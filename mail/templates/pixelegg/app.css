@@ -1310,7 +1310,9 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   padding-right: 5px;
 }
 #mail-compose .mailComposeHeaders span.ms-close-btn,
-#mail-compose .mailComposeHeadersSection span.ms-close-btn {
+#mail-compose .mailComposeHeadersSection span.ms-close-btn,
+#mail-compose .mailComposeHeaders span.ms-edit-btn,
+#mail-compose .mailComposeHeadersSection span.ms-edit-btn {
   width: auto;
   background-repeat: no-repeat;
   padding-right: 8px;

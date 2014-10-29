@@ -3936,9 +3936,9 @@ app.classes.mail = AppJS.extend(
 	set_dragging_dndCompose: function ()
 	{
 		var zIndex = 100;
-		var self = this;
-
-		jQuery('div.ms-sel-item:not(div.ui-draggable)').draggable({
+		var dragItem = jQuery('div.ms-sel-item:not(div.ui-draggable)');
+		
+		dragItem.draggable({
 			appendTo:'body',
 			//Performance wise better to not add ui-draggable class to items since we are not using that class
 			containment:'document',
@@ -3946,7 +3946,7 @@ app.classes.mail = AppJS.extend(
 			cursor:'move',
 			cursorAt:{left:2},
 			//cancel dragging on close button to avoid conflict with close action
-			cancel:'.ms-close-btn',
+			cancel:'.ms-close-btn, .ms-edit-btn',
 			/**
 			 * function to act on draggable item on revert's event
 			 * @returns {Boolean} return true
@@ -3963,14 +3963,14 @@ app.classes.mail = AppJS.extend(
 			 */
 			start:function(event, ui)
 			{
-				if (event.ctrlKey)
+				var dragItem = jQuery(this);
+				if (event.ctrlKey || event.metaKey)
 				{
-					jQuery(this)
-							.addClass('mailCompose_copyEmail')
+					dragItem.addClass('mailCompose_copyEmail')
 							.css('cursor','copy');
 				}
-				jQuery(this).css ('z-index',zIndex++);
-				jQuery(this).css('position','absolute');
+				dragItem.css ('z-index',zIndex++);
+				dragItem.css('position','absolute');
 			},
 			/**
 			 *
@@ -3992,12 +3992,13 @@ app.classes.mail = AppJS.extend(
 	{
 
 		var self = this;
+		var emailTags = jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc');
 		//Call to make new items draggable
-		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').hover(function(){
+		emailTags.hover(function(){
 			self.set_dragging_dndCompose();
 		});
 		//Make used email-tag list widgets in mail compose droppable
-		jQuery('#mail-compose_to,#mail-compose_cc,#mail-compose_bcc').droppable({
+		emailTags.droppable({
 			access:'.ms-sel-item',
 
 			/**
