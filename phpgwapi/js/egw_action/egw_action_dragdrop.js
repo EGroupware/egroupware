@@ -15,7 +15,6 @@
 	egw_action_popup;
 	jquery.jquery;
 	jquery.jquery-ui;
-	/phpgwapi/js/jquery/jquery-ui-touch-punch/touch.js;
 */
 
 /**
