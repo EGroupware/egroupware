@@ -1533,7 +1533,10 @@ var et2_link_list = et2_link_string.extend(
 		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function(menu_item) {
 			var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
 			var row = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
-			self._delete_link(link_id, row);
+			et2_dialog.show_dialog(
+				function(button) { debugger; if(button == et2_dialog.YES_BUTTON) self._delete_link(link_id,row);},
+				egw.lang('Delete link?')
+			);
 		});
 
 		// Native DnD - Doesn't play nice with jQueryUI Sortable
@@ -1660,10 +1663,20 @@ var et2_link_list = et2_link_string.extend(
 			.appendTo(delete_button)
 			// We don't use ui-icon because it assigns a bg image
 			.addClass("delete icon")
-			.bind( 'click', function() {self._delete_link(
-				self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id:_link_data,
-				row
-			);});
+			.bind( 'click', function() {
+				et2_dialog.show_dialog(
+					function(button) {
+						if(button == et2_dialog.YES_BUTTON)
+						{
+							self._delete_link(
+								self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id:_link_data,
+								row
+							);
+						}
+					},
+					egw.lang('Delete link?')
+				);
+			});
 
 		// Context menu
 		row.bind("contextmenu", function(e) {
