@@ -1785,7 +1785,7 @@ div#ui-datepicker-div {
  */
 div.ms-ctn {
   position: relative;
-  height: 28px;
+  height: auto;
   padding: 0;
   margin-bottom: 0px;
   font-size: 14px;
@@ -1881,7 +1881,7 @@ div.ms-ctn-bootstrap-focus {
   border-bottom: 1px solid #CCC;
 }
 div.ms-res-ctn {
-  position: relative;
+  position: absolute;
   background: #FFF;
   overflow-y: auto;
   z-index: 9999;
@@ -1989,7 +1989,7 @@ div.ms-sel-ctn .ms-sel-item .ms-close-btn {
   top: 2px;
 }
 div.ms-sel-ctn .ms-sel-item .ms-close-btn:hover {
-  background-position: 0 -7px;
+  background-position: 0 0;
 }
 span.ms-helper {
   color: #AAA;
