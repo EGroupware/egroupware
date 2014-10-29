@@ -635,7 +635,7 @@
         {
             cfg.dataUrlParams = $.extend({},params);
         };
-
+		
         /**********  PRIVATE ************/
         var _selection = [],      // selected objects
             _comboItemHeight = 0, // height for each combo item.
@@ -644,6 +644,7 @@
             _groups = null,
             _cbData = [],
             _ctrlDown = false,
+			_cntInMf = false, // Content is in modification mode.
             KEYCODES = {
                 BACKSPACE: 8,
                 TAB: 9,
@@ -1023,7 +1024,7 @@
 
                 $.each(_selection, function(index, value){
 
-                    var selectedItemEl, delItemEl,
+                    var selectedItemEl, delItemEl,editItemEl,
                         selectedItemHtml = cfg.selectionRenderer !== null ? cfg.selectionRenderer.call(ref, value) : value[cfg.displayField];
 
                     var validCls = self._validateSingleItem(value[cfg.displayField]) ? '' : ' ms-sel-invalid';
@@ -1048,6 +1049,13 @@
                             }).data('json', value).appendTo(selectedItemEl);
 
                             delItemEl.click($.proxy(handlers._onTagTriggerClick, ref));
+							if (cfg.allowFreeEntries === true){
+								// small pen img
+								editItemEl = $('<span/>', {
+									'class': 'ms-edit-btn'
+								}).data('json', value).appendTo(selectedItemEl);
+								editItemEl.click($.proxy(handlers._onTagEditTriggerClick, ref));
+							}
                         }
                     }
 
@@ -1215,7 +1223,7 @@
                     }
                 }
                 return true;
-            }
+			}
         };
 
         var handlers = {
@@ -1226,6 +1234,7 @@
             _onBlur: function() {
                 ms.container.removeClass('ms-ctn-focus');
                 ms.collapse();
+				_cntInMf = false;
                 _hasFocus = false;
                 if(ms.getRawValue() !== '' && cfg.allowFreeEntries === true){
                     var obj = {};
@@ -1275,8 +1284,15 @@
              * Triggered when focusing on the container div. Will focus on the input field instead.
              * @private
              */
-            _onFocus: function() {
-                ms.input.focus();
+             _onFocus: function(e) {
+				if (!_cntInMf)
+				{
+					ms.input.focus();
+				}
+				else
+				{
+					_cntInMf = false;
+				}
             },
 
             /**
@@ -1284,7 +1300,7 @@
              * @private
              */
             _onInputClick: function(){
-                if (ms.isDisabled() === false && _hasFocus) {
+                if (ms.isDisabled() === false && _hasFocus && !_cntInMf) {
                     if (cfg.toggleOnClick === true) {
                         if (cfg.expanded){
                             ms.collapse();
@@ -1300,7 +1316,7 @@
              * @private
              */
             _onInputFocus: function() {
-                if(ms.isDisabled() === false && !_hasFocus) {
+                if(ms.isDisabled() === false && !_hasFocus && !_cntInMf) {
                     _hasFocus = true;
                     ms.container.addClass('ms-ctn-focus');
                     ms.container.removeClass(cfg.invalidCls);
@@ -1478,7 +1494,22 @@
             _onTagTriggerClick: function(e) {
                 ms.removeFromSelection($(e.currentTarget).data('json'));
             },
-
+			
+			/**
+			 * Triggerd whem clicking upon edit icon (pen) for modification
+			 * @param e
+			 * @private
+			 */
+			_onTagEditTriggerClick: function(e) {
+				var itemData = $(e.currentTarget).data('json');
+				if (ms.input.val() === '')
+				{
+					ms.input.val(itemData.label);
+					ms.removeFromSelection(itemData);
+					_cntInMf = true;
+				}
+			},
+			
             /**
              * Triggered when clicking on the small trigger in the right
              * @private
