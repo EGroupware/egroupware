@@ -3,7 +3,12 @@
 {indent}	{header}
 {indent}	<div class="calendar_calEventIcons">{icons}</div>
 {indent}</div>
-{indent}<div class="calendar_calEventBody{Small}">{title}</div>
+{indent}<div class="calendar_calEventBody{Small}">
+{indent}	<p style="margin: 0px;">
+{indent}		<span class="calendar_calEventTitle">{title}</span>
+{indent}		<br>{bodydescription}
+{indent}	</p>
+{indent}</div>
 <!-- END event_widget -->
 
 <!-- BEGIN event_widget_wholeday_on_top -->
