@@ -14,7 +14,7 @@
 
 /*egw:uses
 	et2_core_inputWidget;
-	/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.1.js;
+	/phpgwapi/js/jquery/magicsuggest/magicsuggest.js;
 */
 
 /**
@@ -602,4 +602,4 @@ et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro", "taglist_a
 
 // Require css
 // TODO: merge into etemplate2.css with all other widgets when done
-if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.1.css");
+if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/magicsuggest.css");
