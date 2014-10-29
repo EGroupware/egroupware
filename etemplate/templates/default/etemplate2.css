@@ -984,6 +984,16 @@ div.message.floating {
 .et2_nextmatch .nextmatch_header_row > div {
 	display: inline-block;
 }
+/* Firefox only search clear button */
+.et2_nextmatch .nextmatch_header_row input[type="search"] + span {
+	position: relative;
+	display: inline-block;
+	top: 4px;
+	margin-left: -16px;
+	/* Clear icon (x) ui-icon-clear */
+	background-position: -80px -128px;
+}
+
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
   margin-top: 6px;
