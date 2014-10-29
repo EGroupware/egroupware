@@ -119,6 +119,13 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			$record->owner = $GLOBALS['egw_info']['user']['account_id'];
 		}
 
+		// Do not import into non-existing type, warn and change
+		if(!$record->tid || !$this->lookups['tid'][$record->tid])
+		{
+			$this->warnings[$import_csv->get_current_position()] = lang('Unknown type %1, imported as %2',$record->tid,lang($this->lookups['tid']['n']));
+			$record->tid = 'n';
+		}
+
 		// Also handle categories in their own field
 		$record_array = $record->get_record_array();
 		$more_categories = array();
