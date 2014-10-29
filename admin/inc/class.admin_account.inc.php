@@ -217,7 +217,7 @@ class admin_account
 		}
 		if ($content['delete'])
 		{
-			$cmd = new admin_cmd_delete_account(accounts::id2name($content['account_id']), $content['new_owner'], true);
+			$cmd = new admin_cmd_delete_account($content['account_id'], $content['new_owner'], true);
 			$msg = $cmd->run();
 			if ($content['contact_id'])
 			{
