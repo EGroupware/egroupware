@@ -474,7 +474,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers['from']):$message->headers['from'])) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail From: ".array2string($addressObject).' vs. '.array2string($message->headers['from']));
-			$mailObject->From = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+			$mailObject->From = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 			$mailObject->FromName = $addressObject->personal;
 		}
 		*/
@@ -483,21 +483,21 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers["to"]):$message->headers["to"])) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail To: ".array2string($addressObject) );
-			//$mailObject->AddAddress($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			//$mailObject->AddAddress($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$toMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// CC
 		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers["cc"]):$message->headers["cc"])) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail CC: ".array2string($addressObject) );
-			//$mailObject->AddCC($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			//$mailObject->AddCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
 		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers["bcc"]):$message->headers["bcc"])) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail BCC: ".array2string($addressObject) );
-			//$mailObject->AddBCC($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			//$mailObject->AddBCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$bccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		/*
@@ -505,7 +505,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers['reply-to']):$message->headers['reply-to'])) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail REPLY-TO: ".array2string($addressObject) );
-			$mailObject->AddReplyTo($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+			$mailObject->AddReplyTo($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 		}
 		*/
 		// save some headers when forwarding mails (content type & transfer-encoding)
@@ -600,7 +600,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//error_log(__METHOD__.__LINE__.array2string($toMailAddr));
 		foreach((array)$toMailAddr as $address) {
 			foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress,(isset($cSMRMethod)?$cSMRMethod:'REQUEST'))) continue;
 				$mailObject->AddAddress($emailAddress, $addressObject->personal);
 				$toCount++;
@@ -609,7 +609,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$ccCount = 0;
 		foreach((array)$ccMailAddr as $address) {
 			foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
 				$mailObject->AddCC($emailAddress, $addressObject->personal);
 				$ccCount++;
@@ -618,7 +618,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$bccCount = 0;
 		foreach((array)$bccMailAddr as $address) {
 			foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
-				$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
 				$mailObject->AddBCC($emailAddress, $addressObject->personal);
 				$bccCount++;
@@ -920,7 +920,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			if (count($folderArray) > 0) {
 				foreach((array)$bccMailAddr as $address) {
 					foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
-						$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+						$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 						$mailAddr[] = array($emailAddress, $addressObject->personal);
 					}
 				}
@@ -1115,7 +1115,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['FROM']):$headers['FROM'])) as $addressObject) {
 							//debugLog(__METHOD__.__LINE__.'Address to add (FROM):'.array2string($addressObject));
 							if (!$addressObject->valid) continue;
-							$mailObject->From = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+							$mailObject->From = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 							$mailObject->FromName = $addressObject->personal;
 //error_log(__METHOD__.__LINE__.'Address to add (FROM):'.array2string($addressObject));
 						}
@@ -1123,19 +1123,19 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['TO']):$headers['TO'])) as $addressObject) {
 							//debugLog(__METHOD__.__LINE__.'Address to add (TO):'.array2string($addressObject));
 							if (!$addressObject->valid) continue;
-							$mailObject->AddAddress($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+							$mailObject->AddAddress($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 						}
 						// CC
 						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['CC']):$headers['CC'])) as $addressObject) {
 							//debugLog(__METHOD__.__LINE__.'Address to add (CC):'.array2string($addressObject));
 							if (!$addressObject->valid) continue;
-							$mailObject->AddCC($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+							$mailObject->AddCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 						}
 						//	AddReplyTo
 						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['REPLY-TO']):$headers['REPLY-TO'])) as $addressObject) {
 							//debugLog(__METHOD__.__LINE__.'Address to add (ReplyTO):'.array2string($addressObject));
 							if (!$addressObject->valid) continue;
-							$mailObject->AddReplyTo($addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : ''),$addressObject->personal);
+							$mailObject->AddReplyTo($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 						}
 						$Header = $Body = ''; // we do not use Header and Body we use the MailObject
 						if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__." Creation of Mailobject succeeded.");
