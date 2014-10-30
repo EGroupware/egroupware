@@ -145,7 +145,7 @@ class admin_ui
 		foreach($apps as $app)
 		{
 			$GLOBALS['menuData'] = $data = array();
-			$data = $GLOBALS['egw']->hooks->single('edit_group', $app, true);
+			$data = $GLOBALS['egw']->hooks->single('edit_group', $app);
 			if (!is_array($data)) $data = $GLOBALS['menuData'];
 			//error_log(__METHOD__."() app $app returned ".array2string($data));
 			foreach($data as $item)
@@ -226,7 +226,7 @@ class admin_ui
 			foreach($apps as $app)
 			{
 				$GLOBALS['menuData'] = $data = array();
-				$data = $GLOBALS['egw']->hooks->single('edit_user', $app, true);
+				$data = $GLOBALS['egw']->hooks->single('edit_user', $app);
 				if (!is_array($data)) $data = $GLOBALS['menuData'];
 				foreach($data as $item)
 				{
