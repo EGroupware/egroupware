@@ -1050,15 +1050,11 @@
 
                             delItemEl.click($.proxy(handlers._onTagTriggerClick, ref));
 							if (cfg.allowFreeEntries === true){
-								// small pen img
-								editItemEl = $('<span/>', {
-									'class': 'ms-edit-btn'
-								}).data('json', value).appendTo(selectedItemEl);
-								editItemEl.click($.proxy(handlers._onTagEditTriggerClick, ref));
+								selectedItemEl.dblclick($.proxy(handlers._onTagEditTriggerClick, ref));
 							}
                         }
                     }
-
+					
                     items.push(selectedItemEl);
                 });
                 ms.selectionContainer.prepend(items);
@@ -1332,7 +1328,7 @@
                         self._updateHelper(cfg.minCharsRenderer.call(this, cfg.minChars - curLength));
                     }
 
-                    self._renderSelection();
+                    setTimeout(function(){self._renderSelection()},300);
                     $(ms).trigger('focus', [ms]);
                 }
             },
@@ -1496,7 +1492,7 @@
             },
 			
 			/**
-			 * Triggerd whem clicking upon edit icon (pen) for modification
+			 * Triggerd when double clicking upon selected item in order to edit its content
 			 * @param e
 			 * @private
 			 */
@@ -1506,7 +1502,7 @@
 				{
 					ms.input.val(itemData.label);
 					ms.removeFromSelection(itemData);
-					_cntInMf = true;
+					_cntInMf = true; // item is in modification mode
 				}
 			},
 			
