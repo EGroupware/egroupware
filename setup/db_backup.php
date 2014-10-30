@@ -153,10 +153,9 @@ if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['e
 {
 	move_uploaded_file($_FILES['uploaded']['tmp_name'],$db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
 
-	if (function_exists('md5_file'))	// php4.2+
-	{
-		$md5 = ', md5='.md5_file($db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
-	}
+	$md5 = ', md5='.md5_file($db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
+	$md5 .= ', sha1='.sha1_file($db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
+
 	$setup_tpl->set_var('error_msg',lang("succesfully uploaded file %1",$_FILES['uploaded']['name'].', '.
 		sprintf('%3.1lf MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']).$md5));
 }
