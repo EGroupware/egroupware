@@ -381,6 +381,7 @@ one week	calendar	en	One week
 one year	calendar	en	One year
 only group-events	calendar	en	Only group events
 only the initial date of that recuring event is checked!	calendar	en	Only the initial date of that recurring event is checked!
+only used for first viewing of calendar, afterwards last selected view is used.	calendar	en	Only used for first viewing of calendar, afterwards last selected view is used.
 open todo's:	calendar	en	Open ToDo's:
 optional	calendar	en	Optional
 overlap holiday	calendar	en	Overlap holiday

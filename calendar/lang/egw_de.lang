@@ -381,6 +381,7 @@ one week	calendar	de	eine Woche
 one year	calendar	de	ein Jahr
 only group-events	calendar	de	nur Gruppentermine
 only the initial date of that recuring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
+only used for first viewing of calendar, afterwards last selected view is used.	calendar	de	Wird nur bei der Erstanzeige des Kalenders benutzt, danach immer die zuletzt ausgewählte Anzeige.
 open todo's:	calendar	de	unerledigte Aufgaben:
 optional	calendar	de	Optional
 overlap holiday	calendar	de	überlappender Feiertag

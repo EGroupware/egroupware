@@ -725,6 +725,32 @@ class calendar_hooks
 			),
 		);
 
+		if ($hook_data['type'] === 'default')
+		{
+			$settings = array_slice($settings, 0, 1, true) + array(
+				'defaultcalendar' => array(
+					'type'  => 'select',
+					'label' => 'Default calendar view',
+					'name'  => 'defaultcalendar',
+					'help'  => 'Only used for first viewing of calendar, afterwards last selected view is used.',
+					'values'	=> array(
+						'day'	=> lang('Dayview'),
+						'day4'	=> lang('four days view'),
+						'week'	=> lang('Weekview'),
+						'weekN'	=> lang('Multiple week view'),
+						'month'	=> lang('Monthview'),
+						'year'	=> lang('Yearview'),
+						'planner' => lang('Planner'),
+						'listview' => lang('listview'),
+					),
+					'xmlrpc' => True,
+					'admin'  => False,
+					'default' => 'week',
+
+				),
+			) + array_slice($settings, 1, count($settings)-1, true);
+		}
+
 		return $settings;
 	}
 
