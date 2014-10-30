@@ -1769,9 +1769,9 @@ div#ui-datepicker-div {
  * @package pixelegg
  * @version $Id$
  */
-.ms-ctn {
+div.ms-ctn {
   position: relative;
-  height: 28px;
+  height: auto;
   padding: 0;
   margin-bottom: 0px;
   font-size: 14px;
@@ -1792,24 +1792,17 @@ div#ui-datepicker-div {
   cursor: default;
   display: block;
 }
-.ms-ctn-invalid {
+input.ms-inv {
   border: 1px solid #CC0000;
 }
-.ms-ctn-readonly {
+div.ms-ctn-readonly {
   cursor: pointer;
 }
-.ms-ctn-disabled {
+div.ms-ctn-disabled {
   cursor: not-allowed;
   background-color: #eeeeee;
 }
-.ms-ctn-bootstrap-focus,
-.ms-ctn-bootstrap-focus .ms-res-ctn {
-  /* IE6-9 */
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-color: #0c5da5 !important;
-}
-.ms-ctn input {
+div.ms-ctn input {
   border: 0;
   box-shadow: none;
   -webkit-transition: none;
@@ -1823,23 +1816,23 @@ div#ui-datepicker-div {
   float: none;
   margin: 2px 0 2px 2px;
 }
-.ms-ctn-disabled input {
+div.ms-ctn-disabled input {
   cursor: not-allowed;
   background-color: #eeeeee;
 }
-.ms-ctn .ms-input-readonly {
+div.ms-ctn .ms-input-readonly {
   cursor: pointer;
 }
-.ms-ctn .ms-empty-text {
+div.ms-ctn .ms-empty-text {
   color: #DDD;
 }
-.ms-ctn input:focus {
+div.ms-ctn input:focus {
   border: 0;
   box-shadow: none;
   -webkit-transition: none;
   background: #FFF;
 }
-.ms-ctn .ms-trigger {
+div.ms-ctn .ms-trigger {
   float: right;
   width: 27px;
   height: 28px;
@@ -1847,7 +1840,7 @@ div#ui-datepicker-div {
   background: #EEE;
   cursor: pointer;
 }
-.ms-ctn .ms-trigger .ms-trigger-ico {
+div.ms-ctn .ms-trigger .ms-trigger-ico {
   display: inline-block;
   width: 0;
   height: 0;
@@ -1859,22 +1852,22 @@ div#ui-datepicker-div {
   margin-left: 9px;
   margin-top: 13px;
 }
-.ms-ctn .ms-trigger:hover {
+div.ms-ctn .ms-trigger:hover {
   background: -moz-linear-gradient(100% 100% 90deg, #e3e3e3, #f1f1f1);
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e3e3e3));
 }
-.ms-ctn .ms-trigger:hover .ms-trigger-ico {
+div.ms-ctn .ms-trigger:hover .ms-trigger-ico {
   background-position: 0 -4px;
 }
-.ms-ctn-disabled .ms-trigger {
+div.ms-ctn-disabled .ms-trigger {
   cursor: not-allowed;
   background-color: #eeeeee;
 }
-.ms-ctn-bootstrap-focus {
+div.ms-ctn-bootstrap-focus {
   border-bottom: 1px solid #CCC;
 }
-.ms-res-ctn {
-  position: relative;
+div.ms-res-ctn {
+  position: absolute;
   background: #FFF;
   overflow-y: auto;
   z-index: 9999;
@@ -1894,7 +1887,7 @@ div#ui-datepicker-div {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.ms-res-ctn .ms-res-group {
+div.ms-res-ctn .ms-res-group {
   line-height: 23px;
   text-align: left;
   padding: 2px 5px;
@@ -1904,40 +1897,40 @@ div#ui-datepicker-div {
   background: #f3edff;
   color: #333;
 }
-.ms-res-ctn .ms-res-item {
+div.ms-res-ctn .ms-res-item {
   line-height: 25px;
   text-align: left;
   padding: 2px 5px;
   color: #666;
   cursor: pointer;
 }
-.ms-res-ctn .ms-res-item-grouped {
+div.ms-res-ctn .ms-res-item-grouped {
   padding-left: 15px;
 }
-.ms-res-ctn .ms-res-odd {
+div.ms-res-ctn .ms-res-odd {
   background: #F3F3F3;
 }
-.ms-res-ctn .ms-res-item-active {
+div.ms-res-ctn .ms-res-item-active {
   background-color: #3875D7;
   color: #fff;
 }
-.ms-sel-ctn {
+div.ms-sel-ctn {
   overflow: auto;
   line-height: 22px;
   padding-right: 0px;
 }
-.ms-sel-ctn .ms-sel-item {
-  background: #ffdd73;
-  color: #000000;
+div.ms-sel-ctn .ms-sel-item {
+  background: #555;
+  color: #EEE;
   float: left;
   font-size: 12px;
-  padding: 0 10px 0 4px !important;
+  padding: 0 15px 0 4px !important;
   position: relative;
   border-radius: 3px;
   margin-left: 5px;
   margin-top: 4px;
 }
-.ms-sel-ctn .ms-sel-text {
+div.ms-sel-ctn .ms-sel-text {
   background: #FFF;
   color: #666;
   padding-right: 0;
@@ -1945,28 +1938,31 @@ div#ui-datepicker-div {
   font-size: 14px;
   font-weight: normal;
 }
-.ms-res-ctn .ms-res-item em {
+div.ms-res-ctn .ms-res-item em {
   font-style: normal;
   background: #565656;
   color: #FFF;
 }
-.ms-sel-ctn .ms-sel-item:hover {
-  background: #ffd140;
+div.ms-sel-ctn .ms-sel-item:hover {
+  background: #434343;
 }
-.ms-sel-ctn .ms-sel-text:hover {
+div.ms-sel-ctn .ms-sel-text:hover {
   background: #FFF;
 }
-.ms-sel-ctn .ms-sel-item-active {
+div.ms-sel-ctn .ms-sel-item-active {
   border: 1px solid red;
   background: #757575;
 }
-.ms-ctn .ms-sel-ctn .ms-sel-item {
+div.ms-ctn .ms-sel-ctn {
+  margin-left: 0px;
+}
+div.ms-ctn .ms-sel-ctn .ms-sel-item {
   margin-top: 3px;
 }
-.ms-stacked .ms-sel-item {
+div.ms-stacked .ms-sel-item {
   float: inherit;
 }
-.ms-sel-ctn .ms-sel-item .ms-close-btn {
+div.ms-sel-ctn .ms-sel-item .ms-close-btn {
   width: 7px;
   cursor: pointer;
   height: 7px;
@@ -1978,15 +1974,42 @@ div#ui-datepicker-div {
   right: 2px;
   top: 2px;
 }
-.ms-sel-ctn .ms-sel-item .ms-close-btn:hover {
-  background-position: 0 -7px;
+div.ms-sel-ctn .ms-sel-item .ms-close-btn:hover {
+  background-position: 0 0;
 }
-.ms-helper {
+span.ms-helper {
   color: #AAA;
   font-size: 10px;
   position: absolute;
   top: -17px;
   right: 0;
+}
+.ms-ctn.input-lg .ms-trigger .ms-trigger-ico {
+  margin-top: 17px;
+}
+.ms-ctn.input-sm .ms-trigger .ms-trigger-ico {
+  margin-top: 13px;
+}
+.ms-ctn.input-lg .ms-sel-ctn .ms-sel-item {
+  padding-top: 2px;
+  padding-bottom: 3px;
+}
+.ms-ctn.input-sm .ms-sel-ctn {
+  line-height: 15px;
+}
+.ms-ctn.input-sm .ms-sel-ctn .ms-sel-item {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.ms-ctn.input-sm .ms-sel-ctn .ms-sel-item .ms-close-btn {
+  margin-top: 4px;
+}
+div.ms-ctn .ms-trigger:hover {
+  width: 24px;
+  right: 1px;
+  border-radius: 0 3px 3px 0;
 }
 /**
  * EGroupware: CSS with less preprocessor
