@@ -1885,13 +1885,13 @@ class calendar_bo
 					case 'participants':
 						foreach ($event[$val] as $key => $value)
 						{
-							$extra_fields [$val] = accounts::id2name($key);
+							$extra_fields [$val] = accounts::id2name($key, 'account_fullname');
 						}	
 						break;
 					case 'modifier':
 					case 'creator':
 					case 'owner':
-						$extra_fields [$val] = accounts::id2name($event[$val]);
+						$extra_fields [$val] = accounts::id2name($event[$val], 'account_fullname');
 						break;
 					default:
 						$extra_fields [] = $event[$val];
