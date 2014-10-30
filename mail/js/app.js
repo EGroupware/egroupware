@@ -3946,7 +3946,7 @@ app.classes.mail = AppJS.extend(
 			cursor:'move',
 			cursorAt:{left:2},
 			//cancel dragging on close button to avoid conflict with close action
-			cancel:'.ms-close-btn, .ms-edit-btn',
+			cancel:'.ms-close-btn',
 			/**
 			 * function to act on draggable item on revert's event
 			 * @returns {Boolean} return true
@@ -3981,7 +3981,8 @@ app.classes.mail = AppJS.extend(
 			{
 				jQuery(this).css('css','move');
 			}
-		});
+		}).draggable('disable');
+		setTimeout(function(){dragItem.draggable('enable');},400)
 	},
 
 	/**
