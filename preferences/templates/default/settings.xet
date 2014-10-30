@@ -38,7 +38,7 @@
 				<template id="preferences.settings.tab1" content="tab1"/>
 			</tabpanels>
 		</tabbox>
-		<hbox class="dialogFooterToolbar" width="100%">
+		<hbox class="dialogFooterToolbar">
 			<button label="Save" id="button[save]"/>
 			<button label="Apply" id="button[apply]"/>
 			<button label="Cancel" id="button[cancel]" onclick="window.close();"/>
