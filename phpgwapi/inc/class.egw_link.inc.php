@@ -1231,6 +1231,15 @@ class egw_link extends solink
 		{
 			echo '<p>'.__METHOD__."('$app','$id','$fname') url=$url</p>\n";
 		}
+		// Log in history - Need to load it first
+		if((int)$app > 0)
+		{
+			$link = self::get_link(-$app);
+			if($link['app2'] && $link['id2'])
+			{
+				historylog::static_add($link['app2'],$link['id2'],$GLOBALS['egw_info']['user']['account_id'],'~file~','', basename($url));
+			}
+		}
 		if (($Ok = !file_exists($url) || egw_vfs::remove($url,true)) && ((int)$app > 0 || $fname))
 		{
 			// try removing the dir, in case it's empty
