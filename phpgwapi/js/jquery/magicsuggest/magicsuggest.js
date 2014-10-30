@@ -1024,7 +1024,7 @@
 
                 $.each(_selection, function(index, value){
 
-                    var selectedItemEl, delItemEl,editItemEl,
+                    var selectedItemEl, delItemEl,
                         selectedItemHtml = cfg.selectionRenderer !== null ? cfg.selectionRenderer.call(ref, value) : value[cfg.displayField];
 
                     var validCls = self._validateSingleItem(value[cfg.displayField]) ? '' : ' ms-sel-invalid';
@@ -1050,7 +1050,7 @@
 
                             delItemEl.click($.proxy(handlers._onTagTriggerClick, ref));
 							if (cfg.allowFreeEntries === true){
-								selectedItemEl.dblclick($.proxy(handlers._onTagEditTriggerClick, ref));
+								selectedItemEl.dblclick($.proxy(handlers._onTagEditTriggerDblClick, ref));
 							}
                         }
                     }
@@ -1280,7 +1280,7 @@
              * Triggered when focusing on the container div. Will focus on the input field instead.
              * @private
              */
-             _onFocus: function(e) {
+             _onFocus: function() {
 				if (!_cntInMf)
 				{
 					ms.input.focus();
@@ -1328,7 +1328,7 @@
                         self._updateHelper(cfg.minCharsRenderer.call(this, cfg.minChars - curLength));
                     }
 
-                    setTimeout(function(){self._renderSelection()},300);
+                    setTimeout(function(){self._renderSelection()},400);
                     $(ms).trigger('focus', [ms]);
                 }
             },
@@ -1496,7 +1496,7 @@
 			 * @param e
 			 * @private
 			 */
-			_onTagEditTriggerClick: function(e) {
+			_onTagEditTriggerDblClick: function(e) {
 				var itemData = $(e.currentTarget).data('json');
 				if (ms.input.val() === '')
 				{

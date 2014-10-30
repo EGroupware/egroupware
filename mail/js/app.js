@@ -3937,52 +3937,58 @@ app.classes.mail = AppJS.extend(
 	{
 		var zIndex = 100;
 		var dragItem = jQuery('div.ms-sel-item:not(div.ui-draggable)');
-		
-		dragItem.draggable({
-			appendTo:'body',
-			//Performance wise better to not add ui-draggable class to items since we are not using that class
-			containment:'document',
-			distance: 0,
-			cursor:'move',
-			cursorAt:{left:2},
-			//cancel dragging on close button to avoid conflict with close action
-			cancel:'.ms-close-btn',
-			/**
-			 * function to act on draggable item on revert's event
-			 * @returns {Boolean} return true
-			 */
-			revert: function (){
-				this.parent().find('.ms-sel-item').css('position','relative');
-				return true;
-			},
-			/**
-			 * function to act as draggable starts dragging
-			 *
-			 * @param {type} event
-			 * @param {type} ui
-			 */
-			start:function(event, ui)
-			{
-				var dragItem = jQuery(this);
-				if (event.ctrlKey || event.metaKey)
+		if (dragItem.length > 0)
+		{
+			dragItem.draggable({
+				appendTo:'body',
+				//Performance wise better to not add ui-draggable class to items since we are not using that class
+				containment:'document',
+				distance: 0,
+				cursor:'move',
+				cursorAt:{left:2},
+				//cancel dragging on close button to avoid conflict with close action
+				cancel:'.ms-close-btn',
+				/**
+				 * function to act on draggable item on revert's event
+				 * @returns {Boolean} return true
+				 */
+				revert: function (){
+					this.parent().find('.ms-sel-item').css('position','relative');
+					return true;
+				},
+				/**
+				 * function to act as draggable starts dragging
+				 *
+				 * @param {type} event
+				 * @param {type} ui
+				 */
+				start:function(event, ui)
 				{
-					dragItem.addClass('mailCompose_copyEmail')
-							.css('cursor','copy');
+					var dragItem = jQuery(this);
+					if (event.ctrlKey || event.metaKey)
+					{
+						dragItem.addClass('mailCompose_copyEmail')
+								.css('cursor','copy');
+					}
+					dragItem.css ('z-index',zIndex++);
+					dragItem.css('position','absolute');
+				},
+				/**
+				 *
+				 * @param {type} event
+				 * @param {type} ui
+				 */
+				create:function(event,ui)
+				{
+					jQuery(this).css('css','move');
 				}
-				dragItem.css ('z-index',zIndex++);
-				dragItem.css('position','absolute');
-			},
-			/**
-			 *
-			 * @param {type} event
-			 * @param {type} ui
-			 */
-			create:function(event,ui)
-			{
-				jQuery(this).css('css','move');
-			}
-		}).draggable('disable');
-		setTimeout(function(){dragItem.draggable('enable');},400)
+			}).draggable('disable');
+			window.setTimeout(function(){
+			
+				if(dragItem && dragItem.data() && typeof dragItem.data()['uiDraggable'] !== 'undefined') dragItem.draggable('enable');
+			},100);
+		}
+		
 	},
 
 	/**
