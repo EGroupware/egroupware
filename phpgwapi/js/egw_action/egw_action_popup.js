@@ -536,6 +536,9 @@ function egwPopupActionImplementation()
 		// Build a tree containing all actions
 		var tree = {"root": []};
 
+		// Automatically add in Drag & Drop actions
+		this._addCopyPaste(_links,_selected);
+
 		for (var k in _links)
 		{
 			_links[k].actionObj.appendToTree(tree);
@@ -572,6 +575,157 @@ function egwPopupActionImplementation()
 		return {'posx': (event.clientX + scrollLeft), 'posy': (event.clientY + scrollTop)};
 	};
 
+	/**
+	 * Automagically add in context menu items for copy and paste from
+	 * drag and drop actions, based on current clipboard and the accepted types
+	 *
+	 * @param {object[]} _links Actions for inclusion in the menu
+	 * @param {egwActionObject[]} _selected Currently selected entries
+	 */
+	ai._addCopyPaste = function (_links, _selected)
+	{
+		// Get a list of drag & drop actions
+		var drag = _selected[0].getSelectedLinks('drag').links;
+		var drop = _selected[0].getSelectedLinks('drop').links;
+
+		// No drags & no drops means early exit
+		if((!drag || jQuery.isEmptyObject(drag)) && (!drop || jQuery.isEmptyObject(drop)))
+		{
+			return;
+		}
+
+		// Find existing actions so we don't get copies
+		var mgr = _selected[0].manager;
+		var copy_action = mgr.getActionById('egw_copy');
+		var paste_action = mgr.getActionById('egw_paste');
+
+		// Create default copy menu action
+		if(drag && !jQuery.isEmptyObject(drag))
+		{
+			// Don't re-add if it's there
+			if(copy_action == null)
+			{
+				// Create a drag action that allows linking
+				copy_action = mgr.addAction('popup', 'egw_copy', egw.lang('Copy to clipboard'), egw.image('copy'), function(action, selected) {
+					// Copied, now add to clipboard
+					var clipboard = {
+						type:[],
+						selected:[]
+					}
+
+					// When pasting we need to know the type of drag
+					for(var k in drag)
+					{
+						if(drag[k].enabled && drag[k].actionObj.dragType.length > 0)
+						{
+							clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
+						}
+					}
+					// egwAction is a circular structure and can't be stringified so just take what we want
+					// Hopefully that's enough for the action handlers
+					for(var k in selected)
+					{
+						if(selected[k].id) clipboard.selected.push({id:selected[k].id, data:selected[k].data})
+					}
+
+					// Save it in session
+					egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
+				},true);
+				copy_action.group = 1.5;
+			}
+			if(typeof _links[copy_action.id] == 'undefined')
+			{
+				_links[copy_action.id] = {
+					"actionObj": copy_action,
+					"enabled": true,
+					"visible": true,
+					"cnt": 0
+				};
+			}
+		}
+
+		// Create default paste menu item
+		if(drop && !jQuery.isEmptyObject(drop))
+		{
+			// Create paste action
+			// This injects the clipboard data and calls the original handler
+			var paste_exec = function(action, selected) {
+				// Add in clipboard as a sender
+				var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+				drop[action.id].actionObj.execute(clipboard.selected,selected[0]);
+			};
+
+			var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+
+			// Don't re-add if action already exists
+			if(paste_action == null)
+			{
+				paste_action = mgr.addAction('popup', 'egw_paste', egw.lang('Paste'), egw.image('editpaste'), paste_exec,true);
+				paste_action.group = 1.5;
+				paste_action.canHaveChildren.push('drop');
+			}
+
+			// Set hint to something resembling current clipboard
+			var hint = egw.lang('Clipboard') + ":\n[" + clipboard.type.join(',')+"]\n";
+			paste_action.set_hint(hint);
+			// Add titles of entries
+			for(var i = 0; i < clipboard.selected.length; i++)
+			{
+				var id = clipboard.selected[i].id.split('::');
+				egw.link_title(id[0],id[1],function(title) {if(title)this.hint += title+"\n";},paste_action);
+			}
+
+			// Add into links so it's included in menu
+			if(typeof _links[paste_action.id] == 'undefined')
+			{
+				_links[paste_action.id] = {
+					"actionObj": paste_action,
+					"enabled": false,
+					"visible": clipboard != null,
+					"cnt": 0
+				};
+			}
+			while(paste_action.children.length > 0)
+			{
+				paste_action.children[0].remove();
+			}
+
+			// If nothing [valid] in the clipboard, don't bother with children
+			if(clipboard == null || typeof clipboard.type != 'object')
+			{
+				return;
+			}
+
+			// Add in actual actions as children
+			for(var k in drop)
+			{
+				// Add some choices - need to be a copy, or they interfere with
+				// the original
+				var drop_clone = jQuery.extend({},drop[k].actionObj);
+				drop_clone.parent = paste_action;
+				drop_clone.onExecute = new egwFnct(this, null, []);
+				drop_clone.set_onExecute(paste_exec);
+				paste_action.children.push(drop_clone);
+				paste_action.allowOnMultiple = paste_action.allowOnMultiple && drop_clone.allowOnMultiple;
+				_links[k] = jQuery.extend({},drop[k]);
+				_links[k].actionObj = drop_clone;
+
+				// Drop is allowed if clipboard types intersect drop types
+				_links[k].enabled = false;
+				_links[k].visible = false;
+				for (var i = 0; i < drop_clone.acceptedTypes.length; i++)
+				{
+					if (clipboard.type.indexOf(drop_clone.acceptedTypes[i]) != -1)
+					{
+						_links[paste_action.id].enabled = true;
+						_links[k].enabled = true;
+						_links[k].visible = true;
+						break;
+					}
+				}
+			}
+		}
+	};
 	return ai;
 }
 
