@@ -275,7 +275,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		if(drop_action == null)
 		{
 			// Create the drop action that links entries
-			drop_action = mgr.addAction('drop', 'egw_link_drop', this.egw.lang('link'), 'link', function(action, source, dropped) {
+			drop_action = mgr.addAction('drop', 'egw_link_drop', this.egw.lang('Create link'), egw.image('link'), function(action, source, dropped) {
 				// Extract link IDs
 				var links = [];
 				var id = '';
