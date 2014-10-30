@@ -64,7 +64,7 @@ function ajax_exception_handler(Exception $e)
 }
 
 // set our own exception handler, to not get the html from eGW's default one
-set_exception_handler('ajax_exception_handler');
+//set_exception_handler('ajax_exception_handler');
 
 if (isset($_GET['menuaction']))
 {
