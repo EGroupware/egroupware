@@ -1502,6 +1502,7 @@
 				{
 					ms.input.val(itemData.label);
 					ms.removeFromSelection(itemData);
+					ms.input.select();
 					_cntInMf = true; // item is in modification mode
 				}
 			},
