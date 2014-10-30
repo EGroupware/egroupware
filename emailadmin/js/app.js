@@ -105,6 +105,7 @@ app.classes.emailadmin = AppJS.extend(
 			var sieve_enabled = this.et2.getWidgetById('acc_sieve_enabled');
 			if (!sieve_enabled || sieve_enabled.get_value())
 			{
+				jQuery('#emailadmin-wizard_output').hide();
 				jQuery('td.emailadmin_progress').show();
 			}
 		}
