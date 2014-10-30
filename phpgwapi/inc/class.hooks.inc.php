@@ -138,6 +138,11 @@ class hooks
 		{
 			$appname = is_array($args) && isset($args['appname']) ? $args['appname'] : $GLOBALS['egw_info']['flags']['currentapp'];
 		}
+		// excute hook only if $no_permission_check or user has run-rights for app
+		if (!($no_permission_check || isset($GLOBALS['egw_info']['user']['apps'][$appname])))
+		{
+			return false;
+		}
 		$SEP = filesystem_separator();
 
 		/* First include the ordered apps hook file */
