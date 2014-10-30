@@ -53,7 +53,7 @@ class accounts_ldap
 	 */
 	var $user_context;
 	/**
-	 * LDAP search filter for user accounts, eg. (uid=%name)
+	 * LDAP search filter for user accounts, eg. (uid=%user)
 	 *
 	 * @var string
 	 */
@@ -82,15 +82,25 @@ class accounts_ldap
 		'user' => array(
 			'top','person','organizationalperson','inetorgperson','posixaccount','shadowaccount'
 		),
-		'user-if-supported' => array(	// these classes get added, only if the server supports them
-			'mozillaabpersonalpha','mozillaorgperson','evolutionperson'
+		'user-if-supported' => array(	// these classes get added, if server supports them
+			'mozillaabpersonalpha','mozillaorgperson','evolutionperson','univentionperson'
 		),
 		'group' => array(
 			'top','posixgroup','groupofnames'
+		),
+		'group-if-supported' => array(	// these classes get added, if servers supports them
+			'univentiongroup',
 		)
 	);
 	/**
 	 * Classes allowing to set a mail-address for a group and specify the memberaddresses as forwarding addresses
+	 *
+	 * $objectclass => $forward
+	 * $objectclass => [$forward, $extra_attr, $mail_attr, $keep_objectclass]
+	 * $forward          : name of attribute to set forwards for members mail addresses, false if not used/required
+	 * $extra_attr       : required attribute (eg. 'uid'), which need to be set, default none
+	 * $mail_attr        : name of attribute for mail-address, if not 'mail'
+	 * $keep_objectclass : true to not remove objectclass, if not mail set
 	 *
 	 * @var array
 	 */
@@ -99,6 +109,7 @@ class accounts_ldap
 		'dbmailuser' => array('mailforwardingaddress','uid'),
 		'qmailuser' => array('mailforwardingaddress','uid'),
 		'mailaccount' => 'mailalias',
+		'univentiongroup' => array(false, false, 'mailprimaryaddress', true),
 	);
 
 	/**
@@ -200,10 +211,7 @@ class accounts_ldap
 			else
 			{
 				$old = ldap::result2array($old[0]);
-				foreach($old['objectclass'] as $n => $class)
-				{
-					$old['objectclass'][$n] = strtolower($class);
-				}
+				$old['objectclass'] = array_map('strtolower', $old['objectclass']);
 				$key = false;
 				if ($is_group && ($key = array_search('namedobject',$old['objectclass'])) !== false ||
 					$is_group && ($old['cn'] != $data_utf8['account_lid'] || substr($old['dn'],0,3) != 'cn=') ||
@@ -243,9 +251,9 @@ class accounts_ldap
 			{
 				$to_write['objectclass'] = $old ? $old['objectclass'] : array();
 			}
-			if (!$old && !$is_group)	// for new accounts add additional addressbook object classes, if supported by server
+			if (!$old)	// for new accounts add additional addressbook object classes, if supported by server
 			{			// as setting them later might loose eg. password, if we are not allowed to read them
-				foreach($this->requiredObjectClasses['user-if-supported'] as $additional)
+				foreach($this->requiredObjectClasses[$is_group?'group-if-supported':'user-if-supported'] as $additional)
 				{
 					if ($this->ldapServerInfo->supportsObjectClass($additional))
 					{
@@ -269,20 +277,22 @@ class accounts_ldap
 			$to_write = $this->_merge_group($to_write,$data_utf8);
 			$data['account_type'] = 'g';
 
-			$groupOfNames = in_array('groupofnames',$old ? $old['objectclass'] : $to_write['objectclass']);
-			if (!$old && $groupOfNames || $members)
+			$objectclass = $old ? $old['objectclass'] : $to_write['objectclass'];
+			if ($members || !$old && array_intersect(array('groupofnames','groupofuniquenames','univentiongroup'), $objectclass))
 			{
-				$to_write = array_merge($to_write,$this->set_members($members,
-					$data['account_id'],$groupOfNames,$dn));
+				$to_write = array_merge($to_write, $this->set_members($members, $data['account_id'], $objectclass, $dn));
 			}
 			// check if we should set a mail address and forwards for each member
 			foreach($this->group_mail_classes as $objectclass => $forward)
 			{
+				$extra_attr = false;
+				$mail_attr = 'mail';
+				$keep_objectclass = false;
+				if (is_array($forward)) list($forward,$extra_attr,$mail_attr,$keep_objectclass) = $forward;
+
 				if ($this->ldapServerInfo->supportsObjectClass($objectclass) &&
-					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old['mail']))
+					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old[$mail_attr]))
 				{
-					$extra_attr = false;
-					if (is_array($forward)) list($forward,$extra_attr) = $forward;
 					if ($data_utf8['account_email'])	// setting an email
 					{
 						if (!in_array($objectclass,$old ? $old['objectclass'] : $to_write['objectclass']))
@@ -291,23 +301,27 @@ class accounts_ldap
 							$to_write['objectclass'][] = $objectclass;
 						}
 						if ($extra_attr) $to_write[$extra_attr] = $data_utf8['account_lid'];
-						$to_write['mail'] = $data_utf8['account_email'];
+						$to_write[$mail_attr] = $data_utf8['account_email'];
 
-						if (!$members) $members = $this->members($data['account_id']);
-						$to_write[$forward] = array();
-						foreach (array_keys($members) as $member)
+						if ($forward)
 						{
-							if (($email = $this->id2name($member,'account_email')))
+							if (!$members) $members = $this->members($data['account_id']);
+							$to_write[$forward] = array();
+							foreach (array_keys($members) as $member)
 							{
-								$to_write[$forward][] = $email;
+								if (($email = $this->id2name($member,'account_email')))
+								{
+									$to_write[$forward][] = $email;
+								}
 							}
 						}
 					}
 					elseif($old)	// remove the mail and forwards only for existing entries
 					{
-						$to_write['mail'] = $to_write[$forward] = array();
+						$to_write[$mail_attr] = array();
+						if ($forward) $to_write[$forward] = array();
 						if ($extra_attr) $to_write[$extra_attr] = array();
-						if (($key = array_search($objectclass,$old['objectclass'])))
+						if (!$keep_objectclass && ($key = array_search($objectclass,$old['objectclass'])))
 						{
 							$to_write['objectclass'] = $old['objectclass'];
 							unset($to_write['objectclass'][$key]);
@@ -360,8 +374,6 @@ class accounts_ldap
 			if ($err)
 			{
 				error_log(__METHOD__."() ldap_".($old ? 'modify' : 'add')."(,'$dn',".array2string($to_write).") --> ldap_error()=".ldap_error($this->ds));
-				echo "ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")\n";
-				echo ldap_error($this->ds);
 				return false;
 			}
 		}
@@ -410,8 +422,23 @@ class accounts_ldap
 	 */
 	protected function _read_group($account_id)
 	{
+		$mail_attr = 'mail';
+		$group = array();
+		if (!is_object($this->ldapServerInfo))
+		{
+			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
+		}
+		foreach($this->group_mail_classes as $objectclass => $attrs)
+		{
+			if ($this->ldapServerInfo->supportsObjectClass($objectclass))
+			{
+				$group['mailAllowed'] = $objectclass;
+				if (is_array($attrs) && $attrs[2]) $mail_attr = $attrs[2];
+				break;
+			}
+		}
 		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
-			array('dn','gidnumber','cn','objectclass','mail'));
+			array('dn', 'gidnumber', 'cn', 'objectclass', $mail_attr, 'memberuid'));
 
 		$ldap_data = ldap_get_entries($this->ds, $sri);
 		if (!$ldap_data['count'])
@@ -419,8 +446,9 @@ class accounts_ldap
 			return false;	// group not found
 		}
 		$data = translation::convert($ldap_data[0],'utf-8');
+		unset($data['objectclass']['count']);
 
-		$group = array(
+		$group += array(
 			'account_dn'        => $data['dn'],
 			'account_id'        => -$data['gidnumber'][0],
 			'account_lid'       => $data['cn'][0],
@@ -428,21 +456,24 @@ class accounts_ldap
 			'account_firstname' => $data['cn'][0],
 			'account_lastname'  => lang('Group'),
 			'account_fullname'  => lang('Group').' '.$data['cn'][0],
-			'groupOfNames'      => in_array('groupOfNames',$data['objectclass']),
-			'account_email'     => $data['mail'][0],
+			'objectclass'       => array_map('strtolower', $data['objectclass']),
+			'account_email'     => $data[$mail_attr][0],
+			'members'           => array(),
 		);
-		if (!is_object($this->ldapServerInfo))
+
+		if (isset($data['memberuid']))
 		{
-			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
-		}
-		foreach(array_keys($this->group_mail_classes) as $objectclass)
-		{
-			if ($this->ldapServerInfo->supportsObjectClass($objectclass))
+			unset($data['memberuid']['count']);
+
+			foreach($data['memberuid'] as $lid)
 			{
-				$group['mailAllowed'] = $objectclass;
-				break;
+				if (($id = $this->name2id($lid, 'account_lid', 'u')))
+				{
+					$group['members'][$id] = $lid;
+				}
 			}
 		}
+
 		return $group;
 	}
 
@@ -745,7 +776,7 @@ class accounts_ldap
 							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
 							'account_primary_group' => (string)-$allVals['gidnumber'][0],
 						);
-						error_log(__METHOD__."() ldap=".array2string($allVals)." --> account=".array2string($account));
+						//error_log(__METHOD__."() ldap=".array2string($allVals)." --> account=".array2string($account));
 						if ($param['active'] && !$this->frontend->is_active($account))
 						{
 							if (isset($totalcount)) --$totalcount;
@@ -755,7 +786,7 @@ class accounts_ldap
 						// return objectclass(es)
 						if ($param['objectclass'])
 						{
-							$account['objectclass'] = $allVals['objectclass'];
+							$account['objectclass'] = array_map('strtolower', $allVals['objectclass']);
 							unset($account['objectclass']['count']);
 						}
 						$accounts[$account['account_id']] = $account;
@@ -1005,9 +1036,11 @@ class accounts_ldap
 		$members = array();
 		if (isset($group[0]['memberuid']))
 		{
+			unset($group[0]['memberuid']['count']);
+
 			foreach($group[0]['memberuid'] as $lid)
 			{
-				if (($id = $this->name2id($lid)))
+				if (($id = $this->name2id($lid, 'account_lid', 'u')))
 				{
 					$members[$id] = $lid;
 				}
@@ -1054,33 +1087,46 @@ class accounts_ldap
 	 *
 	 * @param array $members array with uidnumber or uid's
 	 * @param int $gid gidnumber of group to set
-	 * @param boolean $groupOfNames =null should we set the member attribute of groupOfNames (default detect it)
+	 * @param array $objectclass =null should we set the member and uniqueMember attributes (groupOf(Unique)Names|univentionGroup) (default detect it)
 	 * @param string $use_cn =null if set $cn is used instead $gid and the attributes are returned, not written to ldap
+	 * @param boolean $uniqueMember =null should we set the uniqueMember attribute (default detect it)
 	 * @return boolean/array false on failure, array or true otherwise
 	 */
-	function set_members($members,$gid,$groupOfNames=null,$use_cn=null)
+	function set_members($members, $gid, array $objectclass=null, $use_cn=null)
 	{
 		//echo "<p>accounts_ldap::set_members(".print_r($members,true).",$gid)</p>\n";
 		if (!($cn = $use_cn) && !($cn = $this->id2name($gid))) return false;
 
-		// do that group is a groupOfNames?
-		if (is_null($groupOfNames)) $groupOfNames = $this->id2name($gid,'groupOfNames');
+		// do that group is a groupOf(Unique)Names or univentionGroup?
+		if (is_null($objectclass)) $objectclass = $this->id2name($gid,'objectclass');
 
 		$to_write = array('memberuid' => array());
 		foreach((array)$members as $key => $member)
 		{
+			$member_dn = $this->id2name($member, 'account_dn');
 			if (is_numeric($member)) $member = $this->id2name($member);
 
 			if ($member)
 			{
 				$to_write['memberuid'][] = $member;
-				if ($groupOfNames) $to_write['member'][] = 'uid='.$member.','.$this->user_context;
+				if (in_array('groupofnames', $objectclass))
+				{
+					$to_write['member'][] = $member_dn;
+				}
+				if (array_intersect(array('groupofuniquenames','univentiongroup'), $objectclass))
+				{
+					$to_write['uniquemember'][] = $member_dn;
+				}
 			}
 		}
-		if ($groupOfNames && !$to_write['member'])
+		// hack as groupOfNames requires the member attribute
+		if (in_array('groupofnames', $objectclass) && !$to_write['member'])
 		{
-			// hack as groupOfNames requires the member attribute
 			$to_write['member'][] = 'uid=dummy'.','.$this->user_context;
+		}
+		if (array_intersect(array('groupofuniquenames','univentiongroup'), $objectclass) && !$to_write['uniquemember'])
+		{
+			$to_write['uniquemember'][] = 'uid=dummy'.','.$this->user_context;
 		}
 		if ($use_cn) return $to_write;
 
@@ -1091,10 +1137,13 @@ class accounts_ldap
 			if (is_array($forward)) list($forward,$extra_attr) = $forward;
 			if ($extra_attr && ($uid = $this->id2name($gid))) $to_write[$extra_attr] = $uid;
 
-			$to_write[$forward] = array();
-			foreach($members as $key => $member)
+			if ($forward)
 			{
-				if (($email = $this->id2name($member,'account_email')))	$to_write[$forward][] = $email;
+				$to_write[$forward] = array();
+				foreach($members as $key => $member)
+				{
+					if (($email = $this->id2name($member,'account_email')))	$to_write[$forward][] = $email;
+				}
 			}
 		}
 		if (!ldap_modify($this->ds,'cn='.ldap::quote($cn).','.$this->group_context,$to_write))
