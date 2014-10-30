@@ -371,7 +371,7 @@ class customfields
 			'cf_id' => $cf_id,
 			'cf_app' => $this->appname,
 			'use_private' => $this->use_private,
-		));
+		),2);
 	}
 
 	/**
