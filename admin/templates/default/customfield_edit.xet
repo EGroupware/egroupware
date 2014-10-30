@@ -4,11 +4,17 @@
 	<template id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
+				<column width="130"/>
+				<column width="350"/>
 				<column/>
-				<column/>
-				<column/>
+				<column width="30"/>
 			</columns>
 			<rows>
+				<row class="dialogHeader" height="28">
+					<description statustext="the name used internaly (&amp;lt;= 20 chars), changeing it makes existing data unavailible" value="Name"/>
+					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="cf_name" size="20" maxlength="32" needed="true" class="et2_fullWidth" span="2"/>
+					<appicon/>
+				</row>
 				<row disabled="@no_types">
 					<description value="Type"/>
 					<menulist>
@@ -17,33 +23,22 @@
 					<description/>
 				</row>
 				<row>
-					<description statustext="the name used internaly (&amp;lt;= 20 chars), changeing it makes existing data unavailible" value="Name"/>
-					<textbox statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible" id="cf_name" size="20" maxlength="32" needed="true"/>
-					<description/>
-				</row>
-				<row>
 					<description value="Label"/>
-					<vbox>
-						<textbox statustext="the text displayed to the user" id="cf_label" maxlength="255"/>
-						<description id="cf_label"/>
-					</vbox>
+					<textbox statustext="the text displayed to the user" id="cf_label" maxlength="255" class="et2_fullWidth"/>
 					<description/>
 				</row>
 				<row>
 					<description value="Type of field"/>
-					<vbox>
-						<customfields-types statustext="Type of customfield" id="cf_type"/>
-					</vbox>
-					<description/>
-				</row>
-				<row>
-					<description value="Required"/>
-					<checkbox id="cf_needed"/>
+					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth"/>
+					<hbox>
+						<description value="Required"/>
+						<checkbox id="cf_needed"/>
+					</hbox>
 					<description/>
 				</row>
 				<row disabled="!@use_private">
 					<description value="Private"/>
-					<taglist-account statustext="Select accounts for which the custom field should be visible" id="cf_private" rows="3" account_type="both" span="2"/>
+					<taglist-account class="et2_fullWidth" statustext="Select accounts for which the custom field should be visible" id="cf_private" rows="3" account_type="both" span="2"/>
 					<description/>
 				</row>
 				<row>
@@ -51,18 +46,15 @@
 					<textbox multiline="true" statustext="each value is a line like id[=label]" id="cf_values" rows="4" cols="30" span="2" width="99%"/>
 				</row>
 				<row>
-					<description value="Length"/>
-					<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="cf_len" size="5"/>
-					<description/>
-				</row>
-				<row>
-					<description value="Rows"/>
-					<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" max="10" size="2"/>
-					<description/>
-				</row>
-				<row>
-					<description value="Order"/>
-					<textbox type="integer" statustext="determines the order the fields are displayed" id="cf_order" min="1" size="3"/>
+					<description value="Attributes"/>
+					<box span="2">
+						<description value="Length:"/>
+						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="cf_len" size="5"/>
+						<description value="Rows:"/>
+						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" max="10" size="2"/>
+						<description value="Order:"/>
+						<textbox type="integer" statustext="determines the order the fields are displayed" id="cf_order" min="1" size="3"/>			
+					</box>
 					<description/>
 				</row>
 				<row class="dialogFooterToolbar">
