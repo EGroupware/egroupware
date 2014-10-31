@@ -611,7 +611,7 @@ function egwPopupActionImplementation()
 					var clipboard = {
 						type:[],
 						selected:[]
-					}
+					};
 
 					// When pasting we need to know the type of drag
 					for(var k in drag)
@@ -625,7 +625,7 @@ function egwPopupActionImplementation()
 					// Hopefully that's enough for the action handlers
 					for(var k in selected)
 					{
-						if(selected[k].id) clipboard.selected.push({id:selected[k].id, data:selected[k].data})
+						if(selected[k].id) clipboard.selected.push({id:selected[k].id, data:selected[k].data});
 					}
 
 					// Save it in session
@@ -655,7 +655,10 @@ function egwPopupActionImplementation()
 				drop[action.id].actionObj.execute(clipboard.selected,selected[0]);
 			};
 
-			var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+			var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+				type:[],
+				selected:[]
+			};
 
 			// Don't re-add if action already exists
 			if(paste_action == null)
