@@ -83,13 +83,14 @@ class accounts_ldap
 			'top','person','organizationalperson','inetorgperson','posixaccount','shadowaccount'
 		),
 		'user-if-supported' => array(	// these classes get added, if server supports them
-			'mozillaabpersonalpha','mozillaorgperson','evolutionperson','univentionperson'
+			'mozillaabpersonalpha', 'mozillaorgperson', 'evolutionperson',
+			'univentionperson', array('univentionobject', 'univentionObjectType' => 'users/user'),
 		),
 		'group' => array(
 			'top','posixgroup','groupofnames'
 		),
 		'group-if-supported' => array(	// these classes get added, if servers supports them
-			'univentiongroup',
+			'univentiongroup', array('univentionobject', 'univentionObjectType' => 'groups/group'),
 		)
 	);
 	/**
@@ -255,9 +256,16 @@ class accounts_ldap
 			{			// as setting them later might loose eg. password, if we are not allowed to read them
 				foreach($this->requiredObjectClasses[$is_group?'group-if-supported':'user-if-supported'] as $additional)
 				{
+					$add = array();
+					if (is_array($additional))
+					{
+						$add = $additional;
+						$additional = array_shift($add);
+					}
 					if ($this->ldapServerInfo->supportsObjectClass($additional))
 					{
 						$to_write['objectclass'][] = $additional;
+						if ($add) $to_write += $add;
 					}
 				}
 			}
