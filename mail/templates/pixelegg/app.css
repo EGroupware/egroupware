@@ -502,12 +502,6 @@ div.mail-compose_fileselector {
   left: 3px;
   right: 0;
 }
-#mail-index_mailPreviewContainer.previewNoAttachment {
-  top: 51px;
-}
-#mail-index_mailPreviewContainer.previewNoAttachmentButCC {
-  top: 67px;
-}
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
   max-height: 1.6em;
