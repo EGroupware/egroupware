@@ -795,6 +795,7 @@ ul.et2_link_string {
   background-image: url(images/tab_header_bg.png);
   background-position: bottom;
   background-repeat: repeat-x;
+  white-space: nowrap;
 }
 .et2_taglist_ro ul {
   margin: 0px;
@@ -1690,7 +1691,7 @@ table.et2_egw_action_ddHelper_row img {
 }
 /* Last row of items which shows the number of more items*/
 tr.et2_egw_action_ddHelper_moreRow{
-    
+
 }
 /* The big total item counter*/
 span.et2_egw_action_ddHelper_itemsCnt {

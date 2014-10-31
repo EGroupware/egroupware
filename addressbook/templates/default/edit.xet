@@ -394,7 +394,7 @@
 					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%">
+					<tabbox id="tabs" span="all" width="100%">
 						<tabs>
 							<tab id="general" label="Organisation"/>
 							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
