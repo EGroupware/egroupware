@@ -758,31 +758,37 @@ app.classes.mail = AppJS.extend(
 		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",attachmentsBlock:""}};
 		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
-		var previewContainer = this.et2.getWidgetById('mailPreviewContainer');
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
 		}
-
+		
+		var $preview_iframe = jQuery('#mail-index_mailPreviewContainer');
+		
+		// Re calculate the position of preview iframe according to its visible sibilings
+		var set_prev_iframe_top = function ()
+		{
+			// Need to make sure that the iframe is fullyLoad before calculation
+			window.setTimeout(function(){
+				var lastEl = $preview_iframe.prev().prev();
+				// Top offset of preview iframe calculated from top level
+				var iframeTop = $preview_iframe.offset().top;
+				while (lastEl.css('display') === "none")
+				{
+					lastEl = lastEl.prev();
+				}
+				var offset = iframeTop - (lastEl.offset().top + lastEl.height()) || 130; // fallback to 130 px if can not calculate new top
+				
+				// preview iframe parent has position absolute, therefore need to calculate the top via position
+				$preview_iframe.css ('top', $preview_iframe.position().top - offset + 10);
+			}, 50);
+		}
+		
 		if (attachmentArea && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
 		{
-			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
-			if (!dataElem.data.attachmentsBlock)
-			{
-				if (!dataElem.data.ccaddress)
-				{
-					previewContainer.set_class('previewNoAttachment');
-				}
-				else
-				{
-					previewContainer.set_class('previewNoAttachmentButCC');
-				}
-			}
-			else
-			{
-				jQuery(previewContainer.node).removeClass('previewNoAttachment previewNoAttachmentButCC');
-			}
+			// If there is content to show recalculate the size
+			set_prev_iframe_top();
 		}
 		else
 		{
