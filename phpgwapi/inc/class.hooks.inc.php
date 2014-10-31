@@ -329,8 +329,15 @@ class hooks
 		// deleting hooks, to get ride of no longer existing apps
 		$this->db->delete($this->table,'1=1',__LINE__,__FILE__);
 
+		// if we run in setup, we need to read installed apps first
+		if (!$GLOBALS['egw_info']['apps'])
+		{
+			$applications = new applications();
+			$applications->read_installed_apps();
+		}
+
 		// now register all apps using just filesystem data
-		foreach(scandir(EGW_SERVER_ROOT) as $appname)
+		foreach(array_keys($GLOBALS['egw_info']['apps']) as $appname)
 		{
 			if ($appname[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$appname)) continue;
 
