@@ -922,7 +922,8 @@ class timesheet_bo extends so_sql_cf
 			if (isset($update))
 			{
 				$this->update($update);
-				egw_link::notify_update(TIMESHEET_APP, $this->data['ts_id'],$this->data);
+				// do NOT notify about title-change, as this will lead to an infinit loop!
+				// egw_link::notify_update(TIMESHEET_APP, $this->data['ts_id'],$this->data);
 				//error_log(__METHOD__."() setting pm_id=$pm_id --> ".array2string($update));
 			}
 		}
