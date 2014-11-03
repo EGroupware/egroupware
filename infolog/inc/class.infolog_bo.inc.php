@@ -1413,6 +1413,8 @@ class infolog_bo
 				$infos[$row['info_id']] = array(
 					'status' => $row['info_type'] != 'phone' && $row['info_status'] == 'ongoing' ?
 						$row['info_percent'].'%' : 'infolog/'.$this->status[$row['info_type']][$row['info_status']],
+					'status_icon' => $row['info_type'] != 'phone' && $row['info_status'] == 'ongoing' ?
+						'ongoing' : 'infolog/'.$row['info_status'],
 					'class'  => $row['info_id_parent'] ? 'infolog_rowHasParent' : null,
 				);
 				if (common::image('infolog', $icon=$row['info_type'].'_element') ||
