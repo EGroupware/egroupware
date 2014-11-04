@@ -597,6 +597,7 @@ function egwPopupActionImplementation()
 		// Find existing actions so we don't get copies
 		var mgr = _selected[0].manager;
 		var copy_action = mgr.getActionById('egw_copy');
+		var add_action = mgr.getActionById('egw_copy_add');
 		var paste_action = mgr.getActionById('egw_paste');
 
 		// Create default copy menu action
@@ -621,6 +622,7 @@ function egwPopupActionImplementation()
 							clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
 						}
 					}
+					clipboard.type = jQuery.unique(clipboard.type);
 					// egwAction is a circular structure and can't be stringified so just take what we want
 					// Hopefully that's enough for the action handlers
 					for(var k in selected)
@@ -633,10 +635,51 @@ function egwPopupActionImplementation()
 				},true);
 				copy_action.group = 1.5;
 			}
+			if(add_action == null)
+			{
+				// Create an action to add selected to clipboard
+				add_action = mgr.addAction('popup', 'egw_copy_add', egw.lang('Add to clipboard'), egw.image('copy'), function(action, selected) {
+					// Copied, now add to clipboard
+					var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+						type:[],
+						selected:[]
+					};
+
+					// When pasting we need to know the type of drag
+					for(var k in drag)
+					{
+						if(drag[k].enabled && drag[k].actionObj.dragType.length > 0)
+						{
+							clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
+						}
+					}
+					clipboard.type = jQuery.unique(clipboard.type);
+					// egwAction is a circular structure and can't be stringified so just take what we want
+					// Hopefully that's enough for the action handlers
+					for(var k in selected)
+					{
+						if(selected[k].id) clipboard.selected.push({id:selected[k].id, data:selected[k].data});
+					}
+
+					// Save it in session
+					egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
+				},true);
+				add_action.group = 1.5;
+
+			}
 			if(typeof _links[copy_action.id] == 'undefined')
 			{
 				_links[copy_action.id] = {
 					"actionObj": copy_action,
+					"enabled": true,
+					"visible": true,
+					"cnt": 0
+				};
+			}
+			if(typeof _links[add_action.id] == 'undefined')
+			{
+				_links[add_action.id] = {
+					"actionObj": add_action,
 					"enabled": true,
 					"visible": true,
 					"cnt": 0
