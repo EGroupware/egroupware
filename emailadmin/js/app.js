@@ -81,15 +81,39 @@ app.classes.emailadmin = AppJS.extend(
 			}
 		}
 	},
-
+	
+	/**
+	 * Resize window methode
+	 * 
+	 * @returns {undefined}
+	 */
+	wizard_popup_resize: function ()
+	{
+		var $main_div = $j('#popupMainDiv');
+		var $et2 = $j('.et2_container');
+		var w = {
+			width: egw_getWindowInnerWidth(),
+			height: egw_getWindowInnerHeight()
+		};
+		// Use et2_container for width since #popupMainDiv is full width, but we still need
+		// to take padding/margin into account
+		var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
+		var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
+		if(delta_width != 0 || delta_height != 0)
+		{
+			window.resizeTo(egw_getWindowOuterWidth() - delta_width,egw_getWindowOuterHeight() - delta_height);
+		}
+	}, 
+	
 	/**
 	 * Switch account wizard to manual entry
 	 */
 	wizard_manual: function()
 	{
 		jQuery('.emailadmin_manual').fadeToggle();// not sure how to to this et2-isch
+		this.wizard_popup_resize(); // popup needs to be resized after toggling
 	},
-
+	
 	/**
 	 * onclick for continue button to show progress animation
 	 *
