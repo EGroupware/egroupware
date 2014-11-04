@@ -40,7 +40,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th">
+				<row class="th" height="28">
 					<description span="all" value="Existing links"/>
 				</row>
 				<row class="row_off" valign="top">
@@ -57,20 +57,23 @@
 					<column/>
 				</columns>
 				<rows>
-					<row class="th">
-						<image src="print" onclick="window.print();"/>
-						<description class="bold" value="Calendar" options="bold"/>
+					<row>
+						<hbox>
+							<image src="print" onclick="window.print();" class="calendar_print_button"/>
+							<appicon class="calendar_print_appicon"/>
+						</hbox>
 					</row>
 					<row class="th" height="28">
-						<description value="Title"/>
-						<textbox id="title" size="80" maxlength="255" readonly="true" span="all"/>
+						<description value="Title" class="bold" options="bold"/>
+						<textbox id="title" size="80" maxlength="255" readonly="true" span="all" class="bold"/>
 					</row>
 					<row class="row">
 						<description width="95" options=",,,start" value="Start"/>
-						<hbox options="0,0">
-							<date-time id="start" readonly="true"/>
-							<checkbox label="whole day" id="whole_day" options=",, ,disable" statustext="Event will occupy the whole day" align="center" readonly="true"/>
-						</hbox>
+						<date-time id="start" readonly="true"/>
+					</row>
+					<row class="row">
+						<description width="0" options=",,,whole_day" value="whole day"/>
+						<checkbox id="whole_day" options=",, ," statustext="Event will occupy the whole day" readonly="true"/>
 					</row>
 					<row class="row">
 						<description width="0" options=",,,duration" value="Duration"/>
@@ -85,21 +88,21 @@
 						<description options=",,,location" value="Location" width="0"/>
 						<textbox maxlength="255" id="location" class="calendar_inputFullWidth" readonly="true"/>
 					</row>
-					<row class="row_off">
+					<row class="row">
 						<description options=",,,priority" value="Priority" width="0"/>
 						<menulist>
 							<menupopup type="select-priority" id="priority" readonly="true"/>
 						</menulist>
 					</row>
 					<row class="row">
-						<description value="Options" width="0"/>
-						<checkbox id="non_blocking" options=",, ,disable" statustext="A non blocking event will not conflict with other events" label="non blocking" readonly="true"/>
+						<description value="Non blocking" width="0"/>
+						<checkbox id="non_blocking" options="1,0, ," statustext="A non blocking event will not conflict with other events" readonly="true"/>
 					</row>
 					<row class="row">
-						<description/>
-						<checkbox id="public" options="0,1" label="Private" readonly="true"/>
+						<description value="Private"/>
+						<checkbox id="public" options="0,1" readonly="true"/>
 					</row>
-					<row class="row">
+					<row class="row calendar_print_cat">
 						<description value="Categories"/>
 						<menulist>
 							<menupopup type="select-cat" id="category" readonly="true"/>
