@@ -766,7 +766,7 @@ function set_univention_defaults()
 
 		$config['account_min_id'] = 1200;	// UCS use 11xx for internal users/groups
 
-		$config['account-auth'] = 'ldap';
+		$config['account-auth'] = 'univention,ldap';
 
 		// set sambaadmin sambaSID
 		$config['sambaadmin/sambaSID'] = exec('/usr/bin/univention-ldapsearch -x "(objectclass=sambadomain)" sambaSID|sed -n "s/sambaSID: \(.*\)/\1/p"');
