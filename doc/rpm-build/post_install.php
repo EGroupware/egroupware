@@ -772,17 +772,19 @@ function set_univention_defaults()
 		$config['sambaadmin/sambaSID'] = exec('/usr/bin/univention-ldapsearch -x "(objectclass=sambadomain)" sambaSID|sed -n "s/sambaSID: \(.*\)/\1/p"');
 
 		// mailserver, see setup-cli.php --help config
-		if (_ucr_get('mail/cyrus/imap') == 'yes' && ($domains=_ucr_get('mail/hosteddomains')))
+		if (($mailserver = exec('/usr/bin/univention-ldapsearch -x "(univentionAppID=mailserver_*)" univentionAppInstalledOnServer|sed -n "s/univentionAppInstalledOnServer: \(.*\)/\1/p"')) &&
+			_ucr_get('mail/cyrus/imap') == 'yes' && ($domains=_ucr_get('mail/hosteddomains')))
 		{
 			if (!is_array($domains)) $domains = explode("\n", $domains);
 			$domain = array_shift($domains);
-			$config['smtpserver'] = 'localhost,465,,,yes,tls';
+			$config['smtpserver'] = "$mailserver,465,,,yes,tls";
 			$config['smtp'] = 'no,emailadmin_smtp_ldap_univention';
-			$config['mailserver'] = "localhost,993,$domain,email,tls";
-			$config['imap'] = 'root,'._ucr_secret('cyrus').',emailadmin_imap_cyrus';
+			$config['mailserver'] = "$mailserver,993,$domain,email,tls";
+			$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
+			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,INBOX/Spam';
 			if (($sieve_port = _ucr_get('mail/cyrus/sieve/port')))
 			{
-				$config['sieve'] = 'localhost,'.$sieve_port.',starttls';
+				$config['sieve'] = "$mailserver,$sieve_port,starttls";
 			}
 		}
 	}
