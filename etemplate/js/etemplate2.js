@@ -273,6 +273,8 @@ etemplate2.prototype.download = function(_url)
 etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
 	this.name = _name;	// store top-level template name to have it available in widgets
+	// store template base url, in case initial template is loaded via webdav, to use that for further loads too
+	this.template_base_url = _url.split(_name.split('.').shift())[0];
 
 	egw().debug("info", "Loaded data", _data);
 	var currentapp = this.app = _data.currentapp || window.egw_appName;

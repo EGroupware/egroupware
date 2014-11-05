@@ -103,7 +103,8 @@ var et2_template = et2_DOMWidget.extend(
 				{
 					// Ask server
 					var splitted = template_name.split('.');
-					var path = this.egw().webserverUrl + "/" + splitted.shift() + "/templates/default/" +
+					// use template base url from initial template, to continue using webdav, if that was loaded via webdav
+					var path = this.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
 						splitted.join('.')+ ".xet" + (cache_buster ? '?'+cache_buster : '');
 
 					if(splitted.length)
