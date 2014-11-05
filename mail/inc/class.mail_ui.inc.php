@@ -767,15 +767,14 @@ class mail_ui
 			$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,$_useCacheIfPossible);
 			//$endtime = microtime(true) - $starttime;
 			//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
-			$trashFolder = $this->mail_bo->getTrashFolder(false);
-			$templateFolder = $this->mail_bo->getTemplateFolder(false);
-			$draftFolder = $this->mail_bo->getDraftFolder(false);
-			$sentFolder = $this->mail_bo->getSentFolder(false);
-			$userDefinedFunctionFolders = array();
-			if (isset($trashFolder) && $trashFolder != 'none') $userDefinedFunctionFolders['Trash'] = $trashFolder;
-			if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
-			if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
-			if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
+			$userDefinedFunctionFolders = array(
+				'Trash'     => $this->mail_bo->getTrashFolder(false),
+				'Templates' => $this->mail_bo->getTemplateFolder(false),
+				'Drafts'    => $this->mail_bo->getDraftFolder(false),
+				'Sent'      => $this->mail_bo->getSentFolder(false),
+				'Junk'      => $this->mail_bo->getJunkFolder(false),
+				'Outbox'    => $this->mail_bo->getOutboxFolder(false),
+			);
 		}
 		catch (Exception $e)
 		{
@@ -863,7 +862,7 @@ class mail_ui
 			// the rest of the array is the name of the parent
 			$parentName = implode((array)$folderParts,$obj->delimiter);
 			$parentName = $this->mail_bo->profileID.self::$delimiter.$parentName;
-			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->displayName);
+			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->folderName);
 			array_unshift($fFP,$this->mail_bo->profileID);
 			$oA['path'] = $fFP;
 			$path = $key;
@@ -873,15 +872,10 @@ class mail_ui
 				// mark on inbox if ACL is supported
 				$oA['data'] = array('acl' => $this->mail_bo->icServer->queryCapability('ACL'));
 			}
-			elseif (in_array($obj->shortFolderName,mail_bo::$autoFolders))
+			elseif (($_key = array_search($obj->folderName, $userDefinedFunctionFolders)) !== false)
 			{
-				$oA['text'] = lang($oA['text']);
+				$oA['text'] = lang($_key);
 
-				$oA['im0'] = $oA['im1']= $oA['im2'] = "MailFolder".$obj->shortFolderName.".png";
-			}
-			elseif (in_array($key,$userDefinedFunctionFolders))
-			{
-				$_key = array_search($key,$userDefinedFunctionFolders);
 				$oA['im0'] = $oA['im1']= $oA['im2'] = "MailFolder".$_key.".png";
 			}
 			else
