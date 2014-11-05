@@ -193,7 +193,18 @@ var et2_color = et2_inputWidget.extend(
 		else if (typeof color == "object" && color.val)
 		{
 			// Prefix # to match previous picker values
-			this.value = '#'+color.val("hex");
+			var hex = color.val('hex');
+			// Hex might be null
+			if(hex)
+			{
+				hex = '#'+hex;
+			}
+			else if(this.value != hex)
+			{
+				// Color was cleared
+				hex = '';
+			}
+			this.value = hex;
 		}
 
 		// Update picker
