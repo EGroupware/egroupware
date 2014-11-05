@@ -2502,7 +2502,7 @@ class infolog_ui
 						// instead of fetching only the attachments attached files (as we did previously)
 						$message = $mailobject->getMessageRawBody($attachment['uid'],$attachment['partID'],($attachment['folder']?$attachment['folder']:$mailbox));
 						$headers = $mailobject->getMessageHeader($attachment['uid'],$attachment['partID'],true,false,($attachment['folder']?$attachment['folder']:$mailbox));
-						$subject = str_replace('$$','__',($headers['SUBJECT']?$headers['SUBJECT']:lang('(no subject)')));
+						$subject = $mailClass::adaptSubjectForImport($headers['SUBJECT']);
 						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 						$tmpfile = fopen($attachment_file,'w');
 						fwrite($tmpfile,$message);
@@ -2528,7 +2528,12 @@ class infolog_ui
 							fwrite($tmpfile,$attachmentData['attachment']);
 							fclose($tmpfile);
 						}
-
+						//make sure we search for our attached file in our configured temp_dir
+						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) != 'vfs' &&
+							file_exists($GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file'])))
+						{
+							$attachment['file'] = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file']);
+						}
 						$attachments[] = array(
 							'name' => $attachment['name'],
 							'mimeType' => $attachment['type'],
@@ -2545,7 +2550,7 @@ class infolog_ui
 			if ($_rawMailHeader && $_rawMailBody && $GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
 			{
 				$message = ltrim(str_replace("\n","\r\n",$_rawMailHeader)).str_replace("\n","\r\n",$_rawMailBody);
-				$subject = str_replace('$$','__',($_subject?$_subject:lang('(no subject)')));
+				$subject = $mailClass::adaptSubjectForImport($_subject);
 				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 				$tmpfile = fopen($attachment_file,'w');
 				fwrite($tmpfile,$message);
@@ -2597,7 +2602,7 @@ class infolog_ui
 			{
 				$message = $mailobject->getMessageRawBody($uid, $partid,$mailbox);
 				$headers = $mailobject->getMessageHeader($uid, $partid,true,false,$mailbox);
-				$subject = str_replace('$$','__',($headers['SUBJECT']?$headers['SUBJECT']:lang('(no subject)')));
+				$subject = $mailClass::adaptSubjectForImport($headers['SUBJECT']);
 				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 				$tmpfile = fopen($attachment_file,'w');
 				fwrite($tmpfile,$message);
