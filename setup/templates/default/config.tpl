@@ -173,9 +173,7 @@
     <td>{lang_Select_where_you_want_to_store/retrieve_user_accounts}:</td>
     <td>
      <select name="newsettings[account_repository]">
-      <option value="sql"{selected_account_repository_sql}>SQL</option>
-      <option value="ldap"{selected_account_repository_ldap}>LDAP</option>
-      <option value="ads"{selected_account_repository_ads}>Active Directory</option>
+{hook_account_repository}
      </select>
     </td>
    </tr>

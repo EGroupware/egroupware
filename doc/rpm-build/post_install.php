@@ -11,7 +11,7 @@
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling post_install as web-page
 {
-	die('<h1>rpm_post_install.php must NOT be called as web-page --> exiting !!!</h1>');
+	die('<h1>post_install.php must NOT be called as web-page --> exiting !!!</h1>');
 }
 $verbose = false;
 $config = array(
@@ -55,6 +55,8 @@ $config = array(
 	'ldap_context'  => 'ou=accounts,$base',
 	'ldap_search_filter' => '(uid=%user)',
 	'ldap_group_context' => 'ou=groups,$base',
+	'ldap_encryption_type' => '',
+	'sambaadmin/sambaSID'=> '',	// SID for sambaadmin
 	'mailserver'    => '',
 	'smtpserver'    => 'localhost,25',
 	'smtp'          => '',	// see setup-cli.php --help config
@@ -88,8 +90,11 @@ function set_distro_defaults($distro=null)
 	global $config;
 	if (is_null($distro))
 	{
-		$distro = file_exists('/etc/SuSE-release') ? 'suse' : (file_exists('/etc/debian_version') ? 'debian' :
-			(file_exists('/etc/mandriva-release') ? 'mandriva' : 'rh'));
+		$distro = file_exists('/etc/SuSE-release') ? 'suse' :
+			(file_exists('/etc/mandriva-release') ? 'mandriva' :
+			(file_exists('/etc/lsb-release') && preg_match('/^DISTRIB_ID="Univention"$/mi',
+				file_get_contents('/etc/lsb-release')) ? 'univention' :
+			(file_exists('/etc/debian_version') ? 'debian' : 'rh')));
 	}
 	switch (($config['distro'] = $distro))
 	{
@@ -140,6 +145,9 @@ function set_distro_defaults($distro=null)
 			$config['ldap_base'] = '$suffix';
 			$config['ldap_context'] = 'ou=People,$base';
 			$config['ldap_group_context'] = 'ou=Group,$base';
+			break;
+		case 'univention':
+			set_univention_defaults();
 			break;
 		default:
 			$config['distro'] = 'rh';
@@ -293,6 +301,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 		foreach(array(
 			'domain','ldap_suffix','ldap_host','ldap_admin','ldap_admin_pw',	// non-egw params: only used for create
 			'ldap_base','ldap_root_dn','ldap_root_pw','ldap_context','ldap_search_filter','ldap_group_context',	// egw params
+			'ldap_encryption_type', 'sambaadmin/sambaSID',
 		) as $name)
 		{
 			if (strpos($value=$config[$name],'$') !== false)
@@ -551,7 +560,7 @@ function usage($error=null)
 	foreach($config as $name => $default)
 	{
 		if (in_array($name, array('postfix','cyrus'))) continue;	// do NOT report deprecated options
-		if (in_array($name,array('config_passwd','db_pass','admin_passwd','ldap_root_pw')))
+		if (in_array($name,array('config_passwd','db_pass','admin_passwd','ldap_root_pw')) && strlen($config[$name]) == 16)
 		{
 			$default = '<16 char random string>';
 		}
@@ -723,4 +732,99 @@ function fix_perms()
 		system('/bin/chown -R '.$config['webserver_user'].' /tmp/egw_cache');
 		system('/bin/chmod 700 /tmp/egw_cache');
 	}
+}
+
+/**
+ * Set Univention UCS specific defaults
+ *
+ * Defaults are read from ucr registry and /etc/*.secret files
+ */
+function set_univention_defaults()
+{
+	global $config;
+
+	set_distro_defaults('debian');
+	$config['distro'] = 'univention';
+
+	// mysql settings
+	$config['db_root_pw'] = _ucr_secret('mysql');
+
+	// check if ucs ldap server is configured
+	if (_ucr_get('ldap/server/ip'))
+	{
+		// ldap settings, see http://docs.univention.de/developer-reference-3.2.html#join:secret
+		$config['ldap_suffix'] = $config['ldap_base'] = _ucr_get('ldap/base');
+		$config['ldap_host'] = 'tls://'._ucr_get('ldap/server/ip').':'._ucr_get('ldap/server/port');
+		$config['ldap_admin'] = $config['ldap_root'] = 'cn=admin,$suffix';
+		$config['ldap_admin_pw'] = $config['ldap_root_pw'] = _ucr_secret('ldap');
+		$config['ldap_context'] = 'cn=users,$base';
+		$config['ldap_group_context'] = 'cn=groups,$base';
+		$config['ldap_search_filter'] = '(uid=%user)';
+
+		// ldap password hash (our default blowfish_crypt seems not to work)
+		$config['ldap_encryption_type'] = 'sha512_crypt';
+
+		$config['account_min_id'] = 1200;	// UCS use 11xx for internal users/groups
+
+		$config['account-auth'] = 'univention,ldap';
+
+		// set sambaadmin sambaSID
+		$config['sambaadmin/sambaSID'] = exec('/usr/bin/univention-ldapsearch -x "(objectclass=sambadomain)" sambaSID|sed -n "s/sambaSID: \(.*\)/\1/p"');
+
+		// mailserver, see setup-cli.php --help config
+		if (($mailserver = exec('/usr/bin/univention-ldapsearch -x "(univentionAppID=mailserver_*)" univentionAppInstalledOnServer|sed -n "s/univentionAppInstalledOnServer: \(.*\)/\1/p"')) &&
+			_ucr_get('mail/cyrus/imap') == 'yes' && ($domains=_ucr_get('mail/hosteddomains')))
+		{
+			if (!is_array($domains)) $domains = explode("\n", $domains);
+			$domain = array_shift($domains);
+			$config['smtpserver'] = "$mailserver,465,,,yes,tls";
+			$config['smtp'] = 'no,emailadmin_smtp_ldap_univention';
+			$config['mailserver'] = "$mailserver,993,$domain,email,tls";
+			$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
+			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,INBOX/Spam';
+			if (($sieve_port = _ucr_get('mail/cyrus/sieve/port')))
+			{
+				$config['sieve'] = "$mailserver,$sieve_port,starttls";
+			}
+		}
+	}
+}
+
+/**
+ * Get a value from Univention registry
+ *
+ * @param string $name
+ * @return string
+ */
+function _ucr_get($name)
+{
+	static $values=null;
+	if (!isset($values))
+	{
+		$output = $matches = null;
+		exec('/usr/sbin/ucr dump', $output);
+		foreach($output as $line)
+		{
+			if (preg_match("/^([^:]+): (.*)\n?$/", $line, $matches))
+			{
+				$values[$matches[1]] = $matches[2];
+			}
+		}
+	}
+	return $values[$name];
+}
+
+/**
+ * Read one Univention secret/password eg. _ucr_secret('mysql')
+ *
+ * @param string $name
+ * @return string|boolean
+ */
+function _ucr_secret($name)
+{
+	if (!file_exists($filename = '/etc/'.basename($name).'.secret'))
+	{
+		return false;
+	}
+	return trim(file_get_contents($filename));
 }

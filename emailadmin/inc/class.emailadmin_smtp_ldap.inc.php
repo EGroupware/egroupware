@@ -49,6 +49,11 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	const MAIL_ENABLE_ATTR = false;
 
 	/**
+	 * Value for MAIL_ENABLED to use local mail address
+	 */
+	const MAIL_ENABLED_USE_MAIL = '@mail';
+
+	/**
 	 * Attribute for aliases OR false to use mail
 	 */
 	const ALIAS_ATTR = false;
@@ -224,13 +229,17 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		// does schema support enabling/disabling mail via attribute
 		if (static::MAIL_ENABLE_ATTR)
 		{
-			$newData[static::MAIL_ENABLE_ATTR] = static::MAIL_ENABLED;
+			$newData[static::MAIL_ENABLE_ATTR] = static::MAIL_ENABLED == self::MAIL_ENABLED_USE_MAIL ?
+				$mailLocalAddress : static::MAIL_ENABLE_ATTR;
 		}
 		// does schema support an explicit mailbox name --> set it
 		if (static::MAILBOX_ATTR)
 		{
 			$newData[static::MAILBOX_ATTR] = self::mailbox_addr($_hookValues);
 		}
+
+		// allow extending classes to add extra data
+		$this->addAccountExtra($_hookValues, $allValues[0], $newData);
 
 		if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
 		{
@@ -239,6 +248,18 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 				(!$ret?' ('.ldap_error($ds).')':''));
 		}
 		return $ret;
+	}
+
+	/**
+	 * Add additional values to addAccount and setUserData ($_hookValues['location'])
+	 *
+	 * @param array $_hookValues
+	 * @param array $allValues existing data of account as returned by ldap query
+	 * @param array $newData data to update
+	 */
+	function addAccountExtra(array $_hookValues, array $allValues, array &$newData)
+	{
+		unset($_hookValues, $allValues, $newData);	// not used, but required by function signature
 	}
 
 	/**
@@ -377,7 +398,8 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 					if (static::MAIL_ENABLE_ATTR)
 					{
 						$accountStatus = isset($values[static::MAIL_ENABLE_ATTR]) &&
-							(static::MAIL_ENABLED && !strcasecmp($values[static::MAIL_ENABLE_ATTR][0], static::MAIL_ENABLED) ||
+							(static::MAIL_ENABLED === self::MAIL_ENABLED_USE_MAIL && !empty($values[static::MAIL_ENABLE_ATTR][0]) ||
+							static::MAIL_ENABLED && !strcasecmp($values[static::MAIL_ENABLE_ATTR][0], static::MAIL_ENABLED) ||
 							!static::MAIL_ENABLED && $values[static::ALIAS_ATTR ? static::ALIAS_ATTR : 'mail']['count'] > 0) ?
 								emailadmin_smtp::MAIL_ENABLED : '';
 					}
@@ -567,7 +589,8 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		// does schema support enabling/disabling mail via attribute
 		if (static::MAIL_ENABLE_ATTR)
 		{
-			$newData[static::MAIL_ENABLE_ATTR]	= $_accountStatus ? static::MAIL_ENABLED : array();
+			$newData[static::MAIL_ENABLE_ATTR]	= $_accountStatus ?
+				(static::MAIL_ENABLED == self::MAIL_ENABLED_USE_MAIL ? $_mailLocalAddress : static::MAIL_ENABLED) : array();
 		}
 		// if we have no mail-enabled attribute, but require primary mail in aliases-attr
 		// we do NOT write aliases, if mail is not enabled
@@ -580,6 +603,9 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		{
 			$newData[static::MAILBOX_ATTR] = $_setMailbox;
 		}
+
+		$this->addAccountExtra(array('location' => 'setUserData'), $allValues[0], $newData);
+
 		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
 		return ldap_mod_replace($ldap, $accountDN, $newData);

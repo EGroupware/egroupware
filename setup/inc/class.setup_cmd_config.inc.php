@@ -82,10 +82,15 @@ class setup_cmd_config extends setup_cmd
 		{
 			if (substr($name, 0, 4) == 'acc_') continue;
 
+			$app = 'phpgwapi';
+			if (strpos($name, '/') !== false)
+			{
+				list($app, $name) = explode('/', $name);
+			}
 			self::$egw_setup->db->insert(self::$egw_setup->config_table,array(
 				'config_value' => $value,
 			),array(
-				'config_app'  => 'phpgwapi',
+				'config_app'  => $app,
 				'config_name' => $name,
 			),__LINE__,__FILE__);
 		}
@@ -194,6 +199,7 @@ class setup_cmd_config extends setup_cmd
 		'--ldap-context' => 'ldap_context',
 		'--ldap-search-filter' => 'ldap_search_filter',
 		'--ldap-group-context' => 'ldap_group_context',
+		'--sambaadmin-sid' => 'sambaadmin/sambaSID',
 		'--allow-remote-admin' => 'allow_remote_admin',
 		'--install-id' => 'install_id',
 		'--ads-host' => 'ads_host',
@@ -397,10 +403,14 @@ class setup_cmd_config extends setup_cmd
 				{
 					if (is_array($data) && isset($data['allowed']))
 					{
-						if ($data['name'] == 'auth_type')
+						switch ($data['name'])
 						{
-							$options[$data['name']] = self::auth_types();
-							continue;
+							case 'auth_type':
+								$options[$data['name']] = self::auth_types();
+								continue 2;
+							case 'account_repository':
+								$options[$data['name']] = self::account_repositries();
+								continue 2;
 						}
 						foreach($data['allowed'] as $label => $value)
 						{
@@ -458,6 +468,37 @@ class setup_cmd_config extends setup_cmd
 			}
 		}
 		return $auth_types;
+	}
+
+	/**
+	 * Read auth-types (existing auth backends) from filesystem and fix our $options array
+	 *
+	 * @return array
+	 */
+	static function account_repositories()
+	{
+		static $account_repositories = array(
+			'sql' => 'SQL',
+			'ldap' => 'LDAP',
+			'ads'  => 'Active Directory',
+		);
+		static $scan_done = null;
+		if (!$scan_done++)
+		{
+			// now add auth backends found in filesystem
+			foreach(scandir(EGW_INCLUDE_ROOT.'/phpgwapi/inc') as $file)
+			{
+				$matches = null;
+				if (preg_match('/^class\.accounts_([a-z]+)\.inc\.php$/', $file, $matches) &&
+					!isset($account_repositories[$matches[1]]) &&
+					class_exists($class='accounts_'.$matches[1]) &&
+					(!is_callable($callable=$class.'::available') || call_user_func($callable)))
+				{
+					$account_repositories[$matches[1]] = ucfirst($matches[1]);
+				}
+			}
+		}
+		return $account_repositories;
 	}
 
 	/**

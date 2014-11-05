@@ -110,15 +110,16 @@ class emailadmin_hooks
 
 			try {
 				$account = new emailadmin_account($params);
-				if ($account->acc_imap_type != 'emailadmin_imap' && ($imap = $account->imapServer(true)) &&
-					is_a($imap, 'emailadmin_imap') && get_class($imap) != 'emailadmin_imap')
-				{
-					$imap->$method($data);
-				}
 				if ($account->acc_smtp_type != 'emailadmin_smtp' && ($smtp = $account->smtpServer(true)) &&
 					is_a($smtp, 'emailadmin_smtp') && get_class($smtp) != 'emailadmin_smtp')
 				{
 					$smtp->$method($data);
+				}
+				if ($account->acc_imap_type != 'emailadmin_imap' && $account->acc_admin_username &&
+					$account->acc_admin_password && ($imap = $account->imapServer(true)) &&
+					is_a($imap, 'emailadmin_imap') && get_class($imap) != 'emailadmin_imap')
+				{
+					$imap->$method($data);
 				}
 			}
 			catch(Exception $e) {

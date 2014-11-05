@@ -1018,6 +1018,7 @@ class emailadmin_imapbase
 			$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_sent]='Sent';
 		//if (!empty($this->icServer->acc_folder_template) && !isset($_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]))
 			$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]='Templates';
+		$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_junk]='Junk';
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders));//.'<->'.array2string($this->icServer));
 		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId];
 		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
@@ -2158,11 +2159,17 @@ class emailadmin_imapbase
 		}
 		try
 		{
-			$rv = $this->icServer->createMailbox($newFolderName);
+			$opts = array();
+			// if new created folder is a specal-use-folder, mark it as such, so other clients know to use it too
+			if (isset(self::$specialUseFolders[$newFolderName]))
+			{
+				$opts['special_use'] = self::$specialUseFolders[$newFolderName];
+			}
+			$rv = $this->icServer->createMailbox($newFolderName, $opts);
 		}
 		catch (Exception $e)
 		{
-			error_log(__METHOD__.' ('.__LINE__.') '.' create Folder '.$newFolderName.'->'.$e->getMessage().' Namespace:'.array2string($this->icServer->getNameSpaces()).function_backtrace());
+			error_log(__METHOD__.' ('.__LINE__.') '.' create Folder '.$newFolderName.'->'.$e->getMessage().' ('.$e->details.') Namespace:'.array2string($this->icServer->getNameSpaces()).function_backtrace());
 			return false;
 		}
 		try
@@ -2459,7 +2466,8 @@ class emailadmin_imapbase
 		//subscribed folders may be used in getFolderStatus
 		egw_cache::setCache(egw_cache::INSTANCE,'email','subscribedFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$subscribedFoldersForCache,$expiration=60*60*1);
 		//echo "<br>FolderNameSpace To Process:";_debug_array($foldersNameSpace);
-		$autoFolderObjects = array();
+		$autoFolderObjects = $folders = array();
+		$autofolder_exists = array();
 		foreach( array('personal', 'others', 'shared') as $type) {
 			if(isset($foldersNameSpace[$type])) {
 				if($_subscribedOnly) {
@@ -2520,11 +2528,22 @@ class emailadmin_imapbase
 						$folders[$folderName] = $folderObject;
 					}
 					//error_log(__METHOD__.' ('.__LINE__.') '.':'.$folderObject->folderName);
+					if (!isset(self::$specialUseFolders)) $this->getSpecialUseFolders ();
+					if (isset(self::$specialUseFolders[$folderName]))
+					{
+						$autofolder_exists[$folderName] = self::$specialUseFolders[$folderName];
+					}
 				}
 			}
 		}
 		if (is_array($autoFolderObjects) && !empty($autoFolderObjects)) {
 			uasort($autoFolderObjects,array($this,"sortByAutoFolderPos"));
+		}
+		// check if some standard folders are missing and need to be created
+		if (count($autofolder_exists) < count(self::$autoFolders) && $this->check_create_autofolders($autofolder_exists))
+		{
+			// if new folders have been created, re-read folders ignoring the cache
+			return $this->getFolderObjects($_subscribedOnly, $_getCounters, $_alwaysGetDefaultFolders, false);	// false = do NOT use cache
 		}
 		if (is_array($folders)) uasort($folders,array($this,"sortByDisplayName"));
 		//$folders2return = array_merge($autoFolderObjects,$folders);
@@ -2543,11 +2562,32 @@ class emailadmin_imapbase
 	}
 
 	/**
+	 * Check if all automatic folders exist and create them if not
+	 *
+	 * @param array $autofolders_exists existing folders, no need to check their existance again
+	 * @return int number of new folders created
+	 */
+	function check_create_autofolders(array $autofolders_exists=array())
+	{
+		$num_created = 0;
+		foreach(self::$autoFolders as $folder)
+		{
+			$created = false;
+			if (!in_array($folder, $autofolders_exists) && $this->_getSpecialUseFolder($folder, true, $created) &&
+				$created && $folder != 'Outbox')
+			{
+				$num_created++;
+			}
+		}
+		return $num_created;
+	}
+
+	/**
 	 * search Value In FolderObjects
 	 *
 	 * Helper function to search for a specific value within the foldertree objects
 	 * @param string $needle
-	 * @param array $haystack, array of folderobjects
+	 * @param array $haystack array of folderobjects
 	 * @return MIXED false or key
 	 */
 	static function searchValueInFolderObjects($needle, $haystack)
@@ -2682,18 +2722,21 @@ class emailadmin_imapbase
 	 * abstraction layer for getDraftFolder, getTemplateFolder, getTrashFolder and getSentFolder
 	 * @param string $type the type to fetch (Drafts|Template|Trash|Sent)
 	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param boolean& $created =null on return true: if folder was just created, false if not
 	 * @return mixed string or false
 	 */
-	function _getSpecialUseFolder($_type, $_checkexistance=TRUE)
+	function _getSpecialUseFolder($_type, $_checkexistance=TRUE, &$created=null)
 	{
 		static $types = array(
-			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'acc_folder_draft','autoFolderName'=>'Drafts'),
-			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'acc_folder_template','autoFolderName'=>'Templates'),
-			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'acc_folder_trash','autoFolderName'=>'Trash'),
-			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
-			'Junk'=>array('prefName'=>'junkFolder','profileKey'=>'acc_folder_junk','autoFolderName'=>'Junk'),
-			'Outbox'=>array('prefName'=>'outboxFolder','profileKey'=>'acc_folder_outbox','autoFolderName'=>'Outbox'),
+			'Drafts'   => array('profileKey'=>'acc_folder_draft','autoFolderName'=>'Drafts'),
+			'Template' => array('profileKey'=>'acc_folder_template','autoFolderName'=>'Templates'),
+			'Trash'    => array('profileKey'=>'acc_folder_trash','autoFolderName'=>'Trash'),
+			'Sent'     => array('profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
+			'Junk'     => array('profileKey'=>'acc_folder_junk','autoFolderName'=>'Junk'),
+			'Outbox'   => array('profileKey'=>'acc_folder_outbox','autoFolderName'=>'Outbox'),
 		);
+		if ($_type == 'Templates') $_type = 'Template';	// for some reason self::$autofolders uses 'Templates'!
+		$created = false;
 		if (!isset($types[$_type]))
 		{
 			error_log(__METHOD__.' ('.__LINE__.') '.' '.$_type.' not supported for '.__METHOD__);
@@ -2716,7 +2759,7 @@ class emailadmin_imapbase
 		if ($_folderName && $_checkexistance && $_folderName !='none' && !$this->folderExists($_folderName,true)) {
 			try
 			{
-				$this->createFolder('', $_folderName, true);
+				if (($_folderName = $this->createFolder('', $_folderName, true))) $created = true;
 			}
 			catch(Exception $e)
 			{

@@ -186,6 +186,17 @@ function auth_type_activesync($config)
 }
 
 /**
+ * Make account-repository-types from setup_cmd_config available
+ *
+ * @param array $config
+ * @return string
+ */
+function account_repository($config)
+{
+	return _options_from(setup_cmd_config::account_repositories(), $config['account_repository']);
+}
+
+/**
  * Returns options string
  *
  * @param array $options value => label pairs
