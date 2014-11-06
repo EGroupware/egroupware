@@ -600,6 +600,22 @@ function egwPopupActionImplementation()
 		var add_action = mgr.getActionById('egw_copy_add');
 		var paste_action = mgr.getActionById('egw_paste');
 
+		// Fake UI so we can simulate the position of the drop
+		if(window.event)
+		{
+			var event = jQuery.Event(window.event);
+			var ui = {
+				position: {top: 0, left: 0},
+				offset: {top: 0, left: 0}
+			};
+			if(event)
+			{
+				event = event.originalEvent;
+				ui.position = {top: event.pageY, left: event.pageX};
+				ui.offset = {top: event.offsetY, left: event.offsetX};
+			}
+		}
+
 		// Create default copy menu action
 		if(drag && !jQuery.isEmptyObject(drag))
 		{
@@ -695,6 +711,8 @@ function egwPopupActionImplementation()
 			var paste_exec = function(action, selected) {
 				// Add in clipboard as a sender
 				var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+				// Fake drop position
+				drop[action.id].actionObj.ui = ui;
 				drop[action.id].actionObj.execute(clipboard.selected,selected[0]);
 			};
 
