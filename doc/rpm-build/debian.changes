@@ -1,3 +1,26 @@
+egroupware-epl (14.1.20141106-1) hardy; urgency=low
+
+  * All Apps: get text selection in lists working with Alt/Cmd modifier and file drag-out with Shift+Alt/Cmd modifier
+  * All Apps: Add clear button to nextmatch search box for Firefox
+  * eSync: fixed not working sending of mails after 14.1.20141021 package
+  * Calendar/CalDAV/eSync: exceptions show up in calendars of participants only participating in exceptions not whole recuring event (requires a DB update for existing events!)
+  * Admin: if group was selected only active accounts were shown and show primary group in LDAP
+  * InfoLog: "No filter" favorite was not resetting filters anymore
+  * InfoLog/Tracker: fix missing attachments when converting a composed mail to an InfoLog or Tracker entry
+  * Filemanager: fix since PHP 5.5.18 not longer working non-ascii chars in filenames, eg. German umlauts or accents
+  * Filemanager: Add some new filter options to show all sub-directories and files from links
+  * NewsAdmin: fix SQL error on import, if a number of news items to keep was configured
+  * Calendar: Add event description to calendar event body if the event is long enough (3 times bigger than calendar view interval).
+  * Calendar: allow admin to set a "default calendar view" used for first display of calendar, afterwards last selected view is used
+  * Addressbook: Add ability to rename current distribution list from context menu, as well as more consistent behaviour for adding lists
+  * SambaAdmin: fixed not set password hashes and disabling old Lanmanager hashes by default, also polishing UI a bit
+  * Mail: Make selected email item in compose dialog editable
+  * Mail: fixed icons for special use folders did not use folders set in mail account
+  * ProjectManager/Timesheet: fixed an infinit loop when trying to save a project-element, caused by timesheet notifying project again
+  * LDAP/Univention: add support for Univention LDAP schemas
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 06 Nov 2014 08:59:03 +0100
+
 egroupware-epl (14.1.20141021-1) hardy; urgency=low
 
   * SECURITY: path traversal revealing arbitrary files on server fixed, please update ASAP
