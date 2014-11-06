@@ -193,7 +193,7 @@ function auth_type_activesync($config)
  */
 function account_repository($config)
 {
-	return _options_from(setup_cmd_config::account_repositories(), $config['account_repository']);
+	return _options_from(setup_cmd_config::account_repositories($config['account_repository']), $config['account_repository']);
 }
 
 /**

@@ -473,9 +473,10 @@ class setup_cmd_config extends setup_cmd
 	/**
 	 * Read auth-types (existing auth backends) from filesystem and fix our $options array
 	 *
+	 * @param string $current =null current value, to allways return it
 	 * @return array
 	 */
-	static function account_repositories()
+	static function account_repositories($current=null)
 	{
 		static $account_repositories = array(
 			'sql' => 'SQL',
@@ -492,7 +493,7 @@ class setup_cmd_config extends setup_cmd
 				if (preg_match('/^class\.accounts_([a-z]+)\.inc\.php$/', $file, $matches) &&
 					!isset($account_repositories[$matches[1]]) &&
 					class_exists($class='accounts_'.$matches[1]) &&
-					(!is_callable($callable=$class.'::available') || call_user_func($callable)))
+					($matches[1] == $current || !is_callable($callable=$class.'::available') || call_user_func($callable)))
 				{
 					$account_repositories[$matches[1]] = ucfirst($matches[1]);
 				}

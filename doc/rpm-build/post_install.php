@@ -778,7 +778,7 @@ function set_univention_defaults()
 			if (!is_array($domains)) $domains = explode("\n", $domains);
 			$domain = array_shift($domains);
 			$config['smtpserver'] = "$mailserver,465,,,yes,tls";
-			$config['smtp'] = ',emailadmin_smtp_ldap_univention';
+			$config['smtp'] = ',emailadmin_smtp_univention';
 			$config['mailserver'] = "$mailserver,993,$domain,email,tls";
 			$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
 			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,INBOX/Spam';
