@@ -2612,6 +2612,7 @@ class mail_ui
 	 */
 	function download_zip($message_id=null)
 	{
+		//error_log(__METHOD__.__LINE__.array2string($_GET));
 		// First, get all attachment IDs
 		if(isset($_GET['id'])) $message_id	= $_GET['id'];
 		//error_log(__METHOD__.__LINE__.$message_id);
@@ -2625,9 +2626,9 @@ class mail_ui
 		{
 			$mailbox = $this->mail_bo->sessionData['mailbox'];
 		}
-
-		$attachments = $this->mail_bo->getMessageAttachments($message_id,null, null, false, true,true,$mailbox);
-
+		// always fetch all, even inline (images)
+		$fetchEmbeddedImages = true;
+		$attachments = $this->mail_bo->getMessageAttachments($message_id,null, null, $fetchEmbeddedImages, true,true,$mailbox);
 		// put them in VFS so they can be zipped
 		$header = $this->mail_bo->getMessageHeader($message_id,'',true,false,$mailbox);
 		//get_home_dir may fetch the users startfolder if set; if not writeable, action will fail. TODO: use temp_dir
@@ -2648,13 +2649,14 @@ class mail_ui
 		foreach($attachments as $file)
 		{
 			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false);
-
+			$success=true;
 			if (!($fp = egw_vfs::fopen($path.$file['filename'],'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
+				$success=false;
 				egw_framework::message("Unable to zip {$file['filename']}",'error');
 			}
-			$file_list[] = $path.$file['filename'];
+			if (/*$attachment['attachment'] && */$success) $file_list[] = $path.$file['filename'];
 			if ($fp) fclose($fp);
 		}
 		$this->mail_bo->closeConnection();
