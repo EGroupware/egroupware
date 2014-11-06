@@ -969,7 +969,7 @@ class setup
 
 	function setup_account_object(array $config=array())
 	{
-		if (!isset($this->accounts) || $config)
+		if (!isset($this->accounts) || $this->accounts->config || $config)
 		{
 			if (!is_object($this->db))
 			{

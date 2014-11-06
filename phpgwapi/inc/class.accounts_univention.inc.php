@@ -37,11 +37,13 @@ class accounts_univention extends accounts_ldap
 	{
 		if (!$data['account_id'] && $data['account_type'] !== 'g' && self::available())
 		{
+			$config = $this->frontend->config && $this->frontend->config['ldap_context'] ?
+				$this->frontend->config : $GLOBALS['egw_info']['server'];
 			$params = array(
 				'users/user','create',
-				'--binddn', $this->frontend->config['ldap_root_dn'],
-				'--bindpwd', 5=>$this->frontend->config['ldap_root_pw'],
-				'--position', $this->frontend->config['ldap_context'],
+				'--binddn', $config['ldap_root_dn'],
+				'--bindpwd', 5=>$config['ldap_root_pw'],
+				'--position', $config['ldap_context'],
 				'--set', 'username='.$data['account_lid'],
 				'--set', 'firstname='.$data['account_firstname'],
 				'--set', 'lastname='.$data['account_lastname'],
@@ -57,7 +59,7 @@ class accounts_univention extends accounts_ldap
 			$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
 			$output_arr = $ret = $matches = null;
 			exec($cmd, $output_arr, $ret);
-			$output = explode("\n", $output_arr);
+			$output = implode("\n", $output_arr);
 			if ($ret || !preg_match('/^Object created: (uid=.*)$/mui', $output, $matches))
 			{
 				$params[5] = '********';	// mask out password!
@@ -65,7 +67,7 @@ class accounts_univention extends accounts_ldap
 				throw new egw_exception_wrong_userinput($cmd."\nreturned\n".$output);
 			}
 			$data['account_dn'] = $matches[1];
-			$data['account_id'] = $this->name2id($matches[1], 'account_dn', 'u');
+			$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'u');
 		}
 		return parent::save($data);
 	}
