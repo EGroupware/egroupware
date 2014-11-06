@@ -1,0 +1,117 @@
+#! /bin/sh
+
+#export DEBCONF_DEBUG=developer
+set -e
+# das hier muss ganz oben stehen (man debconf-devel)
+. /usr/share/debconf/confmodule
+db_version 2.0
+
+
+webserver_soft_reload() {
+	if command -v invoke-rc.d >/dev/null 2>&1; then
+		invoke-rc.d "$1" force-reload || :
+	else
+		[ -x /etc/init.d/"$1" ] && /etc/init.d/"$1" force-reload || :
+	fi
+}
+
+
+
+
+if [ "$1" = configure -o "$1" = upgrade ]; then
+	#mkdir -p /var/lib/egroupware/files/users
+	#mkdir -p /var/lib/egroupware/files/groups
+	#mkdir -p /var/lib/egroupware/files/db_backup
+	mkdir -p /var/lib/egroupware/sessions
+	mkdir -p /var/lib/egroupware/default/files
+	mkdir -p /var/lib/egroupware/default/backup
+
+	config="/var/lib/egroupware/header.inc.php"
+	template="/usr/share/egroupware/header.inc.php.template"
+
+# We now ask in "./config"
+
+		# Get configuration passwords.
+		db_get "egroupware/header/user"
+		header_user="$RET"
+		db_get "egroupware/header/password"
+		header_password="$RET"
+
+		# Get first egroupware user / pw
+		db_get "egroupware/admin/user"
+		admin_user="$RET"
+		db_get "egroupware/admin/password"
+		admin_password="$RET"
+
+		# Get egroupware language
+		db_get "egroupware/lang"
+		lang="$RET"
+
+		# Get mysql root / pw
+		db_get "egroupware/db_root"
+		db_root="$RET"
+		db_get "egroupware/db_root_pw"
+		db_root_pw="$RET"
+
+		install_log="/root/egroupware-epl-install.log"
+		date >> $install_log
+
+		#if [ "x$header_password" == "x" -a "x$admin_password" == "x" -a "x$db_root_pw" ]
+		# If upgrading, $2 contains the release currently installed, otherwise it's empty
+		if [ "$2" ]; then 
+			/usr/share/egroupware/doc/rpm-build/post_install.php 2>&1 | /usr/bin/tee -a $install_log
+		else
+		/usr/share/egroupware/doc/rpm-build/post_install.php \
+			--config_user "$header_user" \
+			--config_passwd "$header_password" \
+			--admin_user "$admin_user" \
+			--admin_passwd "$admin_password" \
+			--lang "$lang" \
+			--db_type mysql \
+			--db_root "$db_root" \
+			--db_root_pw "$db_root_pw" 2>&1 | /usr/bin/tee -a $install_log
+		fi
+		echo "EGroupware install log saved to $install_log"
+
+		# Build egroupware header manager configuration file.
+		#perl -MDigest::MD5 -0777 -p -e "
+		#	s/<!-- BEGIN domain -->.*<!-- END domain -->//s;
+		#	s/{domains}//;
+		#	s#{SERVER_ROOT}#/usr/share/egroupware#;
+		#	s#{INCLUDE_ROOT}#/usr/share/egroupware#;
+		#	s/{SETUP_ACL}//;
+		#	s/{DOMAIN_SELECTBOX}/false/;
+		#	s/{DB_PERSISTENT}/false/;
+		#	s/{SESSIONS_TYPE}/db/;
+		#	s/{ENABLE_MCRYPT}/false/;
+		#	s/{MCRYPT_VERSION}/none/;
+		#	s/{MCRYPT_IV}/none/;
+		#	s/{HEADER_ADMIN_PASSWORD}/Digest::MD5::md5_hex('$header_password')/e;
+		#	# put this at the end in case someone picks a user name that matches a placeholder
+		#	s/{HEADER_ADMIN_USER}/$header_user/;
+		#" < $template > $config
+	#fi
+
+	# Only change permissions during initial installation, in case
+	# someone wants a different setup.
+	if [ -z "$2" ]; then
+		chown -R www-data:www-data /var/lib/egroupware/
+		chmod 600 $config
+	fi
+
+	# Set up web server and reload it.
+	if [ -d /etc/apache2/conf.d ] ; then
+		ln -fs ../../egroupware/apache.conf /etc/apache2/conf.d/egroupware
+	else
+		if [ -d /etc/apache2/sites-available ] ; then
+			ln -fs ../../egroupware/apache.conf /etc/apache2/sites-available/egroupware.conf
+			a2ensite egroupware
+		fi
+	fi
+	a2enmod actions >/dev/null
+	webserver_soft_reload apache2
+fi
+
+#DEBHELPER#
+
+db_stop

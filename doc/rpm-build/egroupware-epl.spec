@@ -1,10 +1,10 @@
 Name: egroupware-epl
-Version: 14.1.20140417
+Version: 14.1.20141106
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
-License: GPLv2
-URL: http://www.egroupware.org/
+License: GPLv2 with exception of stylite and esyncpro module, which is proprietary
+URL: http://www.stylite.de/EPL
 Vendor: Stylite GmbH, http://www.stylite.de/
 Packager: Ralf Becker <rb@stylite.de>
 Prefix: /usr/share
@@ -83,9 +83,9 @@ Distribution: %{distribution}
 
 Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
-#Source2: %{name}-stylite-%{version}.tar.bz2
+Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-pixelegg-%{version}.tar.bz2
-#Source4: %{name}-esyncpro-%{version}.tar.bz2
+Source4: %{name}-esyncpro-%{version}.tar.bz2
 Source5: %{name}-jdots-%{version}.tar.bz2
 Source6: phpfreechat_data_public.tar.gz
 Source8: %{name}-rpmlintrc
@@ -103,7 +103,7 @@ AutoReqProv: no
 
 Requires: %{name}-core            = %{version}
 Requires: %{name}-egw-pear        = %{version}
-#Requires: %{name}-stylite         = %{version}
+Requires: %{name}-stylite         = %{version}
 Requires: %{name}-jdots           = %{version}
 Requires: %{name}-esync           = %{version}
 Requires: %{name}-bookmarks       = %{version}
@@ -159,8 +159,13 @@ Obsoletes: %{egw_packagename}-tracker
 Obsoletes: %{egw_packagename}-wiki
 # packages no longer in 14.1
 Obsoletes: %{name}-felamimail
+Obsoletes: %{name}-syncml
 Obsoletes: %{name}-phpsysinfo
 Obsoletes: %{name}-polls
+Obsoletes: %{egw_packagename}-felamimail
+Obsoletes: %{egw_packagename}-syncml
+Obsoletes: %{egw_packagename}-phpsysinfo
+Obsoletes: %{egw_packagename}-polls
 
 %post
 # Check binary paths and create links for opensuse/sles
@@ -278,7 +283,7 @@ Summary: The EGroupware emailadmin application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
-Requires: %{php}-imap
+Requires: %{php}-bcmath
 Requires: %{name}-egw-pear >= %{version}
 Obsoletes: %{egw_packagename}-emailadmin
 %description emailadmin
@@ -343,6 +348,7 @@ Summary: New default template for EGroupware
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
+Requires: %{name}-jdots >= %{version}
 %description pixelegg
 New 14.1 default template from Pixelegg.
 
@@ -470,17 +476,18 @@ Obsoletes: %{egw_packagename}-sitemgr
 %description sitemgr
 This is the Sitemanager CMS app for EGroupware.
 
-#%package stylite
-#Version: %{version}
-#Summary: Stylite EPL enhancements
-#License: proprietary, see http://www.stylite.de/EPL
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core >= %{version}
-#%description stylite
-#The package contains Stylite proprietary EPL enhancements:
-#- stylite.links stream wrapper allows browsing of app directories
-#- filemanger favorites
+%package stylite
+Version: %{version}
+Summary: Stylite EPL enhancements
+License: proprietary, see http://www.stylite.de/EPL
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}
+Obsoletes: %{name}-groups
+%description stylite
+The package contains Stylite proprietary EPL enhancements:
+- stylite.links stream wrapper allows browsing of app directories
+- filemanger favorites
 
 %package timesheet
 Version: %{version}
@@ -514,30 +521,30 @@ Obsoletes: %{egw_packagename}-wiki
 %description wiki
 This is the wiki app for EGroupware.
 
-#%package esyncpro
-#Version: %{version}
-#Summary: Stylite eSync Provisioning
-#License: proprietary
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core >= %{version}, %{name}-esync >= %{version}
-#%description esyncpro
-#Stylite's eSync Provisioning app allows to edit and assign 
-#policies to devices and keeps a central list of syncing devices. 
-#It also allows to remote wipe or view sync logs of all devices.
+%package esyncpro
+Version: %{version}
+Summary: Stylite eSync Provisioning
+License: proprietary
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}, %{name}-esync >= %{version}
+%description esyncpro
+Stylite's eSync Provisioning app allows to edit and assign 
+policies to devices and keeps a central list of syncing devices. 
+It also allows to remote wipe or view sync logs of all devices.
 
-#%post esyncpro
+%post esyncpro
 # update/install esyncpro
-#%{post_install} --install-update-app esyncpro 2>&1 | tee -a %{install_log}
+%{post_install} --install-update-app esyncpro 2>&1 | tee -a %{install_log}
 
 %prep
 echo "Detected php: %{php}"
 echo "post_install: %{post_install}"
 %setup0 -c -n %{egwdirname}
 %setup1 -T -D -a 1 -n %{egwdirname}
-#%setup2 -T -D -a 2 -n %{egwdirname}
+%setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
-#%setup4 -T -D -a 4 -n %{egwdirname}
+%setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
 #%setup9 -T -D -a 9 -n %{egwdirname}
@@ -618,9 +625,9 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %{egwdir}/activesync
 
-#%files esyncpro
-#%defattr(-,root,root)
-#%{egwdir}/esyncpro
+%files esyncpro
+%defattr(-,root,root)
+%{egwdir}/esyncpro
 
 %%files calendar
 %defattr(-,root,root)
@@ -710,9 +717,9 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %{egwdir}/sitemgr
 
-#%files stylite
-#%defattr(-,root,root)
-#%{egwdir}/stylite
+%files stylite
+%defattr(-,root,root)
+%{egwdir}/stylite
 
 %files timesheet
 %defattr(-,root,root)
