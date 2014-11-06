@@ -1914,6 +1914,13 @@ class mail_ui
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
+		$icServerID = $hA['profileID'];
+		$rememberServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
 
 		$this->mail_bo->reopen($mailbox);
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
@@ -1931,6 +1938,11 @@ class mail_ui
 		}
 
 		$this->mail_bo->closeConnection();
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
 
 		header('Content-type: text/html; charset=iso-8859-1');
 		print '<pre>'. htmlspecialchars($rawheaders, ENT_NOQUOTES, 'iso-8859-1') .'</pre>';
@@ -1950,13 +1962,21 @@ class mail_ui
 		if(isset($_requesteddata['id'])) $rowID	= $_requesteddata['id'];
 		if(isset($_requesteddata['part'])) $partID = $_requesteddata['part'];
 		if(isset($_requesteddata['mode'])) $preventRedirect   = (($_requesteddata['mode']=='display' || $_requesteddata['mode'] == 'print')?true:false);
-		$htmlOptions = $this->mail_bo->htmlOptions;
-		if (!empty($_requesteddata['tryastext'])) $htmlOptions  = "only_if_no_text";
-		if (!empty($_requesteddata['tryashtml'])) $htmlOptions  = "always_display";
 
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
+		$icServerID = $hA['profileID'];
+		$rememberServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
+		$htmlOptions = $this->mail_bo->htmlOptions;
+		if (!empty($_requesteddata['tryastext'])) $htmlOptions  = "only_if_no_text";
+		if (!empty($_requesteddata['tryashtml'])) $htmlOptions  = "always_display";
+
 		//error_log(__METHOD__.__LINE__.array2string($hA));
 		if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
 		{
@@ -2070,6 +2090,12 @@ class mail_ui
 			)
 		));
 		$readonlys = $preserv = $content;
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
+
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
@@ -2385,12 +2411,24 @@ class mail_ui
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
+		$icServerID = $hA['profileID'];
+		$rememberServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
 		$part		= $_GET['part'];
 		$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
 
 		$this->mail_bo->reopen($mailbox);
 		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
 		$this->mail_bo->closeConnection();
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
 
 		$GLOBALS['egw']->session->commit_session();
 		//error_log(__METHOD__.print_r($_GET,true));
@@ -2481,6 +2519,13 @@ class mail_ui
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
+		$icServerID = $hA['profileID'];
+		$rememberServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
 
 		$this->mail_bo->reopen($mailbox);
 
@@ -2488,6 +2533,11 @@ class mail_ui
 		$headers = $this->mail_bo->getMessageHeader($uid, $partID, true,false, $mailbox);
 
 		$this->mail_bo->closeConnection();
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
 
 		$GLOBALS['egw']->session->commit_session();
 		if ($display==false)
@@ -2524,11 +2574,18 @@ class mail_ui
 		}
 		translation::add_app('mail');
 
+		$rememberServerID = $this->mail_bo->profileID;
 		foreach((array)$ids as $id)
 		{
 			$hA = self::splitRowID($id);
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
+			$icServerID = $hA['profileID'];
+			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+				$this->changeProfile($icServerID);
+			}
 			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
 			$err=null;
 			if(egw_vfs::is_dir($path))
@@ -2558,6 +2615,12 @@ class mail_ui
 				egw_vfs::proppatch($file,$props);
 			}
 		}
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
+
 		if($close)
 		{
 			egw_framework::window_close(($err?$err:null));
@@ -2584,6 +2647,7 @@ class mail_ui
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
 		}
 		$err=null;
+		$rememberServerID = $this->mail_bo->profileID;
 		foreach((array)$ids as $id)
 		{
 			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
@@ -2591,6 +2655,12 @@ class mail_ui
 			$hA = self::splitRowID($lId);
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
+			$icServerID = $hA['profileID'];
+			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+				$this->changeProfile($icServerID);
+			}
 			//error_log(__METHOD__.__LINE__.array2string($hA));
 			$this->mail_bo->reopen($mailbox);
 			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
@@ -2603,6 +2673,11 @@ class mail_ui
 			if ($fp) fclose($fp);
 		}
 		$this->mail_bo->closeConnection();
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
 		egw_framework::window_close(($err?$err:null));
 	}
 
@@ -2616,11 +2691,18 @@ class mail_ui
 		// First, get all attachment IDs
 		if(isset($_GET['id'])) $message_id	= $_GET['id'];
 		//error_log(__METHOD__.__LINE__.$message_id);
+		$rememberServerID = $this->mail_bo->profileID;
 		if(!is_numeric($message_id))
 		{
 			$hA = self::splitRowID($message_id);
 			$message_id = $hA['msgUID'];
 			$mailbox = $hA['folder'];
+			$icServerID = $hA['profileID'];
+			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+				$this->changeProfile($icServerID);
+			}
 		}
 		else
 		{
@@ -2660,6 +2742,11 @@ class mail_ui
 			if ($fp) fclose($fp);
 		}
 		$this->mail_bo->closeConnection();
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
 
 		// Zip it up
 		egw_vfs::download_zip($file_list);
@@ -3324,6 +3411,14 @@ class mail_ui
 		$uidA = self::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
+		$icServerID = $uidA['profileID'];
+		$rememberServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
+
 		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions);
 		egw_session::cache_control(true);
 		//error_log(array2string($bodyResponse));
@@ -4045,7 +4140,7 @@ class mail_ui
 		}
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
+			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
 			$this->changeProfile($rememberServerID);
 		}
 		$response = egw_json_response::get();
@@ -4131,7 +4226,7 @@ class mail_ui
 			}
 			if ($rememberServerID != $this->mail_bo->profileID)
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
+				//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
 				$this->changeProfile($rememberServerID);
 			}
 			$response = egw_json_response::get();
