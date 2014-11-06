@@ -1431,7 +1431,13 @@ var et2_link_list = et2_link_string.extend(
 			"type": "boolean",
 			"default": false,
 			"description": "Show links that are marked as deleted, being held for purge"
-		}
+		},
+		"onchange": {
+			"name": "onchange",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "JS code which is executed when the links change."
+		},
 	},
 
 	/**
@@ -1534,7 +1540,7 @@ var et2_link_list = et2_link_string.extend(
 			var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
 			var row = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
 			et2_dialog.show_dialog(
-				function(button) { debugger; if(button == et2_dialog.YES_BUTTON) self._delete_link(link_id,row);},
+				function(button) { if(button == et2_dialog.YES_BUTTON) self._delete_link(link_id,row);},
 				egw.lang('Delete link?')
 			);
 		});
@@ -1558,12 +1564,22 @@ var et2_link_list = et2_link_string.extend(
 	set_value: function(_value)
 	{
 		// Handle server passed a list of links that aren't ready yet
-		if(_value && typeof _value == "object" && _value.to_id && typeof _value.to_id == "object")
+		if(_value && typeof _value == "object")
 		{
+			var list = [];
 			this.list.empty();
-			for(var id in _value.to_id)
+			if(_value.to_id && typeof _value.to_id == "object")
 			{
-				var link = _value.to_id[id];
+				list = _value.to_id;
+			}
+			else if (_value.length)
+			{
+				list = _value;
+			}
+		
+			for(var id in list)
+			{
+				var link = list[id];
 				if(link.app)
 				{
 					// Temp IDs can cause problems since the ID includes the file name or :
@@ -1603,6 +1619,14 @@ var et2_link_list = et2_link_string.extend(
 			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : _link_data.link_id))
 			.attr("draggable", _link_data.app == 'file' ? "true" : "")
 			.appendTo(this.list);
+		if(!_link_data.link_id)
+		{
+			for(var k in _link_data)
+			{
+				row[0].dataset[k] = _link_data[k];
+			}
+		}
+		row[0].dataset = _link_data;
 
 		// Icon
 		var icon = $j(document.createElement("td"))
@@ -1680,6 +1704,8 @@ var et2_link_list = et2_link_string.extend(
 
 		// Context menu
 		row.bind("contextmenu", function(e) {
+			// Comment ony available if link_id is there
+			self.context.getItem("comment").set_enabled(typeof _link_data.link_id != 'undefined');
 			// File info only available for existing files
 			self.context.getItem("file_info").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 			// Zip download only offered if there are at least 2 files
@@ -1755,6 +1781,10 @@ var et2_link_list = et2_link_string.extend(
 			var delete_button = jQuery('.delete',row);
 			delete_button.removeClass("delete").addClass("loading");
 			row.off();
+		}
+		if(this.onchange)
+		{
+			this.onchange(this,link_id,row);
 		}
 		if(typeof link_id != "object")
 		{
