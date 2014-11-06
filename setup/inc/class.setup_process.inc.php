@@ -289,10 +289,19 @@ class setup_process
 
 		foreach($current_config as $name => $value)
 		{
+			$app = 'phpgwapi';
+			if ($name == 'postpone_statistics_submit')
+			{
+				$app = 'admin';
+			}
+			elseif(strpos($name, '/') !== false)
+			{
+				list($app, $name) = explode('/', $name);
+			}
 			$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
 				'config_value' => $value,
 			),array(
-				'config_app' => $name == 'postpone_statistics_submit' ? 'admin' : 'phpgwapi',
+				'config_app' => $app,
 				'config_name' => $name,
 			),__FILE__,__LINE__);
 		}
