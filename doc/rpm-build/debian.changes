@@ -16,7 +16,9 @@ egroupware-epl (14.1.20141106-1) hardy; urgency=low
   * SambaAdmin: fixed not set password hashes and disabling old Lanmanager hashes by default, also polishing UI a bit
   * Mail: Make selected email item in compose dialog editable
   * Mail: fixed icons for special use folders did not use folders set in mail account
+  * Mail: on save as zip: always fetch all attachments, even inline (images); do not fatally fail on empty attachments
   * ProjectManager/Timesheet: fixed an infinit loop when trying to save a project-element, caused by timesheet notifying project again
+  * Projectmanager: prevent some infinit loop during updates
   * LDAP/Univention: add support for Univention LDAP schemas
 
  -- Ralf Becker <rb@stylite.de>  Thu, 06 Nov 2014 08:59:03 +0100
@@ -1003,7 +1005,7 @@ egroupware-epl (11.1.20121024-1) hardy; urgency=low
   * Calendar: passing links to timesheet, when creating a timesheet on an event
   * KnowledgeBase: Split out delete permission seperate from edit permission
   * eSync: fix for multiple issues with AS 14.1 devices like iOS6 when working with recurring appointments
-  * Addressbook/ImportExport: add vCard import/export plugins 
+  * Addressbook/ImportExport: add vCard import/export plugins
   * CardDAV: rfc 6578 sync-collection report (more efficient way to sync contacts)
   * InfoLog/CalDAV: sync-collection report, thought reminder app on OS X 10.8.2 does not use it, moved logic for sync-token to baseclass and determine availablity on supported-report-set
   * CalDAV/CardDAV: sync-collection report for calendar allowing a more efficient sync
@@ -1615,7 +1617,7 @@ egroupware-epl (11.1.20110816-1) hardy; urgency=low
   * eSync/Addressbook: new preference to force sorting on device, eg. for use with Windows Mobile, which use "own sorting" set in addressbook otherwise
   * SiteMgr: implement login and search module via <jdoc::include type="module"
   * email: fix for ->starting the search with enter with IE opens a compose window<-
-  * email: fix bug in MailMerge; Mail-Templates with text/html only were not processed as text/html but as text/plain; now this is handeled correctly/as expected 
+  * email: fix bug in MailMerge; Mail-Templates with text/html only were not processed as text/html but as text/plain; now this is handeled correctly/as expected
 
  -- Ralf Becker <rb@stylite.de>  Tue, 16 Aug 2011 16:15:08 +0200
 
@@ -1912,7 +1914,7 @@ egroupware-epl (10.1.20110117-1) hardy; urgency=low
   * eMail: -allow recognition of multipart/report as mails with attachments
   *        -email to infolog -> fix for not decoded senderinformation; fix for stripping too much text when strip_tags stumbles over assumed broken tags ( stuff like: <1 USD/p)
   *        -not filtering own(ed) emailaddresses out of drafts while reopening them for continued processing
-  *        -fix for possible error while saving as draft (mime message could not be opened): some servers do not return the uid of the saved message, in this case reopening for continued editing failes; 
+  *        -fix for possible error while saving as draft (mime message could not be opened): some servers do not return the uid of the saved message, in this case reopening for continued editing failes;
   *        -avoid adding/showing NIL@NIL and the chosen identity as replyto (it will be set while sending anyway) as addressline, upon opening drafted messages
   * Sync: Allow SyncML synchronization of EGw accounts
   * SiteMgr: filecontents block uses now EGroupware proxy config and checks allow_url_fopen On, also added more info about Zend Framework install for css queries to grab only partial data of a site
@@ -1943,9 +1945,9 @@ egroupware-epl (10.1.20101215-1) hardy; urgency=low
 
   * Notifications: fix dont try to notify when none is set/forced for folders to check for new mails; dont try to notify when email as module is not enabled for the particular user
   * eMail: remove invalid -at- when occurring in full name, when adding address to email; skip addresses that produce a parse error while parsed with imap_rfc822_parse_adrlist
-  * eMail: some servers do not correctly report the UNSEEN counter (they report 0->imap.strato.de), so we count ourself by filtering for UNSEEN Messages; 
+  * eMail: some servers do not correctly report the UNSEEN counter (they report 0->imap.strato.de), so we count ourself by filtering for UNSEEN Messages;
   * eMail: improving Information on failed send passed on to UI
-  * Calendar, MailToAllParticipants: force type to plain as thunderbird (with lightning attached) seems to try to be smart while parsing html messages 
+  * Calendar, MailToAllParticipants: force type to plain as thunderbird (with lightning attached) seems to try to be smart while parsing html messages
   *        with ics attachments, but fails with a parse error, resulting in a not displayed message in thunderbird
   * Calendar: make configurable the number of users, until day- or weekview are consolidated; 5 is set as default
   * Filemanager/Versioning: copying (or reinstating earlier versions) of files now also copies the properties (MyStylite #975)
@@ -2003,7 +2005,7 @@ egroupware-epl (10.1.20101112-1) hardy; urgency=low
 
 egroupware-epl (10.1.20101111-1) hardy; urgency=low
 
-  * Infolog:  Fix problem Delegated user was not able to edit infolog entrys owned by Groups, if he was not member of that group, and had no grouprights. Implicit rights where not applied; reported in Stylite Tracker#8255; 
+  * Infolog:  Fix problem Delegated user was not able to edit infolog entrys owned by Groups, if he was not member of that group, and had no grouprights. Implicit rights where not applied; reported in Stylite Tracker#8255;
   * Calendar: Fix notification timezone issues (#2746)
   * eMail: fixing problem with double converted date/time strings for certain DateTime Settings (reported with the user-list)
   * Calendar: Use participant's preferences to handle status resets while moving events
@@ -2115,7 +2117,7 @@ egroupware-epl (10.1.20100830-1) hardy; urgency=low
   * Fix EXDATE issue for Apple devices
   * Using egw_time for date/time handling; handle unrecognized timezones like 'Westeuropäische Sommerzeit' by splitting them off, when strtotime failes
   * moved default fields for copying to addressbook_ui::$copy_fields AND using that default also if nothing is configured
-  
+
 
  -- Ralf Becker <rb@stylite.de>  Mon, 30 Aug 2010 12:35:41 +0200
 
@@ -2129,7 +2131,7 @@ egroupware-epl (10.1.20100826-1) hardy; urgency=low
   * eMail-> ManageFolders: fix for bug: could not add or delete folder ACL
   * Calendar: Only show open infologs in calendar (egw.stylite.de bug #8149)
   * Calendar: Translate calendar filters for infolog - shows open by default, also understands all and deleted
-  
+
 
  -- Ralf Becker <rb@stylite.de>  Thu, 26 Aug 2010 14:26:14 +0200
 
@@ -2153,7 +2155,7 @@ egroupware-epl (10.1.20100824-1) hardy; urgency=low
   * Admin: fixed wired behavior in edit user, when 2 password is typed wrong
   * EventMgr: using utf-8 encoding for html merge-print
   * EventMgr: New "Sales Engineer" field (in main table like WPM Inhouse)
-  
+
 
  -- Ralf Becker <rb@stylite.de>  Tue, 24 Aug 2010 11:13:57 +0200
 
@@ -2204,14 +2206,14 @@ egroupware-epl (10.1.20100702-1) hardy; urgency=low
 egroupware-epl (10.1.20100630-1) hardy; urgency=low
 
   * infolog: Added space to imploding of email addresses in infolog email import to allow linebreaks for long email lists
-  * -notify on infolog creation 
+  * -notify on infolog creation
   * timesheet: Set the timesheet title to the first linked entry, on new entrys
   * addressbook: Fix category search
   * -Fix save so fileas gets updated even if n_fn is set (normal edit)
   * -Add isUpdate parameter to fill in any not set fields from DB when updating fileas
   * tracker: add Status Info only
   * -Add no_notifications to field ACL to be able to control who has permission to skip sending notifications
-  * bookmarks: 
+  * bookmarks:
   * API: PostgreSQL 8.3 fixes
   * -search pattern alread contains a wildcard, do NOT add further ones automatic (eg. in extended search in addressbook)
   * -allow the ordering of applications again
@@ -2290,15 +2292,15 @@ egroupware-epl (9.2.20100610-1) hardy; urgency=low
   *API:-Solved problem with magic_quotes_pgc and xajax request with depth greater 1
   * -fix typo that prevented the redisplay of the saved setting for inital-dot-last and intial-last email creation schemes
   * -update to Version 4.1.1:HTML Purifier 4.1.1 is a major security and bugfix release that
-  *  improves on 4.1s fix for an XSS vulnerability exploitable on Internet Explorer. 
+  *  improves on 4.1s fix for an XSS vulnerability exploitable on Internet Explorer.
   *  It also contains a number of important bugfixes, including
   *  the removal of improper logic that could result in infinite loops and
   *  fixed parsing for single-attributes with entities with DirectLex.
-  * -postgres: fix for problem with db_backup/update -> no MetaColumns retrieved anymore: if tablenames are quoted, 
-  *  remove the quotes as the use of tablenames in MetaColumns is for comparsion of content of fields in postgres 
+  * -postgres: fix for problem with db_backup/update -> no MetaColumns retrieved anymore: if tablenames are quoted,
+  *  remove the quotes as the use of tablenames in MetaColumns is for comparsion of content of fields in postgres
   *  system tables; quoting tablenames breaks comparsion here.
   *SYNC:CalDAV Infolg support for Evolution
-  *eMAIL: -fix: display inline text attachment as attachment too, as they are part of a multipart/mixed mail, 
+  *eMAIL: -fix: display inline text attachment as attachment too, as they are part of a multipart/mixed mail,
   *  and was not displayed as attachment, but indicated as mail with attachment by headerinformation
   * -some additional stuff to improve mailheader decoding
   * -remove message_org block in displayMsg as it is used only in view_message_printable template
@@ -2345,8 +2347,8 @@ egroupware-epl (9.2.20100504-1) hardy; urgency=low
   *             Reset status of participants when copying an event
   *             Add Nokia 5800 XpressMusic to supported devices
   * Admin:  removed Admin >> Manage applications
-  * api:  customfields with links break certian actions in listviews,  
-  *       fixed not working $type==owngroups for ldap, 
+  * api:  customfields with links break certian actions in listviews,
+  *       fixed not working $type==owngroups for ldap,
   *       fixed not exported custom fields
   *
 
@@ -2412,7 +2414,7 @@ egroupware-epl (9.2.20100316-1) hardy; urgency=low
   * mergeprint: fixed bug introduced in 9.2.20100309 (8 and , got lost)
   * some SyncML and CalDAV/CardDAV/GroupDAV fixes
   * WebDAV is working with Mac OS again
-  * Further bugfixes/improvments 
+  * Further bugfixes/improvments
 
  -- Ralf Becker <rb@stylite.de>  Tue, 16 Mar 2010 18:00:00 +0200
 
@@ -2426,19 +2428,19 @@ egroupware-epl (9.2.20100309-1) hardy; urgency=low
         logged in!
   * eventmgr: fixed deleting of costs, divers reporting problems
   * many SyncML and CalDAV/CardDAV/GroupDAV fixes
-  * Further bugfixes/improvments 
+  * Further bugfixes/improvments
 
  -- Ralf Becker <rb@stylite.de>  Tue, 9 Mar 2010 00:00:00 +0200
 
 egroupware-epl (9.2.20100226-1) hardy; urgency=low
 
-  * eventmgr: fixing issue of timeshifting, when apply failed due to concurrent 
-  *   save by another user; display of the unmodified attempted content data, 
+  * eventmgr: fixing issue of timeshifting, when apply failed due to concurrent
+  *   save by another user; display of the unmodified attempted content data,
   *   removed the option to override in that particular case, added reload option
-  * addressbook: fix for failed add to organisation from org-view, when colon 
+  * addressbook: fix for failed add to organisation from org-view, when colon
   *   in org_unit/org_location/organisation
   * egw-pear: fix for broken native windows WebDav Support
-  * Furhter fixes/improvments 
+  * Furhter fixes/improvments
 
  -- Ralf Becker <rb@stylite.de>  Fri, 26 Feb 2010 13:00:00 +0200
 
@@ -2447,30 +2449,30 @@ egroupware-epl (9.2.20100224-1) hardy; urgency=low
   * timesheet: fixes statuschange for whole query
   * infolog: fixes lost links, when copying entrys
   * fix for issue regarding the linking of entrys (no entry found issue (when entrys are to be found))
-  * Furhter fixes/improvments 
+  * Furhter fixes/improvments
 
  -- Ralf Becker <rb@stylite.de>  Wed, 24 Feb 2010 13:00:00 +0200
 
 egroupware-epl (9.2.20100222-1) hardy; urgency=low
   * tracker: fixes for categories
   * news-admin: fixes for categories, fixes for apply behavior
-  * phpbrain/knowledgebase:   fix for the increasing of the views count for all 
+  * phpbrain/knowledgebase:   fix for the increasing of the views count for all
   *   articles shown in list
   * email:   improving session control for felamimail bosieve async_vacation.
-  *   improving addressselection, 
+  *   improving addressselection,
   * eventmgr: timezone issues, fixed "missing cat_id or Contract_status attributes" bug
-  *     fixed SQL error, if WPM inhouse is defined more then once in different calendar 
+  *     fixed SQL error, if WPM inhouse is defined more then once in different calendar
   *     events / for different times
   * stylite: ongoing work for versioning streamwrapper (backend)
   * sync: various improvements (proper refresh, ti mezoneissues, newline issues)
   * general: css adaption for IE7
-  * Furhter fixes/improvments 
+  * Furhter fixes/improvments
 
  -- Ralf Becker <rb@stylite.de>  Mon, 22 Feb 2010 13:00:00 +0200
 
 egroupware-epl (9.2.20100215-1) hardy; urgency=medium
   * Move some config options to setup, security fixes for fckeditor
-  * Furhter fixes/improvments 
+  * Furhter fixes/improvments
 
  -- Ralf Becker <rb@stylite.de>  Mon, 15 Feb 2010 13:00:00 +0200
 
@@ -2478,10 +2480,10 @@ egroupware-epl (9.2.20100212-1) hardy; urgency=low
 
   * Calendar: database UPDATE
   *   IMPORTANT NOTE FOR ALL SYNCML USERS. PLEASE READ!
-  *   All users who sync their devices with SyncML have to be aware that an 
-  *   "initial sync" will be necessary on any synced device directly after the 
+  *   All users who sync their devices with SyncML have to be aware that an
+  *   "initial sync" will be necessary on any synced device directly after the
   *   next update of an EGroupware instance.
-  *   GroupDAV devices should be updated automatically and there are no 
+  *   GroupDAV devices should be updated automatically and there are no
   *   further things to do for GroupDAV devices.
   *   Which updates are affected?
   *   Updates from EPL9.1 Packages to current EPL9.2 released after 11.th Feb.2010
@@ -2493,32 +2495,32 @@ egroupware-epl (9.2.20100212-1) hardy; urgency=low
   *   Updates from any SVN version
   *   - to current SVN versions [branch (Revision 29097) or trunk (Revision 29096)]
   *   Reason:
-  *   In current EGroupware versions (<= 1.6002) we did not fully match the 
-  *   iCal RFC on calendar entries. This caused some hard to resolve problems 
-  *   for syncing the calendar entries. With the next update we change the 
-  *   contents of the calendar's UID and RECURRENCE-ID database fields to fit 
+  *   In current EGroupware versions (<= 1.6002) we did not fully match the
+  *   iCal RFC on calendar entries. This caused some hard to resolve problems
+  *   for syncing the calendar entries. With the next update we change the
+  *   contents of the calendar's UID and RECURRENCE-ID database fields to fit
   *   the iCal RFC.
   *   Here's some advice on performing the next EGroupware update:
   *   - let your SyncML users perform a last sync before EGroupware gets updated
-  *   - tell your users to not change any entries on the sync devices until 
+  *   - tell your users to not change any entries on the sync devices until
   *   the update is finished
-  *   - after the update, let your users perform an "initial sync" on every 
-  *   device; this means to let the sync remove all the contents on the device 
-  *   and refresh it with the server data; this can be done by a setting on 
+  *   - after the update, let your users perform an "initial sync" on every
+  *   device; this means to let the sync remove all the contents on the device
+  *   and refresh it with the server data; this can be done by a setting on
   *   your device
-  * Furhter fixes/improvments / translations 
+  * Furhter fixes/improvments / translations
 
  -- Ralf Becker <rb@stylite.de>  Fri, 12 Feb 2010 13:00:00 +0200
 
 egroupware-epl (9.2.20100205-1) hardy; urgency=low
 
-  * eMail: PreView Issues (Attachment window, tabbing order, feature to be 
-  *  able to include/attach more than one message from a given mailbox to a message 
+  * eMail: PreView Issues (Attachment window, tabbing order, feature to be
+  *  able to include/attach more than one message from a given mailbox to a message
   *  on opening the/a compose window
   * Calendar: allow to set calendar favorites on (primary) group level
   * Eventmgr: changed in eventmgr.edit some fields in contract-tab for additional OMSE-number
   *    implemented link-notify method to remove deleted addresses from events
-  * Furhter fixes/improvments / translations 
+  * Furhter fixes/improvments / translations
 
  -- Ralf Becker <rb@stylite.de>  Fri, 05 Feb 2010 13:00:00 +0200
 
