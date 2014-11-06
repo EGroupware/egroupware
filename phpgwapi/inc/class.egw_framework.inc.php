@@ -1165,8 +1165,6 @@ abstract class egw_framework
 		$apps = array();
 		foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
 		{
-// disable home until we get it working again
-if ($app == 'home') continue;
 			if (is_long($app))
 			{
 				continue;

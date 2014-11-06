@@ -25,18 +25,26 @@ class home_link_portlet extends home_portlet
 	protected $title = 'Link';
 
 	/**
+	 * Base name for template
+	 * @var string
+	 */
+	protected $template_name = 'home.link';
+
+	/**
 	 * Construct the portlet
 	 *
+	 * @param boolean $need_reload Flag to indicate that the portlet needs to be reloaded (exec will be called)
 	 */
-	public function __construct(Array &$context = array())
+	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		// Process dropped data into something useable
 		if($context['dropped_data'])
 		{
 			list($context['entry']['app'], $context['entry']['id']) = explode('::', $context['dropped_data'][0], 2);
 			unset($context['dropped_data']);
+			$need_reload = true;
 		}
-		if($context['entry'])
+		if($context['entry'] && is_array($context['entry']));
 		{
 			$this->title = $context['entry']['title'] = egw_link::title($context['entry']['app'], $context['entry']['id']);
 		}
@@ -64,15 +72,33 @@ class home_link_portlet extends home_portlet
 	}
 
 	/**
-	 * Get a fragment of HTML for display
+	 * Generate display
 	 *
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
 	 * 	unique, if needed.
-	 * @return string HTML fragment for display
 	 */
-	public function get_content($id = null)
+	public function exec($id = null, etemplate_new &$etemplate = null)
 	{
-		return $this->title;
+		// Check for custom template for app
+		if($this->context && $this->context['entry'] && $this->context['entry']['app'] &&
+			$etemplate->read($this->context['entry']['app'] . '.' . $this->template_name))
+		{
+			// No action needed, custom template loaded as side-effect
+		}
+		else
+		{
+			$etemplate->read($this->template_name);
+		}
+
+		$etemplate->set_dom_id($id);
+		
+		$content = $this->context;
+		if(!is_array($content['entry']))
+		{
+			$content['entry'] = null;
+		}
+		
+		$etemplate->exec('home.home_link_portlet.exec',$content);
 	}
 
 	/**
@@ -93,13 +119,15 @@ class home_link_portlet extends home_portlet
 	 */
 	public function get_properties()
 	{
-		return array(
-			array(
+		$properties = parent::get_properties();
+
+		$properties[] = array(
 				'name'	=>	'entry',
 				'type'	=>	'link-entry',
 				'label'	=>	lang('Entry'),
-			)
-		) + parent::get_properties();
+				'size' => ''
+		);
+		return $properties;
 	}
 
 	/**

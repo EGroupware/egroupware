@@ -34,22 +34,31 @@ class home_ui
 	 */
 	public function index($content = array())
 	{
-		// Disabled, for now
-		return;
 		// CSS for Gridster grid layout
 		egw_framework::includeCSS('/phpgwapi/js/jquery/gridster/jquery.gridster.css');
 
 		$template = new etemplate_new('home.index');
 
+		// Get a list of portlets
 		$content = array(
 			'portlets' => $this->get_user_portlets($template)
 		);
-		$template->setElementAttribute('portlets','actions',$this->get_actions());
+		$template->setElementAttribute('home.index','actions',$this->get_actions());
 		//$template->setElementAttribute('portlets[1]','settings',$settings[1]);
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('home');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
+
 		$template->exec('home.home_ui.index', $content);
+
+		// Now run the portlets themselves
+		foreach($content['portlets'] as $portlet => $p_data)
+		{
+			$id = $p_data['id'];
+
+			if(!$id) continue;
+			$portlet = $this->get_portlet($id, $p_data, $content, $attrs, true);
+		}
 	}
 
 	/**
@@ -65,8 +74,8 @@ class home_ui
 		foreach($add_portlets as $id => &$add)
 		{
 			$add['id'] = 'add_' . $id;
+			$add['class'] = $id;
 		}
-		error_log(array2string($add_portlets));
 		$actions = array(
 			'add' => array(
 				'type'	=> 'popup',
@@ -78,13 +87,14 @@ class home_ui
 
 		// Add all known portlets as drop actions too.  If there are multiple matches, there will be a menu
 		$drop_execute = 'javaScript:app.home.add_from_drop';
-		foreach($portlets as $app => $children)
+		foreach($portlets as $app => &$children)
 		{
 			// Home portlets - uses link system, so all apps that support that are accepted
 			if(!$children['children'])
 			{
+				$children['class'] = $app;
 				$children['onExecute'] = $drop_execute;
-				$children['acceptedTypes'] = array_keys(egw_link::app_list());
+				$children['acceptedTypes'] = array('file','link');
 				$children['type'] = 'drop';
 				$actions["drop_$app"] = $children;
 			}
@@ -111,33 +121,45 @@ class home_ui
 	 */
 	protected function get_user_portlets(etemplate_new &$template)
 	{
-		$portlets = array(
-			'Just a hard-coded test',
-		);
-		$attributes = array();
-		$attributes[] = array(
-			'title' => 'Has content',
-		);
+		$portlets = array();
 
 		foreach((array)$GLOBALS['egw_info']['user']['preferences']['home']['portlets'] as $id => $context)
 		{
-			error_log("Portlet: $id");
-			error_log(array2string($context));
 			if(!$id || in_array($id, array_keys($GLOBALS['egw_info']['user']['apps']))) continue;
-			$content = '';
-			$attrs = array();
-			$this->get_portlet($id, $context, $content, $attrs);
-			$portlets[$id] = $content;
-			$attributes[$id] = $attrs;
+
+			$classname = $context['class'];
+			$portlet = new $classname($context);
+			$desc = $portlet->get_description();
+			$portlet_content = array(
+				'id'	=>	$id
+			) + $desc + $context;
+
+
+			// Get settings
+			// Exclude common attributes changed through UI and settings lacking a type
+			$settings = $portlet->get_properties();
+			foreach($settings as $key => $setting)
+			{
+				if(is_array($setting) && !array_key_exists('type',$setting)) unset($settings[$key]);
+			}
+			$settings += $context;
+			foreach(home_portlet::$common_attributes as $attr)
+			{
+				unset($settings[$attr]);
+			}
+			$portlet_content['settings'] = $settings;
+
+			// Set actions
+			// Must be after settings so actions can take settings into account
+			$template->setElementAttribute("portlets[" . count($portlets) . "[$id]", 'actions', $portlet->get_actions());
+
+			$portlets[] = $portlet_content;
 		}
 		
 		// Add in legacy HTML home bits
-		$this->get_legacy_portlets($template, $portlets, $attributes);
-		
-		foreach($portlets as $index => $portlet)
-		{
-			$template->setElementAttribute('portlets', $index, (array)$attributes[$index]);
-		}
+		// TODO: DOM IDs still collide
+		//$this->get_legacy_portlets($portlets, $attributes);
+
 		return $portlets;
 	}
 
@@ -148,18 +170,30 @@ class home_ui
 	 * 	These are specific values for the portlet's properties.
 	 * @param content String HTML fragment to be displayed - will be set by the portlet
 	 * @param attributes Array Settings that can be customized on a per-portlet basis - will be set
+	 * @param full_exec Boolean If set, the portlet etemplates should use mode 2, if not use mode -1
 	 * @return home_portlet The portlet object that created the content
 	 */
-	protected function get_portlet($id, &$context, &$content, &$attributes)
+	protected function get_portlet($id, &$context, &$content, &$attributes, $full_exec = false)
 	{
 		if(!$context['class']) $context['class'] = 'home_link_portlet';
 
+		// This should be set already, but just in case the execution path
+		// is different from normal...
+		if(egw_json_response::isJSONResponse())
+		{
+			$GLOBALS['egw']->framework->response = egw_json_response::get();
+		}
+
 		$classname = $context['class'];
-		$portlet = new $classname($context);
+		$portlet = new $classname($context, $full_exec);
 
 		$desc = $portlet->get_description();
-		$content = $portlet->get_content($id);
 
+		// Pre-set up etemplate so it only needs done once
+		$dom_id = 'home-index_'.$id.'_content';
+
+		$etemplate = new etemplate_new();
+		
 		// Exclude common attributes changed through UI and settings lacking a type
 		$settings = $portlet->get_properties();
 		foreach($settings as $key => $setting)
@@ -174,6 +208,7 @@ class home_ui
 
 		$attributes = array(
 			'title' => $desc['title'],
+			'color' => $settings['color'],
 			'settings' => $settings,
 			'actions' => $portlet->get_actions(),
 		);
@@ -186,6 +221,15 @@ class home_ui
 				$attributes[$name] = $context[$name];
 			}
 		}
+		foreach($attributes as $attr => $value)
+		{
+			$etemplate->setElementAttribute($id, $attr, $value);
+		}
+		if($full_exec)
+		{
+			$content = $portlet->exec($id, $etemplate, $full_exec ? 2 : -1);
+		}
+
 		return $portlet;
 	}
 	
@@ -195,7 +239,7 @@ class home_ui
 	 * wants some content, we make a portlet for that app using the home_legacy_portlet,
 	 * which fetches content from the home hook.
 	 */
-	protected function get_legacy_portlets(&$etemplate, &$content, &$attributes)
+	protected function get_legacy_portlets(&$content, &$attributes)
 	{
 		$sorted_apps = array_keys($GLOBALS['egw_info']['user']['apps']);
 		$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest','mainscreen_showmail','mainscreen_showbirthdays','mainscreen_show_new_updated', 'homepage_display');
@@ -253,7 +297,7 @@ class home_ui
 
 				foreach($files as $entry)
 				{
-					if (!in_array($entry, array('.','..')) && substr($entry,-8) == '.inc.php' && strpos($entry,'portlet'))
+					if (!in_array($entry, array('.','..','class.home_legacy_portlet.inc.php')) && substr($entry,-8) == '.inc.php' && strpos($entry,'portlet'))
 					{
 						list(,$classname) = explode('.', $entry);
 						if(class_exists($classname) &&
@@ -323,9 +367,8 @@ class home_ui
 			else
 			{
 				// Get portlet settings, and merge new with old
-				$content = '';
 				$context = $values+(array)$portlets[$portlet_id]; //array('class'=>$attributes['class']);
-				
+
 				// Handle add IDs
 				$classname =& $context['class'];
 				if(strpos($classname,'add_') == 0 && !class_exists($classname))
@@ -333,8 +376,8 @@ class home_ui
 					$add = true;
 					$classname = substr($classname, 4);
 				}
-				
-				$portlet = $this->get_portlet($portlet_id, $context,$content, $attributes);
+				$full_exec = false;
+				$portlet = $this->get_portlet($portlet_id, $context, $content, $attributes);
 
 				$context['class'] = get_class($portlet);
 				foreach($portlet->get_properties() as $property)
@@ -349,17 +392,17 @@ class home_ui
 					}
 				}
 
-
 				// Update client side
-				$update = array('content' => $content, 'attributes' => $attributes);
+				$update = array('attributes' => $attributes);
 
 				// New portlet?  Flag going straight to edit mode
 				if($add)
 				{
 					$update['edit_settings'] = true;
 				}
+				// Send this back to the portlet widget
 				$response->data($update);
-
+				
 				// Store for preference update
 				$portlets[$portlet_id] = $context;
 			}

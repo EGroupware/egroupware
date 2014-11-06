@@ -36,7 +36,7 @@ class home_list_portlet extends home_portlet
 	 * Construct the portlet
 	 *
 	 */
-	public function __construct(Array &$context = array())
+	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		if(!is_array($context['list'])) $context['list'] = array();
 
@@ -54,6 +54,7 @@ class home_list_portlet extends home_portlet
 			}
 			unset($add);
 			unset($context['dropped_data']);
+			$need_reload = true;
 		}
 		if($context['title'])
 		{
@@ -89,37 +90,18 @@ class home_list_portlet extends home_portlet
 	 * 	unique, if needed.
 	 * @return string HTML fragment for display
 	 */
-	public function get_content($id = null)
+	public function exec($id = null, etemplate_new &$etemplate = null)
 	{
-		$list = array();
-		foreach($this->context['list'] as $link_id => $link)
+		$etemplate->read('home.list');
+
+		$etemplate->set_dom_id($id);
+		$content = $this->context;
+		if(!is_array($content['list']))
 		{
-			$list[] = $link + array(
-				'title' => egw_link::title($link['app'], $link['id']),
-				'icon'	=> egw_link::get_registry($link['app'], 'icon')
-			);
+			$content['list'] = Array();
 		}
 
-		// Find the portlet widget, and add a link-list to it
-		$script = 'app.home.List.set_content("'.$id.'", '.json_encode($list).');';
-		if(egw_json_response::isJSONResponse())
-		{
-			$response = egw_json_response::get();
-			// This has to go last, after the template is loaded
-			$response->addBeforeSendDataCallback(
-				function($response, $script) {
-					// Bind to load event to make sure template is loaded first
-					$response->script('$j("#home-index").on("load", function() {'.$script.'});');
-				}
-				,$response, $script
-			);
-		} else {
-			// Not a JSON Response? Probably an idots first load
-			$response = egw_json_response::get();
-			// Bind to load event to make sure template is loaded first
-			$response->script('$j("#home-index").on("load", function() {'.$script.'});');
-		}
-		return '';
+		$etemplate->exec('home.home_list_portlet.exec',$content);
 	}
 
 	/**
@@ -140,17 +122,18 @@ class home_list_portlet extends home_portlet
 	 */
 	public function get_properties()
 	{
-		return array(
-			array(
-				'name'	=>	'title',
-				'type'	=>	'textbox',
-				'label'	=>	lang('Title'),
-			),
-			// Internal
-			array(
-				'name'	=>	'list'
-			)
-		) + parent::get_properties();
+		$properties = parent::get_properties();
+
+		$properties[] = array(
+			'name'	=>	'title',
+			'type'	=>	'textbox',
+			'label'	=>	lang('Title'),
+		);
+		// Internal - no type means it won't show in configure dialog
+		$properties[] = array(
+			'name'	=>	'list'
+		);
+		return $properties;
 	}
 
 	/**
@@ -173,7 +156,7 @@ class home_list_portlet extends home_portlet
 				'type' => 'drop',
 				'caption' => lang('add'),
 				'onExecute' => 'javaScript:app.home.add_link',
-				'acceptedTypes' => array('file') + array_keys($GLOBALS['egw_info']['apps']),
+				'acceptedTypes' => array('file','link') + array_keys($GLOBALS['egw_info']['apps']),
 			)
 		);
 		return $actions;

@@ -43,11 +43,20 @@ var et2_portlet = et2_valueWidget.extend(
 			"type": "string",
 			"default": window.egw_webserverUrl+"/home/templates/default/edit.xet"
 		},
+		"color": {
+			"name": "Color",
+			"description": "Set the portlet color",
+			"type": "string",
+			"default": ''
+		},
 		"settings": {
 			"name": "Customization settings",
 			"description": "Array of customization settings, similar in structure to preference settings",
 			"type": "any",
 			"default": et2_no_init
+		},
+		"actions": {
+			default: {}
 		},
 		"width": { "default": 2, "ignore": true},
 		"height": { "default": 1, "type": "integer"},
@@ -66,7 +75,7 @@ var et2_portlet = et2_valueWidget.extend(
 	},
 
 	createNamespace: true,
-	GRID: 50,
+	GRID: 100,
 
 	/**
 	 * These are the "normal" actions that every portlet is expected to have.
@@ -126,10 +135,12 @@ var et2_portlet = et2_valueWidget.extend(
 				}
 			});
 		this.header = $j(document.createElement("div"))
+			.attr('id', this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + '_header')
 			.addClass("ui-widget-header ui-corner-all")
 			.appendTo(this.div)
 			.html(this.options.title);
 		this.content = $j(document.createElement("div"))
+			.attr('id', this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + '_content')
 			.appendTo(this.div);
 
 		this.setDOMNode(this.div[0]);
@@ -137,6 +148,15 @@ var et2_portlet = et2_valueWidget.extend(
 
 	destroy: function()
 	{
+		for(var i = 0; i < this._children.length; i++)
+		{
+			// Check for child is a different template and clear it,
+			// since it won't be cleared by destroy()
+			if(this._children[i]._inst != this._inst)
+			{
+				this._children[i]._inst.clear();
+			}
+		}
 		this._super.apply(this, arguments);
 	},
 
@@ -233,7 +253,7 @@ var et2_portlet = et2_valueWidget.extend(
 			buttons: et2_dialog.BUTTONS_OK_CANCEL
 		},this);
 		// Set seperately to avoid translation
-		dialog.set_title(this.egw().lang("Edit") + " " + this.options.title);
+		dialog.set_title(this.egw().lang("Edit") + " " + (this.options.title || ''));
 	},
 
 	_process_edit: function(button_id, value)
@@ -241,10 +261,14 @@ var et2_portlet = et2_valueWidget.extend(
 		if(button_id != et2_dialog.OK_BUTTON) return;
 
 		
-		// Save settings - server will reply with new content, if the portlet needs an update
+		// Save settings - server might reply with new content if the portlet needs an update,
+		// but ideally it doesn't
 		this.div.addClass("loading");
 		this.egw().jsonq("home.home_ui.ajax_set_properties",[this.id, this.options.settings || {}, value], 
 			function(data) {
+				// This section not for us
+				if(!data || typeof data.attributes == 'undefined') return false;
+
 				this.div.removeClass("loading");
 				this.set_value(data.content);
 				for(var key in data.attributes)
@@ -337,10 +361,6 @@ var et2_portlet = et2_valueWidget.extend(
 	{
 		this.options.height = value;
 		this.div.attr("data-sizey", value);
-
-		// Explicitly set the height of the content, so it can properly scroll.  Sometimes set_height()
-		// is called before everything is in the DOM though, so use a magic 18px in that case.
-		this.content.height(value * this.GRID - (this.header.outerHeight() > 0 ? this.header.outerHeight() : 18));
 	}
 	
 });

@@ -30,8 +30,9 @@ abstract class home_portlet
 	 * better to use get_properties().
 	 *
 	 * @param context Array portlet settings such as size, as well as values for properties
+	 * @param boolean $need_reload Flag to indicate that the portlet needs to be reloaded (exec will be called)
 	 */
-	public abstract function __construct(Array &$context = array());
+	public abstract function __construct(Array &$context = array(), &$need_reload = false);
 	
 	/**
 	 * Some descriptive information about the portlet, so that users can decide if
@@ -47,13 +48,14 @@ abstract class home_portlet
 	public abstract function get_description();
 
 	/**
-	 * Get a fragment of HTML for display
+	 * Generate the display for the portlet
 	 *
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
 	 * 	unique, if needed.
-	 * @return string HTML fragment for display
+	 * @param etemplate etemplate_new Etemplate to generate content
+	 * @param dom_id String ID of the etemplate targe DOM node.  If passed, send -1 to etemplate->exec()
 	 */
-	public abstract function get_content($id = null);
+	public abstract function exec($id = null, etemplate_new &$etemplate = null);
 
 	/**
 	 * Return a list of settings to customize the portlet.
@@ -79,6 +81,12 @@ abstract class home_portlet
 		{
 			$properties[$prop] = array('name' => $prop);
 		}
+
+		$properties[] = array(
+			'name'	=>	'color',
+			'type'	=>	'colorpicker',
+			'label'	=>	lang('Color'),
+		);
 		return $properties;
 	}
 

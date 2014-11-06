@@ -12,6 +12,8 @@
 				</row>
 				<row>
 					<box id="portlets">
+						<!-- Box wrapper needed to get box to auto-repeat -->
+						<box id="${row}"><portlet id="${_cont[id]}" title="${_cont[title]}" color="@color" parent_node="home-index_portlets" settings="@settings" width="@width" height="@height" row="@row" col="@col" value="@content"/></box>
 					</box>
 				</row>
 			</rows>

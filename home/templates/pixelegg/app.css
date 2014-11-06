@@ -1,3 +1,4 @@
+@import "../default/app.css";
 /**
  * EGroupware: CSS with less preprocessor
  *
@@ -9,7 +10,3 @@
  * @package home
  * @version $Id$
  */
-#divMain img {
-  width: 16px;
-  height: 16px;
-}

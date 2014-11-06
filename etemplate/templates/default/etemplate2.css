@@ -1154,9 +1154,6 @@ div.message.floating {
 /**
  * et2_portlet
  */
-div.et2_portlet {
-  min-width: 100px;
-}
 .et2_portlet .ui-widget-header {
   margin: 0em;
   padding-bottom: 4px;

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="home.list" template="" lang="" group="0" version="1.9.001">
+		<link-list id="list" onchange="app.home.List.link_change"/>
+	</template>
+</overlay>

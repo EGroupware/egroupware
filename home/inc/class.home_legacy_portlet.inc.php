@@ -29,7 +29,7 @@ class home_legacy_portlet extends home_portlet
 	 */
 	protected $content = '';
 	
-	public function __construct(array &$context = array())
+	public function __construct(array &$context = array(), &$need_reload = false)
 	{
 		$this->context = $context;
 		
@@ -90,9 +90,13 @@ class home_legacy_portlet extends home_portlet
 	 * 	unique, if needed.
 	 * @return string HTML fragment for display
 	 */
-	public function get_content($id = null)
+	public function exec($id = null, etemplate_new &$etemplate = null)
 	{
-		return $this->content;
+		$etemplate->read('home.legacy');
+
+		$etemplate->set_dom_id($id);
+
+		$etemplate->exec('home.home_link_portlet.exec',array('legacy' => $this->content), array(),array(),array(),2);
 	}
 
 	/**
