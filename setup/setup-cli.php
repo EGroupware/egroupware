@@ -182,7 +182,7 @@ function do_config($args)
 /**
  * Register all hooks
  *
- * @param array $args domain(default),[config user(admin)],password
+ * @param array $arg domain(default),[config user(admin)],password
  */
 function do_hooks($arg)
 {
@@ -335,7 +335,7 @@ function do_update($arg)
  *
  * @param string $arg [domain(default)],[user(admin)],password
  * @param int $stop see setup_cmd::check_installed
- * @param boolean $set_lang=true set our charset, overwriting the charset of the eGW installation, default true
+ * @param boolean $set_lang =true set our charset, overwriting the charset of the eGW installation, default true
  * @return array with unprocessed arguments from $arg
  */
 function _check_auth_config($arg,$stop,$set_lang=true)
@@ -480,7 +480,7 @@ function do_usage($what='')
 		echo '	--files-dir, --backup-dir, --temp-dir '.lang('path to various directories: have to exist and be writeable by the webserver')."\n";
 		echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
 		echo '	--mailserver '.lang('host,port(143),[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]').',[starttls|ssl|tls]'."\n";
-		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password],[auth=no|yes|ann]').',[starttls|ssl|tls]'."\n";
+		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password],[auth session user/pw=yes|no],[starttls|ssl|tls],[account user editable=yes|no],[further identities=yes|no]')."\n";
 		echo '	--smtp '.lang('MTA (with LDAP): [yes(user edit forwarding)],emailadmin_smtp(|_sql|_ldap|_ads|_qmail|_mandriva|_dbmailuser|_suse)')."\n";
 		echo '	--imap '.lang('IMAP: Admin user,Password,emailadmin_imap(|_cyrus|_dovecot)')."\n";
 		echo '	--sieve '.lang('Sieve: Host[,Port(4190)]').',[starttls|ssl|tls]'."\n";

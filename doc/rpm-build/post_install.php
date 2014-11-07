@@ -36,6 +36,7 @@ $config = array(
 	'backup'      => '',
 	'admin_user'  => 'sysop',
 	'admin_passwd'=> randomstring(),
+	'admin_email' => '',
 	'lang'        => 'en',	// languages for admin user and extra lang to install
 	'charset'     => 'utf-8',
 	'start_db'    => '/sbin/service mysqld',
@@ -347,7 +348,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	}
 	// create mailserver config (fmail requires at least minimal config given as default, otherwise fatal error)
 	$setup_mailserver = $setup_cli.' --config '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd']);
-	foreach(array('account-auth','smtpserver','smtp','postfix','mailserver','imap','cyrus','sieve') as $name)
+	foreach(array('account-auth','smtpserver','smtp','postfix','mailserver','imap','cyrus','sieve','folder') as $name)
 	{
 		if (!empty($config[$name])) $setup_mailserver .= ' --'.$name.' '.escapeshellarg($config[$name]);
 	}
@@ -355,7 +356,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 
 	// create first user
 	$setup_admin = $setup_cli.' --admin '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd'].','.
-		$config['admin_user'].','.$config['admin_passwd'].',,,,'.$config['lang']);
+		$config['admin_user'].','.$config['admin_passwd'].',,,'.$config['admin_email'].','.$config['lang']);
 	run_cmd($setup_admin);
 
 	// check if webserver is started and start it (permanent) if not
@@ -754,7 +755,8 @@ function set_univention_defaults()
 	{
 		// ldap settings, see http://docs.univention.de/developer-reference-3.2.html#join:secret
 		$config['ldap_suffix'] = $config['ldap_base'] = _ucr_get('ldap/base');
-		$config['ldap_host'] = 'tls://'._ucr_get('ldap/server/ip').':'._ucr_get('ldap/server/port');
+		// port is ldap allowing starttls, but regular php/ldap config does not allow own certificate!
+		$config['ldap_host'] = 'ldap://'._ucr_get('ldap/server/ip').':'._ucr_get('ldap/server/port');
 		$config['ldap_admin'] = $config['ldap_root'] = 'cn=admin,$suffix';
 		$config['ldap_admin_pw'] = $config['ldap_root_pw'] = _ucr_secret('ldap');
 		$config['ldap_context'] = 'cn=users,$base';
@@ -777,15 +779,19 @@ function set_univention_defaults()
 		{
 			if (!is_array($domains)) $domains = explode("\n", $domains);
 			$domain = array_shift($domains);
-			$config['smtpserver'] = "$mailserver,465,,,yes,tls";
+			// set "use auth with session credentials",tls,"not user editable","further identities"
+			$config['smtpserver'] = "$mailserver,465,,,yes,tls,no,yes";
 			$config['smtp'] = ',emailadmin_smtp_univention';
 			$config['mailserver'] = "$mailserver,993,$domain,email,tls";
 			$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
+			// set folders so mail creates them on first login, UCS does not automatic
 			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,INBOX/Spam';
 			if (($sieve_port = _ucr_get('mail/cyrus/sieve/port')))
 			{
 				$config['sieve'] = "$mailserver,$sieve_port,starttls";
 			}
+			// set an email address for sysop user so mail works right away
+			$config['admin_email'] = '$admin_user@'.$domain;
 		}
 	}
 }
