@@ -2038,6 +2038,8 @@ if ($app == 'home') continue;
 		$inc_mgr = new egw_include_mgr();
 		$bundles = array();
 
+		$api_max_mod = $et2_max_mod = $jdots_max_mod = 0;
+
 		// generate api bundle
 		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery-ui.js');
@@ -2057,11 +2059,13 @@ if ($app == 'home') continue;
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu_dhtmlx.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
+		self::bundle_urls($bundles['api'], $api_max_mod);
 
 		// generate et2 bundle (excluding files in api bundle)
 		//$inc_mgr->include_js_file('/etemplate/js/lib/jsdifflib/difflib.js');	// it does not work with "use strict" therefore included in front
 		$inc_mgr->include_js_file('/etemplate/js/etemplate2.js');
 		$bundles['et2'] = array_diff($inc_mgr->get_included_files(), $bundles['api']);
+		self::bundle_urls($bundles['et2'], $et2_max_mod);
 
 		// generate jdots bundle, if installed
 		if (file_exists(EGW_SERVER_ROOT.'/jdots'))
@@ -2070,6 +2074,7 @@ if ($app == 'home') continue;
 			$inc_mgr->include_js_file('/jdots/js/egw_fw_ui.js');
 			$inc_mgr->include_js_file('/jdots/js/egw_fw_classes.js');
 			$bundles['jdots'] = array_diff($inc_mgr->get_included_files(), call_user_func_array('array_merge', $bundles));
+			self::bundle_urls($bundles['jdots'], $jdots_max_mod);
 		}
 
 		// automatic split bundles with more then MAX_BUNDLE_FILES (=50) files
@@ -2083,8 +2088,8 @@ if ($app == 'home') continue;
 			}
 		}
 
-		// store timestamp of when bundle-config was created
-		$bundles['.ts'] = time();
+		// store max modification time of all files in all bundles
+		$bundles['.ts'] = max(array($api_max_mod, $et2_max_mod, $jdots_max_mod));
 
 		//error_log(__METHOD__."() returning ".array2string($bundles));
 		return $bundles;
