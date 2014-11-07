@@ -24,10 +24,10 @@ class setup_cmd_config extends setup_cmd
 	 * Constructor
 	 *
 	 * @param string $domain string with domain-name or array with all arguments
-	 * @param string $config_user=null user to config the domain (or header_admin_user)
-	 * @param string $config_passwd=null pw of above user
-	 * @param string $arguments=null array with command line argruments
-	 * @param boolean $verbose=false if true, echos out some status information during the run
+	 * @param string $config_user =null user to config the domain (or header_admin_user)
+	 * @param string $config_passwd =null pw of above user
+	 * @param string $arguments =null array with command line argruments
+	 * @param boolean $verbose =false if true, echos out some status information during the run
 	 */
 	function __construct($domain,$config_user=null,$config_passwd=null,$arguments=null,$verbose=false)
 	{
@@ -48,7 +48,7 @@ class setup_cmd_config extends setup_cmd
 	/**
 	 * run the command: write the configuration to the database
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
@@ -113,7 +113,7 @@ class setup_cmd_config extends setup_cmd
 	/**
 	 * Return or echo the most common config options
 	 *
-	 * @param boolean $echoit=false if true the config is additionally echo'ed out
+	 * @param boolean $echoit =false if true the config is additionally echo'ed out
 	 * @return array with name => value pairs
 	 */
 	static function get_config($echoit=false)
@@ -183,8 +183,8 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
 			'acc_smtp_type',
 		),
-		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[no|starttls|ssl|tls],[user editable],[further identities]
-			'acc_smtp_host','acc_smtp_port','acc_smtp_username','acc_smtp_passwd',
+		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[auth session user/pw],[no|starttls|ssl|tls],[user editable],[further identities]
+			'acc_smtp_host','acc_smtp_port','acc_smtp_username','acc_smtp_passwd','acc_smtp_auth_session',
 			array('name' => 'acc_smtp_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
 			'acc_user_editable','acc_further_identities',
 		),
