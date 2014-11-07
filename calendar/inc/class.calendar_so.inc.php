@@ -464,7 +464,7 @@ class calendar_so
 	 */
 	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
 	{
-		error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
+		//error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
 
 		if (isset($params['cols']))
 		{
@@ -1112,7 +1112,7 @@ ORDER BY cal_user_type, cal_usre_id
 		sort($categories, SORT_NUMERIC);
 
 		$event['cal_category'] = implode(',',$categories);
-		
+
 		// make sure recurring events never reference to an other recurrent event
 		if ($event['recur_type'] != MCAL_RECUR_NONE) $event['cal_reference'] = 0;
 
