@@ -9,7 +9,7 @@ Homepage: http://www.stylite.de/EPL
 Package: egroupware-epl
 Architecture: all
 Depends:
- egroupware-epl-core (= ${binary:Version}), 
+ egroupware-epl-core (= ${binary:Version}),
  egroupware-epl-egw-pear (= ${binary:Version}),
  egroupware-epl-jdots (= ${binary:Version}),
  egroupware-epl-pixelegg (= ${binary:Version}),
@@ -59,11 +59,12 @@ Depends: apache2,
  php5-mcrypt,
  php5-xsl,
  ${misc:Depends}
-Recommends: mysql-server, php-apc, php5-tidy, mysql-client | postgresql-client
+Recommends: mysql-server, php-apc, php5-pecl-smb, php5-tidy, mysql-client | postgresql-client
 Suggests: egroupware-epl,
  php5-ldap,
  php5-mhash,
- php5-auth-pam
+ php5-auth-pam,
+ php-log
 Provides: egroupware-epl-addressbook, egroupware-epl-etemplate
 Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook, egroupware-etemplate, egroupware-epl-etemplate,
  egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupare-epl-phpsysinfo
@@ -190,7 +191,7 @@ Description: web-based groupware suite - importexport application
  .
  This eGroupWare application is a framework for egroupware to handle
  imports and exports.
- 
+
 Package: egroupware-epl-infolog
 Architecture: all
 Depends: egroupware-epl-core (>= ${binary:Version}), ${misc:Depends}
@@ -237,7 +238,7 @@ Description: web-based groupware suite - notifications
  .
  This package contains the EGroupware notifications, provided as an
  EGroupware application.
-    
+
 Package: egroupware-epl-phpbrain
 Architecture: all
 Depends: egroupware-epl-core (>= ${binary:Version}),
@@ -311,7 +312,7 @@ Description: web-based groupware suite - site manager application
 
 Package: egroupware-epl-timesheet
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}), 
+Depends: egroupware-epl-core (>= ${binary:Version}),
  ${misc:Depends}
 Suggests: egroupware-epl-projectmanager
 Conflicts: egroupware-timesheet
@@ -336,7 +337,7 @@ Description: web-based groupware suite - tracker application
 
 Package: egroupware-epl-wiki
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}), 
+Depends: egroupware-epl-core (>= ${binary:Version}),
  ${misc:Depends}
 Conflicts: egroupware-wiki
 Replaces: egroupware-wiki
