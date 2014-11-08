@@ -55,6 +55,13 @@ if (isset($_GET['g'])) {
     // well need groups config
     $min_serveOptions['minApp']['groups'] = (require MINIFY_MIN_DIR . '/groupsConfig.php');
 }
+// fix big $_GET[f] URL parameter got removed by Suhosin extension
+if (!isset($_GET['f']) && preg_match('|&f=[a-z0-9,./_-]+&|i', $_SERVER['QUERY_STRING']))
+{
+	parse_str($_SERVER['QUERY_STRING'], $get);
+	$_GET['f'] = $get['f'];
+	unset($get);
+}
 if (isset($_GET['f']) || isset($_GET['g'])) {
     // serve!
 
