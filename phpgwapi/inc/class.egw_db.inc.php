@@ -2072,7 +2072,7 @@ class egw_db
 				$select['table_def'],
 			));
 		}
-		$sql = count($union) > 1 ? '(' . implode(")\nUNION\n(",$union).')' : $union[0];
+		$sql = count($union) > 1 ? '(' . implode(")\nUNION\n(",$union).')' : 'SELECT DISTINCT'.substr($union[0],6);
 
 		if ($order_by) $sql .=  (!stristr($order_by,'ORDER BY') ? "\nORDER BY " : '').$order_by;
 
