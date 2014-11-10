@@ -521,7 +521,7 @@ div.mail-compose_fileselector {
 }
 #mail-display,
 #mail-compose {
-  min-height: 500px;
+  min-height: 768px;
 }
 .mailDisplayContainer,
 .mailDisplayAttachments {
@@ -976,7 +976,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose {
   width: 870px;
-  min-height: 500px;
+  min-height: 768px;
   padding: 5px;
   /*// ###############################################################################*/
   /*// Mail Header*/
@@ -1470,7 +1470,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
  */
 #mail-display {
   width: 870px;
-  min-height: 500px;
+  min-height: 768px;
   padding: 5px;
   /*.mailDisplayHeaderSection{*/
   /*top: 0;*/
