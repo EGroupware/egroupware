@@ -1001,7 +1001,19 @@ class emailadmin_account implements ArrayAccess
 		$data['acc_modified'] = time();
 
 		// store account data
-		if (!($data['acc_id'] > 0)) unset($data['acc_id']);
+		if (!($data['acc_id'] > 0))
+		{
+			// set not set values which, are NOT NULL and therefore would give an SQL error
+			$td = self::$db->get_table_definitions('emailadmin', self::TABLE);
+			foreach($td['fd'] as $col => $def)
+			{
+				if (!isset($data[$col]) && $def['nullable'] === false && !isset($def['default']))
+				{
+					$data[$col] = null;
+				}
+			}
+			unset($data['acc_id']);
+		}
 		$where = $data['acc_id'] > 0 ? array('acc_id' => $data['acc_id']) : false;
 		self::$db->insert(self::TABLE, $data, $where, __LINE__, __FILE__, self::APP);
 		if (!($data['acc_id'] > 0))
