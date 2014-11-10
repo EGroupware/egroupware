@@ -164,8 +164,6 @@ app.classes.mail = AppJS.extend(
 				}
 				break;
 			case 'mail.display':
-				var subject = this.et2.getWidgetById('mail_displaysubject');
-				var body = this.et2.getWidgetById('mailDisplayBodySrc');
 				this.mail_isMainWindow = false;
 				this.mail_display();
 	
