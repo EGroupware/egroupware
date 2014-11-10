@@ -44,7 +44,6 @@ class home_ui
 			'portlets' => $this->get_user_portlets($template)
 		);
 		$template->setElementAttribute('home.index','actions',$this->get_actions());
-		//$template->setElementAttribute('portlets[1]','settings',$settings[1]);
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('home');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
@@ -58,6 +57,20 @@ class home_ui
 
 			if(!$id) continue;
 			$portlet = $this->get_portlet($id, $p_data, $content, $attrs, true);
+		}
+
+		// Main screen message
+		translation::add_app('mainscreen');
+		$greeting = translation::translate('mainscreen_message',false,'');
+
+		if($greeting == 'mainscreen_message'|| empty($greeting))
+		{
+			translation::add_app('mainscreen','en');    // trying the en one
+			$greeting = translation::translate('mainscreen_message',false,'');
+		}
+		if(!($greeting == 'mainscreen_message'|| empty($greeting)))
+		{
+			$content['mainscreen_message'] = $greeting;
 		}
 	}
 
@@ -367,7 +380,7 @@ class home_ui
 			else
 			{
 				// Get portlet settings, and merge new with old
-				$context = $values+(array)$portlets[$portlet_id]; //array('class'=>$attributes['class']);
+				$context = $values+(array)$portlets[$portlet_id];
 
 				// Handle add IDs
 				$classname =& $context['class'];

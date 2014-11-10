@@ -156,7 +156,14 @@ app.classes.home = AppJS.extend(
 	add: function(action, source) {
 		// Put it in the last row, first column, since the mouse position is unknown
 		var max_row = Math.max.apply(null,$j('div',this.portlet_container.div).map(function() {return $j(this).attr('data-row');}));
-		var attrs = {id: this._create_id(), row: max_row + 1, col: 1};
+		
+		var attrs = {id: this._create_id(), row: 1, col: 1};
+		if(action.menu_context)
+		{
+			var $portlet_container = $j(this.portlet_container.getDOMNode());
+			attrs.row = Math.round((action.menu_context.posy - $portlet_container.offset().top )/ this.GRID)+1;
+			attrs.col = Math.max(1,Math.round((action.menu_context.posx - $portlet_container.offset().left) / this.GRID)+1);
+		}
 
 		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
 		// Override content ID so etemplate loads

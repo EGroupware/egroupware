@@ -47,6 +47,8 @@ class home_link_portlet extends home_portlet
 		if($context['entry'] && is_array($context['entry']));
 		{
 			$this->title = $context['entry']['title'] = egw_link::title($context['entry']['app'], $context['entry']['id']);
+
+			$need_reload |= (boolean)$context['entry']['id'];
 		}
 		$this->context = $context;
 	}

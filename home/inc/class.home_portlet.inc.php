@@ -107,4 +107,9 @@ abstract class home_portlet
 	{
 		return false;
 	}
+
+	public function __toString()
+	{
+		return get_called_class() . ' Context:' . array2string($this->context);
+	}
 }
