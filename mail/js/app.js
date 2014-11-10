@@ -206,7 +206,7 @@ app.classes.mail = AppJS.extend(
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
-					window.setTimeout(function(){that.compose_resizeHandler();}, 100);
+					window.setTimeout(function(){that.compose_resizeHandler();}, 300);
 				});
 
 				this.compose_fieldExpander();
@@ -3664,10 +3664,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_resizeHandler: function()
 	{
-		var bodyH = jQuery('body').height();
+		var bodyH = egw_getWindowInnerHeight();
 		var textArea = this.et2.getWidgetById('mail_plaintext');
 		var toolbar = jQuery('.mailSignature');
-
+		var content = this.et2.getArrayMgr('content').data;
 		if (typeof textArea != 'undefined' && textArea != null)
 		{
 			var textAreaH = textArea.node.clientHeight;
@@ -3676,8 +3676,11 @@ app.classes.mail = AppJS.extend(
 				textArea = this.et2.getWidgetById('mail_htmltext');
 				textAreaH = parseInt(textArea.getParent().node.clientHeight);
 			}
-
-			var freeSpace = (bodyH  - Math.round(toolbar.height() + toolbar.offset().top) - 65);
+			// Tolerate values base on plain text or html, in order to calculate freespaces
+			var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
+			var delta = content.attachments? 68: textAreaDelta;
+			
+			var freeSpace = (bodyH  - Math.round(toolbar.height() + toolbar.offset().top) - delta);
 
 			if (textArea.id != "mail_htmltext")
 			{
