@@ -77,26 +77,23 @@ class mail_hooks
 				'menuaction' => 'mail.mail_ui.displayMessage',
 			),
 			'view_id'    => 'id',
-			'view_popup' => '870xegw_getWindowOuterHeight()',
-			//'view_popup' => '870x800',
+			'view_popup' => '870xavailHeight',
 			'view_list'	=>	'mail.mail_ui.index',
 			'add'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
-			//'add_popup'  => '870xegw_getWindowOuterHeight()',
-			'add_popup'  => '870x800',
+			'add_popup'  => '870xavailHeight',
 			'edit'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
 			'edit_id'    => 'id',
-			//'edit_popup'  => '870xegw_getWindowOuterHeight()',
-			'edit_popup'  => '870x800',
+			'edit_popup'  => '870xavailHeight',
 			// register mail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
 					'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_url'   => 'formData[file]',
-					'mime_popup' => '870xegw_getWindowOuterHeight()',
+					'mime_popup' => '870xavailHeight',
 				),
 			),
 			'entry' => 'Mail',

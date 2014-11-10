@@ -164,23 +164,9 @@ app.classes.mail = AppJS.extend(
 				}
 				break;
 			case 'mail.display':
-				var subject = this.et2.getWidgetById('mail_displaysubject');
-				var body = this.et2.getWidgetById('mailDisplayBodySrc');
 				this.mail_isMainWindow = false;
 				this.mail_display();
-				body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
-				var app_registry = egw.link_get_registry('mail');
-				var w=870;
-				if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
-				{
-					var w_h =app_registry['view_popup'].split('x');
-					if (w_h[1] == 'egw_getWindowOuterHeight()')
-					{
-						w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
-					}
-				}
-				window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
-
+	
 				// Register attachments for drag
 				this.register_for_drag(
 					this.et2.getArrayMgr("content").getEntry('mail_id'),

@@ -235,6 +235,10 @@
 							// to take padding/margin into account
 							var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
 							var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
+							if (delta_height && egw_getWindowOuterHeight() >= egw.availHeight())
+							{
+								delta_height = 0;
+							}
 							if(delta_width != 0 || delta_height != 0)
 							{
 								window.resizeTo(egw_getWindowOuterWidth() - delta_width,egw_getWindowOuterHeight() - delta_height);
