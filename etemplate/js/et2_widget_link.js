@@ -1576,41 +1576,43 @@ var et2_link_list = et2_link_string.extend(
 			{
 				list = _value;
 			}
-		
-			for(var id in list)
+			if(list.length > 0)
 			{
-				var link = list[id];
-				if(link.app)
+				for(var id in list)
 				{
-					// Temp IDs can cause problems since the ID includes the file name or :
-					if(link.link_id && typeof link.link_id != 'number')
+					var link = list[id];
+					if(link.app)
 					{
-						link.dom_id = 'temp_'+egw.uid();
-					}
-					// Icon should be in registry
-					if(typeof link.icon == 'undefined')
-					{
-						link.icon = egw.link_get_registry(link.app,'icon');
-						// No icon, try by mime type - different place for un-saved entries
-						if(link.icon == false && link.id.type)
+						// Temp IDs can cause problems since the ID includes the file name or :
+						if(link.link_id && typeof link.link_id != 'number')
 						{
-							// Triggers icon by mime type, not thumbnail or app
-							link.type = link.id.type;
-							link.icon = true;
+							link.dom_id = 'temp_'+egw.uid();
 						}
+						// Icon should be in registry
+						if(typeof link.icon == 'undefined')
+						{
+							link.icon = egw.link_get_registry(link.app,'icon');
+							// No icon, try by mime type - different place for un-saved entries
+							if(link.icon == false && link.id.type)
+							{
+								// Triggers icon by mime type, not thumbnail or app
+								link.type = link.id.type;
+								link.icon = true;
+							}
+						}
+						// Special handling for file - if not existing, we can't ask for title
+						if(link.app == 'file' && typeof link.title == 'undefined')
+						{
+							link.title = link.id.name || '';
+						}
+						this._add_link(link);
 					}
-					// Special handling for file - if not existing, we can't ask for title
-					if(link.app == 'file' && typeof link.title == 'undefined')
-					{
-						link.title = link.id.name || '';
-					}
-					this._add_link(link);
 				}
 			}
-		}
-		else
-		{
-			this._super.apply(this,arguments);
+			else
+			{
+				this._super.apply(this,arguments);
+			}
 		}
 	},
 
