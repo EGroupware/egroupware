@@ -279,7 +279,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			if (_popup)
 			{
 				var w_h = _popup.split('x');
-				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
+				if (w_h[1] == 'availHeight') w_h[1] = this.availHeight();
 				var popup_window = _wnd.egw_openWindowCentered2(url, _target || '_blank', w_h[0], w_h[1], false, _target_app, true);
 
 				// Remember which windows are open
@@ -301,6 +301,14 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				return _wnd.open(url, _target);
 			}
+		},
+
+		/**
+		 * Get available height of screen
+		 */
+		availHeight: function()
+		{
+			return screen.availHeight < screen.height ? screen.availHeight : screen.height - 100;
 		},
 
 		/**
