@@ -76,10 +76,10 @@ class admin_accesslog
 
 		foreach($rows as &$row)
 		{
-			$row['sessionstatus'] = lang('success');
+			$row['sessionstatus'] = 'success';
 			if ($row['notification_heartbeat'] > $heartbeat_limit)
 			{
-				$row['sessionstatus'] = lang('active');
+				$row['sessionstatus'] = 'active';
 			}
 			if (stripos($row['session_php'],'blocked') !== false ||
 				stripos($row['session_php'],'bad login') !== false ||
@@ -89,7 +89,7 @@ class admin_accesslog
 			}
 			if ($row['lo']) {
 				$row['total'] = ($row['lo'] - $row['li']) / 60;
-				$row['sessionstatus'] = lang('logged out');
+				$row['sessionstatus'] = 'logged out';
 			}
 			// eg. for bad login or password
 			if (!$row['account_id']) $row['alt_loginid'] = ($row['loginid']?$row['loginid']:lang('none'));
@@ -100,10 +100,12 @@ class admin_accesslog
 				$row['class'] .= ' rowNoDelete ';
 			}
 			// do not allow to delete access log off active sessions
-			if (!$row['lo'] && $row['session_dla'] > time()-$GLOBALS['egw_info']['server']['sessions_timeout'] && !$query['session_list'])
+			if (!$row['lo'] && $row['session_dla'] > time()-$GLOBALS['egw_info']['server']['sessions_timeout'] &&
+				in_array($row['sessionstatus'], array('active', 'success')) && !$query['session_list'])
 			{
 				$row['class'] .= ' rowNoDelete ';
 			}
+			$row['sessionstatus'] = lang($row['sessionstatus']);
 			unset($row['session_php']);	// for security reasons, do NOT give real PHP sessionid to UI
 		}
 		if ($query['session_list'])
