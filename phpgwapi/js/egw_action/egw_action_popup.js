@@ -309,6 +309,7 @@ function egwPopupActionImplementation()
 			_target = null;
 		}
 
+		ai._context = _context;
 		if (typeof _context == "object" && typeof _context.keyEvent == "object")
 		{
 			return ai._handleKeyPress(_context.keyEvent, _selected, _links, _target);
@@ -492,6 +493,9 @@ function egwPopupActionImplementation()
 					if (link.enabled && _enabled)
 					{
 						item.set_onClick(function(elem) {
+							// Pass the context
+							elem.data.menu_context = ai._context;
+
 							// Copy the "checked" state
 							if (typeof elem.data.checked != "undefined")
 							{
