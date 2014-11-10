@@ -613,7 +613,7 @@ class calendar_groupdav extends groupdav_handler
 				if (isset($expand['start'])) $expand['start'] = $this->vCalendar->_parseDateTime($expand['start']);
 				if (isset($expand['end'])) $expand['end'] = $this->vCalendar->_parseDateTime($expand['end']);
 			}
-			$events =& self::get_series($event['uid'], $this->bo, $expand);
+			$events =& self::get_series($event['uid'], $this->bo, $expand, $user);
 		}
 		elseif(!$this->client_shared_uid_exceptions && $event['reference'])
 		{
@@ -630,18 +630,12 @@ class calendar_groupdav extends groupdav_handler
 	 * @param string $uid UID
 	 * @param calendar_bo $bo=null calendar_bo object to reuse for search call
 	 * @param boolean|array $expand=false true or array with values for 'start', 'end' to expand recurrences
+	 * @param int $user=null account_id of calendar to display, to remove master, if current user does not participate in
 	 * @return array
 	 */
-	private static function &get_series($uid,calendar_bo $bo=null, $expand=false)
+	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null)
 	{
 		if (is_null($bo)) $bo = new calendar_bopdate();
-
-		if (!($masterId = array_shift($bo->find_event(array('uid' => $uid), 'master')))
-				|| !($master = $bo->read($masterId, 0, false, 'server')))
-		{
-			return array(); // should never happen
-		}
-		$exceptions =& $master['recur_exception'];
 
 		$params = array(
 			'query' => array('cal_uid' => $uid),
@@ -653,11 +647,31 @@ class calendar_groupdav extends groupdav_handler
 
 		$events =& $bo->search($params);
 
+		$master = null;
 		foreach($events as $k => &$recurrence)
 		{
+			if (!isset($master))	// first event is master
+			{
+				$master = $recurrence;
+				$exceptions =& $master['recur_exception'];
+				unset($events[$k]);
+				continue;
+			}
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
 			if ($recurrence['id'] != $master['id'])	// real exception
 			{
+				// user is NOT participating in this exception
+				if ($user && !isset($recurrence['participants'][$user]))
+				{
+					// if he is NOT in master, delete this exception
+					if (!isset($master['participants'][$user]))
+					{
+						unset($events[$k]);
+						continue;
+					}
+					// otherwise mark him in this exception as rejected
+					$recurrence['participants'][$user] = 'R';
+				}
 				//error_log('real exception: '.array2string($recurrence));
 				// remove from masters recur_exception, as exception is include
 				// at least Lightning "understands" EXDATE as exception from what's included
@@ -683,7 +697,8 @@ class calendar_groupdav extends groupdav_handler
 			$recurrence['recur_type'] = MCAL_RECUR_NONE;	// is set, as this is a copy of the master
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
-		if (!$expand)
+		// only add master if we are not expanding and current user participates in master (and not just some exceptions)
+		if (!$expand && (!$user || isset($master['participants'][$user])))
 		{
 			$events = array_merge(array($master), $events);
 		}
