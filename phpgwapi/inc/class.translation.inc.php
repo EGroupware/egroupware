@@ -1112,12 +1112,12 @@ class translation
 		//replace CRLF with something other to be preserved via preg_replace as CRLF seems to vanish
 		$text = str_replace("\r\n",'<#cr-lf#>',$text);
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-		$text = preg_replace("/(<|&lt;a href=\")*(mailto:([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","'$2 '", $text);
+		$text = preg_replace("/(<|&lt;a href=\")*(mailto:([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","$2 ", $text);
 		//$text = preg_replace_callback("/(<|&lt;a href=\")*(mailto:([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i",'self::transform_mailto2text',$text);
 		//$text = preg_replace('~<a[^>]+href=\"(mailto:)+([^"]+)\"[^>]*>~si','$2 ',$text);
 		$text = preg_replace_callback('~<a[^>]+href=\"(mailto:)+([^"]+)\"[^>]*>([ @\w\.,-.,_.,0-9.]+)<\/a>~si','self::transform_mailto2text',$text);
-		$text = preg_replace("/(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))( |\s)*(<\/a>)*( |\s)*(>|&gt;)*/i","'$1 '", $text);
-		$text = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","'$2 '", $text);
+		$text = preg_replace("/(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))( |\s)*(<\/a>)*( |\s)*(>|&gt;)*/i","$1 ", $text);
+		$text = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","$2 ", $text);
 		$text = str_replace('<#cr-lf#>',"\r\n",$text);
 		return 1;
 	}
