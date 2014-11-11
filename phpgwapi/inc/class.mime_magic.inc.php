@@ -29,12 +29,12 @@ class mime_magic
 	/**
 	 * Get a user friendly label for a mime type: e.g. "PDF file (application/pdf)"
 	 *
-	 * @param string $mime
+	 * @param string $_mime
 	 * @return string
 	 */
-	public static function mime2label($mime)
+	public static function mime2label($_mime)
 	{
-		$mime = strtolower($mime);
+		$mime = strtolower($_mime);
 
 		if ($mime == egw_vfs::DIR_MIME_TYPE)
 		{
@@ -54,16 +54,16 @@ class mime_magic
 	 * If the MIME type is not found then 'application/octet-stream'
 	 * is returned.
 	 *
-	 * @param string $ext  The file extension to be mapped to a MIME type.
+	 * @param string $_ext  The file extension to be mapped to a MIME type.
 	 * @return string  The MIME type of the file extension.
 	 */
-	public static function ext2mime($ext)
+	public static function ext2mime($_ext)
 	{
-		if (empty($ext))
+		if (empty($_ext))
 		{
 			return 'text/plain';//assume no extension is a text file
 		}
-		$ext = strtolower($ext);
+		$ext = strtolower($_ext);
 		if (!array_key_exists($ext, self::$mime_extension_map))
 		{
 			return 'application/octet-stream';
@@ -108,12 +108,12 @@ class mime_magic
 	 *
 	 * If we cannot map the type to a file extension, we return false.
 	 *
-	 * @param string $type  The MIME type to be mapped to a file extension.
+	 * @param string $_type  The MIME type to be mapped to a file extension.
 	 * @return string  The file extension of the MIME type.
 	 */
-	public static function mime2ext($type)
+	public static function mime2ext($_type)
 	{
-		$type = strtolower($type);
+		$type = strtolower($_type);
 		if (isset(self::$mime_alias_map[$type])) $type = self::$mime_alias_map[$type];
 		$key = array_search($type, self::$mime_extension_map);
 		if (empty($type) || $key === false)
@@ -127,7 +127,7 @@ class mime_magic
 	 * Uses variants of the UNIX "file" command to attempt to determine the
 	 * MIME type of an unknown file.
 	 *
-	 * @param string $filename The filename (including full path) to the file to analyze.
+	 * @param string $path filename (including full path) of file to analyze
 	 *
 	 * @return string  The MIME type of the file.  Returns false if either
 	 *                 the file type isn't recognized or the file command is
@@ -309,6 +309,7 @@ class mime_magic
 		'movie'	=> 'video/x-sgi-movie',
 		'mp2'	=> 'audio/mpeg',
 		'mp3'	=> 'audio/mpeg',
+		'mp4'	=> 'video/mp4',
 		'mpe'	=> 'video/mpeg',
 		'mpeg'	=> 'video/mpeg',
 		'mpg'	=> 'video/mpeg',
