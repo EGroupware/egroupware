@@ -662,19 +662,20 @@ class emailadmin_imapbase
 	/**
 	 * getAllIdentities - function to gather the identities connected to the current user
 	 * @param string/int $_accountToSearch; null; if set search accounts for user specified
+	 * @param boolean $resolve_placeholders wether or not resolve possible placeholders in identities
 	 * @return array - array(email=>realname)
 	 */
-	static function getAllIdentities($_accountToSearch=null) {
+	static function getAllIdentities($_accountToSearch=null,$resolve_placeholders=false) {
 		$userEMailAdresses = array();
 		foreach(emailadmin_account::search($only_current_user=($_accountToSearch?$_accountToSearch:true), $just_name=true) as $acc_id => $identity_name)
 		{
 			$acc = emailadmin_account::read($acc_id,($_accountToSearch?$_accountToSearch:null));
-			$userEMailAdresses[$acc['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$acc['ident_id'],'ident_email'=>$acc['ident_email'],'ident_org'=>$acc['ident_org'],'ident_realname'=>$acc['ident_realname'],'ident_signature'=>$acc['ident_signature'],'ident_name'=>$acc['ident_name']);
+			if (!$resolve_placeholders) $userEMailAdresses[$acc['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$acc['ident_id'],'ident_email'=>$acc['ident_email'],'ident_org'=>$acc['ident_org'],'ident_realname'=>$acc['ident_realname'],'ident_signature'=>$acc['ident_signature'],'ident_name'=>$acc['ident_name']);
 			$identities = $acc->identities($acc_id);
 
 			foreach($identities as $ik => $ident) {
 				//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($ident));
-				$identity = emailadmin_account::read_identity($ik);
+				$identity = emailadmin_account::read_identity($ik,$resolve_placeholders);
 				//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($identity));
 				if (!isset($userEMailAdresses[$identity['ident_id']])) $userEMailAdresses[$identity['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature'],'ident_name'=>$identity['ident_name']);
 			}

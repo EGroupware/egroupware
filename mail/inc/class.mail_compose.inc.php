@@ -921,7 +921,7 @@ class mail_compose
 */
 		// prepare signatures, the selected sig may be used on top of the body
 		//identities and signature stuff
-		$allIdentities = mail_bo::getAllIdentities();
+		$allIdentities = mail_bo::getAllIdentities(null,true);
 		$selectedMailAccount = ($content['mailaccount']?$content['mailaccount']:$this->mail_bo->profileID);
 		$acc = emailadmin_account::read($this->mail_bo->profileID);
 		$selectSignatures = array(
@@ -964,6 +964,12 @@ class mail_compose
 		//if (count($defaultIds)>1) unset($defaultIds[$this->mail_bo->profileID]);
 		$allSignatures = $this->mail_bo->getAccountIdentities($selectedMailAccount);
 		$defaultIdentity = 0;
+		// we want identity info in a length approx between 50 and 100 char
+		$longestName = 50;
+		foreach($allSignatures as $key => $singleIdentity) {
+			if (strlen($singleIdentity['ident_name'])>$longestName) $longestName=strlen($singleIdentity['ident_name']);
+		}
+		if ($longestName>100) $longestName=100;
 		foreach($allSignatures as $key => $singleIdentity) {
 			//error_log(__METHOD__.__LINE__.array2string($singleIdentity));
 			//$identities[$singleIdentity['ident_id']] = $singleIdentity['ident_realname'].' <'.$singleIdentity['ident_email'].'>';
@@ -976,13 +982,15 @@ class mail_compose
 			{
 				$id_prepend = '('.$singleIdentity['ident_id'].') ';
 			}
+			$buff='';
 			if (!empty($singleIdentity['ident_name']) && !in_array(lang('Signature').': '.$id_prepend.$singleIdentity['ident_name'],$selectSignatures))
 			{
 				$buff = $singleIdentity['ident_name'];
+				if (strlen($buff)<$longestName)$buff = $singleIdentity['ident_name'].': '.trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,$longestName-strlen($buff)));
 			}
 			else
 			{
-				$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,50));
+				$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,$longestName));
 			}
 			$sigDesc = $buff?$buff:lang('none');
 
