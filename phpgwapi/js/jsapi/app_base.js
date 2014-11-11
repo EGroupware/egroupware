@@ -361,11 +361,20 @@ var AppJS = Class.extend(
 				})
 				.addClass("ui-helper-clearfix");
 
-				//Add Sortable handler to sideBox fav. menu
-				 jQuery('ul','#favorite_sidebox_'+this.appname).sortable({
-
+			//Add Sortable handler to sideBox fav. menu
+			jQuery('ul','#favorite_sidebox_'+this.appname).sortable({
 					items:'li:not([data-id$="add"])',
 					placeholder:'ui-fav-sortable-placeholder',
+					helper: function(event, item) {
+						// We'll need to know which app this is for
+						item.attr('data-appname',self.appname);
+						// Create custom helper so it can be dragged to Home
+						var h_parent = item.parent().parent().clone();
+						h_parent.find('li').not('[data-id="'+item.attr('data-id')+'"]').remove();
+						h_parent.appendTo('body');
+						return h_parent;
+					},
+					refreshPositions: true,
 					update: function (event, ui)
 					{
 						var favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
