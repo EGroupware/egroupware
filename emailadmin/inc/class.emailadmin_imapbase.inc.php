@@ -578,9 +578,11 @@ class emailadmin_imapbase
 	 */
 	static function resetFolderObjectCache($_ImapServerId=null,$account_id=null)
 	{
-		//error_log(__METHOD__.' ('.__LINE__.') '.' called for Profile:'.$_ImapServerId.'->'.function_backtrace());
+		//error_log(__METHOD__.' ('.__LINE__.') '.' called for Profile:'.array2string($_ImapServerId).'->'.function_backtrace());
 		if (is_null($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
-		if (is_null($_ImapServerId))
+		// on [location] => verify_settings we coud either use [prefs] => Array([ActiveProfileID] => 9, .. as $_ImapServerId
+		// or treat it as not given. we try that path
+		if (is_null($_ImapServerId)||is_array($_ImapServerId))
 		{
 			$folders2return = array();
 			$folderInfo = array();
