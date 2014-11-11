@@ -65,22 +65,22 @@ app.classes.mail = AppJS.extend(
 	 */
 	init: function() {
 		this._super.apply(this,arguments);
-
-		// Turn on client side, persistent cache
-		// egw.data system runs encapsulated below etemplate, so this must be
-		// done before the nextmatch is created.
-		this.egw.dataCacheRegister('mail',
-			// Called to determine cache key
-			this.nm_cache,
-			// Called whenever cache is used
-			// TODO: Change this as needed
-			function(server_query)
-			{
-				// Unlock tree if using a cache, since the server won't
-				if(!server_query) this.unlock_tree();
-			},
-			this
-		);
+		if (!this.egw.is_popup())	
+			// Turn on client side, persistent cache
+			// egw.data system runs encapsulated below etemplate, so this must be
+			// done before the nextmatch is created.
+			this.egw.dataCacheRegister('mail',
+				// Called to determine cache key
+				this.nm_cache,
+				// Called whenever cache is used
+				// TODO: Change this as needed
+				function(server_query)
+				{
+					// Unlock tree if using a cache, since the server won't
+					if(!server_query) this.unlock_tree();
+				},
+				this
+			);
 	},
 
 	/**
