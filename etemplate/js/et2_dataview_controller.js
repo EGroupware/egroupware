@@ -678,7 +678,7 @@ var et2_dataview_controller = Class.extend({
 
 		// Unregister the data callback
 		this.self._dataProvider.dataUnregisterUID(this.entry.uid,
-				this.self._dataCallback, null);
+				this.self._dataCallback, this);
 	},
 
 	/**
