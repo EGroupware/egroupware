@@ -290,7 +290,7 @@ class emailadmin_account implements ArrayAccess
 	 */
 	public function imapServer($_adminConnection=false, $_timeout=null)
 	{
-		if (!isset($this->imapServer))
+		if (!isset($this->imapServer) || $this->imapServer->isAdminConnection !== $_adminConnection)
 		{
 			// make sure mbstring.func_overload=0
 			static $func_overload = null;

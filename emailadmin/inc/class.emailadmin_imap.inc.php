@@ -46,6 +46,7 @@ require_once EGW_INCLUDE_ROOT.'/emailadmin/inc/class.defaultimap.inc.php';
  * @property-read boolean $acc_further_identities are non-admin users allowed to create further identities
  * @property-read boolean $acc_user_editable are non-admin users allowed to edit this account, if it is for them
  * @property-read array $params parameters passed to constructor (all above as array)
+ * @property-read boolean|int|string $isAdminConnection admin connection if true or account_id or imap username
  */
 class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 {
@@ -107,9 +108,9 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	protected $enableSieve = false;
 
 	/**
-	 * True if connection is an admin connection
+	 * Connection is an admin connection
 	 *
-	 * @var boolean
+	 * @var boolean|int|string $isAdminConnection admin connection if true or account_id or imap username
 	 */
 	protected $isAdminConnection = false;
 
