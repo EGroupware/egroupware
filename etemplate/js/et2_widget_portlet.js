@@ -132,6 +132,8 @@ var et2_portlet = et2_valueWidget.extend(
 						null,
 						self, true, self
 					);
+					// Tell children
+					self.iterateOver(function(widget) {widget.resize();},null,et2_IResizeable);
 				}
 			});
 		this.header = $j(document.createElement("div"))
@@ -288,6 +290,13 @@ var et2_portlet = et2_valueWidget.extend(
 				{
 					this.edit_settings();
 				}
+
+				// Only resize once, and only if needed
+				if(data.attributes.width || data.attributes.height)
+				{
+					// Tell children
+					this.iterateOver(function(widget) {widget.resize();},null,et2_IResizeable);
+				}
 			},
 			this, true, this
 		);
@@ -350,6 +359,8 @@ var et2_portlet = et2_valueWidget.extend(
 	{
 		this.options.width = value;
 		this.div.attr("data-sizex", value);
+		// Clear what's there from jQuery, we get width from CSS according to sizex
+		this.div.css('width','');
 	},
 	
 	/**
@@ -361,6 +372,8 @@ var et2_portlet = et2_valueWidget.extend(
 	{
 		this.options.height = value;
 		this.div.attr("data-sizey", value);
+		// Clear what's there from jQuery, we get width from CSS according to sizey
+		this.div.css('height','');
 	}
 	
 });

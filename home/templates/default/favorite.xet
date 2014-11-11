@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="home.favorite" template="" lang="" group="0" version="1.9.001">
+		<nextmatch id="nm"/>
+	</template>
+</overlay>

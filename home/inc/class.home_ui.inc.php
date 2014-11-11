@@ -48,17 +48,6 @@ class home_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('home');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
 
-		$template->exec('home.home_ui.index', $content);
-
-		// Now run the portlets themselves
-		foreach($content['portlets'] as $portlet => $p_data)
-		{
-			$id = $p_data['id'];
-
-			if(!$id) continue;
-			$portlet = $this->get_portlet($id, $p_data, $content, $attrs, true);
-		}
-
 		// Main screen message
 		translation::add_app('mainscreen');
 		$greeting = translation::translate('mainscreen_message',false,'');
@@ -72,6 +61,18 @@ class home_ui
 		{
 			$content['mainscreen_message'] = $greeting;
 		}
+
+		$template->exec('home.home_ui.index', $content);
+		
+		// Now run the portlets themselves
+		foreach($content['portlets'] as $portlet => $p_data)
+		{
+			$id = $p_data['id'];
+
+			if(!$id) continue;
+			$portlet = $this->get_portlet($id, $p_data, $content, $attrs, true);
+		}
+
 	}
 
 	/**
@@ -86,6 +87,13 @@ class home_ui
 		$add_portlets = $portlets;
 		foreach($add_portlets as $id => &$add)
 		{
+			if(!$add['id'] && is_array($add['children']))
+			{
+				foreach($add['children'] as $sub_id => &$sub_add)
+				{
+					$sub_add['id'] = 'add_'.$sub_id;
+				}
+			}
 			$add['id'] = 'add_' . $id;
 			$add['class'] = $id;
 		}
@@ -95,7 +103,9 @@ class home_ui
 				'caption'	=> 'Add',
 				'onExecute'	=> 'javaScript:app.home.add',
 				'children'	=> $add_portlets
-			)
+			),
+			// Favorites are sortable which needs special handling,
+			// handled directly through jQuery
 		);
 
 		// Add all known portlets as drop actions too.  If there are multiple matches, there will be a menu
@@ -113,12 +123,15 @@ class home_ui
 			}
 			else
 			{
-				foreach($children as $portlet => $app_portlets)
+				foreach($children['children'] as $portlet => $app_portlet)
 				{
-					$app_portlets['onExecute'] = $drop_execute;
+					if(!is_array($app_portlet)) continue;
+					$app_portlet['class'] = $portlet;
+					$app_portlet['id'] = 'drop_' . $app_portlet['id'];
+					$app_portlet['onExecute'] = $drop_execute;
 					$app_portlet['acceptedTypes'] = $app;
 					$app_portlet['type'] = 'drop';
-					$actions["drop_$portlet"] = $app_portlets;
+					$actions["drop_$portlet"] = $app_portlet;
 				}
 			}
 		}
@@ -300,7 +313,13 @@ class home_ui
 		$list = egw_cache::getTree('home', 'portlet_classes', function() {
 			$list = array();
 			$classes = array();
-
+			
+			// Ignore some problem files and base classes that shouldn't be options
+			$ignore = array(
+				'.','..',
+				'class.home_legacy_portlet.inc.php',
+				'class.home_favorite_portlet.inc.php'
+			);
 			// Look through all known classes for portlets - for now, they need 'portlet' in the file name
 			foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
 			{
@@ -310,7 +329,7 @@ class home_ui
 
 				foreach($files as $entry)
 				{
-					if (!in_array($entry, array('.','..','class.home_legacy_portlet.inc.php')) && substr($entry,-8) == '.inc.php' && strpos($entry,'portlet'))
+					if (!in_array($entry, $ignore) && substr($entry,-8) == '.inc.php' && strpos($entry,'portlet'))
 					{
 						list(,$classname) = explode('.', $entry);
 						if(class_exists($classname) &&

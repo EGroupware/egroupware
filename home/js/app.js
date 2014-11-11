@@ -101,6 +101,35 @@ app.classes.home = AppJS.extend(
 
 			// Set up sorting of portlets
 			this._do_ordering();
+
+			// Accept drops of favorites, which aren't part of action system
+			$j(this.et2.getDOMNode()).droppable({
+				hoverClass: 'drop-hover',
+				accept: function(draggable) {
+					// Check for direct support for that application
+					if(draggable[0].dataset && draggable[0].dataset.appname)
+					{
+						return egw_getActionManager('home',false,1).getActionById('drop_'+draggable[0].dataset.appname +'_favorite_portlet') != null;
+					}
+					return false;
+				},
+				drop: function(event, ui) {
+					// Favorite dropped on home - fake an action and divert to normal handler
+					var action = {
+						data: {
+							class: 'add_home_favorite_portlet'
+						}
+					}
+
+					// Check for direct support for that application
+					if(ui.helper.context.dataset && ui.helper.context.dataset.appname)
+					{
+						var action = egw_getActionManager('home',false,1).getActionById('drop_'+ui.helper.context.dataset.appname +'_favorite_portlet') || {}
+					}
+					action.ui = ui;
+					app.home.add_from_drop(action, [{data: ui.helper.context.dataset}])
+				}
+			})
 		}
 		else if (et2.uniqueId)
 		{
@@ -127,37 +156,24 @@ app.classes.home = AppJS.extend(
 			var misplaced = $j(etemplate2.getById('home-index').DOMContainer).siblings('#'+et2.DOMContainer.id);
 			if(portlet)
 			{
+				portlet.content = $j(et2.DOMContainer).appendTo(portlet.content);
 				portlet.addChild(et2.widgetContainer);
+				et2.resize();
 			}
 			if(portlet && misplaced.length)
 			{
-				// etemplate->exec() always adds a new div, so if there's an extra one, move it
-				$j(et2.DOMContainer).remove();
-				et2.DOMContainer = portlet.getDOMNode(et2);
 				et2.DOMContainer.id = et2.uniqueId;
 			}
 		}
 	},
 
 	/**
-	 * Set top level actions
-	 *
-	 * @param {type} action
-	 * @param {type} source
-	 * @returns {undefined}
-	 */
-	set_actions: function() {
-		
-	},
-
-	/**
 	 * Add a new portlet from the context menu
 	 */
 	add: function(action, source) {
-		// Put it in the last row, first column, since the mouse position is unknown
-		var max_row = Math.max.apply(null,$j('div',this.portlet_container.div).map(function() {return $j(this).attr('data-row');}));
-		
 		var attrs = {id: this._create_id(), row: 1, col: 1};
+
+		// Try to put it about where the menu was opened
 		if(action.menu_context)
 		{
 			var $portlet_container = $j(this.portlet_container.getDOMNode());
@@ -185,7 +201,7 @@ app.classes.home = AppJS.extend(
 	/**
 	 * User dropped something on home.  Add a new portlet
 	 */
-	add_from_drop: function(action,source,target_action) {
+	add_from_drop: function(action,source) {
 
 		// Actions got confused drop vs popup
 		if(source[0].id == 'portlets')
@@ -214,7 +230,14 @@ app.classes.home = AppJS.extend(
 		var drop_data = [];
 		for(var i = 0; i < source.length; i++)
 		{
-			if(source[i].id) drop_data.push(source[i].id);
+			if(source[i].id)
+			{
+				drop_data.push(source[i].id);
+			}
+			else
+			{
+				drop_data.push(source[i].data);
+			}
 		}
 		portlet._process_edit(et2_dialog.OK_BUTTON, {dropped_data: drop_data, class: action.data.class || action.id.substr(5)});
 

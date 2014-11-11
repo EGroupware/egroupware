@@ -10,7 +10,7 @@
 			<rows>
 				<row>
 					<label for="@${row}[name]" value="@${row}[label]"/>
-					<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" options="@${row}[size]"/>
+					<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" select_options="@${row}[select_options]"/>
 				</row>
 			</rows>
 		</grid>

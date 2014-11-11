@@ -24,10 +24,16 @@
 	overflow: hidden;
 }
 .et2_portlet.ui-widget-content > div:last-of-type {
+	/* Allow space for header, as the whole portlet is sized by auto-generated css */
+	position: absolute;
+	bottom: 0px;
+	top: 20px;
+	width: 100%;
+}
+.et2_portlet .et2_container {
 	height: 100%;
 }
 .et2_portlet.ui-widget-content > div:last-of-type > div {
-	height: 100%;
 	background: linear-gradient(to bottom, rgba(255,255,255,.9) 10%,rgba(255,255,255,.75) 90%) /* W3C */
 }
 
@@ -38,10 +44,13 @@
 .home .et2_portlet {
 	position: absolute;
 }
-#portlets .preview-holder {
+.home .et2_portlet.dragging {
+	z-index: 99;
+}
+.preview-holder {
 	margin: 5px;
 	list-style: none;
-	background: transparent;
-	border: 1px dashed silver;
+	background: rgba(0,0,0,.3);
+	border: 1px solid silver;
 	position: absolute;
 }
