@@ -451,7 +451,7 @@ class emailadmin_account implements ArrayAccess
 		if (is_null($account)) $account = $this;
 		$acc_id = is_scalar($account) ? $account : $account['acc_id'];
 
-		$cols = array('ident_id', 'ident_name', 'ident_realname', 'ident_org', 'ident_email', 'acc_id', 'acc_imap_username', 'acc_imap_logintype', 'acc_domain');
+		$cols = array('ident_id', 'ident_name', 'ident_realname', 'ident_org', 'ident_email', 'ident_signature', 'acc_id', 'acc_imap_username', 'acc_imap_logintype', 'acc_domain');
 		if (!in_array($field, array_merge($cols, array('name', 'params'))))
 		{
 			$cols[] = $field;

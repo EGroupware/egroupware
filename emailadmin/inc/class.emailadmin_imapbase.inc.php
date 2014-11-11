@@ -684,24 +684,17 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * getAccountIdentities - function to gather the identities connected to the current mailaccount
-	 * @param int  $acc_id to pass all conected identities back
+	 * Get all identities of given mailaccount
+	 *
+	 * @param int|emailadmin_account $account account-object or acc_id
 	 * @return array - array(email=>realname)
 	 */
-	function getAccountIdentities($acc_id) {
-		$userEMailAdresses = array();
-		$acc = emailadmin_account::read($acc_id);
-		$userEMailAdresses[$acc['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$acc['ident_id'],'ident_email'=>$acc['ident_email'],'ident_org'=>$acc['ident_org'],'ident_realname'=>$acc['ident_realname'],'ident_signature'=>$acc['ident_signature'],'ident_name'=>$acc['ident_name']);
-		$identities = $acc->identities();
-
-		foreach($identities as $ik => $ident) {
-			//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($ident));
-			$identity = emailadmin_account::read_identity($ik);
-			//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($identity));
-			if (!isset($userEMailAdresses[$identity['ident_id']])) $userEMailAdresses[$identity['ident_id']] = array('ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature'],'ident_name'=>$identity['ident_name']);
+	function getAccountIdentities($account) {
+		if (!$account instanceof emailadmin_account)
+		{
+			$account = emailadmin_account::read($account);
 		}
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($userEMailAdresses));
-		return $userEMailAdresses;
+		return $account->identities(null, true, 'params');
 	}
 
 	/**
