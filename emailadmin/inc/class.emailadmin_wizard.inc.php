@@ -1221,6 +1221,14 @@ class emailadmin_wizard
 		$readonlys['tabs']['emailadmin.account.aliases'] = !$content['acc_smtp_type'] ||
 			$content['acc_smtp_type'] == 'emailadmin_smtp';
 
+		// allow smtp class to disable certain features in alias tab
+		if ($content['acc_smtp_type'] && class_exists($content['acc_smtp_type']) &&
+			is_a($content['acc_smtp_type'], 'emailadmin_smtp_ldap', true))
+		{
+			$content['no_forward_available'] = !constant($content['acc_smtp_type'].'::FORWARD_ATTR');
+			$readonlys['deliveryMode'] = !constant($content['acc_smtp_type'].'::FORWARD_ONLY_ATTR');
+		}
+
 		// allow imap classes to disable certain tabs or fields
 		if (($class = emailadmin_account::getIcClass($content['acc_imap_type'])) && class_exists($class) &&
 			($imap_ro = call_user_func(array($class, 'getUIreadonlys'))))
