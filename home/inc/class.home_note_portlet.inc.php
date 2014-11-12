@@ -89,10 +89,6 @@ class home_note_portlet extends home_portlet
 		{
 			$id = $id['id'];
 		}
-		if($etemplate == null)
-		{
-			$etemplate = new etemplate_new();
-		}
 		$etemplate->read('home.note');
 
 		$etemplate->set_dom_id($id);
@@ -101,6 +97,7 @@ class home_note_portlet extends home_portlet
 		if(!$content['note'])
 		{
 			$content['note'] = '';
+			egw_json_response::get()->apply('app.home.note_edit',array($id));
 		}
 
 		$etemplate->exec('home.home_note_portlet.exec',$content,array(),array('__ALL__'=>true),array('id' =>$id));
@@ -117,7 +114,7 @@ class home_note_portlet extends home_portlet
 				'default' => true
 			),
 			'edit_settings' => array(
-				'default' => false
+				'enabled' => false
 			)
 		);
 		return $actions;

@@ -507,7 +507,14 @@ app.classes.home = AppJS.extend(
 	 * @param {egwActionObject[]} Selected
 	 */
 	note_edit: function(action, selected) {
-		var id = selected[0].id;
+		if(!selected && typeof action == 'string')
+		{
+			var id = action;
+		}
+		else
+		{
+			var id = selected[0].id;
+		}
 
 		// Aim to match the size
 		var portlet_dom = $j('[id$='+id+'][data-sizex]',this.portlet_container.getDOMNode);
@@ -522,8 +529,8 @@ app.classes.home = AppJS.extend(
 		// Open popup, but add 30 to the height for the toolbar
 		egw.open_link(egw.link('/index.php',{
 			menuaction: 'home.home_note_portlet.edit',
-			id: selected[0].id,
+			id: id,
 			height: window_height - 70
-		}),action.id+selected[0].id, window_width+'x'+window_height,'home');
+		}),'home_'+id, window_width+'x'+window_height,'home');
 	}
 });
