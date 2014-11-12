@@ -730,6 +730,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 }
 /* MAIL PRINT */
 @media print {
+	html *, .td_display {
+		font-size: 12pt !important;
+	}
 	.mailDisplayHeaders {
 		border-bottom: 0.1em solid #d7d7d7;
 		padding-top: 4px;
