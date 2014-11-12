@@ -1,3 +1,13 @@
+egroupware-epl (14.1.20141112-1) hardy; urgency=low
+
+  * Mail: fix mail display and compose open again in full height
+  * Mail: setting a font-size of 12pt for printing mails
+  * CalDAV: big calendars with more then 500 events in result-set were missing events
+  * CalDAV: fixed users participating only in exceptions of a recurring event were also shown in whole series in Thunderbird and iCal
+  * PHP: automatic set size of shared memory available to PHP APC(u) extension to 128MB, if installed and less then 64MB
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 12 Nov 2014 13:18:37 +0100
+
 egroupware-epl (14.1.20141106-1) hardy; urgency=low
 
   * All Apps: get text selection in lists working with Alt/Cmd modifier and file drag-out with Shift+Alt/Cmd modifier
