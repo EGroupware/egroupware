@@ -253,79 +253,85 @@ var et2_date = et2_inputWidget.extend(
 		// Handle just time as a string in the form H:i
 		if(typeof _value == 'string' && isNaN(_value))
 		{
-			// silently fix skiped minutes or times with just one digit, as parser is quite pedantic ;-)
-			var fix_reg = new RegExp((this._type == "date-timeonly"?'^':' ')+'([0-9]+)(:[0-9]*)?( ?(a|p)m?)?$','i');
-			var matches = _value.match(fix_reg);
-			if (matches && (matches[1].length < 2 || matches[2] === undefined || matches[2].length < 3 ||
-				matches[3] && matches[3] != 'am' && matches[3] != 'pm'))
-			{
-				if (matches[1].length < 2 && !matches[3]) matches[1] = '0'+matches[1];
-				if (matches[2] === undefined) matches[2] = ':00';
-				while (matches[2].length < 3) matches[2] = ':0'+matches[2].substr(1);
-				_value = _value.replace(fix_reg, (this._type == "date-timeonly"?'':' ')+matches[1]+matches[2]+matches[3]);
-				if (matches[4] !== undefined) matches[3] = matches[4].toLowerCase() == 'a' ? 'am' : 'pm';
-			}
-			switch(this._type)
-			{
-				case "date-timeonly":
-					var parsed = jQuery.datepicker.parseTime(this.input_date.datepicker('option', 'timeFormat'), _value);
-					if (!parsed)	// parseTime returns false
-					{
-						this.set_validation_error(this.egw().lang("'%1' has an invalid format !!!",_value));
-						return;
-					}
-					this.set_validation_error(false);
-					// this.date is on current date, changing it in get_value() to 1970-01-01, gives a time-difference, if we are currently on DST
-					this.date.setDate(1);
-					this.date.setMonth(0);
-					this.date.setFullYear(1970);
-					// Avoid javascript timezone offset, hour is in 'user time'
-					this.date.setUTCHours(parsed.hour);
-					this.date.setMinutes(parsed.minute);
-					if(this.input_date.val() != _value)
-					{
-						this.input_date.val(_value);
-						this.input_date.timepicker('setTime',_value);
-						if (this._oldValue !== et2_no_init)
+			try {
+				// silently fix skiped minutes or times with just one digit, as parser is quite pedantic ;-)
+				var fix_reg = new RegExp((this._type == "date-timeonly"?'^':' ')+'([0-9]+)(:[0-9]*)?( ?(a|p)m?)?$','i');
+				var matches = _value.match(fix_reg);
+				if (matches && (matches[1].length < 2 || matches[2] === undefined || matches[2].length < 3 ||
+					matches[3] && matches[3] != 'am' && matches[3] != 'pm'))
+				{
+					if (matches[1].length < 2 && !matches[3]) matches[1] = '0'+matches[1];
+					if (matches[2] === undefined) matches[2] = ':00';
+					while (matches[2].length < 3) matches[2] = ':0'+matches[2].substr(1);
+					_value = _value.replace(fix_reg, (this._type == "date-timeonly"?'':' ')+matches[1]+matches[2]+matches[3]);
+					if (matches[4] !== undefined) matches[3] = matches[4].toLowerCase() == 'a' ? 'am' : 'pm';
+				}
+				switch(this._type)
+				{
+					case "date-timeonly":
+						var parsed = jQuery.datepicker.parseTime(this.input_date.datepicker('option', 'timeFormat'), _value);
+						if (!parsed)	// parseTime returns false
 						{
-							this.change(this.input_date);
-						}
-					}
-					this._oldValue = this.date.toJSON();
-					return;
-				default:
-					// Parse customfields's date with storage data_format to date object
-					// Or generally any date widgets with fixed date/time format
-					if (this.id.match(/^#/g) && this.options.value == _value || (this.options.data_format && this.options.value == _value))
-					{
-						switch (this._type)
-						{
-							case 'date':
-								var parsed = jQuery.datepicker.parseDate(this.egw().dateTimeFormat(this.options.data_format), _value);
-								break;
-							case 'date-time':
-								var DTformat = this.options.data_format.split(' ');
-								var parsed = jQuery.datepicker.parseDateTime(this.egw().dateTimeFormat(DTformat[0]),this.egw().dateTimeFormat(DTformat[1]), _value);
-						}
-					}
-					else  // Parse other date widgets date with timepicker date/time format to date onject
-					{
-						var parsed = jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
-								this.input_date.datepicker('option', 'timeFormat'), _value);
-						if(!parsed)
-						{
-							this.set_validation_error(this.egw().lang("%1' han an invalid format !!!",_value));
+							this.set_validation_error(this.egw().lang("'%1' has an invalid format !!!",_value));
 							return;
 						}
-					}
-					// Update local variable, but remove the timezone offset that
-					// javascript adds when we parse
-					if(parsed)
-					{
-						this.date = new Date(parsed.valueOf() - parsed.getTimezoneOffset() * 60000);
-					}
+						this.set_validation_error(false);
+						// this.date is on current date, changing it in get_value() to 1970-01-01, gives a time-difference, if we are currently on DST
+						this.date.setDate(1);
+						this.date.setMonth(0);
+						this.date.setFullYear(1970);
+						// Avoid javascript timezone offset, hour is in 'user time'
+						this.date.setUTCHours(parsed.hour);
+						this.date.setMinutes(parsed.minute);
+						if(this.input_date.val() != _value)
+						{
+							this.input_date.val(_value);
+							this.input_date.timepicker('setTime',_value);
+							if (this._oldValue !== et2_no_init)
+							{
+								this.change(this.input_date);
+							}
+						}
+						this._oldValue = this.date.toJSON();
+						return;
+					default:
+						// Parse customfields's date with storage data_format to date object
+						// Or generally any date widgets with fixed date/time format
+						if (this.id.match(/^#/g) && this.options.value == _value || (this.options.data_format && this.options.value == _value))
+						{
+							switch (this._type)
+							{
+								case 'date':
+									var parsed = jQuery.datepicker.parseDate(this.egw().dateTimeFormat(this.options.data_format), _value);
+									break;
+								case 'date-time':
+									var DTformat = this.options.data_format.split(' ');
+									var parsed = jQuery.datepicker.parseDateTime(this.egw().dateTimeFormat(DTformat[0]),this.egw().dateTimeFormat(DTformat[1]), _value);
+							}
+						}
+						else  // Parse other date widgets date with timepicker date/time format to date onject
+						{
+							var parsed = jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
+									this.input_date.datepicker('option', 'timeFormat'), _value);
+							if(!parsed)
+							{
+								this.set_validation_error(this.egw().lang("%1' han an invalid format !!!",_value));
+								return;
+							}
+						}
+						// Update local variable, but remove the timezone offset that
+						// javascript adds when we parse
+						if(parsed)
+						{
+							this.date = new Date(parsed.valueOf() - parsed.getTimezoneOffset() * 60000);
+						}
 
-					this.set_validation_error(false);
+						this.set_validation_error(false);
+				}
+			}
+			// catch exception from unparsable date and display it empty instead
+			catch(e) {
+				return this.set_value(null);
 			}
 		} else if (typeof _value == 'object' && _value.date) {
 			this.date = _value.date;
@@ -785,11 +791,17 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		else if(typeof _value == 'string' && isNaN(_value))
 		{
-			// parseDateTime to handle string PHP: DateTime local date/time format
-			var parsed = (typeof jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value) !='undefined')?
-						jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value):
-						jQuery.datepicker.parseDateTime(this.egw().preference('dateformat'),this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', _value);
-
+			try {
+				// parseDateTime to handle string PHP: DateTime local date/time format
+				var parsed = (typeof jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value) !='undefined')?
+							jQuery.datepicker.parseDateTime("yy-mm-dd","hh:mm:ss", _value):
+							jQuery.datepicker.parseDateTime(this.egw().preference('dateformat'),this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', _value);
+			}
+			// display unparsable dates as empty
+			catch(e) {
+				this.span.attr("datetime", "").text("");
+				return;
+			}
 			var text = new Date(parsed);
 
 			// Update local variable, but remove the timezone offset that javascript adds
