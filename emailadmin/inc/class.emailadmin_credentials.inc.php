@@ -97,8 +97,8 @@ class emailadmin_credentials
 	 * Read credentials for a given mail account
 	 *
 	 * @param int $acc_id
-	 * @param int $type=null default return all credentials
-	 * @param int|array $account_id=null default use current user or all (in that order)
+	 * @param int $type =null default return all credentials
+	 * @param int|array $account_id =null default use current user or all (in that order)
 	 * @return array with values for (imap|smtp|admin)_(username|password|cred_id)
 	 */
 	public static function read($acc_id, $type=null, $account_id=null)
@@ -160,7 +160,7 @@ class emailadmin_credentials
 	 * Generate username according to acc_imap_logintype and fetch password from session
 	 *
 	 * @param array $data values for acc_imap_logintype and acc_domain
-	 * @param boolean $set_identity=true true: also set identity values realname&email, if not yet set
+	 * @param boolean $set_identity =true true: also set identity values realname&email, if not yet set
 	 * @return array with values for keys 'acc_(imap|smtp)_(username|password|cred_id)'
 	 */
 	public static function from_session(array $data, $set_identity=true)
@@ -220,8 +220,8 @@ class emailadmin_credentials
 	 * @param string $password cleartext password to write
 	 * @param int $type self::IMAP, self::SMTP or self::ADMIN
 	 * @param int $account_id if of user-account for whom credentials are
-	 * @param int $cred_id=null id of existing credentials to update
-	 * @param ressource $mcrypt=null mcrypt ressource for user, default calling self::init_crypt(true)
+	 * @param int $cred_id =null id of existing credentials to update
+	 * @param ressource $mcrypt =null mcrypt ressource for user, default calling self::init_crypt(true)
 	 * @return int cred_id
 	 */
 	public static function write($acc_id, $username, $password, $type, $account_id=0, $cred_id=null, $mcrypt=null)
@@ -229,7 +229,7 @@ class emailadmin_credentials
 		//error_log(__METHOD__."(acc_id=$acc_id, '$username', \$password, type=$type, account_id=$account_id, cred_id=$cred_id)");
 		if (!empty($cred_id) && !is_numeric($cred_id) || !is_numeric($account_id))
 		{
-			error_log(__METHOD__."($acc_id, '$username', \$password, $type, $account_id, ".array2string($cred_id).") not storing session credentials!");
+			//error_log(__METHOD__."($acc_id, '$username', \$password, $type, $account_id, ".array2string($cred_id).") not storing session credentials!");
 			return;	// do NOT store credentials from session of current user!
 		}
 		$pw_enc = self::CLEARTEXT;
@@ -266,8 +266,8 @@ class emailadmin_credentials
 	 * Delete credentials from database
 	 *
 	 * @param int $acc_id
-	 * @param int|array $account_id=null
-	 * @param int $type=self::ALL self::IMAP, self::SMTP or self::ADMIN
+	 * @param int|array $account_id =null
+	 * @param int $type =self::ALL self::IMAP, self::SMTP or self::ADMIN
 	 * @return int number of rows deleted
 	 */
 	public static function delete($acc_id, $account_id=null, $type=self::ALL)
@@ -299,7 +299,7 @@ class emailadmin_credentials
 	 * @param string $password cleartext password
 	 * @param int $account_id user-account password is for
 	 * @param int &$pw_enc on return encryption used
-	 * @param ressource $mcrypt=null mcrypt ressource for user, default calling self::init_crypt(true)
+	 * @param ressource $mcrypt =null mcrypt ressource for user, default calling self::init_crypt(true)
 	 * @return string encrypted password
 	 */
 	protected static function encrypt($password, $account_id, &$pw_enc, $mcrypt=null)
@@ -327,7 +327,7 @@ class emailadmin_credentials
 	 * Decrypt password from database
 	 *
 	 * @param array $row database row
-	 * @param ressource $mcrypt=null mcrypt ressource for user, default calling self::init_crypt(true)
+	 * @param ressource $mcrypt =null mcrypt ressource for user, default calling self::init_crypt(true)
 	 */
 	protected static function decrypt(array $row, $mcrypt=null)
 	{
@@ -383,10 +383,10 @@ class emailadmin_credentials
 	/**
 	 * Check if session encryption is configured, possible and initialise it
 	 *
-	 * @param boolean|string $user=false true: use user-password from session,
+	 * @param boolean|string $user =false true: use user-password from session,
 	 *	false: database password or string with password to use
-	 * @param string $algo='tripledes'
-	 * @param string $mode='ecb'
+	 * @param string $algo ='tripledes'
+	 * @param string $mode ='ecb'
 	 * @return ressource|boolean mcrypt ressource to use or false if not available
 	 */
 	static public function init_crypt($user=false, $algo='tripledes',$mode='ecb')
