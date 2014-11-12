@@ -875,7 +875,7 @@ class emailadmin_wizard
 					self::fix_account_id_0($content['account_id']);
 
 					// read identities (of current user) and mark std identity
-					$content['identities'] = iterator_to_array($account->identities());
+					$content['identities'] = iterator_to_array($account->identities(null, true, 'name', $content['called_for']));
 					$content['std_ident_id'] = $content['ident_id'];
 					$content['identities'][$content['std_ident_id']] = lang('Standard identity');
 					// change self::SSL_NONE (=0) to "no" used in sel_options
@@ -974,7 +974,7 @@ class emailadmin_wizard
 							$content['std_ident_id'] != $content['ident_id'])
 						{
 							$content['ident_id'] = emailadmin_account::save_identity(array(
-								'account_id' => $GLOBALS['egw_info']['user']['account_id'],
+								'account_id' => $content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
 							)+$content);
 							$content['identities'][$content['ident_id']] = emailadmin_account::identity_name($content);
 							$msg = lang('Identity saved.');
@@ -1140,7 +1140,7 @@ class emailadmin_wizard
 			$sel_options['acc_smtp_ssl'] = self::$ssl_types;
 
 		// admin access to account with no credentials available
-		if ($this->is_admin && (empty($content['acc_imap_username']) || empty($content['acc_imap_host'])))
+		if ($this->is_admin && (empty($content['acc_imap_username']) || empty($content['acc_imap_host']) || $content['called_for']))
 		{
 			// cant connection to imap --> allow free entries in taglists
 			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
@@ -1157,6 +1157,7 @@ class emailadmin_wizard
 						self::mailboxes(self::imap_client ($content));
 			}
 			catch(Exception $e) {
+				if (self::$debug) _egw_log_exception($e);
 				// let user know what the problem is and that he can fix it using wizard or deleting
 				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
 				$msg_type = 'error';
@@ -1195,7 +1196,7 @@ class emailadmin_wizard
 			{
 				if ($content['ident_id'] > 0)
 				{
-					$identity = emailadmin_account::read_identity($content['ident_id']);
+					$identity = emailadmin_account::read_identity($content['ident_id'], false, $content['called_for']);
 					unset($identity['account_id']);
 					$content = array_merge($content, $identity);
 				}

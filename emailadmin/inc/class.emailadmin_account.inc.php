@@ -444,11 +444,13 @@ class emailadmin_account implements ArrayAccess
 	 * @param int|array|emailadmin_account $account=null default this account, empty array() to get all identities of current user
 	 * @param boolean $replace_placeholders=false should placeholders like {{n_fn}} be replaced
 	 * @param string $field='name' what to return as value: "ident_(realname|org|email|signature)" or default "name"=result from identity_name
+	 * @param int $user=null account_id to use if not current user
 	 * @return Iterator ident_id => identity_name of identity
 	 */
-	public /*static*/ function identities($account=null, $replace_placeholders=true, $field='name')
+	public /*static*/ function identities($account=null, $replace_placeholders=true, $field='name', $user=null)
 	{
 		if (is_null($account)) $account = $this;
+		if (!isset($user)) $user = $GLOBALS['egw_info']['user']['account_id'];
 		$acc_id = is_scalar($account) ? $account : $account['acc_id'];
 
 		$cols = array('ident_id', 'ident_name', 'ident_realname', 'ident_org', 'ident_email', 'ident_signature', 'acc_id', 'acc_imap_username', 'acc_imap_logintype', 'acc_domain');
@@ -460,7 +462,7 @@ class emailadmin_account implements ArrayAccess
 		$cols[array_search('acc_id', $cols)] = self::IDENTITIES_TABLE.'.acc_id AS acc_id';
 		$cols[array_search('acc_imap_username', $cols)] = emailadmin_credentials::TABLE.'.cred_username AS acc_imap_username';
 
-		$where[] = self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('account_id' => self::memberships()));
+		$where[] = self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('account_id' => self::memberships($user)));
 		if ($acc_id)
 		{
 			$where[] = self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('acc_id' => $acc_id));
@@ -469,7 +471,7 @@ class emailadmin_account implements ArrayAccess
 			'ORDER BY '.self::IDENTITIES_TABLE.'.account_id,ident_realname,ident_org,ident_email', self::APP, null,
 			' JOIN '.self::TABLE.' ON '.self::TABLE.'.acc_id='.self::IDENTITIES_TABLE.'.acc_id'.
 			' LEFT JOIN '.emailadmin_credentials::TABLE.' ON '.self::TABLE.'.acc_id='.emailadmin_credentials::TABLE.'.acc_id AND '.
-				emailadmin_credentials::TABLE.'.account_id='.(int)$GLOBALS['egw_info']['user']['account_id'].' AND '.
+				emailadmin_credentials::TABLE.'.account_id='.(int)$user.' AND '.
 				'(cred_type&'.emailadmin_credentials::IMAP.') > 0');
 		//error_log(__METHOD__."(acc_id=$acc_id, replace_placeholders=$replace_placeholders, field='$field') sql=".$rs->sql);
 
@@ -635,14 +637,15 @@ class emailadmin_account implements ArrayAccess
 	 *
 	 * @param int $ident_id
 	 * @param boolean $replace_placeholders =false should placeholders like {{n_fn}} be replaced
+	 * @param int $user =null account_id to use, default current user
 	 * @return array
 	 * @throws egw_exception_not_found
 	 */
-	public static function read_identity($ident_id, $replace_placeholders=false)
+	public static function read_identity($ident_id, $replace_placeholders=false, $user=null)
 	{
 		if (!($data = self::$db->select(self::IDENTITIES_TABLE, '*', array(
 			'ident_id' => $ident_id,
-			'account_id' => self::memberships(),
+			'account_id' => self::memberships($user),
 		), __LINE__, __FILE__, false, '', self::APP)->fetch()))
 		{
 			throw new egw_exception_not_found();
@@ -1062,7 +1065,7 @@ class emailadmin_account implements ArrayAccess
 			}
 		}
 		// check for whom we have to store credentials
-		$valid_for = self::credentials_valid_for($data);
+		$valid_for = self::credentials_valid_for($data, $user);
 		// add imap credentials
 		$cred_type = $data['acc_imap_username'] == $data['acc_smtp_username'] &&
 			$data['acc_imap_password'] == $data['acc_smtp_password'] ? 3 : 1;
