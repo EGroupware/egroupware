@@ -166,6 +166,7 @@ class setup
 		$cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
 
 		// remove port from HTTP_HOST
+		$arr = null;
 		if (preg_match("/^(.*):(.*)$/",$cookie_domain,$arr))
 		{
 			$cookie_domain = $arr[1];
@@ -256,11 +257,11 @@ class setup
 	/**
 	 * authenticate the setup user
 	 *
-	 * @param string $auth_type='config' 'config' or 'header' (caseinsensitiv)
+	 * @param string $_auth_type ='config' 'config' or 'header' (caseinsensitiv)
 	 */
-	function auth($auth_type='config')
+	function auth($_auth_type='config')
 	{
-		$auth_type = strtolower($auth_type);
+		$auth_type = strtolower($_auth_type);
 		$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = $GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 
 		if(!$this->checkip($_SERVER['REMOTE_ADDR']))
@@ -423,7 +424,7 @@ class setup
 	/**
 	 * Return X.X.X major version from X.X.X.X versionstring
 	 *
-	 * @param	$
+	 * @param string $versionstring
 	 */
 	function get_major($versionstring)
 	{
@@ -451,10 +452,10 @@ class setup
 	/**
 	 * Add an application to the phpgw_applications table
 	 *
-	 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-	 * @param	$enable		 * optional, set to True/False to override setup.inc.php setting
+	 * @param $appname Application 'name' with a matching $setup_info[$appname] array slice
+	 * @param $_enable =99 set to True/False to override setup.inc.php setting
 	 */
-	function register_app($appname,$enable=99)
+	function register_app($appname, $_enable=99)
 	{
 		$setup_info = $GLOBALS['setup_info'];
 
@@ -463,15 +464,15 @@ class setup
 			return False;
 		}
 
-		if($enable==99)
+		if($_enable == 99)
 		{
-			$enable = $setup_info[$appname]['enable'];
+			$_enable = $setup_info[$appname]['enable'];
 		}
-		$enable = (int)$enable;
+		$enable = (int)$_enable;
 
 		if($GLOBALS['DEBUG'])
 		{
-			echo '<br>register_app(): ' . $appname . ', version: ' . $setup_info[$appname]['version'] . ', table: ' . $appstbl . '<br>';
+			echo '<br>register_app(): ' . $appname . ', version: ' . $setup_info[$appname]['version'] . ', tables: ' . implode(', ',$setup_info[$appname]['tables']) . '<br>';
 			// _debug_array($setup_info[$appname]);
 		}
 
@@ -516,8 +517,6 @@ class setup
 	 */
 	function app_registered($appname)
 	{
-		$setup_info = $GLOBALS['setup_info'];
-
 		if(!$appname)
 		{
 			return False;
@@ -628,7 +627,6 @@ class setup
 		{
 			return False;
 		}
-		$setup_info = $GLOBALS['setup_info'];
 
 		// Remove categories
 		$this->db->delete(categories::TABLE, array('cat_appname'=>$appname),__LINE__,__FILE__);
@@ -640,7 +638,7 @@ class setup
 		$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
 
 		// Remove links to the app
-		$links = egw_link::unlink(0, $appname);
+		egw_link::unlink(0, $appname);
 
 		$this->clear_session_cache();
 	}
@@ -1050,40 +1048,40 @@ class setup
 				error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') failed! accountid=$accountid");
 				return false;
 			}
-			// call vfs_home_hooks::add{account|group} hook to create the vfs-home-dirs
-			// calling general add{account|group} hook fails, as we are only in setup
-			// --> setup_cmd_admin execs "admin/admin-cli.php --edit-user" to run them
-			if ($primary_group)
-			{
-				vfs_home_hooks::addAccount($account);
-/*
- 				$GLOBALS['hook_values'] = $account + array('new_passwd' => $account['account_passwd']);
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'addaccount'
-				),False,True);	// called for every app now, not only enabled ones
-*/
+		}
+		// set password for existing account, if given and not '*unchanged*'
+		elseif($passwd && $passwd != '*unchanged*')
+		{
+			try {
+				$auth = new auth;
+				$pw_changed = $auth->change_password(null, $passwd, $accountid);
 			}
-			else
+			catch (Exception $e)
 			{
-				vfs_home_hooks::addGroup($account+array('account_name' => $account['account_lid']));
-/*
-				$GLOBALS['hook_values'] = $account+(array('account_name' => $account['account_lid']));
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'addgroup'
-				),False,True);  // called for every app now, not only enabled ones)
-*/
+				unset($e);
+				$pw_changed = false;
 			}
+			if (!$pw_changed)
+			{
+				error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') changin password of exisiting account #$accountid failed!");
+				return false;
+			}
+		}
+		// call vfs_home_hooks::add{account|group} hook to create the vfs-home-dirs
+		// calling general add{account|group} hook fails, as we are only in setup
+		// --> setup_cmd_admin execs "admin/admin-cli.php --edit-user" to run them
+		if ($primary_group)
+		{
+			vfs_home_hooks::addAccount($account);
+		}
+		else
+		{
+			vfs_home_hooks::addGroup($account+array('account_name' => $account['account_lid']));
 		}
 		if ($primary_group)	// only for users, NOT groups
 		{
-			$memberships = $this->accounts->memberships($accountid,true);
+			$this->set_memberships(array($primary_group_id), $accountid);
 
-			if($primary_group_id && !in_array($primary_group_id,$memberships))
-			{
-				$memberships[] = $primary_group_id;
-
-				$this->accounts->set_memberships($memberships,$accountid);
-			}
 			if (!$changepw) $this->add_acl('preferences','nopasswordchange',$accountid);
 		}
 		//error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') successfull created accountid=$accountid");
@@ -1091,16 +1089,24 @@ class setup
 	}
 
 	/**
-	 * Set the memberships of an account
+	 * Adding memberships to an account (keeping existing ones!)
 	 *
-	 * @param array $groups array of group-id's
+	 * @param array $_groups array of group-id's to add
 	 * @param int $user account_id
 	 */
-	function set_memberships($groups,$user)
+	function set_memberships($_groups, $user)
 	{
 		$this->setup_account_object();
 
-		return $this->accounts->set_memberships($groups,$user);
+		if (!($groups = $this->accounts->memberships($user, true)))
+		{
+			$groups = $_groups;
+		}
+		else
+		{
+			$groups = array_unique(array_merge($groups, $_groups));
+		}
+		$this->accounts->set_memberships($groups, $user);
 	}
 
 	/**
@@ -1140,10 +1146,10 @@ class setup
 	 *
 	 * Dont use it to set group-membership, use set_memberships instead!
 	 *
-	 * @param $app string/array with app-names
-	 * @param $locations string eg. run
-	 * @param $account int/string accountid or account_lid
-	 * @param $rights int rights to set, default 1
+	 * @param string|array $apps app-names
+	 * @param string $location eg. "run"
+	 * @param int|string $account accountid or account_lid
+	 * @param int $rights rights to set, default 1
 	 */
 	function add_acl($apps,$location,$account,$rights=1)
 	{
