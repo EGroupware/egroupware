@@ -107,7 +107,6 @@ class timesheet_ui extends timesheet_bo
 			}
 			if ($this->ts_viewtype == 'short')
 			{
-				$content['start_time']=$content['end_time']=null;
 				$content['ts_description'] = $content['ts_description_short'];
 			}
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
