@@ -391,6 +391,11 @@ class home_ui
 		{
 			$prefs = $GLOBALS['egw']->preferences->read_repository();
 			$portlets = (array)$prefs['home']['portlets'];
+			if($values =='~reload~')
+			{
+				$full_exec = true;
+				$values = array();
+			}
 			if($values == '~remove~')
 			{
 				unset($portlets[$portlet_id]);
@@ -408,8 +413,7 @@ class home_ui
 					$add = true;
 					$classname = substr($classname, 4);
 				}
-				$full_exec = false;
-				$portlet = $this->get_portlet($portlet_id, $context, $content, $attributes);
+				$portlet = $this->get_portlet($portlet_id, $context, $content, $attributes, $full_exec);
 
 				$context['class'] = get_class($portlet);
 				foreach($portlet->get_properties() as $property)

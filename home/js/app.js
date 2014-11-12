@@ -250,6 +250,19 @@ app.classes.home = AppJS.extend(
 	},
 
 	/**
+	 * Allow a refresh from anywhere by triggering an update with no changes
+	 * 
+	 * @param {string} id
+	 */
+	refresh: function($id) {
+		var p = this.portlet_container.getWidgetById($id);
+		if(p)
+		{
+			p._process_edit(et2_dialog.OK_BUTTON, '~reload~');
+		}
+	},
+
+	/**
 	 * For link_portlet - opens the configured record when the user
 	 * double-clicks or chooses view from the context menu
 	 */
@@ -308,7 +321,7 @@ app.classes.home = AppJS.extend(
 				 */
 				serialize_params: function($w, grid) {
 					return {
-						id: $w.children('.ui-widget-header').next().attr('id'),
+						id: $w.attr('id').replace(app.home.portlet_container.getInstanceManager().uniqueId+'_',''),
 						row: grid.row,
 						col: grid.col,
 						width: grid.size_x,
@@ -481,5 +494,36 @@ app.classes.home = AppJS.extend(
 			portlet.options.settings.list.splice(row.index(), 1);
 			portlet._process_edit(et2_dialog.OK_BUTTON,{list: portlet.options.settings.list || {}});
 		}
+	},
+
+	/**
+	 * Functions for the note portlet
+	 */
+	/**
+	 * Set up for editing a note
+	 * CKEditor has CSP issues, so we need a popup
+	 *
+	 * @param {egwAction} action
+	 * @param {egwActionObject[]} Selected
+	 */
+	note_edit: function(action, selected) {
+		var id = selected[0].id;
+
+		// Aim to match the size
+		var portlet_dom = $j('[id$='+id+'][data-sizex]',this.portlet_container.getDOMNode);
+		var width = portlet_dom.attr('data-sizex') * this.GRID;
+		var height = portlet_dom.attr('data-sizey') * this.GRID;
+		
+		// CKEditor is impossible to use below a certain size
+		// Add 35px for the toolbar, 35px for the buttons
+		var window_width = Math.max(580, width+20);
+		var window_height = Math.max(350, height+70);
+		
+		// Open popup, but add 30 to the height for the toolbar
+		egw.open_link(egw.link('/index.php',{
+			menuaction: 'home.home_note_portlet.edit',
+			id: selected[0].id,
+			height: window_height - 70
+		}),action.id+selected[0].id, window_width+'x'+window_height,'home');
 	}
 });

@@ -134,7 +134,7 @@ class home_favorite_portlet extends home_portlet
 		return array(
 			'displayName'=> lang('Favorite'),
 			'title'=>	$this->title,
-			'description'=>	lang('Show the entries from a favorite')
+			'description'=>	lang('Show all the entries using a favorite')
 		);
 	}
 	/**
