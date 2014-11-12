@@ -1029,7 +1029,7 @@ class setup
 			$passwd = $anonpw = $this->anonpw;
 		}
 
-		if(!($accountid = $this->accounts->name2id($username)))
+		if(!($accountid = $this->accounts->name2id($username, 'account_lid', $primary_group ? 'u' : 'g')))
 		{
 			$account = array(
 				'account_type'      => $primary_group ? 'u' : 'g',
@@ -1072,11 +1072,17 @@ class setup
 		// --> setup_cmd_admin execs "admin/admin-cli.php --edit-user" to run them
 		if ($primary_group)
 		{
-			vfs_home_hooks::addAccount($account);
+			vfs_home_hooks::addAccount(array(
+				'account_id' => $accountid,
+				'account_lid' => $username,
+			));
 		}
 		else
 		{
-			vfs_home_hooks::addGroup($account+array('account_name' => $account['account_lid']));
+			vfs_home_hooks::addGroup(array(
+				'account_id' => $accountid,
+				'account_lid' => $username,
+			));
 		}
 		if ($primary_group)	// only for users, NOT groups
 		{
