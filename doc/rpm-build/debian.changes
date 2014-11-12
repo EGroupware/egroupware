@@ -2,8 +2,12 @@ egroupware-epl (14.1.20141112-1) hardy; urgency=low
 
   * Mail: fix mail display and compose open again in full height
   * Mail: setting a font-size of 12pt for printing mails
+  * eMailAdmin: allow as admin to add or edit identities&signatures for other users
   * CalDAV: big calendars with more then 500 events in result-set were missing events
   * CalDAV: fixed users participating only in exceptions of a recurring event were also shown in whole series in Thunderbird and iCal
+  * Calendar: add customizable link title in calendar preferences, in order to append extra fields to calendar's link title
+  * SiteMgr: got languages containing a dash eg. "es-es" working again
+  * SiteMgr: content-area got lost when editing a block only allowed in a single content-area
   * PHP: automatic set size of shared memory available to PHP APC(u) extension to 128MB, if installed and less then 64MB
 
  -- Ralf Becker <rb@stylite.de>  Wed, 12 Nov 2014 13:18:37 +0100
