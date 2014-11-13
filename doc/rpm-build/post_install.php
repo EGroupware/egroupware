@@ -258,6 +258,9 @@ foreach(array('php','source_dir','data_dir','setup-cli') as $name)
 	if (!file_exists($config[$name])) bail_out(1,$config[$name].' not found!');
 }
 
+// fix important php.ini and conf.d/*.ini settings
+check_fix_php_apc_ini();
+
 // install/upgrade required pear packages
 check_install_pear_packages();
 
@@ -833,4 +836,66 @@ function _ucr_secret($name)
 		return false;
 	}
 	return trim(file_get_contents($filename));
+}
+
+/**
+ * Check and evtl. fix APC(u) shared memory size (apc.shm_segments * apc.shm_size) >= 64M
+ *
+ * We check for < 64M to allow to use that for small installs manually, but set 128M by default.
+ */
+function check_fix_php_apc_ini()
+{
+	if (extension_loaded('apc'))
+	{
+		$shm_size = ini_get('apc.shm_size');
+		$shm_segments = ini_get('apc.shm_segments');
+		// ancent APC (3.1.3) in Debian 6/Squezze has size in MB without a unit
+		if (($numeric_size = is_numeric($shm_size) && $shm_size <= 1048576)) $shm_size .= 'M';
+
+		$size = _size_with_unit($shm_size) * $shm_segments;
+		//echo "shm_size=$shm_size, shm_segments=$shm_segments --> $size, numeric_size=$numeric_size\n";
+
+		// check if we have less then 64MB (eg. default 32M) --> set it to 128MB
+		if ($size < _size_with_unit('64M'))
+		{
+			ob_start();
+			phpinfo();
+			$phpinfo = ob_get_clean();
+			$matches = null;
+			if (preg_match('#(/[a-z0-5./]+apcu?.ini)(,| |$)#mi', $phpinfo, $matches) &&
+				file_exists($path = $matches[1]) && ($apc_ini = file_get_contents($path)))
+			{
+				$new_shm_size = 128 / $shm_segments;
+				if (!$numeric_size) $new_shm_size .= 'M';
+				if (preg_match('|^apc.shm_size\s*=\s*(\d+[KMG]?)$|m', $apc_ini))
+				{
+					file_put_contents($path, preg_replace('|^apc.shm_size\s*=\s*(\d+[KMG]?)$|m', 'apc.shm_size='.$new_shm_size, $apc_ini));
+				}
+				else
+				{
+					file_put_contents($path, $apc_ini."\napc.shm_size=$new_shm_size\n");
+				}
+				echo "Fix APC(u) configuration, set apc.shm_size=$new_shm_size in $path\n";
+			}
+		}
+	}
+}
+
+/**
+ * Convert a size with unit eg. 32M to a number
+ * @param int $size
+ * @return int
+ */
+function _size_with_unit($size)
+{
+	switch(strtoupper(substr($size, -1)))
+	{
+		case 'G':
+			$size *= 1024;
+		case 'M':
+			$size *= 1024;
+		case 'K':
+			$size *= 1024;
+	}
+	return $size;
 }
