@@ -1,3 +1,10 @@
+egroupware-epl (14.1.20141113-1) hardy; urgency=low
+
+  * PHP: fix not starting Apache after adding apc.shm_size, caused by old APC version 3.1 (eg. in Debian6) using a shm_size in MB without unit
+  * Admin/Setup: ignoring doublicate rows from old backups
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 13 Nov 2014 14:28:04 +0100
+
 egroupware-epl (14.1.20141112-1) hardy; urgency=low
 
   * Mail: fix mail display and compose open again in full height
