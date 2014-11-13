@@ -344,6 +344,8 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					}
 					// run validation method of widget implementing this custom field
 					$widget = $this->_widget($fname, $field_settings);
+					// widget has no validate method, eg. is only displaying stuff --> nothing to validate
+					if (!method_exists($widget, 'validate')) continue;
 					$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
 					if ($field_settings['needed'] && (is_array($value) ? !$value : (string)$value === ''))
 					{
