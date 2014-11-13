@@ -866,8 +866,7 @@ function check_fix_php_apc_ini()
 				file_exists($path = $matches[1]) && ($apc_ini = file_get_contents($path)))
 			{
 				$new_shm_size = 128 / $shm_segments;
-				$new_shm_size .= 'M';
-				if ($numeric_size) $new_shm_size = _size_with_unit ($new_shm_size);
+				if (!$numeric_size) $new_shm_size .= 'M';
 				if (preg_match('|^apc.shm_size\s*=\s*(\d+[KMG]?)$|m', $apc_ini))
 				{
 					file_put_contents($path, preg_replace('|^apc.shm_size\s*=\s*(\d+[KMG]?)$|m', 'apc.shm_size='.$new_shm_size, $apc_ini));
