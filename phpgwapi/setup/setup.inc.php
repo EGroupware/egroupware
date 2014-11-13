@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
 $setup_info['phpgwapi']['title']     = 'EGroupware API';
-$setup_info['phpgwapi']['version']   = '14.1';
+$setup_info['phpgwapi']['version']   = '14.1.900';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
@@ -49,6 +49,7 @@ $setup_info['phpgwapi']['tables'][]  = 'egw_cat2entry';
 $setup_info['phpgwapi']['tables'][]  = 'egw_locks';
 $setup_info['phpgwapi']['tables'][]  = 'egw_sqlfs_props';
 $setup_info['phpgwapi']['tables'][]  = 'egw_customfields';
+$setup_info['phpgwapi']['tables'][]  = 'egw_sharing';
 
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
 $setup_info['phpgwapi']['hooks']['addaccount']		= 'phpgwapi.vfs_home_hooks.addAccount';
@@ -78,3 +79,4 @@ $setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = arra
 $setup_info['groupdav']['license'] = 'GPL';
 $setup_info['groupdav']['hooks']['preferences']	= 'groupdav_hooks::menus';
 $setup_info['groupdav']['hooks']['settings']	= 'groupdav_hooks::settings';
+

@@ -304,9 +304,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param boolean $check_url=null check if url is an existing directory, before mounting it
 	 * 	default null only checks if url does not contain a $ as used in $user or $pass
 	 * @param boolean $persitent_mount=true create a persitent mount, or only a temprary for current request
+	 * @param boolean $clear_fstab =false true clear current fstab, false (default) only add given mount
 	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
 	 */
-	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true)
+	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true,$clear_fstab=false)
 	{
 		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
 
@@ -328,6 +329,10 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') permission denied, you are NOT root!');
 			return false;	// only root can mount
+		}
+		if ($clear_fstab)
+		{
+			self::$fstab = array();
 		}
 		if (isset(self::$fstab[$path]) && self::$fstab[$path] === $url)
 		{
