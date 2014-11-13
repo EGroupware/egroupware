@@ -477,7 +477,7 @@ class db_backup
 			{
 				if ($rows)	// flush pending rows of last table
 				{
-					$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+					$this->insert_multiple($table, $rows, $this->schemas[$table]);
 				}
 				$rows = array();
 				$table = substr($line,7);
@@ -531,13 +531,18 @@ class db_backup
 							$rows[] = $data;
 							if (count($rows) == $insert_n_rows)
 							{
-								$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+								$this->insert_multiple($table, $rows, $this->schemas[$table]);
 								$rows = array();
 							}
 						}
 						else
 						{
-							$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+							try {
+								$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+							}
+							catch(egw_exception_db_invalid_sql $e) {
+								echo "<p>".$e->getMessage()."</p>\n";
+							}
 						}
 					}
 					else
@@ -550,7 +555,7 @@ class db_backup
 		}
 		if ($rows)	// flush pending rows
 		{
-			$this->db->insert($table,$rows,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
+			$this->insert_multiple($table, $rows, $this->schemas[$table]);
 		}
 		// updated the sequences, if the DB uses them
 		foreach($this->schemas as $table => $schema)
@@ -637,6 +642,33 @@ class db_backup
 		$GLOBALS['egw']->hooks->register_all_hooks();
 
 		return '';
+	}
+
+	/**
+	 * Insert multiple rows ignoring doublicate entries
+	 *
+	 * @param string $table
+	 * @param array $rows
+	 * @param array $schema
+	 */
+	private function insert_multiple($table, array $rows, array $schema)
+	{
+		try {
+			$this->db->insert($table, $rows, False, __LINE__, __FILE__, false, false, $schema);
+		}
+		catch(egw_exception_db_invalid_sql $e)
+		{
+			// try inserting them one by one, ignoring doublicates
+			foreach($rows as $data)
+			{
+				try {
+					$this->db->insert($table, $data, False, __LINE__, __FILE__, false, false, $schema);
+				}
+				catch(egw_exception_db_invalid_sql $e) {
+					echo "<p>".$e->getMessage()."</p>\n";
+				}
+			}
+		}
 	}
 
 	/**
