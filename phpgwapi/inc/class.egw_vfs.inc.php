@@ -717,6 +717,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string|array $urls url or array of url's
 	 * @param boolean $allow_urls=false allow to use url's, default no only pathes (to stay within the vfs)
+	 * @throws egw_exception_assertion_failed when trainig to remove /, /apps or /home
 	 * @return array
 	 */
 	static function remove($urls,$allow_urls=false)

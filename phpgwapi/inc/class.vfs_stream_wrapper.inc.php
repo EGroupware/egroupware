@@ -293,6 +293,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		if ($mode != 'r' && self::url_is_readonly($url))
+		{
+			return false;
+		}
 		if (!($this->opened_stream = fopen($url,$mode,$options)))
 		{
 			return false;
@@ -463,6 +467,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
+		if (self::url_is_readonly($url))
+		{
+			return false;
+		}
 		$stat = self::url_stat($path, STREAM_URL_STAT_LINK);
 
 		self::symlinkCache_remove($path);
@@ -580,6 +588,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		unset($options);	// not uses but required by function signature
 		if (!($url = self::resolve_url_symlinks($path)))
+		{
+			return false;
+		}
+		if (self::url_is_readonly($url))
 		{
 			return false;
 		}
@@ -957,6 +969,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$stat['url'] = $url;
 		}
+		if (($stat['mode'] & 0222) && self::url_is_readonly($stat['url']))
+		{
+			$stat['mode'] &= ~0222;
+		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components) returning ".array2string($stat));
 
 		return $stat;
@@ -1309,6 +1325,24 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			}
 		}
 		return $path;
+	}
+
+	/**
+	 * Check if url contains ro=1 parameter to mark mount readonly
+	 *
+	 * @param string $url
+	 * @return boolean
+	 */
+	static function url_is_readonly($url)
+	{
+		static $cache = array();
+		$ret =& $cache[$url];
+		if (!isset($ret))
+		{
+			$matches = null;
+			$ret = preg_match('/?(.*&)?ro=([^&]+)/', $url, $matches) && $matches[1];
+		}
+		return $ret;
 	}
 
 	/**

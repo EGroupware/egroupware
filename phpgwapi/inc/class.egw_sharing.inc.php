@@ -73,6 +73,11 @@ class egw_sharing
 			common::egw_exit();
 		}
 		$share['resolve_url'] = egw_vfs::resolve_url($share['share_path']);
+		// if share not writable append ro=1 to mount url to make it readonly
+		if (!$this->db->from_bool($share['share_writable']))
+		{
+			$share['resolve_url'] .= (strpos($share['resolve_url'], '?') ? '&' : '?').'ro=1';
+		}
 		//_debug_array($share);
 
 		// arrange vfs to only contain shared url
