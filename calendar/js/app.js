@@ -780,10 +780,18 @@ app.classes.calendar = AppJS.extend(
 	set_enddate_visibility: function()
 	{
 		var duration = this.et2.getWidgetById('duration');
+		var start = this.et2.getWidgetById('start');
 		var end = this.et2.getWidgetById('end');
+		var content = this.et2.getArrayMgr('content').data;
+		
 		if (typeof duration != 'undefined' && typeof end != 'undefined')
 		{
 			end.set_disabled(duration.get_value()!=='');
+			if (!end.disabled )
+			{
+				end.set_value(start.get_value());
+				if (typeof content.duration != 'undefined') end.set_value("+"+content.duration);
+			}
 		}
 	},
 
