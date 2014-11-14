@@ -139,18 +139,19 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * Resolve the given path according to our fstab AND symlinks
 	 *
-	 * @param string $path
-	 * @param boolean $file_exists=true true if file needs to exists, false if not
-	 * @param boolean $resolve_last_symlink=true
+	 * @param string $_path
+	 * @param boolean $file_exists =true true if file needs to exists, false if not
+	 * @param boolean $resolve_last_symlink =true
 	 * @param array|boolean &$stat=null on return: stat of existing file or false for non-existing files
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url_symlinks($path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
+	static function resolve_url_symlinks($_path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
 	{
-		$path = self::get_path($path);
+		$path = self::get_path($_path);
 
 		if (!($stat = self::url_stat($path,$resolve_last_symlink?0:STREAM_URL_STAT_LINK)) && !$file_exists)
 		{
+			$url = null;
 			$stat = self::check_symlink_components($path,0,$url);
 			if (self::LOG_LEVEL > 1) $log = " (check_symlink_components('$path',0,'$url') = $stat)";
 		}
@@ -170,17 +171,17 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * Resolve the given path according to our fstab
 	 *
-	 * @param string $path
-	 * @param boolean $do_symlink=true is a direct match allowed, default yes (must be false for a lstat or readlink!)
-	 * @param boolean $use_symlinkcache=true
-	 * @param boolean $replace_user_pass_host=true replace $user,$pass,$host in url, default true, if false result is not cached
+	 * @param string $_path
+	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @param boolean $use_symlinkcache =true
+	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url($path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true)
+	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true)
 	{
 		static $cache = array();
 
-		$path = self::get_path($path);
+		$path = self::get_path($_path);
 
 		// we do some caching here
 		if (isset($cache[$path]) && $replace_user_pass_host)
@@ -194,7 +195,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			$path = self::symlinkCache_resolve($path,$do_symlink);
 		}
 		// setting default user, passwd and domain, if it's not contained int the url
-		static $defaults;
+		static $defaults=null;
 		if (is_null($defaults))
 		{
 			$defaults = array(
@@ -252,7 +253,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function mount_url($fullurl)
 	{
-		foreach(array_reverse(self::$fstab) as $mounted => $url)
+		foreach(array_reverse(self::$fstab) as $url)
 		{
 			list($url_no_query) = explode('?',$url);
 			if (substr($fullurl,0,1+strlen($url_no_query)) === $url_no_query.'/')
@@ -284,8 +285,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_open ( $path, $mode, $options, &$opened_path )
 	{
+		unset($opened_path);	// not used but required by function signature
 		$this->opened_stream = null;
 
+		$stat = null;
 		if (!($url = self::resolve_url_symlinks($path,$mode[0]=='r',true,$stat)))
 		{
 			return false;
@@ -508,7 +511,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			$ret = stream_copy_to_stream($from,$to) !== false;
 			fclose($from);
 			fclose($to);
-			if ($ret) $ru = self::unlink($path_from);
+			if ($ret) self::unlink($path_from);
 		}
 		else
 		{
@@ -575,6 +578,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rmdir ( $path, $options )
 	{
+		unset($options);	// not uses but required by function signature
 		if (!($url = self::resolve_url_symlinks($path)))
 		{
 			return false;
@@ -604,9 +608,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string $name
 	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
-	 * @param boolean $fail_silent=false should only false be returned if function is not supported by the backend,
+	 * @param boolean $fail_silent =false should only false be returned if function is not supported by the backend,
 	 * 	or should an E_USER_WARNING error be triggered (default)
-	 * @param int $path_param_key=0 key in params containing the path, default 0
+	 * @param int $path_param_key =0 key in params containing the path, default 0
 	 * @return mixed return value of backend or false if function does not exist on backend
 	 */
 	static protected function _call_on_backend($name,$params,$fail_silent=false,$path_param_key=0)
@@ -661,6 +665,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			}
 			else
 			{
+				$time = null;
 				return $name($url,$time);
 			}
 		}
@@ -671,8 +676,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
 	 * @param string $path
-	 * @param int $time=null modification time (unix timestamp), default null = current time
-	 * @param int $atime=null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 * @param int $time =null modification time (unix timestamp), default null = current time
+	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
 	 * @return boolean true on success, false otherwise
 	 */
 	static function touch($path,$time=null,$atime=null)
@@ -765,7 +770,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * - use eGW's mime-magic class
 	 *
 	 * @param string $path
-	 * @param boolean $recheck=false true = do a new check, false = rely on stored mime type (if existing)
+	 * @param boolean $recheck =false true = do a new check, false = rely on stored mime type (if existing)
 	 * @return string mime-type (self::DIR_MIME_TYPE for directories)
 	 */
 	static function mime_content_type($path,$recheck=false)
@@ -831,7 +836,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = self::parse_url($path,PHP_URL_PATH);
-		foreach(self::$fstab as $mounted => $url)
+		foreach(array_keys(self::$fstab) as $mounted)
 		{
 			if (((egw_vfs::dirname($mounted) == $basepath || egw_vfs::dirname($mounted).'/' == $basepath) && $mounted != '/') &&
 				// only return children readable by the user, if dir is not writable
@@ -869,8 +874,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * - STREAM_URL_STAT_QUIET	If this flag is set, your wrapper should not raise any errors. If this flag is not set,
 	 *                          you are responsible for reporting errors using the trigger_error() function during stating of the path.
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
-	 * @param boolean $try_create_home=false should a user home-directory be created automatic, if it does not exist
-	 * @param boolean $check_symlink_components=true check if path contains symlinks in path components other then the last one
+	 * @param boolean $try_create_home =false should a user home-directory be created automatic, if it does not exist
+	 * @param boolean $check_symlink_components =true check if path contains symlinks in path components other then the last one
 	 * @return array
 	 */
 	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH, $try_reconnect=true )
@@ -906,7 +911,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 						$url = egw_vfs::PREFIX.$lpath;
 						if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
 						// try reading the stat of the link
-						if ($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1))
+						if (($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1)))
 						{
 							if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
 							self::symlinkCache_add($path,$url);
@@ -940,7 +945,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				'account_name' => basename($path),
 			);
 			call_user_func(array('vfs_home_hooks',$hook_data['location']),$hook_data);
-			$hook_data = null;
+			unset($hook_data);
 			$stat = self::url_stat($path,$flags,false);
 		}
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
@@ -956,21 +961,21 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 		return $stat;
 
-		// Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
+		/* Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
 		// Problem: this does NOT stop (calles itself infinit recursive)!
 		if (self::HIDE_UNREADABLES && !egw_vfs::check_access($path,egw_vfs::READABLE,$stat) &&
 			!egw_vfs::check_access(egw_vfs::dirname($path,egw_vfs::WRITABLE)))
 		{
 			return false;
 		}
-		return $stat;
+		return $stat;*/
 	}
 
 	/**
 	 * Check if path (which fails the stat call) contains symlinks in path-components other then the last one
 	 *
 	 * @param string $path
-	 * @param int $flags=0 see url_stat
+	 * @param int $flags =0 see url_stat
 	 * @param string &$url=null already resolved path
 	 * @return array|boolean stat array or false if not found
 	 */
@@ -1020,12 +1025,12 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * Add a resolved symlink to cache
 	 *
-	 * @param string $path vfs path
+	 * @param string $_path vfs path
 	 * @param string $target target path
 	 */
-	static protected function symlinkCache_add($path,$target)
+	static protected function symlinkCache_add($_path,$target)
 	{
-		$path = self::get_path($path);
+		$path = self::get_path($_path);
 
 		if (isset(self::$symlink_cache[$path])) return;	// nothing to do
 
@@ -1041,11 +1046,11 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * Remove a resolved symlink from cache
 	 *
-	 * @param string $path vfs path
+	 * @param string $_path vfs path
 	 */
-	static protected function symlinkCache_remove($path)
+	static protected function symlinkCache_remove($_path)
 	{
-		$path = self::get_path($path);
+		$path = self::get_path($_path);
 
 		unset(self::$symlink_cache[$path]);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path) cache now ".array2string(self::$symlink_cache));
@@ -1056,14 +1061,14 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * The cache is sorted from longer to shorter pathes.
 	 *
-	 * @param string $path
-	 * @param boolean $do_symlink=true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @param string $_path
+	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
 	 * @return string target or path, if path not found
 	 */
-	static public function symlinkCache_resolve($path,$do_symlink=true)
+	static public function symlinkCache_resolve($_path,$do_symlink=true)
 	{
 		// remove vfs scheme, but no other schemes (eg. filesystem!)
-		$path = self::get_path($path);
+		$path = self::get_path($_path);
 
 		$strlen_path = strlen($path);
 
@@ -1094,7 +1099,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * We have to clear the symlink cache before AND after calling the backend,
 	 * because auf traversal rights may be different when egw_vfs::$user changes!
 	 *
-	 * @param string $path='/' path of backend, whos cache to clear
+	 * @param string $path ='/' path of backend, whos cache to clear
 	 */
 	static function clearstatcache($path='/')
 	{
