@@ -1340,7 +1340,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		if (!isset($ret))
 		{
 			$matches = null;
-			$ret = preg_match('/?(.*&)?ro=([^&]+)/', $url, $matches) && $matches[1];
+			$ret = preg_match('/\?(.*&)?ro=([^&]+)/', $url, $matches) && $matches[2];
 		}
 		return $ret;
 	}
