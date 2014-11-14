@@ -372,6 +372,15 @@ class groupdav extends HTTP_WebDAV_Server
 			// add root with current users apps
 			$this->add_home($files, $path, $user, $options['depth']);
 
+			if ($path == '/')
+			{
+				$GLOBALS['egw']->hooks->process(array(
+					'location' => 'groupdav_root_props',
+					'props' => &$files['files'][0]['props'],
+					'options' => $options,
+				));
+			}
+
 			// add principals and user-homes
 			if ($path == '/' && $options['depth'])
 			{
