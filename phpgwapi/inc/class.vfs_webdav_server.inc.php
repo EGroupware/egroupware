@@ -55,7 +55,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	* Reimplemented to not check our vfs base path with realpath and connect to mysql DB
 	*
 	* @access public
-    * @param  $prefix=null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
+    * @param  $prefix =null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
 	*/
 	function ServeRequest($prefix=null)
 	{
@@ -87,22 +87,22 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
 		if (is_dir($path))
 		{
-
-			/*$query = "DELETE FROM {$this->db_prefix}properties
-			WHERE path LIKE '".$this->_slashify($options["path"])."%'";
-			mysql_query($query); */
-
 			// recursive delete the directory
-			egw_vfs::remove($options['path']);
+			try {
+				$ret = egw_vfs::remove($options['path']) && !file_exists($path);
+			}
+			catch (Exception $e) {
+				return '403 Forbidden: '.$e->getMessage();
+			}
 		}
 		else
 		{
-			unlink($path);
+			$ret = unlink($path);
 		}
-		/*$query = "DELETE FROM {$this->db_prefix}properties
-		WHERE path = '$options[path]'";
-		mysql_query($query);*/
-
+		if (!$ret)
+		{
+			return '403 Forbidden';
+		}
 		return '204 No Content';
 	}
 
@@ -221,20 +221,6 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             if (!rename($source, $dest)) {
                 return "500 Internal server error";
             }
-            $destpath = $this->_unslashify($options["dest"]);
-/*
-            if (is_dir($source)) {
-                $query = "UPDATE {$this->db_prefix}properties
-                                 SET path = REPLACE(path, '".$options["path"]."', '".$destpath."')
-                               WHERE path LIKE '".$this->_slashify($options["path"])."%'";
-                mysql_query($query);
-            }
-
-            $query = "UPDATE {$this->db_prefix}properties
-                             SET path = '".$destpath."'
-                           WHERE path = '".$options["path"]."'";
-            mysql_query($query);
-*/
         } else {
             if (is_dir($source) && $options['depth'] == 'infinity') {
             	$files = egw_vfs::find($source,array('depth' => true,'url' => true));	// depth=true: return dirs first, url=true: allow urls!
@@ -267,13 +253,6 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
                     }
                 }
             }
-
-/*
-           $query = "INSERT INTO {$this->db_prefix}properties
-                               SELECT *
-                                 FROM {$this->db_prefix}properties
-                                WHERE path = '".$options['path']."'";
-*/
         }
         // adding Location header as shown in example in rfc2518 section 8.9.5
 		header('Location: '.$this->base_uri.$options['dest']);
@@ -284,13 +263,13 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
     /**
 	* Get properties for a single file/resource
 	*
-	* @param  string  resource path
+	* @param  string  $_path resource path
 	* @return array   resource properties
 	*/
-	function fileinfo($path)
+	function fileinfo($_path)
 	{
 		// internally we require some url-encoding, as vfs_stream_wrapper uses URL's internally
-		$path = str_replace(array('#','?'),array('%23','%3F'),$path);
+		$path = str_replace(array('#','?'),array('%23','%3F'),$_path);
 
 		//error_log(__METHOD__."($path)");
 		// map URI path to filesystem path
@@ -400,12 +379,12 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 				unset($files['files'][$n]);
 				continue;
 			}
-			$path = $info['path'];
-			if (!$n && $info['path'] != '/' && substr($info['path'],-1) == '/') $path = substr($info['path'],0,-1);
+			$_path = $info['path'];
+			if (!$n && $info['path'] != '/' && substr($info['path'],-1) == '/') $_path = substr($info['path'],0,-1);
 
 			// need to encode path again, as $info['path'] is NOT encoded, but egw_vfs::(stat|propfind) require it
 			// otherwise pathes containing url special chars like ? or # will not stat
-			$path = egw_vfs::encodePath($path);
+			$path = egw_vfs::encodePath($_path);
 			$path2n[$path] = $n;
 
 			// adding some properties used instead of regular DAV times
@@ -767,6 +746,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			//'DAV:sync-token' => 'sync-token',
 		);
 		$n = 0;
+		$collection_props = null;
 		foreach($files['files'] as $file)
 		{
 			if (!isset($collection_props))
@@ -778,7 +758,10 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			if(!$n++)
 			{
 				echo "<table>\n\t<tr class='th'>\n\t\t<th>#</th>\n\t\t<th>".lang('Name')."</th>";
-				foreach($props2show as $label) echo "\t\t<th>".lang($label)."</th>\n";
+				foreach($props2show as $label)
+				{
+					echo "\t\t<th>".lang($label)."</th>\n";
+				}
 				echo "\t</tr>\n";
 			}
 			$props = $this->props2array($file['props']);
@@ -819,9 +802,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		foreach($collection_props as $name => $value)
 		{
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
-			$ns = explode(':',$name);
-			$name = array_pop($ns);
-			$ns = implode(':',$ns);
+			$parts = explode(':',$name);
+			$name = array_pop($parts);
+			$ns = implode(':',$parts);
 			echo "\t<tr class='$class'>\n\t\t<td>".htmlspecialchars($ns)."</td><td style='white-space: nowrap'>".htmlspecialchars($name)."</td>\n";
 			echo "\t\t<td>".$value."</td>\n\t</tr>\n";
 		}
@@ -868,14 +851,15 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		{
 			$value = preg_replace('/\<(D:)?href\>('.preg_quote($this->base_uri.'/','/').')?([^<]+)\<\/(D:)?href\>/i','<\\1href><a href="\\2\\3">\\3</a></\\4href>',$value);
 		}
-		$value = $value[0] == '<'  || strpos($value, "\n") !== false ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
+		$ret = $value[0] == '<'  || strpos($value, "\n") !== false ?
+			'<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
 
 		if ($href)
 		{
-			$value = preg_replace('/&lt;a href=&quot;(.+)&quot;&gt;/', '<a href="\\1">', $value);
-			$value = str_replace('&lt;/a&gt;', '</a>', $value);
+			$ret = str_replace('&lt;/a&gt;', '</a>',
+				preg_replace('/&lt;a href=&quot;(.+)&quot;&gt;/', '<a href="\\1">', $ret));
 		}
-		return $value;
+		return $ret;
 	}
 
 	/**
