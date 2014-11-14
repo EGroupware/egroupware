@@ -503,20 +503,25 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		attrs.label = field.label;
 
+		if (this._type == 'customfields-list')
+		{
+			// No buttons in a list, it causes problems with detached nodes
+			return false;
+		}
 		// Simple case, one widget for a custom field
-		if(Object.keys(field.values).length == 1)
+		if(!field.values || typeof field.values != 'object' || Object.keys(field.values).length == 1)
 		{
 			for(var key in field.values)
 			{
 				attrs.label = key;
 				attrs.onclick = field.values[key];
 			}
+			if (!attrs.label)
+			{
+				attrs.label = 'No "label=onclick" in values!';
+				attrs.onclick = function(){ return false; };
+			}
 			return !attrs.readonly;
-		}
-		else if (this._type == 'customfields-list')
-		{
-			// No buttons in a list, it causes problems with detached nodes
-			return false;
 		}
 		else
 		{
