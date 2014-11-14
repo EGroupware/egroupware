@@ -160,7 +160,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * scandir working on just the eGW VFS: returns array with filenames as values
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
-	 * @param int $sorting_order=0 !$sorting_order (default) alphabetical in ascending order, $sorting_order alphabetical in descending order.
+	 * @param int $sorting_order =0 !$sorting_order (default) alphabetical in ascending order, $sorting_order alphabetical in descending order.
 	 * @return array
 	 */
 	static function scandir($path,$sorting_order=0)
@@ -181,8 +181,6 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function copy($from,$to)
 	{
-		$ret = false;
-
 		$old_props = self::file_exists($to) ? self::propfind($to,null) : array();
 		// copy properties (eg. file comment), if there are any and evtl. existing old properties
 		$props = self::propfind($from,null);
@@ -204,7 +202,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param array &$props
 	 * @param array|string $name property array or name
-	 * @param string $ns=self::DEFAULT_PROP_NAMESPACE namespace, only if $prop is no array
+	 * @param string $ns =self::DEFAULT_PROP_NAMESPACE namespace, only if $prop is no array
 	 * @return &array reference to property in $props or null if not found
 	 */
 	static function &find_prop(array &$props,$name,$ns=self::DEFAULT_PROP_NAMESPACE)
@@ -225,7 +223,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * stat working on just the eGW VFS (alias of url_stat)
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
-	 * @param boolean $try_create_home=false should a non-existing home-directory be automatically created
+	 * @param boolean $try_create_home =false should a non-existing home-directory be automatically created
 	 * @return array
 	 */
 	static function stat($path,$try_create_home=false)
@@ -245,7 +243,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * lstat (not resolving symbolic links) working on just the eGW VFS (alias of url_stat)
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
-	 * @param boolean $try_create_home=false should a non-existing home-directory be automatically created
+	 * @param boolean $try_create_home =false should a non-existing home-directory be automatically created
 	 * @return array
 	 */
 	static function lstat($path,$try_create_home=false)
@@ -299,11 +297,11 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * The fstab is stored in the eGW configuration and used for all eGW users.
 	 *
-	 * @param string $url=null url of the filesystem to mount, eg. oldvfs://default/
-	 * @param string $path=null path to mount the filesystem in the vfs, eg. /
-	 * @param boolean $check_url=null check if url is an existing directory, before mounting it
+	 * @param string $url =null url of the filesystem to mount, eg. oldvfs://default/
+	 * @param string $path =null path to mount the filesystem in the vfs, eg. /
+	 * @param boolean $check_url =null check if url is an existing directory, before mounting it
 	 * 	default null only checks if url does not contain a $ as used in $user or $pass
-	 * @param boolean $persitent_mount=true create a persitent mount, or only a temprary for current request
+	 * @param boolean $persitent_mount =true create a persitent mount, or only a temprary for current request
 	 * @param boolean $clear_fstab =false true clear current fstab, false (default) only add given mount
 	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
 	 */
@@ -373,12 +371,12 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if (!self::$is_root)
 		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') permission denied, you are NOT root!');
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).','.array2string($path).') permission denied, you are NOT root!');
 			return false;	// only root can mount
 		}
 		if (!isset(self::$fstab[$path]) && ($path = array_search($path,self::$fstab)) === false)
 		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') NOT mounted!');
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).') NOT mounted!');
 			return false;	// $path not mounted
 		}
 		unset(self::$fstab[$path]);
@@ -390,7 +388,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$GLOBALS['egw']->invalidate_session_cache();
 		}
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful unmount).');
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($path).') returns true (successful unmount).');
 		return true;
 	}
 
@@ -411,7 +409,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * find = recursive search over the filesystem
 	 *
 	 * @param string|array $base base of the search
-	 * @param array $options=null the following keys are allowed:
+	 * @param array $options =null the following keys are allowed:
 	 * - type => {d|f|F} d=dirs, f=files (incl. symlinks), F=files (incl. symlinks to files), default all
 	 * - depth => {true|false(default)} put the contents of a dir before the dir itself
 	 * - dirsontop => {true(default)|false} allways return dirs before the files (two distinct blocks)
@@ -430,9 +428,9 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
 	 * - follow => {true|false(default)} follow symlinks
 	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
-	 * @param string|array/true $exec=null function to call with each found file/dir as first param and stat array as last param or
+	 * @param string|array/true $exec =null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
-	 * @param array $exec_params=null further params for exec as array, path is always the first param and stat the last!
+	 * @param array $exec_params =null further params for exec as array, path is always the first param and stat the last!
 	 * @return array of pathes if no $exec, otherwise path => stat pairs
 	 */
 	static function find($base,$options=null,$exec=null,$exec_params=null)
@@ -505,13 +503,13 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			if ($is_dir && (!isset($options['maxdepth']) || ($options['maxdepth'] > 0 && $options['depth'] < $options['maxdepth'])) && ($dir = @opendir($path)))
 			{
-				while(($file = readdir($dir)) !== false)
+				while(($fname = readdir($dir)) !== false)
 				{
-					if ($file == '.' || $file == '..') continue;	// ignore current and parent dir!
+					if ($fname == '.' || $fname == '..') continue;	// ignore current and parent dir!
 
-					if (self::is_hidden($file) && !$options['hidden']) continue;	// ignore hidden files
+					if (self::is_hidden($fname) && !$options['hidden']) continue;	// ignore hidden files
 
-					$file = self::concat($path,$file);
+					$file = self::concat($path, $fname);
 
 					if ((int)$options['mindepth'] <= 1)
 					{
@@ -522,7 +520,7 @@ class egw_vfs extends vfs_stream_wrapper
 					{
 						$opts = $options;
 						if ($opts['mindepth']) $opts['mindepth']--;
-						if ($opts['maxdepth']) $opts['depth']++;;
+						if ($opts['maxdepth']) $opts['depth']++;
 						unset($opts['order']);
 						unset($opts['limit']);
 						foreach(self::find($options['url']?$file:self::parse_url($file,PHP_URL_PATH),$opts,true) as $p => $s)
@@ -671,7 +669,7 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			list($type,$subtype) = explode('/',$options['mime']);
 			// no subtype (eg. 'image') --> check only the main type
-			if ($sub_type || substr($stat['mime'],0,strlen($type)+1) != $type.'/')
+			if ($subtype || substr($stat['mime'],0,strlen($type)+1) != $type.'/')
 			{
 				return;	// wrong mime-type
 			}
@@ -716,7 +714,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Recursiv remove all given url's, including it's content if they are files
 	 *
 	 * @param string|array $urls url or array of url's
-	 * @param boolean $allow_urls=false allow to use url's, default no only pathes (to stay within the vfs)
+	 * @param boolean $allow_urls =false allow to use url's, default no only pathes (to stay within the vfs)
 	 * @throws egw_exception_assertion_failed when trainig to remove /, /apps or /home
 	 * @return array
 	 */
@@ -774,8 +772,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param string $path path
 	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
 	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
-	 * @param array|boolean $stat=null stat array or false, to not query it again
-	 * @param int $user=null user used for check, if not current user (egw_vfs::$user)
+	 * @param array|boolean $stat =null stat array or false, to not query it again
+	 * @param int $user =null user used for check, if not current user (egw_vfs::$user)
 	 * @return boolean
 	 */
 	static function check_access($path, $check, $stat=null, $user=null)
@@ -921,9 +919,9 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * Does NOT check if user has the rights to set the extended acl for the given url/path!
 	 *
-	 * @param string $path string with path
-	 * @param int $rights=null rights to set, or null to delete the entry
-	 * @param int|boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param string $url string with path
+	 * @param int $rights =null rights to set, or null to delete the entry
+	 * @param int|boolean $owner =null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
 	 * @return boolean true if acl is set/deleted, false on error
 	 */
 	static function eacl($url,$rights=null,$owner=null)
@@ -966,7 +964,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Read properties for a ressource (file, dir or all files of a dir)
 	 *
 	 * @param array|string $path (array of) string with path
-	 * @param string $ns='http://egroupware.org/' namespace if propfind should be limited to a single one, otherwise use null
+	 * @param string $ns ='http://egroupware.org/' namespace if propfind should be limited to a single one, otherwise use null
 	 * @return array|boolean array with props (values for keys 'name', 'ns', 'val'), or path => array of props for is_array($path)
 	 * 	false if $path does not exist
 	 */
@@ -987,7 +985,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Convert a symbolic mode string or octal mode to an integer
 	 *
 	 * @param string|int $set comma separated mode string to set [ugo]+[+=-]+[rwx]+
-	 * @param int $mode=0 current mode of the file, necessary for +/- operation
+	 * @param int $mode =0 current mode of the file, necessary for +/- operation
 	 * @return int
 	 */
 	static function mode2int($set,$mode=0)
@@ -1003,6 +1001,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		foreach(explode(',',$set) as $s)
 		{
+			$matches = null;
 			if (!preg_match($use='/^([ugoa]*)([+=-]+)([rwx]+)$/',$s,$matches))
 			{
 				$use = str_replace(array('/','^','$','(',')'),'',$use);
@@ -1112,8 +1111,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Get the closest mime icon
 	 *
 	 * @param string $mime_type
-	 * @param boolean $et_image=true return $app/$icon string for etemplate (default) or html img tag if false
-	 * @param int $size=16
+	 * @param boolean $et_image =true return $app/$icon string for etemplate (default) or html img tag if false
+	 * @param int $size =16
 	 * @return string
 	 */
 	static function mime_icon($mime_type, $et_image=true, $size=16)
@@ -1164,12 +1163,13 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * From PHP ini_get docs, Ivo Mandalski 15-Nov-2011 08:27
 	 */
-	static function int_size($val)
+	static function int_size($_val)
 	{
-		if(empty($val))return 0;
+		if(empty($_val))return 0;
 
-		$val = trim($val);
+		$val = trim($_val);
 
+		$matches = null;
 		preg_match('#([0-9]+)[\s]*([a-z]+)#i', $val, $matches);
 
 		$last = '';
@@ -1200,12 +1200,12 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * like basename($path), but also working if the 1. char of the basename is non-ascii
 	 *
-	 * @param string $path
+	 * @param string $_path
 	 * @return string
 	 */
-	static function basename($path)
+	static function basename($_path)
 	{
-		list($path,$query) = explode('?',$path);	// remove query
+		list($path) = explode('?',$_path);	// remove query
 		$parts = explode('/',$path);
 
 		return array_pop($parts);
@@ -1216,12 +1216,12 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * Also works around PHP under Windows returning dirname('/something') === '\\', which is NOT understood by EGroupware's VFS!
 	 *
-	 * @param string $path path or url
+	 * @param string $_url path or url
 	 * @return string|boolean parent or false if there's none ($path == '/')
 	 */
-	static function dirname($url)
+	static function dirname($_url)
 	{
-		list($url,$query) = explode('?',$url,2);	// strip the query first, as it can contain slashes
+		list($url,$query) = explode('?',$_url,2);	// strip the query first, as it can contain slashes
 
 		if ($url == '/' || $url[0] != '/' && self::parse_url($url,PHP_URL_PATH) == '/')
 		{
@@ -1245,7 +1245,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * We define all eGW admins the owner of the group directories!
 	 *
 	 * @param string $path
-	 * @param array $stat=null stat for path, default queried by this function
+	 * @param array $stat =null stat for path, default queried by this function
 	 * @return boolean
 	 */
 	static function has_owner_rights($path,array $stat=null)
@@ -1262,26 +1262,26 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * Also normalizing the path, as the relative path can contain ../
 	 *
-	 * @param string $url base url or path, might end in a /
+	 * @param string $_url base url or path, might end in a /
 	 * @param string $relative relative path to add to $url
 	 * @return string
 	 */
-	static function concat($url,$relative)
+	static function concat($_url,$relative)
 	{
-		list($url,$query) = explode('?',$url,2);
+		list($url,$query) = explode('?',$_url,2);
 		if (substr($url,-1) == '/') $url = substr($url,0,-1);
-		$url = ($relative === '' || $relative[0] == '/' ? $url.$relative : $url.'/'.$relative);
+		$ret = ($relative === '' || $relative[0] == '/' ? $url.$relative : $url.'/'.$relative);
 
 		// now normalize the path (remove "/something/..")
-		while (strpos($url,'/../') !== false)
+		while (strpos($ret,'/../') !== false)
 		{
-			list($a,$b) = explode('/../',$url,2);
-			$a = explode('/',$a);
+			list($a_str,$b_str) = explode('/../',$ret,2);
+			$a = explode('/',$a_str);
 			array_pop($a);
-			$b = explode('/',$b);
-			$url = implode('/',array_merge($a,$b));
+			$b = explode('/',$b_str);
+			$ret = implode('/',array_merge($a,$b));
 		}
-		return $url.($query ? (strpos($url,'?')===false ? '?' : '&').$query : '');
+		return $ret.($query ? (strpos($url,'?')===false ? '?' : '&').$query : '');
 	}
 
 	/**
@@ -1310,7 +1310,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Please note: If you dont use eTemplate or the html class, you have to run this url throught egw::link() to get a full url
 	 *
 	 * @param string $path
-	 * @param boolean $force_download=false add header('Content-disposition: filename="' . basename($path) . '"'), currently not supported!
+	 * @param boolean $force_download =false add header('Content-disposition: filename="' . basename($path) . '"'), currently not supported!
 	 * @todo get $force_download working through webdav
 	 * @return string
 	 */
@@ -1332,21 +1332,20 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Download the given file list as a ZIP
 	 *
-	 * @param array $files List of files to include in the zip
+	 * @param array $_files List of files to include in the zip
 	 * @param string $name optional Zip file name.  If not provided, it will be determined automatically from the files
 	 *
 	 * @return undefined
 	 */
-	public static function download_zip(Array $files, $name = false)
+	public static function download_zip(Array $_files, $name = false)
 	{
-		error_log(__METHOD__ . ': '.implode(',',$files));
+		error_log(__METHOD__ . ': '.implode(',',$_files));
 
 		// Create zip file
 		$zip_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'zip');
 
 		$zip = new ZipArchive();
-		$result = $zip->open($zip_file, ZipArchive::OVERWRITE);
-		if($result !== TRUE)
+		if (!$zip->open($zip_file, ZipArchive::OVERWRITE))
 		{
 			throw new egw_exception("Cannot open zip file for writing.");
 		}
@@ -1354,12 +1353,12 @@ class egw_vfs extends vfs_stream_wrapper
 		// Find lowest common directory, to use relative paths
 		// eg: User selected /home/nathan/picture.jpg, /home/Pictures/logo.jpg
 		// We want /home
-		$paths = array();
-		foreach($files as $file)
+		$dirs = array();
+		foreach($_files as $file)
 		{
-			$paths[] = self::dirname($file);
+			$dirs[] = self::dirname($file);
 		}
-		$paths = array_unique($paths);
+		$paths = array_unique($dirs);
 		if(count($paths) > 0)
 		{
 			// Shortest to longest
@@ -1368,19 +1367,19 @@ class egw_vfs extends vfs_stream_wrapper
 			});
 
 			// Start with shortest, pop off sub-directories that don't match
-			$base_dir = explode('/',$paths[0]);
-			foreach($paths as $index => $path)
+			$parts = explode('/',$paths[0]);
+			foreach($paths as $path)
 			{
 				$dirs = explode('/',$path);
 				foreach($dirs as $dir_index => $dir)
 				{
-					if($base_dir[$dir_index] && $base_dir[$dir_index] != $dir)
+					if($parts[$dir_index] && $parts[$dir_index] != $dir)
 					{
-						unset($base_dir[$dir_index]);
+						unset($parts[$dir_index]);
 					}
 				}
 			}
-			$base_dir = implode('/', $base_dir);
+			$base_dir = implode('/', $parts);
 		}
 		else
 		{
@@ -1400,9 +1399,9 @@ class egw_vfs extends vfs_stream_wrapper
 		$filename = $GLOBALS['egw_info']['server']['site_title'] . '_' .
 			str_replace($replace,'_',(
 			$name ? $name : (
-			count($files) == 1 ?
+			count($_files) == 1 ?
 			// Just one file (hopefully a directory?) selected
-			self::basename($files[0]) :
+			self::basename($_files[0]) :
 			// Use the lowest common directory (eg: Infolog, Open, nathan)
 			self::basename($base_dir))
 		)) . '.zip';
@@ -1414,7 +1413,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 
 		// Go into directories, find them all
-		$files = self::find($files);
+		$files = self::find($_files);
 		$links = array();
 
 		// We need to remove them _after_ we're done
@@ -1424,13 +1423,13 @@ class egw_vfs extends vfs_stream_wrapper
 		set_time_limit(count($files));
 
 		// Add files to archive
-		foreach($files as $idx => &$addfile)
+		foreach($files as &$addfile)
 		{
 			// Use relative paths inside zip
-			$_name = str_replace($base_dir, '', $addfile);
+			$relative = substr($addfile, strlen($base_dir));
 
 			// Use safe names - replace unsafe chars, convert to ASCII (ZIP spec says CP437, but we'll try)
-			$path = explode('/',$_name);
+			$path = explode('/',$relative);
 			$_name = translation::convert(translation::to_ascii(implode('/', str_replace($replace,'_',$path))),false,'ASCII');
 
 			// Don't go infinite with app entries
@@ -1467,10 +1466,10 @@ class egw_vfs extends vfs_stream_wrapper
 					$comment = self::find_prop($props,'comment');
 					if($comment)
 					{
-						$zip->setCommentName($_name, $prop['val']);
+						$zip->setCommentName($_name, $comment);
 					}
 				}
-				$props = null;
+				unset($props);
 			}
 		}
 
@@ -1532,8 +1531,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param string &$owner
 	 * @param string &$scope
 	 * @param string &$type
-	 * @param boolean $update=false
-	 * @param boolean $check_writable=true should we check if the ressource is writable, before granting locks, default yes
+	 * @param boolean $update =false
+	 * @param boolean $check_writable =true should we check if the ressource is writable, before granting locks, default yes
 	 * @return boolean true on success
 	 */
 	static function lock($path,&$token,&$timeout,&$owner,&$scope,&$type,$update=false,$check_writable=true)
@@ -1603,6 +1602,7 @@ class egw_vfs extends vfs_stream_wrapper
 				$ret = true;
 			}
 			catch(egw_exception_db $e) {
+				unset($e);
 				$ret = false;	// there's already a lock
 			}
 		}
@@ -1615,7 +1615,7 @@ class egw_vfs extends vfs_stream_wrapper
      *
      * @param string $path path to unlock
      * @param string $token locktoken
-	 * @param boolean $check_writable=true should we check if the ressource is writable, before granting locks, default yes
+	 * @param boolean $check_writable =true should we check if the ressource is writable, before granting locks, default yes
      * @return boolean true on success
      */
     static function unlock($path,$token,$check_writable=true)
@@ -1679,7 +1679,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Get backend specific information (data and etemplate), to integrate as tab in filemanagers settings dialog
 	 *
 	 * @param string $path
-	 * @param array $content=null
+	 * @param array $content =null
 	 * @return array|boolean array with values for keys 'data','etemplate','name','label','help' or false if not supported by backend
 	 */
 	static function getExtraInfo($path,array $content=null)
@@ -1696,7 +1696,7 @@ class egw_vfs extends vfs_stream_wrapper
 			'content' => $content,
 		))))
 		{
-			foreach($vfs_extra as $app => $data)
+			foreach($vfs_extra as $data)
 			{
 				$extra = $extra ? array_merge($extra, $data) : $data;
 			}
@@ -1809,11 +1809,11 @@ class egw_vfs extends vfs_stream_wrapper
 		else if ($file && $mime_main == 'image' && in_array($mime_sub, array('png','jpeg','jpg','gif','bmp')) &&
 		         (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
 		         (string)$GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] != '0' &&
-		         (!is_array($value) && ($stat = egw_vfs::stat($file)) ? $stat['size'] : $value['size']) < 1500000)
+		         ($stat = egw_vfs::stat($file)) && $stat['size'] < 1500000)
 		{
 			if (substr($file, 0, 6) == '/apps/')
 			{
-				$file = self::parse_url(egw_vfs::resolve_url_symlinks($path), PHP_URL_PATH);
+				$file = self::parse_url(egw_vfs::resolve_url_symlinks($file), PHP_URL_PATH);
 			}
 
 			//Assemble the thumbnail parameters
@@ -1828,7 +1828,7 @@ class egw_vfs extends vfs_stream_wrapper
 		else
 		{
 			list($app, $name) = explode("/", egw_vfs::mime_icon($mime), 2);
-			$image = $GLOBALS['egw']->common->image($app, $name);
+			$image = common::image($app, $name);
 		}
 
 		return $image;
@@ -1877,10 +1877,6 @@ class egw_vfs extends vfs_stream_wrapper
 						{
 							// Create the target directory
 							egw_vfs::mkdir($target,null,STREAM_MKDIR_RECURSIVE);
-
-							$files = egw_vfs::find($file, array(
-								"hidden" => true
-							));
 
 							$copied[] = $file;
 							$copied[] = $target; // < newly created folder must not be copied again!
@@ -1950,9 +1946,9 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param array|string $src path to uploaded file or etemplate file array (value for key 'tmp_name')
 	 * @param string $target path or directory to copy uploaded file
-	 * @param array|string $props=null array with properties (name => value pairs, eg. 'comment' => 'FooBar','#cfname' => 'something'),
+	 * @param array|string $props =null array with properties (name => value pairs, eg. 'comment' => 'FooBar','#cfname' => 'something'),
 	 * 	array as for proppatch (array of array with values for keys 'name', 'val' and optional 'ns') or string with comment
-	 * @param boolean $check_is_uploaded_file=true should method perform an is_uploaded_file check, default yes
+	 * @param boolean $check_is_uploaded_file =true should method perform an is_uploaded_file check, default yes
 	 * @return boolean|array stat array on success, false on error
 	 */
 	static public function copy_uploaded($src,$target,$props=null,$check_is_uploaded_file=true)
