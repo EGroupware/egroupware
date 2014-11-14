@@ -2,6 +2,7 @@
  * eGroupware Framework ui object
  * @package framework
  * @author Hadi Nategh <hn@stylite.de>
+ * @author Andreas Stoeckel <as@stylite.de>
  * @copyright Stylite AG 2014
  * @description Framework ui object, is implementation of UI class
  */
@@ -177,7 +178,7 @@ var fw_ui_sidemenu_entry = Class.extend({
 	{
 		$j(this.headerDiv).remove();
 		$j(this.contentDiv).remove();
-	},
+	}
 });
 
 /**
@@ -189,7 +190,6 @@ var fw_ui_sidemenu = Class.extend({
 	* The constructor of the egw_fw_ui_sidemenu.
 	*
 	* @param {object} _baseDiv specifies the "div" in which all entries added by the addEntry function should be displayed.
-	* @param {function} _sortCallback 
 	*/
    init:function(_baseDiv)
    {
@@ -590,7 +590,7 @@ egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _ta
 		{
 			if (this.tabs[i].position > pos)
 			{
-				this.tabs.splice(i, 0, tab)
+				this.tabs.splice(i, 0, tab);
 				inserted = true;
 				break;
 			}
