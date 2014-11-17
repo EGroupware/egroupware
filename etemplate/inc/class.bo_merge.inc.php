@@ -1102,21 +1102,45 @@ abstract class bo_merge
 		if($format && $names)
 		{
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
-			$increase = 0;
-			while($increase < 10) {
-				$result = preg_replace($format, $replacement, $content, -1, $count);
-				if( preg_last_error()== PREG_BACKTRACK_LIMIT_ERROR ) {  // Only check on backtrack limit failure
-					ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 10000 );  // Get current limit and increase
-					$increase++;  // Do not overkill the server
-				} else {  // No fail
-					$content = $result;  // On failure $result would be NULL
-					break;  // Exit loop
-				}
+			do {
+				$result = preg_replace($format, $replacement, $content, -1);
 			}
-			if($increase == 10) {
-				error_log('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit') . ', some cells left as text.');
+			// try to increase/double pcre.backtrack_limit failure
+			while(preg_last_error() == PREG_BACKTRACK_LIMIT_ERROR && self::increase_backtrack_limit());
+
+			if ($result) $content = $result;  // On failure $result would be NULL
+		}
+	}
+
+	/**
+	 * Increase/double prce.backtrack_limit up to 1/4 of memory_limit
+	 *
+	 * @return boolean true: backtrack_limit increased, may try again, false limit already to high
+	 */
+	protected static function increase_backtrack_limit()
+	{
+		static $backtrack_limit=null,$memory_limit=null;
+		if (!isset($backtrack_limit))
+		{
+			$backtrack_limit = ini_get('pcre.backtrack_limit');
+		}
+		if (!isset($memory_limit))
+		{
+			$memory_limit = ini_get('memory_limit');
+			switch(strtoupper(substr($memory_limit, -1)))
+			{
+				case 'G': $memory_limit *= 1024;
+				case 'M': $memory_limit *= 1024;
+				case 'K': $memory_limit *= 1024;
 			}
 		}
+		if ($backtrack_limit < $memory_limit/8)
+		{
+			ini_set( 'pcre.backtrack_limit', $backtrack_limit*=2);
+			return true;
+		}
+		error_log("pcre.backtrack_limit exceeded @ $backtrack_limit, some cells left as text.");
+		return false;
 	}
 
 	/**
@@ -1209,20 +1233,13 @@ abstract class bo_merge
 		if($format && $names)
 		{
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
-			$increase = 0;
-			while($increase < 10) {
-				$result = preg_replace($format, $replacement, $content, -1, $count);
-				if( preg_last_error()== PREG_BACKTRACK_LIMIT_ERROR ) {  // Only check on backtrack limit failure
-					ini_set( 'pcre.backtrack_limit', (int)ini_get( 'pcre.backtrack_limit' )+ 10000 );  // Get current limit and increase
-					$increase++;  // Do not overkill the server
-				} else {  // No fail
-					$content = $result;  // On failure $result would be NULL
-					break;  // Exit loop
-				}
+			do {
+				$result = preg_replace($format, $replacement, $content, -1);
 			}
-			if($increase == 10) {
-				error_log('Backtrack limit exceeded @ ' . ini_get('pcre.backtrack_limit') . ', some cells left as text.');
-			}
+			// try to increase/double pcre.backtrack_limit failure
+			while(preg_last_error() == PREG_BACKTRACK_LIMIT_ERROR && self::increase_backtrack_limit());
+
+			if ($result) $content = $result;  // On failure $result would be NULL
 		}
 	}
 
@@ -1832,7 +1849,7 @@ abstract class bo_merge
 	private static function document_mail_action(Array &$action, $file)
 	{
 		unset($action['postSubmit']);
-		
+
 		// Lots takes a while, confirm
 		$action['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
 
