@@ -44,6 +44,11 @@
  *
  * - copies mail-attributes from ldap to AD (example is from Mandriva mailAccount schema, need to adapt to other schema!)
  *   (no_sid_check=1 uses all objectClass=posixAccount, not checking for having a SID and uid not ending in $ for computer accounts)
+ *
+ * setup/setup-cli.php [--dry-run] --setup_cmd_ldap <domain>,<config-user>,<config-pw> sub_command=passwords_to_sql \
+ * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost
+ *
+ * Updating passwords for existing users in SQL from LDAP, eg. to switch off authentication to LDAP on a SQL install.
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -63,19 +68,19 @@ class setup_cmd_ldap extends setup_cmd
 	 * Constructor
 	 *
 	 * @param string/array $domain domain-name to customize the defaults or array with all parameters
-	 * @param string $ldap_host=null
-	 * @param string $ldap_suffix=null base of the whole ldap install, default "dc=local"
-	 * @param string $ldap_admin=null root-dn needed to create new entries in the suffix
-	 * @param string $ldap_admin_pw=null
-	 * @param string $ldap_base=null base of the instance, default "o=$domain,$suffix"
-	 * @param string $ldap_root_dn=null root-dn used for the instance, default "cn=admin,$base"
-	 * @param string $ldap_root_pw=null
-	 * @param string $ldap_context=null ou for accounts, default "ou=accounts,$base"
-	 * @param string $ldap_search_filter=null search-filter for accounts, default "(uid=%user)"
-	 * @param string $ldap_group_context=null ou for groups, default "ou=groups,$base"
-	 * @param string $sub_command='create_ldap' 'create_ldap', 'test_ldap', 'test_ldap_root', see exec method
-	 * @param string $ldap_encryption_type='des'
-	 * @param boolean $truncate_egw_accounts=false truncate accounts table before migration to SQL
+	 * @param string $ldap_host =null
+	 * @param string $ldap_suffix =null base of the whole ldap install, default "dc=local"
+	 * @param string $ldap_admin =null root-dn needed to create new entries in the suffix
+	 * @param string $ldap_admin_pw =null
+	 * @param string $ldap_base =null base of the instance, default "o=$domain,$suffix"
+	 * @param string $ldap_root_dn =null root-dn used for the instance, default "cn=admin,$base"
+	 * @param string $ldap_root_pw =null
+	 * @param string $ldap_context =null ou for accounts, default "ou=accounts,$base"
+	 * @param string $ldap_search_filter =null search-filter for accounts, default "(uid=%user)"
+	 * @param string $ldap_group_context =null ou for groups, default "ou=groups,$base"
+	 * @param string $sub_command ='create_ldap' 'create_ldap', 'test_ldap', 'test_ldap_root', see exec method
+	 * @param string $ldap_encryption_type ='des'
+	 * @param boolean $truncate_egw_accounts =false truncate accounts table before migration to SQL
 	 */
 	function __construct($domain,$ldap_host=null,$ldap_suffix=null,$ldap_admin=null,$ldap_admin_pw=null,
 		$ldap_base=null,$ldap_root_dn=null,$ldap_root_pw=null,$ldap_context=null,$ldap_search_filter=null,
@@ -107,7 +112,7 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * run the command: test or create the ldap connection and hierarchy
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
@@ -141,7 +146,8 @@ class setup_cmd_ldap extends setup_cmd
 				break;
 			case 'migrate_to_ldap':
 			case 'migrate_to_sql':
-				$msg = $this->migrate($this->sub_command == 'migrate_to_ldap');
+			case 'passwords_to_sql':
+				$msg = $this->migrate($this->sub_command);
 				break;
 			case 'set_mailbox':
 				$msg = $this->set_mailbox($check_only);
@@ -169,7 +175,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Then run admin/admin-cli.php --change-account-id and after this command again without --dry-run.
 	 * After that you need to run the given chown.php command to change filesystem uid/gid in samba share.
 	 *
-	 * @param boolean $check_only=false true: only connect and output necessary commands
+	 * @param boolean $check_only =false true: only connect and output necessary commands
 	 */
 	private function sid2uidnumber($check_only=false)
 	{
@@ -254,7 +260,7 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Copy given attributes of accounts of one ldap to active directory
 	 *
-	 * @param boolean $check_only=false true: only connect and output necessary commands
+	 * @param boolean $check_only =false true: only connect and output necessary commands
 	 */
 	private function copy2ad($check_only=false)
 	{
@@ -326,13 +332,14 @@ class setup_cmd_ldap extends setup_cmd
 			throw new egw_exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
 		}
 		$changed = 0;
+		$utc_diff = null;
 		foreach($entries as $key => $entry)
 		{
 			if ($key === 'count') continue;
 
-			$entry = ldap::result2array($entry);
-			$uid = $entry['uid'];
-			$entry = array_diff_key($entry, $ignore_attr);
+			$entry_arr = ldap::result2array($entry);
+			$uid = $entry_arr['uid'];
+			$entry = array_diff_key($entry_arr, $ignore_attr);
 
 			if (!($sr = ldap_search($ads->ds, $this->ads_context,
 				$search='(&(objectClass=user)(sAMAccountName='.ldap::quote($uid).'))', array('dn'))) ||
@@ -354,8 +361,8 @@ class setup_cmd_ldap extends setup_cmd
 				else
 				{
 					if (is_null($utc_diff)) $utc_diff = date('Z');
-					$entry['shadowexpire'] = $value*24*3600+$utc_diff;	// ldap time to unixTime
-					$entry['shadowexpire'] = accounts_ads::convertUnixTimeToWindowsTime($entry['shadowexpire']);
+					$entry['shadowexpire'] = accounts_ads::convertUnixTimeToWindowsTime(
+						$entry['shadowexpire']*24*3600+$utc_diff);	// ldap time to unixTime
 				}
 			}
 			$update = array();
@@ -364,7 +371,7 @@ class setup_cmd_ldap extends setup_cmd
 				if ($value || $attr === '')
 				{
 					$to = isset($rename[$attr]) ? $rename[$attr] : $attr;
-					unset($prefix);
+					$prefix = null;
 					if ($to[0] == '{')	// eg. {smtp:}proxyAddresses=forwardTo
 					{
 						list($prefix, $to) = explode('}', substr($to, 1));
@@ -414,12 +421,15 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Migrate to other account storage
 	 *
-	 * @param boolean $to_ldap true: sql --> ldap, false: ldap --> sql
+	 * @param boolean|string $to_ldap true: sql --> ldap, false: ldap --> sql, "passwords_to_sql", "migrate_to_(sql|ldap)"
 	 * @return string with success message
 	 * @throws Exception on error
 	 */
 	private function migrate($to_ldap)
 	{
+		$passwords2sql = $to_ldap === "passwords_to_sql";
+		if (is_string($to_ldap)) $to_ldap = substr($to_ldap, -8) == '_to_ldap';
+
 		$msg = array();
 		// if migrating to ldap, check ldap and create context if not yet exiting
 		if ($to_ldap && !empty($this->ldap_admin_pw))
@@ -431,7 +441,7 @@ class setup_cmd_ldap extends setup_cmd
 			$msg[] = $this->connect();
 		}
 		// read accounts from old store
-		$accounts = $this->accounts(!$to_ldap);
+		$accounts = $this->accounts(!$to_ldap, $passwords2sql ? 'accounts' : 'both');
 
 		// clean up SQL before migration
 		if (!$to_ldap && $this->truncate_egw_accounts)
@@ -442,7 +452,8 @@ class setup_cmd_ldap extends setup_cmd
 		// instanciate accounts obj for new store
 		$accounts_obj = $this->accounts_obj($to_ldap);
 
-		$accounts_created = $groups_created = $errors = 0;
+		$accounts_created = $groups_created = $errors = $egw_info_set = 0;
+		$emailadmin_src = $ldap_class = null;
 		$target = $to_ldap ? 'LDAP' : 'SQL';
 		foreach($accounts as $account_id => $account)
 		{
@@ -455,6 +466,31 @@ class setup_cmd_ldap extends setup_cmd
 
 			// invalidate cache: otherwise no migration takes place, if cached results says account already exists
 			accounts::cache_invalidate($account_id);
+
+			if ($passwords2sql)
+			{
+				if (!($sql_account = $accounts_obj->read($account_id)))
+				{
+					$msg[] = lang('%1 does NOT exist in %2.',$what,$target);
+					$errors++;
+				}
+				else
+				{
+					$sql_account['account_passwd'] = self::hash_ldap2sql($account['account_pwd']);
+
+					if (!$accounts_obj->save($sql_account))
+					{
+						$msg[] = lang('Update of %1 in %2 failed !!!',$what,$target);
+						$errors++;
+					}
+					else
+					{
+						$msg[] = lang('%1 password set in %2.',$what,$target);
+						$accounts_created++;
+					}
+				}
+				continue;
+			}
 
 			if ($account['account_type'] == 'u')
 			{
@@ -601,6 +637,11 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_obj->set_members($account['members'],$account_id);
 			}
 		}
+		if ($passwords2sql)
+		{
+			return lang('%1 passwords updated, %3 errors',$accounts_created,$groups_created,$errors).
+				($errors || $this->verbose ? "\n- ".implode("\n- ",$msg) : '');
+		}
 		// migrate addressbook data
 		$GLOBALS['egw_info']['user']['apps']['admin'] = true;	// otherwise migration will not run in setup!
 		$addressbook = new addressbook_so();
@@ -613,12 +654,12 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		ob_start();
 		$addressbook->migrate2ldap($to_ldap ? 'accounts' : 'accounts-back');
-		$msg = array_merge($msg, explode("\n", strip_tags(ob_get_clean())));
+		$msgs = array_merge($msg, explode("\n", strip_tags(ob_get_clean())));
 
 		$this->restore_db();
 
 		return lang('%1 users and %2 groups created, %3 errors',$accounts_created,$groups_created,$errors).
-			($errors || $this->verbose ? "\n- ".implode("\n- ",$msg) : '');
+			($errors || $this->verbose ? "\n- ".implode("\n- ",$msgs) : '');
 	}
 
 	/**
@@ -631,6 +672,7 @@ class setup_cmd_ldap extends setup_cmd
 	{
 		if (!($type = $GLOBALS['egw_info']['server']['sql_encryption_type'])) $type = 'md5';
 
+		$matches = null;
 		if (preg_match('/^\\{(.*)\\}(.*)$/',$hash,$matches))
 		{
 			list(,$type,$hash) = $matches;
@@ -672,15 +714,16 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Read all accounts from sql or ldap
 	 *
-	 * @param boolean $from_ldap=true true: ldap, false: sql
+	 * @param boolean $from_ldap =true true: ldap, false: sql
+	 * @param string $type ='both'
 	 * @return array
 	 */
-	public function accounts($from_ldap=true)
+	public function accounts($from_ldap=true, $type='both')
 	{
 		$accounts_obj = $this->accounts_obj($from_ldap);
 		//error_log(__METHOD__."(from_ldap=".array2string($from_ldap).') get_class(accounts_obj->backend)='.get_class($accounts_obj->backend));
 
-		$accounts = $accounts_obj->search(array('type' => 'both', 'objectclass' => true));
+		$accounts = $accounts_obj->search(array('type' => $type, 'objectclass' => true));
 
 		foreach($accounts as $account_id => &$account)
 		{
@@ -713,7 +756,7 @@ class setup_cmd_ldap extends setup_cmd
 	 */
 	private function accounts_obj($ldap)
 	{
-		static $enviroment_setup;
+		static $enviroment_setup=null;
 		if (!$enviroment_setup)
 		{
 			parent::_setup_enviroment($this->domain);
@@ -739,9 +782,9 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Connect to ldap server
 	 *
-	 * @param string $dn=null default $this->ldap_root_dn
-	 * @param string $pw=null default $this->ldap_root_pw
-	 * @param string $host=null default $this->ldap_host, hostname, ip or ldap-url
+	 * @param string $dn =null default $this->ldap_root_dn
+	 * @param string $pw =null default $this->ldap_root_pw
+	 * @param string $host =null default $this->ldap_host, hostname, ip or ldap-url
 	 * @throws egw_exception_wrong_userinput Can not connect to ldap ...
 	 */
 	private function connect($dn=null,$pw=null,$host=null)
@@ -813,7 +856,7 @@ class setup_cmd_ldap extends setup_cmd
 			$this->ldap_root_dn => array('userPassword' => auth::encrypt_ldap($this->ldap_root_pw,'ssha')),
 		) as $dn => $extra)
 		{
-			if (!$this->_create_node($dn,$extra,$check_only) && $dn == $this->ldap_root_dn)
+			if (!$this->_create_node($dn,$extra,$this->check_only) && $dn == $this->ldap_root_dn)
 			{
 				// ldap_root already existed, lets check the pw is correct
 				$this->connect();
@@ -884,9 +927,9 @@ class setup_cmd_ldap extends setup_cmd
 	 *
 	 * Uses $this->ldap_host, $this->ldap_admin and $this->ldap_admin_pw to connect.
 	 *
-	 * @param string $this->object_class='qmailUser'
-	 * @param string $this->mbox_attr='mailmessagestore' lowercase!!!
-	 * @param string $this->mail_login_type='email' 'email', 'vmailmgr', 'standard' or 'uidNumber'
+	 * @param string $this->object_class ='qmailUser'
+	 * @param string $this->mbox_attr ='mailmessagestore' lowercase!!!
+	 * @param string $this->mail_login_type ='email' 'email', 'vmailmgr', 'standard' or 'uidNumber'
 	 * @return string with success message N entries modified
 	 * @throws egw_exception if dn not found, not listable or delete fails
 	 */
@@ -931,7 +974,7 @@ class setup_cmd_ldap extends setup_cmd
 				$mbox_attr => $mbox,
 			)))
 			{
-				throw new egw_exception(lang("Error modifying dn=%1: %2='%3'!",$dn,$mbox_attr,$mbox));
+				throw new egw_exception(lang("Error modifying dn=%1: %2='%3'!",$entry['dn'],$mbox_attr,$mbox));
 			}
 			++$modified;
 			if ($check_only) echo "$modified: $entry[dn]: $mbox_attr={$entry[$mbox_attr][0]} --> $mbox\n";
@@ -957,7 +1000,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Create a new node in the ldap tree
 	 *
 	 * @param string $dn dn to create, eg. "cn=admin,dc=local"
-	 * @param array $extra=array() extra attributes to set
+	 * @param array $extra =array() extra attributes to set
 	 * @return boolean true if the node was create, false if it was already there
 	 * @throws egw_exception_wrong_userinput
 	 */

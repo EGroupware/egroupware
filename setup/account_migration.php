@@ -66,7 +66,7 @@ array_shift($base_parts);
 
 $cmd = new setup_cmd_ldap(array(
 	'domain' => $GLOBALS['egw_setup']->ConfigDomain,
-	'sub_command' => 'migrate_to_'.$to,
+	'sub_command' => $_POST['passwords2sql'] ? 'passwords_to_sql' : 'migrate_to_'.$to,
 	// allow to set ldap root DN (ldap_admin) to create instance specific admin DN and structure
 	'ldap_admin' => !empty($_POST['ldap_admin']) ? $_POST['ldap_admin'] : $GLOBALS['egw_info']['server']['ldap_root_dn'],
 	'ldap_admin_pw' => !empty($_POST['ldap_admin']) ? $_POST['ldap_admin_pw'] : $GLOBALS['egw_info']['server']['ldap_root_pw'],
@@ -74,7 +74,7 @@ $cmd = new setup_cmd_ldap(array(
 	'truncate_egw_accounts' => !empty($_POST['truncate_egw_accounts']),
 )+$GLOBALS['egw_info']['server']);
 
-if (!$_POST['migrate'])
+if (!$_POST['migrate'] && !$_POST['passwords2sql'])
 {
 	$accounts = $cmd->accounts($from == 'ldap');
 
@@ -100,7 +100,7 @@ if (!$_POST['migrate'])
 		else
 		{
 			$user_list .= '<option value="' . $account_id . '" selected="1">'.
-				$GLOBALS['egw']->common->display_fullname($account['account_lid'],
+				common::display_fullname($account['account_lid'],
 				$account['account_firstname'],$account['account_lastname'])	. "</option>\n";
 		}
 	}
@@ -119,6 +119,10 @@ if (!$_POST['migrate'])
 	$setup_tpl->set_var('ldap_admin_pw_label', lang('Root DN password'));
 	$setup_tpl->set_var('migrate',$direction);
 	$setup_tpl->set_var('cancel',lang('Cancel'));
+	if ($from == 'sql' && $GLOBALS['egw_info']['server']['auth_type'] == 'ldap')
+	{
+		$setup_tpl->set_var('extra_button', html::submit_button('passwords2sql', lang('Passwords --> SQL')));
+	}
 
 	$setup_tpl->pfp('out','header');
 	if($user_list)
@@ -143,14 +147,19 @@ if (!$_POST['migrate'])
 }
 else	// do the migration
 {
-	$cmd->only = array_merge((array)$_POST['users'],(array)$_POST['groups']);
+	$cmd->only = (array)$_POST['users'];
+	if (empty($_POST['passwords2sql'])) $cmd->only = array_merge($cmd->only, (array)$_POST['groups']);
 	$cmd->verbose = true;
 	echo '<p align="center">'.str_replace("\n","</p>\n<p align='center'>",$cmd->run())."</p>\n";
+
 	// store new repostory (and auth_type), as we are migrated now
-	config::save_value('account_repository', $GLOBALS['egw_info']['server']['account_repository']=$to, 'phpgwapi');
-	if (empty($GLOBALS['egw_info']['server']['auth_type']) || $GLOBALS['egw_info']['server']['auth_type'] == $from)
+	if ($_POST['migrate'])
 	{
-		config::save_value('auth_type', $GLOBALS['egw_info']['server']['auth_type']=$to, 'phpgwapi');
+		config::save_value('account_repository', $GLOBALS['egw_info']['server']['account_repository']=$to, 'phpgwapi');
+		if (empty($GLOBALS['egw_info']['server']['auth_type']) || $GLOBALS['egw_info']['server']['auth_type'] == $from)
+		{
+			config::save_value('auth_type', $GLOBALS['egw_info']['server']['auth_type']=$to, 'phpgwapi');
+		}
 	}
 	echo '<p align="center">'.lang('Click <a href="index.php">here</a> to return to setup.')."</p>\n";
 }
