@@ -6254,3 +6254,5 @@ a.textSidebox {
 /*@import "../less/layout_nextmatch.less";*/
 /*@import "../less/layout_footer.less";*/
 /*@import "../less/layout_dialog.less";*/
+/*Styling for mobile devices*/
+/*@import "../less/mobile.less";*/
