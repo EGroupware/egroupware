@@ -322,7 +322,7 @@ class calendar_uilist extends calendar_ui
 				break;
 			case 'custom':
 				$this->first = $search_params['start'] = $params['startdate'];
-				$this->last  = $search_params['end'] = strtotime('+1 day', $params['enddate'])-1;
+				$this->last  = $search_params['end'] = strtotime('+1 day', $this->bo->date2ts($params['enddate']))-1;
 				$label = $this->bo->long_date($this->first,$this->last);
 				break;
 			case 'fixed':
@@ -361,12 +361,6 @@ class calendar_uilist extends calendar_ui
 				$search_params['start'] = $this->date;
 				break;
 		}
-		if ($label)
-		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$label;
-			$params['options-filter'] = $this->date_filters;
-			$params['options-filter'][$params['filter']] = $label; // Add it in, or it will be cleared
-		}
 		if ((int) $params['col_filter']['participant'])
 		{
 			$search_params['users'] = (int) $params['col_filter']['participant'];
@@ -376,6 +370,13 @@ class calendar_uilist extends calendar_ui
 			$search_params['users'] = explode(',',$this->owner);
 		}
 		$rows = $js_integration_data = array();
+		if ($label)
+		{
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$label;
+			// Add it in as specific option, or it will be cleared
+			$rows['sel_options']['filter'] = $this->date_filters;
+			$rows['sel_options']['filter'][$params['filter']] = $label;
+		}
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
 			if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
