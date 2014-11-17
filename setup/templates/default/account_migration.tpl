@@ -54,6 +54,7 @@
    <tr bgcolor="#e6e6e6">
     <td colspan="2" align="center">
      <input type="submit" name="migrate" value="{migrate}" />
+	 {extra_button}
      <input type="submit" name="cancel" value="{cancel}" />
     </td>
    </tr>
