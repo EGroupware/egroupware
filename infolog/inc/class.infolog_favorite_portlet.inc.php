@@ -31,20 +31,21 @@ class infolog_favorite_portlet extends home_favorite_portlet
 		$ui = new infolog_ui();
 
 		$this->context['template'] = 'infolog.index.rows';
+		$this->context['sel_options'] = array(
+			'info_type'     => $ui->bo->enums['type'],
+			'pm_id'      => array(lang('No project')),
+			'info_priority' => $ui->bo->enums['priority'],
+		);
 		$this->nm_settings += array(
 			'get_rows'	=> 'infolog.infolog_ui.get_rows',
 			// Use a different template so it can be accessed from client side
 			'template'	=> 'infolog.home',
 			// Don't overwrite infolog
 			'session_for'	=> 'home',
-			
+			'no_filter2'	=> true,
+			'options-filter'=> $ui->filters,
 			// Allow add actions even when there's no rows
 			'placeholder_actions'	=> array(),
-			'sel_options' => array(
-				'info_type'     => $ui->bo->enums['type'],
-				'pm_id'      => array(lang('No project')),
-				'info_priority' => $ui->bo->enums['priority'],
-			)
 		);
 	}
 

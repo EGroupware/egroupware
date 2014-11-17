@@ -33,10 +33,6 @@ class home_favorite_portlet extends home_portlet
 	 * @var array
 	 */
 	protected $nm_settings = array(
-		'no_filter'		=> true,
-		'no_filter2'	=> true,
-		'no_cat'		=> true,
-		'no_search'		=> true,
 		'lettersearch'	=> false,
 		'favorites'		=> false,	// Hide favorite control
 	);
@@ -103,9 +99,11 @@ class home_favorite_portlet extends home_portlet
 		$etemplate->set_dom_id($id);
 
 		$content = $this->context + array('nm' => $this->nm_settings);
+		$sel_options = $content['sel_options'] ? $content['sel_options'] : array();
+		unset($content['sel_options']);
 		$etemplate->setElementAttribute('nm', 'template',$this->nm_settings['template']);
 
-		$etemplate->exec(get_called_class() .'::process',$content);
+		$etemplate->exec(get_called_class() .'::process',$content,$sel_options);
 	}
 
 	public static function process($content = array())

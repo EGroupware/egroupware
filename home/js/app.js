@@ -526,7 +526,7 @@ app.classes.home = AppJS.extend(
 		var window_width = Math.max(580, width+20);
 		var window_height = Math.max(350, height+70);
 		
-		// Open popup, but add 30 to the height for the toolbar
+		// Open popup, but add 70 to the height for the toolbar
 		egw.open_link(egw.link('/index.php',{
 			menuaction: 'home.home_note_portlet.edit',
 			id: id,
