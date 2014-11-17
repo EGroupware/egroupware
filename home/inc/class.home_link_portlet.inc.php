@@ -92,6 +92,14 @@ class home_link_portlet extends home_portlet
 			$etemplate->read($this->template_name);
 		}
 
+		// Filemanager support - links need app = 'file' and type set
+		if($this->context && $this->context['entry'] && $this->context['entry']['app'] == 'filemanager')
+		{
+			$this->context['entry']['app'] = 'file';
+			$this->context['entry']['path'] = $this->context['entry']['title'] = $this->context['entry']['id'];
+			$this->context['entry']['type'] = egw_vfs::mime_content_type($this->context['entry']['id']);
+		}
+
 		$etemplate->set_dom_id($id);
 		
 		$content = $this->context;
@@ -99,7 +107,7 @@ class home_link_portlet extends home_portlet
 		{
 			$content['entry'] = null;
 		}
-		
+
 		$etemplate->exec('home.home_link_portlet.exec',$content);
 	}
 

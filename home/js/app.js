@@ -103,7 +103,7 @@ app.classes.home = AppJS.extend(
 			this._do_ordering();
 
 			// Accept drops of favorites, which aren't part of action system
-			$j(this.et2.getDOMNode()).droppable({
+			$j(this.et2.getDOMNode().parentNode).droppable({
 				hoverClass: 'drop-hover',
 				accept: function(draggable) {
 					// Check for direct support for that application
@@ -177,7 +177,7 @@ app.classes.home = AppJS.extend(
 		if(action.menu_context)
 		{
 			var $portlet_container = $j(this.portlet_container.getDOMNode());
-			attrs.row = Math.round((action.menu_context.posy - $portlet_container.offset().top )/ this.GRID)+1;
+			attrs.row = Math.max(1,Math.round((action.menu_context.posy - $portlet_container.offset().top )/ this.GRID)+1);
 			attrs.col = Math.max(1,Math.round((action.menu_context.posx - $portlet_container.offset().left) / this.GRID)+1);
 		}
 
@@ -217,8 +217,8 @@ app.classes.home = AppJS.extend(
 		// Try to find where the drop was
 		if(action != null && action.ui && action.ui.position)
 		{
-			attrs.row = Math.round((action.ui.offset.top - $portlet_container.offset().top )/ this.GRID);
-			attrs.col = Math.max(0,Math.round((action.ui.offset.left - $portlet_container.offset().left) / this.GRID)-1);
+			attrs.row = Math.max(1,Math.round((action.ui.position.top - $portlet_container.offset().top )/ this.GRID));
+			attrs.col = Math.max(1,Math.round((action.ui.position.left - $portlet_container.offset().left) / this.GRID));
 		}
 
 		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
@@ -472,13 +472,24 @@ app.classes.home = AppJS.extend(
 					new_list.push({app: explode[0],id: explode[1], link_id: explode.join(':')});
 					changed = true;
 				}
-				widget.getWidgetById('list').set_value(new_list);
 				if(changed)
 				{
 					widget._process_edit(et2_dialog.OK_BUTTON,{
 						list: new_list || {}
 					});
 				}
+				// Filemanager support - links need app = 'file' and type set
+				for(var i = 0; i < new_list.length; i++)
+				{
+					if(new_list[i]['app'] == 'filemanager')
+					{
+						new_list[i]['app'] = 'file';
+						new_list[i]['path'] = new_list[i]['title'] = new_list[i]['icon'] = new_list[i]['id'];
+					}
+				}
+				
+				widget.getWidgetById('list').set_value(new_list);
+				
 			}
 		},
 

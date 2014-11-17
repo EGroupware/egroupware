@@ -100,6 +100,17 @@ class home_list_portlet extends home_portlet
 		{
 			$content['list'] = Array();
 		}
+		// Filemanager support - links need app = 'file' and type set
+		foreach($content['list'] as &$list)
+		{
+			if($list['app'] == 'file') $list['app'] = 'filemanager';
+			if($list['app'] == 'filemanager')
+			{
+				$list['app'] = 'file';
+				$list['path'] = $list['title'] = $list['icon'] = $list['id'];
+				$list['type'] = egw_vfs::mime_content_type($list['id']);
+			}
+		}
 
 		$etemplate->exec('home.home_list_portlet.exec',$content);
 	}
