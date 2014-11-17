@@ -169,7 +169,9 @@ class timesheet_ui extends timesheet_bo
 				case 'apply':
 					if ((!$this->data['ts_quantity'] || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
-						$this->data['ts_quantity'] = round($this->data['ts_duration'] / 60.0, 2);
+						// We need to keep the actual value of ts_quantity when we are storing it, as it is used in price calculation
+						// and rounding it causes miscalculation on prices
+						$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0;
 					}
 					if (!$this->data['ts_quantity'])
 					{
