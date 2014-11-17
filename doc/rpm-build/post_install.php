@@ -862,7 +862,7 @@ function check_fix_php_apc_ini()
 			phpinfo();
 			$phpinfo = ob_get_clean();
 			$matches = null;
-			if (preg_match('#(/[a-z0-5./]+apcu?.ini)(,| |$)#mi', $phpinfo, $matches) &&
+			if (preg_match('#(/[a-z0-5./-]+apcu?.ini)(,| |$)#mi', $phpinfo, $matches) &&
 				file_exists($path = $matches[1]) && ($apc_ini = file_get_contents($path)))
 			{
 				$new_shm_size = 128 / $shm_segments;
