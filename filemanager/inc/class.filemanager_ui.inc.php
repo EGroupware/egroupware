@@ -150,20 +150,10 @@ class filemanager_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.filemanager.mail',
 			),
-			'copy' => array(
-				'caption' => lang('Copy'),
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.clipboard',
-			),
-			'add' => array(
-				'caption' => lang('Add to clipboard'),
-				'group' => $group,
-				'icon' => 'copy',
-				'onExecute' => 'javaScript:app.filemanager.clipboard',
-			),
 			'cut' => array(
 				'caption' => lang('Cut'),
-				'group' => $group,
+				// Clipboards are auto-added to group 2.5, but auto select-all pushes things down
+				'group' => '1.5',
 				'onExecute' => 'javaScript:app.filemanager.clipboard',
 			),
 			'documents' => filemanager_merge::document_action(

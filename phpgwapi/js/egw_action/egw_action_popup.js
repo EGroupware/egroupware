@@ -653,7 +653,7 @@ function egwPopupActionImplementation()
 					// Save it in session
 					egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
 				},true);
-				copy_action.group = 1.5;
+				copy_action.group = 2.5;
 			}
 			if(add_action == null)
 			{
@@ -684,7 +684,7 @@ function egwPopupActionImplementation()
 					// Save it in session
 					egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
 				},true);
-				add_action.group = 1.5;
+				add_action.group = 2.5;
 
 			}
 			if(typeof _links[copy_action.id] == 'undefined')
@@ -729,7 +729,8 @@ function egwPopupActionImplementation()
 			if(paste_action == null)
 			{
 				paste_action = mgr.addAction('popup', 'egw_paste', egw.lang('Paste'), egw.image('editpaste'), paste_exec,true);
-				paste_action.group = 1.5;
+				paste_action.group = 2.5;
+				paste_action.order = 9;
 				paste_action.canHaveChildren.push('drop');
 			}
 

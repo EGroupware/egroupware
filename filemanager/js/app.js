@@ -22,17 +22,9 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	path_widget: null,
 	/**
-	 * Array of pathes from files in clipboard
-	 */
-	clipboard_files: [],
-	/**
 	 * Are files cut into clipboard - need to be deleted at source on paste
 	 */
 	clipboard_is_cut: false,
-	/**
-	 * Key for storing clipboard in browser localstorage
-	 */
-	clipboard_localstore_key: 'filemanager.clipboard',
 
 	/**
 	 * Constructor
@@ -77,10 +69,6 @@ app.classes.filemanager = AppJS.extend(
 		}
 
 		// get clipboard from browser localstore and update button tooltips
-		if (typeof window.localStorage != 'undefined' && typeof window.localStorage[this.clipboard_localstore_key] != 'undefined')
-		{
-			this.clipboard_files = JSON.parse(window.localStorage[this.clipboard_localstore_key]);
-		}
 		this.clipboard_tooltips();
 
 		if (typeof this.readonly != 'undefined')
@@ -162,7 +150,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	open_mail: function(attachments)
 	{
-		if (typeof attachments == 'undefined') attachments = this.clipboard_files;
+		if (typeof attachments == 'undefined') attachments = this.get_clipboard_files();
 		var params = {};
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
 		for(var i=0; i < attachments.length; i++)
@@ -310,6 +298,35 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * Get any files that are in the system clipboard
+	 *
+	 * @return {string[]} Paths
+	 */
+	get_clipboard_files: function()
+	{
+		var clipboard_files = [];
+		if (typeof window.localStorage != 'undefined' && typeof egw.getSessionItem('phpgwapi', 'egw_clipboard') != 'undefined')
+		{
+			var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+				type:[],
+				selected:[]
+			};
+			if(clipboard.type.indexOf('file') >= 0)
+			{
+				for(var i = 0; i < clipboard.selected.length; i++)
+				{
+					var split = clipboard.selected[i].id.split('::');
+					if(split[0] == 'filemanager')
+					{
+						clipboard_files.push(this.id2path(clipboard.selected[i].id));
+					}
+				}
+			}
+		}
+		return clipboard_files;
+	},
+
+	/**
 	 * Update clickboard tooltips in buttons
 	 */
 	clipboard_tooltips: function()
@@ -318,7 +335,7 @@ app.classes.filemanager = AppJS.extend(
 		for(var i=0; i < paste_buttons.length; ++i)
 		{
 			var button = this.et2.getWidgetById(paste_buttons[i]);
-			if (button) button.set_statustext(this.clipboard_files.join(",\n"));
+			if (button) button.set_statustext(this.get_clipboard_files().join(",\n"));
 		}
 	},
 
@@ -331,21 +348,39 @@ app.classes.filemanager = AppJS.extend(
 	clipboard: function(_action, _elems)
 	{
 		this.clipboard_is_cut = _action.id == "cut";
-		if (_action.id != "add") this.clipboard_files = [];
-
-		this.clipboard_files = this.clipboard_files.concat(this._elems2paths(_elems));
-
-		if (_action.id == "add" && this.clipboard_files.length > 1)
+		var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+			type:[],
+			selected:[]
+		};
+		if(_action.id != "add")
 		{
-			// ToDo: make sure files are unique
+			clipboard = {
+				type:[],
+				selected:[]
+			}
+		};
+
+		// When pasting we need to know the type of data - pull from actions
+		var drag = _elems[0].getSelectedLinks('drag').links;
+		for(var k in drag)
+		{
+			if(drag[k].enabled && drag[k].actionObj.dragType.length > 0)
+			{
+				clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
+			}
 		}
+		clipboard.type = jQuery.unique(clipboard.type);
+		// egwAction is a circular structure and can't be stringified so just take what we want
+		// Hopefully that's enough for the action handlers
+		for(var k in _elems)
+		{
+			if(_elems[k].id) clipboard.selected.push({id:_elems[k].id, data:_elems[k].data});
+		}
+
+		// Save it in session
+		egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
+
 		this.clipboard_tooltips();
-
-		// update localstore with files
-		if (typeof window.localStorage != 'undefined')
-		{
-			window.localStorage[this.clipboard_localstore_key] = JSON.stringify(this.clipboard_files);
-		}
 	},
 
 	/**
@@ -355,7 +390,8 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	paste: function(_type)
 	{
-		if (this.clipboard_files.length == 0)
+		var clipboard_files = this.get_clipboard_files();
+		if (clipboard_files.length == 0)
 		{
 			alert(this.egw.lang('Clipboard is empty!'));
 			return;
@@ -363,22 +399,22 @@ app.classes.filemanager = AppJS.extend(
 		switch(_type)
 		{
 			case 'mailpaste':
-				this.open_mail(this.clipboard_files);
+				this.open_mail(clipboard_files);
 				break;
 
 			case 'paste':
-				this._do_action(this.clipboard_is_cut ? 'move' : 'copy', this.clipboard_files);
+				this._do_action(this.clipboard_is_cut ? 'move' : 'copy', clipboard_files);
 
 				if (this.clipboard_is_cut)
 				{
 					this.clipboard_is_cut = false;
-					this.clipboard_files = [];
+					clipboard_files = [];
 					this.clipboard_tooltips();
 				}
 				break;
 
 			case 'linkpaste':
-				this._do_action('symlink', this.clipboard_files);
+				this._do_action('symlink', clipboard_files);
 				break;
 		}
 	},
