@@ -60,6 +60,17 @@ class home_list_portlet extends home_portlet
 		{
 			$this->title = $context['title'];
 		}
+		foreach($context['list'] as &$item)
+		{
+			if($item['app'] == 'filemanager' || $item['app'] == 'file')
+			{
+				$item['app'] = 'file';
+				$item['type'] = egw_vfs::mime_content_type($item['id']);
+
+				// Always reload...
+				$need_reload = true;
+			}
+		}
 		$this->context = $context;
 	}
 
@@ -103,8 +114,8 @@ class home_list_portlet extends home_portlet
 		// Filemanager support - links need app = 'file' and type set
 		foreach($content['list'] as &$list)
 		{
-			if($list['app'] == 'file') $list['app'] = 'filemanager';
-			if($list['app'] == 'filemanager')
+			if($list['app'] == 'filemanager') $list['app'] = 'file';
+			if($list['app'] == 'file')
 			{
 				$list['app'] = 'file';
 				$list['path'] = $list['title'] = $list['icon'] = $list['id'];
