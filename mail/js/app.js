@@ -2698,7 +2698,8 @@ app.classes.mail = AppJS.extend(
 		{
 			for (var i = 0; i < _actionObjects.length; i++)
 			{
-				if (_actionObjects[i].id.length>0)
+				// Check that the ID & interface is there.  Paste is missing iface.
+				if (_actionObjects[i].id.length>0 && _actionObjects[i].iface)
 				{
 					var dataElem = $j(_actionObjects[i].iface.getDOMNode());
 					dataElem.addClass(_class);
