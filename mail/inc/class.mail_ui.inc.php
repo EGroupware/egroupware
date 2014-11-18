@@ -433,7 +433,7 @@ class mail_ui
 				$vacation = false;//$this->gatherVacation();
 				//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
 				if($vacation) {
-					if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date'))
+					if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date' && $vacation['end_date'] > time()))
 					{
 						$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
 						$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
