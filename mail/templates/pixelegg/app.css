@@ -745,8 +745,8 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     overflow: visible;
     height: auto;
   }
-  .mailDisplayContainer {
-    border: none;
+  div.mailDisplayContainer {
+    border-top: none;
     overflow: visible !important;
     position: static !important;
   }
@@ -757,6 +757,16 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
   .et2_button {
     display: none;
+  }
+  div.mailDisplay .mailDisplayHeaders .mail_extraEmails {
+    max-height: 100%;
+    max-width: 80%;
+  }
+  div.mailDisplayHeaders > span:first-child {
+    vertical-align: top;
+  }
+  div.mailDisplayHeaders {
+    padding-top: 10px;
   }
 }
 #popupMainDiv {
