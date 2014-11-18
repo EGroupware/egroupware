@@ -75,7 +75,7 @@ var et2_portlet = et2_valueWidget.extend(
 	},
 
 	createNamespace: true,
-	GRID: 100,
+	GRID: 105,
 
 	/**
 	 * These are the "normal" actions that every portlet is expected to have.
