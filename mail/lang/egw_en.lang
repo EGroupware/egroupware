@@ -23,6 +23,7 @@ all adresses:	mail	en	All Adresses:
 all available info	admin	en	all available info
 all filtered	mail	en	all filtered
 all messages in the folder will be lost	mail	en	All messages in the folder will be lost
+all my email addresses	mail	en	all my email addresses
 all of	mail	en	all of
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	en	All subfolders will be deleted too, and all messages in all affected folders will be lost
 allow external images	mail	en	Allow external images
@@ -94,6 +95,7 @@ display only when no plain text is available	mail	en	display only when no plain 
 displaying html messages is disabled	mail	en	displaying html messages is disabled
 displaying plain messages is disabled	mail	en	displaying plain messages is disabled
 do not auto create folders	mail	en	do not auto create folders
+do not forward	mail	en	do not forward
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
 do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
@@ -472,4 +474,5 @@ yes, only trigger connection reset	mail	en	yes, only trigger connection reset
 yes, show all debug information available for the user	mail	en	yes, show all debug information available for the user
 yes, show basic info only	mail	en	yes, show basic info only
 you can either choose to save as infolog or tracker, not both.	mail	en	You can either choose to save as infolog OR tracker, not both.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you've got new mail	mail	en	You've got new mail

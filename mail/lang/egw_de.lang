@@ -23,6 +23,7 @@ all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
 all filtered	mail	de	alle gefilterten
 all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht werden.
+all my email addresses	mail	de	alle meine EMail Adressen
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
 allow external images	mail	de	Erlaube Bilder von externen Bildquellen
@@ -94,6 +95,7 @@ display only when no plain text is available	mail	de	nur anzeigen wenn kein Plai
 displaying html messages is disabled	mail	de	Die Anzeige von HTML-E-Mails ist deaktiviert.
 displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text E-Mails ist deaktiviert.
 do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
+do not forward	mail	de	nicht weiterleiten
 do you really want to apply %1 to all messages in the current view?	mail	de	Wollen Sie wirklich %1 auf alle Nachrichten in der aktuellen Ansicht anwenden?
 do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirklich löschen?
 do you really want to mark all messages as read in the current folder?	mail	de	Wollen Sie wirklich alle eMails im aktuellen Ordner als gelesen markieren?
@@ -470,4 +472,5 @@ yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen
 yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht als beides gleichzeitig.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Startdatum und $$end$$ für das Enddatum verwenden.
 you've got new mail	mail	de	Sie haben neue E-Mails
