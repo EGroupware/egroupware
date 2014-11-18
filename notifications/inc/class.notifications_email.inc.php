@@ -99,8 +99,23 @@ class notifications_email implements notifications_iface {
 		$this->mail->AddCustomHeader('X-EGroupware-Install: '.$GLOBALS['egw_info']['server']['install_id'].'@'.$GLOBALS['egw_info']['server']['default_domain']);
 		//$this->mail->AddCustomHeader('X-EGroupware-URL: notification-mail');
 		//$this->mail->AddCustomHeader('X-EGroupware-Tracker: notification-mail');
-		$this->mail->From = $this->sender->account_email;
-		$this->mail->FromName = $this->sender->account_fullname;
+		//error_log(__METHOD__.__LINE__."preparing notification message via email.".array2string($this->mail));
+		if (!$this->mail->From)
+		{
+			$this->mail->From = $this->sender->account_email;
+			$this->mail->FromName = $this->sender->account_fullname;
+		}
+		else
+		{
+			if ($this->sender->account_email)
+			{
+				$this->mail->ClearReplyTos();
+				$this->mail->AddReplyTo($this->sender->account_email,$this->sender->account_fullname);
+				// as we set the replyTo, we set (fake) the FromName accordingly
+				if ($this->sender->account_fullname) $this->mail->FromName = $this->sender->account_fullname;
+			}
+		}
+		//error_log(__METHOD__.__LINE__."preparing notification message via email.".array2string($this->mail));
 		$this->mail->Subject = $_subject;
 		// add iCal invitation as mulitpart alternative for calendar notifications
 		if ($_attachments && stripos($_attachments[0]->type,"text/calendar; method=")!==false)
@@ -127,8 +142,10 @@ class notifications_email implements notifications_iface {
 				}
 	  		}
 		}
+		//error_log(__METHOD__.__LINE__."about sending notification message via email.".array2string($this->mail));
 		if(!$error=$this->mail->Send())
 		{
+			//error_log(__METHOD__.__LINE__." Failed sending notification message via email.$error".array2string($this->mail->ErrorInfo));
 			throw new Exception("Failed sending notification message via email.$error".print_r($this->mail->ErrorInfo,true));
 		}
 	}
