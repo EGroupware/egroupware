@@ -110,6 +110,7 @@ var et2_portlet = et2_valueWidget.extend(
 		
 		// Create DOM nodes
 		this.div = $j(document.createElement("div"))
+			.addClass(this.options.class)
 			.addClass("ui-widget ui-widget-content ui-corner-all")
 			.addClass("et2_portlet")
 			/* Gridster */

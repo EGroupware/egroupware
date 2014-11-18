@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<overlay>
+	<template id="addressbook.home.link" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column width="70"/>
+				<column/>
+			</columns>
+			<rows>
+				<row span="all">
+					<hbox height="100px">
+						<image src="image" class="photo"/>
+						<vbox>
+							<description id="n_fn" class="addressbook_sidebox_name"/>
+							<description id="org_name" class="addressbook_sidebox_org"/>
+							<description id="org_unit"/>
+							<description id="adr_one_locality"/>
+						</vbox>
+					</hbox>
+				</row>
+				<row>
+					<description span="2" value="Phone numbers" class="addressbook_sidebox_header"/>
+				</row>
+				<row>
+					<description for="tel_work" value="Business"/>
+					<url-phone id="tel_work" readonly="true"/>
+				</row>
+				<row>
+					<description for="tel_cell" value="Mobile phone"/>
+					<url-phone id="tel_cell" readonly="true"/>
+				</row>
+				<row>
+					<description for="tel_home" value="Private"/>
+					<url-phone id="tel_home" readonly="true"/>
+				</row>
+				<row>
+					<description for="tel_fax" value="Fax"/>
+					<url-phone id="tel_fax" readonly="true"/>
+				</row>
+				<row>
+					<description span="2" value="EMail &amp; Internet" class="addressbook_sidebox_header"/>
+				</row>
+				<row>
+					<description for="email" value="EMail"/>
+					<url-email id="email" readonly="true"/>
+				</row>
+				<row>
+					<description for="url" value="URL"/>
+					<url id="url" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

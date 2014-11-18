@@ -2,6 +2,9 @@
  * Home CSS
  */
 
+/**
+ * Basic layout and structural CSS
+ */
 #home-index_home-index {
 	height:100%;
 }
@@ -20,8 +23,8 @@
 	cursor: pointer;
 }
 
-.et2_portlet.ui-widget-content {
-	overflow: hidden;
+.et2_portlet.ui-widget-content > div {
+	
 }
 .et2_portlet.ui-widget-content > div:last-of-type {
 	/* Allow space for header, as the whole portlet is sized by auto-generated css */
@@ -29,12 +32,10 @@
 	bottom: 0px;
 	top: 20px;
 	width: 100%;
+	overflow: hidden;
 }
 .et2_portlet .et2_container {
 	height: 100%;
-}
-.et2_portlet.ui-widget-content > div:last-of-type > div {
-	background: linear-gradient(to bottom, rgba(255,255,255,.9) 10%,rgba(255,255,255,.75) 90%) /* W3C */
 }
 
 /* Gridster */
@@ -52,5 +53,67 @@
 	list-style: none;
 	background: rgba(0,0,0,.3);
 	border: 1px solid silver;
+	position: absolute;
+}
+
+/**
+ * Portlet styling (cosmetic)
+ */
+.et2_portlet.ui-widget-content > div:last-of-type > div {
+	background: linear-gradient(to bottom, rgba(255,255,255,.9) 10%,rgba(255,255,255,.75) 90%) /* W3C */
+}
+
+/* Single entry */
+.et2_portlet.home_link_portlet > .ui-widget-header {
+	display: none;
+	position: relative;
+	top: -20px;
+}
+.et2_portlet.home_link_portlet:hover > .ui-widget-header {
+	display: block;
+	z-index: 90;
+}
+.et2_portlet.home_link_portlet.ui-widget-content > div:last-of-type {
+	top: 0px
+}
+.et2_portlet.home_link_portlet > div:last-of-type > div {
+	padding: 10px;
+}
+/* Thumbnail / icon */
+.et2_portlet.home_link_portlet > div:last-of-type img:first-of-type {
+	float: left;
+	margin-right: 8px;
+	margin-bottom: 8px;
+	width: 32px;
+	height: 32px;
+}
+
+/* Favorite / nextmatch */
+.et2_portlet .et2_container > div > .et2_button {
+	float: left;
+	margin-bottom: -16px;
+	min-height: 16px;
+	min-width: 16px;
+}
+.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header {
+	min-height: 6px;
+}
+.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header .ui-helper-reset{
+	height: 0px;
+	padding: 0px;
+}
+.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row .header_count {
+	top: -11px;
+	height: 14px;
+}
+.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row .header_count span {
+	top: 0px;
+}
+.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row div.search,
+.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row label,
+.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row select {
+	display:none;
+}
+.et2_portlet .et2_nextmatch.header_hidden .egwGridView_outer:first-of-type {
 	position: absolute;
 }

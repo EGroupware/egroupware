@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+ /**
+  * A single entry is displayed with its application icon and title
+  */
 class home_link_portlet extends home_portlet
 {
 
@@ -23,6 +26,12 @@ class home_link_portlet extends home_portlet
 	 * Title of entry
 	 */
 	protected $title = 'Link';
+
+	/**
+	 * Image shown.  Leave at false to have it automatically set an icon based
+	 * on the entry or customize it for the context.
+	 */
+	protected $image = false;
 
 	/**
 	 * Base name for template
@@ -48,6 +57,8 @@ class home_link_portlet extends home_portlet
 		{
 			$this->title = $context['entry']['title'] = egw_link::title($context['entry']['app'], $context['entry']['id']);
 
+			// Reload to get the latest title
+			// TODO: This is a performance hit, it would be good to do this less
 			$need_reload |= (boolean)$context['entry']['id'];
 		}
 		$this->context = $context;
@@ -82,14 +93,66 @@ class home_link_portlet extends home_portlet
 	public function exec($id = null, etemplate_new &$etemplate = null)
 	{
 		// Check for custom template for app
+		$custom_template = false;
 		if($this->context && $this->context['entry'] && $this->context['entry']['app'] &&
 			$etemplate->read($this->context['entry']['app'] . '.' . $this->template_name))
 		{
 			// No action needed, custom template loaded as side-effect
+			$custom_template = true;
 		}
 		else
 		{
 			$etemplate->read($this->template_name);
+		}
+
+
+		$etemplate->set_dom_id($id);
+		
+		$content = array(
+			'image'	=>	$this->image
+		);
+
+		// Try to load entry
+		if($this->context['entry'] && $this->context['entry']['app'])
+		{
+			try
+			{
+				$classname = $this->context['entry']['app'] . '_egw_record';
+				if(class_exists($classname))
+				{
+					$record = new $classname($this->context['entry']['id']);
+					if($record)
+					{
+						// If there's a custom template, send the full record
+						if($custom_template)
+						{
+							$content += $record->get_record_array();
+						}
+						if($content['image'] == false)
+						{
+							$content['image'] = $record->get_icon();
+						}
+					}
+				}
+			}
+			catch(Exception $e)
+			{
+				error_log("Problem loading record " . array2string($this->context['entry']));
+				throw $e;
+			}
+			
+			// Set a fallback image
+			if($content['image'] == false)
+			{
+				if($this->context['entry'] && $this->context['entry']['app'])
+				{
+					$content['image'] = $this->context['entry']['app'] . '/navbar';
+				}
+				else
+				{
+					$content['image'] = 'home';
+				}
+			}
 		}
 
 		// Filemanager support - links need app = 'file' and type set
@@ -98,11 +161,11 @@ class home_link_portlet extends home_portlet
 			$this->context['entry']['app'] = 'file';
 			$this->context['entry']['path'] = $this->context['entry']['title'] = $this->context['entry']['id'];
 			$this->context['entry']['type'] = egw_vfs::mime_content_type($this->context['entry']['id']);
+			$content['image'] = egw_framework::link('/etemplate/thumbnail.php',array('path' => $this->context['entry']['id']));
 		}
 
-		$etemplate->set_dom_id($id);
-		
-		$content = $this->context;
+		$content += $this->context;
+
 		if(!is_array($content['entry']))
 		{
 			$content['entry'] = null;

@@ -171,7 +171,13 @@ app.classes.home = AppJS.extend(
 	 * Add a new portlet from the context menu
 	 */
 	add: function(action, source) {
-		var attrs = {id: this._create_id(), row: 1, col: 1};
+		// Basic portlet attributes
+		var attrs = {
+			id: this._create_id(),
+			class: action.data.class,
+			width: this.DEFAULT.WIDTH,
+			height: this.DEFAULT.HEIGHT
+		};
 
 		// Try to put it about where the menu was opened
 		if(action.menu_context)
@@ -187,7 +193,7 @@ app.classes.home = AppJS.extend(
 		portlet.loadingFinished();
 
 		// Get actual attributes & settings, since they're not available client side yet
-		portlet._process_edit(et2_dialog.OK_BUTTON, {class: action.id});
+		portlet._process_edit(et2_dialog.OK_BUTTON, attrs);
 
 		// Set up sorting/grid of new portlet
 		var $portlet_container = $j(this.portlet_container.getDOMNode());
@@ -212,7 +218,12 @@ app.classes.home = AppJS.extend(
 		var $portlet_container = $j(this.portlet_container.getDOMNode());
 
 		// Basic portlet attributes
-		var attrs = {id: this._create_id()};
+		var attrs = {
+			id: this._create_id(),
+			class: action.data.class || action.id.substr(5),
+			width: this.DEFAULT.WIDTH,
+			height: this.DEFAULT.HEIGHT
+		};
 
 		// Try to find where the drop was
 		if(action != null && action.ui && action.ui.position)
@@ -239,7 +250,7 @@ app.classes.home = AppJS.extend(
 				drop_data.push(source[i].data);
 			}
 		}
-		portlet._process_edit(et2_dialog.OK_BUTTON, {dropped_data: drop_data, class: action.data.class || action.id.substr(5)});
+		portlet._process_edit(et2_dialog.OK_BUTTON, jQuery.extend({dropped_data: drop_data},attrs));
 
 		// Set up sorting/grid of new portlet
 		$portlet_container.data("gridster").add_widget(
@@ -285,14 +296,6 @@ app.classes.home = AppJS.extend(
 			return;
 		}
 		egw().open(widget.options.settings.entry, "", 'edit');
-	},
-
-	/**
-	 * For list_portlet - adds a new link
-	 * This is needed here so action system can find it
-	 */
-	add_link: function(action,source,target_action) {
-		this.List.add_link(action, source, target_action);
 	},
 
 	/**
@@ -395,116 +398,117 @@ app.classes.home = AppJS.extend(
 	/**
 	 * Functions for the list portlet
 	 */
-	List:
-	{
-		/**
-		 * For list_portlet - opens a dialog to add a new entry to the list
-		 */
-		add_link: function(action, source, target_action) {
-			// Actions got confused drop vs popup
-			if(source[0].id == 'portlets')
-			{
-				return this.add_link(action);
-			}
+	/**
+	* For list_portlet - opens a dialog to add a new entry to the list
+	*
+	* @param {egwAction} action Drop or add action
+	* @param {egwActionObject[]} Selected entries
+	* @param {egwActionObject} target_action Drop target
+	*/
+	add_link: function(action, source, target_action) {
+		// Actions got confused drop vs popup
+		if(source[0].id == 'portlets')
+		{
+			return this.add_link(action);
+		}
 
-			// Get widget
-			var widget = null;
-			while(action.parent != null)
+		// Get widget
+		var widget = null;
+		while(action.parent != null)
+		{
+			if(action.data && action.data.widget)
 			{
-				if(action.data && action.data.widget)
-				{
-					widget = action.data.widget;
-					break;
-				}
-				action = action.parent;
+				widget = action.data.widget;
+				break;
 			}
-			if(target_action == null)
-			{
-				// use template base url from initial template, to continue using webdav, if that was loaded via webdav
-				var splitted = 'home.edit'.split('.');
-				var path = app.home.portlet_container.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
-					splitted.join('.')+ ".xet";
-				var dialog = et2_createWidget("dialog",{
-					callback: function(button_id, value) {
-						if(button_id == et2_dialog.CANCEL_BUTTON) return;
-						var new_list = widget.options.settings.list || [];
-						for(var i = 0; i < new_list.length; i++)
-						{
-							if(new_list[i].app == value.add.app && new_list[i].id == value.add.id)
-							{
-								// Duplicate - skip it
-								return;
-							}
-						}
-						value.add.link_id = value.add.app + ':' + value.add.id;
-						// Update server side
-						new_list.push(value.add);
-						widget._process_edit(button_id,{list: new_list});
-						// Update client side
-						widget.getWidgetById('list').set_value(new_list);
-					},
-					buttons: et2_dialog.BUTTONS_OK_CANCEL,
-					title: app.home.egw.lang('add'),
-					template:path,
-					value: { content: [{label: app.home.egw.lang('add'),type: 'link-entry',name: 'add',size:''}]}
-				});
-			}
-			else
-			{
-				// Drag'n'dropped something on the list - just send action IDs
-				var new_list = widget.options.settings.list || [];
-				var changed = false;
-				for(var i = 0; i < new_list.length; i++)
-				{
-					// Avoid duplicates
-					for(var j = 0; j < source.length; j++)
+			action = action.parent;
+		}
+		if(target_action == null)
+		{
+			// use template base url from initial template, to continue using webdav, if that was loaded via webdav
+			var splitted = 'home.edit'.split('.');
+			var path = app.home.portlet_container.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
+				splitted.join('.')+ ".xet";
+			var dialog = et2_createWidget("dialog",{
+				callback: function(button_id, value) {
+					if(button_id == et2_dialog.CANCEL_BUTTON) return;
+					var new_list = widget.options.settings.list || [];
+					for(var i = 0; i < new_list.length; i++)
 					{
-						if(!source[j].id || new_list[i].app+"::"+new_list[i].id == source[j].id)
+						if(new_list[i].app == value.add.app && new_list[i].id == value.add.id)
 						{
 							// Duplicate - skip it
-							source.splice(j,1);
+							return;
 						}
 					}
-				}
-				for(var i = 0; i < source.length; i++)
+					value.add.link_id = value.add.app + ':' + value.add.id;
+					// Update server side
+					new_list.push(value.add);
+					widget._process_edit(button_id,{list: new_list});
+					// Update client side
+					widget.getWidgetById('list').set_value(new_list);
+				},
+				buttons: et2_dialog.BUTTONS_OK_CANCEL,
+				title: app.home.egw.lang('add'),
+				template:path,
+				value: { content: [{label: app.home.egw.lang('add'),type: 'link-entry',name: 'add',size:''}]}
+			});
+		}
+		else
+		{
+			// Drag'n'dropped something on the list - just send action IDs
+			var new_list = widget.options.settings.list || [];
+			var changed = false;
+			for(var i = 0; i < new_list.length; i++)
+			{
+				// Avoid duplicates
+				for(var j = 0; j < source.length; j++)
 				{
-					var explode = source[i].id.split('::');
-					new_list.push({app: explode[0],id: explode[1], link_id: explode.join(':')});
-					changed = true;
-				}
-				if(changed)
-				{
-					widget._process_edit(et2_dialog.OK_BUTTON,{
-						list: new_list || {}
-					});
-				}
-				// Filemanager support - links need app = 'file' and type set
-				for(var i = 0; i < new_list.length; i++)
-				{
-					if(new_list[i]['app'] == 'filemanager')
+					if(!source[j].id || new_list[i].app+"::"+new_list[i].id == source[j].id)
 					{
-						new_list[i]['app'] = 'file';
-						new_list[i]['path'] = new_list[i]['title'] = new_list[i]['icon'] = new_list[i]['id'];
+						// Duplicate - skip it
+						source.splice(j,1);
 					}
 				}
-				
-				widget.getWidgetById('list').set_value(new_list);
-				
 			}
-		},
+			for(var i = 0; i < source.length; i++)
+			{
+				var explode = source[i].id.split('::');
+				new_list.push({app: explode[0],id: explode[1], link_id: explode.join(':')});
+				changed = true;
+			}
+			if(changed)
+			{
+				widget._process_edit(et2_dialog.OK_BUTTON,{
+					list: new_list || {}
+				});
+			}
+			// Filemanager support - links need app = 'file' and type set
+			for(var i = 0; i < new_list.length; i++)
+			{
+				if(new_list[i]['app'] == 'filemanager')
+				{
+					new_list[i]['app'] = 'file';
+					new_list[i]['path'] = new_list[i]['title'] = new_list[i]['icon'] = new_list[i]['id'];
+				}
+			}
 
-		/**
-		 * Remove a link from the list
-		 */
-		link_change: function(list, link_id, row) {
-			// Quick response client side
-			row.slideUp(row.remove);
+			widget.getWidgetById('list').set_value(new_list);
 
-			// Actual removal
-			var portlet = list._parent._parent;
-			portlet.options.settings.list.splice(row.index(), 1);
-			portlet._process_edit(et2_dialog.OK_BUTTON,{list: portlet.options.settings.list || {}});
 		}
+	},
+
+	/**
+	 * Remove a link from the list
+	 */
+	link_change: function(list, link_id, row) {
+		// Quick response client side
+		row.slideUp(row.remove);
+
+		// Actual removal
+		var portlet = list._parent._parent;
+		portlet.options.settings.list.splice(row.index(), 1);
+		portlet._process_edit(et2_dialog.OK_BUTTON,{list: portlet.options.settings.list || {}});
 	},
 
 	/**
@@ -543,5 +547,33 @@ app.classes.home = AppJS.extend(
 			id: id,
 			height: window_height - 70
 		}),'home_'+id, window_width+'x'+window_height,'home');
+	},
+
+	/**
+	 * Favorites / nextmatch
+	 */
+	/**
+	 * Toggle the nextmatch header shown / hidden
+	 *
+	 * @param {Event} event
+	 * @param {et2_button} widget
+	 */
+	nextmatch_toggle_header: function(event, widget) {
+		widget.set_image(widget.options.image == 'arrow_down' ? 'arrow_left' : 'arrow_down');
+		// We operate on the DOM here, nm should be unaware of our fiddling
+		var nm = widget.getParent().getWidgetById('nm');
+		if(!nm) return;
+		var header = nm.header;
+		var header_height = header.div.innerHeight();
+
+		// Hide header
+		nm.div.toggleClass('header_hidden');
+
+		header_height -= header.div.height();
+
+		// Grow row space - I have no idea why it needs to be 25 pixels instead of header_height
+		var scroll_height = $j('.egwGridView_scrollarea',nm.getDOMNode()).height();
+		$j('.egwGridView_scrollarea',nm.getDOMNode()).height(scroll_height + (header_height > 0 ? 25 : -25));
+		nm.resize();
 	}
 });

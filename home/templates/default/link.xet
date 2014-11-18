@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <overlay>
 	<template id="home.link" template="" lang="" group="0" version="1.9.001">
+		<image id="image" src="image"/>
 		<link id="entry"/>
 	</template>
 </overlay>
