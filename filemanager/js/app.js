@@ -609,7 +609,7 @@ app.classes.filemanager = AppJS.extend(
 
 		// check if target is a file --> use it's directory instead
 		var data = egw.dataGetUIDdata(_target.id);
-		if (data.data.mime != 'httpd/unix-directory')
+		if (!data || data.data.mime != 'httpd/unix-directory')
 		{
 			dst = this.dirname(dst);
 		}

@@ -281,7 +281,8 @@ class filemanager_ui
 					'is_parent'      => 'mime',
 					'is_parent_value'=> egw_vfs::DIR_MIME_TYPE,
 					'header_left'    => 'filemanager.index.header_left',
-					'favorites'      => true
+					'favorites'      => true,
+					'placeholder_actions' => array('file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
 				$content['nm']['path'] = self::get_home_dir();
 			}
