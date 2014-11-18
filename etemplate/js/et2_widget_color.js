@@ -43,7 +43,7 @@ var et2_color = et2_inputWidget.extend(
 			position: { "x": "screenCenter", "y": "screenCenter"}
 		},
 		"images": {
-			clientPath: "phpgwapi/js/jquery/jpicker/images/"
+			clientPath: egw_webserverUrl + "/phpgwapi/js/jquery/jpicker/images/"
 		},
 		"color": {
 			"active": new jQuery.jPicker.Color()
