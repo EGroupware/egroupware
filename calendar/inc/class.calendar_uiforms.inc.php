@@ -1424,8 +1424,8 @@ class calendar_uiforms extends calendar_ui
 				$content['participants'][$row]['delete_id'] = strpbrk($uid,'"\'<>') !== false ? md5($uid) : $uid;
 				//echo "<p>$uid ($quantity): $role --> {$content['participants'][$row]['role']}</p>\n";
 
-				if (!$this->bo->check_status_perms($uid,$event))
-					$readonlys['participants'][$row]['status'] = true;
+				if (($no_status = !$this->bo->check_status_perms($uid,$event)) || $view)
+					$readonlys['participants'][$row]['status'] = $no_status;
 				if ($preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event))
 					$readonlys['participants']['delete'][$uid] = true;
 				// todo: make the participants available as links with email as title
