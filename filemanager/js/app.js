@@ -614,7 +614,7 @@ app.classes.filemanager = AppJS.extend(
 			dst = this.dirname(dst);
 		}
 
-		this._do_action(_action.id == "file_drop_move" ? 'move' : 'copy', src, false, dst);
+		this._do_action(_action.id.replace("file_drop_",''), src, false, dst);
 	},
 
 	/**

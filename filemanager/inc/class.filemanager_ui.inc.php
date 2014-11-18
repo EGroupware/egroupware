@@ -192,6 +192,13 @@ class filemanager_ui
 				'caption' => lang('Copy into folder'),
 				'type' => 'drop',
 				'onExecute' => 'javaScript:app.filemanager.drop'
+			),
+			'file_drop_symlink' => array(
+				'icon' => 'linkpaste',
+				'acceptedTypes' => 'file',
+				'caption' => lang('Link into folder'),
+				'type' => 'drop',
+				'onExecute' => 'javaScript:app.filemanager.drop'
 			)
 		);
 		if (!isset($GLOBALS['egw_info']['user']['apps']['mail']))
