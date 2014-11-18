@@ -258,6 +258,16 @@ class importexport_definition implements importexport_iface_egw_record {
 
 
 	/**
+	 * Gets the URL icon representitive of the record
+	 * This could be as general as the application icon, or as specific as a contact photo
+	 *
+	 * @return string Full URL of an icon, or appname/icon_name
+	 */
+	public function get_icon() {
+		return self::_appname . '/navbar';
+	}
+
+	/**
 	 * saves record into backend
 	 *
 	 * @return string identifier

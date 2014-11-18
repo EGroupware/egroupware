@@ -8,7 +8,7 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id: class.egw_addressbook_record.inc.php 22827 2006-11-10 15:35:35Z nelius_weiss $
+ * @version $Id$
  */
 
 /**
@@ -105,6 +105,21 @@ class addressbook_egw_record implements importexport_iface_egw_record
 		return $this->identifier ? $this->identifier : $this->id;
 	}
 
+	/**
+	 * Gets the URL icon representitive of the record
+	 * This could be as general as the application icon, or as specific as a contact photo
+	 *
+	 * @return string Full URL of an icon, or appname/icon_name
+	 */
+	public function get_icon() {
+		$ui = new addressbook_ui();
+
+		// Type as default
+		$ui->type_icon($this->owner, $this->private, $this->tid, $icon, $label);
+		
+		// Specific photo
+		return $this->jpegphoto ? egw_framework::link('/index.php',$ui->photo_src($this->identifier,$this->jpegphoto)):'addressbook/'.$icon;
+	}
 	/**
 	 * saves record into backend
 	 *

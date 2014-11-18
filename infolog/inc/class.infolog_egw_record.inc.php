@@ -109,6 +109,26 @@ class infolog_egw_record implements importexport_iface_egw_record
 	}
 
 	/**
+	 * Gets the URL icon representitive of the record
+	 * This could be as general as the application icon, or as specific as a contact photo
+	 *
+	 * @return string Full URL of an icon, or appname/icon_name
+	 */
+	public function get_icon() {
+		$icon = 'infolog/navbar';
+		$ui = new infolog_ui();
+		if (!($icon = $ui->icons['type'][$this->info_type]))
+		{
+			$icon = $ui->icons['status'][$this->info_status];
+		}
+		if (!$icon)
+		{
+			$icon = 'navbar';
+		}
+		return 'infolog/'.$icon;
+	}
+
+	/**
 	 * saves record into backend
 	 *
 	 * @return string identifier
