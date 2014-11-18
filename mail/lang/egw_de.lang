@@ -472,5 +472,5 @@ yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen
 yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht als beides gleichzeitig.
-you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Startdatum und $$end$$ für das Enddatum verwenden.
+you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
 you've got new mail	mail	de	Sie haben neue E-Mails
