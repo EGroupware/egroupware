@@ -60,10 +60,26 @@ class send extends egw_mailer
 		$this->Username = $account->acc_smtp_username;
 		$this->Password = $account->acc_smtp_password;
 		$this->defaultDomain = $account->acc_domain;
+		// we do not want to use the phpmailer defaults, as it is bound to fail anyway
+		// !from should be connected to the account used!
+		$this->From = '';
+		$this->FromName = '';
 		// use smpt-username as sender, if available, but only if it is a full email address
-		$this->Sender = $account->acc_smtp_username && strpos($account->acc_smtp_username, '@') !== false ?
-			$account->acc_smtp_username : $account->acc_ident_email;
-
+		// we use setFrom as of from now on as it sets From, FromName and Sender
+		// error_log(__METHOD__.__LINE__.array2string($account));
+		$Sender = $account->acc_smtp_username && strpos($account->acc_smtp_username, '@') !== false ?
+			$account->acc_smtp_username : $account->ident_email;
+		/*emailadmin_account Object has some possible info on the accounts realname
+		 [acc_name] => example given (mail@domain.suffix)
+		 [ident_realname] => example given
+		 [ident_email] => mail@domain.suffix (maybe this is the content of $Sender !)
+		 [ident_org] => not considered
+		 [ident_name] => example
+		*/
+		$Name = ($account['ident_realname']?$account['ident_realname']:($account['ident_name']?$account['ident_name']:
+				($account['acc_name']?$account['acc_name']:$Sender)));
+		//error_log(__METHOD__.__LINE__.$Sender.','.$Name);
+		$this->setFrom($Sender,$Name);
 		$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
 
 		if ($this->debug) error_log(__METHOD__."() initialised egw_mailer with ".array2string($this)." from mail default account ".array2string($account->params));
