@@ -34,6 +34,7 @@
  * @property-read int $acc_imap_port imap port, default 143 or for ssl 993
  * @property-read string $acc_imap_username
  * @property-read string $acc_imap_password
+ * @property-read string $acc_imap_pw_enc emailadmin_credentials::(CLEARTEXT|USER|SYSTEM)
  * @property-read boolean $acc_sieve_enabled sieve enabled
  * @property-read string $acc_sieve_host sieve host, default imap_host
  * @property-read int $acc_sieve_ssl 0=none, 1=starttls, 2=tls, 3=ssl, &8=validate certificate
@@ -48,6 +49,7 @@
  * @property-read int $acc_smtp_port smtp port
  * @property-read string $acc_smtp_username if smtp auth required
  * @property-read string $acc_smtp_password
+ * @property-read string $acc_smtp_pw_enc emailadmin_credentials::(CLEARTEXT|USER|SYSTEM)
  * @property-read string $acc_smtp_type smtp class to use, default emailadmin_smtp
  * @property-read string $acc_imap_type imap class to use, default emailadmin_imap
  * @property-read string $acc_imap_logintype how to construct login-name standard, vmailmgr, admin, uidNumber
@@ -1315,6 +1317,7 @@ class emailadmin_account implements ArrayAccess
 	 */
 	static function get_default_acc_id($smtp=false)
 	{
+		//error_log(__METHOD__.__LINE__.'Smtp?'.array2string($smtp));
 		try
 		{
 			foreach(emailadmin_account::search(true, 'params') as $acc_id => $params)
@@ -1323,7 +1326,23 @@ class emailadmin_account implements ArrayAccess
 				{
 					if (!$params['acc_smtp_host'] || !$params['acc_smtp_port']) continue;
 					// check requirement of session, which is not available in async service!
-					if (isset($GLOBALS['egw_info']['flags']['async-service']) && $params['acc_smtp_auth_session']) continue;
+					//error_log(__METHOD__.__LINE__.array2string($params));
+					//error_log(__METHOD__.__LINE__.'is async:'.array2string($GLOBALS['egw_info']['flags']['async-service']));
+					if (isset($GLOBALS['egw_info']['flags']['async-service']))
+					{
+						if ($params['acc_smtp_auth_session']) continue;
+						// may fail because of smtp only profile, or no session password, etc
+						try
+						{
+							$account = new emailadmin_account($params);
+						}
+						catch (Exception $x)
+						{
+							continue;
+						}
+						if ($account->acc_smtp_pw_enc == emailadmin_credentials::USER) continue;
+						//error_log(__METHOD__.__LINE__.array2string($account->params));
+					}
 				}
 				else
 				{

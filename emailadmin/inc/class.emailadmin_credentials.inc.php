@@ -150,6 +150,7 @@ class emailadmin_credentials
 					$results[$prefix.'password'] = $password;
 					$results[$prefix.'cred_id'] = $row['cred_id'];
 					$results[$prefix.'account_id'] = $row['account_id'];
+					$results[$prefix.'pw_enc'] = $row['cred_pw_enc'];
 				}
 			}
 		}
