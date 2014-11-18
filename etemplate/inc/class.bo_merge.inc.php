@@ -1359,7 +1359,7 @@ abstract class bo_merge
 	{
 		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
 		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
-		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
+		$replace = preg_match('/'.preg_quote($param[2], '/').'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
 		switch($this->mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.text':		// open office
