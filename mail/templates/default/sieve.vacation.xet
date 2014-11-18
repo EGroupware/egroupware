@@ -30,17 +30,17 @@
 				</row>
 				<row>
 					<description value="Respond to mail sent to:"/>
-					<taglist-email id="addresses" needed="true" class="et2_required" allowFreeEntries="true" empty_label="Respond" span="2"/>
+					<taglist-email id="addresses" needed="true" class="et2_required" allowFreeEntries="true" empty_label="all my email addresses" span="2"/>
 					<button class="$cont[hideIfSieveDisabled] et2_fullWidth"  label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
 				</row>
 				<row>
 					<description value="Forward messages to:"/>
-					<taglist-email id="forwards" allowFreeEntries="true" width="100%" empty_label="Forwards"/>
+					<taglist-email id="forwards" allowFreeEntries="true" width="100%" empty_label="do not forward"/>
 				</row>
 				<row>
 					<description value="Every:"/>
 					<textbox type="integer" id="days" min="1" max="31"/>
-					
+
 				</row>
 				<row>
 					<description value="With message:"/>
@@ -61,7 +61,7 @@
 						<button label="Apply" id="button[apply]" class="$cont[hideIfSieveDisabled]"/>
 						<button label="Cancel" id="button[cancel]" onclick="window.close();" class="$cont[hideIfSieveDisabled]"/>
 					</hbox>
-				</row> 
+				</row>
 			</rows>
 		</grid>
 	</template>
