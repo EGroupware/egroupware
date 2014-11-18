@@ -344,6 +344,10 @@ class egw extends egw_minimal
 	 * Verify the user has rights for the requested app
 	 *
 	 * If the user has no rights for the app (eg. called via URL) he get a permission denied page (this function does NOT return)
+	 *
+	 * @throws egw_exception_redirect for anonymous user accessing something he has no rights to
+	 * @throws egw_exception_no_permission_admin
+	 * @throws egw_exception_no_permission_app
 	 */
 	function check_app_rights()
 	{
@@ -358,7 +362,7 @@ class egw extends egw_minimal
 				// present a login page, if anon user has no right for an application
 				if ($this->session->session_flags == 'A')
 				{
-					egw::redirect_link('/logout.php');
+					throw new egw_exception_redirect('/logout.php');
 				}
 				if ($currentapp == 'admin' || $GLOBALS['egw_info']['flags']['admin_only'])
 				{
@@ -440,9 +444,9 @@ class egw extends egw_minimal
 	/**
 	 * Link url generator
 	 *
-	 * @param string	$string	The url the link is for
-	 * @param string|array	$extravars=''	Extra params to be passed to the url
-	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
+	 * @param string $url url link is for
+	 * @param string|array $extravars ='' extra params to be added to url
+	 * @param string $link_app =null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
 	static function link($url, $extravars = '', $link_app=null)
@@ -453,9 +457,9 @@ class egw extends egw_minimal
 	/**
 	 * Redirects direct to a generated link
 	 *
-	 * @param string	$string	The url the link is for
-	 * @param string/array	$extravars	Extra params to be passed to the url
-	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
+	 * @param string $url url link is for
+	 * @param string|array $extravars ='' extra params to be added to url
+	 * @param string $link_app =null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
 	static function redirect_link($url, $extravars='', $link_app=null)
@@ -468,8 +472,8 @@ class egw extends egw_minimal
 	 *
 	 * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
 	 *
-	 * @param  string The url ro redirect to
-	 * @param string $link_app=null appname to redirect for, default currentapp
+	 * @param string $url url to redirect to
+	 * @param string $link_app =null appname to redirect for, default currentapp
 	 */
 	static function redirect($url, $link_app=null)
 	{
@@ -547,7 +551,7 @@ class egw extends egw_minimal
 	 * garanties to run AFTER output send to user.
 	 *
 	 * @param callable $callback use array($classname, $method) for static methods
-	 * @param array $args=array()
+	 * @param array $args =array()
 	 */
 	public static function on_shutdown($callback, array $args=array())
 	{

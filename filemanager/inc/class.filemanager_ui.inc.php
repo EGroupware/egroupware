@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -58,8 +58,8 @@ class filemanager_ui
 			egw_vfs::$is_root = true;
 		}
 
-		self::init_views();
-		self::$merge_prop_namespace = egw_vfs::DEFAULT_PROP_NAMESPACE.$GLOBALS['egw_info']['flags']['currentapp'];
+		static::init_views();
+		static::$merge_prop_namespace = egw_vfs::DEFAULT_PROP_NAMESPACE.$GLOBALS['egw_info']['flags']['currentapp'];
 	}
 
 	/**
@@ -69,21 +69,21 @@ class filemanager_ui
 	 */
 	public static function init_views()
 	{
-		if (!self::$views_init)
+		if (!static::$views_init)
 		{
 			// translate our labels
-			foreach(self::$views as $method => &$label)
+			foreach(static::$views as &$label)
 			{
 				$label = lang($label);
 			}
 			// search for plugins with additional filemanager views
-			foreach($GLOBALS['egw']->hooks->process('filemanager_views') as $app => $views)
+			foreach($GLOBALS['egw']->hooks->process('filemanager_views') as $views)
 			{
-				if (is_array($views)) self::$views += $views;
+				if (is_array($views)) static::$views += $views;
 			}
-			self::$views_init = true;
+			static::$views_init = true;
 		}
-		return self::$views;
+		return static::$views;
 	}
 
 	/**
@@ -98,10 +98,10 @@ class filemanager_ui
 		{
 			$view = $_GET['view'];
 		}
-		if (!isset(self::$views[$view]))
+		if (!isset(static::$views[$view]))
 		{
-			reset(self::$views);
-			$view = key(self::$views);
+			reset(static::$views);
+			$view = key(static::$views);
 		}
 		return $view;
 	}
@@ -224,7 +224,7 @@ class filemanager_ui
 		switch($scope)
 		{
 			case 'self':
-				$props = egw_vfs::propfind($path, self::$merge_prop_namespace);
+				$props = egw_vfs::propfind($path, static::$merge_prop_namespace);
 				$app = empty($props) ? null : $props[0]['val'];
 				break;
 			case 'parents':
@@ -232,7 +232,7 @@ class filemanager_ui
 				$currentpath = $path;
 				while($dir = egw_vfs::dirname($currentpath))
 				{
-					$props = egw_vfs::propfind($dir, self::$merge_prop_namespace);
+					$props = egw_vfs::propfind($dir, static::$merge_prop_namespace);
 					if(!empty($props))
 					{
 						// found prop in parent directory
@@ -274,7 +274,7 @@ class filemanager_ui
 					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
-					'actions'        => self::get_actions(),
+					'actions'        => static::get_actions(),
 					'row_id'         => 'path',
 					'row_modified'   => 'mtime',
 					'parent_id'      => 'dir',
@@ -284,9 +284,9 @@ class filemanager_ui
 					'favorites'      => true,
 					'placeholder_actions' => array('file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
-				$content['nm']['path'] = self::get_home_dir();
+				$content['nm']['path'] = static::get_home_dir();
 			}
-			$content['nm']['home_dir'] = self::get_home_dir();
+			$content['nm']['home_dir'] = static::get_home_dir();
 
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
@@ -303,7 +303,7 @@ class filemanager_ui
 						$path = egw_vfs::dirname($content['nm']['path']);
 						break;
 					case '~':
-						$path = self::get_home_dir();
+						$path = static::get_home_dir();
 						break;
 				}
 				if ($path[0] == '/' && egw_vfs::stat($path,true) && egw_vfs::is_dir($path) && egw_vfs::check_access($path,egw_vfs::READABLE))
@@ -320,7 +320,7 @@ class filemanager_ui
 				if (!$content['nm']['filter']) $content['nm']['filter'] = '';
 			}
 		}
-		$view = self::get_view();
+		$view = static::get_view();
 
 		if (strpos($view,'::') !== false && version_compare(PHP_VERSION,'5.3.0','<'))
 		{
@@ -375,7 +375,7 @@ class filemanager_ui
 		{
 			if ($content['nm']['action'])
 			{
-				$msg = self::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
+				$msg = static::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
 				if($msg) egw_framework::message($msg);
 
 				// clean up after action
@@ -389,7 +389,7 @@ class filemanager_ui
 			}
 			elseif($content['nm']['rows']['delete'])
 			{
-				$msg = self::action('delete',array_keys($content['nm']['rows']['delete']),$content['nm']['path']);
+				$msg = static::action('delete',array_keys($content['nm']['rows']['delete']),$content['nm']['path']);
 				if($msg) egw_framework::message($msg);
 
 				// clean up after action
@@ -483,6 +483,10 @@ class filemanager_ui
 		{
 			$start = $path;
 		}
+		elseif (!egw_vfs::is_dir($start) && egw_vfs::check_access($start, egw_vfs::READABLE))
+		{
+			$start = '/';
+		}
 		return $start;
 	}
 
@@ -511,7 +515,7 @@ class filemanager_ui
 				throw new egw_exception_assertion_failed('Implemented on clientside!');
 
 			case 'delete':
-				return self::do_delete($selected,$errs,$files,$dirs);
+				return static::do_delete($selected,$errs,$files,$dirs);
 
 			case 'copy':
 				foreach($selected as $path)
@@ -650,7 +654,7 @@ class filemanager_ui
 						$document_merge = new filemanager_merge(egw_vfs::decodePath($dir));
 						$msg = $document_merge->download($settings, $selected, '', $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir']);
 						if($msg) return $msg;
-						$failed = count($selected);
+						$errs = count($selected);
 						return false;
 				}
 		}
@@ -732,9 +736,8 @@ class filemanager_ui
 	 *
 	 * @param array $query
 	 * @param array &$rows
-	 * @param array &$readonlys
 	 */
-	function get_rows($query,&$rows,&$readonlys)
+	function get_rows($query, &$rows)
 	{
 		// show projectmanager sidebox for projectmanager path
 		if (substr($query['path'],0,20) == '/apps/projectmanager' && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
@@ -746,7 +749,7 @@ class filemanager_ui
 		{
 			egw_session::appsession('index','filemanager',$query);
 		}
-		if(!$query['path']) $query['path'] = self::get_home_dir();
+		if(!$query['path']) $query['path'] = static::get_home_dir();
 
 		// be tolerant with (in previous versions) not correct urlencoded pathes
 		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))
@@ -755,13 +758,19 @@ class filemanager_ui
 		}
 		if (!egw_vfs::stat($query['path'],true) || !egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
 		{
-			// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
-			// an appropriate message
-			egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
-				'path' => self::get_home_dir(),
-				'msg' => lang('The requested path %1 is not available.',egw_vfs::decodePath($query['path'])),
-				'ajax' => 'true'
-			));
+			// only redirect, if it would be to some other location, gives redirect-loop otherwise
+			if ($query['path'] != ($path = static::get_home_dir()))
+			{
+				// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
+				// an appropriate message
+				egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
+					'path' => $path,
+					'msg' => lang('The requested path %1 is not available.',egw_vfs::decodePath($query['path'])),
+					'ajax' => 'true'
+				));
+			}
+			$rows = array();
+			return 0;
 		}
 		$rows = $dir_is_writable = array();
 		if($query['searchletter'] && !empty($query['search']))
@@ -787,6 +796,7 @@ class filemanager_ui
 
 		$maxdepth = $filter && $filter != 4 ? (int)(boolean)$filter : null;
 		if($filter == 5) $maxdepth = 2;
+		$n = 0;
 		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],array(
 			'mindepth' => 1,
 			'maxdepth' => $maxdepth,
@@ -946,6 +956,7 @@ class filemanager_ui
 			if (in_array($button,array('save','apply')))
 			{
 				$props = array();
+				$perm_changed = $perm_failed = 0;
 				foreach($content['old'] as $name => $old_value)
 				{
 					if (isset($content[$name]) && ($old_value != $content[$name] ||
@@ -989,7 +1000,7 @@ class filemanager_ui
 						{
 							$mergeprop = array(
 								array(
-									'ns'	=> self::$merge_prop_namespace,
+									'ns'	=> static::$merge_prop_namespace,
 									'name'	=> 'mergeapp',
 									'val'	=> (!empty($content[$name]) ? $content[$name] : null),
 								),
@@ -1008,7 +1019,7 @@ class filemanager_ui
 						{
 							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
 							$cmd = array('egw_vfs',$name2cmd[$name]);
-							$value = $name == 'perms' ? self::perms2mode($content['perms']) : $content[$name];
+							$value = $name == 'perms' ? static::perms2mode($content['perms']) : $content[$name];
 							if ($content['modify_subs'])
 							{
 								if ($name == 'perms')
@@ -1076,7 +1087,7 @@ class filemanager_ui
 				if ($content['eacl']['delete'])
 				{
 					list($ino_owner) = each($content['eacl']['delete']);
-					list($ino,$owner) = explode('-',$ino_owner,2);	// $owner is a group and starts with a minus!
+					list(, $owner) = explode('-',$ino_owner,2);	// $owner is a group and starts with a minus!
 					$msg .= egw_vfs::eacl($path,null,$owner) ? lang('ACL deleted.') : lang('Error deleting the ACL entry!');
 				}
 				elseif ($button == 'eacl')
@@ -1165,8 +1176,8 @@ class filemanager_ui
 		}
 
 		// mergeapp
-		$content['mergeapp'] = self::get_mergeapp($path, 'self');
-		$content['mergeapp_parent'] = self::get_mergeapp($path, 'parents');
+		$content['mergeapp'] = static::get_mergeapp($path, 'self');
+		$content['mergeapp_parent'] = static::get_mergeapp($path, 'parents');
 		if(!empty($content['mergeapp']))
 		{
 			$content['mergeapp_effective'] = $content['mergeapp'];
@@ -1225,7 +1236,7 @@ class filemanager_ui
 			$tpl->setElementAttribute('tabs', 'add_tabs', true);
 
 			$tabs =& $tpl->getElementAttribute('tabs','tabs');
-			$tabs = array();
+			if (true) $tabs = array();
 
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{
@@ -1259,7 +1270,7 @@ class filemanager_ui
 	 * @param string $action eg. 'delete', ...
 	 * @param array $selected selected path(s)
 	 * @param string $dir=null current directory
-	 * @see self::action()
+	 * @see static::action()
 	 */
 	public static function ajax_action($action, $selected, $dir=null, $props=null)
 	{
@@ -1344,7 +1355,7 @@ class filemanager_ui
 			// Upload, then link
 			case 'link':
 				// First upload
-				$arr = self::ajax_action('upload', $selected, $dir, $props);
+				$arr = static::ajax_action('upload', $selected, $dir, $props);
 				$app_dir = egw_link::vfs_path($props['entry']['app'],$props['entry']['id'],'',true);
 
 				foreach($arr['uploaded'] as $file)
@@ -1361,7 +1372,7 @@ class filemanager_ui
 				return;
 
 			default:
-				$arr['msg'] = self::action($action, $selected, $dir, $arr['errs'], $arr['dirs'], $arr['files']);
+				$arr['msg'] = static::action($action, $selected, $dir, $arr['errs'], $arr['dirs'], $arr['files']);
 		}
 		$response->data($arr);
 		//error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));

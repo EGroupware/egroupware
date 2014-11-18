@@ -71,6 +71,7 @@ class egw_digest_auth
 	 */
 	static public function autocreate_session_callback(&$account)
 	{
+		unset($account);	// not used, but required by function signature
 		if (self::ERROR_LOG)
 		{
 			$pw = self::ERROR_LOG > 1 ? $_SERVER['PHP_AUTH_PW'] : '**********';
@@ -109,7 +110,8 @@ class egw_digest_auth
 			$password = translation::convert($password, 'iso-8859-1');
 			//error_log(__METHOD__."() Fixed non-ascii password of user '$username' from '$_SERVER[PHP_AUTH_PW]' to '$password'");
 		}
-		if (!isset($username) || !($sessionid = $GLOBALS['egw']->session->create($username, $password, 'text')))
+		// create session without session cookie (session->create(..., true), as we use pseudo sessionid from credentials
+		if (!isset($username) || !($sessionid = $GLOBALS['egw']->session->create($username, $password, 'text', true)))
 		{
 			// if the session class gives a reason why the login failed --> append it to the REALM
 			if ($GLOBALS['egw']->session->reason) $realm .= ': '.$GLOBALS['egw']->session->reason;
@@ -130,8 +132,8 @@ class egw_digest_auth
 	 * If no user is given, check is NOT authoretive, as we can only check if cleartext passwords are generally used
 	 *
 	 * @param string $realm
-	 * @param string $username=null username or null to only check if we auth agains sql and use plaintext passwords
-	 * @param string &$user_pw=null stored cleartext password, if $username given AND function returns true
+	 * @param string $username =null username or null to only check if we auth agains sql and use plaintext passwords
+	 * @param string &$user_pw =null stored cleartext password, if $username given AND function returns true
 	 * @return boolean true if digest auth is available, false otherwise
 	 */
 	static public function digest_auth_available($realm,$username=null,&$user_pw=null)
@@ -181,7 +183,7 @@ class egw_digest_auth
 	 * Check digest
 	 *
 	 * @param string $realm
-	 * @param string $auth_digest=null default to $_SERVER['PHP_AUTH_DIGEST']
+	 * @param string $auth_digest =null default to $_SERVER['PHP_AUTH_DIGEST']
 	 * @param string &$username on return username
 	 * @param string &$password on return cleartext password
 	 * @return boolean true if digest is correct, false otherwise
@@ -215,6 +217,7 @@ class egw_digest_auth
 	 */
 	static private function get_digest_A1($realm,$username,&$password=null)
 	{
+		$user_pw = null;
 		if (empty($username) || empty($realm) || !self::digest_auth_available($realm,$username,$user_pw))
 		{
 			return false;
@@ -236,6 +239,7 @@ class egw_digest_auth
 	    $data = array();
 	    $keys = implode('|', array_keys($needed_parts));
 
+		$matches = null;
 	    preg_match_all('@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
 
 	    foreach ($matches as $m)

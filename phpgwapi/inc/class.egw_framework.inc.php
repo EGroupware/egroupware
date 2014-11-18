@@ -2068,9 +2068,7 @@ abstract class egw_framework
 		// generate jdots bundle, if installed
 		if (file_exists(EGW_SERVER_ROOT.'/jdots'))
 		{
-			$inc_mgr->include_js_file('/jdots/js/egw_fw.js');
-			$inc_mgr->include_js_file('/jdots/js/egw_fw_ui.js');
-			$inc_mgr->include_js_file('/jdots/js/egw_fw_classes.js');
+			$inc_mgr->include_js_file('/jdots/js/fw_jdots.js');
 			$bundles['jdots'] = array_diff($inc_mgr->get_included_files(), call_user_func_array('array_merge', $bundles));
 			self::bundle_urls($bundles['jdots'], $jdots_max_mod);
 		}

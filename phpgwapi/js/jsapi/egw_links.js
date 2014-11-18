@@ -26,7 +26,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.open() or egw.set_link_registry()
 	 */
-	var link_registry = null;
+	var link_registry = undefined;
 
 	/**
 	 * Local cache for link-titles

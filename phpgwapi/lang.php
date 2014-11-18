@@ -20,7 +20,7 @@ ini_set('zlib.output_compression', 0);
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp' => in_array($_GET['app'],array('etemplate','common','custom')) ? 'home' : $_GET['app'],
+		'currentapp' => 'home',
 		'noheader' => true,
 		'load_translations' => false,	// do not automatically load translations
 		'nocachecontrol' => true,

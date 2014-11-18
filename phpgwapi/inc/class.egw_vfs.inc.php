@@ -1774,7 +1774,9 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function init_static()
 	{
-		self::$user = (int) $GLOBALS['egw_info']['user']['account_id'];
+		// if special user/vfs_user given (eg. from sharing) use it instead default user/account_id
+		self::$user = (int)(isset($GLOBALS['egw_info']['user']['vfs_user']) ?
+			$GLOBALS['egw_info']['user']['vfs_user'] : $GLOBALS['egw_info']['user']['account_id']);
 		self::$is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		self::$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 		self::$lock_cache = array();

@@ -169,7 +169,7 @@ class egw_session
 	/**
 	 * Constructor just loads up some defaults from cookies
 	 *
-	 * @param array $domain_names=null domain-names used in this install
+	 * @param array $domain_names =null domain-names used in this install
 	 */
 	function __construct(array $domain_names=null)
 	{
@@ -323,8 +323,8 @@ class egw_session
 	 *
 	 * @param array &$arr
 	 * @param string $label
-	 * @param boolean $recursion=true if true call itself for every item > $limit
-	 * @param int $limit=1000 log only differences > $limit
+	 * @param boolean $recursion =true if true call itself for every item > $limit
+	 * @param int $limit =1000 log only differences > $limit
 	 */
 	static function log_session_usage(&$arr,$label,$recursion=true,$limit=1000)
 	{
@@ -375,8 +375,8 @@ class egw_session
 	 *
 	 * @param string $kp3 mcrypt key transported via cookie or get parameter like the session id,
 	 *	unlike the session id it's not know on the server, so only the client-request can decrypt the session!
-	 * @param string $algo=self::MCRYPT_ALGO
-	 * @param string $mode=self::MCRYPT_MODE
+	 * @param string $algo =self::MCRYPT_ALGO
+	 * @param string $mode =self::MCRYPT_MODE
 	 * @return boolean true if encryption is used, false otherwise
 	 */
 	static private function init_crypt($kp3,$algo=self::MCRYPT_ALGO,$mode=self::MCRYPT_MODE)
@@ -420,8 +420,8 @@ class egw_session
 	 * @param string $login user login
 	 * @param string $passwd user password
 	 * @param string $passwd_type type of password being used, ie plaintext, md5, sha1
-	 * @param boolean $no_session_needed=false dont create a real session, eg. for GroupDAV clients using only basic auth, no cookie support
-	 * @param boolean $auth_check=true if false, the user is loged in without checking his password (eg. for single sign on), default = true
+	 * @param boolean $no_session =false dont create a real session, eg. for GroupDAV clients using only basic auth, no cookie support
+	 * @param boolean $auth_check =true if false, the user is loged in without checking his password (eg. for single sign on), default = true
 	 * @return string session id
 	 */
 	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true)
@@ -520,11 +520,10 @@ class egw_session
 		$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 		$GLOBALS['egw']->accounts->accounts($this->account_id);
 
-		// for WebDAV and GroupDAV we use a pseudo sessionid created from md5(user:passwd)
+		// for *DAV and eSync we use a pseudo sessionid created from md5(user:passwd)
 		// --> allows this stateless protocolls which use basic auth to use sessions!
 		if (($this->sessionid = self::get_sessionid(true)))
 		{
-			$no_session = true;	// no need to set cookie
 			session_id($this->sessionid);
 		}
 		else
@@ -572,7 +571,7 @@ class egw_session
 			'user_ip'        => $user_ip,
 		),'',true)))	// true = run hooks from all apps, not just the ones the current user has perms to run
 		{
-			foreach($hook_result as $app => $reason)
+			foreach($hook_result as $reason)
 			{
 				if ($reason)	// called hook requests to deny the session
 				{
@@ -649,9 +648,9 @@ class egw_session
     * Write or update (for logout) the access_log
 	*
 	* @param string|int $sessionid nummeric or PHP session id or 0 for unsuccessful logins
-	* @param string $login='' account_lid (evtl. with domain) or '' for setting the logout-time
-	* @param string $user_ip='' ip to log
-	* @param int $account_id=0 numerical account_id
+	* @param string $login ='' account_lid (evtl. with domain) or '' for setting the logout-time
+	* @param string $user_ip ='' ip to log
+	* @param int $account_id =0 numerical account_id
 	* @return int $sessionid primary key of egw_access_log for login, null otherwise
 	*/
 	private function log_access($sessionid,$login='',$user_ip='',$account_id=0)
@@ -708,7 +707,6 @@ class egw_session
 	 */
 	private function login_blocked($login,$ip)
 	{
-		$blocked = false;
 		$block_time = time() - $GLOBALS['egw_info']['server']['block_time'] * 60;
 
 		$false_id = $false_ip = 0;
@@ -764,7 +762,7 @@ class egw_session
 				}
 				catch(Exception $e) {
 					// ignore exception, but log it, to block the account and give a correct error-message to user
-					error_log(__METHOD__."('$log', '$ip') ".$e->getMessage());
+					error_log(__METHOD__."('$login', '$ip') ".$e->getMessage());
 				}
 			}
 			// save time of mail, to not send to many mails
@@ -777,9 +775,18 @@ class egw_session
 	}
 
 	/**
+	 * Basename of scripts for which we create a pseudo session-id based on user-credentials
+	 *
+	 * @var array
+	 */
+	static $pseudo_session_scripts = array(
+		'webdav.php', 'groupdav.php', 'remote.php', 'share.php'
+	);
+
+	/**
 	 * Get the sessionid from Cookie, Get-Parameter or basic auth
 	 *
-	 * @param boolean $only_basic_auth=false return only a basic auth pseudo sessionid, default no
+	 * @param boolean $only_basic_auth =false return only a basic auth pseudo sessionid, default no
 	 * @return string
 	 */
 	static function get_sessionid($only_basic_auth=false)
@@ -787,7 +794,7 @@ class egw_session
 		// for WebDAV and GroupDAV we use a pseudo sessionid created from md5(user:passwd)
 		// --> allows this stateless protocolls which use basic auth to use sessions!
 		if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) &&
-			(in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php','remote.php')) ||
+			(in_array(basename($_SERVER['SCRIPT_NAME']), self::$pseudo_session_scripts) ||
 				$_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync'))
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
@@ -799,7 +806,7 @@ class egw_session
 		}
 		// same for digest auth
 		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) &&
-			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php','remote.php')))
+			in_array(basename($_SERVER['SCRIPT_NAME']), self::$pseudo_session_scripts))
 		{
 			// we generate a pseudo-sessionid from the digest username, realm and nounce
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
@@ -897,20 +904,6 @@ class egw_session
 		if($GLOBALS['egw_info']['user']['domain'] && $this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
 			return false;	// session not verified, domain changed
-
-			throw new Exception("Wrong domain! '$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'");
-/*			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid','$kp3') account_domain='$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'=egw_info[user][domain]");
-			$GLOBALS['egw']->ADOdb = null;
-			$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
-			// reset the db
-			$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$this->account_domain]['db_host'];
-			$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$this->account_domain]['db_port'];
-			$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$this->account_domain]['db_name'];
-			$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$this->account_domain]['db_user'];
-			$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$this->account_domain]['db_pass'];
-			$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->account_domain]['db_type'];
-			$GLOBALS['egw']->setup('',false);
-*/
 		}
 		$GLOBALS['egw_info']['user']['kp3'] = $this->kp3;
 
@@ -1022,7 +1015,7 @@ class egw_session
 		}
 		$this->log_access($sessionid);	// log logout-time
 
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($sessionid,$kp3) parent::destroy()=$ret");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($sessionid,$kp3)");
 
 		if (is_numeric($sessionid))	// do we have a access-log-id --> get PHP session id
 		{
@@ -1127,7 +1120,7 @@ class egw_session
 		}
 
 		// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
-		list($url,$othervars) = explode('?',$url,2);
+		list($ret_url,$othervars) = explode('?', $url, 2);
 		if ($extravars && is_array($extravars))
 		{
 			$vars += $extravars;
@@ -1174,18 +1167,17 @@ class egw_session
 					$query[] = $key.'='.urlencode($value);
 				}
 			}
-			$url .= '?' . implode('&',$query);
+			$ret_url .= '?' . implode('&',$query);
 		}
-		//echo " = '$url'</p>\n";
-		return $url;
+		return $ret_url;
 	}
 
 	/**
 	 * Stores or retrieve applications data in/form the eGW session
 	 *
 	 * @param string $location free lable to store the data
-	 * @param string $appname='' default current application (egw_info[flags][currentapp])
-	 * @param mixed $data='##NOTHING##' if given, data to store, if not specified
+	 * @param string $appname ='' default current application (egw_info[flags][currentapp])
+	 * @param mixed $data ='##NOTHING##' if given, data to store, if not specified
 	 * @deprecated use egw_cache::setSession($appname, $location, $data) or egw_cache::getSession($appname, $location)
 	 * @return mixed session data or false if no data stored for $appname/$location
 	 */
@@ -1255,9 +1247,9 @@ class egw_session
 	 * Set a cookie with eGW's cookie-domain and -path settings
 	 *
 	 * @param string $cookiename name of cookie to be set
-	 * @param string $cookievalue='' value to be used, if unset cookie is cleared (optional)
-	 * @param int $cookietime=0 when cookie should expire, 0 for session only (optional)
-	 * @param string $cookiepath=null optional path (eg. '/') if the eGW install-dir should not be used
+	 * @param string $cookievalue ='' value to be used, if unset cookie is cleared (optional)
+	 * @param int $cookietime =0 when cookie should expire, 0 for session only (optional)
+	 * @param string $cookiepath =null optional path (eg. '/') if the eGW install-dir should not be used
 	 */
 	public static function egw_setcookie($cookiename,$cookievalue='',$cookietime=0,$cookiepath=null)
 	{
@@ -1269,12 +1261,11 @@ class egw_session
 
 		if(!headers_sent())	// gives only a warning, but can not send the cookie anyway
 		{
-			$rv = setcookie($cookiename,$cookievalue,$cookietime,
+			setcookie($cookiename,$cookievalue,$cookietime,
 				is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain,
 				// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
 				empty($GLOBALS['egw_info']['server']['insecure_cookies']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
 		}
-		//error_log(__METHOD__." $cookiename->$cookievalue".' returned:'.print_r($rv,true).print_r($_COOKIE,true));
 	}
 
 	/**
@@ -1293,6 +1284,7 @@ class egw_session
 			self::$cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
 		}
 		// remove port from HTTP_HOST
+		$arr = null;
 		if (preg_match("/^(.*):(.*)$/",self::$cookie_domain,$arr))
 		{
 			self::$cookie_domain = $arr[1];
@@ -1305,11 +1297,11 @@ class egw_session
 		if (!$GLOBALS['egw_info']['server']['cookiepath'] ||
 			!(self::$cookie_path = parse_url($GLOBALS['egw_info']['server']['webserver_url'],PHP_URL_PATH)))
 		{
-			 self::$cookie_path = '/';
+			self::$cookie_path = '/';
 		}
 		//echo "<p>cookie_path='self::$cookie_path', cookie_domain='self::$cookie_domain'</p>\n";
 
-		session_set_cookie_params(0, $path, $domain,
+		session_set_cookie_params(0, self::$cookie_path, self::$cookie_domain,
 			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
 			empty($GLOBALS['egw_info']['server']['insecure_cookies']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
 	}
@@ -1320,8 +1312,8 @@ class egw_session
 	 * @param string $login on login $_POST['login'], $_SERVER['PHP_AUTH_USER'] or $_SERVER['REMOTE_USER']
 	 * @param string $domain_requested usually self::get_request('domain')
 	 * @param string &$default_domain usually $default_domain get's set eg. by sitemgr
-	 * @param string|array $server_name usually array($_SERVER['HTTP_HOST'], $_SERVER['SERVER_NAME'])
-	 * @param array $domains=null defaults to $GLOBALS['egw_domain'] from the header
+	 * @param string|array $server_names usually array($_SERVER['HTTP_HOST'], $_SERVER['SERVER_NAME'])
+	 * @param array $domains =null defaults to $GLOBALS['egw_domain'] from the header
 	 * @return string $GLOBALS['egw_info']['user']['domain'] set with the domain/instance to use
 	 */
 	public static function search_instance($login,$domain_requested,&$default_domain,$server_names,array $domains=null)
@@ -1342,9 +1334,9 @@ class egw_session
 				}
 				else
 				{
-					$domain_part = explode('.',$server_name);
-					array_shift($domain_part);
-					$domain_part = implode('.',$domain_part);
+					$parts = explode('.', $server_name);
+					array_shift($parts);
+					$domain_part = implode('.', $parts);
 					if(isset($domains[$domain_part]))
 					{
 						$default_domain = $domain_part;
@@ -1385,7 +1377,7 @@ class egw_session
 	/**
 	 * Update session_action and session_dla (session last used time)
 	 *
-	 * @param boolean $update_access_log=true false: dont update egw_access_log table
+	 * @param boolean $update_access_log =true false: dont update egw_access_log table
 	 * @return string action as written to egw_access_log.session_action
 	 */
 	private function update_dla($update_access_log=true)
@@ -1538,7 +1530,7 @@ class egw_session
 	 *
 	 * @param string $user username
 	 * @param string $password password or md5 hash of password if $allow_password_md5
-	 * @param boolean $allow_password_md5=false can password alread be an md5 hash
+	 * @param boolean $allow_password_md5 =false can password alread be an md5 hash
 	 * @return string
 	 */
 	static function user_pw_hash($user,$password,$allow_password_md5=false)
@@ -1598,7 +1590,7 @@ class egw_session
 	 * - true --> private caching by browser (no expires header)
 	 * - "public" or integer --> public caching with given cache_expire in minutes or php.ini default session_cache_expire
 	 *
-	 * @param int $expire=null expiration time in seconds, default $GLOBALS['egw_info']['flags']['nocachecontrol'] or php.ini session.cache_expire
+	 * @param int $expire =null expiration time in seconds, default $GLOBALS['egw_info']['flags']['nocachecontrol'] or php.ini session.cache_expire
 	 */
 	public static function cache_control($expire=null)
 	{
@@ -1635,6 +1627,7 @@ class egw_session
 			if ($expire && (session_cache_limiter() !== ($expire===true?'private_no_expire':'public') ||
 				is_int($expire) && $expire/60 !== session_cache_expire()))
 			{
+				$file = $line = null;
 				if (headers_sent($file, $line))
 				{
 					error_log(__METHOD__."($expire) called, but header already sent in $file: $line");
@@ -1667,10 +1660,10 @@ class egw_session
 	 * Get a session list (of the current instance)
 	 *
 	 * @param int $start
-	 * @param string $sort='DESC' ASC or DESC
-	 * @param string $order='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
-	 * @param boolean $all_no_sort=False skip sorting and limiting to maxmatchs if set to true
-	 * @param array $filter=array() extra filter for sessions
+	 * @param string $sort ='DESC' ASC or DESC
+	 * @param string $order ='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
+	 * @param boolean $all_no_sort =False skip sorting and limiting to maxmatchs if set to true
+	 * @param array $filter =array() extra filter for sessions
 	 * @return array with sessions (values for keys as in $sort)
 	 */
 	public static function session_list($start,$sort='DESC',$order='session_dla',$all_no_sort=False,array $filter=array())
@@ -1758,6 +1751,6 @@ class egw_session
 	 */
 	function delete_cache($accountid='')
 	{
-
+		unset($accountid);	// not used, but required by function signature
 	}
 }

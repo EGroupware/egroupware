@@ -206,9 +206,12 @@ class etemplate_new extends etemplate_widget_template
 				return;
 			}
 			// let framework know, if we are a popup or not ('popup' not true, which is allways used by index.php!)
-			$GLOBALS['egw_info']['flags']['nonavbar'] = $output_mode == 2 ? 'popup' : false;
+			if (!isset($GLOBALS['egw_info']['flags']['nonavbar']) || is_bool($GLOBALS['egw_info']['flags']['nonavbar']))
+			{
+				$GLOBALS['egw_info']['flags']['nonavbar'] = $output_mode == 2 ? 'popup' : false;
+			}
 			echo $GLOBALS['egw']->framework->header();
-			if ($output_mode != 2)
+			if ($output_mode != 2 && !$GLOBALS['egw_info']['flags']['nonavbar'])
 			{
 				parse_navbar();
 			}
