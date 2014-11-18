@@ -1464,8 +1464,12 @@ class mail_ui
 		}
 		else
 		{
-			//error_log(__METHOD__.__LINE__.' Test on Folder:'.$_folderName.' failed; Using INBOX instead');
-			$query['selectedFolder']=$mail_ui->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
+			// take the extra time on failure
+			if (!$mail_ui->mail_bo->folderExists($_folderName,true))
+			{
+				//error_log(__METHOD__.__LINE__.' Test on Folder:'.$_folderName.' failed; Using INBOX instead');
+				$query['selectedFolder']=$mail_ui->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
+			}
 		}
 		$mail_ui->mail_bo->saveSessionData();
 		$rowsFetched['messages'] = null;
