@@ -421,6 +421,12 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				{
 					app_callback.call(window,this,_name);
 				}
+				if(appname != this.app && typeof window.app[this.app] == "object")
+				{
+					// Loaded a template from a different application?
+					// Let the application that loaded it know too
+					window.app[this.app].et2_ready(this, this.name);
+				}
 
 				$j(this.DOMContainer).trigger('load', this);
 
