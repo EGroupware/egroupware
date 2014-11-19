@@ -116,6 +116,8 @@ function egwPopupActionImplementation()
 
 	ai.type = "popup";
 
+	ai.auto_paste = true;
+
 	/**
 	 * Registers the handler for the default action
 	 *
@@ -541,7 +543,10 @@ function egwPopupActionImplementation()
 		var tree = {"root": []};
 
 		// Automatically add in Drag & Drop actions
-		this._addCopyPaste(_links,_selected);
+		if(this.auto_paste)
+		{
+			this._addCopyPaste(_links,_selected);
+		}
 
 		for (var k in _links)
 		{

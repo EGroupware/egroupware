@@ -625,9 +625,15 @@ function egwDropActionImplementation()
 							// set of properties.
 							var popup = getPopupImplementation();
 							var pos = popup._getPageXY(event.originalEvent);
+							
+							// Don't add paste actions, this is a drop
+							popup.auto_paste = false;
+							
 							window.setTimeout(function() {
 								popup.doExecuteImplementation(pos, selected, links,
 									_context);
+								// Reset, popup is reused
+								popup.auto_paste = true;
 							}, 0); // Timeout is needed to have it working in IE
 						}
 
