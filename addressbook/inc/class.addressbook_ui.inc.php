@@ -1741,6 +1741,12 @@ window.egw_LAB.wait(function() {
 			$label = $owner == $this->user ? lang('personal') : common::grab_owner_name($owner);
 		}
 		// show tid icon for tid!='n' AND only if one is defined
+		if ($tid != 'n' && common::image('addressbook',$this->content_types[$tid]['name']))
+		{
+			$icon = common::image('addressbook',$this->content_types[$tid]['name']);
+		}
+		
+		// Legacy - from when icons could be anywhere
 		if ($tid != 'n' && $this->content_types[$tid]['options']['icon'])
 		{
 			$icon = $this->content_types[$tid]['options']['icon'];

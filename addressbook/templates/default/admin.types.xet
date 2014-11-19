@@ -4,32 +4,6 @@
 	<template id="addressbook.admin.types" template="" lang="" group="0" version="">
 		<vbox>
 			<template id="admin.customfields.types" content="content_types"/>
-			<grid id="content_type_options">
-				<columns>
-					<column/>
-					<column/>
-					<column/>
-				</columns>
-				<rows>
-					<row>
-						<hbox span="all">
-							<description value="Options for type " class="header"/>
-							<description id="type" no_lang="1" font_style="b"/>
-							<description/>
-						</hbox>
-					</row>
-					<row>
-						<description value="Icon"/>
-						<textbox id="icon" size="40"/>
-						<description value="Choose an icon for this contact type"/>
-					</row>
-					<row>
-						<description value="Template"/>
-						<textbox id="template" size="40"/>
-						<description value="Chosse an eTemplate for this contact type"/>
-					</row>
-				</rows>
-			</grid>
 			<button label="Save" id="save"/>
 		</vbox>
 		<styles>.header{

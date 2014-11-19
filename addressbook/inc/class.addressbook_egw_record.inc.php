@@ -118,7 +118,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 		$ui->type_icon($this->owner, $this->private, $this->tid, $icon, $label);
 		
 		// Specific photo
-		return $this->jpegphoto ? egw_framework::link('/index.php',$ui->photo_src($this->identifier,$this->jpegphoto)):'addressbook/'.$icon;
+		return $this->jpegphoto ? egw_framework::link('/index.php',$ui->photo_src($this->identifier,$this->jpegphoto)):$icon;
 	}
 	/**
 	 * saves record into backend
