@@ -928,6 +928,71 @@ var fw_base =  Class.extend({
 				this.applications[app].browser.resize();
 			}
 		}
-	}
+	},
 	
+	/**
+	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string|undefined} _app application name
+	 * @param {string|number|undefined} _id id of entry to refresh
+	 * @param {string|undefined} _type either 'edit', 'delete', 'add' or undefined
+	 * @param {string|undefined} _targetapp which app's window should be refreshed, default current
+	 * @param {string|RegExp} _replace regular expression to replace in url
+	 * @param {string} _with
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @return {DOMwindow|null} null if refresh was triggered, or DOMwindow of app
+	 */
+	refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
+	{
+		//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
+
+		if (!_app)	// force reload of entire framework, eg. when template-set changes
+		{
+			window.location.href = window.egw_webserverUrl+'/index.php?cd=yes'+(_msg ? '&msg='+encodeURIComponent(_msg) : '');
+		}
+		// Call appropriate default / fallback refresh
+		var win = window;
+		var app = this.getApplicationByName(_app);
+		if (app)
+		{
+			// app with closed, or not yet loaded tab --> ignore update, happens automatic when tab loads
+			if (!app.browser)
+			{
+				return;
+			}
+			if (app.browser && app.browser.iframe)
+			{
+				win = app.browser.iframe.contentWindow;
+			}
+		}
+
+		// app running top-level (no full refresh / window reload!)
+		if (win == window)
+		{
+			var refresh_done = false;
+			// et2 nextmatch available, let it refresh
+			if(typeof etemplate2 == "function" && etemplate2.app_refresh)
+			{
+				refresh_done = etemplate2.app_refresh(_msg, _app, _id, _type);
+			}
+			// if not trigger a regular refresh
+			if (!refresh_done)
+			{
+				if (!app) app = this.activeApp;
+				if (app && app.browser)	app.browser.reload();
+			}
+		}
+
+		// if different target-app given, refresh it too
+		if (_targetapp && _app != _targetapp)
+		{
+			this.refresh(_msg, _targetapp, null, null, null, _replace, _with, _msg_type);
+		}
+
+		// app runs in iframe (refresh iframe content window)
+		if (win != window)
+		{
+			return win;
+		}
+   }
 });
