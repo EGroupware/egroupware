@@ -299,7 +299,8 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			this.config.start_date = value.start_date || null;
 			this.config.end_date = value.end_date || null;
 			this.parse(safe_value);
-
+			
+			gantt_widget._apply_sort();
 			gantt_widget.gantt_loading = false;
 			// Once we force the start / end date (below), gantt won't recalculate
 			// them if the user clears the date, so we store them and use them
@@ -416,6 +417,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 						[_task_ids[i],value,task.parent||false],
 						function(data) {
 							this.gantt.parse(data);
+							this._apply_sort();
 							this.gantt.hideCover();
 						},
 						this,true,this
@@ -429,6 +431,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 					if(data = this.egw().dataGetUIDdata(_task_ids[i]) && data.data)
 					{
 						this.gantt.parse(data.data);
+						this._apply_sort();
 					}
 					else
 					{
@@ -590,6 +593,25 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		
 		this.gantt.refreshData();
 		return level;
+	},
+
+	/**
+	 * Apply user's sort preference
+	 */
+	_apply_sort: function()
+	{
+		switch(egw.preference('gantt_pm_elementbars_order','projectmanager'))
+		{
+			case "pe_start":
+				this.gantt.sort('start_date',false);
+				break;
+			case "pe_end":
+				this.gantt.sort('end_date',false);
+				break;
+			case 'pe_title':
+				this.gantt.sort('pe_title',false);
+				break;
+		}
 	},
 
 	/**
