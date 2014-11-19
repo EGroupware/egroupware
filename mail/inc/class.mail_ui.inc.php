@@ -4609,29 +4609,39 @@ class mail_ui
 			}
 			else
 			{
-				$uidA = self::splitRowID($_messageList['msg'][0]);
-				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
-				$sourceProfileID = $uidA['profileID'];
-				foreach($_messageList['msg'] as $rowID)
+				$messageList = array();
+				while(count($_messageList['msg']) > 0)
 				{
-					//error_log(__METHOD__.__LINE__.$rowID);
-					$hA = self::splitRowID($rowID);
-					$messageList[] = $hA['msgUID'];
-					if ($_copyOrMove=='move')
+					$uidA = self::splitRowID($_messageList['msg'][0]);
+					$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+					$sourceProfileID = $uidA['profileID'];
+					$moveList = array();
+					foreach($_messageList['msg'] as $rowID)
 					{
-						$helpvar = explode(self::$delimiter,$rowID);
-						array_shift($helpvar);
-						$messageListForRefresh[]= implode(self::$delimiter,$helpvar);
+						$hA = self::splitRowID($rowID);
+
+						// If folder changes, stop and move what we've got
+						if($hA['folder'] != $folder) break;
+
+						array_shift($_messageList['msg']);
+						$messageList[] = $hA['msgUID'];
+						$moveList[] = $hA['msgUID'];
+						if ($_copyOrMove=='move')
+						{
+							$helpvar = explode(self::$delimiter,$rowID);
+							array_shift($helpvar);
+							$messageListForRefresh[]= implode(self::$delimiter,$helpvar);
+						}
 					}
-				}
-				try
-				{
-					//error_log(__METHOD__.__LINE__."->".print_r($messageList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod.' '.$targetProfileID.'/'.$sourceProfileID);
-					$this->mail_bo->moveMessages($targetFolder,$messageList,($_copyOrMove=='copy'?false:true),$folder,false,$sourceProfileID,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
-				}
-				catch (egw_exception $e)
-				{
-					$error = str_replace('"',"'",$e->getMessage());
+					try
+					{
+						//error_log(__METHOD__.__LINE__."->".print_r($moveList,true).' folder:'.$folder.' Method:'.$_forceDeleteMethod.' '.$targetProfileID.'/'.$sourceProfileID);
+						$this->mail_bo->moveMessages($targetFolder,$moveList,($_copyOrMove=='copy'?false:true),$folder,false,$sourceProfileID,($targetProfileID!=$sourceProfileID?$targetProfileID:null));
+					}
+					catch (egw_exception $e)
+					{
+						$error = str_replace('"',"'",$e->getMessage());
+					}
 				}
 			}
 
