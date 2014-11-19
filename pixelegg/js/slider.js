@@ -135,26 +135,6 @@ egw_LAB.wait(function() {
 	});
 
 	/**
-	 * Callback to calculate height of browser iframe or div
-	 *
-	 * Override jdots height calcluation
-	 *
-	 * @param {object} _iframe dom node of iframe or null for div
-	 * @returns number in pixel
-	 */
-	egw_fw.prototype.getIFrameHeight = function(iframe)
-	{
-		$header = $j(this.tabsUi.appHeaderContainer);
-		var content = $j(this.tabsUi.activeTab.contentDiv);
-		//var height = $j(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight() - this.tabsUi.appHeader.outerHeight();
-		var height = $j(this.sidemenuDiv).height()
-			- $header.outerHeight() - $j(this.tabsUi.contHeaderDiv).outerHeight() - (content.outerHeight(true) - content.height())
-			// Not sure where this comes from...
-			+ 5;
-		return height;
-	};
-
-	/**
 	 * replace [+] on mouseover with quick-add selectbox
 	 *
 	 * Must run after DOM is ready!

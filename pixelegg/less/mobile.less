@@ -8,9 +8,148 @@ and open the template in the editor.
     Author     : Hadi Nategh <hn@stylite.de>
 */
 @media all {
-	#egw_fw_sidebar{
-		-webkit-transform: translate3d(0px,0px,0px);
-	}
+	
+	#egw_fw_basecontainer{
+		
+		//###################
+		//#					#
+		//#		SIDEBAR		#
+		//#					#
+		//###################
+		#egw_fw_sidebar{
+			top: 60px;
+			border-top:2px solid gray;
+		
+		}//End of Sidebar
+	
+		//###################
+		//#					#
+		//#		TOOLBAR		#
+		//#					#
+		//###################
+					
+		//FW Logout
+		div#egw_fw_logout{
+			left: 235px;
+			top: 15px;
+			width: 24px;
+			height: 24px;
+			background-size: 24px 24px;
+			z-index: 1;
+		}
+
+		//FW Print
+		div#egw_fw_print{
+			display:none; //ATM set it to not displayed
+			left: 180px;
+			top: 15px;
+			width: 24px;
+			height: 24px;
+			background-size: 24px 24px;
+		}
+
+		//FW Menu
+		div#egw_fw_menu{
+			background-image: url(../images/topmenu_items/mobile/menu.png);
+			position: fixed;
+			left: 20px;
+			top: 15px;
+			width: 32px;
+			height: 32px;
+			background-size: 32px 32px;
+			background-repeat: no-repeat;
+		}
+		div#egw_fw_menu:active {
+			-webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+			box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+		}
+		div#egw_fw_topmenu_items{
+			width: 250px;
+			display: inline-block;
+			float: left;
+			position: fixed;
+			left: 20px;
+			top: 4px;
+			ul{
+				display:flex;
+				li{
+					display:table-row;
+					padding-right: 6px;
+				}
+				a#topmenu_home:before {
+					content: " ";
+					background-image: url(../images/topmenu_items/mobile/home.png);
+					background-repeat: no-repeat;
+					background-size: 24px 24px;
+					width: 24px;
+					height: 24px;
+					display: inline-block;
+					display:none;
+				}
+				a#topmenu_prefs:before {
+						content: "";
+						background-image: url(../images/topmenu_items/mobile/setup.png);
+						background-repeat: no-repeat;
+						width: 32px;
+						height: 32px;
+						background-size: 32px 32px;
+						display: inline-block;
+				}
+
+				a#topmenu_acl:before {
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					background-image: url(../images/topmenu_items/mobile/access.png);
+					display: inline-block;
+				}
+
+				a#topmenu_cats:before {
+					background-image: url(../images/topmenu_items/mobile/category.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+				a#topmenu_preferences:before {
+					background-image: url(../images/topmenu_items/mobile/password.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+
+				a#topmenu_manual:before {
+					background-image: url(../images/topmenu_items/mobile/help.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+
+				a#topmenu_search:before {
+					background-image: url(../images/topmenu_items/mobile/search.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+
+			}
+		} 
+	}//End of toolbar
+	
 	
 	// ######################tabs header ##########################
 	// #      #      #     #     #     #     #     #     #     ####
@@ -19,7 +158,7 @@ and open the template in the editor.
 	// #      #      #     #     #     #     #     #     #     ####
 	// ############################################################
 	// Div Tabs
-
+	
 	.egw_fw_ui_tabs_header {
 		margin: 0px 0 0 0;
 		padding: 1px 1px 0px 0px;
@@ -54,7 +193,7 @@ and open the template in the editor.
 		.egw_fw_ui_tab_header {
 			padding-left: 0;
 			position: relative;
-			.border_radius(5px,0, 0, 5px);
+			.border_radius(0,0, 0, 0);
 			background: transparent;
 			display: inline-block;
 			overflow: hidden;
@@ -113,10 +252,10 @@ and open the template in the editor.
 		.egw_fw_ui_tab_header_active {
 			border-width: 1px 1px 0px 1px !important;
 			/*padding: 0 0 5px !important;*/
-			.background_color_30_gray ;
+			.background_color_egw_light;
 			background-image:none !important;
 
-			&:hover {.background_color_25_gray ;}
+			&:hover {.background_color_egw_light ;}
 
 
 			// Active image
@@ -398,35 +537,46 @@ and open the template in the editor.
 	//ToggleClass
 	
 	.sidebarToggle{
-		width:82px !important;
-		.egw_fw_ui_sidemenu_entry_content{
+		#egw_fw_sidebar{
+			#egw_fw_sidemenu{
+				width:82px !important;
+				.egw_fw_ui_sidemenu_entry_content, .egw_fw_ui_sidemenu_entry_header{
+					display:none !important;
+				}
+				.egw_fw_ui_sidemenu_entry_header{
+					height: 38px;
+					width: 54px;
+					text-overflow: ellipsis;
+					border-radius: 0px 15px 15px 0px;
+					img{
+						src: url(../images/topmenu_items/setup.png) !important;
+						height:32px !important;
+						width:32px !important;
+					}
+				}
+				.egw_fw_ui_tabs_header{
+					span{
+						height:38px;
+						width:50px;
+						border-radius: 0px 15px 15px 0px;
+						img{
+							height:32px !important;
+							width:32px !important;
+						}
+						h1{
+							display:none;
+						}
+					}
+				}
+				#egw_fw_splitter, .egw_fw_ui_sidemenu_entry_header_active h1{
+					display:none;
+				}				
+			}
+		}
+		#egw_fw_logout, #egw_fw_topmenu_items{
 			display:none !important;
 		}
-		.egw_fw_ui_sidemenu_entry_header{
-			height: 38px;
-			width: 54px;
-			text-overflow: ellipsis;
-			border-radius: 0px 15px 15px 0px;
-			img{
-				src: url(../images/topmenu_items/setup.png) !important;
-				height:32px !important;
-				width:32px !important;
-			}
-		}
-		
-		.egw_fw_ui_tabs_header{
-			span{
-				height:38px;
-				width:50px;
-				border-radius: 0px 15px 15px 0px;
-				img{
-					height:32px !important;
-					width:32px !important;
-				}
-			}
-		}
-		#egw_fw_splitter{
-			display:none;
-		}
 	}
+	
+	
 }
