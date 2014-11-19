@@ -87,6 +87,13 @@ abstract class bo_merge
 	protected $parse_html_styles = true;
 
 	/**
+	 * Enable this to report memory_usage to error_log
+	 *
+	 * @var boolean
+	 */
+	public $report_memory_usage = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @return bo_merge
@@ -738,7 +745,7 @@ abstract class bo_merge
 			$err = lang('for more than one contact in a document use the tag pagerepeat!');
 			return false;
 		}
-		//error_log(__METHOD__."(count(ids)=".count($ids).") strlen(contentrepeat)=".strlen($contentrepeat).', strlen(labelrepeat)='.strlen($Labelrepeat));
+		if ($this->report_memory_usage) error_log(__METHOD__."(count(ids)=".count($ids).") strlen(contentrepeat)=".strlen($contentrepeat).', strlen(labelrepeat)='.strlen($Labelrepeat));
 		foreach ((array)$ids as $n => $id)
 		{
 			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
@@ -759,7 +766,7 @@ abstract class bo_merge
 				$err = $e->getMessage();
 				return false;
 			}
-			//error_log(__METHOD__."() $n: $id ".egw_vfs::hsize(memory_get_usage(true)));
+			if ($this->report_memory_usage) error_log(__METHOD__."() $n: $id ".egw_vfs::hsize(memory_get_usage(true)));
 			// some general replacements: current user, date and time
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
@@ -860,6 +867,7 @@ abstract class bo_merge
 			$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
 			return false;
 		}
+		if ($this->report_memory_usage) error_log(__METHOD__."() returning ".egw_vfs::hsize(memory_get_peak_usage(true)));
 
 		return $content;
 	}
@@ -1533,6 +1541,7 @@ abstract class bo_merge
 					return $err;
 				}
 			}
+			if ($this->report_memory_usage) error_log(__METHOD__."() after HTML processing ".egw_vfs::hsize(memory_get_peak_usage(true)));
 		}
 		if(!empty($name))
 		{
@@ -1563,6 +1572,7 @@ abstract class bo_merge
 			{
 				exec('/usr/bin/zip -F '.escapeshellarg($archive));
 			}
+			if ($this->report_memory_usage) error_log(__METHOD__."() after ZIP processing ".egw_vfs::hsize(memory_get_peak_usage(true)));
 			html::content_header($name,$mimetype,filesize($archive));
 			readfile($archive,'r');
 		}
