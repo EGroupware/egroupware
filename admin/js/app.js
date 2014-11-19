@@ -212,6 +212,43 @@ app.classes.admin = AppJS.extend(
 	},
 
 	/**
+	 * Hide navbar for idots template
+	 *
+	 * Just a hack for old idots, not neccesary for jdots
+	 */
+	_hide_navbar: function()
+	{
+		var document = this.iframe.getDOMNode().contentDocument;
+
+		if (!document) return;	// nothing we can do ...
+
+		// set white background, as transparent one lets account-list show through
+		document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
+
+		// hide navbar elements
+		var ids2hide = ['divLogo', 'topmenu', 'divAppIconBar', 'divStatusBar', 'tdSidebox', 'divAppboxHeader'];
+		for(var i=0; i < ids2hide.length; ++i)
+		{
+			var elem = document.getElementById(ids2hide[i]);
+			if (elem) elem.style.display = 'none';
+		}
+	},
+
+	/**
+	 * Set location of iframe for given _action and _sender (row)
+	 *
+	 * @param _action
+	 * @param _senders
+	 */
+	iframe_location: function(_action, _senders)
+	{
+		var id = _senders[0].id.split('::');
+		var url = _action.data.url.replace(/(%24|\$)id/, id[1]);
+
+		this.load(url);
+	},
+
+	/**
 	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
 	 *
 	 * @param _url
