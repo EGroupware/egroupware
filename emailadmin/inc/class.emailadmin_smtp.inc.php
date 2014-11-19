@@ -67,6 +67,8 @@ class emailadmin_smtp
 
 	var $defaultDomain;
 
+	var $loginType;
+
 	/**
 	 * Constructor
 	 *
@@ -214,13 +216,13 @@ class emailadmin_smtp
 	 * @param int|array $account account_id or whole account array with values for keys
 	 * @param string $domain=null domain, default use $this->defaultDomain
 	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber,
-	 * 	default use $GLOBALS['egw_info']['server']['mail_login_type']
+	 * 	default use $this->loginType
 	 * @return string
 	 */
 	/*static*/ public function mailbox_addr($account,$domain=null,$mail_login_type=null)
 	{
 		if (is_null($domain)) $domain = $this->defaultDomain;
-		if (is_null($mail_login_type)) $mail_login_type = $GLOBALS['egw_info']['server']['mail_login_type'];
+		if (is_null($mail_login_type)) $mail_login_type = $this->loginType;
 
 		switch($mail_login_type)
 		{

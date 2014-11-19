@@ -52,7 +52,6 @@ class emailadmin_bo
 
 	function __construct($_profileID=false,$_restoreSesssion=true)
 	{
-		parent::__construct(self::APP,self::TABLE,null,'',true);
 		//error_log(__METHOD__.function_backtrace());
 		if (!is_object($GLOBALS['emailadmin_bo']))
 		{

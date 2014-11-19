@@ -434,6 +434,7 @@ class emailadmin_account implements ArrayAccess
 		$smtp->username = $params['acc_smtp_username'];
 		$smtp->password = $params['acc_smtp_password'];
 		$smtp->defaultDomain = $params['acc_domain'];
+		$smtp->loginType = $params['acc_imap_login_type'];
 
 		return $smtp;
 	}
@@ -1317,7 +1318,6 @@ class emailadmin_account implements ArrayAccess
 	 */
 	static function get_default_acc_id($smtp=false)
 	{
-		//error_log(__METHOD__.__LINE__.'Smtp?'.array2string($smtp));
 		try
 		{
 			foreach(emailadmin_account::search(true, 'params') as $acc_id => $params)
@@ -1326,8 +1326,6 @@ class emailadmin_account implements ArrayAccess
 				{
 					if (!$params['acc_smtp_host'] || !$params['acc_smtp_port']) continue;
 					// check requirement of session, which is not available in async service!
-					//error_log(__METHOD__.__LINE__.array2string($params));
-					//error_log(__METHOD__.__LINE__.'is async:'.array2string($GLOBALS['egw_info']['flags']['async-service']));
 					if (isset($GLOBALS['egw_info']['flags']['async-service']))
 					{
 						if ($params['acc_smtp_auth_session']) continue;
@@ -1338,17 +1336,16 @@ class emailadmin_account implements ArrayAccess
 						}
 						catch (Exception $x)
 						{
+							unset($x);
 							continue;
 						}
 						if ($account->acc_smtp_pw_enc == emailadmin_credentials::USER) continue;
-						//error_log(__METHOD__.__LINE__.array2string($account->params));
 					}
 				}
 				else
 				{
 					if (!$params['acc_imap_host'] || !$params['acc_imap_port']) continue;
 					$account = new emailadmin_account($params);
-					//error_log(__METHOD__.__LINE__.' '.$acc_id.':'.array2string($account));
 					// continue if we have either no imap username or password
 					if (!$account->is_imap()) continue;
 				}
