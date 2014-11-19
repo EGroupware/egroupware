@@ -42,7 +42,10 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	public function __construct( $_identifier='' ){
 		$this->identifier = $_identifier;
 		$this->botimesheet = new timesheet_bo();
-		$this->set_record($this->botimesheet->read($this->identifier));
+		$data = $this->botimesheet->read($this->identifier);
+		// set ts_project from ts_project_blur, where it get moved, if it is no custom value
+		if (empty($data['ts_project'])) $data['ts_project'] = $data['ts_project_blur'];
+		$this->set_record($data);
 	}
 
 	/**
