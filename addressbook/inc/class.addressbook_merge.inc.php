@@ -36,6 +36,9 @@ class addressbook_merge extends bo_merge
 
 		// overwrite global export-limit, if an addressbook one is set
 		$this->export_limit = bo_merge::getExportLimit('addressbook');
+
+		// switch of handling of html formated content, if html is not used
+		$this->parse_html_styles = egw_customfields::use_html('addressbook');
 	}
 
 	/**
@@ -57,7 +60,7 @@ class addressbook_merge extends bo_merge
 		}
 
 		// Links
-		$replacements += $this->get_all_links('addressbook', $id, $prefix, $content);
+		$replacements += $this->get_all_links('addressbook', $id, '', $content);
 		if (!(strpos($content,'$$calendar/') === false))
 		{
 			$replacements += $this->calendar_replacements($id,!(strpos($content,'$$calendar/-1/') === false));
@@ -68,8 +71,8 @@ class addressbook_merge extends bo_merge
 	/**
 	 * Return replacements for the calendar (next events) of a contact
 	 *
-	 * @param int $contact contact-id
-	 * @param boolean $last_event_too=false also include information about the last event
+	 * @param int $id contact-id
+	 * @param boolean $last_event_too =false also include information about the last event
 	 * @return array
 	 */
 	protected function calendar_replacements($id,$last_event_too=false)

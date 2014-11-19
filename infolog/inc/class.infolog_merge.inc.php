@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Nathan Gray
  * @package infolog
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright 2011 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -48,6 +48,9 @@ class infolog_merge extends bo_merge
 			'info_datemodified',
 			'info_created',
 		);
+
+		// switch of handling of html formated content, if html is not used
+		$this->parse_html_styles = egw_customfields::use_html('infolog');
 	}
 
 	/**
@@ -119,7 +122,7 @@ class infolog_merge extends bo_merge
 
 		// Set any missing custom fields, or the marker will stay
 		$array = $record->get_record_array();
-		foreach($this->bo->customfields as $name => $field)
+		foreach(array_keys($this->bo->customfields) as $name)
 		{
 			if(!$array['#'.$name])
 			{
@@ -133,7 +136,6 @@ class infolog_merge extends bo_merge
 		// Timesheet time
 		if(strpos($content, 'info_sum_timesheets'))
 		{
-			$timesheets = array();
 			$links = egw_link::get_links('infolog',$id,'timesheet');
 			$sum = ExecMethod('timesheet.timesheet_bo.sum',$links);
 			$info['$$info_sum_timesheets$$'] = $sum['duration'];
@@ -141,7 +143,8 @@ class infolog_merge extends bo_merge
 
 		// Check for linked project ID
 		$links = egw_link::get_links('infolog', $id, 'projectmanager');
-		foreach($links as $link_id => $app_id) {
+		foreach($links as $app_id)
+		{
 			$array['pm_id'] = $app_id;
 			$array['project'] = egw_link::title('projectmanager', $app_id);
 			break;
@@ -205,32 +208,32 @@ class infolog_merge extends bo_merge
 		{
 			echo '<tr><td /><td colspan="3">* '.lang('Addressbook placeholders available'). '</td></tr>';
 		}
-		
+
 		echo '<tr><td colspan="4"><h3>'.lang('Parent').":</h3></td></tr>";
 		echo '<tr><td>{{info_id_parent/info_subject}}</td><td colspan="3">'.lang('All other %1 fields are valid',lang('infolog'))."</td></tr>\n";
 
 		echo '<tr><td colspan="4"><h3>'.lang('Contact fields').':</h3></td></tr>';
-		$n = 0;
-                foreach($this->contacts->contact_fields as $name => $label)
-                {
-                        if (in_array($name,array('tid','label','geo'))) continue;       // dont show them, as they are not used in the UI atm.
+		$i = 0;
+		foreach($this->contacts->contact_fields as $name => $label)
+		{
+			if (in_array($name,array('tid','label','geo'))) continue;       // dont show them, as they are not used in the UI atm.
 
-                        if (in_array($name,array('email','org_name','tel_work','url')) && $n&1)         // main values, which should be in the first column
-                        {
-                                echo "</tr>\n";
-                                $n++;
-                        }
-                        if (!($n&1)) echo '<tr>';
-                        echo '<td>{{info_contact/'.$name.'}}</td><td>'.$label.'</td>';
-                        if ($n&1) echo "</tr>\n";
-                        $n++;
-                }
+			if (in_array($name,array('email','org_name','tel_work','url')) && $n&1)         // main values, which should be in the first column
+			{
+					echo "</tr>\n";
+					$i++;
+			}
+			if (!($i&1)) echo '<tr>';
+			echo '<td>{{info_contact/'.$name.'}}</td><td>'.$label.'</td>';
+			if ($i&1) echo "</tr>\n";
+			$i++;
+		}
 
-                echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-                foreach($this->contacts->customfields as $name => $field)
-                {
-                        echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
-                }
+		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
+		foreach($this->contacts->customfields as $name => $field)
+		{
+				echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
+		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(

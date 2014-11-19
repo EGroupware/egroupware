@@ -220,7 +220,7 @@ class historylog_widget
 			}
 			elseif($cf_data['values']['@'])
 			{
-				self::$status_widgets['#'.$cf_name] = customfields_widget::_get_options_from_file($cf_data['values']['@']);
+				self::$status_widgets['#'.$cf_name] = egw_customfields::get_options_from_file($cf_data['values']['@']);
 			}
 			elseif(count($cf_data['values']))
 			{

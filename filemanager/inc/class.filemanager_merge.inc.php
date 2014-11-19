@@ -55,10 +55,14 @@ class filemanager_merge extends bo_merge
 	function __construct($_dir = '')
 	{
 		parent::__construct();
+
 		if($_dir)
 		{
 			$this->dir = $_dir;
 		}
+
+		// switch of handling of html formated content, if html is not used
+		$this->parse_html_styles = egw_customfields::use_html('filemanager');
 	}
 
 	/**
@@ -104,20 +108,21 @@ class filemanager_merge extends bo_merge
 		$file['gid'] *= -1;  // our widgets use negative gid's
 		if (($props = egw_vfs::propfind($id)))
 		{
-			foreach($props as $prop) $file[$prop['name']] = $prop['val'];
+			foreach($props as $prop)
+			{
+				$file[$prop['name']] = $prop['val'];
+			}
 		}
 		if (($file['is_link'] = egw_vfs::is_link($id)))
 		{
 			$file['symlink'] = egw_vfs::readlink($id);
 		}
-		$extra = egw_vfs::getExtraInfo($id);
-
 		// Custom fields
 		if($content && strpos($content, '#') !== 0)
                 {
 			// Expand link-to custom fields
-                        $this->cf_link_to_expand($file, $content, $info);
-		
+			 $this->cf_link_to_expand($file, $content, $info);
+
 			foreach(config::get_customfields('filemanager') as $name => $field)
 			{
 				// Set any missing custom fields, or the marker will stay
@@ -134,18 +139,7 @@ class filemanager_merge extends bo_merge
 					$file['#'.$name] = egw_time::to($file['#'.$name], $field['type'] == 'date' ? true : '');
 				}
 			}
-                }
-
-		// Links
-		/* Not applicable to filemanager
-		$file['links'] = $this->get_links('filemanager', $id, '!'.egw_link::VFS_APPNAME);
- 		$file['attachments'] = $this->get_links('filemanager', $id, egw_link::VFS_APPNAME);
-		$file['links_attachments'] = $this->get_links('filemanager', $id);
-		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
-		{
-			$file["links/{$app}"] = $this->get_links('filemanager',$id, $app);
 		}
-		*/
 
 		// If in apps folder, try for app-specific placeholders
 		if($dirlist[1] == 'apps' && count($dirlist) > 1)
@@ -182,7 +176,9 @@ class filemanager_merge extends bo_merge
 						}
 					}
 					// Silently discard & continue
-					catch(Exception $e) {}
+					catch(Exception $e) {
+						unset($e);	// not used
+					}
 				}
 			}
 		}
