@@ -73,6 +73,8 @@ class calendar_merge extends bo_merge
 		// overwrite global export-limit, if one is set for calendar/appointments
 		$this->export_limit = bo_merge::getExportLimit('calendar');
 
+		// switch of handling of html formated content, if html is not used
+		$this->parse_html_styles = egw_customfields::use_html('calendar');
 		$this->bo = new calendar_boupdate();
 
 		self::$range_tags['start'] = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
@@ -217,7 +219,7 @@ class calendar_merge extends bo_merge
 		}
 
 		$custom = config::get_customfields('calendar');
-		foreach($custom as $name => $field)
+		foreach(array_keys($custom) as $name)
 		{
 			$replacements['$$'.($prefix?$prefix.'/':'').'#'.$name.'$$'] = $event['#'.$name];
 		}
@@ -245,7 +247,7 @@ class calendar_merge extends bo_merge
 	*/
 	public function day_plugin($plugin,$date,$n,$repeat)
 	{
-		static $days;
+		static $days = null;
 		if(is_array($date) && !$date['start']) {
 			// List of IDs
 			if($date[0]['start']) {
@@ -275,12 +277,12 @@ class calendar_merge extends bo_merge
 			'cfs' => array(),	// read all custom-fields
 		));
 
-		$days = array();
+		if (true) $days = array();
 		$replacements = array();
 		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
 		foreach($events as $day => $list)
 		{
-			foreach($list as $key => $event)
+			foreach($list as $event)
 			{
 				if($this->ids && !in_array($event['id'], $this->ids)) continue;
 				$start = egw_time::to($event['start'], 'array');
@@ -304,7 +306,10 @@ class calendar_merge extends bo_merge
 				);
 				if(!is_array($days[date('Ymd',$_date)][date('l',strtotime($day))])) {
 					$blank = $this->calendar_replacements(array());
-					foreach($blank as &$value) $value = '';
+					foreach($blank as &$value)
+					{
+						$value = '';
+					}
 					$days[date('Ymd',$_date)][date('l',strtotime($day))][] = $blank;
 				}
 				$days[date('Ymd',$_date)][date('l',strtotime($day))][0] += $date_marker;
@@ -326,7 +331,7 @@ class calendar_merge extends bo_merge
 	*/
 	public function day($plugin,$id,$n,$repeat)
 	{
-		static $days;
+		static $days = null;
 
 		// Figure out which day
 		list($type, $which) = explode('_',$plugin);
@@ -341,9 +346,9 @@ class calendar_merge extends bo_merge
 				}
 				$id = $dates;
 			}
-			$date = $this->bo->date2array($id['start']);
-			$date['day'] = $which;
-			$date = $this->bo->date2ts($date);
+			$arr = $this->bo->date2array($id['start']);
+			$arr['day'] = $which;
+			$date = $this->bo->date2ts($arr);
 			if(is_array($id) && $id['start'] && ($date < $id['start'] || $date > $id['end'])) return array();
 		}
 		elseif ($plugin == 'selected')
@@ -376,18 +381,18 @@ class calendar_merge extends bo_merge
 		));
 
 		$replacements = array();
-		$days = array();
+		if (true) $days = array();
 		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
 		foreach($events as $day => $list)
 		{
-			foreach($list as $key => $event)
+			foreach($list as $event)
 			{
 				if($this->ids && !in_array($event['id'], $this->ids)) continue;
 				$start = egw_time::to($event['start'], 'array');
 				$end = egw_time::to($event['end'], 'array');
 				$replacements = $this->calendar_replacements($event);
 				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day']) {
-					$dow = date('l',$event['start']);
+					//$dow = date('l',$event['start']);
 				} else {
 					// Fancy date+time formatting for multi-day events
 					$replacements['$$calendar_starttime$$'] = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0,0,0,0,0,1));
@@ -402,7 +407,10 @@ class calendar_merge extends bo_merge
 				);
 				if(!is_array($days[date('Ymd',$_date)][$plugin])) {
 					$blank = $this->calendar_replacements(array());
-					foreach($blank as &$value) $value = '';
+					foreach($blank as &$value)
+					{
+						$value = '';
+					}
 					$days[date('Ymd',$_date)][$plugin][] = $blank;
 				}
 				$days[date('Ymd',$_date)][$plugin][0] += $date_marker;
@@ -423,6 +431,8 @@ class calendar_merge extends bo_merge
 	*/
 	public function participant($plugin,$id,$n)
 	{
+		unset($plugin);	// not used, but required by function signature
+
 		if(!is_array($id) || !$id['start']) {
 			$event = $this->bo->read(is_array($id) ? $id['id'] : $id, is_array($id) ? $id['recur_date'] : null);
 		} else {
@@ -441,6 +451,7 @@ class calendar_merge extends bo_merge
 		if(!$participant) return array();
 
 		// Add some common information
+		$quantity = $role = null;
 		calendar_so::split_status($status,$quantity,$role);
 		if ($role != 'REQ-PARTICIPANT')
 		{
@@ -508,6 +519,7 @@ class calendar_merge extends bo_merge
 		echo "<table width='90%' align='center'>\n";
 		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')."</h3></td></tr>";
 
+		$n = 0;
 		foreach(array(
 			'calendar_id' => lang('Calendar ID'),
 			'calendar_title' => lang('Title'),
@@ -544,7 +556,7 @@ class calendar_merge extends bo_merge
 
 		echo '<tr><td colspan="4"><h3>'.lang('Range fields').":</h3></td></tr>";
 		echo '<tr><td colspan="4">'.lang('If you select a range (month, week, etc) instead of a list of entries, these extra fields are available').'</td></tr>';
-		foreach(self::$range_tags as $name => $format)
+		foreach(array_keys(self::$range_tags) as $name)
 		{
 			echo '<tr><td>{{range/'.$name.'}}</td><td>'.lang($name)."</td></tr>\n";
 		}
@@ -577,7 +589,7 @@ class calendar_merge extends bo_merge
 		}
 		echo '</table></td><td colspan="2"><table >';
 		echo '<tr><td><h3>'.lang('Daily tables').":</h3></td></tr>";
-		foreach(self::$relative as $key => $value) {
+		foreach(self::$relative as $value) {
 			echo '<tr><td>{{table/'.$value. '}} ... {{endtable}}</td></tr>';
 		}
 		echo '<tr><td>{{table/day_n}} ... {{endtable}}</td><td>1 <= n <= 31</td></tr>';

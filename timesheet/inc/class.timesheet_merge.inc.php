@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Nathan Gray
  * @package timesheet
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright 2011 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -49,6 +49,10 @@ class timesheet_merge extends bo_merge
 	function __construct()
 	{
 		parent::__construct();
+
+		// switch of handling of html formated content, if html is not used
+		$this->parse_html_styles = egw_customfields::use_html('timesheet');
+
 		$this->bo = new timesheet_bo();
 		$this->date_fields += array(
 			'ts_start',
@@ -130,7 +134,7 @@ class timesheet_merge extends bo_merge
 		}
 
 		// Set any missing custom fields, or the marker will stay
-		foreach($this->bo->customfields as $name => $field)
+		foreach(array_keys($this->bo->customfields) as $name)
 		{
 			if(!$array['#'.$name]) $array['#'.$name] = '';
 		}
@@ -185,14 +189,14 @@ class timesheet_merge extends bo_merge
 
 		echo '<tr><td colspan="4"><h3>'.lang('Project fields').':</h3></td></tr>';
 		$pm_merge = new projectmanager_merge();
-		$n = 0;
+		$i = 0;
 		foreach($pm_merge->projectmanager_fields as $name => $label)
-                {
-                        if (!($n&1)) echo '<tr>';
-                        echo '<td>{{ts_project/'.$name.'}}</td><td>'.$label.'</td>';
-                        if ($n&1) echo "</tr>\n";
-                        $n++;
-                }
+		{
+			if (!($i&1)) echo '<tr>';
+			echo '<td>{{ts_project/'.$name.'}}</td><td>'.$label.'</td>';
+			if ($i&1) echo "</tr>\n";
+			$i++;
+		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(

@@ -5,13 +5,15 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 /**
  * Document merge print
+ *
+ * @todo move apply_styles call into merge_string to run for each entry merged and not all together to lower memory requirements
  */
 abstract class bo_merge
 {
@@ -78,6 +80,9 @@ abstract class bo_merge
 
 	/**
 	 * Parse HTML styles into target document style, if possible
+	 *
+	 * Apps not using html in there own data should set this with egw_customfields::use_html($app)
+	 * to avoid memory and time consuming html processing.
 	 */
 	protected $parse_html_styles = true;
 
@@ -249,7 +254,7 @@ abstract class bo_merge
 		foreach($this->contacts->customfields as $name => $field)
 		{
 			$name = '#'.$name;
-			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = customfields_widget::format_customfield($field, (string)$contact[$name]);
+			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = egw_customfields::format($field, (string)$contact[$name]);
 		}
 
 		// Add in extra cat field
@@ -339,9 +344,10 @@ abstract class bo_merge
 	 *
 	 * Calls get_links() repeatedly to get all the combinations for the content.
 	 *
-	 * @param app String appname
-	 * @param id String ID of record
-	 * @param content String document content
+	 * @param $app String appname
+	 * @param $id String ID of record
+	 * @param $prefix
+	 * @param $content String document content
 	 */
 	protected function get_all_links($app, $id, $prefix, &$content)
 	{
@@ -550,16 +556,13 @@ abstract class bo_merge
 		return $content;
 	}
 
-	protected function apply_styles (&$content, $mimetype)
+	protected function apply_styles (&$content, $mimetype, $mso_application_progid=null)
 	{
-		if ($mimetype == 'application/xml' &&
-			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches))
+		if (!isset($mso_application_progid))
 		{
-			$mso_application_progid = $matches[1];
-		}
-		else
-		{
-			$mso_application_progid = '';
+			$mso_application_progid = $mimetype == 'application/xml' &&
+				preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches) ?
+					$matches[1] : '';
 		}
 		// Tags we can replace with the target document's version
 		$replace_tags = array();
@@ -585,9 +588,6 @@ abstract class bo_merge
 			case 'application/xmlWord.Document':	// Word 2003*/
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-				$replace_tags = array(
-					'b','strong','i','em','u','span'
-				);
 				// It seems easier to split the parent tags here
 				$replace_tags = array(
 					// Tables, lists don't go inside <w:p>
@@ -615,7 +615,6 @@ abstract class bo_merge
 					$i++;
 				} while($count > 0 && $i < 10);
 
-//echo $content;die();
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
 				$xslt_file = $mimetype == 'application/xml' ? 'wordml.xslt' : 'msoffice.xslt';
@@ -637,7 +636,6 @@ abstract class bo_merge
 			}
 			$content = $xslt->transformToXml($element);
 
-//echo $content;die();
 			// Word 2003 needs two declarations, add extra declaration back in
 			if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
 				$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
@@ -740,7 +738,8 @@ abstract class bo_merge
 			$err = lang('for more than one contact in a document use the tag pagerepeat!');
 			return false;
 		}
-		foreach ((array)$ids as $id)
+		//error_log(__METHOD__."(count(ids)=".count($ids).") strlen(contentrepeat)=".strlen($contentrepeat).', strlen(labelrepeat)='.strlen($Labelrepeat));
+		foreach ((array)$ids as $n => $id)
 		{
 			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
 			if ($lableprint) $content = $Labelrepeat;
@@ -760,7 +759,7 @@ abstract class bo_merge
 				$err = $e->getMessage();
 				return false;
 			}
-
+			//error_log(__METHOD__."() $n: $id ".egw_vfs::hsize(memory_get_usage(true)));
 			// some general replacements: current user, date and time
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
