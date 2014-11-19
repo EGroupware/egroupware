@@ -144,6 +144,12 @@ class filemanager_ui
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:app.filemanager.editprefs',
 			),
+			'mkdir' => array(
+				'caption' => lang('Create directory'),
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'onExecute' => 'javaScript:app.filemanager.createdir'
+			),
 			'mail' => array(
 				'caption' => lang('Mail files'),
 				'icon' => 'filemanager/mail_post_to',
@@ -176,7 +182,8 @@ class filemanager_ui
 			'file_drop_mail' => array(
 				'type' => 'drop',
 				'acceptedTypes' => 'mail',
-				'onExecute' => 'javaScript:app.filemanager.drop'
+				'onExecute' => 'javaScript:app.filemanager.drop',
+				'hideOnDisabled' => true
 			),
 			'file_drop_move' => array(
 				'icon' => 'stylite/move',
@@ -282,7 +289,7 @@ class filemanager_ui
 					'is_parent_value'=> egw_vfs::DIR_MIME_TYPE,
 					'header_left'    => 'filemanager.index.header_left',
 					'favorites'      => true,
-					'placeholder_actions' => array('file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
+					'placeholder_actions' => array('mkdir','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
 				$content['nm']['path'] = static::get_home_dir();
 			}

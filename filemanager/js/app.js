@@ -433,14 +433,22 @@ app.classes.filemanager = AppJS.extend(
 
 	/**
 	 * Prompt user for directory to create
+	 *
+	 * @param {egwAction|undefined} action Action, or undefined if called directly
+	 * @param {egwActionObject[] | undefined} selected Selected row, or undefined if called directly
 	 */
-	createdir: function()
+	createdir: function(action, selected)
 	{
 		var dir = prompt(this.egw.lang('New directory'));
 
 		if (dir)
 		{
 			var path = this.get_path();
+			if(action)
+			{
+				var paths = this._elems2paths(selected);
+				if(paths[0]) path = paths[0];
+			}
 			this._do_action('createdir', dir, true);	// true=synchronous request
 			this.change_dir((path == '/' ? '' : path)+'/'+dir);
 		}
@@ -604,14 +612,23 @@ app.classes.filemanager = AppJS.extend(
 	drop: function(_action, _elems, _target)
 	{
 		var src = this._elems2paths(_elems);
-		var dst = this.id2path(_target.id);
-		//alert(_action.id+': '+src.join(', ')+' --> '+dst);
 
-		// check if target is a file --> use it's directory instead
-		var data = egw.dataGetUIDdata(_target.id);
-		if (!data || data.data.mime != 'httpd/unix-directory')
+
+		// Target will be missing ID if directory is empty
+		// so start with the current directory
+		var dst = this.get_path();
+
+		// File(s) were dropped on a row, they want them inside
+		if(_target && _target.id)
 		{
-			dst = this.dirname(dst);
+			dst = this.id2path(_target.id);
+
+			// check if target is a file --> use it's directory instead
+			var data = egw.dataGetUIDdata(_target.id);
+			if (!data || data.data.mime != 'httpd/unix-directory')
+			{
+				dst = this.dirname(dst);
+			}
 		}
 
 		this._do_action(_action.id.replace("file_drop_",''), src, false, dst);
