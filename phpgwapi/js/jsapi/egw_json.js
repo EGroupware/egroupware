@@ -406,8 +406,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			{
 				egw_topWindow().location.href = res.data.url;
 			}
-			// json request was originating from a different window --> redirect that one
-			else if(this && this.DOMContainer && this.DOMContainer.ownerDocument.defaultView != window)
+			// json request was originating from a different popup --> redirect that one
+			else if(this && this.DOMContainer && this.DOMContainer.ownerDocument.defaultView != window &&
+				egw(this.DOMContainer.ownerDocument.defaultView).is_popup())
 			{
 				this.DOMContainer.ownerDocument.location.href = res.data.url;
 			}
