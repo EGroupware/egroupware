@@ -95,9 +95,6 @@ app.classes.admin = AppJS.extend(
 							self._hide_navbar.call(self);
 						}
 					);
-
-					// Register app refresh now that iframe is available
-					register_app_refresh('admin',jQuery.proxy(this.refresh,this));
 				}
 				break;
 
@@ -155,6 +152,28 @@ app.classes.admin = AppJS.extend(
 		switch(_app)
 		{
 			case 'admin':
+				// if iframe is used --> refresh it
+				var iframe_node = this.iframe ? this.iframe.getDOMNode() : undefined;
+				var iframe_url = iframe_node ? iframe_node.contentDocument.location.href : undefined;
+				if (_id && iframe_url != 'about:blank')
+				{
+					var refresh_done = false;
+					// Try for intelligent et2 refresh inside iframe
+					if(iframe_node && iframe_node.contentWindow && iframe_node.contentWindow.etemplate2)
+					{
+						var templates = iframe_node.contentWindow.etemplate2.getByApplication('admin');
+						for(var i = 0; i < templates.length; i++)
+						{
+							templates[i].refresh(_msg,_app,_id,_type);
+							refresh_done = true;
+						}
+					}
+					if (!refresh_done)	// --> reload iframe
+					{
+						this.load(iframe_url);
+					}
+					return false;	// --> no regular refresh
+				}
 				// invalidate client-side account-cache
 				this.egw.invalidate_account(_id, _type);
 				// group deleted, added or updated
@@ -190,110 +209,6 @@ app.classes.admin = AppJS.extend(
 					return false;	// --> no regular refresh needed
 				}
 		}
-	},
-
-	/**
-	 * Special handling for egw_refresh() in admin, to refresh the iframe when
-	 * the framework detects a simple refresh can be used (same URL).
-	 *
-	 * All parameters ignored.
-	 *
-	 * @param {string} _msg Message to display
-	 * @param {string} _app Application being refreshed, should be 'admin'
-	 * @param {string} _id Unique record ID.
-	 * @param {string} _type Type of refresh.  Either 'edit', 'delete',
-	 *	'add' or null
-	 */
-	refresh: function(_msg, _app, _id, _type)
-	{
-		var refresh_done = false;
-
-		// group deleted, added or updated
-		if (_app === 'admin' && _id < 0)
-		{
-			var tree = this.et2.getWidgetById('tree');
-			switch(_type)
-			{
-				case 'delete':
-					tree.deleteItem('/groups/'+_id, false);
-					break;
-
-				default:	// add, update, edit, null
-					tree.refreshItem('/groups');
-					break;
-			}
-		}
-
-		// Try for intelligent et2 refresh inside iframe
-		var node = _app && _id && this.iframe ? this.iframe.getDOMNode(this.iframe) : null;
-		if(node && node.contentWindow && node.contentWindow.etemplate2)
-		{
-			var templates = node.contentWindow.etemplate2.getByApplication('admin');
-			for(var i = 0; i < templates.length; i++)
-			{
-				templates[i].refresh(_msg,_app,_id,_type);
-				refresh_done = true;
-			}
-		}
-
-		// update of account list eg. from addressbook.edit
-		if(!refresh_done && _app == 'admin' && _id)
-		{
-			var templates = etemplate2.getByApplication('admin');
-			for(var i = 0; i < templates.length; i++)
-			{
-				templates[i].refresh(_msg,_app,_id,_type);
-				refresh_done = true;
-			}
-		}
-
-		// update iframe
-		if (!refresh_done && framework)
-		{
-			var app = framework.getApplicationByName(_app);
-
-			if (app && app.browser && app.browser.currentLocation)
-			{
-				this.linkHandler(app.browser.currentLocation);
-			}
-		}
-	},
-
-	/**
-	 * Hide navbar for idots template
-	 *
-	 * Just a hack for old idots, not neccesary for jdots
-	 */
-	_hide_navbar: function()
-	{
-		var document = this.iframe.getDOMNode().contentDocument;
-
-		if (!document) return;	// nothing we can do ...
-
-		// set white background, as transparent one lets account-list show through
-		document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
-
-		// hide navbar elements
-		var ids2hide = ['divLogo', 'topmenu', 'divAppIconBar', 'divStatusBar', 'tdSidebox', 'divAppboxHeader'];
-		for(var i=0; i < ids2hide.length; ++i)
-		{
-			var elem = document.getElementById(ids2hide[i]);
-			if (elem) elem.style.display = 'none';
-		}
-	},
-
-	/**
-	 * Set location of iframe for given _action and _sender (row)
-	 *
-	 * @param _action
-	 * @param _senders
-	 */
-	iframe_location: function(_action, _senders)
-	{
-		var id = _senders[0].id.split('::');
-		var url = _action.data.url.replace(/(%24|\$)id/, id[1]);
-
-		this.load(url);
 	},
 
 	/**
