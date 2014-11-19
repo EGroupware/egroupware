@@ -189,7 +189,7 @@ abstract class bo_tracking
 		if ($cf_app)
 		{
 			$linkable_cf_types = array('link-entry')+array_keys(egw_link::app_list());
-			foreach(config::get_customfields($cf_app, true) as $cf_name => $cf_data)
+			foreach(egw_customfields::get($cf_app, true) as $cf_name => $cf_data)
 			{
 				$this->field2history['#'.$cf_name] = '#'.$cf_name;
 
@@ -231,12 +231,12 @@ abstract class bo_tracking
 	{
 		$details = array();
 
-		if (($cfs = config::get_customfields($this->app, $all_private_too=false, $only_type2)))
+		if (($cfs = egw_customfields::get($this->app, $all_private_too=false, $only_type2)))
 		{
 			$header_done = false;
 			foreach($cfs as $name => $field)
 			{
-				if (in_array($field['type'], customfields_widget::$non_printable_fields)) continue;
+				if (in_array($field['type'], egw_customfields::$non_printable_fields)) continue;
 
 				if (!$header_done)
 				{
@@ -249,7 +249,7 @@ abstract class bo_tracking
 				//error_log(__METHOD__."() $name: data['#$name']=".array2string($data['#'.$name]).", field[values]=".array2string($field['values']));
 				$details['#'.$name] = array(
 					'label' => $field['label'],
-					'value' => customfields_widget::format_customfield($field, $data['#'.$name]),
+					'value' => egw_customfields::format($field, $data['#'.$name]),
 				);
 				//error_log("--> details['#$name']=".array2string($details['#'.$name]));
 			}
