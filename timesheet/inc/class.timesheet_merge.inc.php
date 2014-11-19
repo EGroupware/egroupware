@@ -120,9 +120,9 @@ class timesheet_merge extends bo_merge
 			$selects['ts_'.$name] = $value;
 		}
 		if($content && strpos($content, '#') !== 0)
-                {
-                        $this->cf_link_to_expand($record->get_record_array(), $content, $info);
-                }
+		{
+			$this->cf_link_to_expand($record->get_record_array(), $content, $info);
+		}
 
 		importexport_export_csv::convert($record, $types, 'timesheet', $selects);
 
