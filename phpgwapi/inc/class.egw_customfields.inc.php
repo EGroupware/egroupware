@@ -51,10 +51,10 @@ class egw_customfields implements IteratorAggregate
 	 * Constructor
 	 *
 	 * @param string $app
-	 * @param boolean $all_private_too=false should all the private fields be returned too, default no
-	 * @param string $only_type2=null if given only return fields of type2 == $only_type2
-	 * @param int $start=0
-	 * @param int $num_rows=null
+	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
+	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
+	 * @param int $start =0
+	 * @param int $num_rows =null
 	 * @return array with customfields
 	 */
 	function __construct($app, $all_private_too=false, $only_type2=null, $start=0, $num_rows=null)
@@ -86,9 +86,9 @@ class egw_customfields implements IteratorAggregate
 	 */
 	function getIterator()
 	{
-		return new egw_db_callback_iterator($this->iterator, function($row)
+		return new egw_db_callback_iterator($this->iterator, function($_row)
 		{
-			$row = egw_db::strip_array_keys($row, 'cf_');
+			$row = egw_db::strip_array_keys($_row, 'cf_');
 			$row['private'] = $row['private'] ? explode(',', $row['private']) : array();
 			$row['type2'] = $row['type2'] ? explode(',', $row['type2']) : array();
 			$row['values'] = json_decode($row['values'], true);
@@ -121,8 +121,8 @@ class egw_customfields implements IteratorAggregate
 	 * Get customfield array of an application
 	 *
 	 * @param string $app
-	 * @param boolean $all_private_too=false should all the private fields be returned too, default no
-	 * @param string $only_type2=null if given only return fields of type2 == $only_type2
+	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
+	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
 	 * @return array with customfields
 	 */
 	public static function get($app, $all_private_too=false, $only_type2=null)
@@ -144,6 +144,216 @@ class egw_customfields implements IteratorAggregate
 		}
 		//error_log(__METHOD__."('$app', $all_private_too, '$only_type2') returning fields: ".implode(', ', array_keys($cfs)));
 		return $cfs;
+	}
+
+	/**
+	 * Check if any customfield uses html (type == 'htmlarea')
+	 *
+	 * @param string $app
+	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
+	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
+	 * @return boolen true: if there is a custom field useing html, false if not
+	 */
+	public static function use_html($app, $all_private_too=false, $only_type2=null)
+	{
+		foreach(self::get($app, $all_private_too, $only_type2) as $data)
+		{
+			if ($data['type'] == 'htmlarea') return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Non printable custom fields eg. UI elements
+	 *
+	 * @var array
+	 */
+	public static $non_printable_fields = array('button');
+
+	/**
+	 * Format a single custom field value as string
+	 *
+	 * @param array $field field defintion incl. type
+	 * @param string $value field value
+	 * @return string formatted value
+	 */
+	public static function format(array $field, $value)
+	{
+		switch($field['type'])
+		{
+			case 'select-account':
+				if ($value)
+				{
+					$values = array();
+					foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
+					{
+						$values[] = common::grab_owner_name($value);
+					}
+					$value = implode(', ',$values);
+				}
+				break;
+
+			case 'checkbox':
+				$value = $value ? 'X' : '';
+				break;
+
+			case 'select':
+			case 'radio':
+				if (count($field['values']) == 1 && isset($field['values']['@']))
+				{
+					$field['values'] = self::get_options_from_file($field['values']['@']);
+				}
+				$values = array();
+				foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
+				{
+					$values[] = isset($field['values'][$value]) ? $field['values'][$value] : '#'.$value;
+				}
+				$value = implode(', ', $values);
+				break;
+
+			case 'date':
+			case 'date-time':
+				if ($value)
+				{
+					$format = $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
+					$formats = preg_split('/[\\/. :-]/',$format);
+					$values = preg_split('/[\\/. :-]/',$value);
+					if (count($formats) != count($values))
+					{
+						error_log(__METHOD__."(".array2string($field).", value='$value') format='$format', formats=".array2string($formats).", values=".array2string($values));
+						$values = array_slice($values, 0, count($formats));
+					}
+					$date = array_combine($formats, $values);
+					$value = common::dateformatorder($date['Y'], $date['m'], $date['d'],true);
+					if (isset($date['H'])) $value .= ' '.common::formattime($date['H'], $date['i']);
+				}
+				break;
+
+			case 'htmlarea':	// ToDo: EMail probably has a nicer html2text method
+				if ($value) $value = strip_tags(preg_replace('/<(br|p)[^>]*>/i', "\r\n", str_replace(array("\r", "\n"), '', $value)));
+				break;
+
+			case 'ajax_select':	// ToDo: returns unchanged value for now
+				break;
+
+			default:
+				// handling for several link types
+				if ($value && in_array($field['type'], self::get_link_types()))
+				{
+					if ($field['type'] == 'link-entry' || strpos($value, ':') !== false)
+					{
+						list($app, $value) = explode(':', $value);
+					}
+					else
+					{
+						$app = $field['type'];
+					}
+					if ($value) $value = egw_link::title($app, $value);
+				}
+				break;
+		}
+		return $value;
+	}
+
+	/**
+	 * Read the options of a 'select' or 'radio' custom field from a file
+	 *
+	 * For security reasons that file has to be relative to the eGW root
+	 * (to not use that feature to explore arbitrary files on the server)
+	 * and it has to be a php file setting one variable called options,
+	 * (to not display it to anonymously by the webserver).
+	 * The $options var has to be an array with value => label pairs, eg:
+	 *
+	 * <?php
+	 * $options = array(
+	 *      'a' => 'Option A',
+	 *      'b' => 'Option B',
+	 *      'c' => 'Option C',
+	 * );
+	 *
+	 * @param string $file file name inside the eGW server root, either relative to it or absolute
+	 * @return array in case of an error we return a single option with the message
+	 */
+	public static function get_options_from_file($file)
+	{
+		$options = array();
+
+		if (!($path = realpath($file[0] == '/' ? $file : EGW_SERVER_ROOT.'/'.$file)) ||	// file does not exist
+			substr($path,0,strlen(EGW_SERVER_ROOT)+1) != EGW_SERVER_ROOT.'/' ||	// we are NOT inside the eGW root
+			basename($path,'.php').'.php' != basename($path) ||	// extension is NOT .php
+			basename($path) == 'header.inc.php')	// dont allow to include our header again
+		{
+			return array(lang("'%1' is no php file in the eGW server root (%2)!".': '.$path,$file,EGW_SERVER_ROOT));
+		}
+		include($path);
+
+		return $options;
+	}
+
+	/**
+	 * Get the customfield types containing links
+	 *
+	 * @return array with customefield types as values
+	 */
+	public static function get_link_types()
+	{
+		static $link_types = null;
+
+		if (is_null($link_types))
+		{
+			$link_types = array_keys(array_intersect(egw_link::app_list('query'),egw_link::app_list('title')));
+			$link_types[] = 'link-entry';
+		}
+		return $link_types;
+	}
+
+	/**
+	 * Check if there are links in the custom fields and update them
+	 *
+	 * This function have to be called manually by an application, if cf's linking
+	 * to other entries should be stored as links too (beside as cf's).
+	 *
+	 * @param string $own_app own appname
+	 * @param array $values new values including the custom fields
+	 * @param array $old =null old values before the update, if existing
+	 * @param string $id_name ='id' name/key of the (link-)id in $values
+	 */
+	public static function update_links($own_app,array $values,array $old=null,$id_name='id')
+	{
+		$link_types = self::get_link_types();
+
+		foreach(egw_customfields::get($own_app) as $name => $data)
+		{
+			if (!in_array($data['type'],$link_types)) continue;
+
+			// do we have a different old value --> delete that link
+			if ($old && $old['#'.$name] && $old['#'.$name] != $values['#'.$name])
+			{
+				if ($data['type'] == 'link-entry')
+				{
+					list($app,$id) = explode(':',$old['#'.$name]);
+				}
+				else
+				{
+					$app = $data['type'];
+					$id = $old['#'.$name];
+				}
+				egw_link::unlink(false,$own_app,$values[$id_name],'',$app,$id);
+			}
+			if ($data['type'] == 'link-entry')
+			{
+				list($app,$id) = explode(':',$values['#'.$name]);
+			}
+			else
+			{
+				$app = $data['type'];
+				$id = $values['#'.$name];
+			}
+			if ($id)	// create new link, does nothing for already existing links
+			{
+				egw_link::link($own_app,$values[$id_name],$app,$id);
+			}
+		}
 	}
 
 	/**
