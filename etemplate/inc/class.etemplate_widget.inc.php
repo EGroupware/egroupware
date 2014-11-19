@@ -150,7 +150,7 @@ class etemplate_widget
 	 * This is necessary as templates can be used multiple time, so we can not alter the cached template!
 	 *
 	 * @param string|XMLReader $xml
-	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
+	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 * @return etemplate_widget_template current object or clone, if any attribute was set
 	 */
 	public function set_attrs($xml, $cloned=true)
@@ -221,9 +221,9 @@ class etemplate_widget
 	 * - csv_split('"a""b,c",d') === array('a"b,c','d')	// to escape enclosures double them!
 	 *
 	 * @param string $str
-	 * @param int $num=null in how many parts to split maximal, parts over this number end up (unseparated) in the last part
-	 * @param string $delimiter=','
-	 * @param string $enclosure='"'
+	 * @param int $num =null in how many parts to split maximal, parts over this number end up (unseparated) in the last part
+	 * @param string $delimiter =','
+	 * @param string $enclosure ='"'
 	 * @return array
 	 */
 	public static function csv_split($str,$num=null,$delimiter=',',$enclosure='"')
@@ -246,14 +246,14 @@ class etemplate_widget
 				$part = substr(str_replace($enclosure.$enclosure,$enclosure,$part),1,-1);
 			}
 		}
-		$parts = array_values($parts);	// renumber the parts (in case we had to concat them)
+		$parts_renum = array_values($parts);	// renumber the parts (in case we had to concat them)
 
-		if ($num > 0 && count($parts) > $num)
+		if ($num > 0 && count($parts_renum) > $num)
 		{
-			$parts[$num-1] = implode($delimiter,array_slice($parts,$num-1,count($parts)-$num+1));
-			$parts = array_slice($parts,0,$num);
+			$parts_renum[$num-1] = implode($delimiter,array_slice($parts_renum,$num-1,count($parts_renum)-$num+1));
+			$parts_renum = array_slice($parts_renum,0,$num);
 		}
-		return $parts;
+		return $parts_renum;
 	}
 
 	/**
@@ -289,7 +289,7 @@ class etemplate_widget
 	 *
 	 * @param string $type
 	 * @param string|XMLReader $xml
-	 * @param string $id=null
+	 * @param string $id =null
 	 */
 	public static function factory($type, $xml, $id=null)
 	{
@@ -338,7 +338,7 @@ class etemplate_widget
 	 * Iterate over children to find the one with the given id and optional type
 	 *
 	 * @param string $id
-	 * @param string $type=null
+	 * @param string $type =null
 	 * @return etemplate_widget or NULL
 	 */
 	public function getElementById($id, $type=null)
@@ -361,7 +361,7 @@ class etemplate_widget
 	 * Iterate over children to find the one with the given type
 	 *
 	 * @param string $type
-	 * @return etemplate_widget or NULL
+	 * @return array of etemplate_widget or empty array
 	 */
 	public function getElementsByType($type)
 	{
@@ -372,7 +372,7 @@ class etemplate_widget
 			{
 				$elements[] = $child;
 			}
-			$elements += $child->getElementsByType($type, $subclass_ok);
+			$elements += $child->getElementsByType($type);
 		}
 		return $elements;
 	}
@@ -383,8 +383,8 @@ class etemplate_widget
 	 * Default implementation only calls method on itself and run on all children
 	 *
 	 * @param string $method_name
-	 * @param array $params=array('') parameter(s) first parameter has to be the cname, second $expand!
-	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 * @param array $params =array('') parameter(s) first parameter has to be the cname, second $expand!
+	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
@@ -465,15 +465,15 @@ class etemplate_widget
 	 */
 	protected static function check_disabled($disabled, array $expand)
 	{
-		if ($not = $disabled[0] == '!')
+		if (($not = $disabled[0] == '!'))
 		{
 			$disabled = substr($disabled,1);
 		}
-		list($val,$check_val) = $vals = explode('=',$disabled);
+		list($value,$check) = $vals = explode('=',$disabled);
 
 		// use expand_name to be able to use @ or $
-		$val = self::expand_name($val,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
-		$check_val = self::expand_name($check_val,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+		$val = self::expand_name($value, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+		$check_val = self::expand_name($check, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 		$result = count($vals) == 1 ? $val != '' : ($check_val[0] == '/' ? preg_match($check_val,$val) : $val == $check_val);
 		if ($not) $result = !$result;
 
@@ -531,48 +531,8 @@ class etemplate_widget
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
-			/* RB: dont think any of this is needed in eTemplate2, as this escaping probably needs to be done on clientside anyway
-
-			// check if name is enclosed in single quotes as argument eg. to an event handler or
-			// variable name is contained in quotes and curly brackets, eg. "'{$cont[nm][path]}'" or
-			// used as name for a button like "delete[$row_cont[something]]" --> quote contained quotes (' or ")
-			if (in_array($name[$pos_var-1],array('[',"'",'{')) && preg_match('/[\'\[]{?('.self::PHP_VAR_PREG.')}?[\'\]]+/',$name,$matches))
-			{
-				eval('$value = '.$matches[1].';');
-				if (is_array($value) && $name[$pos_var-1] == "'")	// arrays are only supported for '
-				{
-					foreach($value as &$val)
-					{
-						$val = "'".str_replace(array("'",'"','[',']'),array('\\\'','&quot;','&#x5B;','&#x5D;'),$val)."'";
-					}
-					$value = '&#x5B; '.implode(', ',$value).' &#x5D;';
-					$name = str_replace("'".$matches[1]."'",$value,$name);
-				}
-				else
-				{
-					$value = str_replace(array("'",'"','[',']'),array('\\\'','&quot;','&#x5B;','&#x5D;'),$value);
-					$name = str_replace(array('{'.$matches[1].'}',$matches[1]),$value,$name);
-				}
-			}
-			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link explodes it on &
-			if ($name[$pos_var-1] == '=' && preg_match('/[&?]([A-Za-z0-9_]+(\[[A-Za-z0-9_]+\])*)=('.self::PHP_VAR_PREG.')/',$name,$matches))
-			{
-				eval('$value = '.$matches[3].';');
-				if (is_array($value))	// works only reasonable, if get-parameter uses array notation, eg. &file[]=$cont[filenames]
-				{
-					foreach($value as &$val)
-					{
-						$val = str_replace('&',urlencode('&'),$val);
-					}
-					$name = str_replace($matches[3],implode('&'.$matches[1].'=',$value),$name);
-				}
-				else
-				{
-					$value = str_replace('&',urlencode('&'),$value);
-					$name = str_replace($matches[3],$value,$name);
-				}
-			}*/
 			eval('$name = "'.str_replace('"','\\"',$name).'";');
+			unset($col_, $row_, $row_cont, $col_row_cont);	// quiten IDE warning about used vars, they might be used in above eval!
 		}
 		if ($is_index_in_content)
 		{
@@ -590,8 +550,6 @@ class etemplate_widget
 				$name = '';
 			}
 		}
-		// RB: not sure why this business with entity encoding for square brakets, it messes up validation
-		//$name = str_replace(array('[',']'),array('&#x5B;','&#x5D;'),$name);
 		return $name;
 	}
 
@@ -638,7 +596,7 @@ class etemplate_widget
 	/**
 	 * Convert widget (incl. children) to xml
 	 *
-	 * @param string $indent=''
+	 * @param string $indent =''
 	 * @return string
 	 */
 	public function toXml($indent='')
@@ -679,7 +637,7 @@ class etemplate_widget
 	 *
 	 * @param string $cname basename
 	 * @param string $name name
-	 * @param array $expand=null values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array $expand =null values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @return string complete form-name
 	 */
 	static function form_name($cname,$name,array $expand=null)
@@ -713,21 +671,21 @@ class etemplate_widget
 	 * $sub = get_array($arr,'a[b]'); $sub = 'c'; is equivalent to $arr['a']['b'] = 'c';
 	 *
 	 * @param array $arr the array to search, referenz as a referenz gets returned
-	 * @param string $idx the index, may contain sub-indices like a[b], see example below
+	 * @param string $_idx the index, may contain sub-indices like a[b], see example below
 	 * @param boolean $reference_into default False, if True none-existing sub-arrays/-indices get created to be returned as referenz, else False is returned
 	 * @param bool $skip_empty returns false if $idx is not present in $arr
 	 * @return mixed reference to $arr[$idx] or null if $idx is not set and not $reference_into
 	 */
-	static function &get_array(&$arr,$idx,$reference_into=False,$skip_empty=False)
+	static function &get_array(&$arr,$_idx,$reference_into=False,$skip_empty=False)
 	{
 		if (!is_array($arr))
 		{
-			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$idx',$reference_into,$skip_empty) \$arr is no array!");
+			throw new egw_exception_assertion_failed(__METHOD__."(\$arr,'$_idx',$reference_into,$skip_empty) \$arr is no array!");
 		}
-		if (is_object($idx)) return false;	// given an error in php5.2
+		if (is_object($_idx)) return false;	// given an error in php5.2
 
 		// Make sure none of these are left
-		$idx = str_replace(array('&#x5B;','&#x5D;'),array('[',']'),$idx);
+		$idx = str_replace(array('&#x5B;','&#x5D;'), array('[',']'), $_idx);
 
 		// Handle things expecting arrays - ends in []
 		if(substr($idx,-2) == "[]")
@@ -759,8 +717,8 @@ class etemplate_widget
 	 * - $readonlys[__ALL__] set and $readonlys[$form_name] !== false
 	 * - $readonlys[$form_name] evaluates to true
 	 *
-	 * @param string $cname=''
-	 * @param string $form_name=null form_name, to not calculate him again
+	 * @param string $cname =''
+	 * @param string $form_name =null form_name, to not calculate him again
 	 * @return boolean
 	 */
 	public function is_readonly($cname='', $form_name=null)
@@ -795,7 +753,7 @@ class etemplate_widget
 	 *
 	 * @param string $name (complete) name of the widget causing the error
 	 * @param string|boolean $error error-message already translated or false to reset all existing error for given name
-	 * @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
+	 * @param string $cname =null set it to '', if the name is already a form-name, defaults to self::$name_vars
 	 */
 	public static function set_validation_error($name,$error,$cname=null)
 	{
@@ -821,8 +779,8 @@ class etemplate_widget
 	/**
 	* Check if we have not ignored validation errors
 	*
-	* @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
-	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
+	* @param string $ignore_validation ='' if not empty regular expression for validation-errors to ignore
+	* @param string $cname =null name-prefix, which need to be ignored, default self::$name_vars
 	* @return boolean true if there are not ignored validation errors, false otherwise
 	*/
 	public static function validation_errors($ignore_validation='',$cname='')
@@ -831,7 +789,7 @@ class etemplate_widget
 		//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
 		if (!$ignore_validation) return count(self::$validation_errors) > 0;
 
-		foreach(self::$validation_errors as $name => $error)
+		foreach(array_values(self::$validation_errors) as $name)
 		{
 			if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
 
@@ -901,7 +859,7 @@ class etemplate_widget
 	 *  disables all cells with name == $name
 	 *
 	 * @param sting $name cell-name
-	 * @param boolean $disabled=true disable or enable a cell, default true=disable
+	 * @param boolean $disabled =true disable or enable a cell, default true=disable
 	 * @return reference to attribute
 	 */
 	public function disableElement($name,$disabled=True)
@@ -933,8 +891,8 @@ class etemplate_widget_box extends etemplate_widget
 	 * Reimplemented because grids and boxes can have an own namespace
 	 *
 	 * @param string $method_name
-	 * @param array $params=array('') parameter(s) first parameter has to be cname!
-	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 * @param array $params =array('') parameter(s) first parameter has to be cname!
+	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
@@ -951,7 +909,7 @@ class etemplate_widget_box extends etemplate_widget
 		}
 		if ($respect_disabled && ($disabled = $this->attrs['disabled'] && self::check_disabled($this->attrs['disabled'], $expand)))
 		{
-			error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
+			//error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
 			return;
 		}
 		if (method_exists($this, $method_name))
@@ -960,6 +918,7 @@ class etemplate_widget_box extends etemplate_widget
 		}
 
 		// Expand children
+		$columns_disabled = null;
 		for($n = 0; ; ++$n)
 		{
 			if (isset($this->children[$n]))
@@ -1002,9 +961,9 @@ class etemplate_widget_box extends etemplate_widget
 		foreach(array($widget) + $widget->children as $check_widget)
 		{
 			$pat = $check_widget->id;
-			while(($pat = strstr($pat, '$')))
+			while(($pattern = strstr($pat, '$')))
 			{
-				$pat = substr($pat,$pat[1] == '{' ? 2 : 1);
+				$pat = substr($pattern,$pattern[1] == '{' ? 2 : 1);
 
 				$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' ||
 					substr($pat,0,4) == 'row_' && substr($pat,0,8) != 'row_cont');
@@ -1016,6 +975,7 @@ class etemplate_widget_box extends etemplate_widget
 					($value = self::get_array(self::$request->content, $fname)) !== null)	// null = not found (can be false!)
 				{
 					//error_log(__METHOD__."($widget,$cname) $this autorepeating row $expand[row] because of $check_widget->id = '$fname' is ".array2string($value));
+					unset($value);
 					return true;
 				}
 			}
