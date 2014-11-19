@@ -217,10 +217,10 @@ class egw_customfields implements IteratorAggregate
 				{
 					$format = $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
 					$formats = preg_split('/[\\/. :-]/',$format);
-					$values = preg_split('/[\\/. :-]/',$value);
+					$values = preg_split('/[\\/. :-]/', is_numeric($value) ? egw_time::to($value, $format) : $value);
 					if (count($formats) != count($values))
 					{
-						error_log(__METHOD__."(".array2string($field).", value='$value') format='$format', formats=".array2string($formats).", values=".array2string($values));
+						//error_log(__METHOD__."(".array2string($field).", value='$value') format='$format', formats=".array2string($formats).", values=".array2string($values));
 						$values = array_slice($values, 0, count($formats));
 					}
 					$date = array_combine($formats, $values);
