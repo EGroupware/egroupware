@@ -367,7 +367,7 @@ class etemplate_widget
 	 * Iterate over children to find the one with the given type
 	 *
 	 * @param string $type
-	 * @return etemplate_widget or NULL
+	 * @return array of etemplate_widget or empty array
 	 */
 	public function getElementsByType($type)
 	{
@@ -532,54 +532,13 @@ class etemplate_widget
 				$cont = array();
 			}
 			if (!is_numeric($c)) $c = boetemplate::chrs2num($c);
-
-			unset($row, $c_, $row_);	// not used, but required by function signature
-			/* RB: dont think any of this is needed in eTemplate2, as this escaping probably needs to be done on clientside anyway
 			$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
 			$col_ = self::num2chrs($c_-1);
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
-			// check if name is enclosed in single quotes as argument eg. to an event handler or
-			// variable name is contained in quotes and curly brackets, eg. "'{$cont[nm][path]}'" or
-			// used as name for a button like "delete[$row_cont[something]]" --> quote contained quotes (' or ")
-			if (in_array($name[$pos_var-1],array('[',"'",'{')) && preg_match('/[\'\[]{?('.self::PHP_VAR_PREG.')}?[\'\]]+/',$name,$matches))
-			{
-				eval('$value = '.$matches[1].';');
-				if (is_array($value) && $name[$pos_var-1] == "'")	// arrays are only supported for '
-				{
-					foreach($value as &$val)
-					{
-						$val = "'".str_replace(array("'",'"','[',']'),array('\\\'','&quot;','&#x5B;','&#x5D;'),$val)."'";
-					}
-					$value = '&#x5B; '.implode(', ',$value).' &#x5D;';
-					$name = str_replace("'".$matches[1]."'",$value,$name);
-				}
-				else
-				{
-					$value = str_replace(array("'",'"','[',']'),array('\\\'','&quot;','&#x5B;','&#x5D;'),$value);
-					$name = str_replace(array('{'.$matches[1].'}',$matches[1]),$value,$name);
-				}
-			}
-			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link explodes it on &
-			if ($name[$pos_var-1] == '=' && preg_match('/[&?]([A-Za-z0-9_]+(\[[A-Za-z0-9_]+\])*)=('.self::PHP_VAR_PREG.')/',$name,$matches))
-			{
-				eval('$value = '.$matches[3].';');
-				if (is_array($value))	// works only reasonable, if get-parameter uses array notation, eg. &file[]=$cont[filenames]
-				{
-					foreach($value as &$val)
-					{
-						$val = str_replace('&',urlencode('&'),$val);
-					}
-					$name = str_replace($matches[3],implode('&'.$matches[1].'=',$value),$name);
-				}
-				else
-				{
-					$value = str_replace('&',urlencode('&'),$value);
-					$name = str_replace($matches[3],$value,$name);
-				}
-			}*/
 			eval('$name = "'.str_replace('"','\\"',$name).'";');
+			unset($col_, $row_, $row_cont, $col_row_cont);	// quiten IDE warning about used vars, they might be used in above eval!
 		}
 		if ($is_index_in_content)
 		{
@@ -597,8 +556,6 @@ class etemplate_widget
 				$name = '';
 			}
 		}
-		// RB: not sure why this business with entity encoding for square brakets, it messes up validation
-		//$name = str_replace(array('[',']'),array('&#x5B;','&#x5D;'),$name);
 		return $name;
 	}
 
