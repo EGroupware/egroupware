@@ -71,6 +71,11 @@ class infolog_customfields extends customfields
 			}
 			$readonlys['content_type_options']['status']["create$name"] = True;
 		}
+		$content['content_type_options']['status'][++$n] = array(
+			'name'     => '',
+			'label'    => '',
+			'disabled' => False
+		);
 		$content['content_type_options']['status']['default'] = $this->status['defaults'][$this->content_type];
 		$content['content_type_options']['group_owner'] = $this->group_owners[$this->content_type];
 		$readonlys['content_types']['delete'] = isset($this->bo->stock_enums['type'][$this->content_type]);
@@ -250,31 +255,37 @@ class infolog_customfields extends customfields
 		$this->save_repository();
 	}
 
-	function create(&$content)
+	function create_content_type(&$content)
 	{
-		$new_name = trim($content['new_name']);
-		unset($content['new_name']);
-		if (empty($new_name) || isset($this->content_types[$new_name]))
+		$new_name = trim($content['content_types']['name']);
+		if (empty($new_name))
 		{
-			$content['error_msg'] .= empty($new_name) ?
-				lang('You have to enter a name, to create a new typ!!!') :
-				lang("Typ '%1' already exists !!!",$new_name);
+			$this->tmpl->set_validation_error('content_types[name]','You have to enter a name, to create a new type!!!');
+			return false;
 		}
 		else
 		{
-			$this->content_types[$new_name] = $new_name;
-			$this->status[$new_name] = array(
-				'ongoing' => 'ongoing',
-				'done' => 'done'
-			);
-			$this->status['defaults'][$new_name] = 'ongoing';
-
-			// save changes to repository
-			$this->save_repository();
-
-			$content['type2'] = $new_name;	// show the new entry
+			foreach($this->content_types as $letter => $name)
+			{
+				if($name == $new_name)
+				{
+					$this->tmpl->set_validation_error('content_types[name]',lang("type '%1' already exists !!!",$new_name));
+					return false;
+				}
+			}
 		}
+		$this->content_types[$new_name] = $new_name;
+		$this->status[$new_name] = array(
+			'ongoing' => 'ongoing',
+			'done' => 'done'
+		);
+		$this->status['defaults'][$new_name] = 'ongoing';
+
+		// save changes to repository
+		$this->save_repository();
+		return $new_name;
 	}
+	
 	function save_repository()
 	{
 		// save changes to repository

@@ -113,7 +113,7 @@ class customfields
 				$this->content_types = (array)egw_link::get_registry($this->appname,'default_types');
 			}
 			// Set this now, we need to know it for updates
-			$this->content_type = $content['content_types']['types'];
+			$this->content_type = $content['content_types']['types'] ? $content['content_types']['types'] : (array_key_exists(0,$this->content_types) ? $this->content_types[0] : key($this->content_types));
 
 			// Common type changes - add, delete
 			if($content['content_types']['delete'])
@@ -122,7 +122,11 @@ class customfields
 			}
 			elseif($content['content_types']['create'])
 			{
-				$content['content_types']['types'] = $this->create_content_type($content);
+				if($new_type = $this->create_content_type($content))
+				{
+					$content['content_types']['types'] = $this->content_type = $new_type;
+				}
+				unset($content['content_types']['create']);
 				unset($content['content_types']['name']);
 			}
 			// No common type change and type didn't change, try an update
@@ -181,7 +185,6 @@ class customfields
 			$content['type_template'] = $this->appname . '.admin.types';
 			$content['content_types']['appname'] = $this->appname;
 			$content_types = array_keys($this->content_types);
-			$this->content_type = $content['content_types']['types'] ? $content['content_types']['types'] : $content_types[0];
 
 			$content['content_type_options'] = $this->content_types[$this->content_type]['options'];
 			$content['content_type_options']['type'] = $this->types2[$this->content_type];
@@ -535,6 +538,12 @@ class customfields
 		}
 	}
 
+	/**
+	 * Validate and create a new content type
+	 *
+	 * @param array $content
+	 * @return string|boolean New type ID, or false for error
+	 */
 	function create_content_type(&$content)
 	{
 		$new_name = trim($content['content_types']['name']);
