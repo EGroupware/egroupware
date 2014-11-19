@@ -722,7 +722,12 @@ function egwPopupActionImplementation()
 				var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
 				// Fake drop position
 				drop[action.id].actionObj.ui = ui;
+				// Set a flag so apps can tell the difference, if they need to
+				drop[action.id].actionObj.paste = true;
+
 				drop[action.id].actionObj.execute(clipboard.selected,selected[0]);
+
+				drop[action.id].actionObj.paste = false;
 			};
 
 			var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {

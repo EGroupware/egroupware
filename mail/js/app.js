@@ -1702,7 +1702,7 @@ app.classes.mail = AppJS.extend(
 		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		var that = this;
 		var rvMain = false;
-		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected()) || _action.id=='readall')
+		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected() && !_action.paste) || _action.id=='readall')
 		{
 			if (_confirm)
 			{
