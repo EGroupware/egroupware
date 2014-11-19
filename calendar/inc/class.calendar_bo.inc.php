@@ -1585,7 +1585,7 @@ class calendar_bo
 			{
 				$status = '('.$lang_status.')';
 			}
-			$names[$id] = $this->participant_name($id).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
+			$names[$id] = html::htmlspecialchars($this->participant_name($id)).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
 
 			// add role, if not a regular participant
 			if ($role != 'REQ-PARTICIPANT')
@@ -1827,7 +1827,7 @@ class calendar_bo
 		}
 		return $this->cached_holidays[$year];
 	}
-	
+
 	/**
 	 * Get translated calendar event fields, presenting as link title options
 	 *
@@ -1847,7 +1847,7 @@ class calendar_bo
 		);
 		return $options;
 	}
-	
+
 	/**
 	 * get title for an event identified by $event
 	 *
@@ -1886,7 +1886,7 @@ class calendar_bo
 						foreach ($event[$val] as $key => $value)
 						{
 							$extra_fields [$val] = accounts::id2name($key, 'account_fullname');
-						}	
+						}
 						break;
 					case 'modifier':
 					case 'creator':

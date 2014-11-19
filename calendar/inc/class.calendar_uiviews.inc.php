@@ -569,7 +569,7 @@ class calendar_uiviews extends calendar_ui
 								$width = $this->time2pos($event['end_m'] - $event['start_m']);
 								$color = $data['color'] ? $data['color'] : 'gray';
 
-								$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$data['tooltip']));
+								$tooltip = html::htmlspecialchars($data['tooltip'], true);	// true=need double-encoding, as it is transported as attribute!
 								$content .= $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').
 									'" data-tooltip ="'.$tooltip .
 									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
@@ -1746,7 +1746,7 @@ class calendar_uiviews extends calendar_ui
  			}
 			foreach($part_array as $part_group => $participant)
  			{
-				$participants .= $this->add_nonempty($participant,$part_group,True,False);
+				$participants .= $this->add_nonempty($participant,$part_group,True,False,false);
  			}
  		}
 		// as we only deal with percentual widht, we consider only the full dayview (1 colum) as NOT small
@@ -1815,7 +1815,7 @@ class calendar_uiviews extends calendar_ui
 		{
 			$tpl->set_var('bodydescription', !$is_private ? nl2br(html::htmlspecialchars($event['description'])) : '');
 		}
-		
+
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
 		$html = $tpl->fp('out',$block);
 
@@ -1838,6 +1838,7 @@ class calendar_uiviews extends calendar_ui
 				$popup = $event['id']."|n";
 			}
 		}
+		$tooltip = html::htmlspecialchars($tooltip, true);	// true=need double-encoding, as it is transported as attribute!
 		//_debug_array($event);
 
 		if ($return_array)
@@ -1890,7 +1891,6 @@ class calendar_uiviews extends calendar_ui
 
 			}
 		}
-		$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$tooltip));
 		if (!$event['whole_day_on_top'] &&
 				!$event['whole_day'])
 		{
@@ -2000,7 +2000,7 @@ class calendar_uiviews extends calendar_ui
 		return $icons;
 	}
 
-	function add_nonempty($content,$label,$one_per_line=False,$space = True)
+	function add_nonempty($content,$label,$one_per_line=False,$space = True,$htmlspecialchars=true)
 	{
 		if (is_array($content))
 		{
@@ -2017,7 +2017,7 @@ class calendar_uiviews extends calendar_ui
 		{
 			return '<span class="calendar_calEventLabel">'.$label.'</span>:'.
 				($one_per_line ? '<br>' : ' ').
-				nl2br(html::htmlspecialchars($content)).'<br>';
+				nl2br($htmlspecialchars?html::htmlspecialchars($content):$content).'<br>';
 		}
 		return '';
 	}
