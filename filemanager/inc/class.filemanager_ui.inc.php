@@ -156,12 +156,6 @@ class filemanager_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.filemanager.mail',
 			),
-			'cut' => array(
-				'caption' => lang('Cut'),
-				// Clipboards are auto-added to group 2.5, but auto select-all pushes things down
-				'group' => '1.5',
-				'onExecute' => 'javaScript:app.filemanager.clipboard',
-			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
 				++$group, 'Insert in document', 'document_',
