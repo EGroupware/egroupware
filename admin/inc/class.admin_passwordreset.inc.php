@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2011 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2011-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -54,8 +54,8 @@ class admin_passwordreset
 	/**
 	 * Reset passwords
 	 *
-	 * @param array $content=null
-	 * @param string $msg=''
+	 * @param array $content =null
+	 * @param string $msg =''
 	 */
 	function index(array $content=null, $msg='')
 	{
@@ -105,6 +105,7 @@ class admin_passwordreset
 				}
 				$change_pw = $content['random_pw'] || $content['hash'] && $content['hash'] != $current_hash;
 				$changed = array();
+				$emailadmin = null;
 				foreach($content['users'] as $account_id)
 				{
 					if (($account = $GLOBALS['egw']->accounts->read($account_id)))
@@ -156,8 +157,12 @@ class admin_passwordreset
 						{
 							if (!isset($emailadmin))
 							{
-								$emailadmin = new emailadmin_bo();
-								$domain = $GLOBALS['egw_info']['server']['mail_suffix'];
+								$emailadmin = emailadmin_account::get_default();
+								if (!emailadmin_account::is_multiple($emailadmin))
+								{
+									$msg = lang('No default account found!');
+									break;
+								}
 							}
 							if (($userData = $emailadmin->getUserData ($account_id)))
 							{
@@ -171,11 +176,11 @@ class admin_passwordreset
 								}
 								if (strpos($content['mail']['domain'], '.') !== false)
 								{
-									$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($domain).'$/', '@'.$content['mail']['domain'], $userData['mailLocalAddress']);
+									$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$content['mail']['domain'], $userData['mailLocalAddress']);
 
 									foreach($userData['mailAlternateAddress'] as &$alias)
 									{
-										$alias = preg_replace('/@'.preg_quote($domain).'$/', '@'.$content['mail']['domain'], $alias);
+										$alias = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$content['mail']['domain'], $alias);
 									}
 								}
 								$emailadmin->saveUserData($account_id, $userData);
@@ -215,6 +220,7 @@ class admin_passwordreset
 							}
 							catch (phpmailerException $e)
 							{
+								unset ($e);
 								$msg .= lang('Notifying account "%1" %2 failed!',$account['account_lid'],$account['account_email']).
 									': '.strip_tags(str_replace('<p>',"\n",$send->ErrorInfo))."\n";
 							}
@@ -247,7 +253,7 @@ class admin_passwordreset
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Bulk password reset');
 
-		$tmpl = new etemplate('admin.passwordreset');
+		$tmpl = new etemplate_new('admin.passwordreset');
 		$tmpl->exec('admin.admin_passwordreset.index',$content,$sel_options,$readonlys,array(
 			'changed' => $changed,
 		));
