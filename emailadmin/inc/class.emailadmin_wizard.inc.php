@@ -955,8 +955,8 @@ class emailadmin_wizard
 
 				case 'delete_identity':
 					// delete none-standard identity of current user
-					if ($content['acc_further_identities'] && $content['ident_id'] > 0 &&
-						$content['std_ident_id'] != $content['ident_id'])
+					if (($this->is_admin || $content['acc_further_identities']) &&
+						$content['ident_id'] > 0 && $content['std_ident_id'] != $content['ident_id'])
 					{
 						emailadmin_account::delete_identity($content['ident_id']);
 						$msg = lang('Identity deleted');
@@ -970,7 +970,7 @@ class emailadmin_wizard
 					try {
 						// save none-standard identity for current user
 						if ($content['acc_id'] && $content['acc_id'] !== 'new' &&
-							$content['acc_further_identities'] &&
+							($this->is_admin || $content['acc_further_identities']) &&
 							$content['std_ident_id'] != $content['ident_id'])
 						{
 							$content['ident_id'] = emailadmin_account::save_identity(array(
