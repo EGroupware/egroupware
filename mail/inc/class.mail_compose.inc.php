@@ -2154,7 +2154,8 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(List-Id: '. $_formData['list-id'].")");
 			$_mailObject->AddCustomHeader('List-Id: '. $_formData['list-id']);
 		}
-		if($_formData['disposition']) {
+		//error_log(__METHOD__.__LINE__.' notify to:'.$_identity['ident_email'].'->'.array2string($_formData));
+		if($_formData['disposition']=='on') {
 			$_mailObject->AddCustomHeader('Disposition-Notification-To: '. $_identity['ident_email']);
 		}
 		if(!empty($_identity->organization) && (mail_bo::$mailConfig['how2displayIdentities'] == '' || mail_bo::$mailConfig['how2displayIdentities'] == 'orgNemail')) {
