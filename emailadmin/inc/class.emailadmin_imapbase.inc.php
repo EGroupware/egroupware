@@ -2130,13 +2130,13 @@ class emailadmin_imapbase
 	 *
 	 * @param string _parent the parent foldername
 	 * @param string _folderName the new foldername
-	 * @param bool _subscribe subscribe to the new folder
+	 * @param string _error pass possible error back to caller
 	 *
 	 * @return mixed name of the newly created folder or false on error
 	 */
-	function createFolder($_parent, $_folderName, $_subscribe=false)
+	function createFolder($_parent, $_folderName, &$_error)
 	{
-		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."->"."$_parent, $_folderName, $_subscribe");
+		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."->"."$_parent, $_folderName");
 		$parent		= $_parent;//$this->_encodeFolderName($_parent);
 		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
 
@@ -2165,6 +2165,7 @@ class emailadmin_imapbase
 		}
 		catch (Exception $e)
 		{
+			$_error = lang('Could not create Folder %1 Reason: %2',$newFolderName,$e->getMessage());
 			error_log(__METHOD__.' ('.__LINE__.') '.' create Folder '.$newFolderName.'->'.$e->getMessage().' ('.$e->details.') Namespace:'.array2string($this->icServer->getNameSpaces()).function_backtrace());
 			return false;
 		}
@@ -2755,7 +2756,9 @@ class emailadmin_imapbase
 		if ($_folderName && $_checkexistance && $_folderName !='none' && !$this->folderExists($_folderName,true)) {
 			try
 			{
-				if (($_folderName = $this->createFolder('', $_folderName, true))) $created = true;
+				$error = null;
+				if (($_folderName = $this->createFolder('', $_folderName, $error))) $created = true;
+				if ($error) error_log(__METHOD__.' ('.__LINE__.') '.' Failed to create Folder '.$_folderName." for $_type:".$error);
 			}
 			catch(Exception $e)
 			{
@@ -2789,8 +2792,10 @@ class emailadmin_imapbase
 			{
 				try
 				{
-					$this->createFolder('', $prefix.$types[$_type]['autoFolderName'], true);
+					$error = null;
+					$this->createFolder('', $prefix.$types[$_type]['autoFolderName'],$error);
 					$_folderName = $prefix.$types[$_type]['autoFolderName'];
+					if ($error) error_log(__METHOD__.' ('.__LINE__.') '.' Failed to create Folder '.$_folderName." for $_type:".$error);
 				}
 				catch(Exception $e)
 				{
