@@ -10,15 +10,11 @@
  * @version $Id$
  */
 
-include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
-
 /**
  * Mail interface class for compose mails in popup
  */
-
 class mail_compose
 {
-
 	var $public_functions = array
 	(
 		'compose'		=> True,
@@ -70,20 +66,16 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.' js_link_registry not set, force it:'.array2string($GLOBALS['egw_info']['flags']['js_link_registry']));
 			$GLOBALS['egw_info']['flags']['js_link_registry']=true;
 		}
-		$this->displayCharset   = $GLOBALS['egw']->translation->charset();
-		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
-				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
+		$this->displayCharset   = translation::charset();
 
-		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
+		$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
+		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
+
 		$this->mailPreferences	=& $this->mail_bo->mailPreferences;
 		//force the default for the forwarding -> asmail
-		if (is_array($this->mailPreferences)) {
-			if (!array_key_exists('message_forwarding',$this->mailPreferences)
-				|| !isset($this->mailPreferences['message_forwarding'])
-				|| empty($this->mailPreferences['message_forwarding'])) $this->mailPreferences['message_forwarding'] = 'asmail';
-		} else {
+		if (!is_array($this->mailPreferences) || empty($this->mailPreferences['message_forwarding']))
+		{
 			$this->mailPreferences['message_forwarding'] = 'asmail';
 		}
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
@@ -122,13 +114,20 @@ class mail_compose
 	 */
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
+		unset($msg);	// not used
+
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
 		{
 			$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
 		}
 		else
 		{
 			$sigPref = array();
+		}
+		// split mailaccount (acc_id) and signature (ident_id)
+		if ($_content && isset($_content['mailaccount']))
+		{
+			list($_content['mailaccount'], $_content['signatureid']) = explode(':', $_content['mailaccount']);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($sigPref));
 		//lang('compose'),lang('from') // needed to be found by translationtools
@@ -238,7 +237,7 @@ class mail_compose
 			foreach($attachments as $i => $att)
 			{
 				$remove=false;
-				foreach($toDelete as $k =>$pressed)
+				foreach(array_keys($toDelete) as $k)
 				{
 					if ($att['tmp_name']==$k) $remove=true;
 				}
@@ -515,8 +514,8 @@ class mail_compose
 				$_htmlConfig = mail_bo::$htmLawed_config;
 				mail_bo::$htmLawed_config['comment'] = 2;
 				mail_bo::$htmLawed_config['transform_anchor'] = false;
-				$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,null,array(),true):$oldSigText));
-				//error_log(__METHOD__.'Old(clean):'.$oldSigText.'#');
+				$oldSigTextCleaned = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,null,array(),true):$oldSigText));
+				//error_log(__METHOD__.'Old(clean):'.$oldSigTextCleaned.'#');
 				if ($_currentMode == 'html')
 				{
 					$content['body'] = str_replace("\n",'\n',$content['body']);	// dont know why, but \n screws up preg_replace
@@ -527,10 +526,12 @@ class mail_compose
 				mail_bo::$htmLawed_config = $_htmlConfig;
 				if ($_currentMode == 'html')
 				{
+					$replaced = null;
 					$content['body'] = preg_replace($reg='|'.preg_quote('<!-- HTMLSIGBEGIN -->','|').'.*'.preg_quote('<!-- HTMLSIGEND -->','|').'|u',
 						$rep='<!-- HTMLSIGBEGIN -->'.$sigText.'<!-- HTMLSIGEND -->', $in=$content['body'], -1, $replaced);
 					$content['body'] = str_replace(array('\n',"\xe2\x80\x93","\xe2\x80\x94","\xe2\x82\xac"),array("\n",'&ndash;','&mdash;','&euro;'),$content['body']);
 					//error_log(__METHOD__."() preg_replace('$reg', '$rep', '$in', -1)='".$content['body']."', replaced=$replaced");
+					unset($rep, $in);
 					if ($replaced)
 					{
 						$content['signatureid'] = $_content['signatureid'] = $presetSig = $_signatureid;
@@ -539,31 +540,31 @@ class mail_compose
 					else
 					{
 						// try the old way
-						$found = (strlen(trim($oldSigText))>0?strpos($content['body'],trim($oldSigText)):false);
+						$found = (strlen(trim($oldSigTextCleaned))>0?strpos($content['body'],trim($oldSigTextCleaned)):false);
 					}
 				}
 				else
 				{
-					$found = (strlen(trim($oldSigText))>0?strpos($content['body'],trim($oldSigText)):false);
+					$found = (strlen(trim($oldSigTextCleaned))>0?strpos($content['body'],trim($oldSigTextCleaned)):false);
 				}
 
-				if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($this->convertHTMLToText($oldSigText,true,true)) ==''))
+				if ($found !== false && $_oldSig != -2 && !(empty($oldSigTextCleaned) || trim($this->convertHTMLToText($oldSigTextCleaned,true,true)) ==''))
 				{
 					//error_log(__METHOD__.'Old Content:'.$content['body'].'#');
-					$_oldSigText = preg_quote($oldSigText,'~');
+					$_oldSigText = preg_quote($oldSigTextCleaned,'~');
 					//error_log(__METHOD__.'Old(masked):'.$_oldSigText.'#');
 					$content['body'] = preg_replace('~'.$_oldSigText.'~mi',$sigText,$content['body'],1);
 					//error_log(__METHOD__.'new Content:'.$content['body'].'#');
 				}
 
-				if ($_oldSig == -2 && (empty($oldSigText) || trim($this->convertHTMLToText($oldSigText,true,true)) ==''))
+				if ($_oldSig == -2 && (empty($oldSigTextCleaned) || trim($this->convertHTMLToText($oldSigTextCleaned,true,true)) ==''))
 				{
 					// if there is no sig selected, there is no way to replace a signature
 				}
 
 				if ($found === false)
 				{
-					if($this->_debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigText);
+					if($this->_debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigTextCleaned);
 					if($this->_debug) error_log(__METHOD__." Compare content:".$content['body']);
 				}
 				else
@@ -730,7 +731,6 @@ class mail_compose
 										if($innerCounter==0 && !empty($email) && in_array($completeMailString ,$mailtoArray) === false) {
 											$i++;
 											$innerCounter++;
-											$str = $GLOBALS['egw']->translation->convert(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>', $this->charset, 'utf-8');
 											$mailtoArray[$i] = $completeMailString;
 										}
 									}
@@ -837,9 +837,9 @@ class mail_compose
 					//must contain =
 					if (strpos($rval,'=')!== false)
 					{
-						$k = $v = '';
 						list($k,$v) = explode('=',$rval,2);
-						$karr[$k] = $v;
+						$karr[$k] = (string)$v;
+						unset($k,$v);
 					}
 				}
 				//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($karr));
@@ -907,104 +907,6 @@ class mail_compose
 		$presetId = NULL;
 		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['mailaccount'])) $presetId = (int)$content['mailaccount'];
 		if (!empty($sigPref[$this->mail_bo->profileID]) && (empty($presetSig) || $presetSig==-1 || empty($content['signatureid']) || $content['signatureid']==-1)) $presetSig=$sigPref[$this->mail_bo->profileID];
-
-/*
-
-		$this->t->set_var("focusElement",$_focusElement);
-
-*/
-
-/*
-		lang('No recipient address given!');
-		lang('No subject given!');
-		lang("You can either choose to save as infolog OR tracker, not both.");
-*/
-		// prepare signatures, the selected sig may be used on top of the body
-		//identities and signature stuff
-		$allIdentities = mail_bo::getAllIdentities(null,true);
-		$selectedMailAccount = ($content['mailaccount']?$content['mailaccount']:$this->mail_bo->profileID);
-		$acc = emailadmin_account::read($this->mail_bo->profileID);
-		$selectSignatures = array(
-			'-2' => lang('no signature')
-		);
-		//unset($allIdentities[0]);
-		//_debug_array($allIdentities);
-		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
-		// not set? -> use default, means full display of all available data
-		if (!isset(mail_bo::$mailConfig['how2displayIdentities'])) mail_bo::$mailConfig['how2displayIdentities'] ='';
-		$defaultIds = array();
-		$identities = array();
-		foreach($allIdentities as $key => $singleIdentity) {
-			if (isset($identities[$singleIdentity['acc_id']])) continue; // only use the first
-			$iS = mail_bo::generateIdentityString($singleIdentity);
-			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1)
-			{
-				$id_prepend ='';
-			}
-			else
-			{
-				$id_prepend = '('.$singleIdentity['ident_id'].') ';
-			}
-			if(empty($defaultIds)&& $singleIdentity['ident_id']==$acc['ident_id'])
-			{
-				$defaultIds[$singleIdentity['ident_id']] = $singleIdentity['ident_id'];
-				$selectedSender = $singleIdentity['acc_id'];
-			}
-			//if ($singleIdentity->default) error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
-			if (array_search($id_prepend.$iS,$identities)===false)
-			{
-				$identities[$singleIdentity['acc_id']] = $id_prepend.$iS;
-				$sel_options['mailaccount'][$singleIdentity['acc_id']] = $id_prepend.$iS;
-			}
-		}
-		$sel_options['mailaccount'] = iterator_to_array(emailadmin_account::search());
-		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
-		// if there are 2 defaultIDs, its most likely, that the user choose to set
-		// the one not being the activeServerProfile to be his default Identity
-		//if (count($defaultIds)>1) unset($defaultIds[$this->mail_bo->profileID]);
-		$allSignatures = $this->mail_bo->getAccountIdentities($selectedMailAccount);
-		$defaultIdentity = 0;
-		// we want identity info in a length approx between 50 and 100 char
-		$longestName = 50;
-		foreach($allSignatures as $key => $singleIdentity) {
-			if (strlen($singleIdentity['ident_name'])>$longestName) $longestName=strlen($singleIdentity['ident_name']);
-		}
-		if ($longestName>100) $longestName=100;
-		foreach($allSignatures as $key => $singleIdentity) {
-			//error_log(__METHOD__.__LINE__.array2string($singleIdentity));
-			//$identities[$singleIdentity['ident_id']] = $singleIdentity['ident_realname'].' <'.$singleIdentity['ident_email'].'>';
-			$iS = mail_bo::generateIdentityString($singleIdentity);
-			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1)
-			{
-				$id_prepend ='';
-			}
-			else
-			{
-				$id_prepend = '('.$singleIdentity['ident_id'].') ';
-			}
-			$buff='';
-			if (!empty($singleIdentity['ident_name']) && !in_array(lang('Signature').': '.$id_prepend.$singleIdentity['ident_name'],$selectSignatures))
-			{
-				$buff = $singleIdentity['ident_name'];
-				if (strlen($buff)<$longestName)$buff = $singleIdentity['ident_name'].': '.trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,$longestName-strlen($buff)));
-			}
-			else
-			{
-				$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($singleIdentity['ident_signature'])),0,$longestName));
-			}
-			$sigDesc = $buff?$buff:lang('none');
-
-			if ($sigDesc == lang('none')) $sigDesc = (!empty($singleIdentity['ident_name'])?$singleIdentity['ident_name']:$singleIdentity['ident_realname'].($singleIdentity['ident_org']?' ('.$singleIdentity['ident_org'].')':''));
-			$selectSignatures[$singleIdentity['ident_id']] = lang('Signature').': '.$id_prepend.$sigDesc;
-
-			if(in_array($singleIdentity['ident_id'],$defaultIds) && $defaultIdentity==0)
-			{
-				//_debug_array($singleIdentity);
-				$defaultIdentity = $singleIdentity['ident_id'];
-				//$defaultIdentity = $key;
-				if (empty($content['signatureid'])) $content['signatureid'] = (!empty($singleIdentity['ident_signature']) ? $singleIdentity['ident_id'] : $content['signatureid']);
-			}
-		}
 
 		// fetch the signature, prepare the select box, ...
 		if (empty($content['signatureid'])) {
@@ -1116,11 +1018,21 @@ class mail_compose
 		} else {
 			$ishtml=0;
 		}
+
+		// get identities of all accounts as "$acc_id:$ident_id" => $identity
+		$sel_options['mailaccount'] = $identities = array();
+		foreach(emailadmin_account::search() as $acc_id => $account)
+		{
+			foreach(emailadmin_account::identities($acc_id) as $ident_id => $identity)
+			{
+				$sel_options['mailaccount'][$acc_id.':'.$ident_id] = $identity;
+				$identities[$ident_id] = $identity;
+			}
+			unset($account);
+		}
+
 		// signature stuff set earlier
-		//_debug_array($selectSignatures);
-		$sel_options['signatureid'] = $selectSignatures;
-		$content['signatureid'] = ($presetSig ? $presetSig : $content['signatureid']);
-		//_debug_array($sel_options['signatureid'][$content['signatureid']]);
+		if ($presetSig) $content['signatureid'] = $presetSig;
 		// end signature stuff
 
 		//$content['bcc'] = array('kl@stylite.de','kl@leithoff.net');
@@ -1136,15 +1048,15 @@ class mail_compose
 			unset($content[strtolower($destination)]);
 			foreach((array)$addr_content as $key => $value) {
 				if ($value=="NIL@NIL") continue;
-				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)]))
+				if ($destination=='replyto' && str_replace('"','',$value) ==
+					str_replace('"','',$identities[$presetId ? $presetId : $this->mail_bo->getDefaultIdentity()]))
 				{
 					// preserve/restore the value to content.
 					$content[strtolower($destination)][]=$value;
 					continue;
 				}
 				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
-				$value = htmlspecialchars_decode($value,ENT_COMPAT);
-				$value = str_replace("\"\"",'"',$value);
+				$value = str_replace("\"\"",'"', htmlspecialchars_decode($value, ENT_COMPAT));
 				foreach(emailadmin_imapbase::parseAddressList($value) as $addressObject) {
 					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
@@ -1161,12 +1073,12 @@ class mail_compose
 			$content = array_merge($content,$_content);
 
 			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
-			$content['mailaccount'] = (empty($content['mailaccount'])?($selectedSender?$selectedSender:$this->mail_bo->profileID):$content['mailaccount']);
+			if (empty($content['mailaccount'])) $content['mailaccount'] = $this->mail_bo->profileID;
 		}
 		else
 		{
 			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['mailaccount'],$selectedSender)));
-			$content['mailaccount'] = ($selectedSender?$selectedSender:$this->mail_bo->profileID);
+			$content['mailaccount'] = $this->mail_bo->profileID;
 			//error_log(__METHOD__.__LINE__.$content['body']);
 		}
 		$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
@@ -1257,6 +1169,9 @@ class mail_compose
 			$content['mimeType']=0;
 		}
 
+		// join mailaccount and signatureid together again
+		$content['mailaccount'] .= ':'.$content['signatureid'];
+
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
 	}
@@ -1291,7 +1206,6 @@ class mail_compose
 		if ($icServerID != $this->mail_bo->profileID)
 		{
 			$this->changeProfile($icServerID);
-			$composeProfile = $this->mail_bo->profileID;
 		}
 		$icServer = $this->mail_bo->icServer;
 		if (!empty($folder) && !empty($msgUID) )
@@ -1345,17 +1259,16 @@ class mail_compose
 			 * Use ajax_merge to merge & send multiple
 			 */
 			// Merge selected ID (in mailtocontactbyid or $mail_id) into given document
-			preg_match('/^([a-z_-]+_merge)$/', $_REQUEST['merge'], $merge_class);
-			$merge_class = $merge_class[1] ? $merge_class[1] : 'addressbook_merge';
+			$merge_class = preg_match('/^([a-z_-]+_merge)$/', $_REQUEST['merge']) ? $_REQUEST['merge'] : 'addressbook_merge';
 			$document_merge = new $merge_class();
 			$this->mail_bo->openConnection();
 			$merge_ids = $_REQUEST['preset']['mailtocontactbyid'] ? $_REQUEST['preset']['mailtocontactbyid'] : $mail_id;
-			$merge_ids = is_array($merge_ids) ? $merge_ids : explode(',',$merge_ids);
+			if (!is_array($merge_ids)) $merge_ids = explode(',',$merge_ids);
 			try
 			{
 				$merged_mail_id = '';
 				$folder = '';
-				if($error = $document_merge->check_document($_REQUEST['document'],''))
+				if(($error = $document_merge->check_document($_REQUEST['document'],'')))
 				{
 					$content['msg'] = $error;
 					return $content;
@@ -1442,6 +1355,7 @@ class mail_compose
 	// all: for a reply to all
 	function getDraftData($_icServer, $_folder, $_uid, $_partID=NULL)
 	{
+		unset($_icServer);	// not used
 		$this->sessionData['to'] = array();
 
 		$mail_bo = $this->mail_bo;
@@ -1463,7 +1377,7 @@ class mail_compose
 			// with the new system it would be the identity
 			try
 			{
-				$identity = emailadmin_account::read_identity($addHeadInfo['X-SIGNATURE']);
+				emailadmin_account::read_identity($addHeadInfo['X-SIGNATURE']);
 				$this->sessionData['signatureid'] = $addHeadInfo['X-SIGNATURE'];
 			}
 			catch (Exception $e)
@@ -1479,7 +1393,7 @@ class mail_compose
 			// with the new system it would the identity is the account id
 			try
 			{
-				$acc = emailadmin_account::read($addHeadInfo['X-IDENTITY']);
+				emailadmin_account::read($addHeadInfo['X-IDENTITY']);
 				$this->sessionData['mailaccount'] = $addHeadInfo['X-IDENTITY'];
 			}
 			catch (Exception $e)
@@ -1493,6 +1407,7 @@ class mail_compose
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['isDraft'] = true;
+		$foundAddresses = array();
 		foreach((array)$headers['CC'] as $val) {
 			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
@@ -1502,8 +1417,7 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(!$foundAddresses[$keyemail]) {
-				$address = $val;
-				$address = $this->mail_bo->decode_header($address,true);
+				$address = $this->mail_bo->decode_header($val,true);
 				$this->sessionData['cc'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
@@ -1523,8 +1437,7 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(!$foundAddresses[$keyemail]) {
-				$address = $val;
-				$address = $this->mail_bo->decode_header($address,true);
+				$address = $this->mail_bo->decode_header($val,true);
 				$this->sessionData['to'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
@@ -1539,8 +1452,7 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(!$foundAddresses[$keyemail]) {
-				$address = $val;
-				$address = $this->mail_bo->decode_header($address,true);
+				$address = $this->mail_bo->decode_header($val,true);
 				$this->sessionData['replyto'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
@@ -1555,8 +1467,7 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(!$foundAddresses[$keyemail]) {
-				$address = $val;
-				$address = $this->mail_bo->decode_header($address,true);
+				$address = $this->mail_bo->decode_header($val,true);
 				$this->sessionData['bcc'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
@@ -1711,11 +1622,14 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.array2string($tmpFileName));
 
 		if ($eliminateDoubleAttachments == true)
-			foreach ((array)$_content['attachments'] as $k =>$attach)
+		{
+			foreach ((array)$_content['attachments'] as $attach)
+			{
 				if ($attach['name'] && $attach['name'] == $_formData['name'] &&
 					strtolower($_formData['type'])== strtolower($attach['type']) &&
 					stripos($_formData['file'],'vfs://') !== false) return;
-
+			}
+		}
 		if ($attachfailed === false)
 		{
 			$buffer = array(
@@ -1842,7 +1756,8 @@ class mail_compose
 	}
 
 	/**
-	 * getRandomString - function to be used to fetch a random string and md5 encode that one
+	 * Fetch a random string and md5 encode that one
+	 *
 	 * @param none
 	 * @return string - a random number which is md5 encoded
 	 */
@@ -1851,13 +1766,14 @@ class mail_compose
 	}
 
 	/**
-	 * testIfOneKeyInArrayDoesExistInString - function to be used to fetch a random string and md5 encode that one
+	 * Fetch a random string and md5 encode that one
+	 *
 	 * @param array arrayToTestAgainst to test its keys against haystack
 	 * @param string haystack
 	 * @return boolean
 	 */
 	function testIfOneKeyInArrayDoesExistInString($arrayToTestAgainst,$haystack) {
-		foreach ($arrayToTestAgainst as $k => $v)
+		foreach (array_keys($arrayToTestAgainst) as $k)
 		{
 			//error_log(__METHOD__.__LINE__.':'.$k.'<->'.$haystack);
 			if (stripos($haystack,$k)!==false)
@@ -1870,7 +1786,8 @@ class mail_compose
 	}
 
 	/**
-	 * getReplyData - function to gather the replyData and save it with the session, to be used then.
+	 * Gather the replyData and save it with the session, to be used then
+	 *
 	 * @param $_mode can be:
 	 * 		single: for a reply to one address
 	 * 		all: for a reply to all
@@ -1882,6 +1799,7 @@ class mail_compose
 	 */
 	function getReplyData($_mode, $_icServer, $_folder, $_uid, $_partID)
 	{
+		unset($_icServer);	// not used
 		$foundAddresses = array();
 
 		$mail_bo  = $this->mail_bo;
@@ -2050,10 +1968,9 @@ class mail_compose
 				$newBody	= translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
-				$newBody        = explode("\n",$newBody);
 				$this->sessionData['body'] .= "\r\n";
 				// create body new, with good line breaks and indention
-				foreach($newBody as $value) {
+				foreach(explode("\n",$newBody) as $value) {
 					// the explode is removing the character
 					if (trim($value) != '') {
 						#if ($value != "\r") $value .= "\n";
@@ -2085,9 +2002,7 @@ class mail_compose
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 		mail_bo::getCleanHTML($_body, $usepurify, $cleanTags);
-		$_body	= preg_replace($nonDisplayAbleCharacters, '', $_body);
-
-		return $_body;
+		return preg_replace($nonDisplayAbleCharacters, '', $_body);
 	}
 
 	static function _getHostName()
@@ -2695,7 +2610,7 @@ class mail_compose
 				$folder[] = $draftFolder;
 			}
 		}
-		$folder = array_unique($folder);
+		if ($folder) $folder = array_unique($folder);
 		if (($this->mailPreferences['sendOptions'] != 'send_only' && $sentFolder != 'none') && !(count($folder) > 0) &&
 			!($_formData['to_infolog']=='on' || $_formData['to_tracker']=='on'))
 		{
@@ -2850,8 +2765,8 @@ class mail_compose
 			}
 			catch (egw_exception $e)
 			{
-				$error = str_replace('"',"'",$e->getMessage());
-				//error_log(__METHOD__.__LINE__." ". $error);
+				//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
+				unset($e);
 			}
 		}
 		unset($this->sessionData['lastDrafted']);
@@ -2964,11 +2879,11 @@ class mail_compose
 			{
 				try
 				{
-					$identity = emailadmin_account::read_identity($sigPref[$this->mail_bo->profileID]);
 					$id = $sigPref[$this->mail_bo->profileID];
 				}
 				catch (Exception $e)
 				{
+					unset($e);
 					unset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'][$this->mail_bo->profileID]);
 				}
 			}
@@ -2995,7 +2910,7 @@ class mail_compose
 	}
 
 	function ajax_searchFolder($_searchStringLength=2, $_returnList=false) {
-		static $useCacheIfPossible;
+		static $useCacheIfPossible = null;
 		if (is_null($useCacheIfPossible)) $useCacheIfPossible = true;
 		$_searchString = trim($_REQUEST['query']);
 		$results = array();
@@ -3121,7 +3036,6 @@ class mail_compose
 							'title' => $email
 						 );
 					}
-					if ($i > 10) break;	// we check for # of results here, as we might have empty email addresses
 				}
 			}
 		}
@@ -3169,7 +3083,7 @@ class mail_compose
 		$document_merge = new addressbook_merge();
 		$this->mail_bo->openConnection();
 
-		if($error = $document_merge->check_document($_REQUEST['document'],''))
+		if(($error = $document_merge->check_document($_REQUEST['document'],'')))
 		{
 			$response->error($error);
 			return;
@@ -3179,6 +3093,7 @@ class mail_compose
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
 		// Actually do the merge
+		$folder = $merged_mail_id = null;
 		$results = $this->mail_bo->importMessageToMergeAndSend(
 			$document_merge, egw_vfs::PREFIX . $_REQUEST['document'],
 			// Send an extra non-numeric ID to force actual send of document
