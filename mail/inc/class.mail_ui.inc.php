@@ -3484,21 +3484,57 @@ class mail_ui
 	function ajax_addFolder($_parentFolderName, $_newName)
 	{
 		//error_log(__METHOD__.__LINE__.' ParentFolderName:'.array2string($_parentFolderName).' NewName/Folder:'.array2string($_newName));
+		$errorMessage='';
 		if ($_parentFolderName)
 		{
 			$created = false;
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_parentFolderName);
 			//the conversion is handeled by horde, frontend interaction is all utf-8
 			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
-			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			list($profileID,$parentFolderName) = explode(self::$delimiter,$decodedFolderName,2);
 			if (is_numeric($profileID))
 			{
 				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				$del = $this->mail_bo->getHierarchyDelimiter(false);
+				//$del = $prefix = '';
+				//$nameSpace = $this->mail_bo->_getNameSpaces();
+				//error_log(__METHOD__.__LINE__.array2string($nameSpace));
+				// we expect something like that: data may differ!
+				//$nameSpace = Array(
+				//	[0] => Array([prefix_present] => [prefix] => [delimiter] => /[type] => personal)
+				//	[1] => Array([prefix_present] => 1[prefix] => Other Users/[delimiter] => /[type] => others)
+				//	[2] => Array([prefix_present] => 1[prefix] => Shared Folders/[delimiter] => /[type] => shared)
+				//)
+				//
+				/*
+				foreach ($nameSpace as $nSp)
+				{
+					error_log(__METHOD__.__LINE__.array2string($nSp));
+					// personal is assumed to be the default
+					if ($nSp['type']=='personal')
+					{
+						$prefix = $nSp['prefix'];
+						$del = $nSp['delimiter'];
+					}
+					if ($parentFolderName && $nSp['prefix_present'] && stripos($parentFolderName,$nSp['prefix'])!==false && stripos($parentFolderName,$nSp['prefix'])<=strlen($nSp['delimiter']))
+					{
+						$prefix = $nSp['prefix'];
+						$del = $nSp['delimiter'];
+						break;
+					}
+					if (empty($parentFolderName) && !$nSp['prefix_present'])
+					{
+						$del = $nSp['delimiter'];
+						break;
+					}
+				}
+
+				if (empty($del)) $del = $this->mail_bo->getHierarchyDelimiter(false);
+				*/
 				$nA = explode($del,$_newName);
 
 				//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
-				$oldFolderInfo = $this->mail_bo->getFolderStatus($parentFolderName,false);
+				if (!!empty($parentFolderName)) $oldFolderInfo = $this->mail_bo->getFolderStatus($parentFolderName,false);
 				//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
 
 				$this->mail_bo->reopen('INBOX');
@@ -3509,21 +3545,42 @@ class mail_ui
 					$c=0;
 					foreach($nA as $sTName)
 					{
-						if(($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, true)))
+						$error=null;
+						if(($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, $error)))
 						{
 							$c++;
+						}
+						else
+						{
+							$errorMessage .= $error;
 						}
 					}
 					if ($c==count($nA)) $created=true;
 				}
-				$this->mail_bo->reopen($parentName);
+				if (!empty($parentName)) $this->mail_bo->reopen($parentName);
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
 			if ($created===true)
 			{
 				$this->mail_bo->resetFolderObjectCache($profileID);
 				$response = egw_json_response::get();
-				$response->call('app.mail.mail_reloadNode',array($_parentFolderName=>$oldFolderInfo['shortDisplayName']));
+				if ( $oldFolderInfo['shortDisplayName'])
+				{
+					$nodeInfo = array($_parentFolderName=>$oldFolderInfo['shortDisplayName']);
+				}
+				else
+				{
+					$nodeInfo = array($profileID=>lang('INBOX'));
+				}
+				$response->call('app.mail.mail_reloadNode',$nodeInfo);
+			}
+			else
+			{
+				if ($errorMessage)
+				{
+					$response = egw_json_response::get();
+					$response->call('egw.message',$errorMessage);
+				}
 			}
 		}
 	}
