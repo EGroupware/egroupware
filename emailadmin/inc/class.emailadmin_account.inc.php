@@ -239,8 +239,15 @@ class emailadmin_account implements ArrayAccess
 				(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
 			) + $params;
 		}
+		if ((is_null($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']) && empty($params['ident_realname']))
+		{
+			$params['ident_realname'] = $GLOBALS['egw_info']['user']['account_fullname'];
+		}
+		if ((is_null($called_for) ||$called_for == $GLOBALS['egw_info']['user']['account_id']) && empty($params['ident_email']))
+		{
+			$params['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];
+		}
 		$this->params = $params;
-
 		unset($this->imapServer);
 		unset($this->smtpServer);
 
