@@ -533,7 +533,7 @@ class mail_hooks
 			$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 		} catch (Exception $e) {
 			//error_log(__METHOD__."()" . $e->getMessage());
-			$profileID = emailadmin_bo::getUserDefaultAccID();
+			$profileID = emailadmin_account::get_default_acc_id();
 		}
 
 		$preferences =& $mail_bo->mailPreferences;
