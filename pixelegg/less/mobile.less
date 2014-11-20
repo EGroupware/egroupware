@@ -11,23 +11,28 @@ and open the template in the editor.
 	
 	#egw_fw_basecontainer{
 		
-		//###################
-		//#					#
-		//#		SIDEBAR		#
-		//#					#
-		//###################
-		#egw_fw_sidebar{
-			top: 60px;
-			border-top:2px solid gray;
 		
-		}//End of Sidebar
 	
 		//###################
 		//#					#
 		//#		TOOLBAR		#
 		//#					#
 		//###################
-					
+		#egw_fw_top_toolbar{
+			border-bottom:1px sold gray;
+			div#egw_fw_app_menu{
+				background-image: url(../images/topmenu_items/mobile/menu.png);
+				top: 15px;
+				width: 32px;
+				height: 32px;
+				background-size: 32px 32px;
+				background-repeat: no-repeat;
+				position:absolute;
+				right:15px;
+				padding-bottom: 13px;
+				border-bottom: 2px solid gray;
+			}
+		}			
 		//FW Logout
 		div#egw_fw_logout{
 			left: 235px;
@@ -66,25 +71,28 @@ and open the template in the editor.
 		}
 		div#egw_fw_topmenu_items{
 			width: 250px;
-			display: inline-block;
+			display: inline;
 			float: left;
 			position: fixed;
-			left: 20px;
-			top: 4px;
+			left: 55px;
+			top: 15px;
 			ul{
-				display:flex;
+				display:inline;
+				padding:0;
+				margin:0;
+				list-style-type: none;
 				li{
-					display:table-row;
+					display:inline;
 					padding-right: 6px;
 				}
 				a#topmenu_home:before {
 					content: " ";
 					background-image: url(../images/topmenu_items/mobile/home.png);
 					background-repeat: no-repeat;
-					background-size: 24px 24px;
-					width: 24px;
-					height: 24px;
-					display: inline-block;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					/*display: inline-block;*/
 					display:none;
 				}
 				a#topmenu_prefs:before {
@@ -150,7 +158,18 @@ and open the template in the editor.
 		} 
 	}//End of toolbar
 	
-	
+	#egw_fw_portrait_bar{
+		margin: 7px 5px 0px 285px;
+		.egw_fw_ui_tabs_header {
+			height: auto;
+			.egw_fw_ui_tab_header {
+				width:auto;
+				h1{
+					display:none;
+				}
+			}
+		}
+	}
 	// ######################tabs header ##########################
 	// #      #      #     #     #     #     #     #     #     ####
 	// #      #      #     #     #     #     #     #     #     ####
@@ -210,7 +229,7 @@ and open the template in the editor.
 			width: 97%;
 			&:hover {
 				/*.background_color_20_gray ;*/
-				background-color: @egw_color_1_e;
+				background-color: none !important;
 			 }
 
 			// APP Name
@@ -273,270 +292,278 @@ and open the template in the editor.
 			}
 		}
 	}
-	
-	    //SIDE AREA
-    #egw_fw_sidemenu {
-        position: absolute;
-        top: 0px;
-        bottom: 4px;
-        left: 4px;
-        right: 5px;
-        overflow: auto;
-        z-index: 0;
-        padding-top: 0.6em;
-        font-size: 0.9em;
-		
-            //####################################################
-            // All Tabs
-            // DRAG AND DROP
-            .egw_fw_ui_sidemenu_entry_header
-			{
-				display: block;
-				margin: 0 0;
-				/*padding: 0px 5px 5px 10px;*/
+	//###################
+	//#					#
+	//#		SIDEBAR		#
+	//#					#
+	//###################
+	#egw_fw_sidebar{
+		top: 60px;
+		border-top:2px solid gray;
 
-				&:hover {
-					.background_color_15_gray;
-					.rounded(5px);
+	
+		//SIDE AREA
+		#egw_fw_sidemenu {
+			position: absolute;
+			top: 0px;
+			bottom: 4px;
+			left: 4px;
+			right: 5px;
+			overflow-y: auto;
+			z-index: 0;
+			padding-top: 0.6em;
+			font-size: 0.9em;
+
+				//####################################################
+				// All Tabs
+				.egw_fw_ui_sidemenu_entry_header
+				{
+					display: block;
+					margin: 0 0;
+					/*padding: 0px 5px 5px 10px;*/
+
+					&:hover {
+						.background_color_15_gray;
+						.rounded(5px);
+					}
+
+					&:active {.box_shadow_standard_light_inset;}
+
+
+					h1 {
+						margin: 0 0 10px 0;
+						padding-top: 0.31em;
+						padding-left: 3em;
+						.color_40_gray;
+						/*font-size: 12px;*/
+						.fontsize_xl;
+						line-height: 17px;
+					}
+
+					object {background-color: @gray_0; .dimension_width_height_m;}
+
 				}
 
-				&:active {.box_shadow_standard_light_inset;}
 
 
-				h1 {
-					margin: 0 0 10px 0;
-					padding-top: 0.31em;
-					padding-left: 3em;
-					.color_40_gray;
-					/*font-size: 12px;*/
-					.fontsize_xl;
-					line-height: 17px;
+				// ####################################
+				// ####                               #
+				// ###   IMG  |  ADD NAME             #
+				// ###                                #
+				// ###                                #
+				// ####################################
+				// Active APP
+				// Active Tab
+				// rounded Corner Left Top
+				.egw_fw_ui_sidemenu_entry_header_active {
+					//
+					cursor: pointer;
+					background-image: url("../images/clear.png");
+					background-position: 95% -3000px;
+					background-repeat: no-repeat;
+
+					.background_color_10_gray;
+					.border_radius ( 5px, 0px, 0px, 27px );
+					.bordered (@gray_30, @gray_30, @gray_30, @gray_30);
+
+					margin: 0 0 0 0;
+					border-bottom: none;
+					height: 33px;
+
+
+					img {padding-left: 9px; padding-top: 6px; height: 18px;}
+
+					h1 {text-transform: uppercase; font-size: 1.4em; .color_100_gray; padding-top: .8em;}
+
+					&:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
+					&:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
+
+					&:focus {
+						background-image: url("../images/ajax-loader.gif");
+						background-repeat: no-repeat;
+						background-position: 90% 50%;
+						.Complete_Button_active;
+
+						.background_color_25_gray;
+					}
+
+					object {
+						margin-left: 14px;
+						margin-top: 8px;
+						.rounded (3px;);
+						.dimension_width_height_s;
+					}
+
+					.egw_fw_ui_ajaxloader {margin-top: -26px;}
+
 				}
 
-				object {background-color: @gray_0; .dimension_width_height_m;}
+				//####################################################
+				// egw_fw_ui_sidemenu_entry_content
+				// ########################################
+				// ##                                    ##
+				// ##                                    ##
+				// ########################################
 
-			}
+				// ########################################
+				// ##                                    ##
+				// ##                                    ##
+				// ########################################
 
+				// ########################################
+				// ##                                    ##
+				// ##                                    ##
+				// ########################################
 
-
-            // ####################################
-            // ####                               #
-            // ###   IMG  |  ADD NAME             #
-            // ###                                #
-            // ###                                #
-            // ####################################
-            // Active APP
-            // Active Tab
-            // rounded Corner Left Top
-            .egw_fw_ui_sidemenu_entry_header_active {
-                //
-                cursor: pointer;
-                background-image: url("../images/clear.png");
-                background-position: 95% -3000px;
-                background-repeat: no-repeat;
-
-                .background_color_10_gray;
-                .border_radius ( 5px, 0px, 0px, 27px );
-                .bordered (@gray_30, @gray_30, @gray_30, @gray_30);
-
-                margin: 0 0 0 0;
-                border-bottom: none;
-                height: 33px;
-
-
-                img {padding-left: 9px; padding-top: 6px; height: 18px;}
-
-                h1 {text-transform: uppercase; font-size: 1.4em; .color_100_gray; padding-top: .8em;}
-
-                &:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
-                &:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
-
-                &:focus {
-                    background-image: url("../images/ajax-loader.gif");
-                    background-repeat: no-repeat;
-                    background-position: 90% 50%;
-                    .Complete_Button_active;
-
-                    .background_color_25_gray;
-                }
-
-                object {
-                    margin-left: 14px;
-                    margin-top: 8px;
-                    .rounded (3px;);
-                    .dimension_width_height_s;
-                }
-
-                .egw_fw_ui_ajaxloader {margin-top: -26px;}
-
-            }
-
-            //####################################################
-            // egw_fw_ui_sidemenu_entry_content
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-
-            // ########################################
-            // ##                                    ##
-            // ##                                    ##
-            // ########################################
-
-            // ########################################
-            //  ##        div.egw_fw_ui_category     ##
-            //   ##       &:nth-last-of-type(-n+3)   ##
-            //    #####################################
+				// ########################################
+				//  ##        div.egw_fw_ui_category     ##
+				//   ##       &:nth-last-of-type(-n+3)   ##
+				//    #####################################
 
 
 
 
 
-            .egw_fw_ui_sidemenu_entry_content {
-                display: block;
-                background-image: none;
-                .border_radius (0, 0, 27px, 0);
-                border-color: @gray_30;
-                border-style: solid;
-                border-width: 0px;
-                margin: 0 0 2em 0;
+				.egw_fw_ui_sidemenu_entry_content {
+					display: block;
+					background-image: none;
+					.border_radius (0, 0, 27px, 0);
+					border-color: @gray_30;
+					border-style: solid;
+					border-width: 0px;
+					margin: 0 0 2em 0;
 
 
-                // rounded Corner on bottom
-                &:nth-last-of-type(-n+3)   {
-                    padding:  5px 0.3em 1.5em 0.3em;
-                    margin: 0 0 10px 0;
-                    .background_color_30_gray;
-                    .border_radius (0, 0, 24px, 0);
-                    border-color: @gray_30;
-                }
+					// rounded Corner on bottom
+					&:nth-last-of-type(-n+3)   {
+						padding:  5px 0.3em 1.5em 0.3em;
+						margin: 0 0 10px 0;
+						.background_color_30_gray;
+						.border_radius (0, 0, 24px, 0);
+						border-color: @gray_30;
+					}
 
-               & > div {.background_color_30_gray;}
+				   & > div {.background_color_30_gray;}
 
-                //###################################################
-                // has round corners
-                div.egw_fw_ui_category:nth-last-of-type(-n+3) {
-                    .border_radius (0, 0, 15px, 0);
-                }
+					//###################################################
+					// has round corners
+					div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+						.border_radius (0, 0, 15px, 0);
+					}
 
-                //###################################################
-                // Normal
-                .egw_fw_ui_category {
-                    margin: 4px 5px 5px 5px;
-                    padding: 0.5em 1em 0.5em 0;
-                    cursor: pointer;
-                    //																												border-top: 7px solid;
-                    border-color: @gray_30;
-                    background-color: @gray_10;
+					//###################################################
+					// Normal
+					.egw_fw_ui_category {
+						margin: 4px 5px 5px 5px;
+						padding: 0.5em 1em 0.5em 0;
+						cursor: pointer;
+						//																												border-top: 7px solid;
+						border-color: @gray_30;
+						background-color: @gray_10;
 
-                    /*background-color: @egw_color_2_d;*/
+						/*background-color: @egw_color_2_d;*/
 
-                    .border_radius(3px,3px,3px,3px);
+						.border_radius(3px,3px,3px,3px);
 
-                    h1 {
-                        margin: 5px 0px 3px 5px;
-                        padding: 0px 0px 0px 15px;
-                        line-height: 1em;
-                        .fontsize_l;
-                        background-image:url(../images/arrow_left.png);
-                        background-repeat:no-repeat;
-                        background-position:left center;
-                    }
+						h1 {
+							margin: 5px 0px 3px 5px;
+							padding: 0px 0px 0px 15px;
+							line-height: 1em;
+							.fontsize_l;
+							background-image:url(../images/arrow_left.png);
+							background-repeat:no-repeat;
+							background-position:left center;
+						}
 
-                    div.egw_fw_ui_category:nth-last-of-type(-n+3) {
-                                                                    img.egw_fw_ui_sidemenu_listitem_icon {
-                                                                     display: block;
-                                                                     }
-                    }
+						div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+																		img.egw_fw_ui_sidemenu_listitem_icon {
+																		 display: block;
+																		 }
+						}
 
-                }
+					}
 
-                //#################################
-                // Hover
-                // on Mouse over change color
-                .egw_fw_ui_category:hover {
-                    .background_color_40_gray;
-                    padding: 0.5em 1em 0.5em 0;
-                }
-
-
-
-                /*######################*/
-                // Active State
-                // change Background color in Blue
-                // See all Elements
-                .egw_fw_ui_category_active {
-                    border-bottom-width: 0px;
-                    margin-top: 4px;
-
-                    background-color: @egw_color_2_a;
-
-                    /*.background-color-50-gray;*/
-                    .color_5_gray;
-                    .border_radius(3px,3px,3px,3px) !important;
-
-                    h1 {
-                        background-image:url(../images/arrow_down.png);
-                        line-height: 1em;
-                        font-size: 12px;
-
-                            a {
-                            color: #FFF;
-
-
-                            img {.dimension_width_height_s;}
-
-                            &:hover {
-                                    padding: 5px 30px 5px 0px;
-                                    width: 200px;
-                                    .background_color_10_gray;
-                                    .color_50_gray;
-                                    .Complete_Button_hover;
-                                }
-                            }
-
-                         }
-
-                    &:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
-                }
+					//#################################
+					// Hover
+					// on Mouse over change color
+					.egw_fw_ui_category:hover {
+						.background_color_40_gray;
+						padding: 0.5em 1em 0.5em 0;
+					}
 
 
 
+					/*######################*/
+					// Active State
+					// change Background color in Blue
+					// See all Elements
+					.egw_fw_ui_category_active {
+						border-bottom-width: 0px;
+						margin-top: 4px;
+
+						background-color: @egw_color_2_a;
+
+						/*.background-color-50-gray;*/
+						.color_5_gray;
+						.border_radius(3px,3px,3px,3px) !important;
+
+						h1 {
+							background-image:url(../images/arrow_down.png);
+							line-height: 1em;
+							font-size: 12px;
+
+								a {
+								color: #FFF;
 
 
-            }
+								img {.dimension_width_height_s;}
 
-            .egw_fw_ui_sidemenu_entry_content_bottom {
-                border-width: 0px 1px 1px 1px;
-            }
-            .egw_fw_ui_sidemenu_entry_header_bottom {
-                border-width: 0px;
-                border-color: @gray_0;
-            }
+								&:hover {
+										padding: 5px 30px 5px 0px;
+										width: 200px;
+										.background_color_10_gray;
+										.color_50_gray;
+										.Complete_Button_hover;
+									}
+								}
 
-            .egw_fw_ui_sidemenu_entry_icon {
-				display: inline-block;
-				.dimension_height_m;
+							 }
 
-				padding-left: 0;
-				padding-right: 0px;
-				float: left;
-
-				/*filter grey*/
-				.img_filter_gray;
-			}
+						&:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
+					}
 
 
-    } // SIDEMENU End
-	
+
+
+
+				}
+
+				.egw_fw_ui_sidemenu_entry_content_bottom {
+					border-width: 0px 1px 1px 1px;
+				}
+				.egw_fw_ui_sidemenu_entry_header_bottom {
+					border-width: 0px;
+					border-color: @gray_0;
+				}
+
+				.egw_fw_ui_sidemenu_entry_icon {
+					display: inline-block;
+					.dimension_height_m;
+
+					padding-left: 0;
+					padding-right: 0px;
+					float: left;
+
+					/*filter grey*/
+					.img_filter_gray;
+				}
+
+
+		} // SIDEMENU End
+	}//End of Sidebar
 	//ToggleClass
 	
-	.sidebarToggle{
+	.sidebar-toggle{
 		#egw_fw_sidebar{
 			#egw_fw_sidemenu{
 				width:82px !important;
@@ -574,6 +601,12 @@ and open the template in the editor.
 			}
 		}
 		#egw_fw_logout, #egw_fw_topmenu_items{
+			display:none !important;
+		}
+	}
+	
+	.portrait-app-toggle{
+		#egw_fw_portrait_bar{
 			display:none !important;
 		}
 	}
