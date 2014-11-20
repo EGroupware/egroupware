@@ -179,7 +179,7 @@ class emailadmin_imapbase
 	{
 		//$_restoreSession=false;
 		if (is_null($_reuseCache)) $_reuseCache = $_restoreSession;
-		//error_log(__METHOD__.' ('.__LINE__.') '.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.'/'.emailadmin_bo::getUserDefaultAccID().' for user:'.$GLOBALS['egw_info']['user']['account_lid'].' called from:'.function_backtrace());
+		//error_log(__METHOD__.' ('.__LINE__.') '.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.'/'.emailadmin_account::get_default_acc_id().' for user:'.$GLOBALS['egw_info']['user']['account_lid'].' called from:'.function_backtrace());
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_oldImapServerObject));
 		if ($_oldImapServerObject instanceof emailadmin_imap)
 		{
@@ -202,7 +202,7 @@ class emailadmin_imapbase
 			}
 			else
 			{
-				$profileID = emailadmin_bo::getUserDefaultAccID();
+				$profileID = emailadmin_account::get_default_acc_id();
 			}
 			if ($profileID!=$_profileID) $_restoreSession==false;
 			$_profileID=$profileID;
@@ -247,7 +247,7 @@ class emailadmin_imapbase
 				self::$instances[$_profileID]->htmlOptions  = self::$instances[$_profileID]->mailPreferences['htmlOptions'];
 			} catch (egw_exception $e)
 			{
-				$newprofileID = emailadmin_bo::getUserDefaultAccID();
+				$newprofileID = emailadmin_account::get_default_acc_id();
 				// try loading the default profile for the user
 				error_log(__METHOD__.' ('.__LINE__.') '." Loading the Profile for ProfileID ".$_profileID.' failed for icServer; '.$e->getMessage().' Trigger new instance for Default-Profile '.$newprofileID.'. called from:'.function_backtrace());
 				if ($newprofileID)
@@ -284,7 +284,7 @@ class emailadmin_imapbase
 		}
 		else
 		{
-			$oldProfileID = emailadmin_bo::getUserDefaultAccID();
+			$oldProfileID = emailadmin_account::get_default_acc_id();
 		}
 		if ($_testConnection)
 		{
@@ -294,7 +294,7 @@ class emailadmin_imapbase
 			}
 			catch (Exception $e)
 			{
-				if ($_profileID != emailadmin_bo::getUserDefaultAccID()) $_profileID = emailadmin_bo::getUserDefaultAccID();
+				if ($_profileID != emailadmin_account::get_default_acc_id()) $_profileID = emailadmin_account::get_default_acc_id();
 				error_log(__METHOD__.__LINE__.' '.$e->getMessage());
 				return false;
 			}

@@ -1318,12 +1318,13 @@ class emailadmin_account implements ArrayAccess
 	}
 
 	/**
-	 * Get ID of default mail account for either IMAP or SMTP
+	 * Get default mail account object either for IMAP or SMTP
 	 *
 	 * @param boolean $smtp =false false: usable for IMAP, true: usable for SMTP
-	 * @return int
+	 * @param boolean $return_id =false true: return acc_id, false return account object
+	 * @return emailadmin_account|null
 	 */
-	static function get_default_acc_id($smtp=false)
+	static function get_default($smtp=false, $return_id=false)
 	{
 		try
 		{
@@ -1356,7 +1357,8 @@ class emailadmin_account implements ArrayAccess
 					// continue if we have either no imap username or password
 					if (!$account->is_imap()) continue;
 				}
-				return $acc_id;
+				return $return_id ? $acc_id : (isset($account) && $account->acc_id == $acc_id ?
+					$account : new emailadmin_account($params));
 			}
 		}
 		catch (Exception $e)
@@ -1364,6 +1366,17 @@ class emailadmin_account implements ArrayAccess
 			error_log(__METHOD__.__LINE__.' Error no Default available.'.$e->getMessage());
 		}
 		return null;
+	}
+
+	/**
+	 * Get ID of default mail account for either IMAP or SMTP
+	 *
+	 * @param boolean $smtp =false false: usable for IMAP, true: usable for SMTP
+	 * @return int
+	 */
+	static function get_default_acc_id($smtp=false)
+	{
+		return self::get_default($smtp, true);
 	}
 
 	/**
