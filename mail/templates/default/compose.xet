@@ -29,7 +29,7 @@
 					</description>
 					<description class="email-button-group notification">
 						<description value="Recieve notification"/>
-						<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
+						<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="on,off"/>
 					</description>
 					<description class="email-button-group priority">
 						<description value="Priority"/>
