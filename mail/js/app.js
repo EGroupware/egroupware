@@ -3663,33 +3663,31 @@ app.classes.mail = AppJS.extend(
 	{
 		var bodyH = egw_getWindowInnerHeight();
 		var textArea = this.et2.getWidgetById('mail_plaintext');
-		var toolbar = jQuery('.mailSignature');
+		var headerSec = jQuery('.mailComposeHeaderSection');
 		var content = this.et2.getArrayMgr('content').data;
 		if (typeof textArea != 'undefined' && textArea != null)
 		{
-			var textAreaH = textArea.node.clientHeight;
 			if (textArea.getParent().disabled)
 			{
 				textArea = this.et2.getWidgetById('mail_htmltext');
-				textAreaH = parseInt(textArea.getParent().node.clientHeight);
 			}
 			// Tolerate values base on plain text or html, in order to calculate freespaces
 			var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
 			var delta = content.attachments? 68: textAreaDelta;
 
-			var freeSpace = (bodyH  - Math.round(toolbar.height() + toolbar.offset().top) - delta);
+			var bodySize = (bodyH  - Math.round(headerSec.height() + headerSec.offset().top) - delta);
 
 			if (textArea.id != "mail_htmltext")
 			{
-				textArea.set_height(textAreaH + freeSpace);
+				textArea.set_height(bodySize);
 			}
 			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext' && typeof textArea.getParent().node.children[1] != 'undefined')
 			{
-				jQuery(textArea.getParent().node.children[1].children[1].children[1]).css('height',textAreaH + (freeSpace - 90));
+				jQuery(textArea.getParent().node.children[1].children[1].children[1]).css('height',bodySize -90);
 			}
 			else
 			{
-				textArea.set_height(textAreaH + (freeSpace - 90));
+				textArea.set_height(bodySize - 90);
 			}
 		}
 	},
