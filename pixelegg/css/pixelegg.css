@@ -3792,11 +3792,9 @@ div.admin-config form > table td b {
  */
 body > div#egw_message {
   background-color: #e6e6e6;
-  /*border-radius: 10px;*/
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  /*        .border_normal;*/
   border: 3px solid #ffc200;
   -webkit-border-top-right-radius: 0px;
   -webkit-border-bottom-right-radius: 15px;
@@ -3816,11 +3814,10 @@ body > div#egw_message {
   padding: 10px;
   padding-left: 25px;
   background-position-x: 5px;
-  /*border: 2px gray solid;*/
   min-width: 100px;
   z-index: 100000;
   margin: 0px auto;
-  width: 22%;
+  max-width: 90%;
 }
 /**
  * Less-file for egroupware
