@@ -3062,7 +3062,7 @@ class emailadmin_imapbase
 
 		$this->icServer->openMailbox($folderName);
 
-		if($folderName == $trashFolder && $deleteOptions == "move_to_trash") {
+		if(strtolower($folderName) == strtolower($trashFolder) && $deleteOptions == "move_to_trash") {
 			$this->deleteMessages('all',$folderName,'remove_immediately');
 		} else {
 			$this->icServer->expunge($folderName);
@@ -3105,8 +3105,8 @@ class emailadmin_imapbase
 		$trashFolder    = $this->getTrashFolder();
 		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
 		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['templateFolder'];
-		if(($_folder == $trashFolder && $deleteOptions == "move_to_trash") ||
-		   ($_folder == $draftFolder)) {
+		if((strtolower($_folder) == strtolower($trashFolder) && $deleteOptions == "move_to_trash") ||
+		   (strtolower($_folder) == strtolower($draftFolder))) {
 			$deleteOptions = "remove_immediately";
 		}
 		if($this->icServer->getCurrentMailbox() != $_folder) {
