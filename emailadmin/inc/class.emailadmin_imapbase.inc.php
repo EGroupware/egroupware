@@ -5302,13 +5302,13 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * getRandomString - function to be used to fetch a random string and md5 encode that one
-	 * @param none
-	 * @return string - a random number which is md5 encoded
+	 * Get a random string of 32 chars
+	 *
+	 * @return string
 	 */
-	static function getRandomString() {
-		mt_srand((float) microtime() * 1000000);
-		return md5(mt_rand (100000, 999999));
+	static function getRandomString()
+	{
+		return auth::randomstring(32);
 	}
 
 	/**
