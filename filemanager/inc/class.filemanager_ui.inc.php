@@ -843,7 +843,6 @@ class filemanager_ui
 		//_debug_array($readonlys);
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'projectmanager')
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('Projectmanager').' - '.lang('Filemanager');
 			// we need our app.css file
 			if (!file_exists(EGW_SERVER_ROOT.($css_file='/filemanager/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/app.css')))
 			{
@@ -851,10 +850,6 @@ class filemanager_ui
 			}
 			$GLOBALS['egw_info']['flags']['css'] .= "\n\t\t</style>\n\t\t".'<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
 				$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type="text/css" rel="StyleSheet" />'."\n\t\t<style>\n\t\t\t";
-		}
-		else
-		{
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('Filemanager').': '.egw_vfs::decodePath($query['path']);
 		}
 		return egw_vfs::$find_total;
 	}
