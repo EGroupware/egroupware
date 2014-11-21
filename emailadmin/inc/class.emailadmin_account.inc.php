@@ -271,7 +271,7 @@ class emailadmin_account implements ArrayAccess
 			if ($this->acc_imap_type != 'emailadmin_imap' &&
 				// do NOT query IMAP server, if we are in forward-only delivery-mode, imap will NOT answer, as switched off for that account!
 				$this->params['deliveryMode'] != emailadmin_smtp::FORWARD_ONLY &&
-				$this->imapServer() && is_a($this->imapServer, 'emailadmin_imap') &&
+				$this->imapServer($this->user) && is_a($this->imapServer, 'emailadmin_imap') &&
 				($data = $this->imapServer->getUserData($GLOBALS['egw']->accounts->id2name($this->user))))
 			{
 				$this->params = array_merge($this->params, $data);
