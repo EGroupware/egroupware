@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and earlier modifications
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker-AT-outdoor-training.de
- * @copyright 2001-2009 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2014 by RalfBecker@outdoor-training.de
  * @package api
  * @subpackage html
  * @version $Id$
@@ -25,8 +25,8 @@ class html
 	 */
 	static $user_agent;
 	/**
-	 * User agent is a mobile browser
-	 * @var boolean
+	 * User agent is mobile browser: "iphone", "ipod", "ipad", "android", "symbianos", "blackberry", "kindle", "opera mobi", "windows phone"
+	 * @var string with name of mobile browser or null, if not mobile browser
 	 */
 	static $ua_mobile;
 	/**
@@ -78,7 +78,8 @@ class html
 			self::$ua_version = preg_match('|Trident/[0-9.]+; rv:([0-9.]+)|i', $_SERVER['HTTP_USER_AGENT'], $matches) ?
 				$matches[1] : 11.0;
 		}
-		self::$ua_mobile = preg_match('/(iPhone|iPad|Android|SymbianOS)/i',$_SERVER['HTTP_USER_AGENT']);
+		self::$ua_mobile = preg_match('/(iPhone|iPod|iPad|Android|SymbianOS|Blackberry|Kindle|Opera Mobi|Windows Phone)/i',
+			$_SERVER['HTTP_USER_AGENT'], $matches) ? strtolower($matches[1]) : null;
 
 		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
 		self::$prefered_img_title = self::$netscape4 ? 'alt' : 'title';
@@ -97,9 +98,9 @@ class html
 	* Please note: it need to be called before the call to egw_header() !!!
 	*
 	* @param string $name the name of the input-field
-	* @param string $value='' the actual value for the input-field, default ''
-	* @param string $title='' tooltip/title for the picker-activation-icon
-	* @param string $options='' options for input
+	* @param string $value ='' the actual value for the input-field, default ''
+	* @param string $title ='' tooltip/title for the picker-activation-icon
+	* @param string $options ='' options for input
 	* @return string the html
 	*/
 	static function inputColor($name,$value='',$title='',$options='')
@@ -214,7 +215,7 @@ class html
 	 * - &nbsp; &lt; &gt; for convenience -> should not happen anymore, as we do not doubleencode anymore (20101020)
 	 *
 	 * @param string $str string to escape
-	 * @param boolean $double_encoding=false do we want double encoding or not, default no
+	 * @param boolean $double_encoding =false do we want double encoding or not, default no
 	 * @return string
 	 */
 	static function htmlspecialchars($str, $double_encoding=false)
@@ -233,7 +234,7 @@ class html
 	 * allows to show and select one item from an array
 	 *
 	 * @param string $name	string with name of the submitted var which holds the key of the selected item form array
-	 * @param string/array $key key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
+	 * @param string|array $key key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
 	 * @param array $arr array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
 	 * @param boolean $no_lang NOT run the labels of the options through lang(), default false=use lang()
 	 * @param string $options additional options (e.g. 'width')
@@ -321,13 +322,13 @@ class html
 	 * in the same way. Therefor I made it an extra function.
 	 *
 	 * @param string $name	string with name of the submitted var which holds the key of the selected item form array
-	 * @param string/array $key key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
+	 * @param string|array $key key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
 	 * @param array $arr array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
 	 * @param boolean $no_lang NOT run the labels of the options through lang(), default false=use lang()
 	 * @param string $options additional options (e.g. 'width')
 	 * @param int $multiple number of lines for a multiselect, default 3
 	 * @param boolean $selected_first show the selected items before the not selected ones, default true
-	 * @param string $style='' extra style settings like "width: 100%", default '' none
+	 * @param string $style ='' extra style settings like "width: 100%", default '' none
 	 * @return string to set for a template or to echo into html page
 	 */
 	static function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='',$enhanced = null)
@@ -451,7 +452,7 @@ class html
 	/**
 	 * generate one or more hidden input tag(s)
 	 *
-	 * @param array/string $vars var-name or array with name / value pairs
+	 * @param array|string $vars var-name or array with name / value pairs
 	 * @param string $value value if $vars is no array, default ''
 	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
 	 * @param string html
@@ -482,7 +483,7 @@ class html
 	 * @param string $name name attr. of the tag
 	 * @param string $value default
 	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
-	 * @param boolean $double_encoding=false do we want double encoding or not, default no
+	 * @param boolean $double_encoding =false do we want double encoding or not, default no
 	 * @param string html
 	 */
 	static function textarea($name,$value='',$options='',$double_encoding=false)
@@ -531,12 +532,12 @@ class html
 	* @param string $_content of the tinymce (will be run through htmlspecialchars !!!), default ''
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
 	* @param array  $_options (toolbar_expanded true/false)
-	* @param string $_height='400px'
-	* @param string $_width='100%'
-	* @param string $_start_path='' if passed activates the browser for image at absolute path passed
-	* @param boolean $_purify=true run $_content through htmlpurifier before handing it to fckEditor
+	* @param string $_height ='400px'
+	* @param string $_width ='100%'
+	* @param string $_start_path ='' if passed activates the browser for image at absolute path passed
+	* @param boolean $_purify =true run $_content through htmlpurifier before handing it to fckEditor
 	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
-	* @param string $_executeJSAfterInit='' Javascript to be executed after InstanceReady of CKEditor
+	* @param string $_executeJSAfterInit ='' Javascript to be executed after InstanceReady of CKEditor
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
@@ -615,13 +616,13 @@ egw_LAB.wait(function() {
 	*
 	* @param string $_name name and id of the input-field
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
-	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
-	* @param string $_height='400px'
-	* @param string $_width='100%'
-	* @param boolean $_purify=true
-	* @param string $_border='0px' NOT used for CKEditor
+	* @param string $_content ='' of the tinymce (will be run through htmlspecialchars !!!), default ''
+	* @param string $_height ='400px'
+	* @param string $_width ='100%'
+	* @param boolean $_purify =true
+	* @param string $_border ='0px' NOT used for CKEditor
 	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
-	* @param string $_executeJSAfterInit='' Javascript to be executed after InstanceReady of CKEditor
+	* @param string $_executeJSAfterInit ='' Javascript to be executed after InstanceReady of CKEditor
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px',$_focusToBody=false,$_executeJSAfterInit='')
@@ -780,24 +781,24 @@ egw_LAB.wait(function() {
 	 * Example link('/index.php?menuaction=infolog.uiinfolog.get_list',array('info_id' => 123))
 	 *	gives 'http://domain/phpgw-path/index.php?menuaction=infolog.uiinfolog.get_list&info_id=123'
 	 *
-	 * @param string $url phpgw-relative link, may include query / get-vars
-	 * @param array/string $vars query or array ('name' => 'value', ...) with query
+	 * @param string $_url egw-relative link, may include query / get-vars
+	 * @param array|string $vars query or array ('name' => 'value', ...) with query
 	 * @return string absolut link already run through $phpgw->link
 	 */
-	static function link($url,$vars='')
+	static function link($_url,$vars='')
 	{
 		//echo "<p>html::link(url='$url',vars='"; print_r($vars); echo "')</p>\n";
 		if (!is_array($vars))
 		{
 			parse_str($vars,$vars);
 		}
-		list($url,$v) = explode('?',$url);	// url may contain additional vars
+		list($url,$v) = explode('?', $_url);	// url may contain additional vars
 		if ($v)
 		{
 			parse_str($v,$v);
 			$vars += $v;
 		}
-		return $GLOBALS['egw']->link($url,$vars);
+		return egw::link($url,$vars);
 	}
 
 	/**
@@ -819,16 +820,16 @@ egw_LAB.wait(function() {
 	 *
 	 * @param string $content of the form, if '' only the opening tag gets returned
 	 * @param array $hidden_vars array with name-value pairs for hidden input fields
-	 * @param string $url eGW relative URL, will be run through the link function, if empty the current url is used
-	 * @param string/array $url_vars parameters for the URL, send to link static function too
+	 * @param string $_url eGW relative URL, will be run through the link function, if empty the current url is used
+	 * @param string|array $url_vars parameters for the URL, send to link static function too
 	 * @param string $name name of the form, defaul ''=none
 	 * @param string $options attributes for the tag, default ''=none
 	 * @param string $method method of the form, default 'POST'
 	 * @return string html
 	 */
-	static function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
+	static function form($content,$hidden_vars,$_url,$url_vars='',$name='',$options='',$method='POST')
 	{
-		$url = $url ? self::link($url,$url_vars) : $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+		$url = $_url ? self::link($_url, $url_vars) : $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"$url\" $options>\n";
 		$html .= self::input_hidden($hidden_vars);
 
@@ -847,7 +848,7 @@ egw_LAB.wait(function() {
 	 * @param string $label label of the button
 	 * @param array $hidden_vars array with name-value pairs for hidden input fields
 	 * @param string $url eGW relative URL, will be run through the link function
-	 * @param string/array $url_vars parameters for the URL, send to link static function too
+	 * @param string|array $url_vars parameters for the URL, send to link static function too
 	 * @param string $options attributes for the tag, default ''=none
 	 * @param string $form_name name of the form, defaul ''=none
 	 * @param string $method method of the form, default 'POST'
@@ -964,21 +965,21 @@ egw_LAB.wait(function() {
 	/**
 	 * html-widget showing progessbar with a view div's (html4 only, textual percentage otherwise)
 	 *
-	 * @param mixed $percent percent-value, gets casted to int
-	 * @param string $title title for the progressbar, default ''=the percentage itself
+	 * @param mixed $_percent percent-value, gets casted to int
+	 * @param string $_title title for the progressbar, default ''=the percentage itself
 	 * @param string $options attributes for the outmost div (may include onclick="...")
 	 * @param string $width width, default 30px
 	 * @param string $color color, default '#D00000' (dark red)
 	 * @param string $height height, default 5px
 	 * @return string html
 	 */
-	static function progressbar( $percent,$title='',$options='',$width='',$color='',$height='' )
+	static function progressbar($_percent, $_title='',$options='',$width='',$color='',$height='' )
 	{
-		$percent = (int) $percent;
+		$percent = (int)$_percent;
 		if (!$width) $width = '30px';
 		if (!$height)$height= '5px';
 		if (!$color) $color = '#D00000';
-		$title = $title ? self::htmlspecialchars($title) : $percent.'%';
+		$title = $_title ? self::htmlspecialchars($_title) : $percent.'%';
 
 		if (self::$netscape4)
 		{
@@ -999,7 +1000,7 @@ egw_LAB.wait(function() {
 	 * This way session-information gets passed, eg. $name=array('menuaction'=>'myapp.class.image','id'=>123).
 	 *
 	 * @param string $app app-name to search the image
-	 * @param string/array $name image-name or URL (incl. vfs:/) or array with get-vars
+	 * @param string|array $name image-name or URL (incl. vfs:/) or array with get-vars
 	 * @param string $title tooltip, default '' = none
 	 * @param string $options further options for the tag, default '' = none
 	 * @return string the html
@@ -1075,7 +1076,7 @@ egw_LAB.wait(function() {
 	 *
 	 * @param string $content of the link, if '' only the opening tag gets returned
 	 * @param string $url eGW relative URL, will be run through the link function
-	 * @param string/array $vars parameters for the URL, send to link static function too
+	 * @param string|array $vars parameters for the URL, send to link static function too
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string the html
 	 */
@@ -1247,17 +1248,17 @@ egw_LAB.wait(function() {
 	 * @author Lars Kneschke <lars-AT-kneschke.de> original code in felamimail
 	 * @param array $_folders array of folders: pairs path => node (string label or array with keys: label, (optional) image, (optional) title, (optional) checked)
 	 * @param string $_selected path of selected folder
-	 * @param mixed $_topFolder=false node of topFolder or false for none
-	 * @param string $_onNodeSelect='alert' js static function to call if node gets selected
-	 * @param string $_tree='foldertree' id of the div and name of the variable containing the tree object
-	 * @param string $_divClass='' css class of the div
-	 * @param string $_leafImage='' default image of a leaf-node, ''=default of foldertree, set it eg. 'folderClosed.gif' to show leafs as folders
-	 * @param boolean|string $_onCheckHandler=false string with handler-name to display a checkbox for each folder, or false (default), 'null' switches checkboxes on without an handler!
-	 * @param string $delimiter='/' path-delimiter, default /
-	 * @param string $folderImageDir=null string path to the tree menu images, null uses default path
-	 * @param string|array $autoLoading=null EGw relative path or array with get parameter, both send through egw::link
-	 * @param string $dataMode='JSON' data type for autoloading: XML, JSON, CSV
-	 * @param boolean $dragndrop=false true to enable drag-n-drop (must be before autoloading get enabled!)
+	 * @param mixed $_topFolder =false node of topFolder or false for none
+	 * @param string $_onNodeSelect ='alert' js static function to call if node gets selected
+	 * @param string $tree ='foldertree' id of the div and name of the variable containing the tree object
+	 * @param string $_divClass ='' css class of the div
+	 * @param string $_leafImage ='' default image of a leaf-node, ''=default of foldertree, set it eg. 'folderClosed.gif' to show leafs as folders
+	 * @param boolean|string $_onCheckHandler =false string with handler-name to display a checkbox for each folder, or false (default), 'null' switches checkboxes on without an handler!
+	 * @param string $delimiter ='/' path-delimiter, default /
+	 * @param string $folderImageDir =null string path to the tree menu images, null uses default path
+	 * @param string|array $autoLoading =null EGw relative path or array with get parameter, both send through egw::link
+	 * @param string $dataMode ='JSON' data type for autoloading: XML, JSON, CSV
+	 * @param boolean $dragndrop =false true to enable drag-n-drop (must be before autoloading get enabled!)
 	 *
 	 * @return string the html code, to be added into the template
 	 */
@@ -1451,11 +1452,11 @@ egw_LAB.wait(function() {
 	 * Runs HTMLPurifier over supplied html to remove malicious code
 	 *
 	 * @param string $html
-	 * @param array/string $config=null - config to influence the behavior of current purifying engine
-	 * @param array/string $spec=null - spec to influence the behavior of current purifying engine
+	 * @param array|string $config =null - config to influence the behavior of current purifying engine
+	 * @param array|string $spec =null - spec to influence the behavior of current purifying engine
 	 *		The $spec argument can be used to disallow an otherwise legal attribute for an element,
 	 *		or to restrict the attribute's values
-	 * @param boolean $_force=null - force the config passed to be used without merging to the default
+	 * @param boolean $_force =null - force the config passed to be used without merging to the default
 	 */
 	static function purify($html,$config=null,$spec=array(),$_force=false)
 	{
@@ -1491,10 +1492,10 @@ egw_LAB.wait(function() {
 	 *
 	 * @author Miles Lott originally in browser class
 	 * @param string $fn filename
-	 * @param string $mime='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
-	 * @param int $length=0 content length, default 0 = skip that header
-	 * @param boolean $nocache=true send headers to disallow browser/proxies to cache the download
-	 * @param boolean $forceDownload=true send headers to handle as attachment/download
+	 * @param string $mime ='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
+	 * @param int $length =0 content length, default 0 = skip that header
+	 * @param boolean $nocache =true send headers to disallow browser/proxies to cache the download
+	 * @param boolean $forceDownload =true send headers to handle as attachment/download
 	 */
 	public static function content_header($fn,$mime='',$length=0,$nocache=True,$forceDownload=true)
 	{
@@ -1528,7 +1529,7 @@ egw_LAB.wait(function() {
 	 * Output content-disposition header for file downloads
 	 *
 	 * @param string $fn filename
-	 * @param boolean $forceDownload=true send headers to handle as attachment/download
+	 * @param boolean $forceDownload =true send headers to handle as attachment/download
 	 */
 	public static function content_disposition_header($fn,$forceDownload=true)
 	{
