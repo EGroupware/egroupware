@@ -456,6 +456,15 @@ var et2_file = et2_inputWidget.extend(
 		event.data = this;
 
 		var result = false;
+		
+		//Remove progress_dropDown_fileList class and unbind the click handler from body
+		if (this.options.progress_dropdownlist)
+		{
+			this.progress.removeClass("progress_dropDown_fileList");
+			jQuery(this.node).find('span').removeClass('totalProgress_loader');
+			jQuery('body').off('click');
+		}	
+		
 		if(this.options.onFinish && !jQuery.isEmptyObject(this.getValue()))
 		{
 			result =  et2_call(this.options.onFinish, event, file_count);
@@ -469,14 +478,6 @@ var et2_file = et2_inputWidget.extend(
 			// Fire legacy change action when done
 			this.change(this.input);
 		}
-		
-		//Remove progress_dropDown_fileList class and unbind the click handler from body
-		if (this.options.progress_dropdownlist)
-		{
-			this.progress.removeClass("progress_dropDown_fileList");
-			jQuery(this.node).find('span').removeClass('totalProgress_loader');
-			jQuery('body').off('click');
-		}	
 	},
 	
 	/**
