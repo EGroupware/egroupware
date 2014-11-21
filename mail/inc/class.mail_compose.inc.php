@@ -179,7 +179,7 @@ class mail_compose
 			// is some style already set and our initalStyle always adds a span with &nbsp;
 			// and we want to avoid that
 			$isFirstLoad = !($actionToProcess=='composeasnew');//true;
-			$this->composeID = $_content['composeID'] = $this->getComposeID();
+			$this->composeID = $_content['composeID'] = $this->generateComposeID();
 			if (!is_array($_content))
 			{
 				$_content = $this->setDefaults();
@@ -1341,13 +1341,12 @@ class mail_compose
 		}
 	}
 
-	// create a hopefully unique id, to keep track of different compose windows
-	// if you do this, you are creating a new email
-	function getComposeID()
+	/**
+	 *  create a unique id, to keep track of different compose windows
+	 */
+	function generateComposeID()
 	{
-		$this->composeID = $this->getRandomString();
-
-		return $this->composeID;
+		return mail_bo::getRandomString();
 	}
 
 	// $_mode can be:
@@ -1756,17 +1755,7 @@ class mail_compose
 	}
 
 	/**
-	 * Fetch a random string and md5 encode that one
-	 *
-	 * @param none
-	 * @return string - a random number which is md5 encoded
-	 */
-	function getRandomString() {
-		return mail_bo::getRandomString();
-	}
-
-	/**
-	 * Fetch a random string and md5 encode that one
+	 * Test if string contains one of the keys of an array
 	 *
 	 * @param array arrayToTestAgainst to test its keys against haystack
 	 * @param string haystack
