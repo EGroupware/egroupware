@@ -174,6 +174,8 @@ app.classes.mail = AppJS.extend(
 				);
 				break;
 			case 'mail.compose':
+				// use a wrapper on a different url to be able to use a different fpm pool
+				et2.menuaction = 'mail_compose::ajax_send';
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();

@@ -3100,4 +3100,20 @@ class mail_compose
 			$response->error(implode(',',$results['failed']));
 		}
 	}
+
+	/**
+	 * Wrapper for etemplate_new::ajax_process_content to be able to identify send request to select different fpm pool
+	 *
+	 * @param string $etemplate_exec_id
+	 * @param array $content
+	 * @param boolean $no_validation
+	 * @throws egw_exception_wrong_parameter
+	 */
+	static public function ajax_send($etemplate_exec_id, array $content, $no_validation)
+	{
+		// setting menuaction is required as it triggers different behavior eg. in egw_framework::window_close()
+		$_GET['menuaction'] = 'etemplate_new::ajax_process_content';
+
+		return etemplate_new::ajax_process_content($etemplate_exec_id, $content, $no_validation);
+	}
 }
