@@ -59,7 +59,7 @@ var et2_groupbox_legend = et2_baseWidget.extend(
 	init: function() {
 		this._super.apply(this, arguments);
 
-		var legend = jQuery("<legend>"+this.options.label+"</legend>");
+		var legend = jQuery(document.createElement("legend")).text(this.options.label);
 		this.setDOMNode(legend[0]);
 	}
 });
