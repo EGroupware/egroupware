@@ -55,6 +55,7 @@ addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbook
 admin	common	en	Admin
 administration	common	en	Administration
 afghanistan	common	en	AFGHANISTAN
+ajax request failed	common	en	Ajax request failed
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 all	common	en	All
@@ -724,6 +725,7 @@ serbia	common	en	Serbia
 server %1 has been added	common	en	Server %1 has been added.
 server answered. processing response...	common	en	Server answered. Processing response...
 server contacted. waiting for response...	common	en	Server contacted. Waiting for response...
+server error log should contain more information about the problem.	common	en	Server error log should contain more information about the problem.
 server is unwilling to perform.	common	en	Server is unwilling to perform.
 server name	common	en	Server name
 session has been killed	common	en	Session has been killed.
@@ -826,6 +828,7 @@ top	common	en	Top
 total	common	en	Total
 transparant bg for the icons?	common	en	Transparant bg for the icons
 trinidad and tobago	common	en	TRINIDAD AND TOBAGO
+trying it again will usually not help!	common	en	Trying it again will usually not help!
 tuesday	common	en	Tuesday
 tunisia	common	en	TUNISIA
 turkey	common	en	TURKEY

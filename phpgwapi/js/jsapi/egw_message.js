@@ -129,6 +129,9 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						.text(matches[2]));
 					msg_div.append(jQuery(_wnd.document.createElement('span')).text(parts[1]));
 				}
+				// center the message
+				msg_div.css('right', ((jQuery(_wnd).innerWidth()-msg_div.width())/2)+'px');
+
 				if (_type == 'success')	// clear message again after some time, if no error
 				{
 					message_timer = _wnd.setTimeout(function() {

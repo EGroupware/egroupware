@@ -55,6 +55,7 @@ addressbooks to sync in addition to personal addressbook	groupdav	de	Adressbüch
 admin	common	de	Admin
 administration	common	de	Administration
 afghanistan	common	de	AFGHANISTAN
+ajax request failed	common	de	Ajax Anfrage fehlgeschlagen
 albania	common	de	ALBANIEN
 algeria	common	de	ALGERIEN
 all	common	de	alle
@@ -724,6 +725,7 @@ serbia	common	de	SERBIEN
 server %1 has been added	common	de	Server %1 wurde zugefügt
 server answered. processing response...	common	de	Server antwortet. Bearbeite Antwort...
 server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort...
+server error log should contain more information about the problem.	common	de	Das Fehlerprotokoll des Servers sollte mehr Informationen über das Problem enthalten.
 server is unwilling to perform.	common	de	Server ist zur Ausführung nicht bereit.
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
@@ -826,6 +828,7 @@ top	common	de	Oben
 total	common	de	Gesamt
 transparant bg for the icons?	common	de	Transparenter Hintergrund für Symbole
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
+trying it again will usually not help!	common	de	Es nochmal zu versuchen hilft im Allgemeinen nicht!
 tuesday	common	de	Dienstag
 tunisia	common	de	TUNISIEN
 turkey	common	de	TÜRKEI
