@@ -33,6 +33,14 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	/**
 	 * Internal implementation of the JSON request object.
+	 *
+	 * @param {string} _menuaction
+	 * @param {array} _parameters
+	 * @param {function} _callback
+	 * @param {object} _context
+	 * @param {boolean} _async
+	 * @param {object} _sender
+	 * @param {egw} _egw
 	 */
 	function json_request(_menuaction, _parameters, _callback, _context,
 		_async, _sender, _egw)
@@ -69,7 +77,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	/**
 	 * Sends the assembled request to the server
 	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
-	 * @param {string} method='POST' allow to eg. use a (cachable) 'GET' request instead of POST
+	 * @param {string} method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST
 	 *
 	 * @return {jqXHR} jQuery jqXHR request object
 	 */
@@ -103,13 +111,18 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				// Don't error about an abort
 				if(_err !== 'abort')
 				{
-					this.egw.debug('error', 'Ajax request to', this.url, ' failed:', _err);
+					this.egw.message.call(this.egw, this.egw.lang('Ajax request failed')+': '+_xmlhttp.statusText+' ('+_xmlhttp.status+
+						")\n\n"+this.egw.lang('Server error log should contain more information about the problem.')+
+						"\n"+this.egw.lang('Trying it again will usually not help!')+
+						"\n\nURL: "+this.url+"\n"+_xmlhttp.getAllResponseHeaders().match(/^Date:.*$/m)[0]);
+
+					this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, _xmlhttp.status, _xmlhttp.statusText);
 				}
 			}
 		});
 
 		return this.request;
-	}
+	};
 
 	json_request.prototype.handleResponse = function(data) {
 		if (data && typeof data.response != 'undefined')
@@ -162,8 +175,10 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 							);
 						} catch(e) {
 							var msg = e.message ? e.message : e + '';
-							var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : ""
-							this.egw.debug('error', 'Exception "' + msg + '" while handling JSON response from ' + this.url + ' [' + JSON.stringify(this.parameters) + '] type "' + res.type + '", plugin', plugin, 'response', res, stack);
+							var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : "";
+							this.egw.debug('error', 'Exception "' + msg + '" while handling JSON response from ' +
+								this.url + ' [' + JSON.stringify(this.parameters) + '] type "' + res.type +
+								'", plugin', plugin, 'response', res, stack);
 						}
 					}
 				}
@@ -175,7 +190,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			}
 		}
 		this.request = null;
-	}
+	};
 
 	var json = {
 
@@ -228,7 +243,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			// Add the entry
 			plugins[_type].push({
 				'callback': _callback,
-				'context': _context,
+				'context': _context
 			});
 		},
 
@@ -273,7 +288,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		{
 			req.alertHandler(
 				res.data.message,
-				res.data.details)
+				res.data.details);
 			return true;
 		}
 		throw 'Invalid parameters';
@@ -326,7 +341,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			catch (e)
 			{
 				req.egw.debug('error', 'Error while executing script: ',
-					res.data,e)
+					res.data,e);
 			}
 			return true;
 		}
