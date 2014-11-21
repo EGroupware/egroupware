@@ -1486,13 +1486,7 @@ app.classes.mail = AppJS.extend(
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest(true);
-
-		// Update list
-		//var ids = [];
-		//for (var i = 0; i < _msg['msg'].length; i++)
-		//{
-		//	ids.push(_msg['msg'][i].replace(/mail::/,''));
-		//}
+		
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current Folder'))));
 	},
@@ -1518,6 +1512,11 @@ app.classes.mail = AppJS.extend(
 		else
 		{
 			this.egw.refresh(_msg['egw_message'],'mail',ids,'delete');
+
+			// Nextmatch automatically selects the next row and calls preview.
+			// Unselect it and thanks to the timeout selectionMgr uses, preview
+			// will close when the selection callback fires.
+			this.et2.getWidgetById(this.nm_index).controller._selectionMgr.resetSelection();
 		}
 	},
 
@@ -2857,9 +2856,16 @@ app.classes.mail = AppJS.extend(
 		if (!target.match(/::/g)) target += '::INBOX';
 
 		var self = this;
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'], function(){self.unlock_tree();})
-			.sendRequest();
 		var nm = this.et2.getWidgetById(this.nm_index);
+		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'], function(){
+			self.unlock_tree();
+			// Nextmatch automatically selects the next row and calls preview.
+			// Unselect it and thanks to the timeout selectionMgr uses, preview
+			// will close when the selection callback fires instead of load the
+			// next message
+			nm.controller._selectionMgr.resetSelection();
+		})
+			.sendRequest();
 		this.mail_setRowClass(_senders,'deleted');
 		// Server response contains refresh
 	},
