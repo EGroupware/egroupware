@@ -5434,6 +5434,24 @@ class emailadmin_imapbase
 	}
 
 	/**
+	 * getStandardIdentityForProfile
+	 * get either the first identity out of the given identities or the one matching the profile_id
+	 * @param object $_identities identity iterator object with identities from emailadmin_account
+	 * @param integer $_profile_id the acc_id/profileID the identity with the matching key is the standard one
+	 * @return array the identity
+	 */
+	static function getStandardIdentityForProfile($_identities, $_profile_id)
+	{
+		$c = 0;
+		// use the standardIdentity
+		foreach($_identities as $key => $acc) {
+			if ($c==0) $identity = $acc;
+			if ($key==$_profile_id) $identity = $acc;
+			$c++;
+		}
+		return $identity;
+	}
+	/**
 	 * createHeaderInfoSection - creates a textual headersection from headerobject
 	 * @param array header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
 	 * @param string headline Text tom use for headline, if SUPPRESS, supress headline and footerline
@@ -5894,7 +5912,7 @@ class emailadmin_imapbase
 				{
 					$mailObject->ClearReplyTos();
 					$activeMailProfiles = $this->mail->getAccountIdentities($this->profileID);
-					$activeMailProfile = array_shift($activeMailProfiles);
+					$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
 
 					$mailObject->AddReplyTo(self::$idna2->encode($activeMailProfile['ident_email']),emailadmin_imapbase::generateIdentityString($activeMailProfile,false));
 				}
@@ -5916,7 +5934,7 @@ class emailadmin_imapbase
 						$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 						$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
 						$activeMailProfiles = $this->getAccountIdentities($this->profileID);
-						$activeMailProfile = array_shift($activeMailProfiles);
+						$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($activeMailProfile));
 						$mailObject->From = $activeMailProfile['ident_email'];
 						//$mailObject->From  = $_identity->emailAddress;

@@ -440,7 +440,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		// initialize our mail_bo
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 		$activeMailProfiles = $this->mail->getAccountIdentities(self::$profileID);
-		$activeMailProfile = array_shift($activeMailProfiles);
+		// use the standardIdentity
+		$activeMailProfile = mail_bo::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
+
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
 		// initialize the new egw_mailer object for sending

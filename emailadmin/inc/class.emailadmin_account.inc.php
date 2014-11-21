@@ -487,7 +487,7 @@ class emailadmin_account implements ArrayAccess
 
 		return new egw_db_callback_iterator($rs,
 			// process each row
-			function($row) use ($replace_placeholders, $field)
+			function($row) use ($replace_placeholders, $field, $user)
 			{
 				// set email from imap-username (evtl. set from session, if acc_imap_logintype specified)
 				if (in_array($field, array('name', 'ident_email', 'params')) &&
@@ -495,8 +495,7 @@ class emailadmin_account implements ArrayAccess
 				{
 					$row = array_merge($row, emailadmin_credentials::from_session($row));
 				}
-				if (empty($row['ident_email'])) $row['ident_email'] = $row['acc_imap_username'];
-
+				if (empty($row['ident_email'])||strpos($row['ident_email'],'@')===false) $row['ident_email'] = ($user == $GLOBALS['egw_info']['user']['account_id'] && $GLOBALS['egw_info']['user']['account_email']? $GLOBALS['egw_info']['user']['account_email'] :$row['acc_imap_username']);
 				if ($field != 'name')
 				{
 					$data = $replace_placeholders ? array_merge($row, emailadmin_account::replace_placeholders($row)) : $row;
