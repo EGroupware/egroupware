@@ -2004,7 +2004,15 @@ class mail_compose
 		return $result;
 	}
 
-	function createMessage(&$_mailObject, $_formData, $_identity, $_signature = false, $_convertLinks=false)
+	/**
+	 * Create a message from given data and identity
+	 *
+	 * @param egw_mailer $_mailObject
+	 * @param array $_formData
+	 * @param array $_identity
+	 * @param boolean $_convertLinks
+	 */
+	function createMessage(egw_mailer $_mailObject, array $_formData, array $_identity, $_convertLinks=false)
 	{
 		$mail_bo	= $this->mail_bo;
 		$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
@@ -2021,40 +2029,32 @@ class mail_compose
 		{
 			error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile['ident_email'].' with ID:'.$activeMailProfile['ident_id'].'. Identitiy to use for sending:'.array2string($_identity));
 		}
-		$_mailObject->Sender  = (!empty($_identity['ident_email'])? $_identity['ident_email'] : $activeMailProfile['ident_email']);
-		if ($_signature && !empty($_signature['ident_email']) && $_identity['ident_email']!=$_signature['ident_email'])
-		{
-			error_log(__METHOD__.__LINE__.' Faking From for '.$activeMailProfile['ident_email'].' with ID:'.$activeMailProfile['ident_id'].'. Identitiy to use for sending:'.array2string($_signature));
-			$_mailObject->From 	= $_signature['ident_email'];
-			$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_signature,false));
-		}
-		else
-		{
-			$_mailObject->From 	= $_identity['ident_email'];
-			$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_identity,false));
-		}
+		$_mailObject->Sender   = (!empty($_identity['ident_email'])? $_identity['ident_email'] : $activeMailProfile['ident_email']);
+		$_mailObject->From 	   = $_identity['ident_email'];
+		$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_identity,false));
+
 		$_mailObject->Priority = $_formData['priority'];
 		$_mailObject->Encoding = 'quoted-printable';
 		$_mailObject->AddCustomHeader('X-Mailer: EGroupware-Mail');
-		if(isset($_formData['in-reply-to']) && !empty($_formData['in-reply-to'])) {
+		if(!empty($_formData['in-reply-to'])) {
 			if (stripos($_formData['in-reply-to'],'<')===false) $_formData['in-reply-to']='<'.trim($_formData['in-reply-to']).'>';
 			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(In-Reply-To: '. $_formData['in-reply-to'].")");
 			$_mailObject->AddCustomHeader('In-Reply-To: '. $_formData['in-reply-to']);
 		}
-		if(isset($_formData['references']) && !empty($_formData['references'])) {
+		if(!empty($_formData['references'])) {
 			if (stripos($_formData['references'],'<')===false) $_formData['references']='<'.trim($_formData['references']).'>';
 			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(References: '. $_formData['references'].")");
 			$_mailObject->AddCustomHeader('References: '. $_formData['references']);
 		}
-		if(isset($_formData['thread-topic']) && !empty($_formData['thread-topic'])) {
+		if(!empty($_formData['thread-topic'])) {
 			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(Tread-Topic: '. $_formData['thread-topic'].")");
 			$_mailObject->AddCustomHeader('Thread-Topic: '. $_formData['thread-topic']);
 		}
-		if(isset($_formData['thread-index']) && !empty($_formData['thread-index'])) {
+		if(!empty($_formData['thread-index'])) {
 			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(Tread-Index: '. $_formData['thread-index'].")");
 			$_mailObject->AddCustomHeader('Thread-Index: '. $_formData['thread-index']);
 		}
-		if(isset($_formData['list-id']) && !empty($_formData['list-id'])) {
+		if(!empty($_formData['list-id'])) {
 			//error_log(__METHOD__.__LINE__.'$_mailObject->AddCustomHeader(List-Id: '. $_formData['list-id'].")");
 			$_mailObject->AddCustomHeader('List-Id: '. $_formData['list-id']);
 		}
@@ -2099,8 +2099,7 @@ class mail_compose
 			$_formData['body'] = quoted_printable_decode($_formData['body']);
 		}
 		$disableRuler = false;
-		#if ($realCharset != $this->displayCharset) error_log("Error: bocompose::createMessage found Charset ($realCharset) differs from DisplayCharset (".$this->displayCharset.")");
-		$signature = $_signature['ident_signature'];
+		$signature = $_identity['ident_signature'];
 
 		if ((isset($this->mailPreferences['insertSignatureAtTopOfMessage']) && $this->mailPreferences['insertSignatureAtTopOfMessage']))
 		{
@@ -2123,7 +2122,6 @@ class mail_compose
 		if($_formData['mimeType'] =='html') {
 			$_mailObject->IsHTML(true);
 			if(!empty($signature)) {
-				#$_mailObject->Body    = array($_formData['body'], $_signature['signature']);
 				$_mailObject->Body = $_formData['body'] .
 					($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').
 					$signature;
@@ -2131,7 +2129,6 @@ class mail_compose
 					($disableRuler ?"\r\n":"\r\n-- \r\n").
 					$this->convertHTMLToText($signature,true,true);
 				#print "<pre>$_mailObject->AltBody</pre>";
-				#print htmlentities($_signature['signature']);
 			} else {
 				$_mailObject->Body	= $_formData['body'];
 				$_mailObject->AltBody	= $this->convertHTMLToText($_formData['body'],true,true);
@@ -2365,8 +2362,6 @@ class mail_compose
 			$acc = emailadmin_account::read($this->sessionData['mailaccount']);
 			//error_log(__METHOD__.__LINE__.array2string($acc));
 			$identity = emailadmin_account::read_identity($acc['ident_id'],true);
-
-			//$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
 		}
 		catch (Exception $e)
 		{
@@ -2505,29 +2500,16 @@ class mail_compose
 		}
 		try
 		{
-			$acc = emailadmin_account::read($this->sessionData['mailaccount']);
-			//error_log(__METHOD__.__LINE__.array2string($acc));
-			$identity = emailadmin_account::read_identity($acc['ident_id'],true);
-
-			//$identity = emailadmin_account::read_identity($this->sessionData['mailaccount'],true);
+			$identity = emailadmin_account::read_identity((int)$this->sessionData['signatureid'],true);
 		}
 		catch (Exception $e)
 		{
-			$identity=array();
-		}
-		try
-		{
-			$signature = emailadmin_account::read_identity((int)$this->sessionData['signatureid'],true);
-		}
-		catch (Exception $e)
-		{
-			$signature=array();
+			$identity = array();
 		}
 		//error_log($this->sessionData['mailaccount']);
-		//error_log(__METHOD__.__LINE__.print_r($identity,true));
-		//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['signatureid']).'->'.print_r($signature,true));
+		//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['signatureid']).'->'.array2string($identity));
 		// create the messages
-		$this->createMessage($mail, $_formData, $identity, $signature, true);
+		$this->createMessage($mail, $_formData, $identity, true);
 		// remember the identity
 		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') $fromAddress = $mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
