@@ -181,7 +181,7 @@ forward messages:	mail	en	Forward messages:
 forward to	mail	en	forward to
 forward to address:	mail	en	Forward to address:
 forwards	mail	en	Forwards
-from	mail	en	from
+from	mail	en	From
 from(a->z)	mail	en	from(A->Z)
 from(z->a)	mail	en	from(Z->A)
 general	admin	en	General
