@@ -176,6 +176,13 @@ class emailadmin_account implements ArrayAccess
 	protected $smtpServer;
 
 	/**
+	 * Instance of Horde mail transport
+	 *
+	 * @var Horde_Mail_Transport_Smtphorde
+	 */
+	protected $smtpTransport;
+
+	/**
 	 * Instanciated account object by acc_id, read acts as singelton
 	 *
 	 * @var array
@@ -239,17 +246,10 @@ class emailadmin_account implements ArrayAccess
 				(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
 			) + $params;
 		}
-		if ((is_null($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']) && empty($params['ident_realname']))
-		{
-			$params['ident_realname'] = $GLOBALS['egw_info']['user']['account_fullname'];
-		}
-		if ((is_null($called_for) ||$called_for == $GLOBALS['egw_info']['user']['account_id']) && empty($params['ident_email']))
-		{
-			$params['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];
-		}
 		$this->params = $params;
 		unset($this->imapServer);
 		unset($this->smtpServer);
+		unset($this->smtpTransport);
 
 		$this->user = $called_for ? $called_for : $GLOBALS['egw_info']['user']['account_id'];
 	}
@@ -407,7 +407,7 @@ class emailadmin_account implements ArrayAccess
 	}
 
 	/**
-	 * Factory method to instanciate smtp server object
+	 * Factory method to instanciate smtp server object / plugin to manage a mail-server from EGroupware
 	 *
 	 * @param array $params
 	 * @return emailadmin_smtp
@@ -444,6 +444,44 @@ class emailadmin_account implements ArrayAccess
 		$smtp->loginType = $params['acc_imap_login_type'];
 
 		return $smtp;
+	}
+
+	/**
+	 * Get Horde mail transport object
+	 *
+	 * @return Horde_Mail_Transport_Smtphorde
+	 */
+	public function smtpTransport()
+	{
+		if (!isset($this->smtpTransport))
+		{
+			$secure = false;
+			switch($this->acc_imap_ssl & ~self::SSL_VERIFY)
+			{
+				case self::SSL_STARTTLS:
+					$secure = 'tls';	// Horde uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
+					break;
+				case self::SSL_SSL:
+					$secure = 'ssl';
+					break;
+				case self::SSL_TLS:
+					$secure = 'tlsv1';	// since Horde_Smtp-1.3.0 requiring Horde_Socket_Client-1.1.0
+					break;
+			}
+			// Horde use locale for translation of error messages
+			common::setlocale(LC_MESSAGES);
+
+			$this->smtpTransport = new Horde_Mail_Transport_Smtphorde(array(
+				'username' => $this->acc_smtp_username,
+				'password' => $this->acc_smtp_password,
+				'host' => $this->acc_smtp_host,
+				'port' => $this->acc_smtp_port,
+				'secure' => $secure,
+				//'timeout' => self::TIMEOUT,
+				//'debug' => self::DEBUG_LOG,
+			));
+		}
+		return $this->smtpTransport;
 	}
 
 	/**
@@ -495,7 +533,12 @@ class emailadmin_account implements ArrayAccess
 				{
 					$row = array_merge($row, emailadmin_credentials::from_session($row));
 				}
-				if (empty($row['ident_email'])||strpos($row['ident_email'],'@')===false) $row['ident_email'] = ($user == $GLOBALS['egw_info']['user']['account_id'] && $GLOBALS['egw_info']['user']['account_email']? $GLOBALS['egw_info']['user']['account_email'] :$row['acc_imap_username']);
+				// fill an empty ident_realname or ident_email of current user with data from user account
+				if ($replace_placeholders && (!isset($user) || $user == $GLOBALS['egw_info']['user']['acount_id']))
+				{
+					if (empty($row['ident_realname'])) $row['ident_realname'] = $GLOBALS['egw_info']['user']['account_fullname'];
+					if (empty($row['ident_email'])) $row['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];
+				}
 				if ($field != 'name')
 				{
 					$data = $replace_placeholders ? array_merge($row, emailadmin_account::replace_placeholders($row)) : $row;
@@ -1406,54 +1449,51 @@ class emailadmin_account implements ArrayAccess
 			$account = array_merge($data, self::replace_placeholders($data));
 			//error_log(__METHOD__."() account=".array2string($account).' took '.number_format(microtime(true)-$start,3));
 		}
-		// user specified an own name --> use just it
-		if (!empty($account['ident_name']))
+		if (empty($account['ident_email']))
 		{
-			$name = $account['ident_name'];
+			try {
+				if (is_array($account) && empty($account['acc_imap_username']) && $account['acc_id'])
+				{
+					if (!isset($account['acc_imap_username']))
+					{
+						$account += emailadmin_credentials::read($account['acc_id'], null, array($account_id, 0));
+					}
+					if (empty($account['acc_imap_username']) && $account['acc_imap_logintype'] &&
+						(!isset($account_id) || $account_id == $GLOBALS['egw_info']['user']['account_id']))
+					{
+						$account = array_merge($account, emailadmin_credentials::from_session($account));
+					}
+				}
+				if (empty($account['ident_email']) && !empty($account['acc_imap_username']))
+				{
+					$account['ident_email'] = $account['acc_imap_username'];
+				}
+			}
+			catch(Exception $e) {
+				_egw_log_exception($e);
+			}
+
+		}
+		if (strlen(trim($account['ident_realname'].$account['ident_org'])))
+		{
+			$name = $account['ident_realname'].' '.$account['ident_org'];
 		}
 		else
 		{
-			if (empty($account['ident_email']))
-			{
-				try {
-					if (is_array($account) && empty($account['acc_imap_username']) && $account['acc_id'])
-					{
-						if (!isset($account['acc_imap_username']))
-						{
-							$account += emailadmin_credentials::read($account['acc_id'], null, array($account_id, 0));
-						}
-						if (empty($account['acc_imap_username']) && $account['acc_imap_logintype'] &&
-							(!isset($account_id) || $account_id == $GLOBALS['egw_info']['user']['account_id']))
-						{
-							$account = array_merge($account, emailadmin_credentials::from_session($account));
-						}
-					}
-					if (empty($account['ident_email']) && !empty($account['acc_imap_username']))
-					{
-						$account['ident_email'] = $account['acc_imap_username'];
-					}
-				}
-				catch(Exception $e) {
-					_egw_log_exception($e);
-				}
-
-			}
-			if (strlen(trim($account['ident_realname'].$account['ident_org'])))
-			{
-				$name = $account['ident_realname'].' '.$account['ident_org'];
-			}
-			else
-			{
-				$name = $account['acc_name'];
-			}
-			if ($account['ident_email'])
-			{
-				$name .= ' <'.$account['ident_email'].'>';
-			}
-			if (stripos($name, $account['acc_name']) === false)
-			{
-				$name .= ' '.$account['acc_name'];
-			}
+			$name = $account['acc_name'];
+		}
+		if (strpos($account['ident_email'], '@') !== false)
+		{
+			$name .= ' <'.$account['ident_email'].'>';
+		}
+		elseif(strpos($account['acc_imap_username'], '@') !== false)
+		{
+			$name .= ' <'.$account['acc_imap_username'].'>';
+		}
+		// if user added a name of this identity, append it in brackets
+		if (!empty($account['ident_name']))
+		{
+			$name .= ' ('.$account['ident_name'].')';
 		}
 		//error_log(__METHOD__."(".array2string($account).", $replace_placeholders) returning ".array2string($name));
 		return $name;
