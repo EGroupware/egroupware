@@ -20,17 +20,33 @@ and open the template in the editor.
 		//###################
 		#egw_fw_top_toolbar{
 			border-bottom: 2px solid gray;
-			div#egw_fw_app_menu{
-				background-image: url(../images/topmenu_items/mobile/menu.png);
-				top: 15px;
-				width: 32px;
-				height: 32px;
-				background-size: 32px 32px;
-				background-repeat: no-repeat;
-				position:absolute;
-				right:15px;
-				padding-bottom: 13px;
-				border-bottom: 2px solid gray;
+			div.egw_fw_ui_tabs_header{
+				max-height: 60px;
+				width: 69%;
+				margin-left: 0;
+				overflow-x: scroll;
+				position: initial;
+				white-space: nowrap;
+				position: fixed;
+				left: 30%;
+				top: 6px;
+				height: 50px;
+				span{
+					margin:0;
+					overflow: visible;
+					height:38px;
+					width:50px;
+					border-width: 1px 1px 1px 1px;
+					
+					/*border-radius: 0px 15px 15px 0px;*/
+					img{
+						height:32px !important;
+						width:32px !important;
+					}
+					h1{
+						display:none;
+					}
+				}
 			}
 		}			
 		//FW Logout
@@ -52,10 +68,18 @@ and open the template in the editor.
 			height: 24px;
 			background-size: 24px 24px;
 		}
+		.egw_fw_top_toolbar>div:hover{
+			-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+			-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+		}
+		
 
 		//FW Menu
 		div#egw_fw_menu{
-			background-image: url(../images/topmenu_items/mobile/menu.png);
+			background-image: url(../images/topmenu_items/mobile/menu_active.png);
+			-webkit-transform:rotate(360deg);
+			transform:rotate(360deg);
 			position: fixed;
 			left: 20px;
 			top: 15px;
@@ -63,6 +87,7 @@ and open the template in the editor.
 			height: 32px;
 			background-size: 32px 32px;
 			background-repeat: no-repeat;
+			z-index: 999;
 		}
 		div#egw_fw_menu:active {
 			-webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -104,7 +129,7 @@ and open the template in the editor.
 						background-size: 32px 32px;
 						display: inline-block;
 				}
-
+				
 				a#topmenu_acl:before {
 					content: "";
 					background-repeat: no-repeat;
@@ -153,7 +178,11 @@ and open the template in the editor.
 					background-size: 32px 32px;
 					display: inline-block;
 				}
-
+				a#topmenu_search:active {
+					transform: scale(-2);
+					-webkit-transform:scale(-2);
+					-webkit-transition: 1s ease;
+				}
 			}
 		} 
 	}//End of toolbar
@@ -552,6 +581,11 @@ and open the template in the editor.
 	//ToggleClass
 	
 	.sidebar-toggle{
+		#egw_fw_top_toolbar div#egw_fw_menu{
+			background-image: url(../images/topmenu_items/mobile/menu.png);
+			-webkit-transform:rotate(0deg);
+			transform:rotate(0deg);
+		}
 		#egw_fw_sidebar{
 			#egw_fw_sidemenu{
 				width:82px !important;
@@ -571,9 +605,11 @@ and open the template in the editor.
 				}
 				.egw_fw_ui_tabs_header{
 					span{
+						margin:0px 5px 0px 2px;
+						overflow: visible;
 						height:38px;
 						width:50px;
-						border-radius: 0px 15px 15px 0px;
+						/*border-radius: 0px 15px 15px 0px;*/
 						img{
 							height:32px !important;
 							width:32px !important;
@@ -591,5 +627,11 @@ and open the template in the editor.
 		#egw_fw_logout, #egw_fw_topmenu_items{
 			display:none !important;
 		}
+	}
+	
+	.tabs-header-portrait-collapsed{
+		left:7% !important;
+		width: 90% !important;
+		border-left:2px solid gray;
 	}
 }
