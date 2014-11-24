@@ -70,7 +70,7 @@
 					<customfields-types statustext="Type of customfield" id="{$row}[cf_type]"/>
 					<checkbox id="${row}[cf_needed]" selected_value="1" unselected_value="0"/>
 					<select-account id="${row}[cf_private]" account_type="both"/>
-					<description id="${row}[cf_values]" no_lang="1"/>
+					<description id="${row}[cf_values]" no_lang="1" class="values"/>
 					<vbox>
 						<description id="${row}[cf_len]" no_lang="1"/>
 						<description id="${row}[cf_rows]" no_lang="1"/>

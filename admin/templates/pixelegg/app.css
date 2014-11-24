@@ -1,3 +1,4 @@
+@import "../default/app.css";
 /**
  * EGroupware: CSS with less preprocessor
 
@@ -11,72 +12,6 @@
  * @package addressbook
  * @version $Id$
  */
-/**
- * EGroupware - CSS Styles used by admin app
- *
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package etemplate
- * @link http://www.egroupware.org
- * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 47432 2014-06-30 07:48:05Z hnategh $
- */
-.admin_tree table,
-.admin_tree tr,
-.admin_tree td {
-  border: none;
-}
-div#divAppbox {
-  padding: 0;
-}
-body {
-  background-image: none;
-  background-color: white;
-}
-/* otherwise it is transparent */
-#admin_iframe {
-  background-color: white;
-}
-tr.adminAccountInactive .adminStatus {
-  color: red;
-}
-.adminOverflowEllipsis {
-  width: 100%;
-  white-space: nowrap;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-img.admin_aclApp {
-  width: 16px;
-}
-td.admin_userAgent {
-  max-width: 200px;
-}
-td.admin_userAgent span {
-  display: block;
-  white-space: nowrap;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#admin-acl_filter {
-  max-width: 100% !important;
-}
-.admin_account_delete > * {
-  padding: 8px;
-}
-/* Global Category classes*/
-.globalCat_confirmDelete {
-  position: absolute;
-  left: 120px;
-  top: 80px;
-  background-color: white;
-  display: none;
-  border: 2px solid black;
-}
-.globalCat_hiddenCatid {
-  display: none;
-}
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
     background-color: #ffdd73;

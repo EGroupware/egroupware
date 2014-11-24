@@ -68,3 +68,17 @@ td.admin_userAgent span {
 .globalCat_hiddenCatid {
   display: none;
 }
+
+/**
+ * Custom fields list
+ */
+#admin-customfields_nm .values {
+	display: inline-block;
+	max-height: 13em;
+	overflow: auto;
+}
+/* Set a max height for all app type options */
+#admin-customfields_admin-customfields-types + table {
+	max-height: 300px;
+	overflow: auto;
+}

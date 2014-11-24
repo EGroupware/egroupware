@@ -223,6 +223,9 @@ class customfields
 		// Allow extending app a change to change content before display
 		static::app_index($content, $sel_options, $readonlys, $preserve);
 
+		// Make sure app css gets loaded, extending app might cause et2 to miss it
+		egw_framework::includeCSS('admin','app');
+
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 
 		// Some logic to make sure extending class (if there is one) gets called
