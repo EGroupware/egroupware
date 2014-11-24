@@ -65,7 +65,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	init: function() {
 		this._super.apply(this,arguments);
-		if (!this.egw.is_popup())	
+		if (!this.egw.is_popup())
 			// Turn on client side, persistent cache
 			// egw.data system runs encapsulated below etemplate, so this must be
 			// done before the nextmatch is created.
@@ -166,7 +166,7 @@ app.classes.mail = AppJS.extend(
 			case 'mail.display':
 				this.mail_isMainWindow = false;
 				this.mail_display();
-	
+
 				// Register attachments for drag
 				this.register_for_drag(
 					this.et2.getArrayMgr("content").getEntry('mail_id'),
@@ -751,9 +751,9 @@ app.classes.mail = AppJS.extend(
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
 		}
-		
+
 		var $preview_iframe = jQuery('#mail-index_mailPreviewContainer');
-		
+
 		// Re calculate the position of preview iframe according to its visible sibilings
 		var set_prev_iframe_top = function ()
 		{
@@ -767,12 +767,12 @@ app.classes.mail = AppJS.extend(
 					lastEl = lastEl.prev();
 				}
 				var offset = iframeTop - (lastEl.offset().top + lastEl.height()) || 130; // fallback to 130 px if can not calculate new top
-				
+
 				// preview iframe parent has position absolute, therefore need to calculate the top via position
 				$preview_iframe.css ('top', $preview_iframe.position().top - offset + 10);
 			}, 50);
-		}
-		
+		};
+
 		if (attachmentArea && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
 		{
 			// If there is content to show recalculate the size
@@ -1486,7 +1486,7 @@ app.classes.mail = AppJS.extend(
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest(true);
-		
+
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current Folder'))));
 	},
@@ -3633,6 +3633,10 @@ app.classes.mail = AppJS.extend(
 			folder:{
 				widget:{},
 				jQClass: '.mailComposeJQueryFolder'
+			},
+			replyto:{
+				widget:{},
+				jQClass: '.mailComposeJQueryReplyto'
 			}};
 
 		for(var widget in widgets)
@@ -3660,33 +3664,31 @@ app.classes.mail = AppJS.extend(
 	{
 		var bodyH = egw_getWindowInnerHeight();
 		var textArea = this.et2.getWidgetById('mail_plaintext');
-		var toolbar = jQuery('.mailSignature');
+		var headerSec = jQuery('.mailComposeHeaderSection');
 		var content = this.et2.getArrayMgr('content').data;
 		if (typeof textArea != 'undefined' && textArea != null)
 		{
-			var textAreaH = textArea.node.clientHeight;
 			if (textArea.getParent().disabled)
 			{
 				textArea = this.et2.getWidgetById('mail_htmltext');
-				textAreaH = parseInt(textArea.getParent().node.clientHeight);
 			}
 			// Tolerate values base on plain text or html, in order to calculate freespaces
 			var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
 			var delta = content.attachments? 68: textAreaDelta;
-			
-			var freeSpace = (bodyH  - Math.round(toolbar.height() + toolbar.offset().top) - delta);
+
+			var bodySize = (bodyH  - Math.round(headerSec.height() + headerSec.offset().top) - delta);
 
 			if (textArea.id != "mail_htmltext")
 			{
-				textArea.set_height(textAreaH + freeSpace);
+				textArea.set_height(bodySize);
 			}
 			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext' && typeof textArea.getParent().node.children[1] != 'undefined')
 			{
-				jQuery(textArea.getParent().node.children[1].children[1].children[1]).css('height',textAreaH + (freeSpace - 90));
+				jQuery(textArea.getParent().node.children[1].children[1].children[1]).css('height',bodySize -90);
 			}
 			else
 			{
-				textArea.set_height(textAreaH + (freeSpace - 90));
+				textArea.set_height(bodySize - 90);
 			}
 		}
 	},
@@ -3700,7 +3702,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_fieldExpander: function(event,widget)
 	{
-		var expWidgets = {cc:{},bcc:{},folder:{}};
+		var expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
 		for (var name in expWidgets)
 		{
 			expWidgets[name] = this.et2.getWidgetById(name+'_expander');
@@ -3730,11 +3732,19 @@ app.classes.mail = AppJS.extend(
 					{
 						expWidgets.folder.set_disabled(true);
 					}
+					break;
+				case 'replyto_expander':
+					jQuery(".mailComposeJQueryReplyto").show();
+					if (typeof expWidgets.replyto !='undefined')
+					{
+						expWidgets.replyto.set_disabled(true);
+					}
+					break;
 			}
 		}
 		else if (typeof widget == "undefined")
 		{
-			var widgets = {cc:{},bcc:{},folder:{}};
+			var widgets = {cc:{},bcc:{},folder:{},replyto:{}};
 
 			for(var widget in widgets)
 			{
@@ -3764,6 +3774,14 @@ app.classes.mail = AppJS.extend(
 							{
 								expWidgets.folder.set_disabled(true);
 							}
+							break;
+						case 'replyto':
+							jQuery(".mailComposeJQueryReplyto").show();
+							if (typeof expWidgets.replyto != 'undefiend')
+							{
+								expWidgets.replyto.set_disabled(true);
+							}
+							break;
 					}
 				}
 			}
@@ -3987,11 +4005,11 @@ app.classes.mail = AppJS.extend(
 				}
 			}).draggable('disable');
 			window.setTimeout(function(){
-			
+
 				if(dragItem && dragItem.data() && typeof dragItem.data()['uiDraggable'] !== 'undefined') dragItem.draggable('enable');
 			},100);
 		}
-		
+
 	},
 
 	/**

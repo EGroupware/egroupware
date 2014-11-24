@@ -2,141 +2,134 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
-		
-			<vbox class="mailCompose mailComposeHeaderSection" width="100%">
-				<hbox class="ui-widget-header ui-corner-all mail-compose_toolbar" width="100%">
-					<description class="email-button-group sent">                  
-						<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
-                    </description>
-                   <description class="email-button-group save">
-		                <buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
-		                <buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraft"/>
-                    </description>
-					<description class="email-button-group file">
-						<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
-						<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='attachments' onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
-					</description>
-                    <description class="email-button-group egw">
-		                <description class="$cont[noSaveAsAvailable]" value="Save:"/>
-		                <hbox class="$cont[noInfologAvailable]">
-							<image class="et2_button ui-button et2_button_icon compose_egw_icons" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
-							<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
+		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
+			<hbox class="ui-widget-header ui-corner-all mail-compose_toolbar" width="100%">
+				<description class="email-button-group sent">
+					<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/>
+				</description>
+			   <description class="email-button-group save">
+					<buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
+					<buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraft"/>
+				</description>
+				<description class="email-button-group file">
+					<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
+					<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='attachments' onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
+				</description>
+				<description class="email-button-group egw">
+					<description class="$cont[noSaveAsAvailable]" value="Save:"/>
+					<hbox class="$cont[noInfologAvailable]">
+						<image class="et2_button ui-button et2_button_icon compose_egw_icons" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
+						<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
+					</hbox>
+					<hbox class="$cont[noTrackerAvailable]">
+						<image class="et2_button ui-button et2_button_icon compose_egw_icons" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
+						<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
+					</hbox>
+				</description>
+				<description class="email-button-group notification">
+					<description value="Recieve notification"/>
+					<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
+				</description>
+				<description class="email-button-group priority">
+					<description value="Priority"/>
+					<menulist>
+						<menupopup id="priority"/>
+					</menulist>
+				</description>
+			</hbox>
+			<grid  width="100%">
+				<columns>
+					<column widtd="10%"/>
+					<column width="84%"/>
+					<column width="6%"/>
+				</columns>
+				<rows>
+					<row class="mailComposeHeaders" >
+						<description value="From"/>
+						<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
+						<vbox>
+							<description id="replyto_expander" value="Reply to" onclick="app.mail.compose_fieldExpander"/>
+							<description id="folder_expander" value="Folder" onclick="app.mail.compose_fieldExpander"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="mode"/>
+							<textbox class="mail-index_quotaDisplayNone" id="lastDrafted"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="references"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"/>
+							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="list-id"/>
+						</vbox>
+					</row>
+					<row class="mailComposeHeaders mailComposeJQueryReplyto">
+						<description value="Reply to"/>
+						<taglist-email id="replyto" width="100%" maxSelection="1" onclick="app.mail.address_click"/>
+						<description/>
+					</row>
+					<row class="mailComposeHeaders mailComposeJQueryFolder">
+						<description value="Folder"/>
+						<taglist id="folder" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false" onclick="app.mail.address_click"/>
+						<description/>
+					</row>
+					<row class="mailComposeHeaders" >
+						<description value="To"/>
+						<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.set_dragging_dndCompose"/>
+						<vbox>
+							<description id="cc_expander" value="Cc" onclick="app.mail.compose_fieldExpander"/>
+							<description id="bcc_expander" value="Bcc" onclick="app.mail.compose_fieldExpander"/>
+						</vbox>
+					</row>
+					<row class="mailComposeHeaders mailComposeJQueryCc">
+						<description value="Cc"/>
+						<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.set_dragging_dndCompose"/>
+						<description/>
+					</row>
+					<row  class="mailComposeHeaders mailComposeJQueryBcc">
+						<description value="Bcc"/>
+						<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.set_dragging_dndCompose"/>
+						<description/>
+					</row>
+					<row class="mailComposeHeaders">
+						<description value="Subject"/>
+						<textbox align="left" width="100%" id="subject" height="25"/>
+						<checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" options=",, ,disable" tabindex="7"/>
+					</row>
+					<row>
+						<description/>
+						<hbox class="mail_Composeicons">
+							<html id="mail_composeicons"/>
 						</hbox>
-						<hbox class="$cont[noTrackerAvailable]">
-							<image class="et2_button ui-button et2_button_icon compose_egw_icons" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
-							<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
-						</hbox>
-					</description>
-					<description class="email-button-group notification">
-						<description value="Recieve notification"/>
-						<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="on,off"/>
-					</description>
-					<description class="email-button-group priority">
-						<description value="Priority"/>
-						<menulist>
-							<menupopup id="priority"/>
-						</menulist>
-                    </description>
-				</hbox>
-				<grid  width="100%">
+					</row>
+				</rows>
+			</grid>
+		</vbox>
+		<vbox class="mailComposeBodySection" width="99%">
+			<hbox disabled="@is_plain" class="mailComposeBody">
+				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="478px" width="100%" />
+			</hbox>
+			<hbox disabled="@is_html" class="mailComposeBody">
+				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
+			</hbox>
+			<groupbox class="et2_file mailUploadSection" disabled="@no_griddata">
+				<caption label="Files"/>
+				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
 					<columns>
-						<column widtd="10%"/>
-						<column width="42%" />
-						<column width="42%"/>
-						<column width="6%"/>
+						<column disabled="!@showtempname" width="10%"/>
+						<column width="85%"/>
+						<column width="8%"/>
+						<column width="" />
 					</columns>
 					<rows>
-						<row class="mailComposeHeaders" >
-							<description value="From"/>
-							<hbox>
-								<menulist>
-									<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
-								</menulist>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="mode"/>
-								<textbox class="mail-index_quotaDisplayNone" id="lastDrafted"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="references"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"/>
-								<textbox class="mail-index_quotaDisplayNone" readonly="true" id="list-id"/>
-							</hbox>
-							<taglist-email id="replyto" empty_label="Reply to" width="100%" maxSelection="1" onclick="app.mail.address_click"/>
-							<hbox>
-								<description id="folder_expander" value="Folder" onclick="app.mail.compose_fieldExpander"/>
-							</hbox>	
-						</row>
-						<row class="mailComposeHeaders mailComposeJQueryFolder">
-							<description value="Folder"/>
-							<taglist id="folder" empty_label="Folder" span="2" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
-							<description/>
-						</row>
-						<row class="mailComposeHeaders" >
-							<description value="To"/>
-							<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" span="2" onchange="app.mail.set_dragging_dndCompose"/>
-							<hbox>
-								<description id="cc_expander" value="Cc" onclick="app.mail.compose_fieldExpander"/>
-								<description id="bcc_expander" value="Bcc" onclick="app.mail.compose_fieldExpander"/>
-							</hbox>
-						</row>
-						<row class="mailComposeHeaders mailComposeJQueryCc">
-							<description value="Cc"/>
-							<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2" onchange="app.mail.set_dragging_dndCompose"/>
-							<description/>
-						</row>
-						<row  class="mailComposeHeaders mailComposeJQueryBcc">
-							<description value="Bcc"/>
-							<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" span="2" onchange="app.mail.set_dragging_dndCompose"/>
-							<description/>
-						</row>
-						<row class="mailComposeHeaders">
-							<description value="Subject"/>
-							<textbox align="left" width="100%" id="subject" span="2" height="25"/>
-							<checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" options=",, ,disable" tabindex="7"/>
-						</row>
-						<row>
-							<description/>
-							<hbox class="mail_Composeicons">
-								<html id="mail_composeicons"/>
-							</hbox>
+						<row class="row attachmentRow">
+							<description id="${row}[tmp_name]"/>
+							<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
+							<description align="right" id="${row}[size]" />
+							<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"/>
 						</row>
 					</rows>
 				</grid>
-			</vbox>
-			<vbox class="mailComposeBodySection" width="99%">
-				<hbox disabled="@is_plain" class="mailComposeBody">
-					<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="478px" width="100%" />
-				</hbox>
-				<hbox disabled="@is_html" class="mailComposeBody">
-					<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
-				</hbox>
-				<groupbox class="mailSignature">
-					<menulist>
-						<menupopup id="signatureid" onchange="app.mail.submitOnChange"/>
-					</menulist>
-					<description value=" "/>
-				</groupbox>
-				<groupbox class="et2_file mailUploadSection" disabled="@no_griddata">
-					<caption label="Files"/>
-					<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
-						<columns>
-							<column disabled="!@showtempname" width="10%"/>
-							<column width="85%"/>
-							<column width="8%"/>
-							<column width="" />
-						</columns>
-						<rows>
-							<row class="row attachmentRow">
-								<description id="${row}[tmp_name]"/>
-								<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
-								<description align="right" id="${row}[size]" />
-								<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"/>
-							</row>
-						</rows>
-					</grid>
-				</groupbox>
-			</vbox>
+			</groupbox>
+		</vbox>
 	</template>
 </overlay>
