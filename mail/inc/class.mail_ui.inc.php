@@ -485,7 +485,9 @@ class mail_ui
 				$sel_options['filter'] = $this->statusTypes;
 
 				$etpl = new etemplate_new('mail.index');
-				$group=0;
+				// Start at 2 so auto-added copy+paste actions show up as second group
+				// Needed because there's no 'select all' action to push things down
+				$group=2;
 				// Set tree actions
 				$tree_actions = array(
 					'drop_move_mail' => array(
@@ -520,33 +522,39 @@ class mail_ui
 						'caption' => 'Add Folder',
 						'onExecute' => 'javaScript:app.mail.mail_AddFolder',
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+						'group'		=> $group,
 					),
 					'edit' => array(
 						'caption' => 'Rename Folder',
 						'onExecute' => 'javaScript:app.mail.mail_RenameFolder',
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+						'group'		=> $group,
 					),
 					'move' => array(
 						'caption' => 'Move Folder',
 						'type' => 'drag',
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'dragType' => array('mailFolder')
+						'dragType' => array('mailFolder'),
+						'group'		=> $group,
 					),
 					'delete' => array(
 						'caption' => 'Delete Folder',
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 						'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
+						'group'		=> $group,
 					),
 					'subscribe' => array(
 						'caption' => 'Subscribe folder ...',
 						//'icon' => 'configure',
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 						'onExecute' => 'javaScript:app.mail.edit_subscribe',
+						'group'		=> $group
 					),
 					'unsubscribe' => array(
 						'caption' => 'Unsubscribe folder',
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 						'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
+						'group'		=> $group,
 					),
 					'sieve' => array(
 						'caption' => 'Mail filter',
