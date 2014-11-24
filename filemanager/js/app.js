@@ -449,7 +449,16 @@ app.classes.filemanager = AppJS.extend(
 			if(action)
 			{
 				var paths = this._elems2paths(selected);
-				if(paths[0]) path = this.dirname(paths[0]);
+				if(paths[0]) path = paths[0];
+				// check if target is a file --> use it's directory instead
+				if(selected[0].id || path)
+				{
+					var data = egw.dataGetUIDdata(selected[0].id || 'filemanager::'+path );
+					if (data && data.data.mime != 'httpd/unix-directory')
+					{
+						path = this.dirname(path);
+					}
+				}
 			}
 			this._do_action('createdir', dir, true, path);	// true=synchronous request
 			this.change_dir((path == '/' ? '' : path)+'/'+dir);
