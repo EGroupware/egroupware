@@ -225,7 +225,9 @@ and open the template in the editor.
 		// #        #
 		// ##########
 		// Inactive
-
+		
+		
+		
 		.egw_fw_ui_tab_header {
 			padding-left: 0;
 			position: relative;
@@ -248,7 +250,11 @@ and open the template in the editor.
 				/*.background_color_20_gray ;*/
 				background-color: none !important;
 			 }
-
+			 &:active {
+				 webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+				-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+				box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+			 }
 			// APP Name
 			h1 {
 				/*font-size: 100%;*/
@@ -290,7 +296,9 @@ and open the template in the editor.
 			/*padding: 0 0 5px !important;*/
 			.background_color_egw_light;
 			background-image:none !important;
-
+			webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+			-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 			&:hover {.background_color_egw_light ;}
 
 
@@ -609,7 +617,6 @@ and open the template in the editor.
 						overflow: visible;
 						height:38px;
 						width:50px;
-						/*border-radius: 0px 15px 15px 0px;*/
 						img{
 							height:32px !important;
 							width:32px !important;
