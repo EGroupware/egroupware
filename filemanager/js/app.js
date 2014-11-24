@@ -621,15 +621,20 @@ app.classes.filemanager = AppJS.extend(
 		var dst = this.get_path();
 
 		// File(s) were dropped on a row, they want them inside
-		if(_target && _target.id)
+		if(_target)
 		{
-			dst = this.id2path(_target.id);
+			var dst = ''
+			var paths = this._elems2paths([_target]);
+			if(paths[0]) dst = paths[0];
 
 			// check if target is a file --> use it's directory instead
-			var data = egw.dataGetUIDdata(_target.id);
-			if (!data || data.data.mime != 'httpd/unix-directory')
+			if(_target.id)
 			{
-				dst = this.dirname(dst);
+				var data = egw.dataGetUIDdata(_target.id);
+				if (!data || data.data.mime != 'httpd/unix-directory')
+				{
+					dst = this.dirname(dst);
+				}
 			}
 		}
 

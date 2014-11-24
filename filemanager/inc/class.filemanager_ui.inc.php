@@ -146,6 +146,7 @@ class filemanager_ui
 			),
 			'mkdir' => array(
 				'caption' => lang('Create directory'),
+				'icon' => 'filemanager/button_createdir',
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:app.filemanager.createdir'
