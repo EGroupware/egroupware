@@ -6,7 +6,7 @@
 			<columns>
 				<column width="130"/>
 				<column width="350"/>
-				<column/>
+				<column width="45"/>
 				<column width="30"/>
 			</columns>
 			<rows>
@@ -17,43 +17,40 @@
 				</row>
 				<row disabled="@no_types">
 					<description value="Type"/>
-					<menulist>
-						<menupopup id="cf_type2" no_lang="1" rows="3"/>
+					<menulist span="3">
+						<menupopup id="cf_type2" no_lang="1" rows="5"/>
 					</menulist>
 					<description/>
 				</row>
 				<row>
 					<description value="Label"/>
-					<textbox statustext="the text displayed to the user" id="cf_label" maxlength="255" class="et2_fullWidth"/>
-					<description/>
+					<textbox statustext="the text displayed to the user" id="cf_label" maxlength="255" class="et2_fullWidth" span="3"/>
 				</row>
 				<row>
 					<description value="Type of field"/>
-					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth"/>
-					<hbox>
+					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth" span="2" onchange="widget.getRoot().getWidgetById('cf_values').set_statustext(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']')||'');widget.getRoot().getWidgetById('cf_len').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_len]'));widget.getRoot().getWidgetById('cf_rows').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_rows]'));"/>
+					<hbox span="2">
 						<description value="Required"/>
 						<checkbox id="cf_needed"/>
 					</hbox>
-					<description/>
 				</row>
 				<row disabled="!@use_private">
 					<description value="Private"/>
-					<taglist-account class="et2_fullWidth" statustext="Select accounts for which the custom field should be visible" id="cf_private" rows="3" account_type="both" span="2"/>
-					<description/>
+					<taglist-account class="et2_fullWidth" statustext="Select accounts for which the custom field should be visible" id="cf_private" rows="3" account_type="both" span="3" empty_label="Add user or group"/>
 				</row>
 				<row>
 					<description statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" value="Options"/>
-					<textbox multiline="true" statustext="each value is a line like id[=label]" id="cf_values" rows="4" cols="30" span="2" width="99%"/>
+					<textbox multiline="true" statustext="@statustext" id="cf_values" rows="5" cols="30" span="3" width="99%"/>
 				</row>
 				<row>
 					<description value="Attributes"/>
-					<box span="2">
+					<box span="3" class="attributes">
 						<description value="Length:"/>
-						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="cf_len" size="5"/>
+						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="cf_len" size="4"/>
 						<description value="Rows:"/>
-						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" max="10" size="2"/>
+						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" max="10" size="4"/>
 						<description value="Order:"/>
-						<textbox type="integer" statustext="determines the order the fields are displayed" id="cf_order" min="1" size="3"/>			
+						<textbox type="integer" statustext="determines the order the fields are displayed" id="cf_order" min="1" size="4"/>
 					</box>
 					<description/>
 				</row>

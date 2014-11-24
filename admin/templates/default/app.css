@@ -82,3 +82,9 @@ td.admin_userAgent span {
 	max-height: 300px;
 	overflow: auto;
 }
+#admin-customfield_edit tr:not([class]) td {
+	padding: 5px 0px;
+}
+#admin-customfield_edit .attributes .et2_label,#admin-customfield_edit .attributes input {
+	margin-right: 1em;
+}

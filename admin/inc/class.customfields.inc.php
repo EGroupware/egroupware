@@ -65,6 +65,29 @@ class customfields
 	var $tmpl;
 
 	/**
+	 * @var Description of the options or value format for each cf_type
+	 */
+	public static $type_option_help = array(
+		'select'	=> 'each value is a line like id[=label], or use @&lt;path&gt; to read options from a file',
+		'radio'		=> 'each value is a line like id[=label], or use @&lt;path> to read options from a file',
+		'button'	=> 'each value is a line like label=[javascript]'
+	);
+
+	/**
+	 * Custom fields can also have length and rows set, but these are't used for all types
+	 * If not set to true here, the field will be disabled when selecting the type
+	 */
+	public static $type_attribute_flags = array(
+		'text'		=> array('cf_len' => true, 'cf_rows' => true),
+		'float'		=> array('cf_len' => true, 'cf_rows' => true),
+		'select'	=> array('cf_len' => false, 'cf_rows' => true),
+		'date'		=> array('cf_len' => true, 'cf_rows' => false),
+		'date-time'	=> array('cf_len' => true, 'cf_rows' => false),
+		'select-account'	=> array('cf_len' => false, 'cf_rows' => true),
+		'htmlarea'	=> array('cf_len' => true, 'cf_rows' => true),
+	);
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $appname
@@ -373,6 +396,11 @@ class customfields
 			$content['no_types'] = true;
 		}
 
+		// Include type-specific value help
+		$content['options'] = lang(self::$type_option_help);
+		$content['statustext'] = $content['options'][$content['cf_type']];
+		$content['attributes'] = self::$type_attribute_flags;
+		
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'cf_id' => $cf_id,
 			'cf_app' => $this->appname,
