@@ -16,28 +16,481 @@ require_once(EGW_API_INC.'/class.phpmailer.inc.php');
  * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
  * or regular error_log for true (can be set either in DB or header.inc.php).
  *
+ * New egw_mailer object uses Horde Mime Mail class with compatibility methods for
+ * old PHPMailer methods and class variable assignments.
+ *
  * This class does NOT use anything EGroupware specific, it acts like PHPMail, but logs.
  */
-class egw_mailer extends PHPMailer
+class egw_mailer extends Horde_Mime_Mail
 {
 	/**
-	 * Constructor: always throw exceptions instead of echoing errors and EGw pathes
+	 * Mail account used for sending mail
+	 *
+	 * @var emailadmin_account
 	 */
-	function __construct()
-	{
-		parent::__construct(true);	// throw exceptions instead of echoing errors
+	protected $account;
 
-		// setting EGroupware specific path for PHPMailer lang files
-		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['lang'])) list($lang,$nation) = explode('-',$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
-		$lang_path = EGW_SERVER_ROOT.'/phpgwapi/lang/';
-		if ($nation && file_exists($lang_path."phpmailer.lang-$nation.php"))	// atm. only for pt-br => br
+	/**
+	 *
+	 * @var Horde_Mail_Rfc822_List
+	 */
+	protected $to;
+	protected $cc;
+	protected $bcc;
+	protected $replyto;
+
+	/**
+	 * Constructor: always throw exceptions instead of echoing errors and EGw pathes
+	 *
+	 * @param int|emailadmin_account $account =null mail account to use, default use emailadmin_account::get_default($smtp=true)
+	 */
+	function __construct($account=null)
+	{
+		parent::__construct();
+		$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+
+		$this->setAccount($account);
+
+		$this->is_html = false;
+
+		$this->ClearAddresses();
+
+		$this->clearParts();
+	}
+
+	/**
+	 * Clear all addresses
+	 */
+	function clearAddresses()
+	{
+		// clear all addresses
+		$this->to = new Horde_Mail_Rfc822_List();
+		$this->cc = new Horde_Mail_Rfc822_List();
+		$this->bcc = new Horde_Mail_Rfc822_List();
+		$this->replyto = new Horde_Mail_Rfc822_List();
+	}
+
+	/**
+	 * Set mail account to use for sending
+	 *
+	 * @param int|emailadmin_account $account =null mail account to use, default use emailadmin_account::get_default($smtp=true)
+	 * @throws egw_exception_not_found if account was not found (or not valid for current user)
+	 */
+	function  setAccount($account=null)
+	{
+		if (is_a($account, 'emailadmin_account'))
 		{
-			$lang = $nation;
+			$this->account = $account;
 		}
-		if (!$this->SetLanguage((empty($lang)?'en':$lang),$lang_path))
+		elseif ($account > 0)
 		{
-			$this->SetLanguage('en',$lang_path);	// use English default
+			$this->account = emailadmin_account::read($account);
 		}
+		else
+		{
+			$this->account = emailadmin_account::get_default(true);	// true = need an SMTP (not just IMAP) account
+		}
+		// use smpt-username as sender, if available, but only if it is a full email address
+		$sender = $this->account->acc_smtp_username && strpos($this->account->acc_smtp_username, '@') !== false ?
+			$this->account->acc_smtp_username : $this->account->ident_email;
+		$name = $this->account->ident_realname ? $this->account->ident_realname : $sender;
+		$this->setFrom($sender, $name);
+	}
+
+	/**
+	 * Set From and Return-Path header
+	 *
+	 * @param string $address
+	 * @param string $personal =''
+	 */
+	public function setFrom($address, $personal='')
+	{
+		$this->addHeader('Return-Path', '<'.$address.'>', true);
+		$this->addHeader('From', self::add_personal($address, $personal));
+	}
+
+	/**
+	 * Add one or multiple addresses to To, Cc, Bcc or Reply-To
+	 *
+	 * @param string|array|Horde_Mail_Rfc822_List $address
+	 * @param string $personal ='' only used if $address is a string
+	 * @param string $type ='to' type of address to add "to", "cc", "bcc" or "replyto"
+	 */
+	function addAddress($address, $personal='', $type='to')
+	{
+		static $type2header = array(
+			'to' => 'To',
+			'cc' => 'Cc',
+			'bcc' => 'Bcc',
+			'replyto' => 'Reply-To',
+		);
+		if (!isset($type2header[$type]))
+		{
+			throw new egw_exception_wrong_parameter("Unknown type '$type'!");
+		}
+		if ($personal) $address = self::add_personal ($address, $personal);
+
+		// add to our local list
+		$this->$type->add($address);
+
+		// add as header
+		$this->addHeader($type2header[$type], $this->$type, true);
+	}
+
+	/**
+	 * Write Bcc as header for storing in sent or as draft
+	 *
+	 * Bcc is normally only add to recipients while sending, but not added visible as header!
+	 */
+	function forceBccHeader()
+	{
+		$this->_headers->removeHeader('Bcc');
+		$this->_headers->addHeader('Bcc', $this->bcc);
+	}
+
+	/**
+	 * Add personal part to email address
+	 *
+	 * @param string $address
+	 * @param string $personal
+	 * @return string Rfc822 address
+	 */
+	static function add_personal($address, $personal)
+	{
+		if (is_string($address) && !empty($personal))
+		{
+			//if (!preg_match('/^[!#$%&\'*+/0-9=?A-Z^_`a-z{|}~-]+$/u', $personal))	// that's how I read the rfc(2)822
+			if ($personal && !preg_match('/^[0-9A-Z -]*$/iu', $personal))	// but quoting is never wrong, so quote more then necessary
+			{
+				$personal = '"'.str_replace(array('\\', '"'),array('\\\\', '\\"'), $personal).'"';
+			}
+			$address = ($personal ? $personal.' <' : '').$address.($personal ? '>' : '');
+		}
+		return $address;
+	}
+
+	/**
+	 * Add one or multiple addresses to Cc
+	 *
+	 * @param string|array|Horde_Mail_Rfc822_List $address
+	 * @param string $personal ='' only used if $address is a string
+	 */
+	function AddCc($address, $personal=null)
+	{
+		$this->AddAddress($address, $personal, 'cc');
+	}
+
+	/**
+	 * Add one or multiple addresses to Bcc
+	 *
+	 * @param string|array|Horde_Mail_Rfc822_List $address
+	 * @param string $personal ='' only used if $address is a string
+	 */
+	function AddBcc($address, $personal=null)
+	{
+		$this->AddAddress($address, $personal, 'bcc');
+	}
+
+	/**
+	 * Add one or multiple addresses to Reply-To
+	 *
+	 * @param string|array|Horde_Mail_Rfc822_List $address
+	 * @param string $personal ='' only used if $address is a string
+	 */
+	function AddReplyTo($address, $personal=null)
+	{
+		$this->AddAddress($address, $personal, 'replyto');
+	}
+
+	/**
+	 * Adds an attachment
+	 *
+	 * "text/calendar; method=..." get automatic detected and added as highes priority alternative,
+	 * overwriting evtl. existing html body!
+	 *
+	 * @param string $file     The path to the file.
+	 * @param string $name     The file name to use for the attachment.
+	 * @param string $type     The content type of the file.
+	 * @param string $charset  The character set of the part, only relevant for text parts.
+	 * @return integer part-number
+	 * @throws egw_exception_not_found if $file could not be opened for reading
+	 */
+	public function addAttachment($file, $name = null, $type = null, $charset = 'us-ascii')
+	{
+		// deprecated PHPMailer::AddAttachment($path, $name = '', $encoding = 'base64', $type = 'application/octet-stream') call
+		if ($type === 'base64')
+		{
+			$type = $charset;
+			$charset = 'us-ascii';
+		}
+
+		// pass file as resource to Horde_Mime_Part::setContent()
+		if (!($resource = fopen($file, 'r')))
+		//if (!($resource = file_get_contents($file)))
+		{
+			throw new egw_exception_not_found("File '$file' not found!");
+		}
+		$part = new Horde_Mime_Part();
+		$part->setType($type ? $type : egw_vfs::mime_content_type($file));
+		$part->setContents($resource);
+		// this should not be necessary, because binary data get detected by mime-type,
+		// but at least Cyrus complains about NUL characters
+		$part->setTransferEncoding('base64', array('send' => true));
+		$part->setName($name ? $name : egw_vfs::basename($file));
+
+		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
+		if (stripos($type,"text/calendar; method=") !== false)
+		{
+			$this->_htmlBody = $part;
+			return;
+		}
+		$part->setDisposition('attachment');
+
+		return $this->addMimePart($part);
+	}
+
+	/**
+	 * Adds a string or binary attachment (non-filesystem) to the list.
+	 *
+	 * "text/calendar; method=..." get automatic detected and added as highes priority alternative,
+	 * overwriting evtl. existing html body!
+	 *
+	 * @param string $content String attachment data.
+	 * @param string $filename Name of the attachment. We assume that this is NOT a path
+	 * @param string $type File extension (MIME) type.
+	 * @return int part-number
+	 */
+	public function AddStringAttachment($content, $filename, $type = 'application/octet-stream')
+	{
+		// deprecated PHPMailer::AddStringAttachment($content, $filename = '', $encoding = 'base64', $type = 'application/octet-stream') call
+		if ($type === 'base64' || func_num_args() == 4)
+		{
+			$type = func_get_arg(3);
+		}
+
+		$part = new Horde_Mime_Part();
+		$part->setType($type);
+		$part->setCharset('utf-8');
+		$part->setContents($content);
+		// this should not be necessary, because binary data get detected by mime-type,
+		// but at least Cyrus complains about NUL characters
+		$part->setTransferEncoding('base64', array('send' => true));
+		$part->setName($filename);
+
+		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
+		if (stripos($type,"text/calendar; method=") !== false)
+		{
+			$this->_htmlBody = $part;
+			return;
+		}
+		$part->setDisposition('attachment');
+
+		return $this->addMimePart($part);
+	}
+
+	/**
+	 * Send mail, injecting mail transport from account
+	 *
+	 * @ToDo hooks port hook from SmtpSend
+	 */
+	function send()
+	{
+		parent::send($this->account->smtpTransport(), true);	// true: keep Message-ID
+	}
+
+	/**
+	 * Reset all Settings to send multiple Messages
+	 */
+	function ClearAll()
+	{
+		$this->__construct($this->account);
+	}
+
+	/**
+     * Get the raw email data sent by this object.
+     *
+	 * Reimplement to be able to call it for saveAsDraft by calling
+	 * $this->send(new Horde_Mail_Transport_Null()),
+	 * if no base-part is set, because send is not called before.
+	 *
+     * @param  boolean $stream  If true, return a stream resource, otherwise
+     * @return stream|string  The raw email data.
+     */
+	function getRaw($stream=true)
+	{
+		try {
+			$this->getBasePart();
+		}
+		catch(Horde_Mail_Exception $e)
+		{
+			unset($e);
+			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
+		}
+		return parent::getRaw($stream);
+	}
+
+	/**
+	 * Deprecated PHPMailer compatibility methods
+	 */
+
+	/**
+	 * Get header part of mail
+	 *
+	 * @deprecated use getRaw($stream=true) to get a stream of whole mail containing headers and body
+	 * @return string
+	 */
+	function getMessageHeader()
+	{
+		try {
+			$this->getBasePart();
+		}
+		catch(Horde_Mail_Exception $e)
+		{
+			unset($e);
+			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
+		}
+		return $this->_headers->toString();
+	}
+
+	/**
+	 * Get body part of mail
+	 *
+	 * @deprecated use getRaw($stream=true) to get a stream of whole mail containing headers and body
+	 * @return string
+	 */
+	function getMessageBody()
+	{
+		try {
+			$this->getBasePart();
+		}
+		catch(Horde_Mail_Exception $e)
+		{
+			unset($e);
+			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
+		}
+		return $this->getBasePart()->toString(
+			array('stream' => false, 'encode' => Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY));
+	}
+
+	/**
+	 * Use SMPT
+	 *
+	 * @deprecated not used, SMTP always used
+	 */
+	function IsSMTP()
+	{
+
+	}
+
+	/**
+	 * @deprecated use AddHeader($header, $value)
+	 */
+	function AddCustomHeader($str)
+	{
+		$matches = null;
+		if (preg_match('/^([^:]+): *(.*)$/', $str, $matches))
+		{
+			$this->addHeader($matches[1], $matches[2]);
+		}
+	}
+	/**
+	 * @deprecated use clearParts()
+	 */
+	function ClearAttachments()
+	{
+		$this->clearParts();
+	}
+	/**
+	 * @deprecated done by Horde automatic
+	 */
+	function EncodeHeader($str/*, $position = 'text'*/)
+	{
+		return $str;
+	}
+	protected $is_html = false;
+	/**
+	 * Defines that setting $this->Body should set Body or AltBody
+	 * @param boolean $html
+	 * @deprecated use either setBody() or setHtmlBody()
+	 */
+	function isHtml($html)
+	{
+		$this->is_html = (bool)$html;
+	}
+
+	protected $from = '';
+	/**
+	 * Magic method to intercept assignments to old PHPMailer variables
+	 *
+	 * @deprecated use addHeader(), setBody() or setHtmlBody()
+	 * @param type $name
+	 * @param type $value
+	 */
+	function __set($name, $value)
+	{
+		switch($name)
+		{
+			case 'Sender':
+				$this->addHeader('Return-Path', '<'.$value.'>', true);
+				break;
+			case 'From':
+			case 'FromName':
+				if (empty($this->from) || $name == 'From' && $this->from[0] == '<')
+				{
+					$this->from = $name == 'From' ? '<'.$value.'>' : $value;
+				}
+				elseif ($name == 'From')
+				{
+					$this->from = self::add_personal($value, $this->from);
+				}
+				else
+				{
+					$this->from = self::add_personal(substr($this->from, 1, -1), $value);
+				}
+				$this->addHeader('From', $this->from, true);
+				break;
+			case 'Priority':
+				$this->AddHeader('X-Priority', $value);
+				break;
+			case 'Subject':
+				$this->AddHeader($name, $value);
+				break;
+			case 'MessageID':
+				$this->AddHeader('Message-ID', $value);
+				break;
+			case 'AltExtended':
+			case 'AltExtendedContentType':
+				// todo addPart()
+				break;
+			case 'Body':
+				$this->is_html ? $this->setHtmlBody($value, null, false) : $this->setBody($value);
+				break;
+			case 'AltBody':
+				!$this->is_html ? $this->setHtmlBody($value, null, false) : $this->setBody($value);
+				break;
+
+			default:
+				error_log(__METHOD__."('$name', ".array2string($value).") unsupported  attribute '$name' --> ignored");
+				break;
+		}
+	}
+	/**
+	 * Magic method to intercept readin old PHPMailer variables
+	 *
+	 * @deprecated use getHeader(), etc.
+	 * @param type $name
+	 */
+	function __get($name)
+	{
+		switch($name)
+		{
+			case 'Sender':
+				return $this->getHeader('Return-Path');
+			case 'From':
+				return $this->getHeader('From');
+		}
+		error_log(__METHOD__."('$name') unsupported  attribute '$name' --> returning NULL");
+		return null;
 	}
 
 	/**
@@ -165,115 +618,5 @@ class egw_mailer extends PHPMailer
 			// re-throw exception
 			throw $e;
 		}
-	}
-
-	/**
-	 * Creates recipient headers.
-	 *
-	 * Overwritten to get To, Cc and Bcc addresses, which are private in phpMailer
-	 *
-	 * @access public
-	 * @return string
- 	 */
-	public function AddrAppend($type, $addr)
-	{
-		if (is_null($addr)) $addr = array();
-		foreach($addr as $data)
-		{
-			if (!empty($data[0])) $this->addresses[$type][] = $data[0];
-		}
-		return parent::AddrAppend($type, $addr);
-	}
-
-	/**
-	 * Adds a "Bcc" address.
-	 *
-	 * Reimplemented as AddrAppend() for Bcc get's NOT called for SMTP!
-	 *
-	 * @param string $address
-	 * @param string $name
-	 * @return boolean true on success, false if address already used
-	 */
-	public function AddBCC($address, $name = '')
-	{
-		$this->AddrAppend('Bcc', array(array($address,$name)));
-
-		return parent::AddBCC($address, $name);
-	}
-
-	/**
-	 * Gets the "ReplyTo" addresses.
-	 *
-	 * Function to retrieve the ReplyTo Addresses of the SMT Mailobject
-	 *
-	 * @return array with the reply-to mail addresse(s))
-	 */
-	public function GetReplyTo()
-	{
-		return $this->ReplyTo;
-	}
-
-	/**
-	 * Adds a string or binary attachment (non-filesystem) to the list.
-	 * This method can be used to attach ascii or binary data,
-	 * such as a BLOB record from a database.
-	 * @param string $string String attachment data.
-	 * @param string $filename Name of the attachment. We assume that this is NOT a path
-	 * @param string $encoding File encoding (see $Encoding).
-	 * @param string $type File extension (MIME) type.
-	 * @return void
-	 */
-	public function AddStringAttachment($string, $filename, $encoding = 'base64', $type = 'application/octet-stream')
-	{
-		// Append to $attachment array
-		//already encoded?
-		//TODO: maybe add an parameter to AddStringAttachment to avoid using the basename
-		$x += preg_match('/\?=.+=\?/', $filename);
-		$this->attachment[] = array(
-			0 => $string,
-			1 => $filename,
-			2 => ($x?basename($filename):$filename),
-			3 => $encoding,
-			4 => $type,
-			5 => true,  // isStringAttachment
-			6 => 'attachment',
-			7 => 0
-		);
-	}
-
-	/**
-	 * Clears all recipients assigned in the TO array.  Returns void.
-	 */
-	public function ClearAddresses() {
-		$this->addresses['To'] = array();
-
-		parent::ClearAddresses();
-	}
-
-	/**
-	 * Clears all recipients assigned in the CC array.  Returns void.
-	 */
-	public function ClearCCs() {
-		$this->addresses['Cc'] = array();
-
-		parent::ClearCCs();
-	}
-
-	/**
-	 * Clears all recipients assigned in the BCC array.  Returns void.
-	 */
-	public function ClearBCCs() {
-		$this->addresses['Bcc'] = array();
-
-		parent::ClearBCCs();
-	}
-
-	/**
-	 * Clears all recipients assigned in the TO, CC and BCC array.  Returns void.
-	 */
-	public function ClearAllRecipients() {
-		$this->addresses = array();
-
-		parent::ClearAllRecipients();
 	}
 }
