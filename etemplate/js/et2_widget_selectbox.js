@@ -965,6 +965,10 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				}
 			}
 		}
+		else if (this.options.empty_label)
+		{
+			this.span.text(this.options.empty_label);
+		}
 	},
 
 	/**
