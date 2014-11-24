@@ -96,7 +96,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Convert array of elems to array of paths
 	 *
-	 * @param {array} _elems selected items from actions
+	 * @param {egwActionObject[]} _elems selected items from actions
 	 * @return array
 	 */
 	_elems2paths: function(_elems)
@@ -104,7 +104,9 @@ app.classes.filemanager = AppJS.extend(
 		var paths = [];
 		for (var i = 0; i < _elems.length; i++)
 		{
-			paths.push(this.id2path(_elems[i].id));
+			// If selected has no id, try parent.  This happens for the placeholder row
+			// in empty directories.
+			paths.push(_elems[i].id? this.id2path(_elems[i].id) : _elems[i]._context._parentId);
 		}
 		return paths;
 	},
@@ -447,9 +449,9 @@ app.classes.filemanager = AppJS.extend(
 			if(action)
 			{
 				var paths = this._elems2paths(selected);
-				if(paths[0]) path = paths[0];
+				if(paths[0]) path = this.dirname(paths[0]);
 			}
-			this._do_action('createdir', dir, true);	// true=synchronous request
+			this._do_action('createdir', dir, true, path);	// true=synchronous request
 			this.change_dir((path == '/' ? '' : path)+'/'+dir);
 		}
 	},
