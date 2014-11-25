@@ -1628,7 +1628,6 @@ var et2_link_list = et2_link_string.extend(
 				row[0].dataset[k] = _link_data[k];
 			}
 		}
-		row[0].dataset = _link_data;
 
 		// Icon
 		var icon = $j(document.createElement("td"))
