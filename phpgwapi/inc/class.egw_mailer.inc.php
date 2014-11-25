@@ -89,22 +89,24 @@ class egw_mailer extends Horde_Mime_Mail
 		{
 			$this->account = emailadmin_account::get_default(true);	// true = need an SMTP (not just IMAP) account
 		}
-		// use smpt-username as sender, if available, but only if it is a full email address
+		$identity = emailadmin_account::read_identity($this->account->ident_id, true, null, $this->account);
+
+		// use smpt-username as sender/return-path, if available, but only if it is a full email address
 		$sender = $this->account->acc_smtp_username && strpos($this->account->acc_smtp_username, '@') !== false ?
-			$this->account->acc_smtp_username : $this->account->ident_email;
-		$name = $this->account->ident_realname ? $this->account->ident_realname : $sender;
-		$this->setFrom($sender, $name);
+			$this->account->acc_smtp_username : $identity['ident_email'];
+		$this->addHeader('Return-Path', '<'.$sender.'>', true);
+
+		$this->setFrom($identity['ident_email'], $identity['ident_realname']);
 	}
 
 	/**
-	 * Set From and Return-Path header
+	 * Set From header
 	 *
 	 * @param string $address
 	 * @param string $personal =''
 	 */
 	public function setFrom($address, $personal='')
 	{
-		$this->addHeader('Return-Path', '<'.$address.'>', true);
 		$this->addHeader('From', self::add_personal($address, $personal));
 	}
 

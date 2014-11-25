@@ -2532,11 +2532,11 @@ class mail_compose
 		//error_log("Folder:".count(array($this->sessionData['folder']))."To:".count((array)$this->sessionData['to'])."CC:". count((array)$this->sessionData['cc']) ."bcc:".count((array)$this->sessionData['bcc']));
 		if(count((array)$this->sessionData['to']) > 0 || count((array)$this->sessionData['cc']) > 0 || count((array)$this->sessionData['bcc']) > 0) {
 			try {
-				$mail->Send();
+				$mail->send();
 			}
 			catch(Exception $e) {
 				_egw_log_exception($e);
-				$this->errorInfo = $e->getMessage().($e->detail ? ': '.$e->detail : '');
+				$this->errorInfo = $e->getMessage();
 				return false;
 			}
 		} else {
