@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API: Sending mail via egw_mailer
+ * EGroupware API: Sending mail via egw_mailer
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -17,11 +17,6 @@
  */
 class send extends egw_mailer
 {
-	var $err    = array();
-	var $to_res = array();
-	// switching on debug with a numeric value other than 0, switches debug in PHPMailer/SMTP Class on
-	var $debug  = false;
-
 	/**
 	 * eGW specific initialisation of the PHPMailer: charset, language, smtp-host, ...
 	 *
@@ -30,59 +25,11 @@ class send extends egw_mailer
 	 */
 	function send()
 	{
-		if ($this->debug && is_numeric($this->debug)) $this->SMTPDebug = $this->debug;
 		if ($this->Subject || $this->Body || count($this->to))
 		{
-			if ($this->debug) error_log(__METHOD__." ".print_r($this->Subject,true)." to be send");
-			return PHPMailer::Send();
+			return parent::send();
 		}
 		parent::__construct();	// calling parent constructor
-
-		$this->CharSet = translation::charset();
-		$this->IsSmtp();
-
-		// smtp settings from default account of current user
-		$account = emailadmin_account::read(emailadmin_account::get_default_acc_id(true));	// true=SMTP
-		$this->Host = $account->acc_smtp_host;
-		$this->Port = $account->acc_smtp_port;
-		switch($account->acc_smtp_ssl)
-		{
-			case emailadmin_account::SSL_TLS:			// requires modified PHPMailer, or comment next two lines to use just ssl!
-				$this->Host = 'tlsv1://'.$this->Host;
-				break;
-			case emailadmin_account::SSL_SSL:
-				$this->Host = 'ssl://'.$this->Host;
-				break;
-			case emailadmin_account::SSL_STARTTLS:	// PHPMailer uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
-				$this->Host = 'tls://'.$this->Host;
-		}
-		$this->SMTPAuth = !empty($account->acc_smtp_username);
-		$this->Username = $account->acc_smtp_username;
-		$this->Password = $account->acc_smtp_password;
-		$this->defaultDomain = $account->acc_domain;
-		// we do not want to use the phpmailer defaults, as it is bound to fail anyway
-		// !from should be connected to the account used!
-		$this->From = '';
-		$this->FromName = '';
-		// use smpt-username as sender, if available, but only if it is a full email address
-		// we use setFrom as of from now on as it sets From, FromName and Sender
-		// error_log(__METHOD__.__LINE__.array2string($account));
-		$Sender = $account->acc_smtp_username && strpos($account->acc_smtp_username, '@') !== false ?
-			$account->acc_smtp_username : $account->ident_email;
-		/*emailadmin_account Object has some possible info on the accounts realname
-		 [acc_name] => example given (mail@domain.suffix)
-		 [ident_realname] => example given
-		 [ident_email] => mail@domain.suffix (maybe this is the content of $Sender !)
-		 [ident_org] => not considered
-		 [ident_name] => example
-		*/
-		$Name = ($account['ident_realname']?$account['ident_realname']:($account['ident_name']?$account['ident_name']:
-				($account['acc_name']?$account['acc_name']:$Sender)));
-		//error_log(__METHOD__.__LINE__.$Sender.','.$Name);
-		$this->setFrom($Sender,$Name);
-		$this->Hostname = $GLOBALS['egw_info']['server']['hostname'];
-
-		if ($this->debug) error_log(__METHOD__."() initialised egw_mailer with ".array2string($this)." from mail default account ".array2string($account->params));
 	}
 
 	/**

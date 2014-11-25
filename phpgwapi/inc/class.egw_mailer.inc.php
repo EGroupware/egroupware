@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_API_INC.'/class.phpmailer.inc.php');
-
 /**
  * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
  * or regular error_log for true (can be set either in DB or header.inc.php).
@@ -31,6 +29,7 @@ class egw_mailer extends Horde_Mime_Mail
 	protected $account;
 
 	/**
+	 * Header / recipients set via Add(Address|Cc|Bcc|Replyto)
 	 *
 	 * @var Horde_Mail_Rfc822_List
 	 */
@@ -140,12 +139,19 @@ class egw_mailer extends Horde_Mime_Mail
 	/**
 	 * Write Bcc as header for storing in sent or as draft
 	 *
-	 * Bcc is normally only add to recipients while sending, but not added visible as header!
+	 * Bcc is normally only add to recipients while sending, but not added visible as header.
+	 *
+	 * This function is should only be called AFTER calling send, or when NOT calling send at all!
 	 */
 	function forceBccHeader()
 	{
 		$this->_headers->removeHeader('Bcc');
-		$this->_headers->addHeader('Bcc', $this->bcc);
+
+		// only add Bcc header, if we have bcc's
+		if (count($this->bcc))
+		{
+			$this->_headers->addHeader('Bcc', $this->bcc);
+		}
 	}
 
 	/**
@@ -226,16 +232,12 @@ class egw_mailer extends Horde_Mime_Mail
 
 		// pass file as resource to Horde_Mime_Part::setContent()
 		if (!($resource = fopen($file, 'r')))
-		//if (!($resource = file_get_contents($file)))
 		{
 			throw new egw_exception_not_found("File '$file' not found!");
 		}
 		$part = new Horde_Mime_Part();
 		$part->setType($type ? $type : egw_vfs::mime_content_type($file));
 		$part->setContents($resource);
-		// this should not be necessary, because binary data get detected by mime-type,
-		// but at least Cyrus complains about NUL characters
-		$part->setTransferEncoding('base64', array('send' => true));
 		$part->setName($name ? $name : egw_vfs::basename($file));
 
 		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
@@ -244,6 +246,9 @@ class egw_mailer extends Horde_Mime_Mail
 			$this->_htmlBody = $part;
 			return;
 		}
+		// this should not be necessary, because binary data get detected by mime-type,
+		// but at least Cyrus complains about NUL characters
+		$part->setTransferEncoding('base64', array('send' => true));
 		$part->setDisposition('attachment');
 
 		return $this->addMimePart($part);
