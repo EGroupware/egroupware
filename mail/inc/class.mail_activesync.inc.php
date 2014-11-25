@@ -1203,7 +1203,6 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						}
 					}
 
-					$mailObject->SetMessageType();
 					$Header = $mailObject->CreateHeader();
 					//debugLog(__METHOD__.__LINE__.' MailObject-Header:'.array2string($Header));
 					$Body = trim($mailObject->CreateBody()); // philip thinks this is needed, so lets try if it does any good/harm
