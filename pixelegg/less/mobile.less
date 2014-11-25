@@ -640,4 +640,39 @@ and open the template in the editor.
 	.egw_fw_ui_app_header_container {
 		display:none;
 	}
+	
+	
+	//###################################
+	//#									#
+	//#			POPUP FRAME				#
+	//#									#
+	//###################################
+	.egw_fw_mobile_popup_container{
+		width:100%;
+		height:100%;
+		position:fixed;
+		display: none;
+		z-index: 999;
+		background: rgba(0, 0, 0, 0.44);
+		#egw_fw_mobile_popupFrame {
+			width: 90%;
+			height: 90%;
+			margin-left:2%;
+			margin-top:2%;
+		}
+		.egw_fw_mobile_popup_toolbar{
+			display:inline;
+			height:10px;
+			#egw_fw_mobile_popup_close {
+				width: 24px;
+				height: 24px;
+				display: inline;
+				white-space: nowrap;
+				top:5px;
+				left:5px;
+			}
+		}
+		
+	}
+	
 }
