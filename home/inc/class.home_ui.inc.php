@@ -85,18 +85,22 @@ class home_ui
 	{
 		$portlets = $this->get_portlet_list();
 		$add_portlets = $portlets;
-		foreach($add_portlets as $id => &$add)
+		$change_for_add = function(&$add_portlets) use (&$change_for_add)
 		{
-			if(!$add['id'] && is_array($add['children']))
+			foreach($add_portlets as $id => &$add)
 			{
-				foreach($add['children'] as $sub_id => &$sub_add)
+				if(is_array($add['children']))
 				{
-					$sub_add['id'] = 'add_'.$sub_id;
+					$change_for_add($add['children']);
+				}
+				if($id && !$add['children'])
+				{
+					$add['id'] = 'add_' . $id;
+					$add['class'] = 'add_'.$id;
 				}
 			}
-			$add['id'] = 'add_' . $id;
-			$add['class'] = $id;
-		}
+		};
+		$change_for_add($add_portlets);
 		$actions = array(
 			'add' => array(
 				'type'	=> 'popup',

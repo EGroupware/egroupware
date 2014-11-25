@@ -338,8 +338,13 @@ var et2_portlet = et2_valueWidget.extend(
 	 */
 	set_title: function(value)
 	{
+		this.header.contents()
+			.filter(function() {
+			  return this.nodeType === 3;
+			})
+			.remove();
 		this.options.title = value;
-		this.header.html(value);
+		this.header.append(value);
 	},
 
 	/**

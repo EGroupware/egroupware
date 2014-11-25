@@ -81,7 +81,7 @@ class home_favorite_portlet extends home_portlet
 		if($this->favorite)
 		{
 			$this->nm_settings['favorite'] = $this->context['favorite'];
-			$this->nm_settings['columnselection_pref'] = 'nextmatch-home';
+			$this->nm_settings['columnselection_pref'] = "nextmatch-home.{$this->context['id']}";
 			if(is_array($this->favorite['state']))
 			{
 				$this->nm_settings += $this->favorite['state'];
@@ -99,6 +99,7 @@ class home_favorite_portlet extends home_portlet
 		$etemplate->set_dom_id($id);
 
 		$content = $this->context + array('nm' => $this->nm_settings);
+		$content['header_node'] = "home-index_{$id}_header";
 		$sel_options = $content['sel_options'] ? $content['sel_options'] : array();
 		unset($content['sel_options']);
 		$etemplate->setElementAttribute('nm', 'template',$this->nm_settings['template']);

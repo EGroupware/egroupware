@@ -91,28 +91,37 @@
 }
 
 /* Favorite / nextmatch
- * NB: No favorite sub-class added here, as they have an app-specific prefix
+ * NB: using class attribute contains as favorites have an app-specific prefix
  */
-.et2_portlet .et2_container > div > .et2_button {
-	position:absolute;
-	top: 0px;
-	left: 100%;
-	margin-left: -16px;
-	margin-bottom: -16px;
+[class*="favorite_portlet"].et2_portlet .ui-widget-header > .et2_button {
+	float: left;
 	padding: 0px !important;
+	margin-top: 3px;
 	height: 12px;
 	width: 12px;
 	z-index: 50;
 }
-.et2_portlet .et2_container > div > button.et2_button_with_image.closed {
+[class*="favorite_portlet"].et2_portlet .ui-widget-header > button.et2_button_with_image.closed {
 	background-position: 0 0  !important;
 }
-.et2_portlet .et2_container > div > button.et2_button_with_image.opened  {
+[class*="favorite_portlet"].et2_portlet  .ui-widget-header > button.et2_button_with_image.opened  {
 	background-position: -10px 0 !important;
 }
-.et2_portlet .et2_nextmatch.header_hidden {
-	padding-top: 16px;
+
+/* We can't just set display:none for the header as that changes the column spacing */
+[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden {
+	padding-top: 0px;
 }
-.et2_portlet .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type {
-	display: none;
+[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type th,
+[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type div.innerContainer,
+[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type th.optcol span.selectcols {
+	height: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	line-height: 0px;
+}
+[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type th {
+	visibility:hidden;
 }

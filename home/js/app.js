@@ -188,10 +188,10 @@ app.classes.home = AppJS.extend(
 		}
 
 		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
-		// Override content ID so etemplate loads
-		portlet.content.attr('id', attrs.id);
 		portlet.loadingFinished();
 
+		// Immediately add content ID so etemplate loads into the right place
+		portlet.content.append('<div id="'+ attrs.id+'" class="et2_container"/>');
 		// Get actual attributes & settings, since they're not available client side yet
 		portlet._process_edit(et2_dialog.OK_BUTTON, attrs);
 
@@ -233,8 +233,8 @@ app.classes.home = AppJS.extend(
 		}
 
 		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
-		// Override content ID so etemplate loads
-		portlet.content.attr('id', attrs.id);
+		// Immediately add content ID so etemplate loads into the right place
+		portlet.content.append('<div id="'+ attrs.id+'" class="et2_container"/>');
 		portlet.loadingFinished();
 
 		// Get actual attributes & settings, since they're not available client side yet
@@ -563,11 +563,10 @@ app.classes.home = AppJS.extend(
 		// We operate on the DOM here, nm should be unaware of our fiddling
 		var nm = widget.getParent().getWidgetById('nm');
 		if(!nm) return;
-		var header = nm.header;
-		var header_height = header.div.innerHeight();
 
 		// Hide header
 		nm.div.toggleClass('header_hidden');
 		nm.set_hide_header(nm.div.hasClass('header_hidden'));
+		nm.resize();
 	}
 });
