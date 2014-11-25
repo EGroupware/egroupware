@@ -13,7 +13,7 @@
 
 
 /**
- * The home_favorite_portlet extends the list portlet to display the entries for a particular
+ * The home_favorite_portlet uses a nextmatch to display the entries for a particular
  * favorite, for a given app.
  */
 class home_favorite_portlet extends home_portlet
@@ -35,6 +35,8 @@ class home_favorite_portlet extends home_portlet
 	protected $nm_settings = array(
 		'lettersearch'	=> false,
 		'favorites'		=> false,	// Hide favorite control
+		'actions'		=> array(),
+		'placeholder_actions' => array()
 	);
 
 	/**
@@ -44,6 +46,9 @@ class home_favorite_portlet extends home_portlet
 	 *
 	 * The implementing class is allowed to modify the context, if needed, but it is
 	 * better to use get_properties().
+	 *
+	 * We try to keep the constructor light as it gets called often, and only load
+	 * things needed for display in exec.
 	 *
 	 * @param context Array portlet settings such as size, as well as values for properties
 	 * @param boolean $need_reload Flag to indicate that the portlet needs to be reloaded (exec will be called)
@@ -104,6 +109,8 @@ class home_favorite_portlet extends home_portlet
 		unset($content['sel_options']);
 		$etemplate->setElementAttribute('nm', 'template',$this->nm_settings['template']);
 
+		// Always load app's javascript, so most actions have a chance of working
+		egw_framework::validate_file('','app',$this->context['appname']);
 		$etemplate->exec(get_called_class() .'::process',$content,$sel_options);
 	}
 

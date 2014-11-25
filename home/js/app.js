@@ -233,9 +233,9 @@ app.classes.home = AppJS.extend(
 		}
 
 		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
+		portlet.loadingFinished();
 		// Immediately add content ID so etemplate loads into the right place
 		portlet.content.append('<div id="'+ attrs.id+'" class="et2_container"/>');
-		portlet.loadingFinished();
 
 		// Get actual attributes & settings, since they're not available client side yet
 		var drop_data = [];

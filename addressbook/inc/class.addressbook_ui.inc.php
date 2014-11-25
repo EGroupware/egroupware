@@ -349,7 +349,7 @@ class addressbook_ui extends addressbook_bo
 	 * @param string $org_view=null
 	 * @return array see nextmatch_widget::get_actions()
 	 */
-	private function get_actions($tid_filter=null, $org_view=null)
+	public function get_actions($tid_filter=null, $org_view=null)
 	{
 		// we have no org view (view of one org has context menu like regular "add contacts" view, as it shows contacts
 		if (!isset($this->org_views[(string) $org_view]))
