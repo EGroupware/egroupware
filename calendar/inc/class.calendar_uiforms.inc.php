@@ -1174,8 +1174,8 @@ class calendar_uiforms extends calendar_ui
 	 *	hide_delete boolean hide delete button
 	 *	no_popup boolean use a popup or not
 	 *	edit_single int timestamp of single event edited, unset/null otherwise
-	 * @param string $msg msg to display
-	 * @param mixed $li$link_to_idontent from or for the link-widget
+	 * @param string $msg ='' msg to display
+	 * @param mixed $link_to_id ='' from or for the link-widget
 	 */
 	function edit($event=null,$preserv=null,$msg='',$link_to_id='')
 	{
