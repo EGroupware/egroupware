@@ -45,6 +45,9 @@ class egw_mailer extends Horde_Mime_Mail
 	 */
 	function __construct($account=null)
 	{
+		// Horde use locale for translation of error messages
+		common::setlocale(LC_MESSAGES);
+
 		parent::__construct();
 		$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 
@@ -299,6 +302,8 @@ class egw_mailer extends Horde_Mime_Mail
 	 * Send mail, injecting mail transport from account
 	 *
 	 * @ToDo hooks port hook from SmtpSend
+	 * @throws egw_exception_not_found for no smtp account available
+	 * @throws Horde_Mime_Exception
 	 */
 	function send()
 	{
@@ -311,6 +316,17 @@ class egw_mailer extends Horde_Mime_Mail
 	function ClearAll()
 	{
 		$this->__construct($this->account);
+	}
+
+	/**
+	 * Get value of a header set with addHeader()
+	 *
+	 * @param string $header
+	 * @return string
+	 */
+	function getHeader($header)
+	{
+		return $this->_headers->getString($header);
 	}
 
 	/**

@@ -74,7 +74,7 @@ class notifications_email implements notifications_iface {
 		{
 			unset($this->mail);
 		}
-		$this->mail = new send();
+		$this->mail = new egw_mailer();
 	}
 
 	/**
@@ -85,52 +85,26 @@ class notifications_email implements notifications_iface {
 	 * @param array $_links
 	 * @param array $_attachments
 	 */
-	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
-		//$_messages['plain'] = $_messages['plain']."\nSent By:".php_uname();
-		//$_messages['html'] = $_messages['html']."\n<hr>\n Sent by:".php_uname();
-
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false)
+	{
 		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient);
 		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
 
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();
-		$this->mail->AddAddress($this->recipient->account_email, $this->recipient->account_fullname);
-		$this->mail->AddCustomHeader('X-EGroupware-type: notification-mail');
-		$this->mail->AddCustomHeader('X-EGroupware-Install: '.$GLOBALS['egw_info']['server']['install_id'].'@'.$GLOBALS['egw_info']['server']['default_domain']);
-		//$this->mail->AddCustomHeader('X-EGroupware-URL: notification-mail');
-		//$this->mail->AddCustomHeader('X-EGroupware-Tracker: notification-mail');
+		$this->mail->addAddress($this->recipient->account_email, $this->recipient->account_fullname);
+		$this->mail->addHeader('X-EGroupware-Type', 'notification-mail');
+		$this->mail->addHeader('X-EGroupware-Install', $GLOBALS['egw_info']['server']['install_id'].'@'.$GLOBALS['egw_info']['server']['default_domain']);
+		//$this->mail->AddHeader('X-EGroupware-URL', 'notification-mail');
+		//$this->mail->AddHeader('X-EGroupware-Tracker', 'notification-mail');
 		//error_log(__METHOD__.__LINE__."preparing notification message via email.".array2string($this->mail));
-		if (!$this->mail->From)
-		{
-			$this->mail->From = $this->sender->account_email;
-			$this->mail->FromName = $this->sender->account_fullname;
-		}
-		else
-		{
-			if ($this->sender->account_email)
-			{
-				$this->mail->ClearReplyTos();
-				$this->mail->AddReplyTo($this->sender->account_email,$this->sender->account_fullname);
-				// as we set the replyTo, we set (fake) the FromName accordingly
-				if ($this->sender->account_fullname) $this->mail->FromName = $this->sender->account_fullname;
-			}
-		}
-		//error_log(__METHOD__.__LINE__."preparing notification message via email.".array2string($this->mail));
-		$this->mail->Subject = $_subject;
-		// add iCal invitation as mulitpart alternative for calendar notifications
-		if ($_attachments && stripos($_attachments[0]->type,"text/calendar; method=")!==false)
-		{
-			$this->mail->AltExtended = $_attachments[0]->string;
-			$this->mail->AltExtendedContentType = $_attachments[0]->type;
-			unset($_attachments[0]);
-			$this->mail->Body = $body_plain;
-		}
-		else
-		{
-			$this->mail->IsHTML();
-			$this->mail->Body = $body_html;
-			$this->mail->AltBody = $body_plain;
-		}
+
+		$this->mail->setFrom($this->sender->account_email, $this->sender->account_fullname);
+
+		$this->mail->addHeader('Subject', $_subject);
+		$this->mail->setHtmlBody($body_html, null, false);	// no automatic alternativ
+		$this->mail->setBody($body_plain);
+
 		if(is_array($_attachments) && count($_attachments) > 0)
 		{
 			foreach($_attachments as $attachment)
@@ -146,11 +120,7 @@ class notifications_email implements notifications_iface {
 	  		}
 		}
 		//error_log(__METHOD__.__LINE__."about sending notification message via email.".array2string($this->mail));
-		if(!$error=$this->mail->Send())
-		{
-			//error_log(__METHOD__.__LINE__." Failed sending notification message via email.$error".array2string($this->mail->ErrorInfo));
-			throw new Exception("Failed sending notification message via email.$error".print_r($this->mail->ErrorInfo,true));
-		}
+		$this->mail->send();
 	}
 
 	/**
@@ -174,9 +144,8 @@ class notifications_email implements notifications_iface {
 		$rendered_links = array();
 		foreach($_links as $link) {
 			if($_render_external || ! $link->popup) { $link->view['no_popup'] = 1; }
-			$url = html::link('/index.php', $link->view);
 			// do not expose sensitive data
-			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
+			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',html::link('/index.php', $link->view));
 			// complete missing protocol and domain part if needed
 			if ($url{0} == '/' && $_render_external) {
 				$url = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').

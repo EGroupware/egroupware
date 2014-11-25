@@ -824,4 +824,13 @@ if (!function_exists('_')) {
     {
     }
 
+	function dgettext($domain, $message)
+	{
+		return $message;
+	}
+
+	function ngettext($singular, $plural, $number)
+    {
+        return $number > 1 ? $plural : $singular;
+    }
 }

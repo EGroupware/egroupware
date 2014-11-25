@@ -96,7 +96,6 @@ class notifications_ajax {
 		$this->config = (object)config::read(self::_appname);
 
 		$prefs = new preferences($this->recipient->account_id);
-		$preferences = $prefs->read();
 		$this->preferences = $prefs->read();
 
 		$this->db = $GLOBALS['egw']->db;
