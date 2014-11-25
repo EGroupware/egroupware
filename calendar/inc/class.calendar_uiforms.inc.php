@@ -1174,8 +1174,8 @@ class calendar_uiforms extends calendar_ui
 	 *	hide_delete boolean hide delete button
 	 *	no_popup boolean use a popup or not
 	 *	edit_single int timestamp of single event edited, unset/null otherwise
-	 * @param string $msg msg to display
-	 * @param mixed $li$link_to_idontent from or for the link-widget
+	 * @param string $msg ='' msg to display
+	 * @param mixed $link_to_id ='' from or for the link-widget
 	 */
 	function edit($event=null,$preserv=null,$msg='',$link_to_id='')
 	{
@@ -1448,9 +1448,7 @@ class calendar_uiforms extends calendar_ui
 							);
 							$readonlys['participants'][$row]['quantity'] = $readonlys['participants']['delete'][$member] = true;
 							// read access is enough to invite participants, but you need edit rights to change status
-							if (!$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
-								$readonlys['participants'][$row]['status'] = true;
-							//$readonlys[$row.'[status]'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,$member);
+							$readonlys['participants'][$row]['status'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,$member);
 							$content['participants'][$row++]['title'] = common::grab_owner_name($member);
 						}
 					}
