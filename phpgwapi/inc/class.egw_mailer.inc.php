@@ -55,7 +55,7 @@ class egw_mailer extends Horde_Mime_Mail
 
 		$this->is_html = false;
 
-		$this->ClearAddresses();
+		$this->clearAddresses();
 
 		$this->clearParts();
 	}
