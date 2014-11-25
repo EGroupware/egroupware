@@ -84,36 +84,35 @@
 	float: left;
 	margin-right: 8px;
 	margin-bottom: 8px;
-	width: 32px;
-	height: 32px;
+	max-width: 100%;
+}
+.et2_portlet.home_link_portlet > div:last-of-type img:first-of-type:not([src*="thumbnail.php"]) {
+	max-width: 32px;
 }
 
-/* Favorite / nextmatch */
+/* Favorite / nextmatch
+ * NB: No favorite sub-class added here, as they have an app-specific prefix
+ */
 .et2_portlet .et2_container > div > .et2_button {
-	float: left;
-	margin-bottom: -16px;
-	min-height: 16px;
-	min-width: 16px;
-}
-.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header {
-	min-height: 6px;
-}
-.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header .ui-helper-reset{
-	height: 0px;
-	padding: 0px;
-}
-.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row .header_count {
-	top: -11px;
-	height: 14px;
-}
-.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row .header_count span {
+	position:absolute;
 	top: 0px;
+	left: 100%;
+	margin-left: -16px;
+	margin-bottom: -16px;
+	padding: 0px !important;
+	height: 12px;
+	width: 12px;
+	z-index: 50;
 }
-.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row div.search,
-.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row label,
-.et2_portlet .et2_nextmatch.header_hidden .nextmatch_header div.nextmatch_header_row select {
-	display:none;
+.et2_portlet .et2_container > div > button.et2_button_with_image.closed {
+	background-position: 0 0  !important;
 }
-.et2_portlet .et2_nextmatch.header_hidden .egwGridView_outer:first-of-type {
-	position: absolute;
+.et2_portlet .et2_container > div > button.et2_button_with_image.opened  {
+	background-position: -10px 0 !important;
+}
+.et2_portlet .et2_nextmatch.header_hidden {
+	padding-top: 16px;
+}
+.et2_portlet .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type {
+	display: none;
 }

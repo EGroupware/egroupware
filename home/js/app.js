@@ -37,13 +37,13 @@ app.classes.home = AppJS.extend(
 	/**
 	 * Grid resolution.  Must match et2_portlet GRID
 	 */
-	GRID: 100,
+	GRID: 50,
 
 	/**
 	 * Default size for new portlets
 	 */
 	DEFAULT: {
-		WIDTH:	2,
+		WIDTH:	4,
 		HEIGHT:	1
 	},
 
@@ -295,7 +295,7 @@ app.classes.home = AppJS.extend(
 			egw().log("warning", "Could not find widget");
 			return;
 		}
-		egw().open(widget.options.settings.entry, "", 'edit');
+		egw().open(widget.options.settings.entry, "", 'view',null,widget.options.settings.entry.app);
 	},
 
 	/**
@@ -559,7 +559,7 @@ app.classes.home = AppJS.extend(
 	 * @param {et2_button} widget
 	 */
 	nextmatch_toggle_header: function(event, widget) {
-		widget.set_image(widget.options.image == 'arrow_down' ? 'arrow_left' : 'arrow_down');
+		widget.set_class(widget.class == 'opened' ? 'closed' : 'opened');
 		// We operate on the DOM here, nm should be unaware of our fiddling
 		var nm = widget.getParent().getWidgetById('nm');
 		if(!nm) return;
@@ -568,12 +568,6 @@ app.classes.home = AppJS.extend(
 
 		// Hide header
 		nm.div.toggleClass('header_hidden');
-
-		header_height -= header.div.height();
-
-		// Grow row space - I have no idea why it needs to be 25 pixels instead of header_height
-		var scroll_height = $j('.egwGridView_scrollarea',nm.getDOMNode()).height();
-		$j('.egwGridView_scrollarea',nm.getDOMNode()).height(scroll_height + (header_height > 0 ? 25 : -25));
-		nm.resize();
+		nm.set_hide_header(nm.div.hasClass('header_hidden'));
 	}
 });

@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="home.favorite" template="" lang="" group="0" version="1.9.001">
-		<button id="header_toggle" image="arrow_left" onclick="app.home.nextmatch_toggle_header"/>
-		<nextmatch id="nm" class="header_hidden"/>
+		<button id="header_toggle" background_image="true" image="egw_action/arrows" class="closed" onclick="app.home.nextmatch_toggle_header"/>
+		<nextmatch id="nm" class="header_hidden" hide_header="true"/>
 	</template>
 </overlay>
