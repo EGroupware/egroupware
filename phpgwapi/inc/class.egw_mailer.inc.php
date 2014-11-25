@@ -326,7 +326,7 @@ class egw_mailer extends Horde_Mime_Mail
 	 */
 	function getHeader($header)
 	{
-		return $this->_headers->getString($header);
+		return $this->_headers ? $this->_headers->getString($header) : null;
 	}
 
 	/**
