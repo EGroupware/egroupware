@@ -183,6 +183,11 @@ class emailadmin_account implements ArrayAccess
 	protected $smtpTransport;
 
 	/**
+	 * Path to log smtp comunication to or null to not log
+	 */
+	const SMTP_DEBUG_LOG = null;//'/tmp/smtp.log';
+
+	/**
 	 * Instanciated account object by acc_id, read acts as singelton
 	 *
 	 * @var array
@@ -477,8 +482,8 @@ class emailadmin_account implements ArrayAccess
 				'host' => $this->acc_smtp_host,
 				'port' => $this->acc_smtp_port,
 				'secure' => $secure,
+				'debug' => self::SMTP_DEBUG_LOG,
 				//'timeout' => self::TIMEOUT,
-				//'debug' => self::DEBUG_LOG,
 			));
 		}
 		return $this->smtpTransport;
@@ -690,12 +695,18 @@ class emailadmin_account implements ArrayAccess
 	 * @param int $ident_id
 	 * @param boolean $replace_placeholders =false should placeholders like {{n_fn}} be replaced
 	 * @param int $user =null account_id to use, default current user
+	 * @param array|emailadmin_account $account =null account array or object, to not read it again from database
 	 * @return array
 	 * @throws egw_exception_not_found
 	 */
-	public static function read_identity($ident_id, $replace_placeholders=false, $user=null)
+	public static function read_identity($ident_id, $replace_placeholders=false, $user=null, $account=null)
 	{
-		if (!($data = self::$db->select(self::IDENTITIES_TABLE, '*', array(
+		if (($account && $account['ident_id'] == $ident_id))
+		{
+			$data = array_intersect_key(is_array($account) ? $account : $account->params,
+				array_flip(array('indent_id', 'ident_name', 'ident_email', 'ident_realname', 'ident_org', 'ident_signature', 'acc_id')));
+		}
+		elseif (!($data = self::$db->select(self::IDENTITIES_TABLE, '*', array(
 			'ident_id' => $ident_id,
 			'account_id' => self::memberships($user),
 		), __LINE__, __FILE__, false, '', self::APP)->fetch()))
@@ -704,21 +715,31 @@ class emailadmin_account implements ArrayAccess
 		}
 		if ($replace_placeholders)
 		{
-			$data = array_merge($data, self::replace_placeholders($data));
-
 			// set empty email&realname from session / account
 			if (empty($data['ident_email']) || empty($data['ident_realname']))
 			{
-				if (($account = self::read($data['acc_id'])))
+				if (is_array($account) || ($account = self::read($data['acc_id'])))
 				{
-					if (empty($data['ident_email'])) $data['ident_email'] = $account->ident_email;
-					if (empty($data['ident_realname'])) $data['ident_realname'] = $account->ident_realname;
+					$is_current_user = !isset($user) || $user == $GLOBALS['egw_info']['user']['account_id'];
+					if (empty($data['ident_email']))
+					{
+						$data['ident_email'] = $account->ident_email || strpos($account->acc_imap_username, '@') === false ?
+							$account->ident_email : $account->acc_imap_username;
+
+						if (empty($data['ident_email']) && $is_current_user)
+						{
+							$data['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];
+						}
+					}
+					if (empty($data['ident_realname']))
+					{
+						$data['ident_realname'] = $account->ident_realname || !$is_current_user ?
+							$account->ident_realname : $GLOBALS['egw_info']['user']['account_fullname'];
+					}
 				}
 			}
-			if (empty($data['ident_name']))
-			{
-				$data['ident_name'] = self::identity_name($data);
-			}
+			// replace placeholders
+			$data = array_merge($data, self::replace_placeholders($data));
 		}
 		return $data;
 	}
