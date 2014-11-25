@@ -697,7 +697,27 @@ class emailadmin_imapbase
 		{
 			$account = emailadmin_account::read($account);
 		}
-		return $account->identities(null, true, 'params');
+		$userEMailAdresses = array();
+		$identities = $account->identities(null, true, 'params');
+		foreach($identities as $ik => $ident) {
+			//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($ident));
+			$identity = emailadmin_account::read_identity($ik,true,null,$account);
+			//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($identity));
+			// standardIdentity has ident_id==acc_id (as it is done within account->identities)
+			if (empty($identity['ident_id'])) $identity['ident_id'] = $identity['acc_id'];
+			if (!isset($userEMailAdresses[$identity['ident_id']]))
+			{
+				$userEMailAdresses[$identity['ident_id']] = array('acc_id'=>$identity['acc_id'],
+																'ident_id'=>$identity['ident_id'],
+																'ident_email'=>$identity['ident_email'],
+																'ident_org'=>$identity['ident_org'],
+																'ident_realname'=>$identity['ident_realname'],
+																'ident_signature'=>$identity['ident_signature'],
+																'ident_name'=>$identity['ident_name']);
+			}
+		}
+
+		return $userEMailAdresses;
 	}
 
 	/**
@@ -5436,7 +5456,7 @@ class emailadmin_imapbase
 	/**
 	 * getStandardIdentityForProfile
 	 * get either the first identity out of the given identities or the one matching the profile_id
-	 * @param object $_identities identity iterator object with identities from emailadmin_account
+	 * @param object/array $_identities identity iterator object or array with identities from emailadmin_account
 	 * @param integer $_profile_id the acc_id/profileID the identity with the matching key is the standard one
 	 * @return array the identity
 	 */
@@ -5446,6 +5466,7 @@ class emailadmin_imapbase
 		// use the standardIdentity
 		foreach($_identities as $key => $acc) {
 			if ($c==0) $identity = $acc;
+			//error_log(__METHOD__.__LINE__." $key == $_profile_id ");
 			if ($key==$_profile_id) $identity = $acc;
 			$c++;
 		}
@@ -5983,7 +6004,7 @@ class emailadmin_imapbase
 						try {
 							$mailObject->Send();
 						}
-						catch(phpmailerException $e) {
+						catch(Exception $e) {
 							$sendOK = false;
 							$errorInfo = $e->getMessage();
 							if ($mailObject->ErrorInfo) // use the complete mailer ErrorInfo, for full Information
@@ -6292,7 +6313,6 @@ error_log(__METHOD__.__LINE__.$mailObject->EncodeHeader($mailObject->SecureHeade
 			$seemsToBePlainMessage = true;
 		}
 		$this->createBodyFromStructure($mailObject, $structure, $parenttype=null);
-		$mailObject->SetMessageType();
 		$mailObject->CreateHeader(); // this sets the boundary stufff
 		//echo "Boundary:".$mailObject->FetchBoundary(1).'<br>';
 		//$boundary ='';
