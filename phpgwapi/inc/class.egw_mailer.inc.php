@@ -412,6 +412,7 @@ class egw_mailer extends Horde_Mime_Mail
 	{
 		return $str;
 	}
+
 	protected $is_html = false;
 	/**
 	 * Defines that setting $this->Body should set Body or AltBody
@@ -421,6 +422,38 @@ class egw_mailer extends Horde_Mime_Mail
 	function isHtml($html)
 	{
 		$this->is_html = (bool)$html;
+	}
+
+	/**
+	 * Sets the message type
+	 *
+	 * @deprecated no longer necessary to call, happens automatic when calling send or getRaw($stream=true)
+	 */
+	public function SetMessageType()
+	{
+
+	}
+
+	/**
+	 * Assembles message header
+	 *
+	 * @deprecated use getMessageHeader() or better getRaw($stream=true)
+	 * @return string The assembled header
+	 */
+	public function CreateHeader()
+	{
+		return $this->getMessageHeader();
+	}
+
+	/**
+	 * Assembles message body
+	 *
+	 * @deprecated use getMessageBody() or better getRaw($stream=true)
+	 * @return string The assembled header
+	 */
+	public function CreateBody()
+	{
+		return $this->getMessageBody();
 	}
 
 	protected $from = '';
