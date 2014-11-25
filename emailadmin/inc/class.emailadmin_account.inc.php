@@ -1477,7 +1477,7 @@ class emailadmin_account implements ArrayAccess
 				{
 					if (!isset($account['acc_imap_username']))
 					{
-						$account += emailadmin_credentials::read($account['acc_id'], null, array($account_id, 0));
+						$account += emailadmin_credentials::read($account['acc_id'], null, ($account_id?array($account_id, 0):null));
 					}
 					if (empty($account['acc_imap_username']) && $account['acc_imap_logintype'] &&
 						(!isset($account_id) || $account_id == $GLOBALS['egw_info']['user']['account_id']))
