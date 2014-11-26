@@ -2564,8 +2564,6 @@ class mail_compose
 
 			// normaly Bcc is only added to recipients, but not as header visible to all recipients
 			$mail->forceBccHeader();
-			$sentMailHeader = $mail->getMessageHeader();
-			$sentMailBody = $mail->getMessageBody();
 		}
 		// copying mail to folder
 		if (count($folder) > 0)
@@ -2696,27 +2694,25 @@ class mail_compose
 		if (!empty($mailaddresses)) $mailaddresses['from'] = $GLOBALS['egw']->translation->decodeMailHeader($fromAddress);
 		// attention: we dont return from infolog/tracker. You cannot check both. cleanups will be done there.
 		if ($_formData['to_infolog'] == 'on') {
-			$uiinfolog =& CreateObject('infolog.infolog_ui');
+			$uiinfolog = new infolog_ui();
 			$uiinfolog->import_mail(
 				$mailaddresses,
 				$this->sessionData['subject'],
 				$this->convertHTMLToText($this->sessionData['body']),
 				$this->sessionData['attachments'],
 				false, // date
-				$sentMailHeader, // raw SentMailHeader
-				$sentMailBody // raw SentMailBody
+				$mail->getRaw()
 			);
 		}
 		if ($_formData['to_tracker'] == 'on') {
-			$uitracker =& CreateObject('tracker.tracker_ui');
+			$uitracker = new tracker_ui();
 			$uitracker->import_mail(
 				$mailaddresses,
 				$this->sessionData['subject'],
 				$this->convertHTMLToText($this->sessionData['body']),
 				$this->sessionData['attachments'],
 				false, // date
-				$sentMailHeader, // raw SentMailHeader
-				$sentMailBody // raw SentMailBody
+				$mail->getRaw()
 			);
 		}
 /*

@@ -2456,10 +2456,9 @@ class infolog_ui
 	 * @param string $_body
 	 * @param array $_attachments
 	 * @param string $_date
-	 * @param string $_rawMailHeader
-	 * @param string $_rawMailBody
+	 * @param resource $_rawMail
 	 */
-	function import_mail($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMailHeader=null,$_rawMailBody=null)
+	function import_mail($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null)
 	{
 		$uid = $_GET['uid'];
 		$partid = $_GET['part'];
@@ -2547,13 +2546,13 @@ class infolog_ui
 			}
 			// this one adds the mail itself (as message/rfc822 (.eml) file) to the infolog as additional attachment
 			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
-			if ($_rawMailHeader && $_rawMailBody && $GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
+			if (is_resource($_rawMail) && $GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
 			{
-				$message = ltrim(str_replace("\n","\r\n",$_rawMailHeader)).str_replace("\n","\r\n",$_rawMailBody);
 				$subject = $mailClass::adaptSubjectForImport($_subject);
 				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 				$tmpfile = fopen($attachment_file,'w');
-				fwrite($tmpfile,$message);
+				fseek($_rawMail, 0, SEEK_SET);
+				stream_copy_to_stream($_rawMail, $tmpfile);
 				fclose($tmpfile);
 				$size = filesize($attachment_file);
 				$attachments[] = array(

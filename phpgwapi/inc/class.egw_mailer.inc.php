@@ -400,20 +400,21 @@ class egw_mailer extends Horde_Mime_Mail
 			unset($e);
 			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
 		}
-		// code copied from Horde_Mime_Mail, as there is no way to inject charset in _headers->toString()
-		// which is required to encode headers containing non-ascii chars correct
+		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
+		// _headers->toString(), which is required to encode headers containing non-ascii chars correct
         if ($stream) {
             $hdr = new Horde_Stream();
-            $hdr->add($this->_headers->toString(array('charset' => 'utf-8')), true);
+            $hdr->add($this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)), true);
             return Horde_Stream_Wrapper_Combine::getStream(
                 array($hdr->stream,
                       $this->getBasePart()->toString(
-                        array('stream' => true, 'encode' => Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY))
+                        array('stream' => true, 'canonical' => true, 'encode' => Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY))
                 )
             );
         }
 
-        return $this->_headers->toString(array('charset' => 'utf-8')) . $this->getBasePart()->toString();
+        return $this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)) .
+			$this->getBasePart()->toString(array('canonical' => true));
     }
 
 	/**
