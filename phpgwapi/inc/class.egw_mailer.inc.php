@@ -506,13 +506,17 @@ class egw_mailer extends Horde_Mime_Mail
 				$this->addHeader('From', $this->from, true);
 				break;
 			case 'Priority':
-				$this->AddHeader('X-Priority', $value);
+				$this->addHeader('X-Priority', $value);
 				break;
 			case 'Subject':
-				$this->AddHeader($name, $value);
+				$this->addHeader($name, $value);
 				break;
 			case 'MessageID':
-				$this->AddHeader('Message-ID', $value);
+				$this->addHeader('Message-ID', $value);
+				break;
+			case 'Date':
+			case 'RFCDateToSet':
+				if ($value) $this->addHeader('Date', $value, true);
 				break;
 			case 'AltExtended':
 			case 'AltExtendedContentType':
@@ -524,7 +528,6 @@ class egw_mailer extends Horde_Mime_Mail
 			case 'AltBody':
 				!$this->is_html ? $this->setHtmlBody($value, null, false) : $this->setBody($value);
 				break;
-
 			default:
 				error_log(__METHOD__."('$name', ".array2string($value).") unsupported  attribute '$name' --> ignored");
 				break;

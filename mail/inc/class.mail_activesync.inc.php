@@ -32,12 +32,10 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	private $mail;
 
 	/**
-	 * Instance of uidisplay
-	 * needed to use various bodyprocessing functions
-	 *
-	 * @var uidisplay
+	 * Provides the ability to change the line ending
+	 * @var string
 	 */
-	//private $ui; // may not be needed after all
+	public static $LE = "\n";
 
 	/**
 	 * Integer id of trash folder
@@ -447,9 +445,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 
 		// initialize the new egw_mailer object for sending
 		$mailObject = new egw_mailer();
-		$mailObject->CharSet = 'utf-8'; // set charset always to utf-8
-		// default, should this be forced?
-		$mailObject->IsSMTP();
+		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->From 	= $activeMailProfile['ident_email'];
 		$mailObject->FromName = $mailObject->EncodeHeader(mail_bo::generateIdentityString($activeMailProfile,false));
@@ -465,7 +461,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$message = $mobj->decode($mimeParams, $mimeParams['crlf']);
 		//error_log(__METHOD__.__LINE__.array2string($message));
 		$mailObject->Priority = $message->headers['priority'];
-		$mailObject->Encoding = 'quoted-printable'; // we use this by default
+		//$mailObject->Encoding = 'quoted-printable'; //handled by horde
 
 		if (isset($message->headers['date'])) $mailObject->RFCDateToSet = $message->headers['date'];
 		if (isset($message->headers['return-path'])) $mailObject->Sender = $message->headers['return-path'];
@@ -569,10 +565,17 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		// if this is a simple message, no structure at all
 		if ($message->ctype_primary=='text' && $message->body)
 		{
-			$mailObject->IsHTML($message->ctype_secondary=='html'?true:false);
 			// we decode the body ourself
 			$message->body = $this->mail->decodeMimePart($message->body,($message->headers['content-transfer-encoding']?$message->headers['content-transfer-encoding']:'WeDontKnowTheEncoding'));
-			$mailObject->Body = $body = $message->body;
+			$body = $message->body;
+			if ($message->ctype_secondary=='html')
+			{
+				$mailObject->setHtmlBody($body,null,false);
+			}
+			else
+			{
+				$mailObject->setBody($body);
+			}
 			$simpleBodyType = ($message->ctype_secondary=='html'?'text/html':'text/plain');
 			if ($this->debugLevel>0) debugLog("IMAP-Sendmail: fetched simple body as ".($message->ctype_secondary=='html'?'html':'text'));
 		}
@@ -582,7 +585,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' mailObject after Inital Parse:'.array2string($mailObject));
         if ($use_orgbody) {
     	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = true");
-            $repl_body = $body = $mailObject->Body;
+            $repl_body = $body = $mailObject->getMessageBody();
 			// if it is a ClientSideMeetingRequest, we report it as send at all times
 			if ($mailObject->AltExtendedContentType && stripos($mailObject->AltExtendedContentType,'text/calendar') !== false )
 			{
@@ -595,7 +598,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
         }
         else {
     	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = false");
-			$body = $mailObject->Body;
+			$body = $mailObject->getMessageBody;
 		}
 		// now handle the addressee list
 		$toCount = 0;
@@ -683,7 +686,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && $mailObject->ContentType == 'text/html') $body=nl2br($body); // this is (should be) the same as $orgMessageContentType == 'text/plain' && $mailObject->ContentType == 'text/html'
 			// receive only body
 			$body .= $bodyBUFF;
-			$mailObject->Encoding = 'base64';
+			//$mailObject->Encoding = 'base64'; //handled by horde
 		}
 
 		// how to forward and other prefs
@@ -782,7 +785,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				}
 			}
 			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && $mailObject->ContentType == 'text/html') $body=nl2br($body);
-			$mailObject->Encoding = 'base64';
+			//$mailObject->Encoding = 'base64'; //handled by horde
 		} // end forward
 
 		// add signature!! -----------------------------------------------------------------
@@ -818,17 +821,19 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$body .= $before.($mailObject->ContentType=='text/html'?$sigText:translation::convertHTMLToText($sigText));
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
 		// remove carriage-returns from body, set the body of the mailObject
-		if (trim($body) =='' && trim($mailObject->Body)==''/* && $attachmentNames*/) $body .= ($attachmentNames?$attachmentNames:lang('no text body supplied, check attachments for message text')); // to avoid failure on empty messages with attachments
+		if (trim($body) =='' && trim($mailObject->getMessageBody())==''/* && $attachmentNames*/) $body .= ($attachmentNames?$attachmentNames:lang('no text body supplied, check attachments for message text')); // to avoid failure on empty messages with attachments
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
-		$mailObject->Body = $body ;//= str_replace("\r\n", "\n", $body); // if there is a <pre> this needs \r\n so DO NOT replace them
-		if ($mailObject->ContentType=='text/html') $mailObject->AltBody = translation::convertHTMLToText($body);
-
-        //advanced debugging
-		if (strtolower($mailObject->CharSet) != 'utf-8')
+		if ($mailObject->ContentType=='text/html')
 		{
-			debugLog(__METHOD__.__LINE__.' POSSIBLE PROBLEM: CharSet was changed during processing of the Body from:'.$mailObject->CharSet.'. Force back to UTF-8 now.');
-			$mailObject->CharSet = 'utf-8';
+			$mailObject->setHtmlBody($body,null,false);
+			$mailObject->setBody(translation::convertHTMLToText($body));
 		}
+		else
+		{
+			$mailObject->setBody($body);
+		}
+        //advanced debugging
+		// Horde SMTP Class uses utf-8 by default.
         //debugLog("IMAP-SendMail: parsed message: ". print_r($message,1));
 		#_debug_array($ogServer);
 		$mailObject->Host 	= $this->mail->ogServer->host;
@@ -849,9 +854,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				'port'=>$mailObject->Port,
 				'username'=>$mailObject->Username,
 				'subject'=>$mailObject->Subject,
-				'CharSet'=>$mailObject->CharSet,
 				'Priority'=>$mailObject->Priority,
-				'Encoding'=>$mailObject->Encoding,
 				'ContentType'=>$mailObject->ContentType,
 			)));
 		}
@@ -871,9 +874,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				'port'=>$mailObject->Port,
 				'username'=>$mailObject->Username,
 				'subject'=>$mailObject->Subject,
-				'CharSet'=>$mailObject->CharSet,
 				'Priority'=>$mailObject->Priority,
-				'Encoding'=>$mailObject->Encoding,
 				'ContentType'=>$mailObject->ContentType,
 			)));
 			$send = false;
@@ -1103,11 +1104,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						//if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__." Using data from ".$rawHeaders.$rawBody);
 						//$this->mail->parseRawMessageIntoMailObject($mailObject,$rawHeaders.$rawBody,$Header,$Body);
 						//debugLog(__METHOD__.__LINE__.array2string($headers));
-						// now force UTF-8
-						$mailObject->IsSMTP(); // needed to ensure the to part of the Header is Created too, when CreatingHeader
-						$mailObject->CharSet = 'utf-8';
+						// now force UTF-8, Horde SMTP Class uses utf-8 by default.
 						$mailObject->Priority = $headers['PRIORITY'];
-						$mailObject->Encoding = 'quoted-printable'; // we use this by default
+						//$mailObject->Encoding = 'quoted-printable'; // handled by horde
 
 						$mailObject->RFCDateToSet = $headers['DATE'];
 						$mailObject->Sender = $headers['RETURN-PATH'];
@@ -1151,7 +1150,6 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					if ($this->debugLevel>0) debugLog("MIME Body -> ".$body); // body is retrieved up
 					if ($output->airsyncbasenativebodytype==2) { //html
 						if ($this->debugLevel>0) debugLog("HTML Body with requested pref 4");
-						$mailObject->IsHTML(true);
 						$html = '<html>'.
 	    					    '<head>'.
 						        '<meta name="Generator" content="Z-Push">'.
@@ -1162,15 +1160,13 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						        str_replace("\n","<BR>",str_replace("\r","", str_replace("\r\n","<BR>",$body))).
 							    '</body>'.
 								'</html>';
-						$mailObject->Body = str_replace("\n","\r\n", str_replace("\r","",$html));
-						if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." MIME Body (constructed)-> ".$mailObject->Body);
-						$mailObject->AltBody = empty($plainBody)?strip_tags($body):$plainBody;
+						$mailObject->setHtmlBody(str_replace("\n","\r\n", str_replace("\r","",$html)),null,false);
+						if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." MIME Body (constructed)-> ".$mailObject->getMessageBody());
+						$mailObject->setBody(empty($plainBody)?strip_tags($body):$plainBody);
 					}
 					if ($output->airsyncbasenativebodytype==1) { //plain
 						if ($this->debugLevel>0) debugLog("Plain Body with requested pref 4");
-						$mailObject->IsHTML(false);
-						$mailObject->Body = $plainBody;
-						$mailObject->AltBody = '';
+						$mailObject->setBody($plainBody);
 					}
 					// we still need the attachments to be added ( if there are any )
 					// start handle Attachments
@@ -1203,12 +1199,12 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						}
 					}
 
-					$Header = $mailObject->CreateHeader();
+					$Header = $mailObject->getMessageHeader();
 					//debugLog(__METHOD__.__LINE__.' MailObject-Header:'.array2string($Header));
-					$Body = trim($mailObject->CreateBody()); // philip thinks this is needed, so lets try if it does any good/harm
+					$Body = trim($mailObject->getMessageBody()); // philip thinks this is needed, so lets try if it does any good/harm
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' MailObject:'.array2string($mailObject));
-					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Header.$mailObject->LE.$mailObject->LE.$Body);
-					$output->airsyncbasebody->data = $Header.$mailObject->LE.$mailObject->LE.$Body;
+					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Header.self::$LE.self::$LE.$Body);
+					$output->airsyncbasebody->data = $Header.self::$LE.self::$LE.$Body;
 				}
 				else if (isset($bodypreference[2]))
 				{
