@@ -405,7 +405,10 @@ class calendar_hooks
 				'admin'  => False,
 				'forced' => 'user',
 			),
-			'use_time_grid' => array(
+			//ATM:Disable the use_time_grid preference
+			//@TODO: the whole use_time_grid preference should be removed
+			// after we decided that is not neccessary to have it at all
+			/*'use_time_grid' => array(
 				'type'   => 'select',
 				'label'  => 'Views with fixed time intervals',
 				'name'   => 'use_time_grid',
@@ -414,7 +417,7 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => 'all',
-			),
+			),*/
 			'link_title' => array(
 				'type'   => 'multiselect',
 				'label'  => 'Link title for events to show',

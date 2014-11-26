@@ -101,8 +101,13 @@ class calendar_uiviews extends calendar_ui
 	 * @var boolean
 	 */
 	var $use_time_grid=true;
-
-
+	
+	/**
+	 * Pref value of use_time_grid preference
+	 * @var string
+	 */
+	var $use_time_grid_pref = '';
+	
 	/**
 	 * Can we display the whole day in a timeGrid of the size of the workday and just scroll to workday start
 	 *
@@ -170,8 +175,11 @@ class calendar_uiviews extends calendar_ui
 		$this->holidays = $this->bo->read_holidays($this->year);
 
 		$this->check_owners_access();
-
-
+		
+		//ATM: Forces use_time_grid preference to use all views by ignoring the preference value
+		//@TODO: the whole use_time_grid preference should be removed (including dependent vars)
+		// after we decided that is not neccessary to have it at all
+		$this->use_time_grid_pref = 'all'; //$this->cal_prefs['use_time_grid'];
 	}
 
 
@@ -612,7 +620,7 @@ class calendar_uiviews extends calendar_ui
 	{
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(weeks=%1) date=%2',True,$weeks,$this->date);
 
-		$this->use_time_grid = !$this->cal_prefs['use_time_grid'] || $this->cal_prefs['use_time_grid'] == 'all';	// all views
+		$this->use_time_grid = !$this->use_time_grid_pref || $this->use_time_grid_pref == 'all';	// all views
 
 		// Merge print
 		if($weeks)
@@ -791,9 +799,9 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function week($days=0,$home=false)
 	{
-		$this->use_time_grid = $days != 4 && !in_array($this->cal_prefs['use_time_grid'],array('day','day4')) ||
-			$days == 4 && $this->cal_prefs['use_time_grid'] != 'day';
-
+		$this->use_time_grid = $days != 4 && !in_array($this->use_time_grid_pref,array('day','day4')) ||
+			$days == 4 && $this->use_time_grid_pref != 'day';
+		
 		if (!$days)
 		{
 			$days = isset($_GET['days']) ? $_GET['days'] : $this->cal_prefs['days_in_weekview'];
