@@ -27,12 +27,6 @@
 <!-- END head -->
 <!-- BEGIN framework -->
 		{hook_after_navbar}
-		<div class="egw_fw_mobile_popup_container">
-			<div class="egw_fw_mobile_popup_toolbar">
-				<button id="egw_fw_mobile_popup_close" class="et2_button_cancel">X</button>
-			</div>
-			<iframe id="egw_fw_mobile_popupFrame"></iframe>
-		</div>
 		<div id="egw_fw_basecontainer">
 			<div id="egw_fw_top_toolbar">
 				<div id="egw_fw_logout" title="{title_logout}" data-logout-url="{link_logout}"></div>
