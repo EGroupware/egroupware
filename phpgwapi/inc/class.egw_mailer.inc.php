@@ -631,7 +631,7 @@ class egw_mailer extends Horde_Mime_Mail
 				!$this->is_html ? $this->setHtmlBody($value, null, false) : $this->setBody($value);
 				break;
 			default:
-				error_log(__METHOD__."('$name', ".array2string($value).") unsupported  attribute '$name' --> ignored");
+				error_log(__METHOD__."('$name', ".array2string($value).") unsupported  attribute '$name' --> ignored ".function_backtrace());
 				break;
 		}
 	}
@@ -654,7 +654,7 @@ class egw_mailer extends Horde_Mime_Mail
 				$body = $this->findBody($name == 'Body' ? 'plain' : 'html');
 				return $body ? $body->getContents() : null;
 		}
-		error_log(__METHOD__."('$name') unsupported  attribute '$name' --> returning NULL");
+		error_log(__METHOD__."('$name') unsupported  attribute '$name' --> returning NULL ".function_backtrace());
 		return null;
 	}
 
