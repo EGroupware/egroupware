@@ -994,5 +994,21 @@ var fw_base =  Class.extend({
 		{
 			return win;
 		}
-   }
+	},
+
+	/**
+	 * Print function prints the active window
+	 */
+	print: function()
+	{
+		if (this.activeApp && this.activeApp.appName != 'manual')
+		{
+			var appWindow = this.egw_appWindow(this.activeApp.appName);
+			if (appWindow)
+			{
+				appWindow.focus();
+				appWindow.print();
+			}
+		}
+	}
 });
