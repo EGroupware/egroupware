@@ -37,6 +37,17 @@ class egw_mailer extends Horde_Mime_Mail
 	protected $cc;
 	protected $bcc;
 	protected $replyto;
+	/**
+	 * Translates between interal Horde_Mail_Rfc822_List attributes and header names
+	 *
+	 * @var array
+	 */
+	static $type2header = array(
+		'to' => 'To',
+		'cc' => 'Cc',
+		'bcc' => 'Bcc',
+		'replyto' => 'Reply-To',
+	);
 
 	/**
 	 * Constructor: always throw exceptions instead of echoing errors and EGw pathes
@@ -55,21 +66,21 @@ class egw_mailer extends Horde_Mime_Mail
 
 		$this->is_html = false;
 
-		$this->clearAddresses();
+		$this->clearAllRecipients();
+		$this->clearReplyTos();
 
 		$this->clearParts();
 	}
 
 	/**
-	 * Clear all addresses
+	 * Clear all recipients: to, cc, bcc (but NOT reply-to!)
 	 */
-	function clearAddresses()
+	function clearAllRecipients()
 	{
 		// clear all addresses
-		$this->to = new Horde_Mail_Rfc822_List();
-		$this->cc = new Horde_Mail_Rfc822_List();
-		$this->bcc = new Horde_Mail_Rfc822_List();
-		$this->replyto = new Horde_Mail_Rfc822_List();
+		$this->clearAddresses();
+		$this->clearCCs();
+		$this->clearBCCs();
 	}
 
 	/**
@@ -122,13 +133,7 @@ class egw_mailer extends Horde_Mime_Mail
 	 */
 	function addAddress($address, $personal='', $type='to')
 	{
-		static $type2header = array(
-			'to' => 'To',
-			'cc' => 'Cc',
-			'bcc' => 'Bcc',
-			'replyto' => 'Reply-To',
-		);
-		if (!isset($type2header[$type]))
+		if (!isset(self::$type2header[$type]))
 		{
 			throw new egw_exception_wrong_parameter("Unknown type '$type'!");
 		}
@@ -138,7 +143,19 @@ class egw_mailer extends Horde_Mime_Mail
 		$this->$type->add($address);
 
 		// add as header
-		$this->addHeader($type2header[$type], $this->$type, true);
+		$this->addHeader(self::$type2header[$type], $this->$type, true);
+	}
+
+	/**
+	 * Remove all addresses from To, Cc, Bcc or Reply-To
+	 *
+	 * @param string $type ='to' type of address to add "to", "cc", "bcc" or "replyto"
+	 */
+	function clearAddresses($type='to')
+	{
+		$this->$type = new Horde_Mail_Rfc822_List();
+
+		$this->removeHeader(self::$type2header[$type]);
 	}
 
 	/**
@@ -192,6 +209,14 @@ class egw_mailer extends Horde_Mime_Mail
 	}
 
 	/**
+	 * Clear all cc
+	 */
+	function clearCCs()
+	{
+		$this->clearAddresses('cc');
+	}
+
+	/**
 	 * Add one or multiple addresses to Bcc
 	 *
 	 * @param string|array|Horde_Mail_Rfc822_List $address
@@ -203,6 +228,14 @@ class egw_mailer extends Horde_Mime_Mail
 	}
 
 	/**
+	 * Clear all bcc
+	 */
+	function clearBCCs()
+	{
+		$this->clearAddresses('bcc');
+	}
+
+	/**
 	 * Add one or multiple addresses to Reply-To
 	 *
 	 * @param string|array|Horde_Mail_Rfc822_List $address
@@ -211,6 +244,24 @@ class egw_mailer extends Horde_Mime_Mail
 	function AddReplyTo($address, $personal=null)
 	{
 		$this->AddAddress($address, $personal, 'replyto');
+	}
+
+	/**
+	 * Clear all reply-to
+	 */
+	function clearReplyTos()
+	{
+		$this->clearAddresses('replyto');
+	}
+
+	/**
+	 * Get set ReplyTo addressses
+	 *
+	 * @return Horde_Mail_Rfc822_List supporting arrayAccess and Iterable
+	 */
+	function getReplyTo()
+	{
+		return $this->replyto;
 	}
 
 	/**
@@ -349,7 +400,57 @@ class egw_mailer extends Horde_Mime_Mail
 			unset($e);
 			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
 		}
-		return parent::getRaw($stream);
+		// code copied from Horde_Mime_Mail, as there is no way to inject charset in _headers->toString()
+		// which is required to encode headers containing non-ascii chars correct
+        if ($stream) {
+            $hdr = new Horde_Stream();
+            $hdr->add($this->_headers->toString(array('charset' => 'utf-8')), true);
+            return Horde_Stream_Wrapper_Combine::getStream(
+                array($hdr->stream,
+                      $this->getBasePart()->toString(
+                        array('stream' => true, 'encode' => Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY))
+                )
+            );
+        }
+
+        return $this->_headers->toString(array('charset' => 'utf-8')) . $this->getBasePart()->toString();
+    }
+
+	/**
+	 * Find body: 1. part with mimetype "text/$subtype"
+	 *
+	 * Use getContents() on non-null return-value to get string content
+	 *
+	 * @param string $subtype =null
+	 * @return Horde_Mime_Part part with body or null
+	 */
+	function findBody($subtype=null)
+	{
+		try {
+			$base = $this->getBasePart();
+			return $base->findBody($subtype);
+		}
+		catch (Exception $e) {
+			unset($e);
+			return $subtype == 'html' ? $this->_htmlBody : $this->_body;
+		}
+	}
+
+	/**
+	 * Clear all non-standard headers
+	 *
+	 * Used in merge-print to remove headers before sending "new" mail
+	 */
+	function ClearCustomHeaders()
+	{
+		foreach($this->_headers->toArray() as $header => $value)
+		{
+			if (stripos($header, 'x-') === 0 || $header == 'Received')
+			{
+				$this->_headers->removeHeader($header);
+			}
+			unset($value);
+		}
 	}
 
 	/**
@@ -547,6 +648,10 @@ class egw_mailer extends Horde_Mime_Mail
 				return $this->getHeader('Return-Path');
 			case 'From':
 				return $this->getHeader('From');
+			case 'Body':
+			case 'AltBody':
+				$body = $this->findBody($name == 'Body' ? 'plain' : 'html');
+				return $body ? $body->getContents() : null;
 		}
 		error_log(__METHOD__."('$name') unsupported  attribute '$name' --> returning NULL");
 		return null;

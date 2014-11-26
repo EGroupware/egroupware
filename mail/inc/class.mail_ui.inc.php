@@ -3271,7 +3271,7 @@ class mail_ui
 			$Body = '';
 			try
 			{
-				$this->mail_bo->parseFileIntoMailObject($mailObject,$tmpFileName,$Header,$Body);
+				$this->mail_bo->parseFileIntoMailObject($mailObject, $tmpFileName);
 			}
 			catch (egw_exception_assertion_failed $e)
 			{
@@ -3292,8 +3292,8 @@ class mail_ui
 					try
 					{
 						$messageUid = $this->mail_bo->appendMessage($_folder,
-							$Header.$mailObject->LE.$mailObject->LE,
-							$Body,'\\Seen');
+							$mailObject->getRaw(),
+							null,'\\Seen');
 					}
 					catch (egw_exception_wrong_userinput $e)
 					{
