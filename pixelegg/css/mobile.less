@@ -3,16 +3,18 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : Nov 14, 2014, 12:39:19 PM
     Author     : Hadi Nategh <hn@stylite.de>
 */
+@import "pixelegg.less";
+
 @media all {
-	
+
 	#egw_fw_basecontainer{
-		
-		
-	
+
+
+
 		//###################
 		//#					#
 		//#		TOOLBAR		#
@@ -38,7 +40,7 @@ and open the template in the editor.
 					border-width: 1px 1px 1px 1px;
 					border:none;
 					border-radius: 10px;
-					
+
 					img{
 						height:32px !important;
 						width:32px !important;
@@ -48,7 +50,7 @@ and open the template in the editor.
 					}
 				}
 			}
-		}			
+		}
 		//FW Logout
 		div#egw_fw_logout{
 			left: 235px;
@@ -73,7 +75,7 @@ and open the template in the editor.
 			-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 		}
-		
+
 
 		//FW Menu
 		div#egw_fw_menu{
@@ -128,7 +130,7 @@ and open the template in the editor.
 						background-size: 32px 32px;
 						display: inline-block;
 				}
-				
+
 				a#topmenu_acl:before {
 					content: "";
 					background-repeat: no-repeat;
@@ -183,9 +185,9 @@ and open the template in the editor.
 					-webkit-transition: 1s ease;
 				}
 			}
-		} 
+		}
 	}//End of toolbar
-	
+
 	// ######################tabs header ##########################
 	// #      #      #     #     #     #     #     #     #     ####
 	// #      #      #     #     #     #     #     #     #     ####
@@ -193,7 +195,7 @@ and open the template in the editor.
 	// #      #      #     #     #     #     #     #     #     ####
 	// ############################################################
 	// Div Tabs
-	
+
 	.egw_fw_ui_tabs_header {
 		margin: 0px 0 0 0;
 		padding: 1px 1px 0px 0px;
@@ -223,9 +225,9 @@ and open the template in the editor.
 		// #        #
 		// ##########
 		// Inactive
-		
-		
-		
+
+
+
 		.egw_fw_ui_tab_header {
 			padding-left: 0;
 			position: relative;
@@ -318,7 +320,7 @@ and open the template in the editor.
 	//###################
 	#egw_fw_sidebar{
 		top: 60px;
-	
+
 		//SIDE AREA
 		#egw_fw_sidemenu {
 			position: absolute;
@@ -567,7 +569,7 @@ and open the template in the editor.
 		} // SIDEMENU End
 	}//End of Sidebar
 	//ToggleClass
-	
+
 	.sidebar-toggle{
 		#egw_fw_top_toolbar div#egw_fw_menu{
 			background-image: url(../images/topmenu_items/mobile/menu.png);
@@ -610,19 +612,19 @@ and open the template in the editor.
 				}
 				#egw_fw_splitter, .egw_fw_ui_sidemenu_entry_header_active h1{
 					display:none;
-				}				
+				}
 			}
 		}
 		#egw_fw_logout, #egw_fw_topmenu_items{
 			display:none !important;
 		}
 	}
-	
+
 	.tabs-header-portrait-collapsed{
 		left:7% !important;
 		width: 90% !important;
 	}
-	
+
 	//###################################
 	//#									#
 	//#			FOOTER					#
@@ -631,7 +633,7 @@ and open the template in the editor.
 	#egw_fw_footer {
 		display:none;
 	}
-	
+
 	//###################################
 	//#									#
 	//#			APP HEADER NAVIGATOR	#
@@ -640,8 +642,8 @@ and open the template in the editor.
 	.egw_fw_ui_app_header_container {
 		display:none;
 	}
-	
-	
+
+
 	//###################################
 	//#									#
 	//#			POPUP FRAME				#
@@ -672,5 +674,5 @@ and open the template in the editor.
 			background-repeat: no-repeat;
 		}
 	}
-	
+
 }
