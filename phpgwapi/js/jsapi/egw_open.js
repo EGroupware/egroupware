@@ -280,12 +280,12 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				var w_h = _popup.split('x');
 				if (w_h[1] == 'availHeight') w_h[1] = this.availHeight();
-				if (_wnd.framework && egwIsMobile())
+				if (_wnd.framework && (egwIsMobile() || egw.preference('theme') == 'mobile'))
 				{
 					var popup_window = _wnd.framework.egw_openWindowCentered2(url, _target || '_blank', w_h[0], w_h[1], false, _target_app, true, _wnd);
 				}
 				else
-				{	
+				{
 					var popup_window = _wnd.egw_openWindowCentered2(url, _target || '_blank', w_h[0], w_h[1], false, _target_app, true);
 				}
 
