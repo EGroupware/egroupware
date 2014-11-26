@@ -2564,6 +2564,8 @@ class mail_compose
 
 			// normaly Bcc is only added to recipients, but not as header visible to all recipients
 			$mail->forceBccHeader();
+			$sentMailHeader = $mail->getMessageHeader();
+			$sentMailBody = $mail->getMessageBody();
 		}
 		// copying mail to folder
 		if (count($folder) > 0)
