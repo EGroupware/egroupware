@@ -43,6 +43,20 @@
 	var start_time = (new Date).getTime();
 	if(typeof console != "undefined" && console.timeline) console.timeline("egw");
 
+	// set opener as early as possible for framework popups (not real popups)
+	if (!window.opener && window.parent !== window)
+	{
+		try {
+			if (window.parent.framework && typeof window.parent.framework.popup_idx == 'function' &&
+				window.parent.framework.popup_idx.call(window.parent.framework, window) !== undefined)
+			{
+				window.opener = window.parent;
+			}
+		}
+		catch(e) {
+			// ignore SecurityError exception if opener is different security context / cross-origin
+		}
+	}
 	// Flag for if this is opened in a popup
 	var popup = (window.opener != null);
 
