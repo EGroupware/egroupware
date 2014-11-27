@@ -174,7 +174,7 @@
 			{
 				egw(window.opener).message(JSON.parse(egw_script.getAttribute('data-message')));
 			}
-			window.close();
+			egw(window).close();
 		}
 
 		// call egw.open_link, if popup attr specified

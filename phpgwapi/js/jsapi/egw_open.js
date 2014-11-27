@@ -337,6 +337,21 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		},
 
 		/**
+		 * Close current window / popup
+		 */
+		close: function()
+		{
+			if (_wnd.framework && typeof _wnd.framework.popup_close == "function")
+			{
+				_wnd.framework.popup_close(_wnd);
+			}
+			else
+			{
+				_wnd.close();
+			}
+		},
+
+		/**
 		 * Check if browser pop-up blocker is on/off
 		 *
 		 * @param {string} _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
