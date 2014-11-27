@@ -1417,8 +1417,10 @@ abstract class egw_framework
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		// Load LABjs ONCE here
-		$java_script .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/labjs/LAB.src.js"'." ></script>\n".
-			'<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/jsapi/egw.js" id="egw_script_id"';
+		$java_script .= '<script type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				'/phpgwapi/js/labjs/LAB.src.js?'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/js/labjs/LAB.src.js')."\"></script>\n".
+			'<script type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				'/phpgwapi/js/jsapi/egw.js?'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/js/jsapi/egw.js').'" id="egw_script_id"';
 
 		// add values of extra parameter and class var as data attributes to script tag of egw.js
 		foreach($extra+self::$extra as $name => $value)
