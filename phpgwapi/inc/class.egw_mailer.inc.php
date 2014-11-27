@@ -203,9 +203,9 @@ class egw_mailer extends Horde_Mime_Mail
 	 * @param string|array|Horde_Mail_Rfc822_List $address
 	 * @param string $personal ='' only used if $address is a string
 	 */
-	function AddCc($address, $personal=null)
+	function addCc($address, $personal=null)
 	{
-		$this->AddAddress($address, $personal, 'cc');
+		$this->addAddress($address, $personal, 'cc');
 	}
 
 	/**
@@ -222,9 +222,9 @@ class egw_mailer extends Horde_Mime_Mail
 	 * @param string|array|Horde_Mail_Rfc822_List $address
 	 * @param string $personal ='' only used if $address is a string
 	 */
-	function AddBcc($address, $personal=null)
+	function addBcc($address, $personal=null)
 	{
-		$this->AddAddress($address, $personal, 'bcc');
+		$this->addAddress($address, $personal, 'bcc');
 	}
 
 	/**
@@ -241,9 +241,9 @@ class egw_mailer extends Horde_Mime_Mail
 	 * @param string|array|Horde_Mail_Rfc822_List $address
 	 * @param string $personal ='' only used if $address is a string
 	 */
-	function AddReplyTo($address, $personal=null)
+	function addReplyTo($address, $personal=null)
 	{
-		$this->AddAddress($address, $personal, 'replyto');
+		$this->addAddress($address, $personal, 'replyto');
 	}
 
 	/**
@@ -321,7 +321,7 @@ class egw_mailer extends Horde_Mime_Mail
 	 * @param string $type File extension (MIME) type.
 	 * @return int part-number
 	 */
-	public function AddStringAttachment($content, $filename, $type = 'application/octet-stream')
+	public function addStringAttachment($content, $filename, $type = 'application/octet-stream')
 	{
 		// deprecated PHPMailer::AddStringAttachment($content, $filename = '', $encoding = 'base64', $type = 'application/octet-stream') call
 		if ($type === 'base64' || func_num_args() == 4)
@@ -364,7 +364,7 @@ class egw_mailer extends Horde_Mime_Mail
 	/**
 	 * Reset all Settings to send multiple Messages
 	 */
-	function ClearAll()
+	function clearAll()
 	{
 		$this->__construct($this->account);
 	}
@@ -373,11 +373,11 @@ class egw_mailer extends Horde_Mime_Mail
 	 * Get value of a header set with addHeader()
 	 *
 	 * @param string $header
-	 * @return string
+	 * @return string|array
 	 */
 	function getHeader($header)
 	{
-		return $this->_headers ? $this->_headers->getString($header) : null;
+		return $this->_headers ? $this->_headers->getValue($header) : null;
 	}
 
 	/**
@@ -429,7 +429,8 @@ class egw_mailer extends Horde_Mime_Mail
 	{
 		try {
 			$base = $this->getBasePart();
-			return $base->findBody($subtype);
+			if (!($part_id = $base->findBody($subtype))) return null;
+			return $base->getPart($part_id);
 		}
 		catch (Exception $e) {
 			unset($e);
@@ -442,7 +443,7 @@ class egw_mailer extends Horde_Mime_Mail
 	 *
 	 * Used in merge-print to remove headers before sending "new" mail
 	 */
-	function ClearCustomHeaders()
+	function clearCustomHeaders()
 	{
 		foreach($this->_headers->toArray() as $header => $value)
 		{
