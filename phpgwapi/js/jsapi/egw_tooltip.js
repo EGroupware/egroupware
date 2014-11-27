@@ -73,7 +73,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			var tooltip_height = tooltip_div.height();
 
 			if (space_left.right < tooltip_width) {
-				tooltip_div.css('left', cursor_rect.left - tooltip_width);
+				tooltip_div.css('left', Math.max(0,cursor_rect.left - tooltip_width));
 			} else if (space_left.left >= tooltip_width) {
 				tooltip_div.css('left', cursor_rect.right);
 			} else	{
