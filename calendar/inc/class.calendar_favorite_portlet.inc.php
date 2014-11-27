@@ -111,6 +111,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				break;
 		}
 
+		unset($GLOBALS['egw_info']['flags']['app_header']);
 		$etemplate->exec(get_called_class() .'::process',$content);
 	}
 
