@@ -36,7 +36,6 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 		{
 			$this->context['sel_options']['tid'][$tid] = $data['name'];
 		}
-		error_log(array2string($this->nm_settings['col_filter']));
 		$this->nm_settings += array(
 			'get_rows'	=> 'addressbook_favorite_portlet::get_rows',
 			// Use a different template so it can be accessed from client side

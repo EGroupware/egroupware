@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="home.list" template="" lang="" group="0" version="1.9.001">
+	<template id="home.legacy" template="" lang="" group="0" version="1.9.001">
 		<html id="legacy"/>
 	</template>
 </overlay>

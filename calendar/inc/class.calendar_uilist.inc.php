@@ -815,7 +815,7 @@ class calendar_uilist extends calendar_ui
 	 *
 	 * @return array see nextmatch_widget::get_actions()
 	 */
-	private function get_actions()
+	public function get_actions()
 	{
 		$actions = array(
 			'add' => array(
