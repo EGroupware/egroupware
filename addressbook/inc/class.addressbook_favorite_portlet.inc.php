@@ -38,7 +38,7 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 		}
 		error_log(array2string($this->nm_settings['col_filter']));
 		$this->nm_settings += array(
-			'get_rows'	=> 'addressbook.addressbook_ui.get_rows',
+			'get_rows'	=> 'addressbook_favorite_portlet::get_rows',
 			// Use a different template so it can be accessed from client side
 			'template'	=> 'addressbook.index.rows',
 			'default_cols'   => 'type,n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
@@ -55,6 +55,23 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 
 		parent::exec($id, $etemplate);
 	}
+
+	/**
+	 * Override from addressbook to clear the app header
+	 *
+	 * @param type $query
+	 * @param type $rows
+	 * @param type $readonlys
+	 * @return integer Total rows found
+	 */
+	public static function get_rows(&$query, &$rows, &$readonlys)
+	{
+		$ui = new addressbook_ui();
+		$total = $ui->get_rows($query, $rows, $readonlys);
+		unset($GLOBALS['egw_info']['flags']['app_header']);
+		return $total;
+	}
+
 	/**
 	 * Here we need to handle any incoming data.  Setup is done in the constructor,
 	 * output is handled by parent.

@@ -115,6 +115,10 @@ class home_link_portlet extends home_portlet
 		// Try to load entry
 		if($this->context['entry'] && $this->context['entry']['app'])
 		{
+
+			// Always load app's css
+			egw_framework::includeCSS($this->context['entry']['app'],'app');
+			
 			try
 			{
 				$classname = $this->context['entry']['app'] . '_egw_record';
