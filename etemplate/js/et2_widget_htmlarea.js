@@ -70,6 +70,12 @@ var et2_htmlarea = et2_inputWidget.extend(
 			description: "The value of the widget",
 			type: "html",	// "string" would remove html tags by running html_entity_decode
 			default: et2_no_init
+		},
+		imageDataUrl: {
+			name: "imageDataUrl",
+			description: "Allow images dragged in as data-url, default false = handle them as fileupload",
+			type: "boolean",
+			default: false
 		}
 	},
 
@@ -136,7 +142,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 				delete self.value;
 			}
 		}
-		
+
 		if(this.ckeditor && this.options.config.preference_style)
 		{
 			var editor = this.ckeditor;
@@ -171,13 +177,18 @@ var et2_htmlarea = et2_inputWidget.extend(
 					return '';
 				});
 				return ret;
-			}
+			};
 
 			var chkImg = function(e) {
 				// don't execute code if the editor is readOnly
 				if (editor.readOnly)
 					return;
 
+				// allow data-URL, returning false to stop regular upload
+				if (self.options.imageDataUrl)
+				{
+					return false;
+				}
 				// Remove the image from the text
 				setTimeout( function() {
 					editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
@@ -203,7 +214,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 				editor.document.getBody().on('drop', chkImg);
 			});
 		}
-		
+
 	},
 
 	destroy: function() {
