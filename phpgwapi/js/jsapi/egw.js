@@ -116,45 +116,6 @@
 		}
 	}
 
-	// call egw.link_handler, if attr specified
-	var egw_redirect = egw_script.getAttribute('data-egw-redirect');
-	if (egw_redirect)
-	{
-		// set sidebox for tabed templates, we need to set it now, as framework will not resent it!
-		var sidebox = egw_script.getAttribute('data-setSidebox');
-		if (window.framework && sidebox)
-		{
-			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
-		}
-		egw_redirect = JSON.parse(egw_redirect);
-		egw.link_handler.apply(egw, egw_redirect);
-		return;	// do NOT execute any further code, as IE(11) will give errors because framework already redirects
-	}
-
-	// call egw_refresh on opener, if attr specified
-	var refresh_opener = egw_script.getAttribute('data-refresh-opener');
-	if (refresh_opener && window.opener)
-	{
-		refresh_opener = JSON.parse(refresh_opener) || {};
-		window.opener.egw_refresh.apply(window.opener, refresh_opener);
-	}
-
-	// close window / call window.close(), if data-window-close is specified
-	var window_close = egw_script.getAttribute('data-window-close');
-	if (window_close)
-	{
-		if (typeof window_close == 'string' && window_close !== '1')
-		{
-			alert(window_close);
-		}
-		// If there's a message & opener, set it
-		if(window.opener && egw_script.getAttribute('data-message'))
-		{
-			egw(window.opener).message(JSON.parse(egw_script.getAttribute('data-message')));
-		}
-		window.close();
-	}
-
 	// focus window / call window.focus(), if data-window-focus is specified
 	var window_focus = egw_script.getAttribute('data-window-focus');
 	if (window_focus && JSON.parse(window_focus))
@@ -177,6 +138,45 @@
 
 	window.egw_LAB.script(include).wait(function()
 	{
+		// call egw.link_handler, if attr specified
+		var egw_redirect = egw_script.getAttribute('data-egw-redirect');
+		if (egw_redirect)
+		{
+			// set sidebox for tabed templates, we need to set it now, as framework will not resent it!
+			var sidebox = egw_script.getAttribute('data-setSidebox');
+			if (window.framework && sidebox)
+			{
+				window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
+			}
+			egw_redirect = JSON.parse(egw_redirect);
+			egw.link_handler.apply(egw, egw_redirect);
+			return;	// do NOT execute any further code, as IE(11) will give errors because framework already redirects
+		}
+
+		// call egw_refresh on opener, if attr specified
+		var refresh_opener = egw_script.getAttribute('data-refresh-opener');
+		if (refresh_opener && window.opener)
+		{
+			refresh_opener = JSON.parse(refresh_opener) || {};
+			window.opener.egw(window.opener).refresh.apply(window.opener, refresh_opener);
+		}
+
+		// close window / call window.close(), if data-window-close is specified
+		var window_close = egw_script.getAttribute('data-window-close');
+		if (window_close)
+		{
+			if (typeof window_close == 'string' && window_close !== '1')
+			{
+				alert(window_close);
+			}
+			// If there's a message & opener, set it
+			if(window.opener && egw_script.getAttribute('data-message'))
+			{
+				egw(window.opener).message(JSON.parse(egw_script.getAttribute('data-message')));
+			}
+			window.close();
+		}
+
 		// call egw.open_link, if popup attr specified
 		var egw_popup = egw_script.getAttribute('data-popup');
 		if (egw_popup)
