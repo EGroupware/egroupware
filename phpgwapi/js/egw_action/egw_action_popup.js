@@ -256,7 +256,7 @@ function egwPopupActionImplementation()
 			{
 				_egw_active_menu.hide();
 			}
-			else if (!e.ctrlKey && e.which == 3)
+			else if (!e.ctrlKey && e.which == 3 || e.which === 0) // tap event indicates by 0
 			{
 				var _xy = ai._getPageXY(e);
 				_callback.call(_context, _xy, ai);
