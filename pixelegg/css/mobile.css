@@ -6312,6 +6312,7 @@ a.textSidebox {
   }
   #egw_fw_basecontainer div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_active.png);
+    cursor: pointer;
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
     position: fixed;
@@ -6528,10 +6529,10 @@ a.textSidebox {
     display: inline-block;
     width: 32px;
     height: 32px;
-    -webkit-filter: contrast(100);
-    -ms-filter: contrast(100);
-    -moz-filter: contrast(100);
-    -o-filter: contrast(100);
+    -webkit-filter: contrast(2);
+    -ms-filter: contrast(2);
+    -moz-filter: contrast(2);
+    -o-filter: contrast(2);
   }
   .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active object {
     width: 32px;
@@ -6926,16 +6927,20 @@ a.textSidebox {
     height: 90%;
     margin-left: 5%;
     margin-top: 4%;
+    border: 3px solid rgba(103, 159, 210, 0.5);
+    -webkit-box-shadow: -1px 1px 18px 2px rgba(0, 0, 0, 0.58);
+    -moz-box-shadow: -1px 1px 18px 2px rgba(0, 0, 0, 0.58);
+    box-shadow: -1px 1px 18px 2px rgba(0, 0, 0, 0.58);
   }
   .egw_fw_mobile_popup_container .egw_fw_mobile_popup_close {
     width: 32px;
     height: 32px;
     top: 12px;
-    right: 18px;
+    right: 12px;
     position: fixed;
-    background-image: url(../images/cancel.png);
-    background-color: white;
-    -webkit-filter: contrast(10);
+    background-image: url(../images/topmenu_items/mobile/cancelled.png);
+    -webkit-filter: contrast(2);
     background-repeat: no-repeat;
+    z-index: 1;
   }
 }
