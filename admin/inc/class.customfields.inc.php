@@ -80,11 +80,16 @@ class customfields
 	public static $type_attribute_flags = array(
 		'text'		=> array('cf_len' => true, 'cf_rows' => true),
 		'float'		=> array('cf_len' => true, 'cf_rows' => true),
-		'select'	=> array('cf_len' => false, 'cf_rows' => true),
+		'label'		=> array('cf_values' => true),
+		'select'	=> array('cf_len' => false, 'cf_rows' => true, 'cf_values' => true),
 		'date'		=> array('cf_len' => true, 'cf_rows' => false),
 		'date-time'	=> array('cf_len' => true, 'cf_rows' => false),
 		'select-account'	=> array('cf_len' => false, 'cf_rows' => true),
 		'htmlarea'	=> array('cf_len' => true, 'cf_rows' => true),
+		'button'	=> array('cf_values' => true),
+		'ajax_select' => array('cf_values' => true),
+		'radio'		=> array('cf_values' => true),
+		'checkbox'	=> array('cf_values' => true),
 	);
 
 	/**
@@ -400,6 +405,14 @@ class customfields
 		$content['options'] = lang(self::$type_option_help);
 		$content['statustext'] = $content['options'][$content['cf_type']];
 		$content['attributes'] = self::$type_attribute_flags;
+
+		// Start disabled, but don't set read-only as that changes the widget to readonly
+		$this->tmpl->setElementAttribute('cf_len', 'disabled', true);
+		$this->tmpl->setElementAttribute('cf_rows', 'disabled', true);
+		foreach(array('cf_len','cf_rows','cf_values') as $field)
+		{
+			$this->tmpl->setElementAttribute($field, 'disabled', !self::$type_attribute_flags[$content['cf_type']][$field]);
+		}
 		
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'cf_id' => $cf_id,
@@ -432,14 +445,14 @@ class customfields
 				'default' => true,
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=admin.customfields.edit&cf_id=$id&use_private='.$this->use_private,
-				'popup' => '450x380',
+				'popup' => '500x380',
 				'group' => $group=1,
 				'disableClass' => 'th',
 			),
 			'add' => array(
 				'caption' => 'Add',
 				'url' => 'menuaction=admin.customfields.edit&appname='.$this->appname.'&use_private='.$this->use_private,
-				'popup' => '450x380',
+				'popup' => '500x380',
 				'group' => $group,
 			),
 			'delete' => array(
