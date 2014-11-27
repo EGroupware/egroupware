@@ -2203,6 +2203,12 @@ class etemplate extends boetemplate
 			$on = str_replace($matches[0], "egw_openWindowCentered2('$matches[1]', '$matches[2]', $matches[3], $matches[4], '$matches[5]')", $on);
 		}
 
+		// replace window.close() with EGw's egw.close()
+		if (strpos($on,'window.close(') !== false)
+		{
+			$on = str_replace('window.close(', 'egw(window).close(', $on);
+		}
+
 		// replace xajax calls to code in widgets, with the "etemplate" handler,
 		// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
 		if (strpos($on,"xajax_doXMLHTTP('etemplate.") !== false)
