@@ -6365,6 +6365,10 @@ a.textSidebox {
     background-size: 32px 32px;
     display: inline-block;
   }
+  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs:active {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl:before {
     content: "";
     background-repeat: no-repeat;

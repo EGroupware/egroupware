@@ -122,7 +122,8 @@ and open the template in the editor.
 					background-size: 32px 32px;
 					display:none;
 				}
-				a#topmenu_prefs:before {
+				a#topmenu_prefs {
+					&:before {
 						content: "";
 						background-image: url(../images/topmenu_items/mobile/setup.png);
 						background-repeat: no-repeat;
@@ -130,8 +131,13 @@ and open the template in the editor.
 						height: 32px;
 						background-size: 32px 32px;
 						display: inline-block;
+					}
+					&:active {
+						-webkit-transform:rotate(180deg);
+						transform: rotate(180deg);
+					}
 				}
-
+				
 				a#topmenu_acl:before {
 					content: "";
 					background-repeat: no-repeat;

@@ -22,7 +22,6 @@
 		{java_script}
 	</head>
 	<body {body_tags}>
-		{include_wz_tooltip}
 		<div id="divAppboxHeader" class="onlyPrint">{app_header}</div>
 <!-- END head -->
 <!-- BEGIN framework -->
@@ -33,7 +32,7 @@
 				<div id="egw_fw_print" title="{title_print}"></div>
 				<div id="egw_fw_topmenu_items">{topmenu_items}</div>
 				<div id="egw_fw_menu" title="{title_menu}"></div>
-			</div>
+				</div>
 			<div id="egw_fw_sidebar">
 				<div id="egw_fw_sidemenu">
 				</div>
