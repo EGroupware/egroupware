@@ -33,7 +33,7 @@ app.classes.calendar = AppJS.extend(
 	init: function()
 	{
 		// make calendar object available, even if not running in top window, as sidebox does
-		if (window.top !== window)
+		if (window.top !== window && !egw(window).is_popup())
 		{
 			// we have to explicitly delete old object or IE11 complains about accessing an already freed script
 			delete window.top.app.calendar;
@@ -181,7 +181,7 @@ app.classes.calendar = AppJS.extend(
 						{
 							// F.F can not handle to style correctly an iframe which is hidden (display:none), therefore we need to
 							// bind a handler to refresh the calendar views after it shows up
-							iframe.one('show',function(){egw_refresh('','calendar');})
+							iframe.one('show',function(){egw_refresh('','calendar');});
 						}
 						else
 						{
@@ -551,11 +551,11 @@ app.classes.calendar = AppJS.extend(
 					that.egw.open_link(link,'_blank',windowSize);
 					return false;
 			});
-			
+
 		//******************************** Calendar Sortable ************************
 		// Calender current state
 		var state = this.getState();
-		
+
 		if (state && state.view === "day"
 				&& typeof state.owner != 'undefined'
 				&& state.owner.split(',').length > 1)
@@ -568,7 +568,7 @@ app.classes.calendar = AppJS.extend(
 						jQuery(this).css({position:"relative",display:"inline-block", left:"none"});
 			});
 		}
-			
+
 		$iframeBody.find('.cal_is_sortable').sortable ({
 				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_plannerHeader",
 				placeholder: "srotable_cal_wk_ph",
@@ -783,7 +783,7 @@ app.classes.calendar = AppJS.extend(
 		var start = this.et2.getWidgetById('start');
 		var end = this.et2.getWidgetById('end');
 		var content = this.et2.getArrayMgr('content').data;
-		
+
 		if (typeof duration != 'undefined' && typeof end != 'undefined')
 		{
 			end.set_disabled(duration.get_value()!=='');
