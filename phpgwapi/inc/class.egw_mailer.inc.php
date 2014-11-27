@@ -311,6 +311,34 @@ class egw_mailer extends Horde_Mime_Mail
 	}
 
 	/**
+	 * Adds an embedded image or other inline attachment
+	 *
+	 * @param string $path Path to the attachment.
+	 * @param string $cid Content ID of the attachment.  Use this to identify
+	 *        the Id for accessing the image in an HTML form.
+	 * @param string $name Overrides the attachment name.
+	 * @param string $type File extension (MIME) type.
+	 * @return integer part-number
+	 */
+	public function addEmbeddedImage($path, $cid, $name = '', $type = 'application/octet-stream')
+	{
+		// deprecated PHPMailer::AddEmbeddedImage($path, $cid, $name='', $encoding='base64', $type='application/octet-stream') call
+		if ($type === 'base64' || func_num_args() == 5)
+		{
+			$type = func_get_arg(4);
+		}
+
+		$part_id = $this->addAttachment($path, $name, $type);
+		error_log(__METHOD__."('$path', '$cid', '$name', '$type') added with (temp.) part_id=$part_id");
+
+		$part = $this->_parts[$part_id];
+		$part->setDisposition('inline');
+		$part->setContentId($cid);
+
+		return $part_id;
+	}
+
+	/**
 	 * Adds a string or binary attachment (non-filesystem) to the list.
 	 *
 	 * "text/calendar; method=..." get automatic detected and added as highes priority alternative,
@@ -646,6 +674,8 @@ class egw_mailer extends Horde_Mime_Mail
 	{
 		switch($name)
 		{
+			case '_bcc':
+				return $this->_bcc;	// this is NOT PHPMailer compatibility, but quietening below log, if $this->_bcc is NOT set
 			case 'Sender':
 				return $this->getHeader('Return-Path');
 			case 'From':
