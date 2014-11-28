@@ -520,7 +520,7 @@ div.mail-compose_fileselector {
 	display: none !important;
 }
 
-#mail-display, #mail-compose {
+#mail-display {
 	min-height: 768px;
 }
 .mailDisplayContainer, .mailDisplayAttachments {
