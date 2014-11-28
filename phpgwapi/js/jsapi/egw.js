@@ -228,6 +228,38 @@
 			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
 		}
 
+		var resize_attempt = 0;
+		var resize_popup = function()
+		{
+			var $main_div = $j('#popupMainDiv');
+			var $et2 = $j('.et2_container');
+			var w = {
+				width: egw_getWindowInnerWidth(),
+				height: egw_getWindowInnerHeight()
+			};
+			// Use et2_container for width since #popupMainDiv is full width, but we still need
+			// to take padding/margin into account
+			var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
+			var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
+			if (delta_height && egw_getWindowOuterHeight() >= egw.availHeight())
+			{
+				delta_height = 0;
+			}
+			if(delta_width != 0 || delta_height != 0)
+			{
+				window.resizeTo(egw_getWindowOuterWidth() - delta_width+8, egw_getWindowOuterHeight() - delta_height+10);
+			}
+			// trigger a 2. resize, as one is not enough, if window is zoomed
+			if (delta_width && ++resize_attempt < 2)
+			{
+				window.setTimeout(resize_popup, 50);
+			}
+			else
+			{
+				resize_attempt = 0;
+			}
+		};
+
 		// rest needs DOM to be ready
 		$j(function() {
 			// load etemplate2 template(s)
@@ -237,27 +269,8 @@
 				if(popup || window.opener)
 				{
 					// Resize popup when et2 load is done
-					jQuery(node).on("load",function() {
-						window.setTimeout(function() {
-							var $main_div = $j('#popupMainDiv');
-							var $et2 = $j('.et2_container');
-							var w = {
-								width: egw_getWindowInnerWidth(),
-								height: egw_getWindowInnerHeight()
-							};
-							// Use et2_container for width since #popupMainDiv is full width, but we still need
-							// to take padding/margin into account
-							var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
-							var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
-							if (delta_height && egw_getWindowOuterHeight() >= egw.availHeight())
-							{
-								delta_height = 0;
-							}
-							if(delta_width != 0 || delta_height != 0)
-							{
-								window.resizeTo(egw_getWindowOuterWidth() - delta_width,egw_getWindowOuterHeight() - delta_height);
-							}
-						}, 200);
+					jQuery(node).on('load', function() {
+						window.setTimeout(resize_popup, 50);
 					});
 				}
 				var et2 = new etemplate2(node, currentapp+".etemplate_new.ajax_process_content.etemplate");
