@@ -3906,26 +3906,30 @@ app.classes.mail = AppJS.extend(
 	mail_display_print: function ()
 	{
 		var mainIframe = jQuery('#mail-display_mailDisplayBodySrc');
-
-		if (jQuery('#tempPrintDiv').length == 0)
+		var tmpPrintDiv = jQuery('#tempPrintDiv');
+		
+		if (tmpPrintDiv.length == 0 && tmpPrintDiv.children())
 		{
-			var tmpPrintDiv = jQuery(document.createElement('div'))
+			tmpPrintDiv = jQuery(document.createElement('div'))
 							.attr('id', 'tempPrintDiv')
 							.addClass('tmpPrintDiv');
-			if (mainIframe)
-			{
-				tmpPrintDiv[0].innerHTML = mainIframe.contents().find('body').html();
-			}
-
-			jQuery('#mail-display_mailDisplayBodySrc').after(tmpPrintDiv);
-
-			tmpPrintDiv.find('#divAppboxHeader').remove();
+			var notAttached = true;
 		}
+		
+		if (mainIframe)
+		{
+			tmpPrintDiv[0].innerHTML = mainIframe.contents().find('body').html();
+		}
+		// Attach the element to the DOM after maniupulation
+		if (notAttached) jQuery('#mail-display_mailDisplayBodySrc').after(tmpPrintDiv);
+		tmpPrintDiv.find('#divAppboxHeader').remove();
 
 		this.egw.message('Printing....');
-		var display = this;
-		// Make sure the print happens after the content is loaded. Seems Firefox can't handle timing for print command correctly
-		setTimeout(function(){display.egw.window.print();},1);
+		
+		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
+		setTimeout(function(){
+			egw(window).window.print();
+		},100);
 	},
 
 	/**
