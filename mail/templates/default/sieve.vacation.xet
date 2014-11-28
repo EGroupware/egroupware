@@ -38,7 +38,7 @@
 					<taglist-email id="forwards" allowFreeEntries="true" width="100%" empty_label="do not forward"/>
 				</row>
 				<row>
-					<description value="Every:"/>
+					<description value="Resend after how many days?"/>
 					<textbox type="integer" id="days" min="1" max="31"/>
 
 				</row>

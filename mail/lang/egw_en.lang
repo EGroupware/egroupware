@@ -144,7 +144,6 @@ error: message could not be displayed.	mail	en	ERROR: Message could not be displ
 error:could not save the acl! because some names are empty!	mail	en	Error:Could not save the ACL! Because some names are empty!
 esync will fail without a working email configuration!	mail	en	eSync will FAIL without a working eMail configuration!
 event details follow	mail	en	Event Details follow
-every:	mail	en	Every:
 everyone	mail	en	Everyone
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra sent folders
@@ -325,6 +324,7 @@ remove immediately	mail	en	remove immediately
 rename folder	mail	en	Rename Folder
 rename folder %1 ?	mail	en	Rename Folder %1 ?
 rename folder %1 to:	mail	en	Rename Folder %1 to:
+resend again after how many days?	mail	en	Resend again after how many days?
 replied	mail	en	replied
 reply	mail	en	Reply
 reply all	mail	en	Reply All
