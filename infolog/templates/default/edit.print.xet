@@ -169,7 +169,7 @@
 					<description span="all" value="customfields"/>
 				</row>
 				<row>
-					<customfields span="all" readonly="true"/>
+					<customfields span="all" options="@info_type" readonly="true"/>
 				</row>
 				<row>
 					<template span="all" id="infolog.edit.print.project"/>
