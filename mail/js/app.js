@@ -196,7 +196,11 @@ app.classes.mail = AppJS.extend(
 				jQuery('#mail-compose').on ('load',function() {
 					window.setTimeout(function(){that.compose_resizeHandler();}, 300);
 				});
-
+				//Resize compose after window resize to not getting scrollbar
+				jQuery(window).on ('resize',function() {
+					that.compose_resizeHandler();
+				});
+					
 				this.compose_fieldExpander();
 
 				//Call drag_n_drop initialization for emails on compose

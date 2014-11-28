@@ -519,8 +519,7 @@ div.mail-compose_fileselector {
   border: 0px !important;
   display: none !important;
 }
-#mail-display,
-#mail-compose {
+#mail-display {
   min-height: 768px;
 }
 .mailDisplayContainer,
@@ -990,7 +989,6 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 }
 #mail-compose {
   width: 870px;
-  min-height: 768px;
   padding: 5px;
   /*// ###############################################################################*/
   /*// Mail Header*/
