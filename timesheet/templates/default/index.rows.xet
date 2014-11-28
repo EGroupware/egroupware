@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<!-- This template is in a seperate file so etemplate can find it for home -->
+<overlay>
+	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="50"/>
+				<column width="135"/>
+				<column width="70%"/>
+				<column width="15%"/>
+				<column width="60"/>
+				<column width="60" disabled="@no_ts_quantity"/>
+				<column width="60" disabled="@no_ts_unitprice"/>
+				<column width="60" disabled="@no_ts_total"/>
+				<column width="130" disabled="@no_owner_col"/>
+				<column width="10%" disabled="@no_ts_status"/>
+				<column width="15%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="ID" id="ts_id"/>
+					<nextmatch-sortheader label="Date" id="ts_start"/>
+					<grid spacing="0" padding="0">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="@pm_integration=full">
+								<nextmatch-filterheader id="ts_project" no_lang="1" options="All projects" search="false"/>
+							</row>
+							<row disabled="!@pm_integration=full">
+								<nextmatch-entryheader id="pm_id" no_lang="1" blur="All projects" only_app="projectmanager"/>
+							</row>
+							<row>
+								<nextmatch-entryheader id="linked"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Title" id="ts_title"/>
+							</row>
+						</rows>
+					</grid>
+					<nextmatch-sortheader label="Category" id="cat_id"/>
+					<vbox>
+						<nextmatch-sortheader label="Duration" id="ts_duration"/>
+						<date-duration id="duration" readonly="true" options=",h,,,1"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Quantity" id="ts_quantity"/>
+						<textbox type="float" id="quantity" readonly="true" precision="3"/>
+					</vbox>
+					<nextmatch-sortheader label="Price" id="ts_unitprice"/>
+					<vbox>
+						<nextmatch-sortheader label="Total" id="ts_total"/>
+						<textbox type="float" id="price" readonly="true" precision="2"/>
+					</vbox>
+					<nextmatch-filterheader id="ts_owner" no_lang="1" options="User" class="$cont[ownerClass]"/>
+					<nextmatch-filterheader id="ts_status" options="Status"/>
+					<nextmatch-customfields id="customfields"/>
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class]">
+					<description id="${row}[ts_id]"/>
+					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
+					<vbox>
+						<link id="${row}[ts_link]" no_lang="1"/>
+						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
+						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
+					</vbox>
+					<menulist class="noWrap">
+						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
+					</menulist>
+					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1" align="right"/>
+					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
+					<description id="${row}[ts_unitprice]" no_lang="1"/>
+					<textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>
+					<menulist class="$cont[ownerClass]">
+						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
+					</menulist>
+					<menulist>
+						<menupopup id="${row}[ts_status]" readonly="true"/>
+					</menulist>
+					<customfields-list id="$row" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -917,7 +917,7 @@ class timesheet_ui extends timesheet_bo
 	 *
 	 * @return array see nextmatch_widget::egw_actions()
 	 */
-	private function get_actions(Array $query)
+	public function get_actions(Array $query)
 	{
 		$actions = array(
 			'open' => array(	// does edit if allowed, otherwise view
