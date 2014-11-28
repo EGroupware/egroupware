@@ -181,7 +181,7 @@ class resources_ui
 	 *
 	 * @return array see nextmatch_widget::egw_actions()
 	 */
-	protected function get_actions()
+	public function get_actions()
 	{
 		$actions = array(
 			'edit' => array(

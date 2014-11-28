@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!-- $Id: show.xet 48785 2014-09-29 16:34:16Z hnategh $ -->
+<overlay>
+	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
+		<grid width="100%">
+			<columns>
+				<column width="70"/>
+				<column width="50%"/>
+				<column width="50"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%" disabled="@no_customfields"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="Image" id="image"/>
+					<vbox>
+						<nextmatch-sortheader label="Name" id="name"/>
+						<nextmatch-sortheader label="Short description" id="short_description"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader statustext="How many of this resource are usable" label="Useable" id="useable"/>
+						<nextmatch-sortheader statustext="How many of this resource exists" label="Quantity" id="quantity"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Category" id="cat_id"/>
+						<description value="Administrator"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Location" id="location"/>
+						<description value="Storage information"/>
+					</vbox>
+					<nextmatch-header label="Resource / Accessories"/>
+					<nextmatch-customfields id="customfields"/>
+				</row>
+				<row class="$row_cont[class]">
+					<image id="${row}[picture_thumb]" width="100%" image_tooltip="true" height="auto" extra_link_target="_blank" href="webdav.php/apps/resources/${row_cont[res_id]}/.picture.jpg" src="${row}[picture_thumb]" />
+					<vbox>
+						<description id="${row}[name]" no_lang="1"/>
+						<description id="${row}[short_description]" no_lang="1"/>
+					</vbox>
+					<vbox align="left">
+						<description align="left" id="${row}[useable]" no_lang="1"/>
+						<description align="left" id="${row}[quantity]" no_lang="1"/>
+					</vbox>
+					<vbox>
+						<menulist>
+							<menupopup type="select-cat" id="{$row}[cat_id]" no_lang="1" readonly="true"/>
+						</menulist>
+						<menulist>
+							<menupopup type="select-account" id="{$row}[admin]" no_lang="1" readonly="true"/>
+						</menulist>
+					</vbox>
+					<vbox>
+						<description id="${row}[location]" no_lang="1"/>
+						<description id="${row}[storage_info]" no_lang="1"/>
+					</vbox>
+					<vbox no_lang="1">
+						<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" no_lang="1"/>
+						<grid width="100%" id="${row}[accessories]">
+							<columns>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" no_lang="1"/>
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+					<customfields-list id="$row"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
