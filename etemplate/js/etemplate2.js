@@ -329,6 +329,12 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		{
 			egw.debug("warn", "Did not load '%s' JS object",appname);
 		}
+		// If etemplate current app does not match app owning the template,
+		// initialize the current app too
+		if (typeof app[this.app] !== 'object' && typeof app.classes[this.app] == 'function')
+		{
+			app[this.app] = new app.classes[this.app]();
+		}
 		if(typeof app[appname] == "object")
 		{
 			app_callback = function(_et2, _name) {
