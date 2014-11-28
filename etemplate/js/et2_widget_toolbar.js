@@ -388,7 +388,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		}
 		if (action.caption)
 		{
-			if ((this.countActions <= parseInt(this.view_range) ||
+			if ((this.countActions <= parseInt(this.options.view_range) ||
 					this.preference[action.id])	&&
 					typeof button[0] !== 'undefined')
 			{
