@@ -111,7 +111,14 @@ class home_favorite_portlet extends home_portlet
 
 		// Always load app's javascript, so most actions have a chance of working
 		egw_framework::validate_file('','app',$this->context['appname']);
+
+		// Set this so app's JS gets initialized
+		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
+		$GLOBALS['egw_info']['flags']['currentapp'] = $this->context['appname'];
+
 		$etemplate->exec(get_called_class() .'::process',$content,$sel_options);
+
+		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 	}
 
 	public static function process($content = array())
