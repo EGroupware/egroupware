@@ -112,6 +112,7 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first!');
+				egw_json_response::get()->apply('egw.message',array($msg,'error'));
 			}
 			else
 			{
@@ -121,17 +122,19 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 				{
 					$msg .= lang('%1 timesheets(s) %2',$success,$action_msg);
 
-					foreach($values['nm']['selected'] as &$id)
+					egw_json_response::get()->apply('egw.message',array($msg,'success'));
+					foreach($content['nm']['selected'] as &$id)
 					{
 						$id = 'timesheet::'.$id;
 					}
 					// Directly request an update - this will get timesheet tab too
-					egw_json_response::get()->apply('egw.dataRefreshUIDs',array($values['nm']['selected']));
+					egw_json_response::get()->apply('egw.dataRefreshUIDs',array($content['nm']['selected']));
 				}
 				elseif(empty($msg))
 				{
 					$msg .= lang('%1 timesheets(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
+				egw_json_response::get()->apply('egw.message',array($msg,'error'));
 			}
 		}
 
