@@ -115,6 +115,12 @@ app.classes.admin = AppJS.extend(
 			this.egw.message(this.egw.lang('Please submit (or postpone) statistic first'), 'info');
 			return;	// do not allow to leave statistics submit
 		}
+		// url outside EGroupware eg. eSyncPro linking to wikipedia
+		if (_url && _url.indexOf(this.egw.webserverUrl) == -1)
+		{
+			window.open(_url, '_blank');
+			return;
+		}
 		if (_url)
 		{
 			this.iframe.set_src(_url);

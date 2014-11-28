@@ -488,7 +488,15 @@ class admin_ui
 			admin_ui::$hook_data[$appname] = $file2 ? $file2 : $file;
 			//error_log(__METHOD__."(".array2string(func_get_args()).")");
 		}
-		return array_merge($GLOBALS['egw']->hooks->process('admin', array('admin')), self::$hook_data);
+		self::$hook_data = array_merge($GLOBALS['egw']->hooks->process('admin', array('admin')), self::$hook_data);
+
+		// sort apps alphabetic by their title / translation of app-name
+		uksort(self::$hook_data, function($a, $b)
+		{
+			return strcasecmp(lang($a), lang($b));
+		});
+
+		return self::$hook_data;
 	}
 
 	/**
