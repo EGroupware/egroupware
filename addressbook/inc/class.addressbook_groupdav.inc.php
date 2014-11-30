@@ -7,7 +7,7 @@
  * @package addressbook
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -674,7 +674,7 @@ class addressbook_groupdav extends groupdav_handler
 			return '403 Forbidden';	// happens when writing new entries in AB's without ADD rights
 		}
 
-		if (!isset($contact['etag']))
+		if (empty($contact['etag']) || empty($contact['cardav_name']))
 		{
 			// epl-11.1 does not store carddav_name for lists, so we need to generate it here
 			$contact = $this->read($is_group ? common::generate_uid('addressbook-lists', $save_ok) : $contact['carddav_name'], $options['path']);
