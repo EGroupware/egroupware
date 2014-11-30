@@ -7,7 +7,7 @@
  * @package addressbook
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -674,7 +674,7 @@ class addressbook_groupdav extends groupdav_handler
 			return '403 Forbidden';	// happens when writing new entries in AB's without ADD rights
 		}
 
-		if (!isset($contact['etag']))
+		if (empty($contact['etag']) || empty($contact['cardav_name']))
 		{
 			if ($is_group)
 			{
