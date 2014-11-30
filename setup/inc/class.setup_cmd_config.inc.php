@@ -409,7 +409,7 @@ class setup_cmd_config extends setup_cmd
 								$options[$data['name']] = self::auth_types();
 								continue 2;
 							case 'account_repository':
-								$options[$data['name']] = self::account_repositries();
+								$options[$data['name']] = self::account_repositories();
 								continue 2;
 						}
 						foreach($data['allowed'] as $label => $value)
