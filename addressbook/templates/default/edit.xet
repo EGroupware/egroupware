@@ -452,7 +452,7 @@
 						<button statustext="download this contact as vCard file" label="vCard" id="button[vcard]" image="vcard" background_image="1"/>
 						<button accesskey="s" label="Save" id="button[save]" class="button_save" image="save" background_image="1"/>
 						<button label="Apply" id="button[apply]" class="button_apply" image="apply" background_image="1"/>
-						<button label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; self.close(); return false;" image="cancel" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; window.close(); return false;" image="cancel" background_image="1"/>
 						<checkbox statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all"/>
 						<button align="right" label="Delete" id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete" background_image="1"/>
 					</hbox>

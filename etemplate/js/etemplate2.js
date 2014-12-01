@@ -920,7 +920,7 @@ function etemplate2_handle_load(_type, _response)
 		{
 			alert(data['window-close']);
 		}
-		window.close();
+		egw.close();
 		return true;
 	}
 

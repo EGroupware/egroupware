@@ -1981,7 +1981,7 @@ class etemplate extends boetemplate
 			if ($extra_link_popup && (($extra_link_popup = $this->expand_name($extra_link_popup,$show_c,$show_row,$content['.c'],$content['.row'],$content))))
 			{
 				list($w,$h) = explode('x',$extra_link_popup);
-				$options .= ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+				$options .= ' onclick="egw(window).openPopup(this,'.(int)$w.','.(int)$h.',this.target); return false;"';
 			}
 			if ($extra_link_title)
 			{
@@ -2146,7 +2146,7 @@ class etemplate extends boetemplate
 	* - form::name('name') returns expanded name/id taking into account the name at that point of the template hierarchy
 	* - egw::lang('Message ...') translate the message
 	* - confirm('message') translates 'message' and adds a '?' if not present
-	* - window.open() replaces it with egw_openWindowCentered2()
+	* - window.open() replaces it with egw(window).openPopup()
 	* - xajax_doXMLHTTP('etemplate. replace ajax calls in widgets with special handler not requiring etemplate run rights
 	*
 	* @param string $on onclick, onchange, ... action
@@ -2197,10 +2197,10 @@ class etemplate extends boetemplate
 			$on = str_replace($matches[0],'confirm(\''.str_replace("'","\\'",$question).'\')',$on);
 		}
 
-		// replace window.open() with EGw's egw_openWindowCentered2()
+		// replace window.open() with EGw's egw(window).openPopup()
 		if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=([^,]*),height=([^,]*),scrollbars=yes,status=(.*)'\)/",$on,$matches))
 		{
-			$on = str_replace($matches[0], "egw_openWindowCentered2('$matches[1]', '$matches[2]', $matches[3], $matches[4], '$matches[5]')", $on);
+			$on = str_replace($matches[0], "egw(window).openPopup('$matches[1]', $matches[3], $matches[4], '$matches[2]', false, false, '$matches[5]')", $on);
 		}
 
 		// replace window.close() with EGw's egw.close()
