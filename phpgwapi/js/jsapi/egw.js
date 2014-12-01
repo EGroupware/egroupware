@@ -247,7 +247,15 @@
 			}
 			if(delta_width != 0 || delta_height != 0)
 			{
-				window.resizeTo(egw_getWindowOuterWidth() - delta_width+8, egw_getWindowOuterHeight() - delta_height+10);
+				
+				if (window.framework && typeof window.framework.resize_popup != 'undefined')
+				{
+					window.framework.resize_popup($et2.outerWidth(true), $et2.outerHeight(true), window);
+				}
+				else
+				{
+					window.resizeTo(egw_getWindowOuterWidth() - delta_width+8, egw_getWindowOuterHeight() - delta_height+10);
+				}
 			}
 			// trigger a 2. resize, as one is not enough, if window is zoomed
 			if (delta_width && ++resize_attempt < 2)
