@@ -14,7 +14,7 @@
 */
 
 var fw_base =  Class.extend({
-	
+
 	/**
 	 * Framework base class constructor sets up basic initialization
 	 * @param {type} _sidemenuId
@@ -39,18 +39,15 @@ var fw_base =  Class.extend({
 
 		this.applications = new Object();
 		this.activeApp = null;
-		
+
 		//Register the resize handler
 		$j(window).resize(function(){window.framework.resizeHandler();});
-		
+
 		//Register the global alert handler
 		window.egw_alertHandler = this.alertHandler;
 
 		//Register the key press handler
 		//$j(document).keypress(this.keyPressHandler);
-
-		//Override the old egw_openWindowCentered2
-		window.egw_openWindowCentered2 = this.egw_openWindowCentered2;
 
 		//Override the app_window function
 		window.egw_appWindow = this.egw_appWindow;
@@ -61,7 +58,7 @@ var fw_base =  Class.extend({
 		// Override the egw_getAppName function
 		window.egw_getAppName = this.egw_getAppName;
 	},
-	
+
 	/**
 	 * Load applications
 	 * @param {object} apps an object list of all applications
@@ -146,7 +143,7 @@ var fw_base =  Class.extend({
 		}
 		return restore;
 	},
-	
+
 	/**
 	 * Navigate to the tab of an application (opening the tab if not yet open)
 	 *
@@ -202,7 +199,7 @@ var fw_base =  Class.extend({
 			this.notifyTabChange();
 		}
 	},
-	
+
 	/**
 	 * Callback to calculate height of browser iframe or div
 	 *
@@ -215,7 +212,7 @@ var fw_base =  Class.extend({
 		var height = $j(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight();
 		return height;
 	},
-		
+
 	/**
 	 * Sets the sidebox data of an application
 	 * @param {object} _app the application whose sidebox content should be set.
@@ -326,7 +323,7 @@ var fw_base =  Class.extend({
 					this.sideboxSizeCallback(_app.sideboxWidth);
 				}
 				_app.sidemenuEntry.parent.open(_app.sidemenuEntry);
-		
+
 				// reliable init sidebox, as app.js might initialise earlier
 				if (typeof app[_app.appName] == 'object')
 				{
@@ -351,7 +348,7 @@ var fw_base =  Class.extend({
 		}
 	},
 	/**
-	 * 
+	 *
 	 */
 	notifyTabChange: function()
 	{
@@ -407,7 +404,7 @@ var fw_base =  Class.extend({
 
 	categoryAnimationCallback: function()
 	{
-		
+
 	},
 
 
@@ -429,9 +426,9 @@ var fw_base =  Class.extend({
 
 		return result;
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @param {app object} _app
 	 * @param {int} _pos
 	 * Checks whether the application already owns a tab and creates one if it doesn't exist
@@ -451,11 +448,11 @@ var fw_base =  Class.extend({
 
 			//Set the tab closeable if there's more than one tab
 			this.tabsUi.setCloseable(this.tabsUi.tabs.length > 1);
-			
-			
+
+
 		}
 	},
-	
+
 	/**
 	 * applicationClickCallback is used internally by egw_fw in order to handle clicks on
 	 * an application in the sidebox menu.
@@ -477,7 +474,7 @@ var fw_base =  Class.extend({
 	   //Set the active application in the framework
 	   this.tag.parentFw.setActiveApp(this.tag);
 	},
-	
+
 	/**
 	 * tabCloseClickCallback is used internally by egw_fw in order to handle clicks
 	 * on the close button of every tab.
@@ -519,7 +516,7 @@ var fw_base =  Class.extend({
 		//As a new tab might remove a row from the tab header, we have to resize all tab content browsers
 		 this.tag.parentFw.resizeHandler();
 	 },
-			
+
 	/**
 	 * @param {string} _url
 	 * Tries to obtain the application from a menuaction
@@ -546,7 +543,7 @@ var fw_base =  Class.extend({
 
 		return null;
 	},
-	
+
 	/**
 	 * Goes through all applications and returns the application with the specified name.
 	 * @param {string} _name the name of the application which should be returned.
@@ -561,7 +558,7 @@ var fw_base =  Class.extend({
 
 		return null;
 	},
-	
+
 	/**
 	 * Sets the website title of an application
 	 * @param {object} _app the application whose title should be set.
@@ -588,10 +585,10 @@ var fw_base =  Class.extend({
 				this.refreshAppTitle();
 		}
 	},
-	
+
 	/**
 	 * Handles alert message
-	 * 
+	 *
 	 * @param {type} _message
 	 * @param {type} _details
 	 */
@@ -606,7 +603,7 @@ var fw_base =  Class.extend({
 			alert(_message);
 		}
 	},
-	
+
 	/**
 	 * Call online manual
 	 *
@@ -631,9 +628,9 @@ var fw_base =  Class.extend({
 			}), 'manual', true);
 		}
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @param {type} _link
 	 * @param {type} _app
 	 * @param {type} _useIframe
@@ -683,7 +680,7 @@ var fw_base =  Class.extend({
 	{
 		window.location = _url;
 	},
-	
+
 	/**
 	* Sets the active framework application to the application specified by _app
 	*
@@ -701,7 +698,7 @@ var fw_base =  Class.extend({
 				return;
 			}
 			this.activeApp = _app;
-			
+
 			//Open the sidemenuUi that belongs to the app, if no sidemenu is attached
 			//to the app, close the sidemenuUi
 			if (_app.sidemenuEntry)
@@ -729,28 +726,21 @@ var fw_base =  Class.extend({
 			}
 		}
 	},
-	
+
 	/**
-	 * Opens popup window at the center
-	 * 
-	 * @param {type} _url popup url
-	 * @param {type} _windowName name of popup window
-	 * @param {type} _width width of window
-	 * @param {type} _height height of window
-	 * @param {type} _status 
-	 * @param {type} _app application which popup belongs to it
-	 * @param {type} _returnID
-	 * @returns {window} returns window
+	 * Open a (centered) popup window with given size and url
+	 *
+	 * @param {string} _url
+	 * @param {number} _width
+	 * @param {number} _height
+	 * @param {string} _windowName or "_blank"
+	 * @param {string|boolean} _app app-name for framework to set correct opener or false for current app
+	 * @param {boolean} _returnID true: return window, false: return undefined
+	 * @param {type} _status "yes" or "no" to display status bar of popup
+	 * @returns {DOMWindow|undefined}
 	 */
-	egw_openWindowCentered2: function(_url, _windowName, _width, _height, _status, _app, _returnID)
+	openPopup: function(_url, _width, _height, _windowName, _app, _returnID, _status)
 	{
-		if (typeof _returnID == 'undefined') _returnID = false;
-		var windowWidth = egw_getWindowOuterWidth();
-		var windowHeight = egw_getWindowOuterHeight();
-
-		var positionLeft = (windowWidth/2)-(_width/2)+egw_getWindowLeft();
-		var positionTop  = (windowHeight/2)-(_height/2)+egw_getWindowTop();
-
 		//Determine the window the popup should be opened in - normally this is the iframe of the currently active application
 		var parentWindow = window;
 		var navigate = false;
@@ -771,27 +761,16 @@ var fw_base =  Class.extend({
 		if (appEntry != null && appEntry.browser.iframe != null)
 			parentWindow = appEntry.browser.iframe.contentWindow;
 
-		var windowID = parentWindow.open(_url, _windowName, "width=" + _width + ",height=" + _height +
-			",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
-			",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
+		var windowID = egw(parentWindow).openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
 
-		// inject framework and egw object, because opener might not yet be loaded and therefore has no egw object!
-		windowID.egw = window.egw;
-		windowID.framework = framework;
+		windowID.framework = this;
 
 		if (navigate)
 		{
 			window.setTimeout("framework.applicationTabNavigate(framework.activeApp, framework.activeApp.indexUrl);", 500);
 		}
 
-		if (_returnID === false)
-		{
-			// return nothing
-		}
-		else
-		{
-			return windowID;
-		}
+		if (_returnID !== false) return windowID;
 	},
 
 	/**
@@ -841,7 +820,7 @@ var fw_base =  Class.extend({
 
 	/**
 	 * Gets application name
-	 * 
+	 *
 	 * @returns {string} returns application name
 	 */
 
@@ -849,7 +828,7 @@ var fw_base =  Class.extend({
 	{
 		return framework.activeApp.appName;
 	},
-	
+
 	/**
 	 * Display an error or regular message
 	 *
@@ -878,7 +857,7 @@ var fw_base =  Class.extend({
 			}, 5000);
 		}
 	},
-	
+
 	/**
 	 * Change timezone and refresh current app
 	 * @param _tz
@@ -894,9 +873,9 @@ var fw_base =  Class.extend({
 			this.activeApp.browser.reload();
 		}
 	},
-	
+
 	/**
-	 * Refresh application title 
+	 * Refresh application title
 	 */
 	refreshAppTitle: function()
 	{
@@ -916,7 +895,7 @@ var fw_base =  Class.extend({
 	},
 
 	/**
-	 * 
+	 *
 	 */
 	resizeHandler: function()
 	{
@@ -929,7 +908,7 @@ var fw_base =  Class.extend({
 			}
 		}
 	},
-	
+
 	/**
 	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
 	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'

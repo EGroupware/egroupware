@@ -280,14 +280,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				var w_h = _popup.split('x');
 				if (w_h[1] == 'availHeight') w_h[1] = this.availHeight();
-				if (_wnd.framework && (egwIsMobile() || egw.preference('theme') == 'mobile'))
-				{
-					var popup_window = _wnd.framework.egw_openWindowCentered2(url, _target || '_blank', w_h[0], w_h[1], false, _target_app, true, _wnd);
-				}
-				else
-				{
-					var popup_window = _wnd.egw_openWindowCentered2(url, _target || '_blank', w_h[0], w_h[1], false, _target_app, true);
-				}
+				var popup_window = this.openPopup(url, w_h[0], w_h[1], _target || '_blank', _target_app, true);
 
 				// Remember which windows are open
 				egw().storeWindow(_target_app, popup_window);
@@ -308,6 +301,51 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				return _wnd.open(url, _target);
 			}
+		},
+
+		/**
+		 * Open a (centered) popup window with given size and url
+		 *
+		 * @param {string} _url
+		 * @param {number} _width
+		 * @param {number} _height
+		 * @param {string} _windowName or "_blank"
+		 * @param {string|boolean} _app app-name for framework to set correct opener or false for current app
+		 * @param {boolean} _returnID true: return window, false: return undefined
+		 * @param {string} _status "yes" or "no" to display status bar of popup
+		 * @param {boolean} _skip_framework
+		 * @returns {DOMWindow|undefined}
+		 */
+		openPopup: function(_url, _width, _height, _windowName, _app, _returnID, _status, _skip_framework)
+		{
+			// Log for debugging purposes
+			egw.debug("navigation", "openPopup(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
+
+			// if we have a framework and we use mobile template --> let framework deal with opening popups
+			if (!_skip_framework && _wnd.framework)
+			{
+				return _wnd.framework.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _wnd);
+			}
+
+			if (typeof(_app) == 'undefined') _app = false;
+			if (typeof(_returnID) == 'undefined') _returnID = false;
+
+			var $wnd = jQuery(_wnd.top);
+			var positionLeft = ($wnd.outerWidth()/2)-(_width/2)+_wnd.screenX;
+			var positionTop  = ($wnd.outerHeight()/2)-(_height/2)+_wnd.screenY;
+
+			// IE fails, if name contains eg. a dash (-)
+			if (navigator.userAgent.match(/msie/i)) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');
+
+			var windowID = _wnd.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
+				",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
+				",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
+
+			// inject egw object
+			windowID.egw = _wnd.egw;
+
+			// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
+			if (_returnID !== false) return windowID;
 		},
 
 		/**

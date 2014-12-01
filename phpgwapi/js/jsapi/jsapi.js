@@ -373,40 +373,27 @@ function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 	}
 }
 
-// works only correctly in Mozilla/FF and Konqueror
+/**
+ * Open a (centered) popup window with given size and url
+ *
+ * @param {string} _url
+ * @param {string} _windowName or "_blank"
+ * @param {number} _width
+ * @param {number} _height
+ * @param {type} _status "yes" or "no" to display status bar of popup
+ * @param {string|boolean} _app app-name for framework to set correct opener or false for current app
+ * @param {boolean} _returnID true: return window, false: return undefined
+ * @returns {DOMWindow|undefined}
+ * @deprecated use egw.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status)
+ */
 function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _app, _returnID)
 {
-	// Log for debugging purposes
-	egw.debug("navigation", "egw_openWindowCentered2(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
-
-	if (typeof(_app) == 'undefined') _app = false;
-	if (typeof(_returnID) == 'undefined') _returnID = false;
-	windowWidth = egw_getWindowOuterWidth();
-	windowHeight = egw_getWindowOuterHeight();
-
-	positionLeft = (windowWidth/2)-(_width/2)+egw_getWindowLeft();
-	positionTop  = (windowHeight/2)-(_height/2)+egw_getWindowTop();
-
-	if (is_ie) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');	// IE fails, if name contains eg. a dash (-)
-
-	windowID = window.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
-		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
-		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
-
-	// inject egw object
-	windowID.egw = window.egw;
-
-	// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
-	if (_returnID === false)
-	{
-		// return nothing
-	}
-	else
-	{
-		return windowID;
-	}
+	return egw(window).openPopup(_url, _width, _height, _windowName, _app, _returnID, _status);
 }
 
+/**
+ * @deprecated use egw.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status)
+ */
 function egw_openWindowCentered(_url, _windowName, _width, _height)
 {
 	return egw_openWindowCentered2(_url, _windowName, _width, _height, 'no', false, true);
