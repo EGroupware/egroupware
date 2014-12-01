@@ -199,6 +199,145 @@ class egw_sharing
 
 		return $token;
 	}
+
+	/**
+	 * Create a new share
+	 *
+	 * @param string $path either path in temp_dir or vfs with optional vfs scheme
+	 * @param string $mode 'link': copy file in users tmp-dir or 'share_ro' share given vfs file, if no vfs behave as 'link'
+	 * @param string $name filename to use for $mode='link', default basename of $path
+	 * @param string|array $recipients one or more recipient email addresses
+	 * @param array $extra =array() extra data to store
+	 * @throw egw_exception_not_found if $path not found
+	 * @throw egw_excpetion_assertion_failed if user temp. directory does not exist and can not be created
+	 * @return array with share data, eg. value for key 'share_token'
+	 */
+	public static function create($path, $mode, $name, $recipients, $extra=array())
+	{
+		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
+
+		if (empty($name)) $name = $path;
+
+		$path2tmp =& egw_cache::getSession(__CLASS__, 'path2tmp');
+
+		// allow filesystem path only for temp_dir
+		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
+		if (substr($path, 0, strlen($temp_dir)) == $temp_dir)
+		{
+			$mode = 'link';
+		}
+		elseif(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+		{
+			$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+		}
+		// check if file exists and is readable
+		if (!file_exists($path) || is_readable($path))
+		{
+			throw new egw_exception_not_found("'$path' NOT found!");
+		}
+		// check if file has been shared before
+		if (($mode != 'link' || isset($path2tmp[$path])) &&
+			($share = self::$db->select(self::TABLE, '*', array(
+				'share_path' => $mode == 'link' ? $path2tmp[$path] : egw_vfs::parse_url($path, PHP_URL_PATH),
+				'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
+			)+$extra, __LINE__, __FILE__)->fetch()))
+		{
+			// if yes, just add additional recipients
+			$share['share_recipients'] = $share['share_recipients'] ? explode(',', $share['recipients']) : array();
+			$need_save = false;
+			foreach((array)$recipients as $recipient)
+			{
+				if (!in_array($recipient, $share['recipients']))
+				{
+					$share['recipients'][] = $recipient;
+					$need_save = true;
+				}
+			}
+			$share['share_recipients'] = implode(',', $share['recipients']);
+			if ($need_save)
+			{
+				self::$db->update(self::TABLE, array(
+					'share_recipients' => $share['share_recipients'],
+				), array(
+					'share_id' => $share['share_id'],
+				), __LINE__, __FILE__);
+			}
+		}
+		else
+		{
+			// if not create new share
+			if ($mode == 'link')
+			{
+				$user_tmp = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.tmp';
+				if (!egw_vfs::file_exists($user_tmp) && !egw_vfs::mkdir($user_tmp))
+				{
+					throw new egw_exception_assertion_failed("Could NOT create temp. directory '$user_tmp'!");
+				}
+				$n = 0;
+				do {
+					$tmp_file = egw_vfs::concat($user_tmp, ($n?$n.'.':'').egw_vfs::basename($name));
+				} while(!($fp = egw_vfs::fopen($tmp_file, 'x')) && $n++ < 100);
+
+				if ($n >= 100)
+				{
+					throw new egw_exception_assertion_failed("Could NOT create temp. file '$tmp_file'!");
+				}
+				fclose($fp);
+
+				if (!copy($path, egw_vfs::PREFIX.$tmp_file))
+				{
+					throw new egw_exception_assertion_failed("Could NOT create temp. file '$tmp_file'!");
+				}
+				// store temp. path in session, to be able to add more recipients
+				$path2tmp[$path] = $tmp_file;
+
+				$path = $tmp_file;
+			}
+
+			$i = 0;
+			while(true)	// self::token() can return an existing value
+			{
+				try {
+					self::$db->insert(self::TABLE, $share = array(
+						'share_token' => self::token(),
+						'share_path' => egw_vfs::parse_url($path, PHP_URL_PATH),
+						'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
+						'share_with' => implode(',', (array)$recipients),
+						'share_created' => time(),
+					)+$extra, false, __LINE__, __FILE__);
+
+					$share['share_id'] = self::$db->get_last_insert_id(self::TABLE, 'share_id');
+					break;
+				}
+				catch(egw_exception_db $e) {
+					if ($i++ > 3) throw $e;
+					unset($e);
+				}
+			}
+		}
+		return $share;
+	}
+
+	/**
+	 * Generate link from share or share-token
+	 *
+	 * @param string|array $share share or share-token
+	 * @return string
+	 */
+	public static function share2link($share)
+	{
+		if (is_array($share)) $share = $share['share_token'];
+
+		$link = egw::link('/share.php').'/'.$share;
+		if ($link[0] == '/')
+		{
+			$link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
+				($GLOBALS['egw_info']['server']['hostname'] ?
+					$GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).
+				$link;
+		}
+		return $link;
+	}
 }
 
 if (file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'))

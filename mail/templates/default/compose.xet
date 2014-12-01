@@ -111,8 +111,8 @@
 			<hbox disabled="@is_html" class="mailComposeBody">
 				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
 			</hbox>
-			<groupbox class="et2_file mailUploadSection" disabled="@no_griddata">
-				<caption label="Files"/>
+			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
+				<select id="filemode" label="Send files as"/>
 				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
 					<columns>
 						<column disabled="!@showtempname" width="10%"/>
@@ -129,7 +129,7 @@
 						</row>
 					</rows>
 				</grid>
-			</groupbox>
+			</vbox>
 		</vbox>
 	</template>
 </overlay>

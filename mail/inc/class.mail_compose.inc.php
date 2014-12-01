@@ -40,6 +40,29 @@ class mail_compose
 		"plain"=>"plain",
 		"html"=>"html"
 	);
+	/**
+	 * Modes for sending files
+	 *
+	 * @var array
+	 */
+	static $filemodes = array(
+		'attach' => array(
+			'label' => 'Attachment',
+			'title' => 'Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB',
+		),
+		'link' => array(
+			'label' => 'Download link',
+			'title' => 'Link is appended to mail allowing recipients to download currently attached version of files',
+		),
+		'share_ro' => array(
+			'label' => 'Share readonly',
+			'title' => 'Link is appended to mail allowing recipients to download up to date version of files',
+		),
+		'share_rw' => array(
+			'label' => 'Share writable',
+			'title' => 'Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)'
+		),
+	);
 
 	/**
 	 * Instance of mail_bo
@@ -103,18 +126,17 @@ class mail_compose
 	}
 
 	/**
-	 * function compose
-	 * 	this function is used to fill the compose dialog with the content provided by $_content
+	 * Compose dialog
 	 *
-	 * @var _content				array the etemplate content array
-	 * @var msg					string a possible message to be passed and displayed to the userinterface
-	 * @var _focusElement		varchar subject, to, body supported
-	 * @var suppressSigOnTop	boolean
-	 * @var isReply				boolean
+	 * @var arra $_content =null etemplate content array
+	 * @var string $msg =null a possible message to be passed and displayed to the userinterface
+	 * @var string $_focusElement ='to' subject, to, body supported
+	 * @var boolean $suppressSigOnTop =false
+	 * @var boolean $isReply =false
 	 */
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
-		unset($msg);	// not used
+		if ($msg) egw_framework::message($msg);
 
 		if (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
 		{
@@ -1103,6 +1125,7 @@ class mail_compose
 		if (isset($content['mimeType'])) $preserv['mimeType'] = $content['mimeType'];
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
+		$sel_options['filemode'] = self::$filemodes;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
@@ -1994,9 +2017,9 @@ class mail_compose
 	 * @param egw_mailer $_mailObject
 	 * @param array $_formData
 	 * @param array $_identity
-	 * @param boolean $_convertLinks
+	 * @param boolean $_send =false true: create to send message: false: create to save as draft
 	 */
-	function createMessage(egw_mailer $_mailObject, array $_formData, array $_identity, $_convertLinks=false)
+	function createMessage(egw_mailer $_mailObject, array $_formData, array $_identity, $_send=false)
 	{
 		$mail_bo	= $this->mail_bo;
 		$activeMailProfile = emailadmin_account::read($this->mail_bo->profileID);
@@ -2078,10 +2101,25 @@ class mail_compose
 		{
 			$signature = mail_bo::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		}
-
+		if ($_formData['attachments'] && $_formData['filemode'] != 'attach' && $_send)
+		{
+			$attachment_links = $this->getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
+				$_formData['mimeType'] == 'html', array_merge((array)$_formData['to'], (array)$_formData['cc'], (array)$_formData['bcc']));
+		}
 		if($_formData['mimeType'] == 'html')
 		{
 			$body = $_formData['body'];
+			if ($attachment_links)
+			{
+				if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
+				{
+					$body = str_replace('<!-- HTMLSIGBEGIN -->', $attachment_links.'<!-- HTMLSIGBEGIN -->', $body);
+				}
+				else
+				{
+					$body .= $attachment_links;
+				}
+			}
 			if(!empty($signature))
 			{
 				$body .= ($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
@@ -2095,14 +2133,19 @@ class mail_compose
 				$_mailObject->setBody($this->convertHTMLToText($_formData['body'],true,true));
 			}
 			// convert URL Images to inline images - if possible
-			if ($_convertLinks) mail_bo::processURL2InlineImages($_mailObject, $body);
+			if ($_send) mail_bo::processURL2InlineImages($_mailObject, $body);
 			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
 			{
 				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
 			}
 			$_mailObject->setHtmlBody($body, null, false);	// false = no automatic alternative, we called setBody()
-		} else {
+		}
+		else
+		{
 			$body = $this->convertHTMLToText($_formData['body'],false);
+
+			if ($attachment_links) $body .= $attachment_links;
+
 			#$_mailObject->Body = $_formData['body'];
 			if(!empty($signature)) {
 				$body .= ($disableRuler ?"\r\n":"\r\n-- \r\n").
@@ -2165,7 +2208,7 @@ class mail_compose
 								break;
 						}
 					}
-					else
+					elseif ($_formData['filemode'] == 'attach')
 					{
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
 						{
@@ -2187,6 +2230,66 @@ class mail_compose
 			}
 			if ($connection_opened) $mail_bo->closeConnection();
 		}
+	}
+
+	/**
+	 * Get html or text containing links to attachments
+	 *
+	 * We only care about file attachments, not forwarded messages or parts
+	 *
+	 * @param array $attachments
+	 * @param string $filemode 'attach', 'link', 'share_ro', 'share_rw'
+	 * @param boolean $html
+	 * @return string might be empty if no file attachments found
+	 */
+	protected function getAttachmentLinks(array $attachments, $filemode, $html, $recipients=array())
+	{
+		switch ($filemode)
+		{
+			case 'attach':
+				return '';
+
+			case 'links':
+			case 'share_ro':
+				$func = 'egw_sharing::create';
+				break;
+
+			case 'share_rw':
+				$func = 'stylite_sharing::create';
+				break;
+		}
+		$links = array();
+		foreach($attachments as $attachment)
+		{
+			$path = $attachment['file'];
+			if (empty($path)) continue;	// we only care about file attachments, not forwarded messages or parts
+			if (parse_url($attachment['file'],PHP_URL_SCHEME) != 'vfs')
+			{
+				$path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($path);
+			}
+			$share = call_user_func($func, $path, $attachment['name'], $filemode, $recipients);
+			$link = egw_sharing::share2link($share);
+
+			$name = egw_vfs::basename($attachment['name'] ? $attachment['name'] : $attachment['file']);
+
+			if ($html)
+			{
+				$links[] = html::a_href($name, $link).' '.egw_vfs::hsize($attachment['size']);
+			}
+			else
+			{
+				$links[] = $name.' '.egw_vfs::hsize($attachment['size']).': '.$link;
+			}
+		}
+		if (!$links)
+		{
+			return null;	// no file attachments found
+		}
+		elseif ($html)
+		{
+			return '<p>'.lang('Download attachments').":</p>\n<ul><li>".implode("</li>\n<li>", $links)."</li></ul>\n";
+		}
+		return lang('Download attachments').":\n- ".implode("\n- ", $links)."\n";
 	}
 
 	/**
