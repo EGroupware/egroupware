@@ -266,7 +266,7 @@ button#cancel {
  * Text box
  */
 .et2_textbox {
-
+  height: auto;
 }
 .et2_textbox_ro {
   white-space: pre-wrap;
