@@ -1283,11 +1283,14 @@ abstract class egw_framework
 			// eTemplate2 - load in top so sidebox has styles too
 			self::includeCSS('/etemplate/templates/default/etemplate2.css');
 
-			// Theme likes to override eTemplate2
-			$theme_css = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
-			if(!file_exists(EGW_SERVER_ROOT.$theme_css))
+			// For mobile user-agent we prefer mobile theme over selected one with a final fallback to theme named as template
+			$themes_to_check = array();
+			if (html::$ua_mobile) $themes_to_check[] = $this->template_dir.'/css/mobile.css';
+			$themes_to_check[] = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
+			$themes_to_check[] = $this->template_dir.'/css/'.$this->template.'.css';
+			foreach($themes_to_check as $theme_css)
 			{
-				$theme_css = $this->template_dir.'/css/'.$this->template.'.css';
+				if (file_exists(EGW_SERVER_ROOT.$theme_css)) break;
 			}
 			self::includeCSS($theme_css);
 
