@@ -6261,6 +6261,13 @@ a.textSidebox {
 /*@import "../less/layout_footer.less";*/
 /*@import "../less/layout_dialog.less";*/
 @media all {
+  body {
+    background-color: white;
+  }
+  #egw_fw_basecontainer {
+    top: 20px;
+    background: white;
+  }
   #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header {
     max-height: 60px;
     width: 69%;
@@ -6270,7 +6277,7 @@ a.textSidebox {
     white-space: nowrap;
     position: fixed;
     left: 30%;
-    top: 6px;
+    top: 15px;
     height: 50px;
   }
   #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header span {
@@ -6291,7 +6298,7 @@ a.textSidebox {
   }
   #egw_fw_basecontainer div#egw_fw_logout {
     left: 235px;
-    top: 15px;
+    top: 20px;
     width: 24px;
     height: 24px;
     background-size: 24px 24px;
@@ -6300,7 +6307,7 @@ a.textSidebox {
   #egw_fw_basecontainer div#egw_fw_print {
     display: none;
     left: 180px;
-    top: 15px;
+    top: 20px;
     width: 24px;
     height: 24px;
     background-size: 24px 24px;
@@ -6317,7 +6324,7 @@ a.textSidebox {
     transform: rotate(360deg);
     position: fixed;
     left: 20px;
-    top: 15px;
+    top: 20px;
     width: 32px;
     height: 32px;
     background-size: 32px 32px;
@@ -6335,7 +6342,7 @@ a.textSidebox {
     float: left;
     position: fixed;
     left: 55px;
-    top: 15px;
+    top: 20px;
   }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul {
     display: inline;
@@ -6559,6 +6566,7 @@ a.textSidebox {
   }
   #egw_fw_sidebar {
     top: 60px;
+    bottom: 1px;
   }
   #egw_fw_sidebar #egw_fw_sidemenu {
     position: absolute;
