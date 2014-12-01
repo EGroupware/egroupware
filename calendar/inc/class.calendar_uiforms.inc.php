@@ -473,6 +473,8 @@ class calendar_uiforms extends calendar_ui
 											else
 											{
 												$msg = lang('Status changed');
+												//Refresh the event in the main window after changing status
+												egw_framework::refresh_opener($msg, 'calendar', $event['id']);
 											}
 										}
 										if (!$content['no_popup'])
