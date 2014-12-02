@@ -445,161 +445,94 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 
 		// initialize the new egw_mailer object for sending
 		$mailObject = new egw_mailer();
+		$this->mail->parseRawMessageIntoMailObject($mailObject,$rfc822);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->From 	= $activeMailProfile['ident_email'];
 		$mailObject->FromName = $mailObject->EncodeHeader(mail_bo::generateIdentityString($activeMailProfile,false));
 		$mailObject->AddCustomHeader('X-Mailer: mail-Activesync');
 
-		$mimeParams = array('decode_headers' => true,
-							'decode_bodies' => false,
-							'include_bodies' => true,
-							'input' => $rfc822,
-							'crlf' => "\r\n",
-							'charset' => 'utf-8');
-		$mobj = new Mail_mimeDecode($mimeParams['input'], $mimeParams['crlf']);
-		$message = $mobj->decode($mimeParams, $mimeParams['crlf']);
-		//error_log(__METHOD__.__LINE__.array2string($message));
-		$mailObject->Priority = $message->headers['priority'];
-		//$mailObject->Encoding = 'quoted-printable'; //handled by horde
 
-		if (isset($message->headers['date'])) $mailObject->RFCDateToSet = $message->headers['date'];
-		if (isset($message->headers['return-path'])) $mailObject->Sender = $message->headers['return-path'];
-		$mailObject->Subject = $message->headers['subject'];
-		$mailObject->MessageID = $message->headers['message-id'];
-		/* the client send garbage sometimes (blackberry->domain\username)
-		// from
-		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers['from']):$message->headers['from'])) as $addressObject) {
-			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog("Header Sentmail From: ".array2string($addressObject).' vs. '.array2string($message->headers['from']));
-			$mailObject->From = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
-			$mailObject->FromName = $addressObject->personal;
-		}
-		*/
 		// prepare addressee list; moved the adding of addresses to the mailobject down
 		// to
-		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers["to"]):$message->headers["to"])) as $addressObject) {
+
+		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("To")) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail To: ".array2string($addressObject) );
 			//$mailObject->AddAddress($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$toMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// CC
-		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers["cc"]):$message->headers["cc"])) as $addressObject) {
+		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Cc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail CC: ".array2string($addressObject) );
 			//$mailObject->AddCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
-		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers["bcc"]):$message->headers["bcc"])) as $addressObject) {
+		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Bcc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			if ($this->debugLevel>0) debugLog("Header Sentmail BCC: ".array2string($addressObject) );
 			//$mailObject->AddBCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$bccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
-		/*
-		//	AddReplyTo
-		foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($message->headers['reply-to']):$message->headers['reply-to'])) as $addressObject) {
-			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog("Header Sentmail REPLY-TO: ".array2string($addressObject) );
-			$mailObject->AddReplyTo($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
-		}
-		*/
-		// save some headers when forwarding mails (content type & transfer-encoding)
-		$headers = "";
+		$mailObject->clearAllRecipients();
 
 		$use_orgbody = false;
 
-		// clean up the transmitted headers
-		// remove default headers because we are using our own mailer
-		//$returnPathSet = false;
-		//$body_base64 = false;
-		$org_charset = "";
-		foreach($message->headers as $k => $v) {
-			if ($k == "subject" ||
-				$k == "to" || $k == "cc" || $k == "bcc" || $k == "sender" || $k == "reply-to" || $k == 'from' || $k == 'return_path' ||
-				$k == "message-id" || $k == 'date')
-                continue; // already set
+		$k = 'Content-Type';
+		$ContentType =$mailObject->getHeader('Content-Type');
+		//error_log(__METHOD__.__LINE__." Header Sentmail original Header (filtered): " . $k.  " = ".trim($ContentType));
+		// if the message is a multipart message, then we should use the sent body
+		if (preg_match("/multipart/i", $ContentType)) {
+			$use_orgbody = true;
+		}
 
-				if ($this->debugLevel>0) debugLog("Header Sentmail original Header (filtered): " . $k.  " = ".trim($v));
-				if ($k == "content-type") {
-					// if the message is a multipart message, then we should use the sent body
-					if (preg_match("/multipart/i", $v)) {
-						$use_orgbody = true;
-						$org_boundary = $message->ctype_parameters["boundary"];
-					}
+		// save the original content-type header for the body part when forwarding
+		if ($smartdata['task'] == 'forward' && $smartdata['itemid'] && !$use_orgbody) {
+			//continue; // ignore
+		}
+		// horde/egw_ mailer does everything as utf-8, the following should not be needed
+		//$org_charset = $ContentType;
+		//$ContentType = preg_replace("/charset=([A-Za-z0-9-\"']+)/", "charset=\"utf-8\"", $ContentType);
+		// if the message is a multipart message, then we should use the sent body
+		if (($smartdata['task'] == 'new' || $smartdata['task'] == 'reply' || $smartdata['task'] == 'forward') &&
+			((isset($smartdata['replacemime']) && $smartdata['replacemime'] == true) ||
+			$k == "Content-Type" && preg_match("/multipart/i", $ContentType))) {
+			$use_orgbody = true;
+		}
 
-					// save the original content-type header for the body part when forwarding
-					if ($smartdata['task'] == 'forward' && $smartdata['itemid'] && !$use_orgbody) {
-						continue; // ignore
-					}
-
-					$org_charset = $v;
-					$v = preg_replace("/charset=([A-Za-z0-9-\"']+)/", "charset=\"utf-8\"", $v);
-				}
-
-            if ($k == "content-transfer-encoding") {
-/* we do not use this, as we determine that by ourself by forcing Encoding=base64 on smartreply/forward
-				// if the content was base64 encoded, encode the body again when sending
-				if (trim($v) == "base64") $body_base64 = true;
-
-				// save the original encoding header for the body part when forwarding
-				if ($smartdata['task'] == 'forward' && $smartdata['itemid']) {
-					continue; // ignore
-				}
-*/
-			}
-
-			// if the message is a multipart message, then we should use the sent body
-			if (($smartdata['task'] == 'new' || $smartdata['task'] == 'reply' || $smartdata['task'] == 'forward') &&
-				((isset($smartdata['replacemime']) && $smartdata['replacemime'] == true) ||
-				$k == "content-type" && preg_match("/multipart/i", $v))) {
-				$use_orgbody = true;
-			}
-
-			// all other headers stay, we probably dont use them, but we may add them with AddHeader/AddCustomHeader
-			//if ($headers) $headers .= "\n";
-			//$headers .= ucfirst($k) . ": ". trim($v);
-        }
 		// if this is a simple message, no structure at all
-		if ($message->ctype_primary=='text' && $message->body)
+		if (preg_match("/text/i", $ContentType))
 		{
-			// we decode the body ourself
-			$message->body = $this->mail->decodeMimePart($message->body,($message->headers['content-transfer-encoding']?$message->headers['content-transfer-encoding']:'WeDontKnowTheEncoding'));
-			$body = $message->body;
-			if ($message->ctype_secondary=='html')
-			{
-				$mailObject->setHtmlBody($body,null,false);
-			}
-			else
-			{
-				$mailObject->setBody($body);
-			}
-			$simpleBodyType = ($message->ctype_secondary=='html'?'text/html':'text/plain');
-			if ($this->debugLevel>0) debugLog("IMAP-Sendmail: fetched simple body as ".($message->ctype_secondary=='html'?'html':'text'));
+			$bodyObj = $mailObject->findBody(preg_match("/html/i", $ContentType) ? 'html' : 'plain');
+			$body = $bodyObj ?$bodyObj->getContents() : null;
+			$simpleBodyType = (preg_match("/html/i", $ContentType)?'text/html':'text/plain');
+			if ($this->debugLevel>0) debugLog("IMAP-Sendmail: fetched simple body as ".(preg_match("/html/i", $ContentType)?'html':'text'));
+		}
+		else
+		{
+			$Body = ($text_body = $mailObject->findBody('plain')) ? $text_body->getContents() : null;
+			$AltBody = ($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null;
+			// prefer plain over html
+			$body = $Body ?$Body : $AltBody;
 		}
 		//error_log(__METHOD__.__LINE__.array2string($mailObject));
 		// if this is a multipart message with a boundary, we must use the original body
-		$this->mail->createBodyFromStructure($mailObject, $message,NULL,$decode=true);
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' mailObject after Inital Parse:'.array2string($mailObject));
         if ($use_orgbody) {
     	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = true");
-            $repl_body = $body = $mailObject->getMessageBody();
-			// if it is a ClientSideMeetingRequest, we report it as send at all times
-			if ($mailObject->AltExtendedContentType && stripos($mailObject->AltExtendedContentType,'text/calendar') !== false )
+ 			// if it is a ClientSideMeetingRequest, we report it as send at all times
+			if (stripos($ContentType,'text/calendar') !== false )
 			{
+				$body = ($text_body = $mailObject->findBody('calendar')) ? $text_body->getContents() : null;
 				if ($this->debugLevel>0) debugLog("IMAP-Sendmail: we have a Client Side Meeting Request");
-				// try figuring out the METHOD -> [AltExtendedContentType] => text/calendar; name=meeting.ics; method=REQUEST
-				$tA = explode(' ',$mailObject->AltExtendedContentType);
+				// try figuring out the METHOD -> [ContentType] => text/calendar; name=meeting.ics; method=REQUEST
+				$tA = explode(' ',$ContentType);
 				foreach ((array)$tA as $k => $p) if (stripos($p,"method=")!==false) $cSMRMethod= trim(str_replace('METHOD=','',strtoupper($p)));
 				$ClientSideMeetingRequest = true;
 			}
         }
-        else {
-    	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = false");
-			$body = $mailObject->getMessageBody;
-		}
 		// now handle the addressee list
 		$toCount = 0;
 		//error_log(__METHOD__.__LINE__.array2string($toMailAddr));
@@ -631,16 +564,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		}
 		if ($toCount+$ccCount+$bccCount == 0) return 0; // noone to send mail to
 		if ($ClientSideMeetingRequest === true && $allowSendingInvitations===false) return true;
-		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' MailAttachments:'.array2string($mailObject->GetAttachments()));
-		// as we use our mailer (phpmailer) it is detecting / setting the mimetype by itself while creating the mail
-		if (isset($smartdata['replacemime']) && $smartdata['replacemime'] == true &&
-			isset($message->ctype_primary)) {
-			//if ($headers) $headers .= "\n";
-			//$headers .= "Content-Type: ". $message->ctype_primary . "/" . $message->ctype_secondary .
-			//	(isset($message->ctype_parameters['boundary']) ? ";\n\tboundary=".$message->ctype_parameters['boundary'] : "");
-		}
+		// as we use our mailer (horde mailer) it is detecting / setting the mimetype by itself while creating the mail
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body:'.$body);
-		$body = str_replace("\r",($mailObject->ContentType=='text/html'?'<br>':""),$body); // what is this for?
+		$body = str_replace("\r",(preg_match("^text/html^i", $ContentType)?'<br>':""),$body); // what is this for?
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body (modified):'.$body);
 		// reply ---------------------------------------------------------------------------
 		if ($smartdata['task'] == 'reply' && isset($smartdata['itemid']) &&
@@ -648,20 +574,12 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			(!isset($smartdata['replacemime']) ||
 			(isset($smartdata['replacemime']) && $smartdata['replacemime'] == false)))
 		{
-			//remember Content type of org messageFolder
-			$orgMessageContentType = $mailObject->ContentType;
 			// now get on, and fetch the original mail
 			$uid = $smartdata['itemid'];
 			if ($this->debugLevel>0) debugLog("IMAP Smartreply is called with FolderID:".$smartdata['folderid'].' and ItemID:'.$smartdata['itemid']);
 			$this->splitID($smartdata['folderid'], $account, $folder);
 
 			$this->mail->reopen($folder);
-			// not needed, as the original header is always transmitted
-			/*
-			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true, $folder);
-			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__." Headers of Message with UID:$uid ->".array2string($headers));
-			$body .= $this->mail->createHeaderInfoSection($headers,lang("original message"));
-			*/
 			$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
 
 			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
@@ -674,16 +592,16 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				// plain text Message
 				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
-				if ($orgMessageContentType!='text/html') $mailObject->IsHTML(false);
+				if (!preg_match("^text/html^i", $ContentType)) $mailObject->IsHTML(false);
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 
-				if ($this->debugLevel>0) debugLog("MIME Body ContentType ".$mailObject->ContentType);
-				$bodyBUFF = ($mailObject->ContentType=='text/html'?'<pre>':'').$bodyBUFF.($mailObject->ContentType=='text/html'?'</pre>':'');
+				if ($this->debugLevel>0) debugLog("MIME Body ContentType ".$ContentType);
+				$bodyBUFF = (preg_match("^text/html^i", $ContentType)?'<pre>':'').$bodyBUFF.(preg_match("^text/html^i", $ContentType)?'</pre>':'');
 			}
 
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Body -> '.$bodyBUFF);
-			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && $mailObject->ContentType == 'text/html') $body=nl2br($body); // this is (should be) the same as $orgMessageContentType == 'text/plain' && $mailObject->ContentType == 'text/html'
+			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && preg_match("^text/html^i", $ContentType)) $body=nl2br($body);
 			// receive only body
 			$body .= $bodyBUFF;
 			//$mailObject->Encoding = 'base64'; //handled by horde
@@ -726,13 +644,6 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			}
 			else
 			{
-/* ToDo - as it may double text
-				// This is for forwarding and using the original body as Client may only include parts of the original mail
-				if (!$use_orgbody)
-					$nbody = $body;
-				else
-					$nbody = $repl_body;
-*/
 				//$body .= $this->mail->createHeaderInfoSection($headers,lang("original message"));
 				$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
 				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
@@ -745,12 +656,11 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					// plain text Message
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
 					// as we glue together the send mail part, and the smartforward part, we stick to the ContentType of the to be sent-Mail
-					$mailObject->IsHTML($mailObject->ContentType=='text/html');
 					$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 					$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 
-					if ($this->debugLevel>0) debugLog("MIME Body ContentType ".$mailObject->ContentType);
-					$bodyBUFF = ($mailObject->ContentType=='text/html'?'<pre>':'').$bodyBUFF.($mailObject->ContentType=='text/html'?'</pre>':'');
+					if ($this->debugLevel>0) debugLog("MIME Body ContentType ".$ContentType);
+					$bodyBUFF = (preg_match("^text/html^i", $ContentType)?'<pre>':'').$bodyBUFF.(preg_match("^text/html^i", $ContentType)?'</pre>':'');
 				}
 				if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Body -> '.$bodyBUFF);
 				// receive only body
@@ -784,7 +694,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					}
 				}
 			}
-			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && $mailObject->ContentType == 'text/html') $body=nl2br($body);
+			$ContentType =$mailObject->getHeader('Content-Type');
+			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && preg_match("^text/html^i", $ContentType)) $body=nl2br($body);
 			//$mailObject->Encoding = 'base64'; //handled by horde
 		} // end forward
 
@@ -808,9 +719,10 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$disableRuler = true;
 		}
 		$before = "";
+		$ContentType =$mailObject->getHeader('Content-Type');
 		if ($disableRuler==false)
 		{
-			if($mailObject->ContentType=='text/html') {
+			if(preg_match("^text/html^i", $ContentType)) {
 				$before = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
 			} else {
 				$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
@@ -818,47 +730,24 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		}
 		$sigText = $this->mail->merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Signature to use:'.$sigText);
-		$body .= $before.($mailObject->ContentType=='text/html'?$sigText:translation::convertHTMLToText($sigText));
+		$body .= $before.(preg_match("^text/html^i", $ContentType)?$sigText:translation::convertHTMLToText($sigText));
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
 		// remove carriage-returns from body, set the body of the mailObject
-		if (trim($body) =='' && trim($mailObject->getMessageBody())==''/* && $attachmentNames*/) $body .= ($attachmentNames?$attachmentNames:lang('no text body supplied, check attachments for message text')); // to avoid failure on empty messages with attachments
+		if (trim($body) =='' /*&& trim($mailObject->getMessageBody())=='' && $attachmentNames*/) $body .= ($attachmentNames?$attachmentNames:lang('no text body supplied, check attachments for message text'));// to avoid failure on empty messages with attachments
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
-		if ($mailObject->ContentType=='text/html')
+		if (preg_match("^text/html^i", $ContentType))
 		{
-			$mailObject->setHtmlBody($body,null,false);
-			$mailObject->setBody(translation::convertHTMLToText($body));
+			if ($html_body = $mailObject->findBody('html')) $html_body->setContents($body);
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body));
 		}
 		else
 		{
-			$mailObject->setBody($body);
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body));
 		}
         //advanced debugging
 		// Horde SMTP Class uses utf-8 by default.
         //debugLog("IMAP-SendMail: parsed message: ". print_r($message,1));
-		#_debug_array($ogServer);
-		$mailObject->Host 	= $this->mail->ogServer->host;
-		$mailObject->Port	= $this->mail->ogServer->port;
-		// SMTP Auth??
-		if($this->mail->ogServer->smtpAuth) {
-			$mailObject->SMTPAuth	= true;
-			// check if username contains a ; -> then a sender is specified (and probably needed)
-			list($username,$senderadress) = explode(';', $this->mail->ogServer->username,2);
-			if (isset($senderadress) && !empty($senderadress)) $mailObject->Sender = $senderadress;
-			$mailObject->Username = $username;
-			$mailObject->Password	= $this->mail->ogServer->password;
-		}
 		if ($this->debugLevel>2) debugLog("IMAP-SendMail: MailObject:".array2string($mailObject));
-		if ($this->debugLevel>0 && $this->debugLevel<=2)
-		{
-			debugLog("IMAP-SendMail: MailObject (short):".array2string(array('host'=>$mailObject->Host,
-				'port'=>$mailObject->Port,
-				'username'=>$mailObject->Username,
-				'subject'=>$mailObject->Subject,
-				'Priority'=>$mailObject->Priority,
-				'ContentType'=>$mailObject->ContentType,
-			)));
-		}
-   	    if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' MailAttachments:'.array2string($mailObject->GetAttachments()));
 
 		// set a higher timeout for big messages
 		@set_time_limit(120);
@@ -870,13 +759,6 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		}
 		catch(phpmailerException $e) {
 			debugLog("The email could not be sent. Last-SMTP-error: ". $e->getMessage());
-			debugLog("IMAP-SendMail: MailObject (short):".array2string(array('host'=>$mailObject->Host,
-				'port'=>$mailObject->Port,
-				'username'=>$mailObject->Username,
-				'subject'=>$mailObject->Subject,
-				'Priority'=>$mailObject->Priority,
-				'ContentType'=>$mailObject->ContentType,
-			)));
 			$send = false;
 		}
 
@@ -951,22 +833,19 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						catch (egw_exception_wrong_userinput $e)
 						{
 							//$asf = false;
-							debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$mailObject->Subject,$folderName,$e->getMessage()));
+							debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$mailObject->getHeader('Subject'),$folderName,$e->getMessage()));
 						}
 					}
 					else
 					{
 						//$asf = false;
-						debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$mailObject->Subject,$folderName));
+						debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$mailObject->getHeader('Subject'),$folderName));
 					}
 			        debugLog("IMAP-SendMail: Outgoing mail saved in configured 'Sent' folder '".$folderName."': ". (($asf)?"success":"failed"));
 				}
 				//$this->mail->closeConnection();
 			}
 		}
-        	// unset mimedecoder - free memory
-		unset($message);
-        unset($mobj);
 
 		//$this->debugLevel=0;
 
@@ -1161,7 +1040,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 							    '</body>'.
 								'</html>';
 						$mailObject->setHtmlBody(str_replace("\n","\r\n", str_replace("\r","",$html)),null,false);
-						if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." MIME Body (constructed)-> ".$mailObject->getMessageBody());
+						if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." MIME Body (constructed)-> ".$mailObject->findBody('html')->getContents());
 						$mailObject->setBody(empty($plainBody)?strip_tags($body):$plainBody);
 					}
 					if ($output->airsyncbasenativebodytype==1) { //plain
