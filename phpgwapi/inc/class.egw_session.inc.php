@@ -1244,6 +1244,14 @@ class egw_session
 	private static $cookie_path = '/';
 
 	/**
+	 * iOS web-apps will loose cookie if set with a livetime of 0 / session-cookie
+	 *
+	 * Therefore we set a fixed lifetime of 24h from session-start instead.
+	 * Server-side session will timeout earliert anyway, if there's no activity.
+	 */
+	const IOS_SESSION_COOKIE_LIFETIME = 86400;
+
+	/**
 	 * Set a cookie with eGW's cookie-domain and -path settings
 	 *
 	 * @param string $cookiename name of cookie to be set
@@ -1259,9 +1267,15 @@ class egw_session
 		}
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($cookiename,$cookievalue,$cookietime,$cookiepath,".self::$cookie_domain.")");
 
+		// if we are installed in iOS as web-app, we must not set a cookietime==0 (session-cookie),
+		// as every change between apps will cause the cookie to get lost
+		static $is_iOS = null;
+		if (!$cookietime && !isset($is_iOS)) $is_iOS = (bool)preg_match('/^(iPhone|iPad|iPod)/i', html::$ua_mobile);
+
 		if(!headers_sent())	// gives only a warning, but can not send the cookie anyway
 		{
-			setcookie($cookiename,$cookievalue,$cookietime,
+			setcookie($cookiename, $cookievalue,
+				!$cookietime && $is_iOS ? time()+self::IOS_SESSION_COOKIE_LIFETIME : $cookietime,
 				is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain,
 				// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
 				empty($GLOBALS['egw_info']['server']['insecure_cookies']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
