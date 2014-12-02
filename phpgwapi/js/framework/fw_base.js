@@ -737,12 +737,13 @@ var fw_base =  Class.extend({
 	 * @param {string|boolean} _app app-name for framework to set correct opener or false for current app
 	 * @param {boolean} _returnID true: return window, false: return undefined
 	 * @param {type} _status "yes" or "no" to display status bar of popup
+	 * @param {DOMWindow} _parentWnd parent window
 	 * @returns {DOMWindow|undefined}
 	 */
-	openPopup: function(_url, _width, _height, _windowName, _app, _returnID, _status)
+	openPopup: function(_url, _width, _height, _windowName, _app, _returnID, _status, _parentWnd)
 	{
 		//Determine the window the popup should be opened in - normally this is the iframe of the currently active application
-		var parentWindow = window;
+		var parentWindow = _parentWnd || window;
 		var navigate = false;
 		if (typeof _app != 'undefined' && _app !== false)
 		{
@@ -758,7 +759,7 @@ var fw_base =  Class.extend({
 			var appEntry = framework.activeApp;
 		}
 
-		if (appEntry != null && appEntry.browser.iframe != null)
+		if (appEntry != null && appEntry.browser.iframe != null && (_app || !egw(parentWindow).is_popup()))
 			parentWindow = appEntry.browser.iframe.contentWindow;
 
 		var windowID = egw(parentWindow).openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
