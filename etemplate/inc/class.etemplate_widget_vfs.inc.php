@@ -149,6 +149,11 @@ error_log(lang('Error copying uploaded file to vfs!'));
 	 */
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
+		// do not validate, as it would overwrite preserved values with null!
+		if (in_array($this->type, array('vfs-size', 'vfs-uid', 'vfs-gid', 'vfs', 'vfs-mime')))
+		{
+			return;
+		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = $value_in = self::get_array($content, $form_name);
 		$valid =& self::get_array($validated, $form_name, true);
