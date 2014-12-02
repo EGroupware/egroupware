@@ -83,7 +83,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		if (!calendar_translated)
 		{
 			// Set template's icon for date popup - could probably use jquery-ui icons
-			_egw.css(".et2_date input.hasDatepicker:hover", "background-image: url(" + egw().image('datepopup') + ")");
+			_egw.css(".et2_date input.hasDatepicker:enabled:hover", "background-image: url(" + egw().image('datepopup') + ")");
 
 			translateCalendar();
 			calendar_translated = true;

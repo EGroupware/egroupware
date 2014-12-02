@@ -107,6 +107,20 @@ var et2_date = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Dynamic disable or enable datepicker
+	 *
+	 * @param {boolean} _ro
+	 */
+	set_readonly: function(_ro)
+	{
+		if (this.input_date && !this.input_date.attr('disabled') != !_ro)
+		{
+			this.input_date.attr('disabled', !!_ro)
+				.datepicker('option', 'disabled', !!_ro);
+		}
+	},
+
+	/**
 	 * Set (full) year of current date
 	 *
 	 * @param {number} _value 4-digit year
