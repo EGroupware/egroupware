@@ -1630,6 +1630,9 @@ function __autoload($class)
 	if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
 		// classes using the new naming schema app_class_name, eg. admin_cmd
 		isset($components[0]) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$components[0].'.inc.php') ||
+		// classes with an underscore in their name
+		!isset($GLOBALS['egw_info']['apps'][$app]) && isset($GLOBALS['egw_info']['apps'][$app . '_' . $components[0]]) && file_exists($file =
+EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
 		// eGW api classes using the old naming schema, eg. html
 		file_exists($file = EGW_API_INC.'/class.'.$class.'.inc.php') ||
 		// eGW api classes containing multiple classes in on file, eg. egw_exception
