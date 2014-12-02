@@ -176,7 +176,11 @@ var et2_textbox = et2_inputWidget.extend(
 	 * @param _size Rather arbitrary size units, approximately characters
 	 */
 	set_size: function(_size) {
-		if (typeof _size != 'undefined' && _size != this.input.attr("size"))
+		if (this.options.multiline || this.options.rows > 1 || this.options.cols > 1)
+		{
+			this.input.css('width', _size + "em");
+		}
+		else if (typeof _size != 'undefined' && _size != this.input.attr("size"))
 		{
 			this.size = _size;
 			this.input.attr("size", this.size);
