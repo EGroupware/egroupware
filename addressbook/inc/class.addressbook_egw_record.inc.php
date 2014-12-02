@@ -74,7 +74,8 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 * @return array complete record as associative array
 	 */
 	public function get_record_array() {
-		return $this->contact;
+		// do not return binary jpeg, it messes up json data
+		return array_diff_key($this->contact, array('jpegphoto' => true));
 	}
 
 	/**
@@ -115,8 +116,9 @@ class addressbook_egw_record implements importexport_iface_egw_record
 		$ui = new addressbook_ui();
 
 		// Type as default
+		$label = $icon = null;
 		$ui->type_icon($this->owner, $this->private, $this->tid, $icon, $label);
-		
+
 		// Specific photo
 		return $this->jpegphoto ? egw_framework::link('/index.php',$ui->photo_src($this->identifier,$this->jpegphoto)):$icon;
 	}
@@ -137,7 +139,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function copy ( $_dst_identifier ) {
-
+		unset($_dst_identifier);	// not used, but required by function signature
 	}
 
 	/**
@@ -148,7 +150,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function move ( $_dst_identifier ) {
-
+		unset($_dst_identifier);	// not used, but required by function signature
 	}
 
 	/**
@@ -168,4 +170,3 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	}
 
 } // end of egw_addressbook_record
-?>
