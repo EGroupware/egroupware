@@ -11,7 +11,25 @@ and open the template in the editor.
 
 @media all {
 	body{
-		background-color: white;
+		background-color: transparent;
+		div.egw_fw_mobile_popup_appHeader {
+			display: block !important;
+			height: 40px !important;
+			font-size: 150% !important;
+			background-color: #679fd2 !important;
+			border-top: none !important;
+			width: 100%;
+			margin-top:15px;
+			.egw_fw_mobile_popup_close {
+				width: 32px;
+				height: 32px;
+				float:right;
+				background-image: url('../images/cancelled.png');/*url(../images/topmenu_items/mobile/menu_active.png);*/
+				-webkit-filter: contrast(2);
+				background-repeat: no-repeat;
+				z-index: 999;
+			}
+		}
 	}
 	#egw_fw_basecontainer{
 		top:20px;
@@ -665,28 +683,16 @@ and open the template in the editor.
 		position:fixed;
 		display: none;
 		z-index: 999;
-		background: rgba(0, 0, 0, 0.44);
+		background: white;
 		.egw_fw_mobile_popupFrame {
-			width: 90%;
-			height: 90%;
-			margin-left:5%;
-			margin-top:4%;
-			border: 3px solid rgba(103, 159, 210, 0.5);
-			-webkit-box-shadow: -1px 1px 18px 2px rgba(0,0,0,0.58);
-			-moz-box-shadow: -1px 1px 18px 2px rgba(0,0,0,0.58);
-			box-shadow: -1px 1px 18px 2px rgba(0,0,0,0.58);
-		}
-		.egw_fw_mobile_popup_close {
-			width: 32px;
-			height: 32px;
-			top: 12px;
-			right: 12px;
-			position: fixed;
-			background-image: url(../images/cancelled.png);
-			-webkit-filter: contrast(2);
-			background-repeat: no-repeat;
-			z-index: 1;
+			width: 100%;
+			height: 100%;
 		}
 	}
-
+	.egw_fw_mobile_popup_loader {
+		background-image: url('../images/ajax-loader.gif');
+		background-repeat: no-repeat;
+		background-position: center;
+		background: rgba(0, 0, 0, 0.44) !important;
+	}
 }
