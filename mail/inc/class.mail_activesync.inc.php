@@ -1202,7 +1202,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 							}
 						}
 					}
-
+					$mailObject->SetMessageType();
 					$Header = $mailObject->CreateHeader();
 					//debugLog(__METHOD__.__LINE__.' MailObject-Header:'.array2string($Header));
 					$Body = trim($mailObject->CreateBody()); // philip thinks this is needed, so lets try if it does any good/harm
@@ -1445,11 +1445,12 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	 * @return SyncAirSyncBaseFileAttachment-object
 	 */
 	function ItemOperationsGetAttachmentData($fid,$attname) {
-		debugLog("ItemOperationsGetAttachmentData: (attname: '$attname')");
+		debugLog(__METHOD__.'(fid='.array2string($fid).', attname='.array2string($attname).')');
 
 		list($folderid, $id, $part) = explode(":", $attname);
 
 		$this->splitID($folderid, $account, $folder);
+		debugLog(__METHOD__.'(fid='.array2string($fid).', attname='.array2string($attname).") folderid='$folderid', id=$id, part=$part, account=$account, folder='$folder', profileId=".self::$profileID);
 
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false, self::$profileID,true,false,true);
 
