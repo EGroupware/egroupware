@@ -53,7 +53,6 @@ abstract class home_portlet
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
 	 * 	unique, if needed.
 	 * @param etemplate etemplate_new Etemplate to generate content
-	 * @param dom_id String ID of the etemplate targe DOM node.  If passed, send -1 to etemplate->exec()
 	 */
 	public abstract function exec($id = null, etemplate_new &$etemplate = null);
 

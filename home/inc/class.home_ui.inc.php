@@ -282,7 +282,7 @@ class home_ui
 			foreach($portal_oldvarnames as $varcheck)
 			{
 				$thisd = $GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck];
-				if(!(int)$thisd && $thisd)
+				if($thisd)
 				{
 					$no_pref = false;
 					break;
@@ -321,6 +321,7 @@ class home_ui
 			// Ignore some problem files and base classes that shouldn't be options
 			$ignore = array(
 				'.','..',
+				'class.home_portlet.inc.php',
 				'class.home_legacy_portlet.inc.php',
 				'class.home_favorite_portlet.inc.php'
 			);
@@ -340,6 +341,10 @@ class home_ui
 							in_array('home_portlet', class_parents($classname, false)))
 						{
 							$classes[$appname][] = $classname;
+						}
+						else
+						{
+							error_log("Could not load $classname from $entry");
 						}
 					}
 				}
@@ -373,7 +378,7 @@ class home_ui
 			
 			return $list;
 		}, array(), 60);
-
+		
 		return $list;
 	}
 

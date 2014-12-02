@@ -37,7 +37,7 @@ class infolog_favorite_portlet extends home_favorite_portlet
 			'info_priority' => $ui->bo->enums['priority'],
 		);
 		$this->nm_settings += array(
-			'get_rows'	=> 'infolog.infolog_ui.get_rows',
+			'get_rows'	=> 'infolog_favorite_portlet::get_rows',
 			// Use a different template so it can be accessed from client side
 			'template'	=> 'infolog.home',
 			// Don't overwrite infolog
@@ -49,6 +49,22 @@ class infolog_favorite_portlet extends home_favorite_portlet
 		);
 	}
 
+	/**
+	 * Override from infolog to clear the app header
+	 *
+	 * @param type $query
+	 * @param type $rows
+	 * @param type $readonlys
+	 * @return integer Total rows found
+	 */
+	public static function get_rows(&$query, &$rows, &$readonlys)
+	{
+		$ui = new infolog_ui();
+		$total = $ui->get_rows($query, $rows, $readonlys);
+		unset($GLOBALS['egw_info']['flags']['app_header']);
+		return $total;
+	}
+	
 	/**
 	 * Here we need to handle any incoming data.  Setup is done in the constructor,
 	 * output is handled by parent.

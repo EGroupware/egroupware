@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="home.birthdays" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<link id="${row}"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

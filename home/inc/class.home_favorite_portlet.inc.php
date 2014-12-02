@@ -109,6 +109,10 @@ class home_favorite_portlet extends home_portlet
 		unset($content['sel_options']);
 		$etemplate->setElementAttribute('nm', 'template',$this->nm_settings['template']);
 
+
+		// Always load app's css
+		egw_framework::includeCSS($this->context['appname'],'app');
+
 		// Always load app's javascript, so most actions have a chance of working
 		egw_framework::validate_file('','app',$this->context['appname']);
 
