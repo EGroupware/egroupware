@@ -266,8 +266,22 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		if(!egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'query') ||
 			egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'title'))
 		{
-			if(drop_action) drop_action.remove();
-			if(drag_action) drag_action.remove();
+			if(drop_action)
+			{
+				drop_action.remove();
+				if(this._actionLinks.indexOf(drop_action.id) >= 0)
+				{
+					this._actionLinks.splice(this._actionLinks.indexOf(drop_action.id),1);
+				}
+			}
+			if(drag_action)
+			{
+				drag_action.remove();
+				if(this._actionLinks.indexOf(drag_action.id) >= 0)
+				{
+					this._actionLinks.splice(this._actionLinks.indexOf(drag_action.id),1);
+				}
+			}
 			return;
 		}
 
@@ -348,6 +362,17 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		drag_action.set_dragType('link');
 	},
 
+	/**
+	 * Set the data cache prefix
+	 * Overridden from the parent to re-check automatically the added link dnd
+	 * since the prefix is used in support detection.
+	 */
+	setPrefix: function(prefix) {
+		this._super.apply(this, arguments)
+
+		this._init_links_dnd(this._actionManager);
+	},
+	
 	/**
 	 * Overwrites the inherited _destroyCallback function in order to be able
 	 * to free the "rowWidget".
