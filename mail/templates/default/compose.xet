@@ -112,7 +112,11 @@
 				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
 			</hbox>
 			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
-				<select id="filemode" label="Send files as"/>
+				<hbox>
+					<select id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"/>
+					<date id="share_expiration" label="Expiration"/>
+					<passwd id="share_password" blur="password protect"/>
+				</hbox>
 				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
 					<columns>
 						<column disabled="!@showtempname" width="10%"/>
@@ -124,7 +128,7 @@
 						<row class="row attachmentRow">
 							<description id="${row}[tmp_name]"/>
 							<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
-							<description align="right" id="${row}[size]" />
+							<vfs-size align="right" id="${row}[size]" />
 							<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"/>
 						</row>
 					</rows>

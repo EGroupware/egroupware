@@ -176,13 +176,6 @@ class mail_compose
 			unset($_GET['part_id']);
 			unset($_GET['id']);
 			unset($_GET['mode']);
-			if (is_array($_content['attachments']))
-			{
-				foreach ($_content['attachments'] as $i => &$upload)
-				{
-					if (is_numeric($upload['size'])) $upload['size'] = mail_bo::show_readable_size($upload['size']);
-				}
-			}
 			//error_log(__METHOD__.__LINE__.array2string($_content));
 		}
 
@@ -242,7 +235,6 @@ class mail_compose
 					error_log(__METHOD__.__LINE__." ". $e->getMessage());
 				}
 				$upload['file'] = $upload['tmp_name'] = $tmp_filename;
-				$upload['size'] = mail_bo::show_readable_size($upload['size']);
 			}
 		}
 		// check if someone did hit delete on the attachments list

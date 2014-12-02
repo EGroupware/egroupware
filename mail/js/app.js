@@ -179,6 +179,7 @@ app.classes.mail = AppJS.extend(
 				var that = this;
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
+				this.check_sharing_filemode();
 
 				// Set autosaving interval to 2 minutes for compose message
 				window.setInterval(function (){
@@ -200,7 +201,7 @@ app.classes.mail = AppJS.extend(
 				jQuery(window).on ('resize',function() {
 					that.compose_resizeHandler();
 				});
-					
+
 				this.compose_fieldExpander();
 
 				//Call drag_n_drop initialization for emails on compose
@@ -3911,7 +3912,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var mainIframe = jQuery('#mail-display_mailDisplayBodySrc');
 		var tmpPrintDiv = jQuery('#tempPrintDiv');
-		
+
 		if (tmpPrintDiv.length == 0 && tmpPrintDiv.children())
 		{
 			tmpPrintDiv = jQuery(document.createElement('div'))
@@ -3919,7 +3920,7 @@ app.classes.mail = AppJS.extend(
 							.addClass('tmpPrintDiv');
 			var notAttached = true;
 		}
-		
+
 		if (mainIframe)
 		{
 			tmpPrintDiv[0].innerHTML = mainIframe.contents().find('body').html();
@@ -3929,7 +3930,7 @@ app.classes.mail = AppJS.extend(
 		tmpPrintDiv.find('#divAppboxHeader').remove();
 
 		this.egw.message('Printing....');
-		
+
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(function(){
 			egw(window).window.print();
@@ -4113,5 +4114,26 @@ app.classes.mail = AppJS.extend(
 			}
 			return true;
 		};
+	},
+
+	/**
+	* Check sharing mode and disable not available options
+	*
+	* @param {DOMNode} _node
+	* @param {et2_widget} _widget
+	*/
+	check_sharing_filemode: function(_node, _widget)
+	{
+		if (!_widget) _widget = this.et2.getWidgetById('filemode');
+
+		var extended_settings = _widget.get_value() != 'attach' && this.egw.app('stylite');
+		this.et2.getWidgetById('share_expiration').set_readonly(!extended_settings);
+		this.et2.getWidgetById('share_password').set_readonly(!extended_settings);
+
+		if (_widget.get_value() == 'share_rw' && !this.egw.app('stylite'))
+		{
+			this.egw.message(this.egw.lang('Writable sharing required EPL version!'), 'info');
+			_widget.setValue('share_ro');
+		}
 	}
 });

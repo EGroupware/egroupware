@@ -365,17 +365,22 @@ div.mailUploadSection {
   border-top: 1px solid silver;
   margin-top: 16px;
 }
-div.mailUploadSection > label {
+div.mailUploadSection > div.et2_hbox {
   margin-top: -10px;
-  padding-left: 4px;
-  padding-right: 12px;
+  margin-left: 6px;
+  margin-right: -12px;
   background-color: white;
   display: table-caption;
+}
+div.mailUploadSection > div.et2_hbox > label {
+  padding-left: 4px;
   white-space: nowrap;
-  margin-left: 6px;
 }
 #mail-compose_filemode {
   margin-left: 6px;
+}
+#mail-compose_share_expiration > input {
+  min-width: 15ex;
 }
 #mail-compose_selectFromVFSForCompose {
   width: 20px;
