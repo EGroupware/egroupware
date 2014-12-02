@@ -13,6 +13,7 @@
 %1 you delegated is due at %2	infolog	fr	%1 que vous avez délégué est dû le %2
 %1 you delegated is starting at %2	infolog	fr	%1 que vous avez délégué commence le %2
 (and children) deleted	infolog	fr	(et enfants) supprimés.
+(no subject)	infolog	fr	(pas de sujet)
 - subprojects from	infolog	fr	- Sous-projets de
 0%	infolog	fr	0%
 10%	infolog	fr	10%
@@ -263,6 +264,7 @@ links and attached files	infolog	fr	Liens et fichiers attachés
 links of this entry	infolog	fr	Liens de cette entrée
 list all categories	infolog	fr	Liste toutes les catégories
 list no subs/childs	infolog	fr	Ne pas lister les Sous/Enfants
+list of files linked to the current record	infolog	fr	Liste des fichiers liés à l'enregistrement en cours
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	fr	Charge les champs personnalisés dans l'index, si filtré par les types sélectionnés (ex. pour les afficher dans un modèle d'index spécifique au type)
 location	infolog	fr	Emplacement
 longer textual description	infolog	fr	Description textuelle plus longue
@@ -280,6 +282,7 @@ new %1 created by %2 at %3	infolog	fr	Nouveau %1 créé par %2 à %3
 new name	infolog	fr	nouveau nom
 new search	infolog	fr	Nouvelle recherche
 no - cancel	infolog	fr	Non - Abandonner
+no custom field "%1" for %2.	infolog	fr	Pas de champ personnalisé "%1" pour %2
 no describtion, links or attachments	infolog	fr	Pas de description, de liens ou d'attachements
 no details	infolog	fr	Pas de détails
 no entries found, try again ...	infolog	fr	Aucune occurrence trouvée, essayez à nouveau ...
@@ -317,6 +320,7 @@ own open and upcoming	infolog	fr	Propriétaire, ouvert et à venir
 own overdue	infolog	fr	Propre tardif
 own upcoming	infolog	fr	Propre arrivant
 owner does not have edit rights	infolog	fr	Le propriétaire n'a pas les droits en édition
+owner, responsible	infolog	fr	Propriétaire, Responsable
 parent	infolog	fr	Parent
 parent infolog	infolog	fr	Parent de l'Infolog
 participants for scheduling an appointment	infolog	fr	Participants pour programmer une réunion
@@ -466,6 +470,7 @@ upcoming	infolog	fr	Arrivant
 urgency	infolog	fr	Priorité
 urgent	infolog	fr	Urgent
 use all	infolog	fr	Utiliser tout
+use custom notification message	infolog	fr	Utiliser le message de notification personnalisé
 use field from csv if possible	infolog	fr	Utiliser le champ du CSV si possible
 use search results	infolog	fr	Utiliser les résultats de la recherche
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
