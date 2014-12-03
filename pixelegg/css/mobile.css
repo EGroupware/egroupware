@@ -6285,7 +6285,6 @@ a.textSidebox {
     z-index: 999;
   }
   #egw_fw_basecontainer {
-    top: 20px;
     background: white;
   }
   #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header {
@@ -6585,8 +6584,8 @@ a.textSidebox {
     background-color: #b4b4b4;
   }
   #egw_fw_sidebar {
-    top: 60px;
-    bottom: 1px;
+    top: 76px;
+    bottom: 5px;
   }
   #egw_fw_sidebar #egw_fw_sidemenu {
     position: absolute;
