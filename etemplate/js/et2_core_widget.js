@@ -393,6 +393,7 @@ var et2_widget = ClassWithAttributes.extend(
 		{
 			return this;
 		}
+		if(!this._children) return null;
 
 		for (var i = 0; i < this._children.length; i++)
 		{
