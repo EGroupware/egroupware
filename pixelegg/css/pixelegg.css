@@ -5801,20 +5801,6 @@ table.egwGridView_grid {
 table.egwGridView_grid img {
   height: 16px;
 }
-table.egwGridView_grid img.iphoto {
-  height: 9em;
-  margin: 0.2em;
-  max-height: 60px;
-  /*filter grey*/
-  filter: none;
-  -webkit-filter: initial;
-  -moz-filter: initial;
-  -ms-filter: initial;
-  -o-filter: initial;
-  /*filter: url(grayscale.svg);  Firefox 4+ */
-  filter: initial;
-  /* IE 6-9 */
-}
 table.egwGridView_grid tbody {
   border-bottom: 1px solid #000000;
   /*padding: 2px 3px 2px 4px;*/
