@@ -312,18 +312,6 @@ class etemplate extends boetemplate
 		}
 		//echo '<p>'.__METHOD__."($method,...) after show: sitemgr=$this->sitemgr, hooked=".(int)$hooked.", output_mode=$output_mode</p>\n";
 
-		if($output_mode == 2)
-		{
-			$html .= '
-<script language="javascript">
-	egw_LAB.wait(function(){
-		$j().ready(function() {
-			window.setTimeout(popup_resize, 150);
-		});
-	});
-</script>'."\n";
-		}
-
 		if (!$this->sitemgr && (int) $output_mode != 1 && (int) $output_mode != -1)	// NOT returning html
 		{
 			if (!@self::$hooked)
