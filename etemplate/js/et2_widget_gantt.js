@@ -71,7 +71,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		duration_step: 1,
 
 		show_progress: true,
-		order_branch: true,
+		order_branch: false,
 		min_column_width: 30,
 		task_height: 25,
 		fit_tasks: true,
@@ -603,6 +603,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		switch(egw.preference('gantt_pm_elementbars_order','projectmanager'))
 		{
 			case "pe_start":
+			case "pe_start,pe_end":
 				this.gantt.sort('start_date',false);
 				break;
 			case "pe_end":
