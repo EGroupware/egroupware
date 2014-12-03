@@ -6265,14 +6265,17 @@ a.textSidebox {
   body {
     background-color: transparent;
   }
+  body div.egw_fw_mobile_iOS_popup_appHeader {
+    padding-top: 25px;
+  }
   body div.egw_fw_mobile_popup_appHeader {
     display: block !important;
     height: 40px !important;
+    background-size: 2px;
     font-size: 150% !important;
-    background-color: #679fd2 !important;
+    border-bottom: 3px solid #679fd2 !important;
     border-top: none !important;
     width: 100%;
-    margin-top: 15px;
   }
   body div.egw_fw_mobile_popup_appHeader .egw_fw_mobile_popup_close {
     width: 32px;
