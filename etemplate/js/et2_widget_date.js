@@ -37,6 +37,12 @@ var et2_date = et2_inputWidget.extend(
 		"type": {
 			"ignore": false
 		},
+		"blur": {
+			"name": "Placeholder",
+			"type": "string",
+			"default": "",
+			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+		},
 		"data_format": {
 			"ignore": true,
 			"description": "Date/Time format. Can be set as an options to date widget",
@@ -68,6 +74,7 @@ var et2_date = et2_inputWidget.extend(
 		this.span = $j(document.createElement("span")).addClass("et2_date");
 
 		this.input_date = $j(document.createElement("input"));
+		if (this.options.blur) this.input_date.attr('placeholder', this.egw().lang(this.options.blur));
 		this.input_date.addClass("et2_date").attr("type", "text")
 			.attr("size", 7)	// strlen("10:00pm")=7
 			.appendTo(this.span);
