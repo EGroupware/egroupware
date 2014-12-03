@@ -40,29 +40,6 @@ class mail_compose
 		"plain"=>"plain",
 		"html"=>"html"
 	);
-	/**
-	 * Modes for sending files
-	 *
-	 * @var array
-	 */
-	static $filemodes = array(
-		'attach' => array(
-			'label' => 'Attachment',
-			'title' => 'Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB',
-		),
-		'link' => array(
-			'label' => 'Download link',
-			'title' => 'Link is appended to mail allowing recipients to download currently attached version of files',
-		),
-		'share_ro' => array(
-			'label' => 'Share readonly',
-			'title' => 'Link is appended to mail allowing recipients to download up to date version of files',
-		),
-		'share_rw' => array(
-			'label' => 'Share writable',
-			'title' => 'Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)'
-		),
-	);
 
 	/**
 	 * Instance of mail_bo
@@ -228,13 +205,19 @@ class mail_compose
 				if (!isset($upload['file'])) $upload['file'] = $upload['tmp_name'];
 				try
 				{
-					$tmp_filename = mail_bo::checkFileBasics($upload,$this->composeID,false);
+					$upload['file'] = $upload['tmp_name'] = mail_bo::checkFileBasics($upload,$this->composeID,false);
 				}
 				catch (egw_exception_wrong_userinput $e)
 				{
-					error_log(__METHOD__.__LINE__." ". $e->getMessage());
+					egw_framework::message($e->getMessage(), 'error');
+					unset($_content['uploadForCompose'][$i]);
+					continue;
 				}
-				$upload['file'] = $upload['tmp_name'] = $tmp_filename;
+				if (is_dir($upload['file']) && (!$_content['filemode'] || $_content['filemode'] == egw_sharing::ATTACH))
+				{
+					$_content['filemode'] = egw_sharing::READONLY;
+					egw_framework::message(lang('Directories have to be shared.'), 'info');
+				}
 			}
 		}
 		// check if someone did hit delete on the attachments list
@@ -747,6 +730,10 @@ class mail_compose
 
 				if (isset($_REQUEST['preset']['file']))
 				{
+					$content['filemode'] = !empty($_REQUEST['preset']['filemode']) &&
+						isset(egw_sharing::$modes[$_REQUEST['preset']['filemode']]) ?
+							$_REQUEST['preset']['filemode'] : egw_sharing::ATTACH;
+
 					$names = (array)$_REQUEST['preset']['name'];
 					$types = (array)$_REQUEST['preset']['type'];
 					//if (!empty($types) && in_array('text/calendar; method=request',$types))
@@ -780,7 +767,11 @@ class mail_compose
 								'file' => egw_vfs::decodePath($path),
 								'size' => filesize(egw_vfs::decodePath($path)),
 							);
-							if ($formData['type'] == egw_vfs::DIR_MIME_TYPE) continue;	// ignore directories
+							if ($formData['type'] == egw_vfs::DIR_MIME_TYPE && $content['filemode'] == egw_sharing::ATTACH)
+							{
+								$content['filemode'] = egw_sharing::READONLY;
+								egw_framework::message(lang('Directories have to be shared.'), 'info');
+							}
 						}
 						elseif(is_readable($path))
 						{
@@ -1117,7 +1108,7 @@ class mail_compose
 		if (isset($content['mimeType'])) $preserv['mimeType'] = $content['mimeType'];
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
-		$sel_options['filemode'] = self::$filemodes;
+		$sel_options['filemode'] = egw_sharing::$modes;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
@@ -1616,6 +1607,7 @@ class mail_compose
 		{
 			$attachfailed = true;
 			$alert_msg = $e->getMessage();
+			egw_framework::message($e->getMessage(), 'error');
 		}
 		//error_log(__METHOD__.__LINE__.array2string($tmpFileName));
 
@@ -2093,10 +2085,12 @@ class mail_compose
 		{
 			$signature = mail_bo::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		}
-		if ($_formData['attachments'] && $_formData['filemode'] != 'attach' && $_send)
+		if ($_formData['attachments'] && $_formData['filemode'] != egw_sharing::ATTACH && $_send)
 		{
 			$attachment_links = $this->getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
-				$_formData['mimeType'] == 'html', array_merge((array)$_formData['to'], (array)$_formData['cc'], (array)$_formData['bcc']));
+				$_formData['mimeType'] == 'html',
+				array_unique(array_merge((array)$_formData['to'], (array)$_formData['cc'], (array)$_formData['bcc'])),
+				$_formData['expiration'], $_formData['password']);
 		}
 		if($_formData['mimeType'] == 'html')
 		{
@@ -2200,7 +2194,7 @@ class mail_compose
 								break;
 						}
 					}
-					elseif ($_formData['filemode'] == 'attach')
+					elseif ($_formData['filemode'] == egw_sharing::ATTACH)
 					{
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
 						{
@@ -2230,26 +2224,17 @@ class mail_compose
 	 * We only care about file attachments, not forwarded messages or parts
 	 *
 	 * @param array $attachments
-	 * @param string $filemode 'attach', 'link', 'share_ro', 'share_rw'
+	 * @param string $filemode egw_sharing::(ATTACH|LINK|READONL|WRITABLE)
 	 * @param boolean $html
+	 * @param array $recipients =array()
+	 * @param string $expiration =null
+	 * @param string $password =null
 	 * @return string might be empty if no file attachments found
 	 */
-	protected function getAttachmentLinks(array $attachments, $filemode, $html, $recipients=array())
+	protected function getAttachmentLinks(array $attachments, $filemode, $html, $recipients=array(), $expiration=null, $password=null)
 	{
-		switch ($filemode)
-		{
-			case 'attach':
-				return '';
+		if ($filemode == egw_sharing::ATTACH) return '';
 
-			case 'links':
-			case 'share_ro':
-				$func = 'egw_sharing::create';
-				break;
-
-			case 'share_rw':
-				$func = 'stylite_sharing::create';
-				break;
-		}
 		$links = array();
 		foreach($attachments as $attachment)
 		{
@@ -2259,18 +2244,28 @@ class mail_compose
 			{
 				$path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($path);
 			}
-			$share = call_user_func($func, $path, $attachment['name'], $filemode, $recipients);
+			// create share
+			if ($filemode == egw_sharing::WRITABLE || $expiration || $password)
+			{
+				$share = stylite_sharing::create($path, $filemode, $attachment['name'], $recipients, $expiration, $password);
+			}
+			else
+			{
+				$share = egw_sharing::create($path, $filemode, $attachment['name'], $recipients);
+			}
 			$link = egw_sharing::share2link($share);
 
 			$name = egw_vfs::basename($attachment['name'] ? $attachment['name'] : $attachment['file']);
 
 			if ($html)
 			{
-				$links[] = html::a_href($name, $link).' '.egw_vfs::hsize($attachment['size']);
+				$links[] = html::a_href($name, $link).' '.
+					(is_dir($path) ? lang('Directory') : egw_vfs::hsize($attachment['size']));
 			}
 			else
 			{
-				$links[] = $name.' '.egw_vfs::hsize($attachment['size']).': '.$link;
+				$links[] = $name.' '.egw_vfs::hsize($attachment['size']).': '.
+					(is_dir($path) ? lang('Directory') : $link);
 			}
 		}
 		if (!$links)

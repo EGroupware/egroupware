@@ -155,7 +155,7 @@ class filemanager_ui
 				'caption' => lang('Mail files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.filemanager.mail',
+				'children' => array(),
 			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
@@ -206,6 +206,17 @@ class filemanager_ui
 		if (!isset($GLOBALS['egw_info']['user']['apps']['mail']))
 		{
 			unset($actions['mail']);
+		}
+		else
+		{
+			foreach(egw_sharing::$modes as $mode => $data)
+			{
+				$actions['mail']['children']['mail_'.$mode] = array(
+					'caption' => $data['label'],
+					'title' => $data['title'],
+					'onExecute' => 'javaScript:app.filemanager.mail',
+				);
+			}
 		}
 		return $actions;
 	}

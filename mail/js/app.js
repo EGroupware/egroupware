@@ -4127,8 +4127,8 @@ app.classes.mail = AppJS.extend(
 		if (!_widget) _widget = this.et2.getWidgetById('filemode');
 
 		var extended_settings = _widget.get_value() != 'attach' && this.egw.app('stylite');
-		this.et2.getWidgetById('share_expiration').set_readonly(!extended_settings);
-		this.et2.getWidgetById('share_password').set_readonly(!extended_settings);
+		this.et2.getWidgetById('expiration').set_readonly(!extended_settings);
+		this.et2.getWidgetById('password').set_readonly(!extended_settings);
 
 		if (_widget.get_value() == 'share_rw' && !this.egw.app('stylite'))
 		{

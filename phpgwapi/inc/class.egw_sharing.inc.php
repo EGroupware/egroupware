@@ -20,7 +20,6 @@
  * @todo handle existing user sessions eg. by mounting share under it's token into vfs and redirect to regular filemanager
  * @todo handle mounts inside shared directory (they get currently lost)
  * @todo handle absolute symlinks (wont work as we use share as root)
- * @todo use sharing instead of attachments in mail app
  */
 class egw_sharing
 {
@@ -47,6 +46,38 @@ class egw_sharing
 	 * @var array
 	 */
 	protected $share;
+
+	/**
+	 * Modes ATTACH is NOT a sharing mode, but it is traditional mode in email
+	 */
+	const ATTACH = 'attach';
+	const LINK = 'link';
+	const READONLY = 'share_ro';
+	const WRITABLE = 'share_rw';
+
+ 	/**
+	 * Modes for sharing files
+	 *
+	 * @var array
+	 */
+	static $modes = array(
+		self::ATTACH => array(
+			'label' => 'Attachment',
+			'title' => 'Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB',
+		),
+		self::LINK => array(
+			'label' => 'Download link',
+			'title' => 'Link is appended to mail allowing recipients to download currently attached version of files',
+		),
+		self::READONLY => array(
+			'label' => 'Readonly share',
+			'title' => 'Link is appended to mail allowing recipients to download up to date version of files',
+		),
+		self::WRITABLE => array(
+			'label' => 'Writable share',
+			'title' => 'Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)'
+		),
+	);
 
 	/**
 	 * Protected constructor called via self::create_session
@@ -204,8 +235,9 @@ class egw_sharing
 	 * Create a new share
 	 *
 	 * @param string $path either path in temp_dir or vfs with optional vfs scheme
-	 * @param string $mode 'link': copy file in users tmp-dir or 'share_ro' share given vfs file, if no vfs behave as 'link'
-	 * @param string $name filename to use for $mode='link', default basename of $path
+	 * @param string $mode self::LINK: copy file in users tmp-dir or self::READABLE share given vfs file,
+	 *	if no vfs behave as self::LINK
+	 * @param string $name filename to use for $mode==self::LINK, default basename of $path
 	 * @param string|array $recipients one or more recipient email addresses
 	 * @param array $extra =array() extra data to store
 	 * @throw egw_exception_not_found if $path not found
@@ -224,7 +256,7 @@ class egw_sharing
 		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
 		if (substr($path, 0, strlen($temp_dir)) == $temp_dir)
 		{
-			$mode = 'link';
+			$mode = self::LINK;
 		}
 		elseif(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
 		{
@@ -236,28 +268,28 @@ class egw_sharing
 			throw new egw_exception_not_found("'$path' NOT found!");
 		}
 		// check if file has been shared before
-		if (($mode != 'link' || isset($path2tmp[$path])) &&
+		if (($mode != self::LINK || isset($path2tmp[$path])) &&
 			($share = self::$db->select(self::TABLE, '*', array(
 				'share_path' => $mode == 'link' ? $path2tmp[$path] : egw_vfs::parse_url($path, PHP_URL_PATH),
 				'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
 			)+$extra, __LINE__, __FILE__)->fetch()))
 		{
 			// if yes, just add additional recipients
-			$share['share_recipients'] = $share['share_recipients'] ? explode(',', $share['recipients']) : array();
+			$share['share_with'] = $share['share_with'] ? explode(',', $share['share_with']) : array();
 			$need_save = false;
 			foreach((array)$recipients as $recipient)
 			{
-				if (!in_array($recipient, $share['recipients']))
+				if (!in_array($recipient, $share['share_with']))
 				{
-					$share['recipients'][] = $recipient;
+					$share['share_with'][] = $recipient;
 					$need_save = true;
 				}
 			}
-			$share['share_recipients'] = implode(',', $share['recipients']);
+			$share['share_with'] = implode(',', $share['share_with']);
 			if ($need_save)
 			{
 				self::$db->update(self::TABLE, array(
-					'share_recipients' => $share['share_recipients'],
+					'share_with' => $share['share_with'],
 				), array(
 					'share_id' => $share['share_id'],
 				), __LINE__, __FILE__);
@@ -276,15 +308,18 @@ class egw_sharing
 				$n = 0;
 				do {
 					$tmp_file = egw_vfs::concat($user_tmp, ($n?$n.'.':'').egw_vfs::basename($name));
-				} while(!($fp = egw_vfs::fopen($tmp_file, 'x')) && $n++ < 100);
+				}
+				while(!(is_dir($path) && egw_vfs::mkdir($tmp_file) ||
+					!is_dir($path) && ($fp = egw_vfs::fopen($tmp_file, 'x'))) && $n++ < 100);
 
 				if ($n >= 100)
 				{
 					throw new egw_exception_assertion_failed("Could NOT create temp. file '$tmp_file'!");
 				}
-				fclose($fp);
+				if ($fp) fclose($fp);
 
-				if (!copy($path, egw_vfs::PREFIX.$tmp_file))
+				if (is_dir($path) && !egw_vfs::copy_files(array($path), $tmp_file) ||
+					!is_dir($path) && !copy($path, egw_vfs::PREFIX.$tmp_file))
 				{
 					throw new egw_exception_assertion_failed("Could NOT create temp. file '$tmp_file'!");
 				}

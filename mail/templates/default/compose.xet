@@ -114,8 +114,8 @@
 			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
 				<hbox>
 					<select id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"/>
-					<date id="share_expiration" label="Expiration"/>
-					<passwd id="share_password" blur="password protect"/>
+					<date id="expiration" label="Expiration" blur="EPL only" data_format="Y-m-d"/>
+					<passwd id="password" blur="password protect" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!"/>
 				</hbox>
 				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
 					<columns>

@@ -382,7 +382,7 @@ div.mailUploadSection > div.et2_hbox > label {
 #mail-compose_filemode {
 	margin-left: 6px;
 }
-#mail-compose_share_expiration > input {
+#mail-compose_expiration > input {
 	min-width: 15ex;
 }
 #mail-compose_selectFromVFSForCompose{

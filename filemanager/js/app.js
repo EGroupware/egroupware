@@ -149,11 +149,12 @@ app.classes.filemanager = AppJS.extend(
 	 * Open compose with already attached files
 	 *
 	 * @param {(string|string[])} attachments path(s)
+	 * @param {object} params
 	 */
-	open_mail: function(attachments)
+	open_mail: function(attachments, params)
 	{
 		if (typeof attachments == 'undefined') attachments = this.get_clipboard_files();
-		var params = {};
+		if (!params || typeof params != 'object') params = {};
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
 		for(var i=0; i < attachments.length; i++)
 		{
@@ -170,7 +171,9 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	mail: function(_action, _elems)
 	{
-		this.open_mail(this._elems2paths(_elems));
+		this.open_mail(this._elems2paths(_elems), {
+			'preset[filemode]': _action.id.substr(5)
+		});
 	},
 
 	/**
@@ -359,7 +362,7 @@ app.classes.filemanager = AppJS.extend(
 			clipboard = {
 				type:[],
 				selected:[]
-			}
+			};
 		};
 
 		// When pasting we need to know the type of data - pull from actions
@@ -632,7 +635,7 @@ app.classes.filemanager = AppJS.extend(
 		// File(s) were dropped on a row, they want them inside
 		if(_target)
 		{
-			var dst = ''
+			var dst = '';
 			var paths = this._elems2paths([_target]);
 			if(paths[0]) dst = paths[0];
 
@@ -793,7 +796,7 @@ app.classes.filemanager = AppJS.extend(
 					widget.set_label('Superuser');
 					widget.onclick = function(){
 						jQuery('.superuser').css('display','inline');
-					}
+					};
 			}
 		}
 	}
