@@ -418,6 +418,19 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				// Trigger the "resize" event
 				this.resize();
 
+				// Automatically set focus to first visible input for popups
+				if(this.widgetContainer._egw.is_popup() && $j('[autofocus]',this.DOMContainer).focus().length == 0)
+				{
+					$j('input:visible',this.DOMContainer)
+						// Date fields open the calendar popup on focus
+						.not('.et2_date')
+						.filter(function() {
+						// Skip inputs that are out of tab ordering
+						$this = $j(this);
+						return !$this.attr('tabindex') || $this.attr('tabIndex')>=0;
+					}).first().focus();
+				};
+				
 				// Tell others about it
 				if(typeof _callback == "function")
 				{
