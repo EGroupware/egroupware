@@ -33,11 +33,8 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			$ui = new calendar_uilist();
 			$this->context['template'] = 'calendar.list.rows';
 			$this->context['sel_options'] = array();
-			foreach($ui->content_types as $tid => $data)
-			{
-				$this->context['sel_options']['tid'][$tid] = $data['name'];
-			}
 			$this->nm_settings += array(
+				'csv_export'      => True,
 				'filter_no_lang'  => True,	// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'      => True,	// I  disable the 2. filter (params are the same as for filter)
 				'no_cat'          => True,	// I  disable the cat-selectbox
@@ -46,9 +43,12 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				'row_modified'    => 'modified',
 				'get_rows'	=> 'calendar_favorite_portlet::get_rows',
 				// Use a different template so it can be accessed from client side
-				'template'	=> 'calendar.list.rows'
+				'template'	=> 'calendar.list.rows',
+				// Default to fewer columns
+				'default_cols'	=> 'cal_start_cal_end,cal_title,cal_owner_cal_location'
 			);
 		}
+		$need_reload = true;
 	}
 
 	public function exec($id = null, etemplate_new &$etemplate = null)
@@ -57,7 +57,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		// Always load app's css
 		egw_framework::includeCSS('calendar','app');
 		
-		if($this->favorite['state']['view'] == 'listview' || !$this->favorite['state']['view'])
+		if($this->favorite['state']['view'] == 'listview' || is_array($this->favorite) && !$this->favorite['state']['view'])
 		{
 			$ui = new calendar_uilist();
 		}
@@ -71,13 +71,11 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			egw_framework::validate_file('','app',$this->context['appname']);
 		}
 
+		$content = array('legacy' => '');
+		
 		switch($this->favorite['state']['view'])
 		{
 			case 'listview':
-			default:
-				$ui = new calendar_uilist();
-
-
 				$this->context['sel_options']['filter'] = &$ui->date_filters;
 				$this->nm_settings['actions'] = $ui->get_actions($this->nm_settings['col_filter']['tid'], $this->nm_settings['org_view']);
 
@@ -112,6 +110,8 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		}
 
 		unset($GLOBALS['egw_info']['flags']['app_header']);
+		// Force loading of CSS
+		egw_framework::include_css_js_response();
 		$etemplate->exec(get_called_class() .'::process',$content);
 	}
 
@@ -126,7 +126,10 @@ class calendar_favorite_portlet extends home_favorite_portlet
 	public static function get_rows(&$query, &$rows, &$readonlys)
 	{
 		$ui = new calendar_uilist();
+		$old_owner = $ui->owner;
+		$ui->owner = $query['owner'];
 		$total = $ui->get_rows($query, $rows, $readonlys);
+		$ui->owner = $old_owner;
 		unset($GLOBALS['egw_info']['flags']['app_header']);
 		return $total;
 	}
@@ -151,8 +154,8 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			else
 			{
 				$success = $failed = $action_msg = null;
-				if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
-						$success,$failed,$action_msg,'calendar_list',$msg, $content['nm']['checkboxes']['no_notifications']))
+				if ($ui->action($values['nm']['action'],$values['nm']['selected'],$values['nm']['select_all'],
+						$success,$failed,$action_msg,'calendar_list',$msg, $values['nm']['checkboxes']['no_notifications']))
 				{
 					$msg .= lang('%1 event(s) %2',$success,$action_msg);
 					egw_json_response::get()->apply('egw.message',array($msg,'success'));

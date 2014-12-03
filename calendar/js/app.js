@@ -558,7 +558,7 @@ app.classes.calendar = AppJS.extend(
 
 		if (state && state.view === "day"
 				&& typeof state.owner != 'undefined'
-				&& state.owner.split(',').length > 1)
+				&& typeof state.owner == 'string' && state.owner.split(',').length > 1)
 		{
 			$iframeBody.find('#calendar_calDayCols')
 					.addClass('cal_is_sortable')
@@ -1042,7 +1042,8 @@ app.classes.calendar = AppJS.extend(
 	 */
 	cal_open: function(_action, _senders)
 	{
-		var js_integration_data = this.et2.getArrayMgr('content').data.nm.js_integration_data;
+		
+		var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
 		var id = _senders[0].id;
 		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
 		var backup = _action.data;

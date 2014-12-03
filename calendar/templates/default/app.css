@@ -666,3 +666,12 @@ img.calendar_print_button, img.calendar_print_appicon {
 	background-color: #ece2f7;
 	display: inline-block;
 }
+
+/**
+ * Home page portlets
+ */
+.calendar_favorite_portlet .calendar_calWeekNavHeader a,
+.calendar_favorite_portlet .calendar_calDayColHeader a,
+.calendar_favorite_portlet .calendar_plannerScale a {
+	display: none;
+}

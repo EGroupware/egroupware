@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 49287 2014-11-04 15:34:51Z hnategh $ */
+/* $Id: app.css 49295 2014-11-05 16:13:26Z hnategh $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -674,6 +674,14 @@ img.calendar_print_appicon {
   border: 2px	dashed gray;
   background-color: #ece2f7;
   display: inline-block;
+}
+/**
+ * Home page portlets
+ */
+.calendar_favorite_portlet .calendar_calWeekNavHeader a,
+.calendar_favorite_portlet .calendar_calDayColHeader a,
+.calendar_favorite_portlet .calendar_plannerScale a {
+  display: none;
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {

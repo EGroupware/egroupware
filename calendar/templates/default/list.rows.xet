@@ -4,18 +4,17 @@
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="120"/>
 				<column width="40%"/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="120"/>
+				<column width="10%"/>
+				<column width="120"/>
+				<column width="10%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="30%"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -39,10 +38,6 @@
 					<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
 					<nextmatch-sortheader id="cal_location" label="Location"/>
 					<nextmatch-accountfilter options="All" id="participant" label="Participants"/>
-					<hbox label="Actions" class="noPrint">
-						<description value="Actions" statustext="Check all" class="noPrint"/>
-						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
-					</hbox>
 				</row>
 				<row class="row" valign="top">
 					<vbox id="start">
@@ -72,12 +67,6 @@
 					</menulist>
 					<description id="${row}[location]" no_lang="1"/>
 					<html id="${row}[parts]" readonly="true" no_lang="1"/>
-					<hbox class="noPrint">
-						<button image="view" label="View" id="view[$row_cont[id]]" statustext="View this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
-						<button image="edit" label="Edit" id="edit[$row_cont[id]]" statustext="Edit this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
-						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this event" onclick="return confirm('Delete this event');"/>
-						<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>
