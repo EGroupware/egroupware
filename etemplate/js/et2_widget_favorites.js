@@ -288,7 +288,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		// Only add 'Add current' if we have a nextmatch
 		if(this.nextmatch)
 		{
-			options.add = "<img src='"+this.egw().image("new") +"'/>Add current";
+			options.add = "<img src='"+this.egw().image("new") +"'/>"+this.egw().lang('Add current');
 		}
 		widget.set_select_options.call(widget,options);
 
