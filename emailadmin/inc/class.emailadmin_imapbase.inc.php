@@ -6188,6 +6188,7 @@ class emailadmin_imapbase
 		{
 			$structure = $message;
 		}
+//self::$debug=true;
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($structure));
 		//_debug_array($structure);
 		//exit;
@@ -6313,6 +6314,9 @@ error_log(__METHOD__.__LINE__.$mailObject->EncodeHeader($mailObject->SecureHeade
 			$seemsToBePlainMessage = true;
 		}
 		$this->createBodyFromStructure($mailObject, $structure, $parenttype=null);
+		unset($mailObject->sentHeader);
+		unset($mailObject->sentBody);
+		$mailObject->SetMessageType();
 		$mailObject->CreateHeader(); // this sets the boundary stufff
 		//echo "Boundary:".$mailObject->FetchBoundary(1).'<br>';
 		//$boundary ='';
@@ -6327,10 +6331,11 @@ error_log(__METHOD__.__LINE__.$mailObject->EncodeHeader($mailObject->SecureHeade
 			$Header .= $mailObject->GetMailMIME();
 		}
 		$Body = $mailObject->getMessageBody(); // this is a method of the egw_mailer/phpmailer class
-		//_debug_array($Header);
-		//_debug_array($Body);
-		//_debug_array($mailObject);
-		//exit;
+//self::$debug=false;
+//		_debug_array($Header);
+//		_debug_array($Body);
+//		_debug_array($mailObject);
+//		exit;
 	}
 
 	/**
