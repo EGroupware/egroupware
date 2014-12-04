@@ -281,7 +281,7 @@ abstract class groupdav_handler
 			return '403 Forbidden';		// no app rights
 		}
 		$extra_acl = $this->method2acl[$method];
-		if (!($entry = $this->read($id, $options['path'])) && ($method != 'PUT' || $entry === false) ||
+		if ($id && !($entry = $this->read($id, $options['path'])) && ($method != 'PUT' || $entry === false) ||
 			($extra_acl != EGW_ACL_READ && $this->check_access($extra_acl,$entry) === false))
 		{
 			if ($return_no_access && !is_null($entry))
