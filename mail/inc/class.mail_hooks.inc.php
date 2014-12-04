@@ -321,7 +321,7 @@ class mail_hooks
 				'values' => array(
 					'0' => 'After reply, visible during compose',
 					'1' => 'Before reply, visible during compose',
-					''  => 'Appened after reply before sending',
+					'no_belowaftersend'  => 'Appened after reply before sending',
 				),
 				'xmlrpc' => True,
 				'default'=> '0',
