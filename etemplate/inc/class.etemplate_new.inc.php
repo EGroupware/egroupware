@@ -121,6 +121,7 @@ class etemplate_new extends etemplate_widget_template
 		// instanciate template to fill self::$request->sel_options for select-* widgets
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
 		$template = etemplate_widget_template::instance($this->name, $this->template_set, $this->version, $this->laod_via);
+		if (!$template) throw new egw_exception_assertion_failed("Template $this->name not instanciable! Maybe you forgot to rename template id.");
 		$template->run('beforeSendToClient', array('', array('cont'=>$content)));
 
 		// some apps (eg. InfoLog) set app_header only in get_rows depending on filter settings
