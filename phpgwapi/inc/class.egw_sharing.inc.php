@@ -140,7 +140,9 @@ class egw_sharing
 
 		// check password, if required
 		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
-			!auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt')))
+			!(auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
+				egw_digest_auth::decode_password($_SERVER['PHP_AUTH_PW']) &&
+					auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
