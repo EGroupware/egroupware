@@ -99,16 +99,7 @@ class egw_digest_auth
 			(preg_match('/[^\x20-\x7F]/', $password) || strpos($password, '\\x') !== false) &&
 			!$GLOBALS['egw']->auth->authenticate($username, $password, 'text'))
 		{
-			// replace \x encoded non-ascii chars in password, as they are used eg. by Thunderbird for German umlauts
-			if (strpos($password, '\\x') !== false)
-			{
-				$password = preg_replace_callback('/\\\\x([0-9A-F]{2})/i', function($matches){
-					return chr(hexdec($matches[1]));
-				}, $password);
-			}
-			// try translating the password from iso-8859-1 to utf-8
-			$password = translation::convert($password, 'iso-8859-1');
-			//error_log(__METHOD__."() Fixed non-ascii password of user '$username' from '$_SERVER[PHP_AUTH_PW]' to '$password'");
+			self::decode_password($password);
 		}
 		// create session without session cookie (session->create(..., true), as we use pseudo sessionid from credentials
 		if (!isset($username) || !($sessionid = $GLOBALS['egw']->session->create($username, $password, 'text', true)))
@@ -124,6 +115,32 @@ class egw_digest_auth
 			exit;
 		}
 		return $sessionid;
+	}
+
+	/**
+	 * Decode password containing non-ascii chars
+	 *
+	 * @param string &$password
+	 * @return boolean true if conversation happend, false if there was no need for a conversation
+	 */
+	public static function decode_password(&$password)
+	{
+		// if given password contains non-ascii chars AND we can not authenticate with it
+		if (preg_match('/[^\x20-\x7F]/', $password) || strpos($password, '\\x') !== false)
+		{
+			// replace \x encoded non-ascii chars in password, as they are used eg. by Thunderbird for German umlauts
+			if (strpos($password, '\\x') !== false)
+			{
+				$password = preg_replace_callback('/\\\\x([0-9A-F]{2})/i', function($matches){
+					return chr(hexdec($matches[1]));
+				}, $password);
+			}
+			// try translating the password from iso-8859-1 to utf-8
+			$password = translation::convert($password, 'iso-8859-1');
+			//error_log(__METHOD__."() Fixed non-ascii password of user '$username' from '$_SERVER[PHP_AUTH_PW]' to '$password'");
+			return true;
+		}
+		return false;
 	}
 
 	/**

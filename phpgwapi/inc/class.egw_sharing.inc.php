@@ -16,7 +16,6 @@
  * Token generation uses openssl_random_pseudo_bytes, if available, otherwise
  * mt_rand based auth::randomstring is used.
  *
- * @todo UI to create shares
  * @todo handle existing user sessions eg. by mounting share under it's token into vfs and redirect to regular filemanager
  * @todo handle mounts inside shared directory (they get currently lost)
  * @todo handle absolute symlinks (wont work as we use share as root)
@@ -138,7 +137,19 @@ class egw_sharing
 			echo "Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n";
 			common::egw_exit();
 		}
-		// ToDo: password check, if required
+
+		// check password, if required
+		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
+			!auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt')))
+		{
+			$realm = 'EGroupware share '.$share['share_token'];
+			header('WWW-Authenticate: Basic realm="'.$realm.'"');
+			$status = '401 Unauthorized';
+			header("HTTP/1.1 $status");
+			header("X-WebDAV-Status: $status", true);
+			echo "<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n";
+			common::egw_exit();
+		}
 
 		// create session without checking auth: create(..., false, false)
 		if (!($sessionid = $GLOBALS['egw']->session->create('anonymous', '', 'text', false, false)))
