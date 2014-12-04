@@ -945,12 +945,18 @@ class mail_compose
 		if (stripos($content['body'],'<html><head></head><body>')!==false) $content['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$content['body']);
 		//error_log(__METHOD__.__LINE__.array2string($this->mailPreferences));
 		$blockElements = array('address','blockquote','center','del','dir','div','dl','fieldset','form','h1','h2','h3','h4','h5','h6','hr','ins','isindex','menu','noframes','noscript','ol','p','pre','table','ul');
-		if (isset($this->mailPreferences['insertSignatureAtTopOfMessage']) &&
-			$this->mailPreferences['insertSignatureAtTopOfMessage'] &&
+		if ($this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend' &&
 			!(isset($_POST['mySigID']) && !empty($_POST['mySigID']) ) && !$suppressSigOnTop
 		)
 		{
-			$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:true);
+			// ON tOP OR BELOW? pREF CAN TELL
+			/*
+				Signature behavior preference changed. New default, if not set -> 0
+						'0' => 'After reply, visible during compose',
+						'1' => 'Before reply, visible during compose',
+						'no_belowaftersend'  => 'Appened after reply before sending',
+			*/
+			$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:($this->mailPreferences['insertSignatureAtTopOfMessage']?$this->mailPreferences['insertSignatureAtTopOfMessage']:'below'));
 			$sigText = mail_bo::merge($signature['ident_signature'],array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			if ($content['mimeType'] == 'html')
 			{
@@ -2101,8 +2107,14 @@ class mail_compose
 		$disableRuler = false;
 		#if ($realCharset != $this->displayCharset) error_log("Error: bocompose::createMessage found Charset ($realCharset) differs from DisplayCharset (".$this->displayCharset.")");
 		$signature = $_signature['ident_signature'];
-
-		if ((isset($this->mailPreferences['insertSignatureAtTopOfMessage']) && $this->mailPreferences['insertSignatureAtTopOfMessage']))
+		/*
+			Signature behavior preference changed. New default, if not set -> 0
+					'0' => 'After reply, visible during compose',
+					'1' => 'Before reply, visible during compose',
+					'no_belowaftersend'  => 'Appened after reply before sending',
+		*/
+		$sigAlreadyThere = $this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend'?1:0;
+		if ($sigAlreadyThere)
 		{
 			// note: if you use stationery ' s the insert signatures at the top does not apply here anymore, as the signature
 			// is already part of the body, so the signature part of the template will not be applied.
@@ -2114,12 +2126,12 @@ class mail_compose
 		{
 			$disableRuler = true;
 		}
-
+		/* should be handled by identity object itself
 		if($signature)
 		{
 			$signature = mail_bo::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		}
-
+		*/
 		if($_formData['mimeType'] =='html') {
 			$_mailObject->IsHTML(true);
 			if(!empty($signature)) {

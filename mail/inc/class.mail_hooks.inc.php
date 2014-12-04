@@ -315,12 +315,16 @@ class mail_hooks
 			),
 			'insertSignatureAtTopOfMessage' => array(
 				'type'   => 'select',
-				'label'  => 'signature at top',
-				'help'   => 'insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)',
+				'label'  => 'Signature position and visibility',
+				'help'   => 'Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.',
 				'name'   => 'insertSignatureAtTopOfMessage',
-				'values' => $no_yes,
+				'values' => array(
+					'0' => 'After reply, visible during compose',
+					'1' => 'Before reply, visible during compose',
+					'no_belowaftersend'  => 'Appened after reply before sending',
+				),
 				'xmlrpc' => True,
-				'default'=> 0,
+				'default'=> '0',
 				'admin'  => False,
 			),
 			'attachVCardAtCompose' => array(
