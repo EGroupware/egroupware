@@ -110,10 +110,13 @@ etemplate2.prototype.resize = function()
 {
 	if (this.widgetContainer)
 	{
+		//Calculate the excess height
+		var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - 20: false;
 		// Call the "resize" event of all functions which implement the
 		// "IResizeable" interface
 		this.widgetContainer.iterateOver(function(_widget) {
-			_widget.resize();
+			
+			_widget.resize(excess_height);
 		}, this, et2_IResizeable);
 	}
 };

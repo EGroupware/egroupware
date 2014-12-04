@@ -23,7 +23,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_tabbox = et2_valueWidget.extend([et2_IInput],
+var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 {
 	attributes: {
 		'tabs': {
@@ -445,6 +445,14 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 	},
 	isValid: function(messages) {
 		return true;
+	},
+	
+	resize: function (_height)
+	{
+		if(_height)
+		{
+			this.tabContainer.height(this.tabContainer.height() + _height);
+		}
 	}
 });
 et2_register_widget(et2_tabbox, ["tabbox"]);

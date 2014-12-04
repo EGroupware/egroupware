@@ -26,7 +26,7 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
+var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResizeable],
 {
 	createNamespace: true,
 
@@ -981,6 +981,17 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			}
 		}
 		return ids.join('_');
+	},
+	
+	resize: function (_height)
+	{
+		if (typeof this.options.resize_ratio != 'undefined'
+			&&this.options.resize_ratio !='' && _height)
+		{
+			// apply the ratio
+			_height *= this.options.resize_ratio;
+			//this.table.height(this.table.height() + _height);
+		}
 	}
 });
 et2_register_widget(et2_grid, ["grid"]);

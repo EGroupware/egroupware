@@ -23,7 +23,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_textbox = et2_inputWidget.extend(
+var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 {
 	attributes: {
 		"multiline": {
@@ -225,6 +225,18 @@ var et2_textbox = et2_inputWidget.extend(
 			this.input.removeAttr("placeholder");
 		}
 		this.options.blur = _value;
+	},
+	
+	resize: function (_height)
+	{
+		if (typeof this.options.resize_ratio != 'undefined'
+			&&this.options.resize_ratio !='' && _height)
+		{
+			// apply the ratio
+			_height *= this.options.resize_ratio;
+			
+			this.input.height(this.input.height() + _height);
+		}
 	}
 });
 et2_register_widget(et2_textbox, ["textbox", "passwd"]);

@@ -75,6 +75,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			type: "js",
 			default: et2_no_init,
 			description: "Set default onExecute javascript method for action not specifying their own"
+		}, 
+		resize_ratio: {
+			name: "Resize height of the widget on callback resize",
+			type:"string",
+			default: '',
+			description: "Allow Resize height of the widget based on exess height and given ratio"
 		}
 	},
 
@@ -149,7 +155,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 		return true;
 	},
-
+	
 	/**
 	 * Detaches the widget from the DOM tree, if it had been attached to the
 	 * DOM-Tree using the attachToDOM method.
@@ -506,7 +512,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		// 'allowed' for this widget at this time
 		var action_links = this._get_action_links(actions);
 		widget_object.updateActionLinks(action_links);
-	}
+		}
 });
 
 /**
