@@ -15,6 +15,7 @@
 /*egw:uses
 	egw_action.egw_action_common;
 	egw_action.egw_action;
+	/phpgwapi/js/jquery/TouchSwipe/jquery.touchSwipe.js;
 */
 
 /**
@@ -53,7 +54,7 @@ function et2_dataview_rowAOI(_node)
 	 * 
 	 * @memberOf et2_dataview_rowAOI
 	 */
-	var selectHandler = function(e) {
+	var selectHandler = function(e, _params) {
 		// Reset the focus so that keyboard navigation will work properly
 		// after the element has been clicked
 		egwUnfocus();
@@ -61,12 +62,25 @@ function et2_dataview_rowAOI(_node)
 		// Reset the prevent selection code (in order to allow wanted
 		// selection of text)
 		_node.onselectstart = null;
-
+		
 		if (e.target != aoi.checkBox)
 		{
 			var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
 			var state = egwGetShiftState(e);
-
+			
+			if (_params)
+			{
+				if (egwIsMobile())
+				{
+					switch (_params.swip)
+					{
+						case "left":
+						case "right":
+							state = 1;
+							break;
+					}
+				}
+			}
 			switch (aoi.selectMode)
 			{
 			case EGW_SELECTMODE_DEFAULT:
@@ -83,7 +97,18 @@ function et2_dataview_rowAOI(_node)
 	};
 
 	if (egwIsMobile()) {
-		_node.ontouchend = selectHandler;
+		$j(_node).swipe({
+				allowPageScroll: "vertical",
+				swipe: function (event, direction)
+				{
+					selectHandler(event, {swip:direction});
+				},
+				click: function (event)
+				{
+					selectHandler(event);
+				},
+				
+		});
 	} else {
 		$j(_node).click(selectHandler);
 	}
