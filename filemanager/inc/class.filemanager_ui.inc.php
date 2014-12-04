@@ -213,7 +213,7 @@ class filemanager_ui
 			{
 				$actions['mail']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
-					'title' => $data['title'],
+					'hint' => $data['title'],
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
 			}
