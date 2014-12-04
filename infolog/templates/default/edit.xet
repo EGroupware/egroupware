@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-		<textbox multiline="true" id="info_des" no_lang="1" width="99%" height="243px"/>
+		<textbox multiline="true" resize_ratio="1" id="info_des" no_lang="1" width="99%" height="243px"/>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%" height="245" overflow="auto">

@@ -30,9 +30,6 @@ tr.dialogOperators td,
 .timesheet_titleDetails {
   font-weight: bold;
 }
-div#timesheet-edit.et2_container {
-  width: 648px;
-}
 /* add # sign behind the ts_id */
 #timesheet-edit_ts_id:before {
   content: "#";
@@ -185,7 +182,4 @@ div#timesheet-edit.et2_container {
 }
 #timesheet-edit_pm_id input {
   width: 99% !important;
-}
-div#timesheet-edit.et2_container {
-  width: 668px;
 }
