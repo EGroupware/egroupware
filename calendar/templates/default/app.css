@@ -650,3 +650,19 @@ img.calendar_print_button, img.calendar_print_appicon {
 	height: 24px;
 	width: 24px;
 }
+
+/*Sortable views*/
+.srotable_cal_wk_ph {
+	border: 2px	dashed gray;
+	height: 230px;
+	width: 99%;
+	background-color: #ece2f7;
+}
+.srotable_cal_day_ph {
+	position: relative;
+	width: 33.333333%;
+	height: 99%;
+	border: 2px	dashed gray;
+	background-color: #ece2f7;
+	display: inline-block;
+}

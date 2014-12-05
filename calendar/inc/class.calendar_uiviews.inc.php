@@ -141,7 +141,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Constructor
 	 *
-	 * @param array $set_states=null to manualy set / change one of the states, default NULL = use $_REQUEST
+	 * @param array $set_states = null to manualy set / change one of the states, default NULL = use $_REQUEST
 	 */
 	function __construct($set_states=null)
 	{
@@ -283,7 +283,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays the planner view
 	 *
-	 * @param boolean $home=false if true return content suitable for home-page
+	 * @param boolean $home = false if true return content suitable for home-page
 	 */
 	function &planner($home=false)
 	{
@@ -367,7 +367,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays a multiple week-view
 	 *
-	 * @param boolean $home=false if true return content suitable for home-page
+	 * @param boolean $home = false if true return content suitable for home-page
 	 */
 	function &weekN($home=false)
 	{
@@ -382,7 +382,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays a year view
 	 *
-	 * @param boolean $home=false if true return content suitable for home-page
+	 * @param boolean $home = false if true return content suitable for home-page
 	 */
 	function &year($home=false)
 	{
@@ -613,8 +613,8 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays the monthview or a multiple week-view
 	 *
-	 * @param int $weeks=0 number of weeks to show, if 0 (default) all weeks of one month are shown
-	 * @param boolean $home=false if true return content suitable for home-page
+	 * @param int $weeks = 0 number of weeks to show, if 0 (default) all weeks of one month are shown
+	 * @param boolean $home = false if true return content suitable for home-page
 	 */
 	function &month($weeks=0,$home=false)
 	{
@@ -720,7 +720,7 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int &$first timestamp 0h of first day of week containing the first of the current month
 	 * @param int &$last timestamp 23:59:59 of last day of week containg the last day of the current month
-	 * @param int $day=1 should the alignment be based on the 1. of the month or an other date, eg. the 15.
+	 * @param int $day = 1 should the alignment be based on the 1. of the month or an other date, eg. the 15.
 	 */
 	function _week_align_month(&$first,&$last,$day=1)
 	{
@@ -768,7 +768,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Four days view, everythings done by the week-view code ...
 	 *
-	 * @param boolean $home=false if true return content suitable for home-page
+	 * @param boolean $home = false if true return content suitable for home-page
 	 * @return string
 	 */
 	function day4($home=false)
@@ -794,8 +794,8 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays the weekview, with 5 or 7 days
 	 *
-	 * @param int $days=0 number of days to show, if 0 (default) the value from the URL or the prefs is used
-	 * @param boolean $home=false if true return content suitable for home-page
+	 * @param int $days = 0 number of days to show, if 0 (default) the value from the URL or the prefs is used
+	 * @param boolean $home = false if true return content suitable for home-page
 	 */
 	function week($days=0,$home=false)
 	{
@@ -897,6 +897,7 @@ class calendar_uiviews extends calendar_ui
 			$headerCounter = 0;
 			foreach($this->_get_planner_users(false) as $uid => $label)
 			{
+				$content .= '<div data-sortable-id="'.$uid.'">';
 				$search_params['users'] = $uid;
 				$content .= '<b>'.$label."</b>\n";
 				$content .= $this->close_button($uid);
@@ -907,7 +908,9 @@ class calendar_uiviews extends calendar_ui
 				{
 					$content .= $navHeader;
 				}
+				$content .= '</div>';
 			}
+			$content = '<div class="cal_is_sortable">'.$content.'</div>';
 		}
 
 		$content = $navHeader.$content;
@@ -926,7 +929,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays the dayview
 	 *
-	 * @param boolean $home=false if true return content suitable for home-page
+	 * @param boolean $home = false if true return content suitable for home-page
 	 */
 	function &day($home=false)
 	{
@@ -1169,7 +1172,7 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int $start time in minutes
 	 * @param int $end time in minutes
-	 * @param int $minimum=0 minimum height
+	 * @param int $minimum = 0 minimum height
 	 * @return float height in percent
 	 */
 	function times2height($start,$end,$minimum=0)
@@ -1188,12 +1191,12 @@ class calendar_uiviews extends calendar_ui
 	 * Uses the dayColWidget to display each day.
 	 *
 	 * @param $daysEvents array with subarrays of events for each day to show, day as YYYYMMDD as key
-	 * @param int $granularity_m=30 granularity in minutes of the rows
-	 * @param int $height=400 height of the widget
-	 * @param string $indent='' string for correct indention
-	 * @param string $title='' title of the time-grid
-	 * @param int/array $owner=0 owner of the calendar (default 0 = $this->owner) or array with owner for each column
-	 * @param boolean $last=true last timeGrid displayed, default true
+	 * @param int $granularity_m = 30 granularity in minutes of the rows
+	 * @param int $height = 400 height of the widget
+	 * @param string $indent = '' string for correct indention
+	 * @param string $title = '' title of the time-grid
+	 * @param int/array $owner = 0 owner of the calendar (default 0 = $this->owner) or array with owner for each column
+	 * @param boolean $last = true last timeGrid displayed, default true
 	 */
 	function &timeGridWidget($daysEvents,$granularity_m=30,$height=400,$indent='',$title='',$owner=0,$last=true)
 	{
@@ -1388,16 +1391,16 @@ class calendar_uiviews extends calendar_ui
 	 * @param int $pleft start of the widget
 	 * @param int $pwidth width of the widget
 	 * @param string $indent string for correct indention
-	 * @param boolean/string $short_title=True should we add a label (weekday, day) with link to the day-view above each day or string with title
-	 * @param boolean $on_off=false start with row_on or row_off, default false=row_off
-	 * @param int $owner=0 if != 0 owner to add to the add-event link
+	 * @param boolean/string $short_title = True should we add a label (weekday, day) with link to the day-view above each day or string with title
+	 * @param boolean $on_off = false start with row_on or row_off, default false=row_off
+	 * @param int $owner = 0 if != 0 owner to add to the add-event link
 	 */
 	function dayColWidget($day_ymd,$events,$pleft,$pwidth,$indent,$short_title=True,$on_off=False,$owner=0)
 	{
 		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$pleft,$pwidth);
 
-		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calendar_calDayCol" style="left: '.$pleft.
-			'%; width: '.$pwidth.'%;">'."\n";
+		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calendar_calDayCol" '.'data-sortable-id="'.$owner.'" style="left: '.$pleft.
+			'%;width: '.$pwidth.'%;">'."\n";
 
 		// Creation of the header-column with date, evtl. holiday-names and a matching background-color
 		$ts = $this->bo->date2ts((string)$day_ymd);
@@ -1525,8 +1528,8 @@ class calendar_uiviews extends calendar_ui
 	 * @param string $day_ymd date
 	 * @param string &$class class to use
 	 * @param string &$holidays commaseparted holidays or empty if none
-	 * @param boolean $only_weekend=false show only the weekend in header-color, otherwise every second days is shown too
-	 * @param boolean $show_bdays=true If available, also show birthdays (or hide Bdays)
+	 * @param boolean $only_weekend = false show only the weekend in header-color, otherwise every second days is shown too
+	 * @param boolean $show_bdays = true If available, also show birthdays (or hide Bdays)
 	 *        Note that this is not the place to disable a preference.
 	 *        If the preferences allow birthdays to be displayed, they are cached within the holidays structure.
 	 *        This setting just suppressing the available data in the view.
@@ -1631,8 +1634,8 @@ class calendar_uiviews extends calendar_ui
 	 * @param $width int width of the widget
 	 * @param string $indent string for correct indention
 	 * @param int $owner owner of the calendar the event is in
-	 * @param boolean $return_array=false should an array with keys(tooltip,popup,html) be returned or the complete widget as string
-	 * @param string $block='event_widget' template used the render the widget
+	 * @param boolean $return_array = false should an array with keys(tooltip,popup,html) be returned or the complete widget as string
+	 * @param string $block = 'event_widget' template used the render the widget
 	 * @param int $z_index is the z-index of the drag-drobable outer box of the event.
 	 * @return string/array
 	 */
@@ -2088,7 +2091,7 @@ class calendar_uiviews extends calendar_ui
 	 * @param mixed $start start-time of the grid
 	 * @param mixed $end end-time of the grid
 	 * @param string|int $by_cat rows by sub-categories of $by_cat (cat_id or 0 for upmost level) or by 'user' or 'month'
-	 * @param string $indent='' string for correct indention
+	 * @param string $indent = '' string for correct indention
 	 * @return string with widget
 	 */
 	function &plannerWidget(&$events,$start,$end,$by_cat=0,$indent='')
@@ -2261,7 +2264,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * get all users to display in the planner_by_user
 	 *
-	 * @param boolean $enum_groups=true should groups be returned as there members (eg. planner) or not (day & week)
+	 * @param boolean $enum_groups = true should groups be returned as there members (eg. planner) or not (day & week)
 	 * @return array with uid => label pairs, first all users alphabetically sorted, then all resources
 	 */
 	function _get_planner_users($enum_groups=true)
@@ -2289,9 +2292,13 @@ class calendar_uiviews extends calendar_ui
 				$users[$user] = $this->bo->participant_name($user);
 			}
 		}
-		asort($users);
-		asort($resources);
-
+		// Only sort users in planner views
+		if ($enum_groups)
+		{
+			asort($users);
+			asort($resources);
+		}
+		
 		return $users+$resources;
 	}
 
@@ -2348,7 +2355,7 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int $start start-time (12h) of the scale
 	 * @param int $days number of days to display
-	 * @param string $indent='' string for correct indention
+	 * @param string $indent = '' string for correct indention
 	 * @return string with scale
 	 */
 	function plannerMonthScale($start,$days,$indent)
@@ -2438,7 +2445,7 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int $start start-time (12h) of the scale
 	 * @param int $days number of days to display
-	 * @param string $indent='' string for correct indention
+	 * @param string $indent = '' string for correct indention
 	 * @return string with scale
 	 */
 	function plannerWeekScale($start,$days,$indent)
@@ -2483,7 +2490,7 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int $start start-time (12h) of the scale
 	 * @param int $days number of days to display
-	 * @param string $indent='' string for correct indention
+	 * @param string $indent = '' string for correct indention
 	 * @return string with scale
 	 */
 	function plannerDayScale($start,$days,$indent)
@@ -2607,7 +2614,7 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int $start start-time (12h) of the scale
 	 * @param int $days number of days to display
-	 * @param string $indent='' string for correct indention
+	 * @param string $indent = '' string for correct indention
 	 * @return string with scale
 	 */
 	function plannerHourScale($start,$days,$indent)
@@ -2652,7 +2659,7 @@ class calendar_uiviews extends calendar_ui
 	 * @param int $end end-time of the row
 	 * @param string $header user or category name for the row-header
 	 * @param string $class additional css class for the row
-	 * @param string $indent='' string for correct indention
+	 * @param string $indent = '' string for correct indention
 	 * @return string with widget
 	 */
 	function plannerRowWidget($events,$start,$end,$header,$class,$indent='')
@@ -2709,7 +2716,7 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int $start timestamp of start of row
 	 * @param int $days number of days in month of row
-	 * @param string $indent=''
+	 * @param string $indent = ''
 	 * @return string
 	 */
 	function yearlyPlannerMarkDays($start,$days,$indent='')
@@ -2739,7 +2746,7 @@ class calendar_uiviews extends calendar_ui
 	 * @param array $events non-overlapping events to show
 	 * @param int $start start-time of the row
 	 * @param int $end end-time of the row
-	 * @param string $indent='' string for correct indention
+	 * @param string $indent = '' string for correct indention
 	 * @return string with widget
 	 */
 	function eventRowWidget($events,$start,$end,$indent='')
