@@ -2122,15 +2122,15 @@ class mail_compose
 			}
 			if(!empty($signature))
 			{
+				$_mailObject->setBody($this->convertHTMLToText($body, true, true).
+					($disableRuler ? "\r\n" : "\r\n-- \r\n").
+					$this->convertHTMLToText($signature, true, true));
+
 				$body .= ($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
-				$_mailObject->setBody($this->convertHTMLToText($_formData['body'],true,true).
-					($disableRuler ?"\r\n":"\r\n-- \r\n").
-					$this->convertHTMLToText($signature,true,true));
 			}
 			else
 			{
-				$body	= $_formData['body'];
-				$_mailObject->setBody($this->convertHTMLToText($_formData['body'],true,true));
+				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
 			}
 			// convert URL Images to inline images - if possible
 			if ($_send) mail_bo::processURL2InlineImages($_mailObject, $body);
@@ -2835,7 +2835,7 @@ class mail_compose
 		if(is_array($this->sessionData['attachments'])) {
 			foreach($this->sessionData['attachments'] as $value) {
 				if (!empty($value['file']) && parse_url($value['file'],PHP_URL_SCHEME) != 'vfs') {	// happens when forwarding mails
-					unlink($value['file']);
+					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.$value['file']);
 				}
 			}
 		}
