@@ -1,0 +1,303 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for login page
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "definitions.less";
+
+@import-once "def_colors.less";
+//##############################################################################################################
+
+#socialMedia {
+	position: relative;
+	bottom: 20px;
+	float: right;
+	right: -10px;
+}
+#socialMedia a {
+	margin-left: 10px;
+}
+
+/* ##################################################################################
+ *       login page
+ */
+
+#loginMainDiv {
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    border-bottom: 0px solid #7E7E7E;
+    margin: 0;
+    background-color: @egw_color_2_d;
+
+    // Logo Leiste
+    #divAppIconBar{
+        margin-left:auto;
+        margin-right:auto;
+        background: transparent;
+        width: 100%;
+        text-align: center;
+
+
+        #divLogo {
+            position: relative;
+            top: 1px;
+            background-color: @egw_color_2_d;
+
+            img {
+                /*width: 70%;*/
+                /*margin-left: 15%;*/
+                margin: 0 auto;
+                max-width: 400px;
+            }
+
+
+            img[src$="svg"]{
+                    width: 70%;
+                    max-width: 2560px;
+                    .gradient_vertical (@egw_color_2_d, @egw_color_2_d);
+                }
+        }
+    }
+
+
+    // Anmeldefenster / Box mit Mesaage + Form
+    div#centerBox{
+        margin: 0% auto;
+        width: 57em;
+        background-color: @gray_0;
+        z-index: 100;
+        padding: 25px 10px 10px;
+        .border_radius (5px, 5px, 5px, 50px);
+        .gradient_vertical (@egw_color_2_e, @egw_color_2_a);
+
+        .bordered (@egw_color_2_a, @egw_color_2_a, @egw_color_2_e, @egw_color_2_a );
+        border-width: 1px;
+
+
+
+        // Meldung
+        #loginScreenMessage{
+            margin: 1em;
+
+        }
+
+
+        // Message
+        #loginCdMessage{
+                 margin: 1em;
+                 .border_radius_button_lefttop;
+                 color: red;
+                 text-align: center;
+                 padding-top: 1em;
+
+
+            // Text der Meldung
+            span {
+                padding: 0.5em;
+                font-size: 1.2em;
+                //											.background-color-hint;
+                color: @color_hint;
+                text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
+                width: 100%;
+            }
+        }
+
+
+
+        // Formular
+        form{
+             margin: 1em;
+
+
+            // Table
+            table.divLoginbox {
+
+                background-color: transparent;
+                .border_radius_button_lefttop;
+
+
+                tr.divLoginboxHeader{}
+
+
+
+
+                // Passwort Image
+                div.LoginPasswordImage{
+                    .gradient_vertical (@egw_color_1_a, @egw_color_2_d);
+
+                                    img.passwordImage {
+                                        /*width: 70%;*/
+                                        /*margin-left: 15%;*/
+                                        margin: 0 auto;
+                                        max-width: 400px;
+                                        .bordered(5px);
+                                        }
+
+                                    img.passwordImage[src$="svg"]{
+                                                .bordered(5px);
+
+                                                .dimension_width_height_xl;
+                                            }
+                }
+
+
+                td { padding: 0.5em; font-weight: bold; color: @egw_color_1_a}
+
+                select {
+                    .Complete_Button_select;
+                    margin: 5px 0em 5px 0px;
+                }
+
+                select:hover {
+                    .Complete_Button_select_hover;
+                }
+
+                input {
+                    .Complete_Button_input;
+                    width: 250px;
+                }
+                input:hover{
+                    .Complete_Button_input_hover;
+                }
+
+                input:focus{
+                    .Complete_Button_input_focus;
+                }
+
+                input[type="submit"] {
+                    .background_color_egw_normal; // Orange
+                    // Hintergrund in EGW Farbe
+                    .color_100_gray;
+                    .fontsize_xxl;
+
+                    &:hover{.Complete_Button_select_hover; background-color: @color_positive_action !important;}
+                    &:focus {.Complete_Button_input_focus;}
+                }
+
+
+
+
+            }
+
+        } // Formular
+
+    } //center box
+
+} //  #loginMainDiv
+
+// Ende Login / Start #################################################
+
+
+
+#wrap{
+/*    float: left;
+    z-index: -1;
+    margin: 0 auto;
+    background-color:transparent;
+    width: 100%;*/
+
+    div.animation_login{
+        margin: 0.3em;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+   }
+
+    img[src$="svg"],
+    background-image[url$="svg"]{
+        .gradient_vertical (@egw_color_2_e, @egw_color_2_e);
+    }
+
+}
+
+ #img1, #img2, #img3, #img4 , #img5 , #img6 , #img7 , #img8 {
+        width:12%;
+        /*height:100%;*/
+        /*position:fixed;*/
+        /*top: 10em;*/
+        z-index:-1;
+
+        animation-name: test;
+        animation-duration: 8s;
+        animation-iteration-count: infinite;
+
+        -webkit-animation-name: test;
+        -webkit-animation-duration: 8s;
+        -webkit-animation-iteration-count: infinite;
+
+        opacity:0;
+    }
+     #img1 {
+        animation-delay:0s;
+        -webkit-animation-delay:0s
+    }
+
+    #img2 {
+        animation-delay:3s;
+        -webkit-animation-delay:3s
+    }
+    #img3 {
+        animation-delay:6s;
+        -webkit-animation-delay:6s
+    }
+    #img4 {
+        animation-delay:9s;
+        -webkit-animation-delay:9s
+    }
+    #img5 {
+        animation-delay:12s;
+        -webkit-animation-delay:12s
+    }
+    #img6 {
+        animation-delay:15s;
+        -webkit-animation-delay:15s
+    }
+    #img7 {
+        animation-delay:18s;
+        -webkit-animation-delay:18s
+    }
+    #img8 {
+        animation-delay:21s;
+        -webkit-animation-delay:21s
+    }
+
+
+
+    @-webkit-keyframes test {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes test {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+
+
+
+//

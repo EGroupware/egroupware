@@ -1,0 +1,42 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for layout and raster
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "definitions.less";
+//##############################################################################################################
+
+//############## Layout ########################################################################################
+
+// Allgemeines
+
+/* #################################################
+ * Basecontainer
+ * #################################################
+ */
+
+//IFRAME
+
+.egw_fw_content_browser_iframe,
+#divMainView {
+    //								.background-color-0-gray;
+    margin: 0;
+
+    body {.background_color_0_gray; }
+}
+
+.egwGridView_scrollarea {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+

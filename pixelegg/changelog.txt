@@ -1,0 +1,70 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ * 
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de> + Wolfgang Ott <wolfgang.ott@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+/* 13.12.2013 ***************** */
+
+button behavior
+
+addressbook edit
+
+tab - addressbook-edit_link_to 
+
+.filters select = 
+
+egw_fw_ui_sidemenu_listitem img = kein Button mehr
+
+Listen:
+tr:nth-child(even) {background: @color-even;}
+tr:nth-child(odd) {background: @color-odd;}
+
+calendar > ui dialog
+calendar > edit
+calendar > edit series
+calendar > edit new
+
+#######
+Buttons behavior on button:active
+
+positive = green
+negative = red
+between = yellow
+
+
+/* 14.12.2013 ***************** */
+
+def: dimension XL + M + S + XS
+
+calendar Dayview
+calendar Edit Alarms
+
+Topmenu Items > put some Icons before
+
+/* 17.12.2013 ***************** */
+
+Raster > fixed Tab_header, tab_header
+
+/* 18.12.2013 ***************** */
+
+Admin > fixed height for global categorys
+
+
+/* 19.12.2013 ***************** */
+
+ADDRESSBOOK - all fixed -> ready for testing
+Infolog - all fixed -> ready for testing
+
+Dateimanager - still working on it
+Calendar -> still working on it
+
+
+/* 27.12.2013 ***************** */
+Fix Headernavigation Img before
+Fix Sidemenu Rollover Effekts
+Fix Dateimanager Menu
+
+NEW: Transition Effekt

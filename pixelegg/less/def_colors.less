@@ -1,0 +1,194 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: pixelegg.less 3017 2014-04-15 08:35:38Z ralfbecker $
+
+## Definitions of all used colors
+
+ */
+@import "definitions.less";
+
+ // Basic colour
+// CI EGW
+
+// Orange
+@egw_color_1 : rgb(255, 194, 0); // #ffc200
+
+@egw_color_1_a : #ffc200;
+@egw_color_1_b : #BF9D30;
+@egw_color_1_c : #A67E00;
+@egw_color_1_d : #FFD140;
+@egw_color_1_e : #FFDD73; // li:selected
+
+// BLUE
+@egw_color_2_a : #0C5DA5;
+@egw_color_2_b : #26537C;
+@egw_color_2_c : #043A6B;
+@egw_color_2_d : #408DD2;
+@egw_color_2_e : #679FD2; // li:current
+
+
+// Lila
+@egw_color_3_a : #560EAD;
+@egw_color_3_b : #512882;
+@egw_color_3_c : #360570;
+@egw_color_3_d : #8643D6;
+@egw_color_3_e : #9B6AD6;
+
+
+
+
+@egw_color_blue : #1D1AB2;
+
+@egw_color_blue_lighter : #0B5FA4 ;
+
+@egw_color_blue_lightest : #679FD2;     //#66A1D2;
+
+//Berechnung der EGW Farben
+
+.background_color_egw_normal  {background-color : @egw_color_1_a;}
+.background_color_egw_light   {background-color : @egw_color_1_d;}
+.background_color_egw_lighter {background-color : @egw_color_1_e;}
+.background_color_egw_dark    {background-color : @egw_color_2_a;}
+.background_color_egw_darker  {background-color : @egw_color_2_b;}
+
+
+// greyscale
+@gray : #000000; // Base colur is black
+
+/*@gray-100 : #000000;*/
+@gray_100 : #000000;
+@gray_90 : #1E1E1E;
+@gray_80 : #373737;
+@gray_70 : #505050;
+@gray_60 : #696969;
+@gray_50 : #828282;
+@gray_40 : #9B9B9B;
+@gray_30 : #B4B4B4;
+@gray_20 : #CDCDCD;
+@gray_10 : #E6E6E6;
+@gray_5 : #F2F2F2;
+@gray_0 : #FFFFFF;
+
+
+.color_0_gray 	{	color : lighten(@gray, 100%);} // white
+
+.color_5_gray 	{	color : lighten(@gray, 95%);}
+.color_10_gray 	{	color : lighten(@gray, 90%);}
+.color_15_gray  {       color : lighten(@gray, 85%);}
+.color_20_gray 	{	color : lighten(@gray, 80%);}
+.color_25_gray 	{	color : lighten(@gray, 75%);}
+.color_30_gray 	{	color : lighten(@gray, 70%);}
+.color_40_gray 	{	color : lighten(@gray, 60%);}
+.color_50_gray 	{	color : lighten(@gray, 50%);}
+.color_60_gray 	{	color : lighten(@gray, 40%);}
+.color_70_gray 	{	color : lighten(@gray, 30%);}
+.color_80_gray 	{	color : lighten(@gray, 20%);}
+.color_90_gray 	{	color : lighten(@gray, 10%);}
+.color_100_gray {	color : @gray;	} // black
+
+@lightgray : @gray*010101;
+/*@darkgrey : .color_90_gray;*/
+
+// grey fpr background
+
+.background_color_0_gray {	background-color : lighten(@gray, 100%);}
+.background_color_5_gray {	background-color : lighten(@gray, 98%);	}
+.background_color_10_gray {	background-color : lighten(@gray, 94%);	}
+.background_color_15_gray {	background-color : lighten(@gray, 85%);	}
+.background_color_20_gray {     background-color : lighten(@gray, 80%);	}
+.background_color_25_gray {     background-color : lighten(@gray, 75%);	}
+.background_color_30_gray {     background-color : lighten(@gray, 70%) !important;	}
+.background_color_40_gray {     background-color : lighten(@gray, 60%);	}
+.background_color_50_gray {	background-color : lighten(@gray, 50%);	}
+
+
+// Warning
+@red: #FF0000;
+@color_warning : @red;
+
+
+// ERROR
+@color_error : #AE1D00;
+
+
+// Test Colour for debug
+@yellow : #FFD40F;
+
+// Link Colours
+@link_color : @egw_color_2_b;
+@link_color_active: fade(@egw_color_2_b, 60%);
+
+// soll EGROUPWARE FARBE GEBEN
+/*@active_button_border_bottom : @egw_color_2_d;*/
+
+// Hint / or have to do / must field
+@color_hint : #189800; //@egw_color_2_a;
+
+// Tooltipp / or have to do / must field
+@color_tooltip : lighten(@egw_color_1_e, 90%);
+
+/*optional / can field*/
+@color_optional : fade(@egw_color_1_e, 10%);
+
+
+
+/*Listenausgabe*/
+
+@color_even : @gray_0;
+@color_odd : darken(@gray_0, 5%);
+
+
+// aktiverte Zeilen in allen APP mit Listenausgabe
+@color_active_row : fade(@egw_color_1_a, 1%);
+
+// not in use
+@color_selected_row : @egw_color_1_e;
+
+// Mouse over
+@color_hover_row : fade(@egw_color_2_e, 20%);
+
+
+/* Dialog Button panel Background Color*/
+@color_button_panel_bg_color : @egw_color_2_e;
+
+
+ /*Button edit + save + apply + copy = positive action         */
+@color_positive_action : #189800; // green
+@color_positive_action_hover : fade(#189800, 2%); // green
+@color_positive_action_active : lighten(#189800, 2%); // green
+
+
+ /*Button  cancel = do nothing action         */
+@color_cancel_action : #F5B301;
+@color_cancel_action_hover : lighten(#F5B301, 0%);
+@color_cancel_action_active : lighten(#F5B301, 15%);
+
+ /*Button delete  = negative action         */
+@color_negative_action : #AE1D00;
+@color_negative_action_hover : lighten(#AE1D00, 2%);
+@color_negative_action_active : lighten(#AE1D00, 10%);
+
+
+
+
+
+@color_splitter_bar : @egw_color_1_a;
+@color_splitter_bar_hover : @egw_color_1_a;
+@color_splitter_bar_active : @egw_color_1_a;
+
+// Search Button
+
+.background_color_search {background-color : @gray_30;	}
+
+
+// cal Heute // in Sidebar
+.background_table_cal_head { background-color : @egw_color_1_a;}
+
+@color_progress : @egw_color_1_e;

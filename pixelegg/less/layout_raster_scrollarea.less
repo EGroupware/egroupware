@@ -1,0 +1,99 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for layout and raster
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
+ */
+/*
+    Created on : 23.07.2014, 13:25:11
+    Author     : stefanreinhardt
+*/
+
+@import (reference) "definitions.less";
+
+// ##############################################################
+// ##                          ##
+// ##                          ##
+// Scrollarea
+
+.egw_fw_ui_scrollarea
+{
+    overflow: hidden;
+    z-index: 0;
+}
+
+.egw_fw_ui_scrollarea_button
+{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 12px;
+    z-index: 2;
+}
+
+.egw_fw_ui_scrollarea_button_up.egw_fw_ui_scrollarea_button_hover,
+.egw_fw_ui_scrollarea_button_down.egw_fw_ui_scrollarea_button_hover
+{
+    background-image:url(../images/scroll_hover.png);
+}
+
+.egw_fw_ui_scrollarea_button_disabled
+{
+    display: none !important;
+}
+
+.egw_fw_ui_scrollarea_button_up, .egw_fw_ui_scrollarea_button_down
+{
+    height: 14px;
+    background-image:url(../images/scroll.png);
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.egw_fw_ui_scrollarea_button_up
+{
+    top: 0px;
+}
+
+.egw_fw_ui_scrollarea_button_down
+{
+    bottom: 0px;
+}
+
+.egw_fw_ui_scrollarea_outerdiv
+{
+    height: 100%;
+}
+
+
+
+
+
+.egw_fw_content_browser_div {
+    display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0 10px;
+  background-color: @gray_20;
+    /*	background-color: RGB(240, 240, 255);*/
+}
+
+.egw_fw_content_browser_div_loading {
+    position: absolute;
+    z-index: 1000;
+    top: 0px;
+    left: 0px;
+    .dimension_width_height_s;
+    background-image: url(../images/ajax-loader.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+

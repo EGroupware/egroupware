@@ -1,0 +1,509 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * dialog
+
+ * define every dialog box in egw
+ * even popup or jquery
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "definitions.less";
+//##############################################################################################################
+
+/*body {
+    background-color: @gray_0;
+    background-image: url(../images/bgDialog.png);
+    background-repeat: repeat-x;
+}*/
+
+// Dialoge Allgemeine Definition
+
+div#popupMainDiv {
+    padding: 8px;
+    background-color: @gray_0;
+    background-image: url(../images/bgDialog.png);
+    background-repeat: repeat-x;
+
+}
+
+div#popupMainDiv > * {margin: 0px;}
+
+div.et2_container {
+
+    //	.background-color-25-gray;
+    padding: 0;
+
+    div{
+
+
+        table.et2_grid {
+            //			.background-color-5-gray;
+
+            tbody {
+
+                tr {
+
+                    // Select + Inputfelder
+                    .row {
+
+
+                        td {
+                            .et2_box_widget {
+
+                                select{
+                                    height: 20px;
+                                    padding: 0;
+                                    margin: 0px;
+                                    font-size: 0.95em;
+
+                                }
+
+                               input {
+                                    height: 20px;
+                                    padding: 0;
+                                    margin: 4px 4px 4px 5px;;
+                                    font-size: 0.95em;
+                                    .border_radius (3px, 3px ,3px ,3px );
+                                }
+
+                                input.hasDatepicker {
+                                    background-image: url( "../images/datepopup.png");
+
+                                    &:hover {cursor: pointer;}
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    td{
+
+                        // Tabs
+                        .et2_tabbox{
+
+                            .et2_tabheader {}
+                            .et2_tabs {
+
+                                table.et2_grid {.background_color_0_gray;}
+
+                            }
+
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+
+// high = more padding
+.high {
+    border-top: 5px solid @gray_10;
+    border-bottom: 5px solid @gray_10 !important;
+}
+/*Main div*/
+
+#popupMainDiv {
+
+
+}
+
+
+
+table.dialog-main-view {width: 100%;}
+
+
+/*###########################################
+#                                           #
+#     dialogHeader                 app-img  #
+#############################################
+#                                           #
+#     dialogHeader2                         #
+#############################################
+#                                           #
+#     dialogHeader3                         #
+#############################################
+#                                           #
+#     dialogHeader4                         #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#    main + tabs                            #
+#                                           #
+#                                           #
+#############################################
+#   dialogOperators                        #
+#############################################
+#                                           #
+#  button | button | button         delete  #
+##############################################*/
+
+tr.dialogHeader td,
+tr.dialogHeader2 td,
+tr.dialogHeader3 td,
+tr.dialogHeader4 td,
+tr.dialogOperators td {
+padding: 5px 6px 5px 0;
+vertical-align: middle;
+}
+
+/*** dialogHeader on a box not table ***/
+div.dialogHeader {
+	/*background-color: @egw_color_2_a !important;*/
+        vertical-align: middle;
+	/*font-size: 150%*/
+}
+.dialogHeader2, .dialogHeader3, .dialogHeader4 {
+	/*font-size: 120%;*/
+}
+
+
+/**********    Header Part ********************/
+.dialogHeader{
+    // background-color gradient
+    /*.gradient_thead;*/
+
+    .color_100_gray;
+    height: 50px;
+
+// APP img
+img[src*="navbar"] {
+    padding: 0 0 0 15px;
+}
+
+// radio button
+input[type="radio"],
+input.et2_radiobox{
+    -webkit-appearance: none;
+    border: none;
+}
+
+table.et2_grid {
+                    border-top: none;
+
+                    .th {
+                        background-color: @egw_color_2_a !important;
+
+                    }
+
+                    tr { height: 30px; }
+
+                    td {padding: 0px 0px 0px 3px; .color_100_gray;}
+
+                    //Table in Table
+      table.et2_grid {
+                     label.et2_label {
+                               span.et2_selectbox {
+                                                    li {float: left;}
+                                                    }
+                                        }
+
+                    }
+
+} // et2_grid End
+
+
+// Inputfield Header
+input.et2_textbox { font-size: 1.3em; }
+
+.et2_label {
+        .color_100_gray;
+        vertical-align: middle;
+        padding: 0px 0px 0px 0px !important;
+        /*margin-right: 57px;*/
+        margin: 0px important;
+        font-size: 1em;
+        text-align: right;
+}
+
+
+
+
+td.space  {
+        span img {
+                background: @gray_0;
+                border: 2px solid @gray_0;
+                /*filter grey*/
+                 filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+
+                    -webkit-filter: grayscale(100%);
+                    -moz-filter: grayscale(100%);
+                    -ms-filter: grayscale(100%);
+                    -o-filter: grayscale(100%);
+                    filter: grayscale(100%);
+                    /*filter: url(grayscale.svg);  Firefox 4+ */
+                    filter: gray; /* IE 6-9 */
+
+                    }
+
+                }
+
+}
+
+
+
+/**********    Header Row2 - 4 ********************/
+tr.dialogHeader2,
+tr.dialogHeader3,
+tr.dialogHeader4{
+    background-color: @gray_5 !important;
+    vertical-align: middle;
+
+
+    .et2_label {
+        .color_90_gray;
+        vertical-align: middle;
+        padding: 0px 0px 0px 0px !important;
+        /*margin-right: 55px;*/
+        margin: 0px;
+        font-size: 1em;
+        width: 50px !important;
+    }
+
+
+
+}
+
+/************* Tabs  *********************************/
+/**
+ * Tabs widget
+ */
+
+.et2_tabheader {
+    padding-left: 0em;
+    border-bottom: 1px solid #bfbfbf;
+    margin: 0;
+    background-image: none;
+    background-color: @gray_0;
+    :first-child {
+        margin-left: 0px;
+    }
+}
+
+.et2_tabflag, .etemplate_tab > div, .etemplate_tab_active > div {
+    margin: 1em 3px -1px 0;
+    padding: 4px;
+    background-color: @gray_30;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    min-width: 73px;
+    .border_radius(3px, 0px, 0px, 3px);
+   &:hover {
+        .color_50_gray;
+        .background_color_25_gray;
+    }
+    &:active{
+        .background_color_0_gray;
+        .color_0_gray;
+    }
+}
+td.etemplate_tab_active.th {
+	background-color: transparent;
+}
+
+
+.et2_tabflag.active, .etemplate_tab_active > div {
+    border-spacing: 0px;
+    background-color: white;
+    .color_100_gray;
+    border-width: 1px 1px 0px 1px;
+    border-style: solid;
+    border-color: @gray_70;
+    &:hover {
+        .color_100_gray;
+        //			border: 1px solid gray;
+        background-color: white;
+    }
+}
+
+
+// field for content
+.et2_tabs, .tab_body {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: @gray_30;
+    padding: 5px;
+    /*overflow-y: auto;*/
+    background-color: @gray_0;
+    .rounded(3px);
+    margin-bottom: 11px;
+}
+
+.tab_body {
+	border-top-width: 1px;
+
+        img {
+            /*filter grey*/
+            .img_filter_gray;
+        }
+
+
+}
+div#etemplate\.tab_widget {
+	margin-bottom: 11px;
+}
+
+
+
+/************* Main  **********************************/
+
+// Terminsuche
+.dialogMainTimeframe {
+
+    div {min-height: 100px;}
+
+}
+
+
+
+/**********    Operators *******************************/
+/*#############################################
+#   dialogOperators                        #
+#############################################*/
+.dialogOperators {
+    background-color: @gray_10;
+    border-top: 0px solid @gray_10;
+    border-bottom: 0px solid @gray_10;
+
+    td {padding: 2px 2px;}
+
+    .et2_label {margin-left: 6px; display: inline-block;}
+}
+
+
+/**********    Footer  *******************************/
+/*#############################################*/
+/*#  Toolbar                                  #*/
+/*#  button | button | button         delete  #*/
+/*##############################################*/
+
+.dialogFooterToolbar{
+    background-color: @color_button_panel_bg_color;
+    margin: 10px 0 0 0;
+    padding: 3px;
+    white-space: nowrap;
+
+    td {padding: 0px 5px 0px 0px;}
+
+    button {
+        .dimension_height_m; min-width: 86px;
+        &:hover{.dimension_height_m;}
+        &:action{.dimension_height_m;}
+    }
+
+    button[id="addressbook-edit_button[delete]"]{
+        float: right;
+    }
+
+    div.et2_hbox {
+    white-space: normal;
+}
+
+    div.et2_box_widget{white-space: nowrap;}
+
+    // selectbox
+    /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
+
+
+
+    // e.g. keine Benachrichtigung senden
+    label.et2_label {white-space: nowrap;}
+
+    input.et2_checkbox { top: 0px;}
+
+}
+
+/*Dialog Calendar - Resourcen suchen*/
+
+div#divMain {
+    padding: 1em;
+
+    img {.dimension_width_height_s;}
+    input[type*="image"] {.dimension_width_height_s;}
+}
+
+//
+//
+
+
+/**
+ * admin - site configuration
+ */
+div.admin-config form > table {
+	width: 100%;
+	padding: 5px;
+
+	tr.th td{
+		font-size: 110%;
+		font-weight: bold;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	td {
+		padding-left: 5px;
+		border-bottom: 1px solid #e0e0e0;
+		b {
+			font-weight: bold;
+		}
+	}
+}
+
+
+
+/**
+ * Styles for different egw_message-types
+ */
+.success_message, .warning_message, .error_message {
+	color: red;
+	font-weight: normal;
+	font-style: italic;
+	text-align: left;
+	margin-left: 5px;
+	padding-left: 20px;
+	background-image: url(../images/check.png);
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: 16px;
+	white-space: pre-wrap;
+}
+.warning_message {
+	background-image: url(../images/dialog_warning.png);
+}
+.error_message {
+	font-weight: bold;
+	background-image: url(../images/dialog_error.png);
+}
+
+/**
+ * Message in popup
+ */
+body > div#egw_message {
+	background-color: @gray_10;
+	.box_shadow_message;
+	border: 3px solid @egw_color_1_a;
+	.border_radius (0px, 15px, 15px, 0px);
+	right: 33%;
+	top: 0px;
+	padding: 10px;
+	padding-left: 25px;
+	background-position-x: 5px;
+	min-width: 100px;
+	z-index: 100000;
+	margin:  0px auto;
+	max-width: 90%;
+}

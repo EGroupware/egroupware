@@ -1,0 +1,48 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
+ */
+@import (reference) "definitions.less";
+//##############################################################################################################
+
+
+/**
+* Clientside Javascript error-log
+*/
+#topmenu_info_error {
+    width: 16px;
+    cursor: pointer;
+}
+div.client_error_log {
+    max-height: 50ex;
+}
+div.client_error_log tbody {
+    vertical-align: top;
+}
+div.client_error_log tr.hidden td > div {
+    max-height: 2ex;
+    max-width: 40ex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+}
+div.client_error_log tr td.timestamp > div {
+    text-wrap: none;
+    white-space: normal;
+    width: 27ex;
+}
+div.client_error_log tr.hidden td.stack > div {
+    text-indent: 100%
+}
+div.client_error_log tr td.stack > div {
+    white-space: pre;
+}

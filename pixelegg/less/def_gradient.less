@@ -1,0 +1,165 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: pixelegg.less 3017 2014-04-15 08:35:38Z ralfbecker $
+
+## Definitions of all gradients
+
+ */
+@import "definitions.less";
+
+// #############################
+// Verlauf
+
+.background_verlauf_diagonal_gray (@i: #d8d8d8, @j: #a3a3a3) {
+    background: -webkit-gradient(linear, 0 0, 0 bottom, @i, @j),
+        -moz-linear-gradient(@i, @j),
+        -o-linear-gradient(@i, @j),
+        linear-gradient(@i, @j);
+    -pie-background: linear-gradient(@i, @j);
+    behavior: url(/PIE.htc);
+}
+
+.background_linear_gradient(@i: #ffb76b, @j: #ff7f04) {
+    background: -webkit-gradient(linear, 0 0, 0 bottom, @i, @j),
+        -moz-linear-gradient(@i, @j),
+        -o-linear-gradient(@i, @j),
+        linear-gradient(@i, @j);
+    -pie-background: linear-gradient(@i, @j);
+    behavior: url(/PIE.htc);
+}
+
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
+    background: @color,
+        -webkit-gradient(linear,
+        left bottom,
+        left top,
+        color-stop(0, @start),
+        color-stop(1, @stop)),
+        -ms-linear-gradient(bottom, @start, @stop),
+        -moz-linear-gradient(center bottom, @start 0%, @stop 100%),
+        -o-linear-gradient(@stop, @start);
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+}
+
+
+.bw_gradient(@color: #F5F5F5, @start: 0, @stop: 255) {
+    background: @color,
+        -webkit-gradient(linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(@start,@start,@start)),
+        color-stop(1, rgb(@stop,@stop,@stop))),
+        -ms-linear-gradient(bottom,
+        rgb(@start,@start,@start) 0%,
+        rgb(@stop,@stop,@stop) 100%),
+        -moz-linear-gradient(center bottom,
+        rgb(@start,@start,@start) 0%,
+        rgb(@stop,@stop,@stop) 100%),
+        -o-linear-gradient(rgb(@stop,@stop,@stop),
+        rgb(@start,@start,@start));
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",rgb(@stop,@stop,@stop),rgb(@start,@start,@start)));
+}
+
+
+
+// Graufiler
+.img_filter_gray{
+
+        /*filter grey*/
+                filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+
+                -webkit-filter: grayscale(100%);
+                -moz-filter: grayscale(100%);
+                -ms-filter: grayscale(0%);
+                -o-filter: grayscale(100%);
+                filter: grayscale(100%);
+                /*filter: url(grayscale.svg);  Firefox 4+ */
+                filter: gray; /* IE 6-9 */
+
+}
+
+
+// kein Filter
+.img_filter_none{
+
+        /*filter grey*/
+                filter: none;
+
+                -webkit-filter: initial;
+                -moz-filter: initial;
+                -ms-filter: initial;
+                -o-filter: initial;
+                filter: initial;
+                /*filter: url(grayscale.svg);  Firefox 4+ */
+                filter: initial; /* IE 6-9 */
+
+}
+
+/* ##################################################### */
+
+.gradient_thead{
+        /*.background-color-5-gray;*/
+        background: -moz-linear-gradient(top,  rgba(240,240,240,0) 0%, rgba(191,191,191,0.65) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,240,240,0)), color-stop(100%,rgba(191,191,191,0.65))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  rgba(240,240,240,0) 0%,rgba(191,191,191,0.65) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00f0f0f0', endColorstr='#a6bfbfbf',GradientType=0 ); /* IE6-9 */
+}
+
+
+// Vertical gradient using CSS where possible, and base64-encoded SVG for IE9 (enables use of this in combination with border-radius)
+// Based on this by Phil Brown: http://blog.philipbrown.id.au/2012/09/base64-encoded-svg-gradient-backgrounds-in-less/
+// Also based on a mixin from Twitter Bootstrap: https://github.com/twitter/bootstrap
+
+.gradient_vertical(@startColor, @endColor) {
+
+// IE9 prep
+@dataPrefix: ~"url(data:image/svg+xml;base64,";
+@dataSuffix: ~")";
+@dataContent: ~'<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1 1" preserveAspectRatio="none"><linearGradient id="g743" gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="0%" y2="100%"><stop stop-color="@{startColor}" offset="0"/><stop stop-color="@{endColor}" offset="1"/></linearGradient><rect x="0" y="0" width="1" height="1" fill="url(#g743)"/></svg>';
+@b64Out: ~`(function(a,b,c){function e(a){a=a.replace(/\r\n/g,'\n');var b='';for(var c=0;c<a.length;c++){var d=a.charCodeAt(c);if(d<128){b+=String.fromCharCode(d)}else if(d>127&&d<2048){b+=String.fromCharCode(d>>6|192);b+=String.fromCharCode(d&63|128)}else{b+=String.fromCharCode(d>>12|224);b+=String.fromCharCode(d>>6&63|128);b+=String.fromCharCode(d&63|128)}}return b}function f(a){var b='';var c,f,g,h,i,j,l;var m=0;a=e(a);while(m<a.length){c=a.charCodeAt(m++);f=a.charCodeAt(m++);g=a.charCodeAt(m++);h=c>>2;i=(c&3)<<4|f>>4;j=(f&15)<<2|g>>6;l=g&63;if(isNaN(f)){j=l=64}else if(isNaN(g)){l=64}b=b+d.charAt(h)+d.charAt(i)+d.charAt(j)+d.charAt(l)}return b}var d='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';return a+f(b)+c})('@{dataPrefix}','@{dataContent}','@{dataSuffix}')`;
+
+background-color: mix(@startColor, @endColor, 60%); // Base solid colour fallback
+background-image: ~"@{b64Out}"; // IE9
+background-image: -moz-linear-gradient(top, @startColor, @endColor); // FF 3.6+
+background-image: -ms-linear-gradient(top, @startColor, @endColor); // IE10
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
+background-image: -webkit-linear-gradient(top, @startColor, @endColor); // Safari 5.1+, Chrome 10+
+background-image: -o-linear-gradient(top, @startColor, @endColor); // Opera 11.10
+background-image: linear-gradient(top, @startColor, @endColor); // The standard
+background-repeat: repeat-x;
+
+}
+
+.span_tool_group {
+
+        float: left;
+        margin: 0 6px 5px 0;
+        padding: 2px 2px 2px 5px;
+        border: 1px solid #a6a6a6;
+        border-bottom-color: #979797;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        -moz-box-shadow: 0 1px 0 rgba(255,255,255,.5),0 0 2px rgba(255,255,255,.15) inset,0 1px 0 rgba(255,255,255,.15) inset;
+        -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.5),0 0 2px rgba(255,255,255,.15) inset,0 1px 0 rgba(255,255,255,.15) inset;
+        box-shadow: 0 1px 0 rgba(255,255,255,.5),0 0 2px rgba(255,255,255,.15) inset,0 1px 0 rgba(255,255,255,.15) inset;
+        background: #e4e4e4;
+        background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e4e4e4));
+        background-image: -moz-linear-gradient(top,#fff,#e4e4e4);
+        background-image: -webkit-linear-gradient(top,#fff,#e4e4e4);
+        background-image: -o-linear-gradient(top,#fff,#e4e4e4);
+        background-image: -ms-linear-gradient(top,#fff,#e4e4e4);
+        background-image: linear-gradient(top,#fff,#e4e4e4);
+        filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr='#ffffff',endColorstr='#e4e4e4');
+        }
+

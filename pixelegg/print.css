@@ -1,0 +1,22 @@
+/**
+ * Pixelegg template: CSS for printing
+ *
+ * @link http://www.stylite.de
+ * @package jdots
+ * @author Andreas Stöckel <as@stylite.de>
+ * @author Ralf Becker <rb@stylite.de>
+ * @author Nathan Gray <ng@stylite.de>
+ * @version $Id$
+ */
+
+/*@import url("../jdots/print.css");*/
+
+/**
+ * Changes for Pixelegg
+ */
+
+@media print {
+	#egw_fw_topmenu_addons, #egw_fw_header {
+		display: none;
+	}
+} /* @media print */

@@ -1,0 +1,43 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * SVG
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+* {
+  fill: #696969;
+  /*stroke: @gray_50;*/
+  /*fill: @gray_0;*/
+}
+/*
+svg#etemplate_navbar {
+    fill: @gray_40;
+}
+
+svg#infolog_navbar  {
+    fill: @gray_40;
+}
+
+svg#admin_navbar  {
+    fill: @gray_40;
+}
+
+.egw_fw_ui_tabs_header > svg *  {
+    fill: @egw_color_2_a !important;
+    stroke: @gray_0 !important;
+}
+
+svg#sambaadmin_navbar  {
+    fill: @gray_40;
+}
+
+svg#mail_navbar {
+    fill: @gray_40;
+}*/
