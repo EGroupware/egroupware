@@ -2853,7 +2853,7 @@ class mail_compose
 			while(list($key,$value) = @each($this->sessionData['attachments'])) {
 				#print "$key: ".$value['file']."<br>";
 				if (!empty($value['file']) && parse_url($value['file'],PHP_URL_SCHEME) != 'vfs') {	// happens when forwarding mails
-					unlink($value['file']);
+					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.$value['file']);
 				}
 			}
 		}
