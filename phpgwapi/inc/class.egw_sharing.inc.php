@@ -382,20 +382,60 @@ class egw_sharing
 	}
 
 	/**
-	 * Periodic (monthly) cleanup of temp. sharing files
+	 * Home long to keep temp. files: 100 day
+	 */
+	const TMP_KEEP = 8640000;
+
+	/**.
+	 * Periodic (monthly) cleanup of temporary sharing files (download link)
+	 *
+	 * Exlicit expireds shares are delete, as ones created over 100 days ago and last accessed over 100 days ago.
 	 */
 	public static function tmp_cleanup()
 	{
+		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
+		egw_vfs::$is_root = true;
+
 		try {
-			egw_vfs::$is_root = true;
-			/* not yet ready
-			egw_vfs::find('/home', array(
-				'path_preg' => '|^/home/[^/]+/.tmp',
-				'maxdepth' => 3,
-			), function($path, $stat)
+			$cols = array(
+				'share_path',
+				'MAX(share_expires) AS share_expires',
+				'MAX(share_created) AS share_created',
+				'MAX(share_last_accessed) AS share_last_accessed',
+			);
+			if (($group_concat = self::$db->group_concat('share_id'))) $cols[] = $group_concat.' AS share_id';
+			// remove expired tmp-files unconditionally
+			$having = 'HAVING share_expires < '.self::$db->quote(self::$db->to_timestamp(time())).' OR '.
+				// remove without expiration date, when created over 100 days ago AND
+				'share_expires IS NULL AND share_created < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)). ' AND '.
+					// (last accessed over 100 days ago OR never)
+					'(share_last_accessed IS NULL OR share_last_accessed < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)).')';
+
+			foreach(self::$db->select(self::TABLE, $cols, array(
+				"share_path LIKE '/home/%/.tmp/%'",
+			), __LINE__, __FILE__, false, 'GROUP BY share_path '.$having) as $row)
 			{
-				error_log(__METHOD__."() path=$path");
-			});*/
+				egw_vfs::remove($row['share_path']);
+
+				if ($group_concat)
+				{
+					$share_ids = $row['share_id'] ? explode(',', $row['share_id']) : array();
+				}
+				else
+				{
+					$share_ids = array();
+					foreach(self::$db->selec(self::TABLE, 'share_id', array(
+						'share_path' => $row['share_path'],
+					), __LINE__, __FILE__) as $id)
+					{
+						$share_ids[] = $id['share_id'];
+					}
+				}
+				if ($share_ids)
+				{
+					self::$db->delete(self::TABLE, array('share_id' => $share_ids), __LINE__, __FILE__);
+				}
+			}
 		}
 		catch (Exception $e) {
 			unset($e);
