@@ -1451,13 +1451,13 @@ var et2_link_list = et2_link_string.extend(
 		var self = this;
 		this.context = new egwMenu();
 		this.context.addItem("comment", this.egw().lang("Comment"), "", function() {
-			var link_id = self.context.data.link_id;
+			var link_id = typeof self.context.data.link_id == 'number' ? self.context.data.link_id : self.context.data.link_id.replace(/[:\.]/g,'_');
 
 			et2_dialog.show_prompt(
 				function(button, comment) {
 					if(button != et2_dialog.OK_BUTTON) return;
 					var remark = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : link_id), self.list).children('.remark');
-					if(isNaN(self.context.data.id))
+					if(isNaN(self.context.data.id) || isNaN(self.context.data.link_id == 'undefined'))
 					{
 						remark.text(comment);
 						// Look for a link-to with the same ID, refresh it
@@ -1475,7 +1475,7 @@ var et2_link_list = et2_link_string.extend(
 							var value = _widget != null ? _widget.getValue() : false;
 							if(_widget && value && value.to_id)
 							{
-								value.to_id[link_id].remark = comment;
+								value.to_id[self.context.data.link_id].remark = comment;
 							}
 						}
 						return;
@@ -1517,6 +1517,16 @@ var et2_link_list = et2_link_string.extend(
 			}
 		});
 		this.context.addItem("-", "-");
+		this.context.addItem("save", this.egw().lang("Save as"), this.egw().image('save'), function(menu_item) {
+			var link_data = self.context.data;
+			// Download file
+			if(link_data.download_url)
+			{
+				window.location = self.egw().link(link_data.download_url,"download");
+				return;
+			}
+			self.egw().open(link_data, "", "view",'download',link_data.target ? link_data.target : link_data.app,link_data.app);
+		});
 		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item) {
 			// Highlight files for nice UI indicating what will be in the zip.
 			// Files have negative IDs.
@@ -1600,7 +1610,7 @@ var et2_link_list = et2_link_string.extend(
 
 	_add_link: function(_link_data) {
 		var row = $j(document.createElement("tr"))
-			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : _link_data.link_id))
+			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : (typeof _link_data.link_id == "number" ?  _link_data.link_id : _link_data.link_id.replace(/[:\.]/g,'_'))))
 			.attr("draggable", _link_data.app == 'file' ? "true" : "")
 			.appendTo(this.list);
 
@@ -1682,6 +1692,7 @@ var et2_link_list = et2_link_string.extend(
 		row.bind("contextmenu", function(e) {
 			// File info only available for existing files
 			self.context.getItem("file_info").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
+			self.context.getItem("save").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 			// Zip download only offered if there are at least 2 files
 			self.context.getItem("zip").set_enabled($j('[id^="link_-"]',this.list).length >= 2);
 
