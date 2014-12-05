@@ -887,6 +887,7 @@ class emailadmin_imapbase
 	{
 		static $quota;
 		if (isset($quota)) return $quota;
+		$this->icServer->getCurrentMailbox();
 		if(!$this->icServer->hasCapability('QUOTA')) {
 			$quota = false;
 			return false;
