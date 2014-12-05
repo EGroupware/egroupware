@@ -1616,6 +1616,7 @@ class mail_compose
 			egw_framework::message($e->getMessage(), 'error');
 		}
 		//error_log(__METHOD__.__LINE__.array2string($tmpFileName));
+		//error_log(__METHOD__.__LINE__.array2string($_formData));
 
 		if ($eliminateDoubleAttachments == true)
 		{
@@ -2152,7 +2153,7 @@ class mail_compose
 			}
 			$_mailObject->setBody($body);
 		}
-
+		//error_log(__METHOD__.__LINE__.array2string($_formData['attachments']));
 		// add the attachments
 		if (is_array($_formData) && isset($_formData['attachments']))
 		{
@@ -2178,14 +2179,15 @@ class mail_compose
 							$connection_opened = true;
 						}
 						$mail_bo->reopen($attachment['folder']);
-						switch($attachment['type']) {
+						switch(strtoupper($attachment['type'])) {
+							case 'MESSAGE/RFC':
 							case 'MESSAGE/RFC822':
 								$rawHeader='';
 								if (isset($attachment['partID'])) {
 									$rawHeader      = $mail_bo->getMessageRawHeader($attachment['uid'], $attachment['partID'],$attachment['folder']);
 								}
 								$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
-								$_mailObject->AddStringAttachment($rawHeader.$rawBody, $attachment['name'], '7bit', 'message/rfc822');
+								$_mailObject->addStringAttachment($rawHeader.$rawBody, $attachment['name'], 'message/rfc822');
 								break;
 							default:
 								$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
@@ -2203,7 +2205,7 @@ class mail_compose
 										}
 									}
 								}
-								$_mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], 'base64', $attachment['type']);
+								$_mailObject->addStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['type']);
 								break;
 						}
 					}
@@ -2218,10 +2220,9 @@ class mail_compose
 						{
 							$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file']);
 						}
-						$_mailObject->AddAttachment (
+						$_mailObject->addAttachment (
 							$tmp_path,
 							$attachment['name'],
-							strtoupper($attachment['type'])=='MESSAGE/RFC822' ? '7bit' : 'base64',
 							$attachment['type']
 						);
 					}
@@ -2568,7 +2569,7 @@ class mail_compose
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
 		#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 		#exit;
-
+//error_log(__METHOD__.__LINE__.'#'.array2string($_formData['serverID']).'<serverID<->mailaccount>'.array2string($_formData['mailaccount']));
 		// we use the authentication data of the choosen mailaccount
 		if ($_formData['serverID']!=$_formData['mailaccount'])
 		{
