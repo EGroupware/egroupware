@@ -1482,7 +1482,6 @@ option:checked {
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
   border-color: #b4b4b4;
-  background: #fbec88 url(images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
   color: #808080;
 }
 .ui-state-highlight a,
