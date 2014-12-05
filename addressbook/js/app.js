@@ -657,13 +657,17 @@ app.classes.addressbook = AppJS.extend(
 
 			var email_business = data.data[action.getManager().getActionById('email_business').checked ? 'email' : ''];
 			var email = data.data[action.getManager().getActionById('email_home').checked ? 'email_home' : ''];
+			// prefix email with full name
+			var personal = data.data.n_fn || '';
+			if (personal.match(/[^a-z0-9. -]/i)) personal = '"'+personal.replace(/"/, '\\"')+'"';
+
 			if(email_business)
 			{
-				emails.push(email_business);
+				emails.push((personal?personal+' <':'')+email_business+(personal?'>':''));
 			}
 			if(email)
 			{
-				emails.push(email);
+				emails.push((personal?personal+' <':'')+email+(personal?'>':''));
 			}
 		}
 		switch (action.id)
