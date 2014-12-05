@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<!-- This template is in a seperate file so etemplate can find it for home -->
+<overlay>
+	<template id="filemanager.home.header_left" template="" lang="" group="0" version="1.9.002">
+		<hbox span="all" class="filemanager_navigation">
+			<image label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"/>
+			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"/>
+			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
+		</hbox>
+	</template>
+	<template id="filemanager.home.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="50"/>
+				<column width="50%"/>
+				<column width="80"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="80"/>
+				<column width="80"/>
+				<column width="80"/>
+				<column width="30%"/>
+				<column width="20%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader align="center" label="Type" id="mime"/>
+					<nextmatch-sortheader label="Name" id="name"/>
+					<nextmatch-sortheader label="Size" id="size"/>
+					<nextmatch-sortheader label="Modified" id="mtime"/>
+					<nextmatch-sortheader label="Created" id="ctime"/>
+					<nextmatch-sortheader label="Permissions" id="mode"/>
+					<nextmatch-sortheader label="Owner" id="uid"/>
+					<nextmatch-sortheader label="Group" id="gid"/>
+					<nextmatch-header label="Comment" id="comment"/>
+					<nextmatch-customfields id="customfields" readonly="true"/>
+				</row>
+				<row class="row $row_cont[class]">
+					<vfs-mime align="center" id="$row"/>
+					<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
+					<vfs-size align="right" id="${row}[size]"/>
+					<date-time id="${row}[mtime]" readonly="true"/>
+					<date-time id="${row}[ctime]" readonly="true"/>
+					<vfs-mode id="${row}[mode]"/>
+					<vfs-uid id="${row}[uid]" no_lang="1"/>
+					<vfs-gid id="${row}[gid]" no_lang="1"/>
+					<description id="${row}[comment]"/>
+					<customfields-list id="$row" class="customfields"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

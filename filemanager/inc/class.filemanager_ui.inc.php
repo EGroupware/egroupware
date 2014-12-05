@@ -111,7 +111,7 @@ class filemanager_ui
 	 *
 	 * @return array
 	 */
-	private static function get_actions()
+	public static function get_actions()
 	{
 		$actions = array(
 			'open' => array(
@@ -514,7 +514,7 @@ class filemanager_ui
 	 * @param int &$files=null on return number of files deleted
 	 * @return string success or failure message displayed to the user
 	 */
-	static private function action($action,$selected,$dir=null,&$errs=null,&$files=null,&$dirs=null)
+	static public function action($action,$selected,$dir=null,&$errs=null,&$files=null,&$dirs=null)
 	{
 		if (!count($selected))
 		{

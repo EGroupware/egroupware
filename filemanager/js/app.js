@@ -18,9 +18,9 @@ app.classes.filemanager = AppJS.extend(
 {
 	appname: 'filemanager',
 	/**
-	 * path widget
+	 * path widget, by template
 	 */
-	path_widget: null,
+	path_widget: {},
 	/**
 	 * Are files cut into clipboard - need to be deleted at source on paste
 	 */
@@ -35,6 +35,17 @@ app.classes.filemanager = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
+		
+		// Loading filemanager in its tab and home causes us problems with
+		// unwanted destruction, so we check for already existing path widgets
+		var lists = etemplate2.getByApplication('home');
+		for(var i = 0; i < lists.length; i++)
+		{
+			if(lists[i].app == 'filemanager' && lists[i].widgetContainer.getWidgetById('path'))
+			{
+				this.path_widget[lists[i].uniqueId] = lists[i].widgetContainer.getWidgetById('path');
+			}
+		}
 	},
 
 	/**
@@ -42,7 +53,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	destroy: function()
 	{
-		delete this.et2;
+		delete this.et2;		
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -54,12 +65,12 @@ app.classes.filemanager = AppJS.extend(
 	 *
 	 * @param et2 etemplate2 Newly ready object
 	 */
-	et2_ready: function(et2)
+	et2_ready: function(et2,name)
 	{
 		// call parent
 		this._super.apply(this, arguments);
 
-		this.path_widget = this.et2.getWidgetById('path');
+		this.path_widget[et2.DOMContainer.id] = this.et2.getWidgetById('path') || null;
 
 		if(this.et2.getWidgetById('nm'))
 		{
@@ -140,9 +151,13 @@ app.classes.filemanager = AppJS.extend(
 	 *
 	 * @return string
 	 */
-	get_path: function()
+	get_path: function(etemplate_name)
 	{
-		return this.path_widget ? this.path_widget.get_value() : null;
+		if(!etemplate_name)
+		{
+			etemplate_name = 'filemanager-index';
+		}
+		return this.path_widget[etemplate_name] ? this.path_widget[etemplate_name].get_value() : null;
 	},
 
 	/**
@@ -433,7 +448,8 @@ app.classes.filemanager = AppJS.extend(
 	action: function(_action, _elems)
 	{
 		var paths = this._elems2paths(_elems);
-		this._do_action(_action.id, paths);
+		var path = this.get_path(_action && _action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
+		this._do_action(_action.id, paths,true, path);
 	},
 
 	/**
@@ -448,7 +464,7 @@ app.classes.filemanager = AppJS.extend(
 
 		if (dir)
 		{
-			var path = this.get_path();
+			var path = this.get_path(action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
 			if(action)
 			{
 				var paths = this._elems2paths(selected);
@@ -564,18 +580,20 @@ app.classes.filemanager = AppJS.extend(
 	 *
 	 * @param _dir directory to change to incl. '..' for one up
 	 */
-	change_dir: function(_dir)
+	change_dir: function(_dir, widget)
 	{
+		var etemplate_name = widget && widget.getInstanceManager().uniqueId || 'filemanager-index';
 		switch (_dir)
 		{
 			case '..':
-				_dir = this.dirname(this.path_widget.getValue());
+				_dir = this.dirname(this.get_path(etemplate_name));
 				break;
 			case '~':
 				_dir = this.et2.getWidgetById('nm').options.settings.home_dir;
 				break;
 		}
-		this.path_widget.set_value(_dir);
+
+		this.path_widget[etemplate_name].set_value(_dir);
 	},
 
 	/**
@@ -591,12 +609,13 @@ app.classes.filemanager = AppJS.extend(
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
 		{
-			this.change_dir(path);
+			this.change_dir(path,_action.parent.data.nextmatch || this.et2);
 		}
 		else
 		{
 			egw.open({path: path, type: data.data.mime}, 'file');
 		}
+		return false;
 	},
 
 	/**
@@ -607,7 +626,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	editprefs: function(_action, _senders)
 	{
-		var path =  typeof _senders != 'undefined' ? this.id2path(_senders[0].id) : this.path_widget.getValue();
+		var path =  typeof _senders != 'undefined' ? this.id2path(_senders[0].id) : this.get_path(_action && _action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
 
 		egw().open_link(egw.link('/index.php', {
 			menuaction: 'filemanager.filemanager_ui.file',
@@ -630,7 +649,7 @@ app.classes.filemanager = AppJS.extend(
 
 		// Target will be missing ID if directory is empty
 		// so start with the current directory
-		var dst = this.get_path();
+		var dst = this.get_path(_action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
 
 		// File(s) were dropped on a row, they want them inside
 		if(_target)
@@ -700,7 +719,7 @@ app.classes.filemanager = AppJS.extend(
 			this.readonly = [_path, _ro];
 			return;
 		}
-		var path =  this.path_widget.getValue();
+		var path =  this.get_path();
 
 		if (_path == path)
 		{
