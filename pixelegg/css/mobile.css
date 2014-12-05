@@ -1,12 +1,14 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/*
-    Created on : Nov 14, 2014, 12:39:19 PM
-    Author     : Hadi Nategh <hn@stylite.de>
-*/
+/**
+ * EGroupware: Stylite Pixelegg template - mobile theme
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package pixelegg
+ * @version $Id$
+ */
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -1505,7 +1507,6 @@ option:checked {
   border-right: solid 1px 1px;
   border-bottom: solid 1px 1px;
   border-color: #b4b4b4;
-  background: #fbec88 url(images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
   color: #808080;
 }
 .ui-state-highlight a,
