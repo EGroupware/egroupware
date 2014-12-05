@@ -24,8 +24,11 @@ class egw_sharing
 {
 	/**
 	 * Length of base64 encoded token (real length is only 3/4 of it)
+	 *
+	 * Dropbox uses just 15 chars (letters/numbers 5-6 bit), php sessions use 32 chars (hex = 4bits),
+	 * so 32 chars of base64 = 6bits should be plenty.
 	 */
-	const TOKEN_LENGTH = 64;
+	const TOKEN_LENGTH = 32;
 
 	/**
 	 * Name of table used for storing tokens
@@ -237,9 +240,12 @@ class egw_sharing
 	public static function token()
 	{
 		// generate random token (using oppenssl if available otherwise mt_rand based auth::randomstring)
-		$token = function_exists('openssl_random_pseudo_bytes') ?
-			base64_encode(openssl_random_pseudo_bytes(3*self::TOKEN_LENGTH/4)) :
-			auth::randomstring(self::TOKEN_LENGTH);
+		do {
+			$token = function_exists('openssl_random_pseudo_bytes') ?
+				base64_encode(openssl_random_pseudo_bytes(3*self::TOKEN_LENGTH/4)) :
+				auth::randomstring(self::TOKEN_LENGTH);
+			// base64 can contain chars not allowed in our vfs-urls eg. / or #
+		} while ($token != egw_vfs::encodePathComponent($token));
 
 		return $token;
 	}
@@ -276,7 +282,7 @@ class egw_sharing
 			$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
 		}
 		// check if file exists and is readable
-		if (!file_exists($path) || is_readable($path))
+		if (!file_exists($path) || !is_readable($path))
 		{
 			throw new egw_exception_not_found("'$path' NOT found!");
 		}
@@ -323,7 +329,9 @@ class egw_sharing
 					$tmp_file = egw_vfs::concat($user_tmp, ($n?$n.'.':'').egw_vfs::basename($name));
 				}
 				while(!(is_dir($path) && egw_vfs::mkdir($tmp_file) ||
-					!is_dir($path) && ($fp = egw_vfs::fopen($tmp_file, 'x'))) && $n++ < 100);
+					!is_dir($path) && (!egw_vfs::file_exists($tmp_file) && ($fp = egw_vfs::fopen($tmp_file, 'x')) ||
+						// do not copy identical files again to users tmp dir, just re-use them
+						egw_vfs::file_exists($tmp_file) && egw_vfs::compare(egw_vfs::PREFIX.$tmp_file, $path))) && $n++ < 100);
 
 				if ($n >= 100)
 				{
@@ -340,6 +348,13 @@ class egw_sharing
 				$path2tmp[$path] = $tmp_file;
 
 				$path = $tmp_file;
+
+				// if not already installed, install periodic cleanup of tmp files
+				$async = new asyncservice();
+				if (!$async->read('egw_sharing-tmp-cleanup'))
+				{
+					$async->set_timer(array('day' => 28),'egw_sharing-tmp_cleanup','egw_sharing::tmp_cleanup',null);
+				}
 			}
 
 			$i = 0;
@@ -364,6 +379,28 @@ class egw_sharing
 			}
 		}
 		return $share;
+	}
+
+	/**
+	 * Periodic (monthly) cleanup of temp. sharing files
+	 */
+	public static function tmp_cleanup()
+	{
+		try {
+			egw_vfs::$is_root = true;
+			/* not yet ready
+			egw_vfs::find('/home', array(
+				'path_preg' => '|^/home/[^/]+/.tmp',
+				'maxdepth' => 3,
+			), function($path, $stat)
+			{
+				error_log(__METHOD__."() path=$path");
+			});*/
+		}
+		catch (Exception $e) {
+			unset($e);
+		}
+		egw_vfs::$is_root = false;
 	}
 
 	/**

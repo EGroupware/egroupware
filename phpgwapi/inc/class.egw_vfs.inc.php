@@ -2005,6 +2005,36 @@ class egw_vfs extends vfs_stream_wrapper
 		if (self::LOG_LEVEL > 1 || !$ret && self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning ".array2string($ret));
 		return $ret;
 	}
+
+	/**
+	 * Compare two files from vfs or local file-system for identical content
+	 *
+	 * VFS files must use URL, to be able to distinguish them eg. from temp. files!
+	 *
+	 * @param string $file1 vfs-url or local path, eg. /tmp/some-file.txt or vfs://default/home/user/some-file.txt
+	 * @param string $file2 -- " --
+	 * @return boolean true: if files are identical, false: if not or file not found
+	 */
+	public static function compare($file1, $file2)
+	{
+		if (filesize($file1) != filesize($file2) ||
+			!($fp1 = fopen($file1, 'r')) || !($fp2 = fopen($file2, 'r')))
+		{
+			//error_log(__METHOD__."($file1, $file2) returning FALSE (different size)");
+			return false;
+		}
+		while (($read1 = fread($fp1, 8192)) !== false &&
+			($read2 = fread($fp2, 8192)) !== false &&
+			$read1 === $read2 && !feof($fp1) && !feof($fp2))
+		{
+			// just loop until we find a difference
+		}
+
+		fclose($fp1);
+		fclose($fp2);
+		//error_log(__METHOD__."($file1, $file2) returning ".array2string($read1 === $read2)." (content differs)");
+		return $read1 === $read2;
+	}
 }
 
 egw_vfs::init_static();
