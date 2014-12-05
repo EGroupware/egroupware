@@ -53,7 +53,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
-		<textbox multiline="true" height="120" id="ts_description" resize_ratio="1" rows="9" cols="70" class="et2_fullWidth"/>
+		<textbox multiline="true" height="120" id="ts_description" rows="9" cols="70" class="et2_fullWidth"/>
 	</template>
 	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
 		<grid width="100%" height="165" overflow="auto">

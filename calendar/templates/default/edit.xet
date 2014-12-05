@@ -90,7 +90,7 @@
 		</hbox>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<textbox multiline="true" id="description" resize_ratio="1" rows="12" cols="70" width="99%" height="240"/>
+		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="240"/>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="99%" height="250" overflow="auto" id="participants">
