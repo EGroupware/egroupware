@@ -54,7 +54,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-		<grid width="100%" height="200">
+		<grid width="100%">
 			<columns>
 				<column width="82"/>
 				<column width="300"/>
@@ -162,7 +162,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" height="200" overflow="auto">
+		<grid width="100%" overflow="auto">
 			<columns>
 				<column disabled="!@cat_tab=Tree"/>
 				<column disabled="@cat_tab=Tree"/>
@@ -172,7 +172,7 @@
 				<row valign="top">
 					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
 					<listbox type="select-cat" id="cat_id" rows="013" options=",width:99%"/>
-					<grid width="100%" height="200">
+					<grid width="100%">
 						<columns>
 							<column width="80"/>
 							<column/>
@@ -192,7 +192,7 @@
 							</row>
 							<row valign="top">
 								<description for="pubkey" value="Public key"/>
-								<textbox multiline="true" id="pubkey" rows="4" class="et2_fullWidth"/>
+								<textbox multiline="true" id="pubkey" rows="4" resize_ratio="0" class="et2_fullWidth"/>
 							</row>
 						</rows>
 					</grid>
@@ -201,7 +201,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="200">
+		<grid width="100%">
 			<columns>
 				<column width="82"/>
 				<column width="300"/>
@@ -304,7 +304,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="200" overflow="auto">
+		<grid width="100%" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -325,26 +325,26 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
-		<box height="200" width="100%" overflow="auto">
+		<box width="100%" overflow="auto">
 			<description id="distrib_lists" span="all"/>
 		</box>
 	</template>
 	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
-		<box height="200" width="100%" overflow="auto">
+		<box width="100%" overflow="auto">
 			<customfields options="$cont[tid],$cont[no_private_cfs]"/>
 		</box>
 	</template>
 	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
-		<box height="200" width="100%" overflow="auto">
+		<box width="100%" overflow="auto">
 			<customfields id="private_cfs" options="$cont[tid],1"/>
 		</box>
 	</template>
 	<template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
-		<historylog id="history" height="200" width="100%" overflow="hidden"/>
+		<historylog id="history" width="100%" overflow="hidden"/>
 	</template>
 	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
 		<template id="addressbook.editname"/>
-		<grid class="addressbook_edit" border="1">
+		<grid class="addressbook_edit" border="1" width="100%">
 			<columns>
 				<column width="90"/>
 				<column width="90"/>
@@ -394,7 +394,7 @@
 					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" width="100%">
+					<tabbox id="tabs" span="all" width="100%" tab_height="200">
 						<tabs>
 							<tab id="general" label="Organisation"/>
 							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>

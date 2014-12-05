@@ -35,6 +35,11 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			'name': 'Add tabs',
 			'default': false,
 			'description': 'Set to true if tabs should be added to tabs from read from template, default false if not'
+		},
+		tab_height: {
+			name: 'Tabs innerHeight',
+			default: '',
+			description: 'Set the innerHeight for the tab content'
 		}
 	},
 
@@ -414,7 +419,13 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			return null;
 		}
 	},
-
+	
+	set_tab_height: function (_height)
+	{
+		this.tab_height = _height;
+		this.tabContainer.css("height", _height);
+	},
+	
 	set_height: function(_value) {
 		this.height = _value;
 
@@ -451,7 +462,12 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 	{
 		if(_height)
 		{
-			this.tabContainer.height(this.tabContainer.height() + _height);
+			this.set_height(this.tabContainer.height() + _height);
+		}
+		//Set the height of tabs with the heighest height
+		else if(_height === 0)
+		{
+			this.set_height(this.tabContainer.height());
 		}
 	}
 });

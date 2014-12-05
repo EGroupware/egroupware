@@ -985,12 +985,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 	
 	resize: function (_height)
 	{
-		if (typeof this.options.resize_ratio != 'undefined'
-			&&this.options.resize_ratio !='' && _height)
+		if (typeof this.options != 'undefined' && _height)
 		{
 			// apply the ratio
-			_height *= this.options.resize_ratio;
-			//this.table.height(this.table.height() + _height);
+			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
+			//if (_height != 0) this.table.height(this.table.height() + _height );
 		}
 	}
 });

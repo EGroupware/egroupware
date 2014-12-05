@@ -235,13 +235,11 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 
 	resize: function (_height)
 	{
-		if (typeof this.options.resize_ratio != 'undefined'
-			&&this.options.resize_ratio !='' && _height)
+		if (_height && this.options.multiline)
 		{
 			// apply the ratio
-			_height *= this.options.resize_ratio;
-
-			this.input.height(this.input.height() + _height);
+			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
+			if (_height != 0) this.input.height(this.input.height() + _height);
 		}
 	}
 });

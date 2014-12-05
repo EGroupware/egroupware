@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
-		<grid width="100%" height="165">
+		<grid width="100%" >
 			<columns>
 				<column width="72"/>
 				<column width="192"/>
@@ -53,10 +53,10 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
-		<textbox multiline="true" height="120" id="ts_description" rows="9" cols="70" class="et2_fullWidth"/>
+		<textbox multiline="true" id="ts_description" rows="9" cols="70" class="et2_fullWidth"/>
 	</template>
 	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
-		<grid width="100%" height="165" overflow="auto">
+		<grid width="100%" overflow="auto">
 			<columns>
 				<column width="99%"/>
 			</columns>
@@ -77,12 +77,12 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
-		<box height="165" width="100%" overflow="auto">
-			<customfields class="et2_fullWidth" height="165"/>
+		<box  width="100%" overflow="auto">
+			<customfields class="et2_fullWidth"/>
 		</box>
 	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
-		<box height="165" width="100%" overflow="auto">
+		<box width="100%" overflow="auto">
 			<historylog id="history"/>
 		</box>
 	</template>
@@ -123,7 +123,7 @@
 					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all">
+					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="165">
 						<tabs>
 							<tab id="notes" label="Description"/>
 							<tab id="general" label="Details"/>

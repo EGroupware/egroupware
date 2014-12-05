@@ -5,7 +5,7 @@
 		<textbox multiline="true"  id="info_des" no_lang="1" width="99%" height="243px"/>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
-		<grid width="100%" height="245" overflow="auto">
+		<grid width="100%" overflow="auto">
 			<columns>
 				<column width="99%"/>
 				<column/>
@@ -27,7 +27,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
-		<grid width="100%" height="245">
+		<grid width="100%">
 			<columns>
 				<column width="80" class="infolog_normalWrap"/>
 				<column width="190"/>
@@ -67,7 +67,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
+		<grid width="100%" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -82,10 +82,10 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
-		<historylog id="history" height="245" width="100%" overflow="hidden"/>
+		<historylog id="history" width="100%" overflow="hidden"/>
 	</template>
 	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
-		<grid height="245" width="100%">
+		<grid width="100%">
 			<columns>
 					<column width="46%"/>
 					<column width="4%"/>
@@ -212,8 +212,8 @@
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="4"/>
 					<description/>
 				</row>
-				<row height="250">
-					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%">
+				<row>
+					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="246px">
 						<tabs>
 							<tab id="description" label="Description" statustext="longer textual description"/>
 							<tab id="details" label="Details" statustext="Location, priority , ..."/>

@@ -35,7 +35,6 @@ div#addressbook_view_sidebox img.photo {
  * new addressbook.edit
  */
 div#addressbook-edit.et2_container {
-	width: 842px;
 }
 div.addressbook_edit_general_picture {
 	position: relative;

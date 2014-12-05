@@ -37,7 +37,7 @@
 					</menulist>
 				</description>
 			</hbox>
-			<grid  width="100%">
+			<grid  width="100%" resize_ratio="0">
 				<columns>
 					<column widtd="10%"/>
 					<column width="84%"/>
@@ -109,7 +109,7 @@
 				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" imageDataUrl="true" expand_toolbar="true" height="478px" width="100%" />
 			</hbox>
 			<hbox disabled="@is_html" class="mailComposeBody">
-				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext"/>
+				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
 			</hbox>
 			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
 				<hbox>
@@ -117,7 +117,7 @@
 					<date id="expiration" label="Expiration" blur="EPL only" data_format="Y-m-d"/>
 					<passwd id="password" blur="password protect" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!"/>
 				</hbox>
-				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid">
+				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid" resize_ratio="0">
 					<columns>
 						<column disabled="!@showtempname" width="10%"/>
 						<column width="85%"/>

@@ -106,12 +106,14 @@ etemplate2.prototype.templates = {};
 /**
  * Calls the resize event of all widgets
  */
-etemplate2.prototype.resize = function()
+etemplate2.prototype.resize = function(e)
 {
 	if (this.widgetContainer)
 	{
 		//Calculate the excess height
-		var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - 20: false;
+		var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - 26: false;
+		if (typeof e != 'undefined' && e.type !== 'resize') excess_height = 0;
+		
 		// Call the "resize" event of all functions which implement the
 		// "IResizeable" interface
 		this.widgetContainer.iterateOver(function(_widget) {
@@ -395,7 +397,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			this.widgetContainer.loadingFinished(deferred);
 
 			// Connect to the window resize event
-			$j(window).on("resize."+this.uniqueId, this, function(e) {e.data.resize();});
+			$j(window).on("resize."+this.uniqueId, this, function(e) {e.data.resize(e);});
 
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
