@@ -1,3 +1,19 @@
+egroupware-epl (14.1.20141205-1) hardy; urgency=low
+
+  * Mail: combine account and identity/signature selection, allows now to send with a different identity
+  * Mail: allways showing signature in compose, unless new (forcable) preference is set to add signature after compose
+  * EMailAdmin: fixed creating identities as admin when further identities are not allowed (for regular users) overwrites standard identity
+  * EMailAdmin: used quota not shown in mail-account when called by an admin for an other user (only for managed mail-servers)
+  * all aps: lower memory requirements of insert into document by skipping HTML processing, if there are no html (custom-)fields
+  * API: report failed Ajax requests to user incl. a hint that server error-log should contain more information
+  * Admin: fix fatal error in admin >> bulk password reset
+  * Tracker: remove NULL values for tr_private hiding tickets and preventing their creation on database level
+  * CardDAV/Addressbook: fixed OS X addressbook overwrites account with lowest id when creating a new contact (caused crash of OS X addressbook)
+  * Calendar: Add new feature to the calendar app, in order to be able to sort calendars in day and week views
+  * eSyncPro: show policies and other former sidebox content in admin tree
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 05 Dec 2014 14:32:44 +0100
+
 egroupware-epl (14.1.20141113-1) hardy; urgency=low
 
   * PHP: fix not starting Apache after adding apc.shm_size, caused by old APC version 3.1 (eg. in Debian6) using a shm_size in MB without unit
