@@ -190,4 +190,4 @@ class etemplate_widget_textbox extends etemplate_widget
 		}
 	}
 }
-etemplate_widget::registerWidget('etemplate_widget_textbox', array('textbox','text','int','integer','float','passwd','hidden','colorpicker'));
+etemplate_widget::registerWidget('etemplate_widget_textbox', array('textbox','text','int','integer','float','passwd','hidden','colorpicker','hidden'));

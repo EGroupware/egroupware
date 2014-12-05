@@ -110,8 +110,14 @@ var et2_textbox = et2_inputWidget.extend(
 		else
 		{
 			this.input = $j(document.createElement("input"));
-			if(this.options.type == "passwd") {
-				this.input.attr("type", "password");
+			switch(this.options.type)
+			{
+				case "passwd":
+					this.input.attr("type", "password");
+					break;
+				case "hidden":
+					this.input.attr("type", "hidden");
+					break;
 			}
 			if (this.options.autocomplete) this.input.attr("autocomplete", this.options.autocomplete);
 		}
@@ -223,7 +229,7 @@ var et2_textbox = et2_inputWidget.extend(
 		this.options.blur = _value;
 	}
 });
-et2_register_widget(et2_textbox, ["textbox", "passwd"]);
+et2_register_widget(et2_textbox, ["textbox", "passwd", "hidden"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
