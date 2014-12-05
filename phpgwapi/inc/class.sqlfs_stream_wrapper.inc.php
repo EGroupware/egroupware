@@ -203,7 +203,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (!is_null($overwrite_new) || !($stat = static::url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
-				$mode[0] == 'x' ||	// or file should not exist, but does
+				$mode[0] == 'x' && $stat ||	// or file should not exist, but does
 				!($dir_stat=static::url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
 				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat))	// or we are not allowed to 																																			create it
 			{
