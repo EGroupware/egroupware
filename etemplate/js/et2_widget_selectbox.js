@@ -450,7 +450,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		if(this.input !== null && (this.options.tags || this.options.search))
 		{
 			// Value must be a real Array, not an object
-			this.input.val(jQuery.map(_value,function(value,index){return [value];}));
+			this.input.val(typeof _value == 'object' && _value != null ? jQuery.map(_value,function(value,index){return [value];}) : _value);
 			this.input.trigger("liszt:updated");
 			this.value = this.input.val();
 			return;
