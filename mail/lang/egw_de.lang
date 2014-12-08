@@ -83,6 +83,7 @@ deleted	mail	de	gelöscht
 deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht
 deleted!	mail	de	gelöscht!
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
+directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
 disabled!	mail	de	deaktiviert
@@ -282,6 +283,7 @@ notify about new mail in this folders	mail	de	Über neue Mails in diesem Ordner 
 notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald neue E-Mails in den folgenden Ordnern ankommen
 on	mail	de	am
 one address is not valid	mail	de	Eine Adresse ist ungültig
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	de	Macht nur dann Sinn, wenn das Passwort auf einem andren Weg, außerhalb dieser Mail, den Empfängern mitgeteilt wird!
 only one window	mail	de	nur ein einziges Fenster
 only send message, do not copy a version of the message to the configured sent folder	mail	de	Versende Nachricht, kopiere sie nicht in den konfigurierten Gesendet Ordner
 open in html mode	mail	de	In HTML Modus öffnen
@@ -290,6 +292,7 @@ organisation	admin	de	Organisation
 organization	mail	de	Organisation
 original message	mail	de	ursprüngliche Nachricht
 outbox	mail	de	Postausgang
+password protect	mail	de	Passwort geschützt
 please configure access to an existing individual imap account.	mail	de	Bitte konfigurieren Sie hier den Zugang zu einem existierenden IMAP Account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
 please select a address	mail	de	Bitte wählen Sie eine Adresse
@@ -360,6 +363,7 @@ select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, 
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager auswählen
 selected	mail	de	ausgewählt
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
+send files as	mail	de	Dateien versenden als
 send message and move to send folder (if configured)	mail	de	Versende Nachricht, und kopiere diese in den konfigurierten Gesendet Ordner
 sender	mail	de	Absender
 sent	mail	de	Gesendet

@@ -35,7 +35,7 @@ app.classes.filemanager = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
-		
+
 		// Loading filemanager in its tab and home causes us problems with
 		// unwanted destruction, so we check for already existing path widgets
 		var lists = etemplate2.getByApplication('home');
@@ -53,7 +53,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	destroy: function()
 	{
-		delete this.et2;		
+		delete this.et2;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -64,6 +64,7 @@ app.classes.filemanager = AppJS.extend(
 	 * make sure to clean it up in destroy().
 	 *
 	 * @param et2 etemplate2 Newly ready object
+	 * @param {string} name template name
 	 */
 	et2_ready: function(et2,name)
 	{
@@ -149,6 +150,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Get current working directory
 	 *
+	 * @param {string} etemplate_name
 	 * @return string
 	 */
 	get_path: function(etemplate_name)
@@ -578,7 +580,8 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Change directory
 	 *
-	 * @param _dir directory to change to incl. '..' for one up
+	 * @param {string} _dir directory to change to incl. '..' for one up
+	 * @param {et2_widget} widget
 	 */
 	change_dir: function(_dir, widget)
 	{

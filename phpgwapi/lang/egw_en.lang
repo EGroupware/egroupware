@@ -259,6 +259,7 @@ dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
 dos international	common	en	DOS International
 download	common	en	Download
+download link	common	en	Download link
 drag to move	jscalendar	en	Drag to move
 e-mail	common	en	Email
 east timor	common	en	EAST TIMOR
@@ -287,6 +288,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 entry has been deleted sucessfully	common	en	Entry has been deleted successfully.
 entry not found!	common	en	Entry not found!
 entry updated sucessfully	common	en	Entry updated successfully.
+epl only	common	en	EPL only
 equatorial guinea	common	en	EQUATORIAL GUINEA
 eritrea	common	en	ERITREA
 error	common	en	Error
@@ -298,6 +300,7 @@ etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
 exact	common	en	Exact
+expiration	common	en	Expiration
 failed to change mode of required directory "%1" to %2!	admin	en	Failed to change mode of required directory "%1" to %2!
 failed to change password.	common	en	Failed to change password.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
@@ -456,6 +459,9 @@ license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
+link is appended to mail allowing recipients to download currently attached version of files	common	en	Link is appended to mail allowing recipients to download currently attached version of files
+link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	en	Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)
+link is appended to mail allowing recipients to download up to date version of files	common	en	Link is appended to mail allowing recipients to download up to date version of files
 list	common	en	List
 list members	common	en	List members
 lithuania	common	en	LITHUANIA
@@ -650,6 +656,7 @@ qatar	common	en	QATAR
 read	common	en	Read
 read this list of methods.	common	en	Read this list of methods
 reading	common	en	Reading
+readonly share	common	en	Readonly share
 register	common	en	Register
 regular	common	en	Regular
 reject	common	en	Reject
@@ -890,7 +897,9 @@ whole query	common	en	Whole query
 width	common	en	Width
 wk	jscalendar	en	wk
 work email	common	en	Work email
+works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	en	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	en	Display the page generation time at the bottom of every window
+writable share	common	en	Writable share
 writing	common	en	Writing
 written by:	common	en	Written by:
 year	common	en	Year

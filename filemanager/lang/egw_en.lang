@@ -12,6 +12,7 @@
 %1 files copied.	filemanager	en	%1 files copied.
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
+%1 shares deleted.	filemanager	en	%1 shares deleted.
 %1 starts with '%2'	filemanager	en	%1 starts with '%2'
 %1 successful unmounted.	filemanager	en	%1 successful unmounted.
 %1 successful uploaded.	filemanager	en	%1 successfully uploaded.
@@ -30,6 +31,7 @@ actions	filemanager	en	Actions
 add to clipboard	filemanager	en	Add to clipboard
 administrators	filemanager	en	Administrators
 all files	filemanager	en	All files
+all types	filemanager	en	All types
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	Maximum number of folder links to be configured in preferences.
 and all it's childeren	filemanager	en	and all it's children
 application fields	filemanager	en	Application fields
@@ -73,6 +75,7 @@ cut to clipboard	filemanager	en	Cut to clipboard
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
 delete these files or directories?	filemanager	en	Delete these files or directories?
+delete these shares?	filemanager	en	Delete these shares?
 delete this file or directory	filemanager	en	Delete this file or directory
 deleted %1	filemanager	en	Deleted %1
 directories sorted in	filemanager	en	Directories sorted in
@@ -110,6 +113,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 executable	filemanager	en	Executable
+expires	filemanager	en	Expires
 export definition to use for nextmatch export	filemanager	en	Export definition to use for nextmatch export
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
@@ -151,6 +155,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	en	If you specify an export definition, it will be used when you export
 if you specify an export definition, it will be used when you export*	filemanager	en	If you specify an export definition, it will be used when you export*
 inherited	filemanager	en	Inherited
+last accessed	filemanager	en	Last accessed
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
 link target	filemanager	en	Link target
@@ -221,6 +226,8 @@ select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current directory
 select file(s) from vfs	common	en	Select file(s) from VFS
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
+shared files	filemanager	en	Shared files
+shared with	filemanager	en	Shared with
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files
 show link "%1" in side box menu?	filemanager	en	Show link "%1" in side menu

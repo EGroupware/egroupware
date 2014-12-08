@@ -90,6 +90,7 @@ class filemanager_hooks
 				}
 			}
 			$file['Placeholders'] = egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
+			$file['Shared files'] = egw::link('/index.php','menuaction=filemanager.filemanager_shares.index&ajax=true');
 			display_sidebox(self::$appname,$title,$file);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['admin']) self::admin(self::$appname);

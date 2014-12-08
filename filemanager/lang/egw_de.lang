@@ -12,6 +12,7 @@
 %1 files copied.	filemanager	de	%1 Dateien kopiert.
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht.
 %1 files moved.	filemanager	de	%1 Dateien verschoben.
+%1 shares deleted.	filemanager	de	%1 Freigaben gelöscht.
 %1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
 %1 successful unmounted.	filemanager	de	%1 erfolgreich unmounted.
 %1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen.
@@ -30,6 +31,7 @@ actions	filemanager	de	Befehle
 add to clipboard	filemanager	de	In die Zwischenablage hinzufügen
 administrators	filemanager	de	Administratoren
 all files	filemanager	de	Alle Dateien
+all types	filemanager	de	Alle Typen
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	Erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
 and all it's childeren	filemanager	de	und alle seine Kinderelemente
 application fields	filemanager	de	Anwendungsfelder
@@ -73,6 +75,7 @@ cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
 delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
+delete these shares?	filemanager	de	Diese Freigaben löschen?
 delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
 deleted %1	filemanager	de	%1 gelöscht
 directories sorted in	filemanager	de	Verzeichnisse einsortiert
@@ -110,6 +113,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	de	Beispiel: {{NELFNV role}} - Wenn das Feld "role" nicht leer ist, dann wird eine neue Zeile angelegt ohne den Inhalt des Feldes "role" einzufügen.
 executable	filemanager	de	Ausführbar
+expires	filemanager	de	Läuft ab
 export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch Export
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte Zugriffsrechte
@@ -151,6 +155,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	de	Wenn Sie eine Exportdefinition angeben wird diese für den Export angewendet.
 if you specify an export definition, it will be used when you export*	filemanager	de	Wenn Sie eine Exportdefinition angeben wird diese für den Export angewendet.
 inherited	filemanager	de	Geerbt
+last accessed	filemanager	de	Letzter Zugriff
 link	filemanager	de	verknüpfen
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
 link target	filemanager	de	Ziel der Verknüpfung
@@ -221,6 +226,8 @@ select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen.
 select file(s) from vfs	common	de	Datein aus dem VFS wählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert.
+shared files	filemanager	de	Freigegebene Dateien
+shared with	filemanager	de	Geteilt mit
 show	filemanager	de	Zeige
 show hidden files	filemanager	de	Zeige versteckte Dateien
 show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü

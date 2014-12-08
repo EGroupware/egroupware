@@ -83,6 +83,7 @@ deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
 deny certain groups access to following features	mail	en	Deny certain groups access to following features
+directories have to be shared.	mail	en	Directories have to be shared.
 disable	mail	en	Disable
 disable ruler for separation of mailbody and signature	mail	en	disable Ruler for separation of mailbody and signature
 disabled!	mail	en	disabled!
@@ -284,6 +285,7 @@ notify about new mail in this folders	mail	en	Notify about new mail in this fold
 notify when new mails arrive in these folders	mail	en	notify when new mails arrive in these folders
 on	mail	en	on
 one address is not valid	mail	en	One address is not valid
+only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	en	Only makes sense, if you transport password through a different channel / outside of this mail to recipients!
 only one window	mail	en	only one window
 only send message, do not copy a version of the message to the configured sent folder	mail	en	only send message, do not copy a version of the message to the configured sent folder
 open in html mode	mail	en	Open in HTML mode
@@ -292,6 +294,7 @@ organisation	admin	en	organisation
 organization	mail	en	organization
 original message	mail	en	original message
 outbox	mail	en	Outbox
+password protect	mail	en	password protect
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	en	Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.
 please select a address	mail	en	Please select a address
@@ -324,7 +327,6 @@ remove immediately	mail	en	remove immediately
 rename folder	mail	en	Rename Folder
 rename folder %1 ?	mail	en	Rename Folder %1 ?
 rename folder %1 to:	mail	en	Rename Folder %1 to:
-resend again after how many days?	mail	en	Resend again after how many days?
 replied	mail	en	replied
 reply	mail	en	Reply
 reply all	mail	en	Reply All
@@ -332,6 +334,7 @@ reply message type	mail	en	Reply message type
 reply to	mail	en	Reply to
 replyto	mail	en	replyto
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
+resend after how many days?	mail	en	Resend after how many days?
 respond to mail sent to:	mail	en	Respond to mail sent to:
 restrict acl management	admin	en	restrict acl management
 row order style	mail	en	row order style
@@ -362,6 +365,7 @@ select file to import into folder	mail	en	Select file to import into Folder
 select file(s) from vfs	mail	en	Select file(s) from VFS
 selected	mail	en	selected
 send a reject message:	mail	en	Send a reject message:
+send files as	mail	en	Send files as
 send message and move to send folder (if configured)	mail	en	send message and move to send folder (if configured)
 sender	mail	en	sender
 sent	mail	en	Sent
