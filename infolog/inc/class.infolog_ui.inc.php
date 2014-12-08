@@ -2676,9 +2676,14 @@ class infolog_ui
 			return False;
 		}
 		$this->called_by = $app;	// for read/save_sessiondata, to have different sessions for the hooks
-		$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
+
+		// Set to calling app, so actions wind up in the correct place client side
+		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
+
 		translation::add_app('infolog');
 
+		// Still want infolog categories though
+		$GLOBALS['egw']->categories = new categories('','infolog');
 		$this->index(null,$app,$args[$view_id],array(
 			'menuaction' => $view,
 			isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]
