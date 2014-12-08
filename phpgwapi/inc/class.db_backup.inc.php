@@ -532,7 +532,8 @@ class db_backup
 			{
 				$charset = trim(substr($line,9));
 				// needed if mbstring.func_overload > 0, else eg. substr does not work with non ascii chars
-				@ini_set('mbstring.internal_encoding',$charset);
+				$ini_default_charset = version_compare(PHP_VERSION, '5.6', '<') ? 'mbstring.internal_encoding' : 'default_charset';
+				@ini_set($ini_default_charset, $charset);
 
 				// check if we really need to convert the charset, as it's not perfect and can do some damage
 				if ($convert_to_system_charset && !strcasecmp($this->schema_proc->system_charset, $charset))

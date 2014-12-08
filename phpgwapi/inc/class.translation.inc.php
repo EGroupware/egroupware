@@ -86,11 +86,11 @@ class translation
 	 */
 	static $mbstring;
 	/**
-	 * Internal encoding / charset of mbstring (if loaded)
+	 * Internal encoding / charset of PHP / mbstring (if loaded)
 	 *
 	 * @var string
 	 */
-	static $mbstring_internal_encoding;
+	static $default_charset;
 
 	/**
 	 * Application which translations have to be cached instance- and NOT tree-specific
@@ -138,9 +138,10 @@ class translation
 
 		// we need to set our charset as mbstring.internal_encoding if mbstring.func_overlaod > 0
 		// else we get problems for a charset is different from the default utf-8
-		if (ini_get('mbstring.func_overload') && self::$mbstring_internal_encoding != $charset)
+		$ini_default_charset = version_compare(PHP_VERSION, '5.6', '<') ? 'mbstring.internal_encoding' : 'default_charset';
+		if (ini_get($ini_default_charset) && self::$default_charset != $charset)
 		{
-			ini_set('mbstring.internal_encoding',self::$mbstring_internal_encoding = $charset);
+			ini_set($ini_default_charset, self::$default_charset = $charset);
 		}
 		return $charset;
 	}
