@@ -107,13 +107,13 @@
 					<description value="Add new participants or resource" span="all"/>
 				</row>
 				<row class="row optional" disabled="@no_add">
-					<vbox options="0,0" span="2">
+					<vbox span="2">
 						<menulist>
 							<menupopup type="select-account" statustext="User or group" id="account" multiple="true" no_lang="true" tags="true" account_type="both" empty_label="User or group" class="et2_fullWidth"/>
 						</menulist>
 						<link-entry id="resource" options="@cal_resources"/>
 					</vbox>
-					<vbox options="0,0" span="2" valign="middle">
+					<vbox span="2" valign="middle">
 						<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
 						<menulist>
 							<menupopup class="selectRole" id="role"/>
@@ -138,7 +138,7 @@
 					<menulist>
 						<menupopup id="${row}[status]" onchange="1"/>
 					</menulist>
-					<button align="center" label="Delete" id="delete[$row_cont[delete_id]]" onchange="1" image="delete"/>
+					<button align="center" label="Delete" id="delete[$row_cont[delete_id]]" image="delete"/>
 				</row>
 			</rows>
 		</grid>
