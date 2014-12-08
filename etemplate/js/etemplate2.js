@@ -110,8 +110,14 @@ etemplate2.prototype.resize = function(e)
 {
 	if (this.widgetContainer)
 	{
+		var appHeader = $j('#divAppboxHeader');
+		
 		//Calculate the excess height
-		var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - 26: false;
+		var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').parent().height() - appHeader.outerHeight()+10: false;
+		
+		// Recalculate excess height if the appheader is shown, e.g. mobile framework dialogs
+		if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.height()-10;
+		
 		if (typeof e != 'undefined' && e.type !== 'resize') excess_height = 0;
 		
 		// Call the "resize" event of all functions which implement the
