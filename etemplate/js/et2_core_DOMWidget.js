@@ -298,6 +298,9 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			var idx = 0;
 			var children = this._parent.getChildren();
 
+			if(children && children.indexOf) return children.indexOf(this);
+
+			egw.debug('warn', 'No Array.indexOf(), falling back to looping. ');
 			for (var i = 0; i < children.length; i++)
 			{
 				if (children[i] == this)
