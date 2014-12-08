@@ -2734,15 +2734,16 @@ class mail_ui
 		$this->mail_bo->reopen($mailbox);
 		foreach($attachments as $file)
 		{
-			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false);
+			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false,true);
 			$success=true;
+			if (empty($file['filename'])) $file['filename'] = $file['name'];
 			if (!($fp = egw_vfs::fopen($path.$file['filename'],'wb')) ||
-				!fwrite($fp,$attachment['attachment']))
+				!(!fseek($attachment['attachment'], 0, SEEK_SET) && stream_copy_to_stream($attachment['attachment'], $fp)))
 			{
 				$success=false;
 				egw_framework::message("Unable to zip {$file['filename']}",'error');
 			}
-			if (/*$attachment['attachment'] && */$success) $file_list[] = $path.$file['filename'];
+			if ($success) $file_list[] = $path.$file['filename'];
 			if ($fp) fclose($fp);
 		}
 		$this->mail_bo->closeConnection();
