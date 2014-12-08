@@ -440,7 +440,7 @@ action buttons, left aligned for "extra" controls
 .et2_customfield_list {
 	width: 100%;
 }
-.et2_customfield_list input {
+.et2_customfield_list input, .et2_customfield_list textarea {
 	max-width: 100ex;
 }
 /* Custom field list inside nextmatch rows gets an icon for each row */
