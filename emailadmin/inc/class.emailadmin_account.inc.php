@@ -296,6 +296,28 @@ class emailadmin_account implements ArrayAccess
 	}
 
 	/**
+	 * Query quota, aliases, forwards, ... from imap and smtp backends and sets them as parameters on current object
+	 *
+	 * @param array with values for keys in self::$user_data
+	 */
+	public function saveUserData($user, array $data)
+	{
+		// store account-information of managed mail server
+		if ($user > 0 && $data['acc_smtp_type'] && $data['acc_smtp_type'] != 'emailadmin_smtp')
+		{
+			$smtp = self::_smtp($data);
+			$smtp->setUserData($user, (array)$data['mailAlternateAddress'], (array)$data['mailForwardingAddress'],
+				$data['deliveryMode'], $data['accountStatus'], $data['mailLocalAddress'], $data['quotaLimit']);
+		}
+		if ($user > 0 && $data['acc_imap_type'] && $data['acc_imap_type'] != 'emailadmin_imap')
+		{
+			$class = self::getIcClass($data['acc_imap_type']);
+			$imap = new $class($data, true);
+			$imap->setUserData($GLOBALS['egw']->accounts->id2name($user), $data['quotaLimit']);
+		}
+	}
+
+	/**
 	 * Get new Horde_Imap_Client imap server object
 	 *
 	 * @param bool|int|string $_adminConnection create admin connection if true or account_id or imap username
@@ -1168,26 +1190,17 @@ class emailadmin_account implements ArrayAccess
 			($data['called_for'] ? $data['called_for'] : $GLOBALS['egw_info']['user']['account_id']),
 			(array)$data['notify_folders']);
 
-		// store account-information of managed mail server
-		if ($user > 0 && $data['acc_smtp_type'] && $data['acc_smtp_type'] != 'emailadmin_smtp')
-		{
-			$smtp = self::_smtp($data);
-			$smtp->setUserData($user, (array)$data['mailAlternateAddress'], (array)$data['mailForwardingAddress'],
-				$data['deliveryMode'], $data['accountStatus'], $data['mailLocalAddress'], $data['quotaLimit']);
-		}
-		if ($user > 0 && $data['acc_imap_type'] && $data['acc_imap_type'] != 'emailadmin_imap')
-		{
-			$class = self::getIcClass($data['acc_imap_type']);
-			$imap = new $class($data, true);
-			$imap->setUserData($GLOBALS['egw']->accounts->id2name($user), $data['quotaLimit']);
-		}
-
 		// store domain of an account for all user like before as "mail_suffix" config
 		if ($data['acc_domain'] && (!$data['account_id'] || $data['account_id'] == array(0)))
 		{
 			config::save_value('mail_suffix', $data['acc_domain'], 'phpgwapi', true);
 		}
 
+		if ($user > 0)
+		{
+			$emailadmin = new emailadmin_account($data, $user);
+			$emailadmin->saveUserData($user, $data);
+		}
 		self::cache_invalidate($data['acc_id']);
 		//error_log(__METHOD__."() returning ".array2string($data));
 		return $data;
