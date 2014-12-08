@@ -318,7 +318,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 					true,
 					self
 				).sendRequest();
-				
+
 			},true);
 		}
 		if(this._actionLinks.indexOf(drop_action.id) < 0)
@@ -372,7 +372,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 
 		this._init_links_dnd(this._actionManager);
 	},
-	
+
 	/**
 	 * Overwrites the inherited _destroyCallback function in order to be able
 	 * to free the "rowWidget".
@@ -432,7 +432,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// No UID, so return a filtered list of actions that doesn't need a UID
 		var links = [];
 		try {
-			links = typeof this._widget.options.settings.placeholder_actions != 'undefined' ? this._widget.options.settings.placeholder_actions : ["add"];
+			links = typeof this._widget.options.settings.placeholder_actions != 'undefined' ?
+				this._widget.options.settings.placeholder_actions : (this._widget.options.add ? ["add"] : []);
 		} catch (e) {
 		}
 
