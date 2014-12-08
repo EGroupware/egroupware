@@ -6267,16 +6267,17 @@ a.textSidebox {
     background-color: transparent;
   }
   body div.egw_fw_mobile_iOS_popup_appHeader {
-    padding-top: 25px;
+    padding-top: 15px;
   }
   body div.egw_fw_mobile_popup_appHeader {
     display: block !important;
-    height: 40px !important;
+    height: 32px !important;
     background-size: 2px;
     font-size: 150% !important;
     border-bottom: 3px solid #679fd2 !important;
     border-top: none !important;
     width: 100%;
+    line-height: 32px !important;
   }
   body div.egw_fw_mobile_popup_appHeader .egw_fw_mobile_popup_close {
     width: 32px;
@@ -6287,6 +6288,7 @@ a.textSidebox {
     -webkit-filter: contrast(2);
     background-repeat: no-repeat;
     z-index: 999;
+    padding-right: 5px;
   }
   #egw_fw_basecontainer {
     background: white;
