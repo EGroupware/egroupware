@@ -216,14 +216,14 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 
 	set_blur: function(_value) {
 		if(_value) {
-			this.input.attr("placeholder", _value + "");	// HTML5
+			this.input.attr("placeholder", this.egw().lang(_value) + "");	// HTML5
 			if(!this.input[0].placeholder) {
 				// Not HTML5
-				if(this.input.val() == "") this.input.val(this.options.blur);
+				if(this.input.val() == "") this.input.val(this.egw().lang(this.options.blur));
 				this.input.focus(this,function(e) {
-					if(e.data.input.val() == e.data.options.blur) e.data.input.val("");
+					if(e.data.input.val() == e.data.egw().lang(e.data.options.blur)) e.data.input.val("");
 				}).blur(this, function(e) {
-					if(e.data.input.val() == "") e.data.input.val(e.data.options.blur);
+					if(e.data.input.val() == "") e.data.input.val(e.data.egw().lang(e.data.options.blur));
 				});
 			}
 		} else {
