@@ -79,7 +79,7 @@ class customfields
 	 */
 	public static $type_attribute_flags = array(
 		'text'		=> array('cf_len' => true, 'cf_rows' => true),
-		'float'		=> array('cf_len' => true, 'cf_rows' => true),
+		'float'		=> array('cf_len' => true),
 		'label'		=> array('cf_values' => true),
 		'select'	=> array('cf_len' => false, 'cf_rows' => true, 'cf_values' => true),
 		'date'		=> array('cf_len' => true, 'cf_rows' => false),
