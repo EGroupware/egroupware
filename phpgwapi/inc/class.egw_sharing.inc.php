@@ -117,6 +117,27 @@ class egw_sharing
 	}
 
 	/**
+	 * so_sql instance for egw_sharing table
+	 *
+	 * @var so_sql
+	 */
+	protected static $so;
+
+
+	/**
+	 * Get a so_sql instance initialised for shares
+	 */
+	public static function so()
+	{
+		if (!isset(self::$so))
+		{
+			self::$so = new so_sql('phpgwapi', self::TABLE, null, '', true);
+			self::$so->set_times('string');
+		}
+		return self::$so;
+	}
+
+	/**
 	 * Create sharing session
 	 *
 	 * @return string with sessionid, does NOT return if no session created
@@ -276,20 +297,26 @@ class egw_sharing
 		if (substr($path, 0, strlen($temp_dir)) == $temp_dir)
 		{
 			$mode = self::LINK;
+			$exists = file_exists($path) && is_readable($path);
 		}
-		elseif(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+		else
 		{
-			$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
+			{
+				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
+			}
+			$vfs_path = egw_vfs::parse_url($path, PHP_URL_PATH);
+			$exists = egw_vfs::file_exists($vfs_path) && egw_vfs::is_readable($vfs_path);
 		}
 		// check if file exists and is readable
-		if (!file_exists($path) || !is_readable($path))
+		if (!$exists)
 		{
 			throw new egw_exception_not_found("'$path' NOT found!");
 		}
 		// check if file has been shared before
 		if (($mode != self::LINK || isset($path2tmp[$path])) &&
 			($share = self::$db->select(self::TABLE, '*', array(
-				'share_path' => $mode == 'link' ? $path2tmp[$path] : egw_vfs::parse_url($path, PHP_URL_PATH),
+				'share_path' => $mode == 'link' ? $path2tmp[$path] : $vfs_path,
 				'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
 			)+$extra, __LINE__, __FILE__)->fetch()))
 		{
