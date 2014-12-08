@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.shares.rows" template="" lang="" group="0" version="14.2.001">
+		<grid width="100%">
+			<columns>
+				<column width="30%"/>
+				<column width="100"/>
+				<column width="30%"/>
+				<column width="90"/>
+				<column width="60"/>
+				<column width="120"/>
+				<column width="120"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="Path" id="share_path"/>
+					<nextmatch-filterheader id="type" options="All types"/>
+					<nextmatch-header label="Shared with" id="shared_with"/>
+					<nextmatch-sortheader label="Expiration" id="share_expires"/>
+					<nextmatch-filterheader id="share_passwd" options="Password"/>
+					<nextmatch-sortheader label="Created" id="share_created"/>
+					<nextmatch-sortheader label="Last accessed" id="share_last_accessed"/>
+				</row>
+				<row>
+					<vfs id="${row}[share_path]"/>
+					<select id="${row}[type]" readonly="true"/>
+					<description id="${row}[share_with]"/>
+					<date id="${row}[share_expires]" readonly="true"/>
+					<checkbox align="center" id="${row}[share_passwd]" readonly="true"/>
+					<date-time id="${row}[share_created]" readonly="true"/>
+					<date-time id="${row}[share_last_accessed]" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.shares" template="" lang="" group="0" version="14.2.001">
+		<nextmatch id="nm" template="filemanager.shares.rows"/>
+	</template>
+</overlay>
