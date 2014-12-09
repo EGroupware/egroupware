@@ -117,27 +117,6 @@ class egw_sharing
 	}
 
 	/**
-	 * so_sql instance for egw_sharing table
-	 *
-	 * @var so_sql
-	 */
-	protected static $so;
-
-
-	/**
-	 * Get a so_sql instance initialised for shares
-	 */
-	public static function so()
-	{
-		if (!isset(self::$so))
-		{
-			self::$so = new so_sql('phpgwapi', self::TABLE, null, '', true);
-			self::$so->set_times('string');
-		}
-		return self::$so;
-	}
-
-	/**
 	 * Create sharing session
 	 *
 	 * @return string with sessionid, does NOT return if no session created
@@ -409,6 +388,71 @@ class egw_sharing
 			}
 		}
 		return $share;
+	}
+
+	/**
+	 * so_sql instance for egw_sharing table
+	 *
+	 * @var so_sql
+	 */
+	protected static $so;
+
+	/**
+	 * Get a so_sql instance initialised for shares
+	 */
+	public static function so()
+	{
+		if (!isset(self::$so))
+		{
+			self::$so = new so_sql('phpgwapi', self::TABLE, null, '', true);
+			self::$so->set_times('string');
+		}
+		return self::$so;
+	}
+
+	/**
+	 * Delete specified shares and unlink temp. files
+	 *
+	 * @param int|array $keys
+	 * @return int number of deleted shares
+	 */
+	public static function delete($keys)
+	{
+		self::$db = $GLOBALS['egw']->db;
+
+		if (is_scalar($keys)) $keys = array('share_id' => $keys);
+
+		// get all temp. files, to be able to delete them
+		$tmp_paths = array();
+		foreach(self::$db->select(self::TABLE, 'share_path', array(
+			"share_path LIKE '/home/%/.tmp/%'")+$keys, __LINE__, __FILE__, false) as $row)
+		{
+			$tmp_paths[] = $row['share_path'];
+		}
+
+		// delete specified shares
+		self::$db->delete(self::TABLE, $keys, __LINE__, __FILE__);
+		$deleted = self::$db->affected_rows();
+
+		// check if temp. files are used elsewhere
+		if ($tmp_paths)
+		{
+			foreach(self::$db->select(self::TABLE, 'share_path,COUNT(*) AS cnt', array(
+				'share_path' => $tmp_paths,
+			), __LINE__, __FILE__, false, 'GROUP BY share_path') as $row)
+			{
+				if (($key = array_search($row['share_path'], $tmp_paths)))
+				{
+					unset($tmp_paths[$key]);
+				}
+			}
+			// if not delete them
+			foreach($tmp_paths as $path)
+			{
+				egw_vfs::remove($path);
+			}
+		}
+		return $deleted;
 	}
 
 	/**

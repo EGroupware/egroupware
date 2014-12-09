@@ -154,10 +154,12 @@ class filemanager_shares extends filemanager_ui
 			switch($content['nm']['action'])
 			{
 				case 'delete':
-					$where = $content['nm']['select_all'] ? array('share_owner' => $GLOBALS['egw_info']['user']['account_id']) :
-						array('share_id' => $content['nm']['selected']);
-					$deleted = egw_sharing::so()->delete($where);
-					egw_framework::message(lang('%1 shares deleted.', $deleted), 'success');
+					$where = array('share_owner' => $GLOBALS['egw_info']['user']['account_id']);
+					if (!$content['nm']['select_all'])
+					{
+						$where['share_id'] = $content['nm']['selected'];
+					}
+					egw_framework::message(lang('%1 shares deleted.', egw_sharing::delete($where)), 'success');
 					break;
 				default:
 					throw new egw_exception_wrong_parameter("Unknown action '{$content['nm']['action']}'!");
