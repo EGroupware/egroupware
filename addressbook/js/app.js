@@ -48,6 +48,11 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	et2_ready: function(et2, name)
 	{
+		// r49769 let's CRM view run under currentapp == "addressbook", which causes
+		// app.addressbook.et2_ready called before app.infolog.et2_ready and therefore
+		// app.addressbook.et2 would point to infolog template, if we not stop here
+		if (name.match(/^infolog\./)) return;
+
 		// call parent
 		this._super.apply(this, arguments);
 
