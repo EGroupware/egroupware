@@ -3096,7 +3096,8 @@ app.classes.mail = AppJS.extend(
 			if (groupbox) groupbox.set_disabled(false);
 		}
 		//Resize the compose dialog
-		this.compose_resizeHandler();
+		var self = this;
+		setTimeout(function(){self.compose_resizeHandler();}, 100);
 		return true;
 	},
 
@@ -3670,8 +3671,18 @@ app.classes.mail = AppJS.extend(
 	{
 		var bodyH = egw_getWindowInnerHeight();
 		var textArea = this.et2.getWidgetById('mail_plaintext');
-		var headerSec = jQuery('.mailComposeHeaderSection');
+		var $headerSec = jQuery('.mailComposeHeaderSection');
+		var attachments = this.et2.getWidgetById('attachments');
 		var content = this.et2.getArrayMgr('content').data;
+		
+		// @var arrbitary int represents px
+		// Visible height of attachment progress
+		var prgV_H = 150;
+		
+		// @var arrbitary int represents px
+		// Visible height of attchements list
+		var attchV_H = 68;
+		
 		if (typeof textArea != 'undefined' && textArea != null)
 		{
 			if (textArea.getParent().disabled)
@@ -3680,9 +3691,12 @@ app.classes.mail = AppJS.extend(
 			}
 			// Tolerate values base on plain text or html, in order to calculate freespaces
 			var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
-			var delta = content.attachments? 68: textAreaDelta;
-
-			var bodySize = (bodyH  - Math.round(headerSec.height() + headerSec.offset().top) - delta);
+			
+			// while attachments are in progress take progress visiblity into account
+			// otherwise the attachment progress is finished and consider attachments list
+			var delta = (attachments.table.find('li').length>0 && attachments.table.height() > 0)? prgV_H: (content.attachments? attchV_H: textAreaDelta);
+			
+			var bodySize = (bodyH  - Math.round($headerSec.height() + $headerSec.offset().top) - delta);
 
 			if (textArea.id != "mail_htmltext")
 			{
