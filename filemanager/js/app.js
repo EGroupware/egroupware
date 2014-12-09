@@ -155,9 +155,9 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	get_path: function(etemplate_name)
 	{
-		if(!etemplate_name)
+		if(!etemplate_name || typeof this.path_widget[etemplate_name] == 'undefined')
 		{
-			etemplate_name = 'filemanager-index';
+			for(etemplate_name in this.path_widget) break;
 		}
 		return this.path_widget[etemplate_name] ? this.path_widget[etemplate_name].get_value() : null;
 	},
@@ -585,7 +585,9 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	change_dir: function(_dir, widget)
 	{
-		var etemplate_name = widget && widget.getInstanceManager().uniqueId || 'filemanager-index';
+		for(var etemplate_name in this.path_widget) break;
+		if (widget) etemplate_name = widget.getInstanceManager().uniqueId;
+
 		switch (_dir)
 		{
 			case '..':
