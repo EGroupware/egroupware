@@ -1,10 +1,10 @@
 Index: egroupware/admin/inc/class.uiasyncservice.inc.php
 ===================================================================
---- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 46642)
+--- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 49786)
 +++ egroupware/admin/inc/class.uiasyncservice.inc.php	(Arbeitskopie)
-@@ -99,16 +99,20 @@
- 			$config->save_repository();
- 			unset($config);
+@@ -95,16 +95,20 @@
+ 		{
+ 			config::save_value('asyncservice', $GLOBALS['egw_info']['server']['asyncservice']=$_POST['asyncservice'], 'phpgwapi');
  		}
 +/*
  		if (!$async->only_fallback)
@@ -23,7 +23,7 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  		echo '<p><b>'.lang('Run Asynchronous services').'</b>'.
  			' <select name="asyncservice" onChange="this.form.submit();">';
  		foreach ($async_use as $key => $label)
-@@ -130,8 +134,9 @@
+@@ -126,8 +130,9 @@
  		}
  		else
  		{
@@ -34,7 +34,7 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  			if (is_array($installed) && isset($installed['cronline']))
  			{
  				echo "$installed[cronline]</p>";
-@@ -146,6 +151,7 @@
+@@ -142,6 +147,7 @@
  			}
  			echo '<p><input type="submit" name="install" value="'.lang('Install crontab')."\">\n".
  				lang("for the times below (empty values count as '*', all empty = every minute)")."</p>\n";
@@ -44,9 +44,9 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  		echo "<hr><table border=0><tr>\n";
 Index: egroupware/phpgwapi/inc/class.egw.inc.php
 ===================================================================
---- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 46642)
+--- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 49786)
 +++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
-@@ -597,11 +597,13 @@
+@@ -606,11 +606,13 @@
  					_egw_log_exception($ex);
  				}
  			}

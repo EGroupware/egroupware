@@ -1,4 +1,4 @@
-egroupware-epl (14.1.20141205-1) hardy; urgency=low
+egroupware-epl (14.2.20141209-1) hardy; urgency=low
 
   * first beta for 14.2 release
   * Home: new dashboard like app showing lists from favorits and entries dragged there from all apps
