@@ -2071,12 +2071,13 @@ abstract class egw_framework
 		self::bundle_urls($bundles['et2'], $et2_max_mod);
 
 		// generate jdots bundle, if installed
+		/* switching jdots bundle off, as fw_pixelegg will cause whole jdots bundle incl. fw_jdots to include
 		if (file_exists(EGW_SERVER_ROOT.'/jdots'))
 		{
 			$inc_mgr->include_js_file('/jdots/js/fw_jdots.js');
 			$bundles['jdots'] = array_diff($inc_mgr->get_included_files(), call_user_func_array('array_merge', $bundles));
 			self::bundle_urls($bundles['jdots'], $jdots_max_mod);
-		}
+		}*/
 
 		// automatic split bundles with more then MAX_BUNDLE_FILES (=50) files
 		foreach($bundles as $name => $files)
