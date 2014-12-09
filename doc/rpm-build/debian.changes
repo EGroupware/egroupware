@@ -1,5 +1,16 @@
 egroupware-epl (14.1.20141205-1) hardy; urgency=low
 
+  * first beta for 14.2 release
+  * Home: new dashboard like app showing lists from favorits and entries dragged there from all apps
+  * Filemanager/EMail: sharing of files and directories via links with optional password (EPL only)
+  * EMail: using above sharing as alternativ to mailing huge attachments
+  * all apps: much improved tablet support, also usable as desktop theme for small screens
+  * all apps: popups can now be resized or maximized for easier editing of big description
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 09 Dec 2014 17:50:18 +0100
+
+egroupware-epl (14.1.20141205-1) hardy; urgency=low
+
   * Mail: combine account and identity/signature selection, allows now to send with a different identity
   * Mail: allways showing signature in compose, unless new (forcable) preference is set to add signature after compose
   * EMailAdmin: fixed creating identities as admin when further identities are not allowed (for regular users) overwrites standard identity
