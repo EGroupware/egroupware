@@ -148,7 +148,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		$this->loginType = $this->params['acc_imap_logintype'];
 		$this->domainName = $this->params['acc_domain'];
 
-		if (is_null($_timeout)) $_timeout = self::getTimeOut ();
+		if (is_null($_timeout)) $_timeout = $this->params['acc_imap_timeout']?$this->params['acc_imap_timeout']:self::getTimeOut ();
 
 		switch($this->params['acc_imap_ssl'] & ~emailadmin_account::SSL_VERIFY)
 		{
