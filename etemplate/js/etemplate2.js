@@ -110,6 +110,15 @@ etemplate2.prototype.resize = function(e)
 {
 	var event = e;
 	var self = this;
+	var excess_height = false;
+	
+	// Check if the framework has an specific excess height calculation
+	if (typeof window.framework != 'undefined' && typeof window.framework.get_wExcessHeight != 'undefined')
+	{
+		excess_height = window.framework.get_wExcessHeight(window);
+	}
+	
+	//@TODO implement getaccess height for other framework and remove 
 	if (typeof event != 'undefined' && event.type == 'resize')
 	{
 		setTimeout(function(){
@@ -118,9 +127,9 @@ etemplate2.prototype.resize = function(e)
 				var appHeader = $j('#divAppboxHeader');
 
 				//Calculate the excess height
-				var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - appHeader.outerHeight()+10: false;
+				excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - appHeader.outerHeight()+10: false;
 
-				// Recalculate excess height if the appheader is shown, e.g. mobile framework dialogs
+				// Recalculate excess height if the appheader is shown
 				if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.outerHeight()-9;
 
 				// Call the "resize" event of all functions which implement the
@@ -139,7 +148,7 @@ etemplate2.prototype.resize = function(e)
 		// "IResizeable" interface
 		this.widgetContainer.iterateOver(function(_widget) {
 
-			_widget.resize();
+			_widget.resize(excess_height);
 		}, this, et2_IResizeable);
 	}
 };
