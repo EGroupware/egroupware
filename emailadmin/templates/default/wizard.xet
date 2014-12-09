@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="emailadmin.wizard" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Step 1: IMAP - incoming mail" span="all" class="emailadmin_header"/>
+					<description/>
+				</row>
+				<row>
+					<description value="EMail address"/>
+					<url-email id="ident_email" needed="1"  size="32" maxlength="128" autocomplete="off"/>
+				</row>
+				<row class="@manual_class">
+					<description value="Username" for="acc_imap_username"/>
+					<textbox blur="if different from EMail address" id="acc_imap_username" size="32" maxlength="128" autocomplete="off"/>
+				</row>
+				<row>
+					<description value="Password" for="acc_imap_password"/>
+					<passwd id="acc_imap_password" needed="1"  size="32" maxlength="128" autocomplete="off"/>
+				</row>
+				<row class="@manual_class">
+					<description value="IMAP server" for="acc_imap_host"/>
+					<textbox blur="Hostname or IP" id="acc_imap_host" size="32" maxlength="128"/>
+				</row>
+				<row class="@manual_class">
+					<description value="Secure connection" for="acc_imap_ssl"/>
+					<hbox>
+						<menulist>
+							<menupopup id="acc_imap_ssl" onchange="app.emailadmin.wizard_imap_ssl_onchange" class="emailadmin_ssl"/>
+						</menulist>
+						<textbox type="integer" label="Port" id="acc_imap_port" class="emailadmin_port"/>
+					</hbox>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox span="all">
+						<button label="Continue" id="button[continue]" onclick="app.emailadmin.wizard_detect" image="continue" background_image="1"/>
+						<button label="Manual entry" id="button[manual]" onclick="app.emailadmin.wizard_manual" image="manual" background_image="1"/>
+						<button label="Skip IMAP" id="button[skip_imap]" class="@manual_class" novalidate="1"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+				<row>
+					<image src="emailadmin/progress" span="all" class="emailadmin_progress"/>
+					<description/>
+				</row>
+				<row>
+					<textbox multiline="true" id="output" readonly="true" span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
