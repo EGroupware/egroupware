@@ -610,7 +610,7 @@ class mail_sieve
 							{
 								if (isset($account_id) && $this->mail_admin)
 								{
-									$resSetvac = $icServer->setVacationUser($account_id, $this->scriptName, $newVacation);
+									$resSetvac = $icServer->setVacationUser($account_id, $newVacation, $this->scriptName);
 								}
 								else
 								{
