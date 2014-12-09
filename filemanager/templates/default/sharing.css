@@ -1,0 +1,47 @@
+/**
+ * EGroupware - CSS Styles used by sharing GUI
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014 by Ralf Becker <rb@stylite.de>
+ * @version $Id$
+ */
+
+div#popupMainDiv {
+	height: 100% !important;
+	padding: 0 !important;
+	background-image: none;
+}
+
+/**
+ * simplify NM UI for sharing
+ */
+div#filemanager-index_buttons img, div#filemanager-index_favorite_wrapper,
+div.header_row_right, span.header_count, select#filemanager-index_filter, span.selectcols {
+	display: none !important;
+}
+
+div.filemanager_navigation label {
+	/*right: 265px !important;*/
+}
+
+div.search {
+	position: absolute;
+	top: 8px;
+	right: 215px;
+}
+
+div#filemanager-index_buttons div.et2_file {
+	margin-top: 6px;
+}
+
+div.et2_nextmatch div.nextmatch_header_row {
+	padding-bottom: 0px;
+}
+
+div.nextmatch_header {
+	padding-bottom: 0 !important;
+	padding-top: 10px !important;
+}

@@ -108,7 +108,7 @@ class egw_sharing
         	$path_info = $matches[1];
         }
         $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
-		list(, $token/*, $path*/) = explode('/', $path_info, 3);
+		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
 
 		$_SERVER['PHP_AUTH_USER'] = $token;
 		if (!isset($_SERVER['PHP_AUTH_PW'])) $_SERVER['PHP_AUTH_PW'] = '';
@@ -249,6 +249,9 @@ class egw_sharing
 		}
 		// run full eTemplate2 UI for directories
 		$_GET['path'] = '/';
+		$_GET['cd'] = 'no';
+		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
+		egw_framework::includeCSS('/filemanager/templates/default/sharing.css');
 		$ui = new egw_sharing_filemanager();
 		$ui->index();
 	}

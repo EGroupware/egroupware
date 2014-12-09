@@ -362,7 +362,12 @@ class egw extends egw_minimal
 				// present a login page, if anon user has no right for an application
 				if ($this->session->session_flags == 'A')
 				{
-					throw new egw_exception_redirect('/logout.php');
+					// need to destroy a basic auth session here, because it will only be available on current url
+					if (($sessionid = egw_session::get_sessionid(true)))
+					{
+						$GLOBALS['egw']->session->destroy($sessionid);
+					}
+					throw new egw_exception_redirect(egw::link('/logout.php'));
 				}
 				if ($currentapp == 'admin' || $GLOBALS['egw_info']['flags']['admin_only'])
 				{

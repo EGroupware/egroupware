@@ -477,7 +477,11 @@ class filemanager_ui
 			'5' => 'Files from links',
 			'0'  => 'Files from subdirectories',
 		);
-
+		// sharing has no divAppbox, we need to set popupMainDiv instead, to be able to drop files everywhere
+		if (substr($_SERVER['SCRIPT_FILENAME'], -10) == '/share.php')
+		{
+			$tpl->setElementAttribute('nm[buttons][upload]', 'drop_target', 'popupMainDiv');
+		}
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
