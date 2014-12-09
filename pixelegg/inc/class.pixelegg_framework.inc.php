@@ -22,6 +22,10 @@ class pixelegg_framework extends jdots_framework
 	 * Appname used for everything but JS includes, which we re-use from jdots
 	 */
 	const APP = 'pixelegg';
+	/**
+	 * Appname used to include javascript code
+	 */
+	const JS_INCLUDE_APP = 'pixelegg';
 
 	/**
 	 * Enable to use this template sets login.tpl for login page
