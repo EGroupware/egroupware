@@ -938,14 +938,13 @@ class calendar_uiforms extends calendar_ui
 			break;
 
 		case 'add_alarm':
-			$time = ($content['actual_date'] ? $content['actual_date'] : $content['start']);
+			$time = $content['start'];
 			$offset = $time - $content['new_alarm']['date'];
-
 			if ($event['recur_type'] != MCAL_RECUR_NONE &&
 				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
 				$time < $next_occurrence['start'])
 			{
-				$time = $next_occurrence['start'];
+				$content['new_alarm']['date'] = $next_occurrence['start'] - $offset;
 			}
 			if ($this->bo->check_perms(EGW_ACL_EDIT,!$content['new_alarm']['owner'] ? $event : 0,$content['new_alarm']['owner']))
 			{
