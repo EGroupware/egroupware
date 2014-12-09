@@ -169,7 +169,8 @@ class translation
 		{
 			if(!empty(self::$system_charset))
 			{
-				ini_set('mbstring.internal_encoding',self::$system_charset);
+				$ini_default_charset = version_compare(PHP_VERSION, '5.6', '<') ? 'mbstring.internal_encoding' : 'default_charset';
+				ini_set($ini_default_charset, self::$system_charset);
 			}
 		}
 
