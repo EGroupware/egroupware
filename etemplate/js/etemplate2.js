@@ -110,28 +110,38 @@ etemplate2.prototype.resize = function(e)
 {
 	var event = e;
 	var self = this;
-	setTimeout(function(){
-		if (self.widgetContainer)
-		{
-			var appHeader = $j('#divAppboxHeader');
+	if (typeof event != 'undefined' && event.type == 'resize')
+	{
+		setTimeout(function(){
+			if (self.widgetContainer)
+			{
+				var appHeader = $j('#divAppboxHeader');
 
-			//Calculate the excess height
-			var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - appHeader.outerHeight()+10: false;
+				//Calculate the excess height
+				var excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - appHeader.outerHeight()+10: false;
 
-			// Recalculate excess height if the appheader is shown, e.g. mobile framework dialogs
-			if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.outerHeight()-9;
+				// Recalculate excess height if the appheader is shown, e.g. mobile framework dialogs
+				if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.outerHeight()-9;
 
-			if (typeof event != 'undefined' && event.type !== 'resize') excess_height = 0;
+				// Call the "resize" event of all functions which implement the
+				// "IResizeable" interface
+				self.widgetContainer.iterateOver(function(_widget) {
 
-			// Call the "resize" event of all functions which implement the
-			// "IResizeable" interface
-			self.widgetContainer.iterateOver(function(_widget) {
+					_widget.resize(excess_height);
+				}, self, et2_IResizeable);
+			}
+		},100);
+	}
+	// Initial resize needs to be resized immediately (for instance for nextmatch resize)
+	else if(this.widgetContainer)
+	{
+		// Call the "resize" event of all functions which implement the
+		// "IResizeable" interface
+		this.widgetContainer.iterateOver(function(_widget) {
 
-				_widget.resize(excess_height);
-			}, self, et2_IResizeable);
-		}
-	},100)
-	
+			_widget.resize();
+		}, this, et2_IResizeable);
+	}
 };
 
 /**
