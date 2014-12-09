@@ -528,12 +528,11 @@ class filemanager_ui
 
 		switch($action)
 		{
-			case 'mail':
-				throw new egw_exception_assertion_failed('Implemented on clientside!');
 
 			case 'delete':
 				return static::do_delete($selected,$errs,$files,$dirs);
 
+			case 'mail':
 			case 'copy':
 				foreach($selected as $path)
 				{
