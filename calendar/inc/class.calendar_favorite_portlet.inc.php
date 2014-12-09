@@ -118,7 +118,13 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		unset($GLOBALS['egw_info']['flags']['app_header']);
 		// Force loading of CSS
 		egw_framework::include_css_js_response();
+
+		// Set this to calendar so app.js gets initialized
+		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
+
 		$etemplate->exec(get_called_class() .'::process',$content);
+		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 	}
 
 	/**

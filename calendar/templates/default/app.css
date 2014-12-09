@@ -670,6 +670,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 /**
  * Home page portlets
  */
+.calendar_favorite_portlet .calendar_calMonthNavHeader a img,
 .calendar_favorite_portlet .calendar_calWeekNavHeader a img,
 .calendar_favorite_portlet .calendar_calDayColHeader a img,
 .calendar_favorite_portlet .calendar_plannerScale a img{
