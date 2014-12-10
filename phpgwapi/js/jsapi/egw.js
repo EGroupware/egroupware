@@ -172,7 +172,7 @@
 		if (refresh_opener && window.opener)
 		{
 			refresh_opener = JSON.parse(refresh_opener) || {};
-			window.opener.egw(window.opener).refresh.apply(window.opener, refresh_opener);
+			window.opener.egw(window.opener).refresh.apply(egw(window.opener), refresh_opener);
 		}
 
 		// close window / call window.close(), if data-window-close is specified
