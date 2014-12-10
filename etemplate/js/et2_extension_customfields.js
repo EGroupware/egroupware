@@ -400,19 +400,22 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 	/**
 	 * Adapt provided attributes to match options for widget
+	 *
+	 * rows > 1 --> textarea, with rows=rows and cols=len
+	 * !rows    --> input, with size=len
+	 * rows = 1 --> input, with size=len, maxlength=len
 	 */
 	_setup_text: function(field_name, field, attrs) {
 		// No label on the widget itself
 		delete(attrs.label);
 
 		field.type = 'textbox';
-		attrs.rows = field.rows;
+		attrs.rows = field.rows > 1 ? field.rows : null;
 
 		if(field.len)
 		{
-			var size = field.len.split(',');
-			attrs.maxlength = size[0];
-			attrs.size = size.length > 1 ? size[1] : size[0];
+			attrs.size = field.len;
+			if (field.rows == 1) attrs.maxlength = field.len;
 		}
 		return true;
 	},
@@ -424,11 +427,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		if(field.len)
 		{
-			var size = field.len.split(',');
-			attrs.maxlength = size[0];
-			attrs.size = size.length > 1 && size[1] !== '' ? size[1] : size[0];
-			if (size.length > 2 && size[2] !== '') attrs.min = size[2];
-			if (size.length > 3 && size[3] !== '') attrs.max = size[3];
+			attrs.size = field.len;
 		}
 		return true;
 	},
@@ -443,11 +442,11 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		return true;
 	},
 	 _setup_date: function(field_name, field, attrs) {
-		attrs.data_format = field.len ? field.len : 'Y-m-d';
+		attrs.data_format = 'Y-m-d';
 		return true;
 	},
 	_setup_date_time: function(field_name, field, attrs) {
-		attrs.data_format = field.len ? field.len : 'Y-m-d H:i:s';
+		attrs.data_format = 'Y-m-d H:i:s';
 		return true;
 	},
 	_setup_htmlarea: function(field_name, field, attrs) {
@@ -455,10 +454,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		attrs.config.toolbarStartupExpanded = false;
 		if(field.len)
 		{
-			var options = field.len.split(',');
-			if(options.length) attrs.config.width = options[0];
-			if(options.length > 1) attrs.config.mode = options[1];
-			if(options.length > 2) attrs.config.toolbarStartupExpanded = options[2];
+			attrs.config.width = field.len+'px';
 		}
 		attrs.config.height = (((field.rows > 0 && field.rows !='undefined') ? field.rows : 5) *16) +'px';
 
