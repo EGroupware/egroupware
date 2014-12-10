@@ -831,35 +831,6 @@ var fw_base =  Class.extend({
 	},
 
 	/**
-	 * Display an error or regular message
-	 *
-	 * @param {string} _msg message to show
-	 * @param {string} _type 'error', 'warning' or 'success' (default)
-	 */
-	setMessage: function(_msg, _type)
-	{
-		if (typeof _type == 'undefined')
-			_type = _msg.match(/error/i) ? 'error' : 'success';
-
-		if (this.messageTimer)
-		{
-			window.clearTimeout(this.messageTimer);
-			delete this.messageTimer;
-		}
-
-		this.tabsUi.setAppHeader(_msg, _type+'_message');
-		this.resizeHandler();
-
-		if (_type != 'error')	// clear message again after some time, if no error
-		{
-			var self = this;
-			this.messageTimer = window.setTimeout(function() {
-				self.refreshAppTitle.call(self);
-			}, 5000);
-		}
-	},
-
-	/**
 	 * Change timezone and refresh current app
 	 * @param _tz
 	 */

@@ -27,7 +27,6 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	_app;	// not used, but required by function signature
 	var message_timer;
 	var error_reg_exp;
-	var on_click_remove_installed = false;
 	var a_href_reg = /<a href="([^"]+)">([^<]+)<\/a>/img;
 	var new_line_reg = /<\/?(p|br)\s*\/?>\n?/ig;
 
@@ -63,7 +62,6 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		message: function(_msg, _type)
 		{
-			var framework = _wnd.framework;
 			var jQuery = _wnd.jQuery;
 
 			if (_msg && !_type)
@@ -73,17 +71,6 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				_type = _msg.match(error_reg_exp) ? 'error' : 'success';
 			}
 
-			// if we are NOT in a popup and have a framwork --> let it deal with it
-			if (!this.is_popup() && typeof framework != 'undefined')
-			{
-				// currently not using framework, but top windows message
-				//framework.setMessage.call(framework, _msg, _type);
-				if (_wnd !== _wnd.top)
-				{
-					egw(_wnd.top).message(_msg, _type);
-					return;
-				}
-			}
 			// handle message display for non-framework templates, eg. idots or jerryr
 			if (message_timer)
 			{
@@ -100,14 +87,6 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			if (_msg)	// empty _msg just removes pervious message
 			{
-				if (!on_click_remove_installed)
-				{
-					// install handler to remove message on click
-					jQuery('body').on('click', 'div#egw_message', function(e) {
-						jQuery('div#egw_message').remove();
-					});
-					on_click_remove_installed = true;
-				}
 				// replace p and br-tags with newlines
 				_msg = _msg.replace(new_line_reg, "\n");
 
@@ -115,6 +94,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					.attr('id','egw_message')
 					.text(_msg)
 					.addClass(_type+'_message')
+					.click(function() {this.remove();})
 					.css('position', 'absolute');
 				parent.prepend(msg_div);
 
