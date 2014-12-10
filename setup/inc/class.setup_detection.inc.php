@@ -181,7 +181,7 @@ class setup_detection
 							$currentver = '0.9.14.508';
 						}
 						$major = $GLOBALS['egw_setup']->get_major($currentver);
-						if ($major == $depsvalue || substr($major,0,strlen($depsvalue)+1) == $depsvalue.'.')
+						if ($major >= $depsvalue || $major == $depsvalue && substr($major,0,strlen($depsvalue)+1) == $depsvalue.'.')
 						{
 							$setup_info['depends'][$depkey]['status'] = True;
 						}

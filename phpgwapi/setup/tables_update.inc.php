@@ -46,3 +46,12 @@ function phpgwapi_upgrade14_1()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.1.900';
 }
 
+/**
+ * Bump version to 14.2
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_1_900()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.2';
+}
