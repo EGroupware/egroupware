@@ -449,7 +449,12 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			// Wait for everything to be loaded, then finish it up
 			jQuery.when.apply(jQuery, deferred).done(jQuery.proxy(function() {
 				egw.debug("log", "Finished loading %s, triggering load event", _name);
-
+				
+				if (typeof window.framework != 'undefined' && typeof window.framework.loadingFinished != 'undefined')
+				{
+					//Call loading finished method of the framework with local window
+					window.framework.et2_loadingFinished(egw(window).window);
+				}
 				// Trigger the "resize" event
 				this.resize();
 
