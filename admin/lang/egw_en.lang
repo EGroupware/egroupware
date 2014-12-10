@@ -67,6 +67,7 @@ add new application	admin	en	Add new application
 add peer server	admin	en	Add Peer Server
 add sub-category	admin	en	Add sub category
 add user	admin	en	Add user
+add user or group	admin	en	Add user or group
 admin email	admin	en	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses, comma-separated, to be notified about the blocked user accounts and IP. Empty = no notification.
 admin name	admin	en	Admin name
@@ -115,6 +116,7 @@ attribute accountstatus explained	admin	en	This handles the attribute <b><i>-acc
 attribute mail explained	admin	en	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the eGW internal email field.
 attribute mailalternateaddress explained	admin	en	This handles the attribute <b><i>-mailAlternateAddress-</i></b> from the QMAIL schema and can be handled as virtual maps or aliases.
 attribute mailforwardingaddress explained	admin	en	This handles the attribute <b><i>-mailForwardingAddress-</i></b> from QMAIL Schema and must not be empty if assigned.
+attributes	admin	en	Attributes
 authentication / accounts	admin	en	Authentication | Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users.
 available placeholders	admin	en	Available placeholders
@@ -230,6 +232,7 @@ disable minifying of javascript and css files	admin	en	Disable minifying of java
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled (not recomended)	admin	en	Disabled (not recommended)
 display	admin	en	Display
+displayed length of input field (set rows=1 to limit length)	admin	en	displayed length of input field (set rows=1 to limit length)
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global sub categories?
 do you want to delete all global subcategories ?	admin	en	Do you want to delete all global sub categories?
@@ -237,8 +240,8 @@ do you want to move all global subcategories one level down ?	admin	en	Do you wa
 document root (default)	admin	en	Document root (default)
 down	admin	en	Down
 download csv	admin	en	Download CSV
-each value is a line like <id>[=<label>]	admin	en	Each value is a line like <id>[=<label>]
-each value is a line like id[=label]	admin	en	Each value is a line like id[=label]
+each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	en	each value is a line like id[=label], or use @path to read options from a file in EGroupware directory
+each value is a line like label=[javascript]	admin	en	each value is a line like label=[javascript]
 edit account	admin	en	Edit account
 edit application	admin	en	Edit application
 edit email settings	admin	en	Edit email settings
@@ -400,6 +403,7 @@ leave the group untouched and return back to the list	admin	en	Leave the group u
 leave unchanged	admin	en	Leave unchanged
 leave without saveing the entry	admin	en	Leave without saving the entry
 leaves without saveing	admin	en	Leaves without saving
+length	admin	en	Length
 length<br>rows	admin	en	Length<br>Rows
 limit global category to members of a certain group	admin	en	Limit global category to members of a certain group.
 limit to members of	admin	en	Limit to members of
@@ -423,7 +427,6 @@ main email-address	admin	en	Main email address
 main screen message	admin	en	Main screen message
 manage mapping	admin	en	Manage mapping
 manager	admin	en	Manager
-max length of the input [, length of the inputfield (optional)]	admin	en	Max length of the input [, length of the input field (optional)]
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id, e.g. 65535 or 1000000
 maximum entries in click path history	admin	en	Maximum entries in click path history
 members	admin	en	Members
@@ -527,6 +530,7 @@ return to admin mainscreen	admin	en	Return to admin main screen
 return to view account	admin	en	Return to view account
 rights	admin	en	Rights
 route all mails to	admin	en	Route all Mails to
+rows	admin	en	Rows
 rpm or debian package	admin	en	RPM or Debian package
 run	admin	en	run
 run asynchronous services	admin	en	Run Asynchronous services
@@ -633,6 +637,7 @@ two months	admin	en	Two months
 two weeks	admin	en	Two weeks
 type '%1' already exists !!!	admin	en	Type '%1' already exists!
 type of customfield	admin	en	Type of custom field
+type of field	admin	en	Type of field
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the async service %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page view!
 unknown account: %1 !!!	admin	en	Unknown account: %1 !
 unknown command %1!	admin	en	Unknown command %1!

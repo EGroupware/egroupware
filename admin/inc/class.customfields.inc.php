@@ -68,8 +68,8 @@ class customfields
 	 * @var Description of the options or value format for each cf_type
 	 */
 	public static $type_option_help = array(
-		'select'	=> 'each value is a line like id[=label], or use @&lt;path&gt; to read options from a file',
-		'radio'		=> 'each value is a line like id[=label], or use @&lt;path> to read options from a file',
+		'select'	=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
+		'radio'		=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'button'	=> 'each value is a line like label=[javascript]'
 	);
 
@@ -177,7 +177,7 @@ class customfields
 			// save changes to repository
 			$this->save_repository();
 		}
-		
+
 		$content['nm']= $GLOBALS['egw']->session->appsession('customfield-index','admin');
 		if (!is_array($content['nm']))
 		{
@@ -195,7 +195,7 @@ class customfields
 		}
 		$content['nm']['appname'] = $this->appname;
 		$content['nm']['use_private'] = $this->use_private;
-		
+
 		// Set up sub-types
 		if($this->manage_content_types)
 		{
@@ -259,7 +259,7 @@ class customfields
 		// Some logic to make sure extending class (if there is one) gets called
 		// when etemplate2 comes back instead of parent class
 		$exec = get_class() == get_called_class() ? 'admin.customfields.index' : $this->appname . '.' . get_called_class() . '.index';
-		
+
 		$this->tmpl->exec($exec,$content,$sel_options,$readonlys,$preserve);
 	}
 
@@ -413,7 +413,7 @@ class customfields
 		{
 			$this->tmpl->setElementAttribute($field, 'disabled', !self::$type_attribute_flags[$content['cf_type']][$field]);
 		}
-		
+
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'cf_id' => $cf_id,
 			'cf_app' => $this->appname,

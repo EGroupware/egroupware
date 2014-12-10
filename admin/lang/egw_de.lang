@@ -67,6 +67,7 @@ add new application	admin	de	Neue Anwendung hinzufügen
 add peer server	admin	de	Server zu Serververbund hinzufügen
 add sub-category	admin	de	Unterkategorie hinzufügen
 add user	admin	de	Neuen Benutzer erstellen
+add user or group	admin	de	Benutzer oder Gruppen eingeben
 admin email	admin	de	E-Mail-Administration
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	E-Mail-Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen ('leer' für keine Benachrichtigung)
 admin name	admin	de	Name des Administrators
@@ -115,6 +116,7 @@ attribute accountstatus explained	admin	de	Dies betrifft das Attribut <b>-accoun
 attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als E-Mail-Adresse innerhalb eGW verwendet.
 attribute mailalternateaddress explained	admin	de	Dies betrifft das Attribut <b>-mailAlternateAddress-</b> aus dem QMAIL Schema. Das experimentelle Schema verwendet dies auch als Alias für mailLocalAddress.
 attribute mailforwardingaddress explained	admin	de	Dies betrifft das Attribut <b>-mailForwardingAddress-</b> aus dem QMAIL Schema. Darf nicht leer sein. Der Begriff mailRoutingAddress wurde hierfür früher als Alias verwendet.
+attributes	admin	de	Einstellungen
 authentication / accounts	admin	de	Benutzerauthentifizierung / Benutzerkonten
 auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten für authentifizierte Benutzer anlegen
 available placeholders	admin	de	Verfügbare Platzhalter
@@ -230,6 +232,7 @@ disable minifying of javascript and css files	admin	de	Komprimierung von Javascr
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	anzeigen
+displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte Länge des Eingabefelds (setze Zeilen=1 um die Eingabe zu beschränken)
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do you also want to delete all global subcategories ?	admin	de	Wollen Sie auch alle globalen Unterkategorien löschen?
 do you want to delete all global subcategories ?	admin	de	Möchten Sie alle globale Unterkategorien löschen?
@@ -237,8 +240,8 @@ do you want to move all global subcategories one level down ?	admin	de	Wollen Si
 document root (default)	admin	de	Wurzelverzeichnis des Webservers (Vorgabe)
 down	admin	de	unten
 download csv	admin	de	CSV herunterladen
-each value is a line like <id>[=<label>]	admin	de	jeder Wert ist ein Zeile <id>[=<label>]
-each value is a line like id[=label]	admin	de	jeder Wert ist eine Zeile id[=label]
+each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	de	jeder Wert ist eine Zeile im Format Wert[=Anzeige], oder benutzen Sie @Pfad um die Optionen aus einer Datei aus dem EGroupware Verzeichnis zu lesen
+each value is a line like label=[javascript]	admin	de	jeder Wert ist eine Zeile im Format Anzeige[=Javascript]
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
 edit email settings	admin	de	E-Mail-Einstellungen bearbeiten
@@ -400,6 +403,7 @@ leave the group untouched and return back to the list	admin	de	Gruppe unverände
 leave unchanged	admin	de	unverändert lassen
 leave without saveing the entry	admin	de	beendet ohne den Eintrag zu speichern
 leaves without saveing	admin	de	beendet ohne zu speichern
+length	admin	de	Länge
 length<br>rows	admin	de	Länge<br>Zeilen
 limit global category to members of a certain group	admin	de	Beschränkt die global Kategorie auf der Mitglieder einer bestimmten Gruppe
 limit to members of	admin	de	beschränken auf Mitglieder von
@@ -423,7 +427,6 @@ main email-address	admin	de	Stamm-E-Mail-Adresse
 main screen message	admin	de	Nachricht der Startseite
 manage mapping	admin	de	Feldzuordnung verwalten
 manager	admin	de	Manager
-max length of the input [, length of the inputfield (optional)]	admin	de	maximale Länge für die Ausgabe [. Länge des Feldes (optional)]
 maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
 maximum entries in click path history	admin	de	Max. Anzahl Einträge in der Click-Path-Historie
 members	admin	de	Mitglieder
@@ -527,6 +530,7 @@ return to admin mainscreen	admin	de	zum Administrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 rights	admin	de	Rechte
 route all mails to	admin	de	Alle E-Mails senden an
+rows	admin	de	Zeilen
 rpm or debian package	admin	de	RPM oder Debian Pakete
 run	admin	de	Ausführen
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
@@ -633,6 +637,7 @@ two months	admin	de	zwei Monate
 two weeks	admin	de	zwei Wochen
 type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits !!!
 type of customfield	admin	de	Typ des Benutzerdefinierten Feldes
+type of field	admin	de	Feldtyp
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows muß der asynchrone Service %1von Hand%2 installiert werden oder es wird nur die Ausweichmöglichkeit benutzt. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft!!!
 unknown account: %1 !!!	admin	de	Unbekanntes Benutzerkonto: %1 !!!
 unknown command %1!	admin	de	Unbekannter Befehl %1 !

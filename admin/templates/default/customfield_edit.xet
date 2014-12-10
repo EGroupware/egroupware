@@ -4,10 +4,10 @@
 	<template id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="450px">
 			<columns>
-				<column width="110"/>
+				<column width="100"/>
 				<column width="350"/>
 				<column width="45"/>
-				<column width="30"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row class="dialogHeader" height="28">
@@ -28,7 +28,7 @@
 				</row>
 				<row>
 					<description value="Type of field"/>
-					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth" span="2" onchange="widget.getRoot().getWidgetById('cf_values').set_statustext(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']')||'');
+					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth" span="2" onchange="widget.getRoot().getWidgetById('cf_values').set_statustext(widget.egw().lang(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']'))||'');
 widget.getRoot().getWidgetById('cf_len').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_len]'));
 widget.getRoot().getWidgetById('cf_rows').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_rows]'));
 widget.getRoot().getWidgetById('cf_values').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_values]'));"/>
@@ -42,17 +42,17 @@ widget.getRoot().getWidgetById('cf_values').set_disabled(!widget.getArrayMgr('co
 					<taglist-account class="et2_fullWidth" statustext="Select accounts for which the custom field should be visible" id="cf_private" rows="3" account_type="both" span="3" empty_label="Add user or group"/>
 				</row>
 				<row>
-					<description statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" value="Options"/>
+					<description statustext="each value is a line like id[=label], or use @path to read options from a file in EGroupware directory" value="Options"/>
 					<textbox multiline="true" statustext="@statustext" id="cf_values" rows="5" cols="30" span="3" width="99%"/>
 				</row>
 				<row>
 					<description value="Attributes"/>
 					<box span="3" class="attributes">
-						<description value="Length:"/>
-						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="cf_len" size="4"/>
-						<description value="Rows:"/>
+						<description value="Length"/>
+						<textbox type="integer" statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" size="4"/>
+						<description value="Rows"/>
 						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" max="10" size="4"/>
-						<description value="Order:"/>
+						<description value="Order"/>
 						<textbox type="integer" statustext="determines the order the fields are displayed" id="cf_order" min="1" size="4"/>
 					</box>
 					<description/>
