@@ -1,0 +1,1323 @@
+/**
+ * Styles for etemplate2 widgets
+ * Überschreibt egroupware/etemplate/templates/default/etemplate2.css
+ *
+ * @version: 1
+ * Stefan Reinhardt
+ */
+
+@import (reference) "./def_design_pattern_color_font_shadow.less";
+@import (reference) "./def_buttons.less";
+/*@import (less) "../../etemplate/templates/default/etemplate2.css";*/
+
+
+
+@media all {
+
+/**
+ * Top level
+ */
+.et2_container {
+    padding: 0px;
+    background-color: transparent;
+}
+.et2_container > div:not([class]) {
+    height: 100%;
+}
+
+
+/**
+ * Basic rules
+ */
+input,button,select {
+    margin: 1px;
+    padding: 0px;
+    // switch off for Safari + Chrome
+    /*-webkit-appearance: none;*/
+}
+
+/**
+ * img gray filter
+ */
+
+img.et2_appicon,
+.et2_appicon img{
+    .img_filter_gray;
+
+}
+
+/**
+ * VBox widget
+ */
+div.et2_vbox>* {
+    display: block;
+}
+
+/**
+ * HBox widget
+ */
+div.et2_hbox_right {
+    background: transparent;
+}
+
+
+
+
+
+
+
+/**
+ * Placeholder widget - used for un-implemented widgets
+ */
+.et2_placeholder {
+    display: inline-block;
+    /*border: 1px solid cornflowerblue;*/
+    .border_normal;
+    background-color: @gray_10;
+}
+
+.et2_placeholder .et2_attr {
+    color: @gray_100;
+}
+
+/**
+ * Label widget, and labels for other widgets
+ */
+.et2_label {
+    color: @gray_90;
+}
+
+/**
+ * img Icons
+ */
+a.et2_url {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  cursor: pointer;
+  margin: -4px;
+  padding: 2px;
+  padding-left: 16px;
+  margin-left: -10px;
+}
+a.et2_url.email {
+  background-image: url(../images/email.png);
+}
+a.et2_url.phone {
+  background-image: url(../images/phone.png);
+}
+a.et2_url.url {
+  background-image: url(../images/url.png);
+}
+
+
+
+/**
+ * Button widget - text only, and icon
+ */
+.et2_button {
+    text-shadow: 0px 0px !important;
+    .Complete_Button_normal;
+}
+
+
+.et2_button_icon {
+    .dimension_height_s;
+}
+
+/* give the image a button lock and feel*/
+img.et2_button_icon[src*="svg"]{
+    .gradient_vertical (@gray_30, @gray_30);
+    &:hover {.gradient_vertical (@color_positive_action_active, @color_positive_action_active); .box_shadow_standard_light_hover;}
+    &:active {.box_shadow_standard_light_inset;}
+}
+
+/*look in layout_content_elements*/
+button.et2_button_text,
+input[type=button] {}
+
+
+.et2_selectbox .ui-multiselect-checkboxes li {
+
+    &:hover {background-color: @color_hint !important;}
+}
+
+.et2_selectbox .ui-multiselect-checkboxes label {
+    display: block;
+    border: 0px solid transparent;
+    padding: 0.1em 0.2em;
+
+    //	&:hover {background-color: @egw_color_2_e;}
+}
+
+.et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close{
+    /*visibility: hidden;*/
+     background-image: url(../images/close.png);
+     background: @gray_0;
+     margin: 2px;
+    padding: 0px;
+}
+/**
+ * Date / Time widgets
+ */
+span.et2_date input.et2_date {
+    min-width: 21.5ex;
+}
+span.et2_date span {
+    color: @gray_0;
+}
+
+.et2_file .progress li:hover div.remove {
+    .dimension_width_height_s;
+}
+
+.et2_file .progress p {
+    background-color: @color_progress;
+}
+span.et2_file_span{
+	background-image: url(../images/upload.png);
+	width: 145px;
+}
+div.et2_file input.et2_file_upload{
+	background-color: @gray_0 !important;
+	.rounded (3px);
+	&:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+}
+
+/* Gantt widget */
+.et2_gantt {
+	.gantt_task_line {
+		background-color: @egw_color_2_e;
+
+		.gantt_task_content {
+			color: @egw_color_2_c;
+		}
+		.gantt_selected {
+			background-color: @color_active_row;
+		}
+
+		.gantt_task_progress {
+			color: @egw_color_2_c;
+			background-color: @color_progress;
+
+			/* outline progress in a complementary color */
+			border: 1px solid @egw_color_1_b;
+			border-right: none;
+			margin: -1px;
+
+		}
+	}
+	.gantt_task_line.gantt_milestone {
+		background-color: @egw_color_1;
+		border-color: @egw_color_1_b;
+	}
+	.gantt_task_link
+	{
+		.gantt_line_wrapper div
+		{
+			background-color: green;
+		}
+		.gantt_link_arrow_left
+		{
+			border-right-color:  green;
+		}
+		.gantt_link_arrow_right
+		{
+			border-left-color:  green;
+		}
+		&:hover .gantt_line_wrapper div {
+			box-shadow: 0 0 5px 0 green;
+		}
+	}
+
+	.gantt_task_link.invalid_constraint {
+		.gantt_line_wrapper div
+		{
+			background-color: @color_error;
+		}
+		.gantt_link_arrow_left
+		{
+			border-right-color:  @color_error;
+		}
+		.gantt_link_arrow_right
+		{
+			border-left-color:  @color_error;
+		}
+		&:hover .gantt_line_wrapper div
+		{
+			box-shadow: 0 0 5px 0 @color_error;
+		}
+	}
+}
+
+/*
+        Link to / Selector Widget
+*/
+.et2_link_to {
+
+    min-height: 78px;
+
+    // Background for select + Search Field
+    div:first-child{
+                    background-color: @egw_color_1_e;
+                    padding: 0.5em 0 0.5em 0.5em;
+                    .rounded(5px);
+                }
+
+        // right select field - icon after
+        .et2_link_entry {
+
+                        .ui-icon-close {
+                            background-color: transparent;
+                            left: 0px;
+                        }
+                }
+
+
+        // BUTTON: make link button
+        button:first-child {
+        .Complete_Button_normal;
+        padding: 3px;
+        .rounded(5px);
+        .dimension_height_sm;
+
+        position: relative;
+        top: 5px;
+        padding-left: 20px;
+
+        background-image: url("../images/link.png");
+        background-position: 2px 2px;
+        background-size: 14px 14px;
+        background-repeat: no-repeat;
+
+        &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+         &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+
+    }
+
+
+    // next line - left
+    // et2_vfs_btn
+    button.et2_vfs_btn{
+        width: auto;
+        .rounded(5px);
+        position: relative;
+        top: 5px;
+        left: 5px;
+    }
+
+    .et2_file{
+           background-color: @gray_0 !important;
+           .rounded (5px);
+           left: 0px;
+           margin-left: 60px;
+/*            &:hover {background-color: @color_positive_action_active !important;}
+            &:active {background-color: @color_positive_action_active !important;}*/
+
+
+
+            span {
+            background-image: url("../images/upload.png");
+            background-position: 4px 2px;
+            background-size: 16px 16px;
+            background-repeat: no-repeat;
+            .rounded (5px);
+
+            &:hover {background-color: @color_positive_action_active !important;}
+            &:active {background-color: @color_positive_action_active !important;}
+
+            }
+
+            span.et2_file_spanActive{background-color: @color_positive_action_active !important;}
+
+           input{
+               border: none;
+               padding: 1em;
+
+            }
+
+
+    }
+
+/*
+        .et2_button_icon {
+            .Complete_Button_Icon_normal;
+            float: left;
+            margin: 0px 20px;
+            padding: 3px;
+            .dimension_width_height_m;
+            background-color: @gray_30;
+            &:hover {.Complete_Button_Icon_hover; background-color: @color_positive_action_active !important;}
+            &:active {.Complete_Button_Icon_active; background-color: @color_positive_action_active !important;}
+}*/
+
+
+}
+
+
+.et2_link {
+    color: @egw_color_2_a;
+}
+.et2_link_list{
+                tr {
+                    cursor: pointer;
+                    &:hover {background-color: @color_hover_row;}
+                     &:active {background-color: @color_active_row;}
+                }
+
+                .icon img,
+                .icon {
+                            width: 14px !important;
+                            height: 14px !important;
+                        }
+
+                  td {
+                      div.delete {
+                            visibility: hidden;
+                            background-image: url("../images/close.png");
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: 16px 16px;
+                            background-color: @color_negative_action;
+                            padding: 0px;
+
+                            &:hover {background-color: @color_negative_action_active !important;}
+                            &:active {background-color: @color_negative_action_active !important;}
+
+                      }
+
+                        }
+}
+
+
+.egw_tooltip
+{
+    background-color: @color_tooltip;
+}
+
+
+
+// defined in layout-dialog.less
+/**
+ * Tabs widget
+ */
+
+/*.et2_tabflag {
+    margin: 1em 3px -1px 0;
+    padding: 4px;
+    .background_color_25_gray;
+    .inner_shadow(1px, 0px, 0px, 0.5);
+    -webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:  1px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    min-width: 73px;
+   &:hover {
+        .color_5_gray;
+        .background_color_25_gray;
+    }
+    &:active{
+        .background_color_0_gray;
+        .color_0_gray;
+    }
+}
+
+
+.et2_tabflag.active {
+    border-spacing: 0px;
+    background-color: white;
+    .color_100_gray;
+    border-width: 1px 1px 0px 1px;
+    border-style: solid;
+    border-color: @gray_70;
+    &:hover {
+        .color_100_gray;
+        //			border: 1px solid gray;
+        background-color: white;
+    }
+}
+
+.et2_tabs {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: @gray_70;
+    padding: 5px;
+    overflow-y: auto;
+    background-color: @gray_0;
+    .border_radius_button_normal;
+}*/
+
+// defined in layout-dialog.less
+/*.et2_tabheader {
+    padding-left: 0em;
+    border-bottom: 1px solid #bfbfbf;
+    margin: 0 2px;
+	background-image: none;
+    :first-child {
+        margin-left: 1px;
+    }
+}*/
+
+/**
+* Validation
+*/
+.et2_required, [required] {
+    background-color: lighten(@egw_color_1_e, 10%);
+    .border_radius (3px, 3px ,3px ,3px );
+}
+
+/**
+ * hrule widget
+ */
+
+hr {
+    border-top: 1px solid @gray_10;
+}
+
+/**
+ * grid widget
+ */
+
+.et2_grid th,
+.et2_grid tr,
+.et2_grid td{
+    /*	border: 1px dashed silver;*/
+
+    .gray {
+        padding: 0px;
+        .dimension_height_m;
+        /*background-color: @color_hint;*/
+        .gradient_thead;
+        span.et2_label {background-color: transparent;padding-left: 3px;}
+        }
+}
+
+
+
+
+
+/* ##################################################################################
+ * Nextmatch widget
+ *
+ * SEARCH FIELD | SEARCH BUTTON ###### FILTER ##### EXPORT IMG ### FAVORITES ### COUNT
+ *
+ * ##################################################################################*/
+
+
+
+div.header_row_right{
+
+    //favoriten
+    div[id$=favorite_wrapper]{margin-top: 0px; top: 6px;}
+
+}
+
+
+// AREA AROUND CONTENT
+.et2_nextmatch {
+    .background_color_10_gray;
+}
+
+// complete nextmatch....Background color!
+.et2_nextmatch .nextmatch_header {
+    padding: 5px;
+    border: none;
+    background-image: none;
+    background-color: @gray_20;
+}
+
+// complete nextmatch....Background color!
+.et2_nextmatch .nextmatch_header_row {
+
+    padding-bottom: 6px;
+
+}
+
+
+// ALL images
+.et2_nextmatch > img {.dimension_width_height_s;}
+
+
+// area width left and right boxes
+.ui-helper-clearfix{ background-color: @gray_20;}
+
+/*################################################################
+*
+* ADD BUTTON for Infolog View in ADDRESSBOOK
+*
+################################################################*/
+.nextmatch_header {
+    div.et2_box_widget{
+                  /*border: 1px solid #0C5DA5;*/
+                  /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+                  /*text-shadow: none;*/
+                 .dimension_height_m;
+                   margin-top: 0px;
+                   margin-left: 12px;
+                   padding: 4px;
+                   /*background-color: @gray_10;*/
+                   position: relative;
+                   top: 5px;
+                 .border_radius(3px, 3px, 3px, 10px);
+                   background-image: none !important;
+                   transition: all 0.5s linear;
+                   -webkit-transition: all 0.5s linear; /* Safari */
+
+/*                         &:before {
+                            content: "+";
+                            font-size: 20px;
+                            color: @egw_color_1_a;
+                            line-height: 1px;
+                            position: relative;
+                            top: 2px;
+                            text-shadow: 1px 1px 2px #000;*/
+                            /*.Complete_Button_Icon_normal;*/
+                            /*.dimension_width_height_sm;*/
+                            /*}*/
+
+                       /*Text ""hinzufügen" "*/
+                       /* commented as it hides upload in filemanager span {display: none;}*/
+
+
+                      // IMG
+                        img {
+                            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+                            .Complete_Button_Icon_normal;
+                            .dimension_width_height_sm;
+                            margin-left: 0.5em;
+                            padding: 0px;
+                            margin-top: 0px;
+                            vertical-align: middle;
+
+
+                            &:hover{.Complete_Button_Icon_hover ; background-color: @color_positive_action;}
+
+                            &:active { .Complete_Button_Icon_active ; background-color: @color_positive_action_active;}
+                        }
+
+                        img:last-child {margin-right: 5px;};
+
+
+
+                /*MouseOver*/
+/*                      &:hover {
+                          .box_shadow_standard_light_hover;
+                          background-color: fade(@egw_color_2_a, 80%) !important;
+                          .border_radius_button_lefttop;
+                          .dimension_height_sm;
+
+                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
+
+                          Text
+                          span {visibility: hidden; display: none;};
+                         img {.scale; margin: 0 5px; background: @gray_0;}
+                      }*/
+        }
+// END BOX WIDGET
+}
+/*######################################################*/
+
+
+
+
+/*################################################################
+*
+* Search Field
+*
+################################################################*/
+.nextmatch_header_row > .search{
+
+    padding: 0 0 0 0px;
+    margin-right: 15px;
+    margin-left: 15px;
+    width: 200px;
+    z-index: 100;
+    white-space: nowrap;
+
+    /*.background_color_search;*/
+    /*.border_radius_button_righttop;*/
+
+    input {
+        /*.background_color_search;*/
+        /*background-color: @gray_0;*/
+        border: none;
+        .fontsize_normal;
+        color: @gray_100;
+        padding: 3px;
+        width: 150px;
+    }
+
+    input::-webkit-input-placeholder {
+            /* WebKit browsers */
+            color: @gray_60;
+        }
+    input:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+           color:   @gray_60;
+        }
+   input::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color:   @gray_60;
+        }
+   input:-ms-input-placeholder {
+            /* Internet Explorer 10+ */
+            color:  @gray_60;
+        }
+
+    // SEARCH BUTTON
+    button.et2_button {
+            .border_normal;
+
+            border-color: @gray_30;
+            -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+            -moz-box-shadow:  1px 1px 1px rgba(0, 0, 0, 0.9);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+
+            width: 45px;
+            .border_radius_button_righttop;
+            /*cursor: pointer; 14022014 entfernt*/
+            padding: 0px;
+            margin: 8px 10px;
+            margin-left: 0px;
+            background-image: url("../images/search.png");
+            background-position: center 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            text-indent: 110%;
+            white-space: nowrap;
+            overflow: hidden;
+
+            &:hover{
+                .box_shadow_standard_light_hover;
+                background-color: @egw_color_2_e !important;
+                /*hide arrow*/
+                color: @egw_color_2_e !important;
+            }
+
+            &:active {
+                /*.background_verlauf_diagonal_gray;*/
+                background-color: @color_positive_action_active !important;
+            }
+
+            &:focus {
+                .Complete_Button_input_focus;
+                /*background-color: @color_positive_action_active !important;*/
+            }
+
+    }
+
+}
+
+
+/*################################################################
+*
+* Filters
+*
+################################################################*/
+.nextmatch_header_row {
+    .et2_label {
+
+        // distance to label
+        select { margin-left: 3px; }
+    }
+}
+
+
+.nextmatch_header_row > .filters {
+
+    /*width: 83%;*/
+    z-index: 7;
+    margin-bottom: 4px;
+    top: 0px; // fix for stylite template
+    padding: 0 5px 0 0;
+    /*background-color: @gray_30;*/
+    background: transparent;
+    border: none !important;
+    /*border-color: @gray_100;*/
+    background-image: none !important;
+    min-height: 37px;
+    margin-left: 224px; // fix for stylite
+    margin-right: 119px; // fix for stylite
+/*    .border_radius (3px, 3px, 0px, 0px);*/
+
+    select {margin-top: 10px;}
+
+    .et2_label {
+        padding: 0.2em;
+        select {
+            /*.Complete_Button_select;*/
+            margin-left: 2px;
+            margin-right: 1px;
+            margin-top: 8px;
+            width: 20%;
+            max-width: 20% !important; // fix for stylite template
+            &:hover{
+                .Complete_Button_select_hover;
+            }
+
+            &:after {}
+
+             /*Dialog - Addressbook - View */
+              #infolog-index_cat_id,
+              #infolog-index_filter {width: 50% !important;}
+        }
+
+    }
+}
+
+
+// Select -> Option
+.nextmatch_header > .filters > select > option {.fontsize_normal;}
+
+// Input Field
+.nextmatch_header > .filters input {
+    margin-right: 2ex;
+    width: 15%;
+    .Complete_Button_input;
+    &:hover{ .Complete_Button_input_hover;   }
+    &:focus{ .Complete_Button_input_focus;   }
+}
+
+
+
+/*################################################################
+*
+* Export Button
+*
+################################################################*/
+
+.nextmatch_header .et2_button_icon {}
+
+// Export Button
+.nextmatch_header > .filters .et2_button_icon {
+    margin-top: 8px;
+    vertical-align: middle;
+    .Complete_Button_Icon_normal;
+    box-shadow: none;
+    margin-right: 1em;
+    .dimension_width_height_s;
+    padding: 2px;
+
+    &:hover{.Complete_Button_Icon_hover ;}
+    &:active{.Complete_Button_Icon_active ;}
+
+}
+
+
+
+/*.et2_nextmatch .nextmatch_header > .filters {
+    border: 1px solid @gray_10;
+    background-color: @gray_20;
+    background-image: url(../images/header_overlay.png);
+    background-position: center;
+    background-repeat: repeat-x;
+    margin-bottom: 3px;
+}*/
+
+/*################################################################
+*
+* count
+*
+################################################################*/
+
+.nextmatch_header .header_count {
+
+    position: relative;
+    top: 1px;
+    height: 22px;
+    .dimension_height_m;
+    border: 1px solid #E0E0E0;
+    float: right;
+    margin: 6px 5px 0 10px;
+    padding: 0 20px;
+    text-align: center;
+
+    .fontsize_normal;
+    .border_normal;
+    .rounded (3px);
+    color: @gray_100;
+
+
+
+    // count number
+    span {
+        .fontsize_normal;
+        top: 4px;
+        position: relative;
+    }
+}
+
+
+
+
+/*################################################################
+*
+* Kategorien
+*
+################################################################*/
+
+
+
+div#admin-categories-index{
+
+    padding: 0px;
+
+    // save space above nextmatch
+    // set height to zero
+    div.ui-helper-clearfix { height: 0px;}
+
+    // move add button
+    div.et2_hbox_right {
+                        margin-right: 0;
+                        padding: 0;
+                        }
+
+}
+
+/*ADD Button*/
+button#admin-categories-index_add {
+            .Complete_Button_add_only_plus;
+            .dimension_height_m;
+            margin: 6px 2px;
+            &:hover {.Complete_Button_add_only_plus_hover;}
+            &:active {background-color: @color_positive_action_active !important;}
+}
+
+ #admin-categories-index_filter {top: 8px;}
+
+/*################################################################
+*
+* Favorites
+*
+################################################################*/
+
+.nextmatch_header div[id$=favorite_wrapper] {
+
+    .border_radius_button_normal;
+    /*.background_color_25_gray;*/
+    z-index: 200;
+}
+
+   /**
+    * Drop down button
+    */
+    .et2_dropdown{
+
+            position: relative;
+            /*top: -5px;*/
+
+            button {
+                .dimension_height_m;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: -2px;
+                padding: 0px 1ex;
+                background-color: @gray_0;
+                background-image: none;
+    //            width: 50px;
+
+                // Filter img
+                img{.dimension_width_height_xs;}
+
+            }
+            button > div {
+                vertical-align: middle;
+            }
+            button:last-child {
+                padding: 0px
+            }
+            + ul.ui-menu {
+                position: absolute;
+                z-index: 2;
+            }
+
+            /*left Button*/
+            button.ui-corner-left,
+            button.ui-state-default{
+                background-image: none !important;
+                background-repeat: no-repeat !important;
+    //            background-size: 10px 10px;
+
+                img {
+                    .dimension_width_height_s;
+                    text-align: left;
+                    position: relative;
+                    right: 1px;
+                    top: 3px;
+                    }
+
+                 /*&:hover {.Complete_Button_save_apply_copy;}*/
+                 &:active {background-color: @color_positive_action_active;}
+
+            }
+
+
+            /*right Button*/
+            button.ui-corner-right {}
+
+           /* hover */
+            button.ui-state-hover { background-color: @gray_10; }
+
+             button.ui-state-hover > img {}
+
+
+
+
+    } // dropdown
+
+
+
+
+
+// Favoriten
+.sidebox-favorites {
+
+        ul.favorites {
+                    width: 99%;
+                    padding: 0px;
+                    border: none;
+                    background: white;
+
+                    li.ui-menu-item {
+                                    margin-left: 0px;
+                                    min-height: 16px;
+                                    padding: 3px 0px;
+                                    margin-bottom: 0.2em;
+                                    background-color: lighten(@egw_color_3_e, 30%);
+
+                                    // lila
+                                    &:hover{
+                                            .color_100_gray;
+                                            background-color: @egw_color_3_e;
+                                            padding: 3px 0;
+
+                                            a{color: @gray_0;}
+
+                                        }
+
+                                    // delete favourites
+                                    &:first-of-type {background-color: @gray_0;
+
+                                                     a{color: @gray_100;}
+                                    }
+
+                                    // view as favourites
+                                    &:last-of-type {background-color: @gray_0;
+
+                                                    a{color: @gray_100;}
+                                    }
+
+
+                                        a{
+
+                                                line-height: inherit;
+                                                padding: 2px 0px;
+
+
+                                                // Heart
+                                                div.ui-icon-heart {background-image: url(../images/personal.png); background-size: 12px 12px;background-position: 0 0;}
+
+                                                // Bulltpoints
+                                                div.sideboxstar {
+                                                                width: 3px;
+                                                                height: 11px;
+                                                                margin-left: 3px;
+                                                                background-image: url(../images/bullet.png);
+                                                                background-size: 12px 12px;
+                                                                background-position: 0 0;
+                                                                background-repeat: no-repeat;
+                                                            }
+
+                                             }
+
+                                       // Aktuelle Ansicht als Favorit
+                                       img {.dimension_width_height_xs; margin-left: 4px;}
+
+                                       // Filter aufheben
+                                       [data-id="blank"]{
+
+                                                        div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
+
+                                                    }
+
+
+                                     } // Ende li
+
+                     // Filter aufheben
+                     li:first-child{
+                        a div.ui-icon-heart {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
+                        a div.sideboxstar {background-image: url(../images/trash.png); background-size: 12px 12px;background-position: 0 0;}
+
+                     }
+
+        }
+} // sidebox-favorites
+
+// Favorites in nextmatch Header
+.favorites{
+
+    img {.dimension_width_height_xs;}
+
+}
+
+
+// Arrow up and down for sorting
+.nextmatch_sortheader {
+/*    background-position: right center;
+    background-repeat: no-repeat;
+    color: #003075;
+    cursor: pointer;
+    margin-right: 10px;*/
+    padding-right: 18px;
+}
+
+.nextmatch_sortheader.asc {
+    font-weight: bold;
+    background-image: url(../images/selectarrowup.png);
+    background-size: 16px 16px;
+}
+
+.nextmatch_sortheader.desc {
+    font-weight: bold;
+    background-image: url(../images/selectarrowdown.png);
+    background-size: 16px 16px;
+}
+/**
+ * Grid / nextmatch Hierarchy
+ */
+/**
+ * This class' margin-right is used to line up columns at each indent level
+ * Classes level_# are created programmatically with margin-right * depth
+ * Margin-right = -(indent + border)
+ */
+.indentation {
+  margin-right: -15px;
+}
+
+/* End of hierarchy */
+
+/* Mangled link-to widget inside a nextmatch - used for DnD uploads */
+.et2_nextmatch * .et2_link_to {
+    position: relative;
+}
+
+div.et2_progress > div {
+    background-color: @color_progress;
+    /*height: 5px;*/
+}
+
+
+/**
+* et2_toolbar
+*/
+.ui-toolbar_dropShadow {
+    min-height: 30px;
+    border: dashed;
+    border-width: 1px;
+    border-color: gray;
+    opacity:0.7;
+}
+
+/**
+ * et2_textbox
+ */
+
+textarea,
+textarea.description {
+    background-color: @color_optional;
+    padding: 0.3em 0 0 0.3em;
+    border: none;
+	height: auto;
+}
+
+/**
+* et2_taglist
+*/
+.ms-ctn,
+.ms-res-ctn {
+  /* It doesn't really work smaller than this */
+  min-width: 150px;
+}
+.ms-ctn .loading {
+  position: relative;
+  margin: 0px auto -16px auto;
+  top: 5px;
+}
+.ms-res-ctn {
+  overflow-x: hidden;
+}
+
+
+
+
+/**
+* et2_toolbar
+*/
+.et2_toolbar {
+	background: none;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.et2_toolbar-dropdown {
+
+    button {
+            /*        height: 100% !important;
+                    border: none !important;
+                    background: #E0E0E0 !important;
+                    background-color: #E0E0E0 !important;
+                    border-radius: 0 !important;
+                    color: #101010 !important;
+                    font-size: 9pt !important;
+                    font-weight: normal !important;
+                    vertical-align: bottom !important;
+                    padding: 1px !important;
+                    margin: 2px !important;
+                    min-height: 19px;*/
+            }
+
+}
+
+
+
+div.ui-toolbar-menulist{
+	position: absolute;
+	height: inherit !important;
+	z-index: 999 !important;
+	overflow: hidden !important;
+	border: solid black 1px;
+	padding: 0 !important;
+	margin-top: 3px !important;
+}
+.ui-toolbar-menulist > h {
+	padding-bottom: 7px;
+}
+.ui-toolbar-menulist > button {
+	padding: 0 !important;
+	margin: 0 !important;
+	text-align: left;
+	border-radius: 0 !important;
+	width: 100% !important;
+	white-space: nowrap;
+}
+.ui-toolbar-menulistHeader{
+	font-size: xx-small;
+	height:100%;
+	margin-top: 2px;
+	direction: ltr;
+}
+.et2_toolbar_activeList{
+	position: relative;
+	float:right;
+	direction: rtl;
+	margin-top: 3px;
+}
+.et2_toolbar_actionlist{
+	float:left;
+}
+
+/**
+ * Do not wrap content of a single widget incl. a label or children of a hbox.
+ * Taking into eg. select-account widget rendered as ul and prefixed with a label
+ * and maintaining some space between widgets.
+ */
+.et2_nowrap{
+	white-space: nowrap;
+}
+ul.et2_nowrap, div.et2_nowrap{
+	display: inline-block;
+}
+.et2_nowrap > *{
+	padding-left: 5px;
+}
+.et2_nowrap > *:first-child{
+	padding-left: 0;
+}
+.et2_nowrap > label > *{
+	padding-left: 5px;
+}
+
+
+
+
+
+/*#################################### ADMIN PART #####################################################*/
+
+iframe#admin-index_iframe{
+
+    background-color: yellow;
+
+    }
+
+
+    // Content Iframe
+    #admin-categories-index{
+
+
+
+        div.egwGridView_scrollarea { min-height: 500px;}
+
+
+        table.et2_grid {
+
+            #admin-categories-index_nm {
+
+                div.egwGridView_outer{
+
+                    td.frame {
+
+
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+// gray Filter for images
+    table.egwGridView_grid{
+                img {
+                    /*filter grey*/
+                    .img_filter_none;
+                }
+        }
+
+// Image Size
+#late-sidebox{
+
+            table {
+                    img {.dimension_width_height_s;}
+                   }
+    }
+
+.admin_aclAPP {.img_filter_none;}
+
+/*#################################### END ADMIN PART #####################################################*/
+
+
+
+
+} // Ende Media all
+
+/*#################################### Media Queries #####################################################*/
+
+@media only screen and (min-width: 980px) and (max-width: 1279px) {
+
+    .nextmatch_header > .filters select {  margin: 0px;}
+
+}
+
+@media only screen and (min-width: 760px) and (max-width: 979px) {
+
+}
+
+@media only screen and (min-width: 320px)  and (max-width: 759px) {
+
+}
+
+//
+//
+//

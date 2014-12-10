@@ -1,0 +1,170 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+
+This descripes the structure of the less files.
+
+/**************************
+* this files joins the less files via less compiler
+* output = pixelegg.css (used in egw)
+*/
+/pixelegg/css/pixelegg.less
+
+
+
+##### generell Parts ######
+
+/**************************
+* copy of (egw)etemplate2.css to override
+*/
+/pixelegg/less/etemplate2.less";
+
+/**************************
+* copy of (egw)jquery-ui.css to overide
+*/
+/pixelegg/less/jquery-ui.less";
+
+
+/**************************
+* copy of (egw)magicsuggest.css to override
+*/
+/pixelegg/less/magicsuggest.less";
+
+
+/pixelegg/layout_chosen.less
+/pixelegg/less/et2_table.less";
+
+
+##### pixelegg Parts ######
+##### Definitions    ######
+
+/**************************
+*   Main definitions for color, font, mixins etc..
+***************************/
+/pixelegg/less/def_design_pattern_color_font_shadow.less
+
+/**************************
+*   Definitions for dialogs
+***************************/
+/pixelegg/less/def_messages.less
+
+/**************************
+* is included 
+* Def Buttons: border, color, dimension, shadow, padding, margin, cursor
+***************************/
+/pixelegg/less/def_buttons.less
+
+
+##### Layout  / GRid  ######
+
+/**************************
+* Main: 
+***************************/
+/pixelegg/less/layout_raster.less";
+
+/*################## Main   ####################*/
+/*#            #      Header Part              #*/
+/*#            #      Topmenu                  #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#            #                               #*/
+/*#  Sidebar   ############################### #*/
+/*#            #                               #*/
+/*#  Menu      #                               #*/
+/*#            #                               #*/
+/*#  Items     #       APP Specific            #*/
+/*#            #                               #*/
+/*#  Icon      #                               #*/
+/*#            #                               #*/
+/*##############################################*/
+/*#            Footer                          #*/
+
+/**************************
+*   Table, th, tr, td, :color, border, width, background
+***************************/
+/pixelegg/less/layout_table.less";
+
+/**************************
+*   Choosen: color, padding, margin
+***************************/
+/pixelegg/less/layout_chosen.less
+
+
+/**************************
+*  Defines all messages  
+***************************/
+/pixelegg/less/layout_messages.less
+
+/**************************
+* Copy of (egw)tradionell.css
+*  For HTML Tags
+* Body, Headline, p, Select, Input, div,  
+***************************/
+/pixelegg/less/layout_content_elements.less
+
+
+/**************************
+*   Login Page ...pixelegg style
+***************************/
+/pixelegg/less/layout_loginPage.less
+
+/**************************
+*   Footer Stuff
+***************************/
+/pixelegg/less/layout_footer.less
+
+/*##############################################*/
+/*#            Footer  (copyright, etc)        #*/
+/*##############################################*/
+
+/**************************
+*   Define all the popup dialogs
+***************************/
+/pixelegg/less/layout_dialog.less
+
+/*###########################################
+#                                           #
+#     dialogHeader                         #
+#############################################
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#                                           #
+#    main + tabs                            #
+#                                           #
+#                                           #
+#############################################
+#   dialogOperators                        #
+#############################################
+#                                           #
+#    buttons                                #
+#                                           #
+#                                           #
+##############################################*/
+
+/**************************
+* not edited yet  
+***************************/
+/pixelegg/less/print.less
+
+
+
+### not in use (yet) ###########
+/pixelegg/less/def_icons.less
+
+### obsolete ############################
+/pixelegg/less/layout_nextmatch.less
+/pixelegg/less/def_messages.less
+/pixelegg/less/layout_buttons_global.less

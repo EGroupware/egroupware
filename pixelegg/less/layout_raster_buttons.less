@@ -1,0 +1,267 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for layout and raster
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
+ */
+/*
+    Created on : 23.07.2014, 13:25:11
+    Author     : stefanreinhardt
+*/
+
+@import (reference) "definitions.less";
+
+
+/*#################################################
+    Add / Print / Logout /
+    - Name / Date
+###################################################*/
+/*#egw_fw_topmenu_addons{}*/
+
+
+
+// Button Logout
+#egw_fw_logout {
+    background-image: url(../images/logout.png);
+    background-size: 16px 16px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-right: 1em;
+    margin-top: 0px;
+    z-index: 200;
+    .Button_size_square_16;
+    /*.border_normal;*/
+    /*.box_shadow_standard_light;*/
+    /*.border_radius_button_normal;*/
+    padding: 0.5em;
+    top: 5px;
+    position: fixed;
+    right: 0px;
+
+
+    &:hover {.box_shadow_standard_light_hover;}
+    &:active {.Complete_Button_active;}
+    &:focus {.box_shadow_standard_light_inset;}
+}
+
+
+
+// Button Print
+
+#egw_fw_print {
+    background-image: url(../images/print.png);
+    background-size: 16px 16px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-right: 5px;
+    margin-top: 0px;
+    position: fixed;
+    .Button_size_square_16;
+    /*.border_normal;*/
+    /*.box_shadow_standard_light;*/
+    /*.border_radius_button_normal;*/
+    padding: 0.5em;
+    top: 5px;
+    right: 40px;
+    z-index: 200;
+    &:hover {.box_shadow_standard_light_hover;}
+    &:active {.Complete_Button_active;}
+    &:focus {.box_shadow_standard_light_inset;}
+
+}
+
+
+/*#################################################
+/* Second Line
+/* e.g. Name / Datum / angemeldete User
+###################################################*/
+
+
+#egw_fw_topmenu_info_items {
+
+    // move to bottom of the page
+    position: fixed;
+    z-index: 1000;
+    bottom: 2px;
+    right: 5px;
+    padding-right: 20px;
+
+
+    .topmenu_info_item {
+
+        overflow: visible;
+	display: inline-block;
+
+        // Info Bell
+        &:nth-child(1) {
+        }
+
+        // Name
+        &:nth-child(2) {
+            /*float: right;*/
+            margin-top: 0;
+            font-size: 1em;
+            padding-right: 5px;
+
+        }
+
+        // angemeldete User
+        &:nth-child(3) {
+            position: relative;
+            top: 0px;
+            display: inline-block;
+
+            &:hover {.box_shadow_standard_light_hover;}
+            &:focus {.box_shadow_standard_light_inset;}
+
+            /*&:before {content: "";font-size: 1em;color: @egw_color_2_a;}*/
+
+        }
+
+        // Add
+        &:nth-child(4) {
+
+        }
+
+    }
+
+    /*Notification*/
+    #topmenu_info_notifications {}
+
+    /*user info*/
+    #topmenu_info_user_info {
+		display: inline-block;
+	}
+
+    /*current user info*/
+    #topmenu_info_current_users {}
+
+    /*current user info*/
+    #topmenu_info_current_users {}
+
+    /*time zone*/
+    form { height: 0px;
+           select {padding: 0px;}
+    }
+
+    /*quick*/
+    #topmenu_info_quick_add {
+
+    // ##############################################################################
+    // quick_add
+    // Fist you see an ADD Icon, via Mouseover it expand right, to an select field
+
+    span#quick_add {
+        /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+        /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
+        float: right;
+        padding: 0.5em;
+        position: fixed;
+        right: 80px;
+        top: 5px;
+
+        background-image: url(../images/add.png);
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+        background-position: 4px 4px;
+
+        .border_radius_button_normal;
+        .dimension_width_height_s;
+
+        &:before {
+            content: " ";
+            font-size: 2em;
+            color: @egw_color_2_a;
+            line-height: 0.6em;
+            background-color: white;
+        }
+
+        &:hover {.box_shadow_standard_light_hover;}
+        &:focus {.box_shadow_standard_light_inset;}
+    }
+
+    // ##############################################################################
+    // quick_add selectbox
+    // ADD different APPs
+    select#quick_add_selectbox {
+
+        visibility: hidden;
+        border: medium none;
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        position: relative !important;
+        right: 1px !important;
+        top: -3px;
+        left: 35px;
+
+    }
+
+    }
+
+    // ##############################################################################
+    // JS ERROR BUTTON
+    // blinking red IMG
+    img#topmenu_info_error{
+                            .dimension_width_height_s;
+                            position: fixed;
+
+                            /*.Button_size_square_16;*/
+
+                            .border_normal;
+                            .box_shadow_standard_light;
+                            padding: 5px;
+                            top: 6px;
+                            right: 112px;
+                            z-index: 200;
+                            &:hover {.box_shadow_standard_light_hover;}
+                            &:active {.Complete_Button_active;}
+                            &:focus {.box_shadow_standard_light_inset;}
+
+                            background-color: @color_warning;
+
+
+                            //blinking
+                            -moz-transition:all 1s ease-in-out;
+                            -webkit-transition:all 1s ease-in-out;
+                            -o-transition:all 1s ease-in-out;
+                            -ms-transition:all 1s ease-in-out;
+                            transition:all 1s ease-in-out;
+                            /* order: name, direction, duration, iteration-count, timing-function */
+                            -moz-animation:blink normal 2s infinite ease-in-out; /* Firefox */
+                            -webkit-animation:blink normal 2s infinite ease-in-out; /* Webkit */
+                            -ms-animation:blink normal 2s infinite ease-in-out; /* IE */
+                            animation:blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+
+                           }
+
+
+
+                            @-moz-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Firefox */
+                            @-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Webkit */
+                            @-ms-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* IE */
+                            @keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Opera and prob css3 final iteration */
+
+}
+
+
+// Update images
+div#topmenu_info_update{
+
+    display: inline-block;
+
+    img{ .rounded(5px);}
+
+
+}

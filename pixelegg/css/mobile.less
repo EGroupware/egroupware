@@ -1,0 +1,706 @@
+/**
+ * EGroupware: Stylite Pixelegg template - mobile theme
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import "pixelegg.less";
+
+@media all {
+	body{
+		background-color: transparent;
+		// iOS appHeader class
+		div.egw_fw_mobile_iOS_popup_appHeader{
+			padding-top:15px;
+		}
+		div.egw_fw_mobile_popup_appHeader {
+			display: block !important;
+			height: 32px !important;
+			background-size	: 2px;
+			font-size: 150% !important;
+			border-bottom: 3px solid #679fd2 !important;
+			border-top: none !important;
+			width: 100%;
+			line-height: 32px !important;
+			.egw_fw_mobile_popup_close {
+				width: 32px;
+				height: 32px;
+				float:right;
+				background-image: url('../images/cancelled.png');/*url(../images/topmenu_items/mobile/menu_active.png);*/
+				-webkit-filter: contrast(2);
+				background-repeat: no-repeat;
+				z-index: 999;
+				padding-right: 5px;
+			}
+		}
+	}
+	#egw_fw_basecontainer{
+		background:white;
+
+
+		//###################
+		//#					#
+		//#		TOOLBAR		#
+		//#					#
+		//###################
+		#egw_fw_top_toolbar{
+			div.egw_fw_ui_tabs_header{
+				max-height: 60px;
+				width: 69%;
+				margin-left: 0;
+				overflow-x: scroll;
+				position: initial;
+				white-space: nowrap;
+				position: fixed;
+				left: 30%;
+				top: 15px;
+				height: 50px;
+				span{
+					margin:0;
+					overflow: visible;
+					height:38px;
+					width:50px;
+					border-width: 1px 1px 1px 1px;
+					border:none;
+					border-radius: 10px;
+
+					img{
+						height:32px !important;
+						width:32px !important;
+					}
+					h1{
+						display:none;
+					}
+				}
+			}
+		}
+		//FW Logout
+		div#egw_fw_logout{
+			left: 235px;
+			top: 20px;
+			width: 24px;
+			height: 24px;
+			background-size: 24px 24px;
+			z-index: 1;
+		}
+
+		//FW Print
+		div#egw_fw_print{
+			display:none; //ATM set it to not displayed
+			left: 180px;
+			top: 20px;
+			width: 24px;
+			height: 24px;
+			background-size: 24px 24px;
+		}
+		.egw_fw_top_toolbar>div:hover{
+			-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+			-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+		}
+
+
+		//FW Menu
+		div#egw_fw_menu{
+			background-image: url(../images/topmenu_items/mobile/menu_active.png);
+			cursor: pointer;
+			-webkit-transform:rotate(360deg);
+			transform:rotate(360deg);
+			position: fixed;
+			left: 20px;
+			top: 20px;
+			width: 32px;
+			height: 32px;
+			background-size: 32px 32px;
+			background-repeat: no-repeat;
+			z-index: 999;
+		}
+		div#egw_fw_menu:active {
+			-webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+			box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+		}
+		div#egw_fw_topmenu_items{
+			width: 250px;
+			display: inline;
+			float: left;
+			position: fixed;
+			left: 55px;
+			top: 20px;
+			ul{
+				display:inline;
+				padding:0;
+				margin:0;
+				list-style-type: none;
+				li{
+					display:inline;
+					padding-right: 6px;
+				}
+				a#topmenu_home:before {
+					content: " ";
+					background-image: url(../images/topmenu_items/mobile/home.png);
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display:none;
+				}
+				a#topmenu_prefs {
+					&:before {
+						content: "";
+						background-image: url(../images/topmenu_items/mobile/setup.png);
+						background-repeat: no-repeat;
+						width: 32px;
+						height: 32px;
+						background-size: 32px 32px;
+						display: inline-block;
+					}
+					&:active {
+						-webkit-transform:rotate(180deg);
+						transform: rotate(180deg);
+					}
+				}
+
+				a#topmenu_acl:before {
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					background-image: url(../images/topmenu_items/mobile/access.png);
+					display: inline-block;
+				}
+
+				a#topmenu_cats:before {
+					background-image: url(../images/topmenu_items/mobile/category.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+				a#topmenu_preferences:before {
+					background-image: url(../images/topmenu_items/mobile/password.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+
+				a#topmenu_manual:before {
+					background-image: url(../images/topmenu_items/mobile/help.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+
+				a#topmenu_search:before {
+					background-image: url(../images/topmenu_items/mobile/search.png);
+					content: "";
+					background-repeat: no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					display: inline-block;
+				}
+				a#topmenu_search:active {
+					transform: scale(-2);
+					-webkit-transform:scale(-2);
+					-webkit-transition: 1s ease;
+				}
+			}
+		}
+	}//End of toolbar
+
+	// ######################tabs header ##########################
+	// #      #      #     #     #     #     #     #     #     ####
+	// #      #      #     #     #     #     #     #     #     ####
+	// #  tab header #     #     #     #     #     #     #     ####
+	// #      #      #     #     #     #     #     #     #     ####
+	// ############################################################
+	// Div Tabs
+
+	.egw_fw_ui_tabs_header {
+		margin: 0px 0 0 0;
+		padding: 1px 1px 0px 0px;
+		background-position: bottom;
+		background-repeat: repeat-x;
+		background-color: transparent;
+		height: 34px;
+
+			h1 {
+				display: inline;
+				width: 100%;
+				text-align: center;
+				-webkit-margin-before: 0;
+				-webkit-margin-after: 0;
+			}
+
+			img{
+				text-align:center;
+				float: none;
+				margin: 0 auto;
+				.dimension_width_height_l;
+			}
+
+		// Tab
+		// ##########
+		// #        #
+		// #        #
+		// ##########
+		// Inactive
+
+
+
+		.egw_fw_ui_tab_header {
+			padding-left: 0;
+			position: relative;
+			.border_radius(0,0, 0, 0);
+			background: transparent;
+			display: inline-block;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			margin: 0px 5px 0px 0px;
+			padding: 2px 5px 7px 2px;
+			cursor: pointer;
+			border-width: 1px 1px 0 1px;
+			border-style: solid;
+			border-color: @gray_30;;
+			background-repeat:repeat-x;
+			height: 38px;
+			width: 97%;
+			&:hover {
+				background-color: none !important;
+			 }
+			 &:active {
+				 webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+				-moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+				box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+			 }
+			// APP Name
+			h1 {
+				.fontsize_xxl;
+				line-height: 1em;
+				margin:0 15px 2px 2px;
+				vertical-align: super;
+			}
+
+			// Images
+			img.egw_fw_ui_tab_icon {
+				display: inline-block;
+				.dimension_width_height_l;
+				margin: 5px 1px 0 1em;
+
+				.img_filter_gray;
+			}
+
+			// FOR SVG IMG
+			object {
+			.dimension_width_height_l;
+			margin: 8px 1px 0 5px;
+			.border_radius(5px,0, 0, 5px);
+
+
+			}
+
+
+		}
+
+		// ##########
+		// #        #
+		// #        #
+		// ##########
+		/*Active Tabs*/
+		.egw_fw_ui_tab_header_active {
+			border-width: 1px 1px 0px 1px !important;
+			.background_color_egw_light;
+			&:hover {.background_color_egw_light ;}
+
+
+			// Active image
+			img.egw_fw_ui_tab_icon {
+				display: inline-block;
+				.dimension_width_height_l;
+				-webkit-filter: contrast(2);
+				-ms-filter:contrast(2);
+				-moz-filter:contrast(2);
+				-o-filter:contrast(2);
+			}
+			 /*Active object*/
+			 object {
+			.dimension_width_height_l;
+			margin: 0px 1px 0 5px;
+			.border_radius(2px,0, 0, 2px);
+
+			background-color: @gray_30;
+			}
+		}
+	}
+	//###################
+	//#					#
+	//#		SIDEBAR		#
+	//#					#
+	//###################
+	#egw_fw_sidebar{
+		top: 76px;
+		bottom: 5px;
+		//SIDE AREA
+		#egw_fw_sidemenu {
+			position: absolute;
+			top: 0px;
+			bottom: 4px;
+			left: 4px;
+			right: 5px;
+			overflow-y: auto;
+			z-index: 0;
+			padding-top: 0.6em;
+			font-size: 0.9em;
+
+				//####################################################
+				// All Tabs
+				.egw_fw_ui_sidemenu_entry_header
+				{
+					display: block;
+					margin: 0 0;
+
+					&:hover {
+						.background_color_15_gray;
+						.rounded(5px);
+					}
+
+					&:active {.box_shadow_standard_light_inset;}
+
+					h1 {
+						margin: 0 0 10px 0;
+						padding-top: 0.31em;
+						padding-left: 3em;
+						.color_40_gray;
+						.fontsize_xl;
+						line-height: 17px;
+					}
+
+					object {background-color: @gray_0; .dimension_width_height_m;}
+				}
+
+
+
+				// ####################################
+				// ####                               #
+				// ###   IMG  |  ADD NAME             #
+				// ###                                #
+				// ###                                #
+				// ####################################
+				// Active APP
+				// Active Tab
+				// rounded Corner Left Top
+				.egw_fw_ui_sidemenu_entry_header_active {
+					//
+					cursor: pointer;
+					background-image: url("../images/clear.png");
+					background-position: 95% -3000px;
+					background-repeat: no-repeat;
+
+					.background_color_10_gray;
+					.border_radius ( 5px, 0px, 0px, 27px );
+					.bordered (@gray_30, @gray_30, @gray_30, @gray_30);
+
+					margin: 0 0 0 0;
+					border-bottom: none;
+					height: 33px;
+
+
+					img {padding-left: 9px; padding-top: 6px; height: 18px;}
+
+					h1 {text-transform: uppercase; font-size: 1.4em; .color_100_gray; padding-top: .8em;}
+
+					&:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
+					&:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
+
+					&:focus {
+						background-image: url("../images/ajax-loader.gif");
+						background-repeat: no-repeat;
+						background-position: 90% 50%;
+						.Complete_Button_active;
+
+						.background_color_25_gray;
+					}
+
+					object {
+						margin-left: 14px;
+						margin-top: 8px;
+						.rounded (3px;);
+						.dimension_width_height_s;
+					}
+
+					.egw_fw_ui_ajaxloader {margin-top: -26px;}
+
+				}
+
+				//####################################################
+				// egw_fw_ui_sidemenu_entry_content
+				// ########################################
+				// ##                                    ##
+				// ##                                    ##
+				// ########################################
+
+				// ########################################
+				// ##                                    ##
+				// ##                                    ##
+				// ########################################
+
+				// ########################################
+				// ##                                    ##
+				// ##                                    ##
+				// ########################################
+
+				// ########################################
+				//  ##        div.egw_fw_ui_category     ##
+				//   ##       &:nth-last-of-type(-n+3)   ##
+				//    #####################################
+
+
+
+
+
+				.egw_fw_ui_sidemenu_entry_content {
+					display: block;
+					background-image: none;
+					.border_radius (0, 0, 27px, 0);
+					border-color: @gray_30;
+					border-style: solid;
+					border-width: 0px;
+					margin: 0 0 2em 0;
+
+
+					// rounded Corner on bottom
+					&:nth-last-of-type(-n+3)   {
+						padding:  5px 0.3em 1.5em 0.3em;
+						margin: 0 0 10px 0;
+						.background_color_30_gray;
+						.border_radius (0, 0, 24px, 0);
+						border-color: @gray_30;
+					}
+
+				   & > div {.background_color_30_gray;}
+
+					//###################################################
+					// has round corners
+					div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+						.border_radius (0, 0, 15px, 0);
+					}
+
+					//###################################################
+					// Normal
+					.egw_fw_ui_category {
+						margin: 4px 5px 5px 5px;
+						padding: 0.5em 1em 0.5em 0;
+						cursor: pointer;
+						//																												border-top: 7px solid;
+						border-color: @gray_30;
+						background-color: @gray_10;
+
+						.border_radius(3px,3px,3px,3px);
+
+						h1 {
+							margin: 5px 0px 3px 5px;
+							padding: 0px 0px 0px 15px;
+							line-height: 1em;
+							.fontsize_l;
+							background-image:url(../images/arrow_left.png);
+							background-repeat:no-repeat;
+							background-position:left center;
+						}
+
+						div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+																		img.egw_fw_ui_sidemenu_listitem_icon {
+																		 display: block;
+																		 }
+						}
+
+					}
+
+					//#################################
+					// Hover
+					// on Mouse over change color
+					.egw_fw_ui_category:hover {
+						.background_color_40_gray;
+						padding: 0.5em 1em 0.5em 0;
+					}
+
+
+
+					/*######################*/
+					// Active State
+					// change Background color in Blue
+					// See all Elements
+					.egw_fw_ui_category_active {
+						border-bottom-width: 0px;
+						margin-top: 4px;
+
+						background-color: @egw_color_2_a;
+
+						.color_5_gray;
+						.border_radius(3px,3px,3px,3px) !important;
+
+						h1 {
+							background-image:url(../images/arrow_down.png);
+							line-height: 1em;
+							font-size: 12px;
+
+								a {
+								color: #FFF;
+
+
+								img {.dimension_width_height_s;}
+
+								&:hover {
+										padding: 5px 30px 5px 0px;
+										width: 200px;
+										.background_color_10_gray;
+										.color_50_gray;
+										.Complete_Button_hover;
+									}
+								}
+
+							 }
+
+						&:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
+					}
+				}
+
+				.egw_fw_ui_sidemenu_entry_content_bottom {
+					border-width: 0px 1px 1px 1px;
+				}
+				.egw_fw_ui_sidemenu_entry_header_bottom {
+					border-width: 0px;
+					border-color: @gray_0;
+				}
+
+				.egw_fw_ui_sidemenu_entry_icon {
+					display: inline-block;
+					.dimension_height_m;
+
+					padding-left: 0;
+					padding-right: 0px;
+					float: left;
+
+					/*filter grey*/
+					.img_filter_gray;
+				}
+
+
+		} // SIDEMENU End
+	}//End of Sidebar
+	//ToggleClass
+
+	.sidebar-toggle{
+		#egw_fw_top_toolbar div#egw_fw_menu{
+			background-image: url(../images/topmenu_items/mobile/menu.png);
+			-webkit-transform:rotate(0deg);
+			transform:rotate(0deg);
+		}
+		#egw_fw_sidebar{
+			#egw_fw_sidemenu{
+				width:82px !important;
+				.egw_fw_ui_sidemenu_entry_content, .egw_fw_ui_sidemenu_entry_header{
+					display:none !important;
+				}
+				.egw_fw_ui_sidemenu_entry_header{
+					height: 38px;
+					width: 54px;
+					text-overflow: ellipsis;
+					border-radius: 0px 15px 15px 0px;
+					img{
+						src: url(../images/topmenu_items/setup.png) !important;
+						height:32px !important;
+						width:32px !important;
+					}
+				}
+				.egw_fw_ui_tabs_header{
+					span{
+						margin:0px 5px 0px 2px;
+						overflow: visible;
+						height:38px;
+						width:50px;
+						border:none;
+						border-radius: 10px;
+						img{
+							height:32px !important;
+							width:32px !important;
+						}
+						h1{
+							display:none;
+						}
+					}
+				}
+				#egw_fw_splitter, .egw_fw_ui_sidemenu_entry_header_active h1{
+					display:none;
+				}
+			}
+		}
+		#egw_fw_logout, #egw_fw_topmenu_items{
+			display:none !important;
+		}
+	}
+
+	.tabs-header-portrait-collapsed{
+		left:7% !important;
+		width: 90% !important;
+	}
+
+	//###################################
+	//#									#
+	//#			FOOTER					#
+	//#									#
+	//###################################
+	#egw_fw_footer {
+		display:none;
+	}
+
+	//###################################
+	//#									#
+	//#			APP HEADER NAVIGATOR	#
+	//#									#
+	//###################################
+	.egw_fw_ui_app_header_container {
+		display:none;
+	}
+
+
+	//###################################
+	//#									#
+	//#			POPUP FRAME				#
+	//#									#
+	//###################################
+	.egw_fw_mobile_popup_container{
+		width:100%;
+		height:100%;
+		position:fixed;
+		display: none;
+		z-index: 999;
+		background: white;
+		.egw_fw_mobile_popupFrame {
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.egw_fw_mobile_popup_loader {
+		background-image: url('../images/ajax-loader.gif');
+		background-repeat: no-repeat;
+		background-position: center;
+		background: rgba(0, 0, 0, 0.44) !important;
+	}
+}

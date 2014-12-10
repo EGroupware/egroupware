@@ -1,0 +1,550 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for layout and raster
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
+ */
+/*
+    Created on : 23.07.2014, 13:25:11
+    Author     : stefanreinhardt
+*/
+
+@import (reference) "definitions.less";
+
+/* ################################################################################################################
+ * Sidebar
+ * ################################################################################################################*/
+
+// AREA UNDER LOGO
+#egw_fw_sidebar {
+    position: fixed;
+    overflow: hidden;
+    top: 43px;
+    left: 0px;
+    bottom: 20px;
+    width: 225px;
+    /*.background_color_5_gray;*/
+
+    //SIDE AREA
+    #egw_fw_sidemenu {
+        position: absolute;
+        top: 0px;
+        bottom: 4px;
+        left: 4px;
+        right: 5px;
+        overflow: hidden;
+        z-index: 0;
+        padding-top: 0.6em;
+        font-size: 0.9em;
+
+        // SIDE AREA
+        .egw_fw_ui_scrollarea_outerdiv{
+            .background_color_5_gray;
+
+
+            //####################################################
+            // AREA for
+            // DRAG AND DROP
+            div.ui-sortable {
+
+                div {
+                    padding: 3px 0 1px 3px;
+                    cursor: pointer;
+                }
+            }
+
+
+            //####################################################
+            // All Tabs
+            // DRAG AND DROP
+            .egw_fw_ui_sidemenu_entry_header {
+                                            display: block;
+                                            margin: 0 0;
+                                            /*padding: 0px 5px 5px 10px;*/
+
+                                            &:hover {
+                                                .background_color_15_gray;
+                                                .rounded(5px);
+                                            }
+
+                                            &:active {.box_shadow_standard_light_inset;}
+
+
+                                            h1 {
+                                                margin: 0 0 10px 0;
+                                                padding-top: 0.31em;
+                                                padding-left: 3em;
+                                                .color_40_gray;
+                                                /*font-size: 12px;*/
+                                                .fontsize_l;
+                                                line-height: 17px;
+                                            }
+
+                                            object {background-color: @gray_0; .dimension_width_height_m;}
+
+                                        }
+
+
+
+            //       ####################################
+            //     ####                                 #
+            //   ###   IMG  |  ADD NAME                 #
+            // ###                                      #
+            // ###                                      #
+            //###########################################
+            // aktive APP
+            // aktiver Tab
+            // rounded Corner Left Top
+            .egw_fw_ui_sidemenu_entry_header_active {
+                //
+                cursor: pointer;
+                background-image: url("../images/clear.png");
+                background-position: 95% -3000px;
+                background-repeat: no-repeat;
+
+                .background_color_10_gray;
+                .border_radius ( 5px, 0px, 0px, 27px );
+                .bordered (@gray_30, @gray_30, @gray_30, @gray_30);
+
+                margin: 0 0 0 0;
+                border-bottom: none;
+                height: 33px;
+
+
+                img {padding-left: 9px; padding-top: 6px; height: 18px;}
+
+                h1 {text-transform: uppercase; font-size: 1.4em; .color_100_gray; padding-top: .8em;}
+
+                &:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
+                &:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
+
+                &:focus {
+                    background-image: url("../images/ajax-loader.gif");
+                    background-repeat: no-repeat;
+                    background-position: 90% 50%;
+                    .Complete_Button_active;
+
+                    .background_color_25_gray;
+                }
+
+                object {
+                    margin-left: 14px;
+                    margin-top: 8px;
+                    .rounded (3px;);
+                    .dimension_width_height_s;
+                }
+
+                .egw_fw_ui_ajaxloader {margin-top: -26px;}
+
+            }
+
+            //####################################################
+            // Rahmen um APP Einstellungen
+            // egw_fw_ui_sidemenu_entry_content
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            //  ##        div.egw_fw_ui_category     ##
+            //   ##       &:nth-last-of-type(-n+3)   ##
+            //    #####################################
+
+
+
+
+
+            .egw_fw_ui_sidemenu_entry_content {
+                display: block;
+                background-image: none;
+                .border_radius (0, 0, 27px, 0);
+                border-color: @gray_30;
+                border-style: solid;
+                border-width: 0px;
+                margin: 0 0 2em 0;
+
+
+                // rounded Corner on bottom
+                &:nth-last-of-type(-n+3)   {
+                    padding:  5px 0.3em 1.5em 0.3em;
+                    margin: 0 0 10px 0;
+                    .background_color_30_gray;
+                    .border_radius (0, 0, 24px, 0);
+                    border-color: @gray_30;
+                }
+
+               & > div {.background_color_30_gray;}
+
+                //###################################################
+                // *letztes Element   */
+                // has round corners
+                div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+                    .border_radius (0, 0, 15px, 0);
+                }
+
+                //###################################################
+                // Schaltflächen - Elements
+                // Normal
+                .egw_fw_ui_category {
+                    margin: 4px 5px 5px 5px;
+                    padding: 0.5em 1em 0.5em 0;
+                    cursor: pointer;
+                    //																												border-top: 7px solid;
+                    border-color: @gray_30;
+                    background-color: @gray_10;
+
+                    /*background-color: @egw_color_2_d;*/
+
+                    .border_radius(3px,3px,3px,3px);
+
+                    h1 {
+                        margin: 5px 0px 3px 5px;
+                        padding: 0px 0px 0px 15px;
+                        line-height: 1em;
+                        .fontsize_l;
+                        background-image:url(../images/arrow_left.png);
+                        background-repeat:no-repeat;
+                        background-position:left center;
+                    }
+
+                    div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+                                                                    img.egw_fw_ui_sidemenu_listitem_icon {
+                                                                     display: block;
+                                                                     }
+                    }
+
+                }
+
+                //#################################
+                // Hover
+                // on Mouse over change color
+                .egw_fw_ui_category:hover {
+                    .background_color_40_gray;
+                    padding: 0.5em 1em 0.5em 0;
+                }
+
+
+
+                /*######################*/
+                // Active State
+                // change Background color in Blue
+                // See all Elements
+                .egw_fw_ui_category_active {
+                    border-bottom-width: 0px;
+                    margin-top: 4px;
+
+                    background-color: @egw_color_2_a;
+
+                    /*.background-color-50-gray;*/
+                    .color_5_gray;
+                    .border_radius(3px,3px,3px,3px) !important;
+
+                    h1 {
+                        background-image:url(../images/arrow_down.png);
+                        line-height: 1em;
+                        font-size: 12px;
+
+                            a {
+                            color: #FFF;
+
+
+                            img {.dimension_width_height_s;}
+
+                            &:hover {
+                                    padding: 5px 30px 5px 0px;
+                                    width: 200px;
+                                    .background_color_10_gray;
+                                    .color_50_gray;
+                                    .Complete_Button_hover;
+                                }
+                            }
+
+                         }
+
+                    &:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
+                }
+
+
+
+
+
+            }
+
+            .egw_fw_ui_sidemenu_entry_content_bottom {
+                border-width: 0px 1px 1px 1px;
+            }
+            .egw_fw_ui_sidemenu_entry_header_bottom {
+                border-width: 0px;
+                border-color: @gray_0;
+            }
+
+            .egw_fw_ui_sidemenu_entry_icon {
+                                        display: inline-block;
+                                        .dimension_height_m;
+
+                                        padding-left: 0;
+                                        padding-right: 0px;
+                                        float: left;
+
+                                        /*filter grey*/
+                                        .img_filter_gray;
+                                    }
+        }
+
+
+    } // SIDEMENU ENDE
+
+
+    /*#################################*/
+    // Trenner (Splitter)
+    #egw_fw_splitter {
+        position: absolute;
+        .background_color_30_gray;
+        width: 5px;
+        top: 40px;
+        bottom: 3px;
+        right: 0px;
+
+        &:hover {background-color: @egw_color_1;}
+    }
+    // Ende Sidebar
+
+// Menu Seite links
+}
+
+
+/** DON"T MOVE THIS **/
+.egw_fw_ui_splitter_vertical {
+	background-image: url(../images/splitter_vert.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	.background_color_30_gray;
+	position: absolute;
+	width: 5px;
+	height: 100%;
+	cursor: col-resize;
+}
+
+
+
+
+            //####################################################
+            // Submenu / Unterpunkte in der Seitenleiste
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ##  #############################     ##
+            // ##  #.egw_fw_ui_category_content#     ##
+            // ##  #############################     ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+
+
+.egw_fw_ui_category_content {
+    .background_color_0_gray;
+    border-top-width: 0;
+    border-left: 0px solid;
+    border-bottom: 0px solid;
+    margin-left: 4px;
+    margin-top: 0px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-top: 3px;
+    margin-right: 5px;
+    /*min-height: 50px;*/
+
+            // Last Element rounded
+                    &:last-of-type{
+                    .border_radius (0, 0, 10px, 0);
+                    border-color: @gray_30;
+                }
+
+                img { .dimension_height_s; vertical-align: middle;}
+
+                &:hover {
+                    .background_color_0_gray;
+                    border-color: @gray_50;
+                }
+
+    input#uical_select_owner_multiple{
+        .dimension_height_s;
+        vertical-align: middle;
+    }
+
+    // Favoriten anlegen und löschen
+    .sidebox-favorites{} // ist in etemplate2.less definiert
+
+
+}
+
+
+            //####################################################
+            // Submenu / Unterpunkte in der Seitenleiste
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ##  #############################     ##
+            // ##  #.egw_fw_ui_category_content#     ##
+            // ##  #############################     ##
+            // ##  #                           #     ##
+            // ##  # .egw_fw_ui_sidemenu_listitem    ##
+            // ##  #                           #     ##
+            // ##  #############################     ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+            // ########################################
+            // ##                                    ##
+            // ##                                    ##
+            // ########################################
+
+
+
+// Sub Sub Menu Item
+
+.egw_fw_ui_sidemenu_listitem {
+
+    padding: 9px 0px 0px 0px;
+    margin: 0px 0 1px 0px;
+    position: relative;
+    min-height: 18px;
+    background-color: @gray_0;
+
+   // Submenu Hover Item - gelb
+    &:hover{
+        .color_100_gray;
+        background-color: @egw_color_1_e;
+
+    }
+
+
+    // Icon before
+    img.egw_fw_ui_sidemenu_listitem_icon {
+        /*display: none;*/
+        .dimension_width_height_xs;
+        padding: 0px;
+        margin: 0px 5px;
+        float: left;
+
+    }
+
+    input {
+        height: 16px;
+        width: 81% !important;
+    }
+
+    input[type="image"] {
+        height: 10px;
+        width: 10px !important;
+        margin-left: 1px;
+    } // mehrere Benutzer auswählen
+
+    select { max-width: 85% !important; }
+
+    // Icon rechts der Liste - Auswahl Button
+    img {
+        height: 9px;
+        width: 9px;
+        padding: 0px;
+        float: right;
+    }
+
+    // normale Links
+    a {
+        // .Complete_Button_text;
+        padding: 5px 0px 5px 5px;
+        text-decoration: none;
+        min-width: 5em;
+        vertical-align: bottom;
+
+        &:hover{
+            .color_100_gray;
+        }
+
+        &:active {
+            .box_shadow_standard_light_inset;
+        }
+    }
+
+
+    div {
+        a:first-child{
+            .Complete_Button_text;
+            //		padding: 2px;
+            //		padding: 5px 30px 5px 0px;
+            width: 72% !important;
+            //		background-color: red;
+        }
+
+        a:first-child:hover {
+            //          .Complete_Button_text_hover;
+            //          .background-color-30-gray;
+            //          padding: 5px 30px 5px 0px;
+            //          width: 200px;
+        }
+
+        //löschen
+        a:nth-child(2){
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: transparent;
+            padding: 0px 2px 0 2px;
+            width: 10px;
+            min-width: 5px;
+
+            img {
+                margin: 0 0 0 0;
+                padding: 0em 0em 0 0em;
+                height: 10px;
+                width: 10px;
+            }
+        }
+
+        a:nth-child(2):hover {
+            background-color: @color_warning;
+            .Complete_Button_Icon_hover ;
+            .color_0_gray;
+            //		width: auto;
+        }
+    }
+
+
+} // .egw_fw_ui_sidemenu_listitem
+

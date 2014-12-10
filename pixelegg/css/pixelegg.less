@@ -1,0 +1,72 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/**
+ * addapted from orginal styles.php
+ */
+/**
+ * EGroupware general def_*.less are moved to phpgwapi/templates/default/*.less
+ * so they can be included from app specific files and are independent of Pixelegg template
+ */
+//@import "../../phpgwapi/templates/idots/css/traditional.less";
+//@import "../../phpgwapi/templates/default/def_buttons.less";
+//@import "../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
+// next two moved to pixelegg (layouts - not definitions)
+//@import "../../phpgwapi/templates/default/def_messages.less";
+//@import "../../phpgwapi/templates/default/def_content_elements.less";
+// next one disabled - not in use - (yet)
+//@import "../../phpgwapi/templates/default/def_icons.less";
+/**
+ * All app_* files are now again in $app/templates/default/app.less&css and will be included independent
+ *
+ * If some settings are Pixelegg template specific, please create $app/templates/pixelegg.less&css
+ * files AND include ../default/app.less from there
+*/
+/**
+ * not sure about these files, in general it is not a good idea to replace
+ * files from other projects, was we need to update them regulary.
+ * Would be a lot better to include their css files and only overwrite
+ * neccesarry settings
+ */
+@import "../less/etemplate2.less";
+// print ausgabe
+@import "../less/print.less";
+/*@import "../../phpgwapi/templates/idots/css/traditional.css";*/
+@import "../less/jquery-ui.less";
+@import "../less/magicsuggest.less";
+@import "../less/traditional.less";
+// next one transferred to layout_chosen.less
+//@import "../less/chosen.less";
+// next one sounds et2 specific, in which case it should go to etemplate ...
+// ==> now transferred to layout_table.less
+//@import "../less/et2_table.less";
+
+
+/**
+ * layout_*.less files are Pixelegg template specific
+ */
+@import "../less/layout_definitions.less";
+
+
+/*@import "../less/layout_buttons_global.less";*/
+/*@import "../less/layout_chosen.less";*/
+/*@import "../less/layout_messages.less";*/
+/*@import "../less/layout_content_elements.less";*/
+/*@import "../less/layout_table.less";*/
+/*@import "../less/layout_loginPage.less";*/
+/*@import "../less/layout_raster.less";*/
+/*@import "../less/layout_nextmatch.less";*/
+/*@import "../less/layout_footer.less";*/
+/*@import "../less/layout_dialog.less";*/
+
+//
+//
+//

@@ -1,0 +1,155 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * et2 Messages
+ *
+ * Please do NOT change css_files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "definitions.less";
+
+
+ //########################################################################################################
+// Chosen
+// Chosen.css
+//########################################################################################################
+
+/* @group Base */
+.chzn-container {
+  .color_50_gray;
+//width: auto !important;
+
+}
+.chzn-container .chzn-drop {
+	width: auto;
+
+}
+.chzn-container.chzn-with-drop .chzn-drop {}
+
+/* @end */
+/* @group Single Chosen */
+.chzn-container-single .chzn-single {}
+.chzn-container-single .chzn-default {}
+.chzn-container-single .chzn-single span { width: auto;}
+.chzn-container-single .chzn-single-with-deselect span {}
+.chzn-container-single .chzn-single abbr {}
+.chzn-container-single .chzn-single abbr:hover {}
+.chzn-container-single.chzn-disabled .chzn-single abbr:hover {}
+.chzn-container-single .chzn-single div {}
+.chzn-container-single .chzn-single div b {}
+.chzn-container-single .chzn-search {}
+.chzn-container-single .chzn-search input {}
+.chzn-container-single .chzn-drop {}
+.chzn-container-single.chzn-container-single-nosearch .chzn-search {}
+
+/* @end */
+/* @group Results */
+.chzn-container .chzn-results {
+  .color_50_gray;
+  margin: 0 4px 4px 0;
+  max-height: 240px;
+  padding: 0 0 0 4px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.chzn-container .chzn-results li {}
+.chzn-container .chzn-results li.active-result {}
+.chzn-container .chzn-results li.disabled-result {}
+.chzn-container .chzn-results li.highlighted {}
+.chzn-container .chzn-results li.no-results {}
+.chzn-container .chzn-results li.group-result {}
+.chzn-container .chzn-results li.group-option {}
+.chzn-container .chzn-results li em {}
+
+/* @end */
+/* @group Multi Chosen */
+.chzn-container-multi .chzn-choices {}
+.chzn-container-multi .chzn-choices li {}
+.chzn-container-multi .chzn-choices li.search-field {}
+.chzn-container-multi .chzn-choices li.search-field input {}
+.chzn-container-multi .chzn-choices li.search-field .default {}
+.chzn-container-multi .chzn-choices li.search-choice {}
+.chzn-container-multi .chzn-choices li.search-choice .search-choice-close {}
+.chzn-container-multi .chzn-choices li.search-choice .search-choice-close:hover {}
+.chzn-container-multi .chzn-choices li.search-choice-disabled {}
+.chzn-container-multi .chzn-choices li.search-choice-focus {}
+.chzn-container-multi .chzn-choices li.search-choice-focus .search-choice-close {}
+.chzn-container-multi .chzn-results {}
+.chzn-container-multi .chzn-drop .result-selected {}
+
+/* @end */
+/* @group Active  */
+.chzn-container-active .chzn-single {}
+.chzn-container-active.chzn-with-drop .chzn-single {}
+.chzn-container-active.chzn-with-drop .chzn-single div {}
+.chzn-container-active.chzn-with-drop .chzn-single div b {}
+.chzn-container-active .chzn-choices {}
+.chzn-container-active .chzn-choices li.search-field input {
+  color: #111 !important;
+  .Complete_Button_input;
+
+  &:hover {.Complete_Button_input_hover;}
+  &:focus {.Complete_Button_input_focus;}
+}
+
+/* @end */
+/* @group Disabled Support */
+.chzn-disabled {}
+.chzn-disabled .chzn-single {}
+.chzn-disabled .chzn-choices .search-choice .search-choice-close {}
+
+/* @end */
+/* @group Right to Left */
+.chzn-rtl {}
+.chzn-rtl .chzn-single {}
+.chzn-rtl .chzn-single span {}
+.chzn-rtl .chzn-single-with-deselect span {}
+.chzn-rtl .chzn-single div {}
+.chzn-rtl .chzn-single abbr {}
+.chzn-rtl .chzn-choices li {}
+.chzn-rtl .chzn-choices li.search-field input {}
+.chzn-rtl .chzn-choices li.search-choice {}
+.chzn-rtl .chzn-choices li.search-choice .search-choice-close {}
+.chzn-rtl.chzn-container-single-nosearch .chzn-search,
+.chzn-rtl .chzn-drop {}
+.chzn-rtl.chzn-container-single .chzn-results {}
+.chzn-rtl .chzn-results li.group-option {}
+.chzn-rtl.chzn-container-active.chzn-with-drop .chzn-single div {}
+.chzn-rtl .chzn-search input {}
+.chzn-rtl.chzn-container-single .chzn-single div b {}
+.chzn-rtl.chzn-container-single.chzn-with-drop .chzn-single div b {}
+
+/* @end */
+/* @group Retina compatibility */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
+  .chzn-rtl .chzn-search input,
+  .chzn-container-single .chzn-single abbr,
+  .chzn-container-single .chzn-single div b,
+  .chzn-container-single .chzn-search input,
+  .chzn-container-multi .chzn-choices .search-choice .search-choice-close,
+  .chzn-container .chzn-results-scroll-down span,
+  .chzn-container .chzn-results-scroll-up span {  }
+}
+/* @end */
+
+/**
+ * Egw customizations for Chosen widget
+ */
+.chzn-container {}
+.chzn-container .chzn-single {}
+.chzn-container .chzn-results {}
+.chzn-container .chzn-results li {}
+.chzn-container-multi .chzn-choices .search-field input {}
+.chzn-container-multi .chzn-choices .search-choice {}
+.chzn-container .chzn-drop {}
+.chzn-container-active.chzn-with-drop.chzn-above .chzn-single {}
+.chzn-container.chzn-above .chzn-drop {}
+//

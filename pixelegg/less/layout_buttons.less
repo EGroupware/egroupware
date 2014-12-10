@@ -1,0 +1,216 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * lettersearch
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
+ */
+@import (reference) "definitions.less";
+//##############################################################################################################
+// Button global for all and everything:
+
+/*##########################################
+#      Content Element                     #
+#      Button                              #
+###########################################*/
+
+
+button{
+ // siehe etemplate2.less
+}
+
+// orginal -> aus traditionell.css
+
+/*input,button,select
+{
+	border: solid 1px #bbbbbb;
+}*/
+
+// orginal -> aus traditionell.css
+/*input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+{
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer;
+	color:  #004e7d;
+}*/
+// orginal -> aus traditionell.css
+/*input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
+{
+	background-color:#94bfd4;
+	border:  outset 1px #b9d5e3;
+	color:  #004e7d;
+}*/
+// orginal -> aus traditionell.css
+/*input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+{
+	border:  inset 1px #bbbbbb;
+}*/
+
+// orginal -> aus traditionell.css
+input[type=submit]:disabled,
+input[type=button]:disabled,
+input[type=reset]:disabled,
+button:disabled,
+.egwbutton:disabled
+{
+	background-color: @color_disabled;
+	color: gray;
+}
+
+
+
+
+button.et2_button_text,
+input[type=button] {
+
+        background-image[src$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
+
+        &:hover{
+            /*background-color: @gray_30;*/
+            text-shadow: 0px 0px;
+            color: @gray_0;
+            .box_shadow_standard_light_hover;
+            background-color: @color_positive_action_active;
+            background-size: 20px 20px;
+           }
+
+        &:active {.box_shadow_standard_light_active !important;}
+
+}
+
+/* ########################################################################################
+ * Content Element
+ * Button mit Bildern
+ *
+ ######################################################################################## */
+button.et2_button_with_image{
+        .Complete_Button_text_icon_before;
+        background-repeat: no-repeat !important;
+        background-position: 6px center;
+        background-size: 20px 20px;
+        background-color: @gray_10;
+        background-color[url$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
+
+}
+
+/* ########################################################################################
+ * Content Element
+ * Button löschen / delete / => color-negative-action // red
+ *
+ ######################################################################################## */
+
+input[type="submit"][id*="delete"],
+input[type="button"][id*="delete"],
+button[id="delete"],
+button[id="infolog-edit_button[delete]"],
+button[id="addressbook-edit_button[delete]"],
+button[id="resources-edit_delete"],
+button[id="calendar-edit_button[delete]"],
+button[id="timesheet-edit_button[delete]"],
+button[id="displayToolbar-delete"],
+button.et2_button_delete
+{
+ .Complete_Button_delete;
+}
+
+/* ########################################################################################
+ * Content Element
+ * Button edit + save + apply + copy => color-positive-action // green
+ *
+ ######################################################################################## */
+
+button[id*="save"],
+button[id*="apply"],
+button[id*="copy"],
+button[id*="edit_button[edit]"],
+button.et2_button{
+
+        .Complete_Button_save_apply_copy;
+}
+
+
+button#filemanager-select_button[ok]{
+    &:active {background-color: @color_positive_action_active;}
+}
+
+// Password change
+#passwordchange {
+     background-image:url('../images/cancel.png') !important;
+    .Complete_Button_text_icon_before;
+
+    &:hover {background-color: @color_positive_action_active !important; .box_shadow_standard_light_hover;}
+    &:active {background-color: @color_positive_action_active !important; .box_shadow_standard_light_inset;}
+
+
+}
+
+
+
+/* ########################################################################################
+ *
+ * Button cancel /  => color-cancel-action // yellow
+ *
+ ######################################################################################## */
+
+button[id*="cancel"],
+button[id*="importexport-wizardbox_button[previous]"],
+button#cancel,
+#cancel,
+button.et2_button_cancel,
+button.et2_button_question{
+
+                &:hover  { background-color: @color_cancel_action_hover !important; color: @gray_100; }
+                &:active { background-color: @color_cancel_action_active !important; color: @gray_80; }
+}
+
+
+/* et2_box_widget ###*/
+/*div.et2_box_widget .et2_button_text:last_child,*/
+button[id="cancel"],
+button#cancel{
+
+               .Complete_Button_cancel;
+}
+
+
+// Password cancel
+#passwordcancel {
+     background-image:url('../images/cancel.png') !important;
+    .Complete_Button_text_icon_before;
+
+    &:hover {background-color: @color_cancel_action_hover !important; .box_shadow_standard_light_hover;}
+    &:active {background-color: @color_cancel_action_active !important; .box_shadow_standard_light_inset;}
+
+
+}
+
+/* ########################################################################################
+ *
+ * Button hinzufügen
+ *
+ ######################################################################################## */
+
+button.add {
+    .Complete_Button_add ;
+}
+
+button[id="add"]{
+                background-image:url('../images/add.png') !important;
+                .Complete_Button_text_icon_before;
+
+                &:active {background-color: @color_positive_action_active !important;}
+}
+
+
+
+
+/*Button Ende #######################################################*/
