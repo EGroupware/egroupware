@@ -83,6 +83,11 @@ app.classes.filemanager = AppJS.extend(
 		// get clipboard from browser localstore and update button tooltips
 		this.clipboard_tooltips();
 
+		// calling set_readonly for initial path
+		if (this.et2.getArrayMgr('content').getEntry('initial_path_readonly'))
+		{
+			this.readonly = [this.et2.getArrayMgr('content').getEntry('nm[path]'), true];
+		}
 		if (typeof this.readonly != 'undefined')
 		{
 			this.set_readonly.apply(this, this.readonly);

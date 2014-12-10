@@ -482,6 +482,10 @@ class filemanager_ui
 		{
 			$tpl->setElementAttribute('nm[buttons][upload]', 'drop_target', 'popupMainDiv');
 		}
+		// if initial load is done via GET request (idots template or share.php)
+		// get_rows cant call app.filemanager.set_readonly, so we need to do that here
+		$content['initial_path_readonly'] = !egw_vfs::is_writable($content['nm']['path']);
+
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
