@@ -1,3 +1,9 @@
+egroupware-epl (14.2.20141210-1) hardy; urgency=low
+
+  * bumping API version to 14.2 and fixing wrong version in changelog
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 10 Dec 2014 10:14:40 +0100
+
 egroupware-epl (14.2.20141209-1) hardy; urgency=low
 
   * first beta for 14.2 release
