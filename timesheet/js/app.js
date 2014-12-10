@@ -106,6 +106,12 @@ app.classes.timesheet = AppJS.extend(
 	 */
 	pm_id_changed: function(_egw, _widget)
 	{
+		// Update price list
+		var ts_pricelist = _widget.getRoot().getWidgetById('pl_id');
+		egw.json('projectmanager_widget::ajax_get_pricelist',[_widget.getValue()],function(value) {
+			ts_pricelist.set_select_options(value||{})
+		}).sendRequest(true);
+
 		var ts_project = this.et2.getWidgetById('ts_project');
 		if (ts_project)
 		{
