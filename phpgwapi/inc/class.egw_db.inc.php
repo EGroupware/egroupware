@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -1507,16 +1507,22 @@ class egw_db
 			{
 				$keys[] = $this->name_quote($key);
 
+				$col = $key;
+				// fix "table.column" expressions, to not trigger exception, if column alone would work
 				if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]))
 				{
-					throw new egw_exception_db_invalid_sql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
+					if (strpos($key, '.') !== false) list(, $col) = explode('.', $key);
+					if (!isset($column_definitions[$col]))
+					{
+						throw new egw_exception_db_invalid_sql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
+					}
 				}
-				$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
-				$not_null = is_array($column_definitions) && isset($column_definitions[$key]['nullable']) ? !$column_definitions[$key]['nullable'] : false;
+				$column_type = is_array($column_definitions) ? @$column_definitions[$col]['type'] : False;
+				$not_null = is_array($column_definitions) && isset($column_definitions[$col]['nullable']) ? !$column_definitions[$col]['nullable'] : false;
 
 				if ($truncate_varchar)
 				{
-					$maxlength = $column_definitions[$key]['type'] == 'varchar' ? $column_definitions[$key]['precision'] : null;
+					$maxlength = $column_definitions[$col]['type'] == 'varchar' ? $column_definitions[$col]['precision'] : null;
 				}
 				// dont use IN ( ), if there's only one value, it's slower for MySQL
 				if (is_array($data) && count($data) == 1)
