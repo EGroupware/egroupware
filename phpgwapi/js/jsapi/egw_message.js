@@ -71,6 +71,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				_type = _msg.match(error_reg_exp) ? 'error' : 'success';
 			}
 
+			// if we are NOT in a popup then call the message on top window
+			if (!this.is_popup() && _wnd !== _wnd.top)
+			{
+				egw(_wnd.top).message(_msg, _type);
+				return;
+			}
 			// handle message display for non-framework templates, eg. idots or jerryr
 			if (message_timer)
 			{
