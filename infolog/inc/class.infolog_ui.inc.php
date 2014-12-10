@@ -343,7 +343,6 @@ class infolog_ui
 		{
 			$link_filters['linked'] = $query['col_filter']['linked'];
 			$links['linked'] = array();
-			unset($query['col_filter']['linked']);
 		}
 		if($query['action'] && in_array($query['action'], array_keys($GLOBALS['egw_info']['apps'])) && $query['action_id'])
 		{
