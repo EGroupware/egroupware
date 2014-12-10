@@ -67,19 +67,31 @@ abstract class etemplate_widget_entry extends etemplate_widget_transformer
 		
 		$form_name = self::form_name($cname, $this->id);
 		$data_id = $attrs['value'] ? self::form_name($cname, $attrs['value']) : self::form_name($cname, self::ID_PREFIX . $this->id);
-		
+
 		// No need to proceed
 		if(!$data_id) return;
 
 		// Find out which record to load
 		$value = self::get_array(self::$request->content, $form_name, false, true);
-
-		// Get the record itself
-		$data =& self::get_array(self::$request->content, $data_id, true, false);
-		if(!$data)
+		if(!$value)
 		{
-			$data =& static::get_entry($value, $attrs);
+			// Try here...  legacy / fallback / just make it work
+			$value = self::get_array(self::$request->content, $data_id, true, false);
+			$data = static::get_entry($value, $attrs);
 		}
+		else
+		{
+			// Get the record itself
+			$data = self::get_array(self::$request->content, $data_id, true, false);
+			if(!$data)
+			{
+				$data = static::get_entry($value, $attrs);
+			}
+		}
+
+		// Set the new value so transformer can find it.  Use prefix to avoid changing the original value
+		$new_value =& self::get_array(self::$request->content, self::ID_PREFIX .$this->id, true, false);
+		$new_value = $data;
 		$this->id = self::ID_PREFIX . $this->id . "[{$attrs['field']}]";
 
 		$old_type = self::getElementAttribute($this->id, 'type');
