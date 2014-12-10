@@ -450,7 +450,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			jQuery.when.apply(jQuery, deferred).done(jQuery.proxy(function() {
 				egw.debug("log", "Finished loading %s, triggering load event", _name);
 				
-				if (typeof window.framework != 'undefined' && typeof window.framework.loadingFinished != 'undefined')
+				if (typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined')
 				{
 					//Call loading finished method of the framework with local window
 					window.framework.et2_loadingFinished(egw(window).window);
