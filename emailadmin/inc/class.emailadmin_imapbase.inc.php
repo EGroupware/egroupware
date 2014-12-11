@@ -999,6 +999,7 @@ class emailadmin_imapbase
 		$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		try
 		{
+			$this->icServer->getCurrentMailbox();
 			$HierarchyDelimiter[$this->icServer->ImapServerId] = $this->icServer->getDelimiter();
 		}
 		catch(Exception $e)
@@ -4662,11 +4663,11 @@ class emailadmin_imapbase
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		//error_log(__METHOD__.' ('.__LINE__.') '." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
-		if (is_null($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-		if (isset($rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
+		if (is_null($rawHeaders)||!is_array($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		if (isset($rawHeaders[$this->icServer->ImapServerId][(string)$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.' ('.__LINE__.') '." Using Cache for raw Header $_uid, $_partID in Folder $_folder");
-			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
+			return $rawHeaders[$this->icServer->ImapServerId][(string)$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		$uid = $_uid;
@@ -4702,7 +4703,7 @@ class emailadmin_imapbase
 				}
 			}
 		}
-		$rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]=$retValue;
+		$rawHeaders[$this->icServer->ImapServerId][(string)$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]=$retValue;
 		egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,$expiration=60*60*1);
 		return $retValue;
 	}
