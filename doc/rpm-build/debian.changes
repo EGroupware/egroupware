@@ -1,3 +1,10 @@
+egroupware-epl (14.2.20141211-1) hardy; urgency=low
+
+  * egw-pear: removed, as no longer necessary
+  * jdots/pixelegg: moved to main egroupware archive
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 11 Dec 2014 14:31:00 +0100
+
 egroupware-epl (14.2.20141210-1) hardy; urgency=low
 
   * bumping API version to 14.2 and fixing wrong version in changelog
