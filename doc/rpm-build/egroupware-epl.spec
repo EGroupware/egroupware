@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 14.2.20141209
+Version: 14.2.20141211
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -82,11 +82,11 @@ Prefix: /usr/share
 Distribution: %{distribution}
 
 Source0: %{name}-%{version}.tar.gz
-Source1: %{name}-egw-pear-%{version}.tar.bz2
+#Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
-Source3: %{name}-pixelegg-%{version}.tar.bz2
+#Source3: %{name}-pixelegg-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
-Source5: %{name}-jdots-%{version}.tar.bz2
+#Source5: %{name}-jdots-%{version}.tar.bz2
 Source6: phpfreechat_data_public.tar.gz
 Source8: %{name}-rpmlintrc
 #Source9: %{name}-gallery-%{version}.tar.bz2
@@ -102,7 +102,6 @@ Buildarch: noarch
 AutoReqProv: no
 
 Requires: %{name}-core            = %{version}
-Requires: %{name}-egw-pear        = %{version}
 Requires: %{name}-stylite         = %{version}
 Requires: %{name}-jdots           = %{version}
 Requires: %{name}-esync           = %{version}
@@ -166,6 +165,8 @@ Obsoletes: %{egw_packagename}-felamimail
 Obsoletes: %{egw_packagename}-syncml
 Obsoletes: %{egw_packagename}-phpsysinfo
 Obsoletes: %{egw_packagename}-polls
+# packages no longer in 14.2
+Obsoletes: %{name}-egw-pear
 
 %post
 # Check binary paths and create links for opensuse/sles
@@ -223,18 +224,6 @@ Obsoletes: %{egw_packagename}-addressbook
 This package provides the EGroupware core applications
 (API, admin, etemplate, preferences and setup) plus addressbook.
 
-%package egw-pear
-Version: %{version}
-Summary: The EGroupware egw-pear application
-Group: Web/Database
-Requires: %{php}-pear
-AutoReqProv: no
-Requires: egw-core >= %{version}
-Provides: egw-pear %{version}
-Obsoletes: %{egw_packagename}-egw-pear
-%description egw-pear
-egw-pear contains modified pear classes necessary for EGroupware
-
 %package esync
 Version: %{version}
 Summary: The EGroupware eSync application
@@ -284,7 +273,6 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
 Requires: %{php}-bcmath
-Requires: %{name}-egw-pear >= %{version}
 Obsoletes: %{egw_packagename}-emailadmin
 %description emailadmin
 EmailAdmin allow to maintain User email accounts
@@ -296,7 +284,6 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
 Requires: %{name}-emailadmin >= %{version}
-Requires: %{name}-egw-pear >= %{version}
 Obsoletes: %{egw_packagename}-felamimail
 Obsoletes: %{name}-felamimail
 %description mail
@@ -308,7 +295,6 @@ Summary: The EGroupware filemanager application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
-Requires: %{name}-egw-pear >= %{version}
 Obsoletes: %{egw_packagename}-filemanager
 %description filemanager
 This is the filemanager app for EGroupware.
@@ -402,26 +388,6 @@ Requires: egw-core >= %{version}
 Obsoletes: %{egw_packagename}-phpfreechat
 %description phpfreechat
 Chat with other EGroupware users. A port of phpFreeChat for EGroupware.
-
-#%package phpsysinfo
-#Version: %{version}
-#Summary: The EGroupware phpsysinfo application
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core >= %{version}
-#Obsoletes: %{egw_packagename}-phpsysinfo
-#%description phpsysinfo
-#This is the phpsysinfo app for EGroupware.
-
-#%package polls
-#Version: %{version}
-#Summary: The EGroupware polls application
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core >= %{version}
-#Obsoletes: %{egw_packagename}-polls
-#%description polls
-#This is the polls app for EGroupware.
 
 %package projectmanager
 Version: %{version}
@@ -541,11 +507,11 @@ It also allows to remote wipe or view sync logs of all devices.
 echo "Detected php: %{php}"
 echo "post_install: %{post_install}"
 %setup0 -c -n %{egwdirname}
-%setup1 -T -D -a 1 -n %{egwdirname}
+#%setup1 -T -D -a 1 -n %{egwdirname}
 %setup2 -T -D -a 2 -n %{egwdirname}
-%setup3 -T -D -a 3 -n %{egwdirname}
+#%setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
-%setup5 -T -D -a 5 -n %{egwdirname}
+#%setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
 #%setup9 -T -D -a 9 -n %{egwdirname}
 %patch0 -p 0
@@ -638,10 +604,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %{egwdir}/developer_tools
 
-%files egw-pear
-%defattr(-,root,root)
-%{egwdir}/egw-pear
-
 %files emailadmin
 %defattr(-,root,root)
 %{egwdir}/emailadmin
@@ -689,14 +651,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files phpfreechat
 %defattr(-,root,root)
 %{egwdir}/phpfreechat
-
-#%files phpsysinfo
-#%defattr(-,root,root)
-#%{egwdir}/phpsysinfo
-
-#%files polls
-#%defattr(-,root,root)
-#%{egwdir}/polls
 
 %files projectmanager
 %defattr(-,root,root)

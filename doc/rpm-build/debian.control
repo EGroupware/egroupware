@@ -10,7 +10,6 @@ Package: egroupware-epl
 Architecture: all
 Depends:
  egroupware-epl-core (= ${binary:Version}),
- egroupware-epl-egw-pear (= ${binary:Version}),
  egroupware-epl-jdots (= ${binary:Version}),
  egroupware-epl-pixelegg (= ${binary:Version}),
  egroupware-epl-stylite (= ${binary:Version}),
@@ -65,10 +64,12 @@ Suggests: egroupware-epl,
  php5-mhash,
  php5-auth-pam,
  php-log
-Provides: egroupware-epl-addressbook, egroupware-epl-etemplate
+Provides: egroupware-epl-addressbook, egroupware-epl-etemplate, egroupware-epl-pear
 Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook, egroupware-etemplate, egroupware-epl-etemplate,
- egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupare-epl-phpsysinfo
-Conflicts: egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupware-epl-phpsysinfo
+ egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupare-epl-phpsysinfo,
+ egroupware-epl-pear, egroupware-pear
+Conflicts: egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupware-epl-phpsysinfo,
+ egroupware-epl-pear, egroupware-pear
 Description: web-based groupware suite - core modules
  ${commondesc}
  .
@@ -345,3 +346,15 @@ Description: web-based groupware suite - wiki application
  ${commondesc}
  .
  This EGroupware application provides a wiki.
+
+Package: egroupware-epl-jdots
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, egroupware-epl-core (>= ${binary:Version}),
+Description: Stylite Template set for EGroupware EPL
+ ${commondesc}
+
+Package: egroupware-epl-pixelegg
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, egroupware-epl-core (>= ${binary:Version}), egroupware-epl-jdots (>= ${binary:Version})
+Description: Pixelegg Template set for EGroupware 14.1
+ ${commondesc}
