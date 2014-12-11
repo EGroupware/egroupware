@@ -234,7 +234,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 		{
 			return _val;
 		}
-		_val = _val.replace(/window\.close\(\)/g, 'egw(window).close()');
+		if (_val) _val = _val.replace(/window\.close\(\)/g, 'egw(window).close()');
 
 		// Check to see if it's a string in app.appname.function format, and wrap it in
 		// a closure to make sure context is preserved
