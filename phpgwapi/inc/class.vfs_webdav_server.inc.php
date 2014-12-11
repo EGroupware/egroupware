@@ -13,15 +13,16 @@
  * @version $Id$
  */
 
+if (strpos(ini_get('include_path'), EGW_API_INC) === false)
+{
+	ini_set('include_path', EGW_API_INC.PATH_SEPARATOR.ini_get('include_path'));
+}
 require_once('HTTP/WebDAV/Server/Filesystem.php');
 
 /**
  * FileManger - WebDAV access using the new stream wrapper VFS interface
  *
- * Using the PEAR HTTP/WebDAV/Server/Filesystem class (which need to be installed!)
- *
- * @todo table to store properties
- * @todo filesystem class uses PEAR's System::find in COPY, which we dont require nor know if it works on custom stream wrappers
+ * Using modified PEAR HTTP/WebDAV/Server/Filesystem class in API dir
  */
 class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 {
