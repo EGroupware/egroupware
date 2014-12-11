@@ -795,3 +795,40 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		padding-top: 10px;
 	}
 }
+
+/* MOBILE (Portrait & Landscape) View --------------*/
+@media only screen and (max-device-width:1024px) {
+	div#mail-index_nm {
+			height: 100% !important;
+	}
+	/*Disable the preview spliter*/
+	div#mail-index_mailPreview, div.splitter-bar {
+		display: none !important;
+	}
+
+	
+}
+/* tablets and smartphones (portrait) ----------- */
+@media only screen
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+	div#mail-index div#mail-index_nm tr.mail.row {
+		font-size: medium;
+	}
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px)
+and (max-device-width:768){
+	div#mail-index div#mail-index_nm tr.mail.row {
+		font-size: medium;
+	}
+}
+
+/* Mobile (landscape) Tablet----------- */
+@media only screen
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+	
+}
