@@ -230,7 +230,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 	// Javascript
 	if (_type == "js")
 	{
-		if (typeof _val == "function")
+		if (typeof _val == "function" || typeof _val == "undefined")
 		{
 			return _val;
 		}
