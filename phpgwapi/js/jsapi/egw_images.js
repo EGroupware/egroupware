@@ -29,7 +29,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Set imagemap, called from /phpgwapi/images.php
 		 *
-		 * @param array/object _images
+		 * @param {array|object} _images
 		 */
 		set_images: function (_images)
 		{
@@ -39,8 +39,8 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Get image URL for a given image-name and application
 		 *
-		 * @param string _name image-name without extension
-		 * @param string _app application name, default current app of window
+		 * @param {string} _name image-name without extension
+		 * @param {string} _app application name, default current app of window
 		 * @return string with URL of image
 		 */
 		image: function (_name, _app)
@@ -84,8 +84,8 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 				return this.webserverUrl+images['phpgwapi'][_name];
 			}
 			// if no match, check if it might contain an extension
-			var matches = [];
-			if (matches = _name.match(/\.(png|gif|jpg)$/i))
+			var matches = _name.match(/\.(png|gif|jpg)$/i);
+			if (matches)
 			{
 				return this.image(_name.replace(/.(png|gif|jpg)$/i,''), _app);
 			}
@@ -97,9 +97,9 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Get image url for a given mime-type and option file
 		 *
-		 * @param _mime
-		 * @param _path vfs path to generate thumbnails for images
-		 * @param _size defaults to 16 (only supported size currently)
+		 * @param {string} _mime
+		 * @param {string} _path vfs path to generate thumbnails for images
+		 * @param {number} _size defaults to 16 (only supported size currently)
 		 * @returns url of image
 		 */
 		mime_icon: function(_mime, _path, _size)
@@ -109,15 +109,15 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			if (_mime == 'httpd/unix-directory') _mime = 'directory';
 
 			var type  = _mime.toLowerCase().split('/');
-			var image;
+			var image = type[0] == 'egw' ? this.image('navbar',type[1]) : undefined;
 
-			if (type[0] == 'egw' && (image = this.image('navbar',type[1])))
+			if (image)
 			{
 
 			}
 			else if (typeof _path == 'string' && type[0] == 'image' && type[1].match(/^(png|jpe?g|gif|bmp)$/))
 			{
-				var thsize = this.config('link_list_thumbnail') || 32;
+				var thsize = this.config('link_list_thumbnail') || 64;
 				image = this.link('/etemplate/thumbnail.php',{ 'path': _path, 'thsize': thsize});
 			}
 			else
@@ -155,6 +155,6 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			}
 			return icon;
 		}
-	}
+	};
 });
 

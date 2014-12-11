@@ -81,7 +81,7 @@ function get_app()
  */
 function get_maxsize()
 {
-	$preset = (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] == '' ? 32 :
+	$preset = !($GLOBALS['egw_info']['server']['link_list_thumbnail'] > 0) ? 64 :
 		$GLOBALS['egw_info']['server']['link_list_thumbnail'];
 
 	// Another maximum size may be passed if thumbnails are turned on
@@ -97,7 +97,7 @@ function get_maxsize()
  * Either loads the thumbnail for the given file form cache or generates a new
  * one
  *
- * @param string $file is the file of which a thumbnail should be created
+ * @param string $src is the file of which a thumbnail should be created
  * @returns false if the file doesn't exist or any other error occured.
  */
 function read_thumbnail($src)
@@ -190,10 +190,6 @@ function gen_dstfile($src, $maxsize)
  */
 function get_scaled_image_size($w, $h, $maxw, $maxh)
 {
-	//Set the output width to zero
-	$wout = 0.0;
-	$hout = 0.0;
-
 	//Scale will contain the factor by which the image has to be scaled down
 	$scale = 1.0;
 
@@ -344,6 +340,7 @@ function gdVersion($user_ver = 0)
 	// Use the gd_info() function if possible.
 	if (function_exists('gd_info')) {
 		$ver_info = gd_info();
+		$match = null;
 		preg_match('/\d/', $ver_info['GD Version'], $match);
 		$gd_ver = $match[0];
 		return $match[0];
@@ -362,10 +359,7 @@ function gdVersion($user_ver = 0)
 	// ...otherwise use phpinfo().
 	ob_start();
 	phpinfo(8);
-	$info = ob_get_contents();
-	ob_end_clean();
-	$info = stristr($info, 'gd version');
-	preg_match('/\d/', $info, $match);
-	$gd_ver = $match[0];
+	$info = stristr(ob_get_clean(), 'gd version');
+	if (preg_match('/\d/', $info, $match)) $gd_ver = $match[0];
 	return $match[0];
 }
