@@ -548,8 +548,6 @@ class setup_cmd_ldap extends setup_cmd
 				{
 					if (!isset($emailadmin_src))
 					{
-						// add egw-pear to include_path, as setup does NOT do it (only includes common_functions.inc.php from API)
-						set_include_path(EGW_SERVER_ROOT.'/egw-pear'.PATH_SEPARATOR.get_include_path());
 						include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$ldap_class.'.inc.php');
 						if ($to_ldap)
 						{

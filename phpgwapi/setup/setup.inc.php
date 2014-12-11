@@ -59,12 +59,6 @@ $setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home_hooks.addGrou
 $setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home_hooks.deleteGroup';
 $setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home_hooks.editGroup';
 
-// egw-pear dependency for modified HTTP_WebDAV_Server
-$setup_info['phpgwapi']['depends'][] = array(
-	'appname'  => 'egw-pear',
-	'versions' => Array('1.9','14.1')
-);
-
 /* CalDAV/CardDAV/GroupDAV app */
 $setup_info['groupdav']['name']      = 'groupdav';
 $setup_info['groupdav']['version']   = '14.1';

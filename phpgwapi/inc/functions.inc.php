@@ -32,12 +32,6 @@ if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_
 {
 	die("eGroupWare requires PHP $egw_min_php_version or greater.<br />Please contact your System Administrator to upgrade PHP!");
 }
-// check if eGW's pear repository is installed and prefer it over the other ones
-if (is_dir(EGW_SERVER_ROOT.'/egw-pear'))
-{
-	set_include_path(EGW_SERVER_ROOT.'/egw-pear'.PATH_SEPARATOR.get_include_path());
-	//echo "<p align=right>include_path='".get_include_path()."'</p>\n";
-}
 
 if (!defined('EGW_API_INC')) define('EGW_API_INC',PHPGW_API_INC);	// this is to support the header upgrade
 

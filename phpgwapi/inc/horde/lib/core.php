@@ -30,7 +30,7 @@ if (!defined('HORDE_BASE')) {
     @define('HORDE_BASE', EGW_BASE . '/phpgwapi/inc/horde/');
 }
 
-$save_include_path = set_include_path(HORDE_BASE . PATH_SEPARATOR . EGW_BASE . '/egw-pear/' . PATH_SEPARATOR . get_include_path());
+$save_include_path = set_include_path(HORDE_BASE . PATH_SEPARATOR . get_include_path());
 /* PEAR base class. */
 include_once 'PEAR.php';
 

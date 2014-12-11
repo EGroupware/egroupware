@@ -376,14 +376,8 @@ function pear_check($package,$args)
 	$pear_packages = $channel_packages[(string)$channel];
 	$version_available = false;
 
-	// check if egw-pear is availible and packages is included
-	if ($package && is_dir('../egw-pear') && file_exists('../egw-pear/'.str_replace('_','/',$package).'.php'))
-	{
-		$available = $found = true;
-		$version_available = '999.egw-pear';
-	}
 	// packages found in the pear registry --> use that info
-	elseif ($pear_packages)
+	if ($pear_packages)
 	{
 		$pear_available = $found = true;
 		// check if package is installed
