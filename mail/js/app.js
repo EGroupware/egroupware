@@ -396,7 +396,7 @@ app.classes.mail = AppJS.extend(
 		messages['msg'] = [_id];
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && (dataElem.data.class.indexOf('unseen') >= 0 || dataElem.data.class.indexOf('recent') >= 0))
+		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data['class'] != 'undefined' && (dataElem.data['class'].indexOf('unseen') >= 0 || dataElem.data['class'].indexOf('recent') >= 0))
 		{
 			this.mail_removeRowClass(messages,'recent');
 			this.mail_removeRowClass(messages,'unseen');
@@ -840,7 +840,7 @@ app.classes.mail = AppJS.extend(
 
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.class != 'undefined' && (dataElem.data.class.indexOf('unseen') >= 0 || dataElem.data.class.indexOf('recent') >= 0))
+		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data['class']  != 'undefined' && (dataElem.data['class'].indexOf('unseen') >= 0 || dataElem.data['class'].indexOf('recent') >= 0))
 		{
 			this.mail_removeRowClass(messages,'recent');
 			this.mail_removeRowClass(messages,'unseen');
@@ -1713,7 +1713,7 @@ app.classes.mail = AppJS.extend(
 			if (_confirm)
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "all", class: "ui-priority-primary", "default": true},
+					{text: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true},
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
 				var messageToDisplay = '';
@@ -1949,7 +1949,7 @@ app.classes.mail = AppJS.extend(
 						dataElem.data.flags = {};
 					}
 					flags = dataElem.data.flags;
-					classes = dataElem.data.class || "";
+					classes = dataElem.data['class'] || "";
 					classes = classes.split(' ');
 					// since we toggle we need to unset the ones already set, and set the ones not set
 					// flags is data, UI is done by class, so update both
@@ -1976,7 +1976,7 @@ app.classes.mail = AppJS.extend(
 					}
 
 					// Update cache & call callbacks - updates list
-					dataElem.data.class = classes.join(' ');
+					dataElem.data['class']  = classes.join(' ');
 					egw.dataStoreUID(msg.msg[i],dataElem.data);
 
 					//Refresh the nm rows after we told dataComponent about all changes, since the dataComponent doesn't talk to nm, we need to do it manually
@@ -2727,7 +2727,7 @@ app.classes.mail = AppJS.extend(
 				}
 
 				// Update class
-				dataElem.data.class += ' ' + _class;
+				dataElem.data['class']  += ' ' + _class;
 
 				// need to update flags too
 				switch(_class)
@@ -2780,12 +2780,12 @@ app.classes.mail = AppJS.extend(
 				}
 
 				// Update class
-				var classes = dataElem.data.class || "";
+				var classes = dataElem.data['class'] || "";
 				classes = classes.split(' ');
 				if(classes.indexOf(_class) >= 0)
 				{
 					classes.splice(classes.indexOf(_class),1);
-					dataElem.data.class = classes.join(' ');
+					dataElem.data['class'] = classes.join(' ');
 
 					// need to update flags too
 					switch(_class)
@@ -2920,7 +2920,7 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
-			{text: this.egw.lang("Add"), id: "add", class: "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
 			{text: this.egw.lang("Cancel"), id:"cancel"}
 		];
 		et2_dialog.show_prompt(function(_button_id, _value) {
@@ -2956,7 +2956,7 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
-			{text: this.egw.lang("Rename"), id: "rename", class: "ui-priority-primary", image: 'edit', "default": true},
+			{text: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
 			{text: this.egw.lang("Cancel"), id:"cancel"}
 		];
 		et2_dialog.show_prompt(function(_button_id, _value) {
@@ -3019,7 +3019,7 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
-			{text: this.egw.lang("Yes"), id: "delete", class: "ui-priority-primary", "default": true},
+			{text: this.egw.lang("Yes"), id: "delete", "class": "ui-priority-primary", "default": true},
 			{text: this.egw.lang("Cancel"), id:"cancel"}
 		];
 		et2_dialog.show_dialog(function(_button_id, _value) {
