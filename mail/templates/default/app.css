@@ -796,17 +796,25 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	}
 }
 
-/* MOBILE (Portrait & Landscape) View --------------*/
+/* MOBILE and tablets (Portrait & Landscape) View --------------*/
 @media only screen and (max-device-width:1024px) {
 	div#mail-index_nm {
-			height: 100% !important;
+			/*height: 100% !important;*/
 	}
 	/*Disable the preview spliter*/
 	div#mail-index_mailPreview, div.splitter-bar {
 		display: none !important;
 	}
 
-	
+	div.mailDisplayContainer{
+		margin-top: 30px;
+		margin-left:0;
+		height: auto;
+	}
+
+	div#mail-display.et2_container {
+		min-height: initial;
+	}
 }
 /* tablets and smartphones (portrait) ----------- */
 @media only screen
