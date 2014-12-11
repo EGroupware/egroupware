@@ -496,11 +496,18 @@ app.classes.infolog = AppJS.extend(
 
 		// It's important that all these keys are here, they override the link
 		// registry.
+		var action_id = nm_value.action_id ? nm_value.action_id : (_action_id != '0' ? _action_id : "") || "";
+		if(typeof action_id == "object" && typeof action_id.length == "undefined")
+		{
+			// Need a real array here
+			action_id = jQuery.map(action_id,function(val) {return val;});
+		}
 		var extras = {
 			type: _type || nm_value.filter || "",
 			cat_id: nm_value.cat_id || "",
-			action: _action || "",
-			action_id: _action_id != '0' ? _action_id : "" || ""
+			action: nm_value.action || _action || "",
+			// egw_link can handle arrays, but server is expecting CSV
+			action_id: typeof action_id.join != "undefined" ? action_id.join(',') : action_id
 		};
 		egw.open('','infolog','add',extras);
 	}
