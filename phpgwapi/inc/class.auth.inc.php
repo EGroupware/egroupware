@@ -56,7 +56,6 @@ class auth
 	}
 
 	/**
-	 * check_password_age
 	 * check if users are supposed to change their password every x sdays, then check if password is of old age
 	 * or the devil-admin reset the users password and forced the user to change his password on next login.
 	 *
@@ -71,11 +70,11 @@ class auth
 		if (is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->session_flags == 'A') return true;
 		// some statics (and initialisation to make information and timecalculation a) more readable in conditions b) persistent per request
 		// if user has to be warned about an upcomming passwordchange, remember for the session, that he was informed
-		static $UserKnowsAboutPwdChange;
+		static $UserKnowsAboutPwdChange=null;
 		if (is_null($UserKnowsAboutPwdChange)) $UserKnowsAboutPwdChange =& egw_cache::getSession('phpgwapi','auth_UserKnowsAboutPwdChange');
 		// retrieve the timestamp regarding the last change of the password from auth system and store it with the session
-		static $alpwchange_val;
-		static $pwdTsChecked;
+		static $alpwchange_val=null;
+		static $pwdTsChecked=null;
 		if (is_null($pwdTsChecked) && is_null($alpwchange_val) || (string)$alpwchange_val === '0')
 		{
 			$alpwchange_val =& egw_cache::getSession('phpgwapi','auth_alpwchange_val'); // set that one with the session stored value
@@ -100,8 +99,8 @@ class auth
 				//error_log(__METHOD__.__LINE__.'#'.$alpwchange_val.'# is null:'.is_null($alpwchange_val).'# is empty:'.empty($alpwchange_val).'# is set:'.isset($alpwchange_val));
 			}
 		}
-		static $passwordAgeBorder;
-		static $daysLeftUntilChangeReq;
+		static $passwordAgeBorder=null;
+		static $daysLeftUntilChangeReq=null;
 		// some debug output and develop options to move the horizons and warn levels around
 		//$GLOBALS['egw_info']['server']['change_pwd_every_x_days'] =35;
 		//$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change']=5;
@@ -209,7 +208,7 @@ class auth
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
-	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @param string $passwd_type ='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
@@ -304,9 +303,9 @@ class auth
 	 *
 	 * @param string $cleartext cleartext password
 	 * @param string $encrypted encrypted password, can have a {hash} prefix, which overrides $type
-	 * @param string $type_i type of encryption
+	 * @param string $type_in type of encryption
 	 * @param string $username used as optional key of encryption for md5_hmac
-	 * @param string &$type=null on return detected type of hash
+	 * @param string &$type =null on return detected type of hash
 	 * @return boolean
 	 */
 	static function compare_password($cleartext, $encrypted, $type_in, $username='', &$type=null)
@@ -314,6 +313,7 @@ class auth
 		// allow to specify the hash type to prefix the hash, to easy migrate passwords from ldap
 		$type = $type_in;
 		$saved_enc = $encrypted;
+		$matches = null;
 		if (preg_match('/^\\{([a-z_5]+)\\}(.+)$/i',$encrypted,$matches))
 		{
 			$type = strtolower($matches[1]);
@@ -419,9 +419,9 @@ class auth
 			}
 		}
 
-		$salt = substr($db_val, 0, $len);
-		$new_hash = crypt($form_val, $salt);
-		//error_log(__METHOD__."('$form_val', '$db_val') type=$type --> len=$len --> salt='$salt' --> new_hash='$new_hash' returning ".array2string($db_val === $new_hash));
+		$full_salt = substr($db_val, 0, $len);
+		$new_hash = crypt($form_val, $full_salt);
+		//error_log(__METHOD__."('$form_val', '$db_val') type=$type --> len=$len --> salt='$full_salt' --> new_hash='$new_hash' returning ".array2string($db_val === $new_hash));
 
 		return $db_val === $new_hash;
 	}
@@ -431,8 +431,8 @@ class auth
 	 *
 	 * uses the encryption type set in setup and calls the appropriate encryption functions
 	 *
-	 * @param $password password to encrypt
-	 * @param $type=null default to $GLOBALS['egw_info']['server']['ldap_encryption_type']
+	 * @param string $password password to encrypt
+	 * @param string $type =null default to $GLOBALS['egw_info']['server']['ldap_encryption_type']
 	 * @return string
 	 */
 	static function encrypt_ldap($password, $type=null)
@@ -495,7 +495,7 @@ class auth
 	 * Create a password for storage in the accounts table
 	 *
 	 * @param string $password
-	 * @param string $type=null default $GLOBALS['egw_info']['server']['sql_encryption_type']
+	 * @param string $type =null default $GLOBALS['egw_info']['server']['sql_encryption_type']
 	 * @return string hash
 	 */
 	static function encrypt_sql($password, $type=null)
@@ -545,7 +545,7 @@ class auth
 	/**
 	 * Get available password hashes sorted by securest first
 	 *
-	 * @param string &$securest=null on return securest available hash
+	 * @param string &$securest =null on return securest available hash
 	 * @return array hash => label
 	 */
 	public static function passwdhashes(&$securest=null)
@@ -603,12 +603,12 @@ class auth
 	 *
 	 * Windows compatible check is $reqstrength=3, $minlength=7, $forbid_name=true
 	 *
-	 * @param string $password
-	 * @param int $reqstrength=null defaults to whatever set in config for "force_pwd_strength"
-	 * @param int $minlength=null defaults to whatever set in config for "check_save_passwd"
-	 * @param string $forbid_name=null if "yes" username or full-name split by delimiters AND longer then 3 chars are
+	 * @param string $passwd
+	 * @param int $reqstrength =null defaults to whatever set in config for "force_pwd_strength"
+	 * @param int $minlength =null defaults to whatever set in config for "check_save_passwd"
+	 * @param string $forbid_name =null if "yes" username or full-name split by delimiters AND longer then 3 chars are
 	 *  forbidden to be included in password, default to whatever set in config for "passwd_forbid_name"
-	 * @param array|int $account=null array with account_lid and account_fullname or account_id for $forbid_name check
+	 * @param array|int $account =null array with account_lid and account_fullname or account_id for $forbid_name check
 	 * @return mixed false if password is considered "safe" (or no requirements) or a string $message if "unsafe"
 	 */
 	static function crackcheck($passwd, $reqstrength=null, $minlength=null, $forbid_name=null, $account=null)
@@ -756,12 +756,12 @@ class auth
 	 *
 	 * @param string $form_val user input value for comparison
 	 * @param string $db_val   stored value (from database)
-	 * @param string $key       key for md5_hmac-encryption (username for imported smf users)
+	 * @param string $_key       key for md5_hmac-encryption (username for imported smf users)
 	 * @return boolean	 True on successful comparison
 	 */
-	static function md5_hmac_compare($form_val,$db_val,$key)
+	static function md5_hmac_compare($form_val,$db_val,$_key)
 	{
-		$key = str_pad(strlen($key) <= 64 ? $key : pack('H*', md5($key)), 64, chr(0x00));
+		$key = str_pad(strlen($_key) <= 64 ? $_key : pack('H*', md5($_key)), 64, chr(0x00));
 		$md5_hmac = md5(($key ^ str_repeat(chr(0x5c), 64)) . pack('H*', md5(($key ^ str_repeat(chr(0x36), 64)). $form_val)));
 
 		return strcmp($md5_hmac,$db_val) == 0;
@@ -778,7 +778,7 @@ interface auth_backend
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
-	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @param string $passwd_type ='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
 	function authenticate($username, $passwd, $passwd_type='text');
