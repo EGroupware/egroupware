@@ -294,7 +294,11 @@ class calendar_uilist extends calendar_ui
 
 		// do we need to query custom fields and which
 		// Check stored preference if selectcols isn't available (ie: first call)
-		$select_cols = explode(',',$params['selectcols'] ? $params['selectcols'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['nextmatch-calendar.list.rows']);
+		$select_cols = $params['selectcols'] ? $params['selectcols'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['nextmatch-calendar.list.rows'];
+		if(!is_array($params['selectcols']))
+		{
+			$select_cols = explode(',',$select_cols);
+		}
 		if (in_array('cfs',$select_cols))
 		{
 			$cfs = array();
