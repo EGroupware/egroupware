@@ -261,7 +261,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 			}
 		}
 
-		if (typeof _val == "string")
+		if (!_val || typeof _val == "string")
 		{
 			return _val;	// get compiled later in widgets own initAttributes, as widget is not yet initialised
 		}
