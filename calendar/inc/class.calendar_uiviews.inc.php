@@ -1826,6 +1826,11 @@ class calendar_uiviews extends calendar_ui
 		{
 			$tpl->set_var('bodydescription', !$is_private ? nl2br(html::htmlspecialchars($event['description'])) : '');
 		}
+		// set the bodydescription to empty if it is not visible
+		else
+		{
+			$tpl->set_var('bodydescription', '');
+		}
 
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
 		$html = $tpl->fp('out',$block);
