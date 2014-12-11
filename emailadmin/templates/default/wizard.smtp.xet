@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="emailadmin.wizard.smtp" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Step 4: SMTP - outgoing mail" span="all" class="emailadmin_header"/>
+					<description/>
+				</row>
+				<row class="@manual_class">
+					<description value="Username" for="acc_smtp_username"/>
+					<textbox blur="if authentication required" id="acc_smtp_username" size="32" maxlength="128" autocomplete="off"/>
+				</row>
+				<row class="@manual_class">
+					<description value="Password" for="acc_smtp_password"/>
+					<passwd id="acc_smtp_password" size="32" maxlength="128" autocomplete="off"/>
+				</row>
+				<row class="@manual_class">
+					<description value="SMTP server" for="acc_smtp_host"/>
+					<textbox blur="Hostname or IP" id="acc_smtp_host" size="32" maxlength="128"/>
+				</row>
+				<row class="@manual_class">
+					<description value="Secure connection" for="acc_smtp_ssl"/>
+					<hbox>
+						<menulist>
+							<menupopup id="acc_smtp_ssl" onchange="app.emailadmin.wizard_smtp_ssl_onchange" class="emailadmin_ssl"/>
+						</menulist>
+						<textbox type="integer" label="Port" id="acc_smtp_port" class="emailadmin_port"/>
+					</hbox>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox span="all">
+						<button label="Continue" id="button[continue]" onclick="app.emailadmin.wizard_detect" image="continue" background_image="1"/>
+						<button label="Back" id="button[back]" image="back" background_image="1"/>
+						<button label="Manual entry" id="button[manual]" onclick="app.emailadmin.wizard_manual" image="manual" background_image="1"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+				<row>
+					<image src="emailadmin/progress" span="all" class="emailadmin_progress"/>
+					<description/>
+				</row>
+				<row>
+					<textbox multiline="true" id="smtp_output" readonly="true" span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
