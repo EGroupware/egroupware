@@ -30,7 +30,7 @@ $config = array(
 	'svnbranch' => 'trunk', // 'branches/1.6' or 'tags/1.6.001'
 	'svnalias' => 'aliases/default-ssh',    // default alias
 	'aliasdir' => 'egroupware',             // directory created by the alias
-	'extra' => array('egw-pear', '$stylitebase/$svnbranch/stylite','$stylitebase/$svnbranch/jdots','$stylitebase/$svnbranch/pixelegg', '$stylitebase/$svnbranch/esyncpro'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
+	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
 	'rsync' => 'rsync --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
@@ -38,7 +38,7 @@ $config = array(
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
 	'packager' => 'build@stylite.de',
-	'obs' => '../obs/stylite-epl',
+	'obs' => './obs',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
@@ -48,7 +48,7 @@ $config = array(
 	'release' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	'copychangelog' => '$sourcedir/README', //'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
-	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs', 'copychangelog'),
+	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs','copychangelog'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 );
 
