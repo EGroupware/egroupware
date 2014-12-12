@@ -16,7 +16,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="ID" id="uid" readonly="true"/>
+					<nextmatch-sortheader label="ID" id="uid" readonly="true"/>
 					<nextmatch-header statustext="Status" label="St." id="status"/>
 					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
 					<nextmatch-sortheader label="subject" id="subject"/>
