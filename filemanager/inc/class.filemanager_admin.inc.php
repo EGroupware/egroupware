@@ -87,8 +87,11 @@ class filemanager_admin extends filemanager_ui
 			{
 				$path = '/etemplates';
 				$url = 'stylite.merge://default/etemplates?merge=.&lang=0&level=1&extension=xet&url=egw';
+				$backup = egw_vfs::$is_root;
+				egw_vfs::$is_root = true;
 				$msg = egw_vfs::mount($url, $path) ?
 					lang('Successful mounted %1 on %2.',$url,$path) : lang('Error mounting %1 on %2!',$url,$path);
+				egw_vfs::$is_root = $backup;
 			}
 			elseif (egw_vfs::$is_root)
 			{
