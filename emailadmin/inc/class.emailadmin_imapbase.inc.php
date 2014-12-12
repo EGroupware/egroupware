@@ -1711,14 +1711,19 @@ class emailadmin_imapbase
 			self::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
 			if (!isset(self::$supportsORinQuery[$this->profileID])) self::$supportsORinQuery[$this->profileID]=true;
 		}
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_filter).' SupportsOrInQuery:'.self::$supportsORinQuery[$this->profileID]);
 		$filter = $this->createIMAPFilter($_folderName, $_filter,self::$supportsORinQuery[$this->profileID]);
 		//_debug_array($filter);
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($filter));
 		if($this->icServer->hasCapability('SORT')) {
-			if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability, SortBy: $_sort Reverse: $_reverse");
+			// when using an orQuery and we sort by date. sort seems to fail on certain servers => ZIMBRA with Horde_Imap_Client
+			// thus we translate the search request from date to Horde_Imap_Client::SORT_SEQUENCE (which should be the same, if
+			// there is no messing with the dates)
+			//if (self::$supportsORinQuery[$this->profileID]&&$_sort=='date'&&$_filter['type']=='quick'&&!empty($_filter['string']))$_sort='INTERNALDATE';
+			if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability, SortBy: ".array2string($_sort)." Reverse: $_reverse");
 			$sortOrder = $this->_getSortString($_sort, $_reverse);
 			if ($_reverse && in_array(Horde_Imap_Client::SORT_REVERSE,$sortOrder)) $_reverse=false; // as we reversed the result already
-			if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy: $sortOrder Filter: ".array2string($filter));
+			if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy:".array2string($_sort)."->".array2string($sortOrder)." Filter: ".array2string($filter));
 			try
 			{
 				$sortResult = $this->icServer->search($_folderName, $filter, array(
@@ -1784,6 +1789,7 @@ class emailadmin_imapbase
 			self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'] = $sortResult;
 			self::$folderStatusCache[$this->profileID][$_folderName]['sort']	= $_sort;
 		}
+		//error_log(__METHOD__." using Filter:".print_r($filter,true)." ->".print_r($sortResult,true));
 		//_debug_array($sortResult['match']->ids);
 		return $sortResult;
 	}
@@ -1864,6 +1870,7 @@ class emailadmin_imapbase
 	function createIMAPFilter($_folder, $_criterias, $_supportsOrInQuery=true)
 	{
 		$imapFilter = new Horde_Imap_Client_Search_Query();
+		$imapFilter->charset('UTF-8');
 
 		//_debug_array($_criterias);
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
@@ -1871,61 +1878,13 @@ class emailadmin_imapbase
 			$imapFilter->flag('DELETED', $set=false);
 			return $imapFilter;
 		}
-		//error_log(__METHOD__.' ('.__LINE__.') '.print_r($_criterias, true));
-		$imapSearchFilter = new Horde_Imap_Client_Search_Query();
 		$queryValid = false;
-		if(!empty($_criterias['string'])) {
-			$criteria = strtoupper($_criterias['type']);
-			switch ($criteria) {
-				case 'QUICK':
-					$imapSearchFilter->headerText('SUBJECT', $_criterias['string'], $not=false);
-					$imapFilter2 = new Horde_Imap_Client_Search_Query();
-					if($this->isSentFolder($_folder)) {
-						$imapFilter2->headerText('TO', $_criterias['string'], $not=false);
-					} else {
-						$imapFilter2->headerText('FROM', $_criterias['string'], $not=false);
-					}
-					if ($_supportsOrInQuery)
-					{
-						$imapSearchFilter->orSearch($imapFilter2);
-					}
-					else
-					{
-						$imapSearchFilter->andSearch($imapFilter2);
-					}
-					$queryValid = true;
-					break;
-				case 'FROM':
-				case 'TO':
-				case 'CC':
-				case 'BCC':
-				case 'SUBJECT':
-					$imapSearchFilter->headerText($criteria, $_criterias['string'], $not=false);
-					$queryValid = true;
-					break;
-				case 'BODY':
-				case 'TEXT':
-					$imapSearchFilter->text($_criterias['string'],($criteria=='BODY'?true:false), $not=false);
-					$queryValid = true;
-					break;
-				case 'SINCE':
-					$imapSearchFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_SINCE, $header=true, $not=false);
-					$queryValid = true;
-					break;
-				case 'BEFORE':
-					$imapSearchFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_BEFORE, $header=true, $not=false);
-					$queryValid = true;
-					break;
-				case 'ON':
-					$imapSearchFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_ON, $header=true, $not=false);
-					$queryValid = true;
-					break;
-			}
-		}
-		if ($queryValid) $imapFilter->andSearch($imapSearchFilter);
+		// statusQuery MUST be placed first, as search for subject/mailbody and such is
+		// depending on charset. flagSearch is not BUT messes the charset if called afterwards
 		$statusQueryValid = false;
 		foreach((array)$_criterias['status'] as $k => $criteria) {
 			$imapStatusFilter = new Horde_Imap_Client_Search_Query();
+			$imapStatusFilter->charset('UTF-8');
 			$criteria = strtoupper($criteria);
 			switch ($criteria) {
 				case 'ANSWERED':
@@ -1999,15 +1958,79 @@ class emailadmin_imapbase
 				default:
 					$statusQueryValid = false;
 			}
-			if ($statusQueryValid) $imapFilter->andSearch($imapStatusFilter);
-			if ($statusQueryValid && !$queryValid) $queryValid=true;
+			if ($statusQueryValid)
+			{
+				$imapFilter->andSearch($imapStatusFilter);
+			}
 		}
+
+
+		//error_log(__METHOD__.' ('.__LINE__.') '.print_r($_criterias, true));
+		$imapSearchFilter = new Horde_Imap_Client_Search_Query();
+		$imapSearchFilter->charset('UTF-8');
+
+		if(!empty($_criterias['string'])) {
+			$criteria = strtoupper($_criterias['type']);
+			switch ($criteria) {
+				case 'QUICK':
+					$imapSearchFilter->headerText('SUBJECT', $_criterias['string'], $not=false);
+					//$imapSearchFilter->charset('UTF-8');
+					$imapFilter2 = new Horde_Imap_Client_Search_Query();
+					$imapFilter2->charset('UTF-8');
+					if($this->isSentFolder($_folder)) {
+						$imapFilter2->headerText('TO', $_criterias['string'], $not=false);
+					} else {
+						$imapFilter2->headerText('FROM', $_criterias['string'], $not=false);
+					}
+					if ($_supportsOrInQuery)
+					{
+						$imapSearchFilter->orSearch($imapFilter2);
+					}
+					else
+					{
+						$imapSearchFilter->andSearch($imapFilter2);
+					}
+					$queryValid = true;
+					break;
+				case 'FROM':
+				case 'TO':
+				case 'CC':
+				case 'BCC':
+				case 'SUBJECT':
+					$imapSearchFilter->headerText($criteria, $_criterias['string'], $not=false);
+					//$imapSearchFilter->charset('UTF-8');
+					$queryValid = true;
+					break;
+				case 'BODY':
+				case 'TEXT':
+					$imapSearchFilter->text($_criterias['string'],($criteria=='BODY'?true:false), $not=false);
+					//$imapSearchFilter->charset('UTF-8');
+					$queryValid = true;
+					break;
+				case 'SINCE':
+					$imapSearchFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_SINCE, $header=true, $not=false);
+					$queryValid = true;
+					break;
+				case 'BEFORE':
+					$imapSearchFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_BEFORE, $header=true, $not=false);
+					$queryValid = true;
+					break;
+				case 'ON':
+					$imapSearchFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_ON, $header=true, $not=false);
+					$queryValid = true;
+					break;
+			}
+		}
+		if ($statusQueryValid && !$queryValid) $queryValid=true;
+		if ($queryValid) $imapFilter->andSearch($imapSearchFilter);
+
 		if (isset($_criterias['range']) && !empty($_criterias['range']))
 		{
 			//$imapFilter .= $_criterias['range'].' ';
 		}
 		if (self::$debug)
 		{
+			//$imapFilter->charset('UTF-8');
 			$query_str = $imapFilter->build();
 			error_log(__METHOD__.' ('.__LINE__.') '.' '.$query_str['query']);
 		}
