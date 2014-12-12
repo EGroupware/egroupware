@@ -462,7 +462,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Prompt user for directory to create
 	 *
-	 * @param {egwAction|undefined} action Action, or undefined if called directly
+	 * @param {egwAction|undefined|jQuery.Event} action Action, event or undefined if called directly
 	 * @param {egwActionObject[] | undefined} selected Selected row, or undefined if called directly
 	 */
 	createdir: function(action, selected)
@@ -471,8 +471,8 @@ app.classes.filemanager = AppJS.extend(
 
 		if (dir)
 		{
-			var path = this.get_path(action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
-			if(action)
+			var path = this.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
+			if(action && action instanceof egwAction)
 			{
 				var paths = this._elems2paths(selected);
 				if(paths[0]) path = paths[0];
@@ -764,7 +764,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 
 		}
-		else if (widget.value.is_dir)
+		else if (widget.value.mime == 'httpd/unix-directory')
 		{
 			var path = null;
 			// Cannot do this, there are multiple widgets named path
