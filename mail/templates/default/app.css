@@ -820,8 +820,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		padding-top: 8px;
 		padding-bottom: 8px;
 	}
-
-	table.egwGridView_outer thead tr th {
+	/*Make Font size readable in mobile theme*/
+	#mail-compose .mailComposeHeaders span, #mail-compose .mailComposeHeadersSection span,
+	div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailComposeBody, div.mailPreviewHeaders > *{
 		font-size: small !important;
 	}
 }
