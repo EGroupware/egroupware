@@ -92,7 +92,7 @@
 					</row>
 					<row class="mailComposeHeaders">
 						<description value="Subject"/>
-						<textbox align="left" width="100%" id="subject" height="25"/>
+						<textbox align="left" width="100%" id="subject" height="25" onchange="app.mail.subject2title"/>
 						<checkbox statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" options=",, ,disable" tabindex="7"/>
 					</row>
 					<row>

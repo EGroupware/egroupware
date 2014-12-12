@@ -180,6 +180,8 @@ app.classes.mail = AppJS.extend(
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
 
+				this.subject2title();
+
 				// Set autosaving interval to 2 minutes for compose message
 				window.setInterval(function (){
 					that.saveAsDraft(null,that.et2.getWidgetById('button[saveAsDraft]'),'autosaving');
@@ -4112,5 +4114,21 @@ app.classes.mail = AppJS.extend(
 			}
 			return true;
 		};
+	},
+
+	/**
+	 * Write / update compose window title with subject
+	 *
+	 * @param {DOMNode} _node
+	 * @param {et2_widget} _widget
+	 */
+	subject2title: function(_node, _widget)
+	{
+		if (!_widget) _widget = this.et2.getWidgetById('subject');
+
+		if (_widget && _widget.get_value())
+		{
+			document.title = _widget.get_value();
+		}
 	}
 });
