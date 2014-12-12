@@ -185,7 +185,7 @@ class filemanager_select
 						$js = "window.opener.CKEDITOR.tools.callFunction(".
 							$content['ckeditorfuncnum'].",'".
 							htmlspecialchars($download_url)."',".
-							"'');\nwindow.close();";
+							"'');\negw(window).close();";
 					}
 					if(egw_json_response::isJSONResponse() && !($content['method'] == 'ckeditor_return'))
 					{
@@ -196,7 +196,7 @@ class filemanager_select
 						}
 						// Ahh!
 						// The vfs-select widget looks for this
-						$response->script('this.selected_files = '.json_encode($files) . '; this.close();');
+						$response->script('this.selected_files = '.json_encode($files) . '; egw(this).close();');
 					}
 					else
 					{
