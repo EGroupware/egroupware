@@ -2582,7 +2582,7 @@ class mail_ui
 
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
-			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
+			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); egw(window).close();';
 		}
 		translation::add_app('mail');
 
@@ -2656,7 +2656,7 @@ class mail_ui
 
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
-			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
+			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); egw(window).close();';
 		}
 		$err=null;
 		$rememberServerID = $this->mail_bo->profileID;

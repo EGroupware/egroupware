@@ -1420,7 +1420,7 @@ app.classes.mail = AppJS.extend(
 		//alert(_action.id+','+ msg);
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
-		if (calledFromPopup && this.mail_isMainWindow==false) window.close();
+		if (calledFromPopup && this.mail_isMainWindow==false) egw(window).close();
 	},
 
 	/**
@@ -3902,14 +3902,14 @@ app.classes.mail = AppJS.extend(
 	print_for_compose: function()
 	{
 		var afterprint = function (){
-			window.close();
+			egw(window).close();
 		};
 
 		if (!window.onafterprint)
 		{
 			// For browsers which does not support onafterprint event, eg. Chrome
 			setTimeout(function() {
-				window.close();
+				egw(window).close();
 			}, 2000);
 		}
 		else

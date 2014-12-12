@@ -581,14 +581,14 @@ app.classes.addressbook = AppJS.extend(
 		if(!index)
 		{
 			alert('Could not find index');
-			window.close();
+			egw(window).close();
 			return false;
 		}
 		var nm = index.widgetContainer.getWidgetById('nm');
 		if(!index)
 		{
 			window.opener.egw.message('Could not find list', 'error');
-			window.close();
+			egw(window).close();
 			return false;
 		}
 		// Reset filters first

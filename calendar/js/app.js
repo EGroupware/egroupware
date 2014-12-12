@@ -979,7 +979,7 @@ app.classes.calendar = AppJS.extend(
 				alert(this.egw.lang('The original calendar edit popup is closed!'));
 			}
 		}
-		window.close();
+		egw(window).close();
 	},
 
 	/**

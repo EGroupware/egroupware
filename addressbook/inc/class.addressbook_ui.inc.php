@@ -884,7 +884,7 @@ window.egw_LAB.wait(function() {
 		{
 			if (!$msg) $msg = lang('%1 contact(s) %2',$success,$action_msg);
 			$response->addScript("alert('".addslashes($msg)."')");
-			$response->addScript('window.close();');
+			$response->addScript('egw(window).close();');
 		}
 
 	}
