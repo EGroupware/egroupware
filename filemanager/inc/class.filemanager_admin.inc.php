@@ -83,6 +83,13 @@ class filemanager_admin extends filemanager_ui
 					lang('Root access granted.') : lang('Wrong username or password!');
 				$msg_type = egw_vfs::$is_root ? 'success' : 'error';
 			}
+			elseif ($content['etemplates'] && $GLOBALS['egw_info']['user']['apps']['admin'])
+			{
+				$path = '/etemplates';
+				$url = 'stylite.merge://default/etemplates?merge=.&lang=0&level=1&extension=xet&url=egw';
+				$msg = egw_vfs::mount($url, $path) ?
+					lang('Successful mounted %1 on %2.',$url,$path) : lang('Error mounting %1 on %2!',$url,$path);
+			}
 			elseif (egw_vfs::$is_root)
 			{
 				if ($content['logout'])
@@ -147,7 +154,7 @@ class filemanager_admin extends filemanager_ui
 				}
 			}
 		}
-		$content = array();
+		if (true) $content = array();
 		if ($this->versioning)
 		{
 			// statistical information
@@ -189,6 +196,9 @@ class filemanager_admin extends filemanager_ui
 			'admins'   => lang('Administrators'),
 			'everyone' => lang('Everyone'),
 		);
+		// show [Mount /etemplates] button for admin, if not already mounted and available
+		$readonlys['etemplates'] = !class_exists('stylite_merge_stream_wrapper') || egw_vfs::file_exists('/etemplates') ||
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		//_debug_array($content);
 
 		$tpl = new etemplate_new('filemanager.admin');

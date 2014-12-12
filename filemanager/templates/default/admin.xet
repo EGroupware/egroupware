@@ -63,6 +63,7 @@
 			</rows>
 		</grid>
 		<vbox class="filemanager_config">
+			<button label="Mount /etemplates to allow customizing of eTemplates" id="etemplates"/>
 			<menulist>
 				<menupopup id="allow_delete_versions" onchange="1" label="Who should be allowed to finally delete deleted files or old versions of a file:" disabled="!@versioning"/>
 			</menulist>
