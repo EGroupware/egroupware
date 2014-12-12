@@ -181,6 +181,8 @@ app.classes.mail = AppJS.extend(
 				this.compose_fieldExpander_init();
 				this.check_sharing_filemode();
 
+				this.subject2title();
+
 				// Set autosaving interval to 2 minutes for compose message
 				window.setInterval(function (){
 					that.saveAsDraft(null,that.et2.getWidgetById('button[saveAsDraft]'),'autosaving');
@@ -3674,15 +3676,15 @@ app.classes.mail = AppJS.extend(
 		var $headerSec = jQuery('.mailComposeHeaderSection');
 		var attachments = this.et2.getWidgetById('attachments');
 		var content = this.et2.getArrayMgr('content').data;
-		
+
 		// @var arrbitary int represents px
 		// Visible height of attachment progress
 		var prgV_H = 150;
-		
+
 		// @var arrbitary int represents px
 		// Visible height of attchements list
 		var attchV_H = 68;
-		
+
 		if (typeof textArea != 'undefined' && textArea != null)
 		{
 			if (textArea.getParent().disabled)
@@ -3691,11 +3693,11 @@ app.classes.mail = AppJS.extend(
 			}
 			// Tolerate values base on plain text or html, in order to calculate freespaces
 			var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
-			
+
 			// while attachments are in progress take progress visiblity into account
 			// otherwise the attachment progress is finished and consider attachments list
 			var delta = (attachments.table.find('li').length>0 && attachments.table.height() > 0)? prgV_H: (content.attachments? attchV_H: textAreaDelta);
-			
+
 			var bodySize = (bodyH  - Math.round($headerSec.height() + $headerSec.offset().top) - delta);
 
 			if (textArea.id != "mail_htmltext")
@@ -4148,6 +4150,22 @@ app.classes.mail = AppJS.extend(
 		{
 			this.egw.message(this.egw.lang('Writable sharing required EPL version!'), 'info');
 			_widget.setValue('share_ro');
+		}
+	},
+
+	/**
+	 * Write / update compose window title with subject
+	 *
+	 * @param {DOMNode} _node
+	 * @param {et2_widget} _widget
+	 */
+	subject2title: function(_node, _widget)
+	{
+		if (!_widget) _widget = this.et2.getWidgetById('subject');
+
+		if (_widget && _widget.get_value())
+		{
+			document.title = _widget.get_value();
 		}
 	}
 });
