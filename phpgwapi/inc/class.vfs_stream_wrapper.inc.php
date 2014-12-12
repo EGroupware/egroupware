@@ -1316,10 +1316,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$path = self::parse_url($path, PHP_URL_PATH);
 		}
-		// remove trailing slashes eg. added by WebDAV
+		// remove trailing slashes eg. added by WebDAV, but do NOT remove / from "sqlfs://default/"!
 		if ($path != '/')
 		{
-			while (mb_substr($path, -1) == '/' && $path != '/')
+			while (mb_substr($path, -1) == '/' && $path != '/' && ($path[0] == '/' || self::parse_url($path, PHP_URL_PATH) != '/'))
 			{
 				$path = mb_substr($path,0,-1);
 			}
