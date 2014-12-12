@@ -792,7 +792,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
 @media only screen and (max-device-width: 1024px) {
   div#mail-index_nm {
-    /*height: 100% !important;*/
+    height: 100% !important;
   }
   /*Disable the preview spliter*/
   div#mail-index_mailPreview,
@@ -806,6 +806,13 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
   div#mail-display.et2_container {
     min-height: initial;
+  }
+  table.egwGridView_grid tbody td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  table.egwGridView_outer thead tr th {
+    font-size: small !important;
   }
 }
 /* tablets and smartphones (portrait) ----------- */

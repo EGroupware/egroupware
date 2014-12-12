@@ -6290,6 +6290,9 @@ a.textSidebox {
     z-index: 999;
     padding-right: 5px;
   }
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
+    font-size: medium;
+  }
   #egw_fw_basecontainer {
     background: white;
   }
