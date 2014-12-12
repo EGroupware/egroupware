@@ -888,6 +888,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_uid=:fs_uid WHERE fs_id=:fs_id');
 
+		// update stat-cache
+		if ($path != '/' && substr($path,-1) == '/') $path = substr($path, 0, -1);
+		self::$stat_cache[$path]['fs_uid'] = $owner;
+
 		return $stmt->execute(array(
 			'fs_uid' => (int) $owner,
 			'fs_id' => $stat['ino'],
@@ -929,6 +933,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_gid=:fs_gid WHERE fs_id=:fs_id');
 
+		// update stat-cache
+		if ($path != '/' && substr($path,-1) == '/') $path = substr($path, 0, -1);
+		self::$stat_cache[$path]['fs_gid'] = $owner;
+
 		return $stmt->execute(array(
 			'fs_gid' => $owner,
 			'fs_id' => $stat['ino'],
@@ -967,6 +975,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;
 		}
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_mode=:fs_mode WHERE fs_id=:fs_id');
+
+		// update stat cache
+		if ($path != '/' && substr($path,-1) == '/') $path = substr($path, 0, -1);
+		self::$stat_cache[$path]['fs_mode'] = ((int) $mode) & 0777;
 
 		return $stmt->execute(array(
 			'fs_mode' => ((int) $mode) & 0777,		// we dont store the file and dir bits, give int overflow!
