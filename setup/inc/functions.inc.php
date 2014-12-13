@@ -67,8 +67,6 @@ if (is_dir(EGW_SERVER_ROOT.'/egw-pear'))
 	//echo "<p align=right>include_path='".get_include_path()."'</p>\n";
 }
 
-define('SEP',filesystem_separator());
-
 /**
  * function to handle multilanguage support
  *
