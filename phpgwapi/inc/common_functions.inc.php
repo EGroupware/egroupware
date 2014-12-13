@@ -1100,6 +1100,7 @@ function get_account_id($account_id = '',$default_id = '')
  *
  * This is completely unnecessary, as you can use forward slashes in php under every OS -- RalfBecker 2005/11/09
  *
+ * @deprecated just use forward slashes supported by PHP on all OS
  * @return file system separator
  */
 function filesystem_separator()
@@ -1113,6 +1114,11 @@ function filesystem_separator()
 		return '/';
 	}
 }
+
+/**
+ * @deprecated just use forward slashes supported by PHP on all OS
+ */
+define('SEP', filesystem_separator());
 
 /**
  * print an array or object as pre-formatted html
