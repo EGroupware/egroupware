@@ -52,8 +52,6 @@ if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))
 
 require_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
 
-define('SEP',filesystem_separator());
-
 /**
  * function to handle multilanguage support
  *

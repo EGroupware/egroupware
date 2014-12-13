@@ -383,7 +383,6 @@ class egw extends egw_minimal
 	 */
 	function define_egw_constants()
 	{
-		define('SEP',filesystem_separator());
 		define('EGW_ACL_READ',1);
 		define('EGW_ACL_ADD',2);
 		define('EGW_ACL_EDIT',4);
