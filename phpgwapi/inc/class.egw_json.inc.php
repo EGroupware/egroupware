@@ -600,7 +600,7 @@ class egw_json_response extends egw_json_msg
 	 * @param mixed $var
 	 * @return string
 	 */
-	public function json_encode($var)
+	public static function json_encode($var)
 	{
 		$ret = json_encode($var);
 
@@ -631,7 +631,7 @@ class egw_json_response extends egw_json_msg
 	 * @param string $prefix =''
 	 * @return mixed
 	 */
-	public function fix_content($var, $prefix='')
+	public static function fix_content($var, $prefix='')
 	{
 		if (json_encode($var) !== false) return $var;
 
