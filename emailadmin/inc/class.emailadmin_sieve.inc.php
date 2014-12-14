@@ -152,7 +152,7 @@ class emailadmin_sieve extends Net_Sieve
 
 			$useTLS = false;
 
-			switch($_icServer->acc_sieve_ssl)
+			switch($_icServer->acc_sieve_ssl & ~emailadmin_account::SSL_VERIFY)
 			{
 				case emailadmin_account::SSL_SSL:
 					$sieveHost = 'ssl://'.$sieveHost;
@@ -163,6 +163,14 @@ class emailadmin_sieve extends Net_Sieve
 				case emailadmin_account::SSL_STARTTLS:
 					$useTLS = true;
 			}
+			// disable certificate validation, if not explicitly enabled (not possible in current UI, as not supported by Horde_Imap_Client)
+			$options = array(
+				'ssl' => array(
+					'verify_peer' => (bool)($_icServer->acc_sieve_ssl & emailadmin_account::SSL_VERIFY),
+					'verify_peer_name' => (bool)($_icServer->acc_sieve_ssl & emailadmin_account::SSL_VERIFY),
+				),
+			);
+
 			if ($euser)
 			{
 				$username = $_icServer->acc_imap_admin_username;
@@ -187,7 +195,7 @@ class emailadmin_sieve extends Net_Sieve
 			$this->_timeout = $timeout;
 		}
 
-		if(PEAR::isError($this->error = $this->connect($sieveHost , $sievePort, $options=null, $useTLS) ) )
+		if(PEAR::isError($this->error = $this->connect($sieveHost , $sievePort, $options, $useTLS) ) )
 		{
 			if ($this->debug)
 			{
