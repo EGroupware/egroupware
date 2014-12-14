@@ -221,6 +221,11 @@ class egw_sharing
 			// or if no filemanager installed (WebDAV has own autoindex)
 			!file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'))
 		{
+			// send a content-disposition header, so browser knows how to name downloaded file
+			if (!egw_vfs::is_dir($this->share['share_path']))
+			{
+				html::content_disposition_header(egw_vfs::basename($this->share['share_path']), false);
+			}
 			//$GLOBALS['egw']->session->commit_session();
 			$webdav_server = new vfs_webdav_server();
 			$webdav_server->ServeRequest('/'.$this->share['share_token']);
