@@ -157,7 +157,14 @@ class notifications_popup implements notifications_iface {
 			if($link->popup && !$GLOBALS['egw_info']['user']['preferences']['notifications']['external_mailclient'])
 			{
 				$dimensions = explode('x', $link->popup);
-				$rendered_links[] = html::div($image.$link->text,'onclick="'.$this->jspopup($url, '_blank', $dimensions[0], $dimensions[1]).'"','link');
+				$data = array(
+					"data-app = '{$link->app}'",
+					"data-id = '{$link->id}'",
+					"data-url = '$url'",
+					"data-popup = '{$link->popup}'"
+				);
+
+				$rendered_links[] = html::div($image.$link->text,implode(' ',$data),'link');
 			} else {
 				$rendered_links[] = html::div('<a href="'.$url.'" target="_blank">'.$image.$link->text.'</a>','','link');
 			}
