@@ -811,6 +811,9 @@ class egw_vfs extends vfs_stream_wrapper
 			}
 			self::$user = $backup_user;
 
+			// we need to clear stat-cache again, after restoring original user, as eg. eACL is stored in session
+			self::clearstatcache($path);
+
 			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check,$user) ".array2string($ret));
 			return $ret;
 		}
