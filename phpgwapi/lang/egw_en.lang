@@ -4,6 +4,7 @@
 %1 file	common	en	%1 file
 %1 is not executable by the webserver !!!	common	en	%1 is not executable by the web server!
 %1 proxy of %2	common	en	%1 proxy of %2
+%1 setting "%2" = %3 disallows access via http!	admin	en	%1 setting "%2" = %3 disallows access via http!
 %1 to sync	groupdav	en	%1 to sync
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writable by web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.

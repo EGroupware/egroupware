@@ -112,6 +112,13 @@ $checks = array(
 		'error' => lang('%1 is set to %2, you will NOT be able to upload or attach files bigger then that!','post_max_size',ini_get('max_post_size')),
 		'change' => 'post_max_size = 8M'
 	),
+	'allow_url_fopen' => array(
+		'func' => 'php_ini_check',
+		'value' => 1,
+		'verbose_value' => 'On',
+		'error' => lang('%1 setting "%2" = %3 disallows access via http!',
+			'php.ini', 'allow_url_fopen', array2string(ini_get('allow_url_fopen'))),
+	),
 	'session' => array(
 		'func' => 'extension_check',
 		'error' => lang('The session extension is required!')
