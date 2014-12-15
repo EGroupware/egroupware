@@ -189,10 +189,6 @@ $checks = array(
 		'func' => 'pear_check',
 		'error' => lang('PEAR extensions are required by many eGroupware applications, PEAR itself is the required basis for each extension!'),
 	),
-	'HTTP_WebDAV_Server' => array(
-		'func' => 'pear_check',
-		'from' => 'WebDAV',
-	),
 	realpath('..') => array(
 		'func' => 'permission_check',
 		'is_world_writable' => False,
@@ -293,11 +289,11 @@ foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_c
 	}
 }
 if ($checks) $sorted_checks += $checks;
-$checks =& $sorted_checks;
 
 function php_version($name,$args)
 {
 	global $passed_icon, $error_icon;
+	unset($name);	// not used, but required by function signature
 
 	$version_ok = version_compare(phpversion(),$args['value']) >= 0;
 
@@ -309,7 +305,7 @@ function php_version($name,$args)
 /**
  * quering the pear registry to find out which pear packages and versions are installed
  *
- * @param $channel=null use default or given channel
+ * @param $channel =null use default or given channel
  * @return array with package-name => version pairs, eg. array('Log' => '1.9.8','PEAR' => '1.4.11')
  */
 function get_installed_pear_packages($channel=null)
@@ -445,7 +441,7 @@ function pear_check($package,$args)
 function extension_check($name,$args)
 {
 	//echo "<p>extension_check($name,".print_r($args,true).")</p>\n";
-	global $passed_icon, $error_icon, $warning_icon, $is_windows;
+	global $passed_icon, $warning_icon, $is_windows;
 
 	if (isset($args['win_only']) && $args['win_only'] && !$is_windows)
 	{
@@ -472,7 +468,7 @@ function extension_check($name,$args)
 
 function function_check($name,$args)
 {
-	global $passed_icon, $error_icon, $warning_icon, $is_windows;
+	global $passed_icon, $warning_icon;
 
 	$available = function_exists($name);
 
@@ -593,16 +589,14 @@ function permission_check($name,$args,$verbose=True)
 		$checks[] = lang('world writable');
 		$check_not = (!$args['is_world_writable']?lang('not'):'');
 	}
-	$checks = implode(', ',$checks);
 
-	$icon = $passed_icon;
 	if (isset($args['msg']) && ($msg = $args['msg']))
 	{
 		$msg .= ': '.$perms."<br />\n";
 	}
 	else
 	{
-		$msg = lang('Checking file-permissions of %1 for %2 %3: %4',$rel_name,$check_not,$checks,$perms)."<br />\n";
+		$msg = lang('Checking file-permissions of %1 for %2 %3: %4',$rel_name,$check_not,implode(', ',$checks),$perms)."<br />\n";
 	}
 	$extra_error_msg = '';
 	if (isset($args['error']) && $args['error'])
@@ -673,50 +667,10 @@ function permission_check($name,$args,$verbose=True)
 
 function mk_value($value)
 {
+	$matches = null;
 	if (!preg_match('/^([0-9]+)([mk]+)$/i',$value,$matches)) return $value;
 
 	return (strtolower($matches[2]) == 'm' ? 1024*1024 : 1024) * (int) $matches[1];
-}
-
-function tnef_check($name,$args)
-{
-	global $passed_icon, $error_icon, $warning_icon;
-
-	$available = false;
-	$tnef = array();
-
-	if (file_exists('/usr/bin/tnef'))
-	{
-		$available = true;
-		$tnef[] = '/usr/bin/tnef';
-	}
-	// Mac ports location
-	elseif (file_exists('/opt/local/bin/tnef'))
-	{
-		$available = true;
-		$tnef[] = '/opt/local/bin/tnef';
-	}
-	elseif (exec("which tnef", $tnef))
-	{
-		$available = true;
-	}
-	elseif (exec("which ytnef", $tnef))
-	{
-		$available = true;
-	}
-
-	echo "<div>".($available ? $passed_icon : $warning_icon).
-		' <span'.($available?'':' class="setup_warning"').'>'.
-		lang('Checking for tnef application').': '.
-		($available ? $tnef[0] : lang('False'));
-
-	if (!$available)
-	{
-		echo "<br />\n".lang('You dont have tnef or ytnef installed! It is needed to decode winmail.dat attachments in felamimail.')."\n";
-	}
-	echo "</span></div>\n";
-
-	return $available;
 }
 
 function php_ini_check($name,$args)
@@ -768,6 +722,7 @@ function php_ini_check($name,$args)
 			unset($tz);
 		}
 		catch(Exception $e) {
+			unset($e);
 			$result = false;	// no valid timezone
 		}
 	}
@@ -807,50 +762,6 @@ function php_ini_check($name,$args)
 	return $result;
 }
 
-function jpgraph_check($name,array $args)
-{
-	global $passed_icon, $error_icon, $warning_icon;
-
-	$egw_path = defined(EGW_SERVER_ROOT) ? EGW_SERVER_ROOT : dirname(dirname(__FILE__));
-	if (!($jpgraph_path = realpath($egw_path.'/..')))
-	{
-		$jpgraph_path = dirname($egw_path);	// realpath can fail because eg. open_basedir does NOT include ..
-	}
-	$jpgraph_path .= SEP.'jpgraph';
-
-	$min_version = isset($args['min_version']) ? $args['min_version'] : '1.13';
-
-	$available = false;
-	if (($check = file_exists($jpgraph_path) && is_dir($jpgraph_path)) &&
-		(file_exists($jpgraph_path.'/src/jpgraph.php') || file_exists($jpgraph_path.'/jpgraph.php')))
-	{
-		if (file_exists($jpgraph_path.'/VERSION') && preg_match('/Version: v([0-9.]+)/',file_get_contents($jpgraph_path.'/VERSION'),$matches))
-		{
-			$version = $matches[1];
-			$available = version_compare($version,$min_version,'>=');
-		}
-		else
-		{
-			$version = 'unknown';
-		}
-	}
-	echo "<div>".($available ? $passed_icon : (isset($version) ? $warning_icon : $error_icon)).
-		' <span'.($available?'':' class="setup_warning"').'>'.
-		lang('Checking for JPGraph in %1',$jpgraph_path).': '.
-		(isset($version) ? lang('Version').' '.$version : lang('False'));
-
-	if (!$available)
-	{
-		echo "<br />\n".lang('You dont have JPGraph version %1 or higher installed! It is needed from ProjectManager for Ganttcharts.',$min_version)."<br />\n";
-		echo lang('Please download a recent version from %1 and install it as %2.',
-			'<a href="http://jpgraph.net/download/" target="_blank">jpgraph.net/download/</a>',
-			$jpgraph_path);
-	}
-	echo "</span></div>\n";
-
-	return $available;
-}
-
 function get_php_ini()
 {
 	ob_start();
@@ -858,6 +769,7 @@ function get_php_ini()
 	$phpinfo = ob_get_contents();
 	ob_end_clean();
 
+	$found = null;
 	return preg_match('/\(php.ini\).*<\/td><td[^>]*>([^ <]+)/',$phpinfo,$found) ? $found[1] : False;
 }
 
@@ -915,7 +827,7 @@ else
 }
 
 $Ok = True;
-foreach ($checks as $name => $args)
+foreach ($sorted_checks as $name => $args)
 {
 	$check_ok = $args['func']($name,$args);
 	$Ok = $Ok && $check_ok;
