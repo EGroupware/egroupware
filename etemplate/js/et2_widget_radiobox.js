@@ -134,7 +134,25 @@ var et2_radiobox = et2_inputWidget.extend(
 		}, this, et2_radiobox);
 
 		return val == this.options.set_value ? this.options.set_value : null;
-	}
+	},
+	
+	/**
+	 * Overridden from parent so if it's required, only 1 in a group needs a value
+	 */
+	isValid: function(messages) {
+		var ok = true;
+
+		// Check for required
+		if(this.options && this.options.needed && !this.options.readonly && (this.getValue() == null || this.getValue().valueOf() == ''))
+		{
+			if(jQuery.isEmptyObject(this.getInstanceManager().getValues(this.getInstanceManager().widgetContainer)[this.id.replace('[]', '')]))
+			{
+				messages.push(this.egw().lang('Field must not be empty !!!'));
+				ok = false;
+			}
+		}
+		return ok;
+	},
 });
 et2_register_widget(et2_radiobox, ["radio"]);
 
