@@ -430,7 +430,7 @@ function pear_check($package,$args)
 		elseif ($min_version && version_compare($min_version,$version_available) > 0)
 		{
 			echo ' '.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
-				$package,$version_available,$min_version).' pear update '.$package;
+				$package,$version_available,$min_version).' pear upgrade '.$package;
 		}
 		elseif ($package)
 		{
