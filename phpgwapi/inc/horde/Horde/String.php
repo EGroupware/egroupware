@@ -28,7 +28,7 @@ class String {
      *
      * @see Util::extensionExists()
      */
-    function extensionExists($ext)
+    public static function extensionExists($ext)
     {
         static $cache = array();
 
@@ -45,7 +45,7 @@ class String {
      *
      * @param string $charset  The charset to use as the default one.
      */
-    function setDefaultCharset($charset)
+    public static function setDefaultCharset($charset)
     {
         $GLOBALS['_HORDE_STRING_CHARSET'] = $charset;
         if (String::extensionExists('mbstring') &&
@@ -73,7 +73,7 @@ class String {
      *
      * @return mixed  The converted input data.
      */
-    function convertCharset($input, $from, $to = null)
+    public static function convertCharset($input, $from, $to = null)
     {
         /* Don't bother converting numbers. */
         if (is_numeric($input)) {
@@ -127,7 +127,7 @@ class String {
     }
 
     /**
-     * Internal function used to do charset conversion.
+     * Internal public static function used to do charset conversion.
      *
      * @access private
      *
@@ -137,7 +137,7 @@ class String {
      *
      * @return string  The converted string.
      */
-    function _convertCharset($input, $from, $to)
+    public static function _convertCharset($input, $from, $to)
     {
         $output = '';
         $from_check = (($from == 'iso-8859-1') || ($from == 'us-ascii'));
@@ -145,7 +145,7 @@ class String {
 
         /* Use utf8_[en|de]code() if possible and if the string isn't too
          * large (less than 16 MB = 16 * 1024 * 1024 = 16777216 bytes) - these
-         * functions use more memory. */
+         * public static functions use more memory. */
         if (strlen($input) < 16777216 || !(String::extensionExists('iconv') || String::extensionExists('mbstring'))) {
             if ($from_check && ($to == 'utf-8')) {
                 return utf8_encode($input);
@@ -201,7 +201,7 @@ class String {
      *
      * @return string  The string with lowercase characters
      */
-    function lower($string, $locale = false, $charset = null)
+    public static function lower($string, $locale = false, $charset = null)
     {
         static $lowers;
 
@@ -246,7 +246,7 @@ class String {
      *
      * @return string  The string with uppercase characters
      */
-    function upper($string, $locale = false, $charset = null)
+    public static function upper($string, $locale = false, $charset = null)
     {
         static $uppers;
 
@@ -291,7 +291,7 @@ class String {
      *
      * @return string  The capitalized string.
      */
-    function ucfirst($string, $locale = false, $charset = null)
+    public static function ucfirst($string, $locale = false, $charset = null)
     {
         if ($locale) {
             $first = String::substr($string, 0, 1, $charset);
@@ -316,7 +316,7 @@ class String {
      *
      * @return string  The string's part.
      */
-    function substr($string, $start, $length = null, $charset = null)
+    public static function substr($string, $start, $length = null, $charset = null)
     {
         if (is_null($length)) {
             $length = String::length($string, $charset) - $start;
@@ -367,7 +367,7 @@ class String {
      *
      * @return string  The string's part.
      */
-    function length($string, $charset = null)
+    public static function length($string, $charset = null)
     {
         if (is_null($charset)) {
             $charset = $GLOBALS['_HORDE_STRING_CHARSET'];
@@ -400,7 +400,7 @@ class String {
      *
      * @return integer  The position of first occurrence.
      */
-    function pos($haystack, $needle, $offset = 0, $charset = null)
+    public static function pos($haystack, $needle, $offset = 0, $charset = null)
     {
         if (String::extensionExists('mbstring')) {
             if (is_null($charset)) {
@@ -434,7 +434,7 @@ class String {
      *
      * @return string  The padded string.
      */
-    function pad($input, $length, $pad = ' ', $type = STR_PAD_RIGHT,
+    public static function pad($input, $length, $pad = ' ', $type = STR_PAD_RIGHT,
                  $charset = null)
     {
         $mb_length = String::length($input, $charset);
@@ -491,7 +491,7 @@ class String {
      *
      * @return string  String containing the wrapped text.
      */
-    function wordwrap($string, $width = 75, $break = "\n", $cut = false,
+    public static function wordwrap($string, $width = 75, $break = "\n", $cut = false,
                       $charset = null, $line_folding = false)
     {
         /* Get the user's default character set if none passed in. */
@@ -560,7 +560,7 @@ class String {
      *
      * @return string  String containing the wrapped text.
      */
-    function wrap($text, $length = 80, $break_char = "\n", $charset = null,
+    public static function wrap($text, $length = 80, $break_char = "\n", $charset = null,
                   $quote = false)
     {
         $paragraphs = array();
@@ -593,7 +593,7 @@ class String {
      *
      * @return boolean  True if the parameter was alphabetic only.
      */
-    function isAlpha($string, $charset = null)
+    public static function isAlpha($string, $charset = null)
     {
         if (!String::extensionExists('mbstring')) {
             return ctype_alpha($string);
@@ -625,7 +625,7 @@ class String {
      *
      * @return boolean  True if the parameter was lowercase.
      */
-    function isLower($string, $charset = null)
+    public static function isLower($string, $charset = null)
     {
         return ((String::lower($string, true, $charset) === $string) &&
                 String::isAlpha($string, $charset));
@@ -640,7 +640,7 @@ class String {
      *
      * @return boolean  True if the parameter was uppercase.
      */
-    function isUpper($string, $charset = null)
+    public static function isUpper($string, $charset = null)
     {
         return ((String::upper($string, true, $charset) === $string) &&
                 String::isAlpha($string, $charset));
@@ -658,7 +658,7 @@ class String {
      *
      * @return array  The matches array from the first regex that matches.
      */
-    function regexMatch($text, $regex, $charset = null)
+    public static function regexMatch($text, $regex, $charset = null)
     {
         if (!empty($charset)) {
             $regex = String::convertCharset($regex, $charset, 'utf-8');
@@ -680,17 +680,17 @@ class String {
     }
 
     /**
-     * Workaround charsets that don't work with mbstring functions.
+     * Workaround charsets that don't work with mbstring public static functions.
      *
      * @access private
      *
      * @param string $charset  The original charset.
      *
-     * @return string  The charset to use with mbstring functions.
+     * @return string  The charset to use with mbstring public static functions.
      */
-    function _mbstringCharset($charset)
+    public static function _mbstringCharset($charset)
     {
-        /* mbstring functions do not handle the 'ks_c_5601-1987' &
+        /* mbstring public static functions do not handle the 'ks_c_5601-1987' &
          * 'ks_c_5601-1989' charsets. However, these charsets are used, for
          * example, by various versions of Outlook to send Korean characters.
          * Use UHC (CP949) encoding instead. See, e.g.,

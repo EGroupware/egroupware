@@ -190,7 +190,7 @@ class HTTP_WebDAV_Server
      *
      * dispatch WebDAV HTTP request to the apropriate method handler
      *
-     * @param  $prefix=null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
+     * @param  $prefix =null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
      * @return void
      */
     function ServeRequest($prefix=null)
@@ -213,18 +213,19 @@ class HTTP_WebDAV_Server
         // seem to pass '?' unencoded, so we need to extract the path info out
         // of the request URI ourselves
         // if request URI contains a full url, remove schema and domain
+		$matches = null;
         if (preg_match('|^https?://[^/]+(/.*)$|', $path_info=$this->_SERVER["REQUEST_URI"], $matches))
         {
         	$path_info = $matches[1];
         }
-        $path_info = substr($path_info, strlen($this->_SERVER["SCRIPT_NAME"]));
+        $path_info_raw = substr($path_info, strlen($this->_SERVER["SCRIPT_NAME"]));
 
         // just in case the path came in empty ...
-        if (empty($path_info)) {
-            $path_info = "/";
+        if (empty($path_info_raw)) {
+            $path_info_raw = "/";
         }
 
-        $path_info = $this->_urldecode($path_info);
+        $path_info = self::_urldecode($path_info_raw);
 
         if ($prefix && strpos($path_info, $prefix) === 0)
         {
@@ -237,7 +238,7 @@ class HTTP_WebDAV_Server
 
         // set path
         // $_SERVER['PATH_INFO'] is already urldecoded
-        //$this->path = $this->_urldecode($path_info);
+        //$this->path = self::_urldecode($path_info);
         // quote '#' (e.g. OpenOffice uses this for lock-files)
         $this->path = strtr($path_info,array(
         	'%' => '%25',
@@ -306,7 +307,6 @@ class HTTP_WebDAV_Server
         } else { // method not found/implemented
             if ($this->_SERVER["REQUEST_METHOD"] == "LOCK") {
             	$error = '412 Precondition failed';
-                ;
             } else {
                 $error = '405 Method not allowed';
                 header("Allow: ".join(", ", $this->_allow()));  // tell client what's allowed
@@ -650,7 +650,7 @@ class HTTP_WebDAV_Server
     /**
      * PROPFIND method handler
      *
-     * @param  string $handler='PROPFIND' allows to use method eg. for CalDAV REPORT
+     * @param  string $handler ='PROPFIND' allows to use method eg. for CalDAV REPORT
      * @return void
      */
     function http_PROPFIND($handler='PROPFIND')
@@ -691,7 +691,7 @@ class HTTP_WebDAV_Server
                 if (is_array($lock) && count($lock)) {
                     $created          = isset($lock['created'])  ? $lock['created']  : time();
                     $modified         = isset($lock['modified']) ? $lock['modified'] : time();
-                    $files['files'][] = array("path"  => $this->_slashify($this->path),
+                    $files['files'][] = array("path"  => self::_slashify($this->path),
                                               "props" => array($this->mkprop("displayname",      $this->path),
                                                                $this->mkprop("creationdate",     $created),
                                                                $this->mkprop("getlastmodified",  $modified),
@@ -917,10 +917,10 @@ class HTTP_WebDAV_Server
             /* TODO right now the user implementation has to make sure
              collections end in a slash, this should be done in here
              by checking the resource attribute */
-            $href = $this->_mergePaths($this->base_uri, $path);
+            $href_raw = $this->_mergePaths($this->base_uri, $path);
 
             /* minimal urlencoding is needed for the resource path */
-            $href = $this->_urlencode($href);
+            $href = $this->_urlencode($href_raw);
 
             if ($this->crrnd)
             {
@@ -1240,7 +1240,7 @@ class HTTP_WebDAV_Server
 	 * we can NOT send Content-Length headers, as the have to reflect size
 	 * AFTER applying compression/transfer encoding.
 	 *
-	 * @param boolean $set=null
+	 * @param boolean $set =null
 	 * @return boolean true if we use compression, false otherwise
 	 */
 	public static function use_compression($set=null)
@@ -1322,7 +1322,7 @@ class HTTP_WebDAV_Server
                                            . (isset($options['size']) ? $options['size'] : "*"));
                                     while ($size && !feof($options['stream'])) {
                                         $buffer = fread($options['stream'], 4096);
-                                        $size  -= $this->bytes($buffer);
+                                        $size  -= self::bytes($buffer);
                                         echo $buffer;
                                     }
                                 } else {
@@ -1358,7 +1358,7 @@ class HTTP_WebDAV_Server
                                 fseek($options['stream'], $from, SEEK_SET);
                                 while ($size && !feof($options['stream'])) {
                                     $buffer = fread($options['stream'], 4096);
-                                    $size  -= $this->bytes($buffer);
+                                    $size  -= self::bytes($buffer);
                                     echo $buffer;
                                 }
                             }
@@ -1376,7 +1376,7 @@ class HTTP_WebDAV_Server
                     if (is_array($options['data'])) {
                         // reply to partial request
                     } else {
-                        if (!self::use_compression()) header("Content-Length: ".$this->bytes($options['data']));
+                        if (!self::use_compression()) header("Content-Length: ".self::bytes($options['data']));
                         echo $options['data'];
                     }
                 }
@@ -1406,6 +1406,7 @@ class HTTP_WebDAV_Server
         if (isset($this->_SERVER['HTTP_RANGE'])) {
 
             // we only support standard "bytes" range specifications for now
+			$matches = null;
             if (preg_match('/bytes\s*=\s*(.+)/', $this->_SERVER['HTTP_RANGE'], $matches)) {
                 $options["ranges"] = array();
 
@@ -1613,6 +1614,7 @@ class HTTP_WebDAV_Server
 			        // single byte range requests are supported
 			        // the header format is also specified in RFC 2616 14.16
 			        // TODO we have to ensure that implementations support this or send 501 instead
+					$matches = null;
 			        if (!preg_match('@bytes\s+(\d+)-(\d+)/((\d+)|\*)@', $val, $matches)) {
 				        $this->http_status('400 bad request');
 				        echo 'The service does only support single byte ranges';
@@ -1623,7 +1625,7 @@ class HTTP_WebDAV_Server
 			        if (is_numeric($matches[3])) {
 				        $range['total_length'] = $matches[3];
 			        }
-			        $option['ranges'][] = $range;
+			        $options['ranges'][] = $range;
 
 			        // TODO make sure the implementation supports partial POST
 			        // this has to be done in advance to avoid data being overwritten
@@ -1792,6 +1794,7 @@ class HTTP_WebDAV_Server
                     // single byte range requests are supported
                     // the header format is also specified in RFC 2616 14.16
                     // TODO we have to ensure that implementations support this or send 501 instead
+					$matches = null;
                     if (!preg_match('@bytes\s+(\d+)-(\d+)/((\d+)|\*)@', $val, $matches)) {
                         $this->http_status("400 bad request");
                         echo "The service does only support single byte ranges";
@@ -2156,7 +2159,7 @@ class HTTP_WebDAV_Server
 	        }
 	        $content .=  '</'.($this->crrnd?'':'D:')."error>\n";
         }
-        if (!self::use_compression()) header("Content-Length: ".$this->bytes($content));
+        if (!self::use_compression()) header("Content-Length: ".self::bytes($content));
         if ($content) echo $options['content'];
     }
 
@@ -2189,7 +2192,7 @@ class HTTP_WebDAV_Server
                 $http_host.= ":".$url["port"];
         } else {
             // only path given, set host to self
-            $http_host == $http_header_host;
+            $http_host = $http_header_host;
         }
 
         if ($http_host == $http_header_host &&
@@ -2267,7 +2270,7 @@ class HTTP_WebDAV_Server
      * @praram boolen  property raw-flag
      * @return array   property array
      */
-    function mkprop()
+    public static function mkprop()
     {
 	    $args = func_get_args();
 	    switch (count($args)) {
@@ -2323,7 +2326,7 @@ class HTTP_WebDAV_Server
      * @param  void
      * @return string  a new UUID
      */
-    function _new_uuid()
+    public static function _new_uuid()
     {
         // use uuid extension from PECL if available
         if (function_exists("uuid_create")) {
@@ -2353,9 +2356,9 @@ class HTTP_WebDAV_Server
      * @param  void
      * @return string  new RFC2518 opaque lock token
      */
-    function _new_locktoken()
+    public static function _new_locktoken()
     {
-        return "opaquelocktoken:".HTTP_WebDAV_Server::_new_uuid();
+        return "opaquelocktoken:".self::_new_uuid();
     }
 
     // }}}
@@ -2558,6 +2561,7 @@ class HTTP_WebDAV_Server
      */
     function _check_uri_condition($uri, $condition)
     {
+		unset($uri);	// not used, but required by function signature
         // not really implemented here,
         // implementations must override
 
@@ -2694,7 +2698,7 @@ class HTTP_WebDAV_Server
      * @param  string  URL to encode
      * @return string  encoded URL
      */
-    function _urlencode($url)
+    public static function _urlencode($url)
     {
     	// cadaver (and probably all neon using agents) need a more complete url encoding
     	// otherwise special chars like "$,()'" in filenames do NOT work
@@ -2724,7 +2728,7 @@ class HTTP_WebDAV_Server
      * @param  string  URL to decode
      * @return string  decoded URL
      */
-    function _urldecode($path)
+    public static function _urldecode($path)
     {
         return rawurldecode($path);
     }
@@ -2850,10 +2854,10 @@ class HTTP_WebDAV_Server
      * @param   string directory path
      * @returns string directory path wiht trailing slash
      */
-    function _slashify($path)
+    public static function _slashify($path)
     {
 		//error_log(__METHOD__." called with $path");
-		if ($path[$this->bytes($path)-1] != '/') {
+		if ($path[self::bytes($path)-1] != '/') {
 			//error_log(__METHOD__." added slash at the end of path");
 			$path = $path."/";
 		}
@@ -2866,10 +2870,10 @@ class HTTP_WebDAV_Server
      * @param   string directory path
      * @returns string directory path wihtout trailing slash
      */
-    function _unslashify($path)
+    public static function _unslashify($path)
     {
         //error_log(__METHOD__." called with $path");
-        if ($path[$this->bytes($path)-1] == '/') {
+        if ($path[self::bytes($path)-1] == '/') {
             $path = substr($path, 0, -1);
 			//error_log(__METHOD__." removed slash at the end of path");
         }
@@ -2883,14 +2887,14 @@ class HTTP_WebDAV_Server
      * @param  string  child path
      * @return string  merged path
      */
-    function _mergePaths($parent, $child)
+    public static function _mergePaths($parent, $child)
     {
         //error_log("merge called :\n$parent \n$child\n" . function_backtrace());
         //error_log("merge :\n".print_r($this->_mergePaths($this->_SERVER["SCRIPT_NAME"], $this->path)true));
         if ($child{0} == '/') {
-            return $this->_unslashify($parent).$child;
+            return self::_unslashify($parent).$child;
         } else {
-            return $this->_slashify($parent).$child;
+            return self::_slashify($parent).$child;
         }
     }
 
@@ -2900,9 +2904,9 @@ class HTTP_WebDAV_Server
      * @param string $str
      * @return int
      */
-    function bytes($str)
+    public static function bytes($str)
     {
-    	static $func_overload;
+    	static $func_overload=null;
 
     	if (is_null($func_overload))
     	{
@@ -2918,4 +2922,3 @@ class HTTP_WebDAV_Server
  * c-basic-offset: 4
  * End:
  */
-?>
