@@ -165,6 +165,16 @@ app.classes.home = AppJS.extend(
 				et2.DOMContainer.id = et2.uniqueId;
 			}
 		}
+
+		// Special handling to deal with legacy (non-et2) calendar links
+		if(name == 'home.legacy')
+		{
+			$j('.calendar_calDayColHeader a, .calendar_plannerDayScale a, .calendar_plannerWeekScale a, .calendar_plannerMonthScale a', et2.DOMContainer)
+				.on('click', function(e) {
+					egw.link_handler(this.href,'calendar');
+					return false;
+				});
+		}
 	},
 
 	/**
