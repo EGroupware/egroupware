@@ -996,7 +996,13 @@ abstract class egw_framework
 		}
 		elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			return html::a_href(html::image('phpgwapi', 'update', lang('Automatic update check failed, you need to check manually!')),
+			$error = lang('Automatic update check failed, you need to check manually!');
+			if (!ini_get('allow_url_fopen'))
+			{
+				$error .= "\n".lang('%1 setting "%2" = %3 disallows access via http!',
+					'php.ini', 'allow_url_fopen', array2string(ini_get('allow_url_fopen')));
+			}
+			return html::a_href(html::image('phpgwapi', 'update', $error),
 				'http://www.egroupware.org/changelog', null, ' target="_blank" data-api-version="'.$api.'"');
 		}
 		return null;
