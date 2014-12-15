@@ -2872,10 +2872,19 @@ app.classes.mail = AppJS.extend(
 			// will close when the selection callback fires instead of load the
 			// next message
 			nm.controller._selectionMgr.resetSelection();
+
+			// Server response may contain refresh, but it's always delete
+			// Refresh list if current view is the target (happens when pasting)
+			var tree = self.et2.getWidgetById('nm[foldertree]');
+			if(nm && tree && target == tree.getValue())
+			{
+				// Can't trust the sorting, needs to be full refresh
+				nm.refresh();
+			}
 		})
 			.sendRequest();
 		this.mail_setRowClass(_senders,'deleted');
-		// Server response contains refresh
+		// Server response may contain refresh, not needed here
 	},
 
 	/**
