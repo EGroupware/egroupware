@@ -148,6 +148,16 @@ class preferences_hooks
 				'admin'  => False,
 				'forced' => file_exists(EGW_SERVER_ROOT.'/pixelegg') ? 'pixelegg' : 'idots',
 			),
+			'audio_effect'=> array(
+				'type'   => 'select',
+				'label'  => 'Audio effect',
+				'name'   => 'audio_effect',
+				'values' => array('0'=>lang('Disable'),'1'=>lang('Enable')),
+				'help'   => 'Audio effect enables|disables sound effects used in the theme',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => '1',
+			),
 			'navbar_format' => array(
 				'type'   => 'select',
 				'label'  => 'Show navigation bar as',
