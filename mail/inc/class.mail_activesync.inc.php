@@ -429,12 +429,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
     		debugLog("IMAP-SendMail: " . (isset($rfc822) ? $rfc822 : ""). "task: ".(isset($smartdata['task']) ? $smartdata['task'] : "")." itemid: ".(isset($smartdata['itemid']) ? $smartdata['itemid'] : "")." folder: ".(isset($smartdata['folderid']) ? $smartdata['folderid'] : ""));
 		if ($this->debugLevel>0) debugLog("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
 		//error_log("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
-		// if we cannot decode the mail in question, fail
-		if (class_exists('Mail_mimeDecode',false)==false && (@include_once 'Mail/mimeDecode.php') === false)
-		{
-			debugLog("IMAP-SendMail: Could not find Mail_mimeDecode.");
-			return false;
-		}
+
 		// initialize our mail_bo
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 		$activeMailProfiles = $this->mail->getAccountIdentities(self::$profileID);
