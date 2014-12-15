@@ -582,7 +582,7 @@ class calendar_uiviews extends calendar_ui
 								$width = $this->time2pos($event['end_m'] - $event['start_m']);
 								$color = $data['color'] ? $data['color'] : 'gray';
 
-								$content .= $indent.'<div class="plannerEvent'.($data['private'] ? 'Private' : '').
+								$content .= $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').
 									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
 									$row_height.'%; top: '.($n * $row_height).'%;'.
 									'background-color: '.$color.';" '.$data['popup'].' '.
@@ -1794,7 +1794,7 @@ function open_edit(series)
  			}
 			foreach($part_array as $part_group => $participant)
  			{
-				$participants .= $this->add_nonempty($participant,$part_group,True,False);
+				$participants .= $this->add_nonempty($participant,$part_group,True,False,false);
  			}
  		}
 		// as we only deal with percentual widht, we consider only the full dayview (1 colum) as NOT small
@@ -1881,6 +1881,7 @@ function open_edit(series)
 				$popup = ' onclick="'.$this->popup($view_link).'; return false;"';
 			}
 		}
+		$tooltip = html::htmlspecialchars($tooltip, true);	// true=need double-encoding, as it is transported as attribute!
 		//_debug_array($event);
 
 		if ($return_array)
@@ -2062,7 +2063,7 @@ function open_edit(series)
 		return $icons;
 	}
 
-	function add_nonempty($content,$label,$one_per_line=False,$space = True)
+	function add_nonempty($content,$label,$one_per_line=False,$space = True,$htmlspecialchars=true)
 	{
 		if (is_array($content))
 		{
@@ -2079,7 +2080,7 @@ function open_edit(series)
 		{
 			return '<span class="calEventLabel">'.$label.'</span>:'.
 				($one_per_line ? '<br>' : ' ').
-				nl2br(html::htmlspecialchars($content)).'<br>';
+				nl2br($htmlspecialchars?html::htmlspecialchars($content):$content).'<br>';
 		}
 		return '';
 	}

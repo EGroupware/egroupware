@@ -1539,7 +1539,7 @@ class calendar_bo
 			{
 				$status = '('.$lang_status.')';
 			}
-			$names[$id] = $this->participant_name($id).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
+			$names[$id] = html::htmlspecialchars($this->participant_name($id)).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
 
 			// add role, if not a regular participant
 			if ($role != 'REQ-PARTICIPANT')
