@@ -527,7 +527,22 @@ var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 					if(!categories) categories = _mgrs["sel_options"].getEntry("${row}["+category_location + "]");
 
 					// Cache
-					if(categories) this.categories = categories;
+					if(categories)
+					{
+						if (!jQuery.isArray(categories))
+						{
+							this.categories = categories;
+						}
+						else
+						{
+							this.categories = {};
+							for(var i=0; i < categories.length; ++i)
+							{
+								var cat = categories[i];
+								this.categories[cat.value] = cat;
+							}
+						}
+					}
 				}
 				for(var i = 0; i < cats.length && this.categories; i++)
 				{
