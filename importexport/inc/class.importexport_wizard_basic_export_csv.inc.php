@@ -98,6 +98,7 @@ class importexport_wizard_basic_export_csv
 				$content['mapping']['all_custom_fields'] = $appname;
 			}
 			unset($content['mapping']['']);
+			unset($content['mapping'][0]);
 			unset($content['fields']);
 			switch (array_search('pressed', $content['button']))
 			{
