@@ -379,7 +379,9 @@ class mail_compose
 			}
 			if ($sendOK == false)
 			{
+				$response = egw_json_response::get();
 				egw_framework::message(lang('Message send failed: %1',$message),'error');// maybe error is more appropriate
+				$response->call('app.mail.clearIntevals');
 			}
 		}
 
