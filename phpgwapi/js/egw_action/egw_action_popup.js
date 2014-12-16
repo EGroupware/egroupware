@@ -16,6 +16,8 @@
 	/phpgwapi/js/zeroclipboard/dist/ZeroClipboard.min.js;
 */
 
+ZeroClipboard.config( { swfPath: egw.webserverUrl+"/phpgwapi/js/zeroclipboard/dist/ZeroClipboard.swf" } );
+
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};
 _egwActionClasses["popup"] = {
