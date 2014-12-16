@@ -13,6 +13,7 @@
 	jquery.jquery;
 	egw_menu;
 	/phpgwapi/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
+	/phpgwapi/js/zeroclipboard/dist/ZeroClipboard.min.js;
 */
 
 if (typeof window._egwActionClasses == "undefined")
@@ -334,6 +335,14 @@ function egwPopupActionImplementation()
 			var menu = ai._buildMenu(_links, _selected, _target);
 			menu.showAt(_context.posx, _context.posy);
 
+			// Bindings for copy to system clipboard
+			menu.instance.dhtmlxmenu.attachEvent("onShow", function(zoneId,ev) {
+				var client = new ZeroClipboard($j('#'+this.idPrefix+'egw_os_clipboard', this.base));
+				client.on("copy",function(event) {
+					 event.clipboardData.setData('text/plain', _links.egw_os_clipboard.actionObj.data.target.innerText);
+					 event.clipboardData.setData('text/html', _links.egw_os_clipboard.actionObj.data.target.innerHTML);
+				 });
+			});
 			return true;
 		}
 		else
@@ -607,6 +616,7 @@ function egwPopupActionImplementation()
 		var mgr = _selected[0].manager;
 		var copy_action = mgr.getActionById('egw_copy');
 		var add_action = mgr.getActionById('egw_copy_add');
+		var clipboard_action = mgr.getActionById('egw_os_clipboard');
 		var paste_action = mgr.getActionById('egw_paste');
 
 		// Fake UI so we can simulate the position of the drop
@@ -692,6 +702,17 @@ function egwPopupActionImplementation()
 				add_action.group = 2.5;
 
 			}
+			if(clipboard_action == null)
+			{
+				// Create an action to add selected to clipboard
+				clipboard_action = mgr.addAction('popup', 'egw_os_clipboard', egw.lang('Copy to OS clipboard'), egw.image('copy'), function(action) {
+					
+				},true);
+				clipboard_action.group = 2.5;
+			}
+			var os_clipboard_caption = event.target.innerText.trim();
+			clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length>20 ? os_clipboard_caption.substring(0,20)+'...':os_clipboard_caption));
+			clipboard_action.data.target = event.target;
 			if(typeof _links[copy_action.id] == 'undefined')
 			{
 				_links[copy_action.id] = {
@@ -707,6 +728,15 @@ function egwPopupActionImplementation()
 					"actionObj": add_action,
 					"enabled": true,
 					"visible": true,
+					"cnt": 0
+				};
+			}
+			if(typeof _links[clipboard_action.id] == 'undefined')
+			{
+				_links[clipboard_action.id] = {
+					"actionObj": clipboard_action,
+					"enabled": os_clipboard_caption.length > 0,
+					"visible": os_clipboard_caption.length > 0,
 					"cnt": 0
 				};
 			}

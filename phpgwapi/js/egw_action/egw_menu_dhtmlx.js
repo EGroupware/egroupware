@@ -101,8 +101,8 @@ egwMenuImpl.prototype._translateStructure = function(_structure, _parentId, _idC
 
 	for (var i = 0; i < _structure.length; i++)
 	{
-		var id = 'elem_' + (_idCnt + counter);
 		var elem = _structure[i];
+		var id = elem.id || 'elem_' + (_idCnt + counter);
 
 		counter++;
 
