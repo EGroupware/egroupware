@@ -328,7 +328,7 @@ final class notifications {
 		$this->links = array(); // clear array if set
 		foreach($_links as $link) {
 			if(is_array($link)) {
-				$this->add_link($link['text'], $link['view'], $link['popup']);
+				$this->add_link($link['text'], $link['view'], $link['popup'], $link['app'],$link['id']);
 			}
 		}
 		return true;
@@ -355,13 +355,18 @@ final class notifications {
 	 * @param string $_text a descriptive text for the link
 	 * @param array $_view all params needed to view the link (name => value pairs)
 	 * @param string $_popup if link can be viewed in a popup something like '300x200' otherwise false
+	 * @param string $_app Application name, to use link registry (popup & view ignored)
+	 * @param string $_id Application ID, to use link registry (popup & view ignored)
 	 */
-	public function add_link($_text, $_view, $_popup = false) {
+	public function add_link($_text, $_view, $_popup = false, $_app = false, $_id = false) {
 		if(!$_view || !$_text) { return false; }
-		$this->links[] = (object)array(	'text'	=> $_text,
-										'view'	=> $_view,
-										'popup'	=> $_popup,
-										);
+		$this->links[] = (object)array(
+			'text'	=> $_text,
+			'view'	=> $_view,
+			'popup'	=> $_popup,
+			'app'	=> $_app,
+			'id'	=> $_id
+		);
 		return true;
 	}
 

@@ -75,6 +75,20 @@
 		egwpopup_message.style.maxHeight = (Browserheight/2) + "px";
 		for(var show in notifymessages) break;
 		egwpopup_message.innerHTML = notifymessages[show];
+
+		// Activate links
+		$j('div[data-id],div[data-url]', egwpopup_message).on('click',
+			function() {
+				if(this.dataset.id)
+				{
+					egw.open(this.dataset.id,this.dataset.app);
+				}
+				else
+				{
+					egw.open_link(this.dataset.url,'_blank',this.dataset.popup);
+				}
+			}
+		).addClass('et2_link');
 		var num = 0;
 		for(var id in notifymessages) ++num;
 		if(num-1 > 0 ) {
@@ -146,7 +160,7 @@
 		for(var id in notifymessages) {
 			ids.push(id);
 		}
-		var request = egw.json("notifications.notifications_ajax.confirm_message", ids);
+		var request = egw.json("notifications.notifications_ajax.confirm_message", [ids]);
 		request.sendRequest();
 		notifymessages = {};
 		var egwpopup = document.getElementById("egwpopup");

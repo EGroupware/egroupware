@@ -945,6 +945,8 @@ abstract class bo_tracking
 		{
 			return array(
 				'text' 	=> $this->get_title($data,$old),
+				'app'	=> $this->app,
+				'id'	=> $data[$this->id_field],
 				'view' 	=> $view,
 				'popup'	=> egw_link::is_popup($this->app,'view'),
 			);
