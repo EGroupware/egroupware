@@ -1,3 +1,32 @@
+egroupware-epl (11.1.20141216-1) hardy; urgency=low
+
+  * SECURITY: please update ASAP
+  * Mail/EMailAdmin/Setup: using PEAR Horde_Mime as alternative, if PHP imap extension is not installed
+  * API/Admin: fixed not working Admin >> Clear cache for default APC(u) and files backends
+  * API/CKEditor: update to version 4.4.3; add additional skins
+  * API/CKEditor: introduce new skins/themes
+  * LDAP/AD: auto-created accounts not allways set primary group also as membership
+  * eSync: limit creation of sessions to one per device and user (like already done for CalDAV)
+  * PostgreSQL/Admin/Setup: backup stopped with SQL error
+  * eSync: recreate session, if session does not contain correct password, fixes broken sync on some devices
+  * Tracker: fix problem with correct resolution initzialization for new Tracker Entrys
+  * API/MySQL: automatic try to reconnect once, if server closed connection "MySQL server has gone away"
+  * Mail: handle (and correct (if needed)) charset for subject on import of messages
+  * Apache 2.4 and RHEL 7 installation fixes
+  * Mail: fix problem with wrong character decoding/encoding handling used when switching signatures
+  * NewsAdmin: fix SQL error on import, if a number of news items to keep was configured
+  * Calendar/CalDAV/eSync: exceptions show up in calendars of participants only participating in exceptions not whole recuring event (requires a DB update for existing events!)
+  * ProjectManager/Timesheet: fixed an infinit loop when trying to save a project-element, caused by timesheet notifying project again
+  * CalDAV: big calendars with more then 500 events in result-set were missing events
+  * CalDAV: fixed users participating only in exceptions of a recurring event were also shown in whole series in Thunderbird and iCal
+  * Admin/Setup: ignoring doublicate rows from old backups
+  * CardDAV/Addressbook: fixed OS X addressbook overwrites account with lowest id when creating a new contact
+  * eMail: fixed not resized grid/preview when eMail was started in a not activated tab
+  * Filemanager: fixed directory creation in vfs root (you need root permisstions of cause)
+  * Filemanager: fix since PHP 5.5.18 not longer working non-ascii chars in filenames, eg. German umlauts or accents
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 16 Dec 2014 09:52:29 +0100
+
 egroupware-epl (11.1.20140715-1) hardy; urgency=low
 
   * Setup: fixed fatal error when updating from 1.8
