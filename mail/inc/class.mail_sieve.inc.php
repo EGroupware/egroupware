@@ -534,9 +534,9 @@ class mail_sieve
 			{
 				$content = $vacation = $vacRules['vacation'];
 				if (!empty($profileID)) $content['acc_id'] = $profileID;
-				if (empty($vacation['addresses']))
+				if (empty($vacation['addresses']) || implode('',$vacation['addresses']) == '')
 				{
-					$content['addresses'] = '';
+					$content['addresses'] = $vacRules['aliases'];
 				}
 				if (!empty($vacation['forwards']))
 				{
