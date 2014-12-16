@@ -1567,10 +1567,10 @@ var et2_link_list = et2_link_string.extend(
 
 	set_value: function(_value)
 	{
+		this.list.empty();
 		// Handle server passed a list of links that aren't ready yet
 		if(_value && typeof _value == "object" && _value.to_id && typeof _value.to_id == "object")
 		{
-			this.list.empty();
 			for(var id in _value.to_id)
 			{
 				var link = _value.to_id[id];
@@ -1610,7 +1610,7 @@ var et2_link_list = et2_link_string.extend(
 
 	_add_link: function(_link_data) {
 		var row = $j(document.createElement("tr"))
-			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : (typeof _link_data.link_id == "number" ?  _link_data.link_id : _link_data.link_id.replace(/[:\.]/g,'_'))))
+			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : (typeof _link_data.link_id == "string" ? _link_data.link_id.replace(/[:\.]/g,'_'):_link_data.link_id ||_link_data.id)))
 			.attr("draggable", _link_data.app == 'file' ? "true" : "")
 			.appendTo(this.list);
 
