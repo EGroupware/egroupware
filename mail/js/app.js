@@ -38,7 +38,7 @@ app.classes.mail = AppJS.extend(
 	nm_index: 'nm', // nm name of index
 	mail_fileSelectorWindow: null,
 	mail_isMainWindow: true,
-
+	
 	// Some state variables to track preview pre-loading
 	preview_preload: {
 		timeout: null,
@@ -57,6 +57,12 @@ app.classes.mail = AppJS.extend(
 	 *
 	 */
 	aclRights:['l','r','s','w','i','p','c','d','a'],
+	
+	/**
+	 * In order to store Intervals assigned to window
+	 * @array of setted intervals
+	 */
+	W_INTERVALS:[],
 
 	/**
 	 * Initialize javascript for this application
@@ -184,9 +190,9 @@ app.classes.mail = AppJS.extend(
 				this.subject2title();
 
 				// Set autosaving interval to 2 minutes for compose message
-				window.setInterval(function (){
+				this.W_INTERVALS.push(window.setInterval(function (){
 					that.saveAsDraft(null,that.et2.getWidgetById('button[saveAsDraft]'),'autosaving');
-				}, 120000);
+				}, 120000));
 
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
@@ -4175,6 +4181,18 @@ app.classes.mail = AppJS.extend(
 		if (_widget && _widget.get_value())
 		{
 			document.title = _widget.get_value();
+		}
+	},
+	
+	/**
+	 * Clear intervals stored in W_INTERVALS which assigned to window
+	 */
+	clearIntevals: function ()
+	{
+		for(var i=0;i<this.W_INTERVALS.length;i++)
+		{
+			clearInterval(this.W_INTERVALS[i]);
+			delete this.W_INTERVALS[i];
 		}
 	}
 });
