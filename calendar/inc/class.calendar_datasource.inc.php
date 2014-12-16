@@ -73,7 +73,7 @@ class calendar_datasource extends datasource
 		$ds['pe_planned_time'] = (int) (($ds['pe_planned_end'] - $ds['pe_planned_start'])/60);	// time is in minutes
 
 		// if the event spans multiple days, we have to substract the nights (24h - daily working time specified in PM)
-		if (date('Y-m-d',$ds['pe_planned_end']) != date('Y-m-d',$ds['pe_planned_start']))
+		if (($ds['pe_planned_time']/ 60 > 24) && date('Y-m-d',$ds['pe_planned_end']) != date('Y-m-d',$ds['pe_planned_start']))
 		{
 			foreach(array('start','end') as $name)
 			{
