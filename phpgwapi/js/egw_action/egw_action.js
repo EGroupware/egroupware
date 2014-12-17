@@ -1917,7 +1917,7 @@ var EGW_AO_EXEC_THIS = 1;
  *
  * @param {object} _implContext is data which should be delivered to the action implementation.
  * 	E.g. in case of the popup action implementation, the x and y coordinates where the
- * 	menu should open are transmitted.
+ * 	menu should open, and contextmenu event are transmitted.
  * @param {string} _implType is the action type for which the implementation should be
  * 	executed.
  * @param {number} _execType specifies in which context the execution should take place.

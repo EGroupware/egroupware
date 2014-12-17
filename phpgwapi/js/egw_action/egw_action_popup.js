@@ -262,7 +262,8 @@ function egwPopupActionImplementation()
 			else if (!e.ctrlKey && e.which == 3 || e.which === 0) // tap event indicates by 0
 			{
 				var _xy = ai._getPageXY(e);
-				_callback.call(_context, _xy, ai);
+				var _implContext = {event:e, posx:_xy.posx, posy: _xy.posy};
+				_callback.call(_context, _implContext, ai);
 			}
 
 			e.cancelBubble = !e.ctrlKey || e.which == 1;
@@ -622,21 +623,16 @@ function egwPopupActionImplementation()
 		var paste_action = mgr.getActionById('egw_paste');
 
 		// Fake UI so we can simulate the position of the drop
-		if(window.event)
+		if(this._context.event)
 		{
-			var event = jQuery.Event(window.event);
 			var ui = {
 				position: {top: 0, left: 0},
 				offset: {top: 0, left: 0}
 			};
-			if(event)
-			{
-				event = event.originalEvent;
-				ui.position = {top: event.pageY, left: event.pageX};
-				ui.offset = {top: event.offsetY, left: event.offsetX};
-			}
+			var event = this._context.event.originalEvent;
+			ui.position = {top: event.pageY, left: event.pageX};
+			ui.offset = {top: event.offsetY, left: event.offsetX};
 		}
-
 		// Create default copy menu action
 		if(drag && !jQuery.isEmptyObject(drag))
 		{
@@ -712,9 +708,9 @@ function egwPopupActionImplementation()
 				},true);
 				clipboard_action.group = 2.5;
 			}
-			var os_clipboard_caption = event.target.innerText.trim();
+			var os_clipboard_caption = this._context.event.originalEvent.target.innerHTML.trim();
 			clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length>20 ? os_clipboard_caption.substring(0,20)+'...':os_clipboard_caption));
-			clipboard_action.data.target = event.target;
+			clipboard_action.data.target = this._context.event.originalEvent.target;
 			if(typeof _links[copy_action.id] == 'undefined')
 			{
 				_links[copy_action.id] = {
