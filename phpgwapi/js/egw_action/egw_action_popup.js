@@ -342,8 +342,8 @@ function egwPopupActionImplementation()
 			menu.instance.dhtmlxmenu.attachEvent("onShow", function(zoneId,ev) {
 				var client = new ZeroClipboard($j('#'+this.idPrefix+'egw_os_clipboard', this.base));
 				client.on("copy",function(event) {
-					 event.clipboardData.setData('text/plain', _links.egw_os_clipboard.actionObj.data.target.innerText);
-					 event.clipboardData.setData('text/html', _links.egw_os_clipboard.actionObj.data.target.innerHTML);
+					 event.clipboardData.setData('text/plain', $j(_links.egw_os_clipboard.actionObj.data.target).text().trim());
+					 event.clipboardData.setData('text/html', $j(_links.egw_os_clipboard.actionObj.data.target).html());
 				 });
 			});
 			return true;
