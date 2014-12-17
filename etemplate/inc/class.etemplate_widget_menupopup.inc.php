@@ -65,7 +65,13 @@ class etemplate_widget_menupopup extends etemplate_widget
 				unset($this->attrs['options']);
 			}
 		}
+		elseif($this->attrs['rows'] > 1)
+		{
+			$this->attrs['multiple'] = true;
+		}
 	}
+
+	const UNAVAILABLE_CAT_POSTFIX = '-unavailable';
 
 	/**
 	 * Validate input
@@ -154,7 +160,19 @@ class etemplate_widget_menupopup extends etemplate_widget
 					break;
 
 				case 'select-cat':
-					// ToDo: unavailable cats need to be merged in again
+					// unavailable cats need to be merged in again
+					$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
+					if (isset(self::$request->preserv[$unavailable_name]))
+					{
+						if ($this->attrs['multiple'])
+						{
+							$value = array_merge($value, (array)self::$request->preserv[$unavailable_name]);
+						}
+						elseif(!$value)	// for single cat, we only restore unavailable one, if no other was selected
+						{
+							$value = self::$request->preserv[$unavailable_name];
+						}
+					}
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			if (true) $valid = $value;
@@ -212,7 +230,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			self::$request->sel_options[$form_name] += self::typeOptions($this,
 				// typeOptions thinks # of rows is the first thing in options
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
-				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
+				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name);
 			// need to run that here manually, automatic run through etemplate_new::exec() already happend
 			self::fix_encoded_options(self::$request->sel_options[$form_name]);
 
@@ -384,12 +402,13 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 *
 	 * @param string|etemplate_widget_menupopup $widget_type Type of widget, or actual widget to get attributes since $legacy_options are legacy
 	 * @param string $_legacy_options options string of widget
-	 * @param boolean $no_lang=false initial value of no_lang attribute (some types set it to true)
-	 * @param boolean $readonly=false for readonly we dont need to fetch all options, only the one for value
-	 * @param mixed $value=null value for readonly
+	 * @param boolean $no_lang =false initial value of no_lang attribute (some types set it to true)
+	 * @param boolean $readonly =false for readonly we dont need to fetch all options, only the one for value
+	 * @param mixed $value =null value for readonly
+	 * @param string $form_name =null
 	 * @return array with value => label pairs
 	 */
-	public static function typeOptions($widget_type, $_legacy_options, &$no_lang=false, $readonly=false, &$value=null)
+	public static function typeOptions($widget_type, $_legacy_options, &$no_lang=false, $readonly=false, &$value=null, $form_name=null)
 	{
 		if($widget_type && is_object($widget_type))
 		{
@@ -499,13 +518,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 					}
 				}
 				// preserv unavailible cats (eg. private user-cats)
-				/* TODO
 				if ($value && ($unavailible = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$options))))
 				{
-					$extension_data['unavailible'] = $unavailible;
+					// unavailable cats need to be merged in again
+					$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
+					self::$request->preserv[$unavailable_name] = $unavailible;
 				}
-				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
-				*/
 				$no_lang = True;
 				break;
 
