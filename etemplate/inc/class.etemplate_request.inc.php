@@ -66,6 +66,16 @@
  * For an example look in link_widget::ajax_search()
  *
  * @property-read boolean $data_modified true if data was modified and therefore needs saving
+ * @property int $output_mode
+ * @property array $content
+ * @property array $changes
+ * @property array $sel_options
+ * @property array $readonlys
+ * @property array $preserv
+ * @property string $method
+ * @property array $ignore_validation
+ * @property array $template
+ * @property string $app_header
  */
 class etemplate_request
 {
