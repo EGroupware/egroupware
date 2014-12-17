@@ -452,7 +452,11 @@ action buttons, left aligned for "extra" controls
 .et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr > td:first-child {
 	padding-left: 1.2em;
 }
-
+/*stops a tags inside next match extends to their parents width,
+which caused click on free space infront of a tag stops nm row selection*/
+.et2_nextmatch .egwGridView_grid tr td div.et2_vbox a  {
+	display: table-row;
+}
 /**
  * Diff widget
  */
