@@ -607,7 +607,8 @@ app.classes.mail = AppJS.extend(
 		//this.et2.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
 		//this.et2.getWidgetById('mailPreviewHeadersSubject').set_disabled(_value);
 		this.et2.getWidgetById('mailPreview').set_disabled(_value);
-		if (_value==true)
+		//Dock the splitter always if we are browsing with mobile
+		if (_value==true || egwIsMobile())
 		{
 			if (this.mail_previewAreaActive) splitter.dock();
 			this.mail_previewAreaActive = false;

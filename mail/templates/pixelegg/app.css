@@ -791,9 +791,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
 @media only screen and (max-device-width: 1024px) {
-  div#mail-index_nm {
-    height: 100% !important;
-  }
   /*Disable the preview spliter*/
   div#mail-index_mailPreview,
   div.splitter-bar {
