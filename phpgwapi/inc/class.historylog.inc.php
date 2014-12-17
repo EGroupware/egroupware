@@ -76,7 +76,7 @@ class historylog
 	/**
 	 * Delete the history-log of one or multiple records of $this->appname
 	 *
-	 * @param int/array $record_id one or more id's of $this->appname, or null to delete ALL records of $this->appname
+	 * @param int|array $record_id one or more id's of $this->appname, or null to delete ALL records of $this->appname
 	 * @return int number of deleted records/rows (0 is not necessaryly an error, it can just mean there's no record!)
 	 */
 	function delete($record_id)
@@ -140,10 +140,10 @@ class historylog
 	/**
 	 * Search history-log
 	 *
-	 * @param array/int $filter array with filters, or int record_id
-	 * @param string $order='history_id' sorting after history_id is identical to history_timestamp
-	 * @param string $sort='DESC'
-	 * @param int $limit=null only return this many entries
+	 * @param array|int $filter array with filters, or int record_id
+	 * @param string $order ='history_id' sorting after history_id is identical to history_timestamp
+	 * @param string $sort ='DESC'
+	 * @param int $limit =null only return this many entries
 	 * @return array of arrays with keys id, record_id, appname, owner (account_id), status, new_value, old_value,
 	 * 	timestamp (Y-m-d H:i:s in servertime), user_ts (timestamp in user-time)
 	 */
@@ -204,6 +204,24 @@ class historylog
 		else
 		{
 			$total = $GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)',$filter,__LINE__,__FILE__,false,'','phpgwapi',0)->fetchColumn();
+		}
+		// filter out private (or no longer defined) custom fields
+		if ($filter['history_appname'])
+		{
+			$to_or[] = "history_status NOT LIKE '#%'";
+			// explicitly allow "##" used to store iCal/vCard X-attributes
+			if (in_array($filter['history_appname'], array('calendar','infolog','addressbook')))
+			{
+				$to_or[] = "history_status LIKE '##%'";
+			}
+			if (($cfs = egw_customfields::get($filter['history_appname'])))
+			{
+				$to_or[] =  'history_status IN ('.implode(',', array_map(function($str)
+				{
+					return $GLOBALS['egw']->db->quote('#'.$str);
+				}, array_keys($cfs))).')';
+			}
+			$filter[] = '('.implode(' OR ', $to_or).')';
 		}
 		$_query = array(array(
 			'table' => self::TABLE,
