@@ -109,25 +109,10 @@ div.ms-ctn-bootstrap-focus {
   border-bottom: 1px solid #CCC;
 }
 div.ms-res-ctn {
-  position: absolute;
-  background: #FFF;
-  overflow-y: auto;
-  z-index: 9999;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #CCC;
-  left: -1px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
   -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
   transition: border linear 0.2s, box-shadow linear 0.2s;
-  border-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 div.ms-res-ctn .ms-res-group {
   line-height: 23px;

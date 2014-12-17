@@ -1353,6 +1353,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
   /* It doesn't really work smaller than this */
   min-width: 150px;
+  border: solid 1px #bbbbbb;
 }
 .ms-ctn .loading {
   position: relative;
@@ -1360,7 +1361,21 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   top: 5px;
 }
 .ms-res-ctn {
-  overflow-x: hidden;
+	position:absolute;
+	background: #FFF;
+	overflow-y: auto;
+	z-index: 9999;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #CCC;
+	left: -1px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	border-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }
 div.ms-sel-ctn {
 	padding-right: 0px;
