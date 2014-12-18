@@ -663,7 +663,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 
 		}
-		else if (widget.value.mime == 'httpd/unix-directory')
+		else if (widget.value.is_dir)	// true for "httpd/unix-directory" and "egw/*"
 		{
 			var path = null;
 			// Cannot do this, there are multiple widgets named path
