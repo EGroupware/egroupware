@@ -90,7 +90,7 @@ class preferences_settings
 							$GLOBALS['egw']->preferences->read_repository();
 						}
 						// name of common preferences which require reload of framework, if there values change
-						$require_reload = array('template_set', 'theme', 'lang');
+						$require_reload = array('template_set', 'theme', 'lang', 'template_color', 'template_custom_color');
 						$old_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'], array_flip($require_reload));
 
 						$attribute = $type == 'group' ? 'user' : $type;
