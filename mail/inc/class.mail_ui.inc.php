@@ -822,7 +822,7 @@ class mail_ui
 				'child'=> (int)($acc_id != $_profileID || $folderObjects), // dynamic loading on unfold
 				'parent' => '',
 				// mark on account if Sieve is enabled
-				'data' => array('sieve' => $accountObj->acc_sieve_enabled),
+				'data' => array('sieve' => $accountObj->imapServer()->acc_sieve_enabled),
 			);
 			$this->setOutStructure($oA, $out, self::$delimiter);
 
