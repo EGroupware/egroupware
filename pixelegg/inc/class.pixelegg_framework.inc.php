@@ -61,7 +61,35 @@ class pixelegg_framework extends jdots_framework
 		}
 		return parent::header($extra);
 	}
+	
+	/**
+	 * Make given color lighter or darker by percentage
+	 *
+	 * @param string $color in hex
+	 * @param int $percent int
+	 * @return string returns color hex format (for instance: #2b2b2b)
+	 */
+	function _color_shader($color, $percent) {
 
+		$R = hexdec(substr($color,0,2));
+		$G = hexdec(substr($color,2,2));
+		$B = hexdec(substr($color,4,2));
+
+		$R = round($R * (100 + $percent) / 100);
+		$G = round($G * (100 + $percent) / 100);
+		$B = round($B * (100 + $percent) / 100);
+		
+		$R = ($R<255)?$R:255;
+		$G = ($G<255)?$G:255;
+		$B = ($B<255)?$B:255;
+
+		$RR = (strlen(dechex($R))==1?"0".dechex($R):dechex($R));
+		$GG = (strlen(dechex($G))==1?"0".dechex($G):dechex($G));
+		$BB = (strlen(dechex($B))==1?"0".dechex($B):dechex($B));
+
+		return '#'.$RR.$GG.$BB;
+	}
+	
 	/**
 	 * Overwrite to NOT add customizable colors from jDots
 	 *
@@ -70,7 +98,58 @@ class pixelegg_framework extends jdots_framework
 	 */
 	public function _get_css()
 	{
-		return egw_framework::_get_css();
+		if (html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile') return egw_framework::_get_css();
+		$ret = parent::_get_css();
+		// color to use
+		$color = str_replace('custom',$GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'],
+			$GLOBALS['egw_info']['user']['preferences']['common']['template_color']);
+		//The hex value of the color
+		$color_hex = ltrim($color, '#');
+		
+		// Create a drak variant of the color
+		$color_hex_dark = $this->_color_shader($color_hex, 15);
+		// Create a draker variant of the color
+		$color_hex_darker = $this->_color_shader($color_hex, -30);
+		
+		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color))	// a little xss check
+		{
+			$ret['app_css'] = "
+/**
+ * theme changes to color pixelegg for color: $color
+ */
+
+/*
+-Top window framework header
+-sidebar actiuve category :hover
+-popup toolbar
+*/
+div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #divAppIconBar #divLogo,
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active:hover,
+.dialogFooterToolbar, .ui-widget-header{
+	background-color: $color;
+}
+
+/*Login background*/
+#loginMainDiv #divAppIconBar #divLogo img[src$='svg'] {
+	background-image: -webkit-linear-gradient(top, $color, $color);
+}
+
+/*Center box in login page*/
+#loginMainDiv div#centerBox {
+	background-image: -webkit-linear-gradient(top,$color_hex_dark,$color_hex_darker);
+	border-top: solid 1px $color_hex_darker;
+	border-left: solid 1px $color_hex_darker;
+	border-right: solid 1px $color_hex_darker;
+	border-bottom: solid 1px $color_hex_dark;
+}
+
+/*Sidebar menu active category*/
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active{
+	background-color: $color_hex_darker;
+}
+";
+		}
+		return $ret;
 	}
 
 	/**

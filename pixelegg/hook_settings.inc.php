@@ -31,26 +31,19 @@ if (!$hook_data['setup'])	// does not work on setup time
 }
 
 $colors = array(
-	'#4b89d8' => lang('dark blue'),
-	'#010101' => lang('black'),
-	'#a3620a' => lang('brown'),
-	'#469609' => lang('dark green'),
-	'#bbde62' => lang('light green'),
-	'#9541d6' => lang('lila'),
-	'#f7b21e' => lang('orange'),
-	'#fe6a07' => lang('dark orange'),
-	'#fedf9e' => lang('light orange'),
-	'#f06eaa' => lang('pink'),
-	'#ed1c24' => lang('red'),
-	'#fef322' => lang('yellow'),
+	'#408dd2' => lang('LightBlue'),
+	'#679fd2' => lang('DarkBlue'),
+	'#B0C4DE' => lang('LightSteelBlue'),
+	'#20B2AA' => lang('LightSeaGreen'),
+	'#84CA8C' => lang('DarkGreen'),
+	'#b4b4b4' => lang('Gray'),
 );
 asort($colors);
 $colors['custom'] = lang('Custom color');	// custom allways last
 $template_colors = array();
 foreach($colors as $color => $label)
 {
-	$template_colors[$color] = $label.' ('.$color.') '.lang('Sidebox and header');
-	$template_colors['@'.$color] = $label.' ('.$color.') '.lang('Sidebox and active tab');
+	$template_colors[$color] = $label.' ('.$color.') '.lang('Sidebox, header, and logo');
 }
 /**
  * Stylite Pixelegg template
@@ -91,7 +84,6 @@ $GLOBALS['settings'] = array(
 		'xmlrpc' => True,
 		'admin'  => False,
 	),
-	/* disabled until Pixelegg template supports it
 	'template_color' => array(
 		'type' => 'select',
 		'label' => 'Template color',
@@ -111,7 +103,7 @@ $GLOBALS['settings'] = array(
 		'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
 		'xmlrpc' => True,
 		'admin'  => False,
-	),*/
+	),
 	'navbar_format' => false,	// not used in JDots (defined in common prefs)
 	'default_app' => false,		// not used in JDots, as we can have multiple tabs open ...
 );
