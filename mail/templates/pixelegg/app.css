@@ -363,6 +363,7 @@ input[type=button] {
 div.mailUploadSection {
   border-top: 1px solid silver;
   margin-top: 16px;
+  width: 99%;
 }
 div.mailUploadSection > div.et2_hbox {
   margin-top: -10px;
@@ -549,14 +550,12 @@ div.mail-compose_fileselector {
   display: -moz-box;
   /*width: 99%;*/
   overflow: hidden;
-  overflow-y: auto;
   left: 8px;
   right: 8px;
 }
 .mailDisplayContainer {
   position: fixed;
   overflow: hidden;
-  overflow-y: auto;
   border: 1px solid silver;
   top: 120px;
 }
@@ -610,9 +609,6 @@ div.mailPreviewHeaders > span:first-child {
 }
 #mail-display_toolbar {
   display: inline-flex;
-}
-#mail-compose_mailaccount {
-  width: 80%;
 }
 div.mailComposeHeaders > span:first-child {
   width: 8em;
@@ -830,6 +826,17 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
 }
 /* Mobile (landscape) Tablet----------- */
+span#mail-compose_cc_expander,
+span#mail-compose_bcc_expander,
+span#mail-compose_folder_expander,
+span#mail-compose_replyto_expander {
+  float: left;
+  width: 55px;
+  margin: 3px;
+  margin-left: 12px;
+  text-align: right;
+  padding: 0;
+}
 #popupMainDiv {
   padding: 5px;
 }
@@ -1436,6 +1443,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   margin: 3px;
   font-size: 8px;
   margin-left: 12px;
+  padding: 0;
 }
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander:hover,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander:hover,
