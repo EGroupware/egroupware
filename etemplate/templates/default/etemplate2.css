@@ -198,17 +198,20 @@ input[type=button] {
 }
 button.et2_button_text:hover,
 .et2_file_spanHover,
+span.et2_button_text:hover,
 input[type=button]:hover {
   color: #050505;
   border: 1px solid gray;
   background-color: #D0D0EE;
 }
 button.et2_button_text:active,
+span.et2_button_text:active,
 input[type=button]:active {
   background-image: url(images/gradient02.png);
   background-color: #D0D0E0;
 }
 button.et2_button_text:focus,
+span.et2_button_text:focus,
 .et2_file_spanActive,
 input[type=button]:focus {
   border: 1px solid #2c3d6f;
