@@ -172,7 +172,6 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			$username = $this->getMailBoxUserName($username);
 		}
 		if ($_adminConnection) $this->adminConnection($username);
-
 		$parent_params = array(
 			'username' => $this->params[$_adminConnection ? 'acc_imap_admin_username' : 'acc_imap_username'],
 			'password' => $this->params[$_adminConnection ? 'acc_imap_admin_password' : 'acc_imap_password'],
@@ -825,7 +824,15 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			// if pseudo-flag is not set, call examineMailbox now to set it (no STATUS_ALL = counters necessary)
 			if (!isset(self::$supports_keywords[$this->ImapServerId]))
 			{
-				$this->examineMailbox('INBOX', Horde_Imap_Client::STATUS_FLAGS|Horde_Imap_Client::STATUS_PERMFLAGS);
+				try
+				{
+					$this->examineMailbox('INBOX', Horde_Imap_Client::STATUS_FLAGS|Horde_Imap_Client::STATUS_PERMFLAGS);
+				}
+				catch (Exception $e)
+				{
+					error_log(__METHOD__.__LINE__.' (examineServer for detection) '.$capability.'->'.array2string(self::$supports_keywords).' failed '.function_backtrace());
+					self::$supports_keywords[$this->ImapServerId]=false;
+				}
 			}
 			//error_log(__METHOD__.__LINE__.' '.$capability.'->'.array2string(self::$supports_keywords).' '.function_backtrace());
 			return self::$supports_keywords[$this->ImapServerId];

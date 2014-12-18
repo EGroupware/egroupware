@@ -1436,7 +1436,17 @@ class emailadmin_imapbase
 
 				// Get already cached headers, 'fetchHeaders' is a label matchimg above
 				$headerForPrio = array_change_key_case($_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerForPrio));
+				if (self::$debug) {
+					error_log(__METHOD__.__LINE__.array2string($_headerObject).'UID:'.$_headerObject->getUid().' Size:'.$_headerObject->getSize().' Date:'.$_headerObject->getImapDate());
+					error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerForPrio));
+				}
+
+				// message deleted from server but cache still reporting its existence ; may happen on QRESYNC with No permanent modsequences
+				if (empty($headerForPrio))
+				{
+					$total--;
+					continue;
+				}
 				if ( isset($headerForPrio['DISPOSITION-NOTIFICATION-TO']) ) {
 					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['DISPOSITION-NOTIFICATION-TO']));
 				} else if ( isset($headerForPrio['RETURN-RECEIPT-TO']) ) {
@@ -1699,7 +1709,7 @@ class emailadmin_imapbase
 			if (self::$debugTimes) $starttime = microtime(true);
 			if (is_null($eMailListContainsDeletedMessages) || empty($eMailListContainsDeletedMessages[$this->profileID]) || empty($eMailListContainsDeletedMessages[$this->profileID][$_folderName])) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
-			//error_log(__METHOD__.' ('.__LINE__.') '.array2string($deletedMessages));
+			if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') Found DeletedMessages:'.array2string($sortResult['match']->ids));
 			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] =$deletedMessages['count'];
 			egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 			if (self::$debugTimes) self::logRunTimes($starttime,null,'setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName],__METHOD__.' ('.__LINE__.') ');			//error_log(__METHOD__.' ('.__LINE__.') '.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
@@ -1713,6 +1723,11 @@ class emailadmin_imapbase
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_filter).' SupportsOrInQuery:'.self::$supportsORinQuery[$this->profileID]);
 		$filter = $this->createIMAPFilter($_folderName, $_filter,self::$supportsORinQuery[$this->profileID]);
+		if (self::$debug)
+		{
+			$query_str = $filter->build();
+			error_log(__METHOD__.' ('.__LINE__.') '.' '.$query_str['query']);
+		}
 		//_debug_array($filter);
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($filter));
 		if($this->icServer->hasCapability('SORT')) {
