@@ -1938,7 +1938,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					{
 						self.search.input.after(
 							$j('<span class="ui-icon"></span>').click(
-								function() {self.search.input.val('');}
+								function() {self.search.input.val('');self.search.input.focus();}
 							)
 						);
 					}
