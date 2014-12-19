@@ -770,3 +770,15 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		padding-top: 10px;
 	}
 }
+
+span#mail-compose_cc_expander,
+span#mail-compose_bcc_expander,
+span#mail-compose_folder_expander,
+span#mail-compose_replyto_expander {
+	float: left;
+	width: 55px;
+	margin: 3px;
+	margin-left: 12px;
+	text-align: right;
+	padding: 0;
+}
