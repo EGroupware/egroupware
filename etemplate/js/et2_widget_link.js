@@ -811,7 +811,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			this.clear.hide();
 			this.options.value = _value = {'id':null};
 		}
-		if(!_value.app) _value.app = this.options.only_app;
+		if(!_value.app) _value.app = this.options.only_app || this.app_select.val();
 
 		if(_value.id) {
 			// Remove specific display and revert to CSS file
