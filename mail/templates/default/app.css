@@ -555,7 +555,7 @@ div.mail-compose_fileselector {
 	height: 121px;
 	position: fixed;
 	bottom: .1em;
-	border: 1px solid grey;
+	border-top: 1px solid grey;
 	opacity: 1;
 	-moz-opacity:1;
 	filter: Alpha(opacity=100);
@@ -726,6 +726,8 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 @media print {
 	html *, .td_display {
 		font-size: 12pt !important;
+		border-right: none !important;
+		border-left: none !important;
 	}
 	.mailDisplayHeaders {
 		border-bottom: 0.1em solid #d7d7d7;
