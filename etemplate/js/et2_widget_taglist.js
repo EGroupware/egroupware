@@ -185,6 +185,10 @@ var et2_taglist = et2_selectbox.extend(
 			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>');})
 			.on("load", function() {$j('.loading',this.container).remove();});
 
+		// Unbind change handler of widget's ancestor to stop it from bubbling
+		// taglist has its own onchange
+		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
+		
 		// onChange
 		if(this.options.onchange && typeof this.options.onchange == 'function')
 		{
