@@ -3516,7 +3516,7 @@ class emailadmin_imapbase
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($id));
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($flags));
 					$body = $_headerObject->getFullMsg();
-					$dataNflags[] = array('data'=>$body, 'flags'=>$flags);
+					$dataNflags[] = array('data'=>$body, 'flags'=>$flags, 'internaldate'=>$_headerObject->getImapDate());
 					if ($c==5)
 					{
 						$ret = $target->append($foldername,$dataNflags);
