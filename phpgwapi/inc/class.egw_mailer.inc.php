@@ -409,9 +409,10 @@ class egw_mailer extends Horde_Mime_Mail
 	 */
 	function send()
 	{
-		if (!($message_id = $this->getHeader('Message-ID')))
+		if (!($message_id = $this->getHeader('Message-ID')) &&
+			class_exists('Horde_Mime_Headers_MessageId'))	// since 2.5.0
 		{
-			$message_id = Horde_Mime_Headers_MessageId::create();
+			$message_id = Horde_Mime_Headers_MessageId::create('EGroupware');
 			$this->addHeader('Message-ID', $message_id);
 		}
 		$body_sha1 = null;	// skip sha1, it requires whole mail in memory, which we traing to avoid now
