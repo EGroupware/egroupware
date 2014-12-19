@@ -495,6 +495,8 @@ class admin_ui
 		{
 			return strcasecmp(lang($a), lang($b));
 		});
+		// make sure admin is first
+		self::$hook_data = array_merge(array('admin' => self::$hook_data['admin']), self::$hook_data);
 
 		return self::$hook_data;
 	}
