@@ -46,10 +46,10 @@
 				<rows>
 					<row class="mailComposeHeaders" >
 						<description value="From"/>
-						<menupopup id="mailaccount" onchange="app.mail.submitOnChange"/>
+						<menupopup id="mailaccount" onchange="app.mail.submitOnChange" class="et2_fullWidth"/>
 						<vbox>
-							<description id="replyto_expander" value="Reply to" onclick="app.mail.compose_fieldExpander"/>
-							<description id="folder_expander" value="Folder" onclick="app.mail.compose_fieldExpander"/>
+							<description id="replyto_expander" value="Reply to" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
+							<description id="folder_expander" value="Folder" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
 							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
 							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="serverID"/>
 							<textbox class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"/>
@@ -76,8 +76,8 @@
 						<description value="To"/>
 						<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.set_dragging_dndCompose"/>
 						<vbox>
-							<description id="cc_expander" value="Cc" onclick="app.mail.compose_fieldExpander"/>
-							<description id="bcc_expander" value="Bcc" onclick="app.mail.compose_fieldExpander"/>
+							<description id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
+							<description id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
 						</vbox>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">

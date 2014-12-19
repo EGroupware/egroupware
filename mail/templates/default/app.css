@@ -528,14 +528,12 @@ div.mail-compose_fileselector {
 	display: -moz-box;
 	/*width: 99%;*/
 	overflow: hidden;
-	overflow-y: auto;
 	left: 8px;
 	right: 8px;
 }
 .mailDisplayContainer {
 	position: fixed;
 	overflow: hidden;
-	overflow-y: auto;
 	border: 1px solid silver;
 	top: 120px;
 }
@@ -590,9 +588,6 @@ div.mailDisplayHeaders > span:first-child,  div.mailPreviewHeaders > span:first-
 }
 #mail-display_toolbar {
 	display: inline-flex;
-}
-#mail-compose_mailaccount{
-	width: 80%;
 }
 div.mailComposeHeaders > span:first-child {
 	width: 8em;
