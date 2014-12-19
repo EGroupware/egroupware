@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 14.1.20141106
+Version: 14.1.20141219
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -84,9 +84,9 @@ Distribution: %{distribution}
 Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
-Source3: %{name}-pixelegg-%{version}.tar.bz2
+#Source3: %{name}-pixelegg-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
-Source5: %{name}-jdots-%{version}.tar.bz2
+#Source5: %{name}-jdots-%{version}.tar.bz2
 Source6: phpfreechat_data_public.tar.gz
 Source8: %{name}-rpmlintrc
 #Source9: %{name}-gallery-%{version}.tar.bz2
@@ -543,9 +543,9 @@ echo "post_install: %{post_install}"
 %setup0 -c -n %{egwdirname}
 %setup1 -T -D -a 1 -n %{egwdirname}
 %setup2 -T -D -a 2 -n %{egwdirname}
-%setup3 -T -D -a 3 -n %{egwdirname}
+#%setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
-%setup5 -T -D -a 5 -n %{egwdirname}
+#%setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
 #%setup9 -T -D -a 9 -n %{egwdirname}
 %patch0 -p 0
