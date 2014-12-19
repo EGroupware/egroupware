@@ -338,7 +338,6 @@ pre {
 */
 #mail-tree_target {
   min-height: 35px;
-  max-height: 450px;
   display: block;
   display: -moz-inline-stack;
   display: -moz-box;
