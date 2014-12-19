@@ -724,6 +724,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 }
 /* MAIL PRINT */
 @media print {
+	html {
+		height: auto !important;
+	}
 	html *, .td_display {
 		font-size: 12pt !important;
 		border-right: none !important;
