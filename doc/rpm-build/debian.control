@@ -345,3 +345,15 @@ Description: web-based groupware suite - wiki application
  ${commondesc}
  .
  This EGroupware application provides a wiki.
+
+Package: egroupware-epl-jdots
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, egroupware-epl-core (>= ${binary:Version}),
+Description: Stylite Template set for EGroupware EPL
+ ${commondesc}
+
+Package: egroupware-epl-pixelegg
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, egroupware-epl-core (>= ${binary:Version}), egroupware-epl-jdots (>= ${binary:Version})
+Description: Pixelegg Template set for EGroupware 14.1
+ ${commondesc}
