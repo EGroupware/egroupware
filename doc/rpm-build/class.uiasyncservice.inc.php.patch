@@ -1,6 +1,6 @@
 Index: egroupware/admin/inc/class.uiasyncservice.inc.php
 ===================================================================
---- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 49786)
+--- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 51102)
 +++ egroupware/admin/inc/class.uiasyncservice.inc.php	(Arbeitskopie)
 @@ -95,16 +95,20 @@
  		{
@@ -44,9 +44,9 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  		echo "<hr><table border=0><tr>\n";
 Index: egroupware/phpgwapi/inc/class.egw.inc.php
 ===================================================================
---- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 49786)
+--- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 51102)
 +++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
-@@ -606,11 +606,13 @@
+@@ -605,11 +605,13 @@
  					_egw_log_exception($ex);
  				}
  			}
