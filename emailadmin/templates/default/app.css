@@ -1,0 +1,57 @@
+/*
+ * CSS for EMailAdmin
+ * $Id$
+ */
+
+.defaultProfile { color:#000000; font-weight:bold; }
+
+/**
+ * mail account wizard and edit
+ */
+.emailadmin_manual {
+  display: none;
+}
+.emailadmin_progress {
+  display: none;
+  padding-top: 5px;
+}
+.emailadmin_ssl {
+  margin-right: 10px;
+}
+.emailadmin_port {
+  width: 5em;
+}
+.emailadmin_header {
+  font-weight: bold;
+  font-size: 150%;
+}
+#emailadmin-account_tabs {
+  padding-top: 10px;
+}
+#emailadmin-account_acc_imap_logintype {
+  width: 100%;
+}
+span.emailadmin_diagnostic,.emailadmin_diagnostic {
+  color: lightgray;
+}
+span#emailadmin-account_acc_id {
+  float: right;
+}
+#emailadmin-account_acc_smtp_account_id {
+  padding-left: 5px;
+}
+#emailadmin-account_button\[multiple\] {
+  height: auto;
+  padding-left: 5px;
+}
+#emailadmin-account_button\[placeholders\] {
+  height: 16px;
+  padding-left: 5px;
+  vertical-align: middle;
+}
+#emailadmin-account_mailLocalAddress {
+  width: 98%;
+}
+select#emailadmin-account_ident_id {
+  width: 95%;
+}
