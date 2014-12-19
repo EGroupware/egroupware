@@ -107,3 +107,7 @@ div.navSeparator {
 .calendar .combo {
 	z-index: 1 !important;
 }
+
+#popupMainDiv {
+	margin:0;
+}
