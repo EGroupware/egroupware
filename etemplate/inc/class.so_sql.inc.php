@@ -980,7 +980,8 @@ class so_sql
 			$colums = array();
 			foreach($only_keys as $key => $col)
 			{
-				$colums[] = ($db_col = array_search($col,$this->db_cols)) ? $db_col : $col;
+				//Convert ambiguous columns to prefixed tablename.column name
+				$colums[] = ($db_col = array_search($col,$this->db_cols)) ?  $this->table_name .'.'.$db_col.' AS '.$col :$col;
 			}
 		}
 		elseif (!$only_keys)
