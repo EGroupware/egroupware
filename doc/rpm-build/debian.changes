@@ -1,3 +1,14 @@
+egroupware-epl (14.2.20141219-1) hardy; urgency=low
+
+  * Filemanager: fixed create directory icon in list and select popup, clicking on favorites in select popup
+  * Filemanager: fixed directory creation in vfs root (you need root permisstions of cause)
+  * Mail: update title of compose window with subject
+  * EMailAdmin: disable certificate validation for Sieve, which is enabled by default in PHP 5.6
+  * all apps: suppressing private (or removed) custom-fields from history log
+  * all apps: preserving for current user unavailable categories (eg. private categories of other user) when editing entries
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 19 Dec 2014 13:27:40 +0100
+
 egroupware-epl (14.2.20141211-1) hardy; urgency=low
 
   * egw-pear: removed, as no longer necessary
