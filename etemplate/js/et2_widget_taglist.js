@@ -186,9 +186,9 @@ var et2_taglist = et2_selectbox.extend(
 			.on("load", function() {$j('.loading',this.container).remove();});
 
 		// onChange
-		if(this.options.onchange)
+		if(this.options.onchange && typeof this.options.onchange == 'function')
 		{
-			$j(this.taglist).on("selectionchange", jQuery.proxy(this.change,this));
+			$j(this.taglist).on("selectionchange", this.options.onchange);
 		}
 
 		// onClick - pass more than baseWidget, so unbind it to avoid double callback
