@@ -842,7 +842,6 @@ div#mail-index div#mail-index_nm tr.mail div span {
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  display: table-cell;
 }
 div#mail-index div.splitter-bar,
 div#mail-index div.splitter-bar-horizontal {
@@ -1899,7 +1898,7 @@ tr.mail div {
 }
 tr.mail div span {
   text-overflow: ellipsis;
-  white-space: normal;
+  white-space: noWrap;
 }
 tr.mail a {
   cursor: pointer;

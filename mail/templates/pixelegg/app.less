@@ -136,7 +136,7 @@ div#mail-index{
             }
             tr.mail td img[src*="svg"]{ .gradient_vertical (@gray_70, @gray_70);}
 
-            tr.mail div span {.dimension_height_xs;.box_shadow_none; display: table-cell; }
+            tr.mail div span {.dimension_height_xs;.box_shadow_none;}
 
 
 
@@ -1119,7 +1119,7 @@ tr.mail div {
     cursor: default;
     white-space: normal;
     text-overflow: ellipsis;
-    span {text-overflow: ellipsis;white-space: normal;}
+    span {text-overflow: ellipsis;white-space: noWrap;}
 }
 
 tr.mail a {
