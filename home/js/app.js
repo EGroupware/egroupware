@@ -148,7 +148,7 @@ app.classes.home = AppJS.extend(
 			{
 				for(var i = 0; i < portlet._children.length; i++)
 				{
-					portlet._children[i]._inst.clear();
+					if(portlet._children[i]._inst) portlet._children[i]._inst.clear();
 				}
 				portlet._children = [];
 			}
@@ -271,6 +271,65 @@ app.classes.home = AppJS.extend(
 	},
 
 	/**
+	 * Set the current selection as default for other users
+	 * 
+	 * Only works (and available) for admins, this shows a dialog to select
+	 * the group, and then sets the default for that group.
+	 * 
+	 * @param {egwAction} action
+	 * @param {egwActionObject[]} selected
+	 */
+	set_default: function(action, selected) {
+		// Gather just IDs, server will handle the details
+		var portlet_ids = [];
+		var group = action.data.portlet_group || false;
+		if(selected[0].id == 'home.index')
+		{
+			// Set all
+			this.portlet_container.iterateOver(function(portlet) {
+				portlet_ids.push(portlet.id);
+			},this,et2_portlet);
+		}
+		else
+		{
+			for(var i = 0; i < selected.length; i++)
+			{
+				portlet_ids.push(selected[i].id);
+
+				// Read the associated group so we can properly remove it
+				var portlet = egw.preference(selected[i].id,'home');
+				if(!group && portlet && portlet.group)
+				{
+					group = portlet.group;
+				}
+			}
+		}
+
+		if(action.id.indexOf("remove_default") == 0)
+		{
+			// Disable action for feedback
+			action.set_enabled(false);
+			
+			// Pass them to server
+			egw.json('home_ui::ajax_set_default', ['delete', portlet_ids, group]).sendRequest(true);
+			return;
+		}
+		var dialog = et2_createWidget("dialog",{
+			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
+			callback: function(button_id, value) {
+				if(button_id != et2_dialog.OK_BUTTON) return;
+
+				// Pass them to server
+				egw.json('home_ui::ajax_set_default', ['add', portlet_ids, value.group||false]).sendRequest(true);
+			},
+			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			title: action.caption,
+			template:"home.set_default",
+			value: {content:{}, sel_options: {group:{default: egw.lang('All'), forced: egw.lang('Forced')}}}
+		});
+	},
+
+	/**
 	 * Allow a refresh from anywhere by triggering an update with no changes
 	 * 
 	 * @param {string} id
@@ -363,7 +422,7 @@ app.classes.home = AppJS.extend(
 							egw().jsonq("home.home_ui.ajax_set_properties",[changed[key].id, widget.options.settings,{
 									row: changed[key].row,
 									col: changed[key].col
-								}],
+								},widget.settings?widget.settings.group:false],
 								null,
 								widget, true, widget
 							);
@@ -401,8 +460,8 @@ app.classes.home = AppJS.extend(
 			     .toString(16)
 			     .substring(1);
 		}
-		while(this.portlet_container.getWidgetById(id));
-		return id;
+		while(this.portlet_container.getWidgetById('portlet_'+id));
+		return 'portlet_'+id;
 	},
 
 	/**
@@ -456,7 +515,11 @@ app.classes.home = AppJS.extend(
 					new_list.push(value.add);
 					widget._process_edit(button_id,{list: new_list});
 					// Update client side
-					widget.getWidgetById('list').set_value(new_list);
+					var list = widget.getWidgetById('list');
+					if(list)
+					{
+						list.set_value(new_list);
+					}
 				},
 				buttons: et2_dialog.BUTTONS_OK_CANCEL,
 				title: app.home.egw.lang('add'),
@@ -542,7 +605,7 @@ app.classes.home = AppJS.extend(
 		}
 
 		// Aim to match the size
-		var portlet_dom = $j('[id$='+id+'][data-sizex]',this.portlet_container.getDOMNode);
+		var portlet_dom = $j('[id$='+id+'][data-sizex]',this.portlet_container.getDOMNode());
 		var width = portlet_dom.attr('data-sizex') * this.GRID;
 		var height = portlet_dom.attr('data-sizey') * this.GRID;
 		

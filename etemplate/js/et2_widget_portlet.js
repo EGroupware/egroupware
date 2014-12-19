@@ -267,7 +267,7 @@ var et2_portlet = et2_valueWidget.extend(
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't
 		this.div.addClass("loading");
-		this.egw().jsonq("home.home_ui.ajax_set_properties",[this.id, this.options.settings || {}, value], 
+		this.egw().jsonq("home.home_ui.ajax_set_properties",[this.id, this.options.settings || {}, value,this.settings?this.settings.group:false],
 			function(data) {
 				// This section not for us
 				if(!data || typeof data.attributes == 'undefined') return false;

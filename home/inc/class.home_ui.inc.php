@@ -121,7 +121,6 @@ class home_ui
 			{
 				$children['class'] = $app;
 				$children['onExecute'] = $drop_execute;
-				$children['acceptedTypes'] = array('file','link');
 				$children['type'] = 'drop';
 				$actions["drop_$app"] = $children;
 			}
@@ -139,7 +138,9 @@ class home_ui
 				}
 			}
 		}
-		
+
+		// For admins, add the ability to set current home as a default
+		self::create_default_actions($actions);
 		return $actions;
 	}
 
@@ -153,9 +154,12 @@ class home_ui
 	{
 		$portlets = array();
 
-		foreach((array)$GLOBALS['egw_info']['user']['preferences']['home']['portlets'] as $id => $context)
+		foreach((array)$GLOBALS['egw_info']['user']['preferences']['home']as $id => $context)
 		{
-			if(!$id || in_array($id, array_keys($GLOBALS['egw_info']['user']['apps']))) continue;
+			if(strpos($id,'portlet_') !== 0 || // Not a portlet
+				in_array($id, array_keys($GLOBALS['egw_info']['user']['apps'])) || // Some other app put it's pref in here
+				!is_array($context) // Not a valid portlet (probably user deleted a default)
+			) continue;
 
 			$classname = $context['class'];
 			$portlet = new $classname($context);
@@ -181,7 +185,12 @@ class home_ui
 
 			// Set actions
 			// Must be after settings so actions can take settings into account
-			$template->setElementAttribute("portlets[" . count($portlets) . "[$id]", 'actions', $portlet->get_actions());
+			$actions = $portlet->get_actions();
+
+			// Add in default for admins
+			self::create_default_actions($actions, $id);
+			
+			$template->setElementAttribute("portlets[" . count($portlets) . "[$id]", 'actions', $actions);
 
 			$portlets[] = $portlet_content;
 		}
@@ -242,6 +251,8 @@ class home_ui
 			'settings' => $settings,
 			'actions' => $portlet->get_actions(),
 		);
+		// Add in default settings
+		self::create_default_actions($attributes['actions'], $id);
 
 		// Set any provided common attributes (size, etc)
 		foreach(home_portlet::$common_attributes as $name)
@@ -371,6 +382,7 @@ class home_ui
 						'caption' => $desc['displayName'],
 						'hint' => $desc['description'],
 						'onExecute' => 'javaScript:app.home.add',
+						'acceptedTypes' => $instance->accept_drop(),
 						'allowOnMultiple' => $instance->accept_multiple()
 					);
 				}
@@ -383,78 +395,261 @@ class home_ui
 	}
 
 	/**
+	 * Create an action to set the portlet as default
+	 *
+	 * @param Array $actions Existing action list
+	 * @param String $portlet_id Provide the ID to have the checkbox set
+	 */
+	protected static function create_default_actions(&$actions, $portlet_id = null)
+	{
+		if($GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$actions['add_default'] = array(
+				'type'		=> 'popup',
+				'caption'	=> 'Set as default',
+				'onExecute'	=> 'javaScript:app.home.set_default',
+				'group'		=> 'Admins',
+				'icon'		=> 'preference'
+			);
+			// Customize for the given portlet
+			if($portlet_id !== null)
+			{
+				$portlet = $GLOBALS['egw_info']['user']['preferences']['home'][$portlet_id];
+
+				foreach(array('forced','group','default') as $location)
+				{
+					$loc = $GLOBALS['egw']->preferences->$location;
+					
+					if($loc['home'][$portlet_id])
+					{
+						// If it's forced, no point in setting default
+						if($location == 'forced')
+						{
+							unset($actions['add_default']);
+						}
+						// If it's a group, we'd like to know which
+						if($location == 'group')
+						{
+							$options = array('account_type' => $type);
+							$groups = accounts::link_query('',$options);
+							foreach($groups as $gid => $name)
+							{
+								$prefs = new preferences($gid);
+								$prefs->read_repository();
+								if (isset($prefs->user['home'][$portlet_id]))
+								{
+									$location = $gid;
+									break;
+								}
+							}
+						}
+						$actions['remove_default_'.$location] = array(
+							'type'		=> 'popup',
+							'caption'	=> lang('Remove default %1',is_numeric($location) ? accounts::id2name($location) : $location),
+							'onExecute'	=> 'javaScript:app.home.set_default',
+							'group'		=> 'Admins',
+							'portlet_group' => $location
+						);
+					}
+				}
+			}
+		}
+		
+		// Change action for forced
+		if($portlet_id && $GLOBALS['egw']->preferences->forced['home'][$portlet_id])
+		{
+			// No one can remove it
+			$actions['remove_portlet']['enabled'] = false;
+			$actions['remove_portlet']['caption'] .= ' ('.lang('Forced') .')';
+
+			// Non-admins can't edit it
+			if($actions['edit_settings'] && !$GLOBALS['egw_info']['user']['apps']['admin'])
+			{
+				$actions['edit_settings']['enabled'] = false;
+				$actions['edit_settings']['visible'] = false;
+			}
+		}
+	}
+
+	/**
 	 * Update the settings for a particular portlet, and give updated content
 	 *
 	 * @param portlet_id String Unique ID (for the user) for a portlet
 	 * @param values Array List of property => value pairs
+	 * @param boolean|int|String $group False for current user, ID of the group to create the favorite for, or 'all' for all users
 	 *
 	 */
-	public function ajax_set_properties($portlet_id, $attributes, $values)
+	public function ajax_set_properties($portlet_id, $attributes, $values, $group = false)
 	{
 		if(!$attributes)
 		{
 			$attributes = array();
 		}
-		$response = egw_json_response::get();
-		if ($GLOBALS['egw_info']['user']['apps']['preferences'])
+		
+		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$prefs = $GLOBALS['egw']->preferences->read_repository();
-			$portlets = (array)$prefs['home']['portlets'];
-			if($values =='~reload~')
+			if($group == 'forced')
 			{
-				$full_exec = true;
-				$values = array();
+				// Quietly reject
+				return;
 			}
-			if($values == '~remove~')
+			// Not an admin, can only override.
+			$group = false;
+		}
+		if($group && $GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$prefs = new preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
+		}
+		else
+		{
+			$prefs = $GLOBALS['egw']->preferences;
+		}
+		$type = is_numeric($group) ? "user" : $group;
+
+		$prefs->read_repository();
+
+		$response = egw_json_response::get();
+
+		if($values =='~reload~')
+		{
+			$full_exec = true;
+			$values = array();
+		}
+		if($values == '~remove~')
+		{
+			// Already removed client side, needs to be removed permanently
+			$default = $prefs->default_prefs('home',$portlet_id) || $prefs->group['home'][$portlet_id];
+
+			if($default)
 			{
-				unset($portlets[$portlet_id]);
-				// Already removed client side
+				// Can't delete forced - not a UI option though
+				if(!$GLOBALS['egw']->preferences->forced['home'][$portlet_id])
+				{
+					// Set a flag to override default instead of just delete
+					$GLOBALS['egw']->preferences->add('home',$portlet_id, 'deleted');
+					$GLOBALS['egw']->preferences->save_repository();
+				}
 			}
 			else
 			{
-				// Get portlet settings, and merge new with old
-				$context = $values+(array)$portlets[$portlet_id];
+				$prefs->delete('home', $portlet_id);
+			}
+		}
+		else
+		{
+			$portlets = $prefs->read();
+			$portlets = $portlets['home'];
 
-				// Handle add IDs
-				$classname =& $context['class'];
-				if(strpos($classname,'add_') == 0 && !class_exists($classname))
+			// Remove some constant stuff that winds up here
+			unset($values['edit_template']);
+			unset($values['readonly']);
+			unset($values['disabled']);unset($values['no_lang']);
+			unset($values['actions']);
+			unset($values['statustext']);
+			unset($values['type']);unset($values['label']);unset($values['status']);
+			unset($values['value']);unset($values['align']);
+
+			// Get portlet settings, and merge new with old
+			$context = $values+(array)$portlets[$portlet_id];
+			$context['group'] = $group;
+
+
+
+			// Handle add IDs
+			$classname =& $context['class'];
+			if(strpos($classname,'add_') == 0 && !class_exists($classname))
+			{
+				$add = true;
+				$classname = substr($classname, 4);
+			}
+			$portlet = $this->get_portlet($portlet_id, $context, $content, $attributes, $full_exec);
+
+			$context['class'] = get_class($portlet);
+			foreach($portlet->get_properties() as $property)
+			{
+				if($values[$property['name']])
 				{
-					$add = true;
-					$classname = substr($classname, 4);
+					$context[$property['name']] = $values[$property['name']];
 				}
-				$portlet = $this->get_portlet($portlet_id, $context, $content, $attributes, $full_exec);
-
-				$context['class'] = get_class($portlet);
-				foreach($portlet->get_properties() as $property)
+				elseif($portlets[$portlet_id][$property['name']])
 				{
-					if($values[$property['name']])
-					{
-						$context[$property['name']] = $values[$property['name']];
-					}
-					elseif($portlets[$portlet_id][$property['name']])
-					{
-						$context[$property['name']] = $portlets[$portlet_id][$property['name']];
-					}
+					$context[$property['name']] = $portlets[$portlet_id][$property['name']];
 				}
-
-				// Update client side
-				$update = array('attributes' => $attributes);
-
-				// New portlet?  Flag going straight to edit mode
-				if($add)
-				{
-					$update['edit_settings'] = true;
-				}
-				// Send this back to the portlet widget
-				$response->data($update);
-				
-				// Store for preference update
-				$portlets[$portlet_id] = $context;
 			}
 
-			// Save updated preferences
-			$GLOBALS['egw']->preferences->add('home', 'portlets', $portlets);
-			$GLOBALS['egw']->preferences->save_repository(True);
+			// Update client side
+			$update = array('attributes' => $attributes);
+
+			// New portlet?  Flag going straight to edit mode
+			if($add)
+			{
+				$update['edit_settings'] = true;
+			}
+			// Send this back to the portlet widget
+			$response->data($update);
+
+			// Store for preference update
+			$prefs->add('home', $portlet_id, $context, $type);
 		}
+
+		// Save updated preferences
+		$prefs->save_repository(True,$type);
+	}
+
+	/**
+	 * Set the selected portlets as default for a group
+	 *
+	 * @param String $action 'add' or 'delete'
+	 * @param String[] $portlet_ids
+	 * @param int|String $group Group ID or 'default' or 'forced'
+	 */
+	public static function ajax_set_default($action, $portlet_ids, $group)
+	{
+		// Admins only
+		if(!$GLOBALS['egw_info']['apps']['admin']) return;
+
+		// Load the appropriate group
+		if($group)
+		{
+			$prefs = new preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
+		}
+		else
+		{
+			$prefs = $GLOBALS['egw']->preferences;
+		}
+		$prefs->read_repository();
+
+		$type = is_numeric($group) ? "user" : $group;
+
+		if($action == 'add')
+		{
+			foreach($portlet_ids as $id)
+			{
+				egw_json_response::get()->call('egw.message', lang("Set default"));
+				// Current user is setting the default, copy their settings
+				$settings = $GLOBALS['egw_info']['user']['preferences']['home'][$id];
+				$settings['group'] = $group;
+				$prefs->add('home',$id,$settings,$type);
+
+				// Remove user's copy
+				$GLOBALS['egw']->preferences->delete('home',$id);
+				$GLOBALS['egw']->preferences->save_repository(true);
+			}
+		}
+		else if ($action == "delete")
+		{
+			foreach($portlet_ids as $id)
+			{
+				egw_json_response::get()->call('egw.message', lang("Removed default"));
+				error_log("Clearing $type $group default $id");
+				$result = $prefs->delete('home',$id, $type);
+			}
+		}
+		$prefs->save_repository(false,$type);
+
+		// Update preferences client side for consistency
+		$prefs = $GLOBALS['egw']->preferences;
+		$pref = $prefs->read_repository();
+		egw_json_response::get()->call('egw.set_preferences', (array)$pref['home'], 'home');
 	}
 }

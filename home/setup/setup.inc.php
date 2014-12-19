@@ -11,7 +11,7 @@
 /* Basic information about this app */
 $setup_info['home']['name']      = 'home';
 $setup_info['home']['title']     = 'Home';
-$setup_info['home']['version']   = '14.1';
+$setup_info['home']['version']   = '14.1.001';
 $setup_info['home']['app_order'] = 1;
 $setup_info['home']['enable']    = 1;
 $setup_info['home']['index']    = 'home.home_ui.index&ajax=true';

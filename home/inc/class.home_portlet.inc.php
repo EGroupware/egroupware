@@ -96,7 +96,7 @@ abstract class home_portlet
 	 * same id / key to override the default action.
 	 */
 	public abstract function get_actions();
-
+		
 	/**
 	 * If this portlet can accept, display, or otherwise handle multiple
 	 * EgroupWare entries.  Used for drag and drop processing.  How the entries
@@ -104,6 +104,18 @@ abstract class home_portlet
 	 */
 	public function accept_multiple()
 	{
+		return false;
+	}
+
+	/**
+	 * If this portlet can be created by dropping, these are the drop types
+	 * that are accepted
+	 *
+	 * @return boolean|String[]
+	 */
+	public function accept_drop()
+	{
+		// In general, no
 		return false;
 	}
 

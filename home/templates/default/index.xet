@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
+	<template id="home.set_default" template="" version="1.9.001">
+		<vbox>
+			<description value="Add as default for"/>
+			<listbox type="select-account" id="group" account_type="groups"/>
+		</vbox>
+	</template>
 	<template id="home.index" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>

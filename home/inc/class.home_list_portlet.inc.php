@@ -191,4 +191,13 @@ class home_list_portlet extends home_portlet
 	{
 		return true;
 	}
+	/**
+	 * This portlet accepts files and links
+	 *
+	 * @return boolean|String[]
+	 */
+	public function accept_drop()
+	{
+		return array('file','link');
+	}
 }

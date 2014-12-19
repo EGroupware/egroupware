@@ -39,6 +39,7 @@ class home_note_portlet extends home_portlet
 
 			$need_reload = true;
 		}
+		
 		$this->context = $context;
 	}
 
@@ -51,15 +52,23 @@ class home_note_portlet extends home_portlet
 		$id = $_GET['id'] ? $_GET['id'] : $content['id'];
 		$height = $_GET['height'] ? $_GET['height'] : $content['height'];
 
-		$prefs = $GLOBALS['egw']->preferences->read_repository();
-		$portlets = (array)$prefs['home']['portlets'];
-
+		if($content['group'] && $GLOBALS['egw_info']['apps']['admin'])
+		{
+			$prefs = new preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
+		}
+		else
+		{
+			$prefs = $GLOBALS['egw']->preferences;
+		}
+		$type = is_numeric($group) ? "user" : $group;
+		$portlets = $prefs->read_repository();
+		$portlets = $portlets['home'];
 		if($content['button'])
 		{
-			$portlets[$id]['note'] = $content['note'];
 			// Save updated preferences
-			$GLOBALS['egw']->preferences->add('home', 'portlets', $portlets);
-			$GLOBALS['egw']->preferences->save_repository(True);
+			$portlets[$id]['note'] = $content['note'];
+			$prefs->add('home', $id, $portlets[$id],$type);
+			$prefs->save_repository(True,$type);
 			// Yay for AJAX submit
 			egw_json_response::get()->apply('window.opener.app.home.refresh',array($id));
 			
@@ -76,8 +85,9 @@ class home_note_portlet extends home_portlet
 		$etemplate->setElementAttribute('note', 'width', '99%');
 		$etemplate->setElementAttribute('note', 'height', $height);
 		$preserve = array(
-			'id'	=>	$id,
+			'id'		=>	$id,
 			'height'	=>	$height,
+			'group'		=>	$portlets[$id]['group']
 		);
 		$etemplate->exec('home.home_note_portlet.edit',$content, array(),array('note'=>false,'save'=>false), $preserve);
 	}

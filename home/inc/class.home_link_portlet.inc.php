@@ -125,7 +125,7 @@ class home_link_portlet extends home_portlet
 				if(class_exists($classname))
 				{
 					$record = new $classname($this->context['entry']['id']);
-					if($record)
+					if($record && $record->get_record_array())
 					{
 						// If there's a custom template, send the full record
 						if($custom_template)
@@ -231,5 +231,14 @@ class home_link_portlet extends home_portlet
 		$actions['view']['enabled'] = (bool)$this->context['entry'];
 
 		return $actions;
+	}
+	/**
+	 * This portlet accepts files and links
+	 *
+	 * @return boolean|String[]
+	 */
+	public function accept_drop()
+	{
+		return array('file','link');
 	}
 }
