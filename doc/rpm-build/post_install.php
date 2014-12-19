@@ -627,9 +627,8 @@ function check_install_pear_packages()
 	include_once(EGW_API_INC.'/common_functions.inc.php');
 
 	// read required packages from apps
-	$packages = array('PEAR' => true, 'HTTP_WebDAV_Server' => '999.egw-pear');	// pear must be the first, to run it's update first!
+	$packages = array('PEAR' => true);	// pear must be the first, to run it's update first!
 	$channels = array();
-	$egw_pear_packages = array();
 	$setup_info = array();
 	foreach(scandir($config['source_dir']) as $app)
 	{
@@ -670,15 +669,10 @@ function check_install_pear_packages()
 				}
 			}
 		}
-		if ($app == 'egw-pear')
-		{
-			$egw_pear_packages['HTTP_WebDAV_Server'] = $egw_pear_packages['Net_IMAP'] = '999.egw-pear';
-		}
 	}
 	//echo 'Installed: '; print_r($packages_installed);
-	//echo 'egw-pear: '; print_r($egw_pear_packages);
 	//echo 'Required: '; print_r($packages);
-	$to_install = array_diff(array_keys($packages),array_keys($packages_installed),array_keys($egw_pear_packages));
+	$to_install = array_diff(array_keys($packages),array_keys($packages_installed));
 
 	$need_upgrade = array();
 	foreach($packages as $package => $version)
@@ -715,6 +709,11 @@ function check_install_pear_packages()
 			}
 			if ($to_install)
 			{
+				// package install can fail if a required package of one to install is of an older version
+				// unfortunately there is no option to automatic update the required packages automatic
+				// as a quick fix for that situation, we always run "pear upgrade-all" first
+				$cmd = $config['pear'].' upgrade-all';
+				echo "$cmd\n";	system($cmd);
 				$cmd = $config['pear'].' install '.implode(' ', $to_install);
 				echo "$cmd\n";	system($cmd);
 			}
