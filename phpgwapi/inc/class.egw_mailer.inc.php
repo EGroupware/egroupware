@@ -159,6 +159,27 @@ class egw_mailer extends Horde_Mime_Mail
 	}
 
 	/**
+	 * Get set to addressses
+	 *
+	 * @param string $type ='to' type of address to add "to", "cc", "bcc" or "replyto"
+	 * @param boolean $return_array =false true: return array of string, false: Horde_Mail_Rfc822_List
+	 * @return array|Horde_Mail_Rfc822_List supporting arrayAccess and Iterable
+	 */
+	function getAddresses($type='to', $return_array=false)
+	{
+		if ($return_array)
+		{
+			$addresses = array();
+			foreach($this->$type as $addr)
+			{
+				$addresses[] = (string)$addr;
+			}
+			return $addresses;
+		}
+		return $this->$type;
+	}
+
+	/**
 	 * Write Bcc as header for storing in sent or as draft
 	 *
 	 * Bcc is normally only add to recipients while sending, but not added visible as header.
@@ -380,14 +401,80 @@ class egw_mailer extends Horde_Mime_Mail
 	/**
 	 * Send mail, injecting mail transport from account
 	 *
-	 * @ToDo hooks port hook from SmtpSend
+	 * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
+	 * or regular error_log for true (can be set either in DB or header.inc.php).
+	 *
 	 * @throws egw_exception_not_found for no smtp account available
 	 * @throws Horde_Mime_Exception
 	 */
 	function send()
 	{
-		parent::send($this->account->smtpTransport(), true);	// true: keep Message-ID
+		if (!($message_id = $this->getHeader('Message-ID')))
+		{
+			$message_id = Horde_Mime_Headers_MessageId::create();
+			$this->addHeader('Message-ID', $message_id);
+		}
+		$body_sha1 = null;	// skip sha1, it requires whole mail in memory, which we traing to avoid now
+
+		$mail_id = $GLOBALS['egw']->hooks->process(array(
+			'location' => 'send_mail',
+			'subject' => $subject=$this->getHeader('Subject'),
+			'from' => $this->getHeader('Return-Path') ? $this->getHeader('Return-Path') : $this->getHeader('From'),
+			'to' => $to=$this->getAddresses('to', true),
+			'cc' => $cc=$this->getAddresses('cc', true),
+			'bcc' => $bcc=$this->getAddresses('bcc', true),
+			'body_sha1' => $body_sha1,
+			'message_id' => (string)$message_id,
+		), array(), true);	// true = call all apps
+
+		try {
+			parent::send($this->account->smtpTransport(), true);	// true: keep Message-ID
+		}
+		catch (Exception $e) {
+			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
+			$GLOBALS['egw']->hooks->process(array(
+				'location' => 'send_mail',
+				'subject' => $subject,
+				'from' => $this->getHeader('Return-Path') ? $this->getHeader('Return-Path') : $this->getHeader('From'),
+				'to' => $to,
+				'cc' => $cc,
+				'bcc' => $bcc,
+				'body_sha1' => $body_sha1,
+				'message_id' => (string)$message_id,
+				'mail_id' => $mail_id,
+				'error' => $e->getMessage(),
+			), array(), true);	// true = call all apps
+		}
+
+		// log mails to file specified in $GLOBALS['egw_info']['server']['log_mail'] or error_log for true
+		if ($GLOBALS['egw_info']['server']['log_mail'])
+		{
+			$msg = $GLOBALS['egw_info']['server']['log_mail'] !== true ? date('Y-m-d H:i:s')."\n" : '';
+			$msg .= (isset($e) ? 'Mail send' : 'Mail NOT send').
+				' to '.implode(', ', $to).' with subject: "'.$subject.'"';
+
+			$msg .= ' from instance '.$GLOBALS['egw_info']['user']['domain'].' and IP '.egw_session::getuser_ip();
+			$msg .= ' from user #'.$GLOBALS['egw_info']['user']['account_id'];
+
+			if ($GLOBALS['egw_info']['user']['account_id'] && class_exists('common',false))
+			{
+				$msg .= ' ('.common::grab_owner_name($GLOBALS['egw_info']['user']['account_id']).')';
+			}
+			if (isset($e))
+			{
+				$msg .= $GLOBALS['egw_info']['server']['log_mail'] !== true ? "\n" : ': ';
+				$msg .= 'ERROR '.$e->getMessage();
+			}
+			$msg .= ' cc='.implode(', ', $cc).', bcc='.implode(', ', $bcc);
+			if ($GLOBALS['egw_info']['server']['log_mail'] !== true) $msg .= "\n\n";
+
+			error_log($msg,$GLOBALS['egw_info']['server']['log_mail'] === true ? 0 : 3,
+				$GLOBALS['egw_info']['server']['log_mail']);
+		}
+		// rethrow error
+		if (isset($e)) throw $e;
 	}
+
 
 	/**
 	 * Reset all Settings to send multiple Messages
@@ -687,132 +774,5 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 		error_log(__METHOD__."('$name') unsupported  attribute '$name' --> returning NULL ".function_backtrace());
 		return null;
-	}
-
-	/**
-	 * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
-	 * or regular error_log for true (can be set either in DB or header.inc.php).
-	 *
-	 * We can NOT supply this method as callback to phpMailer, as phpMailer only accepts
-	 * functions (not methods) and from a function we can NOT access $this->ErrorInfo.
-	 *
-	 * @param boolean $isSent
-	 * @param string $to
-	 * @param string $cc
-	 * @param string $bcc
-	 * @param string $subject
-	 * @param string $body
-	 */
-  	protected function doCallback($isSent,$to,$cc,$bcc,$subject,$body)
-	{
-		if ($GLOBALS['egw_info']['server']['log_mail'])
-		{
-			$msg = $GLOBALS['egw_info']['server']['log_mail'] !== true ? date('Y-m-d H:i:s')."\n" : '';
-			$msg .= ($isSent ? 'Mail send' : 'Mail NOT send').
-				' to '.$to.' with subject: "'.trim($subject).'"';
-
-			$msg .= ' from instance '.$GLOBALS['egw_info']['user']['domain'].' and IP '.egw_session::getuser_ip();
-			$msg .= ' from user #'.$GLOBALS['egw_info']['user']['account_id'];
-
-			if ($GLOBALS['egw_info']['user']['account_id'] && class_exists('common',false))
-			{
-				$msg .= ' ('.common::grab_owner_name($GLOBALS['egw_info']['user']['account_id']).')';
-			}
-			if (!$isSent)
-			{
-				$this->SetError('');	// queries error from (private) smtp and stores it in $this->ErrorInfo
-				$msg .= $GLOBALS['egw_info']['server']['log_mail'] !== true ? "\n" : ': ';
-				$msg .= 'ERROR '.str_replace(array('Language string failed to load: smtp_error',"\n","\r"),'',
-					strip_tags($this->ErrorInfo));
-			}
-			$msg .= " cc=$cc, bcc=$bcc";
-			if ($GLOBALS['egw_info']['server']['log_mail'] !== true) $msg .= "\n\n";
-
-			error_log($msg,$GLOBALS['egw_info']['server']['log_mail'] === true ? 0 : 3,
-				$GLOBALS['egw_info']['server']['log_mail']);
-		}
-		// calling the orginal callback of phpMailer
-		parent::doCallback($isSent,$to,$cc,$bcc,$subject,$body);
-	}
-
-	private $addresses = array();
-
-	/**
-	 * Initiates a connection to an SMTP server.
-	 * Returns false if the operation failed.
-	 *
-	 * Overwriting this method from phpmailer, to make sure we set SMTPSecure to ssl or tls if the standardports for ssl or tls
-	 * are configured for the given profile
-	 *
-	 * @uses SMTP
-	 * @access public
-	 * @return bool
-	 */
-	public function SmtpConnect()
-	{
-		$port = $this->Port;
-		$hosts = explode(';',$this->Host);
-		foreach ($hosts as &$host)
-		{
-			$host = trim($host); // make sure there is no whitespace leading or trailling the host string
-			if (in_array($port,array(465,587)) && strpos($host,'://')===false)
-			{
-				//$host = ($port==587?'tls://':'ssl://').trim($host);
-				$this->SMTPSecure = ($port==587?'tls':'ssl');
-			}
-			//error_log(__METHOD__.__LINE__.' Smtp Host:'.$host.' SmtpSecure:'.($this->SMTPSecure?$this->SMTPSecure:'no'));
-		}
-		return parent::SmtpConnect();
-	}
-
-	/**
-	 * Sends mail via SMTP using PhpSMTP
-	 *
-	 * Overwriting this method from phpmailer, to allow apps to intercept it
-	 * via "send_mail" hook, eg. to log or authorize sending of mail.
-	 * Hooks can throw phpmailerException($message, phpMailer::STOP_CRITICAL),
-	 * to stop sending the mail out like an SMTP error.
-	 *
-	 * @param string $header The message headers
-	 * @param string $body The message body
-	 * @return bool
-	 */
-	public function SmtpSend($header, $body)
-	{
-		$matches = null;
-		$mail_id = $GLOBALS['egw']->hooks->process(array(
-			'location' => 'send_mail',
-			'subject' => $this->Subject,
-			'from' => $this->Sender ? $this->Sender : $this->From,
-			'to' => $this->addresses['To'],
-			'cc' => $this->addresses['Cc'],
-			'bcc' => $this->addresses['Bcc'],
-			'body_sha1' => sha1($body),
-			'message_id' => preg_match('/^Message-ID: (.*)$/m', $header, $matches) ? $matches[1] : null,
-		), array(), true);	// true = call all apps
-
-		$this->addresses = array();	// reset addresses for next mail
-
-		try {
-			// calling the overwritten method
-			return parent::SmtpSend($header, $body);
-		}
-		catch (phpmailerException $e) {
-			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
-			$GLOBALS['egw']->hooks->process(array(
-				'location' => 'send_mail',
-				'subject' => $this->Subject,
-				'from' => $this->Sender ? $this->Sender : $this->From,
-				'to' => $this->addresses['To'],
-				'cc' => $this->addresses['Cc'],
-				'bcc' => $this->addresses['Bcc'],
-				'body_sha1' => sha1($body),
-				'message_id' => preg_match('/^Message-ID: (.*)$/m', $header,$matches) ? $matches[1] : null,
-				'mail_id' => $mail_id,
-				'error' => $e->getMessage(),
-			), array(), true);	// true = call all apps
-			// re-throw exception
-			throw $e;
-		}
 	}
 }
