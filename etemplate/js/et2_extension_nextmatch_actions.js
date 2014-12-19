@@ -431,12 +431,14 @@ function nm_open_popup(_action, _selected)
 					}
 				});
 			});
+			// Need to get the dialog width before make it hidden
+			var dialog_width = dialog.outerWidth(true);
 			popup.hide();
 			dialog.dialog({
 				title: jQuery('.promptheader',popup).text(),
 				modal: true,
 				buttons: d_buttons,
-				minWidth: dialog.outerWidth(true),
+				minWidth: dialog_width,
 				close: function(event, ui) {
 					// Need to destroy the dialog, etemplate widget needs divs back where they were
 					dialog.dialog("destroy");
