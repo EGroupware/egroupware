@@ -682,7 +682,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		var popup = this.egw().open_link(
 			this.egw().link('/index.php', attrs),
 			'link_existing',
-			'640x580'
+			'680x400'
 		);
 		if(popup)
 		{
