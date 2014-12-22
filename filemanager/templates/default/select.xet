@@ -2,14 +2,14 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="filemanager.select" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%">
+		<grid width="100%" resize_ratio="1">
 			<columns>
 				<column width="32"/>
-				<column/>
+				<column />
 			</columns>
 			<rows>
 				<row valign="top">
-					<grid id="apps">
+					<grid id="apps" resize_ratio="1">
 						<columns>
 							<column/>
 						</columns>
@@ -22,7 +22,7 @@
 							</row>
 						</rows>
 					</grid>
-					<grid width="100%">
+					<grid width="100%" resize_ratio="1">
 						<columns>
 							<column/>
 						</columns>
@@ -38,8 +38,8 @@
 									<button label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir" image="button_createdir" ro_image="createdir_disabled" class="createDir"/>
 								</hbox>
 							</row>
-							<row class="selectFiles">
-								<grid width="100%" overflow="auto" id="dir">
+							<row class="selectFiles file_dir_height" resize_ratio="1">
+								<grid width="100%"  id="dir" resize_ratio="1" >
 									<columns>
 										<column width="20"/>
 										<column/>
@@ -69,20 +69,16 @@
 									<file id="file_upload"/>
 								</groupbox>
 							</row>
-							<row class="dialogFooterToolbar">
-								<hbox align="right">
-									<button label="@label" id="button[ok]" image="save" background_image="1"/>
-									<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-								</hbox>
-							</row>
 						</rows>
 					</grid>
 				</row>
+				<row class="dialogFooterToolbar">
+					<hbox align="right">
+						<button label="@label" id="button[ok]" image="save" background_image="1"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
 			</rows>
 		</grid>
-		<styles>
-			.error{color:red; font-style:italic;}
-.createDir img {padding-right:30px;}
-		</styles>
 	</template>
 </overlay>

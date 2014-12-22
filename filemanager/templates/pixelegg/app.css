@@ -115,12 +115,13 @@ div.filemanager_navigation > label > input {
 input.displayNone {
   display: none;
 }
-.selectFiles td div {
-  border-style: groove;
-}
 .selectFiles div {
-  max-height: 400px;
-  overflow: auto;
+  overflow-y: auto;
+}
+#filemanager-select_dir {
+  height: 400px;
+  overflow-y: scroll;
+  display: inline-block;
 }
 /**
  * VFS mounts and versioning
@@ -135,6 +136,20 @@ input.displayNone {
 }
 .filemanager_config > * {
   margin-top: 20px;
+}
+.error {
+  color: red;
+  font-style: italic;
+}
+.createDir img {
+  padding-right: 30px;
+}
+#filemanager-select_apps {
+  width: 61px;
+  height: 400px;
+  margin-top: 44px;
+  display: inline-block;
+  overflow-y: scroll;
 }
 /*/*****************************************************************
 // sidebar
@@ -314,9 +329,6 @@ table.egwGridView_grid img {
 }
 /*// #####################################################*/
 /*Dialog filemanager*/
-#filemanager-select {
-  padding: 0px 8px 0 0;
-}
 #filemanager-select .dialogHeader .et2_button_icon {
   margin: 4px 4px 0 4px;
   border-top: solid 1px #ffffff;
