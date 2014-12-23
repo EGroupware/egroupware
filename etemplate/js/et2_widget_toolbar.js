@@ -232,7 +232,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 				dropdown.set_select_options(children);
 				dropdown.set_label (action.caption);
 
-				dropdown.set_image (action.iconUrl);
+				dropdown.set_image (action.iconUrl||'');
 				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
 				{
 					var action = that._actionManager.getActionById(selected.attr('data-id'));
@@ -381,7 +381,12 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			.attr('id', this.id+'-'+action.id)
 			.attr('title', (action.hint ? action.hint : action.caption))
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
-
+		
+		if (action && action.checkbox)
+		{
+			var action_event = typeof this._actionManager != 'undefined'?this._actionManager.getActionById(action.id):null; 
+			if (action_event && action_event.checked) button.addClass('toolbar_toggled');	
+		}	
 		if ( action.iconUrl)
 		{
 			button.attr('style','background-image:url(' + action.iconUrl + ')');
@@ -407,7 +412,12 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		var click = function(e)
 		{
 			var action = this._actionManager.getActionById(e.data);
-			if(action)
+			if (action && action.checkbox)
+			{
+				action.set_checked(!action.checked);
+				jQuery(button).toggleClass('toolbar_toggled');
+			}
+			else if(action)
 			{
 				this.value = action.id;
 				action.data.event = e;
