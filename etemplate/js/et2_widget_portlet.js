@@ -126,7 +126,7 @@ var et2_portlet = et2_valueWidget.extend(
 				stop: function(event, ui) {
 					self.set_width(Math.round(ui.size.width / self.GRID));
 					self.set_height(Math.round(ui.size.height / self.GRID));
-					self.egw().jsonq("home.home_ui.ajax_set_properties",[self.id, self.options.settings,{
+					self.egw().jsonq("home.home_ui.ajax_set_properties",[self.id, {},{
 							width: self.options.width,
 							height: self.options.height
 						}],
@@ -267,7 +267,10 @@ var et2_portlet = et2_valueWidget.extend(
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't
 		this.div.addClass("loading");
-		this.egw().jsonq("home.home_ui.ajax_set_properties",[this.id, this.options.settings || {}, value,this.settings?this.settings.group:false],
+
+		// Pass updated settings, unless we're removing
+		var settings = value == '~remove~' ? {} : this.options.settings || {}
+		this.egw().jsonq("home.home_ui.ajax_set_properties",[this.id, settings, value,this.settings?this.settings.group:false],
 			function(data) {
 				// This section not for us
 				if(!data || typeof data.attributes == 'undefined') return false;

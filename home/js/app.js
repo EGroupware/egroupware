@@ -419,7 +419,7 @@ app.classes.home = AppJS.extend(
 							var widget = window.app.home.portlet_container.getWidgetById(changed[key].id);
 							if(!widget || widget == window.app.home.portlet_container) continue;
 
-							egw().jsonq("home.home_ui.ajax_set_properties",[changed[key].id, widget.options.settings,{
+							egw().jsonq("home.home_ui.ajax_set_properties",[changed[key].id, {},{
 									row: changed[key].row,
 									col: changed[key].col
 								},widget.settings?widget.settings.group:false],
