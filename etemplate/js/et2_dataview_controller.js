@@ -352,7 +352,7 @@ var et2_dataview_controller = Class.extend({
 		if (!_entry.row)
 		{
 			createdRow = true;
-			_entry.row = new et2_dataview_row(this._grid);
+			_entry.row = this._createRow(ctx);
 			_entry.row.setDestroyCallback(this._destroyCallback, ctx);
 		}
 
@@ -386,6 +386,17 @@ var et2_dataview_controller = Class.extend({
 		}
 
 		return this.hasData;
+	},
+
+
+	/**
+	 * Create a new row.
+	 * 
+	 * @param {type} ctx
+	 * @returns {et2_dataview_container}
+	 */
+	_createRow: function(ctx) {
+		return new et2_dataview_row(this._grid);
 	},
 
 	/**

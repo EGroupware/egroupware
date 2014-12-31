@@ -138,6 +138,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	createNamespace: true,
 
 	columns: [],
+	
+	// Current view, either row or tile.  We store it here as controllers are
+	// recreated when the template changes.
+	view: 'row',
 
 	/**
 	 * Constructor
@@ -1109,6 +1113,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 		this.controller.setPrefix(this.options.settings.dataStorePrefix);
 
+		// Set the view
+		this.controller._view = this.view;
+		
 		// Load the initial order
 		/*this.controller.loadInitialOrder(this._getInitialOrder(
 			this.options.settings.rows, this.options.settings.row_id
@@ -1648,6 +1655,26 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			this.options.actions = actions;
 			this.options.settings.action_links = this.controller._actionLinks = this._get_action_links(actions);
 			this.controller._initActions(actions);
+		}
+	},
+
+	/**
+	 * Switch view between row and tile.
+	 * This should be followed by a call to change the template to match, which
+	 * will cause a reload of the grid using the new settings.
+	 *
+	 * @param {type} view
+	 */
+	set_view: function(view)
+	{
+		// Restrict to the only 2 accepted values
+		if(view == 'tile')
+		{
+			this.view = 'tile';
+		}
+		else
+		{
+			this.view = 'row';
 		}
 	},
 

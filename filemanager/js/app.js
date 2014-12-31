@@ -607,6 +607,42 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * Toggle view between tiles and rows
+	 * 
+	 * @param {string} [view] - Specify what to change the view to.  Either 'tile' or 'row'.
+	 * @param {et2_widget} [button_widget] - The widget that's calling
+	 */
+	change_view: function(view, button_widget)
+	{
+		var nm = this.et2.getWidgetById('nm');
+		if(!nm)
+		{
+			egw.debug('warn', 'Could not find nextmatch to change view');
+
+			return;
+		}
+
+		if(button_widget && button_widget.instanceOf(et2_button))
+		{
+			// Switch view based on button icon, since controller can get re-created
+			if(typeof view != 'string')
+			{
+				view = button_widget.options.image.replace('list_','');
+			}
+
+			// Toggle button icon to the other view
+			button_widget.set_image("list_"+(view == nm.controller.VIEW_ROW ? nm.controller.VIEW_TILE : nm.controller.VIEW_ROW));
+
+			button_widget.set_label(view == nm.controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+		}
+
+		nm.set_view(view);
+
+		// Change template to match
+		this.et2.getWidgetById('nm').set_template(view == nm.controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile');
+	},
+
+	/**
 	 * Open/active an item
 	 *
 	 * @param _action

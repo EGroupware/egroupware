@@ -1147,6 +1147,18 @@ div.message.floating {
   margin-right: -11px;
 }
 /* End of hierarchy */
+
+/* Nextmatch tiled view */
+.et2_nextmatch .egwGridView_grid tr.tile {
+	display: inline-block;
+	width: 240px;
+	float: left;
+	padding: 2px;
+}
+.et2_nextmatch .egwGridView_grid tr.tile > td > div > *:first-child {
+	text-align: center;
+}
+
 /* Mangled link-to widget inside a nextmatch - used for DnD uploads */
 .et2_nextmatch * .et2_link_to {
   position: fixed;

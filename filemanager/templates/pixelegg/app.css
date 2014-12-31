@@ -95,6 +95,31 @@ div.filemanager_navigation > label > input {
   max-height: none;
 }
 /**
+ * Tile view
+table.egwGridView_grid .tile .file_tile {
+	height: 150px;
+}
+ */
+.egwGridView_grid .tile span.iconOverlayContainer {
+  display: block;
+  max-width: 140px;
+}
+table.egwGridView_grid .tile .file_tile img.vfsMimeIcon {
+  height: auto;
+  width: auto;
+  max-height: 120px;
+  display: block;
+  margin: 0 auto;
+}
+.egwGridView_grid tr.tile:hover .innerContainer {
+  overflow: visible;
+}
+.egwGridView_grid tr.tile:hover .file_tile > :not(.iconOverlayContainer) {
+  position: relative;
+  z-index: 90;
+  background-color: white;
+}
+/**
  * Select file dialog
  */
 .selectPath {

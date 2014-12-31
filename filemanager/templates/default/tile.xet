@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<!--
+	This is used as a tiled template for nextmatch.  Note only 1 column, and
+	the vbox has both width and height explicitly defined.  These are for the vbox,
+	and any spacing between should be done using its margins.
+	Also important is the tile class on the row, to get the proper display and
+	the column width="100%" to take the whole width
+	-->
+	<template id="filemanager.tile" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header/>
+				</row>
+				<row class="tile $row_cont[class]">
+					<vbox class="file_tile" width="150px" height="150px">
+						<vfs-mime align="center" id="$row"/>
+						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
+						<description id="${row}[comment]"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

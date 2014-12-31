@@ -50,6 +50,7 @@
 			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~');} return true;" size="80" class="address"/>
 			<hbox id="buttons">
 				<button label="Go to" id="button[go]" image="key_enter"/>
+				<buttononly label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" options="list_tile"/>
 				<image id="tarp" src="buttonseparator"/>
 				<buttononly statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" options="edit"/>
 				<buttononly label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" options="button_createdir,createdir_disabled"/>

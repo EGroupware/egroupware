@@ -19,6 +19,7 @@
 	et2_dataview_view_row;
 	et2_dataview_controller;
 	et2_dataview_interfaces;
+	et2_dataview_view_tile;
 
 	et2_extension_nextmatch_actions; // Contains nm_action
 
@@ -30,6 +31,10 @@
  */
 var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 {
+	// Display constants
+	VIEW_ROW: 'row',
+	VIEW_TILE: 'tile',
+
 	/**
 	 * Initializes the nextmatch controller.
 	 *
@@ -94,6 +99,8 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// dataUnregisterUID
 		this.dataUnregisterUID = _egw.dataUnregisterUID;
 
+		// Default to rows
+		this._view = et2_nextmatch_controller.prototype.VIEW_ROW;
 	},
 
 	destroy: function () {
@@ -189,6 +196,34 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	},
 
 	/** -- PRIVATE FUNCTIONS -- **/
+
+	/**
+	 * Create a new row, either normal or tiled
+	 *
+	 * @param {type} ctx
+	 * @returns {et2_dataview_container}
+	 */
+	_createRow: function(ctx) {
+		switch(this._view)
+		{
+			case et2_nextmatch_controller.prototype.VIEW_TILE:
+				var row = new et2_dataview_tile(this._grid);
+				// Try to overcome chrome rendering issue where float is not
+				// applied properly, leading to incomplete rows
+				window.setTimeout(function() {
+					if(!row.tr) return;
+					row.tr.css('float','none');
+					window.setTimeout(function() {
+						if(!row.tr) return;
+						row.tr.css('float','left');
+					},50);
+				},100);
+				return row;
+			case et2_nextmatch_controller.prototype.VIEW_ROW:
+			default:
+				return new et2_dataview_row(this._grid);
+		}
+	},
 
 	/**
 	 * Initializes the action and the object manager.
