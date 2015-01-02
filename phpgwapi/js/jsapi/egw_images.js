@@ -115,7 +115,8 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			{
 
 			}
-			else if (typeof _path == 'string' && type[0] == 'image' && type[1].match(/^(png|jpe?g|gif|bmp)$/))
+			else if (typeof _path == 'string' && (type[0] == 'image' && type[1].match(/^(png|jpe?g|gif|bmp)$/) ||
+				type[0] == 'application' && type[1].indexOf('vnd.oasis.opendocument.') === 0))
 			{
 				var thsize = this.config('link_list_thumbnail') || 64;
 				image = this.link('/etemplate/thumbnail.php',{ 'path': _path, 'thsize': thsize});

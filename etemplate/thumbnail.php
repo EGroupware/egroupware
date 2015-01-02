@@ -155,6 +155,9 @@ function read_thumbnail($src)
 
 		if ($dst)
 		{
+			// Allow client to cache these, makes scrolling in filemanager much nicer
+			header('Pragma: private');
+			header('Cache-Control: max-age=300');
 			header('Content-Type: '.$output_mime);
 			readfile($dst);
 			return true;
@@ -251,8 +254,69 @@ function gd_image_load($file)
 				return imagecreatefromwbmp($file);
 		}
 	}
+	else if ($type == 'application' && strpos($image_type,'vnd.oasis.opendocument.') === 0)
+	{
+		// OpenDocuments have thumbnails inside already
+		return get_opendocument_thumbnail($file);
+	}
 
 	return false;
+}
+
+/**
+ * Extract the thumbnail from an opendocument file and apply a colored mask
+ * so you can tell what type it is, and so it looks a little better in larger
+ * thumbnails (eg: in tiled view)
+ *
+ * Inspired by thumbnails for nautilus:
+ * http://bernaerts.dyndns.org/linux/76-gnome/285-gnome-shell-generate-libreoffice-thumbnail-nautilus
+ *
+ * @param string $file
+ * @return resource GD image
+ */
+function get_opendocument_thumbnail($file)
+{
+	// Don't bother if they're using tiny thumbnails
+	if(get_maxsize() < 64) return false;
+
+	list($type, $file_type) = explode('/', egw_vfs::mime_content_type($file));
+
+	// Image is already there, but we can't access them directly through VFS
+	$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
+	$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($file,$ext).'-');
+	copy($file,$archive);
+
+	$thumbnail_url = 'zip://'.$archive.'#Thumbnails/thumbnail.png';
+	$image = imagecreatefromstring(file_get_contents($thumbnail_url));
+	unlink($archive);
+
+	// Mask it with a color by type
+	$mask = imagecreatefrompng('templates/default/images/opendocument.png');
+	if($image)
+	{
+		$filter_color = array(0,0,0);
+		switch($file_type)
+		{
+			// Type colors from LibreOffice (https://wiki.documentfoundation.org/Design/Whiteboards/LibreOffice_Initial_Icons)
+			case 'vnd.oasis.opendocument.text':
+				$filter_color = array(2,63,98); break;
+			case 'vnd.oasis.opendocument.spreadsheet':
+				$filter_color = array(16,104,2); break;
+			case 'vnd.oasis.opendocument.presentation':
+				$filter_color = array(98,37,2); break;
+			case 'vnd.oasis.opendocument.graphics':
+				$filter_color = array(135,105,0); break;
+			case 'vnd.oasis.opendocument.database':
+				$filter_color = array(83,2,96); break;
+		}
+		if($colors[$image_type])
+		{
+			$filter_color = $colors[$image_type];
+		}
+		imagefilter($mask, IMG_FILTER_COLORIZE, $filter_color[0],$filter_color[1],$filter_color[2] );
+		imagecopyresampled($image, $mask,0,0,0,0,imagesx($image),imagesy($image),imagesx($mask),imagesy($mask));
+	}
+	return $image;
 }
 
 /**
