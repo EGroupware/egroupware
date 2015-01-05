@@ -117,5 +117,15 @@ app.classes.timesheet = AppJS.extend(
 		{
 			ts_project.set_blur(_widget.getValue() ? _widget.search.val() : '');
 		}
+	},
+	
+	/**
+	 * Get title in order to set it as document title
+	 * @returns {string}
+	 */
+	getWindowTitle: function()
+	{
+		var widget = this.et2.getWidgetById('ts_title');
+		if(widget) return widget.options.value;
 	}
 });

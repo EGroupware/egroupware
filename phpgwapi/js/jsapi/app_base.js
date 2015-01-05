@@ -141,6 +141,7 @@ var AppJS = Class.extend(
 		}
 		this.et2 = et2.widgetContainer;
 		this._fix_iFrameScrolling();
+		if (this.egw.is_popup()) this._set_Window_title();
 	},
 
 	/**
@@ -728,6 +729,38 @@ var AppJS = Class.extend(
 					jQuery(body).append(div);
 				}
 			});
+		}
+	},
+	
+	/**
+	 * Set document title, uses getWindowTitle to get the correct title,
+	 * otherwise set it with uniqueID as default title
+	 */
+	_set_Window_title: function ()
+	{
+		var title = this.getWindowTitle();
+		if (title)
+		{
+			document.title = this.et2._inst.uniqueId + ": " + title;
+		}
+	},
+	
+	/**
+	 * Window title getter function in order to set the window title
+	 * this can be overridden on each application app.js file to customize the title value
+	 * 
+	 * @returns {string} window title
+	 */
+	getWindowTitle: function ()
+	{
+		var titleWidget = this.et2.getWidgetById('title');
+		if (titleWidget)
+		{
+			return titleWidget.get_value();
+		}
+		else
+		{
+			return this.et2._inst.uniqueId;
 		}
 	}
 });

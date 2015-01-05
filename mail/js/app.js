@@ -4195,5 +4195,26 @@ app.classes.mail = AppJS.extend(
 			clearInterval(this.W_INTERVALS[i]);
 			delete this.W_INTERVALS[i];
 		}
+	},
+	
+	/**
+	 * Window title getter function in order to set the window title
+	 * 
+	 * @returns {string} window title
+	 */
+	getWindowTitle: function ()
+	{
+		var widget = {};
+		switch(this.et2._inst.name)
+		{
+			case 'mail.display':
+				widget = this.et2.getWidgetById('mail_displaysubject');
+				if (widget) return widget.options.value;
+				break;
+			case 'mail.compose':
+				widget = this.et2.getWidgetById('subject');
+				if (widget) return widget.get_value();
+				break;
+		}
 	}
 });

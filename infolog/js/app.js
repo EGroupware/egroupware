@@ -510,5 +510,15 @@ app.classes.infolog = AppJS.extend(
 			action_id: typeof action_id.join != "undefined" ? action_id.join(',') : action_id
 		};
 		egw.open('','infolog','add',extras);
+	},
+	
+	/**
+	 * Get title in order to set it as document title
+	 * @returns {string}
+	 */
+	getWindowTitle: function()
+	{
+		var widget = this.et2.getWidgetById('info_subject');
+		if(widget) return widget.options.value;
 	}
 });

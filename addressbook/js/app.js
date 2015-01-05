@@ -804,5 +804,15 @@ app.classes.addressbook = AppJS.extend(
 				}, this).sendRequest();
 				break;
 		}
+	},
+	
+	/**
+	 * Get title in order to set it as document title
+	 * @returns {string}
+	 */
+	getWindowTitle: function()
+	{
+		var widget = this.et2.getWidgetById('n_fn');
+		if(widget) return widget.options.value;
 	}
 });
