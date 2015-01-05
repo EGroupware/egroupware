@@ -1413,6 +1413,10 @@ div.ms-sel-ctn {
 	margin-right: 3px;
 	height: 24px;
 }
+.et2_toolbar button.toolbar_toggled {
+	background-color: white;
+	box-shadow: inset 1px 1px 1px 1px gray;
+}
 .et2_toolbar-dropdown{
 	margin: 1px;
 	display: inline-block;
