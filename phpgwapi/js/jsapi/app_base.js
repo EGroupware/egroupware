@@ -756,7 +756,7 @@ var AppJS = Class.extend(
 		var titleWidget = this.et2.getWidgetById('title');
 		if (titleWidget)
 		{
-			return titleWidget.get_value();
+			return titleWidget.options.value;
 		}
 		else
 		{
