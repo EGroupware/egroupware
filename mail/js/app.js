@@ -168,6 +168,8 @@ app.classes.mail = AppJS.extend(
 					tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
+				// Show vacation notice on load for the current profile
+				this.mail_callRefreshVacationNotice();
 				break;
 			case 'mail.display':
 				this.mail_isMainWindow = false;
