@@ -245,7 +245,8 @@
 			{
 				delta_height = 0;
 			}
-			if(delta_width != 0 || delta_height != 0)
+			if((delta_width != 0 || delta_height != 0) && 
+				(delta_width >2 || delta_height >2 || delta_width<-2 || delta_height < -2))
 			{
 				
 				if (window.framework && typeof window.framework.resize_popup != 'undefined')
@@ -254,7 +255,7 @@
 				}
 				else
 				{
-					window.resizeTo(egw_getWindowOuterWidth() - delta_width+8, egw_getWindowOuterHeight() - delta_height+10);
+					window.resizeTo(egw_getWindowOuterWidth() - delta_width+8, egw_getWindowOuterHeight() - delta_height);
 				}
 			}
 			// trigger a 2. resize, as one is not enough, if window is zoomed
