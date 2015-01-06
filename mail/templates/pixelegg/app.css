@@ -1063,6 +1063,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
 #mail-compose {
   width: 870px;
   padding: 5px;
+  max-height: 700px;
   /*// ###############################################################################*/
   /*// Mail Header*/
 }
