@@ -101,6 +101,86 @@ class mail_compose
 			$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 		}
 	}
+	
+	/**
+	 * Provide toolbar actions used for compose toolbar
+	 *
+	 * @return array an array of actions
+	 */
+	function getToolbarActions()
+	{
+		$actions = array(
+			'send' => array(
+				'caption' => 'Send',
+				'icon'	=> 'mail_send',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.compose_submitAction',
+				'hint' => 'Send'
+			),
+			'button[saveAsDraft]' => array(
+				'caption' => 'Save',
+				'icon' => 'save',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.saveAsDraft',
+				'hint' => 'Save as Draft'
+			),
+			'button[saveAsDraftAndPrint]' => array(
+				'caption' => 'Print',
+				'icon' => 'print',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.saveAsDraft',
+				'hint' => 'Save as Draft and Print'
+			),
+			'selectFromVFSForCompose' => array(
+				'caption' => 'VFS',
+				'icon' => 'filemanager',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
+				'hint' => 'Select file(s) from VFS'
+			),
+			'uploadForCompose' => array(
+				'caption' => 'Upload files...',
+				'icon' => 'attach',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
+				'hint' => 'Select files to upload'
+			),
+			'to_infolog' => array(
+				'caption' => 'Infolog',
+				'icon' => 'infolog/navbar',
+				'group' => ++$group,
+				'checkbox' => true,
+				'hint' => 'check to save as infolog on send'
+			),
+			'to_tracker' => array(
+				'caption' => 'Tracker',
+				'icon' => 'tracker/navbar',
+				'group' => $group,
+				'checkbox' => true,
+				'hint' => 'check to save as trackerentry on send'
+			),
+			'disposition' => array(
+				'caption' => 'Notification',
+				'icon' => 'notification',
+				'group' => ++$group,
+				'checkbox' => true,
+				'hint' => 'check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)'
+			),
+			'prty' => array(
+				'caption' => 'Priority',
+				'group' => ++$group,
+				'children' => array(),
+				'hint' => '',
+			)
+		);
+		foreach (self::$priorities as $priority)
+		{
+			$actions['prty']['children'][$priority] = array(
+						'caption' => $priority,
+			);
+		}
+		return $actions;
+	}
 
 	/**
 	 * Compose dialog
@@ -252,14 +332,14 @@ class mail_compose
 		}
 		//error_log(__METHOD__.__LINE__.array2string($_content));
 		if (!empty($_content['serverID']) && $_content['serverID'] != $this->mail_bo->profileID &&
-			($_content['button']['send'] || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
+			($_content['toolbar'] === 'send' || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
 		)
 		{
 			$this->changeProfile($_content['serverID']);
 			$composeProfile = $this->mail_bo->profileID;
 		}
 		$buttonClicked = false;
-		if ($_content['button']['send'])
+		if ($_content['toolbar'] === 'send')
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
@@ -1120,7 +1200,8 @@ class mail_compose
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
-
+		
+		$etpl->setElementAttribute('toolbar', 'actions', $this->getToolbarActions());
 		if ($content['mimeType']=='html')
 		{
 			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"

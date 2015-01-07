@@ -3185,13 +3185,13 @@ app.classes.mail = AppJS.extend(
 	 * @param {widget object} _widget
 	 * @param {string} _action autosaving trigger action
 	 */
-	saveAsDraft: function(_egw, _widget, _action)
+	saveAsDraft: function(_egw_action, _action)
 	{
 		//this.et2_obj.submit();
 		var content = this.et2.getArrayMgr('content').data;
-		if (_widget )
+		if (_egw_action )
 		{
-			var action = _action == 'autosaving'?_action: _widget.id;
+			var action = _action == 'autosaving'?_action: _egw_action.id;
 		}
 
 		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount', 'mail_htmltext', 'mail_plaintext', 'lastDrafted'];
@@ -4071,8 +4071,8 @@ app.classes.mail = AppJS.extend(
 		});
 		//Make used email-tag list widgets in mail compose droppable
 		emailTags.droppable({
-			access:'.ms-sel-item',
-
+			accept:'.ms-sel-item',
+			
 			/**
 			 * Run after a draggable email item dropped over one of the email-taglists
 			 * -Set the dropped item to the dropped current target widget
@@ -4218,5 +4218,61 @@ app.classes.mail = AppJS.extend(
 				if (widget) return widget.get_value();
 				break;
 		}
-	}
+	},
+	
+	/**
+	 * Set the relevant widget to toolbar actions and submit
+	 * @param {type} _action toolbar action
+	 */
+	compose_submitAction: function (_action)
+	{
+		var action_widget = ['to_infolog','to_tracker','priority'];
+		var toolbar = this.et2.getWidgetById('toolbar');
+		for(var i=0;action_widget.length>i;i++)
+		{
+			var widget = this.et2.getWidgetById(action_widget[i]);
+			if (toolbar._actionManager)
+			{
+				var action_event = toolbar._actionManager.getActionById(action_widget[i]== 'priority'?'prty':action_widget[i]);
+				if (typeof action_event.checkbox != 'undefined' && action_event.checkbox)
+				{
+					widget.set_value(action_event.checked?"on":"off");
+				}
+				else if (action_event && toolbar.options)
+				{
+					var regex = new RegExp(toolbar.options.actions[action_event.id]['value'],'ig');
+					jQuery(widget.options.select_options).each(function(_i,_a){
+						
+						if (_a.label.match(regex))
+						{
+							widget.set_value(_a.value);
+						}
+					})
+					
+				}
+			}
+		}
+		
+		this.et2._inst.submit(null,null,true);
+	},
+	
+	/**
+	 * Triger relative widget via its toolbar identical action
+	 * @param {type} _action toolbar action
+	 */
+	compose_triggerWidget:function (_action)
+	{
+		var widget = this.et2.getWidgetById(_action.id);
+		if (widget)
+		{
+			switch(widget.id)
+			{
+				case 'uploadForCompose':
+					document.getElementById('mail-compose_uploadForCompose').click();
+					break;
+				default:
+					widget.click();
+			}
+		}
+	},
 });

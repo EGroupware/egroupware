@@ -350,93 +350,11 @@ div#mail-index{
     // ##################################
     //	Toolbar
 
-	.mail-compose_toolbar{
-
-        float: left;
-        width: 100%;
-        height: 35px !important;
-        padding: 0px 5px 5px 2px !important;
-
-        /*.gradient_thead;*/
-        .color_100_gray;
-        background: transparent;
-
+	#mail-compose_toolbar{
 
         // Senden Button
-        button[id="mail-compose_button[sent]"],
-        button.et2_button{
-                /*            background-color: @gray_30;*/
-
-                            /*height: 33px;*/
-                            /*margin: 0px 3px 0 !important;*/
-                        }
-
-
-        span.email-button-group {
-            .span_tool_group;
-            height: 27px;
-
-        }
-
-        // senden
-        span.sent {
-            float: left;
-        }
-        // save + print
-        span.save {float: left;
-
-                   img{background-color: @gray_0;}
-        }
-
-        // file upload
-        span.file {float: left;
-
-                   button{background-color: @gray_0;}
-        }
-
-
-        // save as infolog + tracker
-        span.egw {float: left;
-                  img{
-                        .dimension_height_s;
-                        padding: 1px;
-                        margin: 3px;
-                        vertical-align: middle;
-			width :auto;
-                        .rounded(3px);
-                        background-color: @gray_0;
-                  }
-        }
-        span.notification {float: left;
-                    span.et2_label {line-height: 25px;}
-        }
-        span.priority {float: left;
-                    span.et2_label {line-height: 25px;}
-        }
-
-
-        img{.dimension_height_m;}
-        img[src$="svg"]{
-            .gradient_vertical (@gray_30, @gray_40);
-            background-color: @gray_60;
-            .dimension_height_m;
-            &:hover {
-                .box_shadow_standard_light_hover;
-                background-color:@color_positive_action;
-                .gradient_vertical (@color_positive_action, @color_positive_action);
-            }
-        }
-
-        span.et2_label {font-size: 8px;}
-
-        /*######################################*/
-        /*// Button senden -> dev_buttons.less*/
-        button.et2_button { }
-
-
-        // Senden Button
-        .mail-compose_button{
-            height: 27px;
+        button#toolbar-send{
+            height: 24px;
             /*margin-right: 3px !important;*/
             margin-top: 0.7px !important;
             padding: 0 3px 0 0;
@@ -454,103 +372,6 @@ div#mail-index{
             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
             &:disabled {background-color: @color_disabled !important;}
 
-        }
-        /*######################################*/
-        // Save + Print
-
-        img[id="mail-compose_button[saveAsDraftAndPrint]"],
-        img[id="mail-compose_button[saveAsDraft]"]{
-            vertical-align: middle;
-            padding: 1px;
-            margin: 3px;
-            .Complete_Button_Icon_normal;
-            .dimension_height_s;
-
-            &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
-
-        }
-        /*######################################*/
-        // file
-
-        // Dateimanager
-        button[id="mail-compose_selectFromVFSForCompose"] {
-            /*margin-left: 15px !important;*/
-            .dimension_height_s;
-            margin: 3px;
-            vertical-align: middle;
-            float: left;
-			height: 20px !important;
-			width: auto;
-			background-size: 16px 16px;
-			padding: 0;
-            .Complete_Button_Icon_normal;
-            &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
-            &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
-        }
-
-        // Dateien Upload
-        .et2_file,
-        .mail-compose_fileselector{
-
-            float: left;
-            vertical-align: middle;
-			margin:2px;
-            span.et2_file_span{
-
-                        font-size: 1.1em;
-			font-weight: normal;
-                        .Complete_Button_text_icon_before;
-                        background-image: url(images/attach.png) !important;
-                        .background_color_5_gray;
-                        height: 16px;
-                        width: 100px;
-                        &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
-
-                        &:focus {.box_shadow_standard_light_inset; .background_color_15_gray;}
-
-                    }
-
-             input {border: none;}
-
-             input.et2_file_upload {width: 120px}
-
-            div.progress {width: 212px;}
-        }
-
-        /*######################################*/
-        /*save / Speichern als */
-        //als Infolog
-        #mail-compose_to_infolog{
-
-            margin-right: 5px !important;
-            &:hover{
-            .scale;
-            }
-        }
-        //als Ticket
-        input[id="mail-compose_to_tracker"]{
-
-            margin-right: 5px !important;
-            &:hover {
-                .scale;
-            }
-        }
-        /*######################################*/
-        // Empfangsbenachrichtigung
-        #mail-compose_disposition{
-
-            margin-right: 0px !important;
-            &:hover {
-                .scale;
-            }
-
-        }
-
-        // Priorität
-        #mail-compose_priority{
-            margin-right: 0px;
-            font-size: 9px;
-            span.et2_label {margin-right: 3px;}
         }
     } // Toolbar Ende
 
@@ -955,7 +776,7 @@ div.ui-toolbar-menulist{
         .et2_toolbar-dropdown{
 /*            background: @gray_10 !important;
             background-color: @gray_10 !important;*/
-            margin: -4px 5px -2px 4px;
+            margin: -4px 5px 2px 1px;
             .rounded(3px);
 
             .et2_dropdown{
@@ -1510,28 +1331,6 @@ input[type=button] {
 #mail-compose_fileselector {
     width: 245px !important;
 }
-#mail-compose_toolbar {
-    padding: 0px !important;
-}
-#mail-compose_toolbar > button {
-    padding: .2em .4em;
-}
-#mail-compose_toolbar > img {
-    width: 16px;
-    padding: 0px;
-    height: 16px !important;
-}
-#mail-compose_toolbar > button > span > img {
-    width: 16px;
-    padding: 0px;
-    height: 16px !important;
-}
-
-
-
-
-
-
 
 .mailPreviewIcons {
     position: absolute;
