@@ -455,6 +455,8 @@ app.classes.admin = AppJS.extend(
 		sel_options = jQuery.extend({}, this.et2.getArrayMgr('sel_options').data||{}, {
 			'apps': this.et2.getArrayMgr('sel_options').getEntry('filter2')
 		},sel_options);
+		// Remove 'All applications'
+		delete sel_options.apps[''];
 
 		// Some defaults
 		if(this.et2 && this.et2.getWidgetById('nm'))
