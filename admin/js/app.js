@@ -511,23 +511,32 @@ app.classes.admin = AppJS.extend(
 				// Restore account if it's readonly in dialog
 				if(!_value.acl_account) _value.acl_account = content.acl_account;
 
-				// Only send the request if they entered everything
-				if(_value.acl_account && (_value.acl_appname && _value.acl_location || _value.apps))
+				// Handle no applications selected
+				if(typeof _value.apps == 'undefined' && content.acl_location == 'run')
 				{
-					var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
-					if(content && content.id && id != content.id)
+					_value.apps = [];
+				}
+
+				// Only send the request if they entered everything (or selected no apps)
+				if(_value.acl_account && (_value.acl_appname && _value.acl_location || typeof _value.apps != 'undefined'))
+				{
+					if(_value.acl_appname && _value.acl_account && _value.acl_location)
 					{
-						// Changed the account or location, remove previous or we
-						// get a new line instead of an edit
-						this.egw.json(className+'::ajax_change_acl', [content.id, 0], null,this,false,this)
-							.sendRequest();
+						var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
+						if(content && content.id && id != content.id)
+						{
+							// Changed the account or location, remove previous or we
+							// get a new line instead of an edit
+							this.egw.json(className+'::ajax_change_acl', [content.id, 0], null,this,false,this)
+								.sendRequest();
+						}
 					}
 					var rights = 0;
 					for(var i in _value.acl)
 					{
 						rights += parseInt(_value.acl[i]);
 					}
-					if(_value.apps && !_value.acl_appname)
+					if(typeof _value.apps != 'undefined' && !_value.acl_appname)
 					{
 						id = [];
 						rights = 1;
@@ -537,7 +546,7 @@ app.classes.admin = AppJS.extend(
 						for(var app in sel_options.apps)
 						{
 							var run_id = app+":"+_value.acl_account+":run";
-							if(_value.apps.indexOf(app) < 0 && content.apps.indexOf(app) >= 0)
+							if(_value.apps.indexOf(app) < 0 && (content.apps.indexOf(app) >= 0 || content.apps.length == 0))
 							{
 								removed.push(run_id);
 							}
