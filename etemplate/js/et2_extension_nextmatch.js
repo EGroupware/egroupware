@@ -271,8 +271,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			{
 				var self = this;
 				// Register a handler
-				$j('table.egwGridView_grid',this.div)
-					.on('dragenter','tr',function(e) {
+				$j(this.div)
+					.on('dragenter','.egwGridView_grid tr',function(e) {
 						// Figure out _which_ row
 						var row = self.controller.getRowByNode(this);
 
@@ -289,12 +289,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						}
 						return false;
 					})
-					.on('dragexit','tr', function(e) {
+					.on('dragexit','.egwGridView_grid tr', function(e) {
 						self.controller._selectionMgr.setFocused();
 					})
-					.on('dragover','tr',false).attr("dropzone","copy")
+					.on('dragover','.egwGridView_grid tr',false).attr("dropzone","copy")
 
-					.on('drop', 'tr',function(e) {
+					.on('drop', '.egwGridView_grid tr',function(e) {
 						self.handle_drop(e,this);
 						return false;
 					});
