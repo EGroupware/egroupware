@@ -4117,7 +4117,7 @@ class mail_ui
 				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 				$refreshData['vacationnotice'] = lang('Vacation notice is active');
 				$refreshData['vacationrange'] = ($vacation['status']=='by_date'? common::show_date($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.common::show_date($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
-				if ($vacation['end_date']+ 24*3600 < time())$refreshData = '';
+				if ($vacation['status'] == 'by_date' && $vacation['end_date']+ 24*3600 < time())$refreshData = '';
 			}
 		}
 		if ($vacation==false)
