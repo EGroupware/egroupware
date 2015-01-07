@@ -399,33 +399,37 @@ app.classes.admin = AppJS.extend(
 		// Determine which application we're running as
 		var app = egw.app_name();	// can be either admin or preferences!
 		if (app != 'admin') app = 'preferences';
+		// Get by ID, since this.et2 isn't always the ACL list
+		var et2 = etemplate2.getById('admin-acl').widgetContainer;
 		var className = app+'_acl';
 		var acl_rights = {};
 		var readonlys = {acl: {}};
 
 		// Select options are already here, just pull them and pass along
-		sel_options = jQuery.extend({}, this.et2.getArrayMgr('sel_options').data||{}, {
-			'apps': this.et2.getArrayMgr('sel_options').getEntry('filter2')
+		sel_options = jQuery.extend({}, et2.getArrayMgr('sel_options').data||{}, {
+			'apps': et2.getArrayMgr('sel_options').getEntry('filter2')
 		},sel_options);
+		// Remove 'All applications'
+		delete sel_options.apps[''];
 
 		// Some defaults
-		if(this.et2 && this.et2.getWidgetById('nm'))
+		if(et2 && et2.getWidgetById('nm'))
 		{
 			// This is which checkboxes are available for each app
-			var acl_rights = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights')||{};
+			var acl_rights = et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights')||{};
 
 			if(!content.acl_appname)
 			{
 				// Pre-set appname to currently selected
-				content.acl_appname = this.et2.getWidgetById('filter2').getValue()||"";
+				content.acl_appname = et2.getWidgetById('filter2').getValue()||"";
 			}
 			if(!content.acl_account)
 			{
-				content.acl_account = this.et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
+				content.acl_account = et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
 			}
 			if(!content.acl_location)
 			{
-				content.acl_location = this.et2.getWidgetById('filter').getValue() == 'run' ? 'run' : null;
+				content.acl_location = et2.getWidgetById('filter').getValue() == 'run' ? 'run' : null;
 			}
 			// If no admin rights, change UI to not allow adding access to apps
 			if(content.acl_location == 'run' && !egw.user('apps')['admin'])
@@ -596,7 +600,9 @@ app.classes.admin = AppJS.extend(
 	{
 		// Avoid the window / framework / app and just refresh the etemplate
 		// Framework will try to refresh the opener
-		this.et2.getInstanceManager().refresh(_data.msg, this.appname,_data.ids,_data.type);
+		// Get by ID, since this.et2 isn't always the ACL list
+		var et2 = etemplate2.getById('admin-acl').widgetContainer;
+		et2.getInstanceManager().refresh(_data.msg, this.appname,_data.ids,_data.type);
 	},
 
 	/**
