@@ -335,14 +335,14 @@ class mail_compose
 		}
 		//error_log(__METHOD__.__LINE__.array2string($_content));
 		if (!empty($_content['serverID']) && $_content['serverID'] != $this->mail_bo->profileID &&
-			($_content['toolbar'] === 'send' || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
+			($_content['composeToolbar'] === 'send' || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
 		)
 		{
 			$this->changeProfile($_content['serverID']);
 			$composeProfile = $this->mail_bo->profileID;
 		}
 		$buttonClicked = false;
-		if ($_content['toolbar'] === 'send')
+		if ($_content['composeToolbar'] === 'send')
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
@@ -1204,7 +1204,7 @@ class mail_compose
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
 		
-		$etpl->setElementAttribute('toolbar', 'actions', $this->getToolbarActions());
+		$etpl->setElementAttribute('composeToolbar', 'actions', $this->getToolbarActions());
 		if ($content['mimeType']=='html')
 		{
 			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"

@@ -1086,7 +1086,7 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   /*background-color: @gray-0;*/
   /*.gradient_thead;*/
 }
-#mail-compose #mail-compose_toolbar button#toolbar-send {
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-send {
   height: 24px;
   /*margin-right: 3px !important;*/
   margin-top: 0.7px !important;
@@ -1103,18 +1103,18 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   background-color: #0c5da5;
   color: #ffffff;
 }
-#mail-compose #mail-compose_toolbar button#toolbar-send:hover {
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-send:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #189800;
 }
-#mail-compose #mail-compose_toolbar button#toolbar-send:disabled {
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-send:disabled {
   background-color: rgba(12, 93, 165, 0.2) !important;
 }
-#mail-compose #mail-compose_toolbar button#toolbar-to_infolog:hover,
-#mail-compose #mail-compose_toolbar button#toolbar-to_tracker:hover,
-#mail-compose #mail-compose_toolbar button#toolbar-disposition:hover {
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_infolog:hover,
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_tracker:hover,
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:hover {
   background: none;
 }
 #mail-compose table.et2_grid {
