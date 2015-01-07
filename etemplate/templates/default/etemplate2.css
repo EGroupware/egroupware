@@ -1415,7 +1415,7 @@ div.ms-sel-ctn {
 }
 .et2_toolbar button.toolbar_toggled {
 	background-color: white;
-	box-shadow: inset 1px 1px 1px 1px gray;
+	box-shadow: inset 1px 1px 1px 1px gray !important;
 }
 .et2_toolbar-dropdown{
 	margin: 1px;

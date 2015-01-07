@@ -485,6 +485,16 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	isValid: function(messages)
 	{
 		return true;
+	},
+	
+	/**
+	 * Attach the container node of the widget to DOM-Tree
+	 * @returns {Boolean}
+	 */
+	doLoadingFinished: function ()
+	{
+		this._super.apply(this, arguments);
+		return false;
 	}
 });
 et2_register_widget(et2_toolbar, ["toolbar"]);

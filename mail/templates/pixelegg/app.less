@@ -333,7 +333,7 @@ div#mail-index{
     //	gesamtbreite
     width: 870px;
     padding: 5px;
-	max-height: 700px;
+	max-height: 99%;
 
 
 
@@ -373,6 +373,9 @@ div#mail-index{
             &:disabled {background-color: @color_disabled !important;}
 
         }
+		button#toolbar-to_infolog:hover, button#toolbar-to_tracker:hover, button#toolbar-disposition:hover {
+			background: none;
+		}
     } // Toolbar Ende
 
 	table.et2_grid  {display: inline-block;}

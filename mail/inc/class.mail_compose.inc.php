@@ -115,7 +115,8 @@ class mail_compose
 				'icon'	=> 'mail_send',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_submitAction',
-				'hint' => 'Send'
+				'hint' => 'Send',
+				'toolbarDefault' => true
 			),
 			'button[saveAsDraft]' => array(
 				'caption' => 'Save',
@@ -136,14 +137,16 @@ class mail_compose
 				'icon' => 'filemanager',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
-				'hint' => 'Select file(s) from VFS'
+				'hint' => 'Select file(s) from VFS',
+				'toolbarDefault' => true
 			),
 			'uploadForCompose' => array(
 				'caption' => 'Upload files...',
 				'icon' => 'attach',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
-				'hint' => 'Select files to upload'
+				'hint' => 'Select files to upload',
+				'toolbarDefault' => true
 			),
 			'to_infolog' => array(
 				'caption' => 'Infolog',

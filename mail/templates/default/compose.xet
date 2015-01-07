@@ -3,7 +3,7 @@
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
-			<toolbar id="toolbar" width="et2_fullWidth" view_range="8" flat_list="false"/>
+			<toolbar id="toolbar" width="et2_fullWidth" view_range="6" flat_list="false"/>
 			<hbox class="mail-compose_toolbar_assist" width="100%">
 				<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
 				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='attachments' onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
