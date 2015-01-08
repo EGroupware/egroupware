@@ -741,6 +741,19 @@ function fix_perms()
  * Set Univention UCS specific defaults
  *
  * Defaults are read from ucr registry and /etc/*.secret files
+ *
+ * There are 4 types of Univention servers:
+ * - master DC: /etc/machine.secret, /etc/ldap.secret, ldap/server/type=master
+ * - backup DC: /etc/machine.secret, /etc/ldap.secret, /etc/ldap-backup.secret, ldap/server/type=slave (not backup!)
+ * - slave:     /etc/machine.secret, /etc/ldap-backup.secret, ldap/server/type=slave
+ * - member:    /etc/machine.secret, no ldap/server/type
+ *
+ * univention-ldapsearch works on all 4 types.
+ *
+ * ucr get ldap/server/(ip|port) points to local ldap (not member).
+ * ucr get ldap/master(/port) ldap/base points to master (on all servers)
+ *
+ * @todo slave and member have no /etc/ldap.secret
  */
 function set_univention_defaults()
 {
@@ -755,10 +768,10 @@ function set_univention_defaults()
 	// check if ucs ldap server is configured
 	if (_ucr_get('ldap/server/ip'))
 	{
-		// ldap settings, see http://docs.univention.de/developer-reference-3.2.html#join:secret
+		// ldap settings, see http://docs.univention.de/developer-reference.html#join:secret
 		$config['ldap_suffix'] = $config['ldap_base'] = _ucr_get('ldap/base');
-		// port is ldap allowing starttls, but regular php/ldap config does not allow own certificate!
-		$config['ldap_host'] = 'ldap://'._ucr_get('ldap/server/ip').':'._ucr_get('ldap/server/port');
+		// port is ldap allowing starttls (zertificate/CA is correctly set in /etc/ldap/ldap.conf)
+		$config['ldap_host'] = 'tls://'._ucr_get('ldap/master').':'._ucr_get('ldap/master/port');
 		$config['ldap_admin'] = $config['ldap_root'] = 'cn=admin,$suffix';
 		$config['ldap_admin_pw'] = $config['ldap_root_pw'] = _ucr_secret('ldap');
 		$config['ldap_context'] = 'cn=users,$base';
@@ -777,7 +790,8 @@ function set_univention_defaults()
 
 		// mailserver, see setup-cli.php --help config
 		if (($mailserver = exec('/usr/bin/univention-ldapsearch -x "(univentionAppID=mailserver_*)" univentionAppInstalledOnServer|sed -n "s/univentionAppInstalledOnServer: \(.*\)/\1/p"')) &&
-			_ucr_get('mail/cyrus/imap') == 'yes' && ($domains=_ucr_get('mail/hosteddomains')))
+			// only set on host mailserver app is installed: _ucr_get('mail/cyrus/imap') == 'yes' &&
+			($domains=_ucr_get('mail/hosteddomains')))
 		{
 			if (!is_array($domains)) $domains = explode("\n", $domains);
 			$domain = array_shift($domains);
@@ -788,10 +802,9 @@ function set_univention_defaults()
 			$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
 			// set folders so mail creates them on first login, UCS does not automatic
 			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,INBOX/Spam';
-			if (($sieve_port = _ucr_get('mail/cyrus/sieve/port')))
-			{
-				$config['sieve'] = "$mailserver,$sieve_port,starttls";
-			}
+			// default with sieve port to 4190, as config is only available on host mailserver app is installed
+			if (!($sieve_port = _ucr_get('mail/cyrus/sieve/port'))) $sieve_port = 4190;
+			$config['sieve'] = "$mailserver,$sieve_port,starttls";
 			// set an email address for sysop user so mail works right away
 			$config['admin_email'] = '$admin_user@'.$domain;
 		}
