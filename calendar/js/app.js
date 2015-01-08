@@ -1247,6 +1247,14 @@ app.classes.calendar = AppJS.extend(
 			jQuery.extend(state, this._super.apply(this, arguments));	// call default implementation
 		}
 
+		// Don't store current user in state to allow admins to create favourites for all
+		// Should make no difference for normal users.
+		if(state.owner == egw.user('account_id'))
+		{
+			// 0 is always the current user, so if an admin creates a default favorite,
+			// it will work for other users too.
+			state.owner = 0;
+		}
 		return state;
 	},
 
