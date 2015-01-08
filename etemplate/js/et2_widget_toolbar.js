@@ -63,7 +63,10 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this._super.apply(this, arguments);
 		this.div = $j(document.createElement('div'))
 			.addClass('et2_toolbar ui-widget-header ui-corner-all');
-
+		
+		// Set proper id and dom_id for the widget
+		this.set_id(this.id);
+		
 		//actionbox is the div for stored actions
 		this.actionbox = $j(document.createElement('div'))
 				.addClass("et2_toolbar_activeList")
@@ -76,7 +79,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.countActions = 0;
 		this.dropdowns = {};
 		this.preference = {};
-
+		
 		this._build_menu(this.default_toolbar);
 	},
 
@@ -106,10 +109,24 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		var that = this;
-
-		var pref = egw.preference(this.id,this.egw().getAppName());
+		
+		// toolbar preference id correction,
+		// before toolbar used to address pereference with this.id which were not scalable
+		// need to convert them to dom_id prefix for old pref and the new one come with dom_id automatically
+		//TODO: this part of code needs to be removed later
+		var old_pref = egw.preference(this.id,this.egw().getAppName());
+		if (old_pref)
+		{
+			//Set the old preference with correct id
+			egw.set_preference(this.egw().getAppName(), this.dom_id,old_pref);
+			// delete stored pref with wrong id
+			egw.set_preference(this.egw().getAppName(),this.id);
+		}
+		
+		
+		var pref = egw.preference(this.dom_id,this.egw().getAppName());
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
-
+			
 		//Set the default actions for the first time
 		if (typeof pref === 'undefined')
 		{
@@ -312,7 +329,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 					if (that.actionlist.find(".ui-draggable").length == 0)
 					{
 						that.preference = {};
-						egw.set_preference(that.egw().getAppName(),that.id,that.preference);
+						egw.set_preference(that.egw().getAppName(),that.dom_id,that.preference);
 					}
 			},
 			tolerance:"touch"
@@ -359,11 +376,11 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		{
 			case "add":
 				this.preference[_action] = true;
-				egw.set_preference(this.egw().getAppName(),this.id,this.preference);
+				egw.set_preference(this.egw().getAppName(),this.dom_id,this.preference);
 				break;
 			case "remove":
 				delete this.preference[_action];
-				egw.set_preference(this.egw().getAppName(),this.id,this.preference);
+				egw.set_preference(this.egw().getAppName(),this.dom_id,this.preference);
 		}
 	},
 
