@@ -2206,7 +2206,14 @@ abstract class egw_framework
 	public static function ajax_set_preference($app, $name, $value)
 	{
 		$GLOBALS['egw']->preferences->read_repository();
-		$GLOBALS['egw']->preferences->add($app, $name, $value);
+		if ((string)$value === '')
+		{
+			$GLOBALS['egw']->preferences->delete($app, $name);
+		}
+		else
+		{
+			$GLOBALS['egw']->preferences->add($app, $name, $value);
+		}
 		$GLOBALS['egw']->preferences->save_repository(True);
 	}
 

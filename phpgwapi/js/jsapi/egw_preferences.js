@@ -78,15 +78,28 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		 *
 		 * @param {string} _app application name or "common"
 		 * @param {string} _name name of the pref
-		 * @param {string} _val value of the pref
+		 * @param {string} _val value of the pref, null, undefined or "" to unset it
 		 * @param {function} _callback Function passed along to the queue, called after preference is set server-side
 		 */
 		set_preference: function(_app, _name, _val, _callback)
 		{
+			// if there is no change, no need to submit it to server
+			if (typeof prefs[_app] != 'undefined' && prefs[_app][_name] === _val) return;
+
 			this.jsonq('home.egw_framework.ajax_set_preference.template',[_app, _name, _val], _callback);
 
 			// update own preference cache, if _app prefs are loaded (dont update otherwise, as it would block loading of other _app prefs!)
-			if (typeof prefs[_app] != 'undefined') prefs[_app][_name] = _val;
+			if (typeof prefs[_app] != 'undefined')
+			{
+				if (_val === undefined || _val === "" || _val === null)
+				{
+					delete prefs[_app][_name];
+				}
+				else
+				{
+					prefs[_app][_name] = _val;
+				}
+			}
 		},
 
 		/**
