@@ -256,7 +256,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				win.app_refresh(_msg, _app, _id, _type);
 				return;
 			}
-
+			
 			// etemplate2 specific to avoid reloading whole page
 			if(typeof win.etemplate2 != "undefined" && win.etemplate2.app_refresh)
 			{
