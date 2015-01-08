@@ -400,7 +400,7 @@ div.mailUploadSection > div.et2_hbox > label {
   background-position: left;
   background-repeat: no-repeat;
 }
-.mail-compose_toolbar {
+.mail-compose_composeToolbar {
   border-left: 1px solid silver;
   border-top: 1px solid silver;
   border-right: 1px solid gray;
@@ -410,11 +410,11 @@ div.mailUploadSection > div.et2_hbox > label {
   background-position: center;
   background-repeat: repeat-x;
 }
-.mail-compose_toolbar > span {
+.mail-compose_composeToolbarr > span {
   padding: 10px;
   white-space: nowrap;
 }
-.mail-compose_toolbar > span.priority {
+.mail-compose_composeToolbar > span.priority {
   border-right: none;
 }
 .compose_egw_icons {
@@ -459,23 +459,23 @@ div.mail-compose_fileselector {
   overflow: scroll;
   overflow-x: hidden;
 }
-#mail-compose_toolbar {
+#mail-compose_composeToolbar {
   padding: 0px !important;
 }
-#mail-compose_toolbar > button {
+#mail-compose_composeToolbar > button {
   padding: .2em .4em;
 }
-#mail-compose_toolbar > img {
+#mail-compose_composeToolbar > img {
   width: 16px;
   padding: 0px;
   height: 16px !important;
 }
-#mail-compose_toolbar > button > span > img {
+#mail-compose_composeToolbar > button > span > img {
   width: 16px;
   padding: 0px;
   height: 16px !important;
 }
-#mail-compose_toolbar > button {
+#mail-compose_composeToolbar > button {
   padding: .2em .4em;
 }
 #mail-compose_to div.ms-sel-ctn,
@@ -1094,7 +1094,6 @@ div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubje
   text-align: left;
   font-weight: normal;
   padding-left: 20px;
-  width: 71px;
   float: left;
   background-image: url(images/mail_send.png);
   background-position: left;

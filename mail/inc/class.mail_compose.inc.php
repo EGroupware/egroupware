@@ -123,7 +123,8 @@ class mail_compose
 				'icon' => 'save',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.saveAsDraft',
-				'hint' => 'Save as Draft'
+				'hint' => 'Save as Draft',
+				'toolbarDefault' => true
 			),
 			'button[saveAsDraftAndPrint]' => array(
 				'caption' => 'Print',
@@ -150,30 +151,33 @@ class mail_compose
 			),
 			'to_infolog' => array(
 				'caption' => 'Infolog',
-				'icon' => 'infolog/navbar',
+				'icon' => 'to_infolog',
 				'group' => ++$group,
 				'checkbox' => true,
-				'hint' => 'check to save as infolog on send'
+				'hint' => 'check to save as infolog on send',
+				'toolbarDefault' => true
 			),
 			'to_tracker' => array(
 				'caption' => 'Tracker',
-				'icon' => 'tracker/navbar',
+				'icon' => 'to_tracker',
 				'group' => $group,
 				'checkbox' => true,
 				'hint' => 'check to save as trackerentry on send'
 			),
 			'disposition' => array(
 				'caption' => 'Notification',
-				'icon' => 'notification',
+				'icon' => 'high',
 				'group' => ++$group,
 				'checkbox' => true,
-				'hint' => 'check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)'
+				'hint' => 'check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)',
+				'toolbarDefault' => true
 			),
 			'prty' => array(
 				'caption' => 'Priority',
 				'group' => ++$group,
 				'children' => array(),
-				'hint' => '',
+				'toolbarDefault' => true,
+				'hint' => 'Select the message priority tag'
 			)
 		);
 		foreach (self::$priorities as $priority)
