@@ -178,6 +178,13 @@ class mail_compose
 				'children' => array(),
 				'toolbarDefault' => true,
 				'hint' => 'Select the message priority tag'
+			),
+			'save2vfs' => array (
+				'caption' => 'Save to VFS',
+				'icon' => 'filesave',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',
+				'hint' => 'Save the drafted message as eml file into VFS'
 			)
 		);
 		foreach (self::$priorities as $priority)

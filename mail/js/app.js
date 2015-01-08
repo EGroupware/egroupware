@@ -2567,7 +2567,8 @@ app.classes.mail = AppJS.extend(
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
 		url += '&mode=saveas';
-		var filename =dataElem.data.subject.replace(/[\f\n\t\v/\\:*#?<>\|]/g,"_");
+		var subject = dataElem? dataElem.data.subject: _elems[0].subject;
+		var filename = subject.replace(/[\f\n\t\v/\\:*#?<>\|]/g,"_")|| 'unknown';
 		url += '&name='+encodeURIComponent(filename+'.eml');
 		url += '&mime=message'+encodeURIComponent('/')+'rfc822';
 		url += '&method=mail.mail_ui.vfsSaveMessage';
@@ -4275,4 +4276,25 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 	},
+	
+	/**
+	 * Save drafted compose as eml file into VFS
+	 * @param {type} _action action
+	 */
+	compose_saveDraft2fm: function (_action)
+	{
+		var content = this.et2.getArrayMgr('content').data;
+		var subject = this.et2.getWidgetById('subject');
+		var elem = {0:{id:"", subject:""}};
+		if (typeof content != 'undefined' && content.lastDrafted && subject)
+		{
+			elem[0].id = content.lastDrafted;
+			elem[0].subject = subject.get_value();
+			this.mail_save2fm(_action, elem);
+		}
+		else
+		{
+			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save into VFS','info');
+		}
+	}
 });
