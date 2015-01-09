@@ -2574,7 +2574,7 @@ app.classes.mail = AppJS.extend(
 		url += '&method=mail.mail_ui.vfsSaveMessage';
 		url += '&id='+_elems[0].id;
 		url += '&label=Save';
-		egw_openWindowCentered(url,'vfs_save_message_'+_elems[0].id,'640','570',window.outerWidth/2,window.outerHeight/2);
+		egw_openWindowCentered(url,'vfs_save_message_'+_elems[0].id,'680','400',window.outerWidth/2,window.outerHeight/2);
 
 	},
 
