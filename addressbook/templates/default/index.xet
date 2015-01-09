@@ -25,8 +25,8 @@
 					<menulist>
 						<menupopup align="right" label="Type" id="col_filter[tid]" options="All"/>
 					</menulist>
-					<buttononly align="right" label="Advanced search" id="search" onclick="egw(window).open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'addressbook','add','dependent=yes,width=850,height=440,scrollbars=yes,status=yes','_blank'); return false;"/>
-					<buttononly align="right" statustext="Add a new contact" label="Add" id="add" onclick="egw(window).open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'addressbook','add','dependent=yes,width=850,height=440,scrollbars=yes,status=yes','_blank'); return false;"/>
+					<buttononly align="right" label="Advanced search" id="search" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'850','440','_blank','addressbook',null,true); return false;"/>
+					<buttononly align="right" statustext="Add a new contact" label="Add" id="add" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
 				</row>
 			</rows>
 		</grid>
