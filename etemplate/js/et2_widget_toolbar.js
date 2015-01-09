@@ -253,6 +253,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
 				{
 					var action = that._actionManager.getActionById(selected.attr('data-id'));
+					dropdown.set_label(action.caption);
 					if(action)
 					{
 						this.value = action.id;
