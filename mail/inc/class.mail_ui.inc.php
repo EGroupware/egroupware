@@ -2150,6 +2150,9 @@ class mail_ui
 						$attachmentHTML[$key]['filename'] = $x;
 					}
 				}
+//error_log(array2string($value));
+//error_log(strtoupper($value['mimeType']) .'<->'. mime_magic::filename2mime($attachmentHTML[$key]['filename']));
+				if (strtoupper($value['mimeType']=='APPLICATION/OCTET-STREAM')); $value['mimeType'] = mime_magic::filename2mime($attachmentHTML[$key]['filename']);
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);
 				$attachmentHTML[$key]['size']=egw_vfs::hsize($value['size']);

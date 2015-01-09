@@ -1261,7 +1261,8 @@ class mail_compose
 		} else {
 			$content['mimeType']=0;
 		}
-
+		// set the current selected mailaccount as param for folderselection
+		$etpl->setElementAttribute('folder','autocomplete_params',array('mailaccount'=>$content['mailaccount']));
 		// join again mailaccount and identity
 		$content['mailaccount'] .= ':'.$content['mailidentity'];
 
@@ -1462,7 +1463,11 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.array2string($headers));
 		if (!empty($addHeadInfo['X-MAILFOLDER'])) {
 			foreach ( explode('|',$addHeadInfo['X-MAILFOLDER']) as $val ) {
-				if ($mail_bo->folderExists($val)) $this->sessionData['folder'][] = $val;
+				$fval=$val;
+				$icServerID = $mail_bo->icServer->ImapServerId;
+				if (stripos($val,'::')!==false) list($icServerID,$fval) = explode('::',$val,2);
+				if ($icServerID != $mail_bo->icServer->ImapServerId) continue;
+				if ($mail_bo->folderExists($fval)) $this->sessionData['folder'][] = $val;
 			}
 		}
 		if (!empty($addHeadInfo['X-MAILIDENTITY'])) {
@@ -2507,6 +2512,7 @@ class mail_compose
 	 */
 	function saveAsDraft($_formData, &$savingDestination='')
 	{
+		//error_log(__METHOD__.__LINE__);
 		$mail_bo	= $this->mail_bo;
 		$mail		= new egw_mailer($this->mail_bo->profileID);
 
@@ -2544,7 +2550,7 @@ class mail_compose
 		// decide where to save the message (default to draft folder, if we find nothing else)
 		// if the current folder is in draft or template folder save it there
 		// if it is called from printview then save it with the draft folder
-		$savingDestination = $mail_bo->getDraftFolder();
+		if (empty($savingDestination)) $savingDestination = $mail_bo->getDraftFolder();
 		if (empty($this->sessionData['messageFolder']) && !empty($this->sessionData['mailbox']))
 		{
 			$this->sessionData['messageFolder'] = $this->sessionData['mailbox'];
@@ -2583,7 +2589,7 @@ class mail_compose
 	function send($_formData)
 	{
 		$mail_bo	= $this->mail_bo;
-		$mail 		= new egw_mailer($this->mail_bo->profileID);
+		$mail 		= new egw_mailer($mail_bo->profileID);
 		$messageIsDraft	=  false;
 
 		$this->sessionData['mailaccount']	= $_formData['mailaccount'];
@@ -2666,39 +2672,88 @@ class mail_compose
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
 		#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 		#exit;
-//error_log(__METHOD__.__LINE__.'#'.array2string($_formData['serverID']).'<serverID<->mailaccount>'.array2string($_formData['mailaccount']));
-		// we use the authentication data of the choosen mailaccount
+		// check if there are folders to be used
+		$folderToCheck = (array)$this->sessionData['folder'];
+		$folder = array(); //for counting only
+		$folderOnServerID = array();
+		$folderOnMailAccount = array();
+		foreach ($folderToCheck as $k => $f)
+		{
+			$fval=$f;
+			$icServerID = $_formData['serverID'];//folders always assumed with serverID
+			if (stripos($f,'::')!==false) list($icServerID,$fval) = explode('::',$f,2);
+			if ($_formData['serverID']!=$_formData['mailaccount'])
+			{
+				if ($icServerID == $_formData['serverID'] )
+				{
+					$folder[$fval] = $fval;
+					$folderOnServerID[] = $fval;
+				}
+				if ($icServerID == $_formData['mailaccount'])
+				{
+					$folder[$fval] = $fval;
+					$folderOnMailAccount[] = $fval;
+				}
+			}
+			else
+			{
+				if ($icServerID == $_formData['serverID'] )
+				{
+					$folder[$fval] = $fval;
+					$folderOnServerID[] = $fval;
+				}
+			}
+		}
+		//error_log(__METHOD__.__LINE__.'#'.array2string($_formData['serverID']).'<serverID<->mailaccount>'.array2string($_formData['mailaccount']));
+		// serverID ($_formData['serverID']) specifies where we originally came from.
+		// mailaccount ($_formData['mailaccount']) specifies the mailaccount we send from and where the sent-copy should end up
+		// serverID : is or may be needed to mark a mail as replied/forwarded or delete the original draft.
+		// all other folders are tested against serverID that is carried with the foldername ID::Foldername; See above
+		// (we work the folder from formData into folderOnMailAccount and folderOnServerID)
+		// right now only folders from serverID or mailaccount should be selectable in compose form/dialog
+		// we use the sentFolder settings of the choosen mailaccount
+		// sentFolder is account specific
+		$changeProfileOnSentFolderNeeded = false;
 		if ($_formData['serverID']!=$_formData['mailaccount'])
 		{
 			$this->changeProfile($_formData['mailaccount']);
+			//error_log(__METHOD__.__LINE__.'#'.$this->mail_bo->profileID.'<->'.$mail_bo->profileID.'#');
+			$changeProfileOnSentFolderNeeded = true;
+			// sentFolder is account specific
+			$sentFolder = $this->mail_bo->getSentFolder();
+			//error_log(__METHOD__.__LINE__.' SentFolder configured:'.$sentFolder.'#');
+			if ($sentFolder&& $sentFolder!= 'none' && !$this->mail_bo->folderExists($sentFolder, true)) $sentFolder=false;
 		}
-		// sentFolder is account specific
-		$sentFolder = $this->mail_bo->getSentFolder();
-		if (!$this->mail_bo->folderExists($sentFolder, true)) $sentFolder=false;
+		else
+		{
+			$sentFolder = $mail_bo->getSentFolder();
+			//error_log(__METHOD__.__LINE__.' SentFolder configured:'.$sentFolder.'#');
+			if ($sentFolder&& $sentFolder!= 'none' && !$mail_bo->folderExists($sentFolder, true)) $sentFolder=false;
+		}
+		//error_log(__METHOD__.__LINE__.' SentFolder configured:'.$sentFolder.'#');
 
-		// we switch back from authentication data to the account we used to work on
+		// we switch $this->mail_bo back to the account we used to work on
 		if ($_formData['serverID']!=$_formData['mailaccount'])
 		{
 			$this->changeProfile($_formData['serverID']);
 		}
 
-		// check if there are folders to be used
-		$folderToCheck = (array)$this->sessionData['folder'];
-		$folder = array();
-		foreach ($folderToCheck as $k => $f)
-		{
-			if ($this->mail_bo->folderExists($f, true))
-			{
-				$folder[] = $f;
-			}
-		}
+
 		if(isset($sentFolder) && $sentFolder && $sentFolder != 'none' &&
 			$this->mailPreferences['sendOptions'] != 'send_only' &&
 			$messageIsDraft == false)
 		{
 			if ($sentFolder)
 			{
-				$folder[] = $sentFolder;
+				if ($_formData['serverID']!=$_formData['mailaccount'])
+				{
+					$folderOnMailAccount[] = $sentFolder;
+				}
+				else
+				{
+					$folderOnServerID[] = $sentFolder;
+				}
+				$folder[$sentFolder] = $sentFolder;
 			}
 			else
 			{
@@ -2711,15 +2766,19 @@ class mail_compose
 				($this->mailPreferences['sendOptions'] != 'send_only' &&
 				$sentFolder != 'none')) $this->errorInfo = lang("No Send Folder set in preferences");
 		}
+		// draftFolder is on Server we start from
 		if($messageIsDraft == true) {
-			$draftFolder = $this->mail_bo->getDraftFolder();
-			if(!empty($draftFolder) && $this->mail_bo->folderExists($draftFolder,true)) {
+			$draftFolder = $mail_bo->getDraftFolder();
+			if(!empty($draftFolder) && $mail_bo->folderExists($draftFolder,true)) {
 				$this->sessionData['folder'] = array($draftFolder);
-				$folder[] = $draftFolder;
+				$folderOnServerID[] = $draftFolder;
+				$folder[$draftFolder] = $draftFolder;
 			}
 		}
-		if ($folder) $folder = array_unique($folder);
-		if (($this->mailPreferences['sendOptions'] != 'send_only' && $sentFolder != 'none') && !(count($folder) > 0) &&
+		if ($folderOnServerID) $folderOnServerID = array_unique($folderOnServerID);
+		if ($folderOnMailAccount) $folderOnMailAccount = array_unique($folderOnMailAccount);
+		if (($this->mailPreferences['sendOptions'] != 'send_only' && $sentFolder != 'none') &&
+			!( count($folder) > 0) &&
 			!($_formData['to_infolog']=='on' || $_formData['to_tracker']=='on'))
 		{
 			$this->errorInfo = lang("Error: ").lang("No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.").($this->errorInfo?' '.$this->errorInfo:'');
@@ -2769,22 +2828,23 @@ class mail_compose
 		// copying mail to folder
 		if (count($folder) > 0)
 		{
-			foreach($folder as $folderName) {
+			foreach($folderOnServerID as $folderName) {
 				if (is_array($folderName)) $folderName = array_shift($folderName); // should not happen at all
+				//error_log(__METHOD__.__LINE__." attempt to save message to:".array2string($folderName));
 				// if $_formData['serverID']!=$_formData['mailaccount'] skip copying to sentfolder on serverID
-				if($mail_bo->isSentFolder($folderName) && $_formData['serverID']!=$_formData['mailaccount']) continue;
-				if($mail_bo->isSentFolder($folderName)) {
-					$flags = '\\Seen';
-				} elseif($mail_bo->isDraftFolder($folderName)) {
-					$flags = '\\Draft';
-				} else {
-					$flags = '\\Seen';
-				}
-				#$mailHeader=explode('From:',$mail->getMessageHeader());
-				#$mailHeader[0].$mail->AddrAppend("Bcc",$mailAddr).'From:'.$mailHeader[1],
-				//error_log(__METHOD__.__LINE__.array2string($folderName));
-				//$mail_bo->reopen($folderName);
+				// if($_formData['serverID']!=$_formData['mailaccount'] && $folderName==$sentFolder && $changeProfileOnSentFolderNeeded) continue;
 				if ($mail_bo->folderExists($folderName,true)) {
+					if($mail_bo->isSentFolder($folderName)) {
+						$flags = '\\Seen';
+					} elseif($mail_bo->isDraftFolder($folderName)) {
+						$flags = '\\Draft';
+					} else {
+						$flags = '\\Seen';
+					}
+					#$mailHeader=explode('From:',$mail->getMessageHeader());
+					#$mailHeader[0].$mail->AddrAppend("Bcc",$mailAddr).'From:'.$mailHeader[1],
+					//error_log(__METHOD__.__LINE__." Cleared FolderTests; Save Message to:".array2string($folderName));
+					//$mail_bo->reopen($folderName);
 					try
 					{
 						//error_log(__METHOD__.__LINE__.array2string($folderName));
@@ -2801,30 +2861,40 @@ class mail_compose
 				}
 			}
 			// if we choose to send from a differing profile
-			if ($_formData['serverID']!=$_formData['mailaccount'])
-			{
-				// we assume the intention is to see the sent mail in the sentfolder
-				// of that account, that is, if there is one at all, and our options
-				// suggest it
-				if(isset($sentFolder) && $sentFolder != 'none' &&
-					$this->mailPreferences['sendOptions'] != 'send_only')
-				{
-					$this->changeProfile($_formData['mailaccount']);
-					$sentFolder = $this->mail_bo->getSentFolder();
+			if ($folderOnMailAccount)  $this->changeProfile($_formData['mailaccount']);
+			foreach($folderOnMailAccount as $folderName) {
+				if (is_array($folderName)) $folderName = array_shift($folderName); // should not happen at all
+				//error_log(__METHOD__.__LINE__." attempt to save message to:".array2string($folderName));
+				// if $_formData['serverID']!=$_formData['mailaccount'] skip copying to sentfolder on serverID
+				// if($_formData['serverID']!=$_formData['mailaccount'] && $folderName==$sentFolder && $changeProfileOnSentFolderNeeded) continue;
+				if ($this->mail_bo->folderExists($folderName,true)) {
+					if($this->mail_bo->isSentFolder($folderName)) {
+						$flags = '\\Seen';
+					} elseif($this->mail_bo->isDraftFolder($folderName)) {
+						$flags = '\\Draft';
+					} else {
+						$flags = '\\Seen';
+					}
+					#$mailHeader=explode('From:',$mail->getMessageHeader());
+					#$mailHeader[0].$mail->AddrAppend("Bcc",$mailAddr).'From:'.$mailHeader[1],
+					//error_log(__METHOD__.__LINE__." Cleared FolderTests; Save Message to:".array2string($folderName));
+					//$mail_bo->reopen($folderName);
 					try
 					{
-						$flags = '\\Seen';
 						//error_log(__METHOD__.__LINE__.array2string($folderName));
-						$this->mail_bo->appendMessage($sentFolder, $mail->getRaw(), null, $flags);
+						$this->mail_bo->appendMessage($folderName, $mail->getRaw(), null, $flags);
 					}
 					catch (egw_exception_wrong_userinput $e)
 					{
 						error_log(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$this->sessionData['subject'],$folderName,$e->getMessage()));
 					}
-
-					$this->changeProfile($_formData['serverID']);
+				}
+				else
+				{
+					error_log(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$this->sessionData['subject'],$folderName));
 				}
 			}
+			if ($folderOnMailAccount)  $this->changeProfile($_formData['serverID']);
 
 			//$mail_bo->closeConnection();
 		}
@@ -2989,11 +3059,19 @@ class mail_compose
 		}
 	}
 
-	function ajax_searchFolder($_searchStringLength=2, $_returnList=false) {
+	function ajax_searchFolder($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null) {
+		//error_log(__METHOD__.__LINE__.':'.array2string($_REQUEST));
 		static $useCacheIfPossible = null;
 		if (is_null($useCacheIfPossible)) $useCacheIfPossible = true;
 		$_searchString = trim($_REQUEST['query']);
 		$results = array();
+		$rememberServerID = $this->mail_bo->icServer->ImapServerId;
+		if (is_null($_mailaccountToSearch) && !empty($_REQUEST['mailaccount'])) $_mailaccountToSearch = $_REQUEST['mailaccount'];
+		if (empty($_mailaccountToSearch)) $_mailaccountToSearch = $this->mail_bo->icServer->ImapServerId;
+		if ($this->mail_bo->icServer && $_mailaccountToSearch && $this->mail_bo->icServer->ImapServerId != $_mailaccountToSearch)
+		{
+			$this->changeProfile($_mailaccountToSearch);
+		}
 		if (strlen($_searchString)>=$_searchStringLength && isset($this->mail_bo->icServer))
 		{
 			//error_log(__METHOD__.__LINE__.':'.$this->mail_bo->icServer->ImapServerId);
@@ -3012,21 +3090,26 @@ class mail_compose
 			{
 				//error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
 				$f=false;
+				$key = $_mailaccountToSearch.'::'.$k;
 				if ($_searchStringLength<=0)
 				{
 					$f=true;
-					$results[] = array('id'=>$k, 'label' => htmlspecialchars($fA->displayName));
+					$results[] = array('id'=>$key, 'label' => htmlspecialchars($fA->displayName));
 				}
 				if ($f==false && stripos($fA->displayName,$_searchString)!==false)
 				{
 					$f=true;
-					$results[] = array('id'=>$k, 'label' => htmlspecialchars($fA->displayName));
+					$results[] = array('id'=>$key, 'label' => htmlspecialchars($fA->displayName));
 				}
 				if ($f==false && stripos($k,$searchString)!==false)
 				{
-					$results[] = array('id'=>$k, 'label' => htmlspecialchars($fA->displayName));
+					$results[] = array('id'=>$key, 'label' => htmlspecialchars($fA->displayName));
 				}
 			}
+		}
+		if ($this->mail_bo->icServer && $rememberServerID != $this->mail_bo->icServer->ImapServerId)
+		{
+			$this->changeProfile($rememberServerID);
 		}
 		//error_log(__METHOD__.__LINE__.' IcServer:'.$this->mail_bo->icServer->ImapServerId.':'.array2string($results));
 		if ($_returnList)
