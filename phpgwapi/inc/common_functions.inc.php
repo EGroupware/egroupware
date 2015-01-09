@@ -1637,8 +1637,8 @@ function __autoload($class)
 		// classes using the new naming schema app_class_name, eg. admin_cmd
 		isset($components[0]) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// classes with an underscore in their name
-		!isset($GLOBALS['egw_info']['apps'][$app]) && isset($GLOBALS['egw_info']['apps'][$app . '_' . $components[0]]) && file_exists($file =
-EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
+		!isset($GLOBALS['egw_info']['apps'][$app]) && isset($GLOBALS['egw_info']['apps'][$app . '_' . $components[0]]) &&
+			file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
 		// eGW api classes using the old naming schema, eg. html
 		file_exists($file = EGW_API_INC.'/class.'.$class.'.inc.php') ||
 		// eGW api classes containing multiple classes in on file, eg. egw_exception
@@ -1651,7 +1651,7 @@ EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
 		!isset($GLOBALS['egw_info']['apps'][$app]) && @include($file = strtr($class, array('_'=>'/','\\'=>'/')).'.php'))
 	{
 		include_once($file);
-		//error_log("autoloading class $class by include_once($file)");
+		//if (!class_exists($class, false) && !interface_exists($class, false)) error_log("autoloading class $class by include_once($file) failed!");
 	}
 	// allow apps to define an own autoload method
 	elseif (isset($GLOBALS['egw_info']['flags']['autoload']) && is_callable($GLOBALS['egw_info']['flags']['autoload']))
@@ -1659,6 +1659,8 @@ EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
 		call_user_func($GLOBALS['egw_info']['flags']['autoload'],$class);
 	}
 }
+// register our autoloader with sql, so other PHP code can use spl_autoload_register, without stalling our autoloader
+spl_autoload_register('__autoload');
 
 /**
  * Clasify exception for a headline and log it to error_log, if not running as cli
