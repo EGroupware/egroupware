@@ -1584,9 +1584,12 @@ div.ui-toolbar-menulist {
   background-color: #e6e6e6 !important;
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown button img {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   top: 3px;
+}
+.et2_toolbar_actionlist .et2_toolbar-dropdown .et2_button_icon {
+  height: 12px;
 }
 div#displayToolbar-menulist .et2_dropdown {
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);

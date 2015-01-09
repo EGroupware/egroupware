@@ -175,6 +175,7 @@ class mail_compose
 			'prty' => array(
 				'caption' => 'Priority',
 				'group' => ++$group,
+				'icon' => 'priority',
 				'children' => array(),
 				'toolbarDefault' => true,
 				'hint' => 'Select the message priority tag'
@@ -191,7 +192,19 @@ class mail_compose
 		{
 			$actions['prty']['children'][$key] = array(
 						'caption' => $priority,
+						'icon' => 'prio_high'
 			);
+			switch ($priority)
+			{
+				case 'high':
+					$actions['prty']['children'][$key]['icon'] = 'prio_high';
+					break;
+				case 'normal':
+					$actions['prty']['children'][$key]['icon'] = 'prio_normal';
+					break;
+				case 'low':
+					$actions['prty']['children'][$key]['icon'] = 'prio_low';
+			}
 		}
 		return $actions;
 	}
