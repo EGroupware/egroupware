@@ -677,7 +677,7 @@ app.classes.filemanager = AppJS.extend(
 		egw().open_link(egw.link('/index.php', {
 			menuaction: 'filemanager.filemanager_ui.file',
 			path: path
-		}), 'fileprefs', '495x425');
+		}), 'fileprefs', '510x425');
 	},
 
 	/**
