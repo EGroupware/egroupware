@@ -2827,7 +2827,7 @@ class emailadmin_imapbase
 			}
 		}
 		// not sure yet if false is the correct behavior on none
-		if ($_folderName =='none') return false;
+		if ($_folderName =='none') return 'none' ; //false;
 		//no (valid) folder found yet; try specialUseFolders
 		if (empty($_folderName) && is_array(self::$specialUseFolders) && ($f = array_search($_type,self::$specialUseFolders))) $_folderName = $f;
 		//no specialUseFolder; try some Defaults
