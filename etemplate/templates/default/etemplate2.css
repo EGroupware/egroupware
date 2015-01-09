@@ -407,7 +407,7 @@ span.et2_date span {
   font-size: 9pt;
 }
 span.et2_date_duration input.et2_date_duration{
-	width: 3em;
+	width: 5em;
 }
 /**
  * Dialog widget
@@ -1669,7 +1669,7 @@ ul.et2_nowrap, div.et2_nowrap{
 	float: left;
 }
 .et2_fullWidth select.et2_date_duration {
-	width: 77%;
+	width: 70%;
 	float: right;
 }
 
