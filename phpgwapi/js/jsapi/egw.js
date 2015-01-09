@@ -202,14 +202,14 @@
 
 		// instanciate app object
 		var appname = window.egw_appName;
-		if (window.app && window.app[appname] != 'object' && typeof window.app.classes[appname] == 'function')
+		if (window.app && typeof window.app[appname] != 'object' && typeof window.app.classes[appname] == 'function')
 		{
 			window.app[appname] = new window.app.classes[appname]();
 		}
 
 		// set sidebox for tabed templates
 		var sidebox = egw_script.getAttribute('data-setSidebox') || jQuery('#late-sidebox').attr('data-setSidebox');
-		if (window.framework && sidebox)
+		if (window.framework && sidebox && sidebox !== 'null')
 		{
 			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
 		}

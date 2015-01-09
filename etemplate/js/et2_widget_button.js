@@ -421,7 +421,7 @@ jQuery.extend(et2_button,
 		copy: /copy(&|\]|$)/,
 		more: /more(&|\]|$)/,
 		check: /(yes|check)(&|\]|$)/,
-		canceled: /no(&|\]|$)/,
+		cancelled: /no(&|\]|$)/,
 		ok: /ok(&|\]|$)/,
 		close: /close(&|\]|$)/,
 		add: /(add(&|\]|$)|create)/	// customfields use create*
