@@ -4241,15 +4241,7 @@ app.classes.mail = AppJS.extend(
 				}
 				else if (action_event && toolbar.options)
 				{
-					var regex = new RegExp(toolbar.options.actions[action_event.id]['value']||'normal','ig');
-					jQuery(widget.options.select_options).each(function(_i,_a){
-						
-						if (_a.label.match(regex))
-						{
-							widget.set_value(_a.value);
-						}
-					})
-					
+					widget.set_value(toolbar.options.actions[action_event.id]['value']||'3');
 				}
 			}
 		}

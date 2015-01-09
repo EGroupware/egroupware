@@ -187,9 +187,9 @@ class mail_compose
 				'hint' => 'Save the drafted message as eml file into VFS'
 			)
 		);
-		foreach (self::$priorities as $priority)
+		foreach (self::$priorities as $key => $priority)
 		{
-			$actions['prty']['children'][$priority] = array(
+			$actions['prty']['children'][$key] = array(
 						'caption' => $priority,
 			);
 		}
