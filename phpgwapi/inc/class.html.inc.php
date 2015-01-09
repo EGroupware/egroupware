@@ -672,7 +672,7 @@ egw_LAB.wait(function() {
 		'copy'   => '/copy(&|\]|$)/',
 		'more'   => '/more(&|\]|$)/',
 		'check'  => '/(yes|check)(&|\]|$)/',
-		'canceled' => '/no(&|\]|$)/',
+		'cancelled' => '/no(&|\]|$)/',
 		'ok'     => '/ok(&|\]|$)/',
 		'close'  => '/close(&|\]|$)/',
 		'add'    => '/(add(&|\]|$)|create)/',	// customfields use create*
