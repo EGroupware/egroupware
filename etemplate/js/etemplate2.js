@@ -127,8 +127,8 @@ etemplate2.prototype.resize = function(e)
 				var appHeader = $j('#divAppboxHeader');
 
 				//Calculate the excess height
-				excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - appHeader.outerHeight()+10: false;
-
+				excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - appHeader.outerHeight()+11: false;
+				//if (excess_height > 2 || excess_height > -2) 
 				// Recalculate excess height if the appheader is shown
 				if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.outerHeight()-9;
 
