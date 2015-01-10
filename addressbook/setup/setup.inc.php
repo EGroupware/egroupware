@@ -36,7 +36,6 @@ $setup_info['addressbook']['tables']  = array();	// addressbook tables are in th
 $setup_info['addressbook']['hooks']['admin'] = 'addressbook_hooks::all_hooks';
 $setup_info['addressbook']['hooks']['sidebox_menu'] = 'addressbook_hooks::all_hooks';
 $setup_info['addressbook']['hooks']['settings'] = 'addressbook_hooks::settings';
-$setup_info['addressbook']['hooks'][] = 'home';
 $setup_info['addressbook']['hooks']['deleteaccount'] = 'addressbook.addressbook_bo.deleteaccount';
 $setup_info['addressbook']['hooks']['deletegroup'] = 'addressbook.addressbook_bo.deleteaccount';
 $setup_info['addressbook']['hooks']['delete_category'] = 'addressbook.addressbook_bo.delete_category';

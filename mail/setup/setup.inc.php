@@ -38,10 +38,6 @@ $setup_info['mail']['hooks']['clear_cache'] = 'mail_bo::unsetCachedObjects';
 $setup_info['mail']['hooks']['check_notify'] = 'mail_hooks::notification_check_mailbox';
 $setup_info['mail']['hooks']['emailadmin_edit'] = 'mail_hooks::emailadmin_edit';
 
-/*
-$setup_info['mail']['hooks'][] = 'home';
-*/
-
 /* Dependencies for this app to work */
 $setup_info['mail']['depends'][] = array(
 	'appname'  => 'phpgwapi',

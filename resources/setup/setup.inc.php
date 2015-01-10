@@ -1,8 +1,8 @@
 <?php
 /**
- * eGroupWare - resources
- * http://www.egroupware.org
+ * EGroupware - resources
  *
+ * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package resources
  * @subpackage setup
@@ -35,8 +35,6 @@ $setup_info['resources']['hooks']['search_link']	= 'resources.resources_hooks.se
 $setup_info['resources']['hooks']['calendar_resources']	= 'resources.resources_hooks.calendar_resources';
 $setup_info['resources']['hooks']['delete_category']	= 'resources.resources_hooks.delete_category';
 $setup_info['resources']['hooks']['settings'] = 'resources_hooks::settings';
-//	$setup_info['resources']['hooks'][]	= 'home';
-//	$setup_info['resources']['hooks'][]	= 'settings';
 
 $setup_info['resources']['depends'][]	= array(
 	 'appname' => 'phpgwapi',

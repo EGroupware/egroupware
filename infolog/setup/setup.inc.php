@@ -52,7 +52,6 @@ $setup_info['infolog']['hooks']['not_enum_group_acls'] = 'infolog_hooks::not_enu
 $setup_info['infolog']['hooks']['acl_rights'] = 'infolog_hooks::acl_rights';
 $setup_info['infolog']['hooks']['categories'] = 'infolog_hooks::categories';
 $setup_info['infolog']['hooks']['deleteaccount'] = 'infolog.infolog_so.change_delete_owner';
-$setup_info['infolog']['hooks'][] = 'home';
 $setup_info['infolog']['hooks']['addressbook_view'] = 'infolog.infolog_ui.hook_view';
 $setup_info['infolog']['hooks']['projects_view']    = 'infolog.infolog_ui.hook_view';
 $setup_info['infolog']['hooks']['calendar_view']    = 'infolog.infolog_ui.hook_view';
