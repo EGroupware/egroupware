@@ -207,7 +207,7 @@ abstract class egw_framework
 		// - "connect-src 'self'" allows ajax requests only to self
 		// - "style-src 'self' 'unsave-inline'" allows only self and inline style, which we need
 		// - "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
-		$frame_src = array("'self'", 'manual.egroupware.org');
+		$frame_src = array("'self'", 'manual.egroupware.org', 'www.egroupware.org');
 		if (($additional = $this->_get_csp_frame_src())) $frame_src = array_unique(array_merge($frame_src, $additional));
 
 		$csp = "script-src 'self' ".self::csp_script_src_attrs().

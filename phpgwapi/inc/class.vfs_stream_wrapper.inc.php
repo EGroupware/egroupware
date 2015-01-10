@@ -411,14 +411,14 @@ class vfs_stream_wrapper implements iface_stream_wrapper
  	 * See fseek() for more information about these parameters.
  	 *
  	 * @param integer $offset
- 	 * @param integer $whence	SEEK_SET - Set position equal to offset bytes
- 	 * 							SEEK_CUR - Set position to current location plus offset.
- 	 * 							SEEK_END - Set position to end-of-file plus offset. (To move to a position before the end-of-file, you need to pass a negative value in offset.)
+ 	 * @param integer $whence	SEEK_SET - 0 - Set position equal to offset bytes
+ 	 * 							SEEK_CUR - 1 - Set position to current location plus offset.
+ 	 * 							SEEK_END - 2 - Set position to end-of-file plus offset. (To move to a position before the end-of-file, you need to pass a negative value in offset.)
  	 * @return boolean TRUE if the position was updated, FALSE otherwise.
  	 */
 	function stream_seek ( $offset, $whence )
 	{
-		return fseek($this->opened_stream,$offset,$whence);
+		return !fseek($this->opened_stream,$offset,$whence);	// fseek returns 0 on success and -1 on failure
 	}
 
 	/**
