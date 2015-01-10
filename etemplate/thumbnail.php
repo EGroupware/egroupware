@@ -148,7 +148,7 @@ function read_thumbnail($src)
 			$mime = egw_vfs::mime_content_type($src);
 			list($app, $icon) = explode('/', egw_vfs::mime_icon($mime), 2);
 			list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
-				$GLOBALS['egw']->common->image($app, $icon), 2);
+				common::image($app, $icon), 2);
 			$dst = EGW_SERVER_ROOT.$path;
 			$output_mime = mime_content_type($dst);
 		}
@@ -227,11 +227,27 @@ function get_scaled_image_size($w, $h, $maxw, $maxh)
 }
 
 /**
+ * Read thumbnail from image, without loading it completly using optional exif extension
+ *
+ * @param string $file
+ * @return boolean|resource false or a gd_image
+ */
+function exif_thumbnail_load($file)
+{
+	if (!function_exists('exif_thumbnail') ||
+		!($image = exif_thumbnail($file)))
+	{
+		return false;
+	}
+	return imagecreatefromstring($image);
+}
+
+/**
  * Loads the given imagefile - returns "false" if the file wasn't an image,
  * otherwise the gd-image is returned.
  *
  * @param string $file the file which to load
- * @returns false or a gd_image
+ * @returns boolean|resource false or a gd_image
  */
 function gd_image_load($file)
 {
@@ -241,11 +257,14 @@ function gd_image_load($file)
 	// Call the according gd constructor depending on the file type
 	if($type == 'image')
 	{
+		if (in_array($image_type, array('tiff','jpeg')) && ($image = exif_thumbnail_load($file)))
+		{
+			return $image;
+		}
 		switch ($image_type)
 		{
 			case 'png':
 				return imagecreatefrompng($file);
-			case 'jpg':
 			case 'jpeg':
 				return imagecreatefromjpeg($file);
 			case 'gif':
@@ -279,7 +298,7 @@ function get_opendocument_thumbnail($file)
 	// Don't bother if they're using tiny thumbnails
 	if(get_maxsize() < 64) return false;
 
-	list($type, $file_type) = explode('/', egw_vfs::mime_content_type($file));
+	list(, $file_type) = $mimetype = explode('/', egw_vfs::mime_content_type($file));
 
 	// Image is already there, but we can't access them directly through VFS
 	$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
@@ -308,10 +327,6 @@ function get_opendocument_thumbnail($file)
 				$filter_color = array(135,105,0); break;
 			case 'vnd.oasis.opendocument.database':
 				$filter_color = array(83,2,96); break;
-		}
-		if($colors[$image_type])
-		{
-			$filter_color = $colors[$image_type];
 		}
 		imagefilter($mask, IMG_FILTER_COLORIZE, $filter_color[0],$filter_color[1],$filter_color[2] );
 		imagecopyresampled($image, $mask,0,0,0,0,imagesx($image),imagesy($image),imagesx($mask),imagesy($mask));
