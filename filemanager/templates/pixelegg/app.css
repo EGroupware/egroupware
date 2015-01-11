@@ -1,6 +1,6 @@
 /**
  * EGroupware: CSS with less preprocessor
-
+ *
  * FILEMANAGER
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
@@ -107,7 +107,7 @@ table.egwGridView_grid .tile .file_tile {
 table.egwGridView_grid .tile .file_tile img.vfsMimeIcon {
   height: auto;
   width: auto;
-  max-height: 120px;
+  max-height: 64px;
   display: block;
   margin: 0 auto;
 }

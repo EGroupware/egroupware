@@ -1658,6 +1658,8 @@ class mime_magic
 	);
 	/**
 	 * Mapping some old formats to the newer form, or any other aliasing for mime-types
+	 *
+	 * Should be in sync with ../js/jsapi/egw_image.js
 	 */
 	static $mime_alias_map = array(
 		'text/vcard' => 'text/x-vcard',

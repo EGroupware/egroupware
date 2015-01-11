@@ -25,6 +25,23 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 	 */
 	var images = {};
 
+	/**
+	 * Mapping some old formats to the newer form, or any other aliasing for mime-types
+	 *
+	 * Should be in sync with ../inc/class.mime_magic.inc.php
+	 */
+	var mime_alias_map = {
+		'text/vcard': 'text/x-vcard',
+		'text/comma-separated-values': 'text/csv',
+		'text/rtf': 'application/rtf',
+		'text/xml': 'application/xml',
+		'text/x-diff': 'text/diff',
+		'application/x-jar': 'application/java-archive',
+		'application/x-javascript': 'application/javascript',
+		'application/x-troff': 'text/troff',
+		'application/x-egroupware-etemplate': 'application/xml'
+	};
+
 	return {
 		/**
 		 * Set imagemap, called from /phpgwapi/images.php
@@ -99,12 +116,12 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		 *
 		 * @param {string} _mime
 		 * @param {string} _path vfs path to generate thumbnails for images
-		 * @param {number} _size defaults to 16 (only supported size currently)
+		 * @param {number} _size defaults to 128 (only supported size currently)
 		 * @returns url of image
 		 */
 		mime_icon: function(_mime, _path, _size)
 		{
-			if (typeof _size == 'undefined') _size = 16;
+			if (typeof _size == 'undefined') _size = 128;
 			if (!_mime) _mime = 'unknown';
 			if (_mime == 'httpd/unix-directory') _mime = 'directory';
 
@@ -123,7 +140,8 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			}
 			else
 			{
-				if ((typeof type[1] == 'undefined' || !(image = this.image('mime'+_size+'_'+type[0]+'_'+type[1], 'etemplate'))) &&
+				if ((typeof type[1] == 'undefined' || !(image = this.image('mime'+_size+'_'+type[0]+'_'+type[1], 'etemplate')) &&
+					!(typeof mime_alias_map[_mime] != 'undefined' && (image=this.mime_icon(mime_alias_map[_mime], _path, _size)))) &&
 					!(image = this.image('mime'+_size+'_'+type[0], 'etemplate')))
 				{
 					image = this.image('mime'+_size+'_unknown', 'etemplate');
