@@ -67,7 +67,7 @@ class home_favorite_portlet extends home_portlet
 			}
 
 			unset($context['dropped_data']);
-
+			
 			$need_reload = true;
 		}
 		// Title not set for new widgets created via context menu
@@ -79,9 +79,16 @@ class home_favorite_portlet extends home_portlet
 			
 			$need_reload = true;
 		}
-		$favorites = egw_favorites::get_favorites($context['appname']);
-		$this->favorite = $favorites[$context['favorite']];
-		$this->title = $context['title'] = $context['title'] ? $context['title'] : lang($context['appname']) . ' ' . $this->favorite['name'];
+
+		// Load and copy favorite
+		if($context['favorite'] && !is_array($context['favorite']))
+		{
+			$favorites = egw_favorites::get_favorites($context['appname']);
+			$context['favorite'] = $favorites[$context['favorite']];
+		}
+
+		$this->favorite = $context['favorite'];
+		$this->title = lang($context['appname']) . ': ' . $this->favorite['name'];
 		$this->context = $context;
 		if($this->favorite)
 		{
