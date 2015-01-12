@@ -41,7 +41,7 @@
 				</row>
 				<row>
 					<description for="comment" value="Comment"/>
-					<textbox multiline="true" id="comment" class="comment" height="200"/>
+					<textbox multiline="true" id="comment" class="et2_fullWidth" height="100"/>
 				</row>
 			</rows>
 		</grid>
@@ -252,7 +252,7 @@
 					<description id="msg" span="all" class="redItalic"/>
 				</row>
 				<row class="dialogTabs">
-					<tabbox id="tabs" span="all" tab_height = "400">
+					<tabbox id="tabs" span="all" tab_height="300">
 						<tabs>
 							<tab id="filemanager.file.general" label="General"/>
 							<tab id="filemanager.file.perms" label="Permissions"/>
@@ -302,7 +302,7 @@
 										<button label="Submit" id="button[setup]"/>
 										<buttononly label="Cancel" onclick="jQuery('.superuser').hide();"/>
 									</hbox>
-									
+
 								</row>
 							</rows>
 						</grid>

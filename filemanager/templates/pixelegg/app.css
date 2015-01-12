@@ -31,10 +31,6 @@
   font-weight: bold;
   width: 100%;
 }
-.comment textarea {
-  width: 100%;
-  height: 35px;
-}
 .previewImage img {
   max-width: 430px;
   max-height: 275px;
@@ -409,10 +405,6 @@ table.egwGridView_grid img {
 div#filemanager-file_tabs {
   /*eacl*/
   /*Abonements*/
-}
-div#filemanager-file_tabs img {
-  width: 24px;
-  height: 24px;
 }
 div#filemanager-file_tabs span.ui-icon-search {
   /*.background_color_10_gray;*/
