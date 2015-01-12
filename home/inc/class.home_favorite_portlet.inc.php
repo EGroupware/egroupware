@@ -74,8 +74,8 @@ class home_favorite_portlet extends home_portlet
 		if(!$context['favorite'])
 		{
 			// Set initial size to 6x3, default is way too small
-			$context['width'] = 6;
-			$context['height'] = 3;
+			$context['width'] = max($context['width'], 6);
+			$context['height'] = max($context['height'], 3);
 			
 			$need_reload = true;
 		}
@@ -93,12 +93,12 @@ class home_favorite_portlet extends home_portlet
 		if($this->favorite)
 		{
 			$this->nm_settings['favorite'] = $this->context['favorite'];
-			$this->nm_settings['columnselection_pref'] = "nextmatch-home.{$this->context['id']}";
 			if(is_array($this->favorite['state']))
 			{
 				$this->nm_settings += $this->favorite['state'];
 			}
 		}
+		$this->nm_settings['columnselection_pref'] = "nextmatch-home.{$this->context['id']}";
 	}
 	public function exec($id = null, etemplate_new &$etemplate = null)
 	{

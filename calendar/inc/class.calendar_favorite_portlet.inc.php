@@ -45,7 +45,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				// Use a different template so it can be accessed from client side
 				'template'	=> 'calendar.list.rows',
 				// Default to fewer columns
-				'default_cols'	=> 'cal_start_cal_end,cal_title,cal_owner_cal_location'
+				'default_cols'	=> 'cal_start_cal_end,cal_title'
 			);
 		}
 		$need_reload = true;
@@ -143,6 +143,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		$total = $ui->get_rows($query, $rows, $readonlys);
 		$ui->owner = $old_owner;
 		unset($GLOBALS['egw_info']['flags']['app_header']);
+		unset($query['selectcols']);
 		return $total;
 	}
 

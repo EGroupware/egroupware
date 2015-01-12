@@ -38,7 +38,7 @@ class resources_favorite_portlet extends home_favorite_portlet
 			// Don't store in session, there's no point
 			'store_state'    => false,
 			// Use a reduced column set for home, user can change if needed
-			'default_cols'   => 'image,name_short_description',
+			'default_cols'   => 'image,name_short_description,useable_quantity',
 			'row_id'         => 'res_id',
 			'row_modified'   => 'ts_modified',
 

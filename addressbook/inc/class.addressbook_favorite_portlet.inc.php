@@ -40,8 +40,8 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 			'get_rows'	=> 'addressbook_favorite_portlet::get_rows',
 			// Use a different template so it can be accessed from client side
 			'template'	=> 'addressbook.index.rows',
-			'default_cols'   => 'type,n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
-				'business_adr_one_countrycode_adr_one_postalcode,tel_work_tel_cell_tel_home,url_email_email_home',
+			'default_cols'   => 'n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
+				'tel_work_tel_cell_tel_home,url_email_email_home',
 		);
 	}
 

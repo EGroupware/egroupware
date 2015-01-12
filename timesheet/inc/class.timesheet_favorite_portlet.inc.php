@@ -36,7 +36,7 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 			// Use a different template so it can be accessed from client side
 			'template'	=> 'timesheet.index.rows',
 			// Use a reduced column set for home, user can change if needed
-			'default_cols'   => 'ts_id,ts_start,ts_project_pm_id_linked_ts_title,ts_duration_duration',
+			'default_cols'   => 'ts_start,ts_project_pm_id_linked_ts_title,ts_duration_duration',
 			'row_id'         => 'ts_id',
 			'row_modified'   => 'ts_modified',
 		);

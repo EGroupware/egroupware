@@ -40,6 +40,7 @@ class infolog_favorite_portlet extends home_favorite_portlet
 			'get_rows'	=> 'infolog_favorite_portlet::get_rows',
 			// Use a different template so it can be accessed from client side
 			'template'	=> 'infolog.home',
+			'default_cols'   => 'info_type_info_status_info_percent,linked_info_priority_info_subject_info_id_info_des_info_datemodified,info_startdate_info_enddate_info_datecompleted',
 			// Don't overwrite infolog
 			'session_for'	=> 'home',
 			'no_filter2'	=> true,
