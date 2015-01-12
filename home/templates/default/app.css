@@ -89,9 +89,7 @@ div.calendar_favorite_portlet.et2_portlet.ui-widget-content > div:last-of-type {
 	margin-right: 8px;
 	margin-bottom: 8px;
 	max-width: 100%;
-}
-.et2_portlet.home_link_portlet > div:last-of-type img:first-of-type:not([src*="thumbnail.php"]) {
-	max-width: 32px;
+	max-height: 64px;
 }
 
 /* Favorite / nextmatch
