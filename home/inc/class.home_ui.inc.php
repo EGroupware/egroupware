@@ -656,12 +656,12 @@ class home_ui
 	/**
 	 * Current version of home screen, there need to be a function matching that number!
 	 */
-	const CURRENT_HOME_VERSION = '14.2rc1';
+	const CURRENT_HOME_VERSION = '14.2rc';
 
 	/**
 	 * Setup default home screen for 14.2
 	 */
-	public static function setup_default_home_14_2rc1()
+	public static function setup_default_home_14_2rc()
 	{
 		$preferences = $GLOBALS['egw']->preferences;
 		$preferences->read_repository();
@@ -682,44 +682,6 @@ class home_ui
 		}
 
 		$app_prefs = array(
-			'calendar' => array(
-				// current users week
-				'favorite_setup142w' => array(
-					'name' => $weekview,
-					'group' => 'default',
-					'state' => array(
-						'cat_id' => '0',
-						'filter' => 'default',
-						'owner' => 0,	// current user
-						'sortby' => 'user',
-						'planner_days' => '0',
-						'view' => 'week',
-						'listview_days' => '',
-					),
-				),
-			),
-			'news_admin' => array(
-				// egroupware.org news
-				'favorite_setup142n' => array(
-					'name' => 'www.egroupware.org',
-					'group' => 'default',
-					'state' => array(
-						'selected' => array(),
-						'col_filter' => array(
-							'visible' => 'now',
-							'news_lang' => $lang == 'de' ? 'de' : 'en',
-							'news_submittedby' => ''
-						),
-						'filter' => $cat_id_egw_org_news,
-						'filter2' => 'content',
-						'search' => '',
-						'sort' => array(
-							'id' => 'news_date',
-							'asc' => false
-						),
-					),
-				),
-			),
 			'home' => array(
 				// show tutorials from www.egroupware.org
 				'portlet_setup142t' => array(
@@ -744,7 +706,19 @@ class home_ui
 					'width' => 7,
 					'height' => 5,
 					'color' => '',
-					'favorite' => 'setup142w',
+					'favorite' => array(
+						'name' => $weekview,
+						'group' => 'default',
+						'state' => array(
+							'cat_id' => '0',
+							'filter' => 'default',
+							'owner' => 0,	// current user
+							'sortby' => 'user',
+							'planner_days' => '0',
+							'view' => 'week',
+							'listview_days' => '',
+						),
+					),
 					'title' => $weekview,
 					'resize_ratio' => '',
 					'group' => 'default',
@@ -757,7 +731,25 @@ class home_ui
 					'width' => 8,
 					'height' => 5,
 					'color' => '',
-					'favorite' => 'egroupware_org',
+					'favorite' => array(
+						'name' => 'www.egroupware.org',
+						'group' => 'default',
+						'state' => array(
+							'selected' => array(),
+							'col_filter' => array(
+								'visible' => 'now',
+								'news_lang' => $lang == 'de' ? 'de' : 'en',
+								'news_submittedby' => ''
+							),
+							'filter' => $cat_id_egw_org_news,
+							'filter2' => 'content',
+							'search' => '',
+							'sort' => array(
+								'id' => 'news_date',
+								'asc' => false
+							),
+						),
+					),
 					'id' => 'portlet_setup142n',
 					'class' => 'news_admin_favorite_portlet',
 					'title' => 'www.egroupware.org',
@@ -769,7 +761,6 @@ class home_ui
 		);
 		if (empty($cat_id_egw_org_news))
 		{
-			unset($app_prefs['news_admin']['favorite_setup142n']);
 			unset($app_prefs['home']['portlet_setup142n']);
 		}
 		foreach($app_prefs as $app => $prefs)
