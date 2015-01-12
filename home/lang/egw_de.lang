@@ -1,7 +1,28 @@
+a quick note	home	de	Kurze Beschreibung
+birthday reminders	home	de	Erinnerung an Geburtstage
+color	home	de	Farbe
+configure	home	de	Bearbeiten
 displays home	home	de	Home anzeigen
 egroupware	home	de	EGroupware
 entry	home	de	Eintrag
+favorite	home	de	Favorit
+forced	home	de	Erzwungen
 home	home	de	Home
+in %1 days (%2) is %3's birthday.	home	de	In %1 Tagen (%2) ist %3's Geburtstag.
+list of entries	home	de	Liste mehrere Einträge
+remove	home	de	Löschen
+remove default %1	home	de	%1 als Vorgabe entfernen
+removed default	home	de	Vorgabe gelöcht
+set as default	home	de	Als Vorgabe speichern
+set default	home	de	Als Vorgabe speichern
 show a list of entries	home	de	Liste der Einträge anzeigen
+show all the entries using a favorite	home	de	Zeit alle Einträge unter Benutzung eines Favoriten
 show one entry	home	de	Einen Eintrag anzeigen
+single entry	home	de	Einzeleintrag
 there is a new version of egroupware available	home	de	Es steht eine neuere Version von EGroupware zur Verfügung
+today is %1's birthday!	home	de	Heute ist der Geburtstag von %1.
+tomorrow is %1's birthday.	home	de	Morgen ist der Geburtstag von %1.
+yes, for the next three days	home	de	Ja,  für die nächsten drei Tage
+yes, for the next two weeks	home	de	Ja,  für die nächsten zwei Wochen
+yes, for the next week	home	de	Ja,  für die nächste Wochen
+yes, for today and tomorrow	home	de	Ja,  für die heute und morgen

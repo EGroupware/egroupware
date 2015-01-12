@@ -14,6 +14,7 @@ addressbook csv import	importexport	de	Adressen per CSV Importieren
 addressbook vcard import	importexport	de	Adressen per vCard Importieren
 admin disabled exporting	importexport	de	Ihr Administrator hat den Export deaktiviert
 all encodings	importexport	de	Alle Enkodierungen
+all users	importexport	de	Alle Benutzer
 allowed users	importexport	de	Erlaubte Benutzer
 automatically created by importexport	importexport	de	Wurde automatisch vom Import/Export Modul erstellt
 basic csv import	importexport	de	Basis CSV Import
@@ -46,7 +47,6 @@ duplicate name, please choose another.	importexport	de	Doppelter Name, bitte wä
 edit conditions	importexport	de	Einstellmöglichkeiten bearbeiten
 edit definition <a href="%1">%2</a> to match your file	importexport	de	Importdefinition überarbeiten<a href="%1">%2</a> um Ihre Datei zu Importieren
 edit your file to match the definition:	importexport	de	Bearbeiten Sie Ihre Importdatei, um Ihrem Importprofil zu Entsprechen
-encoding mismatch. expected %1 file, you uploaded %2.<br />n	importexport	de	Importdefinition überarbeiten<a href="%1">%2</a> um Ihre Datei zu Importieren
 errors	importexport	de	Fehler
 execute	importexport	de	Ausführen
 expert options	importexport	de	Export Optionen
@@ -56,6 +56,7 @@ export data as	importexport	de	Daten exportieren als
 export definition to use for nextmatch export	preferences	de	Export Definition für den Export über die Benutzeroberfläche (nextmatch)
 export spreadsheet	importexport	de	Export Tabellenkalkulation
 exported	importexport	de	Exportiert.
+extra %1	importexport	de	Extra %1
 extra charsets for import / export	importexport	de	Anderen Zeichensatz für den Impor/Export wählen
 extra encodings	importexport	de	Extra Enkodierung
 false	importexport	de	Unwahr
@@ -89,6 +90,7 @@ lock expired on previous run	importexport	de	Ihre Zeitsperre ist bei letzten Imp
 manage mapping	importexport	de	Zuordnung bearbeiten
 next	importexport	de	Weiter
 next run	importexport	de	Nächster Import
+no custom field "%1" for %2.	importexport	de	Es gibt kein Benutzerdefiniertes Feld "%1" für %2
 no matches	importexport	de	Keine Übereinstimmungen
 no matching records	importexport	de	Keine passenden Einträge gefunden
 no notifications	importexport	de	Keine Benachrichtigung versenden
@@ -98,6 +100,7 @@ old fixed definition	preferences	de	Alte feste Definition
 please select file to import	importexport	de	Bitte wählen Sie ein Import Datei
 plugin	importexport	de	Plug-In
 preview	importexport	de	Vorschau
+preview not supported by %1	importexport	de	Die Vorschau für %1 wird nicht unterstützt.
 previous	importexport	de	Zurück
 problems during import:	importexport	de	Schwierigkeiten während des Imports:
 save as definition	importexport	de	Als Definition speichern

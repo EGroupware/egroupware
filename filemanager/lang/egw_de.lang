@@ -158,6 +158,7 @@ inherited	filemanager	de	Geerbt
 last accessed	filemanager	de	Letzter Zugriff
 link	filemanager	de	verknüpfen
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
+link into folder	filemanager	de	Verknüpfung in ein Verzeichnis
 link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
@@ -251,6 +252,7 @@ the following document-types are supported:	filemanager	de	Die folgenden Dokumen
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
 there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!
 there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
+tile view	filemanager	de	Kachelansicht
 to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
 total files	filemanager	de	Gesamtanzahl Dateien
 unmount	filemanager	de	Unmount

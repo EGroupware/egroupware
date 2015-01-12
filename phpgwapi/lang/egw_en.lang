@@ -8,6 +8,7 @@
 %1 to sync	groupdav	en	%1 to sync
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writable by web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
+'%1' is no php file in the egw server root (%2)!	common	en	'%1' is no php file in the eGW server root (%2)!
 (session restored in %1 seconds)	common	en	Session restored in %1 seconds.
 (shift-)click or drag to change value	jscalendar	en	(Shift-) Click or drag to change value
 - click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it.
@@ -116,8 +117,10 @@ benin	common	en	BENIN
 bermuda	common	en	BERMUDA
 bhutan	common	en	BHUTAN
 blocked, too many attempts	common	en	Blocked, too many attempts.
+blue moono theme	common	en	blue moono theme
 bold	common	en	Bold
 bolivia	common	en	BOLIVIA
+bootstrap theme for ckeditor	common	en	bootstrap theme for ckeditor
 border	common	en	Border
 bosnia and herzegovina	common	en	BOSNIA AND HERZEGOVINA
 botswana	common	en	BOTSWANA
@@ -205,6 +208,7 @@ cote d ivoire	common	en	COTE D IVOIRE
 could not contact server. operation timed out!	common	en	Could not contact server. Operation timed out!
 create	common	en	Create
 created by	common	en	Created by
+created by %1	common	en	Created by %1
 croatia	common	en	CROATIA
 ctrl	common	en	Ctrl
 cuba	common	en	CUBA
@@ -213,6 +217,7 @@ current	common	en	Current
 current users	common	en	Current users
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
+dark moono theme	common	en	dark moono theme
 database error	common	en	Database error
 database error!	common	en	Database error!
 date	common	en	Date
@@ -275,6 +280,7 @@ egroupware	common	en	EGroupware
 egroupware api version	common	en	EGroupware API version
 egroupware maintenance update %1 available	common	en	EGroupware maintenance update %1 available
 egroupware security update %1 needs to be installed!	common	en	EGroupware security update %1 needs to be installed!
+egroupware version	common	en	EGroupware version
 egroupware: login blocked for user '%1', ip %2	common	en	Login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
@@ -381,7 +387,6 @@ help	common	en	Help
 high	common	en	High
 highest	common	en	Highest
 hold [%1] and [%2] key to drag %3 to your desktop	common	en	Hold [%1] and [%2] key to drag %3 to your desktop
-hold [%1] key to select text eg. to copy it	common	en	Hold [%1] key to select text eg. to copy it
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
 home email	common	en	Home email
@@ -394,6 +399,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how to show the general egroupware menu ?	common	en	How to show the general EGroupware menu
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
+icy-orange theme for ckeditor	common	en	icy-orange theme for ckeditor
 iespell not detected. click ok to go to download page.	common	en	ieSpell not detected. Click OK to go to download page.
 if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute.
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
@@ -433,6 +439,7 @@ justify center	common	en	Justify center
 justify full	common	en	Justify full
 justify left	common	en	Justify left
 justify right	common	en	Justify right
+kama theme	common	en	kama theme
 kazakstan	common	en	KAZAKSTAN
 kenya	common	en	KENYA
 keywords	common	en	Key words
@@ -514,6 +521,8 @@ monday	common	en	Monday
 mongolia	common	en	MONGOLIA
 montenegro	common	en	MONTENEGRO
 montserrat	common	en	MONTSERRAT
+moono color theme	common	en	moono color theme
+moono theme (default)	common	en	moono theme (default)
 more then one active file %1 found, inactivating %2 older revisions!	admin	en	More then one active file %1 found, inactivating %2 older revisions!
 morocco	common	en	MOROCCO
 moved %1 children from directory fs_id=%2 to %3	admin	en	Moved %1 children from directory fs_id=%2 to %3
@@ -572,6 +581,7 @@ november	common	en	November
 numbers	common	en	numbers
 october	common	en	October
 off	groupdav	en	Off
+office-2013 theme for ckeditor	common	en	office-2013 theme for ckeditor
 ok	common	en	OK
 old value	common	en	Old value
 oman	common	en	OMAN

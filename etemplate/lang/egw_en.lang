@@ -7,6 +7,7 @@
 %1 more...	etemplate	en	%1 more...
 %1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for application '%2'
 %1 not implemented for %2!	etemplate	en	%1 not implemented for %2!
+%1, duplicate id	etemplate	en	%1, duplicate ID
 %s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
 %s notranslation	etemplate	en	%s NoTranslation
@@ -19,6 +20,7 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floating point number!
 '%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer!
 '%1' is not allowed ('%2')!	etemplate	en	'%1' is NOT allowed ('%2')!
+'%1' is not allowed%2)!	etemplate	en	'%1' is NOT allowed%2)!
 1 minute	etemplate	en	1 Minute
 15 minutes	etemplate	en	15 Minutes
 30 minutes	etemplate	en	30 Minutes
@@ -36,6 +38,7 @@ add column	etemplate	en	Add column
 add index	etemplate	en	Add index
 add new	etemplate	en	Add new
 add table	etemplate	en	Add table
+add to clipboard	etemplate	en	Add to clipboard
 advanced search	etemplate	en	Advanced search
 align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	Alignment of label and input field in table cell
@@ -101,6 +104,8 @@ contact	etemplate	en	Contact
 contact field to show	etemplate	en	Contact field to show
 contact fields	etemplate	en	Contact fields
 contains	etemplate	en	Contains
+copy %1	etemplate	en	Copy %1
+copy to clipboard	etemplate	en	Copy to clipboard
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	Creates an English ('en') langfile from label and help texts (for application in Name)
 creator	preferences	en	Creator

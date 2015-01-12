@@ -1,31 +1,57 @@
 %1 already exists as a file	filemanager	nl	%1 bestaat reeds als een bestand
+%1 already mounted on %2!	filemanager	nl	%1 al verbonden met %2
 %1 directories and %2 files copied.	filemanager	nl	%1 directories en %2 bestanden gekopieerd.
 %1 directories and %2 files deleted.	filemanager	nl	%1 directories en %2 bestanden verwijderd.
+%1 elements linked.	filemanager	nl	%1 elementen verbonden
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	nl	%1 fouten tijdens kopiëren ((%2 directories en %3 bestanden gekopieerd)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	nl	%1 fouten tijdens verwijderen (%2 directories en %3 bestanden verwijderd)!
+%1 errors linking (%2)!	filemanager	nl	%1 fouten bij verbinden (%2)
 %1 errors moving (%2 files moved)!	filemanager	nl	%1 fouten tijdens verplaatsen (%2 bestanden verplaatst)!
 %1 failed, %2 succeded	filemanager	nl	%1 mislukt, %2 gelukt
+%1 files	common	nl	%1 bestanden
 %1 files copied.	filemanager	nl	%1 bestanden gekopieerd.
 %1 files deleted.	filemanager	nl	%1 bestanden verwijderd.
 %1 files moved.	filemanager	nl	%1 bestanden verplaatst.
 %1 starts with '%2'	filemanager	nl	%1 start met '%2'
+%1 successful unmounted.	filemanager	nl	%1 succesvol losgekoppeld
+%1 successful uploaded.	filemanager	nl	%1 uploaden succesvol
 %1 the following files into current directory	filemanager	nl	%1de volgende bestanden naar de huidige directory
 %1 urls %2 to clipboard.	filemanager	nl	%1 URLs %2 naar het klembord.
+%d errors while copying, %d files successfully copied.	filemanager	nl	%d fouten tijdens kopiëren, %d bestanden succesvol gekopieerd.
+%d errors while moving, %d files successfully moved.	filemanager	nl	%d fouten tijdens verplaatsen,%d bestanden succesvol verplaatst.
+%d erros while copying, %d files successfully copied.	filemanager	nl	%d fouten tijdens kopiëren, %d bestanden succesvol gekopieerd.
+%d erros while moving, %d files successfully moved.	filemanager	nl	%d fouten tijdens verplaatsen,%d bestanden succesvol verplaatst.
+%d files successfully copied.	filemanager	nl	%d bestanden gekopieerd
+%d files successfully moved.	filemanager	nl	%d bestanden verplaatst.
 accessrights	filemanager	nl	Toegangsrechten
 acl added.	filemanager	nl	ACL toegevoegd.
 acl deleted.	filemanager	nl	ACL verwijderd.
 actions	filemanager	nl	Acties
+add to clipboard	filemanager	nl	Voeg toe aan klembord
+administrators	filemanager	nl	Aministrateurs
+all files	filemanager	nl	Alle bestanden
 allow a maximum of the above configured folderlinks to be configured in settings	admin	nl	staat een maximum van de hierboven ingestelde folderlinks toe om ingesteld te worden
 and all it's childeren	filemanager	nl	en alle kinderen
+application fields	filemanager	nl	Velden van Toepassingen
 applications	common	nl	Toepassingen
+backend	filemanager	nl	Backend
+backend url	filemanager	nl	Backend URL
+backend url to mount	filemanager	nl	Backend URL om te koppelen
 basedirectory	filemanager	nl	Basisdirectory
+can't open directory %1!	filemanager	nl	kan map %1! niet openen
 cancel editing %1 without saving	filemanager	nl	Annuleer het bewerken van %1 zonder op te slaan
 cannot create directory because it begins or ends in a space	filemanager	nl	Kan de directory niet aanmaken omdat de naam met en spatie begint of eindigt
+cautiously rejecting to remove folder '%1'!	filemanager	nl	Geweigerd (voorzorg) om map te verwijderen %1!
 check all	filemanager	nl	Markeer alles
+check virtual filesystem	common	nl	Controleer het virtueel bestandsysteem
 clear search	filemanager	nl	zoekcriteria leegmaken
+clipboard is empty!	filemanager	nl	Klembord is leeg
 comment	filemanager	nl	Commentaar
+configuration changed.	filemanager	nl	Configuratie is veranderd
 copied	filemanager	nl	gekopieerd
 copied %1 to %2	filemanager	nl	%1 naar %2 gekopieerd
+copy	filemanager	nl	Kopie
+copy into folder	filemanager	nl	Kopieer naar map
 copy to	filemanager	nl	Kopieer naar
 copy to clipboard	filemanager	nl	Kopieer naar klembord
 could not copy %1 to %2	filemanager	nl	Kon %1 niet naar %2 kopieëren
@@ -33,6 +59,7 @@ could not create %1	filemanager	nl	Kon %1 niet aanmaken
 could not delete %1	filemanager	nl	Kon %1 niet verwijderen
 could not move %1 to %2	filemanager	nl	Kon %1 niet naar %2 verplaatsen
 could not rename %1 to %2	filemanager	nl	Kon %1 niet hernoemen in %2
+create a link	filemanager	nl	Maak een verwijzing
 create directory	filemanager	nl	Directory aanmaken
 create file	filemanager	nl	Bestand aanmaken
 create folder	filemanager	nl	Folder aanmaken
@@ -44,6 +71,8 @@ custom fields	filemanager	nl	Aangepast velden
 cut	filemanager	nl	knippen
 cut to clipboard	filemanager	nl	Knippen naar klembord
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	nl	Standaard gedrag is NEE. De link wordt niet getoond maar u kunt nog steeds naar deze locatie navigeren. Of stel deze locatie in als start folder of folder link.
+default document to insert entries	filemanager	nl	Standaard dokument voor het invoegen van gegevens
+delete these files or directories?	filemanager	nl	Deze bestanden of mappen, verwijderen ?
 delete this file or directory	filemanager	nl	Verwijder dit bestand of deze directory
 deleted %1	filemanager	nl	%1 verwijderd
 directories sorted in	filemanager	nl	Directories gesorteerd in
@@ -51,24 +80,44 @@ directory	filemanager	nl	Directory
 directory %1 already exists	filemanager	nl	Directory %1 bestaat reeds
 directory %1 does not exist	filemanager	nl	Directory %1 bestaat niet
 directory not found or no permission to access it!	filemanager	nl	Directory niet gevonden of geen rechten om het te benaderen!
+directory successfully created.	filemanager	nl	Map succesvol aangemaakt
+directory with documents to insert entries	filemanager	nl	Map met dokumenten om gegevens in tevoeren
+disable	filemanager	nl	Ze uit
+disable versioning for this mountpoint	filemanager	nl	Zet versiebeheer uit voor dit koppelpunt
 display and modification of content	filemanager	nl	Weergave en modifcatie van inhoud
 display of content	filemanager	nl	Weergave van inhoud
+do you want to overwrite existing file %1 in directory %2?	filemanager	nl	Wilt u het bestaande bestand %1 overschrijven in deze map %2 ?
+do you want to overwrite the existing file %1?	filemanager	nl	Wilt u het bestaande nbestand %1 overschrijven ?
 download	filemanager	nl	Download
 edit comments	filemanager	nl	Commentaar bewerken
 edit settings	filemanager	nl	Instellingen bewerken
+enable	filemanager	nl	Zet aan
+enable versioning for given mountpoint	filemanager	nl	Zet versiebeheer aan voor dit koppelpunt
 enter setup user and password	filemanager	nl	Voer installatie gebruiker en wachtwoord in
 enter setup user and password to get root rights	filemanager	nl	Voer installatie gebruiker en wachwoord in om root rechten te krijgen
 enter the complete vfs path to specify a fast access link to a folder	filemanager	nl	Vul het volledige VFS pad in om een snelkoppeling naar een folder te specificeren
 enter the complete vfs path to specify your desired start folder.	filemanager	nl	Vul het volledige VFS pad in om uw voorkeurs start folder te specificeren.
 error adding the acl!	filemanager	nl	Fout bij toevoegen van ACL!
+error creating symlink to target %1!	filemanager	nl	Fout bij het aanmaken van symlink naar dioel %1!
 error deleting the acl entry!	filemanager	nl	Fout bij verwijderen van de ACL regel!
+error mounting %1 on %2!	filemanager	nl	Fout bij koppelen %1 aan %2
+error unmounting %1!	filemanager	nl	Fout bij loskoppelen %1!
 error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
+error while creating directory.	filemanager	nl	Fout bij maken map
+everyone	filemanager	nl	Iedereen
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	nl	Voorbeeld {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - zoek het veld "n_prefix", for "Mr", als gevonden, schrijf Hello Mr., anders schrijf Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	nl	Voorbeeld {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Voorbeeld: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	nl	Voorbeeld {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	nl	Voorbeeld {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 executable	filemanager	nl	Uitvoerbaar bestand
+export definition to use for nextmatch export	filemanager	nl	Export definitie om te gebruiken bij volgende export
 extended access control list	filemanager	nl	Uitgebreide toegangscontrolelijst
 extended acl	filemanager	nl	Uitgebreide ACL
 failed to change permissions of %1!	filemanager	nl	Wijzigen van toestemmingen van %1 is mislukt.
 failed to create directory!	filemanager	nl	Aanmaken van directory is mislukt!
-file	filemanager	nl	Bestand
+favorites	filemanager	nl	Favorieten
+file	common	nl	Bestand
+file %1 already exists	filemanager	nl	Bestand %1 bestaat al
 file %1 could not be created.	filemanager	nl	Bestand %1 kon niet aangemaakt worden.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	nl	Bestand %1 is mogelijk te groot. Neem contact op met uw systeembeheerder voor meer informatie
 file deleted.	filemanager	nl	Bestand verwijderd.
@@ -77,9 +126,18 @@ file or directory not found!	filemanager	nl	Bestand of directory niet gevonden!
 file successful uploaded.	filemanager	nl	Bestandsupload met succes voltooid.
 filemanager	common	nl	Bestandsbeheerder
 filemanager configuration	admin	nl	bestandsbeheerder configuratie
+filemanager fields:	filemanager	nl	Bestandmanager velden:
+filename must not be empty!	filemanager	nl	Bestandnaam mag niet leeg zijn !
+files	common	nl	Bestanden
+files from links	filemanager	nl	Bestanden van links
 files from subdirectories	filemanager	nl	Bestanden uit subdirectories
 files in this directory	filemanager	nl	Bestanden in deze directory
+filesystem check reported no problems.	filemanager	nl	Check van bestandsysteem rapporteert geen problemen
+finally delete this version	filemanager	nl	Verwijder deze vesie definitief
+fix reported problems	filemanager	nl	Hersteld gerapporteerde problemen
 folder up	filemanager	nl	Folder omhoog
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	nl	Voor bestanden welke gelinked zijn aan een toepassing (binnen /apps/appname/id) zijn de tijdelijke aanduidingen ook beschikbaar. Zoek bij de toepassing naar de lijst van beschikbare tijdelijke aanduidingen.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	nl	Voor bestanden welke gelinked zijn aan een toepassing (binnen /apps/appname/id) zijn de tijdelijke aanduidingen ook beschikbaar. Zoek bij de toepassing naar de lijst van beschikbare tijdelijke aanduidingen.
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
 general	filemanager	nl	Algemeen
 general fields:	filemanager	nl	Algemene velden:
@@ -88,27 +146,44 @@ go to	filemanager	nl	Ga naar
 go to your home directory	filemanager	nl	Ga naar uw homedirectory
 go up	filemanager	nl	naar boven
 id	filemanager	nl	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Die actie staat dan toe dat het document wordt gedownload met de data %1 toegevoegd.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
+if you specify an export definition, it will be used when you export	filemanager	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
+if you specify an export definition, it will be used when you export*	filemanager	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export*
 inherited	filemanager	nl	Geërfd
 link	filemanager	nl	Link
 link %1: %2	filemanager	nl	Link %1: %2
+link target	filemanager	nl	Link doel
+link target %1 not found!	filemanager	nl	Link doel %1 niet gevonden !
 location	filemanager	nl	Locatie
 log out as superuser	filemanager	nl	Uitloggen als supergebruiker
+mail files	filemanager	nl	Mail bestanden
+mail paste	filemanager	nl	Mail plakken
 max folderlinks	admin	nl	max folderlinks
 mime type	filemanager	nl	MIME-type
 modified	filemanager	nl	Gewijzigd
 modified between	filemanager	nl	gewijzigd tussen
 modify all subdirectories and their content	filemanager	nl	Wijzig alle subdirectories en hun inhoud
+mount	filemanager	nl	Koppel
+mountpoints	filemanager	nl	Koppelpunten
 move	filemanager	nl	Verplaats
+move into folder	filemanager	nl	Verplaats naar map
 move to	filemanager	nl	Verplaats naar
 moved %1 to %2	filemanager	nl	%1 verplaatst naar %2
 name of current user, all other contact fields are valid too	filemanager	nl	Naam van de huidige gebruiker, alle andere contactvelden zijn ook geldig
+new directory	filemanager	nl	Nieuwe map
 no access	filemanager	nl	Geen toegang
 no files in this directory.	filemanager	nl	Geen bestanden in deze directory.
 no preview available	filemanager	nl	Geen afdrukvoorbeeld beschikbaar
 no version history for this file/directory	filemanager	nl	Geen versie historie voor dit bestand/deze directory
+noone	filemanager	nl	Geen
+older versions or deleted files	filemanager	nl	Oude versiers of verwijderde bestanden
 only owner can rename or delete the content	filemanager	nl	Alleen de eigenaar kan de inhoud hernoemen of verwijderen
 open	filemanager	nl	open
 operation	filemanager	nl	Bewerking
+paste link	filemanager	nl	Plak link
+path %1 not found or not a directory!	filemanager	nl	Pad %1 niet gevonden of geen map !
+percentage	filemanager	nl	Percentage
 permission denied!	filemanager	nl	Toestemming geweigerd!
 permissions	filemanager	nl	Toestemmingen
 permissions of %1 changed.	filemanager	nl	Toestemmingen van %1 gewijzigd.
@@ -127,35 +202,67 @@ rename, change permissions or ownership	filemanager	nl	Hernoemen, wijzig toestem
 renamed %1 to %2	filemanager	nl	%1 hernoemd in %2
 renamed %1 to %2.	filemanager	nl	%1 hernoemd in %2
 replaced %1	filemanager	nl	%1 is vervangen
+replacements for inserting entries into documents	filemanager	nl	Vervanging voor het invoeren van gegevens in documenten
 rights	filemanager	nl	Rechten
+root	filemanager	nl	Root
 root access granted.	filemanager	nl	Root toegang verleend.
 root access stopped.	filemanager	nl	Root toegang ingetrokken.
 save %1	filemanager	nl	Bewaar %1
 save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
+save as	filemanager	nl	Bewaar als
+save as zip	filemanager	nl	Bewaar als Zip
 save changes	filemanager	nl	Wijzigingen bewaren
 saved %1	filemanager	nl	%1 is bewaard
 saving properties failed!	filemanager	nl	Opslaan van eigenschappen is mislukt!
+saving setting for document merge failed!	filemanager	nl	Bewaar instellingen voor dit dokument samenvoegen mislukt !
 search for '%1'	filemanager	nl	Zoek naar '%1'
 searchstring	filemanager	nl	zoektekst
 select action...	filemanager	nl	Kies actie...
 select file to upload in current directory	filemanager	nl	Selecteer bestand om in de huidige directory te uploaden
+select file(s) from vfs	common	nl	Selecteer bestand(en) van VFS
+setting for document merge saved.	filemanager	nl	Instellingen voor het samenvoegen van bestanden bewaard
 show	filemanager	nl	Toon
+show hidden files	filemanager	nl	Toon verborgen bestanden
+show link "%1" in side box menu?	filemanager	nl	Toon link %1 in zij menu
+show link "users and groups" in side box menu?	filemanager	nl	Toon link "Gebruikers en groepen"in zij menu?
+show link "users and groups*" in side box menu?*	filemanager	nl	Toon link "Gebruikers en groepen"in zij menu?*
+show link "your home directory" in side box menu?	filemanager	nl	Toon link naar "Uw thuis map"in zij menu?
+show link "your home directory*" in side box menu?*	filemanager	nl	Toon link naar "Uw thuis map"in zij menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	nl	Toon link naar bestandbeheerder's basisdirectory (/) in zijkant menu?
 size	filemanager	nl	Grootte
+sqlfs statistics	filemanager	nl	sqlFS Statistieken
 start search	filemanager	nl	start zoeken
+startfolder	filemanager	nl	Beginmap
+successful mounted %1 on %2.	filemanager	nl	Succesgekoppeld %1 op %2
 superuser	filemanager	nl	Supergebruiker
+superuser (root)	filemanager	nl	Superuser (root)
+symlink to %1 created.	filemanager	nl	Symlink naar %1 gemaakt.
+tag to mark positions for address labels	filemanager	nl	Tag om positie voor adres labels te markeren
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	nl	De standaard start folder is uw persoonlijke folder. De standaard wordt gebruikt indien u dit leeg laat, het pad niet bestaat of indien u onvoldoende toegangsrechten heeft.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
+the following document-types are supported:	filemanager	nl	De volgende document types worden ondersteund
 the requested path %1 is not available.	filemanager	nl	Het aangevraagde pad %1 is niet beschikbaar.
+there's already a directory with that name!	filemanager	nl	Er bestaat al een map met deze naam
 there's already a file with that name!	filemanager	nl	Er bestaat reeds een bestand met deze naam!
 to overwrite the existing file store again.	filemanager	nl	Om het bestaande bestand te overschrijven moet u het opnieuw opslaan.
 total files	filemanager	nl	Totaal aantal bestanden
+unmount	filemanager	nl	Koppel los
 unused space	filemanager	nl	Ongebruikte ruimte
 up	filemanager	nl	Naar boven
 updated comment for %1	filemanager	nl	Commentaar voor %1 is bijgewerkt
+upload fields	filemanager	nl	Upload velden
+upload files	filemanager	nl	Upload bestanden
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	nl	Gebruik deze tag voor adres labels. Zet de inhoud, welke e wilt herhalen, tussen twee tags
 used space	filemanager	nl	Gebruikte ruimte
 users and groups	filemanager	nl	Gebruikers en groepen
+versioning	filemanager	nl	Versie beheer
+vfs mounts and versioning	common	nl	VFS laden en versie beheren
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	nl	Wie zou er uiteindelijk bestanden en oude versies van bestanden definitief mogen verwijderen :
 wrong username or password!	filemanager	nl	Onjuiste gebruikersnaam of wachtwoord!
+you are not allowed to upload a script!	filemanager	nl	U mag GEEN script uploaden !
+you can only grant additional rights, you can not take rights away!	filemanager	nl	U kunt alleen rechten toevoegen, u kunt NIET rechten afnemen !
 you do not have access to %1	filemanager	nl	U heeft geen toegang tot %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	nl	U moet als root zijn aangemeld. om versiebeheer aan of uit te zetten voor mappen !
 you need to select an owner!	filemanager	nl	U moet een eigenaar selecteren
 you need to select some files first!	filemanager	nl	U moet eerst enkele bestanden selecteren
 you will be redirected to your home directory.	filemanager	nl	U wordt omgeleid naar uw Home Directory

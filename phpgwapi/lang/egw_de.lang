@@ -8,6 +8,7 @@
 %1 to sync	groupdav	de	%1 zum synchronisieren
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br />oder %3 geben Sie dem Webserver Schreibrechte für dieses Verzeichnis.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierte, Mehrbenutzer Groupware Suite.
+'%1' is no php file in the egw server root (%2)!	common	de	'%1' ist keine php Datei in der Server-Root Umgebung (%2)!
 (session restored in %1 seconds)	common	de	(Sitzung in %1 Sekunden wiederhergestellt)
 (shift-)click or drag to change value	jscalendar	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
 - click on any of the time parts to increase it	jscalendar	de	- Auf Uhrzeit klicken um sie zu erhöhen
@@ -116,8 +117,10 @@ benin	common	de	BENIN
 bermuda	common	de	BERMUDA
 bhutan	common	de	BHUTAN
 blocked, too many attempts	common	de	Gesperrt, zu viele Versuche
+blue moono theme	common	de	Bau Mono Theme
 bold	common	de	Fett
 bolivia	common	de	BOLIVIEN
+bootstrap theme for ckeditor	common	de	Bootstrap Theme für den Ckeditor
 border	common	de	Rahmen
 bosnia and herzegovina	common	de	BOSNIEN UND HERZEGOVINA
 botswana	common	de	BOTSWANA
@@ -205,6 +208,7 @@ cote d ivoire	common	de	COTE D IVOIRE
 could not contact server. operation timed out!	common	de	Konnte Server nicht kontaktieren. Zeitüberschreitung!
 create	common	de	Erstellen
 created by	common	de	Erstellt von
+created by %1	common	de	Erstellt von %1
 croatia	common	de	KROATIEN
 ctrl	common	de	Strg
 cuba	common	de	KUBA
@@ -213,6 +217,7 @@ current	common	de	derzeit
 current users	common	de	Aktive Benutzersitzungen
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
+dark moono theme	common	de	Dunkles Moono Theme
 database error	common	de	Datenbank Fehler
 database error!	common	de	Datenbank Fehler!
 date	common	de	Datum
@@ -275,6 +280,7 @@ egroupware	common	de	EGroupware
 egroupware api version	common	de	EGroupware API Version
 egroupware maintenance update %1 available	common	de	EGroupware Fehlerbehebungsupdate %1 ist verfügbar
 egroupware security update %1 needs to be installed!	common	de	EGroupware Sicherheitsupdate %1 muss installiert werden!
+egroupware version	common	de	EGroupware Version
 egroupware: login blocked for user '%1', ip %2	common	de	EGroupware: Anmelden gesperrt für Benutzer '%1', IP %2
 egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
@@ -381,7 +387,6 @@ help	common	de	Hilfe
 high	common	de	Hoch
 highest	common	de	Höchste
 hold [%1] and [%2] key to drag %3 to your desktop	common	de	[%1] und [%2] Tasten halten um %3 auf Ihren Schreibtisch (Desktop) zu ziehen
-hold [%1] key to select text eg. to copy it	common	de	[%1] Taste halten um Text zu markieren um ihn z.B. zu kopieren
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
 home email	common	de	private E-Mail
@@ -394,6 +399,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how to show the general egroupware menu ?	common	de	Wie soll das allgemeine EGroupware Menü angezeigt werden?
 hungary	common	de	UNGARN
 iceland	common	de	ISLAND
+icy-orange theme for ckeditor	common	de	icy-orange Theme für den Ckeditor
 iespell not detected. click ok to go to download page.	common	de	ieSpell nicht gefunden. OK klicken um zur Download Seite zu gehen.
 if the clock is enabled would you like it to update it every second or every minute?	common	de	Möchten Sie bei aktivierter Uhr, dass diese sekündlich aktualisiert wird?
 if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bilder im Hintergrund Ordner sind können Sie wählen, welches Sie sehen möchten.
@@ -433,6 +439,7 @@ justify center	common	de	Ausrichtung mittig
 justify full	common	de	Ausrichtung im Block
 justify left	common	de	Ausrichtung links
 justify right	common	de	Ausrichtung rechts
+kama theme	common	de	Kama Theme
 kazakstan	common	de	KASACHSTAN
 kenya	common	de	KENIA
 keywords	common	de	Schlüsselwort
@@ -514,6 +521,8 @@ monday	common	de	Montag
 mongolia	common	de	MONGOLEI
 montenegro	common	de	MONTENEGRO
 montserrat	common	de	MONTSERRA
+moono color theme	common	de	Mono Color Theme
+moono theme (default)	common	de	Mono Color Theme (Vorgabe)
 more then one active file %1 found, inactivating %2 older revisions!	admin	de	Mehr als eine Datei %1 verfügbar, %2 ältere Revisionen werden deaktiviert
 morocco	common	de	MAROKKO
 moved %1 children from directory fs_id=%2 to %3	admin	de	verschoben %1 Kinderelemente vom Verzeichnis fs_id=%2 nach %3
@@ -572,6 +581,7 @@ november	common	de	November
 numbers	common	de	Nummern
 october	common	de	Oktober
 off	groupdav	de	Aus
+office-2013 theme for ckeditor	common	de	Office 2013 Theme für den Ckeditor
 ok	common	de	OK
 old value	common	de	Alter Wert
 oman	common	de	OMAN

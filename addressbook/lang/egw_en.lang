@@ -178,6 +178,7 @@ directory with documents to insert contacts	addressbook	en	Directory with docume
 display contact	addressbook	en	Display contact
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Display birthdays on the Home page.
 distribution list deleted	addressbook	en	Distribution list deleted
+distribution list renamed	addressbook	en	Distribution list renamed
 distribution lists	addressbook	en	Distribution lists
 distribution lists, ...	addressbook	en	Distribution lists, ...
 do you really want to delete this contact?	addressbook	en	Do you really want to delete this contact?
@@ -293,6 +294,7 @@ income	addressbook	en	Income
 infolog	addressbook	en	InfoLog
 insert	addressbook	en	Insert
 insufficent rights to delete this list!	addressbook	en	Insufficient rights to delete this list!
+insufficent rights to edit this list!	addressbook	en	Insufficent rights to edit this list!
 international	addressbook	en	International
 internet	addressbook	en	Internet
 label	addressbook	en	Label
@@ -348,6 +350,7 @@ no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No vCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
+open %1 crm view	addressbook	en	Open %1 CRM view
 open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
 open for editing?	addressbook	en	Open for editing?
 open infolog crm view	preferences	en	Open InfoLog CRM view
@@ -422,6 +425,7 @@ show infolog entries for this organisation	addressbook	en	Show InfoLog entries f
 show the contacts of this organisation	addressbook	en	Show contacts of this organisation
 similar contacts found:	addressbook	en	Similar contacts found:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup. Width x Height e.g. 400x300
+special	addressbook	en	Special
 stadt	addressbook	en	City
 start	admin	en	Start
 startrecord	addressbook	en	Start record
@@ -460,8 +464,10 @@ type	addressbook	en	Type
 un-delete	addressbook	en	Un-delete
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	en	Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.
 unable to delete	addressbook	en	unable to delete
+unable to import into %1, using %2	addressbook	en	Unable to import into %1, using %2
 unique id (uid)	addressbook	en	Unique ID (UID)
 unique id<br />(to update existing records)	addressbook	en	Unique ID<br />to update existing records
+unknown type %1, imported as %2	addressbook	en	Unknown type %1, imported as %2
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 update fields by edited organisations?	admin	en	Fields to update of edited organizations
 updated	addressbook	en	Updated
@@ -515,6 +521,7 @@ you must select a vcard. (*.vcf)	addressbook	en	Select a vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	Select at least 1 column to display
 you need to select a distribution list	addressbook	en	Select a distribution list
 you need to select some contacts first	addressbook	en	Select some contacts first
+you need to select some entries first	addressbook	en	You need to select some entries first
 zip code	common	en	ZIP code
 zip code (private)	addressbook	en	ZIP code (private)
 zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files. Do not mix file types per import.

@@ -178,6 +178,7 @@ directory with documents to insert contacts	addressbook	de	Verzeichnis mit Dokum
 display contact	addressbook	de	Kontakte Anzeigen
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie sich in der EGroupware anmelden oder auf das Startseiten Icon (Haus) klicken.
 distribution list deleted	addressbook	de	Verteiler gelöscht
+distribution list renamed	addressbook	de	Verteiler umbenannt
 distribution lists	addressbook	de	Verteilerlisten
 distribution lists, ...	addressbook	de	Verteilerlisten, ...
 do you really want to delete this contact?	addressbook	de	Diesen Kontakt löschen?
@@ -293,6 +294,7 @@ income	addressbook	de	Einkommen
 infolog	addressbook	de	InfoLog
 insert	addressbook	de	einfügen
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
+insufficent rights to edit this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu ändern!
 international	addressbook	de	International
 internet	addressbook	de	Internet
 label	addressbook	de	Adressetikett
@@ -348,6 +350,7 @@ no fallback	addressbook	de	Keine Ausweichlösung
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
+open %1 crm view	addressbook	de	Öffnet %1 in der CRM-Ansicht
 open email addresses in external mail program	addressbook	de	Öffne E-Mail Adressen in externem Mail Programm
 open for editing?	addressbook	de	Zum Bearbeiten öffnen?
 open infolog crm view	preferences	de	Infolog CRM-Ansicht öffnen
@@ -460,8 +463,10 @@ type	addressbook	de	Typ
 un-delete	addressbook	de	Gelöschte Adressen wieder  herstellen
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	de	Umwandelung von "%1" zu Benutzer ID nicht möglich. Einstellung des Plug-ins (%2) wird für diesen Benutzer verwendet.
 unable to delete	addressbook	de	Löschen nicht möglich
+unable to import into %1, using %2	addressbook	de	Import nach %1 ist nicht möglich, %2 wird dafür verwendet
 unique id (uid)	addressbook	de	Eindeutige ID (UID)
 unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
+unknown type %1, imported as %2	addressbook	de	Unbekannter Typ %!, als %2 importiert
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 update fields by edited organisations?	admin	de	Welche Felder sollen  beim Bearbeiten von Organisationen aktualisiert werden?
 updated	addressbook	de	Aktualisiert
@@ -515,6 +520,7 @@ you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswähle
 you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
 you need to select a distribution list	addressbook	de	Sie müssen eine Verteilerliste auswählen
 you need to select some contacts first	addressbook	de	Sie müssen zuerst Kontakte auswählen
+you need to select some entries first	addressbook	de	Sie müssen zuerst Daten auswählen
 zip code	common	de	PLZ
 zip code (private)	addressbook	de	PLZ (Privat)
 zip_note	addressbook	de	<p><b>Notiz:</b>Die Datei kann ein zip Archiv sein, bestehend aus .csv, .vcf oder .ldif Dateien. Sie dürfen die Dateitypen pro Import nicht mischen!

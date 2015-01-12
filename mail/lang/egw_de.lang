@@ -10,6 +10,7 @@
 (with checkbox enforced)	mail	de	(mit Checkbox)
 account editable by user	mail	de	Anwender darf dieses Konto bearbeiten
 acl rights retrive failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
+acl rights retrived successfully	mail	de	Zugriffskontrollrechte erfolgreich gelesen
 acl rights retrived successfully!	mail	de	Zugriffskontrollrechte erfolgreich gelesen!
 action	mail	de	Aktion
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
@@ -116,6 +117,7 @@ don't use draft folder	mail	de	keine Entwurfs Ordner verwenden
 don't use sent	mail	de	Keinen gesendeten E-Mails speichern
 don't use template folder	mail	de	Keinen Vorlagen Ordner verwenden
 don't use trash	mail	de	Keinen Papierkorb verwenden
+download attachments	mail	de	Attachments herunterladen
 draft folder	mail	de	Entwurfs Ordner
 drafts	mail	de	Entwürfe
 drafts folder	mail	de	Ordner für Entwürfe
@@ -135,6 +137,8 @@ enable	mail	de	Aktivieren
 enabled!	mail	de	aktiviert!
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
+error while setting acl for folder %1!	mail	de	Fehler beim Speichern von Zugriffsrechten für den Ordner %1!
+error while setting folder	mail	de	Fehler beim Speichern eines Ordners
 error:	mail	de	FEHLER:
 error: could not save acl	mail	de	FEHLER: Zugriffskontrollrechte konnten nicht gespeichert werden
 error: could not save message as draft	mail	de	FEHLER: Die Nachricht konnte nicht als Entwurf gespeichert werden.
@@ -293,6 +297,7 @@ organization	mail	de	Organisation
 original message	mail	de	ursprüngliche Nachricht
 outbox	mail	de	Postausgang
 password protect	mail	de	Passwort geschützt
+permission denied	mail	de	Zugriff verweigert
 please configure access to an existing individual imap account.	mail	de	Bitte konfigurieren Sie hier den Zugang zu einem existierenden IMAP Account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
 please select a address	mail	de	Bitte wählen Sie eine Adresse
@@ -386,6 +391,7 @@ sieve script name	mail	de	Stellen Sie den Sieve Skript Namen ein.
 sieve server	mail	de	Sieve Server
 signature	mail	de	Signatur
 signature at top	mail	de	Signatur am Anfang der Nachricht
+signature position and visibility	mail	de	Position der Signatur und Sichtbarkeit
 size(...->0)	mail	de	Größe(...->0)
 size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
