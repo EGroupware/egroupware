@@ -32,8 +32,10 @@ class home_ui
 	 * Main UI - generates the container, and aggregates all
 	 * the portlets from the applications
 	 */
-	public function index($content = array())
+	public function index()
 	{
+		self::setup_default_home();
+
 		// CSS for Gridster grid layout
 		egw_framework::includeCSS('/phpgwapi/js/jquery/gridster/jquery.gridster.css');
 
@@ -63,7 +65,7 @@ class home_ui
 		}
 
 		$template->exec('home.home_ui.index', $content);
-		
+
 		// Now run the portlets themselves
 		foreach($content['portlets'] as $portlet => $p_data)
 		{
@@ -189,12 +191,12 @@ class home_ui
 
 			// Add in default for admins
 			self::create_default_actions($actions, $id);
-			
+
 			$template->setElementAttribute("portlets[" . count($portlets) . "[$id]", 'actions', $actions);
 
 			$portlets[] = $portlet_content;
 		}
-		
+
 		// Add in legacy HTML home bits
 		// TODO: DOM IDs still collide
 		//$this->get_legacy_portlets($portlets, $attributes);
@@ -229,10 +231,8 @@ class home_ui
 		$desc = $portlet->get_description();
 
 		// Pre-set up etemplate so it only needs done once
-		$dom_id = 'home-index_'.$id.'_content';
-
 		$etemplate = new etemplate_new();
-		
+
 		// Exclude common attributes changed through UI and settings lacking a type
 		$settings = $portlet->get_properties();
 		foreach($settings as $key => $setting)
@@ -273,7 +273,7 @@ class home_ui
 
 		return $portlet;
 	}
-	
+
 	/**
 	 * Get a list of pre-etemplate2 home hook content according to the individual
 	 * application preferences.  If we find a preference that indicates the user
@@ -284,7 +284,7 @@ class home_ui
 	{
 		$sorted_apps = array_keys($GLOBALS['egw_info']['user']['apps']);
 		$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest','mainscreen_showmail','mainscreen_showbirthdays','mainscreen_show_new_updated', 'homepage_display');
-		
+
 		foreach($sorted_apps as $appname)
 		{
 			// If there's already [new] settings, or no preference, skip it
@@ -323,12 +323,10 @@ class home_ui
 	 */
 	protected function get_portlet_list()
 	{
-		$list = array();
-
 		$list = egw_cache::getTree('home', 'portlet_classes', function() {
 			$list = array();
 			$classes = array();
-			
+
 			// Ignore some problem files and base classes that shouldn't be options
 			$ignore = array(
 				'.','..',
@@ -337,7 +335,7 @@ class home_ui
 				'class.home_favorite_portlet.inc.php'
 			);
 			// Look through all known classes for portlets - for now, they need 'portlet' in the file name
-			foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
+			foreach(array_keys($GLOBALS['egw_info']['apps']) as $appname)
 			{
 				if(in_array($appname, array('phpgwapi', 'felamimail'))) continue;
 				$files = (array)@scandir(EGW_SERVER_ROOT . '/'.$appname .'/inc/');
@@ -359,7 +357,7 @@ class home_ui
 						}
 					}
 				}
-				
+
 				if(!$classes[$appname]) continue;
 
 				// Build 'Add' actions for each discovered portlet.
@@ -387,10 +385,10 @@ class home_ui
 					);
 				}
 			}
-			
+
 			return $list;
 		}, array(), 60);
-		
+
 		return $list;
 	}
 
@@ -414,12 +412,10 @@ class home_ui
 			// Customize for the given portlet
 			if($portlet_id !== null)
 			{
-				$portlet = $GLOBALS['egw_info']['user']['preferences']['home'][$portlet_id];
-
 				foreach(array('forced','group','default') as $location)
 				{
 					$loc = $GLOBALS['egw']->preferences->$location;
-					
+
 					if($loc['home'][$portlet_id])
 					{
 						// If it's forced, no point in setting default
@@ -454,7 +450,7 @@ class home_ui
 				}
 			}
 		}
-		
+
 		// Change action for forced
 		if($portlet_id && $GLOBALS['egw']->preferences->forced['home'][$portlet_id])
 		{
@@ -485,7 +481,7 @@ class home_ui
 		{
 			$attributes = array();
 		}
-		
+
 		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			if($group == 'forced')
@@ -537,8 +533,8 @@ class home_ui
 		}
 		else
 		{
-			$portlets = $prefs->read();
-			$portlets = $portlets['home'];
+			$pref_data = $prefs->read();
+			$portlets = $pref_data['home'];
 
 			// Remove some constant stuff that winds up here
 			unset($values['edit_template']);
@@ -642,7 +638,7 @@ class home_ui
 			{
 				egw_json_response::get()->call('egw.message', lang("Removed default"));
 				error_log("Clearing $type $group default $id");
-				$result = $prefs->delete('home',$id, $type);
+				$prefs->delete('home',$id, $type);
 			}
 		}
 		$prefs->save_repository(false,$type);
@@ -651,5 +647,158 @@ class home_ui
 		$prefs = $GLOBALS['egw']->preferences;
 		$pref = $prefs->read_repository();
 		egw_json_response::get()->call('egw.set_preferences', (array)$pref['home'], 'home');
+	}
+
+	/**
+	 * Name of config var to store installed default home screen
+	 */
+	const HOME_VERSION = 'home_version';
+	/**
+	 * Current version of home screen, there need to be a function matching that number!
+	 */
+	const CURRENT_HOME_VERSION = '14.2rc1';
+
+	/**
+	 * Setup default home screen for 14.2
+	 */
+	public static function setup_default_home_14_2rc1()
+	{
+		$preferences = $GLOBALS['egw']->preferences;
+		$preferences->read_repository();
+		$lang = $preferences->default['common']['lang'];
+		if (empty($lang)) $lang = 'en';
+
+		$tutorial_url = $lang == 'de' ?
+			'http://www.egroupware.org/de/discover/tutorials/egroupware.html' :
+			'http://www.egroupware.org/discover/tutorials/egroupware.html';
+
+		translation::add_app('calendar', $lang);
+		$weekview = lang('Weekview');
+
+		if ($GLOBALS['egw_info']['apps']['news_admin'])
+		{
+			$cats = new categories('', 'news_admin');
+			$cat_id_egw_org_news = $cats->name2id('egroupware.org');
+		}
+
+		$app_prefs = array(
+			'calendar' => array(
+				// current users week
+				'favorite_setup142w' => array(
+					'name' => $weekview,
+					'group' => 'default',
+					'state' => array(
+						'cat_id' => '0',
+						'filter' => 'default',
+						'owner' => 0,	// current user
+						'sortby' => 'user',
+						'planner_days' => '0',
+						'view' => 'week',
+						'listview_days' => '',
+					),
+				),
+			),
+			'news_admin' => array(
+				// egroupware.org news
+				'favorite_setup142n' => array(
+					'name' => 'www.egroupware.org',
+					'group' => 'default',
+					'state' => array(
+						'selected' => array(),
+						'col_filter' => array(
+							'visible' => 'now',
+							'news_lang' => $lang == 'de' ? 'de' : 'en',
+							'news_submittedby' => ''
+						),
+						'filter' => $cat_id_egw_org_news,
+						'filter2' => 'content',
+						'search' => '',
+						'sort' => array(
+							'id' => 'news_date',
+							'asc' => false
+						),
+					),
+				),
+			),
+			'home' => array(
+				// show tutorials from www.egroupware.org
+				'portlet_setup142t' => array(
+					'id' => 'portlet_setup142t',
+					'class' => 'home_note_portlet',
+					'row' => 1,
+					'col' => 1,
+					'width' => 15,
+					'height' => 5,
+					'title' => 'Tutorials: www.egroupware.org',
+					'color' => '',
+					'resize_ratio' => '',
+					'group' => 'default',
+					'note' => '<iframe src="'.$tutorial_url.'" width="100%" height="250"></iframe>',
+				),
+				// current users week favorite
+				'portlet_setup142w' => array(
+					'id' => 'portlet_setup-142wp',
+					'class' => 'calendar_favorite_portlet',
+					'row' => 7,
+					'col' => 1,
+					'width' => 7,
+					'height' => 5,
+					'color' => '',
+					'favorite' => 'setup142w',
+					'title' => $weekview,
+					'resize_ratio' => '',
+					'group' => 'default',
+					'appname' => 'calendar',
+				),
+				// egroupware.org news
+				'portlet_setup142n' => array(
+					'row' => 7,
+					'col' => 8,
+					'width' => 8,
+					'height' => 5,
+					'color' => '',
+					'favorite' => 'egroupware_org',
+					'id' => 'portlet_setup142n',
+					'class' => 'news_admin_favorite_portlet',
+					'title' => 'www.egroupware.org',
+					'resize_ratio' => '',
+					'group' => 'default',
+					'appname' => 'news_admin'
+				),
+			),
+		);
+		if (empty($cat_id_egw_org_news))
+		{
+			unset($app_prefs['news_admin']['favorite_setup142n']);
+			unset($app_prefs['home']['portlet_setup142n']);
+		}
+		foreach($app_prefs as $app => $prefs)
+		{
+			foreach($prefs as $name => $value)
+			{
+				preferences::delete_preference($app, $name);
+				$preferences->add($app, $name, $value, 'default');
+			}
+		}
+		$preferences->save_repository(null, 'default');
+	}
+
+	/**
+	 * Check and if necessary setup default home screen
+	 *
+	 * Version of home-screen is stored in api config self::HOME_VERSION
+	 */
+	public static function setup_default_home()
+	{
+		switch($GLOBALS['egw_info']['server'][self::HOME_VERSION])
+		{
+			case self::CURRENT_HOME_VERSION:
+				return;	// already up to date --> nothing to do
+
+			default:
+				call_user_func(array(__CLASS__, 'setup_default_home_'.str_replace('.', '_', self::CURRENT_HOME_VERSION)));
+				config::save_value(self::HOME_VERSION, self::CURRENT_HOME_VERSION, 'phpgwapi');
+				break;
+		}
 	}
 }
