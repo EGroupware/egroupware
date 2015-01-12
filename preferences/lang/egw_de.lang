@@ -9,6 +9,7 @@ a theme defines the colors and fonts used by the template.	preferences	de	Das Th
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde upgedatet
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass sie diese Kategorie löschen wollen ?
+audio effect	preferences	de	Audio Effect
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
 bootstrap theme for ckeditor	preferences	de	Bootstrap Schema für den CKEditor
@@ -36,10 +37,12 @@ deny following groups access to acl (grant access)	admin	de	verweigere folgenden
 deny following groups access to edit categories	admin	de	verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
 deny following groups access to preferences	admin	de	verweigere folgenden Gruppen den Zugang zu den Präferenzen
 description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
+disable	preferences	de	Deaktivieren
 display thumbnails for linked images	preferences	de	Zeige Vorschaubilder für verlinkte Bilder
 div	preferences	de	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	de	Bevorzugen Sie ein 24 Stunden Zeitformat oder 12 Stunden mit angehängtem Vor-/Nachmittag.
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
+enable	preferences	de	Aktivieren
 enable drag and drop functionality (experimental)	preferences	de	Drag-and-Drop einschalten (experimentell)
 enable selectbox dropdown resizing for ie (experimental)	preferences	de	Aktiviere Selectbox-Drop-Down-Menue Grössenanpassung für IE (experimentell)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	de	Schaltet drag-and-drop in allen Anwendungen ein. Wenn vom Browser nicht unterstützt, wird es automatisch ausgeschaltet. Ist im Moment noch experimentell.

@@ -10,6 +10,7 @@
 (with checkbox enforced)	mail	en	(with checkbox enforced)
 account editable by user	mail	en	account editable by user
 acl rights retrive failed, seems there are no rights set!	mail	en	ACL rights retrive failed, seems there are no rights set!
+acl rights retrived successfully	mail	en	ACL rights retrived successfully
 acl rights retrived successfully!	mail	en	ACL rights retrived successfully!
 action	mail	en	Action
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
@@ -115,6 +116,7 @@ don't use draft folder	mail	en	Don't use draft folder
 don't use sent	mail	en	Don't use Sent
 don't use template folder	mail	en	Don't use template folder
 don't use trash	mail	en	Don't use Trash
+download attachments	mail	en	Download attachments
 draft folder	mail	en	draft folder
 drafts	mail	en	Drafts
 drafts folder	mail	en	Drafts folder
@@ -134,6 +136,7 @@ enable	mail	en	Enable
 enabled!	mail	en	enabled!
 enter the name for the new folder:	mail	en	Enter the name for the new Folder:
 error saving %1!	mail	en	Error saving %1!
+error while setting acl for folder %1!	mail	en	Error while setting ACL for folder %1!
 error while setting folder	mail	en	Error while setting folder
 error:	mail	en	Error:
 error: could not save acl	mail	en	Error: Could not save ACL
@@ -241,7 +244,6 @@ mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mailaccount
 mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)
 mark all as read	mail	en	mark all as read
 mark as deleted	mail	en	mark as deleted
 match:	mail	en	Match:
@@ -292,6 +294,7 @@ organisation	admin	en	organisation
 organization	mail	en	organization
 original message	mail	en	original message
 outbox	mail	en	Outbox
+permission denied	mail	en	Permission denied
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	en	Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.
 please select a address	mail	en	Please select a address
@@ -384,6 +387,7 @@ sieve script name	mail	en	sieve script name
 sieve server	mail	en	Sieve server
 signature	mail	en	Signature
 signature at top	mail	en	signature at top
+signature position and visibility	mail	en	Signature position and visibility
 size(...->0)	mail	en	size(...->0)
 size(0->...)	mail	en	size(0->...)
 small view	mail	en	small view

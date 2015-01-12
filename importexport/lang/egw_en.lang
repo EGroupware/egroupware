@@ -14,6 +14,7 @@ addressbook csv import	importexport	en	Addressbook CSV Import
 addressbook vcard import	importexport	en	Addressbook vCard import
 admin disabled exporting	importexport	en	Admin disabled exporting
 all encodings	importexport	en	All encodings
+all users	importexport	en	all users
 allowed users	importexport	en	Allowed users
 automatically created by importexport	importexport	en	Automatically created by Import|Export
 basic csv import	importexport	en	Basic CSV import
@@ -46,7 +47,6 @@ duplicate name, please choose another.	importexport	en	Duplicate name, please ch
 edit conditions	importexport	en	Edit conditions
 edit definition <a href="%1">%2</a> to match your file	importexport	en	Edit definition <a href="%1">%2</a> to match your file
 edit your file to match the definition:	importexport	en	Edit your file to match the definition:
-encoding mismatch. expected %1 file, you uploaded %2.<br />\n	importexport	en	Encoding mismatch. Expected %1 file, you uploaded %2.<br />\n
 errors	importexport	en	Errors
 execute	importexport	en	Execute
 expert options	importexport	en	Expert options
@@ -56,6 +56,7 @@ export data as	importexport	en	Export data as
 export definition to use for nextmatch export	preferences	en	Export definition to use for nextmatch export
 export spreadsheet	importexport	en	Export Spreadsheet
 exported	importexport	en	Exported.
+extra %1	importexport	en	Extra %1
 extra charsets for import / export	importexport	en	Extra charsets for import / export
 extra encodings	importexport	en	Extra encodings
 false	importexport	en	False
@@ -89,6 +90,7 @@ lock expired on previous run	importexport	en	Lock expired on previous run
 manage mapping	importexport	en	Manage mapping
 next	importexport	en	Next
 next run	importexport	en	Next run
+no custom field "%1" for %2.	importexport	en	No custom field "%1" for %2.
 no matches	importexport	en	no matches
 no matching records	importexport	en	No matching records
 no notifications	importexport	en	No notifications
@@ -98,6 +100,7 @@ old fixed definition	preferences	en	Old fixed definition
 please select file to import	importexport	en	Please select file to import
 plugin	importexport	en	Plugin
 preview	importexport	en	Preview
+preview not supported by %1	importexport	en	Preview not supported by %1
 previous	importexport	en	Previous
 problems during import:	importexport	en	Problems during import:
 save as definition	importexport	en	Save as definition

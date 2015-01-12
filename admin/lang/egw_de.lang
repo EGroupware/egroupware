@@ -7,7 +7,7 @@
 %1 category(s) %2	admin	de	%1 Kategorie(n) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	de	%1 Kategorie(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
 %1 class not instanciated	admin	de	%1 Klasse nicht instanziiert
-%1 group %2	admin	de	%1 Gruppe %2
+%1 group %2	admin	de	%1 Benutzergruppe %2
 %1 is no command!	admin	de	%1 ist kein Befehl !
 %1 log entries deleted.	admin	de	%1 Protokolleinträge gelöscht.
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar !!!
@@ -333,6 +333,8 @@ go directly to admin menu, returning here the next time you click on administrat
 governmental: incl. state or municipal authorities or services	admin	de	Öffentlicher Dienst: Bundes-, Länder- oder städtische Behörden und Dienstleistungen
 grant	admin	de	Berechtigungen
 group #%1 must have negative sign!	admin	de	Benutzergruppe #%1 muss ein negatives Vorzeichen besitzen
+group %1 %2	admin	de	Gruppe %1 %2
+group '%1' deleted.	admin	de	Gruppe '%1' wurde gelöscht.
 group ?	admin	de	Gruppe ?
 group csv export	admin	de	CSV Export von Gruppen
 group csv import	admin	de	CSV Import von Gruppen
@@ -446,6 +448,7 @@ new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leer l
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
 no alternate email address	admin	de	keine Aliase definiert
+no default account found!	admin	de	Es steht ein Default Account zur Verfügung!
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden

@@ -127,6 +127,7 @@ contact repository	admin	nl	Contact databasegegevens
 contact saved	addressbook	nl	Contact opgeslagen
 contact settings	admin	nl	Contactinstellingen
 contactform	addressbook	nl	Contactformulier
+contacts	common	nl	Contacten
 contacts and account contact-data to ldap	admin	nl	contacten en account contactgegevens naar LDAP
 contacts and account contact-data to sql	admin	nl	contacten en account contactgegevens naar SQL
 contacts to ldap	admin	nl	contacten naar LDAP

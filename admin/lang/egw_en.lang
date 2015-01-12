@@ -333,6 +333,8 @@ go directly to admin menu, returning here the next time you click on administrat
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
 grant	admin	en	Grant
 group #%1 must have negative sign!	admin	en	Group #%1 must have negative sign!
+group %1 %2	admin	en	Group %1 %2
+group '%1' deleted.	admin	en	Group '%1' deleted.
 group ?	admin	en	Group?
 group csv export	admin	en	Group CSV export
 group csv import	admin	en	Group CSV import
@@ -446,6 +448,7 @@ new password [ leave blank for no change ]	admin	en	New password [ Leave blank f
 next run	admin	en	Next run
 no algorithms available	admin	en	No algorithms available!
 no alternate email address	admin	en	No alternate email address!
+no default account found!	admin	en	No default account found!
 no jobs in the database !!!	admin	en	No jobs in the database!
 no login history exists for this user	admin	en	No login history exists for this user!
 no matches found	admin	en	No matches found!

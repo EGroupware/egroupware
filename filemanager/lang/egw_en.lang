@@ -153,6 +153,7 @@ if you specify an export definition, it will be used when you export*	filemanage
 inherited	filemanager	en	Inherited
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
+link into folder	filemanager	en	Link into folder
 link target	filemanager	en	Link target
 link target %1 not found!	filemanager	en	Link target %1 not found!
 location	filemanager	en	Location
@@ -244,6 +245,7 @@ the following document-types are supported:	filemanager	en	The following documen
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available!
 there's already a directory with that name!	filemanager	en	There's already a directory with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
+tile view	filemanager	en	Tile view
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing filestore again
 total files	filemanager	en	Total files
 unmount	filemanager	en	Unmount

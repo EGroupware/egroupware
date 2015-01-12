@@ -9,6 +9,7 @@ a theme defines the colors and fonts used by the template.	preferences	en	A them
 acl grants have been updated	preferences	en	ACL grants have been updated.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
+audio effect	preferences	en	Audio effect
 automatically start with this font	preferences	en	Automatically start with this font
 automatically start with this font size	preferences	en	Automatically start with this font size
 bootstrap theme for ckeditor	preferences	en	Bootstrap Theme for CKEditor
@@ -36,10 +37,12 @@ deny following groups access to acl (grant access)	admin	en	Deny following group
 deny following groups access to edit categories	admin	en	Deny following groups access to edit categories
 deny following groups access to preferences	admin	en	Deny following groups access to preferences
 description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length !
+disable	preferences	en	Disable
 display thumbnails for linked images	preferences	en	Display thumbnails for linked images
 div	preferences	en	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	en	Select the displayed time format. 24 hour or a 12 hour with am/pm attached.
 edit custom fields	preferences	en	Edit custom fields
+enable	preferences	en	Enable
 enable drag and drop functionality (experimental)	preferences	en	Drag and drop
 enable selectbox dropdown resizing for ie (experimental)	preferences	en	Select box drop down menu resizing
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically.

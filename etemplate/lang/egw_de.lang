@@ -7,6 +7,7 @@
 %1 more...	etemplate	de	%1 mehr...
 %1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplate(s) importiert für die Anwendung '%2'
 %1 not implemented for %2!	etemplate	de	%1 ist nicht  implementiert für '%2'
+%1, duplicate id	etemplate	de	%1, doppelte ID
 %s disabled	etemplate	de	%s deaktiviert
 %s needed	etemplate	de	%s benötigt
 %s notranslation	etemplate	de	%s nicht übersetzen
@@ -19,6 +20,7 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Gleitkommazahl !!!
 '%1' is not a valid integer !!!	etemplate	de	'%1' ist keine gültige Ganzzahl !!!
 '%1' is not allowed ('%2')!	etemplate	de	'%1' ist NICHT erlaubt ('%2')!
+'%1' is not allowed%2)!	etemplate	de	'%1' ist NICHT erlaubt '%2'!
 1 minute	etemplate	de	1 Minute
 15 minutes	etemplate	de	15 Minuten
 30 minutes	etemplate	de	30 Minuten
@@ -36,6 +38,7 @@ add column	etemplate	de	Spalte zufügen
 add index	etemplate	de	Index zufügen
 add new	etemplate	de	Neu hinzufügen
 add table	etemplate	de	Tabelle zufügen
+add to clipboard	etemplate	de	Zur Zwischenablage hinzufügen
 advanced search	etemplate	de	Erweiterte Suche
 align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
@@ -101,6 +104,8 @@ contact	etemplate	de	Kontakt
 contact field to show	etemplate	de	Kontaktfeld zum Anzeigen
 contact fields	etemplate	de	Kontaktfelder
 contains	etemplate	de	enthalten
+copy %1	etemplate	de	%1 kopieren
+copy to clipboard	etemplate	de	In die Zwischenablage kopieren
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
 creator	preferences	de	Ersteller
