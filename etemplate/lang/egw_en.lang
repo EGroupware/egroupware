@@ -104,7 +104,7 @@ contact	etemplate	en	Contact
 contact field to show	etemplate	en	Contact field to show
 contact fields	etemplate	en	Contact fields
 contains	etemplate	en	Contains
-copy %1	etemplate	en	Copy %1
+copy "%1"	etemplate	en	Copy "%1"
 copy to clipboard	etemplate	en	Copy to clipboard
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	Creates an English ('en') langfile from label and help texts (for application in Name)

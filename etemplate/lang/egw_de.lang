@@ -104,7 +104,7 @@ contact	etemplate	de	Kontakt
 contact field to show	etemplate	de	Kontaktfeld zum Anzeigen
 contact fields	etemplate	de	Kontaktfelder
 contains	etemplate	de	enthalten
-copy %1	etemplate	de	%1 kopieren
+copy "%1"	etemplate	de	"%1" kopieren
 copy to clipboard	etemplate	de	In die Zwischenablage kopieren
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
