@@ -124,7 +124,7 @@ class home_note_portlet extends home_portlet
 				'default' => true
 			),
 			'edit_settings' => array(
-				'enabled' => false
+				'default' => false
 			)
 		);
 		return $actions;
