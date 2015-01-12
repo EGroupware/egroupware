@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<overlay>
+	<template id="home.weather" template="" lang="" group="0" version="1.9.001">
+		<grid id="current" disabled="!@current" width="100%">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<image class="weather_icon" src="weather[0][icon]"/>
+					<hbox id="temp">
+						<description class="current temperature" id="temp" no_lang="true"/>
+					</hbox>
+					<vbox id="temp" disabled="@no_current_temp">
+						<description class="high_low temperature" id="max" no_lang="true"/>
+						<description class="high_low temperature" id="min" no_lang="true"/>
+					</vbox>
+				</row>
+				<row disabled="!@weather[0][description]">
+					<description id="weather[0][description]" no_lang="true"/>
+				</row>
+			</rows>
+		</grid>
+		<box id="list" class="forecast" disabled="!@list" width="100%">
+			<!-- Box wrapper needed to get box to auto-repeat -->
+			<box id="${row}">
+				<grid width="100%">
+					<columns>
+						<column/>
+					</columns>
+					<rows>
+						<row><description align="center" id="day"/></row>
+						<row class="weather_icon"><image align="center" class="weather_icon" src="weather[0][icon]"/></row>
+						<row>
+							<vbox align="center" id="temp">
+								<description class="high_low temperature" id="max" no_lang="true"/>
+								<description class="high_low temperature" id="min" no_lang="true"/>
+							</vbox>
+						</row>
+					</rows>
+				</grid>
+			</box>
+		</box>
+		<description activate_links="true" align="center" class="attribution" extra_link_target="_blank" href="@attribution" value="openweathermap.org"/>
+	</template>
+</overlay>

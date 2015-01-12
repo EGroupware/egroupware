@@ -477,6 +477,7 @@ class home_ui
 	 */
 	public function ajax_set_properties($portlet_id, $attributes, $values, $group = false)
 	{
+		//error_log(__METHOD__ . "($portlet_id, " .array2string($attributes).','.array2string($values).",$group)");
 		if(!$attributes)
 		{
 			$attributes = array();
@@ -546,10 +547,8 @@ class home_ui
 			unset($values['value']);unset($values['align']);
 
 			// Get portlet settings, and merge new with old
-			$context = $values+(array)$portlets[$portlet_id];
+			$context = array_merge((array)$portlets[$portlet_id], $values);
 			$context['group'] = $group;
-
-
 
 			// Handle add IDs
 			$classname =& $context['class'];
