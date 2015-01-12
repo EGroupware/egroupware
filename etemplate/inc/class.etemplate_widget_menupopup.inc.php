@@ -231,8 +231,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 				// typeOptions thinks # of rows is the first thing in options
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
 				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name);
-			// need to run that here manually, automatic run through etemplate_new::exec() already happend
-			self::fix_encoded_options(self::$request->sel_options[$form_name]);
 
 			// if no_lang was modified, forward modification to the client
 			if ($no_lang != $this->attr['no_lang'])
@@ -240,6 +238,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 				self::setElementAttribute($form_name, 'no_lang', $no_lang);
 			}
 		}
+		// need to run that here manually for select-* and customfield widgets
+		// (automatic run through etemplate_new::exec() already happend)
+		self::fix_encoded_options(self::$request->sel_options[$form_name]);
 
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
 		$options = (isset(self::$request->sel_options[$form_name]) ? $form_name : $this->id);
@@ -290,7 +291,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					}
 				}
 			}
-			if (is_null($use_array_of_objects) && is_numeric($value))
+			if (is_null($use_array_of_objects) && is_numeric($value) && (!is_array($label) || !isset($label['value'])))
 			{
 				$options = $backup_options;
 				return self::fix_encoded_options($options, true);
