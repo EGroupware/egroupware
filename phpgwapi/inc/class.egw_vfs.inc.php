@@ -1134,7 +1134,7 @@ class egw_vfs extends vfs_stream_wrapper
 		if (!($img=common::image('etemplate',$icon='mime'.$size.'_'.$mime_full)) &&
 			// check mime-alias-map before falling back to more generic icons
 			!(isset(mime_magic::$mime_alias_map[$mime_type]) &&
-				($img=common::image('etemplate',$icon='mime'.$size.'_'.str_replace('/','_',self::$mime_alias_map[$mime_full])))) &&
+				($img=common::image('etemplate',$icon='mime'.$size.'_'.str_replace('/','_',mime_magic::$mime_alias_map[$mime_full])))) &&
 			!($img=common::image('etemplate',$icon='mime'.$size.'_'.$mime_part)))
 		{
 			$img = common::image('etemplate',$icon='mime'.$size.'_unknown');
