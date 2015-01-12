@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="filemanager.file.general" template="" lang="" group="0" version="1.7.002">
-		<grid width="450" spacing="10">
+		<grid width="100%" spacing="10">
 			<columns>
 				<column width="80"/>
 				<column/>
@@ -47,7 +47,7 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.perms" template="" lang="" group="0" version="1.5.001">
-		<grid width="450" spacing="10">
+		<grid width="100%" spacing="10">
 			<columns>
 				<column/>
 			</columns>
@@ -123,7 +123,7 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
-		<grid width="550" spacing="10">
+		<grid width="100%" spacing="10">
 			<columns>
 				<column width="120"/>
 				<column/>
@@ -174,7 +174,7 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.preview" template="" lang="" group="0" version="1.5.001">
-		<grid width="450" spacing="10" overflow="auto">
+		<grid width="100%" spacing="10" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -192,7 +192,7 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.custom" template="" lang="" group="0" version="1.5.001">
-		<grid width="450" spacing="10" overflow="auto">
+		<grid width="100%" spacing="10" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -204,7 +204,7 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.merge" template="" lang="" group="0" version="1.9.001">
-		<grid width="450" spacing="10" overflow="auto">
+		<grid width="100%" spacing="10" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
