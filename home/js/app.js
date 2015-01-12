@@ -432,6 +432,10 @@ app.classes.home = AppJS.extend(
 
 			});
 
+		// Rescue selectboxes from Firefox
+		$portlet_container.on('mousedown touchstart', 'select', function(e) {
+			e.stopPropagation();
+		});
 		// Bind window resize to re-layout gridster
 		$j(window).one("resize."+this.et2._inst.uniqueId, function() {
 			// Note this doesn't change the positions, just makes them invalid
