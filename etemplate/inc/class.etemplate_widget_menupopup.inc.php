@@ -276,7 +276,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			// so check here, as we re-index
 			// Duplicates might happen if app programmer isn't paying attention and
 			// either uses the same ID in the template, or adds the options twice
-			if(is_numeric($value) && (!is_array($label) || is_array($label) && !array_key_exists('value',$label)))
+			if(!is_array($label) || is_array($label) && !array_key_exists('value',$label))
 			{
 				$check_value = (string)(is_array($label) && array_key_exists('value', $label) ? $label['value'] : $value);
 				if((string)$value === $check_value)

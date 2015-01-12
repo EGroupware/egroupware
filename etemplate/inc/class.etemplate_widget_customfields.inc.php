@@ -203,6 +203,14 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					$fields_with_vals[]=$lname;
 				}
 		}
+		// need to encode values/select-options to keep their order
+		foreach($customfields as &$data)
+		{
+			if (!empty($data['values']))
+			{
+				etemplate_widget_menupopup::fix_encoded_options($data['values']);
+			}
+		}
 		if($fields != $customfields)
 		{
 			// This widget has different settings from global
