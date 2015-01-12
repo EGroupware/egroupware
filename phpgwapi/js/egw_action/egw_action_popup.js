@@ -144,6 +144,10 @@ function egwPopupActionImplementation()
 
 			_callback.call(_context, "default", ai);
 
+			// Stop action from bubbling up to parents
+			e.stopPropagation();
+			e.cancelBubble = true;
+			
 			return false;
 		};
 
