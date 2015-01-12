@@ -81,7 +81,7 @@ table.egwGridView_grid .tile .file_tile {
 	display: block;
 	max-width: 140px;
 }
-table.egwGridView_grid .tile .file_tile img.vfsMimeIcon {
+#filemanager-index_nm .tile .file_tile img.vfsMimeIcon {
 	height: auto;
 	width: auto;
 	max-height: 64px;
