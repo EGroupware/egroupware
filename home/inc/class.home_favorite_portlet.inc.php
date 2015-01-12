@@ -70,8 +70,8 @@ class home_favorite_portlet extends home_portlet
 			
 			$need_reload = true;
 		}
-		// Title not set for new widgets created via context menu
-		if(!$context['title'])
+		// Favorite not set for new widgets created via context menu
+		if(!$context['favorite'])
 		{
 			// Set initial size to 6x3, default is way too small
 			$context['width'] = 6;
