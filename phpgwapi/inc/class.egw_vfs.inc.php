@@ -1115,10 +1115,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string $mime_type
 	 * @param boolean $et_image =true return $app/$icon string for etemplate (default) or html img tag if false
-	 * @param int $size =16
+	 * @param int $size =128
 	 * @return string
 	 */
-	static function mime_icon($mime_type, $et_image=true, $size=16)
+	static function mime_icon($mime_type, $et_image=true, $size=128)
 	{
 		if ($mime_type == egw_vfs::DIR_MIME_TYPE)
 		{

@@ -64,6 +64,14 @@ div.filemanager_navigation > label > input {
   max-height: none;
 }
 
+#filemanager-index_nm img.vfsMimeIcon {
+	max-height: 16px;
+	height: auto;
+}
+#filemanager-index_nm img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
+	max-height: none;
+}
+
 /**
  * Tile view
 table.egwGridView_grid .tile .file_tile {
