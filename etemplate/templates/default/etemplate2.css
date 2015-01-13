@@ -842,6 +842,13 @@ button.et2_vfs_btn {
     background-position:  4px center;
 	background-size: 20px auto;
 }
+img.vfsMimeIcon, #filemanager-select img.vfsMimeIcon {
+	max-height: 16px;
+	height: auto;
+}
+img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
+	max-height: none;
+}
 
 /**
 * Validation

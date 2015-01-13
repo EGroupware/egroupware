@@ -90,14 +90,6 @@ div.filemanager_navigation > label > input {
   text-overflow: ellipsis;
   max-height: none;
 }
-#filemanager-index_nm img.vfsMimeIcon,
-#filemanager-select img.vfsMimeIcon {
-  max-height: 16px;
-  height: auto;
-}
-#filemanager-index_nm img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
-  max-height: none;
-}
 /**
  * Tile view
 table.egwGridView_grid .tile .file_tile {
@@ -208,6 +200,9 @@ img#filemanager-index_home {
   height: 16px;
   padding: 4px;
   background-color: #e6e6e6;
+}
+#filemanager-index_nm img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
+  height: auto;
 }
 div.filemanager_navigation {
   position: relative;
