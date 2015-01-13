@@ -353,11 +353,13 @@ save as infolog	mail	de	Als Infolog speichern
 save as infolog on send	mail	de	Als Infolog speichern
 save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
+save into vfs	mail	de	In das virtuelle Dateisystem (VFS) speichern
 save message to disk	mail	de	Nachricht auf Ihrer Festplatte speichern
 save message to filemanager	mail	de	Im EGroupware Dateimanger speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save to disk	mail	de	Speichern
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
+save to vfs	mail	de	Im VFS speichern
 save:	mail	de	Speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
@@ -366,6 +368,7 @@ select all	mail	de	Alle Auswählen
 select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an diese Nachricht anhängen möchten.
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager auswählen
+select files to upload	mail	de	Wählen Sie Dateien aus, die Sie zur dieser Mail hochladen möchten.
 selected	mail	de	ausgewählt
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
@@ -444,6 +447,7 @@ undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
 unsubscribe folder	mail	de	Ordner Abbestellen
+upload files...	mail	de	Dateien hochladen...
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 use source as displayed, if applicable	mail	de	Format wie E-Mailanzeige
@@ -483,4 +487,5 @@ yes, show all debug information available for the user	mail	de	Ja, zeige alle de
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht als beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
+you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail in das VFS speichern können.
 you've got new mail	mail	de	Sie haben neue E-Mails
