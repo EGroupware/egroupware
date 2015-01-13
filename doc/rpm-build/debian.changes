@@ -1,3 +1,11 @@
+egroupware-epl (14.1.20150113-1) hardy; urgency=low
+
+  * Mail: fix for Horde_Imap_Client-2.26.0 requiring Horde_Mail-2.5.1 requring Horde_Idna-1.0.1 which stalls our autoloader by calling spl_autoload_register
+  * Univention: allow installation on backup DC too (master was working before)
+  * News: fixed SQL error when deleting huge number of news items
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 13 Jan 2015 09:29:50 +0100
+
 egroupware-epl (14.1.20141219-1) hardy; urgency=low
 
   * Filemanager: fixed clicking on favorites in select popup
