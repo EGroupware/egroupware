@@ -245,10 +245,20 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 				var dropdown = et2_createWidget("dropdown_button", {
 					id: action.id
 				},this);
-
+				
 				dropdown.set_select_options(children);
 				dropdown.set_label (action.caption);
-
+				//Set default selected action
+				if (typeof action.children !='undefined')
+				{
+					for (var child in action.children)
+					{
+						if(action.children[child].default)
+						{
+							dropdown.set_label(action.children[child].caption);
+						}
+					}
+				}	
 				dropdown.set_image (action.iconUrl||'');
 				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
 				{
