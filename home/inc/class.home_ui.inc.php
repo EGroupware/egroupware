@@ -668,8 +668,8 @@ class home_ui
 		if (empty($lang)) $lang = 'en';
 
 		$tutorial_url = $lang == 'de' ?
-			'http://www.egroupware.org/de/discover/tutorials/egroupware.html' :
-			'http://www.egroupware.org/discover/tutorials/egroupware.html';
+			'//www.egroupware.org/de/discover/tutorials/egroupware.html' :
+			'//www.egroupware.org/discover/tutorials/egroupware.html';
 
 		translation::add_app('calendar', $lang);
 		$weekview = lang('Weekview');
