@@ -60,8 +60,9 @@ var et2_portlet = et2_valueWidget.extend(
 		},
 		"width": { "default": 2, "ignore": true},
 		"height": { "default": 1, "type": "integer"},
-		"rows": {"ignore": true},
-		"cols": {"ignore": true},
+		"rows": {"ignore": true, default: et2_no_init},
+		"cols": {"ignore": true, default: et2_no_init},
+		"resize_ratio": {"ignore": true, default: et2_no_init}, // Portlets are explicitly sized
 		"row": {
 			"name": "Row",
 			"description": "Home page location (row) - handled by home app",
@@ -306,7 +307,10 @@ var et2_portlet = et2_valueWidget.extend(
 		);
 
 		// Extend, not replace, because settings has types while value has just value
-		jQuery.extend(this.options.settings, value);
+		if(typeof value == 'object')
+		{
+			jQuery.extend(this.options.settings, value);
+		}
 	},
 
 	/**
