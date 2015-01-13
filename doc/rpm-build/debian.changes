@@ -1,3 +1,18 @@
+egroupware-epl (14.2.20150113-1) hardy; urgency=low
+
+  * Release candidate for 14.2
+  * Filemanager: Tile view for filemanager incl. new bigger Mine icons and thumbnails for OpenOffice documents
+  * Home: portlets (widgets on home screen) can be set as default for all users or groups by admins
+  * Home: default home screen containing video tutorials, egroupware.org new and calendar week-view
+  * Mail: customizable toolbar in compose dialog
+  * Mail: fix for Horde_Imap_Client-2.26.0 requiring Horde_Mail-2.5.1 requring Horde_Idna-1.0.1 which stalls our autoloader by calling spl_autoload_register
+  * Mail: fix problem sent or copied mail ending up with in folder of wrong mailaccount
+  * Univention: allow installation on backup DC too (master was working before)
+  * News: fixed SQL error when deleting huge number of news items
+  * All apps: improved German translations, other languages are lacking
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 13 Jan 2015 09:17:33 +0100
+
 egroupware-epl (14.2.20141219-1) hardy; urgency=low
 
   * Filemanager: fixed create directory icon in list and select popup, clicking on favorites in select popup
