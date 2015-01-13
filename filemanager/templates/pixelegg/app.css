@@ -90,7 +90,8 @@ div.filemanager_navigation > label > input {
   text-overflow: ellipsis;
   max-height: none;
 }
-#filemanager-index_nm img.vfsMimeIcon {
+#filemanager-index_nm img.vfsMimeIcon,
+#filemanager-select img.vfsMimeIcon {
   max-height: 16px;
   height: auto;
 }
@@ -373,7 +374,7 @@ table.egwGridView_grid img {
 #filemanager-select .dialogHeader .selectPathContainer {
   overflow: auto;
   width: 470px;
-  margin_top: 0px;
+  margin-top: 0px;
   height: 32px;
 }
 #filemanager-select .dialogHeader .selectPathContainer input {
@@ -395,10 +396,6 @@ table.egwGridView_grid img {
 }
 #filemanager-select table#filemanager-select_dir tr:nth-child(odd) {
   background: #f2f2f2;
-}
-#filemanager-select .vfsMimeIcon {
-  width: 16px;
-  height: 16px;
 }
 /*// #####################################################*/
 /*Dialog filemanager edit POPUP WINDOW*/

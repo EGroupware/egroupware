@@ -63,7 +63,7 @@ div.filemanager_navigation > label > input {
   max-height: none;
 }
 
-#filemanager-index_nm img.vfsMimeIcon {
+#filemanager-index_nm img.vfsMimeIcon, #filemanager-select img.vfsMimeIcon {
 	max-height: 16px;
 	height: auto;
 }
