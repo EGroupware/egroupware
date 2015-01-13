@@ -440,13 +440,13 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		var click = function(e)
 		{
 			var action = this._actionManager.getActionById(e.data);
-			if (action && action.checkbox)
+			if(action)
 			{
-				action.set_checked(!action.checked);
-				jQuery(button).toggleClass('toolbar_toggled');
-			}
-			else if(action)
-			{
+				if (action.checkbox)
+				{
+					action.set_checked(!action.checked);
+					jQuery(button).toggleClass('toolbar_toggled');
+				}
 				this.value = action.id;
 				action.data.event = e;
 				action.execute([]);
