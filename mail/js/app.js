@@ -4227,21 +4227,17 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_submitAction: function (_action)
 	{
-		var action_widget = ['to_infolog','to_tracker','disposition','priority'];
+		var action_widget = ['to_infolog','to_tracker','disposition'];
 		var toolbar = this.et2.getWidgetById('composeToolbar');
 		for(var i=0;action_widget.length>i;i++)
 		{
 			var widget = this.et2.getWidgetById(action_widget[i]);
 			if (toolbar._actionManager)
 			{
-				var action_event = toolbar._actionManager.getActionById(action_widget[i]== 'priority'?'prty':action_widget[i]);
+				var action_event = toolbar._actionManager.getActionById(action_widget[i]);
 				if (typeof action_event.checkbox != 'undefined' && action_event.checkbox)
 				{
 					widget.set_value(action_event.checked?"on":"off");
-				}
-				else if (action_event && toolbar.options)
-				{
-					widget.set_value(toolbar.options.actions[action_event.id]['value']||'3');
 				}
 			}
 		}
@@ -4249,6 +4245,19 @@ app.classes.mail = AppJS.extend(
 		this.et2._inst.submit(null,null,true);
 	},
 	
+	/**
+	 * Set the selected priority value
+	 * @param {type} _action selected action
+	 * @returns {undefined}
+	 */
+	compose_priorityChange: function (_action)
+	{
+		var widget = this.et2.getWidgetById ('priority');
+		if (widget)
+		{
+			widget.set_value(_action.id);
+		}
+	},
 	/**
 	 * Triger relative widget via its toolbar identical action
 	 * @param {type} _action toolbar action

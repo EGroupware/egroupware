@@ -104,10 +104,11 @@ class mail_compose
 	
 	/**
 	 * Provide toolbar actions used for compose toolbar
+	 * @param array $content content of compose temp
 	 *
 	 * @return array an array of actions
 	 */
-	function getToolbarActions()
+	function getToolbarActions($content)
 	{
 		$actions = array(
 			'send' => array(
@@ -178,7 +179,8 @@ class mail_compose
 				'icon' => 'priority',
 				'children' => array(),
 				'toolbarDefault' => true,
-				'hint' => 'Select the message priority tag'
+				'hint' => 'Select the message priority tag',
+				
 			),
 			'save2vfs' => array (
 				'caption' => 'Save to VFS',
@@ -192,7 +194,9 @@ class mail_compose
 		{
 			$actions['prty']['children'][$key] = array(
 						'caption' => $priority,
-						'icon' => 'prio_high'
+						'icon' => 'prio_high',
+						'default' => false,
+						'onExecute' => 'javaScript:app.mail.compose_priorityChange'
 			);
 			switch ($priority)
 			{
@@ -206,6 +210,12 @@ class mail_compose
 					$actions['prty']['children'][$key]['icon'] = 'prio_low';
 			}
 		}
+		// Set the priority action its current state
+		if ($content['priority'])
+		{
+			$actions['prty']['children'][$content['priority']]['default'] = true;
+		}
+		
 		return $actions;
 	}
 
@@ -1227,8 +1237,8 @@ class mail_compose
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
-		
-		$etpl->setElementAttribute('composeToolbar', 'actions', $this->getToolbarActions());
+			
+		$etpl->setElementAttribute('composeToolbar', 'actions', $this->getToolbarActions($_content));
 		if ($content['mimeType']=='html')
 		{
 			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"
