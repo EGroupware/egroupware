@@ -127,3 +127,39 @@ div.calendar_favorite_portlet.et2_portlet.ui-widget-content > div:last-of-type {
 [class*="favorite_portlet"].et2_portlet .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type th {
   visibility: hidden;
 }
+/**
+ * Weather
+ */
+.home_weather_portlet table[id$="current"] {
+  max-width: 250px;
+}
+.home_weather_portlet .temperature:after {
+  content: "\00B0";
+}
+.home_weather_portlet .current {
+  font-size: large;
+}
+.home_weather_portlet .forecast [id$="day"] {
+  font-size: smaller;
+}
+.home_weather_portlet .forecast > div {
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 52px;
+}
+.home_weather_portlet .forecast img {
+  margin: -10px -6px;
+  width: 40px;
+  height: auto;
+}
+.home_weather_portlet .high_low {
+  padding: 3px;
+}
+.home_weather_portlet .high_low[id$="min"] {
+  background-color: rgba(200, 200, 255, 0.3);
+}
+.home_weather_portlet .attribution {
+  position: relative;
+  bottom: 0.5em;
+  font-size: smaller;
+}

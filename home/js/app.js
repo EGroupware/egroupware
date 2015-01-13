@@ -47,6 +47,9 @@ app.classes.home = AppJS.extend(
 		HEIGHT:	1
 	},
 
+	// List of portlets
+	portlets: {},
+
 	/**
 	 * Constructor
 	 *
@@ -66,6 +69,8 @@ app.classes.home = AppJS.extend(
 	{
 		delete this.et2;
 		delete this.portlet_container;
+
+		this.portlets = {};
 
 		// call parent
 		this._super.apply(this, arguments);
@@ -130,6 +135,14 @@ app.classes.home = AppJS.extend(
 					app.home.add_from_drop(action, [{data: ui.helper.context.dataset}])
 				}
 			})
+			// Bind to unload to remove it from our list
+				.on('clear','.et2_container[id]', jQuery.proxy(function(e) {
+					if(e.target && e.target.id && this.portlets[e.target.id])
+					{
+						this.portlets[e.target.id].destroy();
+						delete this.portlets[e.target.id];
+					}
+				},this));
 		}
 		else if (et2.uniqueId)
 		{
@@ -164,6 +177,9 @@ app.classes.home = AppJS.extend(
 			{
 				et2.DOMContainer.id = et2.uniqueId;
 			}
+
+			// Instanciate custom code for this portlet
+			this._get_portlet_code(portlet);
 		}
 
 		// Special handling to deal with legacy (non-et2) calendar links
@@ -175,6 +191,53 @@ app.classes.home = AppJS.extend(
 					return false;
 				});
 		}
+	},
+
+	/**
+	 * Observer method receives update notifications from all applications
+	 *
+	 * Home passes the notification off to specific code for each portlet, which
+	 * decide if they should be updated or not.
+	 *
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string} _app application name
+	 * @param {(string|number)} _id id of entry to refresh or null
+	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @param {string} _targetapp which app's window should be refreshed, default current
+	 * @return {false|*} false to stop regular refresh, thought all observers are run
+	 */
+	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	{
+		for(var id in this.portlets)
+		{
+			// App is home, refresh all portlets
+			if(_app == 'home')
+			{
+				this.refresh(id);
+				continue;
+			}
+
+			// Ask the portlets if they're interested
+			try
+			{
+				var code = this.portlets[id];
+				if(code)
+				{
+					code.observer(_msg,_app,_id,_type,_msg_type,_targetapp);
+				}
+			}
+			catch(e)
+			{
+				this.egw.debug("error", "Error trying to update portlet " + id,e);
+			}
+		}
+		return false;
 	},
 
 	/**
@@ -212,6 +275,9 @@ app.classes.home = AppJS.extend(
 			this.DEFAULT.WIDTH, this.DEFAULT.HEIGHT,
 			attrs.col, attrs.row
 		);
+
+		// Instanciate custom code for this portlet
+		this._get_portlet_code(portlet);
 	},
 
 	/**
@@ -268,6 +334,9 @@ app.classes.home = AppJS.extend(
 			this.DEFAULT.WIDTH, this.DEFAULT.HEIGHT,
 			attrs.col, attrs.row
 		);
+
+		// Instanciate custom code for this portlet
+		this._get_portlet_code(portlet);
 	},
 
 	/**
@@ -334,12 +403,38 @@ app.classes.home = AppJS.extend(
 	 * 
 	 * @param {string} id
 	 */
-	refresh: function($id) {
-		var p = this.portlet_container.getWidgetById($id);
+	refresh: function(id) {
+		var p = this.portlet_container.getWidgetById(id);
 		if(p)
 		{
 			p._process_edit(et2_dialog.OK_BUTTON, '~reload~');
 		}
+	},
+
+	/**
+	 * Determine the best fitting code to use for the given portlet, instanciate
+	 * it and add it to the list.
+	 *
+	 * @param {et2_portlet} portlet
+	 * @returns {home_portlet}
+	 */
+	_get_portlet_code: function(portlet) {
+		var classname = portlet.class;
+		// Freshly added portlets can have 'add_' prefix
+		if(classname.indexOf('add_') == 0)
+		{
+			classname = classname.replace('add_','');
+		}
+		// Prefer a specific match
+		var _class = app.classes.home[classname] ||
+			// If it has a nextmatch, use favorite base class
+			(portlet.getWidgetById('nm') ? app.classes.home.home_favorite_portlet : false) ||
+			// Fall back to base class
+			app.classes.home.home_portlet;
+
+		this.portlets[portlet.id] = new _class(portlet);
+
+		return this.portlets[portlet.id];
 	},
 
 	/**
@@ -571,7 +666,6 @@ app.classes.home = AppJS.extend(
 			}
 
 			widget.getWidgetById('list').set_value(new_list);
-
 		}
 	},
 
@@ -647,3 +741,95 @@ app.classes.home = AppJS.extend(
 		nm.resize();
 	}
 });
+
+/// Base class code
+
+/**
+ * Base class for portlet specific javascript
+ *
+ * Should this maybe extend et2_portlet?  It would complicate instantiation.
+ * 
+ * @type @exp;Class@call;extend
+ */
+app.classes.home.home_portlet = Class.extend({
+	portlet: null,
+
+	init: function(portlet) {
+		this.portlet = portlet;
+	},
+	destroy: function() {
+		this.portlet = null;
+	},
+
+	/**
+	 * Handle framework refresh messages to determine if the portlet needs to
+	 * refresh too.
+	 *
+	 * App is responsible for only reacting to "messages" it is interested in!
+	 *
+	 */
+	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	{
+		// Not interested
+	}
+});
+
+app.classes.home.home_link_portlet = app.classes.home.home_portlet.extend({
+	observer: function(_msg, _app, _id, _type)
+	{
+		if(this.portlet)
+		{
+			var value = this.portlet.settings.entry || {};
+			if(value.app && value.app == _app && value.id && value.id == _id)
+			{
+				// We don't just get the updated title, in case there's a custom
+				// template with more fields
+				app.home.refresh(this.portlet.id);
+			}
+		}
+	}
+});
+app.classes.home.home_list_portlet = app.classes.home.home_portlet.extend({
+	observer: function(_msg, _app, _id, _type)
+	{
+		if(this.portlet && this.portlet.getWidgetById('list'))
+		{
+			var list = this.portlet.getWidgetById('list').options.value;
+			for(var i = 0; i < list.length; i++)
+			{
+				if(list[i].app == _app && list[i].id == _id)
+				{
+					app.home.refresh(this.portlet.id);
+					return;
+				}
+			}
+		}
+	}
+});
+app.classes.home.home_favorite_portlet = app.classes.home.home_portlet.extend({
+	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+	{
+		if(this.portlet.class.indexOf(_app) == 0 || this.portlet.class == 'home_favorite_portlet')
+		{
+			this.portlet.getWidgetById('nm').refresh(_id,_type);
+		}
+	}
+});
+
+
+/**
+ * An example illustrating extending the base code for a application specific code.
+ * See also the calendar app, which needs custom handlers
+ * 
+ * @type @exp;app@pro;classes@pro;home@pro;home_favorite_portlet@call;extend
+ * Note we put it in home, but this code should go in addressbook/js/addressbook_favorite_portlet.js
+ *
+app.classes.home.addressbook_favorite_portlet = app.classes.home.home_favorite_portlet.extend({
+
+observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
+{
+	// Just checking...
+	debugger;
+}
+});
+*/

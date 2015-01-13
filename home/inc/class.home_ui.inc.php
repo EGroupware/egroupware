@@ -266,6 +266,10 @@ class home_ui
 		{
 			$etemplate->setElementAttribute($id, $attr, $value);
 		}
+
+		// Make sure custom javascript is loaded
+		egw_framework::validate_file('', $classname, $context['appname'] ? $context['appname'] : 'home');
+
 		if($full_exec)
 		{
 			$content = $portlet->exec($id, $etemplate, $full_exec ? 2 : -1);
