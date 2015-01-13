@@ -113,7 +113,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			"description": "Hide the second filter",
 			"default": et2_no_init
 		},
-
+		"view": {
+			"name": "View",
+			"type": "string",
+			"description": "Display entries as either 'row' or 'tile'.  A matching template must also be set after changing this.",
+			"default": et2_no_init
+		},
 		"onselect": {
 			"name": "onselect",
 			"type": "js",
@@ -1663,7 +1668,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * This should be followed by a call to change the template to match, which
 	 * will cause a reload of the grid using the new settings.
 	 *
-	 * @param {type} view
+	 * @param {string} view Either 'tile' or 'row'
 	 */
 	set_view: function(view)
 	{

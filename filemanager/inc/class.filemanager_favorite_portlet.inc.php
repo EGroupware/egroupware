@@ -30,12 +30,11 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 
 		$ui = new filemanager_ui();
 
-		$this->context['template'] = 'filemanager.index.rows';
 		$this->nm_settings += array(
 			'get_rows'       => 'filemanager.filemanager_ui.get_rows',
 			'csv_export'     => true,
 			// Use a different template so it can be accessed from client side
-			'template'       => 'filemanager.home.rows',
+			'template'       => ($this->nm_settings['view'] == 'tile' ? 'filemanager.tile' : 'filemanager.home.rows' ),
 			// Filemanager needs this header, it's an important component for actions, but we reduce it to the minimum
 			'header_left'    => 'filemanager.home.header_left',
 			// Use a reduced column set for home, user can change if needed
@@ -80,6 +79,11 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 	{
 		$ui = new filemanager_ui();
 		$total = $ui->get_rows($query, $rows, $readonlys);
+		// Change template to match selected view
+		if($query['view'])
+		{
+			$query['template'] = ($query['view'] == 'row' ? 'filemanager.home.rows' : 'filemanager.tile');
+		}
 		unset($GLOBALS['egw_info']['flags']['app_header']);
 		return $total;
 	}

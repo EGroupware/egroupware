@@ -18,7 +18,7 @@
 					<nextmatch-header/>
 				</row>
 				<row class="tile $row_cont[class]">
-					<vbox class="file_tile" width="150px" height="150px">
+					<vbox class="file_tile" width="150px" height="110px">
 						<vfs-mime align="center" id="$row"/>
 						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
 						<description id="${row}[comment]"/>

@@ -482,6 +482,13 @@ class filemanager_ui
 		{
 			$tpl->setElementAttribute('nm[buttons][upload]', 'drop_target', 'popupMainDiv');
 		}
+		// Set view button to match current settings
+		if($content['nm']['view'] == 'tile')
+		{
+			$tpl->setElementAttribute('nm[buttons][button][change_view]','label',lang('List view'));
+			$tpl->setElementAttribute('nm[buttons][button][change_view]','image','list_row');
+
+		}
 		// if initial load is done via GET request (idots template or share.php)
 		// get_rows cant call app.filemanager.set_readonly, so we need to do that here
 		$content['initial_path_readonly'] = !egw_vfs::is_writable($content['nm']['path']);
@@ -757,7 +764,7 @@ class filemanager_ui
 	 * @param array $query
 	 * @param array &$rows
 	 */
-	function get_rows($query, &$rows)
+	function get_rows(&$query, &$rows)
 	{
 		// show projectmanager sidebox for projectmanager path
 		if (substr($query['path'],0,20) == '/apps/projectmanager' && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
@@ -771,6 +778,11 @@ class filemanager_ui
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 
+		// Change template to match selected view
+		if($query['view'])
+		{
+			$query['template'] = ($query['view'] == 'row' ? 'filemanager.index.rows' : 'filemanager.tile');
+		}
 		// be tolerant with (in previous versions) not correct urlencoded pathes
 		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))
 		{

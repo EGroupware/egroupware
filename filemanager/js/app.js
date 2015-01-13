@@ -72,6 +72,13 @@ app.classes.filemanager = AppJS.extend(
 		this._super.apply(this, arguments);
 
 		this.path_widget[et2.DOMContainer.id] = this.et2.getWidgetById('path') || null;
+		if(this.path_widget[et2.DOMContainer.id])
+		{
+			// Bind to removal to remove from list
+			$j(et2.DOMContainer).on('clear', function(e) {
+				delete app.filemanager.path_widget[e.target.id];
+			});
+		}
 
 		if(this.et2.getWidgetById('nm'))
 		{
@@ -93,6 +100,60 @@ app.classes.filemanager = AppJS.extend(
 			this.set_readonly.apply(this, this.readonly);
 			delete this.readonly;
 		}
+	},
+
+	/**
+	 * Set the application's state to the given state.
+	 *
+	 * Extended from parent to also handle view
+	 *
+	 *
+	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
+	 *	Only state is required, and its contents are application specific.
+	 *
+	 * @return {boolean} false - Returns false to stop event propagation
+	 */
+	setState: function(state)
+	{
+		// State should be an object, not a string, but we'll parse
+		if(typeof state == "string")
+		{
+			if(state.indexOf('{') != -1 || state =='null')
+			{
+				state = JSON.parse(state);
+			}
+		}
+		if(typeof state == "object" && state.state && state.state.view)
+		{
+			var et2 = etemplate2.getById('filemanager-index');
+			if(et2)
+			{
+				var nm = et2.widgetContainer.getWidgetById('nm');
+				nm.set_view(state.state.view);
+			}
+		}
+		return this._super.call(this,state);
+	},
+
+	/**
+	 * Retrieve the current state of the application for future restoration
+	 *
+	 * Extended from parent to also set view
+	 *
+	 * @return {object} Application specific map representing the current state
+	 */
+	getState: function()
+	{
+		var state = this._super.apply(this);
+
+		var et2 = etemplate2.getById('filemanager-index');
+		if(et2)
+		{
+			var nm = et2.widgetContainer.getWidgetById('nm');
+			state.view = nm.view;
+		}
+
+		return state;
 	},
 
 	/**
@@ -609,7 +670,8 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Toggle view between tiles and rows
 	 * 
-	 * @param {string} [view] - Specify what to change the view to.  Either 'tile' or 'row'.
+	 * @param {string|Event} [view] - Specify what to change the view to.  Either 'tile' or 'row'.
+	 *	Or, if this is used as a callback view is actually the event, and we need to find the view.
 	 * @param {et2_widget} [button_widget] - The widget that's calling
 	 */
 	change_view: function(view, button_widget)
@@ -622,6 +684,10 @@ app.classes.filemanager = AppJS.extend(
 			return;
 		}
 
+		if(!button_widget)
+		{
+			button_widget = nm.getWidgetById('button[change_view]');
+		}
 		if(button_widget && button_widget.instanceOf(et2_button))
 		{
 			// Switch view based on button icon, since controller can get re-created
@@ -637,6 +703,8 @@ app.classes.filemanager = AppJS.extend(
 		}
 
 		nm.set_view(view);
+		// Put it into active filters (but don't refresh)
+		nm.activeFilters.view = view;
 
 		// Change template to match
 		this.et2.getWidgetById('nm').set_template(view == nm.controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile');
@@ -765,23 +833,26 @@ app.classes.filemanager = AppJS.extend(
 			this.readonly = [_path, _ro];
 			return;
 		}
-		var path =  this.get_path();
-
-		if (_path == path)
+		for(var id in this.path_widget)
 		{
-			var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
-			for(var i=0; i < ids.length; ++i)
+			var path = this.get_path(id);
+
+			if (_path == path)
 			{
-				var widget = this.et2.getWidgetById(ids[i]);
-				if (widget)
+				var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
+				for(var i=0; i < ids.length; ++i)
 				{
-					if (widget._type == 'button' || widget._type == 'buttononly')
+					var widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
+					if (widget)
 					{
-						widget.set_readonly(_ro);
-					}
-					else
-					{
-						widget.set_disabled(_ro);
+						if (widget._type == 'button' || widget._type == 'buttononly')
+						{
+							widget.set_readonly(_ro);
+						}
+						else
+						{
+							widget.set_disabled(_ro);
+						}
 					}
 				}
 			}

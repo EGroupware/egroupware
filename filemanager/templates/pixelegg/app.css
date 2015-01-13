@@ -100,20 +100,15 @@ table.egwGridView_grid .tile .file_tile {
   display: block;
   max-width: 140px;
 }
-#filemanager-index_nm .tile .file_tile img.vfsMimeIcon {
+.tile .file_tile img.vfsMimeIcon {
   height: auto;
   width: auto;
   max-height: 64px;
   display: block;
   margin: 0 auto;
 }
-.egwGridView_grid tr.tile:hover .innerContainer {
-  overflow: visible;
-}
-.egwGridView_grid tr.tile:hover .file_tile > :not(.iconOverlayContainer) {
-  position: relative;
-  z-index: 90;
-  background-color: white;
+.tile .file_tile .et2_label {
+  word-wrap: break-word;
 }
 /**
  * Select file dialog

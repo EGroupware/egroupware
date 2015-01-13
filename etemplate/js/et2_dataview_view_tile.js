@@ -100,7 +100,7 @@ var et2_dataview_tile = et2_dataview_row.extend([],
 	_recalculate_columns: function() {
 		if(this._inTree && this.tr && this.tr.parent())
 		{
-			this.columns = parseInt(this.tr.parent().innerWidth() / this.tr.outerWidth(true));
+			this.columns = Math.max(1,parseInt(this.tr.parent().innerWidth() / this.tr.outerWidth(true)));
 		}
 	}
 });
