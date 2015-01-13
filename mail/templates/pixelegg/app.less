@@ -349,6 +349,14 @@ div#mail-index{
 
     // ##################################
     //	Toolbar
+.et2_toolbar button.toolbar_toggled {
+    background-color: @color_positive_action;
+}
+
+ 
+
+
+
 
 	#mail-compose_composeToolbar{
 
@@ -447,9 +455,30 @@ div#mail-index{
     }
 
 
-    // Anhang
+     // File sent as...
+div.mailUploadSection {
+  border-top: 0px solid silver;
+  margin-top: 16px;
+  width: 99%;
+
+        // File Compose Elements
+        div.et2_hbox {
+              margin: -11px 0 5px -4px;
+
+              label { margin-right: 10%;}
+
+        }
+
+        // Table - attachments
+        #mail-compose_attachments{
+            border-top: 1px solid silver;
+        }
+
+}
+
+
     fieldset.mailUploadSection{
-		border-top: 1px solid silver;
+                border-top: 0px solid silver;
 		font-size: 0.8em;
 		margin: 8px 0;
 		border-bottom: none;
@@ -497,7 +526,9 @@ div#mail-index{
             /*display: -webkit-box;*/
 
             // all buttons
-            div.et2_toolbar_actionlist{margin-top: 3px; margin-left: 3px;}
+            div.et2_toolbar_actionlist{
+                margin-top: 0px;
+                margin-left: 0px;}
 
            button {
                 .Complete_Button_Icon_normal;
@@ -784,8 +815,11 @@ div.ui-toolbar-menulist{
             .et2_dropdown{
                         .box_shadow_none;
                         border: none !important;
+                        height: 24px !important;
 
                         button{
+                            margin: 0px;
+                            padding-top: -3px !important;
                             .box_shadow_none;
                             background: @gray_10 !important;
                             background-color: @gray_10 !important;
@@ -798,13 +832,13 @@ div.ui-toolbar-menulist{
                             }
 
                         }
-						
+
              }
 			 .et2_button_icon
 			 {
 				.dimension_height_xs;
 			 }
-				
+
             ul> li{  }
 
             ul{          }
