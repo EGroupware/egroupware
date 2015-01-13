@@ -4227,7 +4227,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_submitAction: function (_action)
 	{
-		var action_widget = ['to_infolog','to_tracker','priority'];
+		var action_widget = ['to_infolog','to_tracker','disposition','priority'];
 		var toolbar = this.et2.getWidgetById('composeToolbar');
 		for(var i=0;action_widget.length>i;i++)
 		{
