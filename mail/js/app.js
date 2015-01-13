@@ -4227,22 +4227,22 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_submitAction: function (_action)
 	{
-		var action_widget = ['to_infolog','to_tracker','disposition'];
-		var toolbar = this.et2.getWidgetById('composeToolbar');
-		for(var i=0;action_widget.length>i;i++)
-		{
-			var widget = this.et2.getWidgetById(action_widget[i]);
-			if (toolbar._actionManager)
-			{
-				var action_event = toolbar._actionManager.getActionById(action_widget[i]);
-				if (typeof action_event.checkbox != 'undefined' && action_event.checkbox)
-				{
-					widget.set_value(action_event.checked?"on":"off");
-				}
-			}
-		}
-		
 		this.et2._inst.submit(null,null,true);
+	},
+	
+	/**
+	 * Set the selected checkbox action
+	 * 
+	 * @param {type} _action selected toolbar action with checkbox
+	 * @returns {undefined}
+	 */
+	compose_setToggle: function (_action)
+	{
+		var widget = this.et2.getWidgetById (_action.id);
+		if (widget && typeof _action.checkbox != 'undefined' && _action.checkbox)
+		{
+			widget.set_value(_action.checked?"on":"off");
+		}
 	},
 	
 	/**
@@ -4258,6 +4258,7 @@ app.classes.mail = AppJS.extend(
 			widget.set_value(_action.id);
 		}
 	},
+	
 	/**
 	 * Triger relative widget via its toolbar identical action
 	 * @param {type} _action toolbar action

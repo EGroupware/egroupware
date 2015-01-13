@@ -156,14 +156,16 @@ class mail_compose
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to save as infolog on send',
-				'toolbarDefault' => true
+				'toolbarDefault' => true,
+				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
 			'to_tracker' => array(
 				'caption' => 'Tracker',
 				'icon' => 'to_tracker',
 				'group' => $group,
 				'checkbox' => true,
-				'hint' => 'check to save as trackerentry on send'
+				'hint' => 'check to save as trackerentry on send',
+				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
 			'disposition' => array(
 				'caption' => 'Notification',
@@ -171,7 +173,8 @@ class mail_compose
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)',
-				'toolbarDefault' => true
+				'toolbarDefault' => true,
+				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
 			'prty' => array(
 				'caption' => 'Priority',
