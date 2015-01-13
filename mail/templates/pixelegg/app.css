@@ -503,7 +503,7 @@ div.mail-compose_fileselector {
 }
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
-  max-height: 1.6em;
+  max-height: 3.6em;
   max-width: 50%;
   overflow: scroll;
   overflow-x: hidden;
@@ -512,6 +512,7 @@ div.mail-compose_fileselector {
   -moz-opacity: 1;
   filter: alpha(opacity=100);
   display: inline-block !important;
+  width: 100%;
   vertical-align: text-top;
 }
 #mail-index_previewAttachmentArea.noContent {
