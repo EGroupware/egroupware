@@ -131,6 +131,7 @@ unable to schedule	importexport	de	Zeitplan nicht möglich
 update categories	importexport	de	Kategorien aktualisieren
 use default	importexport	de	Standard verwenden
 use field from csv if possible	importexport	de	Verwendet ein Adressbuch Definition aus der CSV-Datein, falls vorhanden.
+use search results	common	de	Suchergebnis nutzen
 user preference	importexport	de	Einstellen verwenden
 user template folder	importexport	de	Vorlagenverzeichnis verwenden
 users allowed to create their own definitions	importexport	de	Benutzern erlauben, Ihre eigenen Definitionen zu erstellen.

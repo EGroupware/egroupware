@@ -357,6 +357,7 @@ save into vfs	mail	en	Save into VFS
 save message to disk	mail	en	Save Message to disk
 save message to filemanager	mail	en	Save message to filemanager
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
+save the drafted message as eml file into vfs	mail	en	Save the drafted message as eml file into VFS
 save to disk	mail	en	Save to disk
 save to filemanager	mail	en	Save to filemanager
 save to vfs	mail	en	Save to VFS

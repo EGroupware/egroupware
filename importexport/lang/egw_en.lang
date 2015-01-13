@@ -131,6 +131,7 @@ unable to schedule	importexport	en	Unable to schedule.
 update categories	importexport	en	Update categories
 use default	importexport	en	Use default
 use field from csv if possible	importexport	en	Use field from CSV if possible
+use search results	common	en	Use search results
 user preference	importexport	en	User preference
 user template folder	importexport	en	User template folder
 users allowed to create their own definitions	importexport	en	Users allowed to create their own definitions

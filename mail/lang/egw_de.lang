@@ -357,6 +357,7 @@ save into vfs	mail	de	In das virtuelle Dateisystem (VFS) speichern
 save message to disk	mail	de	Nachricht auf Ihrer Festplatte speichern
 save message to filemanager	mail	de	Im EGroupware Dateimanger speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
+save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf in das VFS als .eml Datei ab.
 save to disk	mail	de	Speichern
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
 save to vfs	mail	de	Im VFS speichern
@@ -367,8 +368,8 @@ saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
 select all	mail	de	Alle Auswählen
 select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an diese Nachricht anhängen möchten.
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
-select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager auswählen
-select files to upload	mail	de	Wählen Sie Dateien aus, die Sie zur dieser Mail hochladen möchten.
+select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen.
+select files to upload	mail	de	Dateien anhängen.
 selected	mail	de	ausgewählt
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
@@ -447,10 +448,10 @@ undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
 unsubscribe folder	mail	de	Ordner Abbestellen
-upload files...	mail	de	Dateien hochladen...
+upload files...	mail	de	Dateien anhängen
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
-use source as displayed, if applicable	mail	de	Format wie E-Mailanzeige
+use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
 use username+password from current user	mail	de	verwendet Benutzername+Passwort des angemeldeten Benutzers
 vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheits-Nachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
 vacation notice	mail	de	Abwesenheitsnotiz
