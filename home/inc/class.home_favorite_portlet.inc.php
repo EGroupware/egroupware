@@ -85,6 +85,7 @@ class home_favorite_portlet extends home_portlet
 		{
 			$favorites = egw_favorites::get_favorites($context['appname']);
 			$context['favorite'] = $favorites[$context['favorite']];
+			$need_reload = true;
 		}
 
 		$this->favorite = $context['favorite'];

@@ -240,6 +240,7 @@ class home_ui
 			if(is_array($setting) && !array_key_exists('type',$setting)) unset($settings[$key]);
 		}
 		$settings += $context;
+		error_log(__LINE__ . ' ' . array2string($context));
 		foreach(home_portlet::$common_attributes as $attr)
 		{
 			unset($settings[$attr]);
@@ -268,7 +269,16 @@ class home_ui
 		}
 
 		// Make sure custom javascript is loaded
-		egw_framework::validate_file('', $classname, $context['appname'] ? $context['appname'] : 'home');
+		$appname = $context['appname'];
+		if(!$appname)
+		{
+			list($app) = explode('_',$classname);
+			if($GLOBALS['egw_info']['apps'][$app])
+			{
+				$appname = $app;
+			}
+		}
+		egw_framework::validate_file('', $classname, $appname ? $appname : 'home');
 
 		if($full_exec)
 		{
@@ -481,7 +491,7 @@ class home_ui
 	 */
 	public function ajax_set_properties($portlet_id, $attributes, $values, $group = false)
 	{
-		//error_log(__METHOD__ . "($portlet_id, " .array2string($attributes).','.array2string($values).",$group)");
+		error_log(__METHOD__ . "($portlet_id, " .array2string($attributes).','.array2string($values).",$group)");
 		if(!$attributes)
 		{
 			$attributes = array();
@@ -588,6 +598,8 @@ class home_ui
 			$response->data($update);
 
 			// Store for preference update
+			error_log("Storing " . $portlet_id);
+			error_log(array2string($context));
 			$prefs->add('home', $portlet_id, $context, $type);
 		}
 
@@ -696,7 +708,6 @@ class home_ui
 					'height' => 5,
 					'title' => 'Tutorials: www.egroupware.org',
 					'color' => '',
-					'resize_ratio' => '',
 					'group' => 'default',
 					'note' => '<iframe src="'.$tutorial_url.'" width="100%" height="250"></iframe>',
 				),
@@ -723,7 +734,6 @@ class home_ui
 						),
 					),
 					'title' => $weekview,
-					'resize_ratio' => '',
 					'group' => 'default',
 					'appname' => 'calendar',
 				),
@@ -756,7 +766,6 @@ class home_ui
 					'id' => 'portlet_setup142n',
 					'class' => 'news_admin_favorite_portlet',
 					'title' => 'www.egroupware.org',
-					'resize_ratio' => '',
 					'group' => 'default',
 					'appname' => 'news_admin'
 				),

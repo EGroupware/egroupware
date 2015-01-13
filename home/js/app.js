@@ -260,11 +260,15 @@ app.classes.home = AppJS.extend(
 			attrs.col = Math.max(1,Math.round((action.menu_context.posx - $portlet_container.offset().left) / this.GRID)+1);
 		}
 
-		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
+		// Don't pass default width & height so class can set it
+		delete attrs.width;
+		delete attrs.height;
+		var portlet = et2_createWidget('portlet',jQuery.extend({},attrs), this.portlet_container);
 		portlet.loadingFinished();
 
 		// Immediately add content ID so etemplate loads into the right place
 		portlet.content.append('<div id="'+ attrs.id+'" class="et2_container"/>');
+
 		// Get actual attributes & settings, since they're not available client side yet
 		portlet._process_edit(et2_dialog.OK_BUTTON, attrs);
 
@@ -308,7 +312,7 @@ app.classes.home = AppJS.extend(
 			attrs.col = Math.max(1,Math.round((action.ui.position.left - $portlet_container.offset().left) / this.GRID));
 		}
 
-		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
+		var portlet = et2_createWidget('portlet',jQuery.extend({},attrs), this.portlet_container);
 		portlet.loadingFinished();
 		// Immediately add content ID so etemplate loads into the right place
 		portlet.content.append('<div id="'+ attrs.id+'" class="et2_container"/>');
@@ -326,6 +330,9 @@ app.classes.home = AppJS.extend(
 				drop_data.push(source[i].data);
 			}
 		}
+		// Don't pass default width & height so class can set it
+		delete attrs.width;
+		delete attrs.height;
 		portlet._process_edit(et2_dialog.OK_BUTTON, jQuery.extend({dropped_data: drop_data},attrs));
 
 		// Set up sorting/grid of new portlet
