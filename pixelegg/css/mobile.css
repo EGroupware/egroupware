@@ -6954,6 +6954,7 @@ a.textSidebox {
   .egw_fw_mobile_popup_container .egw_fw_mobile_popupFrame {
     width: 100%;
     height: 100%;
+    visibility: hidden;
   }
   .egw_fw_mobile_popup_loader {
     background-image: url('../images/ajax-loader.gif');
