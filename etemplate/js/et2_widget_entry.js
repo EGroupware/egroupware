@@ -59,9 +59,6 @@ var et2_entry = et2_valueWidget.extend(
 
 	legacyOptions: ["field","compare","alternate_fields"],
 
-	// Doesn't really need a namespace, but this simplifies the sub-widgets
-	createNamespace: true,
-
 	prefix: '~',
 
 	/**
@@ -102,17 +99,17 @@ var et2_entry = et2_valueWidget.extend(
 	 */
 	loadField: function() {
 		// Create widget of correct type
-		var entry = {type: 'label'};
+		var attrs = {
+			id: this.id + '[' +this.options.field+']',
+			type: 'label',
+			readonly: this.options.readonly
+		};
 		var modifications = this.getArrayMgr("modifications");
 		if(modifications && this.options.field)
 		{
-			jQuery.extend(entry, modifications.getEntry(this.options.field));
+			jQuery.extend(attrs, modifications.getEntry(attrs.id));
 		}
-		var attrs = {
-			id: this.options.field,
-			type: entry.type || 'label',
-			readonly: this.options.readonly
-		};
+		
 		// Supress labels on templates
 		if(attrs.type == 'template' && this.options.label)
 		{

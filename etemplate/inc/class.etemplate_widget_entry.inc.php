@@ -58,7 +58,7 @@ abstract class etemplate_widget_entry extends etemplate_widget_transformer
 	 *
 	 * @param string $cname
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand=array())
 	{
 		$attrs = $this->attrs;
 
@@ -96,7 +96,7 @@ abstract class etemplate_widget_entry extends etemplate_widget_transformer
 
 		$old_type = self::getElementAttribute($this->id, 'type');
 
-		parent::beforeSendToClient($cname);
+		parent::beforeSendToClient($cname, $expand);
 
 		// Check for conflict - more than one with same id/field and different type
 		if($old_type && $old_type != $this->type)

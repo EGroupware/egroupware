@@ -99,7 +99,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 	 *
 	 * @param string $cname
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, array $expand=array())
 	{
 		$attrs = $this->attrs;
 		$form_name = self::form_name($cname, $this->id);
@@ -136,6 +136,14 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 					self::$request->sel_options[$form_name] = $val;
 					break;
 				case 'type':	// not an attribute in etemplate2
+					if($val == 'template')
+					{
+						// If the widget has been transformed into a template, we
+						// also need to try and instanciate & parse the template too
+						$transformed_template = etemplate_widget_template::instance($attrs['template']);
+						$this->expand_widget($transformed_template, $expand);
+						$transformed_template->run('beforeSendToClient',array($cname,$expand));
+					}
 				default:
 					self::setElementAttribute($form_name, $attr, $val);
 					break;

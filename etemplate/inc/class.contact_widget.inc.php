@@ -175,7 +175,7 @@ class contact_widget extends etemplate_widget_entry
 				{
 					$value = 'account:'.($attrs['name'] != 'account:' ? $value : $GLOBALS['egw_info']['user']['account_id']);
 				}
-				// fall-throught
+				// fall-through
 			case 'contact-value':
 			default:
 				if (substr($value,0,12) == 'addressbook:') $value = substr($value,12);	// link-entry syntax
