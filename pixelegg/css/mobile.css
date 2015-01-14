@@ -6277,6 +6277,7 @@ a.textSidebox {
   }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
     font-size: medium;
+    margin-top: 15px;
   }
   body table.egwGridView_outer thead tr th {
     font-size: small !important;
