@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Christian Binder <christian-AT-jaytraxx.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-14 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-15 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -137,12 +137,12 @@ class calendar_so
 	 * All times (start, end and modified) are returned as timesstamps in servertime!
 	 *
 	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
-	 * @param int $recur_date=0 if set read the next recurrence at or after the timestamp, default 0 = read the initital one
+	 * @param int $recur_date =0 if set read the next recurrence at or after the timestamp, default 0 = read the initital one
 	 * @return array|boolean array with cal_id => event array pairs or false if entry not found
 	 */
 	function read($ids,$recur_date=0)
 	{
-		//_debug_array(__METHOD__.__LINE__.'#'.$recur_date.'#'.function_backtrace());
+		//error_log(__METHOD__.'('.array2string($ids).",$recur_date) ".function_backtrace());
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
@@ -151,8 +151,6 @@ class calendar_so
 		{
 			$minimum_uid_length = 8;
 		}
-
-		//echo "<p>socal::read(".print_r($ids,true).",$recur_date)<br />\n".function_backtrace()."<p>\n";
 
 		$cols = self::get_columns('calendar', $this->cal_table);
 		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
@@ -331,8 +329,8 @@ class calendar_so
 	 * This includes ALL recurences of an event series
 	 *
 	 * @param int|string|array $users one or mulitple calendar users
-	 * @param booelan $owner_too=false if true return also events owned by given users
-	 * @param boolean $master_only=false only check recurance master (egw_cal_user.recur_date=0)
+	 * @param booelan $owner_too =false if true return also events owned by given users
+	 * @param boolean $master_only =false only check recurance master (egw_cal_user.recur_date=0)
 	 * @return int maximum modification timestamp
 	 */
 	function get_ctag($users, $owner_too=false,$master_only=false)
@@ -350,6 +348,7 @@ class calendar_so
 		$types = array();
 		foreach((array)$users as $uid)
 		{
+			$type = $id = null;
 			self::split_user($uid, $type, $id);
 			$types[$type][] = $id;
 		}
@@ -394,10 +393,10 @@ class calendar_so
 	 * Use as: foreach(get_cal_data() as $data) { $data = egw_db::strip_array_keys($data, 'cal_'); // do something with $data
 	 *
 	 * @param array $query filter, keys have to use 'cal_' prefix
-	 * @param string|array $cols='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified' cols to query
+	 * @param string|array $cols ='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified' cols to query
 	 * @return Iterator as egw_db::select
 	 */
-	function get_cal_data(array $query, $cols='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified', $include_user_modified=false)
+	function get_cal_data(array $query, $cols='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified')
 	{
 		if (!is_array($cols)) $cols = explode(',', $cols);
 
@@ -441,23 +440,23 @@ class calendar_so
 	 * @param int $start startdate of the search/list (servertime)
 	 * @param int $end enddate of the search/list (servertime)
 	 * @param int|array $users user-id or array of user-id's, !$users means all entries regardless of users
-	 * @param int|array $cat_id=0 mixed category-id or array of cat-id's (incl. all sub-categories), default 0 = all
-	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or everything (incl. rejected, deleted)
-	 * @param int|boolean $offset=False offset for a limited query or False (default)
-	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
-	 * @param array $params=array()
+	 * @param int|array $cat_id =0 mixed category-id or array of cat-id's (incl. all sub-categories), default 0 = all
+	 * @param string $filter ='all' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or everything (incl. rejected, deleted)
+	 * @param int|boolean $offset =False offset for a limited query or False (default)
+	 * @param int $num_rows =0 number of rows to return if offset set, default 0 = use default in user prefs
+	 * @param array $params =array()
 	 * @param string|array $params['query'] string: pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 *      array: everything is directly used as $where
-	 * @param string $params['order']='cal_start' column-names plus optional DESC|ASC separted by comma
+	 * @param string $params['order'] ='cal_start' column-names plus optional DESC|ASC separted by comma
 	 * @param string $params['sql_filter'] sql to be and'ed into query (fully quoted)
 	 * @param string|array $params['cols'] what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
 	 * 						if specified and not false an iterator for the rows is returned
 	 * @param string $params['append'] SQL to append to the query before $order, eg. for a GROUP BY clause
 	 * @param array $params['cfs'] custom fields to query, null = none, array() = all, or array with cfs names
 	 * @param array $params['users'] raw parameter as passed to calendar_bo::search() no memberships resolved!
-	 * @param boolean $params['master_only']=false, true only take into account participants/status from master (for AS)
-	 * @param int $remove_rejected_by_user=null add join to remove entry, if given user has rejected it
+	 * @param boolean $params['master_only'] =false, true only take into account participants/status from master (for AS)
+	 * @param int $remove_rejected_by_user =null add join to remove entry, if given user has rejected it
 	 * @return array of cal_ids, or false if error in the parameters
 	 *
 	 * ToDo: search custom-fields too
@@ -535,7 +534,10 @@ class calendar_so
 						$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
 						// only users can be owners, no need to add groups
 						$user_ids = array();
-						foreach($ids as $user_id) if ($GLOBALS['egw']->accounts->get_type($user_id) === 'u') $user_ids[] = $user_id;
+						foreach($ids as $user_id)
+						{
+							if ($GLOBALS['egw']->accounts->get_type($user_id) === 'u') $user_ids[] = $user_id;
+						}
 						$owner_or = $this->db->expression($cal_table_def,array('cal_owner' => $user_ids));
 					}
 				}
@@ -662,7 +664,7 @@ class calendar_so
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
-				'append'=> $params['append'].' '.$group_by,
+				'append'=> $params['append'],
 			);
 			if ($params['enum_recuring'])	// dates table join only needed to enum recuring events
 			{
@@ -910,7 +912,7 @@ class calendar_so
 			'filter'=> $filter,
 			'query' => $query,
 		));
-		foreach(self::$integration_data as $app => $data)
+		foreach(self::$integration_data as $data)
 		{
 			if (is_array($data['selects']))
 			{
@@ -937,7 +939,7 @@ class calendar_so
 	 *
 	 * @param array $app_cols required name => own name pairs
 	 * @param string|array $required array or comma separated column names or table.*
-	 * @param string $required_app='calendar'
+	 * @param string $required_app ='calendar'
 	 * @return string cols for union query to match ones supplied in $required
 	 */
 	public static function union_cols(array $app_cols,$required,$required_app='calendar')
@@ -950,6 +952,7 @@ class calendar_so
 		$return_cols = array();
 		foreach(is_array($required) ? $required : explode(',',$required) as $cols)
 		{
+			$matches = null;
 			if (substr($cols,-2) == '.*')
 			{
 				$cols = self::get_columns($required_app,substr($cols,0,-2));
@@ -1053,7 +1056,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param array $event
 	 * @param boolean &$set_recurrences on return: true if the recurrences need to be written, false otherwise
 	 * @param int &$set_recurrences_start=0 on return: time from which on the recurrences should be rebuilt, default 0=all
-	 * @param int $change_since=0 time from which on the repetitions should be changed, default 0=all
+	 * @param int $change_since =0 time from which on the repetitions should be changed, default 0=all
 	 * @param int &$etag etag=null etag to check or null, on return new etag
 	 * @return boolean|int false on error, 0 if etag does not match, cal_id otherwise
 	 */
@@ -1413,18 +1416,18 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * Shift alarm on recurring events to next future recurrence
 	 *
-	 * @param array $event event with optional 'cal_' prefix in keys
+	 * @param array $_event event with optional 'cal_' prefix in keys
 	 * @param array &$alarm
 	 * @return boolean true if alarm could be shifted, false if not
 	 */
-	public static function shift_alarm(array $event, array &$alarm)
+	public static function shift_alarm(array $_event, array &$alarm)
 	{
-		if ($event['recur_type'] == MCAL_RECUR_NONE)
+		if ($_event['recur_type'] == MCAL_RECUR_NONE)
 		{
 			return false;
 		}
 		$start = (int)time() + $alarm['offset'];
-		$event = egw_db::strip_array_keys($event, 'cal_');
+		$event = egw_db::strip_array_keys($_event, 'cal_');
 		$rrule = calendar_rrule::event2rrule($event, false);
 		foreach ($rrule as $time)
 		{
@@ -1443,9 +1446,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $cal_id
 	 * @param int $start new starttime
 	 * @param int $end new endtime
-	 * @param int|boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
-	 * @param int $old_start=0 old starttime or (default) 0, to query it from the db
-	 * @param int $old_end=0 old starttime or (default) 0
+	 * @param int|boolean $change_since =0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
+	 * @param int $old_start =0 old starttime or (default) 0, to query it from the db
+	 * @param int $old_end =0 old starttime or (default) 0
 	 * @todo Recalculate recurrences, if timezone changes
 	 * @return int|boolean number of moved recurrences or false on error
 	 */
@@ -1536,8 +1539,8 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Combine status, quantity and role into one value
 	 *
 	 * @param string $status
-	 * @param int $quantity=1
-	 * @param string $role='REQ-PARTICIPANT'
+	 * @param int $quantity =1
+	 * @param string $role ='REQ-PARTICIPANT'
 	 * @return string
 	 */
 	static function combine_status($status,$quantity=1,$role='REQ-PARTICIPANT')
@@ -1561,6 +1564,7 @@ ORDER BY cal_user_type, cal_usre_id
 		$quantity = 1;
 		$role = 'REQ-PARTICIPANT';
 		//error_log(__METHOD__.__LINE__.array2string($status));
+		$matches = null;
 		if (is_string($status) && strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
 		{
 			if ((int)$matches[1] > 0) $quantity = (int)$matches[1];
@@ -1581,9 +1585,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param int $cal_id
 	 * @param array $participants uid => status pairs
-	 * @param int|boolean $change_since=0, false=new event,
+	 * @param int|boolean $change_since =0, false=new event,
 	 * 		0=all, > 0 time from which on the repetitions should be changed
-	 * @param boolean $add_only=false
+	 * @param boolean $add_only =false
 	 *		false = add AND delete participants if needed (full list of participants required in $participants)
 	 *		true = only add participants if needed, no participant will be deleted (participants to check/add required in $participants)
 	 * @return int|boolean number of updated recurrences or false on error
@@ -1729,8 +1733,8 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param char $user_type 'u' regular user, 'r' resource, 'c' contact
 	 * @param int $user_id
 	 * @param int|char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
-	 * @param int $recur_date=0 date to change, or 0 = all since now
-	 * @param string $role=null role to set if !is_null($role)
+	 * @param int $recur_date =0 date to change, or 0 = all since now
+	 * @param string $role =null role to set if !is_null($role)
 	 * @return int number of changed recurrences
 	 */
 	function set_status($cal_id,$user_type,$user_id,$status,$recur_date=0,$role=null)
@@ -1799,8 +1803,8 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $cal_id
 	 * @param int $start
 	 * @param int $end
-	 * @param boolean $exception=null true or false to set recure_exception flag, null leave it unchanged (new are by default no exception)
 	 * @param array $participants uid => status pairs
+	 * @param boolean $exception =null true or false to set recure_exception flag, null leave it unchanged (new are by default no exception)
 	 */
 	function recurrence($cal_id,$start,$end,$participants,$exception=null)
 	{
@@ -1826,6 +1830,7 @@ ORDER BY cal_user_type, cal_usre_id
 				$type = '';
 				$id = null;
 				self::split_user($uid,$type,$id);
+				$quantity = $role = null;
 				self::split_status($status,$quantity,$role);
 				$this->db->insert($this->user_table,array(
 					'cal_status'	=> $status,
@@ -1926,7 +1931,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
 	 *
 	 * @param int|array $cal_id
-	 * @param boolean $update_cache=null true: re-read given $cal_id, false: delete given $cal_id
+	 * @param boolean $update_cache =null true: re-read given $cal_id, false: delete given $cal_id
 	 * @return array of (cal_id => array of) alarms with alarm-id as key
 	 */
 	function read_alarms($cal_id, $update_cache=null)
@@ -1934,7 +1939,7 @@ ORDER BY cal_user_type, cal_usre_id
 		if (!isset(self::$alarm_cache) && is_array($cal_id))
 		{
 			self::$alarm_cache = array();
-			if ($jobs = $this->async->read('cal:%'))
+			if (($jobs = $this->async->read('cal:%')))
 			{
 				foreach($jobs as $id => $job)
 				{
@@ -1984,7 +1989,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 	private function read_alarms_nocache($cal_id)
 	{
-		if ($jobs = $this->async->read('cal:'.(int)$cal_id.':%'))
+		if (($jobs = $this->async->read('cal:'.(int)$cal_id.':%')))
 		{
 			foreach($jobs as $id => $job)
 			{
@@ -2011,9 +2016,9 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			return False;
 		}
-		list($id,$job) = each($jobs);
+		list($alarm_id,$job) = each($jobs);
 		$alarm         = $job['data'];	// text, enabled
-		$alarm['id']   = $id;
+		$alarm['id']   = $alarm_id;
 		$alarm['time'] = $job['next'];
 
 		//echo "<p>read_alarm('$id')="; print_r($alarm); echo "</p>\n";
@@ -2025,7 +2030,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param int $cal_id Id of the calendar-entry
 	 * @param array $alarm array with fields: text, owner, enabled, ..
-	 * @param boolean $update_modified=true call update modified, default true
+	 * @param boolean $update_modified =true call update modified, default true
 	 * @return string id of the alarm
 	 */
 	function save_alarm($cal_id, $alarm, $update_modified=true)
@@ -2076,7 +2081,7 @@ ORDER BY cal_user_type, cal_usre_id
 		//error_log(__METHOD__."($cal_id) ".function_backtrace());
 		if (($alarms = $this->read_alarms($cal_id)))
 		{
-			foreach($alarms as $id => $alarm)
+			foreach(array_keys($alarms) as $id)
 			{
 				$this->async->cancel_timer($id);
 			}
@@ -2113,9 +2118,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Delete account hook
 	 *
 	 * @param array|int $old_user integer old user or array with keys 'account_id' and 'new_owner' as the deleteaccount hook uses it
-	 * @param int $new_user=null
+	 * @param int $new_user =null
 	 */
-	function deleteaccount($old_user, $newuser=null)
+	function deleteaccount($old_user, $new_user=null)
 	{
 		if (is_array($old_user))
 		{
@@ -2179,9 +2184,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 * get stati of all recurrences of an event for a specific participant
 	 *
 	 * @param int $cal_id
-	 * @param int $uid=null  participant uid; if == null return only the recur dates
-	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
-	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
+	 * @param int $uid =null  participant uid; if == null return only the recur dates
+	 * @param int $start =0  if != 0: startdate of the search/list (servertime)
+	 * @param int $end =0  if != 0: enddate of the search/list (servertime)
 	 *
 	 * @return array recur_date => status pairs (index 0 => main status)
 	 */
@@ -2204,19 +2209,20 @@ ORDER BY cal_user_type, cal_usre_id
 		if (is_null($uid)) return $participant_status;
 		$user_type = $user_id = null;
 		self::split_user($uid, $user_type, $user_id);
-		$where = array(
+
+		$where2 = array(
 			'cal_id'		=> $cal_id,
 			'cal_user_type'	=> $user_type ? $user_type : 'u',
 			'cal_user_id'   => $user_id,
 		);
-		if ($start != 0 && $end == 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
-		if ($start == 0 && $end != 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . (int)$end . ')';
+		if ($start != 0 && $end == 0) $where2[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
+		if ($start == 0 && $end != 0) $where2[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . (int)$end . ')';
 		if ($start != 0 && $end != 0)
 		{
-			$where[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . (int)$start .
+			$where2[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . (int)$start .
 						' AND cal_recur_date <= ' . (int)$end . '))';
 		}
-		foreach ($this->db->select($this->user_table,'cal_recur_date,cal_status,cal_quantity,cal_role',$where,
+		foreach ($this->db->select($this->user_table,'cal_recur_date,cal_status,cal_quantity,cal_role',$where2,
 				__LINE__,__FILE__,false,'','calendar') as $row)
 		{
 			$status = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
@@ -2229,7 +2235,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * get all participants of an event
 	 *
 	 * @param int $cal_id
-	 * @param int $recur_date=0 gives participants of this recurrence, default 0=all
+	 * @param int $recur_date =0 gives participants of this recurrence, default 0=all
 	 *
 	 * @return array participants
 	 */
@@ -2285,9 +2291,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param array $event			Recurring Event.
 	 * @param string tz_id=null		timezone for exports (null for event's timezone)
-	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
-	 * @param int $end=0  if != 0:	enddate of the search/list (servertime)
-	 * @param string $filter='all'	string filter-name: all (not rejected),
+	 * @param int $start =0  if != 0: startdate of the search/list (servertime)
+	 * @param int $end =0  if != 0:	enddate of the search/list (servertime)
+	 * @param string $filter ='all'	string filter-name: all (not rejected),
 	 * 		accepted, unknown, tentative, rejected, delegated
 	 *      rrule					return array of remote exceptions in servertime
 	 * 		tz_rrule/tz_only,		return (only by) timezone transition affected entries
@@ -2456,9 +2462,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function status_pseudo_exception($cal_id, $recur_date, $filter)
 	{
-		static $recurrence_zero;
-		static $cached_id;
-		static $user;
+		static $recurrence_zero=null;
+		static $cached_id=null;
+		static $user=null;
 
 		if (!isset($cached_id) || $cached_id != $cal_id)
 		{
@@ -2587,14 +2593,14 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			$timezone = self::$tz_cache[$event['tzid']];
 		}
-		$start = new egw_time($event['start'],egw_time::$server_timezone);
-		$start->setTimezone($timezone);
-		$end = new egw_time($event['end'],egw_time::$server_timezone);
-		$end->setTimezone($timezone);
+		$start_time = new egw_time($event['start'],egw_time::$server_timezone);
+		$start_time->setTimezone($timezone);
+		$end_time = new egw_time($event['end'],egw_time::$server_timezone);
+		$end_time->setTimezone($timezone);
 		//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 		//	'(): ' . $start . '-' . $end);
-		$start = egw_time::to($start,'array');
-		$end = egw_time::to($end,'array');
+		$start = egw_time::to($start_time,'array');
+		$end = egw_time::to($end_time,'array');
 
 
 		return !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
@@ -2629,9 +2635,9 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Updates the modification timestamp to force an etag, ctag and sync-token change
 	 *
 	 * @param int $id event id
-	 * @param int|boolean $update_master=false id of series master or true, to update series master too
-	 * @param int $time=null new timestamp, default current (server-)time
-	 * @param int $modifier=null uid of the modifier, default current user
+	 * @param int|boolean $update_master =false id of series master or true, to update series master too
+	 * @param int $time =null new timestamp, default current (server-)time
+	 * @param int $modifier =null uid of the modifier, default current user
 	 */
 	function updateModified($id, $update_master=false, $time=null, $modifier=null)
 	{
