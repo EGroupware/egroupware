@@ -113,6 +113,12 @@ var et2_entry = et2_valueWidget.extend(
 			type: entry.type || 'label',
 			readonly: this.options.readonly
 		};
+		// Supress labels on templates
+		if(attrs.type == 'template' && this.options.label)
+		{
+			this.egw().debug('log', "Surpressed label on <" + this._type + ' label="' + this.options.label + '" id="' + this.id + '"...>');
+			this.options.label = '';
+		}
 		var widget = et2_createWidget(attrs.type, attrs, this);
 
 		// If value is not set, etemplate takes care of everything
