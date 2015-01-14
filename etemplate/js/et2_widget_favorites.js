@@ -167,6 +167,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			
 			items:'li:not([data-id$="add"])',
 			placeholder:'ui-fav-sortable-placeholder',
+			delay: 250, //(millisecond) delay before the sorting should start
 			update: function (event, ui)
 			{
 				self.favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});

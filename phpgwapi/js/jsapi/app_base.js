@@ -366,6 +366,7 @@ var AppJS = Class.extend(
 			jQuery('ul','#favorite_sidebox_'+this.appname).sortable({
 					items:'li:not([data-id$="add"])',
 					placeholder:'ui-fav-sortable-placeholder',
+					delay:250, //(millisecond) delay before the sorting should start
 					helper: function(event, item) {
 						// We'll need to know which app this is for
 						item.attr('data-appname',self.appname);
