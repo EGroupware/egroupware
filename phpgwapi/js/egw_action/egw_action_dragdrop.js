@@ -340,6 +340,15 @@ function egwDragActionImplementation()
 						return ai.defaultDDHelper(ai.selected);//$j(document.createElement("div")).addClass('et2_egw_action_ddHelper');
 					},
 					"start": function(e) {
+						
+						//Stop dragging if user tries to do scrolling by mouse down and drag
+						//Seems this issue is only happening in FF
+						var $target = $j(e.originalEvent.target);
+						if(e.originalEvent.pageX - $target.offset().left + 15 > $target.innerWidth())
+						{
+							return false;
+						}
+						
 						return ai.helper != null;
 					},
 					revert: function(valid)
