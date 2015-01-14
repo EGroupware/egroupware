@@ -123,16 +123,20 @@ app.classes.filemanager = AppJS.extend(
 				state = JSON.parse(state);
 			}
 		}
+		var result = this._super.call(this,state);
+		
+		// This has to happen after the parent, changing to tile recreates
+		// nm controller
 		if(typeof state == "object" && state.state && state.state.view)
 		{
 			var et2 = etemplate2.getById('filemanager-index');
 			if(et2)
 			{
-				var nm = et2.widgetContainer.getWidgetById('nm');
-				nm.set_view(state.state.view);
+				this.et2 = et2.widgetContainer;
+				this.change_view(state.state.view);
 			}
 		}
-		return this._super.call(this,state);
+		return result;
 	},
 
 	/**
@@ -685,7 +689,12 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	change_view: function(view, button_widget)
 	{
-		var nm = this.et2.getWidgetById('nm');
+		var et2 = etemplate2.getById('filemanager-index');
+		var nm = false;
+		if(et2 && et2.widgetContainer.getWidgetById('nm'))
+		{
+			nm = et2.widgetContainer.getWidgetById('nm');
+		}
 		if(!nm)
 		{
 			egw.debug('warn', 'Could not find nextmatch to change view');
@@ -716,7 +725,7 @@ app.classes.filemanager = AppJS.extend(
 		nm.activeFilters.view = view;
 
 		// Change template to match
-		this.et2.getWidgetById('nm').set_template(view == nm.controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile');
+		nm.set_template(view == nm.controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile');
 	},
 
 	/**
