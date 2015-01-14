@@ -85,6 +85,12 @@ var et2_file = et2_inputWidget.extend(
 			"default": false,
 			"description": "Style list of files in uploading progress like dropdown list with a total upload progress indicator"
 		},
+		onFinishOne: {
+			"name": "Finish event handler for each one",
+			"type": "any",
+			"default": et2_no_init,
+			"description": "A (js) function called when a file to be uploaded is finished."
+		},
 	},
 
 	asyncOptions: {},
@@ -275,7 +281,7 @@ var et2_file = et2_inputWidget.extend(
 		if(jQuery.isEmptyObject(value))
 		{
 			this.options.value = {};
-			this.progress.empty();
+			if (this.resumable.progress() == 1) this.progress.empty();
 
 			// Reset the HTML element
 			this.input.wrap('<form>').closest('form').get(0).reset();
@@ -592,7 +598,10 @@ var et2_file = et2_inputWidget.extend(
 				.css("display", "block")
 				.text(this.egw().lang("Server error"));
 		}
-
+		var event = jQuery.Event('upload');
+		
+		event.data = this;
+		
 		// Callback
 		if(this.options.onFinishOne)
 		{
