@@ -258,7 +258,16 @@ app.classes.filemanager = AppJS.extend(
 			'preset[filemode]': _action.id.substr(5)
 		});
 	},
-
+	
+	/**
+	 * Trigger Upload after each file is uploaded
+	 * @param {type} _event
+	 */
+	uploadOnOne: function (_event)
+	{
+		this.upload(_event,1);
+	},
+	
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
 	 *
