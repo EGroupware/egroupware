@@ -256,6 +256,10 @@ class calendar_boupdate extends calendar_bo
 				'users' => $users,
 				'ignore_acl' => true,	// otherwise we get only events readable by the user
 				'enum_groups' => true,	// otherwise group-events would not block time
+				'query' => array(
+					'cal_non_blocking' => 0,
+				),
+				'use_so_events' => true,// use new calendar_so::events instead of ::search
 			));
 			if ($this->debug > 2 || $this->debug == 'update')
 			{

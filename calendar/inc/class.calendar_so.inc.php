@@ -132,6 +132,98 @@ class calendar_so
 	}
 
 	/**
+	 * Return sql to fetch all events in a given timerange, to be used instead of full table in further sql queries
+	 *
+	 * @param int $start
+	 * @param int $end
+	 * @param array $where =null
+	 * @param boolean $deleted =false
+	 * @return string
+	 */
+	protected function sql_range_view($start, $end, array $where=null, $deleted=false)
+	{
+		$sql = "SELECT * ".
+			"FROM $this->cal_table ".
+			"WHERE range_start<".(int)$end.
+			" AND (range_end IS NULL OR range_end>".(int)$start.")";
+
+		if ($where) $sql .= " AND ".$this->db->expression($this->table, $where);
+
+		if (isset($deleted)) $sql .= " AND cal_deleted IS ".($deleted ? '' : 'NOT').' NULL';
+
+		return $sql;
+	}
+
+	/**
+	 * Return events in a given timespan containing given participants (similar to search but quicker)
+	 *
+	 * Not all search parameters are currently supported!!!
+	 *
+	 * @param int $start startdate of the search/list (servertime)
+	 * @param int $end enddate of the search/list (servertime)
+	 * @param int|array $users user-id or array of user-id's, !$users means all entries regardless of users
+	 * @param int|array $cat_id =0 mixed category-id or array of cat-id's (incl. all sub-categories), default 0 = all
+	 * @param string $filter ='default' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or everything (incl. rejected, deleted)
+	 * @param int|boolean $offset =False offset for a limited query or False (default)
+	 * @param int $num_rows =0 number of rows to return if offset set, default 0 = use default in user prefs
+	 * @param array $params =array()
+	 * @param string|array $params['query'] string: pattern so search for, if unset or empty all matching entries are returned (no search)
+	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
+	 *      array: everything is directly used as $where
+	 * @param string $params['order'] ='cal_start' column-names plus optional DESC|ASC separted by comma
+	 * @param string $params['sql_filter'] sql to be and'ed into query (fully quoted)
+	 * @param string|array $params['cols'] what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+	 * 						if specified and not false an iterator for the rows is returned
+	 * @param string $params['append'] SQL to append to the query before $order, eg. for a GROUP BY clause
+	 * @param array $params['cfs'] custom fields to query, null = none, array() = all, or array with cfs names
+	 * @param array $params['users'] raw parameter as passed to calendar_bo::search() no memberships resolved!
+	 * @param boolean $params['master_only'] =false, true only take into account participants/status from master (for AS)
+	 * @param boolean $params['enum_recuring'] =true enumerate recuring events
+	 * @param int $remove_rejected_by_user =null add join to remove entry, if given user has rejected it
+	 * @return array of events
+	 */
+	function &events($start,$end,$users,$cat_id=0,$filter='default',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
+	{
+		// not everything is supported by now
+		if ($filter != 'default' || !$start || !$end || is_string($params['query']) || //isset($remove_rejected_by_user) ||
+			$params['enum_recuring']===false)
+		{
+			throw new egw_exception_assertion_failed("Unsupported value for parameters!");
+		}
+		$where = is_array($params['query']) ? $params['query'] : array();
+		if ($cat_id) $where[] = $this->cat_filter($cat_id);
+
+		// fix $users to also prefix system users and groups (with 'u')
+		if (!is_array($users)) $users = $users ? (array)$users : array();
+		foreach($users as &$uid)
+		{
+			if (is_numeric($uid)) $uid = 'u'.$uid;
+		}
+
+		$egw_cal = $this->sql_range_view($start, $end, $where, $filter != 'deleted');
+
+		$sql = "SELECT DISTINCT {$this->cal_table}_repeats.*,$this->cal_table.*,\n".
+			"	CASE WHEN recur_type IS NULL THEN egw_cal.range_start ELSE cal_start END AS cal_start,\n".
+			"	CASE WHEN recur_type IS NULL THEN egw_cal.range_end ELSE cal_end END AS cal_end\n".
+			// using time-limited range view, instead of complete table, give a big performance plus
+			"FROM ($egw_cal) egw_cal\n".
+			"JOIN egw_cal_user ON egw_cal_user.cal_id=egw_cal.cal_id\n".
+			// need to left join dates, as egw_cal_user.recur_date is null for non-recuring event
+			"LEFT JOIN egw_cal_dates ON egw_cal_user.cal_id=egw_cal_dates.cal_id AND egw_cal_dates.cal_start=egw_cal_user.cal_recur_date\n".
+			"LEFT JOIN egw_cal_repeats ON egw_cal_user.cal_id=egw_cal_repeats.cal_id\n".
+			"WHERE cal_status NOT IN ('X','R','E')\n".	// "default" filter for enum_recuring
+			"	AND CASE WHEN recur_type IS NULL THEN egw_cal.range_start ELSE cal_start END<".(int)$end."\n".
+			"	AND CASE WHEN recur_type IS NULL THEN egw_cal.range_end ELSE cal_end END>".(int)$start."\n";
+
+		if ($users)
+		{
+			$sql .= "	AND CONCAT(cal_user_type,cal_user_id) IN (".implode(',', array_map(array($this->db, 'quote'), $users)).")";
+		}
+		//error_log(__METHOD__."(".array2string(func_get_args()).") $sql");
+		return $this->get_events($this->db->query($sql, __LINE__, __FILE__, $offset, $num_rows));
+	}
+
+	/**
 	 * reads one or more calendar entries
 	 *
 	 * All times (start, end and modified) are returned as timesstamps in servertime!
@@ -143,15 +235,6 @@ class calendar_so
 	function read($ids,$recur_date=0)
 	{
 		//error_log(__METHOD__.'('.array2string($ids).",$recur_date) ".function_backtrace());
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
-		{
-			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
-		}
-		else
-		{
-			$minimum_uid_length = 8;
-		}
-
 		$cols = self::get_columns('calendar', $this->cal_table);
 		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
 		$cols = "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".implode(',',$cols);
@@ -194,8 +277,31 @@ class calendar_so
 		}
 		$cols .= ',range_end AS recur_enddate';
 
+		$events =& $this->get_events($this->db->select($this->cal_table, $cols, $where, __LINE__, __FILE__, false, $group_by, 'calendar', 0, $join), $recur_date);
+
+		return $events ? $events : false;
+	}
+
+	/**
+	 * Get full event information from an iterator of a select on egw_cal
+	 *
+	 * @param array|Iterator $rs
+	 * @param int $recur_date =0
+	 * @return array
+	 */
+	protected function &get_events($rs, $recur_date=0)
+	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		{
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		}
+		else
+		{
+			$minimum_uid_length = 8;
+		}
+
 		$events = array();
-		foreach($this->db->select($this->cal_table, $cols, $where, __LINE__, __FILE__, false, $group_by, 'calendar', 0, $join) as $row)
+		foreach($rs as $row)
 		{
 			if (!$row['recur_type'])
 			{
@@ -204,11 +310,11 @@ class calendar_so
 			}
 			$row['recur_exception'] = $row['alarm'] = array();
 			$events[$row['cal_id']] = egw_db::strip_array_keys($row,'cal_');
-
-			// if a uid was supplied, convert it for the further code to an id
-			if (!is_array($ids) && !is_numeric($ids)) $ids = $row['cal_id'];
 		}
-		if (!$events) return false;
+		if (!$events) return $events;
+
+		$ids = array_keys($events);
+		if (count($ids) == 1) $ids = $ids[0];
 
 		foreach ($events as &$event)
 		{
@@ -234,24 +340,21 @@ class calendar_so
 			if (($recur_date &&	$event['recur_type'] != MCAL_RECUR_NONE))
 			{
 				//_debug_array(__METHOD__.__LINE__.' recur_date:'.$recur_date.' check cal_start:'.$event['start']);
-				foreach(($i=$this->db->select($this->dates_table, 'cal_id,cal_start', array(
+				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
 					'cal_id' => $event['id'],
 					'cal_start' => $event['start'],
 					'recur_exception' => true,
-				), __LINE__, __FILE__, false, '', 'calendar')) as $row)
+				), __LINE__, __FILE__, false, '', 'calendar') as $row)
 				{
 					$isException[$row['cal_id']] = true;
 				}
-				//_debug_array($i->sql.'-> found Rows:'.$i->_numOfRows);
 				if ($isException[$event['id']])
 				{
-					$x = $this->db->select($this->cal_table, 'cal_id', array(
+					if (!$this->db->select($this->cal_table, 'COUNT(*)', array(
 						'cal_uid' => $event['uid'],
 						'cal_recurrence' => $event['start'],
 						'cal_deleted' => NULL
-					), __LINE__, __FILE__, false, '', 'calendar');
-					//_debug_array(__METHOD__.__LINE__.$x->sql.'-> found Rows:'.$x->_numOfRows);
-					if (empty($x->_numOfRows))
+					), __LINE__, __FILE__, false, '', 'calendar')->fetchColumn())
 					{
 						$e = $this->read($event['id'],$event['start']+1);
 						$event = $e[$event['id']];
@@ -456,15 +559,23 @@ class calendar_so
 	 * @param array $params['cfs'] custom fields to query, null = none, array() = all, or array with cfs names
 	 * @param array $params['users'] raw parameter as passed to calendar_bo::search() no memberships resolved!
 	 * @param boolean $params['master_only'] =false, true only take into account participants/status from master (for AS)
+	 * @param boolean $params['enum_recuring'] =true enumerate recuring events
+	 * @param boolean $params['use_so_events'] =false, true return result of new $this->events()
 	 * @param int $remove_rejected_by_user =null add join to remove entry, if given user has rejected it
-	 * @return array of cal_ids, or false if error in the parameters
-	 *
-	 * ToDo: search custom-fields too
+	 * @return array of events
 	 */
 	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
 	{
 		//error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
 
+		// uncomment to use new events method for supported parameters
+		//$params['use_so_events'] = $params['use_so_events'] || $start && $end && $filter=='default' && $params['enum_recuring']!==false;
+
+		// use new events method only if explicit requested
+		if ($params['use_so_events'])
+		{
+			return call_user_func_array(array($this,'events'), func_get_args());
+		}
 		if (isset($params['cols']))
 		{
 			$cols = $params['cols'];
