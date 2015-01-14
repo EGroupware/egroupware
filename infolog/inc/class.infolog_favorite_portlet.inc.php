@@ -17,6 +17,9 @@
 class infolog_favorite_portlet extends home_favorite_portlet
 {
 
+	// Infolog app helpfully overwrites what we set in constructor
+	protected static $default_cols = 'info_type_info_status_info_percent,linked_info_priority_info_subject_info_id_info_des_info_datemodified,info_startdate_info_enddate_info_datecompleted';
+
 	/**
 	 * Construct the portlet
 	 *
@@ -40,7 +43,7 @@ class infolog_favorite_portlet extends home_favorite_portlet
 			'get_rows'	=> 'infolog_favorite_portlet::get_rows',
 			// Use a different template so it can be accessed from client side
 			'template'	=> 'infolog.home',
-			'default_cols'   => 'info_type_info_status_info_percent,linked_info_priority_info_subject_info_id_info_des_info_datemodified,info_startdate_info_enddate_info_datecompleted',
+			'default_cols'   => self::$default_cols,
 			// Don't overwrite infolog
 			'session_for'	=> 'home',
 			'no_filter2'	=> true,
@@ -62,6 +65,8 @@ class infolog_favorite_portlet extends home_favorite_portlet
 	{
 		$ui = new infolog_ui();
 		$total = $ui->get_rows($query, $rows, $readonlys);
+		// infolog_ui overwrites what we set in constructor
+		$query['default_cols'] = self::$default_cols;
 		unset($GLOBALS['egw_info']['flags']['app_header']);
 		return $total;
 	}
