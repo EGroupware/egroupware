@@ -368,6 +368,8 @@ function egwDragActionImplementation()
 									egw.lang("Ctrl") : egw.lang("Command ⌘");
 								egw.message(egw.lang('Hold [%1] key to select text eg. to copy it', key), 'info');
 							}
+							// Set cursor back to auto. Seems FF can't handle cursor reversion
+							$j('body').css({cursor:'auto'});
 							// Invalid target
 							return true;
 						}
@@ -645,7 +647,9 @@ function egwDropActionImplementation()
 								popup.auto_paste = true;
 							}, 0); // Timeout is needed to have it working in IE
 						}
-
+						// Set cursor back to auto. Seems FF can't handle cursor reversion
+						$j('body').css({cursor:'auto'});
+						
 						_aoi.triggerEvent(EGW_AI_DRAG_OUT);
 					},
 					"over": function() {
