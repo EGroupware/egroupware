@@ -345,6 +345,11 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 					function(result) {
 						if(result)
 						{
+							for (var i=0; i < this._objectManager.selectedChildren.length; i++)
+							{
+								this._widget.refresh(this._objectManager.selectedChildren[i].id,'update');
+							}
+							this._widget.egw().message('Linked');
 							// Update the target to show the liks
 							this._widget.refresh(dropped.id,'update');
 						}
