@@ -35,6 +35,7 @@ actions	common	zh	操作
 active	common	zh	活动的
 add	common	zh	添加
 add %1 category for	common	zh	添加类别为
+add a new contact	common	zh	添加联系人
 add category	common	zh	添加类别
 add shortcut	common	zh	添加快捷键
 add sub	common	zh	添加子类别
@@ -241,6 +242,7 @@ estonia	common	zh	爱沙尼亚
 ethiopia	common	zh	埃塞俄比亚
 everything	common	zh	全部
 exact	common	zh	准确的
+failed to change password.	common	zh	更改密码失败。请联系系统管理员。
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	zh	未能连接服务器或由于服务器的错误回应。请重试或联系管理员。
 falkland islands (malvinas)	common	zh	福克兰群岛(马尔维纳斯)
 faroe islands	common	zh	法罗群岛
@@ -376,6 +378,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	zh	列表
 list members	common	zh	会员列表
 lithuania	common	zh	立陶宛
+load	common	zh	加载
 local	common	zh	本地
 locations	common	zh	位置
 login	common	zh	登录
@@ -444,6 +447,7 @@ niger	common	zh	尼日尔
 nigeria	common	zh	尼日利亚
 niue	common	zh	纽埃岛
 no	common	zh	否
+no - cancel	common	zh	否
 no entries found, try again ...	common	zh	条目找不到，请重试...
 no history for this record	common	zh	该记录无历史记录
 no savant2 template directories were found in:	common	zh	没没有找到 Savant2 模版目录：
@@ -518,6 +522,7 @@ please set your preferences for this application	common	zh	请为该应用程序
 please wait...	common	zh	请稍候...
 please, check back with us shortly.	common	zh	对不起，稍后回来与我们检查。
 poland	common	zh	波兰
+popup with search	common	zh	弹出式搜索窗口
 portugal	common	zh	葡萄牙
 postal	common	zh	邮政
 powered by	common	zh	Powered by
@@ -576,6 +581,7 @@ search or select accounts	common	zh	搜索或选择帐户
 second	common	zh	秒
 section	common	zh	部分
 select	common	zh	选择
+select all	common	zh	全选
 select all %1 %2 for %3	common	zh	为%3选择全部l%1%2
 select category	common	zh	选择分类
 select date	common	zh	选择日期
@@ -740,6 +746,7 @@ written by:	common	zh	作者：
 year	common	zh	年
 yemen	common	zh	也门
 yes	common	zh	是
+yes - delete	common	zh	是
 you are required to change your password during your first login	common	zh	首次登录，您必须更改密码
 you can customize how many icons and toolbars the editor shows.	common	zh	您可以通过选项来定制编辑器显示多少个图标与工具栏。
 you have been successfully logged out	login	zh	注销成功
@@ -757,7 +764,6 @@ your message could <b>not</b> be sent!<br>	common	zh	您的邮件<b>无法</b>�
 your message has been sent	common	zh	您的邮件已发送
 your search returned %1 matchs	common	zh	您的搜索返回%1个匹配结果
 your search returned 1 match	common	zh	您的搜索返回1个匹配结果
-your session could not be verified.	login	zh	本次会话无法校验。
 your settings have been updated	common	zh	您的设置已更新
 zambia	common	zh	赞比亚
 zimbabwe	common	zh	津巴布韦

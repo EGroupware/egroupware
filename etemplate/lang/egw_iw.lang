@@ -22,6 +22,7 @@ advanced search	etemplate	iw	חיפוש מתקדם
 align	etemplate	iw	יישר
 alignment of label and input-field in table-cell	etemplate	iw	יישור התווית ושדה הקלט בתא של הטלה
 alignment of the v/hbox containing table-cell	etemplate	iw	יישור תיבת האנכי/אופקי המכיל את התא של הטבהל
+all users	etemplate	iw	כל המשתמשים
 am	etemplate	iw	הנני
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	iw	!(עמודה מאונדקסת מזרזת שאילתות המשתמשות בעמודה זו (על חשבון מקום אכסון
 and	etemplate	iw	-ו
@@ -63,7 +64,6 @@ css-styles	etemplate	iw	CSS-סגנונות
 custom	etemplate	iw	מותאם אישית
 custom fields	etemplate	iw	שדות מותאמים אישית
 date+time	etemplate	iw	שעה+תאריך
-datum	etemplate	iw	נתון
 day	etemplate	iw	יום
 days	etemplate	iw	ימים
 db ensures that every row has a unique value in that column	etemplate	iw	בסיס הנתונים מוודא של כל שורה יש ערך ייחודי בעמודה זו
@@ -134,6 +134,7 @@ help	etemplate	iw	עזרה
 horizontal rule	etemplate	iw	חוק אופקי
 hour	etemplate	iw	שעה
 hours	etemplate	iw	שעות
+id	etemplate	iw	זיהוי
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	iw	אם השדה מבוטל תא ריק מוצג כדי להסיר (זמנית) את השדה/תא
 image	etemplate	iw	תמונה
 import	etemplate	iw	ייבוא
@@ -162,6 +163,7 @@ load this template into the editor	etemplate	iw	טען תבנית זו אל הע
 minute	etemplate	iw	דקה
 minutes	etemplate	iw	דקות
 month	etemplate	iw	חודש
+more	etemplate	iw	עוד
 multicolumn indices	etemplate	iw	אידקס רב-עמודות
 name	etemplate	iw	שם
 name of other table where column is a key from	etemplate	iw	שם הטבלה בה עמודה זו מהווה מפתח
@@ -169,6 +171,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	iw	שם הטבלה להוסיף
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	iw	[צריך להיות בצורה יישום.פונקציה[.תת-תבנית ,eTemplate-שם ה
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	iw	חייב להיות ייחודי בטבלה, ואסור להשתמש במילות מפתח של <br>
+new	etemplate	iw	חדש
 new search	common	iw	חיפוש חדש
 new table created	etemplate	iw	נוצרה טבלה חדשה
 newer version '%1' exists !!!	etemplate	iw	!קיימת גירסה חדשה יותר
@@ -200,11 +203,14 @@ read a list of entries.	etemplate	iw	קרא רשימת רשומות
 read a single entry by passing the id and fieldlist.	etemplate	iw	קרא רשומוה בודדת ע"י העברת הזיהוי ורשימת שדות
 read etemplate from database (for the keys above)	etemplate	iw	(מבסיס נתונים (עבור המפתחות לעיל eTemplate קרא
 readonly	etemplate	iw	לקריאה בלבד
+refresh	etemplate	iw	רענן
 remove row (can not be undone!!!)	etemplate	iw	(הסר שורה (לא ניתן לשחזור
 remove this link (not the entry itself)	etemplate	iw	(הסר קישור זה (אבל לא את הרשומה עצמה
 required	etemplate	iw	נדרש
+reset	etemplate	iw	איפוס
 returns savely, without deleting	etemplate	iw	חוזר תוך כדי שמירה, בלי למחוק
 right	etemplate	iw	ימין
+save all	etemplate	iw	שמור הכל
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	iw	[תחת המפתחות לעיל (שם,...), שנה שם עבור [שמור בשם eTemplate-שמור את ה
 saves changes to tables_current.inc.php	etemplate	iw	tables_current.inc.php שמור שינוים אל
 scale	etemplate	iw	קנה מידה

@@ -127,6 +127,7 @@ delete this user	admin	pt	eliminar este utilizador
 deleted	admin	pt	eliminado/a
 deletes this field	admin	pt	eliminar este campo
 deliver extern	admin	pt	Entrega externa
+deny access	admin	pt	Negar acesso
 deny access to access log	admin	pt	Negar acesso ao registo de acessos
 deny access to application registery	admin	pt	Negar acesso ao registo de aplicações
 deny access to applications	admin	pt	Negar acesso às aplicações
@@ -154,8 +155,6 @@ do you also want to delete all global subcategories ?	admin	pt	Deseja eliminar t
 do you want to delete all global subcategories ?	admin	pt	Deseja eliminar todas as subcategorias gerais ?
 do you want to move all global subcategories one level down ?	admin	pt	Deseja mover todas as subcategorias gerais para um nível mais abaixo ?
 down	admin	pt	baixo
-each value is a line like <id>[=<label>]	admin	pt	cada valor é uma linha como <id>[=<etiqueta>]
-each value is a line like id[=label]	admin	pt	cada valor é uma linha como <id>[=etiqueta]
 edit account	admin	pt	Editar conta
 edit application	admin	pt	Editar aplicações
 edit email settings	admin	pt	Editar definições do correio electrónico
@@ -205,6 +204,7 @@ error canceling timer, maybe there's none set !!!	admin	pt	Erro ao cancelar cron
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt	Erro ao activar cronómetro: sintaxe incorrecta ou já existe um em execução !!!
 error! no appname found	admin	pt	Erro! Nenhum nome de aplicação encontrado
 error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outro erro !!!
+exists	admin	pt	Existe
 expires	admin	pt	Expira
 explanation of ldapman	admin	pt	Até ao momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e necessita de schemas CORE e QMAIL (OID7914). Para mais informações sobre a utilização e configuração deste sistema, consulte o ficheiro README.Idapman na pasta de documentos de ADMIN.
 failed to change password.	admin	pt	Não foi possível alterar a senha.
@@ -220,6 +220,7 @@ forward also to	admin	pt	reencaminha também para
 forward emails to	admin	pt	reencaminhar mensagens para
 forward only	admin	pt	reencaminhar apenas
 full name	admin	pt	Nome completo
+general	admin	pt	Geral
 global categories	common	pt	Categorias gerais
 group ?	admin	pt	grupo ?
 group has been added	common	pt	O grupo foi  adicionado
@@ -279,8 +280,8 @@ loginid	admin	pt	ID do utilizador
 mail settings	admin	pt	Configurações do correio electrónico
 main email-address	admin	pt	Endereço de correio electrónico principal
 main screen message	admin	pt	Mensagem da página inicial
+manage mapping	admin	pt	Gerenciar mapeamento
 manager	admin	pt	Gestor
-max length of the input [, length of the inputfield (optional)]	admin	pt	comprimento máximo [, comprimento do campo (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	pt	ID máximo para contas (Exemplo: 65535 ou 1000000)
 maximum entries in click path history	admin	pt	Número máximo de registos ao clicar no histórico
 members	admin	pt	Membros
@@ -320,6 +321,7 @@ percent of users that logged out	admin	pt	Percentagem de utilizadores que saíra
 percent this user has logged out	admin	pt	Percentagem das saídas deste utilizador
 permission denied	admin	pt	Permissão negada
 permission denied !!!	admin	pt	Permissão negada !!!
+permission denied!!!	admin	pt	Permissão negada!!!
 permissions	admin	pt	Permissões
 permissions this group has	admin	pt	Permissões do grupo
 phpinfo	admin	pt	Informações do PHP
@@ -342,6 +344,7 @@ remove all users from this group ?	admin	pt	Deseja remover todos os utilizadores
 return to admin mainscreen	admin	pt	voltar ao ecrã de administração
 return to view account	admin	pt	Voltar à visualização de conta
 route all mails to	admin	pt	Encaminhar todas as mensagens para
+rows	admin	pt	Linhas
 run asynchronous services	admin	pt	Executar serviços assíncronos
 save the category	admin	pt	guardar a categoria
 save the category and return back to the list	admin	pt	guardar a categoria e voltar à lista

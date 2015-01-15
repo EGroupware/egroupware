@@ -1,4 +1,14 @@
+color	home	cs	Barva
 displays home	home	cs	Zobrazuje hlavní stranu
 egroupware	home	cs	eGroupWare
 home	home	cs	Hlavní strana
+in %1 days (%2) is %3's birthday.	home	cs	Za %1 dní (%2) má %3 narozeniny.
+remove	home	cs	odstranit
+set as default	home	cs	Nastavit jako výchozí
 there is a new version of egroupware available	home	cs	Je k dispozici nová verze eGroupWare
+today is %1's birthday!	home	cs	Dnes má narozeniny %1!
+tomorrow is %1's birthday.	home	cs	Zítra má narozeniny %1!
+yes, for the next three days	home	cs	Ano, po následující tři měsíce
+yes, for the next two weeks	home	cs	Ano, po následující dva týdny
+yes, for the next week	home	cs	Ano, po následující týden
+yes, for today and tomorrow	home	cs	Ano, po dnešní a zítřejší den

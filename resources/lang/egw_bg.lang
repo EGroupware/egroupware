@@ -2,7 +2,11 @@ actions	resources	bg	Действия
 all categories	resources	bg	Всички категории
 check all	resources	bg	Маркира всички
 create new links	resources	bg	Създаване на нови връзки
+custom etemplate for the contactform	resources	bg	eTemplate по избор за формата за контакти
+custom fields	resources	bg	Полета по избор
+days	resources	bg	дни
 delete this entry	resources	bg	изтриване на този запис
+deleted	resources	bg	изтрит
 edit this entry	resources	bg	Редактиране на записа
 existing links	resources	bg	Съществуващи връзки
 general	resources	bg	Общи
@@ -16,3 +20,4 @@ quantity	resources	bg	Количество
 resources	common	bg	Ресурси
 select resources	common	bg	Изберете ресурси
 view this entry	resources	bg	Преглед на записа
+yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи

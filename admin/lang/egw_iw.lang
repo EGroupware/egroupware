@@ -115,6 +115,7 @@ delete this user	admin	iw	מחק משתמש זה
 deleted	admin	iw	נמחקו
 deletes this field	admin	iw	מוחק את השדה הזה
 deliver extern	admin	iw	מסירה חיצונית
+deny access	admin	iw	חסום גישה
 deny access to access log	admin	iw	מנע גישה ליומן הגישה
 deny access to application registery	admin	iw	מנע גישה לרישום היישומים
 deny access to applications	admin	iw	מנע גישה ליישומים
@@ -256,7 +257,6 @@ loginid	admin	iw	זיהוי כניסה
 mail settings	admin	iw	הגדרות דואר
 main screen message	admin	iw	מסר של מסך הראשי
 manager	admin	iw	מנהל
-max length of the input [, length of the inputfield (optional)]	admin	iw	([אורך הקלט המירבי [, אורך שדה הקלט (אופציונאלי
 maximum account id (e.g. 65535 or 1000000)	admin	iw	(זיהוי חשבון מירבי (לדוגמא: 65535 או 10000000
 maximum entries in click path history	admin	iw	כמות הרשומות המירבי בהסטוריה של הקלקות
 message has been updated	admin	iw	המסר עודכן
@@ -313,6 +313,7 @@ remove all users from this group	admin	iw	הסר את כל המשתמשים מק
 remove all users from this group ?	admin	iw	?להסיר את כל המשתמשים מקבוצה זו
 return to admin mainscreen	admin	iw	חזרה למסך הראשי של ניהול
 return to view account	admin	iw	חזרה לתצוגת חשבון
+rows	admin	iw	שורות
 run asynchronous services	admin	iw	הרץ שירותים א-סנכרונים
 save the category	admin	iw	שמור את הקטגוריה
 save the category and return back to the list	admin	iw	שמור את הקטגוריה וחזור לרשימה

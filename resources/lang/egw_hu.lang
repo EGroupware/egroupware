@@ -19,10 +19,15 @@ check all	resources	hu	Összes ellenőrzése
 choose categories admin	resources	hu	kategória adminisztrátor kiválasztása
 clear selection	resources	hu	kijelölés eltávolítása
 configure access permissions	admin	hu	Hozzáférési jogosultságok beállítása
+conflict	resources	hu	Ütközés
 create new accessory for this resource	resources	hu	Új kiegészítő hozzáadása
 create new links	resources	hu	Új hivatkozások létrehozása
+custom etemplate for the contactform	resources	hu	Egyéni eTemplate a kapcsolatfelvételi űrlaphoz
+custom fields	resources	hu	Egyedi mezők
+days	resources	hu	napok
 delete selected resources	resources	hu	kiválasztott erőforrás törlése
 delete this entry	resources	hu	Bejegyzés törlése
+deleted	resources	hu	törölve
 description (short)	resources	hu	Leírás (rövid)
 direct booking permissions	resources	hu	Közvetlen foglalási jogosultságok
 don't use vfs (this will need a symlink --> see readme)	resources	hu	Ne haszálja a vfs-t (a működéshez egy symlink hozzáadása szükséges, lásd. a README-t)
@@ -84,6 +89,7 @@ something went wrong by deleting resource	resources	hu	Hiba történt az erőfor
 something went wrong by saving resource	resources	hu	Hiba történt az erőforrás mentésekor
 storage information	resources	hu	Információ a raktározásról
 storage information:	resources	hu	Információ a raktározásról:
+the anonymous user needs add rights for it!	resources	hu	Az anonymous felhasználónak hozzáadási jogosultsága kell legyen!
 the calendar of this resource	resources	hu	Ennek az erőforrásnak a Naptárja
 this module displays the resources app	resources	hu	Ez a modul megjeleníti az Erőforrások alkalmazása
 use general resources icon	resources	hu	Használja az 'Általános erőforrások' ikonját
@@ -98,5 +104,6 @@ web-site for this resource	resources	hu	Az erőforrás webhelye
 where to find this resource?	resources	hu	Hol található ez az erőforrás?
 which category does this resource belong to?	resources	hu	Melyik kategóriába tartozik ez az erőforrás?
 write permissions	resources	hu	Írási jogosultságok
+yes, only admins can purge deleted items	admin	hu	Igen, csak az adminisztrátorok távolíthatják el a törölt elemeket
 you are not permitted to get information about this resource!	resources	hu	Nincs jogosultság az erőforrás adatainak megtekintéséhez!
 you chose more resources than available	resources	hu	Több erőforrás lett kiválasztva, mint amennyi elérhető

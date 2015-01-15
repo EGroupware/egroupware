@@ -20,13 +20,14 @@ date format	preferences	zh	日期格式
 default	preferences	zh	默认
 default application	preferences	zh	默认应用程序
 default preferences	preferences	zh	默认用户参数
-default theme	preferences	zh	默认主题
 delete categories	preferences	zh	删除类别
 description can not exceed 255 characters in length !	preferences	zh	描述的长度不能超过255个字符！
+disable	preferences	zh	禁用
 display thumbnails for linked images	preferences	zh	显示链接图像的缩略图
 div	preferences	zh	<div> 区快
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	zh	您更喜欢 24 小时时间格式，还是带有 am/pm 附注的 12 小时时间格式。
 edit custom fields	preferences	zh	编辑自定义字段
+enable	preferences	zh	启用
 enable drag and drop functionality (experimental)	preferences	zh	启用拖放功能 (实验性的)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	zh	在所有应用程序中启用或禁用拖放功能。如果浏览器不支持拖放，它将自动禁用。这个特征目前是实验性的。
 enter your new password	preferences	zh	请输入您的新密码
@@ -52,7 +53,6 @@ no default	preferences	zh	无默认值
 no user-selection at all	common	zh	无任何用户选择
 note: this feature does *not* change your email password. this will	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码。这将
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码，这将需要通过手动更改。
-office 2003 theme	preferences	zh	Office 2003 主题
 p: paragraph	preferences	zh	<p> 段落
 please, select a new theme	preferences	zh	请选择一个新主题
 popup with search	preferences	zh	弹出式搜索窗口
@@ -78,7 +78,6 @@ show navigation bar as	preferences	zh	导航栏显示模式为
 show number of current users	preferences	zh	显示当前用户数
 show text on navigation icons	preferences	zh	在导航栏图标上显示文字说明
 show_more_apps	common	zh	显示更多应用程序
-silver theme	preferences	zh	银色主题
 spellchecker language	addressbook	zh	拼写检查语言
 text only	preferences	zh	只显示文字
 the old password is not correct	preferences	zh	旧密码不正确

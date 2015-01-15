@@ -21,6 +21,7 @@ add table	etemplate	hr	Add Table
 align	etemplate	hr	Align
 alignment of label and input-field in table-cell	etemplate	hr	alignment of label and input-field in table-cell
 alignment of the v/hbox containing table-cell	etemplate	hr	Alignment of the V/HBox containing table-cell
+all users	etemplate	hr	Svi korisnici
 am	etemplate	hr	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	hr	an indexed column speeds up querys using that column (cost space on the disk !!!)
 and	etemplate	hr	And
@@ -63,7 +64,6 @@ css-styles	etemplate	hr	CSS-styles
 custom	etemplate	hr	Proizvoljno
 custom fields	etemplate	hr	Proizvoljno Polje
 date+time	etemplate	hr	Date+Time
-datum	etemplate	hr	Datum
 day	etemplate	hr	Day
 days	etemplate	hr	dana
 db ensures that every row has a unique value in that column	etemplate	hr	DB ensures that every row has a unique value in that column
@@ -141,6 +141,7 @@ horizontal rule	etemplate	hr	Horizontal Rule
 hour	etemplate	hr	Hour
 hours	etemplate	hr	sati
 html	etemplate	hr	Html
+id	etemplate	hr	identitet
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	hr	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	hr	Image
 import	etemplate	hr	Import
@@ -170,6 +171,7 @@ load this template into the editor	etemplate	hr	load this template into the edit
 minute	etemplate	hr	Minute
 minutes	etemplate	hr	minuta
 month	etemplate	hr	Month
+more	etemplate	hr	More
 multicolumn indices	etemplate	hr	Multicolumn Indices
 name	etemplate	hr	Name
 name of other table where column is a key from	etemplate	hr	name of other table where column is a key from
@@ -177,6 +179,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	hr	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	hr	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	hr	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+new	etemplate	hr	New
 new search	common	hr	New search
 new table created	etemplate	hr	New table created
 newer version '%1' exists !!!	etemplate	hr	newer version '%1' exists !!!
@@ -209,10 +212,13 @@ read a list of entries.	etemplate	hr	Read a list of entries.
 read a single entry by passing the id and fieldlist.	etemplate	hr	Read a single entry by passing the id and fieldlist.
 read etemplate from database (for the keys above)	etemplate	hr	read eTemplate from database (for the keys above)
 readonly	etemplate	hr	samo za čitanje
+refresh	etemplate	hr	Obnovi
 remove row (can not be undone!!!)	etemplate	hr	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	hr	Remove this link (not the entry itself)
+reset	etemplate	hr	Postavi ponovo
 returns savely, without deleting	etemplate	hr	returns savely, WITHOUT deleting
 right	etemplate	hr	Right
+save all	etemplate	hr	Spremi sve
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	hr	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	hr	saves changes to tables_current.inc.php
 scale	etemplate	hr	Scale

@@ -19,10 +19,15 @@ check all	resources	sl	Izberi vse
 choose categories admin	resources	sl	Izberi upravljalnik kategorij
 clear selection	resources	sl	Izbriši izbor
 configure access permissions	admin	sl	Konfiguriraj pravice dostopa
+conflict	resources	sl	Spor
 create new accessory for this resource	resources	sl	Ustvari nov pripomoček za to sredstvo
 create new links	resources	sl	Ustvari nove povezave
+custom etemplate for the contactform	resources	sl	eTemplate po meri za obrazec za stike
+custom fields	resources	sl	Lastna polja
+days	resources	sl	Dni
 delete selected resources	resources	sl	Izbriši izbrana sredstva
 delete this entry	resources	sl	Izbriši ta vnos
+deleted	resources	sl	Zbrisano
 description (short)	resources	sl	Opis (kratek)
 direct booking permissions	resources	sl	Neposredno dovoljenje za rezervacijo
 don't use vfs (this will need a symlink --> see readme)	resources	sl	Ne uporabljaj vfs (za to potrebujete symlink --> glejte README)
@@ -87,6 +92,7 @@ something went wrong by deleting resource	resources	sl	Nekaj ni bilo v redu pri 
 something went wrong by saving resource	resources	sl	Nekaj ni bilo v redu pri shranjevanju sredstva
 storage information	resources	sl	Informacija o prostoru
 storage information:	resources	sl	Informacija o prostoru:
+the anonymous user needs add rights for it!	resources	sl	Anonimni uporabnik potrebuje pravico dodajanja!
 the calendar of this resource	resources	sl	Koledar tega sredstva
 this module displays the resources app	resources	sl	Ta modul prikaže program za vodenje sredstev
 use general resources icon	resources	sl	Uporabi splošno ikono za sredstva
@@ -101,5 +107,7 @@ web-site for this resource	resources	sl	Spletna stran tega sredstva
 where to find this resource?	resources	sl	Kje najti to sredstvo?
 which category does this resource belong to?	resources	sl	Kateri kategoriji to sredstvo pripada?
 write permissions	resources	sl	Dovoljenje za pisanje
+yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
+yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke
 you are not permitted to get information about this resource!	resources	sl	Nimate dovoljenja pridobiti informacij o tem sredstvu!
 you chose more resources than available	resources	sl	Izbrali ste več sredstev, kot jih je na voljo

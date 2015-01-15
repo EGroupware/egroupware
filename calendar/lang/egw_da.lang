@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	da	%1 %2 i %3
+%1 hours	calendar	da	%1 timer
 %1 records imported	calendar	da	%1 posteringer importeret
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	da	%1 posteringer læst (ikke importeret endnu, du skal gå tilbage og fravælge Test Import)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	da	<b>Bemærk venligst</b>: Kalenderen benytter dit lands helligdage. Dit land er er sat til %1. Du kan ændre det i din %2.<br/> Helligdage er %3 automatisk installeret fra %4. Du kan ændre dette i %5.
@@ -57,6 +58,7 @@ created	calendar	da	Oprettet
 csv	calendar	da	CSV
 csv-fieldname	calendar	da	CSV-Feltnavn
 csv-filename	calendar	da	CSV-Filnavn
+custom	calendar	da	Valgfri
 custom fields	common	da	Egne felter
 daily	calendar	da	Daglig
 day	calendar	da	Dag

@@ -35,11 +35,17 @@ entry deleted	timesheet	fi	Merkintä poistettu
 entry saved	timesheet	fi	Merkintä tallennettu
 error deleting the entry!!!	timesheet	fi	Virhe poistettaessa merkintää!
 error saving the entry!!!	timesheet	fi	Virhe tallentaessa merkintää!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	fi	Esimerkki {{NELFNV role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
 existing links	timesheet	fi	Olemassa olevat linkit
 exists	timesheet	fi	Olemassaoleva
+export definition to use for nextmatch export	timesheet	fi	Vienti asetukset 'nextmatch' vientiin
 export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
+favorites	timesheet	fi	Suosikit
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
 full: use only projectmanager	admin	fi	Täysi: käytä vain projektinhallintaa
@@ -48,6 +54,8 @@ global categories	timesheet	fi	Yleiset kategoriat
 history	timesheet	fi	Historia
 history logging	admin	fi	Historialoki
 id	timesheet	fi	ID
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
+if you specify an export definition, it will be used when you export	timesheet	fi	Valitse viennin oletusasetus
 ignore	timesheet	fi	Ohita
 import options	timesheet	fi	Tuontiasetukset
 imports entries into the timesheet from a csv file.	timesheet	fi	Tuo merkintöjä CSV tiedostosta Ajanhallintaan.
@@ -62,6 +70,9 @@ leave it empty for a full week	timesheet	fi	Jätä tyhjäksi, jos koko viikko
 leaves without saveing	timesheet	fi	Poistuu tallentamatta
 length<br>rows	timesheet	fi	Pituus Rivit
 links	timesheet	fi	Linkit
+links and attached files	timesheet	fi	Linkit ja liitetyt tiedostot
+links to specified application.  example: {{links/infolog}}	timesheet	fi	Linkki määriteltyyn sovellukseen. Esim. {{links/infolog}}
+list of files linked to the current record	timesheet	fi	Lista liitetyistä tiedostoista
 max length of the input [, length of the inputfield (optional)]	timesheet	fi	Maksimipituus merkinnälle. [, merkintäkentän pituus (valinnainen)]
 modified	timesheet	fi	Muokattu
 modify status	timesheet	fi	Muokkaa tilaa
@@ -84,6 +95,7 @@ price	timesheet	fi	Hinta
 project fields	timesheet	fi	Projektikentät
 projectmanager integration	admin	fi	Projektinhallinnan integrointi
 quantity	timesheet	fi	Määrä
+recovered	timesheet	fi	Palautetut
 replacements for inserting entries into documents	timesheet	fi	Sijaismerkinnät asiakirjoihin
 save & new	timesheet	fi	Tallenna & Uusi
 saves the changes made	timesheet	fi	Tallenna muutokset
@@ -108,6 +120,8 @@ status of created timesheets	timesheet	fi	Luotujen merkintöjen tila.
 status updated.	timesheet	fi	Tila päivitetty.
 sum %1:	timesheet	fi	Summa %1:
 tag to mark positions for address labels	timesheet	fi	Käytä tägiä osoitetarroihin
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	fi	Tiedosto voi sisältää merkintöjä kuten {{%3}}, mihin syötetään haluttu tieto. %1Lista mahdollisista merkinnöistä%2
+the following document-types are supported:	timesheet	fi	Seuraavat tiedostotyypit ovat tuettuja:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fi	Tietokannassa käytettävä nimi, <=20 merkkiä. ÄLÄ muuta nimeä tai jo olemassa olevia tietoja ei voi enää löytää.
 the text displayed to the user	timesheet	fi	Käyttäjälle näkyvä nimi
 this month	timesheet	fi	Tässä kuussa
@@ -124,11 +138,14 @@ timesheet openoffice export	timesheet	fi	Ajanhallinnan OpenOffice-vienti
 timesheet status-%1 '%2' added.	timesheet	fi	Tila %1 '%2' lisätty.
 timesheet-%1 '%2' updated.	timesheet	fi	Merkintä %1 '%2' päivitetty.
 timesheet-%1 deleted.	timesheet	fi	Merkintä %1 poistettu.
+titles of any entries linked to the current record, excluding attached files	timesheet	fi	Linkitettyjen tietueiden otsikot/aiheet, poissulkien liitetyt tiedostot.
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	fi	'%1' ei voitu muuttaa tili IDksi. Käytetty sen sijaan (%2) %3
 unitprice	timesheet	fi	Yksikköhinta
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	fi	Käytä tätä tägiä osoitteisiin. Lisää halutut tekstit kahden tägin väliin.
 values for selectbox	timesheet	fi	Valintalaatikon arvot
 view this entry	timesheet	fi	Näytä tämä merkintä
 week	timesheet	fi	Viikko
+yes, only admins can purge deleted items	admin	fi	Kyllä, ainoastaan ylläpitäjät voivat (lopullisesti) poistaa tapahtumia
+yes, users can purge their deleted items	admin	fi	Kyllä, käyttäjät voivat (lopullisesti) poistaa tapahtumia
 yesterday	timesheet	fi	Eilen
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fi	Tietokantasi EI ole ajan tasalla %1 vs. %2), %3päivitä%4 tietokanta.

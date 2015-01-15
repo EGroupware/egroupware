@@ -7,7 +7,7 @@ configuration	infolog	ja	環境設定
 contact	infolog	ja	連絡先
 csv-filename	infolog	ja	CSVファイル名
 custom fields	infolog	ja	カスタム項目
-done	common	ja	終了
+done	infolog	ja	終了
 download	infolog	ja	ダウンロード
 duration	infolog	ja	継続時間
 fax	infolog	ja	Fax

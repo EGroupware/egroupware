@@ -236,8 +236,6 @@ do you want to move all global subcategories one level down ?	admin	fr	Voulez-vo
 document root (default)	admin	fr	Racine des documents (défaut)
 down	admin	fr	Bas
 download csv	admin	fr	Télécharger en CSV
-each value is a line like <id>[=<label>]	admin	fr	Chaque valeur est une ligne comme <id>[=<label>]
-each value is a line like id[=label]	admin	fr	Chaque valeur est une ligne comme id[=<label>]
 edit account	admin	fr	Modifier le compte
 edit application	admin	fr	Modifier l'application
 edit email settings	admin	fr	Paramétrage des emails
@@ -422,7 +420,6 @@ main email-address	admin	fr	Adresse email principale
 main screen message	admin	fr	Message de l'écran principal
 manage mapping	admin	fr	Gestion des correspondances
 manager	admin	fr	Gestionnaire
-max length of the input [, length of the inputfield (optional)]	admin	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
 maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.e. 65535 ou 1000000)
 maximum entries in click path history	admin	fr	Nombre maximal d'entrées dans l'historique des clics sur les liens
 members	admin	fr	Membres
@@ -525,6 +522,7 @@ return to admin mainscreen	admin	fr	Revenir à l'écran principal d'administrati
 return to view account	admin	fr	Revenir à l'affichage du compte
 rights	admin	fr	Droits
 route all mails to	admin	fr	Livrer tous les emails à
+rows	admin	fr	Lignes
 rpm or debian package	admin	fr	Paquet RPM ou Debian
 run	admin	fr	exécuter
 run asynchronous services	admin	fr	Exécuter les Services asynchrones

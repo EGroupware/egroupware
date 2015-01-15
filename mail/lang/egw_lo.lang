@@ -1,3 +1,9 @@
+copy to	mail	lo	ສໍາເນົາໄປທີ່
+edit account	mail	lo	ແກ້ໄຂບັນຊີ
 event details follow	mail	lo	ຕິດຕາມລາຍລະອຽດກິດຈະກໍາ
 filemanager	mail	lo	ຕົວຈັດການຟາຍ
+general	admin	lo	ທົ່ວໄປ
 mail settings	mail	lo	ຕັ້ງຄ່າ mail
+move to	mail	lo	ເຄື່ອນຫຍ້າຍໄປ
+no access	mail	lo	ບໍ່ສາມາດເຂົ້າເຖິງ
+permission denied	mail	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ

@@ -18,6 +18,7 @@ a pattern to be searched for	etemplate	sl	Iskani vzorec
 accesskey	etemplate	sl	Bližnjica
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	sl	Bližnjico lahko določite tudi z znakom & v oznaki (npr. &Ime)
 account contactdata	etemplate	sl	Kontaktni podatki računa
+actions...	etemplate	sl	Dejanja ...
 add a new column (after the existing ones)	etemplate	sl	Dodaj nov stolpec (za obstoječimi)
 add a new entry of the selected application	etemplate	sl	Dodaj nov vnos v izbrano aplikacijo
 add a new multi-column index	etemplate	sl	Dodaj novo kazalo z več stolpci
@@ -25,12 +26,14 @@ add column	etemplate	sl	Dodaj stolpec
 add index	etemplate	sl	Dodaj kazalo
 add new	etemplate	sl	Dodaj novo
 add table	etemplate	sl	Dodaj tabelo
+add to clipboard	etemplate	sl	Vse v odložišče
 advanced search	etemplate	sl	Napredno iskanje
 align	etemplate	sl	Poravnaj
 alignment of label and input-field in table-cell	etemplate	sl	Poravnava napisov in vnosnih polj v tabeli
 alignment of the v/hbox containing table-cell	etemplate	sl	Poravnava V/H okvirjev s tabelarnimi celicami
 all days	etemplate	sl	Vsi dnevi
 all operations save the template!	etemplate	sl	Vse operacije shranijo predlogo!
+all users	etemplate	sl	Vsi uporabniki
 am	etemplate	sl	dop
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sl	Oštevilčen stolpec pospeši poizvedbe (zavzame več prostora na disku!)
 and	etemplate	sl	in
@@ -84,6 +87,7 @@ contact	etemplate	sl	Stik
 contact field to show	etemplate	sl	Polje stika za prikaz
 contact fields	etemplate	sl	Polja s stikom
 contains	etemplate	sl	Vsebuje
+copy to clipboard	etemplate	sl	Kopiraj v odložišče
 create a new table for the application	etemplate	sl	Naredi novo tabelo za program
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sl	naredi angleško ('en') jezikovno datoteko iz napisov in besedila za pomoč (za program v polju Ime)
 css class for the table-tag	etemplate	sl	Razred CSS za značko table
@@ -96,7 +100,6 @@ custom fields	etemplate	sl	Polja po meri
 custom javascript for onchange	etemplate	sl	Javascript za onChange po meri
 cut	etemplate	sl	Izreži
 date+time	etemplate	sl	Datum+Čas
-datum	etemplate	sl	Datum
 day	etemplate	sl	Dan
 days	etemplate	sl	Dnevi
 db ensures that every row has a unique value in that column	etemplate	sl	Podatkovna baza zagotovi, da ima vsaka vrstica svojo vrednost v tem stolpcu
@@ -183,6 +186,7 @@ grid	etemplate	sl	Mreža
 grid column attributes	etemplate	sl	Lastnosti stolpcev mreže
 grid row attributes	etemplate	sl	Lastnosti vrstic mreže
 groupbox	etemplate	sl	Združeni okvir
+h	etemplate	sl	h
 hbox	etemplate	sl	Vodoravni okvir
 height	etemplate	sl	Višna
 height of row (in % or pixel)	etemplate	sl	Višina vrstice (v % ali pikslih)
@@ -196,6 +200,7 @@ hour	etemplate	sl	Ura
 hours	etemplate	sl	Ur
 how many entries should the list show	etemplate	sl	Koliko vnosov naj se prikaže v seznamu
 html	etemplate	sl	HTML
+id	etemplate	sl	Šifra
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sl	Če je polje izključeno, je prikazana prazna celica v tabeli, za začasno odstranitev polja/celice
 image	etemplate	sl	Slika
 import	etemplate	sl	Uvoz
@@ -234,11 +239,13 @@ linklist	etemplate	sl	Povezava - seznam
 linkstring	etemplate	sl	Povezava - besedilo
 linkto	etemplate	sl	Povezava na
 load this template into the editor	etemplate	sl	Naloži to predlogo v urejevalnik
+loading	etemplate	sl	Nalaganje
 maximum size for uploads	filemanager	sl	Največja velikost za prenos
 middle	etemplate	sl	Srednji
 minute	etemplate	sl	Minuta
 minutes	etemplate	sl	Minute
 month	etemplate	sl	Mesec
+more	etemplate	sl	Več
 multicolumn indices	etemplate	sl	Kazala več stolpcev
 name	etemplate	sl	Ime
 name of other table where column is a key from	etemplate	sl	Ime tabele, iz katere je stolpec ključ
@@ -246,6 +253,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	sl	Ime tabele za dodati
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sl	Ime ePredloge mora biti v obliki application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sl	Mora biti enolično in ne sme biti beseda rezervirana za SQL. Najboljše, da vsem dodate predpono aplikacije, dolgo dva znaka, npr.: 'et_'
+new	etemplate	sl	Novo
 new search	common	sl	Novo iskanje
 new table created	etemplate	sl	Nova tabela ustvarjena
 newer version '%1' exists !!!	etemplate	sl	Obstaja novejša različica '%1'
@@ -265,6 +273,7 @@ nothing	etemplate	sl	Nič
 nothing found - try again !!!	etemplate	sl	Nič ni bilo najdeno - poskusite znova
 nothing in clipboard to paste !!!	etemplate	sl	Na odložišču ni ničesar za prilepiti
 nothing matched search criteria !!!	etemplate	sl	Nobenih zadetkov za iskan kriterij
+now	etemplate	sl	Zdaj
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	sl	Število stolpcev, ki naj jih polje/celica združi oziroma 'vse' za vse preostale stolpce, CSS ime razreda (za TD značko)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	sl	Število vrstic/stolpcev v V/H okvirju, odmik celice, razmik med celicami
 of	etemplate	sl	od
@@ -294,12 +303,16 @@ read a list of entries.	etemplate	sl	Beri seznam vnosov.
 read a single entry by passing the id and fieldlist.	etemplate	sl	Beri posamezni vnos s podano šifro in seznamom polj.
 read etemplate from database (for the keys above)	etemplate	sl	Beri ePredlogo iz zbirke podatkov (za zgornje ključe)
 readonly	etemplate	sl	Samo za branje
+refresh	etemplate	sl	Osveži
 remove row (can not be undone!!!)	etemplate	sl	Odstrani vrstico (ni mogoče razveljaviti)
 remove this link (not the entry itself)	etemplate	sl	Odstrani to povezavo (ne samega vnosa)
 required	etemplate	sl	Zahtevano
+reset	etemplate	sl	Ponastavi
 returns savely, without deleting	etemplate	sl	Vrne varno, BREZ brisanja
 right	etemplate	sl	Desno
 row...	etemplate	sl	Vrstica ...
+save all	etemplate	sl	Shrani vse
+save as	etemplate	sl	Shrani kot
 save selected columns as default preference for all users.	etemplate	sl	Shrani izbrane stolpce kot privzeto nastavitev za vse uporabnike.
 save the changes made and close the window	etemplate	sl	Shrani spremembe in zapri okno
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sl	Shrani ePredlogo pod gornjimi ključi (ime,...), spremeni jih za Shrani kot
@@ -342,6 +355,7 @@ select which accounts to show	etemplate	sl	Izberite, kateri računi naj bodo pri
 select which values to show	etemplate	sl	Označite vrednosti za prikaz
 select year	etemplate	sl	Izberite leto
 selectbox	etemplate	sl	Izbirno polje
+set as default	etemplate	sl	Nastavi kot privzeto
 sets today as date	etemplate	sl	Določi današnji datum za trenutni datum
 should the form be submitted or any custom javascript be executed	etemplate	sl	Naj bo obrazec oddan ali naj bo izveden katerikoli javascript po meri
 show	etemplate	sl	Prikaži
@@ -408,6 +422,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	sl	Širina stolpca (v % in pixlih)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	sl	Širina tabele v % ali pikslih za značko "table" in (neobvezno) značko div
 width, disabled	etemplate	sl	Širina, onemogočeno
+wk	etemplate	sl	Ted
 working days	etemplate	sl	Delovniki
 write <app>/setup/tables_current.inc.php	etemplate	sl	Zapiši <app>/setup/tables_current.inc.php
 write langfile	etemplate	sl	Zapiši jezikovno datoteko

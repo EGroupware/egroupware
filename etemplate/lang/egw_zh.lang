@@ -17,6 +17,7 @@ a pattern to be searched for	etemplate	zh	一搜索模式用于
 accesskey	etemplate	zh	快捷键
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	zh	快捷键也可以在标签中指定有一个 & (例如 &Name) 字符
 account contactdata	etemplate	zh	账户联系人数据
+actions...	etemplate	zh	操作...
 add a new column (after the existing ones)	etemplate	zh	添加新列 (在已存在的之后)
 add a new entry of the selected application	etemplate	zh	在选择的应用程序中添加新条目
 add a new multi-column index	etemplate	zh	添加新的多列索引
@@ -30,6 +31,7 @@ alignment of label and input-field in table-cell	etemplate	zh	标签与输入字
 alignment of the v/hbox containing table-cell	etemplate	zh	V/HBox 的对齐方式
 all days	etemplate	zh	全部日数
 all operations save the template!	etemplate	zh	所有操作保存模板！
+all users	etemplate	zh	所有用户
 am	etemplate	zh	上午
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zh	使用索引列可以提高搜索速度(但是会占用磁盘空间！)
 and	etemplate	zh	及
@@ -83,6 +85,7 @@ contact	etemplate	zh	联系人
 contact field to show	etemplate	zh	要显示的联系人字段
 contact fields	etemplate	zh	联系人字段
 contains	etemplate	zh	包含
+copy to clipboard	etemplate	zh	复制到剪贴板
 create a new table for the application	etemplate	zh	为这个应用程序创建一新数据表
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	zh	从标签和帮助文本创建一个英文('en')语言文件(用于应用程序名称)
 creator	preferences	zh	创建者
@@ -96,7 +99,6 @@ custom fields	etemplate	zh	自定义字段
 custom javascript for onchange	etemplate	zh	为 onChange 自定义 javascript
 cut	etemplate	zh	剪切
 date+time	etemplate	zh	日期+时间
-datum	etemplate	zh	数据
 day	etemplate	zh	天
 days	etemplate	zh	天
 db ensures that every row has a unique value in that column	etemplate	zh	在该列中数据库确保每一行有一个不重复的值
@@ -183,6 +185,7 @@ grid	etemplate	zh	栅格
 grid column attributes	etemplate	zh	栅格列属性
 grid row attributes	etemplate	zh	栅格行属性
 groupbox	etemplate	zh	成组框控件
+h	etemplate	zh	时
 hbox	etemplate	zh	水平框控件
 height	etemplate	zh	高度
 height of row (in % or pixel)	etemplate	zh	行高 (百分比或像素)
@@ -196,6 +199,7 @@ hour	etemplate	zh	小时
 hours	etemplate	zh	小时
 how many entries should the list show	etemplate	zh	列表将要显示多少个条目
 html	etemplate	zh	HTML
+id	etemplate	zh	编号
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	zh	为了(暂时)移除一个 field/cell，如果字段被禁用则会显示一个空白 table-cell
 image	etemplate	zh	图片
 import	etemplate	zh	导入
@@ -233,11 +237,13 @@ linklist	etemplate	zh	链接列表
 linkstring	etemplate	zh	链接字串
 linkto	etemplate	zh	链接到
 load this template into the editor	etemplate	zh	载入该模板到编辑器中
+loading	etemplate	zh	载入
 middle	etemplate	zh	中间
 minute	etemplate	zh	分
 minutes	etemplate	zh	分
 modifier	preferences	zh	修改人
 month	etemplate	zh	月
+more	etemplate	zh	更多
 multicolumn indices	etemplate	zh	多列索引
 name	etemplate	zh	名称
 name of other table where column is a key from	etemplate	zh	其他表名哪一列是来自键值
@@ -245,6 +251,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	zh	要添加的数据表名称
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	zh	模板名称，应在表单 application.function[.subTemplate]中
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	zh	在表格中必须是唯一的且不是SQL的保留字，最好加上两个英文与一个底线当作前置字来表示应用程序
+new	etemplate	zh	新建
 new search	common	zh	新建搜索
 new table created	etemplate	zh	新表已创建
 newer version '%1' exists !!!	etemplate	zh	有新的版本 '%1'！
@@ -264,6 +271,7 @@ nothing	etemplate	zh	无
 nothing found - try again !!!	etemplate	zh	没有找到 - 请再试！
 nothing in clipboard to paste !!!	etemplate	zh	无法从剪贴板粘贴！
 nothing matched search criteria !!!	etemplate	zh	没有与搜索条件相匹配的！
+now	etemplate	zh	现在
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	zh	字段/单元列数应为跨距或'所有'的其余列，CSS类名(对于TD标签)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	zh	V/HBox 中 rows/cols 数目、Cellpadding, Cellspacing
 of	etemplate	zh	的
@@ -293,12 +301,15 @@ read a list of entries.	etemplate	zh	读取条目列表。
 read a single entry by passing the id and fieldlist.	etemplate	zh	通过ID和字段列表读取一单项条目。
 read etemplate from database (for the keys above)	etemplate	zh	从数据库读取模板 (通过以上键值)
 readonly	etemplate	zh	只读
+refresh	etemplate	zh	刷新
 remove row (can not be undone!!!)	etemplate	zh	移除行 (无法还原！)
 remove this link (not the entry itself)	etemplate	zh	移除此链接 (不是条目本身)
 required	etemplate	zh	需要
+reset	etemplate	zh	重置
 returns savely, without deleting	etemplate	zh	返回，未删除
 right	etemplate	zh	正确
 row...	etemplate	zh	列...
+save all	etemplate	zh	保存所有
 save selected columns as default preference for all users.	etemplate	zh	保存所选列作为所有用户默认首选。
 save the changes made and close the window	etemplate	zh	保存所作更改并且关闭窗口
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	zh	在上面的键值(name,...)之下保存模板，把它们改为另存将
@@ -341,6 +352,7 @@ select which accounts to show	etemplate	zh	选择要显示的帐户
 select which values to show	etemplate	zh	选择要显示的数值
 select year	etemplate	zh	选择年
 selectbox	etemplate	zh	下拉选单
+set as default	etemplate	zh	设置作为缺省
 sets today as date	etemplate	zh	设置为当前日期
 should the form be submitted or any custom javascript be executed	etemplate	zh	将表单提交或是执行任何自定义 javascript
 show	etemplate	zh	显示
@@ -407,6 +419,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	zh	列的宽度（百分比或像素）
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	zh	用于table-tag和(可选)div的百分比或像素表格宽度
 width, disabled	etemplate	zh	宽度，禁用
+wk	etemplate	zh	周
 working days	etemplate	zh	工作日
 write <app>/setup/tables_current.inc.php	etemplate	zh	写入<app>/setup/tables_current.inc.php
 write langfile	etemplate	zh	写语言文件

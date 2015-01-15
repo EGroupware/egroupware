@@ -19,10 +19,14 @@ check all	resources	sv	Markera alla
 choose categories admin	resources	sv	Välj kategori administratör
 clear selection	resources	sv	Rensa markeringar
 configure access permissions	admin	sv	Reglera åtkomst
+conflict	resources	sv	Konflikt
 create new accessory for this resource	resources	sv	Skapa tillbehör till resursen
 create new links	resources	sv	Skapa nya länkar
+custom fields	resources	sv	Anpassade fält
+days	resources	sv	Dagar
 delete selected resources	resources	sv	Radera valda resurser
 delete this entry	resources	sv	Radera posten
+deleted	resources	sv	Raderad
 description (short)	resources	sv	Beskrivning (kort)
 direct booking permissions	resources	sv	Direkt bokningsrättigheter
 don't use vfs (this will need a symlink --> see readme)	resources	sv	Använd inte VFS (detta behöver en mjuklänk --> läs i README)

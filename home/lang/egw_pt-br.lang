@@ -1,4 +1,14 @@
+color	home	pt-br	Cor
 displays home	home	pt-br	Exibe Página Inicial
 egroupware	home	pt-br	eGroupWare
 home	home	pt-br	Página Inicial
+in %1 days (%2) is %3's birthday.	home	pt-br	Em %1 dia(s) (%2) será aniversário de %3
+remove	home	pt-br	remover
+set as default	home	pt-br	Definir como padrão
 there is a new version of egroupware available	home	pt-br	Há uma nova versão do eGroupWare disponível
+today is %1's birthday!	home	pt-br	Hoje é o aniversário de %1.
+tomorrow is %1's birthday.	home	pt-br	Amanhã é o aniversário de %1.
+yes, for the next three days	home	pt-br	Sim, para os próximos três dias
+yes, for the next two weeks	home	pt-br	Sim, para as próximas duas semanas
+yes, for the next week	home	pt-br	Sim, para a próxima semana
+yes, for today and tomorrow	home	pt-br	Sim, para hoje e amanhã

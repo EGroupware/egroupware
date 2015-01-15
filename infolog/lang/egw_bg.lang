@@ -9,6 +9,7 @@
 %1 you are responsible for is starting at %2	infolog	bg	%1, за което отговаряте, започва на %2
 %1 you delegated is due at %2	infolog	bg	%1, делегирано от Вас приключва на %2
 %1 you delegated is starting at %2	infolog	bg	%1, делегирано от Вас започва на %2
+(no subject)	infolog	bg	(без тема)
 - subprojects from	infolog	bg	- Подпроекти от
 0%	infolog	bg	0%
 10%	infolog	bg	10%
@@ -123,7 +124,7 @@ do you want a notification, if items you delegated are about to start?	infolog	b
 do you want a notification, if items you delegated are due?	infolog	bg	Желаете ли известие при достигане на крайния срок за задачи, които сте делегирали?
 do you want to receive notifications as html-mails or plain text?	infolog	bg	Известията да бъдат във вид на HTML или текстови съобщения?
 don't show infolog	infolog	bg	НЕ показвай Дневника
-done	common	bg	приключен
+done	infolog	bg	приключен
 download	infolog	bg	Изтегляне
 duration	infolog	bg	Продължителност
 each value is a line like <id>[=<label>]	infolog	bg	всяка стойност е ред във формат <id>[=<label>]
@@ -153,6 +154,7 @@ fieldseparator	infolog	bg	Разделител на полетата
 finish	infolog	bg	край
 for which types should this field be used	infolog	bg	за кои типове да се използва полето
 from	infolog	bg	От
+general fields:	infolog	bg	Общи полета:
 global categories	infolog	bg	Глобални категории
 group owner for	infolog	bg	Група-собственик на
 high	infolog	bg	висок
@@ -187,12 +189,10 @@ leave it empty	infolog	bg	оставете непопълнено
 leave it empty for a full week	infolog	bg	Непопълнено - цяла седмица
 leave without saveing the entry	infolog	bg	изход без запис
 leaves without saveing	infolog	bg	изход без запис
-length<br>rows	infolog	bg	Дължина<br>Редове
 link	infolog	bg	Връзка
 links	infolog	bg	Връзки
 links of this entry	infolog	bg	Връзки на записа
 list all categories	infolog	bg	Покажи всички категории
-list no subs/childs	infolog	bg	Покажи без Под-
 location	infolog	bg	Местонахождение
 longer textual description	infolog	bg	по-дълго текстово описание
 low	infolog	bg	нисък

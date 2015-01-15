@@ -35,6 +35,7 @@ actions	common	ca	Accions
 active	common	ca	Actiu
 add	common	ca	Afegir
 add %1 category for	common	ca	Afegir %1 categoria per a
+add a new contact	common	ca	Afegeix un nou contacte
 add category	common	ca	Afegir categoria
 add shortcut	common	ca	Afegeix combinació de tecles
 add sub	common	ca	Afegir sub
@@ -235,6 +236,7 @@ estonia	common	ca	ESTÒNIA
 ethiopia	common	ca	ETIÒPIA
 everything	common	ca	Tot
 exact	common	ca	exacte
+failed to change password.	common	ca	Error al canviar la contrasenya.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	ca	No s'ha pogut contactar amb el Servidor o Resposta Invàlida del Servidor. Torna-ho a provar. Contacta amb l'administrador en cas que falli.
 falkland islands (malvinas)	common	ca	ILLES MALVINES (FALKLAND)
 faroe islands	common	ca	ILLES FEROE
@@ -372,6 +374,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	ca	Llista
 list members	common	ca	Llista de membres
 lithuania	common	ca	LITUÀNIA
+load	common	ca	Carregar
 local	common	ca	Local
 locations	common	ca	Ubicacions
 login	common	ca	Entrar
@@ -440,6 +443,7 @@ niger	common	ca	NIGER
 nigeria	common	ca	NIGERIA
 niue	common	ca	NIUE
 no	common	ca	No
+no - cancel	common	ca	No - Cancel·lar
 no entries found, try again ...	common	ca	No s'han trobat entrades, proveu un altre cop...
 no history for this record	common	ca	Sense historial per aquest registre
 no savant2 template directories were found in:	common	ca	No s'han trobat directoris de plantilles Savant2  a:
@@ -511,6 +515,7 @@ please set your preferences for this application	common	ca	Si us plau, establiu 
 please wait...	common	ca	Si us plau, espereu...
 please, check back with us shortly.	common	ca	Siusplau, verifiqueu amb nosaltres aviat.
 poland	common	ca	POLÒNIA
+popup with search	common	ca	Finestra emergent amb recerca
 portugal	common	ca	PORTUGAL
 postal	common	ca	Postal
 powered by	common	ca	Gestionat per
@@ -569,6 +574,7 @@ search or select accounts	common	ca	busca o selecciona comptes
 second	common	ca	segon
 section	common	ca	Secció
 select	common	ca	Triar
+select all	common	ca	Seleccionar tot
 select all %1 %2 for %3	common	ca	Triar tots els %1 %2 per %3
 select category	common	ca	Triar categoria
 select date	common	ca	Triar data
@@ -733,6 +739,8 @@ written by:	common	ca	Escrit per:
 year	common	ca	Any
 yemen	common	ca	IEMEN
 yes	common	ca	Sí
+yes - delete	common	ca	Sí - Esborrar
+yes - delete including sub-entries	common	ca	Sí - Esborrar incloent subentrades
 you are required to change your password during your first login	common	ca	Heu de canviar la vostra contrasenya a la vostra primera connexió.
 you can customize how many icons and toolbars the editor shows.	common	ca	Podeu personalitzar quantes icones i barres d'eines mostra l'editor.
 you have been successfully logged out	login	ca	Desconnexió correcta
@@ -749,7 +757,6 @@ your message could <b>not</b> be sent!<br>	common	ca	El missatge <b>no</b> s'ha 
 your message has been sent	common	ca	Missatge enviat
 your search returned %1 matchs	common	ca	la recerca ha tornat %1 resultats
 your search returned 1 match	common	ca	la recerca ha tornat 1 resultat
-your session could not be verified.	login	ca	La vostra sessió no s'ha pogut verificar.
 your settings have been updated	common	ca	Preferències actualitzades
 zambia	common	ca	ZAMBIA
 zimbabwe	common	ca	ZIMBABWE

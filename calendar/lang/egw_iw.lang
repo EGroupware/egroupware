@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	iw	%1 %2 ב-%3
+%1 hours	calendar	iw	%1 שעות
 %1 records imported	calendar	iw	הובאו %1 רשומות
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	iw	(נקראו %1 רשומות (הן עוד לא ובאו, אפשר לחזור אחורה ולהוריד את הסימון ליד בדוק ייבוא
 accept	calendar	iw	קבל
@@ -33,6 +34,7 @@ create new links	calendar	iw	יצור קישורים חדשים
 created	calendar	iw	נוצר
 csv-fieldname	calendar	iw	CSV-שם-שדה
 csv-filename	calendar	iw	CSV-שם-קובץ
+custom	calendar	iw	מותאם אישית
 custom fields	common	iw	שדות מותאמות אישית
 daily	calendar	iw	יומי
 day	calendar	iw	יום

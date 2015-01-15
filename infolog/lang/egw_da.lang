@@ -1,5 +1,6 @@
 %1 records imported	infolog	da	%1 posteringer importeret
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	da	%1 posteringer læst (ikke implementeret endnu, du skal gå tilbage og fravælge Test Import)
+(no subject)	infolog	da	(ingen emne)
 - subprojects from	infolog	da	- Underprojekt fra
 0%	infolog	da	0%
 10%	infolog	da	10%
@@ -86,7 +87,7 @@ description	infolog	da	Beskrivelse
 determines the order the fields are displayed	infolog	da	bestemmer rækkefølgen felterne bliver vist
 disables a status without deleting it	infolog	da	deaktivere en status uden at slette den
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	da	vil du have en bekræftelse fra den ansvarlige om: Acceptering, opgave udført eller begge
-done	common	da	Udført
+done	infolog	da	Udført
 download	infolog	da	Download
 duration	infolog	da	Varighed
 each value is a line like <id>[=<label>]	infolog	da	hver værdi er en linie som <id>[=<label>]
@@ -138,12 +139,10 @@ last changed	infolog	da	Sidst ændret
 last modified	infolog	da	Sidst ændret
 leave without saveing the entry	infolog	da	forlad uden at gemme indtastningen
 leaves without saveing	infolog	da	forlad uden at gemme
-length<br>rows	infolog	da	Længde<br>række
 link	infolog	da	Link
 links	infolog	da	Links
 links of this entry	infolog	da	Links til denne postering
 list all categories	infolog	da	Vis alle kategorier
-list no subs/childs	infolog	da	Vis ikke underkategorier/børn
 location	infolog	da	Sted
 longer textual description	infolog	da	Længere tekstet beskrivelse
 low	infolog	da	lav
@@ -202,6 +201,7 @@ responsible open	infolog	da	Ansvarlig - åben
 responsible overdue	infolog	da	Ansvarlig - over tid
 responsible upcoming	infolog	da	Ansvarlig - kommende
 returns a list / search for records.	infolog	da	Viser en liste / Søger efter posteringer
+rows	infolog	da	Rækker
 save	infolog	da	Gem
 saves the changes made and leaves	infolog	da	gem ændringerne og afslut
 saves this entry	infolog	da	Gem denne postering

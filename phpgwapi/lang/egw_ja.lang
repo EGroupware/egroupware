@@ -99,6 +99,7 @@ language	common	ja	言語
 last name	common	ja	名
 last page	common	ja	last page
 lastname	common	ja	名
+load	common	ja	読み込み
 login	common	ja	ログイン
 loginid	common	ja	ログインID
 logout	common	ja	ログアウト
@@ -156,6 +157,7 @@ search	common	ja	検索
 search accounts	common	ja	アカウント検索
 section	common	ja	表示場所
 select	common	ja	選択
+select all	common	ja	全て選択
 select category	common	ja	カテゴリ選択
 select one	common	ja	選択して下さい
 send	common	ja	送信
@@ -206,5 +208,4 @@ you have not entered a valid date	common	ja	日付が正しくありません
 your message has been sent	common	ja	メッセージを送信しました。
 your search returned %1 matchs	common	ja	%1 件見つかりました。
 your search returned 1 match	common	ja	１件見つかりました。
-your session could not be verified.	login	ja	Your session could not be verified.
 your settings have been updated	common	ja	Your settings have been Updated

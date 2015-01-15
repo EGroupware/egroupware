@@ -145,6 +145,7 @@ checking php.ini	setup	es-es	Comprobando php.ini
 checking required php version %1 (recommended %2)	setup	es-es	Comprobando la versión necesaria de PHP: %1 (recomendada: %2)
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	es-es	comprueba si eGrouWare está instalado, sus versiones y las actualizaciones necesarias (para los valores de retorno, ver --exit-codes)
+clear cache and register hooks	setup	es-es	Limpiar la caché y registrar los hooks
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
 click here to re-run the installation tests	setup	es-es	Pulse aquí para volver a ejecutar las pruebas de instalación
@@ -278,6 +279,7 @@ error in group-creation !!!	setup	es-es	¡Error al crear grupo!
 error listing "dn=%1"!	setup	es-es	¡Error al listar "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	es-es	¡Error al modificar dn=%1: %2='%3'!
 export has been completed!	setup	es-es	¡La exportación se ha completado!
+failed to mount backup directory!	setup	es-es	Fallo el montar el directorio de backup
 failed writing configuration file header.inc.php, check the permissions !!!	setup	es-es	Fallo al escribir el fichero de configuración header.inc.php. ¡Compruebe los permisos!
 false	setup	es-es	Falso
 file	setup	es-es	FICHERO

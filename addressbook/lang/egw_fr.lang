@@ -363,7 +363,6 @@ phone numbers	common	fr	Numéros de téléphone
 photo	addressbook	fr	Photo
 please enter a name for that field !	addressbook	fr	SVP entrez un nom pour ce champ !
 please select only one category	addressbook	fr	Sélectionnez une seule catégorie !
-please update the templatename in your customfields section!	addressbook	fr	Mettre à jour le nom du template dans la session des champs personnalisés.
 postal	common	fr	Postal
 pref	addressbook	fr	pref
 preferred email address to use in distribution lists	addressbook	fr	Adresse email préférée
@@ -443,6 +442,7 @@ this person's first name was not in the address book.	addressbook	fr	Le prénom 
 this person's last name was not in the address book.	addressbook	fr	Le nom de cette personne n'était pas dans le carnet d'adresses.
 timezone	addressbook	fr	Fuseau horaire
 title	addressbook	fr	Titre
+titles of any entries linked to the current record, excluding attached files	addressbook	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 to many might exceed your execution-time-limit	addressbook	fr	trop pourrait dépasser votre temps limite d'exécution
 today is %1's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1 !
 tomorrow is %1's birthday.	common	fr	Demain c'est l'anniversaire de %1.
@@ -474,7 +474,6 @@ verification	addressbook	fr	Vérification
 view linked infolog entries	addressbook	fr	Afficher les entrées liées à InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	ATTENTION!! LDAP est valide seulement si vous n'utilisez PAS les contacts pour le stockage des comptes!
 warning: all contacts found will be deleted!	addressbook	fr	AVERTISSEMENT : Tous les contacts trouvés seront supprimés!
-warning: template "%1" not found, using default template instead.	addressbook	fr	AVERTISSEMENT : template "%1" introubable, utilisation du template par défaut.
 weekday	addressbook	fr	Jour de la semaine
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fr	Que devraient afficher les liens du carnet d'adresses dans les autres applications. Les valeurs vides ne seront pas prises en compte. Vous devez vous reconnecter si vous modifiez ce paramètre!
 when viewing a contact, show linked entries from the selected application	addressbook	fr	A l'affichage du contact, afficher les entrées liées sur les applications sélectionnées
@@ -506,6 +505,7 @@ you must select a vcard. (*.vcf)	addressbook	fr	Vous devez choisir une vcard. (*
 you must select at least 1 column to display	addressbook	fr	Vous devez choisir au moins 1 colonne à afficher
 you need to select a distribution list	addressbook	fr	Vous devez choisir une liste de diffusion
 you need to select some contacts first	addressbook	fr	Vous devez d'abord choisir les contacts
+you need to select some entries first	addressbook	fr	Vous devez d'abord sélectionner des entrées.
 zip code	common	fr	Code postal
 zip code (private)	addressbook	fr	Code postal (privé)
 zip_note	addressbook	fr	<p><b>Note:</b> Le fichier peut être un fichier zip contenant une collection de fichiers .csv, .vcf ou .ldif. C´est pourquoi il est important de ne pas mélanger les types de fichiers lors de l'importation.

@@ -1,4 +1,14 @@
+color	home	nl	Kleur
 displays home	home	nl	Toont start
 egroupware	home	nl	eGroupware
 home	home	nl	Start
+in %1 days (%2) is %3's birthday.	home	nl	Over %1 dagen (%2) is %3  jarig.
+remove	home	nl	verwijderen
+set as default	home	nl	Instellen als standaard
 there is a new version of egroupware available	home	nl	Er is een nieuwe versie van eGroupWare beschikbaar
+today is %1's birthday!	home	nl	Vandaag is %1 jarig !
+tomorrow is %1's birthday.	home	nl	Morgen is %1 jarig
+yes, for the next three days	home	nl	Ja, voor de volgende drie dagen
+yes, for the next two weeks	home	nl	Ja, voor de volgende twee dagen
+yes, for the next week	home	nl	Ja, voor de volgende week
+yes, for today and tomorrow	home	nl	Ja, voor vandaag en morgen

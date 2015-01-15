@@ -27,6 +27,7 @@ actions	common	et	Tegevused
 active	common	et	Aktiivne
 add	common	et	Lisa
 add %1 category for	common	et	Lisa %1 kategooria
+add a new contact	common	et	Lisa uus kontakt
 add category	common	et	Lisa Kategooria
 add shortcut	common	et	Lisa Kiirklahv
 add sub	common	et	Lisa alam
@@ -285,6 +286,7 @@ liberia	common	et	LIBEERIA
 license	common	et	Litsents
 list	common	et	Nimekiri
 lithuania	common	et	LEEDU
+load	common	et	Lae
 local	common	et	Lokaalne
 loginid	common	et	SisselogimiseID
 logout	common	et	Logi välja
@@ -315,6 +317,7 @@ niger	common	et	NIGER
 nigeria	common	et	NIGEERIA
 niue	common	et	NIUE
 no	common	et	Ei
+no - cancel	common	et	Ei -Tühista
 no entries found, try again ...	common	et	kirjeid ei leitud, proovi uuesti
 none	common	et	Pole
 normal	common	et	Normaalne
@@ -380,6 +383,7 @@ search accounts	common	et	Otsi kontosid
 second	common	et	teine
 section	common	et	Selektsioon
 select	common	et	Vali
+select all	common	et	Märgi kõik
 select all %1 %2 for %3	common	et	Vali kõik %1 %2 for %3
 select category	common	et	Vali Kategooria
 select date	common	et	Vali kuupäev
@@ -483,6 +487,8 @@ written by:	common	et	Kirjutatud:
 year	common	et	Aasta
 yemen	common	et	JEEMEN
 yes	common	et	Jah
+yes - delete	common	et	Jah - Kustuta
+yes - delete including sub-entries	common	et	Jah - Kustuta koos alam-kirjetega
 you are required to change your password during your first login	common	et	Sa pead muutma oma parooli esmasel sisselogimisel
 you have been successfully logged out	login	et	Oled täielikult välja loginud
 you have not entered a title	common	et	Sa ei sisestanud pealkirja

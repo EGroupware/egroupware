@@ -124,7 +124,6 @@ do not delete the category and return back to the list	admin	uk	НЕ видал�
 do you also want to delete all global subcategories ?	admin	uk	Чи хочете ви також видалити всі глобальні підкатегорії ?
 do you want to delete all global subcategories ?	admin	uk	Чи хочете ви видалити всі глобальні підкатегорії ?
 do you want to move all global subcategories one level down ?	admin	uk	Чи хочете ви перенести всі глобальні підкатегорії рівнем нижче ?
-each value is a line like <id>[=<label>]	admin	uk	Кожне значення є рядком у вигляді <id>[=<label>]
 edit account	admin	uk	Редагувати рахунок
 edit application	admin	uk	Редагувати приложення
 edit global category	admin	uk	Редагувати глобальну категорію
@@ -222,7 +221,6 @@ login time	admin	uk	Час входу
 loginid	admin	uk	ID входу
 main screen message	admin	uk	Повідомлення основного екрану
 manager	admin	uk	Керівник
-max length of the input [, length of the inputfield (optional)]	admin	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
 maximum account id (e.g. 65535 or 1000000)	admin	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
 maximum entries in click path history	admin	uk	Максимальна кількість записів у історії переходів
 message has been updated	admin	uk	Повідомлення змінено

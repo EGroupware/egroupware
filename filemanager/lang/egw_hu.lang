@@ -19,7 +19,8 @@ accessrights	filemanager	hu	hozzáférés
 acl added.	filemanager	hu	hozzáférés engedélyezve
 acl deleted.	filemanager	hu	hozzáférés törölve
 actions	filemanager	hu	Akció
-all files	common	hu	minden file
+administrators	filemanager	hu	Adminisztrátorok
+all files	filemanager	hu	minden file
 allow a maximum of the above configured folderlinks to be configured in settings	admin	hu	Maximálisan létrehozható linkek száma mappák számára
 and all it's childeren	filemanager	hu	és az összes bejegyzést
 applications	common	hu	Alkalmazások
@@ -59,12 +60,14 @@ directory	filemanager	hu	Könyvtár
 directory %1 already exists	filemanager	hu	%1 könyvtár már létezik
 directory %1 does not exist	filemanager	hu	%1 könyvtár nem létezik
 directory not found or no permission to access it!	filemanager	hu	Könyvtár nem létezik vagy nincs hozzáférési jogosultságod a belépéshez!
+disable	filemanager	hu	Letilt
 display and modification of content	filemanager	hu	A tartalom megjelenítése és módosítása
 display of content	filemanager	hu	A tartalom megjelenítése
 do you want to overwrite the existing file %1?	filemanager	hu	Felülírod a létező %1 filet?
 download	filemanager	hu	Letölt
 edit comments	filemanager	hu	Megjegyzés szerkesztése
 edit settings	filemanager	hu	Beállítások módosítása
+enable	filemanager	hu	engedélyez
 enter setup user and password	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
 enter setup user and password to get root rights	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
 enter the complete vfs path to specify a fast access link to a folder	filemanager	hu	Add meg a teljes VFS elérési utat a gyors mappa-hozzáféréshez
@@ -73,13 +76,15 @@ error adding the acl!	filemanager	hu	HIba a hozzáférés létrehozása során!
 error creating symlink to target %1!	filemanager	hu	Hiba a sylink létrehozása során %1 céhoz!
 error deleting the acl entry!	filemanager	hu	Hiba a hozzáférés törlése során!
 error uploading file!	filemanager	hu	HIba a file feltöltése során!
+everyone	filemanager	hu	bárki
 executable	filemanager	hu	Végrehajtható
+expires	filemanager	hu	Lejár
 extended access control list	filemanager	hu	Kiterjeszett hozzáférés korlátozás lista
 extended acl	filemanager	hu	Kiterjeszett hozzáférés korlátozás
 failed to change permissions of %1!	filemanager	hu	Hiba a %1 hozzáférés módosítása során!
 failed to create directory!	filemanager	hu	Hiba a mappa léterhozása során!
 favorites	filemanager	hu	Kedvencek
-file	filemanager	hu	File
+file	common	hu	File
 file %1 could not be created.	filemanager	hu	%1 fájl nem hozható létre.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	hu	%1 file mérete túl nagy, további információért lépj kapcsolatba a rendszergazdával.
 file deleted.	filemanager	hu	File törölve.
@@ -116,9 +121,11 @@ no access	filemanager	hu	Nincs hozzáférés
 no files in this directory.	filemanager	hu	Nincs állomány ebben a könyvtárban.
 no preview available	filemanager	hu	Előnézet nem áll rendelkezésre
 no version history for this file/directory	filemanager	hu	Nincs elérhető verzió történet ehhez az állományhoz/könyvtárhoz
+noone	filemanager	hu	Senki
 only owner can rename or delete the content	filemanager	hu	Csak a tulajdonos tudja átnevezni és törölni a tartalmat
 open	filemanager	hu	Megnyit
 operation	filemanager	hu	Művelet
+percentage	filemanager	hu	Százalék
 permission denied!	filemanager	hu	Hozzáférés elutasítva!
 permissions	filemanager	hu	Hozzáférés
 permissions of %1 changed.	filemanager	hu	%1 hozzáférése módosult

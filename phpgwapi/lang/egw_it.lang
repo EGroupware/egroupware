@@ -37,6 +37,7 @@ actions	common	it	Azioni
 active	common	it	Attivo
 add	common	it	Aggiungi
 add %1 category for	common	it	Aggiungi %1 categoria per
+add a new contact	common	it	Aggiungi un nuovo contatto
 add category	common	it	Aggiungi categoria
 add shortcut	common	it	Aggiungi Scorciatoia
 add sub	common	it	Aggiungi Sotto-
@@ -73,6 +74,7 @@ are you sure you want to delete this entry ?	common	it	Vuoi davvero cancellare q
 argentina	common	it	ARGENTINA
 armenia	common	it	ARMENIA
 aruba	common	it	ARUBA
+attachment	common	it	Allegato
 august	common	it	Agosto
 australia	common	it	AUSTRALIA
 austria	common	it	AUSTRIA
@@ -138,6 +140,7 @@ centered	common	it	centrato
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
 change	common	it	Cambia
+change owner	common	it	Cambia proprietario
 charset	common	it	utf-8
 check installation	common	it	Controlla installazione
 check now	common	it	Controlla Adesso
@@ -201,6 +204,7 @@ delete	common	it	Elimina
 delete category	common	it	Elimina categoria
 delete file	common	it	Elimina file
 delete row	common	it	Cancella riga
+delete selected entries?	common	it	Eliminare le voci selezionate?
 delete these entries	common	it	Elimina queste voci
 delete this entry	common	it	Elimina questa voce
 denmark	common	it	DANIMARCA
@@ -243,6 +247,7 @@ edit categories	common	it	Modifica Categorie
 edit category	common	it	Modifica Categoria
 egroupware	common	it	EGroupware
 egroupware api version	common	it	Versione API EGroupware
+egroupware version	common	it	Versione EGroupware
 egroupware: login blocked for user '%1', ip %2	common	it	eGroupWare: login bloccato per l'utente '%1', IP %2
 egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
@@ -269,9 +274,11 @@ etag	common	it	ETag
 ethiopia	common	it	ETIOPIA
 everything	common	it	Tutto
 exact	common	it	esatta
+failed to change password.	common	it	Impossibile cambiare la password.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	it	Connessione al Server fallita o risposta del Server non valida. Prova a ripetere il login. Contatta l'Amministratore in caso di fallimento operazione.
 falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
 faroe islands	common	it	ISOLE FAROE
+favorites	common	it	Preferiti
 fax number	common	it	numero di fax
 features of the editor?	common	it	Funzioni dell'editor
 february	common	it	Febbraio
@@ -414,6 +421,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	it	Lista
 list members	common	it	Elenco membri
 lithuania	common	it	LITUANIA
+load	common	it	Carica
 local	common	it	Locale
 locations	common	it	località
 logging / debuging	groupdav	it	Resgistro/Debug
@@ -423,6 +431,7 @@ logout	common	it	Logout
 lost login id	common	it	ID di accesso perso
 lost password	common	it	Password persa
 low	common	it	Bassa
+lowercase letters	common	it	lettere minuscole
 lowest	common	it	Più Bassa
 luxembourg	common	it	LUSSEMBURGO
 macau	common	it	MACAO
@@ -457,6 +466,7 @@ monday	common	it	Lunedì
 mongolia	common	it	MONGOLIA
 montenegro	common	it	MONTENEGRO
 montserrat	common	it	MONTSERRAT
+moono color theme	common	it	Colori tema Moono
 morocco	common	it	MAROCCO
 mozambique	common	it	MOZAMBICO
 multiple	common	it	multiplo
@@ -472,6 +482,7 @@ netherlands antilles	common	it	ANTILLE OLANDESI
 never	common	it	Mai
 new caledonia	common	it	NUOVA CALEDONIA
 new entry added sucessfully	common	it	Nuova voce aggiunto con successo
+new favorite	common	it	Nuovo preferito
 new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
@@ -484,6 +495,7 @@ niger	common	it	NIGER
 nigeria	common	it	NIGERIA
 niue	common	it	NIUE
 no	common	it	No
+no - cancel	common	it	No - Annulla
 no entries found, try again ...	common	it	nessuna voce trovata, prova ancora ...
 no history for this record	common	it	Nessuna history per questo record
 no savant2 template directories were found in:	common	it	Nessuna directory template Savant2 trovata in:
@@ -503,6 +515,7 @@ notifications	common	it	Notifiche
 notify window	common	it	Finestra di Notifica
 notify your administrator to correct this situation	common	it	Chiedi all'Amministratore di correggere questa Situazione
 november	common	it	Novembre
+numbers	common	it	numeri
 october	common	it	Ottobre
 off	groupdav	it	Spento
 ok	common	it	OK
@@ -535,6 +548,8 @@ paraguay	common	it	PARAGUAY
 parcel	common	it	Parcella
 parent category	common	it	Categoria superiore
 password	common	it	Password
+password contains only %1 of required %2 character classes: no %3	common	it	la password contiene solo %1 di %2 classi di caratteri richieste: no %3
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	it	la password contiene "%1" una parte o tutto il tuo nome (3 o più caratteri di lunghezza)
 password could not be changed	common	it	La password non può essere cambiata
 password has been updated	common	it	La password è stata aggiornata
 password must contain at least %1 lowercase letters	common	it	La Password deve contenere almeno %1 lettere minuscole
@@ -561,6 +576,7 @@ please set your preferences for this application	common	it	Per favore imposta le
 please wait...	common	it	Attendere per Favore...
 please, check back with us shortly.	common	it	Per favore torna a trovarci più tardi
 poland	common	it	POLONIA
+popup with search	common	it	Popup con ricerca
 portugal	common	it	PORTOGALLO
 postal	common	it	Postale
 powered by	common	it	Powered by
@@ -628,6 +644,7 @@ select	common	it	Seleziona
 select "%1", if your client does not support multiple addressbooks.	groupdav	it	Seleziona "%1", se il tuo client non supporta rubriche multiple
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	it	Seleziona "%1", se il tuo client supporta gruppi, p.es. rubrica OS X oppure iOS
 select action	common	it	Scegli azione
+select all	common	it	Seleziona tutto
 select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select category	common	it	Selezione categoria
 select date	common	it	Selezione data
@@ -647,6 +664,7 @@ serbia	common	it	Serbia
 server %1 has been added	common	it	Server %1 aggiunto
 server answered. processing response...	common	it	Il Server ha risposto. Elaborazione risposta in corso...
 server contacted. waiting for response...	common	it	Server contattato. Attesa risposta...
+server is unwilling to perform.	common	it	Il server non accetta di procedere.
 server name	common	it	Nome Server
 session has been killed	common	it	La sessione è stata terminata
 setup	common	it	Setup
@@ -681,6 +699,7 @@ sorry, your login has expired	login	it	Spiacente, il tuo login è scaduto
 south africa	common	it	SUD AFRICA
 south georgia and the south sandwich islands	common	it	SUD GEORGIA E LE ISOLE SUD SANDWICH
 spain	common	it	SPAGNA
+special characters	common	it	caratteri speciali
 sri lanka	common	it	SRI LANKA
 start date	common	it	Data Inizio
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	it	Directory iniziale per il browser dell'editor di testo in EGroupware File Manager
@@ -758,6 +777,7 @@ update the clock per minute or per second	common	it	Aggiorna l'orologio ogni min
 upload	common	it	Carica
 upload directory does not exist, or is not writeable by webserver	common	it	Cartella di upload inesistente o non scrivibile dal server
 upload requires the directory to be writable by the webserver!	common	it	Il caricamento richiede che il server possa scrivere nella cartella!
+uppercase letters	common	it	lettere maiuscole
 url	common	it	URL
 uruguay	common	it	URUGUAY
 use button to search for	common	it	usa il Pulsante per cercare
@@ -801,6 +821,8 @@ written by:	common	it	Scritto da:
 year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
+yes - delete	common	it	Sì - Cancella
+yes - delete including sub-entries	common	it	Sì - Cancella includendo voci secondarie
 you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
 you can customize how many icons and toolbars the editor shows.	common	it	Quante icone e barre degli strumenti mostra l'editor
 you have been successfully logged out	login	it	L'uscita è stata effettuata correttamente
@@ -819,10 +841,11 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi 
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
 your message has been sent	common	it	Il tuo messaggio è stato inviato
+your password does not have required strength:	common	it	La tua password non è sufficientemente efficace:
 your password is about to expire in %1 days, you may change your password now	common	it	La tua password scade in %1 giorni, puoi cambiare la tua password adesso.
+your password might not match the password policy.	common	it	La tua password non corrisponde ai criteri di sicurezza predefiniti.
 your search returned %1 matchs	common	it	la tua ricerca ha restituito %1 risultati
 your search returned 1 match	common	it	la tua ricerca ha restituito 1 risultato
-your session could not be verified.	login	it	La sessione non può essere verificata.
 your settings have been updated	common	it	Le tue impostazioni sono state aggiornate
 zambia	common	it	ZAMBIA
 zimbabwe	common	it	ZIMBABWE

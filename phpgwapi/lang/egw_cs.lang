@@ -3,6 +3,7 @@
 %1 is not executable by the webserver !!!	common	cs	%1 není spustitelný pro webový server
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	cs	%1Zvolte jiný adresář%2<br />nebo nastavte práva na %3 tak, aby do něj mohl zapisovat webový server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	cs	%1eGroupWare%2 je víceuživatelský groupware postavený na webových technologiích napsaný v jazyce %3PHP%4.
+'%1' is no php file in the egw server root (%2)!	common	cs	'%1' není php souborem v server root eGW (%2)!
 (session restored in %1 seconds)	common	cs	(relace obnovena za %1 sekund)
 (shift-)click or drag to change value	jscalendar	cs	Klikněte (se shiftem) nebo uchopte pro změnu hodnoty
 - click on any of the time parts to increase it	jscalendar	cs	- Kliknutím zvětšíte libovolnou položku časového údaje
@@ -37,6 +38,7 @@ actions	common	cs	Akce
 active	common	cs	Aktivní
 add	common	cs	Přidat
 add %1 category for	common	cs	Přidat kategorii %1 pro
+add a new contact	common	cs	Přidat nový kontakt
 add category	common	cs	Přidat kategorii
 add shortcut	common	cs	Přidat zástupce
 add sub	common	cs	Přidat pod
@@ -228,6 +230,7 @@ edit categories	common	cs	Editovat kategorie
 edit category	common	cs	Editovat kategorii
 egroupware	common	cs	eGroupWare
 egroupware api version	common	cs	verze eGroupWare API
+egroupware version	common	cs	Verze eGroupWaru
 egroupware: login blocked for user '%1', ip %2	common	cs	eGroupWare: zablokováno přihlášení uživatele '%1', IP %2
 egypt	common	cs	EGYPT
 el salvador	common	cs	EL SALVADOR
@@ -251,9 +254,11 @@ etag	common	cs	ETag
 ethiopia	common	cs	ETIOPIE
 everything	common	cs	Vše
 exact	common	cs	přesný (výraz)
+failed to change password.	common	cs	Nepodařilo se změnit heslo.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	cs	Nepodařilo se zkontaktovat server nebo jeho odpověď byla chybná. Zkuste se přihlásit znovu a v případě chyby kontaktujte administrátora.
 falkland islands (malvinas)	common	cs	FALKLANDSKÉ OSTROVY
 faroe islands	common	cs	FAERSKÉ OSTROVY
+favorites	common	cs	Oblíbené
 fax number	common	cs	číslo faxu
 features of the editor?	common	cs	Vlastnosti editoru?
 february	common	cs	Únor
@@ -393,6 +398,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	cs	Seznam
 list members	common	cs	Seznam členů
 lithuania	common	cs	LITVA
+load	common	cs	Nahrát
 local	common	cs	Lokální
 locations	common	cs	umístění
 login	common	cs	Přihlásit
@@ -462,6 +468,7 @@ niger	common	cs	NIGER
 nigeria	common	cs	NIGÉRIE
 niue	common	cs	NIUE
 no	common	cs	Ne
+no - cancel	common	cs	Ne - Zrušit
 no entries found, try again ...	common	cs	žádné záznamy nebyly nalezeny, zkuste znovu...
 no history for this record	common	cs	Žádná historie pro tento záznam
 no savant2 template directories were found in:	common	cs	Nebyly nalezeny šablony adresářů Savant2 v:
@@ -537,6 +544,7 @@ please set your preferences for this application	common	cs	Upravte prosím své 
 please wait...	common	cs	Prosím čekejte...
 please, check back with us shortly.	common	cs	Prosíme, navštivte nás až za chvíli.
 poland	common	cs	POLSKO
+popup with search	common	cs	Překryvné okno s hledáním
 portugal	common	cs	PORTUGALSKO
 postal	common	cs	Poštovní
 powered by	common	cs	Založeno na
@@ -599,6 +607,7 @@ second	common	cs	sekunda
 section	common	cs	Sekce
 select	common	cs	Vybrat
 select action	common	cs	Vybrat akci
+select all	common	cs	Vybrat vše
 select all %1 %2 for %3	common	cs	Vybrat vše %1 %2 pro %3
 select category	common	cs	Vybrat kategorii
 select date	common	cs	Vybrat datum
@@ -766,6 +775,8 @@ written by:	common	cs	Napsal(a):
 year	common	cs	Rok
 yemen	common	cs	JEMEN
 yes	common	cs	Ano
+yes - delete	common	cs	Ano - Smazat
+yes - delete including sub-entries	common	cs	Ano - Smazat včetně podpoložek
 you are required to change your password during your first login	common	cs	Během svého prvního přihlášení si musíte změnit heslo
 you can customize how many icons and toolbars the editor shows.	common	cs	Můžete navolit kolik ikon a nástrojových lišt editor zobrazuje.
 you have been successfully logged out	login	cs	Byl(a) jste úspěšně odhlášen(a)
@@ -784,7 +795,6 @@ your message could <b>not</b> be sent!<br>	common	cs	Vaše zpráva <b>nemůže</
 your message has been sent	common	cs	Vaše zpráva byla odeslána
 your search returned %1 matchs	common	cs	Vaše hledání vrátilo %1 výsledků
 your search returned 1 match	common	cs	Vaše hledání vrátilo 1 výsledek
-your session could not be verified.	login	cs	Vaše relace nemohla být ověřena.
 your settings have been updated	common	cs	Vaše nastavení byla zaktualizována
 zambia	common	cs	ZAMBIE
 zimbabwe	common	cs	ZIMBABWE

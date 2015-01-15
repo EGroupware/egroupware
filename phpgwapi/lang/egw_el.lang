@@ -31,6 +31,7 @@ actions	common	el	Ενέργειες
 active	common	el	Ενεργό
 add	common	el	Προσθήκη
 add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
+add a new contact	common	el	Προσθέστε μία νέα επαφή
 add category	common	el	Προσθήκη κατηγορίας
 add shortcut	common	el	Προσθήκη Συντόμευσης
 add sub	common	el	Προσθήκη υπo
@@ -361,6 +362,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	el	Λίστα
 list members	common	el	Μέλη λίστας
 lithuania	common	el	ΛΙΘΟΥΑΝΙΑ
+load	common	el	Φόρτωση
 local	common	el	Τοπικός
 locations	common	el	τοποθεσίες
 login	common	el	Είσοδος
@@ -427,6 +429,7 @@ niger	common	el	ΝΙΓΗΡ
 nigeria	common	el	ΝΙΓΗΡΙΑ
 niue	common	el	ΝΙΟΥΕ
 no	common	el	Όχι
+no - cancel	common	el	Όχι-Άκυρο
 no entries found, try again ...	common	el	δεν βρέθηκαν καταχωρήσεις, ξαναπροσπαθήστε...
 no history for this record	common	el	Δεν υπάρχει ιστορικό γι' αυτή την εγγραφή
 no savant2 template directories were found in:	common	el	Δεν βρέθηκαν ετικέτες καταλόγων Savant2 στο:
@@ -545,6 +548,7 @@ search accounts	common	el	Αναζήτηση λογαριασμών
 second	common	el	δευτερόλεπτο
 section	common	el	Τομέας
 select	common	el	Επιλογή
+select all	common	el	Επιλογή όλων
 select all %1 %2 for %3	common	el	Επιλογή όλων %1 %2 για %3
 select category	common	el	Επιλογή κατηγορίας
 select date	common	el	Επιλογή ημερομηνίας
@@ -703,6 +707,8 @@ written by:	common	el	Γραμμένο από:
 year	common	el	Έτος
 yemen	common	el	ΥΕΜΕΝΗ
 yes	common	el	Ναι
+yes - delete	common	el	Ναι- Διαγραφή
+yes - delete including sub-entries	common	el	Ναι-Διαγραφή συμπεριλαμβανομένων και των υπο-καταχωρήσεων
 you are required to change your password during your first login	common	el	Απαιτείται η αλλαγή του κωδικού σας κατά την πρώτη είσοδο
 you can customize how many icons and toolbars the editor shows.	common	el	Μπορείτε να ρυθμίσετε πόσες εικόνες και μπάρες εργαλειών θα δείχνει ο εκδότης.
 you have been successfully logged out	login	el	Επιτυχής έξοδος
@@ -718,7 +724,6 @@ your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b
 your message has been sent	common	el	To μήνυμά σας εστάλει
 your search returned %1 matchs	common	el	η αναζήτηση επέστρεψε %1 αποτελέσματα
 your search returned 1 match	common	el	η αναζήτηση επέστρεψε 1 αποτέλεσμα
-your session could not be verified.	login	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί
 your settings have been updated	common	el	Οι ρυθμίσεις σας έχουν ενημερωθεί
 zambia	common	el	ΖΑΜΠΙΑ
 zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ

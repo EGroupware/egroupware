@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	lv	%1 %2 iekš %3
+%1 hours	calendar	lv	%1 stundas
 %1 records imported	calendar	lv	%1 ieraksti importēti
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	lv	%1 ieraksti nolasīti (vēl nav importēti, tu vari iet atpakaļ un noņemt Pārbaudīt importēšanu)
 accept	calendar	lv	Akceptēt
@@ -35,6 +36,7 @@ create new links	calendar	lv	Izveidot jaunas saites
 created	calendar	lv	Izveidots
 csv-fieldname	calendar	lv	CSV-lauka nosaukums
 csv-filename	calendar	lv	CSV- datnes nosaukums
+custom	calendar	lv	Mainīt
 custom fields	common	lv	Klienta lauki
 daily	calendar	lv	Ikdienas
 day	calendar	lv	Diena

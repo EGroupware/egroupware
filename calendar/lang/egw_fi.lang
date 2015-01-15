@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	fi	%1 %2 %3:ssa
 %1 event(s) %2	calendar	fi	%1 tapahtuma(a) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	fi	%1 tapahtuma(a) %2, %3 epäonnistui riittämättömien käyttöoikeuksien takia.
+%1 hours	calendar	fi	%1 tunti(a)
 %1 participants removed because of missing invite grants	calendar	fi	%1 osallistuja(a) poistettu puuttuvien kutsuoikeuksien takia.
 %1 records imported	calendar	fi	%1 tapahtumaa tuotu
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	fi	%1 tapahtumaa luettu (ei vielä tuotu, voit palata ja poistaa valinnan Testi Tuonti)
@@ -105,6 +106,7 @@ creator	calendar	fi	Luoja
 csv	calendar	fi	CSV
 csv-fieldname	calendar	fi	CSV-kentän nimi
 csv-filename	calendar	fi	CSV-tiedoston nimi
+custom	calendar	fi	Lisätiedot
 custom fields	common	fi	Lisäkentät
 custom_2	common	fi	Vapaa/Kiireinen
 daily	calendar	fi	Päivittäin
@@ -180,6 +182,7 @@ event deleted	calendar	fi	Tapahtuma poistettu
 event details follow	calendar	fi	Tapahtuman yksityiskohdat alla
 event saved	calendar	fi	Tapahtuma tallennettu
 event will occupy the whole day	calendar	fi	Tapahtuma varaa koko päivän
+events	common	fi	Tapahtumat
 every user can invite other users and groups	admin	fi	Jokainen käyttäjä voi kutsua muita käyttäjiä ja ryhmiä
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller

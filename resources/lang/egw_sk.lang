@@ -20,16 +20,23 @@ check all	resources	sk	Označ všetko
 choose categories admin	resources	sk	Vyberte správcu kategórií
 clear selection	resources	sk	Zrušiť výber
 configure access permissions	admin	sk	Nastaviť prístupové práva
+confirmed addressbook.	resources	sk	Potvrdený adresár
+conflict	resources	sk	Konflikt
 create new accessory for this resource	resources	sk	Vytvoriť novú kategóriu pre tento zdroj
 create new links	resources	sk	Vytvoriť nové odkazy
+custom etemplate for the contactform	resources	sk	Vlastná eŠablóna pre tento formulár kontaktu
+custom fields	resources	sk	Vlastné polia
+days	resources	sk	dní
 delete selected resources	resources	sk	Odstrániť vybrané zdroje
 delete this entry	resources	sk	Odstrániť túto položku
+deleted	resources	sk	Odstránené
 description (short)	resources	sk	Popis (stručný)
 direct booking permissions	resources	sk	Priame rezervačné práva
 don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepoužívať vfs (bude potrebný symlink --> prečítajte si README)
 edit this entry	resources	sk	Uprav tento záznam
 existing links	resources	sk	Existujúce odkazy
 exists	resources	sk	Existuje
+export definition to use for nextmatch export	resources	sk	Exportná definícia pre použitie v exporte
 export definitition to use for nextmatch export	resources	sk	Exportná definícia pre použitie v exporte
 exports a list of resources to a csv file.	resources	sk	Exportovať zoznam zdrojov do CSV súboru
 general	resources	sk	Hlavné
@@ -100,8 +107,10 @@ something went wrong by saving resource	resources	sk	Počas ukladania zdroja sa 
 storage	resources	sk	Sklad
 storage information	resources	sk	Informácie o sklade
 storage information:	resources	sk	Informácie o sklade:
+the anonymous user needs add rights for it!	resources	sk	Anonymný používateľ by na to potreboval pridať práva!
 the calendar of this resource	resources	sk	Kalendár pre tento zdroj
 this module displays the resources app	resources	sk	Tento modul zobrazuje aplikáciu pre zdroje
+unable to process confirmation.	resources	sk	Nepodarilo sa spracovať potvrdenie.
 use general resources icon	resources	sk	Použiť všeobecnú ikonu zdrojov
 use own picture	resources	sk	Použiť vlastný obrázok
 use the category's icon	resources	sk	Použiť ikonu kategórie
@@ -115,6 +124,8 @@ web-site for this resource	resources	sk	Webstránka tohto zdroja
 where to find this resource?	resources	sk	Kde sa dá nájsť tento zdroj
 which category does this resource belong to?	resources	sk	Do ktorej kategórie tento zdroj patrí?
 write permissions	resources	sk	Oprávnenia k zápisu
+yes, only admins can purge deleted items	admin	sk	Áno, iba správci môžu vymazať odstránené položky
+yes, users can purge their deleted items	admin	sk	Áno, používatelia môžu vymazať ich odstránené položky
 you are not permitted to delete this resource!	resources	sk	Nemáte oprávnenia odstrániť tento zdroj!
 you are not permitted to edit this resource!	resources	sk	Nemáte oprávnenia upraviť tento zdroj!
 you are not permitted to get information about this resource!	resources	sk	Nemáte oprávnenia čítať informácie o tomto zdroji!

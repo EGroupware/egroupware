@@ -23,6 +23,8 @@ account list	admin	cs	Seznam účtů
 account permissions	admin	cs	Práva účtu
 account preferences	admin	cs	Předvolby účtu
 account-id's have to be integers!	admin	cs	ID účtů musí být celá kladná čísla!
+acl added.	admin	cs	ACL byly přidány.
+acl deleted.	admin	cs	ACL byly smazány.
 acl manager	admin	cs	Správce ACL
 acl rights	common	cs	ACL práva
 action	admin	cs	Akce
@@ -158,6 +160,7 @@ delete this user	admin	cs	smazat tohoto uživatele
 deleted	admin	cs	smazáno
 deletes this field	admin	cs	smaže tuto položku
 deliver extern	admin	cs	doručit extern
+deny access	admin	cs	Zakázat přístup
 deny access to access log	admin	cs	Zablokovat přístup k přístupovému protokolu
 deny access to application registery	admin	cs	Zablokovat přístup do registru aplikací
 deny access to applications	admin	cs	Zablokovat přístup k aplikacím
@@ -186,8 +189,6 @@ do you want to delete all global subcategories ?	admin	cs	Chcete smazat všechny
 do you want to move all global subcategories one level down ?	admin	cs	Chcete přesunout všechny globální podkategorie o jednu úroveň níže ?
 document root (default)	admin	cs	Kořenový adresář dokumentů (výchozí)
 down	admin	cs	dolů
-each value is a line like <id>[=<label>]	admin	cs	každá hodnota je řádek ve tvaru <id>[=<label>]
-each value is a line like id[=label]	admin	cs	každá hodnota je řádek ve tvaru id[=label]
 edit account	admin	cs	Editovat účet
 edit application	admin	cs	Editovat aplikaci
 edit email settings	admin	cs	editovat nastavení e-mailu
@@ -265,6 +266,7 @@ forward also to	admin	cs	přeposlat také na
 forward emails to	admin	cs	přeposlat e-maily na
 forward only	admin	cs	jen přeposlat
 full name	admin	cs	Celé jméno
+general	admin	cs	Obecné
 global categories	common	cs	Globální kategorie
 go directly to admin menu, returning here the next time you click on administration.	admin	cs	Jít přímo do administračního menu; sem se vrátíte jakmile příště kliknete na administraci.
 governmental: incl. state or municipal authorities or services	admin	cs	Vládní: včetně státních nebo obecních úřadů a služeb
@@ -348,7 +350,6 @@ main email-address	admin	cs	Hlavní e-mailová adresa
 main screen message	admin	cs	Zpráva na hlavní obrazovce
 manage mapping	admin	cs	Spravovat mapování
 manager	admin	cs	Správce
-max length of the input [, length of the inputfield (optional)]	admin	cs	maximální délka vstupu (volitelné)
 maximum account id (e.g. 65535 or 1000000)	admin	cs	Maximální id účtu (např. 65535 nebo 1000000)
 maximum entries in click path history	admin	cs	Maximální počet záznamů v historii kliknutí
 members	admin	cs	Členové
@@ -401,6 +402,7 @@ percent of users that logged out	admin	cs	Procento odhlášených uživatelů
 percent this user has logged out	admin	cs	Procento odhlášení tohoto uživatele
 permission denied	admin	cs	Přístup zamítnut
 permission denied !!!	admin	cs	Přístup zamítnut !!!
+permission denied!!!	admin	cs	Přístup zamítnut!!!
 permissions	admin	cs	Oprávnění
 permissions this group has	admin	cs	Oprávnění této skupiny
 personal: eg. within a family	admin	cs	Osobní: např. v rámci rodiny
@@ -429,7 +431,9 @@ remove all users from this group ?	admin	cs	Odstranit všechny uživatele z tét
 requested	admin	cs	Požadovaný
 return to admin mainscreen	admin	cs	návrat na hlavní stránku administrace
 return to view account	admin	cs	Návrat na zobrazení účtu
+rights	admin	cs	Práva
 route all mails to	admin	cs	Směrovat všechny zprávy na
+rows	admin	cs	Ŕádky
 rpm or debian package	admin	cs	RPM nebo balíček Debianu
 run asynchronous services	admin	cs	Spustit asynchronní služby
 save the category	admin	cs	uložit katergorii

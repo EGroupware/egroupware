@@ -180,6 +180,7 @@ error creating %1 %2 directory	common	fa	خطای ايجاد 1% 2% پوشه
 error deleting %1 %2 directory	common	fa	خطای حذف 1% 2% پوشه
 error renaming %1 %2 directory	common	fa	خطای دوباره نامگذاری 1% 2% پوشه
 exact	common	fa	دقیقا
+failed to change password.	common	fa	ناتوان از تغییر گذرواژه. لطفا با مدیر سیستم تماس بگیرید
 fax number	common	fa	شماره نمابر
 february	common	fa	فوريه
 fields	common	fa	فیلدها
@@ -270,6 +271,7 @@ left	common	fa	چپ
 license	common	fa	مجوز
 list	common	fa	فهرست
 list members	common	fa	فهرست اعضا
+load	common	fa	بارگذاری
 local	common	fa	محلی
 login	common	fa	ورود
 loginid	common	fa	شناسه کاربری
@@ -311,6 +313,7 @@ nicaragua	common	fa	نیکاراگوئه
 niger	common	fa	نیجر
 nigeria	common	fa	نیجریه
 no	common	fa	خیر
+no - cancel	common	fa	نه - لغو
 no entries found, try again ...	common	fa	ورودی پیدا نشد، مجددا سعی کنید
 no history for this record	common	fa	برای این رکورد سابقه ای نیست
 no savant2 template directories were found in:	common	fa	پوشه قالب Savant2 پیدا نشد
@@ -371,6 +374,7 @@ please select	common	fa	لطفا انتخاب کنید
 please set your global preferences	common	fa	لطفا تنظیمات عمومی خود را انجام دهید
 please set your preferences for this application	common	fa	لطفا تنظیمات خود را برای این برنامه انجام دهید
 please wait...	common	fa	لطفا صبر کنید...
+popup with search	common	fa	پایین افتادنی با جستجو
 portugal	common	fa	پرتغال
 postal	common	fa	پستی
 preferences	common	fa	تنظیمات
@@ -411,6 +415,7 @@ search or select accounts	common	fa	جستجو یا انتخاب حسابها
 second	common	fa	ثانیه
 section	common	fa	بخش
 select	common	fa	انتخاب
+select all	common	fa	انتخاب همه
 select all %1 %2 for %3	common	fa	همه %1 %2 ها را برای %3 انتخاب کن
 select category	common	fa	انتخاب دسته
 select date	common	fa	انتخاب تاریخ
@@ -523,6 +528,8 @@ written by:	common	fa	نوشته شده توسط:
 year	common	fa	سال
 yemen	common	fa	یمن
 yes	common	fa	بله
+yes - delete	common	fa	بله - حذف کن
+yes - delete including sub-entries	common	fa	بله - بهمراه جواب/ارجاعها حذف کن
 you are required to change your password during your first login	common	fa	از شما خواسته شده در اولین ورود به سیستم، گذرواژه خود را تغییر دهید
 you have been successfully logged out	login	fa	شما با موفقیت از سیستم خارج شدید
 you have not entered a title	common	fa	شما عنوانی وارد نکردید
@@ -536,7 +543,6 @@ your message could <b>not</b> be sent!<br>	common	fa	پیامتان نمیتوا
 your message has been sent	common	fa	پیغام شما ارسال شد
 your search returned %1 matchs	common	fa	جستجوی شما %1 نتیجه داشت
 your search returned 1 match	common	fa	جستجوی شما یک نتیجه داشت
-your session could not be verified.	login	fa	نشست شما نمی تواند بررسی شود
 your settings have been updated	common	fa	تنظیمات شما بهنگام شد
 zambia	common	fa	زامبیا
 zimbabwe	common	fa	زیمباوه

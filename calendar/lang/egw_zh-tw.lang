@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	zh-tw	在%3的%1 %2
+%1 hours	calendar	zh-tw	%1 小時
 %1 records imported	calendar	zh-tw	%1 筆資料匯入
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	zh-tw	讀取了%1筆資料(還沒匯入，您必須回到上一頁並且取消圈選匯入測試)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	zh-tw	<b>請注意</b>： 行事曆使用了您的國家假日，目前設定為 %1 ；您可以將它修改為適合您的 %2 。<br /> %3 假日資訊是自動從 %4 安裝的，可以在 %5 修改。
@@ -67,6 +68,7 @@ created	calendar	zh-tw	建立日期
 csv	calendar	zh-tw	CSV
 csv-fieldname	calendar	zh-tw	CSV-欄位名稱
 csv-filename	calendar	zh-tw	CSV-檔案名稱
+custom	calendar	zh-tw	自訂
 custom fields	common	zh-tw	自訂欄位
 daily	calendar	zh-tw	每日
 day	calendar	zh-tw	日

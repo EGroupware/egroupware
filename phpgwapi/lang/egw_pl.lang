@@ -3,6 +3,7 @@
 %1 is not executable by the webserver !!!	common	pl	%1 nie może być wykonany przez webserver !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pl	%1Wybierz inny katalog%2<br />lub uczyń %3 dostępny do zapisu dla serwera WWW
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1eGroupWare%2 jest pakietem oprogramowania do pracy grupowej dla wielu użytkowników, działającym w środowisku internetowym / intranetowym i napisanym w PHP4.
+'%1' is no php file in the egw server root (%2)!	common	pl	'%1' to nie plik php w katalogu głównym serwera (%2)
 (session restored in %1 seconds)	common	pl	(sesja będzie przywrócona po upływie %1 sekund)
 (shift-)click or drag to change value	jscalendar	pl	Kilknij z Shift-em aby przenieść lub zmienić wartość
 - click on any of the time parts to increase it	jscalendar	pl	- Kliknij na dowolny wycinek czasu aby go zwiększyć
@@ -37,6 +38,7 @@ actions	common	pl	Polecenia
 active	common	pl	Aktywne
 add	common	pl	Dodaj
 add %1 category for	common	pl	Dodaj kategorię %1 dla
+add a new contact	common	pl	Dodaj nowy kontakt
 add category	common	pl	Dodaj kategorię
 add shortcut	common	pl	Dodaj skrót
 add sub	common	pl	Dodaj podrzędne
@@ -229,6 +231,7 @@ edit categories	common	pl	Edytuj kategorie
 edit category	common	pl	Edytuj kategorię
 egroupware	common	pl	eGroupWare
 egroupware api version	common	pl	eGroupWare wersja API
+egroupware version	common	pl	Wersja EGroupware
 egroupware: login blocked for user '%1', ip %2	common	pl	eGroupWare: zablokowane logowanie dla użytkownika '%1', IP %2
 egypt	common	pl	EGIPT
 el salvador	common	pl	SALWADOR
@@ -252,9 +255,11 @@ etag	common	pl	ETag
 ethiopia	common	pl	ETIOPIA
 everything	common	pl	Wszystko
 exact	common	pl	dokładnie
+failed to change password.	common	pl	Zmiana hasła nieudana.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	pl	Nie udało się skontaktować z serwerem lub serwer przesłał nieprawidłową odpowiedź. Spróbuj się zalogować ponownie. Jeżeli to nie pomoże, skontaktuj się z administratorem.
 falkland islands (malvinas)	common	pl	FALKLANDY (MALWINY)
 faroe islands	common	pl	WYSPY FAROE
+favorites	common	pl	Ulubione
 fax number	common	pl	numer faxu
 features of the editor?	common	pl	Możliwości edytora?
 february	common	pl	Luty
@@ -394,6 +399,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	pl	Lista
 list members	common	pl	Członkowie listy
 lithuania	common	pl	LITWA
+load	common	pl	Załaduj
 local	common	pl	Lokalny
 locations	common	pl	Lokacje
 login	common	pl	Zaloguj się
@@ -463,6 +469,7 @@ niger	common	pl	NIGER
 nigeria	common	pl	NIGERIA
 niue	common	pl	NIUE
 no	common	pl	Nie
+no - cancel	common	pl	Nie - Anuluj
 no entries found, try again ...	common	pl	nie znaleziono wpisów, spróbuj jeszcze raz...
 no history for this record	common	pl	Brak historii dla tego zapisu
 no savant2 template directories were found in:	common	pl	Nie znaleziono katalogów wzorca Savant2 w:
@@ -538,6 +545,7 @@ please set your preferences for this application	common	pl	Proszę wprowadzić u
 please wait...	common	pl	Proszę czekac...
 please, check back with us shortly.	common	pl	Proszę spróbować ponownie w najbliższym czasie.
 poland	common	pl	POLSKA
+popup with search	common	pl	Okno popup do szukania
 portugal	common	pl	PORTUGALIA
 postal	common	pl	Pocztowy
 powered by	common	pl	Działa w oparciu o
@@ -600,6 +608,7 @@ second	common	pl	sekunda
 section	common	pl	Sekcja
 select	common	pl	Wybierz
 select action	common	pl	Wybierz akcję
+select all	common	pl	Zaznacz wszystkie
 select all %1 %2 for %3	common	pl	Wybierz wszystkie %1 %2 dla %3
 select category	common	pl	Wybierz kategorię
 select date	common	pl	Wybierz datę
@@ -715,6 +724,7 @@ tuvalu	common	pl	TUVALU
 type	common	pl	Typ
 uganda	common	pl	UGANDA
 ukraine	common	pl	UKRAINA
+un-delete	common	pl	Przywróć
 underline	common	pl	Podkreślenie
 united arab emirates	common	pl	ZJEDNOCZONE EMIRATY ARABSKIE
 united kingdom	common	pl	WIELKA BRYTANIA
@@ -767,6 +777,8 @@ written by:	common	pl	Napisany przez:
 year	common	pl	Rok
 yemen	common	pl	JEMEN
 yes	common	pl	Tak
+yes - delete	common	pl	Tak - Usuń
+yes - delete including sub-entries	common	pl	Tak - Usuń wraz z podrzędnymi
 you are required to change your password during your first login	common	pl	Po pierwszym zalogowaniu się musisz zmienić swoje hasło
 you can customize how many icons and toolbars the editor shows.	common	pl	Możesz spersonalizować liczbę ikon i pasków narzędzi pokazywanych przez edytor.
 you have been successfully logged out	login	pl	Zostałeś pomyślnie wylogowany
@@ -785,7 +797,6 @@ your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomość <b>nie</b
 your message has been sent	common	pl	Wiadomość została wysłana
 your search returned %1 matchs	common	pl	wyszukiwanie zwróciło %1 trafień
 your search returned 1 match	common	pl	wyszukiwanie zwróciło 1 trafienie
-your session could not be verified.	login	pl	Nie można zweryfikować sesji.
 your settings have been updated	common	pl	Twoje ustawienia zostały uaktualnione
 zambia	common	pl	ZAMBIA
 zimbabwe	common	pl	ZIMBABWE

@@ -35,6 +35,7 @@ actions	common	zh-tw	動作
 active	common	zh-tw	啟用
 add	common	zh-tw	新增
 add %1 category for	common	zh-tw	新增 %1 子分類給
+add a new contact	common	zh-tw	新增聯絡人
 add category	common	zh-tw	新增分類
 add shortcut	common	zh-tw	新增快速鍵
 add sub	common	zh-tw	新增子分類
@@ -234,6 +235,7 @@ estonia	common	zh-tw	愛沙尼亞
 ethiopia	common	zh-tw	衣索比亞
 everything	common	zh-tw	全部
 exact	common	zh-tw	解開
+failed to change password.	common	zh-tw	密碼變更錯誤，請聯絡管理員
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	zh-tw	無法連線伺服器或是伺服器回應訊息有誤，請重試或是聯繫管理員。
 falkland islands (malvinas)	common	zh-tw	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	zh-tw	FAROE ISLANDS
@@ -370,6 +372,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	zh-tw	列表
 list members	common	zh-tw	列出會員
 lithuania	common	zh-tw	LITHUANIA
+load	common	zh-tw	讀取
 local	common	zh-tw	本地
 locations	common	zh-tw	位置
 login	common	zh-tw	登入
@@ -438,6 +441,7 @@ niger	common	zh-tw	NIGER
 nigeria	common	zh-tw	NIGERIA
 niue	common	zh-tw	NIUE
 no	common	zh-tw	否
+no - cancel	common	zh-tw	否 - 取消
 no entries found, try again ...	common	zh-tw	找不到任何資料，請重試
 no history for this record	common	zh-tw	這筆紀錄沒有歷史資料
 no savant2 template directories were found in:	common	zh-tw	沒有找到 Savant2 樣板資料夾：
@@ -508,6 +512,7 @@ please set your global preferences	common	zh-tw	請設定您的全域設定
 please set your preferences for this application	common	zh-tw	請設定這個應用程式的個人喜好設定
 please wait...	common	zh-tw	請等待...
 poland	common	zh-tw	波瀾
+popup with search	common	zh-tw	跳出搜尋
 portugal	common	zh-tw	PORTUGAL
 postal	common	zh-tw	郵遞區號
 powered by	common	zh-tw	系統提供
@@ -564,6 +569,7 @@ search accounts	common	zh-tw	搜尋帳號
 second	common	zh-tw	秒
 section	common	zh-tw	選擇
 select	common	zh-tw	選擇
+select all	common	zh-tw	選擇全部
 select all %1 %2 for %3	common	zh-tw	選擇 %3 的所有 %1 %2
 select category	common	zh-tw	選擇分類
 select date	common	zh-tw	選擇日期
@@ -725,6 +731,8 @@ written by:	common	zh-tw	作者：
 year	common	zh-tw	年
 yemen	common	zh-tw	葉門
 yes	common	zh-tw	是
+yes - delete	common	zh-tw	確定 - 刪除
+yes - delete including sub-entries	common	zh-tw	確定 - 刪除（包含附屬資料）
 you are required to change your password during your first login	common	zh-tw	您必須在第一次登入時修改您的密碼
 you can customize how many icons and toolbars the editor shows.	common	zh-tw	您可以自訂編輯器要顯示的圖示與工具列。
 you have been successfully logged out	login	zh-tw	您已經成功登出。
@@ -740,7 +748,6 @@ your message could <b>not</b> be sent!<br>	common	zh-tw	您的訊息<b>無法</b
 your message has been sent	common	zh-tw	您的訊息已經送出
 your search returned %1 matchs	common	zh-tw	搜尋到 %1 筆資料
 your search returned 1 match	common	zh-tw	搜尋到 1 筆資料
-your session could not be verified.	login	zh-tw	您的連線不合法。
 your settings have been updated	common	zh-tw	您的設定已經更新。
 zambia	common	zh-tw	尚比亞
 zimbabwe	common	zh-tw	辛巴威

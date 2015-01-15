@@ -29,6 +29,7 @@ alignment of label and input-field in table-cell	etemplate	fa	چیدمان بر�
 alignment of the v/hbox containing table-cell	etemplate	fa	چیدمان افقی/عمودی جعبه شامل سلول جدول
 all days	etemplate	fa	همه روزها
 all operations save the template!	etemplate	fa	همه عملیات فرم ذخیره شد!
+all users	etemplate	fa	همه کاربران
 am	etemplate	fa	صبح
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fa	ستون نمایه دار شده باعث می شود که پرس و جوهای آن ستون سریعتر انجام شوند(فضای دیسک را بیشتر مصرف می کند)!!!
 and	etemplate	fa	و
@@ -90,7 +91,6 @@ custom fields	etemplate	fa	فیلدهای سفارشی
 custom javascript for onchange	etemplate	fa	جاوااسکریپت سفارشی برای «درتغییر»
 cut	etemplate	fa	بریدن
 date+time	etemplate	fa	تاریخ و ساعت
-datum	etemplate	fa	مأخذ
 day	etemplate	fa	روز
 days	etemplate	fa	روز
 db ensures that every row has a unique value in that column	etemplate	fa	پایگاه داده تضمین می کند که هر سطر یک مقدار یکتائی در آن ستون دارد
@@ -173,6 +173,7 @@ grid	etemplate	fa	توری(grid)
 grid column attributes	etemplate	fa	مشخصات ستون توری
 grid row attributes	etemplate	fa	مشخصات سطر توری
 groupbox	etemplate	fa	جعبه گروه
+h	etemplate	fa	ساعت
 hbox	etemplate	fa	جعبه افقی
 height	etemplate	fa	ارتفاع
 height of row (in % or pixel)	etemplate	fa	ارتفاع سطر( به ٪ یا پیکسل)
@@ -185,6 +186,7 @@ hour	etemplate	fa	ساعت
 hours	etemplate	fa	ساعت
 how many entries should the list show	etemplate	fa	فهرست باید چند ورودی را نمایش دهد
 html	etemplate	fa	زنگام(html)
+id	etemplate	fa	کد
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fa	اگر فیلد غیر فعال شود یک سلول خالی جدول نمایش داده می شود، برای (موقتی) حذف یک فیلد/سلول
 image	etemplate	fa	تصویر
 import	etemplate	fa	وارد کردن
@@ -222,10 +224,12 @@ middle	etemplate	fa	وسط
 minute	etemplate	fa	دقیقه
 minutes	etemplate	fa	دقیقه
 month	etemplate	fa	ماه
+more	etemplate	fa	بیشتر
 multicolumn indices	etemplate	fa	نمایه های چند ستونی
 name	etemplate	fa	نام
 name of other table where column is a key from	etemplate	fa	نام جدول دیگری که کلید ستون از آنجاست
 name of table to add	etemplate	fa	نام جدول برای افزودن
+new	etemplate	fa	جدید
 new search	common	fa	جستجوی جدید
 new table created	etemplate	fa	جدول جدید ایجاد شد!
 newer version '%1' exists !!!	etemplate	fa	نسخه جدیدتر '%1'  موجود است
@@ -271,12 +275,15 @@ read a list of entries.	etemplate	fa	خواندن فهرست ورودیها.
 read a single entry by passing the id and fieldlist.	etemplate	fa	خواندن یک ورودی با فرستادن شناسه و فهرست فیلد
 read etemplate from database (for the keys above)	etemplate	fa	خواندن فرم از پایگاه داده
 readonly	etemplate	fa	فقط خواندنی
+refresh	etemplate	fa	بازخوانی
 remove row (can not be undone!!!)	etemplate	fa	حذف سطر(غیر قابل برگشت)!!!
 remove this link (not the entry itself)	etemplate	fa	حذف این پیوند (نه خود ورودی)
 required	etemplate	fa	لازم
+reset	etemplate	fa	از نو
 returns savely, without deleting	etemplate	fa	بازگشت ذخیره ای، بدون حذف
 right	etemplate	fa	راست
 row...	etemplate	fa	سطر...
+save all	etemplate	fa	ذخیره کردن همه
 save the changes made and close the window	etemplate	fa	ذخیره تغییرات ایجاد شده و بستن پنجره
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fa	ذخیره فرم زیر کلیدهای فوق(نام و...)، تغییر آنها برای «ذخیره بعنوان»
 saves changes to tables_current.inc.php	etemplate	fa	ذخیره تغییرات به tables_current.inc.php
@@ -378,6 +385,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	fa	عرض ستون(به درصد یا پیکسل)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	fa	عرض جدول به درصد یا پیکسل برای علامت جدول و div (انتخابی)
 width, disabled	etemplate	fa	عرض، غیر فعال شده
+wk	etemplate	fa	هفته
 working days	etemplate	fa	روزهای کاری
 write <app>/setup/tables_current.inc.php	etemplate	fa	نوشتن <app>/setup/tables_current.inc.php
 write langfile	etemplate	fa	نوشتن پرونده زبان

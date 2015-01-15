@@ -1,3 +1,4 @@
+all users	importexport	id	Semua pengguna
 allowed users	importexport	id	Pengguna yang dibolehkan
 changed	importexport	id	Diubah
 charset of file	importexport	id	Charset of file

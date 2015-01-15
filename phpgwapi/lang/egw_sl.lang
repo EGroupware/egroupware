@@ -36,6 +36,7 @@ actions	common	sl	Dejanja
 active	common	sl	Aktiven
 add	common	sl	Dodaj
 add %1 category for	common	sl	Dodaj kategorijo %1 za
+add a new contact	common	sl	Dodaj nov kontakt
 add category	common	sl	Dodaj kategorijo
 add shortcut	common	sl	Dodaj bližnjico
 add sub	common	sl	Dodaj pod
@@ -243,9 +244,11 @@ estonia	common	sl	ESTONIJA
 ethiopia	common	sl	ETIOPIJA
 everything	common	sl	Vse
 exact	common	sl	Natančno
+failed to change password.	common	sl	Napaka pri spreminjanju gesla.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sl	Povezava s strežnikom ni uspela oz. strežnik je javil napačen odgovor. Poskusite se ponovno prijaviti. Če vam ne uspe, kontaktirajte skrbnika.
 falkland islands (malvinas)	common	sl	FALKLANDSKO OTOČJE
 faroe islands	common	sl	FERSKO OTOČJE
+favorites	common	sl	Priljubljene
 fax number	common	sl	Faks
 features of the editor?	common	sl	Zmožnosti urejevalnika?
 february	common	sl	Februar
@@ -380,6 +383,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	sl	Seznam
 list members	common	sl	Seznam članov
 lithuania	common	sl	LITVA
+load	common	sl	Naloži
 local	common	sl	Lokalno
 locations	common	sl	Lokacije
 login	common	sl	Prijava
@@ -436,6 +440,7 @@ netherlands antilles	common	sl	NIZOZEMSKI ANTILI
 never	common	sl	Nikoli
 new caledonia	common	sl	NOVA KALEDONIJA
 new entry added sucessfully	common	sl	Nov vnos je uspešno dodan.
+new favorite	common	sl	Nov priljubljeni
 new main category	common	sl	Nova glavna kategorija
 new value	common	sl	Nova vrednost
 new zealand	common	sl	NOVA ZELANDIJA
@@ -448,6 +453,7 @@ niger	common	sl	NIGER
 nigeria	common	sl	NIGERIJA
 niue	common	sl	NIUE
 no	common	sl	Ne
+no - cancel	common	sl	Ne - Prekliči
 no entries found, try again ...	common	sl	Ne najdem vnosov. Poskusite ponovno...
 no history for this record	common	sl	Ni zgodovine za ta zapis.
 no savant2 template directories were found in:	common	sl	Mape s predlogo Savant2 ni bilo mogoče najti v:
@@ -523,6 +529,7 @@ please set your preferences for this application	common	sl	Vnesite nastavitve za
 please wait...	common	sl	Prosimo, počakajte...
 please, check back with us shortly.	common	sl	Vrnite se pozneje.
 poland	common	sl	POLJSKA
+popup with search	common	sl	Okno za iskanje
 portugal	common	sl	PORTUGALSKA
 postal	common	sl	Poštno
 powered by	common	sl	Teče na
@@ -581,6 +588,7 @@ search or select accounts	common	sl	Išči ali izberi uporabniške račune
 second	common	sl	Sekunda
 section	common	sl	Odsek
 select	common	sl	Izberi
+select all	common	sl	Izberi vse
 select all %1 %2 for %3	common	sl	Izberi vse %1 %2 za %3
 select category	common	sl	Izberi kategorijo
 select date	common	sl	Izberi datum
@@ -694,6 +702,7 @@ tuvalu	common	sl	TUVALU
 type	common	sl	Vrsta
 uganda	common	sl	UGANDA
 ukraine	common	sl	UKRAJINA
+un-delete	common	sl	Povrni
 underline	common	sl	Podčrtano
 united arab emirates	common	sl	ZDRUŽENI ARABSKI EMIRATI
 united kingdom	common	sl	VELIKA BRITANIJA
@@ -745,6 +754,8 @@ written by:	common	sl	Napisal:
 year	common	sl	Leto
 yemen	common	sl	JEMEN
 yes	common	sl	Da
+yes - delete	common	sl	Da - Izbriši
+yes - delete including sub-entries	common	sl	Da - Izbriši, vključno s podrejenimi vnosi
 you are required to change your password during your first login	common	sl	Ob prvi prijavi morate zamenjati geslo!
 you can customize how many icons and toolbars the editor shows.	common	sl	Prilagodite lahko koliko ikon in orodnih vrstic naj prikaže urejevalnik.
 you have been successfully logged out	login	sl	Bili ste uspešno odjavljeni.
@@ -762,7 +773,6 @@ your message could <b>not</b> be sent!<br>	common	sl	Vaše sporočilo <b>NI<b> b
 your message has been sent	common	sl	Vaše sporočilo je bilo poslano
 your search returned %1 matchs	common	sl	Najdenih %1 zadetkov
 your search returned 1 match	common	sl	Najden 1 zadetek
-your session could not be verified.	login	sl	Vaša seja ne more biti preverjena.
 your settings have been updated	common	sl	Vaše nastavitve so bile posodobljene
 zambia	common	sl	ZAMBIJA
 zimbabwe	common	sl	ZIMBABVE

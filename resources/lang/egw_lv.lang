@@ -17,7 +17,10 @@ clear selection	resources	lv	notīrīt izvēli
 configure access permissions	admin	lv	Konfigurēt pieejas atļaujas
 create new accessory for this resource	resources	lv	Izveidot jaunu piederumu šim resursam
 create new links	resources	lv	Izveidot jaunas saites
+custom fields	resources	lv	Mainīti lauki
+days	resources	lv	dienas
 delete this entry	resources	lv	Dzēst šo ierakstu
+deleted	resources	lv	Izdzēsts
 description (short)	resources	lv	Aprsaksts (īss)
 direct booking permissions	resources	lv	Tiešās grāmatošanas atļaujas
 edit this entry	resources	lv	Rediģ''et šo ierakstu

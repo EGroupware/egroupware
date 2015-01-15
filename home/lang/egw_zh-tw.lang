@@ -1,4 +1,13 @@
+color	home	zh-tw	顏色
 displays home	home	zh-tw	顯示首頁
 egroupware	home	zh-tw	eGroupWare
 home	home	zh-tw	首頁
+in %1 days (%2) is %3's birthday.	home	zh-tw	再 %1 天 (%2) 就是 %3 的生日。
+remove	home	zh-tw	移除
 there is a new version of egroupware available	home	zh-tw	eGroupWare 有新版本推出了
+today is %1's birthday!	home	zh-tw	今天是 %1 的生日！
+tomorrow is %1's birthday.	home	zh-tw	明天是 %1 的生日。
+yes, for the next three days	home	zh-tw	是，在接下來三天
+yes, for the next two weeks	home	zh-tw	是，在接下來兩週
+yes, for the next week	home	zh-tw	是，在接下來一週
+yes, for today and tomorrow	home	zh-tw	是，在今天與明天

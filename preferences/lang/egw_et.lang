@@ -8,6 +8,8 @@ country	preferences	et	Riik
 default	preferences	et	vaikimisi
 default application	preferences	et	Vaikimisi programm
 delete categories	preferences	et	Kustuta kategooriad
+disable	preferences	et	Keela
+enable	preferences	et	luba
 enter your new password	preferences	et	Sisesta uus parool
 enter your old password	preferences	et	Sisesta vana parool
 help off	preferences	et	Lülita abi välja

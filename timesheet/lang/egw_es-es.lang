@@ -34,10 +34,16 @@ entry deleted	timesheet	es-es	Se ha borrado la entrada
 entry saved	timesheet	es-es	Se ha guardado la entrada
 error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
 error saving the entry!!!	timesheet	es-es	¡Se ha producido un error al guardar la entrada!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 existing links	timesheet	es-es	Enlaces existentes
 exists	timesheet	es-es	Existe
+export definition to use for nextmatch export	timesheet	es-es	Exportar la definición a usar para exportar nextmatch
 export to openoffice spreadsheet	timesheet	es-es	Exportar a hoja de cálculo de OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta entradas desde la hoja de tiempos en un fichero CSV (valores separados por comas). Sin embargo, también se pueden elegir otros separadores en la pestaña de opciones.
+favorites	timesheet	es-es	Favoritos
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
 full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
@@ -45,7 +51,11 @@ general fields:	timesheet	es-es	Campos generales:
 global categories	timesheet	es-es	Categorías globales
 history	timesheet	es-es	Historial
 history logging	admin	es-es	Registro de historial
+html link to the current record	timesheet	es-es	Enlace HTML al registro actual
 id	timesheet	es-es	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos %1 insertados.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
+if you specify an export definition, it will be used when you export	timesheet	es-es	Si especifica una definición de exportación, se usará al exportar
 ignore	timesheet	es-es	Ignorar
 insert	timesheet	es-es	Insertar
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	es-es	El ID del propietario no es válido: %1. Puede ser una mala traducción del campo. Se ha usado %2 en su lugar.
@@ -57,6 +67,9 @@ leave it empty for a full week	timesheet	es-es	Dejar en blanco durante una seman
 leaves without saveing	timesheet	es-es	sale sin guardar
 length<br>rows	timesheet	es-es	Longitud<br>Filas
 links	timesheet	es-es	Enlaces
+links and attached files	timesheet	es-es	Enlaces y ficheros adjuntos
+links to specified application.  example: {{links/infolog}}	timesheet	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}
+list of files linked to the current record	timesheet	es-es	Lista de ficheros vinculados al registro actual
 max length of the input [, length of the inputfield (optional)]	timesheet	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 modified	timesheet	es-es	Modificado
 modify status	timesheet	es-es	Estado de modificación
@@ -98,6 +111,8 @@ status of created timesheets	timesheet	es-es	Estado de las hojas de tiempo cread
 status updated.	timesheet	es-es	Se ha actualizado el estado.
 sum %1:	timesheet	es-es	Suma %1:
 tag to mark positions for address labels	timesheet	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
+the following document-types are supported:	timesheet	es-es	Los siguientes tipos de documentos están soportados:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	es-es	el nombre utilizado internamente (<= 20 caracteres), si se cambia, impide acceder a los datos
 the text displayed to the user	timesheet	es-es	el texto mostrado al usuario
 this month	timesheet	es-es	Este mes
@@ -111,10 +126,13 @@ timesheet openoffice export	timesheet	es-es	Exportar a OpenOffice la hoja de pre
 timesheet status-%1 '%2' added.	timesheet	es-es	Estado de la hoja de tiempo-%1 '%2' añadido.
 timesheet-%1 '%2' updated.	timesheet	es-es	Hoja de tiempo-%1 '%2' actualizado.
 timesheet-%1 deleted.	timesheet	es-es	Hoja de tiempo-%1 '%2' borrado.
+titles of any entries linked to the current record, excluding attached files	timesheet	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
 unitprice	timesheet	es-es	Precio por unidad
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	es-es	Usar esta etiqueta para las etiquetas de direcciones. Ponga el contenido que quiera repetir entre dos etiquetas.
 values for selectbox	timesheet	es-es	Valores para la lista de selección.
 view this entry	timesheet	es-es	Ver esta entrada
 week	timesheet	es-es	Semana
+yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
+yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden purgar sus elementos borrados
 yesterday	timesheet	es-es	Ayer
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	es-es	La base de datos NO está actualizada (%1 vs %2). Por favor, ejecute %3setup%4 para actualizar la base de datos.

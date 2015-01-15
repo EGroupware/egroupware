@@ -20,6 +20,7 @@ entry saved	timesheet	sl	Vnos shranjen
 error saving the entry!!!	timesheet	sl	Napaka pri shranjevanju vnosa!
 existing links	timesheet	sl	Obstoječe povezave
 exists	timesheet	sl	Obstaja
+favorites	timesheet	sl	Priljubljene
 field must not be empty !!!	timesheet	sl	Polje ne sme biti prazno!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
 general fields:	timesheet	sl	Splošna polja:
@@ -41,6 +42,7 @@ order	timesheet	sl	Vrstni red
 parent	timesheet	sl	Nadrejen
 price	timesheet	sl	Cena
 quantity	timesheet	sl	Količina
+recovered	timesheet	sl	Obnovljeno
 saves the changes made	timesheet	sl	Shrani spremembe
 saves the changes made and leaves	timesheet	sl	Shrani narejene spremembe in zapusti program
 select a price	timesheet	sl	Izberite ceno
@@ -53,4 +55,6 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 values for selectbox	timesheet	sl	Vrednosti za izbirno polje
 view this entry	timesheet	sl	Poglej ta vnos
 week	timesheet	sl	Teden
+yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
+yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sl	Vaša podatkovna baza NI obnovljena (%1 vs. %2), prosimo poženite %3 nastavitev%4 za prenovo vaše podatkovne baze.

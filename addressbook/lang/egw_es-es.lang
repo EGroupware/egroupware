@@ -105,6 +105,7 @@ contact repository	admin	es-es	Repositorio de contactos
 contact saved	addressbook	es-es	Se ha guardado la entrada
 contact settings	admin	es-es	Configuración de los contactos
 contactform	addressbook	es-es	Formulario de contacto
+contacts	common	es-es	contactos
 contacts and account contact-data to ldap	admin	es-es	Contactos y datos del contacto y la cuenta en LDAP
 contacts and account contact-data to sql	admin	es-es	contactos y datos del contacto de la cuenta a SQL
 contacts to ldap	admin	es-es	Contactos en LDAP
@@ -123,6 +124,7 @@ csv-filename	addressbook	es-es	Archivo CSV
 custom	addressbook	es-es	Personalizado
 custom etemplate for the contactform	addressbook	es-es	Plantilla personalizada para el formulario del contacto
 custom fields	addressbook	es-es	Campos personalizados
+data exchange settings	addressbook	es-es	Opciones para intercambio de datos
 debug output in browser	addressbook	es-es	Depurar salida en el navegador
 default	addressbook	es-es	predeterminado
 default address format	addressbook	es-es	Formato predeterminado de las drecciones
@@ -190,6 +192,7 @@ exports contacts from your addressbook into a csv file. csv means 'comma seperat
 extra	addressbook	es-es	Extra
 extra private	addressbook	es-es	Extra privado
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	es-es	Fallo al cambiar %1 miembros de la organización ¡No tiene privilegios suficientes!
+favorites	addressbook	es-es	Favoritos
 fax	addressbook	es-es	Fax
 fax number	common	es-es	Número de fax
 field %1 has been added !	addressbook	es-es	¡El campo %1 ha sido añadido!
@@ -205,6 +208,7 @@ freebusy uri	addressbook	es-es	URI para disponibilidad
 full name	addressbook	es-es	Nombre completo
 general	admin	es-es	General
 general fields:	addressbook	es-es	Campos generales:
+general settings	addressbook	es-es	Opciones generales
 geo	addressbook	es-es	GEO
 global categories	addressbook	es-es	Categorías globales
 grant addressbook access	common	es-es	Conceder acceso a la libreta de direcciones
@@ -224,6 +228,7 @@ home state	addressbook	es-es	Provincia de residencia
 home street	addressbook	es-es	Domicilio personal
 home zip code	addressbook	es-es	Código postal
 how many contacts should non-admins be able to export	admin	es-es	Cuántos contactos deben poder exportar usuarios que no son administradores
+html link to the current record	addressbook	es-es	Enlace HTML al registro actual
 icon	addressbook	es-es	Icono
 if accounts are already in ldap	admin	es-es	si las cuentas ya están en LDAP
 ignore first line	addressbook	es-es	Ignorar la primera línea
@@ -256,11 +261,14 @@ ldif	addressbook	es-es	LDIF
 line 2	addressbook	es-es	Línea 2
 link title for contacts show	addressbook	es-es	Título del enlace para mostrar contactos
 links	addressbook	es-es	Enlaces
+links and attached files	addressbook	es-es	Enlaces y ficheros adjuntos
+links to specified application.  example: {{links/infolog}}	addressbook	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}
 list all categories	addressbook	es-es	Lista de todas las categorías
 list all customfields	addressbook	es-es	Lista de todos los campos personalizados
 list already exists!	addressbook	es-es	¡La lista ya existe!
 list created	addressbook	es-es	Se ha creado la lista
 list creation failed, no rights!	addressbook	es-es	Falló la creación de lista. No tiene privilegios suficientes.
+list of files linked to the current record	addressbook	es-es	Lista de ficheros vinculados al registro actual
 load vcard	addressbook	es-es	Cargar VCard
 location	addressbook	es-es	Ubicación
 locations	addressbook	es-es	ubicaciones
@@ -307,7 +315,6 @@ phone numbers	common	es-es	Números de teléfono
 photo	addressbook	es-es	Fotografía
 please enter a name for that field !	addressbook	es-es	Por favor, introduzca un nombre para ese campo
 please select only one category	addressbook	es-es	Por favor, seleccione sólo una categoría
-please update the templatename in your customfields section!	addressbook	es-es	¡Por favor, actualice el nombre de la plantilla en la sección de campos personalizados!
 postal	common	es-es	Postal
 pref	addressbook	es-es	pref
 preferred email address to use in distribution lists	addressbook	es-es	Dirección de correo electrónica preferida para usar en las listas de distribución
@@ -373,12 +380,14 @@ that field name has been used already !	addressbook	es-es	El nombre del campo ya
 the anonymous user has probably no add rights for this addressbook.	addressbook	es-es	El usuario anónimo probablemente no tiene derechos de añadir para esta libreta de direcciones.
 the anonymous user needs add rights for it!	addressbook	es-es	¡El usuario anónimo necesita derechos de añadir para esto!
 the anonymous user needs read it!	addressbook	es-es	¡El usuario anónimo necesita leerlo!
+the following document-types are supported:	addressbook	es-es	Los siguientes tipos de documentos están soportados:
 there was an error saving your data :-(	addressbook	es-es	Ocurrió un error al guardar los datos
 this module displays a contactform, that stores direct into the addressbook.	addressbook	es-es	Este módulo muestra un formulario de contacto que se guarda directamente en la libreta de direcciones.
 this module displays block from a adddressbook group.	addressbook	es-es	Este módulo muestra el bloque de un grupo de libreta de direcciones
 this person's first name was not in the address book.	addressbook	es-es	El primer nombre de esta persona no estaba en la libreta de direcciones.
 this person's last name was not in the address book.	addressbook	es-es	El apellido de esta persona no estaba en la libreta de direcciones.
 timezone	addressbook	es-es	Zona horaria
+titles of any entries linked to the current record, excluding attached files	addressbook	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
 to many might exceed your execution-time-limit	addressbook	es-es	a cuánto puede exceder el tiempo límite de ejecución
 today is %1's birthday!	common	es-es	¡Hoy es el cumpleaños de %1!
 tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
@@ -405,7 +414,6 @@ verification	addressbook	es-es	Verificación
 view linked infolog entries	addressbook	es-es	Ver las entradas del Registro que estén vinculadas
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! ¡LDAP es valido sólo si no está usando contactos para almacenar las cuentas!
 warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
-warning: template "%1" not found, using default template instead.	addressbook	es-es	AVISO: No se encontró la plantilla "%1". Se usa la plantilla predeterminada en su lugar.
 weekday	addressbook	es-es	Día semanal
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	es-es	Qué deben mostrar los enlaces a la libreta de direcciones en otras aplicaciones. Los valores vacíos se ignorarán. Es necesario volver a iniciar la sesión si se cambia esta opción.
 where to add the email address	addressbook	es-es	dónde añadir la dirección de correo electrónico
@@ -434,5 +442,6 @@ you must select a vcard. (*.vcf)	addressbook	es-es	Debe seleccionar una tarjeta 
 you must select at least 1 column to display	addressbook	es-es	Debe seleccionar al menos una columna para mostrar
 you need to select a distribution list	addressbook	es-es	Necesita seleccionar una lista de distribución
 you need to select some contacts first	addressbook	es-es	Necesita seleccionar antes algunos contactos
+you need to select some entries first	addressbook	es-es	Necesita seleccionar antes algunas entradas
 zip code	common	es-es	Código postal
 zip_note	addressbook	es-es	<p><b>Nota:</b> El fichero puede ser un fichero zip conteniendo ficheros .csv, .vcf o .ldif. Sin embargo, no mezcle los tipos cada vez que importe.

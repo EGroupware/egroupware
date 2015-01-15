@@ -34,7 +34,10 @@ authentication	mail	fr	Authentification
 available personal email-accounts/profiles	mail	fr	Profils et comptes emails personnels disponibles
 but check shared folders	mail	fr	sauf les dossiers partagés sélectionnés
 by date	mail	fr	Par date
+can not open imap connection	mail	fr	Ne peut pas ouvrir de connexion IMAP
 changed profile	mail	fr	Profil changé
+check message against next rule also	mail	fr	vérifiez le message avec la prochaine règle également
+common acl	mail	fr	ACL communs
 compose	mail	fr	Composer
 compose as new	mail	fr	Composer comme nouveau
 compress folder	mail	fr	Compresser le dossier
@@ -47,6 +50,7 @@ contains	mail	fr	contient
 contains(*)	mail	fr	Contient(*)
 convert mail to item and attach its attachments to this item (standard)	mail	fr	Convertir le message en item et y attacher ses pièces jointes
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	fr	Convertir le mesasge en item, attacher ses pièces jointes et ajouter le message brut (message/rfc822 (.eml)) en tant que pièce jointe
+copy to	mail	fr	Copier vers
 create new account	mail	fr	Créer un nouveau compte
 date(newest first)	mail	fr	Date (plus récente d'abord)
 date(oldest first)	mail	fr	Date (plus ancienne d'abord)
@@ -72,7 +76,6 @@ do you really want to apply %1 to all messages in the current view?	mail	fr	Voul
 do you really want to delete folder %1 ?	mail	fr	Voulez-vous vraiment supprimer le dossier %1 ?
 do you really want to mark all messages as read in the current folder?	mail	fr	Voulez-vous vraiment marquer TOUS les messages de ce dossier comme "lus" ?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	fr	Voulez-vous recevoir une notification de confirmation avant de déplacer les messages sélectionnés dans un autre dossier ?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration du transfert des mails par règles (même si SIEVE est activé) ?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration des règles de filtrages (même si SIEVE est activé) ?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration de la notification par email à d'autres adresses emails si des emails arrivent (même si SIEVE est activé) ?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration de la notification d'absences/vacances (même si SIEVE est activé) ?
@@ -108,9 +111,10 @@ error: could not save message as draft	mail	fr	Erreur : impossible d'enregistrer
 error: could not save rule	mail	fr	Erreur : impossible d'enregistrer la règle.
 error: could not send message.	mail	fr	Erreur : impossible d'envoyer le message
 error: message could not be displayed.	mail	fr	ERREUR: Impossible d'afficher le message.
+esync will fail without a working email configuration!	mail	fr	eSync ne peut fonctionner sans une configuration email fonctionnelle !
 event details follow	mail	fr	Les détails de l'événement suivent
-every:	mail	fr	Tout :
 everyone	mail	fr	Tout le monde
+extended	mail	fr	Etendu.
 failed to delete %1 ! reason: %2	mail	fr	Impossible de supprimer %1! Motif : %2
 failed to move %1 ! reason: %2	mail	fr	Impossible de déplacer %1! Motif : 2%
 failed to rename %1 ! reason: %2	mail	fr	Impossible de renommer %1! Motif : 2%
@@ -174,11 +178,13 @@ job	mail	fr	traité
 junk	mail	fr	Indésirables
 junk folder	mail	fr	Dossier des indésirables
 keep a copy of the message in your inbox	mail	fr	Garder une copie du message dans votre boite de réception
+kilobytes	mail	fr	kilo-octets
 later	mail	fr	Plus tard
 less than	mail	fr	Moins que
 mail	common	fr	Mail
 mail filter	mail	fr	Filtre de mail
 mail settings	mail	fr	Réglages email
+mail source	mail	fr	Source des emails
 mail-address	mail	fr	Adresse email
 mailaccount	mail	fr	Compte mail
 mailinglist	mail	fr	liste de diffusion
@@ -208,6 +214,7 @@ no recipient address given!	mail	fr	Il n'a pas d'adresse de destinataire
 no signature	mail	fr	Pas de signature !
 no subject given!	mail	fr	Votre message n'a pas de sujet !
 no subject supplied	mail	fr	pas de sujet
+no valid %1 folder configured!	mail	fr	Aucun répertoire %1 valide configuré !
 non	mail	fr	Non
 none, create all	mail	fr	aucun, créer tous
 nothing to change.	mail	fr	Ne rien changer
@@ -223,6 +230,7 @@ organisation	admin	fr	organisation
 organization	mail	fr	Entreprise
 original message	mail	fr	message d'origine
 outbox	mail	fr	Boîte d'envoi
+permission denied	mail	fr	Permission refusée
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
 please select a address	mail	fr	Sélectionner une adresse
 please select the number of days to wait between responses	mail	fr	Sélectionner le nombre de jours pour attendre entre les réponses
@@ -305,6 +313,7 @@ test connection and display basic information about the selected profile	mail	fr
 text	mail	fr	Texte
 text mode	mail	fr	Mode texte
 text/plain	mail	fr	text/plain
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	fr	L'expéditeur du message a demandé une réponse pour indiquer que vous avez lu ce message. Souhaitez-vous envoyer un accusé de réception?
 the mimeparser can not parse this message.	mail	fr	L'analyseur mime ne peut pas décoder ce message.
 then	mail	fr	ALORS
 there is no imap server configured.	mail	fr	Il n'y a pas de serveur IMAP configuré.
@@ -312,10 +321,10 @@ timeout on connections to your imap server	mail	fr	Timout sur les connexion à v
 to do	mail	fr	à faire
 trash	mail	fr	Corbeille
 trash folder	mail	fr	Dossier Corbeille
+undelete	mail	fr	Restaurer
 unflagged	mail	fr	Non-marqué
 unread	mail	fr	Non-lu
 unsubscribe folder	mail	fr	Se désinscrire du dossier
-urgent	mail	fr	Urgent
 use default timeout (20 seconds)	mail	fr	Utiliser le timeout par défaut (20 secondes)
 use username+password from current user	mail	fr	Utilisez le nom d'utilisateur + mot de passe de l'utilisateur courant
 vacation messages with start and end date require an admin account to be set!	mail	fr	Vous devez avoir un compte admin pour définir un message de vacances  avec une date de début et une date de fin
@@ -326,6 +335,7 @@ vacation notice update failed	mail	fr	Echec de la mise à jour de la notificatio
 vacation start-date must be before the end-date!	mail	fr	La date de début de la notice d'absence doit être ANTERIEURE à la date de fin.
 vacation update failed	mail	fr	Echec de la mise à jour de vacances
 valid for	mail	fr	Valable pour :
+view header lines	mail	fr	voir les lignes d'entête
 what order the list columns are in	mail	fr	Quel ordre pour les colonnes de la liste ?
 what to do when you delete a message	mail	fr	Ce qu'il faut faire quand vous supprimez un message
 what to do when you send a message	mail	fr	Ce qu'il faut faire quand vous envoyez un message

@@ -23,6 +23,8 @@ account list	admin	lo	ລາຍການບັນຊີ
 account permissions	admin	lo	ສິດທິບັນຊີຜູ້ໃຊ້
 account preferences	admin	lo	ການຕັ້ງຄ່າບັນຊີ
 account-id's have to be integers!	admin	lo	ລະຫັດຂອງບັນຊີຈະຕ້ອງເປັນຕົວເລກຈໍານວນຖ້ວນ!
+acl added.	admin	lo	ໄດ້ເພີ່ມ ACL.
+acl deleted.	admin	lo	ໄດ້ລຶບ ACL.
 acl manager	admin	lo	ຜູ້ຈັດການ ACL
 acl rights	common	lo	ສິດທິ ACL
 action	admin	lo	ປະຕິບັດ
@@ -181,8 +183,6 @@ do you also want to delete all global subcategories ?	admin	lo	ທ່ານຍ�
 do you want to delete all global subcategories ?	admin	lo	ທ່ານຕ້ອງການທີ່ຈະລຶບໝວດຍ່ອຍທົ່ວໄປທັງໝົດບໍ່?
 do you want to move all global subcategories one level down ?	admin	lo	ທ່ານຕ້ອງການຍ້າຍໝວດຍ່ອຍທົ່ວໄປ ທັງໝົດລົງໜຶ່ງລະດັບບໍ່?
 document root (default)	admin	lo	ເອກະສານຕົ້ນສະບັບ(ຄ່າເລີ່ມຕົ້ນ)
-each value is a line like <id>[=<label>]	admin	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ <id>[=<label>]
-each value is a line like id[=label]	admin	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ id[=label]
 edit account	admin	lo	ແກ້ໄຂບັນຊີ
 edit application	admin	lo	ແກ້ໄຂ ແອັບພຼິເຄຊັນ
 edit email settings	admin	lo	ແກ້ໄຂການຕັ້ງຄ່າ email
@@ -259,6 +259,7 @@ force selectbox	admin	lo	ຕ້ອງເລືອກເອົາ
 forward also to	admin	lo	ສົ່ງຕໍ່ໄປຫາ
 forward emails to	admin	lo	ສົ່ງເມລໃຫ້ນີ້ໃຫ້ຄົນອື່ນຕໍ່
 forward only	admin	lo	ສົ່ງຕໍ່ເທົ່ານັ້ນ
+general	admin	lo	ທົ່ວໄປ
 global categories	common	lo	ໝວດທົ່ວໄປ
 go directly to admin menu, returning here the next time you click on administration.	admin	lo	ໄປທີ່ເມນູຜູ້ຄຸ້ມຄອງລະບົບ, ກັບຄືນມາໜ້ານີ້ຫຼັງຈາກກົດທີ່ ການບໍລິຫານ(administration)
 governmental: incl. state or municipal authorities or services	admin	lo	ລັດທະບານ: ລວມມີໜ່ວຍງານຫຼືເທດສະບານຫຼືໜ່ວຍງານບໍລິການ
@@ -340,7 +341,6 @@ mail settings	admin	lo	ຕັ້ງຄ່າ mail
 main email-address	admin	lo	ທີ່ຢູ່ email ຫຼັກ
 main screen message	admin	lo	ຂໍ້ຄວາມໜ້າຈໍຫຼັກ
 manager	admin	lo	ຜູ້ຈັດການ
-max length of the input [, length of the inputfield (optional)]	admin	lo	ຄວາມຍາວສູງສຸດຂອງການປ້ອນຂໍ້ຄວາມ[, ຄວາມຍາວຂອງພື້ນທີ່ຂໍ້ຄວາມ(ຖ້າມີ)]
 maximum account id (e.g. 65535 or 1000000)	admin	lo	ຈໍານວນ ID ບັບຊີສູງສຸດ(ເຊັ່ນ: 65535 ຫຼື 1000000)
 maximum entries in click path history	admin	lo	ຄ່າສູງສຸດຂອງປະຫວັດພາດເກັບຟາຍທີ່ໄດ້ກົດ
 message has been updated	admin	lo	ຂໍ້ຄວາມໄດ້ຮັບການປັບປຸງແລ້ວ
@@ -419,6 +419,7 @@ remove all users from this group ?	admin	lo	ລຶບຜູ້ໃຊ້ງານ
 requested	admin	lo	ການຮ້ອງຂໍ
 return to admin mainscreen	admin	lo	ກັບຄືນໜ້າຜູ້ເບີ່ງແຍງລະບົບ
 return to view account	admin	lo	ກັບຄືນສູ່ໜ້າສະແດງບັນຊີ
+rights	admin	lo	ສິດທິ
 route all mails to	admin	lo	ເສັ້ນທາງເມລ ທັງໝົດໄປຍັງ
 rpm or debian package	admin	lo	RPM ຫຼື Debian package
 run asynchronous services	admin	lo	ເປີດບໍລິການ Asynchronous

@@ -237,8 +237,6 @@ do you want to move all global subcategories one level down ?	admin	it	Vuoi spos
 document root (default)	admin	it	Directory di default del webserver
 down	admin	it	Giù
 download csv	admin	it	Scarica CSV
-each value is a line like <id>[=<label>]	admin	it	ogni valore è una linea come <id>[=<label>]
-each value is a line like id[=label]	admin	it	ogni valore è una linea come id[=label]
 edit account	admin	it	Modifica account
 edit application	admin	it	Modifica Applicazione
 edit email settings	admin	it	Modifica impostazioni email
@@ -423,7 +421,6 @@ main email-address	admin	it	Indirizzo email Principale
 main screen message	admin	it	Messaggio nella schermata principale
 manage mapping	admin	it	Gestisci la mappatura
 manager	admin	it	Manager
-max length of the input [, length of the inputfield (optional)]	admin	it	lunghezza massima del input [, length of the inputfield (optional)]
 maximum account id (e.g. 65535 or 1000000)	admin	it	ID massimo per l'account (es. 65535 or 100000, etc.)
 maximum entries in click path history	admin	it	Voci massime cliccando nella history dei path
 members	admin	it	Membri
@@ -526,6 +523,7 @@ return to admin mainscreen	admin	it	ritorna alla pagina principale di amministra
 return to view account	admin	it	Ritorna alla visualizzazone dell'account
 rights	admin	it	Diritti
 route all mails to	admin	it	Indirizza tutte le mail a
+rows	admin	it	Righe
 rpm or debian package	admin	it	Pacchetto RPM o Debian
 run	admin	it	esegui
 run asynchronous services	admin	it	Esegui lo Schedulatore

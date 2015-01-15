@@ -19,16 +19,21 @@ check all	resources	it	Seleziona tutto
 choose categories admin	resources	it	gestione scelta categorie
 clear selection	resources	it	cancella selezione
 configure access permissions	admin	it	Configura Permessi Accesso
+conflict	resources	it	Conflitto
 create new accessory for this resource	resources	it	Crea un nuovo accessorio per questa risorsa
 create new links	resources	it	Crea nuovi collegamenti
+custom fields	resources	it	Campi Personalizzati
+days	resources	it	giorni
 delete selected resources	resources	it	elimina risorse selezionate
 delete this entry	resources	it	Cancella questa voce
+deleted	resources	it	cancellato
 description (short)	resources	it	Descrizione (breve)
 direct booking permissions	resources	it	Permessi di prenotazione diretti
 don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare vfs (servirà un symlink --> vedi README)
 edit this entry	resources	it	Modifica questa voce
 existing links	resources	it	Collegamenti esistenti
 exists	resources	it	Esiste
+export definition to use for nextmatch export	resources	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 export definitition to use for nextmatch export	resources	it	Esporta la definizione da utilizzare per la esportazione
 general	resources	it	Generale
 general informations about resource	resources	it	Informazioni generali sulla risorsa
@@ -60,6 +65,7 @@ manage mapping	resources	it	Gestisci la mappatura
 name of resource	resources	it	Nome della risorsa
 name:	resources	it	Nome:
 no description available	resources	it	nessuna descrizione disponibile
+no matches	resources	it	nessuna corrispondenza
 no resources selected	resources	it	Nessuna risorsa selezionata
 notify your administrator to correct this situation	resources	it	Avverti il tuo amministratore di correggere questa situazione
 picture	resources	it	Immagine
@@ -91,6 +97,8 @@ storage information	resources	it	Informazioni stoccaggio
 storage information:	resources	it	Informazioni stoccaggio:
 the calendar of this resource	resources	it	Il Calendario di questa risorsa
 this module displays the resources app	resources	it	Questo modulo visualizza l'applicazione risorse
+too many matches	resources	it	Troppe corrispondenze
+unable to link to %1 "%2"	resources	it	Impossibile collegare %1 a "%2"
 use general resources icon	resources	it	Usa l'icona risorsa generica
 use own picture	resources	it	Usa propria immagine
 use the category's icon	resources	it	Usa l'icona della categoria
@@ -103,5 +111,7 @@ web-site for this resource	resources	it	Pagina Web di questa risorsa
 where to find this resource?	resources	it	Dove trovare questa risorsa?
 which category does this resource belong to?	resources	it	A quale categoria appartiene questa risorsa?
 write permissions	resources	it	Permessi di scrittura
+yes, only admins can purge deleted items	admin	it	Sì, solo gli amministratori possono cancellare definitivamente gli elementi
+yes, users can purge their deleted items	admin	it	Sì, gli utenti possono rimuovere definitivamente gli elementi eliminati.
 you are not permitted to get information about this resource!	resources	it	Non hai il permesso di ottenere informazioni su questa risorsa!
 you chose more resources than available	resources	it	Hai scelto più risorse di quelle disponibili

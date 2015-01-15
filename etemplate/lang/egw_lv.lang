@@ -24,6 +24,7 @@ advanced search	etemplate	lv	Uzlabota meklēšana
 align	etemplate	lv	Centrēt
 alignment of label and input-field in table-cell	etemplate	lv	iezīmes un ievades lauka novietojums tabulas kolonnā
 alignment of the v/hbox containing table-cell	etemplate	lv	V/Hbox satura novietojums tabulas kolonnā
+all users	etemplate	lv	Visi lietotāji
 am	etemplate	lv	noo rīta
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	lv	indeksēta kolonna paātrina pieprasījumu (izrēķina vietu diskā!!!)
 and	etemplate	lv	Un
@@ -66,7 +67,6 @@ css-styles	etemplate	lv	CSS veidi
 custom	etemplate	lv	Mainīt
 custom fields	etemplate	lv	Mainīti lauki
 date+time	etemplate	lv	Datums+Laiks
-datum	etemplate	lv	Dati
 day	etemplate	lv	Diena
 days	etemplate	lv	dienas
 db ensures that every row has a unique value in that column	etemplate	lv	DB pārliecinās, ka katrā kolonnas rindiņā ir unikāla vērtība
@@ -130,6 +130,7 @@ go to the first entry	etemplate	lv	iet uz pirmo ierakstu
 go to the last entry	etemplate	lv	Iet uz pēdējo ierakstu
 go to the next page of entries	etemplate	lv	iet uz ierakstu nākamo lapu
 go to the previous page of entries	etemplate	lv	iet uz ierakstu iepriekšējo lapu
+h	etemplate	lv	h
 hbox	etemplate	lv	HBox
 height	etemplate	lv	Augstums
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	lv	rindas augstums(% vai pikseļos), neatļaut rindiņu:[!=not]<value>[=<check>]piem., '!@data'neatļauj rindiņu, ja ieraksts ir tukšs
@@ -140,6 +141,7 @@ horizontal rule	etemplate	lv	Horizontālā kārtula
 hour	etemplate	lv	Stundas
 hours	etemplate	lv	stundas
 html	etemplate	lv	HTML
+id	etemplate	lv	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	lv	ja lauks nav atļauts,īslaicīgai lauka/kolonnas pārcelšanai tiek parādītas tabulas tukšās kolonnas.
 image	etemplate	lv	Attēls
 import	etemplate	lv	Importēt
@@ -168,11 +170,13 @@ load this template into the editor	etemplate	lv	ielādēt šo veidni redaktorā
 minute	etemplate	lv	Minūte
 minutes	etemplate	lv	minūtes
 month	etemplate	lv	Mēnesis
+more	etemplate	lv	Vēl
 multicolumn indices	etemplate	lv	Daudzkolonnu indeksi
 name	etemplate	lv	Vārds
 name of other table where column is a key from	etemplate	lv	citas kolonnas, no kurienes ir atslēga, nosaukums
 name of table to add	etemplate	lv	Tabulas , kur pievienot, nosaukums
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	lv	eVeidnes nosaukumam jābūt application.function formā [.apakšveidne]
+new	etemplate	lv	Jauna
 new search	common	lv	Jauna meklēšana
 new table created	etemplate	lv	Izveidota jauna tabula
 newer version '%1' exists !!!	etemplate	lv	eksistē "%1"jaunāka versija!!!
@@ -200,11 +204,14 @@ read a list of entries.	etemplate	lv	Las
 read a single entry by passing the id and fieldlist.	etemplate	lv	Lasīt atsevišķu ierakstu apejot id un lauku sarakstu
 read etemplate from database (for the keys above)	etemplate	lv	lasīt eVeidni no datubāzes (ar iepriekšminētajām atslēgām)
 readonly	etemplate	lv	tikai lasāms
+refresh	etemplate	lv	Atsvaidzināt
 remove row (can not be undone!!!)	etemplate	lv	izdzēst rindiņu (nevar but nepabeigts!!!)
 remove this link (not the entry itself)	etemplate	lv	Izdzēst šo saiti (ne pašu ierakstu)
 required	etemplate	lv	Pieprasīts
+reset	etemplate	lv	Atiestate
 returns savely, without deleting	etemplate	lv	atgriežas saglabājot , BEZ dzēšanas
 right	etemplate	lv	Pa labi
+save all	etemplate	lv	Saglabāt visus
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	lv	saglabā eVeidni ar minētajām atslēgām (vārds,...)Save As lai nomainītu
 saves changes to tables_current.inc.php	etemplate	lv	saglabā izmaiņas tables_current.inc.php
 scale	etemplate	lv	Skala

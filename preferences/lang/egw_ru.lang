@@ -28,13 +28,14 @@ default application	preferences	ru	Приложение по умолчанию
 default font	preferences	ru	Шрифт по умолчанию
 default font size	preferences	ru	Размер шрифта по умолчанию
 default preferences	preferences	ru	Настройки по умолчанию
-default theme	preferences	ru	Тема по-умолчанию
 delete categories	preferences	ru	Удалить категории
 description can not exceed 255 characters in length !	preferences	ru	Описание не должно быть более 255 символов !
+disable	preferences	ru	Запретить
 display thumbnails for linked images	preferences	ru	Показывать миниатюры связанных изображений
 div	preferences	ru	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ru	Какой временной формат вы предпочитаете: 24 часовой или 12 часовой.
 edit custom fields	preferences	ru	Редактировать дополн. поля
+enable	preferences	ru	Разрешить
 enable drag and drop functionality (experimental)	preferences	ru	Разрешить функциональность drug-n--drop (экспериментальное)
 enable selectbox dropdown resizing for ie (experimental)	preferences	ru	Выберите выпадающее меню для изменения размера
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	ru	Разрешить или запретить функции drug-n-drop во всех приложениях. Если браузер не поддерживает drug-n-drop, это будет запрещено автоматически. Эта возможность - экспериментальная на данный момент.
@@ -75,7 +76,6 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ru	Примечание: Эта настройка *не* изменит ваш пароль на электронной почте.Это нужно выполнить вручную.
 notification settings	preferences	ru	Установки уведомлений
 number format	preferences	ru	Формат числа
-office 2003 theme	preferences	ru	Тема Офис 2003
 old password and new password are the same. this is invalid. you must enter a new password	preferences	ru	Старый и новый пароли одинаковы. Необходимо ввести новый пароль!
 p: paragraph	preferences	ru	p: Параграф
 password changed	preferences	ru	Пароль изменен.
@@ -109,7 +109,6 @@ show navigation bar as	preferences	ru	Отображать строку нави
 show number of current users	preferences	ru	Показывать число текущих пользователей
 show text on navigation icons	preferences	ru	Показывать текст на значках навигации
 show_more_apps	common	ru	Показывать больше приложений
-silver theme	preferences	ru	Серебряная тема
 spellchecker language	addressbook	ru	Язык проверки орфографии
 text editor settings	preferences	ru	Установки редактора текста
 text only	preferences	ru	Только текст

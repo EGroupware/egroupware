@@ -26,6 +26,7 @@ error deleting the entry!!!	timesheet	hu	Bejegyzés törlése közben hiba lépe
 error saving the entry!!!	timesheet	hu	Bejegyzés mentése közben hiba lépett fel!!!
 existing links	timesheet	hu	Meglévő hivatkozások
 export to openoffice spreadsheet	timesheet	hu	Exportálás OpenOffice Táblázatkezelő formátumban
+favorites	timesheet	hu	Kedvencek
 field must not be empty !!!	timesheet	hu	A mezőt ki kell tölteni!!!
 full: use only projectmanager	admin	hu	Teljes: csak a ProjectManager használata
 general fields:	timesheet	hu	Általános mezők:
@@ -77,5 +78,6 @@ unitprice	timesheet	hu	Egységár
 values for selectbox	timesheet	hu	Éktékek a kiválasztódoboznak
 view this entry	timesheet	hu	Bejegyzés megtekintése
 week	timesheet	hu	hét
+yes, only admins can purge deleted items	admin	hu	Igen, csak az adminisztrátorok távolíthatják el a törölt elemeket
 yesterday	timesheet	hu	Tegnap
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	hu	Az adatbázis nem friss (%1 <-> %2), kérjük %3frissítse%4 az adatbázist.

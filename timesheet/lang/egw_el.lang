@@ -39,4 +39,5 @@ the name used internaly (<= 20 chars), changeing it makes existing data unavaili
 the text displayed to the user	timesheet	el	το κείμενο που προβάλεται στον χρήστη
 values for selectbox	timesheet	el	Αξίες του επιλεγμένου κουτιού
 week	timesheet	el	Εβδομάδα
+yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	el	Το ηλεκτρονικό σας αρχείο ΔΕΝ είναι ενημερωμένο (%1 vs. %2), παρακαλώ τρέξτε %3setup%4  για να ενημερώσετε το ηλεκτρονικό σας αρχείο.

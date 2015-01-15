@@ -49,11 +49,13 @@ directory	filemanager	bg	Директория
 directory %1 already exists	filemanager	bg	Директорията %1 вече съществува
 directory %1 does not exist	filemanager	bg	Директорията %1 не съществува
 directory not found or no permission to access it!	filemanager	bg	Директорията не съществува или нямате право на достъп!
+disable	filemanager	bg	Забранява
 display and modification of content	filemanager	bg	Преглед и промяна на съдържанието
 display of content	filemanager	bg	Преглед на съдържанието
 download	filemanager	bg	Изтегли
 edit comments	filemanager	bg	Редактиране на коментарите
 edit settings	filemanager	bg	Редактиране на атрибути
+enable	filemanager	bg	позволява
 enter the complete vfs path to specify a fast access link to a folder	filemanager	bg	Въведете пълния VFS път, за да зададете връзка за бърз достъп до директория
 enter the complete vfs path to specify your desired start folder.	filemanager	bg	Въведете пълния VFS път, за да зададете желаната си стартова директория
 error adding the acl!	filemanager	bg	Грешка при добавяне на ACL!
@@ -63,7 +65,7 @@ executable	filemanager	bg	Изпълним
 extended access control list	filemanager	bg	Разширен списък за контрол на достъпа (ACL)
 extended acl	filemanager	bg	Разширен ACL
 failed to create directory!	filemanager	bg	Грешка при създаване на директория!
-file	filemanager	bg	Файл
+file	common	bg	Файл
 file %1 could not be created.	filemanager	bg	Неуспешно създаване на файла %1.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	bg	Файлът %1 може би е твърде голям. Свържете се с Вашия Администратор за повече информация
 file deleted.	filemanager	bg	Файлът е изтрит.

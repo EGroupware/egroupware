@@ -12,6 +12,7 @@
 %1 files deleted.	filemanager	fi	%1 tiedosto(a) poistettu.
 %1 files moved.	filemanager	fi	%1 tiedosto(a) siirretty.
 %1 starts with '%2'	filemanager	fi	%1 alkaa '%2':lla.
+%1 successful unmounted.	filemanager	fi	%1: Versiointi otettu pois käytöstä
 %1 successful uploaded.	filemanager	fi	%1 ladattu.
 %1 the following files into current directory	filemanager	fi	%1 seuraavat tiedostot nykyiseen hakemistoon.
 %1 urls %2 to clipboard.	filemanager	fi	%1 URL(:ää) %2 leikepöydälle.
@@ -26,7 +27,8 @@ acl added.	filemanager	fi	Käyttöoikeus lisätty.
 acl deleted.	filemanager	fi	Käyttöoikeus poistettu.
 actions	filemanager	fi	Toiminnot
 add to clipboard	filemanager	fi	Lisää leikepöydälle
-all files	common	fi	Kaikki tiedostot
+administrators	filemanager	fi	Ylläpitäjät
+all files	filemanager	fi	Kaikki tiedostot
 allow a maximum of the above configured folderlinks to be configured in settings	admin	fi	Konfiguroitavien kansiolinkkien maksimimäärä asetuksissa.
 and all it's childeren	filemanager	fi	ja kaikki sen aliosastot (subit)
 application fields	filemanager	fi	Sovelluskentät
@@ -36,13 +38,15 @@ can't open directory %1!	filemanager	fi	Hakemistoa %1 ei voitu avata!
 cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta muutoksia
 cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai päättyy välilyöntiin
 check all	filemanager	fi	Valitse kaikki
-check virtual filesystem	filemanager	fi	Tarkista VFS
+check virtual filesystem	common	fi	Tarkista VFS
 clear search	filemanager	fi	Tyhjennä haku
 clipboard is empty!	filemanager	fi	Leikepöytä on tyhjä!
 comment	filemanager	fi	Kommentti
+configuration changed.	filemanager	fi	Konfiguraatiota muokattu
 copied	filemanager	fi	Kopioitu
 copied %1 to %2	filemanager	fi	%1 kopioitu %2
 copy	filemanager	fi	Kopioi
+copy into folder	filemanager	fi	Kopioi kansioon
 copy to	filemanager	fi	Kopioi kohteeseen
 copy to clipboard	filemanager	fi	Kopioi leikepöydälle
 could not copy %1 to %2	filemanager	fi	%1 ei voitu kopioida %2
@@ -73,12 +77,16 @@ directory %1 does not exist	filemanager	fi	Hakemisto %1 ei ole
 directory not found or no permission to access it!	filemanager	fi	Hakemistoa ei löydy tai sinulla ei ole lukuoikeuksia kyseiseen hakemistoon!
 directory successfully created.	filemanager	fi	Hakemisto luotu onnistuneesti
 directory with documents to insert entries	filemanager	fi	Asiakirjan oletuskansio
+disable	filemanager	fi	Ota pois käytöstä
+disable versioning for this mountpoint	filemanager	fi	Ota versioniti pois käytöstä
 display and modification of content	filemanager	fi	Sisällön muokaus ja näyttö
 display of content	filemanager	fi	Sisällön näyttö (lukuoikeus)
 do you want to overwrite the existing file %1?	filemanager	fi	Haluatko tallentaa jo olemassaolevan tiedoston %1 päälle (overwrite)?
 download	filemanager	fi	Lataa
 edit comments	filemanager	fi	Muokkaa kommentteja
 edit settings	filemanager	fi	Muokkaa asetuksia
+enable	filemanager	fi	Ota käyttöön
+enable versioning for given mountpoint	filemanager	fi	Salli versiointi
 enter setup user and password	filemanager	fi	Anna käyttäjänimi ja salasana
 enter setup user and password to get root rights	filemanager	fi	Anna ROOT käyttäjänimi ja salasana
 enter the complete vfs path to specify a fast access link to a folder	filemanager	fi	Anna täydellinen VFS polku kansiolinkille.
@@ -86,19 +94,23 @@ enter the complete vfs path to specify your desired start folder.	filemanager	fi
 error adding the acl!	filemanager	fi	Virhe ACL -oikeuksia lisättäessä!
 error creating symlink to target %1!	filemanager	fi	Virhe luotaessa symlinkkiä kohteeseen %1!
 error deleting the acl entry!	filemanager	fi	Virhe ACL -oikeuksia poistettaessa!
+error mounting %1 on %2!	filemanager	fi	%1: Virhe otettaessa versiointia käyttöön!
+error unmounting %1!	filemanager	fi	%1: Virhe otettaessa versiointia pois käytöstä!
 error uploading file!	filemanager	fi	Virhe ladattaessa tiedostoa!
 error while creating directory.	filemanager	fi	Virhe luotaessa hakemistoa
+everyone	filemanager	fi	Kaikki käyttäjät
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	fi	Esimerkki {{NELFNV role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
+expires	filemanager	fi	Vanhentuu
 export definition to use for nextmatch export	filemanager	fi	Vienti asetukset 'nextmatch' vientiin
 extended access control list	filemanager	fi	Laajennetut ACL -oikeudet
 extended acl	filemanager	fi	Laajennetut ACL -oikeudet
 failed to change permissions of %1!	filemanager	fi	%1, oikeuksien myöntäminen epäonnistui!
 failed to create directory!	filemanager	fi	Hakemiston luominen epäonnistui
 favorites	filemanager	fi	Suosikit
-file	filemanager	fi	Tiedosto
+file	common	fi	Tiedosto
 file %1 could not be created.	filemanager	fi	Tiedostoa %1 ei voitu luoda.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	fi	Tiedosto %1 voi olla liian suuri. Ota yhteys ylläpitäjiin lisätietojen saamiseksi!
 file deleted.	filemanager	fi	Tiedosto poistettu
@@ -111,6 +123,7 @@ filemanager fields:	filemanager	fi	Tiedostonhallinnan kentät:
 filename must not be empty!	filemanager	fi	Tiedoston nimi ei voi olla tyhjä!
 files from subdirectories	filemanager	fi	Alakansioiden tiedostot
 files in this directory	filemanager	fi	Tiedostot tässä kansiossa
+finally delete this version	filemanager	fi	Poista tämä versio
 folder up	filemanager	fi	Ylempi kansio
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	fi	Käytä tätä Tagia sarjakirjeille (serial letter). Lisää toistettava sisältö kahden Tagin väliin
 general	filemanager	fi	Yleinen
@@ -137,6 +150,7 @@ modified	filemanager	fi	Muokattu
 modified between	filemanager	fi	Muokattu välillä
 modify all subdirectories and their content	filemanager	fi	Muokkaa kaikkia alahakemistoja ja niiden sisältöä
 move	filemanager	fi	Siirrä
+move into folder	filemanager	fi	Siirrä kansioon
 move to	filemanager	fi	Siirrä
 moved %1 to %2	filemanager	fi	%1 siirrettiin %2
 name of current user, all other contact fields are valid too	filemanager	fi	Nykyisen käyttäjän nimi, myös muut yhteystietokentät ovat voimassa.
@@ -145,9 +159,13 @@ no access	filemanager	fi	Ei pääsyä
 no files in this directory.	filemanager	fi	Kansiossa ei ole tiedostoja
 no preview available	filemanager	fi	Esikatselu ei ole käytössä
 no version history for this file/directory	filemanager	fi	Tiedostolla/kansiolla ei ole versioita
+noone	filemanager	fi	Ei kukaan
+older versions or deleted files	filemanager	fi	Vanhat versiot ja/tai poistetut tiedostot
 only owner can rename or delete the content	filemanager	fi	Ainoastaan omistaja voi uudellennimetä tai poistaa sisällön
 open	filemanager	fi	Avoin
 operation	filemanager	fi	Operaatio
+path %1 not found or not a directory!	filemanager	fi	Polkua %1 ei löytynyt tai kansiota ei ole olemassa!
+percentage	filemanager	fi	Prosentti
 permission denied!	filemanager	fi	Pääsy estetty!
 permissions	filemanager	fi	ACL-oikeudet
 permissions of %1 changed.	filemanager	fi	ACL-oikeudet muutettu: %1
@@ -188,9 +206,12 @@ show link "users and groups*" in side box menu?*	filemanager	fi	Näyt linkki "K�
 show link "your home directory*" in side box menu?*	filemanager	fi	Näyt linkki "Oma kansio" navigointipalkissa
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	fi	Näytetäänkö linkki Tiedostonhallinnan kantahakemistoon (base directory) (/) sivuvalikossa?
 size	filemanager	fi	Koko
+sqlfs statistics	filemanager	fi	sqlFS tilastot
 start search	filemanager	fi	Aloita haku
 startfolder	filemanager	fi	Aloituskansio
+successful mounted %1 on %2.	filemanager	fi	%1: versiointi otettu käyttöön.
 superuser	filemanager	fi	SuperUser
+superuser (root)	filemanager	fi	Superuser (root)
 symlink to %1 created.	filemanager	fi	Symlink kohteeseen %1 luotu.
 tag to mark positions for address labels	filemanager	fi	Tägi osoitetarrojen sijainnille
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	fi	Aloituskansioksi on oletuksena yksityinen kansiosi. Oletusta käytetään, jos tämä jätetään tyhjäksi, polkua ei löydy tai sinulla ei ole tarvittavia ACL-oikeuksia määrittelemääsi kansioon.
@@ -210,10 +231,12 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used space	filemanager	fi	Käytetty tila
 users and groups	filemanager	fi	Käyttäjät ja ryhmät
 versioning	filemanager	fi	Versiointi
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	fi	Kenen/Keiden sallitaan lopullisesti poistaa vanhoja versioita ja poistettuja tiedostoja:
 wrong username or password!	filemanager	fi	Väärä käyttäjätunnus tai salasana!
 you are not allowed to upload a script!	filemanager	fi	Sinulla ei ole riittäviä oikeuksia ladata skriptiä!
 you can only grant additional rights, you can not take rights away!	filemanager	fi	Voit ainoastaan antaa lisää oikeuksia, et voi vähentää/ottaa niitä pois!
 you do not have access to %1	filemanager	fi	Sinulla ei ole käyttöoikeutta kohteeseen %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	fi	Vain Super User voi ottaa versioinnin käyttöön tai poistaa sen käytöstä!
 you need to select an owner!	filemanager	fi	Valitse omistaja!
 you need to select some files first!	filemanager	fi	Valitse ensin tiedosto!
 you will be redirected to your home directory.	filemanager	fi	Jälleenohjautuu kotihakemistoon.

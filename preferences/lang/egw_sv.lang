@@ -21,8 +21,10 @@ default application	preferences	sv	Standard applikation
 default preferences	preferences	sv	Standard inställningar
 delete categories	preferences	sv	Radera kategorier
 description can not exceed 255 characters in length !	preferences	sv	Beskrivningen kan inte vara längre än 255 tecken
+disable	preferences	sv	Inaktivera
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sv	Föredrar du 24 timmars format, eller 12 med fm/em.
 edit custom fields	preferences	sv	Ändra anpassade fält
+enable	preferences	sv	Aktivera
 enter your new password	preferences	sv	Nytt lösenord
 enter your old password	preferences	sv	Gamla lösenordet
 failed to change password.	preferences	sv	Kunde inte ändra lösenordet.

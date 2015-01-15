@@ -34,6 +34,7 @@ existing links	timesheet	pl	Istniejące odsyłacze
 exists	timesheet	pl	istnieje
 export to openoffice spreadsheet	timesheet	pl	Eksportuj do arkusza OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	pl	Exportuj wpisy ze swojego Czasu Pracy do pliku CSV (CSV - wpisy rozdzielane przecinkiem). W opcjach możesz wybrać własny separator wpisów.
+favorites	timesheet	pl	Ulubione
 field must not be empty !!!	timesheet	pl	Powyższe pole nie może być puste!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	pl	Użyj tego tagu dla listów seryjnych. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa tagi.
 full: use only projectmanager	admin	pl	Pełna: zezwalaj tylko na nazwy z Menadżera Projektów
@@ -70,6 +71,7 @@ permission denied!!!	timesheet	pl	Dostęp zabroniony !!!
 price	timesheet	pl	Cena
 projectmanager integration	admin	pl	Integracja z Menadżerem projektów
 quantity	timesheet	pl	Ilość
+recovered	timesheet	pl	odzyskany
 save & new	timesheet	pl	Zapisz & Nowy
 saves the changes made	timesheet	pl	Zapisz poczynione zmiany
 saves the changes made and leaves	timesheet	pl	zapisz zmiany i zamknij

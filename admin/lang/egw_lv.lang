@@ -115,6 +115,7 @@ delete this group	admin	lv	izdzēst šo grupu
 delete this user	admin	lv	izdzēst šo lietotāju
 deleted	admin	lv	Izdzēsts
 deletes this field	admin	lv	dzēš šo lauku
+deny access	admin	lv	Liegt pieeju
 deny access to access log	admin	lv	Liegt pieeju piekļuves logam
 deny access to application registery	admin	lv	Liegt pieeju aplikācijas reģistrēšanai
 deny access to applications	admin	lv	Liegt pieeju aplikācijām
@@ -141,7 +142,6 @@ do you also want to delete all global subcategories ?	admin	lv	Vai vēlies dzēs
 do you want to delete all global subcategories ?	admin	lv	Vai vēlies dzēst visas vispārējas apakšgrupas?
 do you want to move all global subcategories one level down ?	admin	lv	Vai vēlies pārvietot visas vispārējas apakšgrupas vienu līmeni zemāk?
 down	admin	lv	lejā
-each value is a line like <id>[=<label>]	admin	lv	katra vēr'tiba ir līniija kā <id>[=<iezīme>]
 edit account	admin	lv	Rediģēt kontu
 edit application	admin	lv	Rediģēt  aplikāciju
 edit email settings	admin	lv	rediģēt e-pasta uzstādījumus
@@ -199,6 +199,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 forward also to	admin	lv	pārsūtīt arī
 forward only	admin	lv	tikai pārsūtīt
 full name	admin	lv	Pilns vārds
+general	admin	lv	Vispārējs
 global categories	common	lv	Vispārējas (global) kategorijas
 group ?	admin	lv	grupa?
 group has been added	common	lv	Grupa tika pievienota
@@ -256,7 +257,6 @@ loginid	admin	lv	Autorizācijas ID
 mail settings	admin	lv	Sūtījumu uzstādījumi
 main screen message	admin	lv	Galvenā loga ziņojums
 manager	admin	lv	Pārvaldnieks
-max length of the input [, length of the inputfield (optional)]	admin	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
 maximum account id (e.g. 65535 or 1000000)	admin	lv	Maksimālais kontu ID (piem.65535 vai 1000000)
 members	admin	lv	Locekļi
 message has been updated	admin	lv	ziņojums tika atjaunināts
@@ -307,6 +307,7 @@ remove all users from this group	admin	lv	Izmest visus lietotājus no šīs grup
 remove all users from this group ?	admin	lv	Vai izmest visus lietotājus no šīs grupas?
 return to admin mainscreen	admin	lv	Atgriezties uz administratora galveno logu
 return to view account	admin	lv	Atgriezties, lai redzētu kontu
+rows	admin	lv	Rindas
 run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus
 save the category	admin	lv	Saglabāt kategoriju
 save the category and return back to the list	admin	lv	Saglabāt kategoriju un atgriezties uz sarakstu

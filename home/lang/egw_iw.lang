@@ -1,4 +1,8 @@
+color	home	iw	צבע
 displays home	home	iw	test
 egroupware	home	iw	sdg
 home	home	iw	gsg
+remove	home	iw	הסר
 there is a new version of egroupware available	home	iw	sgsg
+today is %1's birthday!	home	iw	!היום יום הולדת של %1
+tomorrow is %1's birthday.	home	iw	.מחר יום הולדת של %1

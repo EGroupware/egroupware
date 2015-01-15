@@ -21,9 +21,13 @@ deleted %1	filemanager	hr	Obrisano %1
 directory	filemanager	hr	Mapa
 directory %1 already exists	filemanager	hr	Mapa %1 već postoji
 directory %1 does not exist	filemanager	hr	Mapa %1 ne postoji
+disable	filemanager	hr	Onesposobi
 download	filemanager	hr	Preuzmi sa poslužitelja
 edit comments	filemanager	hr	Uredi komentar
-file	filemanager	hr	Datoteka
+enable	filemanager	hr	Omogući
+everyone	filemanager	hr	svi
+expires	filemanager	hr	Istječe
+file	common	hr	Datoteka
 file %1 could not be created.	filemanager	hr	Nisam mogao  napraviti %1 datoteku.
 file names cannot contain "%1"	filemanager	hr	Imena datoteka nemogu sadržavati "%1"
 filemanager	common	hr	Filemanager

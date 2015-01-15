@@ -1,3 +1,4 @@
+all users	etemplate	tr	Tüm Kullanýcýlar
 and	etemplate	tr	Ve
 application	etemplate	tr	Uygulama
 applications	etemplate	tr	Uygulamalar
@@ -20,12 +21,16 @@ link	etemplate	tr	Link
 minute	etemplate	tr	Dakika
 minutes	etemplate	tr	dakika
 month	etemplate	tr	Ay
+more	etemplate	tr	Daha fazla
 name	etemplate	tr	Ýsim
+new	etemplate	tr	Yeni
 no file	etemplate	tr	dosya yok
 no matches found	etemplate	tr	Hiç eþleþme yok
 or	etemplate	tr	ya da
 read a list of entries.	etemplate	tr	Bir girdi listesini oku
 read a single entry by passing the id and fieldlist.	etemplate	tr	ID ve alan listesini tarayarak bir girdi oku
+refresh	etemplate	tr	Yenile
+reset	etemplate	tr	Sýfýrla
 selectbox	etemplate	tr	Seçim kutusu
 text	etemplate	tr	Metin
 today	etemplate	tr	Bugün

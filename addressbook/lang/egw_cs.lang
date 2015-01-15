@@ -182,6 +182,7 @@ exports contacts from your addressbook into a csv file. csv means 'comma seperat
 extra	addressbook	cs	Extra
 extra private	addressbook	cs	Extra soukromé
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	cs	nepodařilo se změnit %1 členů organizace (nedostatečná práva) !!!
+favorites	addressbook	cs	Oblíbené
 fax	addressbook	cs	Fax
 fax number	common	cs	Faxové číslo
 field %1 has been added !	addressbook	cs	Položka %1 byla přidána.
@@ -298,7 +299,6 @@ phone numbers	common	cs	Telefonní čísla
 photo	addressbook	cs	Fotografie
 please enter a name for that field !	addressbook	cs	Zadejte prosím název pro tuto položku!
 please select only one category	addressbook	cs	Vyberte prosím jen jednu kategorii
-please update the templatename in your customfields section!	addressbook	cs	Zaktualizujte prosím název šablony ve Vaší sekci uživatelsky definovaných položek!
 postal	common	cs	PSČ
 pref	addressbook	cs	preferovaný
 preferred email address to use in distribution lists	addressbook	cs	Preferovaná e-mailová adresa pro použití v distribučních seznamech
@@ -395,7 +395,6 @@ verification	addressbook	cs	Ověření
 view linked infolog entries	addressbook	cs	Zobrazit odkazované záznamy v InfoLogu
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	cs	VAROVÁNÍ!! LDAP je použitelný jen v případě, že NEpoužíváte kontakty pro ukládání uživatelských účtů!
 warning: all contacts found will be deleted!	addressbook	cs	VAROVÁNÍ: Všechny kontakty budou smazány!
-warning: template "%1" not found, using default template instead.	addressbook	cs	VAROVÁNÍ: Šablona "%1" nebyla nalezena, bude použita výchozí.
 weekday	addressbook	cs	Pracovní den
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	cs	Co mají odkazy na adresář zobrazovat v ostatních aplikacích. Prázdné hodnoty budou vynechány. Pokud změníte toto nastavení, musíte se znovu přihlásit!
 where to add the email address	addressbook	cs	kam přidat e-mailovou adresu

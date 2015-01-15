@@ -21,8 +21,12 @@ clear selection	resources	zh	明确的选择
 configure access permissions	admin	zh	设置访问权限
 create new accessory for this resource	resources	zh	添加此资源附件
 create new links	resources	zh	添加链接
+custom etemplate for the contactform	resources	zh	为联系人表单自定义模板
+custom fields	resources	zh	自定义字段
+days	resources	zh	日
 delete selected resources	resources	zh	删除所选资源
 delete this entry	resources	zh	删除此条目
+deleted	resources	zh	已删除
 description (short)	resources	zh	描述 (简短)
 direct booking permissions	resources	zh	直接预订权限
 don't use vfs (this will need a symlink --> see readme)	resources	zh	不要使用虚拟文件系统(这将需要使用符号链接，-->请参阅 README 文档说明)
@@ -84,6 +88,7 @@ something went wrong by deleting resource	resources	zh	删除资源时发生错�
 something went wrong by saving resource	resources	zh	保存资源时发生错误
 storage information	resources	zh	存储信息
 storage information:	resources	zh	存储信息：
+the anonymous user needs add rights for it!	resources	zh	匿名用户需要为它增加权限！
 the calendar of this resource	resources	zh	这一资源的日历
 this module displays the resources app	resources	zh	这一模块显示资源应用
 use general resources icon	resources	zh	使用通用资源图标

@@ -23,4 +23,5 @@ signature	admin	nl	Ondertekening
 step	notifications	nl	Stap
 warning	notifications	nl	Waarschuwing
 windows-popup backend	admin	nl	Windows-Popup backend
+you've got new mail	notifications	nl	Er is een nieuw bericht
 your session could not be verified.	notifications	nl	Uw sessie kon niet geverifieerd worden

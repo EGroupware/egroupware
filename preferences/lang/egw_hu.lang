@@ -18,13 +18,14 @@ date format	preferences	hu	Dátum formátum
 default	preferences	hu	alapértelmezett
 default application	preferences	hu	Alapértelmezett alkalmazás
 default preferences	preferences	hu	Alapértelmezett Tulajdonságok
-default theme	preferences	hu	Alapértelmezett téma
 delete categories	preferences	hu	Kategóriák Törlése
 description can not exceed 255 characters in length !	preferences	hu	A leírás nem érheti el a 255 karakter hosszúságot!
+disable	preferences	hu	Letilt
 display thumbnails for linked images	preferences	hu	Csatolt képekhez ikon megjelenítése
 div	preferences	hu	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	hu	A 24 órás idő formátumot részesíti előnyben, vagy a 12 órásat am/pm utótaggal.
 edit custom fields	preferences	hu	egyedi mezők szerkesztése
+enable	preferences	hu	engedélyez
 enable drag and drop functionality (experimental)	preferences	hu	Drag and Drop funkció engedélyezése (haladó)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	hu	Engedélyezi vagy tiltja a Drag and Drop funkciókat az összes alkalmazásban. Ha a böngésző nem támogatja a Drag and Drop-ot, akkor automatikusan le lesz tiltva. Ez a tulajdonság egyelőre haladó.
 enter your new password	preferences	hu	Új jelszó megadása
@@ -50,7 +51,6 @@ max number of icons in navbar	preferences	hu	Az ikonok maximális száma a navig
 no default	preferences	hu	Nincs alapértelmezett
 no user-selection at all	common	hu	Egyáltalán nincs felhasználó választás
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg. Ezt önnek kell megtennie.
-office 2003 theme	preferences	hu	Office 2003 téma
 p: paragraph	preferences	hu	p: Paragrafus
 permanent time zone selection	preferences	hu	Állandó időzóna szelekció
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	hu	Kérlek válassz időzónát amelyek között váltani szeretnél. A változtatási lehetőség nem lesz feltüntetve ha kevesebb mint két időzóna lett kiválasztva.
@@ -78,7 +78,6 @@ show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint
 show number of current users	preferences	hu	Aktuálisan bejelentkezett felhasználók számának mutatása
 show text on navigation icons	preferences	hu	Szöveg megjelenítése a navigációs ikonokon
 show_more_apps	common	hu	Több program megjelenítése
-silver theme	preferences	hu	Ezüst téma
 spellchecker language	addressbook	hu	Helyesírás-ellenörző nyelve
 text only	preferences	hu	Csak szöveg
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett alkalmazás fog elindulni, amikor belép az eGroupWare-be vagy a Kezdőlap ikonra kattint.<br>Több alkalmazást is megjeleníthet a Kezdőlapon(Főképernyőn), ha nem jelöl meg itt alapértelmezett alkalmazást. Ezeket az egyes alkalmazások beállításai között kell beállítani (pl. Felamimail, Infolog, Hírszerkesztő stb.).

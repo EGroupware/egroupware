@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	eu	%1 %2 %3an
+%1 hours	calendar	eu	%1 ordu
 %1 records imported	calendar	eu	%1 errenkada inportatuta
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	eu	%1 errenkadak irakurriak (oraindik inportatu gabe ordea. Inportatu nahi izanez gero bueltatu atzera eta "inportazio testa" aukera kendu)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	eu	<b>Kontutan izatekoa</b>: Egutegiak zure herrialdeko jaiegunak erabiltzen ditu, berau %1 bezala definiturik dagoelarik. Zure %2 atalean alda dezakezu berau. <br> Jaiegunak automatikoki instalatzen dira %4 tik. Berauek %5 ean alda ditzazkezu.
@@ -56,6 +57,7 @@ created	calendar	eu	Sortua
 csv	calendar	eu	CSV
 csv-fieldname	calendar	eu	CSV-Fitxategiaren izena
 csv-filename	calendar	eu	CSV-Fitxategiaren izena
+custom	calendar	eu	Egokitua
 custom fields	common	eu	Eremu pertsonalizatua
 daily	calendar	eu	Egunerokoa
 day	calendar	eu	Eguna

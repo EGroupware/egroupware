@@ -1,4 +1,14 @@
+color	home	es-es	Color
 displays home	home	es-es	Muestra el inicioOOOOO
 egroupware	home	es-es	eGroupWare
 home	home	es-es	Inicio
+in %1 days (%2) is %3's birthday.	home	es-es	En %1 días (%2) es el cumpleaños de %3.
+remove	home	es-es	borrar
+set as default	home	es-es	Establecer como predeterminado
 there is a new version of egroupware available	home	es-es	Hay disponible una nueva versión de eGroupWare
+today is %1's birthday!	home	es-es	¡Hoy es el cumpleaños de %1!
+tomorrow is %1's birthday.	home	es-es	¡Mañana es el cumpleaños de %1!
+yes, for the next three days	home	es-es	Sí, para los tres próximos días
+yes, for the next two weeks	home	es-es	Sí, para las dos semanas siguientes
+yes, for the next week	home	es-es	Sí, para la semana siguiente
+yes, for today and tomorrow	home	es-es	Sí, para hoy y mañana

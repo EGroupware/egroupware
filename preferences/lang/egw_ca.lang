@@ -21,8 +21,10 @@ default application	preferences	ca	Aplicació per defecte
 default preferences	preferences	ca	Preferències per defecte
 delete categories	preferences	ca	Esborrar Categories
 description can not exceed 255 characters in length !	preferences	ca	La Descripció no pot passar de 255 caràcters de llarg !
+disable	preferences	ca	Deshabilitar
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ca	Preferiu el format de temps de 24 hores, o bé el de 12 hores amb "am/pm" darrere ?
 edit custom fields	preferences	ca	Editar camps personalitzats
+enable	preferences	ca	Habilitar
 enable drag and drop functionality (experimental)	preferences	ca	Habilita funcionalitat d'arrossegar i deixar anar (experimental)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	ca	Habilita o deshabilita funcions d'arrossegar i deixar anar a totes les aplicacions. Si el navegador no permet l'arrossegar i deixar anar, serà inhabilitat automàticament. Aquesta funció és experimental de moment.
 enter your new password	preferences	ca	Entreu la nova contrasenya

@@ -268,7 +268,6 @@ leave it empty	infolog	it	lascia vuoto
 leave it empty for a full week	infolog	it	Lascia vuoto per una settimana completa
 leave without saveing the entry	infolog	it	uscire senza salvare la voce
 leaves without saveing	infolog	it	uscire senza salvare
-length<br>rows	infolog	it	Lunghezza<br>Righe
 limit number of description lines (default 5, 0 for no limit)	infolog	it	Limita il numero di righe di descrizione. Predefinito = 5, 0 = nessun limite
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	it	Limita la larghezza della colonna di descrizione. Predefinito = 5, 0 = nessun limite
 link	infolog	it	Link
@@ -279,7 +278,6 @@ links of this entry	infolog	it	Links della voce
 links to specified application.  example: {{links/infolog}}	infolog	it	Collegamento (link) alla applicazione specifica. Esempio: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	it	Collegamenti fra tag HREF con link allo scaricamento
 list all categories	infolog	it	Elenca tutte le categorie
-list no subs/childs	infolog	it	Non elencare Sub/figli
 list of files linked to the current record	infolog	it	Elenco file collegato alla voce corrente
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	it	Carica campi personalizzati nell'indice, se filtrato in base a tipi selezionati (p.es. per mostrarli in un modello specifico per tipi)
 location	infolog	it	Localizzazione
@@ -392,6 +390,7 @@ responsible upcoming	infolog	it	Responsabile prossime
 responsible user, priority	infolog	it	Responsabile utente, priorità
 returns a list / search for records.	infolog	it	Restituisce un elenco / cerca record.
 rights for the responsible	infolog	it	Diritti del responsabile
+rows	infolog	it	Righe
 same day	infolog	it	Stesso giorno
 save	infolog	it	Salva
 saves the changes made and leaves	infolog	it	salva i cambiamenti ed esci

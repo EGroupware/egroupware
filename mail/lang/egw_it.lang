@@ -1,7 +1,6 @@
 %1 attachments	mail	it	%1 allegati
 %1 is not writable by you!	mail	it	%1 non è scrivibile da te!
 %1 mails selected	mail	it	% messaggi selezionati
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (). if you check "use regular expressions" you must use valid regular expressions.	mail	it	(*) caratteri jolly (*,?) possono essere usati. Se stai cercando di far corrispondere * o ? come caratteri, allora devi anteporre un backslash (\). Se tu selezionassi "Usa espressioni regolari" dovresti inserire espressioni regolari valide.
 (leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
 (no subject)	mail	it	(nessun oggetto)
 (not connected)	mail	it	(non connesso)
@@ -27,7 +26,6 @@ allow images from external sources in html emails	mail	it	Permetti immagini da s
 allow users to create further identities	mail	it	Permetti agli utenti di creare identità ulteriori
 allways a new window	mail	it	sempre in una nuova finestra
 always show html emails	mail	it	Visualizza sempre le e-mail HTML
-an error happend while trying to remove acl rights from the account %1.	mail	it	E' stato rilevato un errore durante la rimozione dei permessi dall'account %1
 and the rule with priority %1, now got the priority %2	mail	it	E la regola con priorità %1, ha adesso priorità %2
 any of	mail	it	qualsiasi di
 any status	mail	it	qualsiasi stato
@@ -90,7 +88,6 @@ do not auto create folders	mail	it	non creare automaticamente le cartelle
 do you really want to delete folder %1 ?	mail	it	Si è sicuri di voler ELIMINARE la cartella %1 ?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	it	Vuoi una richiesta di conferma prima di allegare i messaggi selezionati al nuovo email?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	it	Vuoi una richiesta di conferma prima di spostare i messaggi selezionati ad un altra cartella?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione per l'inoltro di email tramite impostazioni, anche se SIEVE è abilitato?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione di regole di filtraggio, anche se SIEVE è abilitato?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione della notifica per email ad altri indirizzi email se arrivassero messaggi, anche se SIEVE è abilitato?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione della notifica di assenza/vacanza, anche se SIEVE è abilitato?
@@ -131,7 +128,6 @@ error: message could not be displayed.	mail	it	Errore: il messaggio non può ess
 error:could not save the acl! because some names are empty!	mail	it	Impossibile salvare le regole dei permessi ACL! Alcuni nomi sono vuoti!
 esync will fail without a working email configuration!	mail	it	La sincronizzazione via eSync non funzionerà senza una configurazione corretta di eMail
 event details follow	mail	it	Dettagli dell'evento
-every:	mail	it	Ogni:
 everyone	mail	it	Ognuno
 extended	mail	it	Esteso
 extra sent folders	mail	it	Cartelle di posta inviata extra
@@ -271,6 +267,7 @@ organisation	admin	it	organizzazione
 organization	mail	it	organizzazione
 original message	mail	it	Messaggio originale
 outbox	mail	it	Posta in uscita
+permission denied	mail	it	Permesso negato
 please configure access to an existing individual imap account.	mail	it	Configura l'accesso ad un account IMAP esistente
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	it	Per favore contattare il proprio amministratore per validare il supporto di regole di filtri lato Server, e come abilitarli in EGroupware per il tuo account attivo (%1) con ID: %2
 please select a address	mail	it	Prego seleziona un indirizzo
@@ -279,7 +276,6 @@ please supply the message to send with auto-responses	mail	it	Prego fornisci il 
 post	mail	it	post
 prevent managing filters	mail	it	Inibire la gestione dei filtri
 prevent managing folders	mail	it	Inibire la gestione delle cartelle
-prevent managing forwards	mail	it	Inibire la gestione degli inoltri
 prevent managing notifications	mail	it	Inibire la gestione delle notifiche
 prevent managing vacation notice	mail	it	Inibire l'impostazione del autorisponditore "in vacanza"
 primary profile	mail	it	Profilo primario
@@ -378,7 +374,6 @@ subject(a->z)	mail	it	Oggetto (A->Z)
 subject(z->a)	mail	it	Oggetto (Z->A)
 subscribe folder	mail	it	Sottoscrivi cartella
 subscribe folder ...	mail	it	Sottoscrivi cartella...
-subscription faild!	mail	it	Sottoscrizione fallita!
 subscription folders	mail	it	Cartelle da sottoscrivere
 subscription successfully saved.	mail	it	Sottoscrizione salvata corretamente.
 successfully connected	mail	it	Connesso con successo
@@ -390,9 +385,6 @@ test connection and display basic information about the selected profile	mail	it
 text	mail	it	Testo
 text mode	mail	it	Modalità testo
 text/plain	mail	it	text/plain (testo semplice)
-the %1 's acl removed from the %2!	mail	it	I permessi di %1 rimossi dalla %2!
-the %1 's acl, including its subfolders, removed from the %2!	mail	it	I permessi di %1, sottocartelle incluse, rimossi dalla %2!
-the folder %1 's acls saved!	mail	it	I permessi ACL per la cartella %1 sono stati salvati!
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	it	La cartella <b>%1</b> sarà usata, se non ci fosse nulla qui e non fosse fornito un valore predefinito valido.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	it	Il mittente del messaggio ha richiesto la ricevuta di lettura. Vuoi inviarla?
 the mimeparser can not parse this message.	mail	it	Il mime parser non riesce a interpretare il messaggio.

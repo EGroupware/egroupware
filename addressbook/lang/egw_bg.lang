@@ -275,7 +275,6 @@ phone numbers	common	bg	Телефонни номера
 photo	addressbook	bg	Снимка
 please enter a name for that field !	addressbook	bg	Моля въведете име за това поле!
 please select only one category	addressbook	bg	Моля, изберете само една категория
-please update the templatename in your customfields section!	addressbook	bg	Моля, обновете името на шаблона в секцията за полете по избор!
 postal	common	bg	Пощенски
 pref	addressbook	bg	предп.
 preferred email address to use in distribution lists	addressbook	bg	Предпочитан e-mail адрес за пощенски списъци
@@ -354,7 +353,6 @@ verification	addressbook	bg	Проверка
 view linked infolog entries	addressbook	bg	Покзване на свързаните записи от Дневника
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	bg	ВНИМАНИЕ! LDAP е валиден избор само ако НЕ използвате контактите за съхранение и на потребителските акаунти!
 warning: all contacts found will be deleted!	addressbook	bg	ВНИМАНИЕ! Всички намерени контакти ще бъдат изтрити!
-warning: template "%1" not found, using default template instead.	addressbook	bg	ВНИМАНИЕ: Не е намерен шаблон "%1". Използва се шаблона по подразбиране.
 weekday	addressbook	bg	Ден от седмицата
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	bg	Как да се изобразяват връзките към Адресния указател в другите приложения? Празните стойности ще бъдат игнорирани. Ако промените тази настройка следва да излезете и влезете в системата отново.
 where to add the email address	addressbook	bg	къде да се добави E-Mail адрес

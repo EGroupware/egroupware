@@ -1,7 +1,13 @@
 deleted	mail	ko	삭제됨
+edit account	mail	ko	계정 편집
 event details follow	mail	ko	** 다음은 이벤트-설명
+everyone	mail	ko	모두
+extended	mail	ko	확장
 from	mail	ko	부터
+general	admin	ko	일반
 mail settings	mail	ko	메일 설정
+permission denied	mail	ko	접근권한이 없습니다
 remove all	mail	ko	모두 삭제
+select all	mail	ko	모두 선택
 small view	mail	ko	미니뷰
-urgent	mail	ko	긴급
+write	mail	ko	쓰기

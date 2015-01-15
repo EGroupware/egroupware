@@ -5,6 +5,7 @@ accounts	common	tr	Hesaplar
 action	common	tr	Eylem
 actions	common	tr	Eylemler
 add	common	tr	ekle
+add a new contact	common	tr	Yeni bir ba?lant? ekle
 addressbook	common	tr	Adres Defteri
 administration	common	tr	Yönetim
 and	common	tr	Ve
@@ -35,6 +36,7 @@ group name	common	tr	Grup Ýsmi
 highest	common	tr	En yüksek
 home email	common	tr	Ev E-mail
 international	common	tr	Uluslararas?
+load	common	tr	Yükle
 loginid	common	tr	Kullanýcý Adý
 lowest	common	tr	En düþük
 message	common	tr	Mesaj
@@ -54,6 +56,7 @@ primary group	common	tr	ana grup
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku
 search accounts	common	tr	Hesaplarý ara
+select all	common	tr	Tamam?n? seç
 site configuration	common	tr	Site Ayarlarý
 submit	common	tr	Gönder
 the api is current	common	tr	API güncel

@@ -196,6 +196,7 @@ error renaming %1 %2 directory	common	lv	Kļūda pārsaucot %1 %2 direktoriju
 estonia	common	lv	IGAUNIJA
 ethiopia	common	lv	ETIOPIJA
 exact	common	lv	tieši
+failed to change password.	common	lv	Neizdevād nomainīt paroli.
 falkland islands (malvinas)	common	lv	FOLKLENDA (MELVINU)SALAS
 faroe islands	common	lv	FARĒRU(FĒRU) SALAS
 fax number	common	lv	faksa nummurs
@@ -312,6 +313,7 @@ liechtenstein	common	lv	LIHTENŠTEINA
 list	common	lv	Saraksts
 list members	common	lv	Saraksta dalībnieki
 lithuania	common	lv	LIETUVA
+load	common	lv	Ielādēt
 local	common	lv	Vietējais
 login	common	lv	Pieteikties
 loginid	common	lv	Pieteikuma ID
@@ -377,6 +379,7 @@ niger	common	lv	NIGĒRA
 nigeria	common	lv	NIGĒRIJA
 niue	common	lv	NIUE
 no	common	lv	Nē
+no - cancel	common	lv	Nē- Atcelt
 no entries found, try again ...	common	lv	neviens ieraksts netika atrasts, mēģiniet vēlreiz ...
 no history for this record	common	lv	nav pieejama šī ieraksta vēsture
 no subject	common	lv	Nav Tēmas
@@ -436,6 +439,7 @@ please set your global preferences	common	lv	Lūdzu ierakstiet galvenos datus pa
 please set your preferences for this application	common	lv	Lūdzu uzstādi savas izvēles šai programmatūrai
 please wait...	common	lv	Lūdzu uzgaidi...
 poland	common	lv	POLIJA
+popup with search	common	lv	Uzsākt ar meklēšanu
 portugal	common	lv	PORTUGĀLE
 postal	common	lv	Pasta
 preferences	common	lv	Iestādījumi
@@ -484,6 +488,7 @@ search accounts	common	lv	Meklēt kontus
 search or select accounts	common	lv	Meklēt vai izvēlēties kontus
 section	common	lv	Nodaļa
 select	common	lv	Iezīmēt
+select all	common	lv	Iezīmēt visus
 select all %1 %2 for %3	common	lv	Iezīmēt visus %1 %2 priekš %3
 select category	common	lv	Izvēlēties Kategoriju
 select date	common	lv	Izvēlēties datumu
@@ -618,6 +623,7 @@ written by:	common	lv	Autors:
 year	common	lv	Gads
 yemen	common	lv	JEMENA
 yes	common	lv	Jā
+yes - delete	common	lv	Jā- izdzēst
 you are required to change your password during your first login	common	lv	Jums jāsamaina parole pēc pirmās pieteikšanās
 you have been successfully logged out	login	lv	Veiksmīga darba beigšana
 you have not entered a title	common	lv	Jūs aizmirsāt uzrakstīt virsrakstu
@@ -632,7 +638,6 @@ your message could <b>not</b> be sent!<br>	common	lv	Jūsu ziņa <b>netika<b> no
 your message has been sent	common	lv	Jūsu ziņa tika nosūtīta
 your search returned %1 matchs	common	lv	atradu %1 ierakstus
 your search returned 1 match	common	lv	atradu 1 ierakstu
-your session could not be verified.	login	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.
 your settings have been updated	common	lv	Iestādījumi tika saglabāti
 zambia	common	lv	ZAMBIJA
 zimbabwe	common	lv	ZIMBABVE

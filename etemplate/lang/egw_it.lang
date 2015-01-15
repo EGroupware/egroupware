@@ -16,6 +16,7 @@
 a pattern to be searched for	etemplate	it	un pattern da cercare
 accesskey	etemplate	it	Chiave d'accesso
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	it	Le chiavi d'accesso possono anche essere specificate con un & nell'etichetta (es. &Nome)
+actions...	etemplate	it	Azioni
 add a new column (after the existing ones)	etemplate	it	Aggiungi una nuova colonna (dopo quelle esistenti)
 add a new entry of the selected application	etemplate	it	Aggiungi una nuova voce dell'applicazione selezionata
 add a new multi-column index	etemplate	it	Aggiungi un nuovo indice multi-colonna
@@ -23,12 +24,14 @@ add column	etemplate	it	Aggiungi Colonna
 add index	etemplate	it	Aggiungi Indice
 add new	etemplate	it	Aggiungi nuova
 add table	etemplate	it	Aggiungi Tabella
+add to clipboard	etemplate	it	Aggiungi agli appunti.
 advanced search	etemplate	it	Ricerca avanzata
 align	etemplate	it	Allinea
 alignment of label and input-field in table-cell	etemplate	it	allineamento di etichetta e campo-input in cella-tabella
 alignment of the v/hbox containing table-cell	etemplate	it	Allineamento del V/HBox contenente cella-tabella
 all days	etemplate	it	tutti i giorni
 all operations save the template!	etemplate	it	tutte le operazioni salvano il template!
+all users	etemplate	it	Tutti gli utenti
 am	etemplate	it	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	it	una colonna indicizzata velocizza le ricerche che utilizzano quella colonna (costa spazio sul disco!!!)
 application	etemplate	it	Applicazione
@@ -78,6 +81,7 @@ confirmation necesary or custom java-script	etemplate	it	conferma necessaria o j
 contact	etemplate	it	Contatto
 contact fields	etemplate	it	campi Contatti
 contains	etemplate	it	contiene
+copy to clipboard	etemplate	it	Copia negli appunti
 create a new table for the application	etemplate	it	Crea una nuova tabella per l'applicazione
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	it	creates an english ('en') langfile from label and helptexts (for application in Name)
 creator	preferences	it	Creatore
@@ -91,7 +95,6 @@ custom fields	etemplate	it	campi personalizzati
 custom javascript for onchange	etemplate	it	javascript personalizzato per onChange
 cut	etemplate	it	Taglia
 date+time	etemplate	it	Data+Ora
-datum	etemplate	it	Datum
 day	etemplate	it	Giorno
 days	etemplate	it	giorni
 db ensures that every row has a unique value in that column	etemplate	it	DB assicura che ogni riga abbia un unico valore in quella colonna
@@ -153,6 +156,9 @@ etemplate '%1' written to '%2'	etemplate	it	eTemplate '%1' scritto su '%2'
 etemplate editor	etemplate	it	Editor eTemplate
 etemplate reference	etemplate	it	Riferimenti eTemplate
 etemplate tutorial	etemplate	it	Tutorial eTemplate
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	it	Esempio {{NELFNV role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
 exchange this row with the one above	etemplate	it	scambia questa riga con quella superiore
 exchange this two columns	etemplate	it	scambia queste due colonne
 export the loaded etemplate into a xml-file	etemplate	it	esporta l'eTemplate caricato in un file xml
@@ -168,6 +174,7 @@ first	etemplate	it	Primo
 floating point	etemplate	it	Virgola Mobile
 foreign key	etemplate	it	Tasto straniero
 formatted text (html)	etemplate	it	Testo Formattato (HTML)
+general fields:	preferences	it	Campi generali
 go to the first entry	etemplate	it	vai alla prima voce
 go to the last entry	etemplate	it	vai all'ultima voce
 go to the next page of entries	etemplate	it	vai alla pagina seguente delle voci
@@ -176,6 +183,7 @@ grid	etemplate	it	Griglia
 grid column attributes	etemplate	it	Attributi colonna della griglia
 grid row attributes	etemplate	it	Attributi riga della griglia
 groupbox	etemplate	it	GroupBox
+h	etemplate	it	h
 hbox	etemplate	it	HBox
 height	etemplate	it	Altezza
 height of row (in % or pixel)	etemplate	it	altezza della riga (in % o pixel)
@@ -189,7 +197,11 @@ hour	etemplate	it	Ora
 hours	etemplate	it	ore
 how many entries should the list show	etemplate	it	Quante voci deve mostrare l'elenco
 html	etemplate	it	Html
+html link to the current record	etemplate	it	Collegamento HTML al record attuale
+id	etemplate	it	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	it	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra una azione per ogni documento. Quella azione permette di scaricare il documento specificato con la data inserita.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
 image	etemplate	it	Immagine
 import	etemplate	it	Importa
 import an etemplate from a xml-file	etemplate	it	import an eTemplate from a xml-file
@@ -224,13 +236,18 @@ link target %1 not found!	etemplate	it	Destinazione %1 del collegamento non trov
 linkapps	etemplate	it	Applicazioni Link
 linkentry	etemplate	it	Voce Link
 linklist	etemplate	it	Elenco Link
+links and attached files	preferences	it	Collegamenti e file allegati
 linkstring	etemplate	it	Stringa Link
 linkto	etemplate	it	Link A
+list of files linked to the current record	preferences	it	Elenco dei file collegati al record attuale
 load this template into the editor	etemplate	it	carica questo template nell'editor
+loading	etemplate	it	Sto caricando...
 middle	etemplate	it	In mezzo
 minute	etemplate	it	Minuto
 minutes	etemplate	it	Minuti
+modifier	preferences	it	Modificatore
 month	etemplate	it	Mese
+more	etemplate	it	Altro
 multicolumn indices	etemplate	it	Multicolumn Indices
 name	etemplate	it	Nome
 name of other table where column is a key from	etemplate	it	name of other table where column is a key from
@@ -238,6 +255,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	it	Nome della tabella da aggiungere
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	it	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	it	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+new	etemplate	it	Nuovo
 new search	common	it	Nuova ricerca
 new table created	etemplate	it	Nuova tabella creata
 newer version '%1' exists !!!	etemplate	it	newer version '%1' exists !!!
@@ -248,12 +266,14 @@ no column to swap with !!!	etemplate	it	nessuna colonna con cui scambiare !!!
 no file	etemplate	it	nessun file
 no filename given or selected via browse...	etemplate	it	no filename given or selected via Browse...
 no matches found	etemplate	it	Nessuna corrispondenza trovata.
+no rights to export more than %1 entries!	common	it	Diritti insufficienti per esportare più di %1 voci!
 no row to swap with !!!	etemplate	it	nessuna riga con cui scambiare !!!
 not null	etemplate	it	NON VUOTO
 nothing	etemplate	it	niente
 nothing found - try again !!!	etemplate	it	Non è stato trovato niente - prova ancora !!!
 nothing in clipboard to paste !!!	etemplate	it	niente negli appunti da incollare !!!
 nothing matched search criteria !!!	etemplate	it	Nothing matched search criteria !!!
+now	etemplate	it	Adesso
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	it	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	it	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	it	di
@@ -282,12 +302,16 @@ read a list of entries.	etemplate	it	Leggi un elenco di voci
 read a single entry by passing the id and fieldlist.	etemplate	it	Read a single entry by passing the id and fieldlist.
 read etemplate from database (for the keys above)	etemplate	it	read eTemplate from database (for the keys above)
 readonly	etemplate	it	sola lettura
+refresh	etemplate	it	Aggiorna
 remove row (can not be undone!!!)	etemplate	it	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	it	Remove this link (not the entry itself)
 required	etemplate	it	Richiesto
+reset	etemplate	it	Reimposta
 returns savely, without deleting	etemplate	it	returns savely, WITHOUT deleting
 right	etemplate	it	Destra
 row...	etemplate	it	Riga...
+save all	etemplate	it	Salva tutti
+save as	etemplate	it	Salva come
 save the changes made and close the window	etemplate	it	Salva le modifiche fatte e chiude la finestra
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	it	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	it	saves changes to tables_current.inc.php
@@ -311,6 +335,7 @@ select country	etemplate	it	Seleziona Nazione
 select day	etemplate	it	Seleziona Giorno
 select day of week	etemplate	it	scegli giorno della settimana
 select entry	etemplate	it	Scegli voce
+select file(s) from vfs	etemplate	it	Seleziona file dal sistema virtuale di file (vfs)
 select hour	etemplate	it	Scegli ora
 select if content of field should not be translated (label gets always translated)	etemplate	it	scegli se il contenuto del campo non deve essere tradotto (l'etichetta viene sempre tradotta)
 select month	etemplate	it	Seleziona Mese
@@ -325,6 +350,7 @@ select which accounts to show	etemplate	it	seleziona quali account mostrare
 select which values to show	etemplate	it	seleziona quali valori mostrare
 select year	etemplate	it	Seleziona Anno
 selectbox	etemplate	it	Selectbox
+set as default	etemplate	it	Imposta come predefinito
 sets today as date	etemplate	it	imposta oggi come data
 show	etemplate	it	Mostra
 show (no save)	etemplate	it	Mostra (non salva)
@@ -355,8 +381,11 @@ template deleted	etemplate	it	Template cancellato
 template saved	etemplate	it	Template salvato
 text	etemplate	it	Testo
 textarea	etemplate	it	Area di Testo
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
+the following document-types are supported:	preferences	it	I seguenti tipi di documenti sono supportati:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	it	this text gets displayed if the input-field is empty and has no focus (blur)
 time	etemplate	it	Tempo
+titles of any entries linked to the current record, excluding attached files	preferences	it	I titoli delle voci collegate a questa, allegati esclusi
 to start the db-tools	etemplate	it	to start the DB-Tools
 to start the etemplate editor	etemplate	it	to start the eTemplate editor
 to start the search	etemplate	it	to start the search
@@ -388,6 +417,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	it	larghezza della colonna (in % o pixel)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	it	Larghezza della tabella in % o pixel per table-tag e (opzionale)div
 width, disabled	etemplate	it	Larghezza, Disabilitata
+wk	etemplate	it	Sett
 working days	etemplate	it	giorni lavorativi
 write <app>/setup/tables_current.inc.php	etemplate	it	Scrivi <app>/setup/tables_current.inc.php
 write langfile	etemplate	it	Scrivi File Linguaggio

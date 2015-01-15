@@ -12,6 +12,7 @@
 %1 files deleted.	filemanager	it	%1 files rimossi.
 %1 files moved.	filemanager	it	%1 files spostati.
 %1 starts with '%2'	filemanager	it	%1 inizia con '%2'
+%1 successful unmounted.	filemanager	it	%1 smontato conrrettamente
 %1 successful uploaded.	filemanager	it	%1 caricati con successo.
 %1 the following files into current directory	filemanager	it	%1 i file seguenti nella cartella corrente.
 %1 urls %2 to clipboard.	filemanager	it	%1 URL %2 negli appunti
@@ -26,21 +27,26 @@ acl added.	filemanager	it	Regola ACL aggiunta.
 acl deleted.	filemanager	it	Regola ACL eliminata.
 actions	filemanager	it	Azioni
 add to clipboard	filemanager	it	Aggiungi agli appunti.
-all files	common	it	Tutti i file
+administrators	filemanager	it	amministratori
+all files	filemanager	it	Tutti i file
 allow a maximum of the above configured folderlinks to be configured in settings	admin	it	Numero massimo di collegamenti a cartelle da configurare nelle preferenze
 and all it's childeren	filemanager	it	e tutti i figli
 application fields	filemanager	it	Campi di applicazione
 applications	common	it	Applicazioni
+backend	filemanager	it	Backend
+backend url	filemanager	it	Backend URL
+backend url to mount	filemanager	it	Backend URL da montare
 basedirectory	filemanager	it	Cartella principale
 can't open directory %1!	filemanager	it	Impossibile aprire la cartella %1!
 cancel editing %1 without saving	filemanager	it	Annulla modifiche di %1 senza salvare
 cannot create directory because it begins or ends in a space	filemanager	it	Non posso creare la directory perché inizia o finisce con uno spazio
 cautiously rejecting to remove folder '%1'!	filemanager	it	Eliminazione della cartella %1 rigettata per precauzione!
 check all	filemanager	it	Seleziona tutto
-check virtual filesystem	filemanager	it	Controlla il filesystem virtuale
+check virtual filesystem	common	it	Controlla il filesystem virtuale
 clear search	filemanager	it	Reimposta la ricerca
 clipboard is empty!	filemanager	it	Gli appunti sono vuoti!
 comment	filemanager	it	Commento
+configuration changed.	filemanager	it	Configurazione modificata
 copied	filemanager	it	Copiato
 copied %1 to %2	filemanager	it	Ho copiato %1 in %2
 copy	filemanager	it	Copia
@@ -75,6 +81,8 @@ directory %1 does not exist	filemanager	it	La directory %1 non esiste
 directory not found or no permission to access it!	filemanager	it	Directory non trovata oppure non hai diritto di accesso!
 directory successfully created.	filemanager	it	Directory creata con successo.
 directory with documents to insert entries	filemanager	it	Cartella con documenti per l'inserimento
+disable	filemanager	it	Disabilita
+disable versioning for this mountpoint	filemanager	it	Disabilitare il controllo delle versioni per questo mountpoint
 display and modification of content	filemanager	it	Visualizzazione e modifica del contenuto
 display of content	filemanager	it	Visualizzazione del contenuto
 do you want to overwrite existing file %1 in directory %2?	filemanager	it	Vuoi sovrascrivere il file esistente %1 nella cartella %2?
@@ -82,6 +90,8 @@ do you want to overwrite the existing file %1?	filemanager	it	Vuoi sovrascrivere
 download	filemanager	it	Download
 edit comments	filemanager	it	Modifica commenti
 edit settings	filemanager	it	Modifica le impostazioni
+enable	filemanager	it	Abilita
+enable versioning for given mountpoint	filemanager	it	Abilitare il controllo delle versioni per il mountpoint selezionato
 enter setup user and password	filemanager	it	Inserisci il nome utente e la password dell'utente di setup.
 enter setup user and password to get root rights	filemanager	it	Inserisci il nome utente e la password dell'utente di setup per ottenere diritti amministrativi (root)
 enter the complete vfs path to specify a fast access link to a folder	filemanager	it	Inserisci il percorso VFS completo per specificare un link veloce verso una cartella
@@ -89,20 +99,24 @@ enter the complete vfs path to specify your desired start folder.	filemanager	it
 error adding the acl!	filemanager	it	Errore nell'aggiunta della regola ACL!
 error creating symlink to target %1!	filemanager	it	Errore di creazione del link simbolico verso %1!
 error deleting the acl entry!	filemanager	it	Errore di eliminazione della regola ACL!
+error mounting %1 on %2!	filemanager	it	Errore nel montaggio di %1 su %2
+error unmounting %1!	filemanager	it	Errore nello smontaggio di %1
 error uploading file!	filemanager	it	Errore di caricamento file!
 error while creating directory.	filemanager	it	Errore di creazione della cartella
+everyone	filemanager	it	Ognuno
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	it	Esempio {{IF n_prefix~Mr~Salve Sig.~Salve Sig.ra}} - ricerca nel campo "n_prefix", per"Mr", se trovato, scrivere Salve Mr., altrimenti scrivi Salve Sig.ra
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Esempio: Sig. Dr. Giorgio Rossi
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, otterrai una nuova riga col valore del campo "Ruolo"
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	it	Example {{NELFNV role}} - se il campo "Ruolo" non è vuoto, imposta un LF senza alcun valore del campo
 executable	filemanager	it	Eseguibile
+expires	filemanager	it	Scade
 export definition to use for nextmatch export	filemanager	it	Definizione da usare per l'esportazione nextmatch (corrispondenza successiva)
 extended access control list	filemanager	it	Lista di controllo degli accessi (ACL) estesa
 extended acl	filemanager	it	ACL estesa
 failed to change permissions of %1!	filemanager	it	Non è stato possibilile modificare i permessi di %1!
 failed to create directory!	filemanager	it	Non è stato possibile creare la cartella!
 favorites	filemanager	it	Preferiti
-file	filemanager	it	Archivia
+file	common	it	Archivia
 file %1 already exists	filemanager	it	Il file %1 esiste già
 file %1 could not be created.	filemanager	it	Il file %1 non può essere creato.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	it	Il file %1 potrebbe essere troppo grande
@@ -117,6 +131,7 @@ filename must not be empty!	filemanager	it	Il nome del file non può essere vuot
 files from subdirectories	filemanager	it	File da sottocartelle
 files in this directory	filemanager	it	File in questa cartella
 filesystem check reported no problems.	filemanager	it	Non sono stati individuati problemi dopo il controllo del filesystem.
+finally delete this version	filemanager	it	Cancellazione finale di questa versione
 fix reported problems	filemanager	it	Problemi riparati
 folder up	filemanager	it	Cartella superiore
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	it	Per i file collegati ad una voce di alte applicazioni (in /apps/nomeapp/id) le variabili metasintattiche per quella applicazione sono disponibili pure. Vedi l'applicazione specifica per l'elenco delle variabili metasintattiche disponibili.
@@ -156,9 +171,11 @@ no access	filemanager	it	Accesso negato
 no files in this directory.	filemanager	it	Nessun File in questa directory.
 no preview available	filemanager	it	L'anteprima non è disponibile
 no version history for this file/directory	filemanager	it	Nessuna cronologia versioni per questo file/directory
+noone	filemanager	it	Nessuno
 only owner can rename or delete the content	filemanager	it	Solo il proprietario può rinominare o eliminare il contenuto
 open	filemanager	it	Apri
 operation	filemanager	it	Operazione
+percentage	filemanager	it	Percentuale
 permission denied!	filemanager	it	Permesso negato
 permissions	filemanager	it	Permessi
 permissions of %1 changed.	filemanager	it	Permessi di %1 modificati.
@@ -193,6 +210,7 @@ search for '%1'	filemanager	it	Cerca per '%1'
 searchstring	filemanager	it	Stringa di ricerca
 select action...	filemanager	it	Scegli azione...
 select file to upload in current directory	filemanager	it	Seleziona il file da caricare nella cartella corrente
+select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (vfs)
 setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.
 show	filemanager	it	Mostra
 show hidden files	filemanager	it	Mostra i file nascosti
@@ -206,6 +224,7 @@ size	filemanager	it	Dimensione
 start search	filemanager	it	Avvia ricerca
 startfolder	filemanager	it	Cartella di avvio
 superuser	filemanager	it	Super utente
+superuser (root)	filemanager	it	Super utente (root)
 symlink to %1 created.	filemanager	it	Link simbolico a %1 creato.
 tag to mark positions for address labels	filemanager	it	Tagga per marcare le posizioni per le etichette di indirizzo
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	it	La cartella di avvio predefinita è quella personale. Se lasci questa voce vuota, immetti un percorso inesistente oppure non hai i diritti di accesso sufficienti, allora verrà utilizzata quella predefinita.
@@ -216,6 +235,7 @@ there's already a directory with that name!	filemanager	it	Esiste già una carte
 there's already a file with that name!	filemanager	it	Esiste già un file con questo nome!
 to overwrite the existing file store again.	filemanager	it	Per sovrascrivere l'esistente salva di nuovo
 total files	filemanager	it	File totali
+unmount	filemanager	it	Smonta
 unused space	filemanager	it	Spazio inutilizzato
 up	filemanager	it	Su
 updated comment for %1	filemanager	it	Ho aggiornato i commenti per %1

@@ -5,15 +5,22 @@ allways a new window	mail	sv	Alltid nytt fönster
 always show html emails	mail	sv	Visa alltid HTML e-post
 any of	mail	sv	Någon av
 any status	mail	sv	Alla status
+attachments	mail	sv	Bilagor
 by date	mail	sv	Enligt datum
+check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
 compose	mail	sv	Skriv
 compress folder	mail	sv	Komprimera katalog
+condition	mail	sv	vilkor
 contains	mail	sv	Innehåller
+copy to	mail	sv	Kopiera
 date(newest first)	mail	sv	Datum (nyaste först)
 date(oldest first)	mail	sv	Datum (äldsta först)
 default sorting order	mail	sv	Standard sorterings ordning
+delete folder	mail	sv	Radera katalog
 deleted	mail	sv	Raderad
+disable	mail	sv	Inaktivera
 discard	mail	sv	Ignorera
+discard message	mail	sv	Ignorera meddelande
 display messages in multiple windows	mail	sv	Visa meddelanden i flera fönster
 display of html emails	mail	sv	Visning av HTML e-post
 display only when no plain text is available	mail	sv	Visa endast när textformat inte är tillgängligt
@@ -25,24 +32,37 @@ don't use draft folder	mail	sv	Använd inte Utkast
 don't use sent	mail	sv	Använd inte Skickat
 don't use trash	mail	sv	Använd inte Borttaget
 draft folder	mail	sv	Utkast katalog
+edit account	mail	sv	Ändra konto
+edit vacation settings	mail	sv	Ändra frånvaro alternativ
 emailaddress	admin	sv	E-post adress
 empty trash	mail	sv	Töm Borttaget
+enable	mail	sv	Aktivera
 event details follow	mail	sv	Händelse detaljer följer
-felamimail	admin	sv	FelaMiMail
+everyone	mail	sv	Alla
+extended	mail	sv	Utökad
 file into	mail	sv	Flytta till
 filemanager	mail	sv	Filhanterare
 flagged	mail	sv	Flaggad
 folder	mail	sv	Katalog
 folder settings	mail	sv	Katalog alternativ
+forward	mail	sv	Vidarebefodra
 forward to	mail	sv	Vidarebefodra till
 from	mail	sv	Från
 from(a->z)	mail	sv	Från (A->Ö)
 from(z->a)	mail	sv	Från (Ö->A)
+general	admin	sv	Allmänt
 greater than	mail	sv	Större än
+header lines	mail	sv	Brevhuvud
 html	mail	sv	Html
+identity	mail	sv	Identitet
 if	mail	sv	OM
+if mail header	mail	sv	om brevhuvud
+if message size	mail	sv	om meddelande storlek
+imap	mail	sv	IMAP
 imap server	mail	sv	IMAP Server
 inbox	mail	sv	Inkorg
+keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din Inkorg
+kilobytes	mail	sv	Kb
 later	mail	sv	Senare
 less than	mail	sv	Mindre än
 mail settings	mail	sv	E-post alternativ
@@ -50,6 +70,7 @@ mark as deleted	mail	sv	Markera som raderad
 matches	mail	sv	Matchar
 matches regexp	mail	sv	Matchar regexp
 move selected to	mail	sv	Flytta valda till
+move to	mail	sv	Flytta valda till
 move to trash	mail	sv	Flytta till Borttaget
 never display html emails	mail	sv	Visa inte HTML meddelanden
 no plain text part found	mail	sv	Hittade inget textfält
@@ -58,6 +79,7 @@ one address is not valid	mail	sv	En adress är ogiltig
 only one window	mail	sv	Endast ett fönster
 organisation	admin	sv	Organisation
 organization	mail	sv	Organisation
+permission denied	mail	sv	Åtkomst nekad
 please select a address	mail	sv	Välj adress
 please select the number of days to wait between responses	mail	sv	Antal dagar mellan svar
 please supply the message to send with auto-responses	mail	sv	Meddelande att skicka med autosvar
@@ -66,10 +88,18 @@ refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
 remove all	mail	sv	Radera samtliga
 remove immediately	mail	sv	Radera omedelbart
+rename folder	mail	sv	Byt namn på katalog
 replied	mail	sv	Svarade
+reply	mail	sv	Svara
+reply all	mail	sv	Svara alla
+reply to	mail	sv	Svara till
 replyto	mail	sv	Svara till
 row order style	mail	sv	Rad sortering
 save all	mail	sv	Spara alla
+save as draft	mail	sv	Spara som utkast
+save as infolog	mail	sv	Spara som InfoLogg
+save message to disk	mail	sv	Spara meddelanden till disk
+select all	mail	sv	Välj samtliga
 sent folder	mail	sv	Skickat katalog
 sieve script name	mail	sv	Sieve skript namn
 signature	mail	sv	Signatur
@@ -78,11 +108,14 @@ size(0->...)	mail	sv	Storlek (0->...)
 small view	mail	sv	Liten vy
 subject(a->z)	mail	sv	Ämne (A->Ö)
 subject(z->a)	mail	sv	Ämne (Ö->A)
+text	mail	sv	Text
 the mimeparser can not parse this message.	mail	sv	MIME-tolken kunde inte tolka meddelandet
 then	mail	sv	SEN
 trash folder	mail	sv	Borttaget
+unflagged	mail	sv	Oflaggad
 unread	mail	sv	Oläst
-urgent	mail	sv	Brådskande
-vacation notice	admin	sv	Frånvaro meddelande
+vacation notice	mail	sv	Frånvaro meddelande
+view header lines	mail	sv	Visa brevhuvudet
 when deleting messages	mail	sv	Vid meddelande radering
+write	mail	sv	Skriv
 wrote	mail	sv	Skrev

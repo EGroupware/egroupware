@@ -22,6 +22,8 @@ account list	admin	pt-br	Lista de contas
 account permissions	admin	pt-br	Permissões da conta
 account preferences	admin	pt-br	Preferências da conta
 account-id's have to be integers!	admin	pt-br	Id da conta deve ser número inteiro!
+acl added.	admin	pt-br	ACL adicionada
+acl deleted.	admin	pt-br	ACL removida.
 acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
 action	admin	pt-br	Ação
@@ -150,6 +152,7 @@ delete this user	admin	pt-br	remover este usuário
 deleted	admin	pt-br	removido
 deletes this field	admin	pt-br	Remover este campo
 deliver extern	admin	pt-br	entrega externa
+deny access	admin	pt-br	Negar acesso
 deny access to access log	admin	pt-br	Negar acesso ao registro de acessos
 deny access to application registery	admin	pt-br	Negar acesso ao registro de aplicativos
 deny access to applications	admin	pt-br	Negar acesso aos aplicativos
@@ -178,8 +181,6 @@ do you want to delete all global subcategories ?	admin	pt-br	Deseja remover toda
 do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um nível abaixo?
 document root (default)	admin	pt-br	Pasta raiz (padrão)
 down	admin	pt-br	baixo
-each value is a line like <id>[=<label>]	admin	pt-br	cada valor é uma linha como <id>[=<label>]
-each value is a line like id[=label]	admin	pt-br	cada valor é uma linha como id[=label]
 edit account	admin	pt-br	Editar conta
 edit application	admin	pt-br	Editar Aplicativo
 edit email settings	admin	pt-br	Editar configurações de e-mail
@@ -239,6 +240,7 @@ error saving to db:	admin	pt-br	Erro salvando no banco de dados:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado !!!
 error! no appname found	admin	pt-br	Erro: Nome de aplicativo não encontrado
 error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido !!!
+exists	admin	pt-br	Existe
 expires	admin	pt-br	Expira
 explanation of ldapman	admin	pt-br	Até o momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e precisa dos esquemas CORE e QMAIL (OID7914). Mais detalhes, sobre como usar e configurar este sistema, pode ser encontrato no arquivo README.ldapman na pasta doc de ADMIN.
 failed to change password.	admin	pt-br	Erro ao moudar a senha.
@@ -254,6 +256,7 @@ forward also to	admin	pt-br	encaminhar também para
 forward emails to	admin	pt-br	encaminhar e-mails para
 forward only	admin	pt-br	apenas encaminhar
 full name	admin	pt-br	Nome Completo
+general	admin	pt-br	Geral
 global categories	common	pt-br	Categorias globais
 grant	admin	pt-br	Conceder
 group ?	admin	pt-br	grupo?
@@ -324,7 +327,6 @@ main email-address	admin	pt-br	E-Mail principal
 main screen message	admin	pt-br	Mensagem da tela principal
 manage mapping	admin	pt-br	Gerenciar mapeamento
 manager	admin	pt-br	Gerenciador
-max length of the input [, length of the inputfield (optional)]	admin	pt-br	tamanho máximo da entrada [, tamanho do campo de entrada (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	pt-br	id máximo para contas (Exemplo: 65535 ou 1000000)
 maximum entries in click path history	admin	pt-br	Máximo de entradas no histórico de caminho de cliques
 members	admin	pt-br	Membros
@@ -367,6 +369,7 @@ percent of users that logged out	admin	pt-br	Percentual de usuários que descone
 percent this user has logged out	admin	pt-br	Percentagem de vezes que este usuário desconectou
 permission denied	admin	pt-br	Permissão negada
 permission denied !!!	admin	pt-br	Permissão negada !!!
+permission denied!!!	admin	pt-br	Permissão negada !!
 permissions	admin	pt-br	Permissões
 permissions this group has	admin	pt-br	Permissões do grupo
 phpinfo	admin	pt-br	Informações do PHP
@@ -391,7 +394,9 @@ remove all users from this group	admin	pt-br	Remover todos os usuários deste gr
 remove all users from this group ?	admin	pt-br	Remover todos os usuários desse grupo?
 return to admin mainscreen	admin	pt-br	retornar à tela principal da Administração
 return to view account	admin	pt-br	retornar à visualização da conta
+rights	admin	pt-br	Direitos
 route all mails to	admin	pt-br	Remeter todos e-mails para
+rows	admin	pt-br	Fileiras
 run asynchronous services	admin	pt-br	Executar Serviços Assícronos
 save the category	admin	pt-br	salvar a categoria
 save the category and return back to the list	admin	pt-br	salvar a categoria e retornar à lista
@@ -482,6 +487,7 @@ unknown command %1!	admin	pt-br	Comando desconhecido %1!
 unknown option %1	admin	pt-br	Opção desconhecida %1
 up	admin	pt-br	para cima
 updated	admin	pt-br	atualizado
+usage	admin	pt-br	uso
 use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sessão
 use pure html compliant code (not fully working yet)	admin	pt-br	Usar código HTML puro (não funciona totalmente ainda)
 use theme	admin	pt-br	Usar tema

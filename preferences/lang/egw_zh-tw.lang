@@ -21,8 +21,10 @@ default application	preferences	zh-tw	預設應用程式
 default preferences	preferences	zh-tw	預設偏好設定
 delete categories	preferences	zh-tw	刪除分類
 description can not exceed 255 characters in length !	preferences	zh-tw	說明不能夠超過255個字元
+disable	preferences	zh-tw	停用
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	zh-tw	您想使用24小時制或是12小時制。
 edit custom fields	preferences	zh-tw	編輯自訂的欄位
+enable	preferences	zh-tw	啟用
 enter your new password	preferences	zh-tw	輸入您的新密碼
 enter your old password	preferences	zh-tw	輸入您的舊密碼
 failed to change password.	preferences	zh-tw	密碼變更錯誤，請聯絡管理員

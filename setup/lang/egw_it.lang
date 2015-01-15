@@ -61,12 +61,14 @@ check installation	setup	it	Controlla installazione
 check ip address of all sessions	setup	it	controlla l'indirizzo ip di tutte le sessioni
 checking php.ini	setup	it	Esecuzione controllo di php.ini
 checking the egroupware installation	setup	it	Esecuzione controllo installazione eGroupWare
+clear cache and register hooks	setup	it	Pulisci la memoria temporanea e registra gli agganci
 click here	setup	it	Clicca qui
 click here to re-run the installation tests	setup	it	Clicca qui per rieseguire i test di installazione
 completed	setup	it	Completato
 config password	setup	it	Password Configurazione
 config username	setup	it	Username Configurazione
 configuration	setup	it	Configurazione
+configuration changed.	setup	it	Configurazione modificata
 configuration completed	setup	it	Configurazione completata
 configuration password	setup	it	Password Configurazione
 configuration user	setup	it	Username Configurazione
@@ -106,6 +108,7 @@ delete all my tables and data	setup	it	Cancella tutte le mie tabelle e i dati
 delete all old languages and install new ones	setup	it	Cancella tutte le lingue gi&agrave; presenti e installa quelle nuove
 deleting tables	setup	it	Cancella Tabelle
 demo server setup	setup	it	Setup del server dimostrativo
+deny access	setup	it	Nega accesso
 deny all users access to grant other users access to their entries ?	setup	it	Nega a tutti gli utenti l'accesso ai dati inseriti dagli altri utenti ?
 deregistered	setup	it	deregistrato
 details for admin account	setup	it	Dettagli per l'utente amministratore
@@ -152,6 +155,7 @@ install applications	setup	it	Installa Applicazioni
 install language	setup	it	Installa Lingue
 installed	setup	it	installato
 instructions for creating the database in %1:	setup	it	Istruzioni per creare il database in %1:
+invalid argument '%1' !!!	setup	it	Argomento '%1' non valido
 invalid ip address	setup	it	Indirizzo IP errato
 invalid password	setup	it	Password errata
 is broken	setup	it	non funziona
@@ -235,6 +239,7 @@ return to setup	setup	it	Ritorna al Setup
 run installation tests	setup	it	Esegui test installazione
 save	setup	it	Salva
 save this text as contents of your header.inc.php	setup	it	Salva questo testo come contenuto del tuo header.inc.php
+schedule	setup	it	Pianifica importazione | esportazione
 select one...	setup	it	selezionane uno...
 select the default applications to which your users will have access	setup	it	Seleziona l'applicazione predefinita alla quale i tuoi utenti avranno accesso
 select the desired action(s) from the available choices	setup	it	Seleziona, dalle scelte disponibili, le azioni desiderate

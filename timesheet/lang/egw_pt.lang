@@ -1,15 +1,20 @@
 2 month ago	timesheet	pt	Há 2 meses atrás
 2 years ago	timesheet	pt	Há 2 anos atrás
 3 years ago	timesheet	pt	Há 3 anos atrás
+all projects	timesheet	pt	Todos os projetos
 applies the changes	timesheet	pt	Aplicar as alterações
 by	timesheet	pt	por
+change category	timesheet	pt	Alterar categoria
+changed category to %1	timesheet	pt	Categoria alterada para 1%
 check all	timesheet	pt	Marcar todas
 create new links	timesheet	pt	Criar novas ligações
 creates a new field	timesheet	pt	cria um novo campo
 custom fields	timesheet	pt	Personalizar campos
+default document to insert entries	timesheet	pt	Documento padrão para inserir entradas
 deleted	timesheet	pt	eliminado/a
 deletes this field	timesheet	pt	eliminar este campo
 determines the order the fields are displayed	timesheet	pt	determina a ordem de apresentação dos campos
+directory with documents to insert entries	timesheet	pt	Diretório com documentos para inserir entradas
 each value is a line like <id>[=<label>]	timesheet	pt	cada valor é uma linha como <id>[=<etiqueta>]
 edit status	timesheet	pt	Editar estado
 edit this entry	timesheet	pt	Editar este registo
@@ -20,10 +25,17 @@ entry saved	timesheet	pt	Registo guardado
 error deleting the entry!!!	timesheet	pt	Erro ao eliminar o registo!!!
 error saving the entry!!!	timesheet	pt	Erro ao guardar o registo!!!
 existing links	timesheet	pt	Ligações existentes
+exists	timesheet	pt	Existe
+export definition to use for nextmatch export	timesheet	pt	Definição Exportar para usar para exportação NextMatch
+favorites	timesheet	pt	Favoritos
 field must not be empty !!!	timesheet	pt	O campo não pode estar vazio !!!
+general fields:	timesheet	pt	Campos gerais:
 global categories	timesheet	pt	Categorias gerais
 history	timesheet	pt	Histórico
+history logging	admin	pt	Logging História
+html link to the current record	timesheet	pt	Link HTML para o registro atual
 id	timesheet	pt	ID
+insert	timesheet	pt	Inserir
 last modified	timesheet	pt	Última modificação
 last month	timesheet	pt	Último mês
 last week	timesheet	pt	Última semana
@@ -32,15 +44,20 @@ leave it empty for a full week	timesheet	pt	Deixar vário para uma semana interi
 leaves without saveing	timesheet	pt	Continua sem guardar
 length<br>rows	timesheet	pt	Altura<br>Linhas
 links	timesheet	pt	Ligações
+links and attached files	timesheet	pt	Links e arquivos anexados
+list of files linked to the current record	timesheet	pt	Lista de arquivos vinculados ao registro atual
 max length of the input [, length of the inputfield (optional)]	timesheet	pt	comprimento máximo [, comprimento do campo (opcional)]
 modified	timesheet	pt	Modificado
 no details	timesheet	pt	Sem detalhes
+no project	timesheet	pt	Nenhum projeto
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
 order	timesheet	pt	Ordenar
 parent	timesheet	pt	Principal
 permission denied!!!	timesheet	pt	Permissão negada!!!
+permissions error - %1 could not %2	timesheet	pt	Erro de permissões -% 1 não pôde% 2
 price	timesheet	pt	Preço
 quantity	timesheet	pt	Quantidade
+replacements for inserting entries into documents	timesheet	pt	Substitutos para a inserção de entradas em documentos
 save & new	timesheet	pt	Guardar e criar novo
 saves the changes made	timesheet	pt	Guarda as alterações efectuadas
 saves the changes made and leaves	timesheet	pt	guarda as alterações e deixa
@@ -49,6 +66,8 @@ select a price	timesheet	pt	Seleccione um preço
 select a project	timesheet	pt	Seleccione um projecto
 start	timesheet	pt	Início
 sum %1:	timesheet	pt	Sum %1:
+tag to mark positions for address labels	timesheet	pt	Tag para marcar posições para etiquetas de endereço
+the following document-types are supported:	timesheet	pt	Os seguintes tipos de documentos são suportados:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	pt	o nome utilizado internamente (<= 20 caracteres), alterá-lo torna os dados existentes indisponíveis
 the text displayed to the user	timesheet	pt	o texto apresentado ao utilizador
 this month	timesheet	pt	Este mês
@@ -59,5 +78,6 @@ unitprice	timesheet	pt	Preço por unidade
 values for selectbox	timesheet	pt	Valores para a caixa de selecção
 view this entry	timesheet	pt	Ver este registo
 week	timesheet	pt	Semana
+yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
 yesterday	timesheet	pt	Ontem
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt	A sua base de dados NÃO está actualizada (%1 vs. %2). Por favor, execute a %3configuração%4 para actualizar a sua base de dados.

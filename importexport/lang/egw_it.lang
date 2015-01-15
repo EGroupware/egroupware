@@ -14,6 +14,7 @@ addressbook csv import	importexport	it	Importazione da CSV rubrica
 addressbook vcard import	importexport	it	Importazione da vCard rubrica
 admin disabled exporting	importexport	it	L'amministratore ha disabilitato l'esportazione
 all encodings	importexport	it	Tutte le codifiche
+all users	importexport	it	Tutti gli utenti
 allowed users	importexport	it	Utenti consentiti
 automatically created by importexport	importexport	it	Automaticamente creto da Importa|Esporta
 basic csv import	importexport	it	Importazione base CSV
@@ -46,7 +47,6 @@ duplicate name, please choose another.	importexport	it	Nome duplicato, seleziona
 edit conditions	importexport	it	Modifica le condizioni
 edit definition <a href="%1">%2</a> to match your file	importexport	it	Modifica la definizione<a href="%1">%2</a> in modo che combaci con il tuo file
 edit your file to match the definition:	importexport	it	Modifica il file in modo che combaci con la definizione:
-encoding mismatch. expected %1 file, you uploaded %2.<br />n	importexport	it	Discrepanza nella codifica. Si aspettava file %1, è stato caricato %2.<br />\n
 errors	importexport	it	Errori
 execute	importexport	it	Esegui
 expert options	importexport	it	Opzioni per esperti
@@ -89,6 +89,7 @@ lock expired on previous run	importexport	it	Blocca scaduti nell'esecuzione prec
 manage mapping	importexport	it	Gestisci la mappatura
 next	importexport	it	Prossimo
 next run	importexport	it	Prossima esecuzione
+no custom field "%1" for %2.	importexport	it	Nessun campo personalizzato "%1" per %2.
 no matches	importexport	it	nessuna corrispondenza
 no matching records	importexport	it	Nessuna corrispondenza
 no notifications	importexport	it	Nessuna notifica
@@ -128,6 +129,7 @@ unable to schedule	importexport	it	Impossibile pianificare.
 update categories	importexport	it	Aggiorna categorie
 use default	importexport	it	Usa il predefinito
 use field from csv if possible	importexport	it	Usa campo da CSV se possibile
+use search results	common	it	Usa i risultati della ricerca
 user preference	importexport	it	Preferenza utente
 user template folder	importexport	it	Usa cartella modelli
 users allowed to create their own definitions	importexport	it	Utenti a cui è consentito modificare le loro definizioni

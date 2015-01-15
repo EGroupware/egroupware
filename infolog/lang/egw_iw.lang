@@ -1,5 +1,6 @@
 %1 records imported	infolog	iw	%1 רשומות הובאו
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	iw	(%1 רשומות נקראו (אך עדיין לא הובאו, אפשר ל-%2חזור%3 ולהסיר את הסימן ליד בדוק ייבוא
+(no subject)	infolog	iw	(ללא נושא)
 - subprojects from	infolog	iw	-תתי-פרויקטים מ
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	iw	ישירות LAN עבור לקוחות file:/path במקום העלה ושליפה באמצעות <b>symlinks צרף קבצים בעזרת</b>
 a short subject for the entry	infolog	iw	תיאור קצר לרשומה
@@ -73,7 +74,7 @@ deletes this status	infolog	iw	מוחק את הסטאטוס השה
 description	infolog	iw	תיאור
 determines the order the fields are displayed	infolog	iw	קובע את סדר תצוגת השדות
 disables a status without deleting it	infolog	iw	הופך סטאטוס ללא פעיל מבלי למחוק אותו
-done	common	iw	בוצע
+done	infolog	iw	בוצע
 download	infolog	iw	הורד
 duration	infolog	iw	משך
 edit	infolog	iw	ערוך
@@ -116,12 +117,10 @@ last changed	infolog	iw	שונה לאחרונה
 last modified	infolog	iw	שונה לאחרונה
 leave without saveing the entry	infolog	iw	צא בלי לשמור את הרשומה
 leaves without saveing	infolog	iw	יוצא בלי לשמור
-length<br>rows	infolog	iw	אורך<br>שורות
 link	infolog	iw	קישור
 links	infolog	iw	קישורים
 links of this entry	infolog	iw	קישורי רשומה זו
 list all categories	infolog	iw	הצג את כל הקטגוריות
-list no subs/childs	infolog	iw	אל תציג תתי/ילדי
 location	infolog	iw	מיקום
 longer textual description	infolog	iw	תיאור טקסטואלי אורך יותר
 low	infolog	iw	נמוך
@@ -172,6 +171,7 @@ remark	infolog	iw	הערה
 remove this link (not the entry itself)	infolog	iw	(הסר קישור זה (אבל לא את הרשומה עצמה
 responsible	infolog	iw	אחראי
 returns a list / search for records.	infolog	iw	מחזיר רשימה/חיפוש של רשומות
+rows	infolog	iw	שורות
 save	infolog	iw	שמור
 saves the changes made and leaves	infolog	iw	יוצא ושומר את השינוים
 saves this entry	infolog	iw	שומר רשומה זו

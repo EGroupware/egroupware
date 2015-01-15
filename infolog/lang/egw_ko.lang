@@ -61,7 +61,7 @@ deletes this field	infolog	ko	이 필드 삭제
 deletes this status	infolog	ko	이 상태 삭제
 description	infolog	ko	내용
 don't show infolog	infolog	ko	인포로그 보이지 않기
-done	common	ko	완료
+done	infolog	ko	완료
 download	infolog	ko	다운로드
 duration	infolog	ko	기간
 edit	infolog	ko	수정
@@ -110,7 +110,6 @@ link	infolog	ko	링크
 links	infolog	ko	링크들
 links of this entry	infolog	ko	이 엔트리의 링크
 list all categories	infolog	ko	모든 카테고리 목록
-list no subs/childs	infolog	ko	스레드 제외 목록
 location	infolog	ko	장소
 low	infolog	ko	낮음
 name must not be empty !!!	infolog	ko	이름을 입력하세요
@@ -160,6 +159,7 @@ responsible overdue	infolog	ko	응답자 만기초과
 responsible upcoming	infolog	ko	응답자 예정
 responsible user, priority	infolog	ko	응답대상,중요도
 rights for the responsible	infolog	ko	응답자에 대한 권한
+rows	infolog	ko	줄
 save	infolog	ko	저장
 saves the changes made and leaves	infolog	ko	저장하고 나가기
 saves this entry	infolog	ko	이 엔트리를 저장함

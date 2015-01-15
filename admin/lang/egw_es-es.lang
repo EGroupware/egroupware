@@ -198,6 +198,7 @@ delete this user	admin	es-es	borrar este usuario
 deleted	admin	es-es	borradas
 deletes this field	admin	es-es	borra este campo
 deliver extern	admin	es-es	entrega externa
+deny access	admin	es-es	Denegar acceso
 deny access to access log	admin	es-es	Denegar acceso al registro de accesos
 deny access to application registery	admin	es-es	Denegar acceso al registro de aplicaciones
 deny access to applications	admin	es-es	Denegar acceso a aplicaciones
@@ -231,8 +232,6 @@ do you want to move all global subcategories one level down ?	admin	es-es	¿Dese
 document root (default)	admin	es-es	Raíz de los documentos (Document root) (predeterminado)
 down	admin	es-es	Abajo
 download csv	admin	es-es	Descargar CSV
-each value is a line like <id>[=<label>]	admin	es-es	cada valor es una línea como <id>[=<etiqueta>]
-each value is a line like id[=label]	admin	es-es	cada valor es una línea como id[=label]
 edit account	admin	es-es	Editar cuenta
 edit application	admin	es-es	Editar aplicación
 edit email settings	admin	es-es	editar configuración de correo
@@ -321,6 +320,7 @@ forward also to	admin	es-es	reenviar también a
 forward emails to	admin	es-es	reenviar correos a
 forward only	admin	es-es	reenviar solamente
 full name	admin	es-es	Nombre completo
+general	admin	es-es	General
 global categories	common	es-es	Categorías globales
 go directly to admin menu, returning here the next time you click on administration.	admin	es-es	Ir directamente al menú de administración, volviendo aquí la próxima vez que pulse en administración.
 governmental: incl. state or municipal authorities or services	admin	es-es	Gubernamental: incluye estado o autoridades municipales o servicios
@@ -415,7 +415,6 @@ main email-address	admin	es-es	Dirección de correo principal
 main screen message	admin	es-es	Mensaje de la pantalla principal
 manage mapping	admin	es-es	Gestión de mapeos
 manager	admin	es-es	Administrador
-max length of the input [, length of the inputfield (optional)]	admin	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	es-es	Id máximo de cuenta (ej. 65535 o 1000000)
 maximum entries in click path history	admin	es-es	Número máximo de entradas en la ruta del historial de pulsar con el ratón
 members	admin	es-es	Miembros
@@ -516,7 +515,9 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	es-es	Requerido
 return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
 return to view account	admin	es-es	Volver a ver cuenta
+rights	admin	es-es	Derechos
 route all mails to	admin	es-es	dirigir todos los correos a
+rows	admin	es-es	Filas
 rpm or debian package	admin	es-es	Paquete RPM o Debian
 run	admin	es-es	ejecutar
 run asynchronous services	admin	es-es	Ejecutar servicios asíncronos

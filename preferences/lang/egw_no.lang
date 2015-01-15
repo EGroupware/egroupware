@@ -19,8 +19,10 @@ default application	preferences	no	Standard program
 default preferences	preferences	no	Standard preferanser
 delete categories	preferences	no	Slett kategori
 description can not exceed 255 characters in length !	preferences	no	Beskrivelser kan ikke overstige 255 karakterer i lengde !
+disable	preferences	no	Deaktiver
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	no	Vil du bruker 24 timers tidsformat, eller 12 timers med am/pm markering.
 edit custom fields	preferences	no	endre egendefinerte felter
+enable	preferences	no	muliggjør
 enter your new password	preferences	no	Skriv inn ditt nye passord
 enter your old password	preferences	no	Skriv inn ditt gamle passord
 failed to change password.	preferences	no	Passordet kunne ikke endres.

@@ -22,12 +22,13 @@ date format	preferences	sk	Formát dátumu
 default	preferences	sk	predvolený
 default application	preferences	sk	Predvolená aplikácia
 default preferences	preferences	sk	Predvolené nastavenia
-default theme	preferences	sk	Predvolená téma
 delete categories	preferences	sk	Zmazať kategórie
 description can not exceed 255 characters in length !	preferences	sk	Dĺžka opisu nesmie prekročiť 255 znakov!
+disable	preferences	sk	Vypnúť
 display thumbnails for linked images	preferences	sk	Zobraziť náhľady pre odkazované obrázky
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sk	Chcete čas zobrazovať ako 24 hodín, alebo ako 12 hodín s príponami am(dopoludnia) a pm(popoludní).
 edit custom fields	preferences	sk	upraviť vlastné polia
+enable	preferences	sk	Zapnúť
 enable drag and drop functionality (experimental)	preferences	sk	Povoliť funkcionalitu ťahaj-a-pusť (experimentálna!)
 enable selectbox dropdown resizing for ie (experimental)	preferences	sk	Povoliť zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE (experimentálne)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže funkcie ťahaj-a-pusť vo všetkých aplikáciách. Ak váš prehliadač nepodporuje ťahaj-a-pusť, automaticky sa zakáže. Táto funkcia je v súčasnosti iba na experimentálnej úrovni.
@@ -61,7 +62,6 @@ no user-selection at all	common	sk	Žiadny výber používateľov
 note: this feature does *not* change your email password. this will	preferences	sk	Poznámka: Týmto *nezmeníte* vaše E-mailové heslo. Spôsobí
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sk	Poznámka: Týmto *nezmeníte* vaše E-mailové heslo. To sa dá urobiť len ručne.
 number format	preferences	sk	Formát čísla
-office 2003 theme	preferences	sk	Téma Office 2003
 old password and new password are the same. this is invalid. you must enter a new password	preferences	sk	Staré a nové heslo sú rovnaké. Toto je nesprávne. Musíte zadať nové heslo.
 password changed	preferences	sk	Heslo zmenené
 permanent time zone selection	preferences	sk	Výber trvalého časového pásma
@@ -92,7 +92,6 @@ show navigation bar as	preferences	sk	Ako zobraziť navigačný panel
 show number of current users	preferences	sk	Zobraziť počet pripojených používateľov
 show text on navigation icons	preferences	sk	Zobrazovať text na navigačných ikonách
 show_more_apps	common	sk	Zobraziť ďalšie aplikácie
-silver theme	preferences	sk	Strieborná téma
 spellchecker language	addressbook	sk	Jazyk kontroly pravopisu
 text only	preferences	sk	Iba text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do EGroupware alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.

@@ -5,7 +5,9 @@ color	preferences	el	Χρώμα
 country	preferences	el	Χώρα
 default	preferences	el	προκαθορισμένο
 description can not exceed 255 characters in length !	preferences	el	Η περιγραφή δεν πρέπει να υπερβαίνει τους 255 χαρακτήρες σε μήκος
+disable	preferences	el	Απενεργοποίηση
 edit custom fields	preferences	el	Επεξεργασία προσαρμοσμένων πεδίων
+enable	preferences	el	ενεργοποίηση
 hours	preferences	el	Ωρες
 icon	preferences	el	Εικόνα
 icons and text	preferences	el	Εικόνες και κείμενο

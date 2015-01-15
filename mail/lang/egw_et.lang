@@ -6,8 +6,11 @@ contains	mail	et	sisaldab
 date(newest first)	mail	et	Kuupäev (uuemad enne)
 date(oldest first)	mail	et	Kuupäev (vanemad enne)
 default sorting order	mail	et	Vaikimisi sorteerimise järjekord
+delete folder	mail	et	Kustuta kaust
 deleted	mail	et	kustutatud
+disable	mail	et	Keela
 discard	mail	et	unusta
+discard message	mail	et	unusta kirjad
 display messages in multiple windows	mail	et	Näita kirju mitmes aknas
 display of html emails	mail	et	Näita HTML emaile
 display only when no plain text is available	mail	et	Näita ainult kui plain tekst pole saadaval
@@ -15,11 +18,17 @@ displaying html messages is disabled	mail	et	html kirjade näitamine on välja l
 does not contain	mail	et	ei sisalda
 don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
+edit account	mail	et	Muuda kontot
 empty trash	mail	et	tühjenda prügi
+enable	mail	et	luba
+extended	mail	et	Laiendatud
 file into	mail	et	faili info
 folder settings	mail	et	Kausta setingud
+forward	mail	et	Edasi
+general	admin	et	Üldine
 html	mail	et	Html
 if	mail	et	KUI
+imap	mail	et	IMAP
 imap server	mail	et	IMAP Server
 later	mail	et	Hiljem
 less than	mail	et	vähem kui
@@ -31,15 +40,19 @@ no signature	mail	et	pole signatuuri
 on	mail	et	:
 only one window	mail	et	ainult üks aken
 organisation	admin	et	Organisatsioon
+permission denied	mail	et	Õigused puuduvad
 please select a address	mail	et	Palun vali aadress
 quicksearch	mail	et	Kiirotsing
 refresh time in minutes	mail	et	Värkendamise aeg minutites
 remove all	mail	et	Eemalda Kõik
 remove immediately	mail	et	Eemalda koheselt!
 replied	mail	et	vastatud
+reply	mail	et	Vasta
+select all	mail	et	Märgi kõik
 size(...->0)	mail	et	Suurus (...->0)
 size(0->...)	mail	et	Suurus (0->...)
 small view	mail	et	väike vaade
+text	mail	et	Tekst
 trash folder	mail	et	Trash Kaust
 unread	mail	et	lugematta
-urgent	mail	et	kiire
+write	mail	et	Kirjuta

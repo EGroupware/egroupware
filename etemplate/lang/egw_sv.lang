@@ -16,6 +16,7 @@
 a pattern to be searched for	etemplate	sv	Sökord att söka efter
 accesskey	etemplate	sv	Åtkomstnyckel
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	sv	Åtkomstnyckel kan specifieras med ett & i en etikett (ex. &Namn)
+actions...	etemplate	sv	Åtgärder
 add a new column (after the existing ones)	etemplate	sv	Infoga kolumn (efter existerande)
 add a new entry of the selected application	etemplate	sv	Skapa ny post av vald applikation
 add a new multi-column index	etemplate	sv	Skapa multikolumn index
@@ -29,6 +30,7 @@ alignment of label and input-field in table-cell	etemplate	sv	Justering av etike
 alignment of the v/hbox containing table-cell	etemplate	sv	Justering av V/HBox innehållande tabell cell
 all days	etemplate	sv	Samtliga dagar
 all operations save the template!	etemplate	sv	Alla operationer sparar template
+all users	etemplate	sv	Alla användare
 am	etemplate	sv	fm
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sv	En kolumn med index går fortare att sök i (på bekostnad av filsystemsutrymme)
 and	etemplate	sv	Och
@@ -91,7 +93,6 @@ custom fields	etemplate	sv	Anpassade fält
 custom javascript for onchange	etemplate	sv	Anpassat javaskript för onChange
 cut	etemplate	sv	Klipp ut
 date+time	etemplate	sv	Datum+Tid
-datum	etemplate	sv	Datum
 day	etemplate	sv	Dag
 days	etemplate	sv	Dagar
 db ensures that every row has a unique value in that column	etemplate	sv	Databasen försäkrar att varje rad har ett unikt värde i kolumnen
@@ -175,6 +176,7 @@ grid	etemplate	sv	Grid
 grid column attributes	etemplate	sv	Grid kolumn attribut
 grid row attributes	etemplate	sv	Grid rad attribut
 groupbox	etemplate	sv	Gruppruta
+h	etemplate	sv	t
 hbox	etemplate	sv	HBox
 height	etemplate	sv	Höjd
 height of row (in % or pixel)	etemplate	sv	Radhöjd (i % eller pixlar)
@@ -188,6 +190,7 @@ hour	etemplate	sv	Timme
 hours	etemplate	sv	Timmar
 how many entries should the list show	etemplate	sv	Hur många poster ska listan visa
 html	etemplate	sv	Html
+id	etemplate	sv	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sv	Om fält är inaktiverat visas en tom tabell cell, för (temporär) borttagning av ett fält/cell
 image	etemplate	sv	Bild
 import	etemplate	sv	Import
@@ -224,10 +227,12 @@ linklist	etemplate	sv	LinkList
 linkstring	etemplate	sv	LinkString
 linkto	etemplate	sv	LinkTo
 load this template into the editor	etemplate	sv	Ladda mallen i editorn
+loading	etemplate	sv	Laddar
 middle	etemplate	sv	Mitten
 minute	etemplate	sv	Minut
 minutes	etemplate	sv	Minuter
 month	etemplate	sv	Månad
+more	etemplate	sv	Fler
 multicolumn indices	etemplate	sv	Multikolumn Index
 name	etemplate	sv	Namn
 name of other table where column is a key from	etemplate	sv	Namnet på den andra tabellen kolumnen är en nyckel till
@@ -235,6 +240,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	sv	Namnet på tabell
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sv	Namn på eTemplate, ska vara i formatet applikation.funktion[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sv	måste vara unikt för tabellen och inte ett reserverat SQL ord. Rekomenderas att använda 2 tecken prefix för aplikations namnet, ex. 'et_'
+new	etemplate	sv	Nytt
 new search	common	sv	Ny sökning
 new table created	etemplate	sv	Tabell skapad
 newer version '%1' exists !!!	etemplate	sv	Nyare version '%1' existerar
@@ -251,6 +257,7 @@ nothing	etemplate	sv	Ingenting
 nothing found - try again !!!	etemplate	sv	Inga träffar - försök igen
 nothing in clipboard to paste !!!	etemplate	sv	Ingenting i urklipp att infoga
 nothing matched search criteria !!!	etemplate	sv	Inga träffar på sökord
+now	etemplate	sv	Nu
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	sv	Antal kolumner som fält/cell ska omfatta eller 'alla' för återstående kolumner, CSS klassnamn (för TD kod)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	sv	Antal rader/kolumner i en V/HBox, Cellpadding, Cellspacing
 of	etemplate	sv	av
@@ -283,9 +290,11 @@ readonly	etemplate	sv	Skrivskyddad
 remove row (can not be undone!!!)	etemplate	sv	Radera rad (kan INTE återskapas)
 remove this link (not the entry itself)	etemplate	sv	Radera länk (inte posten i sig)
 required	etemplate	sv	Krävs
+reset	etemplate	sv	Återställ
 returns savely, without deleting	etemplate	sv	Återgår UTAN att radera
 right	etemplate	sv	Höger
 row...	etemplate	sv	Rad
+save all	etemplate	sv	Spara alla
 save the changes made and close the window	etemplate	sv	Spara ändringar och stäng fönster
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sv	Spara eTemplate under ovanstående nycklar (namn, ....), ändra för att Spara Som.
 saves changes to tables_current.inc.php	etemplate	sv	Spara ändringar i tables_current.inc.php
@@ -388,6 +397,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	sv	Kolumnbredd (i % eller pixel)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	sv	Tabellbredd (i % eller pixel) för tabell kod och (frivillig) div
 width, disabled	etemplate	sv	Bredd, inaktiverad
+wk	etemplate	sv	Arb
 working days	etemplate	sv	Arbetsdagar
 write <app>/setup/tables_current.inc.php	etemplate	sv	Skriv <app>/setup/tables_current.inc.php
 write langfile	etemplate	sv	Skriv språkfil

@@ -35,6 +35,7 @@ alignment of label and input-field in table-cell	etemplate	pl	wyrównanie etykie
 alignment of the v/hbox containing table-cell	etemplate	pl	wyrównanie V/H Box, który zawiera komórkę tabeli
 all days	etemplate	pl	wszystkie dni
 all operations save the template!	etemplate	pl	wszystkie operacje prowadzą do zapisu wzorca
+all users	etemplate	pl	Wszyscy użytkownicy
 allowed file type: %1	etemplate	pl	Dopuszczony typ pliku: %1
 am	etemplate	pl	przed południem
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pl	kolumna indeksowana przyspiesza wyszukiwanie na tej kolumnie (zabiera przestrzeń dyskową!)
@@ -88,6 +89,7 @@ contact	etemplate	pl	Kontakt
 contact field to show	etemplate	pl	Pole kontaktu do wyświetlenia
 contact fields	etemplate	pl	Pola kontaktu
 contains	etemplate	pl	zawiera
+copy to clipboard	etemplate	pl	Kopiuj do schowka
 create a new table for the application	etemplate	pl	Tworzy nową tabelę dla aplikacji
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pl	tworzy angielski plik językowy ('en') z etykiet i tekstów pomocy (dla aplikacji z pola 'Name')
 creator	preferences	pl	Twórca
@@ -101,7 +103,6 @@ custom fields	etemplate	pl	pola niestandardowe
 custom javascript for onchange	etemplate	pl	niestandardowy kod JS dla zdarzenia onChange
 cut	etemplate	pl	Wytnij
 date+time	etemplate	pl	Data+Czas
-datum	etemplate	pl	Data
 day	etemplate	pl	Dzień
 days	etemplate	pl	dni
 db ensures that every row has a unique value in that column	etemplate	pl	DBMS (baza danych) zapewnia, że każdy wiersz będzie posiadał unikalną wartość w tej kolumnie
@@ -193,6 +194,7 @@ grid	etemplate	pl	Siatka
 grid column attributes	etemplate	pl	Atrybuty kolumn siatki
 grid row attributes	etemplate	pl	Atrybuty wierszy siatki
 groupbox	etemplate	pl	GroupBox
+h	etemplate	pl	g
 hbox	etemplate	pl	HBox
 height	etemplate	pl	Wysokość
 height of row (in % or pixel)	etemplate	pl	wysokość wiersza (w % lub pikselach)
@@ -206,6 +208,7 @@ hour	etemplate	pl	Godzina
 hours	etemplate	pl	godziny
 how many entries should the list show	etemplate	pl	Jak dużo wpisów powinna pokazywać lista
 html	etemplate	pl	HTML
+id	etemplate	pl	id
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	pl	jeżeli pole jest wyłączone, pojawia się pusta komórka tabeli - dla (tymczasowego) usunięcia pola lub komórki
 image	etemplate	pl	Obrazek
 import	etemplate	pl	Importuj
@@ -243,12 +246,14 @@ linklist	etemplate	pl	LinkListy
 linkstring	etemplate	pl	LinkCiąguZnaków
 linkto	etemplate	pl	LinkDo
 load this template into the editor	etemplate	pl	załaduj ten szablon do edytora
+loading	etemplate	pl	ładowanie
 maximum size for uploads	filemanager	pl	Maksymalny rozmiar przy przesyłaniu plików
 message ...	etemplate	pl	Wiadomość ...
 middle	etemplate	pl	Wyśrodkowany
 minute	etemplate	pl	Minuta
 minutes	etemplate	pl	minuty
 month	etemplate	pl	miesiąc
+more	etemplate	pl	Więcej
 more than 1 match for '%1'	etemplate	pl	Więcej niż 1 pasujący dla '%1'
 multicolumn indices	etemplate	pl	Indeksy wielokolumnowe
 name	etemplate	pl	Nazwa
@@ -257,6 +262,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	pl	Nazwa tabeli do dodania
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pl	nazwa e-Szablonu powinna być w formie: application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	pl	musi być unikatowy w tabeli i nie być zarezerwowanym słowem SQL, najlepiej poprzedzić wszystkie jednakowym, 2 literowym skrótem nazwy aplikacji
+new	etemplate	pl	Nowa
 new search	common	pl	Nowe wyszukiwanie
 new table created	etemplate	pl	Utworzono nową tabelę
 newer version '%1' exists !!!	etemplate	pl	nowsza wersja '%1' istnieje!
@@ -276,6 +282,7 @@ nothing	etemplate	pl	nic
 nothing found - try again !!!	etemplate	pl	Nic nie znaleziono - spróbuj ponownie.
 nothing in clipboard to paste !!!	etemplate	pl	Schowek pusty - nie można wkleić.
 nothing matched search criteria !!!	etemplate	pl	Brak elementów spełniających kryteria.
+now	etemplate	pl	Obecne
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	pl	liczba kolumn jakie komórka powinna zajmować, lib 'all' dla wszystkich kolumn, nazwa klasy css dla tagu td
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	pl	liczba wierszy/kolumn w V/HBox, cellpadding, cellspacing
 of	etemplate	pl	z
@@ -305,11 +312,14 @@ read a list of entries.	etemplate	pl	Odczytaj lstę wpisów.
 read a single entry by passing the id and fieldlist.	etemplate	pl	Odczytaj pojedynczy wpis, podając ID oraz listę pól
 read etemplate from database (for the keys above)	etemplate	pl	odczytaj e-Szablon z bazy danych (dla powyższych kluczy)
 readonly	etemplate	pl	tylko do odczytu
+refresh	etemplate	pl	Odśwież
 remove row (can not be undone!!!)	etemplate	pl	usuń wiersz (nie można cofnąć!)
 remove this link (not the entry itself)	etemplate	pl	usuń ten odnośnik (ale nie wpis)
 required	etemplate	pl	Wymagane
+reset	etemplate	pl	Skasuj
 returns savely, without deleting	etemplate	pl	powraca zapisując, bez usuwania
 row...	etemplate	pl	Wiersz...
+save all	etemplate	pl	Zapisz wszystko
 save selected columns as default preference for all users.	etemplate	pl	Zachowaj wybrane kolumny w formie domyślnej preferencji dla wszystkich użytkowników.
 save the changes made and close the window	etemplate	pl	Zachowuje zmiany i zamyka okno
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	pl	zapisz eSzablon pod następującymi kluczami (nazwa, ...), zmień je aby zapisać pod inną nazwą
@@ -350,6 +360,7 @@ select which accounts to show	etemplate	pl	wybierz konta, które mają być poka
 select which values to show	etemplate	pl	wybierz wartości, które mają być pokazane
 select year	etemplate	pl	Wybierz rok
 selectbox	etemplate	pl	Wybór z listy
+set as default	etemplate	pl	Ustaw jako domyslne
 sets today as date	etemplate	pl	ustaw "dzisiaj" jako datę
 should the form be submitted or any custom javascript be executed	etemplate	pl	Czy formularz powinien być przesłany czy będzie wykonywany kod JavaScript?
 show	etemplate	pl	Pokaż
@@ -414,6 +425,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	pl	szerokość kolumny (w procentach lub pikselach)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	pl	Szerokość tabeli w % lub pikselach dla tagu tabeli i (opcjonalnie) div
 width, disabled	etemplate	pl	Szerokość, Wyłączono
+wk	etemplate	pl	Tydź.
 working days	etemplate	pl	dni robocze
 write <app>/setup/tables_current.inc.php	etemplate	pl	Zapisz <aplikacja>/setup/tables_current.inc.php
 write langfile	etemplate	pl	Zapisz plik języka

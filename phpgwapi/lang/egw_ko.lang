@@ -17,6 +17,7 @@ action	common	ko	액션
 actions	common	ko	액션
 active	common	ko	활성화
 add	common	ko	추가
+add a new contact	common	ko	새 연락처 추가
 add category	common	ko	카테고리 추가
 add sub	common	ko	하위 추가
 addressbook	common	ko	주소록
@@ -105,6 +106,7 @@ error	common	ko	오류
 error creating %1 %2 directory	common	ko	%1 %2 디렉토리를 생성하는데 오류가 발생했습니다.
 error deleting %1 %2 directory	common	ko	%1 %2 디렉토리를 삭제하는데 오류가 발생했습니다.
 error renaming %1 %2 directory	common	ko	%1 %2 디렉토리를 이름변경하는데 오류가 발생했습니다.
+failed to change password.	common	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
 fax number	common	ko	팩스번호
 february	common	ko	2월
 fields	common	ko	필드들
@@ -166,6 +168,7 @@ last page	common	ko	끝 페이지로
 lastname	common	ko	성
 left	common	ko	왼쪽
 list members	common	ko	멤버 목록
+load	common	ko	불러오기
 login	common	ko	로그인
 loginid	common	ko	로그인ID
 logout	common	ko	로그아웃
@@ -191,6 +194,7 @@ new value	common	ko	새 값
 next	common	ko	다음
 next page	common	ko	다음 페이지로
 no	common	ko	아니오
+no - cancel	common	ko	아니오 - 취소
 no entries found, try again ...	common	ko	항목을 찾지 못했습니다. 다시 시도해보세요
 no history for this record	common	ko	이 레코드의 내역(변동기록)이 없습니다.
 no subject	common	ko	제목없음
@@ -238,6 +242,7 @@ please select	common	ko	선택해주세요
 please set your global preferences	common	ko	전역 환경설정을 필히 설정해주세요!
 please set your preferences for this application	common	ko	이 응용프로그램의 환경설정을 설정해주세요
 please wait...	common	ko	기다려주세요
+popup with search	common	ko	팝업으로 검색
 postal	common	ko	우편번호
 preferences	common	ko	환경설정
 previous page	common	ko	이전 페이지로
@@ -263,6 +268,7 @@ search accounts	common	ko	계정 찾기
 search or select accounts	common	ko	계정 선택 혹은 검색
 second	common	ko	초
 select	common	ko	선택
+select all	common	ko	모두 선택
 select category	common	ko	분류 선택
 select date	common	ko	날짜 선택
 select group	common	ko	그룹 선택
@@ -337,6 +343,8 @@ work email	common	ko	업무 E-Mail
 would you like to display the page generation time at the bottom of every window?	common	ko	페이지 생성 시간을 모든 창의 하단에 출력하길 원하십니까?
 written by:	common	ko	작성:
 yes	common	ko	예
+yes - delete	common	ko	예 - 삭제
+yes - delete including sub-entries	common	ko	예 - 하위 엔트리 포함삭제
 you have been successfully logged out	login	ko	로그아웃 되었습니다.
 you have not entered a title	common	ko	제목을 입력하지 않았습니다
 you have not entered a valid date	common	ko	올바른 날짜를 입력하지 않았습니다
@@ -349,6 +357,5 @@ your message could <b>not</b> be sent!<br>	common	ko	당신의 메시지는 <B>�
 your message has been sent	common	ko	메시지가 전송되었습니다.
 your search returned %1 matchs	common	ko	%1건의 결과가 검색되었습니다.
 your search returned 1 match	common	ko	1건의 결과가 검색되었습니다.
-your session could not be verified.	login	ko	세션이 검증되지 않았습니다
 your settings have been updated	common	ko	설정이 변경되었습니다.
 zoom	common	ko	확대

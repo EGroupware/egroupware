@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	es-es	%1 %2 en %3
 %1 event(s) %2	calendar	es-es	%1 eventos %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	es-es	%1 eventos %2, fallo en %3 por privilegios insuficientes
+%1 hours	calendar	es-es	%1 horas
 %1 participants removed because of missing invite grants	calendar	es-es	%1 participantes eliminados por faltar acceso a la invitación
 %1 records imported	calendar	es-es	%1 registros importados
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-es	%1 registros leídos (todavía sin importar, puede volver atrás y desmarcar Probar Importar)
@@ -48,6 +49,7 @@ automatically purge old events after	admin	es-es	Purgar automáticamente eventos
 back half a month	calendar	es-es	medio mes hacia atrás
 back one month	calendar	es-es	un mes hacia atrás
 back one year	calendar	es-es	un año atrás
+before	calendar	es-es	Antes
 before %1	calendar	es-es	Antes de %1
 before current date	calendar	es-es	Antes de la fecha actual
 before the event	calendar	es-es	antes del evento
@@ -94,9 +96,11 @@ creator	calendar	es-es	Creador
 csv	calendar	es-es	CSV
 csv-fieldname	calendar	es-es	CSV - Nombre del campo
 csv-filename	calendar	es-es	CSV- Nombre del fichero
+custom	calendar	es-es	Personalizado
 custom fields	common	es-es	Campos personalizados
 custom_2	common	es-es	disponibilidad
 daily	calendar	es-es	Diario
+data exchange settings	calendar	es-es	Opciones para intercambio de datos
 day	calendar	es-es	día
 days	calendar	es-es	días
 days of the week for a weekly repeated event	calendar	es-es	Días de la semana para un evento de repetición semanal
@@ -164,6 +168,7 @@ event deleted	calendar	es-es	Evento borrado
 event details follow	calendar	es-es	A continuación, los detalles del evento
 event saved	calendar	es-es	Evento guardado
 event will occupy the whole day	calendar	es-es	El evento ocupará todo el día
+events	common	es-es	eventos
 every user can invite other users and groups	admin	es-es	Cada usuario puede invitar a otros usuarios y grupos
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
@@ -201,6 +206,7 @@ fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
 fullname of person to notify	calendar	es-es	Nombre completo de la persona a la que notificar
 general fields:	calendar	es-es	Campos generales:
+general settings	calendar	es-es	Opciones generales
 global categories	calendar	es-es	Categorías globales
 global public and group public	calendar	es-es	Público Global y grupo público
 global public only	calendar	es-es	Público global sólo
@@ -226,6 +232,7 @@ how many describtion lines should be directly visible. further lines are availab
 how many minutes should each interval last?	calendar	es-es	¿Cuántos minutos debe durar cada intervalo?
 how many weeks should the multiple week view show?	calendar	es-es	¿Cuántas semanas deben mostrarse en la vista de múltiples semanas?
 how much entries to skip	calendar	es-es	Cuántas entradas ignorar
+html link to the current record	calendar	es-es	Enlace HTML al registro actual
 ical	calendar	es-es	iCal
 ical / rfc2445	calendar	es-es	iCal / rfc2445
 ical export	calendar	es-es	Exportar iCal
@@ -258,7 +265,10 @@ length of the time interval	calendar	es-es	Longitud del intervalo de tiempo
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	es-es	Limitar el número de líneas de la descripción en la vista de la lista (predeterminado: 5; 0 para ilimitadas)
 link to view the event	calendar	es-es	Vínculo para ver el evento
 links	calendar	es-es	Enlaces
+links and attached files	calendar	es-es	Enlaces y ficheros adjuntos
+links to specified application.  example: {{links/infolog}}	calendar	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}
 links, attachments	calendar	es-es	Enlaces, adjuntos
+list of files linked to the current record	calendar	es-es	Lista de ficheros vinculados al registro actual
 listview	calendar	es-es	Ver lista
 location	calendar	es-es	Lugar
 location to autoload from	admin	es-es	Lugar desde donde cargar automáticamente
@@ -459,6 +469,7 @@ timezone of event exports	calendar	es-es	Zona horaria de los eventos exportados
 timezone of event ical file import/export	calendar	es-es	Zona horaria de eventos de importar/exportar fichero iCal
 timezones updated to version %1 (%2 records updated).	calendar	es-es	Las zonas horarias se han actualizado a la versión %1 (%2 registros actualizados)
 title of the event	calendar	es-es	Título del evento
+titles of any entries linked to the current record, excluding attached files	calendar	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
 to many might exceed your execution-time-limit	calendar	es-es	límite de ejecución
 to-firstname	calendar	es-es	Para nombre
 to-fullname	calendar	es-es	Para nombre completo

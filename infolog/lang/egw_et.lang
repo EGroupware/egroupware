@@ -74,7 +74,7 @@ deletes this field	infolog	et	kustutab selle välja
 deletes this status	infolog	et	kustutab selle staatuse
 description	infolog	et	Kirjeldus
 don't show infolog	infolog	et	ÄRA näita InfoLog
-done	common	et	valmis
+done	infolog	et	valmis
 download	infolog	et	lae alla
 duration	infolog	et	Kestvus
 each value is a line like <id>[=<label>]	infolog	et	iga väärtus on rida nagu <id>[=<label>]

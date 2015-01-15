@@ -4,6 +4,7 @@
 %1 to sync	groupdav	fi	Synkronoitava %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2<bt />tai salli veb palvelimelle kirjoitusoikeudet: %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fi	%1EGroupware%2 on %3PHP%4 kielellä kirjoitettu monen käyttäjän työryhmäohjelmisto.
+'%1' is no php file in the egw server root (%2)!	common	fi	'%1' ei ole PHP tiedosto EGroupwaren server rootissa (%2)!
 (session restored in %1 seconds)	common	fi	Istunto palautettu %1 sekunnissa.
 (shift-)click or drag to change value	jscalendar	fi	(Shift-) napsauta tai vedä muuttaaksesi arvoa
 - click on any of the time parts to increase it	jscalendar	fi	- Napsauta mitä tahansa ajan osaa muuttaaksesi sitä suuremmaksi
@@ -39,6 +40,7 @@ actions	common	fi	Toimenpiteet
 active	common	fi	Aktiivinen
 add	common	fi	Lisää
 add %1 category for	common	fi	Lisää %1 kategoriaa kohteelle
+add a new contact	common	fi	Lisää uusi yhteystieto
 add category	common	fi	Lisää kategoria
 add shortcut	common	fi	Lisää pikakuvake
 add sub	common	fi	Lisää alikategoria
@@ -144,6 +146,7 @@ centered	common	fi	Keskitetty
 central african republic	common	fi	KESKI-AFRIKAN TASAVALTA
 chad	common	fi	TSAD
 change	common	fi	Muuta
+change owner	common	fi	Vaihda omistaja
 charset	common	fi	utf-8
 check installation	common	fi	Tarkista asennus
 check now	common	fi	Tarkista nyt
@@ -207,6 +210,7 @@ delete	common	fi	Poista
 delete category	common	fi	Poista kategoria
 delete file	common	fi	Poista tiedosto
 delete row	common	fi	Poista rivi
+delete selected entries?	common	fi	Poista merkinnät
 delete these entries	common	fi	Poista merkinnät
 delete this entry	common	fi	Poista merkintä
 denmark	common	fi	TANSKA
@@ -250,6 +254,7 @@ edit categories	common	fi	Muokkaa kategorioita
 edit category	common	fi	Muokkaa kategoriaa
 egroupware	common	fi	EGroupware
 egroupware api version	common	fi	EGroupware API versio
+egroupware version	common	fi	EGroupware versio
 egroupware: login blocked for user '%1', ip %2	common	fi	Käyttäjän '%1' pääsy estetty, IP %2
 egypt	common	fi	EGYPTI
 el salvador	common	fi	EL SALVADOR
@@ -276,9 +281,11 @@ etag	common	fi	ETag
 ethiopia	common	fi	ETIOPIA
 everything	common	fi	Kaikki
 exact	common	fi	Täsmällinen
+failed to change password.	common	fi	Salasanan vaihto ei onnistunut.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fi	Yhteys palvelimeen epäonnistui, yritä uudestaan. Ota yhteyttä ylläpitäjään mikäli ongelma toistuu.
 falkland islands (malvinas)	common	fi	FALKLANDSAARET
 faroe islands	common	fi	FÄRSAARET
+favorites	common	fi	Suosikit
 fax number	common	fi	Faksi
 features of the editor?	common	fi	Editorin ominaisuudet
 february	common	fi	Helmikuu
@@ -421,6 +428,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	fi	Luettelo
 list members	common	fi	Jäsenluettelo
 lithuania	common	fi	LIETTUIA
+load	common	fi	Lataa
 local	common	fi	Paikallinen
 location calendars	groupdav	fi	Paikat/Sijainnit -kalenterit
 locations	common	fi	Paikat/Sijainnit
@@ -480,6 +488,7 @@ netherlands antilles	common	fi	ALANKOMAIDEN ANTILLIT
 never	common	fi	Ei koskaan
 new caledonia	common	fi	UUSI KALEDONIA
 new entry added sucessfully	common	fi	Uusi tietue lisätty
+new favorite	common	fi	Uusi suosikki
 new main category	common	fi	Uusi pääkategoria
 new value	common	fi	Uusi arvo
 new zealand	common	fi	UUSI SEELANTI
@@ -492,6 +501,7 @@ niger	common	fi	NIGER
 nigeria	common	fi	NIGERIA
 niue	common	fi	NIUE
 no	common	fi	Ei
+no - cancel	common	fi	Ei - Peruuta
 no entries found, try again ...	common	fi	Ei merkintöjä, yritä uudelleen ...
 no history for this record	common	fi	Tällä merkinnällä ei ole historiatietoja
 no savant2 template directories were found in:	common	fi	Savant2 mallipohjan hakemistoa ei löydy:
@@ -508,6 +518,7 @@ not assigned	common	fi	Ei osoitettu
 not readable %1 entry of user %2	common	fi	Henkilön %2 tietue %1 ei luettavissa
 note	common	fi	Muistiinpano
 notes	common	fi	Muistiinpanot
+nothing to save.	common	fi	Ei tallennettavaa
 notifications	common	fi	Huomautusviestit
 notify window	common	fi	Huomautusikkuna
 notify your administrator to correct this situation	common	fi	Ilmoita tästä ylläpitäjille tilanteen korjaamiseksi.
@@ -571,6 +582,7 @@ please set your preferences for this application	common	fi	Määrittele tämän 
 please wait...	common	fi	Odota hetki...
 please, check back with us shortly.	common	fi	Yritä hetken kuluttua uudestaan!
 poland	common	fi	PUOLA
+popup with search	common	fi	Haun ponnahdusikkuna
 portugal	common	fi	PORTUGALI
 postal	common	fi	Posti
 powered by	common	fi	Kehittänyt
@@ -637,6 +649,7 @@ select	common	fi	Valitse
 select "%1", if your client does not support multiple addressbooks.	groupdav	fi	Valitse "%1", jos synkronoiva laite/ohjelmisto ei tue useita osoitekirjoja.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	fi	Valitse "%1", jos synkronoiva laite/ohjelmisto tukee ryhmiä.
 select action	common	fi	Valitse toiminto
+select all	common	fi	Valitse kaikki
 select all %1 %2 for %3	common	fi	Valitse kaikki %1 %2 for %3
 select category	common	fi	Valitse kategoria
 select date	common	fi	Valitse päivämäärä
@@ -760,6 +773,7 @@ tuvalu	common	fi	TUVALU
 type	common	fi	Tyyppi
 uganda	common	fi	UGANDA
 ukraine	common	fi	UKRAINA
+un-delete	common	fi	Palauta
 underline	common	fi	Alleviivaa
 united arab emirates	common	fi	YHDISTYNEET ARABIEMIRAATIT
 united kingdom	common	fi	YHDISTYNYT KUNINGASKUNTA
@@ -814,6 +828,8 @@ written by:	common	fi	Kirjoittanut:
 year	common	fi	Vuosi
 yemen	common	fi	JEMEN
 yes	common	fi	Kyllä
+yes - delete	common	fi	Kyllä - Poista
+yes - delete including sub-entries	common	fi	Kyllä - Poista myös alamerkinnät
 you are required to change your password during your first login	common	fi	Salasanasi on vaihdettava ensimmäisen sisäänkirjautumisen yhteydessä.
 you can customize how many icons and toolbars the editor shows.	common	fi	Määritele montako kuvaketta ja työkaluriviä editori näyttää
 you have been successfully logged out	login	fi	Olet kirjautunut ulos
@@ -835,9 +851,7 @@ your message has been sent	common	fi	Viesti on lähetetty
 your password is about to expire in %1 days, you may change your password now	common	fi	Salasanasi täytyy vaihtaa %1 päivän kuluessa!
 your search returned %1 matchs	common	fi	Haku palautti %1 osumaa
 your search returned 1 match	common	fi	Haku palautti yhden osuman
-your session could not be verified.	login	fi	Istuntoasi ei voitu varmentaa.
 your settings have been updated	common	fi	Asetukset päivitetty
 zambia	common	fi	ZAMBIA
 zimbabwe	common	fi	ZIMBABWE
 zoom	common	fi	Suurenna
-nothing to save.	common	fi	Ei tallennettavaa

@@ -30,7 +30,6 @@ allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf ext
 allow users to create further identities	mail	nl	Sta gebruikers toe meer identitietien aan te maken
 allways a new window	mail	nl	altijd in een nieuw venster
 always show html emails	mail	nl	Altijd HTML-emails weergeven
-an error happend while trying to remove acl rights from the account %1.	mail	nl	Er ging iets fout bij het verwijderen van de ACL rechten van account %1
 and the rule with priority %1, now got the priority %2	mail	nl	Regel met pioriteit %1, heeft nu prioriteit %2
 any of	mail	nl	iedere van
 any status	mail	nl	iedere status
@@ -141,7 +140,6 @@ error: message could not be displayed.	mail	nl	Fout: Bericht kan niet worden get
 error:could not save the acl! because some names are empty!	mail	nl	Fout: Kan de ACL niet bewaren! Sommige namen zijn leeg !
 esync will fail without a working email configuration!	mail	nl	eSync zal NIET WERKEN zonder een eMail configuratie
 event details follow	mail	nl	Afspraak details volgen
-every:	mail	nl	Alle:
 everyone	mail	nl	Iedereen
 extended	mail	nl	Uitgebreid
 extra sent folders	mail	nl	Extra verzend mappen
@@ -238,7 +236,6 @@ mail source	mail	nl	Berichten oorsporng
 mail-address	mail	nl	Bericht-adres
 mailaccount	mail	nl	Berichtaccount
 mailinglist	mail	nl	Berichtenlijst
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	nl	Mailserver rapporteert: \n%1 \n wilt u werkelijk doorgaan met het meteen verwijderen van alle geselecteerde berichten (klik op ok) ?\n als u dit niet probeer eerst dan de prullenbak te legen voordat u verder gaat. (klik op annuleren)
 mark all as read	mail	nl	Markeer alle als gelzezen
 mark as deleted	mail	nl	Markeer als verwijderd
 match:	mail	nl	Komt overeen:
@@ -289,6 +286,7 @@ organisation	admin	nl	organisatie
 organization	mail	nl	Organisatie
 original message	mail	nl	originele bericht
 outbox	mail	nl	Te verzenden
+permission denied	mail	nl	Toestemming geweigerd
 please configure access to an existing individual imap account.	mail	nl	Configureer alstublieft toegang tot een bestaand IMAP account
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	nl	Neem contact op met uw administrateur om na te gaan of uw server filter op regels wordt ondersteund, en hoe u deze in EGroupware moet activeren voor uw actieve account (%1) met ID:(%2)
 please select a address	mail	nl	Kies s.v.p. een adres
@@ -409,9 +407,6 @@ test connection and display basic information about the selected profile	mail	nl
 text	mail	nl	Tekst
 text mode	mail	nl	Tekst mode
 text/plain	mail	nl	text/plain
-the %1 's acl removed from the %2!	mail	nl	De %1 's acl verwijdert van de %2!
-the %1 's acl, including its subfolders, removed from the %2!	mail	nl	De %1 's acl, inclusiek de onderliggende mappen, verwijdert van de %2
-the folder %1 's acls saved!	mail	nl	De map %1 's ACL is bewaard
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	nl	De map %1 zal worden gebruikt, als er hier niets is opgegeven, en er geen standaard bekend is.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	nl	De persoon die het bericht heeft verstuurd heeft gevraagd om een reactie om te laten zien dat u het bericht heeft gelezen. Wilt u een leesbevestiging versturen ?
 the mimeparser can not parse this message.	mail	nl	De mimeparsers kan dit bericht niet lezen.

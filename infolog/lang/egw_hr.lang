@@ -1,5 +1,6 @@
 %1 records imported	infolog	hr	%1 zapisa uvezeno
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	hr	%1 zapisa pročitano(još nije uvezeno, možete se %2back%3 i odizabrati testni uvoz)
+(no subject)	infolog	hr	(nema teme)
 - subprojects from	infolog	hr	- Podprojekti od
 0%	infolog	hr	0%
 10%	infolog	hr	10%
@@ -83,7 +84,7 @@ description	infolog	hr	Opis
 determines the order the fields are displayed	infolog	hr	Određuje redosljed prikazivanja polja
 disables a status without deleting it	infolog	hr	Onemogućuje status ne brišući ga
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	hr	želite li potvrdu odgovorne osobe u slučaju: prihvata, završetka ili oboje
-done	common	hr	gotovo
+done	infolog	hr	gotovo
 download	infolog	hr	Prenesi sa poslužitelja
 duration	infolog	hr	Trajanje
 each value is a line like <id>[=<label>]	infolog	hr	each value is a line like <id>[=<label>]
@@ -129,12 +130,10 @@ last changed	infolog	hr	Zadnja promjena
 last modified	infolog	hr	Zadnja izmjena
 leave without saveing the entry	infolog	hr	napusti bez spremanja zapisa
 leaves without saveing	infolog	hr	napusti bez spremanja
-length<br>rows	infolog	hr	Duljina<br>Retci
 link	infolog	hr	Link
 links	infolog	hr	Links
 links of this entry	infolog	hr	Links of this entry
 list all categories	infolog	hr	Prikaži sve kategorije
-list no subs/childs	infolog	hr	Ne prikaži podmape
 location	infolog	hr	Lokacija
 longer textual description	infolog	hr	duži tekstualni opis
 low	infolog	hr	nizak
@@ -184,6 +183,7 @@ remark	infolog	hr	Primjedba
 remove this link (not the entry itself)	infolog	hr	Remove this link (not the entry itself)
 responsible	infolog	hr	Odgovoran
 returns a list / search for records.	infolog	hr	Vrati listu / traži zapise
+rows	infolog	hr	Retci
 save	infolog	hr	Spremi
 saves the changes made and leaves	infolog	hr	sprema promjene i izlazi
 saves this entry	infolog	hr	Sprema ovaj zapis

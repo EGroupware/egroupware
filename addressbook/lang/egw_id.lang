@@ -84,6 +84,7 @@ contact repository	admin	id	Tempat Kontak
 contact saved	addressbook	id	Kontak disimpan
 contact settings	admin	id	Pengaturan Kontak
 contactform	addressbook	id	Formulir kontak
+contacts	common	id	kontak
 contains	addressbook	id	mengandung
 copied	addressbook	id	disalin
 copied by %1, from record #%2.	addressbook	id	Disalin oleh %1, dari rekaman #%2.
@@ -134,6 +135,7 @@ export selection	addressbook	id	Ekspor pilihan
 exported	addressbook	id	diekspor
 extra	addressbook	id	Tambahan
 extra private	addressbook	id	Privat tambahan
+favorites	addressbook	id	Favorit
 fax	addressbook	id	Fax
 fax number	common	id	Nomor Fax
 field %1 has been added !	addressbook	id	Field %1 telah ditambahkan!

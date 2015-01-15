@@ -6,15 +6,22 @@ allways a new window	mail	zh-tw	都開啟一個新視窗
 always show html emails	mail	zh-tw	都用HTML顯示郵件
 any of	mail	zh-tw	任意的
 any status	mail	zh-tw	任意狀態
+attachments	mail	zh-tw	附加檔案
 by date	mail	zh-tw	按日期
+check message against next rule also	mail	zh-tw	也用下一個規則檢查郵件
 compose	mail	zh-tw	建立
 compress folder	mail	zh-tw	壓縮資料夾
+condition	mail	zh-tw	條件
 contains	mail	zh-tw	包含
+copy to	mail	zh-tw	複製到
 date(newest first)	mail	zh-tw	日期(新的在前)
 date(oldest first)	mail	zh-tw	日期(舊的在前)
 default sorting order	mail	zh-tw	預設排序
+delete folder	mail	zh-tw	刪除資料夾
 deleted	mail	zh-tw	刪除了
+disable	mail	zh-tw	停用
 discard	mail	zh-tw	取消
+discard message	mail	zh-tw	取消郵件
 display messages in multiple windows	mail	zh-tw	開啟多個視窗顯示訊息
 display of html emails	mail	zh-tw	顯示HTML郵件
 display only when no plain text is available	mail	zh-tw	只有在不包含存文字時顯示
@@ -26,24 +33,37 @@ don't use draft folder	mail	zh-tw	不使用草稿夾
 don't use sent	mail	zh-tw	不使用寄件備份
 don't use trash	mail	zh-tw	不使用垃圾桶
 draft folder	mail	zh-tw	草稿夾
+edit account	mail	zh-tw	編輯帳號
+edit vacation settings	mail	zh-tw	編輯假期設定
 emailaddress	admin	zh-tw	郵件位址
 empty trash	mail	zh-tw	清空垃圾桶
+enable	mail	zh-tw	啟用
 event details follow	mail	zh-tw	事件細節
-felamimail	admin	zh-tw	FelaMiMail
+everyone	mail	zh-tw	所有人
+extended	mail	zh-tw	延伸的
 file into	mail	zh-tw	檔案插入
 filemanager	mail	zh-tw	檔案管理員
 flagged	mail	zh-tw	被標示
 folder	mail	zh-tw	資料夾
 folder settings	mail	zh-tw	資料夾設定
+forward	mail	zh-tw	轉寄
 forward to	mail	zh-tw	轉寄給
 from	mail	zh-tw	從
 from(a->z)	mail	zh-tw	從 (A->Z)
 from(z->a)	mail	zh-tw	從 (Z->A)
+general	admin	zh-tw	一般
 greater than	mail	zh-tw	大於
+header lines	mail	zh-tw	頭條新聞
 html	mail	zh-tw	HTML
+identity	mail	zh-tw	識別
 if	mail	zh-tw	如果
+if mail header	mail	zh-tw	如果郵件標頭
+if message size	mail	zh-tw	如果信件大小
+imap	mail	zh-tw	IMAP
 imap server	mail	zh-tw	IMAP伺服器
 inbox	mail	zh-tw	收件匣
+keep a copy of the message in your inbox	mail	zh-tw	在收件夾保留郵件副本
+kilobytes	mail	zh-tw	KB
 later	mail	zh-tw	晚一點
 less than	mail	zh-tw	小於
 mail settings	mail	zh-tw	郵件設定
@@ -51,6 +71,7 @@ mark as deleted	mail	zh-tw	標示刪除
 matches	mail	zh-tw	符合
 matches regexp	mail	zh-tw	符合規則
 move selected to	mail	zh-tw	移動選取的到
+move to	mail	zh-tw	移動選取的到
 move to trash	mail	zh-tw	移到垃圾桶
 never display html emails	mail	zh-tw	不顯示HTML郵件
 no plain text part found	mail	zh-tw	找不到純文字部份
@@ -60,6 +81,7 @@ one address is not valid	mail	zh-tw	其中一個信箱格式有誤
 only one window	mail	zh-tw	只開啟一個視窗
 organisation	admin	zh-tw	組織
 organization	mail	zh-tw	組織
+permission denied	mail	zh-tw	拒絕存取
 please select a address	mail	zh-tw	請選擇一個位址
 please select the number of days to wait between responses	mail	zh-tw	請選擇回應之間要等待的天數
 please supply the message to send with auto-responses	mail	zh-tw	請提供要自動回信的內容
@@ -68,10 +90,18 @@ refresh time in minutes	mail	zh-tw	重新整理的分鐘數
 reject with	mail	zh-tw	拒絕
 remove all	mail	zh-tw	全部移除
 remove immediately	mail	zh-tw	立刻移除
+rename folder	mail	zh-tw	修改資料匣名稱
 replied	mail	zh-tw	已回信
+reply	mail	zh-tw	回信
+reply all	mail	zh-tw	全部回覆
+reply to	mail	zh-tw	回覆到
 replyto	mail	zh-tw	回覆到
 row order style	mail	zh-tw	列順序風格
 save all	mail	zh-tw	儲存全部
+save as draft	mail	zh-tw	儲存為草稿
+save as infolog	mail	zh-tw	儲存為記事
+save message to disk	mail	zh-tw	儲存訊息到硬碟
+select all	mail	zh-tw	選擇全部
 sent folder	mail	zh-tw	寄件備份
 sieve script name	mail	zh-tw	sieve 程式名稱
 signature	mail	zh-tw	簽名檔
@@ -81,11 +111,15 @@ small view	mail	zh-tw	縮小
 sort order	mail	zh-tw	排序方式
 subject(a->z)	mail	zh-tw	標題(A->Z)
 subject(z->a)	mail	zh-tw	標題(Z->A)
+text	mail	zh-tw	文字
 the mimeparser can not parse this message.	mail	zh-tw	mime 解析程式無法處理這封郵件
 then	mail	zh-tw	然後
 trash folder	mail	zh-tw	垃圾桶
+unflagged	mail	zh-tw	取消標示
 unread	mail	zh-tw	未讀取
-urgent	mail	zh-tw	緊急的
-vacation notice	admin	zh-tw	假期提醒
+vacation notice	mail	zh-tw	假期提醒
+vacation notice is active	mail	zh-tw	假期提醒功能啟用中
+view header lines	mail	zh-tw	檢視檔頭
 when deleting messages	mail	zh-tw	當刪除訊息時
+write	mail	zh-tw	寫入
 wrote	mail	zh-tw	寫

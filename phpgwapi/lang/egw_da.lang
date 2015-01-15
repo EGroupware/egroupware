@@ -221,6 +221,7 @@ error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
 exact	common	da	nøjagtig
+failed to change password.	common	da	Det lykkedes ikke at ændre adgangskoden.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	da	Kan ikke kontakte server eller ugyldigt svar fra server. Prøv at logge ind igen. Kontakt administrator i tilfælde af fejl.
 falkland islands (malvinas)	common	da	Falklands Øerne
 faroe islands	common	da	Færøerne
@@ -339,6 +340,7 @@ license	common	da	Licens
 liechtenstein	common	da	Liechenstein
 list	common	da	Liste
 lithuania	common	da	Lithuania
+load	common	da	Indlæs
 local	common	da	Lokal
 login	common	da	Login
 loginid	common	da	LoginID
@@ -402,6 +404,7 @@ niger	common	da	Niger
 nigeria	common	da	Nigeria
 niue	common	da	Niue
 no	common	da	Nej
+no - cancel	common	da	No - Annullere
 no entries found, try again ...	common	da	ingen resultater fundet, prøv igen....
 no history for this record	common	da	Ingen historie fundet for denne post
 no subject	common	da	Intet Emne
@@ -463,6 +466,7 @@ please set your global preferences	common	da	Indstil venligst dine globale indst
 please set your preferences for this application	common	da	Indtast venligst dine præferencer for denne applikation
 please wait...	common	da	Vent venligst...
 poland	common	da	Polen
+popup with search	common	da	Popup vindue med søg
 portugal	common	da	Portugal
 postal	common	da	Post
 preferences	common	da	Præferencer
@@ -506,6 +510,7 @@ search	common	da	Søg
 search accounts	common	da	Søg kontoer
 section	common	da	Sektion
 select	common	da	Vælg
+select all	common	da	Vælg alle
 select all %1 %2 for %3	common	da	Vælg alle %1 %2 for %3
 select category	common	da	Vælg Kategori
 select date	common	da	Vælg dato
@@ -639,6 +644,8 @@ written by:	common	da	Skrevet af:
 year	common	da	År
 yemen	common	da	Yemen
 yes	common	da	Ja
+yes - delete	common	da	Ja - Slet
+yes - delete including sub-entries	common	da	Ja - Slet inclusiv under-emner
 you are required to change your password during your first login	common	da	Du skal ændre Dit password ved Din første log ind
 you have been successfully logged out	login	da	Du er nu logget ud
 you have not entered a title	common	da	Du har ikke indtastet en titel
@@ -652,7 +659,6 @@ your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b
 your message has been sent	common	da	Din besked er afsendt
 your search returned %1 matchs	common	da	Søgningen leverede %1 resultater
 your search returned 1 match	common	da	Søgningen leverede 1 resultat
-your session could not be verified.	login	da	Din session kunne ikke verificeres
 your settings have been updated	common	da	Dine indstillinger er opdateret
 zambia	common	da	Zambia
 zimbabwe	common	da	Zimbabwe

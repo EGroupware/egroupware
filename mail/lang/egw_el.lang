@@ -6,15 +6,21 @@ allways a new window	mail	el	πάντα νέο παράθυρο
 always show html emails	mail	el	Να εμφανίζονται πάντοτε τα HTML emails
 any of	mail	el	οποιοδήποτε
 any status	mail	el	οποιαδήποτε κατάσταση
+attachments	mail	el	Επισυνάψεις
 by date	mail	el	Βάσει ημερομηνίας
 compose	mail	el	Συνθέτω
 compress folder	mail	el	Φάκελος συμπίεσης
+condition	mail	el	κατάσταση
 contains	mail	el	περιέχει
+copy to	mail	el	Αντιγραφή στο
 date(newest first)	mail	el	Ημερομηνία (πρώτα η πιο πρόσφατη)
 date(oldest first)	mail	el	Ημερομηνία (πρώτα η πιο παλιά)
 default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
+delete folder	mail	el	Διαγραφή Φακέλου
 deleted	mail	el	διεγράφη
+disable	mail	el	Απενεργοποίηση
 discard	mail	el	απόρριψη
+discard message	mail	el	απόρριψη μηνύματων
 display messages in multiple windows	mail	el	προβολή μηνυμάτων σε πολλαπλά παράθυρα
 display of html emails	mail	el	Προβολή των HTML emails
 display only when no plain text is available	mail	el	Προβολή μόνο όταν είναι δεν διαθέσιμο κανένα αποκρυπτογραφημένο κείμενο
@@ -25,30 +31,44 @@ don't use draft folder	mail	el	Μην χρησιμοποιείτε των φάκ
 don't use sent	mail	el	Μην χρησιμοποιείτε τα Σταλθέντα
 don't use trash	mail	el	Μην χρησιμοποιείτε των Κάδο Αχρήστων
 draft folder	mail	el	προσχέδιος φάκελος
+edit account	mail	el	Επεξεργασία λογαριασμού
+edit vacation settings	mail	el	επεξεργασία ρυθμίσεων διακοπών
 emailaddress	admin	el	Διεύθυνση e-mail
 empty trash	mail	el	Άδειασμα κάδου αχρήστων
+enable	mail	el	ενεργοποίηση
 event details follow	mail	el	Ακολουθούν λεπτομέρειες γεγονότων
-felamimail	admin	el	FelaMiMail
+everyone	mail	el	όλοι
+extended	mail	el	Εκτεταμένος
 file into	mail	el	αρχείο μέσα στο
 filemanager	mail	el	Διαχειριστής αρχείων
 flagged	mail	el	σημαιοστολισμένο
 folder	mail	el	Φάκελος
 folder settings	mail	el	Ρυθμίσεις φακέλου
+forward	mail	el	Προώθηση
 forward to	mail	el	προώθηση σε
 from	mail	el	Από
 from(a->z)	mail	el	Από (Α->Ω)
 from(z->a)	mail	el	Από (Ω->Α)
+general	admin	el	Γενικά
 greater than	mail	el	μεγαλύτερο από
+header lines	mail	el	Γραμμές Τίτλου
 html	mail	el	HTML
+identity	mail	el	Ταυτότητα
 if	mail	el	ΑΝ
+if mail header	mail	el	αν ο τίτλος του μηνύματος
+if message size	mail	el	αν το μέγεθος του μηνύματος
+imap	mail	el	IMAP
 imap server	mail	el	IMAP Server
 inbox	mail	el	Εισερχόμενα
+keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
+kilobytes	mail	el	kilobytes
 less than	mail	el	λιγότερο από
 mail settings	mail	el	Ρυθμίσεις μηνυμάτων
 mark as deleted	mail	el	Σημείωση ως διαγραμένο
 matches	mail	el	συνδυάζεται
 matches regexp	mail	el	συνδυάζεται regexp
 move selected to	mail	el	μετακίνηση επιλεγμένων στο
+move to	mail	el	μετακίνηση επιλεγμένων στο
 move to trash	mail	el	Μετακίνηση στον Κάδο Αχρήστων
 never display html emails	mail	el	Να μην προβάλονται τα HTML emails
 no plain text part found	mail	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
@@ -57,6 +77,7 @@ one address is not valid	mail	el	Κάποια διεύθυνση είναι άκ
 only one window	mail	el	μόνο ένα παράθυρο
 organisation	admin	el	οργανισμός
 organization	mail	el	οργανισμός
+permission denied	mail	el	Άδεια απορρίπτεται
 please select a address	mail	el	Παρακαλώ επιλέξτε μία διεύθυνση
 please select the number of days to wait between responses	mail	el	παρακαλώ επιλέξτε τον αριθμό των ημερών για αναμονή μεταξύ των απαντήσεων
 please supply the message to send with auto-responses	mail	el	Παρακαλώ τροφοδοτήστε το μήνυμα προς αποστολή με αυτόματες απαντήσεις
@@ -64,10 +85,18 @@ quicksearch	mail	el	Γρήγορη αναζήτηση
 refresh time in minutes	mail	el	Ανανέωση ώρας σε λεπτά
 reject with	mail	el	απόρριψη με
 remove immediately	mail	el	Άμεση μετακίνηση
+rename folder	mail	el	Μετονομασία φακέλου
 replied	mail	el	απαντήθηκε
+reply	mail	el	Απάντηση
+reply all	mail	el	Απάντηση σε όλα
+reply to	mail	el	Απάντηση στο
 replyto	mail	el	Απάντησηστο
 row order style	mail	el	Στυλ ταξινόμησης σειράς
 save all	mail	el	Αποθήκευση όλων
+save as draft	mail	el	Αποθήκευση ως προσχέδιο
+save as infolog	mail	el	Αποθήκευση ως infolog
+save message to disk	mail	el	αποθήκευση αλλαγών στο δίσκο
+select all	mail	el	Επιλογή όλων
 sent folder	mail	el	Φάκελος σταλθέντων
 sieve script name	mail	el	όνομα sieve σεναρίου
 signature	mail	el	Υπογραφή
@@ -78,8 +107,11 @@ subject(a->z)	mail	el	Θέμα (Α->Ω)
 subject(z->a)	mail	el	Θέμα (Ω->Α)
 then	mail	el	ΜΕΤΑ
 trash folder	mail	el	Φάκελος Κάδου Αχρήστων
+unflagged	mail	el	αποσημαιοστολίστηκε
 unread	mail	el	Αδιάβαστα
-urgent	mail	el	επείγον
-vacation notice	admin	el	ειδοποίηση διακοπών
+vacation notice	mail	el	ειδοποίηση διακοπών
+vacation notice is active	mail	el	Η ειδοποίηση διακοπών είναι ενεργή
+view header lines	mail	el	Προβολή γραμμών τίτλου
 when deleting messages	mail	el	Όταν διαγράφονται τα μηνύματα
+write	mail	el	Γραφή
 wrote	mail	el	γράφτηκε

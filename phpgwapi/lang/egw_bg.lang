@@ -36,6 +36,7 @@ actions	common	bg	Действия
 active	common	bg	Активен
 add	common	bg	Добави
 add %1 category for	common	bg	Добави %1 категория за
+add a new contact	common	bg	Добавяне на контакт
 add category	common	bg	Добави категория
 add shortcut	common	bg	Добави пряк път
 add sub	common	bg	Добави подкатегория
@@ -446,6 +447,7 @@ niger	common	bg	Нигер
 nigeria	common	bg	Нигерия
 niue	common	bg	Ниуе
 no	common	bg	Не
+no - cancel	common	bg	Не - Отменя
 no entries found, try again ...	common	bg	няма резултати, опитайте отново...
 no history for this record	common	bg	Няма история за този запис
 no savant2 template directories were found in:	common	bg	Не са намерени Savant2 template директории в:
@@ -575,6 +577,7 @@ search or select accounts	common	bg	търсене или избор на ака
 second	common	bg	секунда
 section	common	bg	Секция
 select	common	bg	Изберете
+select all	common	bg	Избиране на всичко
 select all %1 %2 for %3	common	bg	Избор на всички %1 %2 за %3
 select category	common	bg	Изберете категория
 select date	common	bg	Изберете дата
@@ -736,6 +739,8 @@ written by:	common	bg	Написано от:
 year	common	bg	Година
 yemen	common	bg	Йемен
 yes	common	bg	Да
+yes - delete	common	bg	Да - Изтриване
+yes - delete including sub-entries	common	bg	Да - Изтриване с под-записите
 you are required to change your password during your first login	common	bg	Трябва да смените паролата си при първото влизане
 you can customize how many icons and toolbars the editor shows.	common	bg	Може да определите колко икони и ленти с инструменти да показва Редактора.
 you have been successfully logged out	login	bg	Излизането ви от системата приключи успешно
@@ -753,7 +758,6 @@ your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не
 your message has been sent	common	bg	Писмото ви беше изпратено
 your search returned %1 matchs	common	bg	търсенето ви върна %1 съвпадения
 your search returned 1 match	common	bg	търсенето ви върна 1 съвпадение
-your session could not be verified.	login	bg	Сесията ви не може да бъде проверена.
 your settings have been updated	common	bg	Настройките ви са обновени
 zambia	common	bg	Замбия
 zimbabwe	common	bg	Зимбабве

@@ -12,5 +12,7 @@ month	etemplate	vi	Tháng
 no matches found	etemplate	vi	Không tìm th&#7845;y
 read a list of entries.	etemplate	vi	Li&#7879;t kê danh sách các m&#7909;c
 read a single entry by passing the id and fieldlist.	etemplate	vi	Li&#7879;t kê m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n id và fieldlist
+refresh	etemplate	vi	N&#7841;p l&#7841;i
+reset	etemplate	vi	Thi&#7871;t l&#7853;p l&#7841;i
 text	etemplate	vi	Ph&#7847;n ghi
 update a single entry by passing the fields.	etemplate	vi	C&#7853;p nh&#7853;t m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n các tr&#432;&#7901;ng

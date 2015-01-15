@@ -14,6 +14,7 @@ addressbook csv import	importexport	fr	Import csv du carnet d'adresses
 addressbook vcard import	importexport	fr	Import vCard du carnet d'adresses
 admin disabled exporting	importexport	fr	L'administrateur a désactivé les exports
 all encodings	importexport	fr	Tous les encodages
+all users	importexport	fr	Tous les utilisateurs
 allowed users	importexport	fr	Utilisateurs autorisés
 automatically created by importexport	importexport	fr	Automatiquement créé par l' Import | Export
 basic csv import	importexport	fr	Import CSV simple
@@ -86,6 +87,7 @@ load sample file	importexport	fr	Charger un fichier exemple
 manage mapping	importexport	fr	Gestion des correspondances
 next	importexport	fr	prochain
 next run	importexport	fr	Prochaine exécution
+no custom field "%1" for %2.	importexport	fr	Pas de champ personnalisé "%1" pour %2
 no matches	importexport	fr	pas de résutlat
 no matching records	importexport	fr	Aucun enregistrement correspondant
 no notifications	importexport	fr	Aucune notification
@@ -124,6 +126,7 @@ unable to schedule	importexport	fr	Incapable d'établir la planification
 update categories	importexport	fr	Mettre à jour les catégories
 use default	importexport	fr	Utiliser le défaut
 use field from csv if possible	importexport	fr	Utiliser le champ du CSV si possible
+use search results	common	fr	Utiliser les résultats de la recherche
 user preference	importexport	fr	Préférences de l'utilisateur
 user template folder	importexport	fr	Dossier de modèles utilisateurs
 users allowed to create their own definitions	importexport	fr	Autoriser les utilisateurs à créer leurs propres définitions

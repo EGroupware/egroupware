@@ -54,6 +54,7 @@ delete application	admin	ja	アプリケーション削除
 delete category	admin	ja	カテゴリ削除
 delete group	admin	ja	グループ削除
 delete peer server	admin	ja	対等サーバ削除
+deny access	admin	ja	アクセス不可
 deny access to applications	admin	ja	アプリケーションの制限
 deny access to current sessions	admin	ja	セッションの制限
 deny access to global categories	admin	ja	グローバルカテゴリの制限

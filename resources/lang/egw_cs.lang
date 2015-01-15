@@ -19,10 +19,15 @@ check all	resources	cs	Označit všechny
 choose categories admin	resources	cs	vybrat správce kategorií
 clear selection	resources	cs	zrušit výběr
 configure access permissions	admin	cs	Konfigurovat přístupová práva
+conflict	resources	cs	Konflikt
 create new accessory for this resource	resources	cs	Vytvořit nové příslušenství k tomtuto zdroji
 create new links	resources	cs	Vytvořit nové odkazy
+custom etemplate for the contactform	resources	cs	Uživatelsky definovaná eŠablona pro formulář kontaktu
+custom fields	resources	cs	Uživatelsky definovaná pole
+days	resources	cs	dny
 delete selected resources	resources	cs	Smazat vybrané zdroje
 delete this entry	resources	cs	Smazat záznam
+deleted	resources	cs	smazáno
 description (short)	resources	cs	Popis (stručný)
 direct booking permissions	resources	cs	Práva na přímou rezervaci
 don't use vfs (this will need a symlink --> see readme)	resources	cs	Nepoužívat vfs (bude zapotřebí symbolický odkaz --> přečtěte si README)
@@ -85,6 +90,7 @@ something went wrong by deleting resource	resources	cs	Během mazání zdroje se
 something went wrong by saving resource	resources	cs	Během ukládání zdroje se něco nezdařilo
 storage information	resources	cs	Informace o uskladnění
 storage information:	resources	cs	Informace o uskladnění
+the anonymous user needs add rights for it!	resources	cs	Anonymní uživatel potřebuje práva k přidávání záznamů.
 the calendar of this resource	resources	cs	Kalendář tohoto zdroje
 this module displays the resources app	resources	cs	Tento modul zobrazuje aplikaci Zdroje
 use general resources icon	resources	cs	Použít obecnou ikonu zdrojů
@@ -99,5 +105,6 @@ web-site for this resource	resources	cs	Web tohto zdroje
 where to find this resource?	resources	cs	Kde se dá najít tento zdroj?
 which category does this resource belong to?	resources	cs	Do které kategorie patří tento zdroj?
 write permissions	resources	cs	Práva k zápisu
+yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 you are not permitted to get information about this resource!	resources	cs	Nemáte oprávnění získávat informace o tomto zdroji!
 you chose more resources than available	resources	cs	Vybral(a) jste více zdrojů než je k dispozici

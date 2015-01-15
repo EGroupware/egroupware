@@ -14,18 +14,22 @@ change your settings	preferences	pt	Altere as suas preferências
 click to select a color	preferences	pt	Clique aqui para seleccionar uma cor
 color	preferences	pt	Cor
 country	preferences	pt	País
+data exchange settings	preferences	pt	Configurações de troca de dados
 date format	preferences	pt	Formato de data
 default	preferences	pt	por omissão
 default application	preferences	pt	Aplicação por omissão
 default preferences	preferences	pt	Preferências por omissão
 delete categories	preferences	pt	Eliminar categorias
 description can not exceed 255 characters in length !	preferences	pt	A descrição não pode exceder os 255 caracteres !
+disable	preferences	pt	Desactivar
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pt	O formato horário deve ser de 24 horas ou de 12 horas com am/pm anexado.
 edit custom fields	preferences	pt	Editar campos personalizados
+enable	preferences	pt	Activar
 enter your new password	preferences	pt	Insira sua nova senha
 enter your old password	preferences	pt	Insira sua antiga senha
 failed to change password.	preferences	pt	Não foi possível alterar a senha.
 forced preferences	preferences	pt	Preferências obrigatórias
+general settings	preferences	pt	Definições gerais
 help off	preferences	pt	Ajuda
 hours	preferences	pt	horas
 how do you like to display accounts	preferences	pt	Como deseja apresentar as contas
@@ -44,6 +48,7 @@ max number of icons in navbar	preferences	pt	Número máximo de ícones na barra
 no default	preferences	pt	Não definido por omissão
 note: this feature does *not* change your email password. this will	preferences	pt	nota: Esta funcionalidade *não* altera a sua senha de correio electrónico. Isto irá
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pt	Nota: Esta função *não* altera sua senha de correio electrónico. Deverá fazê-lo manualmente.
+notification settings	preferences	pt	Configurações de notificação
 please, select a new theme	preferences	pt	Por favor, seleccione um novo tema
 popup with search	preferences	pt	Janela popup com pesquisa
 re-enter your password	preferences	pt	Insira a sua senha novamente

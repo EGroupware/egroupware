@@ -1,5 +1,6 @@
 %1 records imported	infolog	eu	%1 erregistro inportatu
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	eu	%1 erregistro irakurriak (oraindik inportatu gabe, atzera itzuli eta "Inportazio Testa" kontrol laukia hautatu gabe utzi)
+(no subject)	infolog	eu	(gai gabe)
 - subprojects from	infolog	eu	-Azpiproiektuak
 0%	infolog	eu	%0
 10%	infolog	eu	%10
@@ -79,7 +80,7 @@ deletes this field	infolog	eu	Eremu hau ezabatu
 deletes this status	infolog	eu	Egoera hau ezabatu
 description	infolog	eu	Deskribapena
 disables a status without deleting it	infolog	eu	debekatu egoera bat ezabatu gabe
-done	common	eu	eginda
+done	infolog	eu	eginda
 download	infolog	eu	Deskargatu
 duration	infolog	eu	Iraupena
 edit	infolog	eu	Editatu
@@ -125,7 +126,6 @@ last changed	infolog	eu	Azken aldaketa
 last modified	infolog	eu	Azken aldaketa
 leave without saveing the entry	infolog	eu	sarrera gorde gabe utzi
 leaves without saveing	infolog	eu	gorde gabe utzi
-length<br>rows	infolog	eu	Luzera<br>Errenkadak
 link	infolog	eu	Lotura
 links	infolog	eu	Loturak
 links of this entry	infolog	eu	Sarreraren loturak

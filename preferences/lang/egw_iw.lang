@@ -17,8 +17,10 @@ default application	preferences	iw	יישום מחדלי
 default preferences	preferences	iw	עדיפויות מחדליות
 delete categories	preferences	iw	קטגוריות מחדליות
 description can not exceed 255 characters in length !	preferences	iw	!התיאור לא יכול לעלות על אורך של 255 תווים
+disable	preferences	iw	הפוך ללא פעיל
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	iw	.am/pm האם עדיף לך פורמט שעון בעל 24 שעות, או פורמט של 12 שעות בתוספת
 edit custom fields	preferences	iw	ערוך שדות מותאמות אישית
+enable	preferences	iw	אפשר
 enter your new password	preferences	iw	ציין את סיסמתך החדשה
 failed to change password.	preferences	iw	.לא הצלחתי לשנות את הסיסמא. נא ליצור קשר עם מנהל המערכת
 forced preferences	preferences	iw	הגדרות בכוח

@@ -24,9 +24,11 @@ deleted %1	filemanager	eu	%1 ezabatu
 directory	filemanager	eu	Direktorioa
 directory %1 already exists	filemanager	eu	%1 direktorioa existitzen da
 directory %1 does not exist	filemanager	eu	%1 direktorioa ez da existitzen
+disable	filemanager	eu	Ezgaitu
 download	filemanager	eu	Behera kargatu
 edit comments	filemanager	eu	Oharrak editatu
-file	filemanager	eu	Fitxategia
+enable	filemanager	eu	indarrean jarri
+file	common	eu	Fitxategia
 file %1 could not be created.	filemanager	eu	%1 fitxategia sortzea ezinezkoa izan da.
 file names cannot contain "%1"	filemanager	eu	Fitxategi izenek ezin dute "%1" izan
 filemanager	common	eu	Fitxategi-kudeatzailea

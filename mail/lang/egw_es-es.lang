@@ -8,21 +8,28 @@ allways a new window	mail	es-es	siempre una ventana nueva
 always show html emails	mail	es-es	Mostrar siempre los correos HTML
 any of	mail	es-es	cualquiera de
 any status	mail	es-es	cualquier estado
+attachments	mail	es-es	Adjuntos
 by date	mail	es-es	por fecha
+check message against next rule also	mail	es-es	comprobar el mensaje también con la regla siguiente
 compose	mail	es-es	Redactar
+compose as new	mail	es-es	Redactar como nuevo
 compress folder	mail	es-es	Comprimir carpeta
+condition	mail	es-es	condición
 contains	mail	es-es	contiene
+copy to	mail	es-es	Copiar a
 date(newest first)	mail	es-es	Fecha (la más reciente primero)
 date(oldest first)	mail	es-es	Fecha (la más antigua primero)
 default sorting order	mail	es-es	Modo de ordenar predeterminado
+delete folder	mail	es-es	Borrar carpeta
 deleted	mail	es-es	borrado
+disable	mail	es-es	Desactivar
 discard	mail	es-es	descargar
+discard message	mail	es-es	descartar mensaje
 display messages in multiple windows	mail	es-es	mostrar los mensajes en múltiples ventanas
 display of html emails	mail	es-es	Mostrar los mensajes HTML
 display only when no plain text is available	mail	es-es	Mostrar sólo cuando no hay texto simple disponible
 displaying html messages is disabled	mail	es-es	Mostrar los mensajes en HTML está desactivado
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	es-es	¿Desea que se le pida confirmación antes de mover los mensajes seleccionados a otra carpeta?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de los correos mediante las preferencias (incluso si SIEVE está activado)?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de las reglas de filtrado (incluso si SIEVE está activado)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de la notificación a otras direcciones si llegan correos (incluso si SIEVE está activado)?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de la notificación de ausencia o vacaciones (incluso si SIEVE está activado)?
@@ -37,36 +44,51 @@ don't use template folder	mail	es-es	No usar la carpeta de plantillas
 don't use trash	mail	es-es	No usar Papelera
 draft folder	mail	es-es	Carpeta borradores
 drafts	mail	es-es	Borradores
+edit account	mail	es-es	Editar cuenta
+edit vacation settings	mail	es-es	editar configuración de vacaciones
 email notification update failed	mail	es-es	falló la actualización de la notificación de correo electrónico
 emailaddress	admin	es-es	dirección de correo electrónico
 empty trash	mail	es-es	Vaciar papelera
+enable	mail	es-es	Activar
 error saving %1!	mail	es-es	¡Error al guardar %1!
 error:	mail	es-es	Error:
 error: could not save message as draft	mail	es-es	Error: no se pudo salvar el mensaje como borrador
 error: could not save rule	mail	es-es	Error: no se pudo guardar la regla
 error: message could not be displayed.	mail	es-es	ERROR: No se pudo mostrar el mensaje
 event details follow	mail	es-es	A continuación, los detalles del evento
-felamimail	admin	es-es	FelaMiMail
+everyone	mail	es-es	todos
+extended	mail	es-es	Extendido
 file into	mail	es-es	Información del fichero
 filemanager	mail	es-es	Administrador de archivos
 flagged	mail	es-es	marcado
 folder	mail	es-es	carpeta
 folder settings	mail	es-es	Opciones de la carpeta
+forward	mail	es-es	Reenviar
 forward as attachment	mail	es-es	reenviar como adjunto
 forward inline	mail	es-es	reenviar como incorporado
 forward to	mail	es-es	reenviar a
 from	mail	es-es	De
 from(a->z)	mail	es-es	De (A-> Z)
 from(z->a)	mail	es-es	De (Z-> A)
+general	admin	es-es	General
+general settings	mail	es-es	Opciones generales
 greater than	mail	es-es	mayor que
+header lines	mail	es-es	Líneas de encabezado
 how to forward messages	mail	es-es	cómo reenviar mensajes
 html	mail	es-es	Html
+identity	mail	es-es	identidad
 if	mail	es-es	SI
+if mail header	mail	es-es	si el encabezado
+if message size	mail	es-es	si el tamaño del mensaje
+imap	mail	es-es	IMAP
 imap server	mail	es-es	Servidor IMAP
+import message	mail	es-es	importar mensaje
 importance	mail	es-es	Importancia
 inbox	mail	es-es	Bandeja de entrada
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	es-es	inserte la firma en la parte superior del mensaje al abrir el diálogo de redactar (quizás no pueda cambiar la firma)
 junk	mail	es-es	Basura
+keep a copy of the message in your inbox	mail	es-es	guardar una copia del mensaje en la bandeja de entrada
+kilobytes	mail	es-es	kilobytes
 later	mail	es-es	Más tarde
 less than	mail	es-es	menor que
 mail settings	mail	es-es	Configuración del correo electrónico
@@ -74,8 +96,10 @@ mark as deleted	mail	es-es	Marcar como borrado
 matches	mail	es-es	coincide
 matches regexp	mail	es-es	coincide con la expresión
 move selected to	mail	es-es	mover los seleccionados a
+move to	mail	es-es	mover los seleccionados a
 move to trash	mail	es-es	Mover a la papelera
 never display html emails	mail	es-es	Nunca mostar los correos en HTML
+no access	mail	es-es	Sin acceso
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	es-es	No se ha suministrado dirección para el campo A/CC/CCO, ni carpeta donde guardar el mensaje.
 no folders	mail	es-es	no hay carpetas
 no plain text part found	mail	es-es	No se encontró ninguna parte con texto sencillo
@@ -83,12 +107,14 @@ no recipient address given!	mail	es-es	¡No se han indicado destinatarios!
 no signature	mail	es-es	sin firma
 no subject given!	mail	es-es	¡No se ha indicado un asunto!
 none, create all	mail	es-es	ninguno, crear todo
+nothing to change.	mail	es-es	No hay nada que cambiar.
 on	mail	es-es	en
 one address is not valid	mail	es-es	Una dirección no es válida
 only one window	mail	es-es	sólo una ventana
 organisation	admin	es-es	organización
 organization	mail	es-es	Organización
 original message	mail	es-es	mensaje original
+permission denied	mail	es-es	Permiso denegado
 please configure access to an existing individual imap account.	mail	es-es	por favor, configure el acceso a una cuenta individual IMAP.
 please select a address	mail	es-es	Por favor, seleccione una dirección
 please select the number of days to wait between responses	mail	es-es	Por favor, seleccione el número de días a esperar entre las respuestas
@@ -99,11 +125,20 @@ refresh time in minutes	mail	es-es	Tiempo de refresco en minutos
 reject with	mail	es-es	rechazar con
 remove all	mail	es-es	Eliminar todo
 remove immediately	mail	es-es	Eliminar inmediatamente
+rename folder	mail	es-es	Renombrar carpeta
 replied	mail	es-es	respondido
+reply	mail	es-es	Responder
+reply all	mail	es-es	Responder a todos
+reply to	mail	es-es	Responder A
 replyto	mail	es-es	Responder A
 row order style	mail	es-es	estilo de ordenar filas
 save all	mail	es-es	Guardar todo
 save as	mail	es-es	Guardar como
+save as draft	mail	es-es	guardar como borrador
+save as infolog	mail	es-es	guardar como registro de notas y tareas
+save message to disk	mail	es-es	Guardar mensaje en el disco
+select all	mail	es-es	Seleccionar todo
+select file(s) from vfs	mail	es-es	Seleccionar ficheros desde VFS
 sender	mail	es-es	Remitente
 sent	mail	es-es	Enviados
 sent folder	mail	es-es	Carpeta de enviados
@@ -118,18 +153,24 @@ subject(a->z)	mail	es-es	Asunto (A->Z)
 subject(z->a)	mail	es-es	Asunto (Z->A)
 template folder	mail	es-es	Carpeta de plantillas
 templates	mail	es-es	Plantillas
+text	mail	es-es	Texto
 text/plain	mail	es-es	text/plain
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?
 the mimeparser can not parse this message.	mail	es-es	El intérprete mime no puede interpretar este mensaje
 then	mail	es-es	ENTONCES
 there is no imap server configured.	mail	es-es	No se ha configurado un servidor IMAP.
 trash	mail	es-es	Papelera
 trash folder	mail	es-es	Carpeta Papelera
+unflagged	mail	es-es	Sin marcar
 unread	mail	es-es	No leído
-urgent	mail	es-es	urgente
-vacation notice	admin	es-es	aviso de vacaciones
+vacation notice	mail	es-es	aviso de vacaciones
+vacation notice is active	mail	es-es	El aviso de vacaciones está activo
 vacation start-date must be before the end-date!	mail	es-es	¡La fecha de inicio de las vacaciones debe ser ANTES de la fecha de fin!
+view header lines	mail	es-es	Ver líneas del encabezado
 when deleting messages	mail	es-es	Al borrar mensajes
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el equema de la vista de Enviados
 which folders - in general - should not be automatically created, if not existing	mail	es-es	qué carpetas, en general, NO deben crearse automáticamente si no existen
+write	mail	es-es	Escribir
 wrote	mail	es-es	escribió
 yes, offer copy option	mail	es-es	sí, ofrecer la opción de copiar
+you've got new mail	mail	es-es	Tiene correo nuevo

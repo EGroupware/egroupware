@@ -15,6 +15,8 @@ account id	admin	sl	ID računa
 account list	admin	sl	Seznam računov
 account permissions	admin	sl	Dovoljenja računa
 account preferences	admin	sl	Nastavitve računa
+acl added.	admin	sl	ACL dodan.
+acl deleted.	admin	sl	ACL izbrisan.
 acl manager	admin	sl	Upravljalec ACL
 acl rights	common	sl	Pravice ACL
 action	admin	sl	Dejanje
@@ -132,6 +134,7 @@ delete this user	admin	sl	Izbriši tega uporabnika
 deleted	admin	sl	Zbrisano
 deletes this field	admin	sl	Ibriše to polje
 deliver extern	admin	sl	Dostavi zunanji aplikaciji
+deny access	admin	sl	prepreči dostop
 deny access to access log	admin	sl	Prepreči dostop do dnevnika dostopov
 deny access to application registery	admin	sl	Prepreči dostop do registra aplikacij
 deny access to applications	admin	sl	Prepreči dostop do aplikacij
@@ -160,8 +163,6 @@ do you want to delete all global subcategories ?	admin	sl	Ali želite izbrisati 
 do you want to move all global subcategories one level down ?	admin	sl	Ali želite premakniti vse globalne podkategorije nivo niže?
 document root (default)	admin	sl	Koren dokumentov (Document root) (privzeto)
 down	admin	sl	Navzdol
-each value is a line like <id>[=<label>]	admin	sl	vsaka vrednost je vrstica oblike <id>[=<oznaka>]
-each value is a line like id[=label]	admin	sl	Vsaka vrednost je vrstica oblike id[=oznaka]
 edit account	admin	sl	Urejanje računa
 edit application	admin	sl	Urejanje aplikacije
 edit email settings	admin	sl	Urejanje e-poštnih nastavitev
@@ -230,6 +231,7 @@ forward also to	admin	sl	Posreduj tudi
 forward emails to	admin	sl	Posreduj sporočila
 forward only	admin	sl	Samo posreduj
 full name	admin	sl	Polno ime
+general	admin	sl	Splošno
 global categories	common	sl	Globalne kategorije
 group ?	admin	sl	Skupina?
 group has been added	common	sl	Skupina je bila dodana.
@@ -295,7 +297,6 @@ main email-address	admin	sl	Glavni E-naslov
 main screen message	admin	sl	Sporočilo osnovnega zaslona
 manage mapping	admin	sl	Upravljaj mapiranje
 manager	admin	sl	Upravitelj
-max length of the input [, length of the inputfield (optional)]	admin	sl	Največja dolžina vnosa [, dolžina vnosnega polja (opcijsko)]
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najvišji ID računa (npr. 65535 ali 1000000)
 maximum entries in click path history	admin	sl	Največ vnosov v zgodovino klikanja
 members	admin	sl	Člani
@@ -358,7 +359,9 @@ remove all users from this group ?	admin	sl	Odstranim vse uporabnike iz te skupi
 requested	admin	sl	Zahtevano
 return to admin mainscreen	admin	sl	Vrni se na oskrbnikov zaslon
 return to view account	admin	sl	Vrni se na pregled računa
+rights	admin	sl	Pravice
 route all mails to	admin	sl	Preusmeri vso pošto na
+rows	admin	sl	Vrstice
 run asynchronous services	admin	sl	Poženi asinhrone storitve
 save the category	admin	sl	Shrani to kategorijo
 save the category and return back to the list	admin	sl	Shrani kategorijo in se vrni na seznam

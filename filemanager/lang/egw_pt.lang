@@ -1,5 +1,6 @@
 %1 already exists as a file	filemanager	pt	%1 já existe como um ficheiro
 actions	filemanager	pt	Acções
+administrators	filemanager	pt	Administradores
 applications	common	pt	Aplicações
 cancel editing %1 without saving	filemanager	pt	Cancelar edição de %1 sem guardar
 cannot create directory because it begins or ends in a space	filemanager	pt	Não é possível criar a directoria porque seu nome inicia ou termina com um espaço em branco
@@ -19,35 +20,48 @@ created %1,%2	filemanager	pt	Criado %1,%2
 created directory %1	filemanager	pt	Directoria %1 criada
 custom fields	filemanager	pt	Personalizar campos
 cut	filemanager	pt	Cortar
+default document to insert entries	filemanager	pt	Documento padrão para inserir entradas
 deleted %1	filemanager	pt	%1 eliminado
 directory	filemanager	pt	Directoria
 directory %1 already exists	filemanager	pt	A directoria %1 já existe
 directory %1 does not exist	filemanager	pt	A directoria %1 não existe
+directory with documents to insert entries	filemanager	pt	Diretório com documentos para inserir entradas
+disable	filemanager	pt	Desactivar
 download	filemanager	pt	Transferir
 edit comments	filemanager	pt	Editar comentários
-file	filemanager	pt	Ficheiro
+enable	filemanager	pt	Activar
+error uploading file!	filemanager	pt	O upload de arquivos de erro!
+everyone	filemanager	pt	Todo o mundo
+expires	filemanager	pt	Expira
+export definition to use for nextmatch export	filemanager	pt	Definição Exportar para usar para exportação NextMatch
+favorites	filemanager	pt	Favoritos
+file	common	pt	Ficheiro
 file %1 could not be created.	filemanager	pt	O ficheiro %1 não pôde ser criado.
 file names cannot contain "%1"	filemanager	pt	Os nomes de ficheiros não podem conter "%1"
 filemanager	common	pt	Gestor de ficheiros
 files in this directory	filemanager	pt	Ficheiros nesta directoria
 folder up	filemanager	pt	Subir um nível
 general	filemanager	pt	Geral
+general fields:	filemanager	pt	Campos gerais:
 go home	filemanager	pt	Ir para directoria principal
 go to	filemanager	pt	Ir para
 go to your home directory	filemanager	pt	Ir para sua pasta Home
 go up	filemanager	pt	Subir
 id	filemanager	pt	ID
 link	filemanager	pt	Ligação
+link target %1 not found!	filemanager	pt	Destino do link% 1 não encontrado!
 location	filemanager	pt	Local
 mime type	filemanager	pt	Tipo MIME
 modified	filemanager	pt	Modificado
 move	filemanager	pt	Mover
 move to	filemanager	pt	Mover para
 moved %1 to %2	filemanager	pt	Movido de %1 para %2
+no access	filemanager	pt	sem acesso
 no files in this directory.	filemanager	pt	Nenhum ficheiro nesta directoria.
 no version history for this file/directory	filemanager	pt	Sem histórico de versão para este ficheiro/directoria
 open	filemanager	pt	Abrir
 operation	filemanager	pt	Operação
+percentage	filemanager	pt	Percentagem
 permissions	filemanager	pt	Permissões
 please select a file to delete.	filemanager	pt	Por favor, seleccione o ficheiro a eliminar.
 preview	filemanager	pt	Pré-visualização
@@ -58,12 +72,17 @@ quick jump to	filemanager	pt	Saltar para
 reload	filemanager	pt	Recarregar
 renamed %1 to %2	filemanager	pt	Renomeado de %1 para %2
 replaced %1	filemanager	pt	Substituído %1
+replacements for inserting entries into documents	filemanager	pt	Substitutos para a inserção de entradas em documentos
 save %1	filemanager	pt	Guardar %1
 save %1, and go back to file listing	filemanager	pt	Guardar %1, e voltar à lista de ficheiros
+save as	filemanager	pt	Salvar como
 save changes	filemanager	pt	Guardar alterações
 saved %1	filemanager	pt	%1 guardado
+select file(s) from vfs	common	pt	Selecione o arquivo (s) a partir de VFS
 show	filemanager	pt	Exibir
 size	filemanager	pt	Tamanho
+tag to mark positions for address labels	filemanager	pt	Tag para marcar posições para etiquetas de endereço
+the following document-types are supported:	filemanager	pt	Os seguintes tipos de documentos são suportados:
 total files	filemanager	pt	Total de ficheiros
 unused space	filemanager	pt	Espaço Não Usado
 up	filemanager	pt	Acima

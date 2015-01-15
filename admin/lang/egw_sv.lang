@@ -127,6 +127,7 @@ delete this user	admin	sv	Radera denna användare
 deleted	admin	sv	Raderad
 deletes this field	admin	sv	Raderar detta fält
 deliver extern	admin	sv	Leverera externt
+deny access	admin	sv	Neka åtkomst
 deny access to access log	admin	sv	Neka åtkomst till accesslogg
 deny access to application registery	admin	sv	Neka åtkomst till applikations register
 deny access to applications	admin	sv	Neka åtkomst till applikationer
@@ -154,8 +155,6 @@ do you also want to delete all global subcategories ?	admin	sv	Vill du samtidigt
 do you want to delete all global subcategories ?	admin	sv	Vill du radera alla globala underkategorier?
 do you want to move all global subcategories one level down ?	admin	sv	Vill du flytta alla globala underkategorier en nivå nedåt?
 down	admin	sv	Ner
-each value is a line like <id>[=<label>]	admin	sv	varje värde är en rad liknande <id>[=<label>]
-each value is a line like id[=label]	admin	sv	varje värde är en rad liknande <id>[=<label>]
 edit account	admin	sv	Ändra konto
 edit application	admin	sv	Ändra applikation
 edit email settings	admin	sv	Ändra e-postinställningar
@@ -222,6 +221,7 @@ forward also to	admin	sv	Vidarebefodra även till
 forward emails to	admin	sv	Vidarebefodra e-post till
 forward only	admin	sv	Vidarebefodra enbart
 full name	admin	sv	Fullständigt namn
+general	admin	sv	Allmänt
 global categories	common	sv	Globala kategorier
 group ?	admin	sv	grupp?
 group has been added	common	sv	Grupp har lagts till
@@ -284,7 +284,6 @@ mail settings	admin	sv	E-post alternativ
 main email-address	admin	sv	Standard e-postadress
 main screen message	admin	sv	Meddelande på Startsidan
 manager	admin	sv	Hanterare
-max length of the input [, length of the inputfield (optional)]	admin	sv	max indata längd[, Indatafälts längd (option)]
 maximum account id (e.g. 65535 or 1000000)	admin	sv	Högsta konto ID (ex. 65535 eller 1000000)
 maximum entries in click path history	admin	sv	Maximalt antal poster i klick historik
 members	admin	sv	Medlemmar
@@ -324,6 +323,7 @@ percent of users that logged out	admin	sv	Procent av användare som loggat ut
 percent this user has logged out	admin	sv	Procent denna användare loggat ut
 permission denied	admin	sv	Åtkomst nekad
 permission denied !!!	admin	sv	Åtkomst nekas
+permission denied!!!	admin	sv	Åtkomst nekad!
 permissions	admin	sv	Behörigheter
 permissions this group has	admin	sv	Tillåtna applikationer för gruppen
 phpinfo	admin	sv	PHP information
@@ -347,6 +347,7 @@ requested	admin	sv	Begärt
 return to admin mainscreen	admin	sv	Återgå till Startsida för administration
 return to view account	admin	sv	Återgå till att titta på kontot
 route all mails to	admin	sv	Länka all e-post till
+rows	admin	sv	Rader
 run asynchronous services	admin	sv	Kör asynkrona tjänster
 save the category	admin	sv	Spara kategorin
 save the category and return back to the list	admin	sv	Spara kategorin och återgå till listan

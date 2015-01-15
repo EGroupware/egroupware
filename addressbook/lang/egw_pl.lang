@@ -109,6 +109,7 @@ contact repository	admin	pl	Repozytorium kontaktu
 contact saved	addressbook	pl	Kontakt został zapisany
 contact settings	admin	pl	Ustawienia kontaktu
 contactform	addressbook	pl	Formularz kontaktu
+contacts	common	pl	książka adresowa
 contacts and account contact-data to ldap	admin	pl	Kontakty i dane osobiste konta do LDAP
 contacts and account contact-data to sql	admin	pl	Kontakty i dane osobiste konta do SQL
 contacts to ldap	admin	pl	kontakty do LDAP'a
@@ -188,6 +189,7 @@ exports contacts from your addressbook into a csv file. csv means 'comma seperat
 extra	addressbook	pl	Dodatkowe
 extra private	addressbook	pl	Dodatkowe prywatne
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pl	nie udało się zmienić %1 członków organizacji (brak uprawnień)
+favorites	addressbook	pl	Ulubione
 fax	addressbook	pl	Faks
 fax number	common	pl	Numer faksu
 field %1 has been added !	addressbook	pl	Pole %1 zostało dodane !
@@ -304,7 +306,6 @@ phone numbers	common	pl	Numery telefonów
 photo	addressbook	pl	Zdjęcie
 please enter a name for that field !	addressbook	pl	Proszę podać nazwę tego pola !
 please select only one category	addressbook	pl	Proszę wybrać jedynie jedną kategorię
-please update the templatename in your customfields section!	addressbook	pl	Proszę zaktualizować nazwe szablony w sekcji pól własnch!
 postal	common	pl	Kod pocztowy
 pref	addressbook	pl	pref
 preferred email address to use in distribution lists	addressbook	pl	Preferowany adres email do użycia w listach dystrybucyjnych
@@ -404,7 +405,6 @@ verification	addressbook	pl	Weryfikacja
 view linked infolog entries	addressbook	pl	Pokaż wpisy do InfoLog jako link
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA!! Można używać LDAP tylko kiedy NIE używa się kontaktów do przechowywania kont!
 warning: all contacts found will be deleted!	addressbook	pl	UWAGA: Wszystkie znalezione kontakty zostaną skasowane!
-warning: template "%1" not found, using default template instead.	addressbook	pl	UWAGA: Szablon "%1" nie znaleziony, używam domyślnego szablonu.
 weekday	addressbook	pl	dzień tygodnia
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pl	Jaką treść powinny mieć odnośniki do książki adresowej widocznie w innych aplikacjach? Puste wartości zostaną pominięte. Musisz na nowo się zalogować, jeżeli zmienisz to ustawienie.
 where to add the email address	addressbook	pl	gdzie dodać adres email

@@ -23,6 +23,7 @@ advanced search	etemplate	no	Avansert søk
 align	etemplate	no	Juster
 all days	etemplate	no	alle dager
 all operations save the template!	etemplate	no	alle operasjoner lagrer malen!
+all users	etemplate	no	Alle brukere
 am	etemplate	no	er
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	no	en indeksert kolonne øker hastigheten på spørringer som benytter kolonnen(tar plass på disk!)
 and	etemplate	no	Og
@@ -70,7 +71,6 @@ custom	etemplate	no	Egendefinert
 custom fields	etemplate	no	Egendefinerte felt
 cut	etemplate	no	Klipp ut
 date+time	etemplate	no	Dato+Tid
-datum	etemplate	no	Dato
 day	etemplate	no	Dag
 days	etemplate	no	dager
 db-tools	etemplate	no	DB-Verktøy
@@ -134,6 +134,7 @@ grid	etemplate	no	Rutenett
 grid column attributes	etemplate	no	Kolonneatributter for rutenett
 grid row attributes	etemplate	no	Linjeatrributter for rutenett
 groupbox	etemplate	no	Gruppeboks
+h	etemplate	no	t
 hbox	etemplate	no	HBoks
 height	etemplate	no	Høyde
 height of row (in % or pixel)	etemplate	no	høyde på linje (i % eller piksler)
@@ -143,6 +144,7 @@ horizontal rule	etemplate	no	Horisontal regel
 hour	etemplate	no	Time
 hours	etemplate	no	timer
 html	etemplate	no	Html
+id	etemplate	no	Id
 image	etemplate	no	Bilde
 import	etemplate	no	Importer
 import an etemplate from a xml-file	etemplate	no	Importer en eMal fra en xml-fil
@@ -174,8 +176,10 @@ middle	etemplate	no	Midten
 minute	etemplate	no	Minutt
 minutes	etemplate	no	minutter
 month	etemplate	no	Måned
+more	etemplate	no	Mer
 name	etemplate	no	Navn
 name of table to add	etemplate	no	Navn på tabell som skal legges til
+new	etemplate	no	Opprett
 new search	common	no	Nytt søk
 new table created	etemplate	no	Ny tabell opprettet
 newer version '%1' exists !!!	etemplate	no	nyere versjon '%1' eksisterer!
@@ -209,11 +213,14 @@ read	etemplate	no	Lese
 read a list of entries.	etemplate	no	Les en liste av oppføringer.
 read a single entry by passing the id and fieldlist.	etemplate	no	Les ett enkelt innslag ved å gi id og feltliste.
 readonly	etemplate	no	Bare lese
+refresh	etemplate	no	Oppfrisk
 remove row (can not be undone!!!)	etemplate	no	Fjern linje (Kan ikke gjøres om!)
 remove this link (not the entry itself)	etemplate	no	Fjern denne lenken (ikke forekomsten i seg selv)
 required	etemplate	no	Nødvendig
+reset	etemplate	no	Tilbakestill
 right	etemplate	no	Høyre
 row...	etemplate	no	Rad...
+save all	etemplate	no	Lagre alle
 save the changes made and close the window	etemplate	no	Lagre utførte endringer og så lukke vinduet
 saves changes to tables_current.inc.php	etemplate	no	lagre endringer til  tables_current.inc.php
 saves the template with given version number and closes the window	etemplate	no	Lagre malen med gitt versjonsnummer og så lukke vinduet
@@ -282,6 +289,7 @@ weekend	etemplate	no	Helg
 width	etemplate	no	Bredde
 width of column (in % or pixel)	etemplate	no	bredde på kolonne (i % eller piksler)
 width, disabled	etemplate	no	Bredde, avslått
+wk	etemplate	no	Uke
 working days	etemplate	no	arbeidsdager
 write langfile	etemplate	no	Lagre språkfil
 write tables	etemplate	no	Lagre tabeller

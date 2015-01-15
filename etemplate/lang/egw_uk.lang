@@ -1,3 +1,4 @@
+all users	etemplate	uk	Всі користувачі
 application	etemplate	uk	Приложення
 applications	etemplate	uk	Приложення
 attach file	etemplate	uk	Прикласти файл
@@ -15,6 +16,7 @@ default	etemplate	uk	По замовченню
 delete a single entry by passing the id.	etemplate	uk	Видалити один запис по id.
 duration	etemplate	uk	Тривалість
 hours	etemplate	uk	години
+id	etemplate	uk	Id
 import	etemplate	uk	Імпорт
 label	etemplate	uk	Примітки
 last	etemplate	uk	Останній
@@ -27,7 +29,9 @@ no file	etemplate	uk	файлу немає
 no matches found	etemplate	uk	Відповідностей не знайдено
 read a list of entries.	etemplate	uk	Прочитати перелік записів
 read a single entry by passing the id and fieldlist.	etemplate	uk	Прочитати один запис по id та переліку полів.
+refresh	etemplate	uk	Поновити
 remove this link (not the entry itself)	etemplate	uk	Видалити це посилання (не сам запис)
+reset	etemplate	uk	Переввести
 select an app to search in	etemplate	uk	Виберіть приложення в якому шукати
 select an entry to link with	etemplate	uk	Виберіть запис для Посилання
 selectbox	etemplate	uk	Selectbox

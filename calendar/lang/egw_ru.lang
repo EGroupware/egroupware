@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	ru	%1 %2 в %3
 %1 event(s) %2	calendar	ru	%1 событий %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	ru	%1 событий %2, %3 не завершено и-за недостаточности прав!
+%1 hours	calendar	ru	%1 часов
 %1 participants removed because of missing invite grants	calendar	ru	%1 участников удалено в связи с отсутствием ответа на приглашение
 %1 records imported	calendar	ru	импортировано %1 записей
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ru	прочитано %1 записей (но еще не импортировано; вы можете вернуться и снять отметку с Тест Импорта)
@@ -108,6 +109,7 @@ creator	calendar	ru	Создатель
 csv	calendar	ru	CSV
 csv-fieldname	calendar	ru	CSV - Имя поля
 csv-filename	calendar	ru	CSV - Имя файла
+custom	calendar	ru	Пользовательский
 custom fields	common	ru	Дополнительные поля пользователя
 custom_2	common	ru	Занят/Свободен
 daily	calendar	ru	Ежедневно
@@ -187,6 +189,7 @@ event deleted	calendar	ru	Событие удалено
 event details follow	calendar	ru	Детали события следуют
 event saved	calendar	ru	Событие сохранено
 event will occupy the whole day	calendar	ru	Событие на весь день
+events	common	ru	События
 every user can invite other users and groups	admin	ru	Каждый пользователь может приглашать других пользователей и группы
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	ru	Пример: {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}}— поиск по полю "n_prefix" значения "Mr", если найдено, пишет Hello Mr., иначе пишет Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	ru	Пример: {{LETTERPREFIXCUSTOM n_prefix title n_family}}. Результат: Mr. Dr. James Miller

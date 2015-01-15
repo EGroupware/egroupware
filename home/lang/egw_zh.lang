@@ -1,4 +1,14 @@
+color	home	zh	颜色
 displays home	home	zh	显示首页
 egroupware	home	zh	eGroupWare
 home	home	zh	首页
+in %1 days (%2) is %3's birthday.	home	zh	在%1 天 (%2) 就是%3的生日。
+remove	home	zh	移除
+set as default	home	zh	设置作为缺省
 there is a new version of egroupware available	home	zh	eGroupWare 有最新版本推出
+today is %1's birthday!	home	zh	今天是%1的生日！
+tomorrow is %1's birthday.	home	zh	明天是%1的生日。
+yes, for the next three days	home	zh	是，在接下来三天
+yes, for the next two weeks	home	zh	是，在接下来两周
+yes, for the next week	home	zh	是，在接下来一周
+yes, for today and tomorrow	home	zh	是，在今天与明天

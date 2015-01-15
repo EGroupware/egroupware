@@ -26,7 +26,8 @@ acl added.	filemanager	es-es	Se ha añadido la ACL
 acl deleted.	filemanager	es-es	Se ha borrado la ACL
 actions	filemanager	es-es	Acciones
 add to clipboard	filemanager	es-es	Añadir al portapapeles
-all files	common	es-es	Todos los ficheros
+administrators	filemanager	es-es	Administradores
+all files	filemanager	es-es	Todos los ficheros
 allow a maximum of the above configured folderlinks to be configured in settings	admin	es-es	permitir un máximo de los enlaces configurados arriba para configurarse en las preferencias
 and all it's childeren	filemanager	es-es	y todos los subdirectorios
 application fields	filemanager	es-es	Campos de la aplicación
@@ -37,10 +38,11 @@ cancel editing %1 without saving	filemanager	es-es	Cancelar la edición %1 sin g
 cannot create directory because it begins or ends in a space	filemanager	es-es	No se puede crear el directorio porque empieza o acaba en un espacio
 cautiously rejecting to remove folder '%1'!	filemanager	es-es	Por precaución, se rechaza el borrado de la carpeta '%1'
 check all	filemanager	es-es	Comprobar todo
-check virtual filesystem	filemanager	es-es	Comprobar el sistema de ficheros virtual
+check virtual filesystem	common	es-es	Comprobar el sistema de ficheros virtual
 clear search	filemanager	es-es	Limpiar búsqueda
 clipboard is empty!	filemanager	es-es	¡El portapapeles está vacío!
 comment	filemanager	es-es	Comentario
+configuration changed.	filemanager	es-es	Se ha modificdo la configuración.
 copied	filemanager	es-es	copiado
 copied %1 to %2	filemanager	es-es	Se ha copiado "%1" a "%2"
 copy	filemanager	es-es	Copiar
@@ -75,6 +77,7 @@ directory %1 does not exist	filemanager	es-es	El directorio %1 no existe
 directory not found or no permission to access it!	filemanager	es-es	No se encontró el directorio, o no tiene permiso para acceder a él
 directory successfully created.	filemanager	es-es	El directorio se ha creado correctamente.
 directory with documents to insert entries	filemanager	es-es	Directorio con documentos para insertar entradas
+disable	filemanager	es-es	Desactivar
 display and modification of content	filemanager	es-es	Mostrar y modificar el contenido
 display of content	filemanager	es-es	Mostar el contenido
 do you want to overwrite existing file %1 in directory %2?	filemanager	es-es	¿Desea sobreescribir el fichero existente %1 en el directorio %2?
@@ -82,6 +85,7 @@ do you want to overwrite the existing file %1?	filemanager	es-es	¿Desea sobrees
 download	filemanager	es-es	Descargar
 edit comments	filemanager	es-es	Editar comentarios
 edit settings	filemanager	es-es	Editar configuración
+enable	filemanager	es-es	Activar
 enter setup user and password	filemanager	es-es	Introducir usuario de configuración y contraseña
 enter setup user and password to get root rights	filemanager	es-es	Introduzca usuario de configuración y contraseña para obtener permisos de administrador
 enter the complete vfs path to specify a fast access link to a folder	filemanager	es-es	Introduzca la ruta VFS completa para especificar un acceso rápido a una carpeta
@@ -91,18 +95,20 @@ error creating symlink to target %1!	filemanager	es-es	¡Error al crear el enlac
 error deleting the acl entry!	filemanager	es-es	¡Error al borrar la entrada de la ACL!
 error uploading file!	filemanager	es-es	¡Error al subir el fichero!
 error while creating directory.	filemanager	es-es	Error al crear el directorio
+everyone	filemanager	es-es	todos
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 executable	filemanager	es-es	Ejecutable
+expires	filemanager	es-es	Expira
 export definition to use for nextmatch export	filemanager	es-es	Exportar la definición a usar para exportar nextmatch
 extended access control list	filemanager	es-es	Listas de control de acceso extendidas
 extended acl	filemanager	es-es	ACL extendida
 failed to change permissions of %1!	filemanager	es-es	Fallo al cambiar los permisos de %1
 failed to create directory!	filemanager	es-es	¡Fallo al crear el directorio!
 favorites	filemanager	es-es	Favoritos
-file	filemanager	es-es	Archivo
+file	common	es-es	Archivo
 file %1 already exists	filemanager	es-es	El fichero %1 ya existe
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1
 file %1 may be too big. contact your systemadministrator for further info	filemanager	es-es	El fichero %1 puede ser demasiado grande. Póngase en contacto con su administrador para más información.
@@ -156,9 +162,11 @@ no access	filemanager	es-es	Sin acceso
 no files in this directory.	filemanager	es-es	No hay ficheros en este directorio.
 no preview available	filemanager	es-es	No hay vista previa disponible
 no version history for this file/directory	filemanager	es-es	No hay historial para este fichero/directorio
+noone	filemanager	es-es	Nadie
 only owner can rename or delete the content	filemanager	es-es	Sólo el propietario puede renombrar o borrar el contenido
 open	filemanager	es-es	Abrir
 operation	filemanager	es-es	Operación
+percentage	filemanager	es-es	Porcentaje
 permission denied!	filemanager	es-es	¡Permiso denegado!
 permissions	filemanager	es-es	Permisos
 permissions of %1 changed.	filemanager	es-es	Se han modificado los permisos de %1.

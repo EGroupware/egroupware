@@ -23,6 +23,7 @@ end	addressbook	lo	ສິ້ນສຸດ
 error: the entry has been updated since you opened it for editing!	addressbook	lo	ຂໍ້ຜິດພາດ: ຂໍ້ມູນ/ລາຍການ ໄດ້ຮັບການປັບປຸງຕັ້ງແຕ່ຕອນທ່ານເປີດສໍາລັບການແກ້ໄຂ!!!
 existing links	addressbook	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
 exists	addressbook	lo	ມີຢູ່ແລ້ວ
+favorites	addressbook	lo	ລາຍການທີ່ມັກ
 fieldseparator	addressbook	lo	ການແຍກຟີລ
 general	admin	lo	ທົ່ວໄປ
 global categories	addressbook	lo	ໝວດທົ່ວໄປ

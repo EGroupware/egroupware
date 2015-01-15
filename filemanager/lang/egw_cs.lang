@@ -19,7 +19,8 @@ accessrights	filemanager	cs	Přístupová práva
 acl added.	filemanager	cs	ACL byly přidány.
 acl deleted.	filemanager	cs	ACL byly smazány.
 actions	filemanager	cs	Akce
-all files	common	cs	Všechny soubory
+administrators	filemanager	cs	Administrátoři
+all files	filemanager	cs	Všechny soubory
 allow a maximum of the above configured folderlinks to be configured in settings	admin	cs	povolit konfiguraci maxima z výše konfigurovaných odkazů na složky v nastaveních
 and all it's childeren	filemanager	cs	a všechny jeho potomky
 applications	common	cs	Aplikace
@@ -30,6 +31,7 @@ cannot create directory because it begins or ends in a space	filemanager	cs	Nemo
 check all	filemanager	cs	Označit vše
 clear search	filemanager	cs	Nové hledání
 comment	filemanager	cs	Komentář
+configuration changed.	filemanager	cs	Konfigurace změněna
 copied	filemanager	cs	zkopírováno
 copied %1 to %2	filemanager	cs	%1 zkopírováno do %2
 copy	filemanager	cs	Kopírovat
@@ -59,12 +61,14 @@ directory	filemanager	cs	Adresář
 directory %1 already exists	filemanager	cs	Adresář %1 již existuje
 directory %1 does not exist	filemanager	cs	Adresář %1 neexistuje
 directory not found or no permission to access it!	filemanager	cs	Adresář nebyl nalezen nebo chybí přístupové oprávnění!
+disable	filemanager	cs	Zakázat
 display and modification of content	filemanager	cs	Zobrazení a úprava obsahu
 display of content	filemanager	cs	Zobrazení obsahu
 do you want to overwrite the existing file %1?	filemanager	cs	Opravdu chcete smazat stávající soubor %1?
 download	filemanager	cs	Stáhnout
 edit comments	filemanager	cs	Editovat komentáře
 edit settings	filemanager	cs	Editovat nastavení
+enable	filemanager	cs	povolit
 enter setup user and password	filemanager	cs	Zadejte jméno a heslo administrátora hlaviček
 enter setup user and password to get root rights	filemanager	cs	Zadejte jméno a heslo administrátora hlaviček pro získání práv roota
 enter the complete vfs path to specify a fast access link to a folder	filemanager	cs	Zadejte kompletní VFS cestu k nastavení odkazu pro rychlý přístup ke složce
@@ -73,13 +77,15 @@ error adding the acl!	filemanager	cs	Při přidávání ACL došlo k chybě!
 error creating symlink to target %1!	filemanager	cs	Chyba při vytváření symbolického odkazu na cíl %1!
 error deleting the acl entry!	filemanager	cs	Při mazání ACL záznamu došlo k chybě!
 error uploading file!	filemanager	cs	Chyba při uploadu souboru!
+everyone	filemanager	cs	všichni
 executable	filemanager	cs	Spustitelný
+expires	filemanager	cs	Vyprší
 extended access control list	filemanager	cs	Rozšířený seznam přístupových oprávnění
 extended acl	filemanager	cs	Rozšířený ACL
 failed to change permissions of %1!	filemanager	cs	Nepodařilo se změnit oprávnění %1!
 failed to create directory!	filemanager	cs	Nepodařilo se vytvořit adresář!
 favorites	filemanager	cs	Oblíbené
-file	filemanager	cs	Soubor
+file	common	cs	Soubor
 file %1 could not be created.	filemanager	cs	Soubor %1 nemohl být vytvořen.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	cs	Soubor %1 je možná příliš velký. Kontaktujte Vašeho administrátora pro další informace.
 file deleted.	filemanager	cs	Soubor smazán.
@@ -118,9 +124,11 @@ no access	filemanager	cs	Přístup zakázán
 no files in this directory.	filemanager	cs	V tomto adresáři nejsou soubory.
 no preview available	filemanager	cs	Náhled není k dispozici
 no version history for this file/directory	filemanager	cs	Pro tento soubor/adresář neexistuje historie verzí
+noone	filemanager	cs	Nikdo
 only owner can rename or delete the content	filemanager	cs	Jen vlastník smí přejmenovávat nebo mazat obsah
 open	filemanager	cs	Otevřít
 operation	filemanager	cs	Operace
+percentage	filemanager	cs	Procento
 permission denied!	filemanager	cs	Přístup zamítnut!
 permissions	filemanager	cs	Oprávnění
 permissions of %1 changed.	filemanager	cs	Oprávnění %1 změněna

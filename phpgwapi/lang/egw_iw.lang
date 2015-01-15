@@ -134,6 +134,7 @@ error creating %1 %2 directory	common	iw	שגיאה אירע בעת יצירת �
 error deleting %1 %2 directory	common	iw	שגיאה אירע בעת מחיקת סיפריה %1 %2
 error renaming %1 %2 directory	common	iw	שגיאה אירע בעת שינוי שם סיפריה %1 %2
 exact	common	iw	בדיוק
+failed to change password.	common	iw	.לא הצלחתי לשנות את הסיסמא. נא ליצור קשר עם מנהל המערכת
 fax number	common	iw	מספר פקס
 february	common	iw	פברואר
 fields	common	iw	שדות
@@ -202,6 +203,7 @@ left	common	iw	שמאל
 license	common	iw	רשיון
 list	common	iw	רשימה
 list members	common	iw	חברים ברשימה
+load	common	iw	טען
 local	common	iw	מקומי
 login	common	iw	כניסה
 loginid	common	iw	זיהוי כניסה
@@ -231,6 +233,7 @@ next month (hold for menu)	jscalendar	iw	(החודש הבא (החזק לקבלת
 next page	common	iw	עמוד הבא
 next year (hold for menu)	jscalendar	iw	(השנה הבאה (החזק לקבלת תפריט
 no	common	iw	לא
+no - cancel	common	iw	לא - בטל
 no entries found, try again ...	common	iw	...לא נמצאו רשומות, נסה שוב
 no history for this record	common	iw	אין היסטוריה לרשומה זו
 no subject	common	iw	אין נושא
@@ -277,6 +280,7 @@ please select	common	iw	נא לבחור
 please set your global preferences	common	iw	!נא לקבוע את עדיפויות הגלובלית שלך
 please set your preferences for this application	common	iw	!נא לקבוע את העדיפויות שלך ליישום זה
 please wait...	common	iw	...המתן בבקשה
+popup with search	common	iw	חלונית קופצת עם חיפוש
 postal	common	iw	דואר
 preferences	common	iw	העדיפויות
 prev. month (hold for menu)	jscalendar	iw	(החודש הקודם (החזק לקבלת תפריט
@@ -309,6 +313,7 @@ search accounts	common	iw	חיפוש חשבונות
 search or select accounts	common	iw	חפש או בחר חשבונות
 section	common	iw	חלק
 select	common	iw	בחר
+select all	common	iw	בחר הכל
 select all %1 %2 for %3	common	iw	בחר כל %1 %2 עבור %3
 select category	common	iw	בחר קטגוריה
 select date	common	iw	בחר תאריך
@@ -398,6 +403,7 @@ writing	common	iw	כותב
 written by:	common	iw	:נכתב על ידי
 year	common	iw	שנה
 yes	common	iw	כן
+yes - delete	common	iw	כן - מחק
 you are required to change your password during your first login	common	iw	עליך לשנות את סיסמתך בכניסה הראשונה שלך למערכת
 you have been successfully logged out	login	iw	יצאת מהמערכת בהצלחה
 you have not entered a title	common	iw	לא הקלדת כותרת
@@ -412,7 +418,6 @@ your message could <b>not</b> be sent!<br>	common	iw	.לא הצלחתי לשלו
 your message has been sent	common	iw	ההודעה שלך נשלחה
 your search returned %1 matchs	common	iw	חיפושך מצא %1 התאמות
 your search returned 1 match	common	iw	החיפוש שלך מצא התאמה אחד
-your session could not be verified.	login	iw	.לא הצלחתי לשחזר את המושב
 your settings have been updated	common	iw	ההגדרות שלך עודכנו
 zambia	common	iw	זמביה
 zoom	common	iw	הגדל

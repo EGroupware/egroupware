@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	cs	%1 %2 v %3
+%1 hours	calendar	cs	%1 hodin
 %1 participants removed because of missing invite grants	calendar	cs	%1 účastníků bylo odstraněno kvůli chybějícím oprávněním k pozvání
 %1 records imported	calendar	cs	%1 záznamů importováno
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	cs	%1 záznamů načteno (zatím nebyly importovány, můžete se vrátit zpět a odškrtnout Testovat Import)
@@ -82,6 +83,7 @@ creator	calendar	cs	Tvůrce
 csv	calendar	cs	CSV
 csv-fieldname	calendar	cs	Název CSV pole
 csv-filename	calendar	cs	Jméno CSV souboru
+custom	calendar	cs	Uživatelsky definované
 custom fields	common	cs	Volitelné položky
 custom_2	common	cs	volný/zaneprázdněn
 daily	calendar	cs	Denně

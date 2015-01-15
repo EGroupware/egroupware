@@ -8,21 +8,28 @@ allways a new window	mail	cs	Vždy nové okno
 always show html emails	mail	cs	Vždy zobrazovat HTML e-maily
 any of	mail	cs	kterýkoli z
 any status	mail	cs	jakýkoli status
+attachments	mail	cs	Přílohy
 by date	mail	cs	datumem
+check message against next rule also	mail	cs	zkontrolovat zprávu také proti následujícímu pravidlu
 compose	mail	cs	Nová zpráva
+compose as new	mail	cs	Vytvořit jako novou zprávu
 compress folder	mail	cs	Komprimovat složku
+condition	mail	cs	podmínka
 contains	mail	cs	obsahuje
+copy to	mail	cs	Kopírovat do
 date(newest first)	mail	cs	Datum (od nejnovějšího)
 date(oldest first)	mail	cs	Datum (od nejstaršího)
 default sorting order	mail	cs	Výchozí třídění
+delete folder	mail	cs	Smazat složku
 deleted	mail	cs	smazáno
+disable	mail	cs	Zakázat
 discard	mail	cs	zahodit
+discard message	mail	cs	zahodit zprávu
 display messages in multiple windows	mail	cs	Zobrazovat zprávy ve více oknech
 display of html emails	mail	cs	Zobrazování HTML zpráv
 display only when no plain text is available	mail	cs	Zobrazovat jen pokud není k dispozici prostý text
 displaying html messages is disabled	mail	cs	zobrazování HTML zpráv je zakázáno
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	cs	Chcete být požádáni o potvrzení při přesouvání vybraných zpráv do jiné složky?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v přesměrování pošty prostřednictvím nastavení (i když je povolen SIEVE)?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v pravidlech pro filtrování pošty (i když je povolen SIEVE)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v zasílání upozornění na příchod zprávy (i když je povolen SIEVE)?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny ve zprávách o nepřítomnosti (i když je povolen SIEVE)?
@@ -37,35 +44,49 @@ don't use template folder	mail	cs	Nepoužívat složku šablon
 don't use trash	mail	cs	Nepoužívat Koš
 draft folder	mail	cs	Rozepsané
 drafts	mail	cs	Rozepsané
+edit account	mail	cs	Editovat účet
+edit vacation settings	mail	cs	editovat nastavení odpovědi v nepřítomnosti
 email notification update failed	mail	cs	aktualizace e-mailových upozornění se nezdařila
 emailaddress	admin	cs	e-mailová adresa
 empty trash	mail	cs	Vyprázdnit koš
+enable	mail	cs	povolit
 error saving %1!	mail	cs	Chyba při ukládání %1!
 error:	mail	cs	Chyba:
 error: could not save message as draft	mail	cs	Chyba: Zprávu nebylo možné uložit jako rozepsanou
 error: could not save rule	mail	cs	Chyba:  Nelze uložit pravidlo
 error: message could not be displayed.	mail	cs	Chyba: Zprávu nelze zobrazit.
 event details follow	mail	cs	Následují detaily události
-felamimail	admin	cs	FelaMiMail
+everyone	mail	cs	všichni
+extended	mail	cs	Rozšířený
 file into	mail	cs	soubor do
 filemanager	mail	cs	Správce souborů
 flagged	mail	cs	s příznakem
 folder	mail	cs	složka
 folder settings	mail	cs	Nastavení složky
+forward	mail	cs	Přeposlat
 forward as attachment	mail	cs	přeposlat jako přílohu
 forward inline	mail	cs	přeposlat vložené do dopisu
 forward to	mail	cs	přeposlat (komu)
 from	mail	cs	Od
 from(a->z)	mail	cs	Od (A->Z)
 from(z->a)	mail	cs	Od (Z->A)
+general	admin	cs	Obecné
 greater than	mail	cs	větší než
+header lines	mail	cs	Řádky hlavičky
 how to forward messages	mail	cs	Jak přeposílat zprávy
 html	mail	cs	HTML
+identity	mail	cs	Identita
 if	mail	cs	POKUD
+if mail header	mail	cs	pokud hlavička obsahuje
+if message size	mail	cs	pokud velikost zprávy
+imap	mail	cs	IMAP
 imap server	mail	cs	IMAP Server
+import message	mail	cs	importovat zprávu
 importance	mail	cs	Důležitost
 inbox	mail	cs	INBOX
 junk	mail	cs	Spam
+keep a copy of the message in your inbox	mail	cs	zachovat kopii zprávy ve Vašem inboxu
+kilobytes	mail	cs	kilobytů
 later	mail	cs	Později
 less than	mail	cs	menší než
 mail settings	mail	cs	Nastavení pošty
@@ -73,8 +94,10 @@ mark as deleted	mail	cs	Označit jako smazané
 matches	mail	cs	shoduje se s
 matches regexp	mail	cs	shoduje se s regulárním výrazem
 move selected to	mail	cs	přesunout vybrané (kam)
+move to	mail	cs	Přesunout do
 move to trash	mail	cs	Přesunout do koše
 never display html emails	mail	cs	Nikdy nezobrazovat HTML e-maily
+no access	mail	cs	Přístup zakázán
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	cs	Nebyly zadány adresy Komu/Kopie/Skrytá kopie ani složka pro uložení zprávy.
 no folders	mail	cs	žádné složky
 no plain text part found	mail	cs	nebyla nalezena část ve formě prostého textu
@@ -82,12 +105,14 @@ no recipient address given!	mail	cs	Nebyla zadána adresa příjemce!
 no signature	mail	cs	bez podpisu
 no subject given!	mail	cs	Nebyl zadán předmět!
 none, create all	mail	cs	žádné, vytvořit všechny
+nothing to change.	mail	cs	Není třeba nic měnit.
 on	mail	cs	na
 one address is not valid	mail	cs	Jedna adresa není platná
 only one window	mail	cs	Jen jedno okno
 organisation	admin	cs	Organizace
 organization	mail	cs	organizace
 original message	mail	cs	původní zpráva
+permission denied	mail	cs	Přístup zamítnut
 please configure access to an existing individual imap account.	mail	cs	Nakonfigurujte prosím přístup ke stávajícímu osobnímu IMAP účtu.
 please select a address	mail	cs	Prosím vyberte adresu
 please select the number of days to wait between responses	mail	cs	Vyberte prosím počet dní, jak dlouho čekat mezi odpovědmi
@@ -98,10 +123,18 @@ refresh time in minutes	mail	cs	Čas obnovování v minutách
 reject with	mail	cs	zamítnout s
 remove all	mail	cs	Odstranit vše
 remove immediately	mail	cs	Odstranit okamžitě
+rename folder	mail	cs	Přejmenovat složku
 replied	mail	cs	odpovězené
+reply	mail	cs	Odpovědět
+reply all	mail	cs	Odpovědět všem
+reply to	mail	cs	Odpovědět (komu)
 replyto	mail	cs	Odpovědět (komu)
 row order style	mail	cs	Způsob řazení řádků
 save all	mail	cs	Uložit vše
+save as draft	mail	cs	Uložit jako rozepsané
+save as infolog	mail	cs	Uložit jako infolog
+save message to disk	mail	cs	Uložit zprávu na disk
+select all	mail	cs	Vybrat vše
 sender	mail	cs	Odesílatel
 sent	mail	cs	Odeslané
 sent folder	mail	cs	Odeslané
@@ -116,18 +149,24 @@ subject(a->z)	mail	cs	Předmět (A->Z)
 subject(z->a)	mail	cs	Předmět (Z->A)
 template folder	mail	cs	Složka šablon
 templates	mail	cs	Šablony
+text	mail	cs	Text
 text/plain	mail	cs	prostý text
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	cs	Odesílatel požaduje zaslání potvrzení o přečtení zprávy. Přejete si potvrzení odeslat?
 the mimeparser can not parse this message.	mail	cs	Mimeparser nemůže zpracovat tuto zprávu.
 then	mail	cs	POTOM
 there is no imap server configured.	mail	cs	Není nakonfigurován žádný IMAP server.
 trash	mail	cs	Koš
 trash folder	mail	cs	Koš
+unflagged	mail	cs	bez příznaku
 unread	mail	cs	nepřečtené
-urgent	mail	cs	Naléhavé
-vacation notice	admin	cs	Odpověď v nepřítomnosti
+vacation notice	mail	cs	Odpověď v nepřítomnosti
+vacation notice is active	mail	cs	Odpověď v nepřítomnosti je aktivní
 vacation start-date must be before the end-date!	mail	cs	Počáteční datum automatické odpovědi musí PŘEDCHÁZET koncovému datu!
+view header lines	mail	cs	Zobrazit řádky hlavičky
 when deleting messages	mail	cs	Při mazání zpráv
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	cs	Které složky (kromě složky Odeslané) by měly být zobrazeny za použití schématu pro zobrazení složky Odeslané
 which folders - in general - should not be automatically created, if not existing	mail	cs	Které složky by neměly být automaticky vytvářeny pokud neexistují
+write	mail	cs	Uložit
 wrote	mail	cs	napsal
 yes, offer copy option	mail	cs	Ano, nabídnout volbu kopírování
+you've got new mail	mail	cs	Přišel Vám nový e-mail

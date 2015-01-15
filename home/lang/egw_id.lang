@@ -1,4 +1,10 @@
+color	home	id	Warna
 displays home	home	id	Tampilkan beranda
 egroupware	home	id	eGroupWare
 home	home	id	Beranda
+in %1 days (%2) is %3's birthday.	home	id	Tinggal %1 hari (%2) adalah HUT %3.
+remove	home	id	buang
+set as default	home	id	Tetapkan sbg bawaan
 there is a new version of egroupware available	home	id	Tersedia versi terbaru dari eGroupWare
+today is %1's birthday!	home	id	Hari ini adalah HUT %1!
+tomorrow is %1's birthday.	home	id	Esok adalah HUT %1!

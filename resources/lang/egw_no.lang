@@ -21,8 +21,11 @@ clear selection	resources	no	Opphev valgene
 configure access permissions	admin	no	Konfigurer aksesstillatelser
 create new accessory for this resource	resources	no	Opprette nytt tilbehør til denne ressursen
 create new links	resources	no	Opprette nye lenker
+custom fields	resources	no	Egendefinerte Felter
+days	resources	no	dager
 delete selected resources	resources	no	Slett valgte ressurser
 delete this entry	resources	no	Slett denne registreringen
+deleted	resources	no	slettet
 description (short)	resources	no	Beskrivelse (kort)
 direct booking permissions	resources	no	Deleger bestillingsrettigheter
 don't use vfs (this will need a symlink --> see readme)	resources	no	Ikke bruke vfs (dette trenger en symlink-->Se LESMEG

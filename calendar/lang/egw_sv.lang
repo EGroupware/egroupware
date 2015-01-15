@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	sv	%1 %2 i %3
+%1 hours	calendar	sv	%1 timmar
 %1 participants removed because of missing invite grants	calendar	sv	%1 deltagare har tagits bort pga avsaknad av bjudningsrätt
 %1 records imported	calendar	sv	%1 poster importerade
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sv	%1 poster lästa (ännu inte importerade, gå tillbaks för att avmarkera Testimport)
@@ -78,6 +79,7 @@ created	calendar	sv	Skapad
 csv	calendar	sv	CSV
 csv-fieldname	calendar	sv	CSV Fältnamn
 csv-filename	calendar	sv	CSV Filnamn
+custom	calendar	sv	Anpassade
 custom fields	common	sv	Anpassade fält
 custom_2	common	sv	Freebusy
 daily	calendar	sv	Daglig

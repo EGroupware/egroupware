@@ -21,8 +21,10 @@ default application	preferences	eu	Lehenetsitako aplikazioa
 default preferences	preferences	eu	Lehenetsitako hobespenak
 delete categories	preferences	eu	Kategoriak ezabatu
 description can not exceed 255 characters in length !	preferences	eu	Deskribapenak ezin ditu 255 karaktere baino gehiago izan.
+disable	preferences	eu	Ezgaitu
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	eu	Zer nahiago duzu 24 orduko ordu formatua edota 12 ordukoa am/pm atzetik duela.
 edit custom fields	preferences	eu	Eremu pertsonalizatuak editatu
+enable	preferences	eu	indarrean jarri
 enter your new password	preferences	eu	Zure pasahitz berria sartu
 enter your old password	preferences	eu	Zure pasahitz zaharra sartu
 failed to change password.	preferences	eu	Akatsa pasahitza aldatzerakoan.

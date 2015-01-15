@@ -1,3 +1,4 @@
+%1 hours	calendar	uk	%1 годин
 %1 records imported	calendar	uk	%1 записів імпортовано
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	uk	%1 записів прочитано (ще не імпортовано, Ви повинні повернутися та зняти відмітку Тестувати Імпорт)
 accept	calendar	uk	Прийняти
@@ -29,6 +30,7 @@ country	calendar	uk	Країна
 create new links	calendar	uk	Створити нові посилання
 csv-fieldname	calendar	uk	CSV-Fieldname
 csv-filename	calendar	uk	CSV-Filename
+custom	calendar	uk	Власне
 custom fields	common	uk	Власні поля
 daily	calendar	uk	Поденно
 day	calendar	uk	День

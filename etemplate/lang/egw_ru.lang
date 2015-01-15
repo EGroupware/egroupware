@@ -23,6 +23,7 @@ a pattern to be searched for	etemplate	ru	Шаблон для поиска
 accesskey	etemplate	ru	Ключ доступа
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	ru	Ключи доступа могут быть также заданы при помощи "&" в названии (напр &Name)
 account contactdata	etemplate	ru	Данные учетной запися для связи
+actions...	etemplate	ru	Действия...
 add a new column (after the existing ones)	etemplate	ru	Добавить новую колонку (сразу после существующих)
 add a new entry of the selected application	etemplate	ru	Добавить новую запись выбранного приложения
 add a new multi-column index	etemplate	ru	Добавить новый многоколоночный индекс
@@ -30,12 +31,14 @@ add column	etemplate	ru	Добавить колонку
 add index	etemplate	ru	Добавить индекс
 add new	etemplate	ru	Добавить новый
 add table	etemplate	ru	Добавить таблицу
+add to clipboard	etemplate	ru	Добавить буфер обмена
 advanced search	etemplate	ru	Расширенный поиск
 align	etemplate	ru	Выравнивание
 alignment of label and input-field in table-cell	etemplate	ru	Выравнивание меток и полей ввода в ячейке таблицы
 alignment of the v/hbox containing table-cell	etemplate	ru	Выравнивание Верт/Гориз (Box)  содержащего ячеку таблицы
 all days	etemplate	ru	все дни
 all operations save the template!	etemplate	ru	все действия сохраняют шаблон!
+all users	etemplate	ru	Все пользователи
 allowed file type: %1	etemplate	ru	Допустимый тип файла: %1
 am	etemplate	ru	утр?(am)
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	ru	проиндексированные колонки уеличивают скорость обработки запросов использующих колонки (при этом затрачивается дополнительное дисковое пространство)
@@ -93,6 +96,7 @@ contact	etemplate	ru	Контакт
 contact field to show	etemplate	ru	Поле Контакт для показа
 contact fields	etemplate	ru	Поля Контакта
 contains	etemplate	ru	содержит
+copy to clipboard	etemplate	ru	Копировать в буфер обмена
 create a new table for the application	etemplate	ru	Создать новую таблицу для приложения
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	ru	создает английский ('en') файл перевода из меток и текстов помощи (для приложения по Имени)
 creator	preferences	ru	Создатель
@@ -105,9 +109,8 @@ custom	etemplate	ru	пользовательский
 custom fields	etemplate	ru	пользовательские поля
 custom javascript for onchange	etemplate	ru	пользовательский java-скрипт по onChange
 cut	etemplate	ru	Вырезать
-date	preferences	ru	Дата
+date	etemplate	ru	Дата
 date+time	etemplate	ru	Дата+Время
-datum	etemplate	ru	Дата
 day	etemplate	ru	День
 days	etemplate	ru	день/дня(ей)
 db ensures that every row has a unique value in that column	etemplate	ru	БД проверяет, чтобы у каждой строки в этой колонке было уникальное значение
@@ -152,6 +155,7 @@ editable templates - delete template	etemplate	ru	Редактируемые Ш�
 editable templates - editor	etemplate	ru	Редактируемые Шаблоны - Редактор
 editable templates - search	etemplate	ru	Редактируемые Шаблоны - Поиск
 editable templates - show template	etemplate	ru	Редактируемые Шаблоны - Показать Шаблон
+element role title	etemplate	ru	Название роли элемента
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	ru	встроенные стили css, yапр. '.red { background: red; }' (отметьте знак '.' gеред именем класса) или '@import url(...)' (имя класса глобально для всей страницы!)
 enable javascript onchange submit	etemplate	ru	разрешить подчинение JavaScript onChange
 enter '' for an empty default, nothing mean no default	etemplate	ru	ввести '' для пустого значения по-умолчанию, ничего обозначает без значения по-умолчанию
@@ -205,6 +209,7 @@ grid	etemplate	ru	Решетка
 grid column attributes	etemplate	ru	Атрибуты колонки сетки
 grid row attributes	etemplate	ru	Атрибуты строки сетки
 groupbox	etemplate	ru	Рамка группы
+h	etemplate	ru	час
 hbox	etemplate	ru	ГРамка
 height	etemplate	ru	Высота
 height of row (in % or pixel)	etemplate	ru	высота строки (в % или пикселях)
@@ -219,6 +224,7 @@ hours	etemplate	ru	час(а,ов)
 how many entries should the list show	etemplate	ru	Сколко записей надо показывать в списке
 html	etemplate	ru	Html
 html link to the current record	etemplate	ru	HTML-ссылка на запись
+id	etemplate	ru	Идентификатор ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	ru	если поле запрещено - показывается пустая клетка таблицы, для (временного) удаления поля/ячейки
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	ru	Если указан каталог с полным путем, %1 показывает действие для каждого документа. Это действие позволяет загрузить указанный документ со вставленными данными.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	ru	Если указан документ с полным путем, %1 показывает пиктограмму внешнего документам для каждой записи. Эти пиктограмма позволяет загрузить указанный документ со вставленными данными.
@@ -262,6 +268,7 @@ linkstring	etemplate	ru	СсылкаНаСтроку
 linkto	etemplate	ru	СвязатьС
 list of files linked to the current record	preferences	ru	Список файлов, связанных с текущей записью
 load this template into the editor	etemplate	ru	загрузить этот шаблон в редактор
+loading	etemplate	ru	Загружаю
 maximum size for uploads	filemanager	ru	Максимальный размер загрузки
 message ...	etemplate	ru	Сообщение ...
 message prepared for sending.	etemplate	ru	Сообщение подготовлено для отправки
@@ -273,6 +280,7 @@ minutes	etemplate	ru	Минут(а,ы)
 missing: %1	etemplate	ru	Пропущено: %1
 modifier	preferences	ru	Изменено (кем)
 month	etemplate	ru	Месяц
+more	etemplate	ru	Еще
 more than 1 match for '%1'	etemplate	ru	Более чем 1 совпадает с '%1'
 multicolumn indices	etemplate	ru	Многоколоночные Индексы
 name	etemplate	ru	Название
@@ -281,6 +289,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	ru	Название таблицы для добавления
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	ru	имя еШаблона, должно быть в форме приложение.функция[.подШаблон]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	ru	должно быть уникальным в пределах таблицы и не быть зарезервированным словом из SQL, лучше всего - давайте всем префикс из общепринятого 2-цифрового сокращения для приложения, напр. 'et_'
+new	etemplate	ru	Новая
 new search	common	ru	Новый поиск
 new table created	etemplate	ru	Новая таблица создана
 newer version '%1' exists !!!	etemplate	ru	существует более новая версия '%1' !!!
@@ -301,6 +310,7 @@ nothing	etemplate	ru	ничего
 nothing found - try again !!!	etemplate	ru	Ничего не найдено - попробуйте еще раз !!!
 nothing in clipboard to paste !!!	etemplate	ru	в буфере нет ничего для вставки
 nothing matched search criteria !!!	etemplate	ru	Нет совпадений с критерием поиска
+now	etemplate	ru	Сегодня
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	ru	количество столбцов, которые должно объединять поле/ячейка или 'все' для оставшихся столбцов, имя класса CSS (для тега TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	ru	количество строк/столбцов в В/ГРамке, Набивка ячеек, Разгонка ячеек
 of	etemplate	ru	из
@@ -330,14 +340,18 @@ read a list of entries.	etemplate	ru	Читать список записей:
 read a single entry by passing the id and fieldlist.	etemplate	ru	Прочитать одну запись в соответствии с идентификатором и списком полей
 read etemplate from database (for the keys above)	etemplate	ru	прочитать еШаблон из базы данных (для вышеуказанных ключей)
 readonly	etemplate	ru	только для чтения
+refresh	etemplate	ru	Обновить
 remove row (can not be undone!!!)	etemplate	ru	убрать Строку (НЕ может быть отменено!!!)
 remove this link (not the entry itself)	etemplate	ru	Убрать эту ссылку (не запись по ней)
 required	etemplate	ru	Необходимо
+reset	etemplate	ru	Сброс
 restore all	etemplate	ru	Перезаписать все
 restore all application templates, overwriting existing ones with identical version number	etemplate	ru	Перезаписать все шаблоны приложения, переписав существующие с тем же номером версии
 returns savely, without deleting	etemplate	ru	возвращает безопасно, БЕЗ удаление
 right	etemplate	ru	Вправо
 row...	etemplate	ru	Строка...
+save all	etemplate	ru	Сохранить всё
+save as	etemplate	ru	Сохранить как
 save selected columns as default preference for all users.	etemplate	ru	Записать выбранные столбцы как настройки по-умолчанию для всех пользователей.
 save the changes made and close the window	etemplate	ru	Сохранить изменения и закрыть окно
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	ru	записать еШаблон под вышеуказанными ключами (имя, ...), изменить их для СохранитьКак
@@ -381,6 +395,7 @@ select which accounts to show	etemplate	ru	выбрать какие аккау�
 select which values to show	etemplate	ru	выбрать значения для показа
 select year	etemplate	ru	Выбрать Год
 selectbox	etemplate	ru	Рамка выбора
+set as default	etemplate	ru	Установить по умолчанию
 sets today as date	etemplate	ru	Установить сегодняшний день как дату
 should the form be submitted or any custom javascript be executed	etemplate	ru	Должна ли форма быть передана или должен выполняться любой пользовательский javascript
 show	etemplate	ru	Показать
@@ -452,6 +467,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	ru	ширина колонки (в % или пикселях)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	ru	Ширина таблицы в % или пикселях для тега Таблица и (необязательно) div
 width, disabled	etemplate	ru	Ширина, Отключено
+wk	etemplate	ru	Раб
 working days	etemplate	ru	рабочие дни
 write <app>/setup/tables_current.inc.php	etemplate	ru	Записать <прил>/setup/tables_current.inc.php
 write langfile	etemplate	ru	Запись файла языка

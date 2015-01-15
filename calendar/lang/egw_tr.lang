@@ -29,6 +29,7 @@ countries	calendar	tr	Ülkeler
 country	calendar	tr	Ülke
 csv-fieldname	calendar	tr	CSV-Alan adý
 csv-filename	calendar	tr	CSV-Alan adý
+custom	calendar	tr	Özel
 custom fields	common	tr	Özel Alanlar
 daily	calendar	tr	Günlük
 day	calendar	tr	Gün

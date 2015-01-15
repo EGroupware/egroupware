@@ -9,6 +9,7 @@
 %1 you are responsible for is starting at %2	infolog	id	%1 dimana anda bertanggungjawab akan mulai pada %2
 %1 you delegated is due at %2	infolog	id	%1 dimana anda didelegasikan akan berakhir pada %2
 %1 you delegated is starting at %2	infolog	id	%1 dimana anda didelegasikan akan mulai pada %2
+(no subject)	infolog	id	(tanpa subyek)
 - subprojects from	infolog	id	- Sub-proyek dari
 0%	infolog	id	0%
 10%	infolog	id	10%
@@ -104,7 +105,7 @@ deletes this status	infolog	id	hapus status ini
 description	infolog	id	Uraian
 determines the order the fields are displayed	infolog	id	menentukan urutan field ditampilkan
 don't show infolog	infolog	id	JANGAN tampilkan InfoLog
-done	common	id	selesai
+done	infolog	id	selesai
 download	infolog	id	Unduh
 due %1	infolog	id	Berakhir %1
 duration	infolog	id	Durasi
@@ -120,11 +121,13 @@ end	infolog	id	Akhir
 enddate	infolog	id	Tanggal jatuh-tempo
 enddate can not be before startdate	infolog	id	Tanggal jatuh-tempo tidak dapat sebelum tanggal memulai
 existing links	infolog	id	Tautan yang ada
+favorites	infolog	id	Favorit
 fax	infolog	id	Fax
 field must not be empty !!!	infolog	id	Field tidak boleh kosong !!!
 fieldseparator	infolog	id	Pemisah field
 finish	infolog	id	rampung
 from	infolog	id	Dari
+general fields:	infolog	id	Field Umum:
 global categories	infolog	id	Kategori Global
 high	infolog	id	tinggi
 history	infolog	id	Riwayat
@@ -154,7 +157,6 @@ leave it empty	infolog	id	biarkan kosong
 leave it empty for a full week	infolog	id	Biarkan kosong bila seminggu penuh
 leave without saveing the entry	infolog	id	tinggalkan tanpa menyimpan entri
 leaves without saveing	infolog	id	tinggalkan tanpa menyimpan
-length<br>rows	infolog	id	Length<br>Rows
 link	infolog	id	Tautan
 links	infolog	id	Tautan
 list all categories	infolog	id	Daftar semua kategori
@@ -221,6 +223,7 @@ responsible	infolog	id	penanggungjawab
 responsible open	infolog	id	responsible open
 responsible overdue	infolog	id	responsible overdue
 responsible upcoming	infolog	id	responsible upcoming
+rows	infolog	id	Rows
 same day	infolog	id	hari yang sama
 save	infolog	id	Simpan
 saves the changes made and leaves	infolog	id	simpan perubahan dan tinggalkan

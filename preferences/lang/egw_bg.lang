@@ -18,7 +18,9 @@ default application	preferences	bg	Приложение по подразбир�
 default preferences	preferences	bg	Настройки по подразбиране
 delete categories	preferences	bg	Изтриване на категории
 description can not exceed 255 characters in length !	preferences	bg	Описанието не може да превишава 255 символа!
+disable	preferences	bg	Забранява
 edit custom fields	preferences	bg	Редакция на полета по избор
+enable	preferences	bg	позволява
 enter your new password	preferences	bg	Въведете нова парола
 hours	preferences	bg	часа
 how do you like to display accounts	preferences	bg	Как искате да се изобразяват акаунтите

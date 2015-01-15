@@ -17,8 +17,10 @@ default application	preferences	uk	Типове приложення
 default preferences	preferences	uk	Типові параметри
 delete categories	preferences	uk	Видалити категорії
 description can not exceed 255 characters in length !	preferences	uk	Довжина опису не може перевищувати 255 символів !
+disable	preferences	uk	Відключити
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	uk	Ви використовуєте 24-х годинний формат часу, чи 12-и годинний з am/pm.
 edit custom fields	preferences	uk	Редагувати додаткові поля
+enable	preferences	uk	Включити
 enter your new password	preferences	uk	Введіть новий пароль
 forced preferences	preferences	uk	Форсовані параметри
 help off	preferences	uk	Допомога

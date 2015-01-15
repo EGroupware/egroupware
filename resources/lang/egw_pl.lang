@@ -19,10 +19,15 @@ check all	resources	pl	Zaznacz wszysto
 choose categories admin	resources	pl	wybierz kategorie administratora
 clear selection	resources	pl	odhacz wybrane elementy
 configure access permissions	admin	pl	Konfiguruj Prawa Dostępu
+conflict	resources	pl	Konflikt
 create new accessory for this resource	resources	pl	Utwórz nowe akcesoriu dla tego zasobu
 create new links	resources	pl	Utwórz nowe odsyłacze
+custom etemplate for the contactform	resources	pl	Własny eSzablon do formularza kontaktowego
+custom fields	resources	pl	Pola użytkownika
+days	resources	pl	dni
 delete selected resources	resources	pl	usuń wybrane zasoby
 delete this entry	resources	pl	Usuń ten wpis
+deleted	resources	pl	skasowany
 description (short)	resources	pl	Opis (krótki)
 direct booking permissions	resources	pl	Pozwolenie na bezpośrednią rezerwacje
 don't use vfs (this will need a symlink --> see readme)	resources	pl	Nie używaj 'VFS' (to będzie wymagać odnośników symbolicznych --> patrz README)
@@ -86,6 +91,7 @@ something went wrong by deleting resource	resources	pl	Coś poszło nie tak przy
 something went wrong by saving resource	resources	pl	Coś poszlo nie tak przy zapisywaniu zasobu
 storage information	resources	pl	Informacje o przechowywaniu
 storage information:	resources	pl	Informacje o przechowywaniu:
+the anonymous user needs add rights for it!	resources	pl	Anonimowy użytkownik potrzebuje praw dodawania!
 the calendar of this resource	resources	pl	Kolendarz tego zasobu
 this module displays the resources app	resources	pl	Ten moduł pokazuje aplikację do zasobów
 use general resources icon	resources	pl	Użyj domyślnej ikonki zasobów

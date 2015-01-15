@@ -1,3 +1,5 @@
+acl added.	admin	bg	Списъкът за контрол на достъпа е добавен.
+acl deleted.	admin	bg	Списъкът за контрол на достъпа е изтрит.
 actions	admin	bg	Действия
 activate	admin	bg	Активиране
 admins	admin	bg	Администратори
@@ -21,13 +23,13 @@ description can not exceed 255 characters in length !	admin	bg	Описание�
 determines the order the fields are displayed	admin	bg	определя реда за показване на полетата
 disable	admin	bg	Забранява
 down	admin	bg	надолу
-each value is a line like <id>[=<label>]	admin	bg	всяка стойност е ред във формат <id>[=<label>]
 email address	admin	bg	E-Mail адрес
 enable	admin	bg	позволява
 enter your default mail domain ( from: user@domain )	admin	bg	Въведете e-mail домейн по подразбиране (От: user@domain)
 enter your smtp server hostname or ip address	admin	bg	Въведете името или IP адреса на SMTP сървъра
 enter your smtp server port	admin	bg	Въведете порта на SMTP сървъра
 full name	admin	bg	Име
+general	admin	bg	Общи
 global categories	common	bg	Глобални категории
 icon	admin	bg	Икона
 leave without saveing the entry	admin	bg	изход без запис
@@ -35,7 +37,6 @@ leaves without saveing	admin	bg	изход без запис
 length<br>rows	admin	bg	Дължина<br>Редове
 mail settings	admin	bg	Настройки на пощата
 manage mapping	admin	bg	Управление на съответствията
-max length of the input [, length of the inputfield (optional)]	admin	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
 modified	admin	bg	Редактирано
 name must not be empty !!!	admin	bg	Името трябва да бъде попълнено!!!
 new name	admin	bg	ново име
@@ -46,9 +47,11 @@ one week	admin	bg	една седмица
 order	admin	bg	Ред
 permission denied	admin	bg	Не е позволено
 permission denied !!!	admin	bg	Достъпът отказан !!!
+permission denied!!!	admin	bg	Достъпът отказан!!!
 permissions	admin	bg	Права
 re-enter password	admin	bg	Въведете отново паролата
 remove	admin	bg	премахване
+rights	admin	bg	Права
 saves the changes made and leaves	admin	bg	запазва направените промени и излиза
 saves this entry	admin	bg	Запазва записа
 start	admin	bg	Старт

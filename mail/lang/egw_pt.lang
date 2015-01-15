@@ -112,7 +112,6 @@ error: could not save rule	mail	pt	Erro: Não foi possível salvar regra
 error: could not send message.	mail	pt	Erro: Não foi possível enviar mensagem.
 error: message could not be displayed.	mail	pt	ERRO: A mensagem não pode ser exibida.
 event details follow	mail	pt	Seguem detalhes do evento
-every:	mail	pt	Cada:
 everyone	mail	pt	Todo o mundo
 extended	mail	pt	Estendido
 extra sent folders	mail	pt	Pastas extras enviados
@@ -242,6 +241,7 @@ organisation	admin	pt	empresa
 organization	mail	pt	empresa
 original message	mail	pt	mensagem original
 outbox	mail	pt	Caixa de saída
+permission denied	mail	pt	Permissão negada
 please select a address	mail	pt	Por favor, seleccione um endereço
 please select the number of days to wait between responses	mail	pt	Por favor, seleccione o número de dias a esperar entre respostas
 please supply the message to send with auto-responses	mail	pt	Por favor, insira uma mensagem a enviar como auto-resposta
@@ -282,7 +282,6 @@ restrict acl management	admin	pt	restringir gestão acl
 row order style	mail	pt	estilo ordem de linha
 rule priority position	mail	pt	Regra posição prioridade
 rule with priority	mail	pt	governar com prioridade
-rules	mail	pt	regras	 		Salve todo
 save all	mail	pt	Guardar tudo
 save as	mail	pt	Salvar como
 save as default	mail	pt	salvar como padrão
@@ -339,7 +338,6 @@ subject(a->z)	mail	pt	Assunto (A->Z)
 subject(z->a)	mail	pt	Assunto (Z-->A)
 subscribe folder	mail	pt	Assinar pasta
 subscribe folder ...	mail	pt	Assinar pasta ...
-subscription faild!	mail	pt	Faild Assinatura!
 subscription folders	mail	pt	Pastas de Subscrição
 subscription successfully saved.	mail	pt	Assinatura salvo com sucesso.
 successfully connected	mail	pt	Conectado com sucesso
@@ -350,8 +348,6 @@ test connection	mail	pt	Teste de conexão
 text	mail	pt	Texto
 text mode	mail	pt	O modo de texto
 text/plain	mail	pt	text / plain
-the %1 's acl removed from the %2!	mail	pt	O% 1 's acl removido do% 2!
-the folder %1 's acls saved!	mail	pt	A pasta% ACLs 1 's salva!
 the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.
 the rule with priority %1 successfully saved!	mail	pt	A regra com prioridade 1% salvo com sucesso!
 then	mail	pt	então

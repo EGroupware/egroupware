@@ -114,6 +114,7 @@ delete this user	admin	hr	obriši ovog korisnika
 deleted	admin	hr	Obrisano
 deletes this field	admin	hr	obriši ova polja
 deliver extern	admin	hr	deliver extern
+deny access	admin	hr	Deny Access
 deny access to access log	admin	hr	Uskrati pristup evidenciji pristupa
 deny access to application registery	admin	hr	Uskrati pristup registru aplikacija
 deny access to applications	admin	hr	Uskrati pristup aplikacijama
@@ -140,7 +141,6 @@ do you also want to delete all global subcategories ?	admin	hr	Želite li obrisa
 do you want to delete all global subcategories ?	admin	hr	Želite li obrisati i sve globalne podkategorije ?
 do you want to move all global subcategories one level down ?	admin	hr	Želite li pomaknuti sve globalne podkategorije za jedan nivo prema dolje ?
 down	admin	hr	dolje
-each value is a line like <id>[=<label>]	admin	hr	each value is a line like <id>[=<label>]
 edit account	admin	hr	Uredi korisnički račun
 edit application	admin	hr	Uredi aplikaciju
 edit email settings	admin	hr	edit email settings
@@ -258,7 +258,6 @@ loginid	admin	hr	LoginID
 mail settings	admin	hr	Postavke pošte
 main screen message	admin	hr	Poruka glavnog ekrana
 manager	admin	hr	Upravitelj
-max length of the input [, length of the inputfield (optional)]	admin	hr	max length of the input [, length of the inputfield (optional)]
 maximum account id (e.g. 65535 or 1000000)	admin	hr	Najveći indetitet korisničkog računa (npr. 65535 ili 1000000)
 maximum entries in click path history	admin	hr	Maximum entries in click path history
 message has been updated	admin	hr	poruka je obnovljena
@@ -316,6 +315,7 @@ remove all users from this group	admin	hr	Ukloni sve korisnike iz ove grupe
 remove all users from this group ?	admin	hr	Da uklonim sve korisnike iz ove grupe?
 return to admin mainscreen	admin	hr	povratak na glavnu stranicu admin
 return to view account	admin	hr	Return to view account
+rows	admin	hr	Retci
 run asynchronous services	admin	hr	Run Asynchronous services
 save the category	admin	hr	spremi kategoriju
 save the category and return back to the list	admin	hr	spremi kategoriju i vrati se na listu

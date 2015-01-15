@@ -1,5 +1,6 @@
 %1 already exists as a file	filemanager	fa	%1 قبلا بعنوان پرونده وجود دارد
 actions	filemanager	fa	اعمال
+administrators	filemanager	fa	مدیران
 applications	common	fa	کاربردها
 cancel editing %1 without saving	filemanager	fa	لغو ویرایش %1 بدون ذخیره سازی
 cannot create directory because it begins or ends in a space	filemanager	fa	ناتوان از ایجاد پوشه چون با یک فاصله شروع یا تمام می شود
@@ -23,9 +24,13 @@ deleted %1	filemanager	fa	%1 حذف شد
 directory	filemanager	fa	پوشه
 directory %1 already exists	filemanager	fa	پوشه %1 قبلا وجود دارد
 directory %1 does not exist	filemanager	fa	پوشه %1 وجود ندارد
+disable	filemanager	fa	غیر فعال
 download	filemanager	fa	دریافت
 edit comments	filemanager	fa	ویراستن توضیحات
-file	filemanager	fa	پرونده
+enable	filemanager	fa	فعال
+everyone	filemanager	fa	همه
+expires	filemanager	fa	انقضاء
+file	common	fa	پرونده
 file %1 could not be created.	filemanager	fa	پرونده %1 نمی تواند ایجاد شود
 file names cannot contain "%1"	filemanager	fa	نام پرونده نمی تواند شامل "%1" باشد
 filemanager	common	fa	مدیر پرونده
@@ -48,6 +53,7 @@ no files in this directory.	filemanager	fa	پرونده ای در پوشه نی�
 no version history for this file/directory	filemanager	fa	تاریخچه نسخه ای برای این پرونده/پوشه نیست
 open	filemanager	fa	کارهای باز
 operation	filemanager	fa	عملیات
+percentage	filemanager	fa	درصد
 permissions	filemanager	fa	مجورها
 please select a file to delete.	filemanager	fa	لطفا پرونده ای را برای حذف انتخاب کنید
 preview	filemanager	fa	پیش نمایش

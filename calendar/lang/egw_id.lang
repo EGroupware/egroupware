@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	id	%1 %2 dalam %3
 %1 event(s) %2	calendar	id	%1 kegiatan %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	id	%1 kegiatan %2, %3 gagal karena kurang kewenangan !!!
+%1 hours	calendar	id	%1 jam
 %1 participants removed because of missing invite grants	calendar	id	%1 peserta dibuang karena tiada hak mengundang
 %1 records imported	calendar	id	%1 rekaman diimpor
 %1 weeks	calendar	id	%1 minggu
@@ -82,6 +83,7 @@ creator	calendar	id	Creator
 csv	calendar	id	CSV
 csv-fieldname	calendar	id	Nama field-CSV
 csv-filename	calendar	id	Nama berkas CSV
+custom	calendar	id	Custom
 custom fields	common	id	Custom fields
 custom_2	common	id	Senggang/Sibuk
 daily	calendar	id	Harian
@@ -119,6 +121,7 @@ event deleted	calendar	id	Kegiatan dihapus
 event details follow	calendar	id	Berikut adalah detil Kegiatan
 event saved	calendar	id	Kegiatan disimpan
 event will occupy the whole day	calendar	id	Kegiatan akan berlangsung sehari penuh
+events	common	id	events
 exception	calendar	id	Pengecualian
 exceptions	calendar	id	Pengecualian
 existing links	calendar	id	Tautan yang ada

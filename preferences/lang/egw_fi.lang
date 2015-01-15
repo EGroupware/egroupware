@@ -27,13 +27,14 @@ default application	preferences	fi	Oletussovellus
 default font	preferences	fi	Oletus kirjasinlaji
 default font size	preferences	fi	Oletus kirjasinkoko
 default preferences	preferences	fi	Oletusasetukset
-default theme	preferences	fi	Oletusteema
 delete categories	preferences	fi	Poista kategoriat
 description can not exceed 255 characters in length !	preferences	fi	Kuvauksen pituus ei saa ylittää 255:ä merkkiä!
+disable	preferences	fi	Ota pois käytöstä
 display thumbnails for linked images	preferences	fi	Näytä linkitettyjen kuvien thumbnailit
 div	preferences	fi	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fi	Haluatko näyttää kellonajan 24 tunnin muodossa, vai näyttää 12 tuntia ja am/pm -lyhenteen?
 edit custom fields	preferences	fi	Muokkaa lisäkenttiä
+enable	preferences	fi	Ota käyttöön
 enable drag and drop functionality (experimental)	preferences	fi	Drag & Drop
 enable selectbox dropdown resizing for ie (experimental)	preferences	fi	Ota käyttöön valintalaatikon pudotusvalikon koonmääritys toiminto IE:lle.
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	fi	Ota käyttöön / pois käytöstä 'drag and drop' toiminto kaikissa sovelluksissa. Jos selain ei tue toimintoa, se otetaan pois käytöstä automaattisesti.
@@ -67,7 +68,6 @@ no user-selection at all	common	fi	Ei ollenkaan käyttäjävalintaa
 note: this feature does *not* change your email password. this will	preferences	fi	Huom: tämä asetus EI muuta sähköpostin salasanaa. Sähköpostin salasana on vaihdetaan muuta kautta.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fi	Huom! Tämä asetus EI muuta sähköpostin salasanaa. Sähköpostin salasana on vaihdetaan muuta kautta.
 number format	preferences	fi	Numeroiden muoto
-office 2003 theme	preferences	fi	Office 2003 teema
 old password and new password are the same. this is invalid. you must enter a new password	preferences	fi	Vanha ja uusi salasana ovat samanlaiset. Valitse uusi salasana.
 p: paragraph	preferences	fi	p: Paragraph
 password changed	preferences	fi	Salasana vaihdettu!
@@ -99,7 +99,6 @@ show navigation bar as	preferences	fi	Näytä navigaatiopalkki
 show number of current users	preferences	fi	Nykyiset käyttäjät
 show text on navigation icons	preferences	fi	Näytä navigaatiokuvakkeiden teksti
 show_more_apps	common	fi	Näytä lisää sovelluksia
-silver theme	preferences	fi	Silver -teema
 spellchecker language	addressbook	fi	Oikolukuohjelman kieli
 text only	preferences	fi	Vain teksti
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fi	Oletus sovellus käynnistyy kun kirjaudut EGroupwareen tai painat etusivun kuvaketta.<br>Sinulla voi olla enemmän kuin yksi sovellus etusivullasi (pitää asettaa sovelluskohtaisesti), jollet määrittele tiettyä sovellusta tähän.

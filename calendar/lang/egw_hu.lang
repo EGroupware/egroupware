@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	hu	%1 %2 a %3-ban
+%1 hours	calendar	hu	%1 órák
 %1 records imported	calendar	hu	%1 bejegyzés importálva
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	hu	%1 bejegyzés beolvasva (importálás nem történt, az előző lépésben a Test Import kikapcsolása után élesben történik a beolvasás)
 %1 weeks	calendar	hu	%1 hét
@@ -73,6 +74,7 @@ created	calendar	hu	Létrehozva
 csv	calendar	hu	CSV
 csv-fieldname	calendar	hu	CSV-Mezőnév
 csv-filename	calendar	hu	CSV-Fájlnév
+custom	calendar	hu	Egyedi
 custom fields	common	hu	Egyedi Mezők
 custom_2	common	hu	szabad/foglalat
 daily	calendar	hu	Naponta

@@ -16,23 +16,26 @@ charset for the csv export	addressbook	nl	Karakterset voor de CSV export
 click to select a color	preferences	nl	Klik om een kleur te kiezen
 color	preferences	nl	Kleur
 country	preferences	nl	Land
+data exchange settings	preferences	nl	Data exchange instellingen
 date format	preferences	nl	Datumweergave
 default	preferences	nl	standaard
 default application	preferences	nl	Standaard toepassing
 default preferences	preferences	nl	Standaard voorkeuren
-default theme	preferences	nl	Standaard theme
 delete categories	preferences	nl	Verwijder categorieën
 description can not exceed 255 characters in length !	preferences	nl	Beschrijving mag de 255 tekens niet overschrijden in lengte!
+disable	preferences	nl	Deactiveren
 display thumbnails for linked images	preferences	nl	Toon miniaturen voor gekoppelde afbeeldingen
 div	preferences	nl	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	nl	Prefereert u de tijd in 24-uurs formaat, of in 12-uurs formaat met am/pm toegevoegd?
 edit custom fields	preferences	nl	wijzig aangepaste velden
+enable	preferences	nl	inschakelen
 enable drag and drop functionality (experimental)	preferences	nl	Schakel drag and drop functionaliteit in (experimenteel)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	nl	Schakel drag and drop functies in alle toepassingen in of uit. Indien de browser drag and drop niet ondersteund wordt, wordt het vanzelf uitgeschakeld. Deze functie is op dit moment experimenteel.
 enter your new password	preferences	nl	Voer uw nieuwe wachtwoord in
 enter your old password	preferences	nl	Voer uw oude wachtwoord in
 failed to change password.	preferences	nl	Wachtwoord kan niet worden gewijzigd.
 forced preferences	preferences	nl	Geforceerde voorkeuren
+general settings	preferences	nl	Algemene instellingen
 help off	preferences	nl	Help uitgeschakeld
 hours	preferences	nl	uren
 how do you like to display accounts	preferences	nl	Hoe wilt u accounts weergeven?
@@ -53,7 +56,6 @@ no default	preferences	nl	Geen standaard
 no user-selection at all	common	nl	Totaal geen gebruikersselectie
 note: this feature does *not* change your email password. this will	preferences	nl	Opmerking: Deze optie wijzigt uw email wachtwoord niet. Dit moet
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	nl	Let op: Deze optie wijzigt *niet* uw email-wachtwoord. Dit moet handmatig te gebeuren.
-office 2003 theme	preferences	nl	Office 2003 theme
 p: paragraph	preferences	nl	p: Paragraaf
 please, select a new theme	preferences	nl	Selecteer een nieuw thema
 popup with search	preferences	nl	Popupvenster met zoekfunctie
@@ -79,7 +81,6 @@ show navigation bar as	preferences	nl	Navigatiebalk weergeven als
 show number of current users	preferences	nl	Aantal huidige gebruikers weergeven
 show text on navigation icons	preferences	nl	Geef tekst weer op de navigatiebalk
 show_more_apps	common	nl	Meer toepassingen weergeven
-silver theme	preferences	nl	Silver theme
 spellchecker language	addressbook	nl	Spellingcontrole
 text only	preferences	nl	Alleen tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	nl	De standaard toepassing wordt direct geopend na het inloggen in eGroupWare en wanneer u klikt op start.<br />U kunt ook informatie van meerdere applicaties weergeven op de startpagina door hier geen specifieke pagina te selecteren. Niet alle toepassingen kunnen informatie tonen op de startpagina. Een voorbeeld toepassing die het wel kan is 'Kalender'. Zie de voorkeuren van 'Kalender' voor meer informatie.

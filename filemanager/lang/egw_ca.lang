@@ -1,11 +1,13 @@
 %1 already exists as a file	filemanager	ca	%1 ja existeix com a arxiu
 %1 starts with '%2'	filemanager	ca	%1 comença amb '%2'
 actions	filemanager	ca	Accions
+administrators	filemanager	ca	Administradors
 applications	common	ca	Aplicacions
 cancel editing %1 without saving	filemanager	ca	Cancelar la edición de %1 sin guardar
 cannot create directory because it begins or ends in a space	filemanager	ca	No es pot crear el directori perqué comença o acaba amb un espai
 check all	filemanager	ca	Comprova-ho tot
 comment	filemanager	ca	Comentari
+configuration changed.	filemanager	ca	Configuració canviada.
 copied %1 to %2	filemanager	ca	Copiat %1 a %2
 copy to	filemanager	ca	Copiar A
 could not copy %1 to %2	filemanager	ca	No es pot copiar %1 a %2
@@ -23,9 +25,13 @@ deleted %1	filemanager	ca	%1 esborrat
 directory	filemanager	ca	Directori
 directory %1 already exists	filemanager	ca	El directori %1 ja existeix
 directory %1 does not exist	filemanager	ca	El directori %1 no existeix
+disable	filemanager	ca	Deshabilitar
 download	filemanager	ca	Descarregar
 edit comments	filemanager	ca	Editar comentaris
-file	filemanager	ca	Arxiu
+enable	filemanager	ca	Habilitar
+everyone	filemanager	ca	tothom
+expires	filemanager	ca	Caduca
+file	common	ca	Arxiu
 file %1 could not be created.	filemanager	ca	No es pot crear l'arxiu %1.
 file names cannot contain "%1"	filemanager	ca	Els noms d'arxiu no poden tenir "%1"
 filemanager	common	ca	Administrador d'Arxius
@@ -46,6 +52,7 @@ move to	filemanager	ca	Moure A
 moved %1 to %2	filemanager	ca	S'ha mogut %1 a %2
 no files in this directory.	filemanager	ca	No hi ha fitxers en aquest directori
 no version history for this file/directory	filemanager	ca	No hi ha historial de versió per aquest arxiu o directori
+noone	filemanager	ca	Ningú
 open	filemanager	ca	obert
 operation	filemanager	ca	Operació
 permissions	filemanager	ca	Permisos

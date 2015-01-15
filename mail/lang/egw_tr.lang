@@ -1,4 +1,12 @@
 deleted	mail	tr	Silindi
+disable	mail	tr	Engelle
+edit account	mail	tr	Hesap düzenle
+enable	mail	tr	Etkinleþtir
 event details follow	mail	tr	Etkinlik Detaylarý Ektedir
+extended	mail	tr	Geniþletilmiþ
 from	mail	tr	Nereden
 mail settings	mail	tr	Mail ayarlarý
+permission denied	mail	tr	Ýzin verilmedi
+select all	mail	tr	Tamam?n? seç
+text	mail	tr	Metin
+write	mail	tr	Yaz

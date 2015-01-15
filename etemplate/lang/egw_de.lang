@@ -220,6 +220,7 @@ grid	etemplate	de	Tabelle
 grid column attributes	etemplate	de	Attribute der Tabellenspalte
 grid row attributes	etemplate	de	Attribute der Tabellenzeile
 groupbox	etemplate	de	Gruppierung
+h	etemplate	de	h
 hbox	etemplate	de	HBox
 height	etemplate	de	Höhe
 height of row (in % or pixel)	etemplate	de	Höhe der Zeile (in % oder Pixel)
@@ -279,6 +280,7 @@ linkstring	etemplate	de	VerknüpfungZeichenkette
 linkto	etemplate	de	VerknüpfungZu
 list of files linked to the current record	preferences	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
+loading	etemplate	de	lade
 maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
 message ...	etemplate	de	Nachricht ...
 message prepared for sending.	etemplate	de	Nachricht zum Versand vorbereitet.
@@ -369,6 +371,8 @@ right	etemplate	de	Rechts
 row...	etemplate	de	Zeile...
 sa	etemplate	de	Sa
 save all	etemplate	de	Alle speichern
+save as	etemplate	de	Konvertiere E-Mails in andere Anwendung als
+save as zip	etemplate	de	Als ZIP-Datei speichern
 save selected columns as default preference for all users.	etemplate	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
 save the changes made and close the window	etemplate	de	speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
@@ -377,6 +381,7 @@ saves the template with given version number and closes the window	etemplate	de	
 scale	etemplate	de	Scale
 scale for float	etemplate	de	Nachkommastellen für Gleitkommawerte
 search	etemplate	de	Suchen
+search letter	etemplate	de	Suche nach Buchstaben
 search...	etemplate	de	Suchen...
 select a category	etemplate	de	eine Kategorie auswählen
 select a primary contact, to show in the list	etemplate	de	einen Hauptkontakt auswählen, der in der Auflistung mit angezeigt wird
@@ -396,6 +401,7 @@ select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
 select day of week	etemplate	de	Wochentag auswählen
 select entry	etemplate	de	Eintrag auswählen
+select file(s) from vfs	etemplate	de	Datein aus dem VFS wählen
 select files from filemanager ...	etemplate	de	Dateien aus Dateimanager auswählen ...
 select hour	etemplate	de	Stunde auswählen
 select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
@@ -414,6 +420,7 @@ select which accounts to show	etemplate	de	Benutzer zum Anzeigen auswählen
 select which values to show	etemplate	de	auswählen welche Werte angezeigt werden
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
+set as default	etemplate	de	Als Vorgabe setzen
 set these columns as the default	etemplate	de	Speichern Sie diese Spaltenauswahl als Vorgabe
 sets today as date	etemplate	de	setzt heutiges Datum
 should the form be submitted or any custom javascript be executed	etemplate	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden

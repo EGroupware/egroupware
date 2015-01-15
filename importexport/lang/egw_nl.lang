@@ -1,3 +1,6 @@
+addressbook csv import	importexport	nl	Adresboek CSV import
+addressbook vcard import	importexport	nl	Adresboek vCard import
+all users	importexport	nl	Alle gebruikers
 allowed users	importexport	nl	Toegestane gebruikers
 automatically created by importexport	importexport	nl	Automatisch aangemaakt door importexport
 changed	importexport	nl	Veranderd
@@ -15,11 +18,14 @@ deleted	importexport	nl	verwijderd
 expert options	importexport	nl	Expert opties
 export	importexport	nl	Export
 export all selected definitions	importexport	nl	exporteer ALLE geselecteerde definities
+export definition to use for nextmatch export	preferences	nl	Export definitie om te gebruiken bij nextmatch export
 exported	importexport	nl	geexporteerd
+extra encodings	importexport	nl	Extra versleutelen
 false	importexport	nl	onwaar
 finish	importexport	nl	beëindig
 general	preferences	nl	Algemeen
 general fields:	preferences	nl	Algemene velden:
+if you specify an export definition, it will be used when you export	preferences	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 import	importexport	nl	Importeren
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	nl	Importdefinities (Let op: Bestaande definities met dezelfde naam worden overschreven!!!)
 importexport wizard finished successfully!	importexport	nl	ImportExport wizard is succesvol geëindigd!
@@ -36,6 +42,8 @@ select plugin	importexport	nl	Selecteer plugin
 some nice text	importexport	nl	een fraaie uitleg
 translation	importexport	nl	Vertaling
 true	importexport	nl	waar
+unable to delete	importexport	nl	Niet mogelijk te verwijderen
 use default	importexport	nl	Gebruik standaard
+user preference	importexport	nl	Gebrukers voorkeur
 which useres are allowed for this definition	importexport	nl	Welke gebruikers mogen deze definitie gebruiken
 you need to select an app and format first!	importexport	nl	U moet eerst een toepassing en formaat selecteren!

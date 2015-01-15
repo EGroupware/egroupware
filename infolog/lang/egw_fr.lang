@@ -159,7 +159,7 @@ do you want a notification, if items you delegated are about to start?	infolog	f
 do you want a notification, if items you delegated are due?	infolog	fr	Être notifié si des entrées que vous avez déléguées sont dues.
 do you want to receive notifications as html-mails or plain text?	infolog	fr	Recevoir les notifications en mail HTML ou texte simple.
 don't show infolog	infolog	fr	NE PAS afficher InfoLog
-done	common	fr	Fait
+done	infolog	fr	Fait
 download	infolog	fr	Télécharger
 download url for links	infolog	fr	URL de téléchargement pour les liens
 due %1	infolog	fr	Dû %
@@ -187,6 +187,7 @@ error: the entry has been updated since you opened it for editing!	infolog	fr	Er
 execute a further action for this entry	infolog	fr	Exécuter une action de plus pour cette entrée
 existing links	infolog	fr	Liens existants
 exists	infolog	fr	Existe
+export definition to use for nextmatch export	infolog	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports in ical format.	infolog	fr	Exportes au format iCal.
 exports infolog entries into a csv file.	infolog	fr	Exporter les entrées d'Infolog dans un fichier CSV.
 favorites	infolog	fr	Favoris
@@ -216,6 +217,9 @@ id	infolog	fr	Id
 id#	infolog	fr	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	fr	Si un type a un propriétaire de groupe, toutes les entrées de ce type appartiendront à ce groupe, et NON à l'utilisateur qui l'a créé!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	fr	Si non renseigné, la ligne contenant la recherche et les filtres est cachée lorsqu'il y a plus d'entrées que le "Nombre max d'occurences correspondantes par page" (défini dans les préférences).
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
+if you specify an export definition, it will be used when you export	infolog	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 import next set	infolog	fr	importer l´élément suivant
 importance	infolog	fr	Importance
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	fr	Importe les entrées dans l'Infolog depuis un fichier CSV. CSV veut dire 'Valeurs Séparées par des Virgules". Dans l'onglet d'options, vous pouvez aussi choisir d'autres séparateurs.
@@ -254,7 +258,6 @@ leave it empty	infolog	fr	laisser vide
 leave it empty for a full week	infolog	fr	Laisser vide pour une semaine complète
 leave without saveing the entry	infolog	fr	quitter sans enregistrer l'entrée
 leaves without saveing	infolog	fr	quitte sans enregistrer
-length<br>rows	infolog	fr	Longueur<br>Lignes
 limit number of description lines (default 5, 0 for no limit)	infolog	fr	Limiter le nombre de lignes de description. Défaut = 5, 0 = pas de limite.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	fr	Limiter la largeur de la colonne de description. Ne fonctionne que si le nombre de ligne est défini. 0 = pas de limite.
 link	infolog	fr	Lien
@@ -262,8 +265,8 @@ linked to %1	infolog	fr	Lié à %1
 links	infolog	fr	Liens
 links and attached files	infolog	fr	Liens et fichiers attachés
 links of this entry	infolog	fr	Liens de cette entrée
+links to specified application.  example: {{links/infolog}}	infolog	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
 list all categories	infolog	fr	Liste toutes les catégories
-list no subs/childs	infolog	fr	Ne pas lister les Sous/Enfants
 list of files linked to the current record	infolog	fr	Liste des fichiers liés à l'enregistrement en cours
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	fr	Charge les champs personnalisés dans l'index, si filtré par les types sélectionnés (ex. pour les afficher dans un modèle d'index spécifique au type)
 location	infolog	fr	Emplacement
@@ -300,6 +303,7 @@ notification settings	infolog	fr	Paramètres de notification
 number of records to read (%1)	infolog	fr	Nombre d'enregistrements à lire (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	fr	nombre de lignes pour un champ d´entrées multilignes ou pour une boîte de sélection multiple
 offer	infolog	fr	Offre
+old fixed definition	infolog	fr	L'ancienne définition fixe
 one day after	infolog	fr	Un jour plus tard
 one day in advance	infolog	fr	Un jour plus tôt
 ongoing	infolog	fr	Entrant
@@ -375,6 +379,7 @@ responsible upcoming	infolog	fr	Responsable à venir
 responsible user, priority	infolog	fr	Responsable utilisateur, priorité
 returns a list / search for records.	infolog	fr	Retourne une liste / Recherche d´enregistrements.
 rights for the responsible	infolog	fr	Droits pour le responsable
+rows	infolog	fr	Lignes
 same day	infolog	fr	Même jour
 save	infolog	fr	Enregistrer
 saves the changes made and leaves	infolog	fr	enregistre les modifications et quitte
@@ -451,6 +456,7 @@ the text displayed to the user	infolog	fr	le texte affiché pour l´utilisateur
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
 til when should the todo or phonecall be finished	infolog	fr	Quand la tâche ou l'appel téléphonique devrait être terminé
 times	infolog	fr	Heures
+titles of any entries linked to the current record, excluding attached files	infolog	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 to many might exceed your execution-time-limit	infolog	fr	trop peut excéder votre temps limite d´exécution.
 to what should the startdate of new entries be set.	infolog	fr	A quoi devrait être fixée la date de départ de la nouvelle entrée.
 today	infolog	fr	Aujourd'hui

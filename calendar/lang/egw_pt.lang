@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	pt	%1 %2 em %3
+%1 hours	calendar	pt	%1 horas
 %1 records imported	calendar	pt	%1 registos importados
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt	%1 registos lidos (ainda por importar: pode voltar atrás e desmarcar a opção Importação de Teste)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pt	<b>Nota</b>: O calendário integra os feriados do seu país, estando definido como %1. Pode alterá-lo nas suas %2.<br />Os feriados são %3 automaticamente instalados a partir de %4. Pode alterá-lo no %5.
@@ -9,6 +10,7 @@ accepted	calendar	pt	Aceite
 access denied to the calendar of %1 !!!	calendar	pt	Acesso negado ao calendário de %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt	Acção que gerou o aviso: Adicionada, Cancelada, Aceite, Rejeitada, ...
 actions	calendar	pt	Acções
+actions...	calendar	pt	Ações ...
 add alarm	calendar	pt	Adicionar aviso
 add timesheet entry	calendar	pt	Adicionar registo da folha de tempo
 added	calendar	pt	Adicionado
@@ -44,6 +46,7 @@ calendar settings	admin	pt	Configurações do calendário
 calendar-fieldname	calendar	pt	calendário-Nome do campo
 can't add alarms in the past !!!	calendar	pt	Não é possível adicionar avisos no passado !!!
 canceled	calendar	pt	Cancelado
+change history	calendar	pt	Mudar a história
 charset of file	calendar	pt	Charset do ficheiro
 check all	calendar	pt	Marcar todas
 choose a category	calendar	pt	Escolher uma categoria
@@ -56,11 +59,14 @@ countries	calendar	pt	Países
 country	calendar	pt	País
 create new links	calendar	pt	Criar novas ligações
 created	calendar	pt	Criado
+creator	calendar	pt	Criador
 csv	calendar	pt	CSV
 csv-fieldname	calendar	pt	CSV-Nome de campo
 csv-filename	calendar	pt	CSV-Nome de ficheiro
+custom	calendar	pt	Personalizar
 custom fields	common	pt	Personalizar campos
 daily	calendar	pt	Diário/a
+data exchange settings	calendar	pt	Configurações de troca de dados
 day	calendar	pt	Dia
 days	calendar	pt	Dias
 days of the week for a weekly repeated event	calendar	pt	Dias da semana para um evento repetido semanalmente
@@ -69,14 +75,17 @@ dayview	calendar	pt	Visualização diária
 default appointment length (in minutes)	calendar	pt	Duração do compromisso por omissão (em minutos)
 default calendar filter	calendar	pt	Filtro do calendário por omissão
 default calendar view	calendar	pt	Visualização do calendário por omissão
+default document to insert entries	calendar	pt	Documento padrão para inserir entradas
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pt	Duração por omissão de eventos criados. A duração encontra-se em minutos. Ex: 60 por 1 hora.
 default week view	calendar	pt	Visualização semanal por omissão
+delegated	calendar	pt	Delegada
 delete series	calendar	pt	Eliminar consjuntos
 delete this alarm	calendar	pt	Eliminar este aviso
 delete this event	calendar	pt	Eliminar este evento
 delete this exception	calendar	pt	Eliminar esta excepção
 delete this series of recuring events	calendar	pt	Eliminar este conjunto de eventos recorrentes
 deleted	calendar	pt	eliminado/a
+directory with documents to insert entries	calendar	pt	Diretório com documentos para inserir entradas
 disinvited	calendar	pt	Desconvidado
 display status of events	calendar	pt	Exibir estado dos eventos
 displayed view	calendar	pt	Visualização exibida
@@ -112,9 +121,13 @@ event saved	calendar	pt	Evento guardado
 event will occupy the whole day	calendar	pt	Evento de dia inteiro
 exception	calendar	pt	Excepção
 exceptions	calendar	pt	Excepções
+execute a further action for this entry	calendar	pt	Executar uma ação adicional para esta entrada
 existing links	calendar	pt	Ligações existentes
+exists	calendar	pt	Existe
+export definition to use for nextmatch export	calendar	pt	Definição Exportar para usar para exportação NextMatch
 extended	calendar	pt	Avançado
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt	As actualizações avançadas incluem sempre os detalhes completos do evento. Os detalhes do iCal podem ser importados por outras aplicações do calendário.
+favorites	calendar	pt	Favoritos
 fieldseparator	calendar	pt	Separador de campos
 filemanager	calendar	pt	Gestor de ficheiros
 filename	calendar	pt	Nome de ficheiro
@@ -132,6 +145,8 @@ freetime search	calendar	pt	Pesquisa de tempo livre
 fri	calendar	pt	Sex
 full description	calendar	pt	Descrição completa
 fullname of person to notify	calendar	pt	Nome completo da pessoa a avisar
+general fields:	calendar	pt	Campos gerais:
+general settings	calendar	pt	Definições gerais
 global categories	calendar	pt	Categorias gerais
 global public and group public	calendar	pt	Acesso público e de grupo
 global public only	calendar	pt	Apenas acesso público
@@ -143,12 +158,14 @@ h	calendar	pt	h
 here is your requested alarm.	calendar	pt	Eis o aviso que solicitou.
 high priority	calendar	pt	prioridade alta
 history	calendar	pt	Histórico
+history logging	admin	pt	Logging História
 holiday	calendar	pt	Feriado
 holiday management	calendar	pt	Gestão de feriados
 holidays	calendar	pt	Feriados
 hours	calendar	pt	Horas
 how far to search (from startdate)	calendar	pt	pesquisar desde quando (data de início)
 how many minutes should each interval last?	calendar	pt	Quantos minutos deve ter cada intervalo?
+html link to the current record	calendar	pt	Link HTML para o registro atual
 ical	calendar	pt	iCal
 ical / rfc2445	calendar	pt	iCal / rfc2445
 ical export	calendar	pt	Exportar iCal
@@ -160,6 +177,8 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	pt	Ignorar conflito
 import	calendar	pt	Importar
 import csv-file	common	pt	Importar ficheiro CSV
+insert	calendar	pt	Inserir
+insert in document	calendar	pt	Insira no documento
 interval	calendar	pt	Intervalo
 invalid email-address "%1" for user %2	calendar	pt	Endereço de correio electrónico "%1" inválido para o utilizador %2
 last	calendar	pt	Último
@@ -168,15 +187,19 @@ lastname of person to notify	calendar	pt	Apelido da pessoa a avisar
 length of the time interval	calendar	pt	Duração do intervalo
 link to view the event	calendar	pt	Ligação para visualizar o evento
 links	calendar	pt	Ligações
+links and attached files	calendar	pt	Links e arquivos anexados
 links, attachments	calendar	pt	Ligações, Anexos
+list of files linked to the current record	calendar	pt	Lista de arquivos vinculados ao registro atual
 listview	calendar	pt	Visualização da lista
 location	calendar	pt	Local
 location to autoload from	admin	pt	Local para enviar automaticamente de
 location, start- and endtimes, ...	calendar	pt	Local, data de início e de fim, ....
 mail all participants	calendar	pt	Enviar mensagens a todos os participantes
 make freebusy information available to not loged in persons?	calendar	pt	Deseja tornar acessível a informação sobre a disponibilidade a pessoas não ligadas?
+manage mapping	calendar	pt	Gerenciar mapeamento
 minutes	calendar	pt	Minutos
 modified	calendar	pt	Modificado
+modifier	calendar	pt	Modifier
 mon	calendar	pt	Seg
 month	calendar	pt	Mês
 monthly	calendar	pt	Mensalmente
@@ -189,6 +212,7 @@ no events found	calendar	pt	Nenhum evento encontrado
 no filter	calendar	pt	Sem filtro
 no matches found	calendar	pt	Sem resultados encontrados
 no response	calendar	pt	Sem resposta
+no rights to export more than %1 entries!	calendar	pt	Nenhum direito a exportar mais de 1% entradas!
 non blocking	calendar	pt	Não conflituoso
 not	calendar	pt	não
 notification messages for added events	calendar	pt	Mensagens de aviso: Eventos adicionados
@@ -197,9 +221,11 @@ notification messages for disinvited participants	calendar	pt	Mensagens de aviso
 notification messages for modified events	calendar	pt	Mensagens de aviso: Eventos modificados
 notification messages for your alarms	calendar	pt	Mensagens de aviso: Os seus avisos
 notification messages for your responses	calendar	pt	Mensagens de aviso: As suas respostas
+notification settings	calendar	pt	Configurações de notificação
 number of records to read (%1)	calendar	pt	Número de registos por ler (%1)
 observance rule	calendar	pt	Observação
 occurence	calendar	pt	Ocorrência
+old fixed definition	calendar	pt	Definição fixa Velho
 old startdate	calendar	pt	Data de início antiga
 on %1 %2 %3 your meeting request for %4	calendar	pt	Por %1 %2 %3 o seu pedido de reunião para %4
 on all modification, but responses	calendar	pt	Por todas as modificações, excluindo repostas
@@ -251,6 +277,9 @@ saves the event ignoring the conflict	calendar	pt	Guarda o evento ignorando o co
 scheduling conflict	calendar	pt	Conflito de agendamento
 select a %1	calendar	pt	seleccionar um %1
 select a time	calendar	pt	seleccionar uma hora
+select an action	calendar	pt	Selecione uma ação
+select an action...	calendar	pt	Selecione uma ação ...
+select multiple contacts for a further action	calendar	pt	Selecionar vários contatos para uma nova acção
 select resources	calendar	pt	Seleccionar fontes
 select who should get the alarm	calendar	pt	Seleccionar quem deve ser avisado
 set a year only for one-time / non-regular holidays.	calendar	pt	Definir um Ano para feriados únicos / não regulares
@@ -272,8 +301,10 @@ startrecord	calendar	pt	Registo inicial
 status changed	calendar	pt	Estado alterado
 submit to repository	calendar	pt	Submeter no Repositório
 sun	calendar	pt	Dom
+tag to mark positions for address labels	calendar	pt	Tag para marcar posições para etiquetas de endereço
 tentative	calendar	pt	Tentativa
 test import (show importable records <u>only</u> in browser)	calendar	pt	Importação de Teste (exibir registos a importar <u>apenas</u> no navegador)
+the following document-types are supported:	calendar	pt	Os seguintes tipos de documentos são suportados:
 this day is shown as first day in the week or month view.	calendar	pt	Este dia é exibido como o primeiro dia da visualização semanal ou mensal.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	pt	Este campo define o fim da sua visualização diária. Os eventos fora deste horário serão exibidos abaixo da visualização diária.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	pt	Este campo define o início da sua visualização diária.<b>Este horário será igualmente aplicado como data de início de novos eventos por omissão.
@@ -315,6 +346,7 @@ work day ends on	calendar	pt	Dia de trabalho termina às
 work day starts on	calendar	pt	Dia de trabalho começa às
 yearly	calendar	pt	Anual
 yearview	calendar	pt	Visualização anual
+yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
 you can either set a year or a occurence, not both !!!	calendar	pt	Pode definir um Ano ou uma Ocorrência. Não pode definir os dois !!!
 you can only set a year or a occurence !!!	calendar	pt	Pode apenas definir um ano ou uma ocorrência !!!
 you do not have permission to read this record!	calendar	pt	Não tem permissões para ler este registo!

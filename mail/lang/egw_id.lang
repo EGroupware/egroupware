@@ -5,47 +5,65 @@ add to addressbook	mail	id	Tambahkan ke buku alamat
 all of	mail	id	semua
 any of	mail	id	sembarang
 any status	mail	id	status apapun
+attachments	mail	id	Lampiran
 by date	mail	id	menurut tanggal
 compose	mail	id	Tulis
+compose as new	mail	id	tulis sbg pesan baru
 compress folder	mail	id	Mampatkan folder
+condition	mail	id	kondisi
 contains	mail	id	mengandung
+copy to	mail	id	Salin ke
 date(newest first)	mail	id	Tanggal (terbaru)
 date(oldest first)	mail	id	Tanggal (terkuno)
 default sorting order	mail	id	Pengurutan bawaan
+delete folder	mail	id	Hapus Folder
 deleted	mail	id	terhapus
+disable	mail	id	Disable
 discard	mail	id	buang
+discard message	mail	id	buang pesan
 draft folder	mail	id	draft folder
 drafts	mail	id	Drafts
+edit account	mail	id	Edit akoun
 emailaddress	admin	id	alamat email
 empty trash	mail	id	kosongkan trash
+enable	mail	id	enable
 error saving %1!	mail	id	Error menyimpan %1!
 error:	mail	id	Error:
 event details follow	mail	id	Berikut adalah detil Kegiatan
-felamimail	admin	id	eMail
+everyone	mail	id	everyone
+extended	mail	id	Extended
 file into	mail	id	file into
 filemanager	mail	id	Manajer berkas
 flagged	mail	id	ditandai
 folder	mail	id	folder
 folder settings	mail	id	Pengaturan Folder
+forward	mail	id	Forward
 forward as attachment	mail	id	forward as attachment
 forward inline	mail	id	forward inline
 forward to	mail	id	forward to
 from	mail	id	Dari
 from(a->z)	mail	id	Dari (A->Z)
 from(z->a)	mail	id	Dari (Z->A)
+general	admin	id	Umum
 greater than	mail	id	lebih dari
+header lines	mail	id	Baris Header
 html	mail	id	HTML
+identity	mail	id	identitas
 if	mail	id	IF
+imap	mail	id	IMAP
 imap server	mail	id	IMAP Server
 importance	mail	id	Importance
 inbox	mail	id	INBOX
 junk	mail	id	Junk
+kilobytes	mail	id	kilobyte
 later	mail	id	Later
 less than	mail	id	kurang dari
 mail settings	mail	id	Pengaturan Mail
 mark as deleted	mail	id	Tandai sbg terhapus
 matches	mail	id	kecocokan
 matches regexp	mail	id	cocok regexp
+move to	mail	id	Pindahkan ke
+no access	mail	id	No access
 no folders	mail	id	tiada folder
 no signature	mail	id	tiada tandatangan
 no subject given!	mail	id	tiada subyek diisikan!
@@ -53,14 +71,23 @@ on	mail	id	pada
 organisation	admin	id	Organisasi
 organization	mail	id	organisasi
 original message	mail	id	pesan asal
+permission denied	mail	id	Ijin ditolak
 printview	mail	id	lihat cetakan
 quicksearch	mail	id	Cari cepat
 reject with	mail	id	tolak dengan
 remove all	mail	id	Buang Semuanya
 remove immediately	mail	id	Buang segera
+rename folder	mail	id	Ubah folder
 replied	mail	id	dibalas
+reply	mail	id	Balas
+reply all	mail	id	Balas ke Semua
+reply to	mail	id	Balas Ke
 replyto	mail	id	ReplyTo
 save all	mail	id	Simpan semuanya
+save as draft	mail	id	simpan sbg draft
+save as infolog	mail	id	simpan sbg infolog
+save message to disk	mail	id	simpan pesan ke disk
+select all	mail	id	Pilih semua
 sender	mail	id	Pengirim
 sent	mail	id	Sent
 sent folder	mail	id	Sent Folder
@@ -73,11 +100,14 @@ subject(a->z)	mail	id	Subyek (A->Z)
 subject(z->a)	mail	id	Subyek (Z->A)
 template folder	mail	id	Folder Templat
 templates	mail	id	Templat
+text	mail	id	Text
 text/plain	mail	id	text/plain
 then	mail	id	THEN
 trash	mail	id	Trash
 trash folder	mail	id	Trash Folder
+unflagged	mail	id	tak ditandai
 unread	mail	id	Tak dibaca
-urgent	mail	id	mendesak
-vacation notice	admin	id	vacation notice
+vacation notice	mail	id	vacation notice
+write	mail	id	Tulis
 wrote	mail	id	menulis
+you've got new mail	mail	id	Anda mendapat email baru

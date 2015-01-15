@@ -8,21 +8,28 @@ allways a new window	mail	pl	zawsze w nowym oknie
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
+attachments	mail	pl	Załączniki
 by date	mail	pl	Według daty
+check message against next rule also	mail	pl	sprawdź również kolejnę regułę
 compose	mail	pl	Utwórz
+compose as new	mail	pl	Utwórz nowe
 compress folder	mail	pl	Kompaktuj folder
+condition	mail	pl	warunek
 contains	mail	pl	zawiera
+copy to	mail	pl	Kopiuj do
 date(newest first)	mail	pl	Data (od najnowszych)
 date(oldest first)	mail	pl	Data (od najstarszych)
 default sorting order	mail	pl	Domyślny porządek sortowania
+delete folder	mail	pl	Usuń folder
 deleted	mail	pl	skasowany
+disable	mail	pl	Wyłącz
 discard	mail	pl	odrzuć
+discard message	mail	pl	odrzuć wiadomość
 display messages in multiple windows	mail	pl	wyświetl wiadomości w wielu oknach
 display of html emails	mail	pl	Wyświetlaj wiadomość w HTML
 display only when no plain text is available	mail	pl	Wyświetlaj jedynie, jeżeli nie ma wersji tekstowej
 displaying html messages is disabled	mail	pl	Wyświetlanie wiadomości w HTML jest wyłączone
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	pl	Czy chcesz być pytany o potwierdzenie przed przeniesieniem wybranej wiadomości do innego folderu?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu przekazywania wiadomości poprzez ustawienia poczty (nawet jeśli SITO jest włączone)?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu reguł filtra (nawet jeśli SITO jest włączone)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia wysyłanego na inne adresy email jeśli pojawią się nowe wiadomości (nawet jeśli SITO jest włączone)?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia o wakacjach (nawet jeśli SITO jest włączone)?
@@ -37,36 +44,50 @@ don't use template folder	mail	pl	Nie używaj folderu szablonów
 don't use trash	mail	pl	Nie używaj Kosza
 draft folder	mail	pl	folder szkiców
 drafts	mail	pl	Szkice
+edit account	mail	pl	Edytuj konto użytkownika
+edit vacation settings	mail	pl	edytuj ustawienia autorespondera
 email notification update failed	mail	pl	aktualizacja powiadomień e-mail nie powiodła się
 emailaddress	admin	pl	adres_email
 empty trash	mail	pl	opróżnij kosz
+enable	mail	pl	włącz
 error saving %1!	mail	pl	Błąd zapisu %1!
 error:	mail	pl	Błąd:
 error: could not save message as draft	mail	pl	Błąd: Nie można zapisać wiadomości jako Szkic
 error: could not save rule	mail	pl	Błąd: Nie można zapisać zasady
 error: message could not be displayed.	mail	pl	Bład: Wiadomość nie może być wyświetlona.
 event details follow	mail	pl	Detale Wydarzenia Następują
-felamimail	admin	pl	FelaMiMail
+everyone	mail	pl	każdy
+extended	mail	pl	Rozszerzone
 file into	mail	pl	informacja o pliku
 file rejected, no %2. is:%1	mail	pl	Plik odrzucony. Jest %1 nie %2.
 filemanager	mail	pl	Pliki
 flagged	mail	pl	oflagowano
 folder	mail	pl	Katalog
 folder settings	mail	pl	Ustawienia foldera
+forward	mail	pl	Prześlij dalej
 forward as attachment	mail	pl	Prześlij dalej jako załącznik
 forward inline	mail	pl	Prześlij dalej w wiadomości
 forward to	mail	pl	Prześlij do
 from	mail	pl	Z
 from(a->z)	mail	pl	Od (A->Z)
 from(z->a)	mail	pl	Od (Z->A)
+general	admin	pl	Główne
 greater than	mail	pl	większe niż
+header lines	mail	pl	Linie nagłówka
 how to forward messages	mail	pl	sposób przekazywania wiadomości
 html	mail	pl	HTML
+identity	mail	pl	tożsamość
 if	mail	pl	JEŻELI
+if mail header	mail	pl	jeżeli nagłówek wiadomości
+if message size	mail	pl	jeżeli rozmiar wiadomości
+imap	mail	pl	IMAP
 imap server	mail	pl	Serwer IMAP
+import message	mail	pl	importuj wiadomość
 importance	mail	pl	ważność
 inbox	mail	pl	ODEBRANE
 junk	mail	pl	Śmieci
+keep a copy of the message in your inbox	mail	pl	zachowaj kopię wiadomości w folderze ODEBRANE
+kilobytes	mail	pl	kilobajtów
 later	mail	pl	Później
 less than	mail	pl	mniej niż
 mail settings	mail	pl	Ustawienia email
@@ -74,8 +95,10 @@ mark as deleted	mail	pl	Zaznacz jako usunietą
 matches	mail	pl	pasuje do
 matches regexp	mail	pl	pasuje do wyrażenia regularnego
 move selected to	mail	pl	przenieś wiadomości do
+move to	mail	pl	przenieś wiadomości do
 move to trash	mail	pl	przenieś do kosza
 never display html emails	mail	pl	Nigdy nie wyświetlaj emaili HTML
+no access	mail	pl	Brak dostępu
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pl	Nie podano adresu (TO/CC/BCC) ani folderu do zapisania wiadomości.
 no folders	mail	pl	brak folderów
 no plain text part found	mail	pl	brak części 'czystym' tekstem
@@ -83,12 +106,14 @@ no recipient address given!	mail	pl	Nie podano adresu docelowego!
 no signature	mail	pl	brak podpisu
 no subject given!	mail	pl	Nie podano tematu!
 none, create all	mail	pl	żaden, utwórz wszystko
+nothing to change.	mail	pl	Brak elementów do wprowadzenia zmian.
 on	mail	pl	na
 one address is not valid	mail	pl	Jeden adres nie jest poprawny
 only one window	mail	pl	tylko jedno okno
 organisation	admin	pl	organizacja
 organization	mail	pl	instytucja
 original message	mail	pl	wiadomość oryginalna
+permission denied	mail	pl	Dostęp zabroniony
 please configure access to an existing individual imap account.	mail	pl	proszę skonfigurować dostęp do istniejącego konta IMAP.
 please select a address	mail	pl	Proszę wybrać adres
 please select the number of days to wait between responses	mail	pl	Wybierz, ile dni czekać między odpowiedziami
@@ -100,10 +125,18 @@ refresh time in minutes	mail	pl	Czas odświeżania w minutach
 reject with	mail	pl	odrzuć z
 remove all	mail	pl	Usuń wszystko
 remove immediately	mail	pl	usuń natychmiast
+rename folder	mail	pl	Zmień nazwę foldera
 replied	mail	pl	odpowiedziano
+reply	mail	pl	Odpowiedz
+reply all	mail	pl	Odpowiedz wszystkim
+reply to	mail	pl	Odpowiedz
 replyto	mail	pl	Odpowiedz
 row order style	mail	pl	styl porządku wierszy
 save all	mail	pl	Zapisz wszystko
+save as draft	mail	pl	zapisz jako szkic
+save as infolog	mail	pl	zapisz jako zadanie Dziennika CRM
+save message to disk	mail	pl	zachowaj wiadomość na dysku
+select all	mail	pl	Zaznacz wszystkie
 sender	mail	pl	nadawca
 sent	mail	pl	Wysłano
 sent folder	mail	pl	Folder Wysłane
@@ -118,18 +151,24 @@ subject(a->z)	mail	pl	Temat (A->Z)
 subject(z->a)	mail	pl	Temat (Z->A)
 template folder	mail	pl	Katalog szablnów
 templates	mail	pl	Szablony
+text	mail	pl	Tekst
 text/plain	mail	pl	zwykły tekst
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
 the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
 then	mail	pl	WTEDY
 there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP
 trash	mail	pl	Kosz
 trash folder	mail	pl	Folder Kosza
+unflagged	mail	pl	nie oflagowano
 unread	mail	pl	nieprzeczytane
-urgent	mail	pl	pilne
-vacation notice	admin	pl	powiadomienie urlopowe
+vacation notice	mail	pl	powiadomienie urlopowe
+vacation notice is active	mail	pl	Powiadomienie urlopowe jest aktywne
 vacation start-date must be before the end-date!	mail	pl	Start Urlopu musi być wcześniejszy niż jego koniec
+view header lines	mail	pl	pokaż linie nagłówka
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
+write	mail	pl	Zapisz
 wrote	mail	pl	zapisano
 yes, offer copy option	mail	pl	tak, oferuj opcję kopii
+you've got new mail	mail	pl	Masz nową pocztę

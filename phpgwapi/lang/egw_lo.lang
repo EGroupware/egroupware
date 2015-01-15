@@ -229,6 +229,7 @@ edit categories	common	lo	ແກ້ໄຂໝວມໝູ່
 edit category	common	lo	ແກ້ໄຂໝວມໝູ່
 egroupware	common	lo	ຕາຕະລາງເວລາ
 egroupware api version	common	lo	eGroupWare API ເວີຊັນ
+egroupware version	common	lo	Egroupware Version
 egroupware: login blocked for user '%1', ip %2	common	lo	ຕາຕະລາງເວລາ:ຜູ້ໃຊ້'%1',ທີ່ຢູ່ໄອພີ%2ຖືກລະງັບ
 egypt	common	lo	EGYPT
 el salvador	common	lo	ELSALVADOR
@@ -252,9 +253,11 @@ etag	common	lo	Etag
 ethiopia	common	lo	ETHIOPIA
 everything	common	lo	ທຸກສິ່ງ
 exact	common	lo	ແນ່ນອນ
+failed to change password.	common	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	lo	ບໍ່ສາມາດຕິດຕໍ່ເຊີບເວີ້
 falkland islands (malvinas)	common	lo	FALKLAND ISLANDS(MALVINAS)
 faroe islands	common	lo	FAROE ISLANDS
+favorites	common	lo	ລາຍການທີ່ມັກ
 fax number	common	lo	ເບີແຟັກ
 features of the editor?	common	lo	ຄຸນສົມບັດເຄື່ອງມືແກ້ໄຂ?
 february	common	lo	ກຸມພາ
@@ -536,6 +539,7 @@ please set your preferences for this application	common	lo	ກະລຸນາຈ
 please wait...	common	lo	ກະລຸນາລໍຖ້າ
 please, check back with us shortly.	common	lo	ກະລຸນາກວດສອບຍ້ອນຫຼັງກັບພວກເຮົາໂດຍໃຊ້ເວລາບໍ່ດົນ
 poland	common	lo	POLAN
+popup with search	common	lo	Popup ສໍາລັບການຄົ້ນຫາ
 portugal	common	lo	PORTUGAL
 postal	common	lo	ລະຫັດໄປສະນີ
 powered by	common	lo	Powered by
@@ -780,7 +784,6 @@ your message could <b>not</b> be sent!<br>	common	lo	ຂໍ້ຄວາມຂອ
 your message has been sent	common	lo	ສົ່ງຂໍ້ຄວາມຂອງທ່ານແລ້ວ
 your search returned %1 matchs	common	lo	ການຄົ້ນຫາຂອງທ່່ານມີ %1 ອັນທີ່ກົງກັນ
 your search returned 1 match	common	lo	ການຄົ້ນຫາຂອງທ່່ານມີ 1 ອັນທີ່ກົງກັນ
-your session could not be verified.	login	lo	ເຊສຊັນຂອງທ່ານບໍ່ສາມາດກວດສອບໄດ້
 your settings have been updated	common	lo	ໄດ້ປັບປຸງການຕັ້ງຄ່າຂອງທ່ານ
 zambia	common	lo	ZAMBIA
 zimbabwe	common	lo	ZIMBABWE

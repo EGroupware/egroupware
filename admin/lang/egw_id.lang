@@ -12,6 +12,8 @@ account has been updated	common	id	Akoun telah dikinikan
 account list	admin	id	Daftar Akoun
 account permissions	admin	id	Ijin-ijin Akoun
 account preferences	admin	id	Kesukaan Akoun
+acl added.	admin	id	ACL ditambakan.
+acl deleted.	admin	id	ACL dihapus.
 acl manager	admin	id	Manajer ACL
 acl rights	common	id	Hak-hak ACL
 action	admin	id	Tindakan
@@ -104,6 +106,7 @@ delete this user	admin	id	hapus pengguna ini
 deleted	admin	id	terhapus
 deletes this field	admin	id	hapus field ini
 deliver extern	admin	id	deliver extern
+deny access	admin	id	Deny Access
 description can not exceed 255 characters in length !	admin	id	Panjang uraian tidak boleh melebihi 255 karakter!
 determines the order the fields are displayed	admin	id	menentukan urutan field ditampilkan
 disable	admin	id	Disable
@@ -112,7 +115,6 @@ disabled (not recomended)	admin	id	disabled (not recomended)
 display	admin	id	Tampilan
 document root (default)	admin	id	Document root (default)
 down	admin	id	turun
-each value is a line like <id>[=<label>]	admin	id	setiap nilai adalah sebuah baris seperti <id>[=<label>]
 edit account	admin	id	Edit akoun
 edit application	admin	id	Edit aplikasi
 edit email settings	admin	id	edit pengaturan email
@@ -143,6 +145,7 @@ false	admin	id	false
 file space	admin	id	File space
 forward only	admin	id	Hanya Forward
 full name	admin	id	Nama Lengkap
+general	admin	id	Umum
 global categories	common	id	Kategori Global
 group ?	admin	id	kelompok?
 group has been added	common	id	Kelompok telah dibuat
@@ -238,6 +241,7 @@ peer server list	admin	id	Peer server list
 peer servers	admin	id	Peer servers
 permission denied	admin	id	Ijin ditolak
 permission denied !!!	admin	id	Ijin ditolak !!!
+permission denied!!!	admin	id	Ijin ditolak!!!
 permissions	admin	id	Perijinan
 personal: eg. within a family	admin	id	Personal: eg. within a family
 php version	admin	id	PHP Version
@@ -254,6 +258,8 @@ quota size in mbyte	admin	id	ukuran kuota dalam MByte
 re-enter password	admin	id	Masukan-ulang password
 remove	admin	id	buang
 requested	admin	id	Diminta
+rights	admin	id	Hak
+rows	admin	id	Rows
 save the category	admin	id	simpan kategori ini
 saves the changes made and leaves	admin	id	simpan perubahan dan tinggalkan
 saves this entry	admin	id	Simpan entri ini

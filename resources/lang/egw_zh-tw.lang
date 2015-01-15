@@ -21,8 +21,12 @@ clear selection	resources	zh-tw	清除選擇的項目
 configure access permissions	admin	zh-tw	設定存取權限
 create new accessory for this resource	resources	zh-tw	新增這個資源的附件
 create new links	resources	zh-tw	新增連結
+custom etemplate for the contactform	resources	zh-tw	自訂 eTemplate 的聯絡表單
+custom fields	resources	zh-tw	自訂欄位
+days	resources	zh-tw	日
 delete selected resources	resources	zh-tw	刪除選擇的資源
 delete this entry	resources	zh-tw	刪除這一筆資料
+deleted	resources	zh-tw	刪除了
 description (short)	resources	zh-tw	說明（簡短）
 direct booking permissions	resources	zh-tw	直接預定權限
 don't use vfs (this will need a symlink --> see readme)	resources	zh-tw	不要使用虛擬檔案系統（這將會需要使用符號連結，請參考 README 文件說明）
@@ -85,6 +89,7 @@ something went wrong by deleting resource	resources	zh-tw	刪除資源時發生�
 something went wrong by saving resource	resources	zh-tw	儲存資源時發生錯誤
 storage information	resources	zh-tw	保管資訊
 storage information:	resources	zh-tw	保管資訊：
+the anonymous user needs add rights for it!	resources	zh-tw	訪客需要新增的權限！
 the calendar of this resource	resources	zh-tw	這個資源的行事曆
 this module displays the resources app	resources	zh-tw	這個模組顯示資源應用
 use general resources icon	resources	zh-tw	使用一般資源圖示
@@ -99,5 +104,6 @@ web-site for this resource	resources	zh-tw	這個資源的網站
 where to find this resource?	resources	zh-tw	從哪裡找的到這個資源？
 which category does this resource belong to?	resources	zh-tw	這個資源屬於哪個類別？
 write permissions	resources	zh-tw	寫入權限
+yes, only admins can purge deleted items	admin	zh-tw	是，只有管理者可以排除刪除的項目
 you are not permitted to get information about this resource!	resources	zh-tw	您沒有取得關於這個資源資訊的權限！
 you chose more resources than available	resources	zh-tw	您選擇的資源超過現有資源

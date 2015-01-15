@@ -8,22 +8,29 @@ allways a new window	mail	fi	Aina uusi ikkuna
 always show html emails	mail	fi	Näytä aina HTML sähköpostit
 any of	mail	fi	Mikä tahansa
 any status	mail	fi	Mikä tahansa tila
+attachments	mail	fi	Liitteet
 by date	mail	fi	Päivämäärän mukaan
+check message against next rule also	mail	fi	Tarkista viesti myös seuraavaa sääntöä vastaan
 compose	mail	fi	Kirjoita viesti
+compose as new	mail	fi	Kirjoita uusi viesti
 compress folder	mail	fi	Tiivistä kansio
+condition	mail	fi	Ehdot
 contains	mail	fi	Sisältää
+copy to	mail	fi	Kopio
 date(newest first)	mail	fi	Päivämäärä - uusin ensin
 date(oldest first)	mail	fi	Päivämäärä - vanhin ensin
 default sorting order	mail	fi	Oletus lajittelujärjestys
+delete folder	mail	fi	Poista kansio
 deleted	mail	fi	Poistettu
+disable	mail	fi	Ota pois käytöstä
 discard	mail	fi	Hylkää
+discard message	mail	fi	Hylkää viesti
 display messages in multiple windows	mail	fi	Näytä viesti uudessa ikkunassa?
 display of html emails	mail	fi	HTML sähköpostien näkymä
 display only when no plain text is available	mail	fi	Näytä vain kun "pelkkä teksti" ei ole saatavilla
 displaying html messages is disabled	mail	fi	HTML viestien näyttäminen on estetty
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	fi	haluatko, että sinulta varmistetaan asia ennenkuin liität tiedostoja?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	fi	Haluatko, että sinulta varmistetaan asia ennenkuin siirrät valitut viestit toiseen kansioon?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	fi	Haluatko estää välitettävän (Forwarding) sähköpostin muokkauksen/käyttöönoton, (vaikka SIEVE on käytössä)?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	fi	Haluatko estää suodatinsääntöjen (Filter rules) muokkauksen/käyttöönoton, (vaikka SIEVE on käytössä)?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	fi	Haluatko estää houmautussviestien muokkauksen /käyttöönoton, kun sähköpostin saapuessa tiettyyn kansioon huomautusvieti lähetettäisiin toiseen kansioon, (vaikka SIEVE on käytössä)?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	fi	Haluatko estää lomaviestien (Vacation notice) muokkauksen /käyttöönoton, (vaikka SIEVE on käytössä)?
@@ -38,9 +45,12 @@ don't use template folder	mail	fi	Älä käytä Mallipohjat -kansiota
 don't use trash	mail	fi	Älä käytä Roskakori -kansiota
 draft folder	mail	fi	Luonnokset -kansio
 drafts	mail	fi	Luonnokset
+edit account	mail	fi	Muokkaa käyttäjätiliä
+edit vacation settings	mail	fi	Muokkaa lomavastaaja-asetuksia
 email notification update failed	mail	fi	Sähköpostin huomautusviestipäivitys epäonnistui
 emailaddress	admin	fi	Sähköpostiosoite
 empty trash	mail	fi	Tyhjennä roskakori
+enable	mail	fi	Ota käyttöön
 error saving %1!	mail	fi	Virhe tallennettaessa %1!
 error:	mail	fi	Virhe:
 error: could not save message as draft	mail	fi	Virhe: Viestiä ei voitu tallentaa luonnoksena.
@@ -48,23 +58,32 @@ error: could not save rule	mail	fi	Virhe: Sääntöä ei voitu tallentaa
 error: could not send message.	mail	fi	Virhe: Viestiä ei voitu lähettää.
 error: message could not be displayed.	mail	fi	Virhe: Viestiä ei voida näyttää.
 event details follow	mail	fi	Tapahtuman yksityiskohdat alla
-felamimail	admin	fi	Sähköposti
+everyone	mail	fi	Kaikki käyttäjät
+extended	mail	fi	Laajennettu
 file into	mail	fi	Tiedosto
 filemanager	mail	fi	Tiedostonhallinta
 flagged	mail	fi	Merkitty tunnuksella
 folder	mail	fi	Kansio
 folder settings	mail	fi	Kansion asetukset
+forward	mail	fi	Välitä eteenpäin
 forward as attachment	mail	fi	Liitteenä
 forward inline	mail	fi	Viestiin sisällytettynä
 forward to	mail	fi	Välitä:
 from	mail	fi	Mistä
 from(a->z)	mail	fi	A:sta Z:taan
 from(z->a)	mail	fi	Z:sta A:han
+general	admin	fi	Yleinen
 greater than	mail	fi	Suurempi kuin
+header lines	mail	fi	Ylätunnisterivit
 how to forward messages	mail	fi	Kuinka viestejä välitetään
 html	mail	fi	HTML
+identity	mail	fi	Identiteetti
 if	mail	fi	JOS
+if mail header	mail	fi	Jos postin ylätunniste
+if message size	mail	fi	Jos viestin koko
+imap	mail	fi	IMAP
 imap server	mail	fi	IMAP -palvelin
+import message	mail	fi	Tuo sähköpostiviesti
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	fi	Viestin %1 tuonti epäonnistui. Viestiä ei voitu tallentaa kansioon %2. Syy: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	fi	Viestin %1 tuonti epäonnistui. Kohdekansiota %1 ei löytynyt.
 import of message %1 failed. destination folder not set.	mail	fi	Viestin %1 tuonti epäonnistui. kohdekansiota ei asetettu.
@@ -73,16 +92,20 @@ importance	mail	fi	Tärkeys
 inbox	mail	fi	Saapuneet
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	fi	Aseta allekirjoitus oman viestisi alapuolelle vastatessasi sähköpostiin.
 junk	mail	fi	Roskaposti
+keep a copy of the message in your inbox	mail	fi	Pidä kopio viestistä Inboxissa
+kilobytes	mail	fi	Kilotavu(a)
 later	mail	fi	Jälkeen
 less than	mail	fi	Vähemmän kuin
-mail	mail	fi	Lähetä sähköpostilla
+mail	common	fi	Lähetä sähköpostilla
 mail settings	mail	fi	Sähköpostiasetukset
 mark as deleted	mail	fi	Merkitse poistetuksi
 matches	mail	fi	Täsmäävät
 matches regexp	mail	fi	Täsmäävät merkkijonoon
 move selected to	mail	fi	Siirrä valitut
+move to	mail	fi	Siirrä valitut:
 move to trash	mail	fi	Siirrä roskakoriin
 never display html emails	mail	fi	Älä näytä HTML -sähköposteja
+no access	mail	fi	Ei pääsyä
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	fi	Osoitetta ei ole annettu kohtaan Kenelle/Kopio/Piilokopio , eikä Kansiota, mihin viesti pitäisi tallentaa löydy.
 no folders	mail	fi	Ei kansioita
 no plain text part found	mail	fi	Pelkkää tekstiä ei löytynyt
@@ -90,12 +113,14 @@ no recipient address given!	mail	fi	Vastaanottajan osoite puuttuu!
 no signature	mail	fi	Ei allekirjoitusta
 no subject given!	mail	fi	Aihe puuttuu!
 none, create all	mail	fi	Ei mitään, luo kaikki
+nothing to change.	mail	fi	Ei muutettavaa.
 one address is not valid	mail	fi	Yksi osoite ei kelpaa
 only one window	mail	fi	Vain yksi ikkuna
 only send message, do not copy a version of the message to the configured sent folder	mail	fi	Ainoastaan lähetä viesti, älä kopoi sitä Lähetetyt-kansioon
 organisation	admin	fi	Organisaatio
 organization	mail	fi	Organisaatio
 original message	mail	fi	Alkuperäinen viesti
+permission denied	mail	fi	Pääsy estetty
 please configure access to an existing individual imap account.	mail	fi	Konfiguroi jo olemassaolevan IMAP sähköpostitilisi asetukset.
 please select a address	mail	fi	Valitse osoite
 please select the number of days to wait between responses	mail	fi	Valitse päivien lukumäärä, joka vastausten välillä odotetaan
@@ -106,12 +131,22 @@ refresh time in minutes	mail	fi	Päivitysaika minuutteina
 reject with	mail	fi	Hylkää
 remove all	mail	fi	Poista kaikki
 remove immediately	mail	fi	Poista heti
+rename folder	mail	fi	Nimeä kansio uudelleen
 replied	mail	fi	Vastattu
+reply	mail	fi	Vastaa
+reply all	mail	fi	Vastaa kaikille
+reply to	mail	fi	Vastaanottaja
 replyto	mail	fi	Vastaanottaja
 row order style	mail	fi	Rivijärjestyksen muotoilu
 save all	mail	fi	Tallenna kaikki
 save as	mail	fi	Tallenna nimellä
+save as draft	mail	fi	Tallenna luonnoksena
+save as infolog	mail	fi	Tallenna InfoLogina
+save as ticket	mail	fi	Tallenna reklamaationa
+save message to disk	mail	fi	Tallenna viesti levylle
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	fi	Viestin %1 tallennus epäonnistui. Viestiä ei voitu tallentaa kansioon %2. Syy: %3
+save:	mail	fi	Tallenna:
+select all	mail	fi	Valitse kaikki
 send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä Lähetetyt kansioon
 sender	mail	fi	Lähettäjä
 sent	mail	fi	Lähetetyt
@@ -127,20 +162,26 @@ subject(a->z)	mail	fi	Aiheet A > Z
 subject(z->a)	mail	fi	Aiheet Z > A
 template folder	mail	fi	Mallipohjat -kansio
 templates	mail	fi	Mallipohjat
+text	mail	fi	Teksti
 text/plain	mail	fi	Pelkkä teksti
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	fi	Viestin lähettäjä haluaa vahvistuksen, että olet saanut tämän viestin. Haluatko lähettää sen?
 the mimeparser can not parse this message.	mail	fi	Mimeparseri ei voi jäsentää tätä viestiä
 then	mail	fi	TAI
 there is no imap server configured.	mail	fi	IMAP palvelinta ei ole konfiguroitu
 trash	mail	fi	Roskakori
 trash folder	mail	fi	Roskakori -kansio
+unflagged	mail	fi	Tunnukseton
 unread	mail	fi	Lukematon
-urgent	mail	fi	Tärkeä
-vacation notice	admin	fi	Lomavastaaja
+vacation notice	mail	fi	Lomavastaaja
+vacation notice is active	mail	fi	Lomavastaaja on käytössä
 vacation start-date must be before the end-date!	mail	fi	Lomavastaajan aloituspäivän pitää olla ennen loppumispäivää
+view header lines	mail	fi	Näytä ylätunnisterivit
 when deleting messages	mail	fi	Kun poistetaan viestejä
 when sending messages	mail	fi	Kun lähetetään viestejä
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	fi	Minkä kansioiden (Lähetetyt-kansion lisäksi) tulisi käyttää Sent Folder View Schemaa?
 which folders - in general - should not be automatically created, if not existing	mail	fi	Mitä kansioita -yleisesti ottaen - EI pitäisi automaattisesti luoda, jos ne eivät ole jo olemassa?
+write	mail	fi	Kirjoita
 wrote	mail	fi	Kirjoitettu
 yes, offer copy option	mail	fi	Kyllä, tarjoa kopiointimahdollisuutta
 you can either choose to save as infolog or tracker, not both.	mail	fi	Voit tallentaa joko InfoLogina tai reklamaationa, et molempina!
+you've got new mail	mail	fi	Sinulle on uusi sähköposti

@@ -10,6 +10,7 @@
 %s onchange	etemplate	ca	%s al cambiar
 %s readonly	etemplate	ca	%s de sólo lectura
 a pattern to be searched for	etemplate	ca	un patrón de búsqueda
+actions...	etemplate	ca	Accions...
 add a new column (after the existing ones)	etemplate	ca	Añadir una columna nueva (detrás de las existentes)
 add a new multi-column index	etemplate	ca	Añadir un nuevo índice multicolumna
 add column	etemplate	ca	Añadir columna
@@ -19,6 +20,7 @@ advanced search	etemplate	ca	Cerca avançada
 align	etemplate	ca	Alinear
 alignment of label and input-field in table-cell	etemplate	ca	posición de la etiqueta y campo de entrada en la celda de la tabla
 alignment of the v/hbox containing table-cell	etemplate	ca	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
+all users	etemplate	ca	Tots els usuaris
 am	etemplate	ca	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	ca	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
 and	etemplate	ca	I
@@ -62,7 +64,6 @@ css-styles	etemplate	ca	Estilos CSS
 custom	etemplate	ca	Personalitzat
 custom fields	etemplate	ca	Camps personalitzats
 date+time	etemplate	ca	Fecha + hora
-datum	etemplate	ca	Fecha
 day	etemplate	ca	Día
 days	etemplate	ca	dies
 db ensures that every row has a unique value in that column	etemplate	ca	La base de datos se asegura de que cada fila tiene un valor único en esa columna
@@ -131,6 +132,7 @@ go to the first entry	etemplate	ca	Ir a la primera entrada
 go to the last entry	etemplate	ca	Ir a la última entrada
 go to the next page of entries	etemplate	ca	Ir a la página siguiente de las entradas
 go to the previous page of entries	etemplate	ca	Ir a la página anterior de las entradas
+h	etemplate	ca	h
 hbox	etemplate	ca	Cuadro horizontal
 height	etemplate	ca	Altura
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	ca	Altura de la fila (in % o píxeles), desactivar fila: [!= no]<valor>[=<check]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos está vacío.
@@ -141,6 +143,7 @@ horizontal rule	etemplate	ca	Regla horizontal
 hour	etemplate	ca	Hora
 hours	etemplate	ca	hores
 html	etemplate	ca	Html
+id	etemplate	ca	id
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	ca	Si el campo está desactivado, la celda de la tabla estará vacía, para borrar temporalmente un campo o celda.
 image	etemplate	ca	Imagen
 import	etemplate	ca	Importar
@@ -171,6 +174,7 @@ load this template into the editor	etemplate	ca	cargar esta plantilla en el edit
 minute	etemplate	ca	Minuto
 minutes	etemplate	ca	minuts
 month	etemplate	ca	Mes
+more	etemplate	ca	Més
 multicolumn indices	etemplate	ca	Indices multicolumna
 name	etemplate	ca	Nombre
 name of other table where column is a key from	etemplate	ca	nombre de la otra tabla donde la columna es una clave de
@@ -178,6 +182,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	ca	Nombre de la tabla a añadir
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	ca	Nombre de la plantilla. Debe estar en el formato aplicación.función[,subplantilla]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	ca	necesita ser única en la tabla y no ser palabra reservada SQL. Intente poner un prefijo común de dos caracteres para la aplicación, por ejemplo 'et_'
+new	etemplate	ca	Nou
 new search	common	ca	Nueva búsqueda
 new table created	etemplate	ca	Se ha creado una tabla nueva
 newer version '%1' exists !!!	etemplate	ca	¡Existe una versión '%1' más reciente!
@@ -188,6 +193,7 @@ no matches found	etemplate	ca	Sense resultats
 not null	etemplate	ca	NO NULO
 nothing found - try again !!!	etemplate	ca	No se encontró nada. Inténtelo de nuevo.
 nothing matched search criteria !!!	etemplate	ca	No se encontró nada con ese criterio.
+now	etemplate	ca	Ara
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	ca	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	ca	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
 of	etemplate	ca	de
@@ -208,11 +214,14 @@ read a list of entries.	etemplate	ca	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	etemplate	ca	Leer una sola entrada pasando el id y la lista de campos
 read etemplate from database (for the keys above)	etemplate	ca	leer plantilla de la base de datos (para las claves de arriba)
 readonly	etemplate	ca	només de lectura
+refresh	etemplate	ca	Refrescar
 remove row (can not be undone!!!)	etemplate	ca	eliminar fila (¡NO se puede deshacer!)
 remove this link (not the entry itself)	etemplate	ca	Borrar este enlace (no la entrada en sí)
 required	etemplate	ca	Obligatori
+reset	etemplate	ca	Restablir
 returns savely, without deleting	etemplate	ca	vuelve de forma segura, SIN borrar
 right	etemplate	ca	Derecha
+save all	etemplate	ca	Desar tot
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	ca	guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
 saves changes to tables_current.inc.php	etemplate	ca	guarda los cambios a tables_current.inc.php
 scale	etemplate	ca	Escala
@@ -289,6 +298,7 @@ width	etemplate	ca	Ancho
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	ca	ancho de la columna (in % o píxeles), desactivar columna: [!= no]<valor>[=comprobar] ej: '!@data' desactiva la columna si el contenido de los datos está vacío
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	ca	Ancho de la tabla en % o píxeles para la etiqueta y, opcionalmente, elemento div
 width, disabled	etemplate	ca	Ancho, desactivado
+wk	etemplate	ca	Stm
 write <app>/setup/tables_current.inc.php	etemplate	ca	Escribir <app>/setup/tables_current.inc.php
 write langfile	etemplate	ca	Escribir fichero de idioma
 write tables	etemplate	ca	Escribir tablas

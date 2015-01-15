@@ -1,4 +1,5 @@
 advanced search	etemplate	da	Avanceretsøgning
+all users	etemplate	da	Alle brugere
 and	etemplate	da	Og
 applications	etemplate	da	Applikationer
 attach file	etemplate	da	Vedhæft fil
@@ -19,8 +20,10 @@ documentation	etemplate	da	Dokumentation
 doesn't matter	etemplate	da	det gør ikke noget
 duration	etemplate	da	Varighed
 file	etemplate	da	Fil
+h	etemplate	da	h
 hours	etemplate	da	timer
 html	etemplate	da	HTML
+id	etemplate	da	ID
 import	etemplate	da	Importer
 label	etemplate	da	Mærkat
 last	etemplate	da	sidste
@@ -28,6 +31,8 @@ link	etemplate	da	Link
 minute	etemplate	da	Minut
 minutes	etemplate	da	Minutter
 month	etemplate	da	Måned
+more	etemplate	da	Flere
+new	etemplate	da	Ny
 new search	common	da	Ny søgning
 no file	etemplate	da	ingen fil
 no matches found	etemplate	da	Ingen resultater fundet
@@ -36,8 +41,11 @@ or	etemplate	da	eller
 read a list of entries.	etemplate	da	Læs en liste af indtastninger
 read a single entry by passing the id and fieldlist.	etemplate	da	Læs et enkelt element ved at give id og fil-liste
 readonly	etemplate	da	læs-kun
+refresh	etemplate	da	Opdater
 remove this link (not the entry itself)	etemplate	da	Fjern dette link (ikke opgaven selv)
 required	etemplate	da	Krævet
+reset	etemplate	da	Nulstil
+save all	etemplate	da	Gem alle
 select a category	etemplate	da	Vælg en kategori
 select an app to search in	etemplate	da	Vælg en appilkation at søge i
 select an entry to link with	etemplate	da	Vælg en opgave at linke med
@@ -51,3 +59,4 @@ unlink	etemplate	da	Fjern link
 update a single entry by passing the fields.	etemplate	da	opdater et enkelt element ve at sende felter.
 upload	etemplate	da	Upload
 view this linked entry in its application	etemplate	da	se det linkede emne i dets program
+wk	etemplate	da	Uge

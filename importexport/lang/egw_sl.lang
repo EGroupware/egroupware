@@ -1,4 +1,5 @@
 addressbook csv import	importexport	sl	Uvoz adresarja iz CSV
+all users	importexport	sl	Vsi uporabniki
 allowed users	importexport	sl	Dovoljeni uporabniki
 automatically created by importexport	importexport	sl	Samodejno ustvarjeno z Importexport
 changed	importexport	sl	Spremenjeno

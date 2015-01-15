@@ -2,7 +2,10 @@ actions	filemanager	uk	Дії
 applications	common	uk	Приложення
 comment	filemanager	uk	Коментувати
 custom fields	filemanager	uk	Власні поля
+disable	filemanager	uk	Відключити
 download	filemanager	uk	Загрузити
+enable	filemanager	uk	Включити
+expires	filemanager	uk	Обмежено
 id	filemanager	uk	Id
 link	filemanager	uk	Посилання
 location	filemanager	uk	Місце

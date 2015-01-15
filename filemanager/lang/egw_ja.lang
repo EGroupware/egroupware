@@ -3,6 +3,7 @@ applications	common	ja	アプリケーション
 create folder	filemanager	ja	フォルダ作成
 created	filemanager	ja	作成
 custom fields	filemanager	ja	カスタム項目
+expires	filemanager	ja	有効期限
 id	filemanager	ja	ID
 location	filemanager	ja	場所
 move	filemanager	ja	移動

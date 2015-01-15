@@ -4,7 +4,9 @@ color	preferences	tr	Renk
 country	preferences	tr	Ülke
 default	preferences	tr	Varsayýlan
 description can not exceed 255 characters in length !	preferences	tr	Açýklama en fazla 255 karakter olabilir !
+disable	preferences	tr	Engelle
 edit custom fields	preferences	tr	Özel alanlar? düzenle
+enable	preferences	tr	Etkinleþtir
 hours	preferences	tr	saat
 icon	preferences	tr	Simge
 selectbox	preferences	tr	Seçim kutusu

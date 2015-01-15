@@ -17,6 +17,8 @@ account list	admin	hu	Azonosítók listája
 account permissions	admin	hu	Azonosító jogosultságai
 account preferences	admin	hu	Azonosító beállításai
 account-id's have to be integers!	admin	hu	Felhasználói azonosító egész szám kell legyen!
+acl added.	admin	hu	hozzáférés engedélyezve
+acl deleted.	admin	hu	hozzáférés törölve
 acl manager	admin	hu	ACL kezelő
 acl rights	common	hu	ACL jogok
 action	admin	hu	Művelet
@@ -164,8 +166,6 @@ do you want to delete all global subcategories ?	admin	hu	Biztosan törlésre ke
 do you want to move all global subcategories one level down ?	admin	hu	Biztosan szeretné egy szinttel lejjebb vinni az összes globális alkategóriát?
 document root (default)	admin	hu	Dokumentum főkönyvtár (alapértelmezett)
 down	admin	hu	Le
-each value is a line like <id>[=<label>]	admin	hu	minden érték egy sor, ehhez hasonlóan: <id>[=<címke>]
-each value is a line like id[=label]	admin	hu	minden érték egy sor, ehhez hasonlóan: id[=címke]
 edit account	admin	hu	Azonosító szerkesztése
 edit application	admin	hu	Alkalmazás módosítása
 edit email settings	admin	hu	email beállítások szerkesztése
@@ -233,6 +233,7 @@ forward also to	admin	hu	továbbítsd ide is
 forward emails to	admin	hu	email továbbítása ide
 forward only	admin	hu	csak továbbküldés
 full name	admin	hu	Teljes Neve
+general	admin	hu	Általános
 global categories	common	hu	Globális kategóriák
 group ?	admin	hu	csoport?
 group has been added	common	hu	A csoport hozzáadása megtörtént
@@ -295,7 +296,6 @@ mail settings	admin	hu	eMail beállítások
 main email-address	admin	hu	Fő emailcím
 main screen message	admin	hu	Főképernyőn megjelenő szöveg
 manager	admin	hu	Manager
-max length of the input [, length of the inputfield (optional)]	admin	hu	a beviteli mező maximális hossza (opcionális)
 maximum account id (e.g. 65535 or 1000000)	admin	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
 maximum entries in click path history	admin	hu	Útvonal látogatottság bejegyzések maximális száma
 members	admin	hu	Résztvevők
@@ -336,6 +336,7 @@ percent of users that logged out	admin	hu	Rendesen kijelentkezett felhasználók
 percent this user has logged out	admin	hu	Jelenlegi felhasználó rendes kijelentkezése %-ban
 permission denied	admin	hu	Hozzáférés megtagadva
 permission denied !!!	admin	hu	Hozzáférés megtagadva!!!
+permission denied!!!	admin	hu	Hozzáférés megtagadva!!!
 permissions	admin	hu	Jogok
 permissions this group has	admin	hu	A csoport jogosultságai
 phpinfo	admin	hu	PHP információk
@@ -357,7 +358,9 @@ remove all users from this group	admin	hu	Csoport összes felhasználójának t�
 remove all users from this group ?	admin	hu	Összes felhasználó eltávolítása ebből a csoportból?
 return to admin mainscreen	admin	hu	visszatérés az adminisztrációs főképernyőre
 return to view account	admin	hu	Visszatérés a hozzáférések megjelenítéséhez
+rights	admin	hu	Hozzáférés
 route all mails to	admin	hu	Összes email irányítása ide:
+rows	admin	hu	Sorok
 run asynchronous services	admin	hu	Feladat ütemező futtatása
 save the category	admin	hu	Kategória mentése
 save the category and return back to the list	admin	hu	Kategória mentése és visszatérés a listához

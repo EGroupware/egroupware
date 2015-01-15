@@ -129,6 +129,7 @@ delete this user	admin	ca	esborrar aquest usuari
 deleted	admin	ca	eliminat
 deletes this field	admin	ca	esborra aquest camp
 deliver extern	admin	ca	lliura extern
+deny access	admin	ca	Denegar accés
 deny access to access log	admin	ca	Denegar accés al registre d'accesos
 deny access to application registery	admin	ca	Denegar accés al registre d'aplicacions
 deny access to applications	admin	ca	Denegar accés a les aplicacions
@@ -157,8 +158,6 @@ do you want to delete all global subcategories ?	admin	ca	Voleu esborrar totes l
 do you want to move all global subcategories one level down ?	admin	ca	Voleu moure totes les subcategories globals un nivell cap avall?
 document root (default)	admin	ca	Arrel del document (predetermidada)
 down	admin	ca	avall
-each value is a line like <id>[=<label>]	admin	ca	cada valor és una línia com <id>[=<etiqueta>]
-each value is a line like id[=label]	admin	ca	cada valor és una línia com id[=etiqueta]
 edit account	admin	ca	Editar compte
 edit application	admin	ca	Editar aplicació
 edit email settings	admin	ca	edita les preferències de correu
@@ -224,6 +223,7 @@ forward also to	admin	ca	reenviar també a
 forward emails to	admin	ca	reenviar correu a
 forward only	admin	ca	reenviar només
 full name	admin	ca	Nom complet
+general	admin	ca	General
 global categories	common	ca	Categories Globals
 group ?	admin	ca	grup ?
 group has been added	common	ca	Grup afegit
@@ -286,7 +286,6 @@ mail settings	admin	ca	Configuracions de Correu
 main email-address	admin	ca	Adreça de Correu Principal
 main screen message	admin	ca	Missatge de la Pantalla Principal
 manager	admin	ca	Gestor
-max length of the input [, length of the inputfield (optional)]	admin	ca	longitud màxima de l'entrada [, longitud del camp de text (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	ca	Màxim id de compte (ex. 65535 o 1000000)
 maximum entries in click path history	admin	ca	Nombre màxim d'entrades a l'historial de pulsacions de rutes
 members	admin	ca	Membres
@@ -349,6 +348,7 @@ remove all users from this group ?	admin	ca	Esborrar tots els usuaris d'aquest g
 return to admin mainscreen	admin	ca	tornar a la pantalla principal d'administració
 return to view account	admin	ca	Tornar a veure compte
 route all mails to	admin	ca	Direcciona tots els Correus a
+rows	admin	ca	Files
 run asynchronous services	admin	ca	Executar serveis asíncrons
 save the category	admin	ca	guardar la categoria
 save the category and return back to the list	admin	ca	guardar la categoria i tornar a la llista

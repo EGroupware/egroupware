@@ -190,6 +190,10 @@ error: importing the ical	infolog	de	Fehler beim Import der iCal Import!
 error: no mail (mailbox / uid) given!	infolog	de	Fehler: keine Mail (Mailbox / UID) angegeben!
 error: saving the entry	infolog	de	Fehler: beim Speichern des Eintrags
 error: the entry has been updated since you opened it for editing!	infolog	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
@@ -224,6 +228,9 @@ id	infolog	de	Id
 id#	infolog	de	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allgemeinen Einstellungen definiert).
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export Definition für den Export.
 import next set	infolog	de	Nächsten Satz importieren
 importance	infolog	de	Wichtigkeit
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	de	Importiert Einträge in das Infolog Modul aus einer CSV Datei (Komma getrennte Werte).
@@ -270,6 +277,8 @@ linked to %1	infolog	de	Verknüpft mit %1
 links	infolog	de	Verknüpfungen
 links and attached files	infolog	de	Verknüpfungen und Dateianhänge
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
+links to specified application.  example: {{links/infolog}}	infolog	de	Verknüpfungen zu bestimmten Anwendungen. Beispiel: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	de	Verknüpfungen in einem Anker Tag (HREF) mit einem Download Link
 list all categories	infolog	de	Alle Kategorien anzeigen
 list of files linked to the current record	infolog	de	Liste der Dateien die mit dem aktuellen Datensatz verknüpft sind
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	de	Benutzerdefinierte Felder in Liste laden, wenn nach einem der folgenden InfoLog Typen gefiltert wird (z. B. für ein type-spezifisches Listen-Template)
@@ -307,6 +316,7 @@ notification settings	infolog	de	Einstellungen der Benachrichtigungen
 number of records to read (%1)	infolog	de	Anzahl Datensätze lesen (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	de	Anzahl Zeilen für ein mehrzeiliges Eingabefeld oder eines mehrfachen Auswahlfeldes
 offer	infolog	de	Angebot
+old fixed definition	infolog	de	Ältere Definition, deren Werte nicht angepasst werden können.
 one day after	infolog	de	am nächsten Tag
 one day in advance	infolog	de	am Vortag
 ongoing	infolog	de	in Arbeit

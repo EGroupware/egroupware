@@ -91,7 +91,6 @@ charset for the vcard export	addressbook	sl	Nabor znakov za izvoz vCard
 charset of file	addressbook	sl	Kodna tabela datoteke
 check all	addressbook	sl	Preveri vse
 choose an icon for this contact type	admin	sl	Izberite ikono za to vrsto stika
-choose export options	addressbook	sl	Izberite možnosti izvoza
 choose owner of imported data	addressbook	sl	Izberite lastnika uvoženih podatkov
 chosse an etemplate for this contact type	admin	sl	Izberite eTemplate za to vrsto stika
 city	common	sl	Mesto
@@ -197,6 +196,7 @@ exports contacts from your addressbook into a csv file. csv means 'comma seperat
 extra	addressbook	sl	Dodatno
 extra private	addressbook	sl	Posebej zasebno
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sl	Napaka pri spreminjanju %1 članov organizacije (premalo pravic)!
+favorites	addressbook	sl	Priljubljene
 fax	addressbook	sl	Faks
 fax number	common	sl	Faks
 field %1 has been added !	addressbook	sl	Polje %1 je bilo dodano!
@@ -319,7 +319,6 @@ phone numbers	common	sl	Telefonske številke
 photo	addressbook	sl	Slika
 please enter a name for that field !	addressbook	sl	Prosim, vpišite ime za to polje!
 please select only one category	addressbook	sl	Izberite samo eno kategorijo
-please update the templatename in your customfields section!	addressbook	sl	Posodobite ime predloge v lastnem izboru polj!
 postal	common	sl	Poštni
 pref	addressbook	sl	Privzeto
 preferred email address to use in distribution lists	addressbook	sl	Privzeti e-naslov za uporabo v distribucijskem seznamu.
@@ -422,7 +421,6 @@ verification	addressbook	sl	Potrditev
 view linked infolog entries	addressbook	sl	Poglej povezane vnose InfoDnevnika
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate stikov za skladiščenje računov!
 warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najdeni stiki bodo zbrisani!
-warning: template "%1" not found, using default template instead.	addressbook	sl	Opozorilo: predloga "%1" ni bila najdena. Ušorabljena bo privzeta predloga.
 weekday	addressbook	sl	Delovnik
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v drugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
 where to add the email address	addressbook	sl	Kje naj se doda e-naslov?

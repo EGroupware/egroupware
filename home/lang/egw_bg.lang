@@ -1,0 +1,10 @@
+color	home	bg	Цвят
+in %1 days (%2) is %3's birthday.	home	bg	Рожденият ден на %3 е след %1 дни (%2).
+remove	home	bg	премахване
+set as default	home	bg	По подразбиране
+today is %1's birthday!	home	bg	Днес е рожденият ден на %1!
+tomorrow is %1's birthday.	home	bg	Утре е рожденият ден на %1!
+yes, for the next three days	home	bg	Да, за следващите три дни
+yes, for the next two weeks	home	bg	Да, за следващите две седмици
+yes, for the next week	home	bg	Да, за следващата седмица
+yes, for today and tomorrow	home	bg	Да, за днес и утре

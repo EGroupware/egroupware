@@ -7,6 +7,7 @@
 %1 to sync	groupdav	nl	%1 om te synchroniseren
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br />of maak %3 schrijfbaar voor de webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
+'%1' is no php file in the egw server root (%2)!	common	nl	'%1' is geen php bestand in de eGW server rootdirectory (%2)
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
 (shift-)click or drag to change value	jscalendar	nl	(Shift-)Klik of sleep om waarde te wijzigen
 - click on any of the time parts to increase it	jscalendar	nl	- Klik op een willekeurig tijdsonderdeel om het te verhogen
@@ -85,6 +86,7 @@ are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit it
 argentina	common	nl	ARGENTINIË
 armenia	common	nl	ARMENIË
 aruba	common	nl	ARUBA
+attachment	common	nl	Bijlage
 august	common	nl	Augustus
 australia	common	nl	AUSTRALIË
 austria	common	nl	OOSTENRIJK

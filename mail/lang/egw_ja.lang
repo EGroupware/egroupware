@@ -1,7 +1,15 @@
+attachments	mail	ja	添付ファイル
 compose	mail	ja	作成
+delete folder	mail	ja	フォルダ削除
+edit account	mail	ja	アカウント訂正
+forward	mail	ja	転送
 from	mail	ja	差出人
 inbox	mail	ja	Inbox
 mail settings	mail	ja	電子メール設定
 original message	mail	ja	Original Message
 replied	mail	ja	返信済み
+reply	mail	ja	返信
+reply to	mail	ja	リプライ
+select all	mail	ja	全て選択
 signature	mail	ja	署名
+write	mail	ja	Write

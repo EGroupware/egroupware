@@ -4,13 +4,19 @@ all of	mail	no	alle av
 allways a new window	mail	no	altid et nytt vindu
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
+attachments	mail	no	Vedlegg
+check message against next rule also	mail	no	Kontroller melding mot neste regel også
 compose	mail	no	Ny melding
 compress folder	mail	no	Komprimer mappe
 contains	mail	no	inneholder
+copy to	mail	no	Kopier til
 date(newest first)	mail	no	Dato (nyeste først)
 date(oldest first)	mail	no	Dato (eldste først)
 default sorting order	mail	no	Standard sortering
+delete folder	mail	no	Slett Mappe
 deleted	mail	no	slettet
+disable	mail	no	Deaktiver
+discard message	mail	no	Forkast melding
 display of html emails	mail	no	Visning av HTML e-post
 display only when no plain text is available	mail	no	Vis bare når ingen normal tekst er tilgjengelig
 does not contain	mail	no	inneholder ikke
@@ -18,28 +24,41 @@ does not match	mail	no	stemmer ikke
 does not match regexp	mail	no	stemmer ikke med regexp
 don't use sent	mail	no	Ikke bruk Sendt
 don't use trash	mail	no	Ikke bruk Søppelkurv
+edit account	mail	no	Rediger konto
+edit vacation settings	mail	no	Redigere ferieinnstillinger
 empty trash	mail	no	tøm søppelkurv
+enable	mail	no	muliggjør
 event details follow	mail	no	Hendelses Detaljer Følger
-felamimail	admin	no	E-post
+everyone	mail	no	Alle
+extended	mail	no	Forlenget
 file into	mail	no	fil til
 filemanager	mail	no	Filhåndterer
 flagged	mail	no	flagget
 folder	mail	no	Mappe
 folder settings	mail	no	Mappeinnstillinger
+forward	mail	no	Videresend
 from	mail	no	Fra
 from(a->z)	mail	no	Fra (A -> Å)
 from(z->a)	mail	no	Fra (Å -> A)
+general	admin	no	Generell
 greater than	mail	no	Større enn
+header lines	mail	no	Hodelinjer
 html	mail	no	Html
 if	mail	no	Dersom
+if mail header	mail	no	dersom meldingshodet
+if message size	mail	no	dersom meldingsstørrelse
+imap	mail	no	IMAP
 imap server	mail	no	IMAP Tjener
 inbox	mail	no	Innboks
+keep a copy of the message in your inbox	mail	no	behold en kopi av meldingen i din innboks
+kilobytes	mail	no	kilobytes
 less than	mail	no	mindre enn
 mail settings	mail	no	Epost innstillinger
 mark as deleted	mail	no	Merk som slettet
 matches	mail	no	treff
 matches regexp	mail	no	treffer regexp
 move selected to	mail	no	flytt valgt til
+move to	mail	no	flytt valgt til
 move to trash	mail	no	Flytt til søppelkurv
 never display html emails	mail	no	Vis aldri HTML e-post
 on	mail	no	på
@@ -47,6 +66,7 @@ one address is not valid	mail	no	En av adressene er ikke gyldig
 only one window	mail	no	Bare et vindu
 organisation	admin	no	Organisasjon
 organization	mail	no	organisasjon
+permission denied	mail	no	Ingen tilgang
 please select a address	mail	no	Vennligst velg en adresse
 please select the number of days to wait between responses	mail	no	Vennligst velg antall dager for vent melding tilbakemeldinger
 please supply the message to send with auto-responses	mail	no	Vennligst registrer meldingen som skal sendes som automatisk tilbakemelding
@@ -54,9 +74,14 @@ quicksearch	mail	no	Hurtigsøk
 refresh time in minutes	mail	no	Oppdateringstid i minutter
 remove all	mail	no	Fjern alle
 remove immediately	mail	no	Fjern umiddelbart
+rename folder	mail	no	Gi mappen nytt navn
 replied	mail	no	svart
+reply	mail	no	Svar
+reply all	mail	no	Svar alle
+reply to	mail	no	Svar til
 replyto	mail	no	SvarTil
 save all	mail	no	Lagre alle
+select all	mail	no	Velg alle
 sent folder	mail	no	Sendt Mappe
 signature	mail	no	Signatur
 size(...->0)	mail	no	Størrelse (...->0)
@@ -65,10 +90,12 @@ small view	mail	no	liten visning
 sort order	mail	no	Sortering
 subject(a->z)	mail	no	Emne (A->Å)
 subject(z->a)	mail	no	Emne (Å->A)
+text	mail	no	Tekst
 then	mail	no	DA
 trash folder	mail	no	Søppelmappe
+unflagged	mail	no	avflagget
 unread	mail	no	Ulest
-urgent	mail	no	haster
-vacation notice	admin	no	Ferie melding
+vacation notice	mail	no	Ferie melding
 when deleting messages	mail	no	Når du sletter meldinger
+write	mail	no	Lagre
 wrote	mail	no	skrev

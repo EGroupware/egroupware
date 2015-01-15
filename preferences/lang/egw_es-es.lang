@@ -15,17 +15,19 @@ charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a
 click to select a color	preferences	es-es	Pulse para seleccionar un color
 color	preferences	es-es	Color
 country	preferences	es-es	País
+data exchange settings	preferences	es-es	Opciones para intercambio de datos
 date format	preferences	es-es	Formato de la fecha
 default	preferences	es-es	predeterminado
 default application	preferences	es-es	Aplicación predeterminada
 default preferences	preferences	es-es	Preferencias predeterminadas
-default theme	preferences	es-es	Tema predeterminado
 delete categories	preferences	es-es	Borrar categorías
 description can not exceed 255 characters in length !	preferences	es-es	La descripción no puede exceder de 255 caracteres
+disable	preferences	es-es	Desactivar
 display thumbnails for linked images	preferences	es-es	Mostrar miniaturas para las imágenes vinculadas
 div	preferences	es-es	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	es-es	¿Prefiere el formato de 24 horas o el de 12 con am/pm detrás?
 edit custom fields	preferences	es-es	Editar campos personalizados
+enable	preferences	es-es	Activar
 enable drag and drop functionality (experimental)	preferences	es-es	Activar la funcionalidad de arrastrar y soltar (experimental)
 enable selectbox dropdown resizing for ie (experimental)	preferences	es-es	Activar el menú desplegable redimensionable para IE (experimental)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	es-es	Activa o desactiva las funciones de arrastrar y soltar en todas las aplicaciones. Si el navegador no soporta arrastrar y soltar, se desactivará automáticamente. Esta característica es experimental en este instante.
@@ -34,6 +36,7 @@ enter your new password	preferences	es-es	Introduzca la contraseña nueva
 enter your old password	preferences	es-es	Introduzca la contraseña anterior
 failed to change password.	preferences	es-es	Fallo al cambiar la contraseña.
 forced preferences	preferences	es-es	Preferencias forzadas
+general settings	preferences	es-es	Opciones generales
 help off	preferences	es-es	Desactivar ayuda
 hours	preferences	es-es	horas
 how do you like to display accounts	preferences	es-es	¿Cómo desea ver las cuentas?
@@ -55,7 +58,6 @@ no user-selection at all	common	es-es	No hay ninguna selección del usuario
 note: this feature does *not* change your email password. this will	preferences	es-es	nota: Esta característica *no* cambia su contraseña de coreo.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	es-es	Nota: Esta opción *no* cambia la contraseña de su correo electrónico. Esto deberá hacerse manualmente.
 number format	preferences	es-es	Formato de los números
-office 2003 theme	preferences	es-es	Tema Office 2003
 p: paragraph	preferences	es-es	p: Párrafo
 permanent time zone selection	preferences	es-es	Selección permanente de zona horaria
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	es-es	Por favor, seleccione las zonas horarias entre las que desee cambiar répidamente. El cambio NO se muestra si se seleccionan menos de dos.
@@ -84,7 +86,6 @@ show navigation bar as	preferences	es-es	Mostrar la barra de navegación como
 show number of current users	preferences	es-es	Mostrar el número actual de usuarios
 show text on navigation icons	preferences	es-es	Mostrar descripción sobre los iconos
 show_more_apps	common	es-es	Mostrar más aplicaciones
-silver theme	preferences	es-es	Tema Silver
 spellchecker language	addressbook	es-es	Idioma del corrector ortográfico
 text only	preferences	es-es	Sólo texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en eGroupWare o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.

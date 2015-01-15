@@ -24,9 +24,13 @@ deleted %1	filemanager	el	Διεγράφη %1
 directory	filemanager	el	Κατάλογος
 directory %1 already exists	filemanager	el	Ο κατάλογος %1 υπάρχει ήδη
 directory %1 does not exist	filemanager	el	Ο κατάλογος %1 δεν υπάρχει
+disable	filemanager	el	Απενεργοποίηση
 download	filemanager	el	Φόρτωση
 edit comments	filemanager	el	Επεξεργασία σχολίων
-file	filemanager	el	Αρχείο
+enable	filemanager	el	ενεργοποίηση
+everyone	filemanager	el	όλοι
+expires	filemanager	el	Λήγει
+file	common	el	Αρχείο
 file %1 could not be created.	filemanager	el	Το αρχείο %1 δεν μπόρεσε να δημιουργηθεί.
 file names cannot contain "%1"	filemanager	el	Τα ονόματα αρχείων δεν μπορούν να περιέχουν "%1"
 filemanager	common	el	Διαχειριστής αρχείων

@@ -2,7 +2,10 @@ actions	resources	da	Handling
 all categories	resources	da	Alle kategorier
 configure access permissions	admin	da	Konfigurer adgangsrettigheder
 create new links	resources	da	Lav nyt link
+custom fields	resources	da	Valgfri Felter
+days	resources	da	dage
 delete this entry	resources	da	Slet denne indtastning
+deleted	resources	da	slettet
 edit this entry	resources	da	Redigér denne indstasning
 existing links	resources	da	eksisterende links
 general	resources	da	Generelt

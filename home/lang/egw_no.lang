@@ -1,2 +1,6 @@
+color	home	no	Farge
 egroupware	home	no	egroupware
 home	home	no	Hjem
+remove	home	no	fjern
+today is %1's birthday!	home	no	I dag har %1 fødselsdag!
+tomorrow is %1's birthday.	home	no	I morgen er det %1's fødselsdag.

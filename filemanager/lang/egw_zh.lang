@@ -11,6 +11,7 @@
 %1 the following files into current directory	filemanager	zh	以下文件%1在当前目录里
 %1 urls %2 to clipboard.	filemanager	zh	%1 URLs %2到剪贴板。
 actions	filemanager	zh	操作
+administrators	filemanager	zh	系统管理
 and all it's childeren	filemanager	zh	并且全部是自文件夹
 applications	common	zh	应用程序
 cancel editing %1 without saving	filemanager	zh	取消编辑%1， 不保存
@@ -18,6 +19,7 @@ cannot create directory because it begins or ends in a space	filemanager	zh	无�
 check all	filemanager	zh	全选
 clear search	filemanager	zh	清除搜索
 comment	filemanager	zh	注释
+configuration changed.	filemanager	zh	配置已更改。
 copied	filemanager	zh	已复制
 copied %1 to %2	filemanager	zh	%1已复制到%2
 copy to	filemanager	zh	复制到
@@ -41,13 +43,17 @@ directory	filemanager	zh	目录
 directory %1 already exists	filemanager	zh	目录%1已存在
 directory %1 does not exist	filemanager	zh	目录%1不存在
 directory not found or no permission to access it!	filemanager	zh	目录不存在或无权访问！
+disable	filemanager	zh	禁用
 display and modification of content	filemanager	zh	内容显示和更改
 display of content	filemanager	zh	内容显示
 download	filemanager	zh	下载
 edit comments	filemanager	zh	编辑注释
+enable	filemanager	zh	启用
 error uploading file!	filemanager	zh	上传文件错误！
+everyone	filemanager	zh	所有人
+expires	filemanager	zh	期限
 failed to create directory!	filemanager	zh	创建目录失败！
-file	filemanager	zh	文件
+file	common	zh	文件
 file %1 could not be created.	filemanager	zh	文件 %1 不能创建。
 file %1 may be too big. contact your systemadministrator for further info	filemanager	zh	文件%1太大，请联系系统管理员取得更多信息
 file deleted.	filemanager	zh	文件已删除。
@@ -76,8 +82,10 @@ name of current user, all other contact fields are valid too	filemanager	zh	目�
 no access	filemanager	zh	无访问
 no files in this directory.	filemanager	zh	该目录为空。
 no version history for this file/directory	filemanager	zh	该文件/目录夹无版本历史记录
+noone	filemanager	zh	没有人
 open	filemanager	zh	待决事项
 operation	filemanager	zh	操作
+percentage	filemanager	zh	百分比
 permissions	filemanager	zh	访问权限
 please select a file to delete.	filemanager	zh	请选择要删除文件。
 preview	filemanager	zh	预览

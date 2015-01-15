@@ -19,10 +19,14 @@ check all	resources	id	Contreng semua
 choose categories admin	resources	id	pilih admin kategori
 clear selection	resources	id	bersihkan pilihan
 configure access permissions	admin	id	Pengaturan Ijin Akses
+conflict	resources	id	Konflik
 create new accessory for this resource	resources	id	Bikin aksesori baru untuk sumberdaya ini
 create new links	resources	id	Bikin tautan baru
+custom fields	resources	id	Custom fields
+days	resources	id	hari
 delete selected resources	resources	id	hapus sumberdaya terpilih
 delete this entry	resources	id	Hapus entri ini
+deleted	resources	id	terhapus
 description (short)	resources	id	Uraian (ringkas)
 direct booking permissions	resources	id	Ijin pemesanan langsung
 edit this entry	resources	id	Edit entri ini

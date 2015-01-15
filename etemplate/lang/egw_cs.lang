@@ -22,6 +22,7 @@ a pattern to be searched for	etemplate	cs	hledaný výraz
 accesskey	etemplate	cs	Přístupový klíč
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	cs	Přístupové klíče mohou být specifikovány také s & v označení (např. &Name)
 account contactdata	etemplate	cs	Kontaktní údaje účtu
+actions...	etemplate	cs	Akce...
 add a new column (after the existing ones)	etemplate	cs	Přidat nový sloupec (za stávající)
 add a new entry of the selected application	etemplate	cs	Přidat nový záznam vybrané aplikace
 add a new multi-column index	etemplate	cs	Přidat nový vicesloupcový index
@@ -35,6 +36,7 @@ alignment of label and input-field in table-cell	etemplate	cs	zarovnání popisk
 alignment of the v/hbox containing table-cell	etemplate	cs	Zarovnání V/HBoxu obsahujícího buňku tabulky
 all days	etemplate	cs	všechny dny
 all operations save the template!	etemplate	cs	všechny operace ukládají šablonu !
+all users	etemplate	cs	Všichni uživatelé
 allowed file type: %1	etemplate	cs	Povolený typ souboru: %1
 am	etemplate	cs	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	cs	indexy vytvořené pro sloupec zrychlují vyhledávání v daném sloupci (ale také zabírají místo na disku !!!)
@@ -89,6 +91,7 @@ contact	etemplate	cs	Kontakt
 contact field to show	etemplate	cs	Zobrazit položku kontaktu
 contact fields	etemplate	cs	Kontaktní položky
 contains	etemplate	cs	obsahuje
+copy to clipboard	etemplate	cs	Kopírovat do clipboardu
 create a new table for the application	etemplate	cs	Vytvořit novou tabulku pro aplikaci
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	cs	vytvoří nový anglický jazykový soubor ('en') z označení a pomocných textů (pro aplikaci uvedenou v Názvu)
 creator	preferences	cs	Tvůrce
@@ -102,7 +105,6 @@ custom fields	etemplate	cs	uživatelsky definované položky
 custom javascript for onchange	etemplate	cs	uživatelsky definovaný javaskript pro onChange (při změně)
 cut	etemplate	cs	Vyjmout
 date+time	etemplate	cs	Datum a čas
-datum	etemplate	cs	Datum
 day	etemplate	cs	Den
 days	etemplate	cs	dnů
 db ensures that every row has a unique value in that column	etemplate	cs	Databáze zajišťuje, že každý řádek má v tomto sloupci unikátní hodnotu
@@ -194,6 +196,7 @@ grid	etemplate	cs	Mřížka
 grid column attributes	etemplate	cs	Atributy sloupců ve mřížce
 grid row attributes	etemplate	cs	Atributy řádků ve mřížce
 groupbox	etemplate	cs	Rámeček skupiny
+h	etemplate	cs	h
 hbox	etemplate	cs	Vodorovný rámeček
 height	etemplate	cs	Výška
 height of row (in % or pixel)	etemplate	cs	výška řádku (v % nebo pixelech)
@@ -207,6 +210,7 @@ hour	etemplate	cs	Hodina
 hours	etemplate	cs	hodin
 how many entries should the list show	etemplate	cs	Kolik záznamů má seznam zobrazovat
 html	etemplate	cs	HTML
+id	etemplate	cs	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	cs	pokud je položka zakázaná, je zobrazena prázdná buňka tabulky pro (dočasné) odstranění položky/buňky
 image	etemplate	cs	Obrázek
 import	etemplate	cs	Importovat
@@ -245,12 +249,14 @@ linklist	etemplate	cs	Seznam odkazů
 linkstring	etemplate	cs	Řetězec odkazu
 linkto	etemplate	cs	Odkaz na
 load this template into the editor	etemplate	cs	Načíst tuto šablonu do editoru
+loading	etemplate	cs	nahrávám
 maximum size for uploads	filemanager	cs	Maximální velikost pro uploady
 message ...	etemplate	cs	Zpráva...
 middle	etemplate	cs	Prostřední
 minute	etemplate	cs	Minuta
 minutes	etemplate	cs	minut
 month	etemplate	cs	Měsíc
+more	etemplate	cs	Více
 more than 1 match for '%1'	etemplate	cs	Více než jeden záznam pro '%1'
 multicolumn indices	etemplate	cs	Vícesloupcové indexy
 name	etemplate	cs	Jméno
@@ -259,6 +265,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	cs	Název tabulky, která se má přidat
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	cs	název eŠablony, měl by být ve tvaru aplikace.funkce.[.podŠablona]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	cs	musí být unikátní v rámci tabulky a nesmí být rezervovaným slovem SQL, nejlepší je všechny opatřit společnou dvoupísmennou zkratkou aplikace, např. 'et_'
+new	etemplate	cs	Nová
 new search	common	cs	Nové hledání
 new table created	etemplate	cs	Nová tabulka vytvořena
 newer version '%1' exists !!!	etemplate	cs	existuje novější verze '%1'  !!!
@@ -278,6 +285,7 @@ nothing	etemplate	cs	nic
 nothing found - try again !!!	etemplate	cs	Nic nenalezeno - zkuste znovu !!!
 nothing in clipboard to paste !!!	etemplate	cs	v clipboardu není nic ke vložení !!!
 nothing matched search criteria !!!	etemplate	cs	Zadanému kritériu hledání nic neodpovídá !!!
+now	etemplate	cs	Nyní
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	cs	počet sloupců, přes které se má pole/buňka roztáhnout nebo 'all' pro zbývající sloupce, jméno CSS třídy (pro tag TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	cs	počet řádků/sloupců ve Svislém/Vodorovném rámečku, vzdálenost mezi buňkou a jejím obsahem, vzdálenost mezi buňkami
 of	etemplate	cs	z
@@ -307,12 +315,15 @@ read a list of entries.	etemplate	cs	Načíst seznam záznamů
 read a single entry by passing the id and fieldlist.	etemplate	cs	Načíst jednotlivý záznam zadáním jeho id a seznamu polí
 read etemplate from database (for the keys above)	etemplate	cs	načíst eŠablonu z databáze (pro výše uvedené klíče)
 readonly	etemplate	cs	jen pro čtení
+refresh	etemplate	cs	Obnovit
 remove row (can not be undone!!!)	etemplate	cs	odstranit řádek (nelze vrátit zpět!!!)
 remove this link (not the entry itself)	etemplate	cs	Odstranit tento odkaz (ne celý záznam)
 required	etemplate	cs	Vyžadováno
+reset	etemplate	cs	Vynulovat
 returns savely, without deleting	etemplate	cs	vrátí bezpečně zpět, BEZ smazání
 right	etemplate	cs	Pravý
 row...	etemplate	cs	Řádek...
+save all	etemplate	cs	Uložit vše
 save selected columns as default preference for all users.	etemplate	cs	Uložit vybrané sloupce jako výchozí předvolbu pro všechny uživatele.
 save the changes made and close the window	etemplate	cs	Uložit provedené změny a zavřít okno
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	cs	uložit eŠablonu pod výše uvedenými klíči (název, ...), změnit je pro Uložit jako
@@ -355,6 +366,7 @@ select which accounts to show	etemplate	cs	vybrat účty ke zobrazení
 select which values to show	etemplate	cs	vybrat hodnoty ke zobrazení
 select year	etemplate	cs	Vybrat rok
 selectbox	etemplate	cs	Rozbalovací nabídka
+set as default	etemplate	cs	Nastavit jako výchozí
 sets today as date	etemplate	cs	nastaví dnešek jako datum
 should the form be submitted or any custom javascript be executed	etemplate	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský javascript
 show	etemplate	cs	Zobrazit
@@ -422,6 +434,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	cs	šířka sloupce (v % nebo pixelech)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	cs	Šířka tabulky (v % nebo pixelech) pro tag tabulky a (volitelně) div
 width, disabled	etemplate	cs	Šířka, vypnuto
+wk	etemplate	cs	Týd.
 working days	etemplate	cs	pracovní dny
 write <app>/setup/tables_current.inc.php	etemplate	cs	Zapsat <app>/setup/tables_current.inc.php
 write langfile	etemplate	cs	Zapsat jazykový soubor

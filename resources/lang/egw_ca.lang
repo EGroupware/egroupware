@@ -4,7 +4,10 @@ bookable	resources	ca	Reservable
 check all	resources	ca	Comprova-ho tot
 configure access permissions	admin	ca	Configurar permissos d'accés
 create new links	resources	ca	Crear nous enllaços
+custom fields	resources	ca	Camps personalitzats
+days	resources	ca	dies
 delete this entry	resources	ca	esborrar aquesta entrada
+deleted	resources	ca	eliminat
 edit this entry	resources	ca	Editar aquesta entrada
 existing links	resources	ca	Enllaços existents
 general	resources	ca	General

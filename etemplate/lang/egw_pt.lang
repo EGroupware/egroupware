@@ -206,6 +206,7 @@ grid	etemplate	pt	Grelha
 grid column attributes	etemplate	pt	Colocar grelha nos atributos das colunas
 grid row attributes	etemplate	pt	Colocar grelha nos atributos das linhas
 groupbox	etemplate	pt	Caixa de grupo
+h	etemplate	pt	h
 hbox	etemplate	pt	Caixa horizontal
 height	etemplate	pt	Altura
 height of row (in % or pixel)	etemplate	pt	Altura da linha (em % ou píxeis)
@@ -350,6 +351,7 @@ right	etemplate	pt	Direita
 row...	etemplate	pt	Linha...
 sa	etemplate	pt	Sa
 save all	etemplate	pt	Salve todo
+save as	etemplate	pt	Salvar como
 save the changes made and close the window	etemplate	pt	Guardar as alterações efectuadas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	pt	Guardar o modelo Web com as chaves de cima (nome, ...). Terá de alterá-las para "Guardar como..."
 saves changes to tables_current.inc.php	etemplate	pt	Guarda as alterações em tables_current.inc.php
@@ -376,6 +378,7 @@ select country	etemplate	pt	Seleccionar país
 select day	etemplate	pt	Seleccionar dia
 select day of week	etemplate	pt	Seleccionar dia da semana
 select entry	etemplate	pt	Escolha uma opção
+select file(s) from vfs	etemplate	pt	Selecione o arquivo (s) a partir de VFS
 select files from filemanager ...	etemplate	pt	Selecione os arquivos a partir de Filemanager ...
 select hour	etemplate	pt	Selecione hora
 select if content of field should not be translated (label gets always translated)	etemplate	pt	Seleccionar se o conteúdo de um campo não deve ser traduzido (a etiqueta será sempre traduzida)

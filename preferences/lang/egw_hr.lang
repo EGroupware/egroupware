@@ -17,8 +17,10 @@ default application	preferences	hr	Početno postavljena aplikacija
 default preferences	preferences	hr	Početno postavljene postavke
 delete categories	preferences	hr	Obriši kategorije
 description can not exceed 255 characters in length !	preferences	hr	Opis nemože biti dulji od 255 znakova!
+disable	preferences	hr	Onesposobi
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	hr	Da li želite da vam se vrijeme prikazuje u 24 satnom formatu ili 12 satnom sa am/pm dodatkom.
 edit custom fields	preferences	hr	Uredi proizvoljna polja
+enable	preferences	hr	Omogući
 enter your new password	preferences	hr	Unesite vašu novu zaporku
 failed to change password.	preferences	hr	Nisam mogao promijeniti zaporku.
 forced preferences	preferences	hr	Prisiljene postavke

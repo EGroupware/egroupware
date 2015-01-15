@@ -29,16 +29,17 @@ default application	preferences	it	Applicazione predefinita
 default font	preferences	it	Font predefinito
 default font size	preferences	it	Dimensione font predefinita
 default preferences	preferences	it	Preferenze Predefinite
-default theme	preferences	it	Tema predefinito
 delete categories	preferences	it	Elimina Categorie
 deny following groups access to acl (grant access)	admin	it	Nega ai seguenti gruppi la possibilità di impostare delle regole di accesso
 deny following groups access to edit categories	admin	it	Nega ai seguenti gruppi la possibilità di modificare categorie
 deny following groups access to preferences	admin	it	Nega ai seguenti gruppi la possibilità di accedere alle preferenze
 description can not exceed 255 characters in length !	preferences	it	La descrizione non può essere più lunga di 255 caratteri!
+disable	preferences	it	Disabilita
 display thumbnails for linked images	preferences	it	Mostra miniature per le immagini collegate
 div	preferences	it	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	it	Preferisci il formato a 24 ore, o a 12 ore con l'aggiunta di am/pm?
 edit custom fields	preferences	it	modifica campi personalizzati
+enable	preferences	it	Abilita
 enable drag and drop functionality (experimental)	preferences	it	Trascina e rilascia
 enable selectbox dropdown resizing for ie (experimental)	preferences	it	Selezionare il ridimensionamento del menù a tendina
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	it	Abilita o disabilita le funzioni di trascinamento e rilascio in tutte le applicazioni. Se il browser non supporta la funzione, sarà disabilitata automaticamente.
@@ -78,7 +79,6 @@ lowercase letters	preferences	it	lettere minuscole
 max matches per page	preferences	it	Numero massimo di risultati per pagina
 max number of icons in navbar	preferences	it	Numero massimo di icone nella barra di navigazione
 moono color theme	preferences	it	Colori tema Moono
-moono theme	preferences	it	Tema Moono
 no default	preferences	it	Nessun predefinito
 no user-selection at all	common	it	Nessuna selezione
 note: this feature does *not* change your email password. this will	preferences	it	nota: Questa funzione *non* cambia la tua password email.
@@ -86,7 +86,6 @@ note: this feature does *not* change your email password. this will need to be d
 notification settings	preferences	it	Impostazioni di notifica
 number format	preferences	it	Formato numero
 numbers	preferences	it	numeri
-office 2003 theme	preferences	it	Tema office 2003
 old password and new password are the same. this is invalid. you must enter a new password	preferences	it	La vecchia e la nuova password coincidono. Devi inserire una password nuova!
 p: paragraph	preferences	it	p: Paragrafo
 password changed	preferences	it	Password modificata
@@ -125,7 +124,6 @@ show navigation bar as	preferences	it	Mostra la barra di navigazione come
 show number of current users	preferences	it	Visualizza il numero degli utenti correnti
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
 show_more_apps	common	it	Visualizza altre applicazioni
-silver theme	preferences	it	Tema silver
 special characters	preferences	it	caratteri speciali
 spellchecker language	addressbook	it	Lingua del correttore ortografico
 text editor settings	preferences	it	Impostazioni dell'editor di testo

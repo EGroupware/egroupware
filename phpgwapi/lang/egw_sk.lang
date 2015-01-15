@@ -3,6 +3,7 @@
 %1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2<br />alebo nastavte pre webserver právo zápisu do %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1EGroupware%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
+'%1' is no php file in the egw server root (%2)!	common	sk	'%1' nie je php súborom v root adresári eGW servera (%2)!
 (session restored in %1 seconds)	common	sk	(relácia obnovená za %1 sekúnd)
 (shift-)click or drag to change value	jscalendar	sk	Ak chcete zmeniť hodnotu, použite (Shift-)klik alebo potiahnutie
 - click on any of the time parts to increase it	jscalendar	sk	- Ak kliknite na ktorúkoľvek časť času, zvýši sa
@@ -38,6 +39,7 @@ actions	common	sk	Akcie
 active	common	sk	Aktívne
 add	common	sk	Pridať
 add %1 category for	common	sk	Pridať %1 kategóriu pre
+add a new contact	common	sk	Pridať nový kontakt
 add category	common	sk	Pridať kategóriu
 add shortcut	common	sk	Pridať skratku
 add sub	common	sk	Pridať podkategóriu
@@ -141,6 +143,7 @@ centered	common	sk	na stred
 central african republic	common	sk	STREDOAFRICKÁ REPUBLIKA
 chad	common	sk	ČAD
 change	common	sk	Zmeniť
+change owner	common	sk	Zmeniť vlastníka
 charset	common	sk	utf-8
 check installation	common	sk	Skontroluj inštaláciu
 check now	common	sk	Skontroluj - Teraz
@@ -204,6 +207,7 @@ delete	common	sk	Odstrániť
 delete category	common	sk	Odstrániť kategóriu
 delete file	common	sk	Odstrániť súbor
 delete row	common	sk	Odstrániť Riadok
+delete selected entries?	common	sk	Odstrániť vybrané položky?
 delete these entries	common	sk	Odstrániť tieto položky
 delete this entry	common	sk	Odstrániť túto položku
 denmark	common	sk	DÁNSKO
@@ -246,6 +250,7 @@ edit categories	common	sk	Upraviť kategórie
 edit category	common	sk	Upraviť kategóriu
 egroupware	common	sk	EGwoupware
 egroupware api version	common	sk	EGroupware API verzia
+egroupware version	common	sk	EGroupware verzia
 egroupware: login blocked for user '%1', ip %2	common	sk	EGroupware: prihlasovanie zablokované pre používateľa '%1', IP %2
 egypt	common	sk	EGYPT
 el salvador	common	sk	SALVADOR
@@ -272,9 +277,11 @@ etag	common	sk	EZnačka
 ethiopia	common	sk	ETIÓPIA
 everything	common	sk	Všetko
 exact	common	sk	presne
+failed to change password.	common	sk	Nepodarilo sa zmeniť heslo.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sk	Nepodarilo sa pripojiť na server, alebo je odpoveď servera neplatná. Skúste sa znovu prihlásiť. Ak sa nepodarí, kontaktujte správcu systému.
 falkland islands (malvinas)	common	sk	FALKLANDY
 faroe islands	common	sk	FAERSKÉ OSTROVY
+favorites	common	sk	Obľúbené
 fax number	common	sk	číslo faxu
 features of the editor?	common	sk	Možnosti editora?
 february	common	sk	Február
@@ -417,6 +424,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	sk	Zoznam
 list members	common	sk	Zoznam členov
 lithuania	common	sk	LITVA
+load	common	sk	Načítať
 local	common	sk	Lokálny
 locations	common	sk	Umiestnenia
 logging / debuging	groupdav	sk	Protokolovanie / ladenie
@@ -487,6 +495,7 @@ niger	common	sk	NIGER
 nigeria	common	sk	NIGÉRIA
 niue	common	sk	NIUE
 no	common	sk	Nie
+no - cancel	common	sk	Nie - Zrušiť
 no entries found, try again ...	common	sk	nič som nenašiel, skúste znovu...
 no history for this record	common	sk	Žiadna história pre tento záznam
 no savant2 template directories were found in:	common	sk	Žiadne adresáre šablóny Savant2 sa nenašli v:
@@ -502,6 +511,7 @@ not assigned	common	sk	nepriradené
 not readable %1 entry of user %2	common	sk	Nečitateľná položka %1 používateľa %2
 note	common	sk	Poznámka
 notes	common	sk	Poznámky
+nothing to save.	common	sk	Niet čo uložiť.
 notifications	common	sk	Upozornenia
 notify window	common	sk	Upozorňujúce okno
 notify your administrator to correct this situation	common	sk	Upozornite svojho správcu, aby napravil vzniknutú situáciu
@@ -564,6 +574,7 @@ please set your preferences for this application	common	sk	Prosím upravte vaše
 please wait...	common	sk	Prosím čakajte...
 please, check back with us shortly.	common	sk	Prosím, ozvite sa čoskoro.
 poland	common	sk	POĽSKO
+popup with search	common	sk	Vyhľadaním
 portugal	common	sk	PORTUGALSKO
 postal	common	sk	Poštové
 powered by	common	sk	Používame
@@ -626,10 +637,12 @@ search accounts	common	sk	Hľadať v účtoch
 search or select accounts	common	sk	hľadať alebo vyberať medzi účtami
 second	common	sk	sekunda
 section	common	sk	Sekcia
+securest	common	sk	Najbezpečnejšie
 select	common	sk	Výber
 select "%1", if your client does not support multiple addressbooks.	groupdav	sk	Vyberte "%1" ak váš klient nepodporuje viacero adresárov.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	sk	Vyberte "%1" ak váš klient podporuje skupiny, napr. adresár OS X alebo iOS.
 select action	common	sk	Vyberte akciu
+select all	common	sk	Označiť všetko
 select all %1 %2 for %3	common	sk	Vyberte všetky %1 %2 pre %3
 select category	common	sk	Vyberte kategóriu
 select date	common	sk	Vyberte dátum
@@ -750,6 +763,7 @@ tuvalu	common	sk	TUVALU
 type	common	sk	Typ
 uganda	common	sk	UGANDA
 ukraine	common	sk	UKRAJINA
+un-delete	common	sk	Obnoviť vymazané
 underline	common	sk	Podčiarknuť
 united arab emirates	common	sk	SPOJENÉ ARABSKÉ EMIRÁTY
 united kingdom	common	sk	SPOJENÉ KRÁĽOVSTVO
@@ -804,6 +818,8 @@ written by:	common	sk	Zapísal:
 year	common	sk	Rok
 yemen	common	sk	JEMEN
 yes	common	sk	Áno
+yes - delete	common	sk	Áno - Odstrániť
+yes - delete including sub-entries	common	sk	Áno - Odstrániť vrátane podzáznamov
 you are required to change your password during your first login	common	sk	Počas svojho prvého prihlásenia budete musieť zmeniť svoje heslo
 you can customize how many icons and toolbars the editor shows.	common	sk	Môžete si nastaviť, koľko ikoniek a nástrojových panelov má editor zobrazovať.
 you have been successfully logged out	login	sk	Boli ste úspešne odhlásení.
@@ -825,9 +841,7 @@ your message has been sent	common	sk	Vaša správa bola odoslaná
 your password is about to expire in %1 days, you may change your password now	common	sk	Vaše heslo vyprší do %1 dní, môžete si ho už zmeniť.
 your search returned %1 matchs	common	sk	našiel som %1 záznamov
 your search returned 1 match	common	sk	našiel som 1 záznam
-your session could not be verified.	login	sk	Vašu reláciu sa nepodarilo overiť.
 your settings have been updated	common	sk	Vaše nastavenia boli upravené
 zambia	common	sk	ZAMBIA
 zimbabwe	common	sk	ZIMBABWE
 zoom	common	sk	Lupa
-nothing to save.	common	sk	Niet čo uložiť.

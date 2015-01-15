@@ -1,9 +1,11 @@
+actions...	etemplate	hu	Műveletek...
 add column	etemplate	hu	Oszlop hozzáadása
 add index	etemplate	hu	Index hozzáadása
 add new	etemplate	hu	Új hozzáadása
 add table	etemplate	hu	Táblázat hozzáadása
 advanced search	etemplate	hu	Kiterjesztett keresés
 align	etemplate	hu	Igazítás
+all users	etemplate	hu	Összes felhasználó
 am	etemplate	hu	de
 and	etemplate	hu	És
 application	etemplate	hu	Alkalmazás
@@ -27,6 +29,7 @@ comment	etemplate	hu	Hozzászólás
 confirm	etemplate	hu	megerősít
 contact	etemplate	hu	Kapcsolat
 contains	etemplate	hu	tartalmaz
+copy to clipboard	etemplate	hu	Vágólapra másol
 custom	etemplate	hu	egyedi
 custom fields	etemplate	hu	egyedi mezők
 cut	etemplate	hu	Kivág
@@ -50,11 +53,13 @@ field must not be empty !!!	etemplate	hu	A mezőt ki kell tölteni!!!
 file	etemplate	hu	Állomány
 first	etemplate	hu	Első
 general fields:	preferences	hu	Általános mezők:
+h	etemplate	hu	h
 height	etemplate	hu	Magasság
 help	etemplate	hu	Segítség
 hour	etemplate	hu	Óra
 hours	etemplate	hu	órák
 html	etemplate	hu	HTML
+id	etemplate	hu	Azonosító
 image	etemplate	hu	Kép
 import	etemplate	hu	Import
 key	etemplate	hu	Kulcs
@@ -64,16 +69,20 @@ last	etemplate	hu	Utolsó
 left	etemplate	hu	Balra
 link	etemplate	hu	Hivatkozás
 link target %1 not found!	etemplate	hu	Link célpontja nem található (%1)!
+loading	etemplate	hu	betöltés
 maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
 minute	etemplate	hu	Perc
 minutes	etemplate	hu	Percek
 month	etemplate	hu	Hónap
+more	etemplate	hu	Több
 name	etemplate	hu	Név
+new	etemplate	hu	Új
 new search	common	hu	Új keresés
 no file	etemplate	hu	nincs file
 no matches found	etemplate	hu	Nincs egyezés
 not null	etemplate	hu	NOT NULL
 nothing	etemplate	hu	semmi
+now	etemplate	hu	Most
 options	etemplate	hu	Opciók
 or	etemplate	hu	vagy
 padding	etemplate	hu	Helykitöltés
@@ -84,14 +93,18 @@ read	etemplate	hu	Olvas
 read a list of entries.	etemplate	hu	Bejegyzés lista olvasása.
 read a single entry by passing the id and fieldlist.	etemplate	hu	Egyedi bejegyzés olvasása az azonositó és mezőlista alapján.
 readonly	etemplate	hu	csak olvasható
+refresh	etemplate	hu	Frissít
 remove this link (not the entry itself)	etemplate	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
 required	etemplate	hu	Szükséges
+reset	etemplate	hu	Alaphelyzet
 right	etemplate	hu	Jobbra
+save all	etemplate	hu	Összes mentése
 search	etemplate	hu	Keres
 select a category	etemplate	hu	Kategória kiválasztása
 select an app to search in	etemplate	hu	Alkalmazásban keresés
 select an entry to link with	etemplate	hu	Bejegyzés választása hivatkozás készítéshez
 selectbox	etemplate	hu	Kiválasztó doboz
+set as default	etemplate	hu	Beállítás alapértelmezettként
 show	etemplate	hu	Mutat
 spacing	etemplate	hu	Betűköz
 start a new search, cancel this link	etemplate	hu	új keresés indítása, hivatkozás elhagyása
@@ -109,6 +122,7 @@ version	etemplate	hu	Verzió
 view this linked entry in its application	etemplate	hu	hivatkozott bejegyzés megtekintése a hozzá tartozó alkalmazással
 weekend	etemplate	hu	hétvége
 width	etemplate	hu	Szélesség
+wk	etemplate	hu	hét
 working days	etemplate	hu	munkanapok
 year	etemplate	hu	Év
 you can respond by visiting:	etemplate	hu	Megtekintéshez látogasson el ide:

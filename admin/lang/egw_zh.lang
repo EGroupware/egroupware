@@ -150,6 +150,7 @@ delete this user	admin	zh	删除该用户
 deleted	admin	zh	已删除
 deletes this field	admin	zh	删除此字段域
 deliver extern	admin	zh	外部传送
+deny access	admin	zh	拒绝访问
 deny access to access log	admin	zh	拒绝对访问日志的访问
 deny access to application registery	admin	zh	拒绝访问应用程序注册
 deny access to applications	admin	zh	拒绝对应用程序的访问
@@ -178,8 +179,6 @@ do you want to delete all global subcategories ?	admin	zh	您是否想要删除�
 do you want to move all global subcategories one level down ?	admin	zh	您是否想要把所有的全局子类别向下移动一级？
 document root (default)	admin	zh	文件根目录 (默认)
 down	admin	zh	向下
-each value is a line like <id>[=<label>]	admin	zh	每个数值是一行像是<id>[=<label>]这样的文字
-each value is a line like id[=label]	admin	zh	每个数值是一行像是 id[=label] 这样的文字
 edit account	admin	zh	编辑账户
 edit application	admin	zh	编辑应用程序
 edit email settings	admin	zh	编辑邮件设置
@@ -253,6 +252,7 @@ forward also to	admin	zh	同时转发到
 forward emails to	admin	zh	转发邮件到
 forward only	admin	zh	转发
 full name	admin	zh	姓名
+general	admin	zh	通用
 global categories	common	zh	全局分类
 grant	admin	zh	允许
 group ?	admin	zh	群组？
@@ -324,7 +324,6 @@ main email-address	admin	zh	主要信箱
 main screen message	admin	zh	主窗口信息
 manage mapping	admin	zh	管理匹配
 manager	admin	zh	管理器
-max length of the input [, length of the inputfield (optional)]	admin	zh	输入的最大长度 [, 输入字段的长度 (可选)]
 maximum account id (e.g. 65535 or 1000000)	admin	zh	最大帐户 id 数 (例如：65535 或 1000000)
 maximum entries in click path history	admin	zh	在点击路径历史记录中的最大条目数
 members	admin	zh	成员
@@ -367,6 +366,7 @@ percent of users that logged out	admin	zh	已注销用户的百分比
 percent this user has logged out	admin	zh	该用户注销百分比
 permission denied	admin	zh	没有权限
 permission denied !!!	admin	zh	没有权限！
+permission denied!!!	admin	zh	没有权限！
 permissions	admin	zh	权限
 permissions this group has	admin	zh	该组权限
 phpinfo	admin	zh	系统环境信息
@@ -393,6 +393,7 @@ requested	admin	zh	请求
 return to admin mainscreen	admin	zh	返回系统管理主窗口
 return to view account	admin	zh	返回到查看账户
 route all mails to	admin	zh	路由所有信件到
+rows	admin	zh	行
 run asynchronous services	admin	zh	运行异步服务
 save the category	admin	zh	保存类别
 save the category and return back to the list	admin	zh	保存类别并返回列表

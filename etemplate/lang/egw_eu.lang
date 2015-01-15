@@ -23,6 +23,7 @@ advanced search	etemplate	eu	Bilaketa aurreratua
 align	etemplate	eu	Lerrokatzea
 all days	etemplate	eu	egunero
 all operations save the template!	etemplate	eu	operazio guztiek plantilla gordetzen dute!
+all users	etemplate	eu	Erabiltzaile guztiak
 am	etemplate	eu	am
 and	etemplate	eu	Eta
 application	etemplate	eu	Aplikazioa
@@ -68,7 +69,6 @@ custom fields	etemplate	eu	eremu pertsonalizatuak
 custom javascript for onchange	etemplate	eu	javascript pertsonalizatua onChange-entzako
 cut	etemplate	eu	Ebaki
 date+time	etemplate	eu	Data+ordua
-datum	etemplate	eu	Data
 day	etemplate	eu	Eguna
 days	etemplate	eu	egunak
 db-tools	etemplate	eu	Datu baseko tresnak
@@ -132,6 +132,7 @@ grid	etemplate	eu	Sareta
 grid column attributes	etemplate	eu	Saretako zutabearen atributoak
 grid row attributes	etemplate	eu	Saretako errenkaden atributoak
 groupbox	etemplate	eu	Taldeko koadroa
+h	etemplate	eu	o
 hbox	etemplate	eu	Koadro horizontala
 height	etemplate	eu	Altuera
 height of row (in % or pixel)	etemplate	eu	errenkadaren altuera (% edo pixeletan)
@@ -142,6 +143,7 @@ hour	etemplate	eu	Ordua
 hours	etemplate	eu	Orduak
 how many entries should the list show	etemplate	eu	Zenbait sarrera ikusten dira zerrendan?
 html	etemplate	eu	Html
+id	etemplate	eu	Id
 image	etemplate	eu	Irudia
 import	etemplate	eu	Inportatu
 import an etemplate from a xml-file	etemplate	eu	Plantilla xml fitxategi batetik inportatu
@@ -170,13 +172,16 @@ linklist	etemplate	eu	Loturen zerrenda
 linkstring	etemplate	eu	Loturen katea
 linkto	etemplate	eu	Lotu
 load this template into the editor	etemplate	eu	plantilla hau editorean kargatu
+loading	etemplate	eu	kargatzen
 middle	etemplate	eu	Erdia
 minute	etemplate	eu	Minutua
 minutes	etemplate	eu	Minutuak
 month	etemplate	eu	Hilabetea
+more	etemplate	eu	Gehiago
 multicolumn indices	etemplate	eu	Zutabe askotako aurkibidea
 name	etemplate	eu	Izena
 name of table to add	etemplate	eu	Gehitu behar den taularen izena
+new	etemplate	eu	Berria
 new search	common	eu	Bilaketa berria
 new table created	etemplate	eu	Taula berri bat sortu da
 newer version '%1' exists !!!	etemplate	eu	Bertsio '%1' berriagoa dago!!!
@@ -206,6 +211,8 @@ pm	etemplate	eu	pm
 read a list of entries.	etemplate	eu	Sarrea zerrenda bat irakurri
 read a single entry by passing the id and fieldlist.	etemplate	eu	Sarrera bakarra irakurri "ID"-a eta "eremu zerrenda" pasatuaz.
 remove this link (not the entry itself)	etemplate	eu	Lotura hau ezabatu (ez sarrera)
+reset	etemplate	eu	Berrezarri
+save all	etemplate	eu	Gorde dena
 select a category	etemplate	eu	Kategoria hautatu
 select an app to search in	etemplate	eu	Bilaketa egiteko aplikazio bat aukeratu
 selectbox	etemplate	eu	Aukeraketa kuadroa
@@ -217,3 +224,4 @@ unlink	etemplate	eu	Desestekatu
 update a single entry by passing the fields.	etemplate	eu	Eguneratu sarrera bakarra eremua emanez.
 upload	etemplate	eu	Kargatu
 view this linked entry in its application	etemplate	eu	zure aplikazioarekin lotura duen sarrera hau ikusi
+wk	etemplate	eu	Astea

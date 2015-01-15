@@ -30,6 +30,7 @@ actions	common	eu	Ekintzak
 active	common	eu	Aktibatua
 add	common	eu	Gehitu
 add %1 category for	common	eu	%1 kategoria gehitu zertarako
+add a new contact	common	eu	Kontaktu berri bat gehitu
 add category	common	eu	Kategoria gehitu
 add shortcut	common	eu	Gehitu lasterbidea
 add sub	common	eu	Gehitu azpi-
@@ -211,6 +212,7 @@ error renaming %1 %2 directory	common	eu	Errorea %1 %2 direktorioa berizendatzer
 estonia	common	eu	ESTONIA
 ethiopia	common	eu	ETHIOPIA
 exact	common	eu	Zehatz
+failed to change password.	common	eu	Akatsa pasahitza aldatzerakoan.
 falkland islands (malvinas)	common	eu	MALVINAK
 faroe islands	common	eu	FAROE IRLAK
 fax number	common	eu	Fax zenbakia
@@ -394,6 +396,7 @@ niger	common	eu	NIGER
 nigeria	common	eu	NIGERIA
 niue	common	eu	NIUE
 no	common	eu	Ez
+no - cancel	common	eu	Ez - Ezeztatu
 no entries found, try again ...	common	eu	Ez da sarrerarik aurkitu, saiatu berriro...
 no history for this record	common	eu	Ez dago historiarik erregistro honetarako
 no subject	common	eu	Gaiarik gabe
@@ -494,6 +497,7 @@ search accounts	common	eu	Kontuak bilatu
 search or select accounts	common	eu	Bilatu aukeratutako kontuetan
 section	common	eu	Sekzioa
 select	common	eu	Aukeratu
+select all	common	eu	Guztiak hautatu
 select all %1 %2 for %3	common	eu	Guztiak aukeratu %1 %2 %3tik
 select category	common	eu	Aukeratu kategoria
 select date	common	eu	Aukeratu eguna
@@ -615,6 +619,8 @@ written by:	common	eu	Nork idatzi:
 year	common	eu	Urtea
 yemen	common	eu	YEMEN
 yes	common	eu	Bai
+yes - delete	common	eu	Bai - Ezabatu
+yes - delete including sub-entries	common	eu	Bai - Ezabatu azpikategoriak eta guzti
 you have been successfully logged out	login	eu	Zuzen irten zara
 you have not entered a title	common	eu	Ez duzu izenbururik sartu
 you have not entered a valid date	common	eu	Ez duzu baliozko data bat sartu
@@ -626,7 +632,6 @@ you have successfully logged out	common	eu	Saioa zuzen bukatu duzu
 your message has been sent	common	eu	Zure mezua bidalia izan da
 your search returned %1 matchs	common	eu	Zure bilaketak %1eko emaitza izan du
 your search returned 1 match	common	eu	Zure bilaketak emaitza bai izan du
-your session could not be verified.	login	eu	Zure saioa ezin izan da egiaztatu
 your settings have been updated	common	eu	Zure hobespenak eguneratuak izan dira
 zambia	common	eu	ZAMBIA
 zimbabwe	common	eu	ZIMBABWE

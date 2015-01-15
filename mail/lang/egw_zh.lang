@@ -7,15 +7,22 @@ allways a new window	mail	zh	允许新窗口
 always show html emails	mail	zh	总是显示HTML邮件
 any of	mail	zh	任何
 any status	mail	zh	任何状态
+attachments	mail	zh	附件
 by date	mail	zh	以日期
+check message against next rule also	mail	zh	也用下一个规则检查邮件
 compose	mail	zh	撰写
 compress folder	mail	zh	压缩文件夹
+condition	mail	zh	条件
 contains	mail	zh	包含
+copy to	mail	zh	复制到
 date(newest first)	mail	zh	日期 (最近邮件优先)
 date(oldest first)	mail	zh	日期 (最早邮件优先)
 default sorting order	mail	zh	默认排序
+delete folder	mail	zh	删除邮件夹
 deleted	mail	zh	已删除
+disable	mail	zh	禁用
 discard	mail	zh	取消
+discard message	mail	zh	取消邮件
 display messages in multiple windows	mail	zh	在多窗口显示邮件
 display of html emails	mail	zh	显示HTML邮件
 display only when no plain text is available	mail	zh	仅当邮件非纯文本时显示
@@ -27,24 +34,37 @@ don't use draft folder	mail	zh	不使用草稿夹
 don't use sent	mail	zh	不使用发件箱
 don't use trash	mail	zh	不使用回收站
 draft folder	mail	zh	草稿夹
+edit account	mail	zh	编辑账户
+edit vacation settings	mail	zh	编辑假期设置
 emailaddress	admin	zh	邮件地址
 empty trash	mail	zh	清空回收站
+enable	mail	zh	启用
 event details follow	mail	zh	事件细节
-felamimail	admin	zh	我的邮箱
+everyone	mail	zh	所有人
+extended	mail	zh	扩展
 file into	mail	zh	文件插入
 filemanager	mail	zh	文件管理器
 flagged	mail	zh	已标记
 folder	mail	zh	邮件夹
 folder settings	mail	zh	邮件夹设置
+forward	mail	zh	转发
 forward to	mail	zh	转发到
 from	mail	zh	从
 from(a->z)	mail	zh	从 (A->Z)
 from(z->a)	mail	zh	从 (Z->A)
+general	admin	zh	通用
 greater than	mail	zh	大于
+header lines	mail	zh	邮件头
 html	mail	zh	HTML
+identity	mail	zh	身份
 if	mail	zh	如果
+if mail header	mail	zh	如果邮件头
+if message size	mail	zh	如果邮件大小
+imap	mail	zh	IMAP
 imap server	mail	zh	IMAP 服务器
 inbox	mail	zh	收件箱
+keep a copy of the message in your inbox	mail	zh	在收件箱保留一个邮件副本
+kilobytes	mail	zh	kb
 later	mail	zh	晚一点
 less than	mail	zh	少于
 mail settings	mail	zh	邮件设置
@@ -52,8 +72,10 @@ mark as deleted	mail	zh	标记为已删除
 matches	mail	zh	符合
 matches regexp	mail	zh	符合规则
 move selected to	mail	zh	将选定邮件移至
+move to	mail	zh	将选定邮件移至
 move to trash	mail	zh	移动至回收站
 never display html emails	mail	zh	从不显示 HTML 邮件
+no access	mail	zh	无访问
 no plain text part found	mail	zh	未找到纯文本部分
 no recipient address given!	mail	zh	没有给定收件人地址！
 no signature	mail	zh	没有签名
@@ -63,6 +85,7 @@ one address is not valid	mail	zh	其中一个地址无效
 only one window	mail	zh	只一个窗口
 organisation	admin	zh	组织
 organization	mail	zh	组织
+permission denied	mail	zh	没有权限
 please select a address	mail	zh	请选择地址
 please select the number of days to wait between responses	mail	zh	请选择回复之间要等待的天数
 please supply the message to send with auto-responses	mail	zh	请提供要自动回复的内容
@@ -71,10 +94,18 @@ refresh time in minutes	mail	zh	刷新时间分钟数
 reject with	mail	zh	拒绝
 remove all	mail	zh	全部删除
 remove immediately	mail	zh	立刻删除
+rename folder	mail	zh	重命名邮件夹
 replied	mail	zh	已回复
+reply	mail	zh	回复
+reply all	mail	zh	全部回复
+reply to	mail	zh	回复到
 replyto	mail	zh	回复到
 row order style	mail	zh	行排序类型
 save all	mail	zh	保存所有
+save as draft	mail	zh	存为草稿
+save as infolog	mail	zh	存为记事本
+save message to disk	mail	zh	保存邮件到磁盘
+select all	mail	zh	全选
 sent folder	mail	zh	发件夹
 sieve script name	mail	zh	Sieve 脚本名
 signature	mail	zh	签名
@@ -84,12 +115,16 @@ small view	mail	zh	小视图
 sort order	mail	zh	分类排序
 subject(a->z)	mail	zh	主题 (A->Z)
 subject(z->a)	mail	zh	主题 (Z->A)
+text	mail	zh	文字
 the mimeparser can not parse this message.	mail	zh	mime 解析器不能解析这个邮件。
 then	mail	zh	然后
 trash folder	mail	zh	回收站
+unflagged	mail	zh	已清除标记
 unread	mail	zh	未读
-urgent	mail	zh	最高
-vacation notice	admin	zh	假期通知
+vacation notice	mail	zh	假期通知
+vacation notice is active	mail	zh	假期通知已激活
 vacation start-date must be before the end-date!	mail	zh	假期开始日期必须是在结束日期之前！
+view header lines	mail	zh	查看邮件头
 when deleting messages	mail	zh	当删除邮件时
+write	mail	zh	写入
 wrote	mail	zh	写信

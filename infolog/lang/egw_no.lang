@@ -1,5 +1,6 @@
 %1 records imported	infolog	no	%1 rekker importert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	no	%1 rekker lest (ikke importert enda, du må evt. gå %2back%3 å fjerne haken på Test Import.
+(no subject)	infolog	no	(uten emne)
 - subprojects from	infolog	no	- Underprosjekter fra
 0%	infolog	no	0%
 10%	infolog	no	10%
@@ -95,7 +96,7 @@ description	infolog	no	Beskrivelse
 determines the order the fields are displayed	infolog	no	avgjør rekkefølge feltene vises i
 disables a status without deleting it	infolog	no	kobler ut status uten å slette
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	no	vil du ha bekreftelse fra ansvarlig ang: akseptering, ferdigstilling eller begge
-done	common	no	Ferdig
+done	infolog	no	Ferdig
 download	infolog	no	Nedlasting
 duration	infolog	no	Varighet
 each value is a line like <id>[=<label>]	infolog	no	hver verdi er en linje som <id>[=<label>]
@@ -150,12 +151,10 @@ leave it empty	infolog	no	La stå tom
 leave it empty for a full week	infolog	no	La stå tom for en full uke
 leave without saveing the entry	infolog	no	avslutt uten å lagre innslaget
 leaves without saveing	infolog	no	avslutt uten å lagre
-length<br>rows	infolog	no	Lengde<br>Kolonner
 link	infolog	no	Lenke
 links	infolog	no	Lenker
 links of this entry	infolog	no	Lenker i dette innslaget
 list all categories	infolog	no	Liste over alle kategorier
-list no subs/childs	infolog	no	Liste antall Under/Barn
 location	infolog	no	Lokasjon
 longer textual description	infolog	no	lenger ordrett beskrivelse
 low	infolog	no	lav
@@ -223,6 +222,7 @@ responsible overdue	infolog	no	Ansvarlig for overskredne
 responsible upcoming	infolog	no	Ansvarlig for kommende
 responsible user, priority	infolog	no	Ansvarlig bruker, prioritet
 returns a list / search for records.	infolog	no	Viser en liste / søk etter rekker.
+rows	infolog	no	Rader
 save	infolog	no	Lagre
 saves the changes made and leaves	infolog	no	lagrer endringene og lukker
 saves this entry	infolog	no	Lagrer innslaget

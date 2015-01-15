@@ -1,18 +1,27 @@
+all users	importexport	pt	Todos os utilizadores
 changed	importexport	pt	Alterado/a
 charset of file	importexport	pt	Charset do ficheiro
 check all	importexport	pt	Marcar todas
+condition	importexport	pt	Condição
 created	importexport	pt	Criado
 deleted	importexport	pt	eliminado/a
 execute	importexport	pt	Executar
 export	importexport	pt	Exportar
+export definition to use for nextmatch export	preferences	pt	Definição Exportar para usar para exportação NextMatch
 false	importexport	pt	Falso
 finish	importexport	pt	fim
 general	preferences	pt	Geral
+general fields:	preferences	pt	Campos gerais:
 import	importexport	pt	Importar
+manage mapping	importexport	pt	Gerenciar mapeamento
 next run	importexport	pt	Execução seguinte
+no custom field "%1" for %2.	importexport	pt	No campo personalizado "% 1" para% 2.
+old fixed definition	preferences	pt	Definição fixa Velho
 preview	importexport	pt	Pré-visualização
 previous	importexport	pt	anterior
 schedule	common	pt	Agendar
 translation	importexport	pt	Tradução
 true	importexport	pt	Verdadeiro
 use default	importexport	pt	Utilizar definições por omissão
+use field from csv if possible	importexport	pt	Use o campo de CSV, se possível
+use search results	common	pt	Utilizar os resultados da pesquisa

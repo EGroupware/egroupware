@@ -138,6 +138,7 @@ delete this event	calendar	pt-br	Remover este evento
 delete this exception	calendar	pt-br	Remover esta exceção
 delete this series of recuring events	calendar	pt-br	Remover esta série de eventos recorrentes
 deleted	calendar	pt-br	removido
+directory with documents to insert entries	calendar	pt-br	Diretório com documentos para inserir entradas
 disinvited	calendar	pt-br	Desconvidado
 display status of events	calendar	pt-br	Exibir status dos eventos
 displayed view	calendar	pt-br	Visualização exibida
@@ -398,8 +399,10 @@ startrecord	calendar	pt-br	Registro inicial
 status changed	calendar	pt-br	Status alterado
 submit to repository	calendar	pt-br	Enviar para o repositório
 sun	calendar	pt-br	Dom
+tag to mark positions for address labels	calendar	pt-br	Tag para marcar posições para etiquetas de endereço
 tentative	calendar	pt-br	Tentativa
 test import (show importable records <u>only</u> in browser)	calendar	pt-br	Testar Importação (mostar <u>somente</u> registros que podem ser importados no navegador)
+the following document-types are supported:	calendar	pt-br	Os seguintes tipos de documentos são suportados:
 this day is shown as first day in the week or month view.	calendar	pt-br	Esse dia será mostrado como primeiro dia da semana na visão semanal e mensal
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	pt-br	Isso define o último horário da visão diária. Eventos além desse horário são mostrados abaixo do dia.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	pt-br	Isso define o primeiro horário da visão diária. Eventos antes desse horário são mostrados acima do dia.<br>Esse horário também será o horário inicial para novos eventos.

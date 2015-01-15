@@ -8,21 +8,28 @@ allways a new window	mail	hu	mindig új ablak
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
 any of	mail	hu	bármennyi
 any status	mail	hu	bármilyen állapot
+attachments	mail	hu	Mellékletek
 by date	mail	hu	dátum szerint
+check message against next rule also	mail	hu	üzenet ellenőrzése a következő szabály szerint is
 compose	mail	hu	Szerkeszt
+compose as new	mail	hu	szerkesztés újként
 compress folder	mail	hu	Mappa tömörítése
+condition	mail	hu	feltétel
 contains	mail	hu	tartalmaz
+copy to	mail	hu	Másold ide:
 date(newest first)	mail	hu	Dátum (újak elsőnek)
 date(oldest first)	mail	hu	Dátum (régiek elsőnek)
 default sorting order	mail	hu	Alapértelmezett rendezési sor
+delete folder	mail	hu	Mappa törlése
 deleted	mail	hu	törölve
+disable	mail	hu	Letilt
 discard	mail	hu	elvet
+discard message	mail	hu	üzenet elvetése
 display messages in multiple windows	mail	hu	üzenetek megjelenítése több ablakban
 display of html emails	mail	hu	HTML email-ek megjelenítése
 display only when no plain text is available	mail	hu	Csak akkor jelenítse meg, ha nincs egyszerű szöveg
 displaying html messages is disabled	mail	hu	HTML levelek megjelenítése tiltva
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	hu	Szeretnél megerősítést a kijelölt üzenetek áthelyezése előtt?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a továbbított üzenetek módosítását? (engedélyezett SIEVE esetén is)
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a szűrő szabályok létrehozását és alkalmazását? (engedélyezett SIEVE esetén is)
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni más címre küldött figyelmeztető e-mail beállítását beérkező üzenet esetén? (engedélyezett SIEVE esetén is)
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a "szabadságon vagyok" üzenet módosításának lehetőségét? (engedélyezett SIEVE esetén is)
@@ -37,34 +44,47 @@ don't use template folder	mail	hu	Ne használja a "Sablonok" mappát
 don't use trash	mail	hu	Ne használja a 'Szemetes' mappát
 draft folder	mail	hu	vázlat mappa
 drafts	mail	hu	Piszkozatok
+edit account	mail	hu	Azonosító szerkesztése
+edit vacation settings	mail	hu	szabadság beállítások szerkesztése
 email notification update failed	mail	hu	e-mail értesítő frissítés mező
 emailaddress	admin	hu	E-Mail cím
 empty trash	mail	hu	Szemetes ürítése
+enable	mail	hu	engedélyez
 error saving %1!	mail	hu	Hiba %1 mentése során!
 error:	mail	hu	Hiba:
 error: could not save message as draft	mail	hu	Hiba: üzenet mentése piszkozatként nem sikerült
 error: message could not be displayed.	mail	hu	Hiba: az üzenet nem megjeleníthető
 event details follow	mail	hu	Esemény jellemzőinek követése
-felamimail	admin	hu	FelaMiMail
+everyone	mail	hu	bárki
+extended	mail	hu	Kibővített
 file into	mail	hu	állományba
 filemanager	mail	hu	Filekezelő
 flagged	mail	hu	megjelölt
 folder	mail	hu	mappa
 folder settings	mail	hu	Mappa beállításai
+forward	mail	hu	Továbbít
 forward as attachment	mail	hu	továbbítás mellékletként
 forward inline	mail	hu	továbbítás beágyazva
 forward to	mail	hu	Továbbítás ide
 from	mail	hu	Tól:
 from(a->z)	mail	hu	Feladó (A->Z)
 from(z->a)	mail	hu	Feladó (Z->A)
+general	admin	hu	Általános
 greater than	mail	hu	nagyobb mint
+header lines	mail	hu	Email fejléce
 how to forward messages	mail	hu	Üzenet továbbítás módja
 html	mail	hu	HTML
+identity	mail	hu	azonosító
 if	mail	hu	HA
+if mail header	mail	hu	ha a levél fejléce
+if message size	mail	hu	ha a levél mérete
+imap	mail	hu	IMAP
 imap server	mail	hu	IMAP szerver
 importance	mail	hu	Fontosság
 inbox	mail	hu	Bejövő
 junk	mail	hu	Spam
+keep a copy of the message in your inbox	mail	hu	másolat megőrzése a Bejövő postafiókban
+kilobytes	mail	hu	kilobájt
 later	mail	hu	Később
 less than	mail	hu	kisebb mint
 mail settings	mail	hu	eMail beállítások
@@ -72,8 +92,10 @@ mark as deleted	mail	hu	Törlésre megjelöl
 matches	mail	hu	egyezés
 matches regexp	mail	hu	reguláris kifejezés egyezése
 move selected to	mail	hu	kijelöltek mozgatása
+move to	mail	hu	kijelöltek mozgatása
 move to trash	mail	hu	Szemetesbe mozgatás
 never display html emails	mail	hu	Soha ne jelenítse meg a HTML formátumú emaileket
+no access	mail	hu	Nincs hozzáférés
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	hu	Nincs címzett és mappa az üzenet mentéséhez beállítva.
 no folders	mail	hu	nincs mappa
 no plain text part found	mail	hu	nem található egyszerű szöveges tartalom
@@ -87,6 +109,7 @@ only one window	mail	hu	csak egy ablak
 organisation	admin	hu	szervezet
 organization	mail	hu	szervezet
 original message	mail	hu	eredeti üzenet
+permission denied	mail	hu	Hozzáférés megtagadva
 please select a address	mail	hu	Kérlek válassz címet
 please select the number of days to wait between responses	mail	hu	Kérlek add hány napot várjon a válaszok között
 please supply the message to send with auto-responses	mail	hu	Kérlek add meg az automatikus válaszüzenetet
@@ -95,10 +118,18 @@ quicksearch	mail	hu	Gyorskeresés
 refresh time in minutes	mail	hu	Frissítési időintervallum percben
 reject with	mail	hu	elutasítás
 remove immediately	mail	hu	Azonnali eltávolítás
+rename folder	mail	hu	Mappa átnevezése
 replied	mail	hu	megválaszolt
+reply	mail	hu	Válasz
+reply all	mail	hu	Válasz mindenkinek
+reply to	mail	hu	Válasz
 replyto	mail	hu	Válasz
 row order style	mail	hu	sorok rendezése
 save all	mail	hu	Összes mentése
+save as draft	mail	hu	Mentés vázlatként
+save as infolog	mail	hu	Mentés InfoLog-ként
+save message to disk	mail	hu	Üzenet mentése lemezre
+select all	mail	hu	Minden kiválasztása
 sender	mail	hu	Feladó
 sent	mail	hu	Elköldött üzenetek
 sent folder	mail	hu	'Elküldött' mappa
@@ -112,17 +143,22 @@ subject(a->z)	mail	hu	Tárgy (A->Z)
 subject(z->a)	mail	hu	Tárgy (Z->A)
 template folder	mail	hu	Sablonok mappa
 templates	mail	hu	Sablonok
+text	mail	hu	Szöveg
 text/plain	mail	hu	szöveg
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	hu	A feladó kéri tértivevényt küldését amely jelzi, hogy megkaptad az üzenetet. Szeretnéd hogy elküldjem?
 the mimeparser can not parse this message.	mail	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
 then	mail	hu	AKKOR
 there is no imap server configured.	mail	hu	Nincs IMAP szerver beállítva.
 trash	mail	hu	Törölt üzenetek
 trash folder	mail	hu	"Szemetes" mappa
+unflagged	mail	hu	jelöletlen
 unread	mail	hu	Olvasatlan
-urgent	mail	hu	sürgős
-vacation notice	admin	hu	szabadság értesítés
+vacation notice	mail	hu	szabadság értesítés
+vacation notice is active	mail	hu	Szabadság értesítő aktív
 vacation start-date must be before the end-date!	mail	hu	Szabadság kezdete korábban legyen mint a vége!
+view header lines	mail	hu	fejléc tartalom megjelenítése
 when deleting messages	mail	hu	Üzenet törlése esetén
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve?
 which folders - in general - should not be automatically created, if not existing	mail	hu	Melyik mappa ne legyen automatikusan létrehozva?
+write	mail	hu	Írás
 wrote	mail	hu	írta

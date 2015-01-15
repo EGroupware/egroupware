@@ -112,24 +112,40 @@ error: could not save message as draft	mail	pt-br	Erro: Não foi possível salva
 error: could not save rule	mail	pt-br	Erro: Não foi possível salvar regra
 error: could not send message.	mail	pt-br	Erro: Não foi possível enviar mensagem.
 event details follow	mail	pt-br	Seguem detalhes do evento
+everyone	mail	pt-br	todo o mundo
+extended	mail	pt-br	Extendido
 file into	mail	pt-br	Arquivar em
+file rejected, no %2. is:%1	mail	pt-br	Arquivo rejeitado, sem% 2. É: 1%
 filemanager	mail	pt-br	Gerenciador de Arquivos
 flagged	mail	pt-br	sinalizado
 folder	mail	pt-br	pasta
 folder settings	mail	pt-br	Configurações da Pasta
+forward	mail	pt-br	Encaminhar
 forward as attachment	mail	pt-br	encaminhar como anexo
 forward inline	mail	pt-br	encaminhar no corpo da mensagem
 forward to	mail	pt-br	encaminhar para
 from	mail	pt-br	De
 from(a->z)	mail	pt-br	de (A->Z)
 from(z->a)	mail	pt-br	de (Z->A)
+general	admin	pt-br	Geral
+general settings	mail	pt-br	Definições gerais
 greater than	mail	pt-br	maior que
+header lines	mail	pt-br	Linhas de Cabeçalho
+hostname or ip	mail	pt-br	Nome do host ou IP
 how to forward messages	mail	pt-br	como encaminhar mensagens
 html	mail	pt-br	Html
+identity	mail	pt-br	identificar
 if	mail	pt-br	SE
+if different from email address	mail	pt-br	se for diferente do endereço de email
+if mail header	mail	pt-br	Se cabeçalho de e-mail
+if message size	mail	pt-br	Se tamanho da mensagem
+imap	mail	pt-br	IMAP
 imap server	mail	pt-br	Servidor IMAP
+importance	mail	pt-br	importância
 inbox	mail	pt-br	Caixa de Entrada
 junk	mail	pt-br	Spam
+keep a copy of the message in your inbox	mail	pt-br	Manter uma cópia da mensagem em sua caixa de entrada
+kilobytes	mail	pt-br	Kbytes
 later	mail	pt-br	Depois
 less than	mail	pt-br	menor que
 mail settings	mail	pt-br	Configurações de E-Mail
@@ -137,19 +153,24 @@ mark as deleted	mail	pt-br	Remover mensagem(ns) selecionada(s)
 matches	mail	pt-br	coincidentes
 matches regexp	mail	pt-br	coincidentes com a expressão
 move selected to	mail	pt-br	mover selecionados para
+move to	mail	pt-br	mover selecionados para
 move to trash	mail	pt-br	Mover para a lixeira
 never display html emails	mail	pt-br	Nunca mostar mensagens em HTML
+no access	mail	pt-br	Sem acesso
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pt-br	Nenhum endereço em PARA/CC/CCO informado e nenhuma pasta para salvar mensagens definida.
 no plain text part found	mail	pt-br	Nehuma parte em texto puro encontrada
 no recipient address given!	mail	pt-br	Nenhum endereço informado!
 no signature	mail	pt-br	sem assinatura
 no subject given!	mail	pt-br	Nenhum assunto informado!
+no valid %1 folder configured!	mail	pt-br	Nenhuma pasta válido% 1 configurado!
+nothing to change.	mail	pt-br	Nada a alterar.
 on	mail	pt-br	em
 one address is not valid	mail	pt-br	Um endereço não é válido
 only one window	mail	pt-br	Somente uma janela
 organisation	admin	pt-br	Organização
 organization	mail	pt-br	organização
 original message	mail	pt-br	mensagem original
+permission denied	mail	pt-br	Permissão negada
 please select a address	mail	pt-br	Por favor, selecione um endereço
 please select the number of days to wait between responses	mail	pt-br	Por favor, selecione o número de dias para aguardar entre respostas.
 please supply the message to send with auto-responses	mail	pt-br	Por favor, informe a mensagem para enviar como auto-resposta.
@@ -159,9 +180,19 @@ refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
 reject with	mail	pt-br	rejeitar com
 remove all	mail	pt-br	Remover todos
 remove immediately	mail	pt-br	Remover imediatamente
+rename folder	mail	pt-br	Renomear pasta
 replied	mail	pt-br	Respondido
+reply	mail	pt-br	Responde
+reply all	mail	pt-br	Responde a todos
+reply to	mail	pt-br	Responde a
 replyto	mail	pt-br	Responde a
+required pear class mail/mimedecode.php not found.	mail	pt-br	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
 row order style	mail	pt-br	estilo da ordem de linha
+save as	mail	pt-br	salvar como
+save as draft	mail	pt-br	salvar como rascunho
+save as infolog	mail	pt-br	salvar como tarefa
+save message to disk	mail	pt-br	Salvar mensagem no disco
+select file(s) from vfs	mail	pt-br	Selecione o arquivo (s) a partir de VFS
 sent	mail	pt-br	Enviado
 sent folder	mail	pt-br	Pasta Enviadas
 sieve script name	mail	pt-br	nome do script sieve
@@ -175,13 +206,20 @@ subject(a->z)	mail	pt-br	Assunto (A->Z)
 subject(z->a)	mail	pt-br	Assunto (Z->A)
 template folder	mail	pt-br	Pasta Modelos
 templates	mail	pt-br	Modelos
+text	mail	pt-br	Texto
 text/plain	mail	pt-br	texto/plano
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt-br	O remetente da mensagem solicitou uma resposta para indicar que você a leu. Gostaria de enviá-la?
 the mimeparser can not parse this message.	mail	pt-br	O analisador mime não pôde processar esta mensagem.
 then	mail	pt-br	ENTÃO
 trash	mail	pt-br	Lixeira
 trash folder	mail	pt-br	Pasta Lixeira
+unflagged	mail	pt-br	dessinalizado
 unread	mail	pt-br	Não lido
 vacation notice	mail	pt-br	Notícia de ausência
+vacation notice is active	mail	pt-br	Notícia de ausência está ativa
 vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final !
+view header lines	mail	pt-br	Exibir linhas de cabeçalho
 when deleting messages	mail	pt-br	Ao remover mensagens
+write	mail	pt-br	Gravar
 wrote	mail	pt-br	escreveu
+you've got new mail	mail	pt-br	Você tem um novo e-mail

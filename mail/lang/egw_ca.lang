@@ -4,14 +4,20 @@ all of	mail	ca	tots
 allways a new window	mail	ca	sempre en una finestra nova
 always show html emails	mail	ca	Mostra sempre els correus HTML
 any of	mail	ca	algun
+attachments	mail	ca	Adjunts
 by date	mail	ca	En data
+check message against next rule also	mail	ca	aplica la següent regla a aquest missatge
 compose	mail	ca	Redactar
 compress folder	mail	ca	Comprimir carpeta
 contains	mail	ca	conté
+copy to	mail	ca	Copiar A
 date(newest first)	mail	ca	Data (la més recent primer)
 date(oldest first)	mail	ca	Data (la més antiga primer)
 default sorting order	mail	ca	Mode d'ordenació predeterminat
+delete folder	mail	ca	Esborrar carpeta
 deleted	mail	ca	eliminat
+disable	mail	ca	Deshabilitar
+discard message	mail	ca	elimina el missatge
 display messages in multiple windows	mail	ca	mostra missatges en múltiples pantalles
 display of html emails	mail	ca	Mostrar els missatges HTML
 display only when no plain text is available	mail	ca	Mostrar només quan no hi ha text simple disponible
@@ -20,28 +26,41 @@ does not match	mail	ca	No coincideix amb
 does not match regexp	mail	ca	No coincideix amb l'expressió
 don't use sent	mail	ca	No utilitzar Enviats
 don't use trash	mail	ca	No utilitzar Paperera
+edit account	mail	ca	Editar compte
+edit vacation settings	mail	ca	edita configuració de vacances
 empty trash	mail	ca	Buidar paperera
+enable	mail	ca	Habilitar
 event details follow	mail	ca	Segueixen els detalls de la cita
-felamimail	admin	ca	FelaMiMail
+everyone	mail	ca	tothom
+extended	mail	ca	Estès
 file into	mail	ca	Informació del fitxer
 filemanager	mail	ca	Administrador d'Arxius
 flagged	mail	ca	marcat
 folder	mail	ca	Carpeta
 folder settings	mail	ca	Opcions de la carpeta
+forward	mail	ca	Reenviar
 from	mail	ca	De
 from(a->z)	mail	ca	De (A-> Z)
 from(z->a)	mail	ca	De (Z-> A)
+general	admin	ca	General
 greater than	mail	ca	major que
+header lines	mail	ca	Línies de Capçalera
 html	mail	ca	Html
 if	mail	ca	SI
+if mail header	mail	ca	si la capçalera del correu
+if message size	mail	ca	si la mida del missatge
+imap	mail	ca	IMAP
 imap server	mail	ca	Servidor IMAP
 inbox	mail	ca	Entrada
+keep a copy of the message in your inbox	mail	ca	manté una còpia del missatge dins la safata d'entrada
+kilobytes	mail	ca	kilobytes
 less than	mail	ca	menor que
 mail settings	mail	ca	Configuracions de Correu
 mark as deleted	mail	ca	Marcar com a esborrat
 matches	mail	ca	coincideix
 matches regexp	mail	ca	coincideix amb l'expressió
 move selected to	mail	ca	moure els seleccionats a
+move to	mail	ca	moure els seleccionats a
 move to trash	mail	ca	Moure a la paperera
 never display html emails	mail	ca	No mostrar mai els correus HTML
 on	mail	ca	en
@@ -49,6 +68,7 @@ one address is not valid	mail	ca	Una adreça no és vàlida
 only one window	mail	ca	només una finestra
 organisation	admin	ca	Organització
 organization	mail	ca	Organització
+permission denied	mail	ca	Permís denegat
 please select a address	mail	ca	Si us plau, seleccioneu una adreça
 please select the number of days to wait between responses	mail	ca	Si us plau, seleccioneu el número de dies a esperar entre respostes
 please supply the message to send with auto-responses	mail	ca	Si us plau, indiqueu el missatge a enviar amb auto-respostes
@@ -56,9 +76,14 @@ quicksearch	mail	ca	Cerca ràpida
 refresh time in minutes	mail	ca	Temps de refresc en minuts
 remove all	mail	ca	Esborrar tot
 remove immediately	mail	ca	Eliminar inmediatament
+rename folder	mail	ca	Renomenar carpeta
 replied	mail	ca	respost
+reply	mail	ca	Respondre
+reply all	mail	ca	Respondre a tots
+reply to	mail	ca	Respondre A
 replyto	mail	ca	Respondre A
 save all	mail	ca	Desar tot
+select all	mail	ca	Seleccionar tot
 sent folder	mail	ca	Carpeta d'enviats
 signature	mail	ca	Signatura
 size(...->0)	mail	ca	Mida (...->0)
@@ -67,10 +92,12 @@ small view	mail	ca	Vista reduïda
 sort order	mail	ca	Forma de ordenación
 subject(a->z)	mail	ca	Assumpte (A->Z)
 subject(z->a)	mail	ca	Assumpte (Z->A)
+text	mail	ca	Texto
 then	mail	ca	ALESHORES
 trash folder	mail	ca	Carpeta Paperera
+unflagged	mail	ca	Sense senyalar
 unread	mail	ca	No llegit
-urgent	mail	ca	urgent
-vacation notice	admin	ca	notificació de vacances
+vacation notice	mail	ca	notificació de vacances
 when deleting messages	mail	ca	En esborrar missatges
+write	mail	ca	Escriure
 wrote	mail	ca	ha escrit

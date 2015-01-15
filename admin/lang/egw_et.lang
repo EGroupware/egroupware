@@ -73,6 +73,7 @@ delete this group	admin	et	kustuta see grupp
 delete this user	admin	et	kustuta see kasutaja
 deleted	admin	et	kustutatud
 deletes this field	admin	et	kustutab selle välja
+deny access	admin	et	Keela Ligipääs
 deny access to access log	admin	et	Keela ligipääs külastus logile
 deny access to application registery	admin	et	Keela ligipääs rakenduse registrile
 deny access to applications	admin	et	Keela ligipääs rakendustele
@@ -91,7 +92,6 @@ do you want to delete all global subcategories ?	admin	et	Kas tahad kustutada k�
 do you want to move all global subcategories one level down ?	admin	et	Kas tahad liigutada kõik globaalsed alamkategooriad üks level alla ?
 document root (default)	admin	et	Dokument root (vaikimisi)
 down	admin	et	alla
-each value is a line like <id>[=<label>]	admin	et	iga väärtus on rida nagu <id>[=<label>]
 edit account	admin	et	Muuda kontot
 edit application	admin	et	Muuda rakendust
 edit email settings	admin	et	muuda email setinguid
@@ -123,6 +123,7 @@ error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga
 expires	admin	et	Aegub
 field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba !!!
 full name	admin	et	Täis nimi
+general	admin	et	Üldine
 global categories	common	et	Globaalsed Kategooriad
 group ?	admin	et	grupp ?
 group list	admin	et	Gruppi nimekiri
@@ -171,6 +172,7 @@ password for smtp-authentication	admin	et	Parool SMTP-audentimiseks
 path information	admin	et	Teekonna informatsioon
 permission denied	admin	et	Õigused puuduvad
 permission denied !!!	admin	et	Õigused puuduvad !!!
+permission denied!!!	admin	et	Ligipääs keelatud !!!
 permissions	admin	et	Õigused
 phpinfo	admin	et	PHP informatsioon
 please enter a name	admin	et	Palun sisesta nimi

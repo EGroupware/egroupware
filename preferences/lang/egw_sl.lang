@@ -20,13 +20,14 @@ date format	preferences	sl	Oblika datuma
 default	preferences	sl	Privzeto
 default application	preferences	sl	Privzeta aplikacija
 default preferences	preferences	sl	Privzete nastavitve
-default theme	preferences	sl	Privzeta tema
 delete categories	preferences	sl	Izbriši kategorije
 description can not exceed 255 characters in length !	preferences	sl	Opis ne more presegati 255 znakov!
+disable	preferences	sl	Onemogoči
 display thumbnails for linked images	preferences	sl	Prikaži ikonice za slike s povezavami
 div	preferences	sl	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sl	Imate raje 24 ali 12 urni časovni zapis?
 edit custom fields	preferences	sl	Uredi lastna polja
+enable	preferences	sl	Omogoči
 enable drag and drop functionality (experimental)	preferences	sl	Omogoči "povleci in spusti"
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sl	Omogoči ali onemogoči "povleci in spusti" v vseh aplikacijah. Če brskalnik tega ne podpira, bo samodejno onemogočeno. Ta funkcionalnost je trenutno v testni fazi.
 enter your new password	preferences	sl	Vpišite novo geslo
@@ -53,7 +54,6 @@ no default	preferences	sl	Ni privzetih vrednosti
 no user-selection at all	common	sl	Ni izbire za uporabnika
 note: this feature does *not* change your email password. this will	preferences	sl	Pozor: to *NE* bo zamenjalo gesla vaše E-pošte. To bo
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sl	Opomba: Ta možnost *ne* spremeni vašega E-poštnega gesla. Spremeniti ga boste moral ročno.
-office 2003 theme	preferences	sl	Tema Office 2003
 p: paragraph	preferences	sl	p: Paragraph
 please, select a new theme	preferences	sl	Izberite novo temo
 popup with search	preferences	sl	Okno za iskanje
@@ -79,7 +79,6 @@ show navigation bar as	preferences	sl	Prikaži navigacijsko vrstico kot
 show number of current users	preferences	sl	Prikaži število prijavljenih uporabnikov
 show text on navigation icons	preferences	sl	Prikaži besedilo na navigacijski ikoni
 show_more_apps	common	sl	Pokaži več aplikacij
-silver theme	preferences	sl	Tema Silver
 spellchecker language	addressbook	sl	Jezik črkovalnika
 text only	preferences	sl	Samo besedilo
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sl	Privzeta aplikacija se bo zagnala ob vstopu v EGW ali ob kliku na domačo ikono.<br>Na domači strani je lahko hkrati prikazanih več aplikacij. Prikaz aplikacij določate v nastavitvah aplikacij.

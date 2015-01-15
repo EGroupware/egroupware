@@ -12,6 +12,7 @@
 %1 you delegated is due at %2	infolog	pt	% 1 você delegada é devido em% 2
 %1 you delegated is starting at %2	infolog	pt	% 1 você delegada está começando em% 2
 (and children) deleted	infolog	pt	(E crianças) excluída.
+(no subject)	infolog	pt	(sem assunto)
 - subprojects from	infolog	pt	- Sub-projectos de
 0%	infolog	pt	0%
 10%	infolog	pt	10%
@@ -240,7 +241,6 @@ leave it empty	infolog	pt	Deixar vazio
 leave it empty for a full week	infolog	pt	Deixar vário para uma semana interira
 leave without saveing the entry	infolog	pt	Continua sem guardar o registo
 leaves without saveing	infolog	pt	Continua sem guardar
-length<br>rows	infolog	pt	Comprimento<br>Linhas
 link	infolog	pt	Ligação
 linked to %1	infolog	pt	Ligado a 1%
 links	infolog	pt	Ligações
@@ -248,7 +248,6 @@ links and attached files	infolog	pt	Links e arquivos anexados
 links of this entry	infolog	pt	Ligações para este registo
 links wrapped in an href tag with download link	infolog	pt	Ligações envolto em uma tag HREF com link para download
 list all categories	infolog	pt	Listar todas as categorias
-list no subs/childs	infolog	pt	Não listar sub-elementos
 list of files linked to the current record	infolog	pt	Lista de arquivos vinculados ao registro atual
 location	infolog	pt	Local
 longer textual description	infolog	pt	Descrição textual mais desenvolvida
@@ -283,6 +282,7 @@ notification settings	infolog	pt	Configurações de notificação
 number of records to read (%1)	infolog	pt	Número de registos por ler (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	pt	Número de linhas para um campo multi-linha ou linha de uma caixa de selecção múltipla
 offer	infolog	pt	Oferta
+old fixed definition	infolog	pt	Definição fixa Velho
 one day after	infolog	pt	Um dia depois
 one day in advance	infolog	pt	Um dia de antecedência
 ongoing	infolog	pt	Em processamento
@@ -353,6 +353,7 @@ responsible upcoming	infolog	pt	Responsável -- a chegar
 responsible user, priority	infolog	pt	utilizador responsável, prioridade
 returns a list / search for records.	infolog	pt	Volta à lista / pesquisa por registos.
 rights for the responsible	infolog	pt	Direitos do responsável
+rows	infolog	pt	Linhas
 same day	infolog	pt	Mesmo dia
 save	infolog	pt	Guardar
 saves the changes made and leaves	infolog	pt	guarda as alterações e deixa

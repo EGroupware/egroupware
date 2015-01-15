@@ -22,6 +22,7 @@ a pattern to be searched for	etemplate	es-es	un patrón de búsqueda
 accesskey	etemplate	es-es	Tecla rápida
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	es-es	Las teclas rápidas se pueden especificar también poniendo & en la etiqueta (p. ej. &Nombre)
 account contactdata	etemplate	es-es	Datos de contacto de la cuenta
+actions...	etemplate	es-es	Acciones...
 add a new column (after the existing ones)	etemplate	es-es	Añadir una columna nueva (detrás de las existentes)
 add a new entry of the selected application	etemplate	es-es	Añadir una entrada nueva de la aplicación seleccionada
 add a new multi-column index	etemplate	es-es	Añadir un nuevo índice multicolumna
@@ -29,12 +30,14 @@ add column	etemplate	es-es	Añadir columna
 add index	etemplate	es-es	Añadir índice
 add new	etemplate	es-es	Añadir nueva
 add table	etemplate	es-es	Añadir tabla
+add to clipboard	etemplate	es-es	Añadir al portapapeles
 advanced search	etemplate	es-es	Búsqueda avanzada
 align	etemplate	es-es	Alinear
 alignment of label and input-field in table-cell	etemplate	es-es	posición de la etiqueta y campo de entrada en la celda de la tabla
 alignment of the v/hbox containing table-cell	etemplate	es-es	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
 all days	etemplate	es-es	todos los días
 all operations save the template!	etemplate	es-es	¡Todas las operaciones guardan la plantilla!
+all users	etemplate	es-es	Todos los usuarios
 allowed file type: %1	etemplate	es-es	Tipo de fichero permitido: %1
 am	etemplate	es-es	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	es-es	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
@@ -88,6 +91,7 @@ contact	etemplate	es-es	Contacto
 contact field to show	etemplate	es-es	Campo del contacto a mostrar
 contact fields	etemplate	es-es	Campos de contacto
 contains	etemplate	es-es	contiene
+copy to clipboard	etemplate	es-es	Copiar al portapapeles
 create a new table for the application	etemplate	es-es	Crear una tabla nueva para la aplicación
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	es-es	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
 creator	preferences	es-es	Creador
@@ -101,7 +105,6 @@ custom fields	etemplate	es-es	campos personalizados
 custom javascript for onchange	etemplate	es-es	javascript personalizado para onChange
 cut	etemplate	es-es	Cortar
 date+time	etemplate	es-es	Fecha + hora
-datum	etemplate	es-es	Fecha
 day	etemplate	es-es	Día
 days	etemplate	es-es	días
 db ensures that every row has a unique value in that column	etemplate	es-es	La base de datos se asegura de que cada fila tiene un valor único en esa columna
@@ -145,6 +148,7 @@ editable templates - delete template	etemplate	es-es	Plantillas editables - Borr
 editable templates - editor	etemplate	es-es	Plantillas editables - Editor
 editable templates - search	etemplate	es-es	Plantillas editables - Buscar
 editable templates - show template	etemplate	es-es	Plantillas editables - Mostrar plantilla
+element role title	etemplate	es-es	Título del rol del elemento
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la página)
 enable javascript onchange submit	etemplate	es-es	activar enviar JavaScript onChange
 enter '' for an empty default, nothing mean no default	etemplate	es-es	Introduzca '' para un valor predeterminado vacío. Si se deja en blanco, no hay valor predeterminado
@@ -196,6 +200,7 @@ grid	etemplate	es-es	Rejilla
 grid column attributes	etemplate	es-es	Atributos de la columna de la rejilla
 grid row attributes	etemplate	es-es	Atributos de la fila de la rejilla
 groupbox	etemplate	es-es	Recuadro de grupo
+h	etemplate	es-es	h
 hbox	etemplate	es-es	Cuadro horizontal
 height	etemplate	es-es	Altura
 height of row (in % or pixel)	etemplate	es-es	altura de la fila (en % o pixels)
@@ -209,6 +214,8 @@ hour	etemplate	es-es	Hora (del día)
 hours	etemplate	es-es	horas
 how many entries should the list show	etemplate	es-es	¿Cuántas entradas se muestran en la lista?
 html	etemplate	es-es	Html
+html link to the current record	etemplate	es-es	Enlace HTML al registro actual
+id	etemplate	es-es	Id
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	es-es	Si el campo está desactivado, se muestra la celda de la tabla vacía, para borrar temporalmente un campo o celda.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
 image	etemplate	es-es	Imagen
@@ -245,9 +252,12 @@ link target %1 not found!	etemplate	es-es	¡No se ha encontrado el enlace de des
 linkapps	etemplate	es-es	Enlace a aplicaciones
 linkentry	etemplate	es-es	Entrada de enlace
 linklist	etemplate	es-es	Lista de enlaces
+links and attached files	preferences	es-es	Enlaces y ficheros adjuntos
 linkstring	etemplate	es-es	Cadena de enlace
 linkto	etemplate	es-es	Enlace a
+list of files linked to the current record	preferences	es-es	Lista de ficheros vinculados al registro actual
 load this template into the editor	etemplate	es-es	cargar esta plantilla en el editor
+loading	etemplate	es-es	cargando
 maximum size for uploads	filemanager	es-es	Tamaño máximo para subida de ficheros
 message ...	etemplate	es-es	Mensaje...
 middle	etemplate	es-es	Medio
@@ -255,6 +265,7 @@ minute	etemplate	es-es	Minuto
 minutes	etemplate	es-es	MInutos
 modifier	preferences	es-es	Modificador
 month	etemplate	es-es	Mes
+more	etemplate	es-es	Más
 more than 1 match for '%1'	etemplate	es-es	Más de 1 coincidencia para '%1'
 multicolumn indices	etemplate	es-es	Indices multicolumna
 name	etemplate	es-es	Nombre
@@ -263,6 +274,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	es-es	Nombre de la tabla a añadir
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	es-es	Nombre de la plantilla. Debe estar en el formato aplicación.función[.subplantilla]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	es-es	Necesita ser única en la tabla y no ser palabra reservada SQL. Intente poner un prefijo común de dos caracteres para la aplicación, por ejemplo 'et_'
+new	etemplate	es-es	Nuevo
 new search	common	es-es	Nueva búsqueda
 new table created	etemplate	es-es	Se ha creado una tabla nueva
 newer version '%1' exists !!!	etemplate	es-es	¡Existe una versión '%1' más reciente!
@@ -282,6 +294,7 @@ nothing	etemplate	es-es	nada
 nothing found - try again !!!	etemplate	es-es	No se encontró nada. Inténtelo de nuevo.
 nothing in clipboard to paste !!!	etemplate	es-es	¡¡No hay nada en el portapapeles para pegar!!
 nothing matched search criteria !!!	etemplate	es-es	No se encontró nada con ese criterio.
+now	etemplate	es-es	Ahora
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	es-es	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	es-es	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
 of	etemplate	es-es	de
@@ -310,12 +323,16 @@ read a list of entries.	etemplate	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	etemplate	es-es	Leer una sola entrada pasando el id y la lista de campos
 read etemplate from database (for the keys above)	etemplate	es-es	leer plantilla de la base de datos (para las claves de arriba)
 readonly	etemplate	es-es	sólo lectura
+refresh	etemplate	es-es	Refrescar
 remove row (can not be undone!!!)	etemplate	es-es	Eliminar fila (¡NO se puede deshacer!)
 remove this link (not the entry itself)	etemplate	es-es	Borrar este enlace (no la entrada en sí)
 required	etemplate	es-es	Requerido
+reset	etemplate	es-es	Restablecer
 returns savely, without deleting	etemplate	es-es	Vuelve de forma segura, SIN borrar
 right	etemplate	es-es	Derecha
 row...	etemplate	es-es	Fila...
+save all	etemplate	es-es	Guardar todo
+save as	etemplate	es-es	Guardar como
 save selected columns as default preference for all users.	etemplate	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
 save the changes made and close the window	etemplate	es-es	Guardar los cambios realizados y cerrar la ventana
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
@@ -342,6 +359,7 @@ select country	etemplate	es-es	Seleccionar país
 select day	etemplate	es-es	Seleccionar día
 select day of week	etemplate	es-es	Seleccionar día de la semana
 select entry	etemplate	es-es	Seleccionar entrada
+select file(s) from vfs	etemplate	es-es	Seleccionar ficheros desde VFS
 select hour	etemplate	es-es	Seleccionar hora del día
 select if content of field should not be translated (label gets always translated)	etemplate	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
 select language	etemplate	es-es	Seleccionar idioma
@@ -358,6 +376,7 @@ select which accounts to show	etemplate	es-es	seleccionar las cuentas a mostrar
 select which values to show	etemplate	es-es	Seleccionar qué valores mostrar
 select year	etemplate	es-es	Seleccionar año
 selectbox	etemplate	es-es	Cuadro de selección
+set as default	etemplate	es-es	Establecer como predeterminado
 sets today as date	etemplate	es-es	pone hoy como fecha
 should the form be submitted or any custom javascript be executed	etemplate	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
 show	etemplate	es-es	Mostrar
@@ -394,6 +413,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the following document-types are supported:	preferences	es-es	Los siguientes tipos de documentos están soportados:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	es-es	este texto se muestra si el campo de entrada está vacío y no tiene foco (borroso)
 time	etemplate	es-es	Hora (completa)
+titles of any entries linked to the current record, excluding attached files	preferences	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	es-es	para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' está vacío
 to start the db-tools	etemplate	es-es	para iniciar las Herramientas de la base de datos
 to start the etemplate editor	etemplate	es-es	para iniciar el editor de plantillas
@@ -427,6 +447,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	es-es	ancho de la columna (en % o pixel)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Ancho de la tabla en % o píxeles para la etiqueta y, opcionalmente, elemento div
 width, disabled	etemplate	es-es	Ancho, desactivado
+wk	etemplate	es-es	Semana
 working days	etemplate	es-es	días laborales
 write <app>/setup/tables_current.inc.php	etemplate	es-es	Escribir <app>/setup/tables_current.inc.php
 write langfile	etemplate	es-es	Escribir fichero de idioma

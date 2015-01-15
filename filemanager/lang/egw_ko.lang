@@ -4,7 +4,9 @@ comment	filemanager	ko	커멘트
 created	filemanager	ko	생성됨
 custom fields	filemanager	ko	사용자정의 필드
 download	filemanager	ko	내려받기
-file	filemanager	ko	FILE
+everyone	filemanager	ko	모두
+expires	filemanager	ko	만료
+file	common	ko	FILE
 general	filemanager	ko	일반
 go to	filemanager	ko	이동하기(Go to)
 link	filemanager	ko	링크

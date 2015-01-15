@@ -12,6 +12,7 @@
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	nl	(Gebruik <a href="setup/" target="setup">Setup</a>[Beheer toepassingen] om nieuwe toepassingen te installeren.)
 -  type	admin	nl	- type
 accesslog and bruteforce defense	admin	nl	Toegangslogboek en bescherming procesvermogen
+account	admin	nl	Account
 account %1 %2	admin	nl	Account %1 %2
 account '%1' deleted.	admin	nl	Account '%1' verwijderd.
 account active	admin	nl	Account actief
@@ -23,6 +24,8 @@ account list	admin	nl	Accountlijst
 account permissions	admin	nl	Toegangsrechten account
 account preferences	admin	nl	Voorkeuren account
 account-id's have to be integers!	admin	nl	Account-ids moeten integers zijn!
+acl added.	admin	nl	ACL toegevoegd.
+acl deleted.	admin	nl	ACL verwijderd.
 acl manager	admin	nl	ACL-beheerder
 acl rights	common	nl	ACL-rechten
 action	admin	nl	Actie
@@ -152,6 +155,7 @@ delete this user	admin	nl	deze gebruiker verwijderen
 deleted	admin	nl	verwijderd
 deletes this field	admin	nl	verwijdert dit veld
 deliver extern	admin	nl	extern afleveren
+deny access	admin	nl	Toegang weigeren
 deny access to access log	admin	nl	Toegang tot toegangslogboek weigeren
 deny access to application registery	admin	nl	Toegang tot toepassingsregister weigeren
 deny access to applications	admin	nl	Toegang tot toepassingen weigeren
@@ -180,8 +184,6 @@ do you want to delete all global subcategories ?	admin	nl	Wilt u  alle globale s
 do you want to move all global subcategories one level down ?	admin	nl	Wilt u alle globale subcategorieën een niveau naar beneden verplaatsen?
 document root (default)	admin	nl	Document root (standaard)
 down	admin	nl	omlaag
-each value is a line like <id>[=<label>]	admin	nl	iedere waarde is een regel zoals <id>[=<label>]
-each value is a line like id[=label]	admin	nl	iedere waarde is een regel zoals id[=label]
 edit account	admin	nl	Account bewerken
 edit application	admin	nl	Toepassing bewerken
 edit email settings	admin	nl	email instellingen bewerken
@@ -241,6 +243,7 @@ error saving to db:	admin	nl	Fout bij opslaan in database:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	nl	Fout bij het zetten van de timer. verkeerde syntax of misschien draait er al een timer!
 error! no appname found	admin	nl	Fout! geen appname gevonden
 error: %1 not found or other error !!!	admin	nl	Fout: %1 niet gevonden of een ander fout!
+exists	admin	nl	Bestaat
 expires	admin	nl	Verloopt
 explanation of ldapman	admin	nl	Deze module is getest voor POSTFIX, LDAP, Courier-IMAP en vereist de schema's CORE en QMAIL (OID7914). Meer details over het gebruik en configureren van dit systeem is te vinden in README.ldapman in de doc map van ADMIN.
 failed to change password.	admin	nl	Wachtwoord kan niet worden gewijzigd.
@@ -256,6 +259,7 @@ forward also to	admin	nl	ook doorsturen naar
 forward emails to	admin	nl	stuurt emails door naar
 forward only	admin	nl	alleen doorsturen
 full name	admin	nl	Volledige naam
+general	admin	nl	Algemeen
 global categories	common	nl	Algemene Categorieën
 grant	admin	nl	Sta toe
 group ?	admin	nl	groep?
@@ -326,7 +330,6 @@ main email-address	admin	nl	Hoofd emailadres
 main screen message	admin	nl	Boodschap op startpagina
 manage mapping	admin	nl	Beheer de mappings
 manager	admin	nl	Manager
-max length of the input [, length of the inputfield (optional)]	admin	nl	max lengte van de invoer [, lengte van het invoerveld (optioneel)]
 maximum account id (e.g. 65535 or 1000000)	admin	nl	Max. account id (bijv. 65535 of 100000)
 maximum entries in click path history	admin	nl	Max. aantal records in klikpad-historie
 members	admin	nl	Deelnemers
@@ -371,6 +374,7 @@ percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
 percent this user has logged out	admin	nl	Percentage dat deze gebruiker uitgelogd heeft
 permission denied	admin	nl	Toestemming geweigerd
 permission denied !!!	admin	nl	Toestemming geweigerd !!!
+permission denied!!!	admin	nl	Toegang geweigerd!!!
 permissions	admin	nl	Toestemmingen
 permissions this group has	admin	nl	Toestemmingen van deze groep
 phpinfo	admin	nl	PHP informatie
@@ -395,7 +399,9 @@ remove all users from this group	admin	nl	Alle gebruikers uit deze groep verwijd
 remove all users from this group ?	admin	nl	Alle gebruikers uit deze groep verwijderen?
 return to admin mainscreen	admin	nl	terug naar de startpagina van beheer
 return to view account	admin	nl	Terug naar accountweergave
+rights	admin	nl	Rechten
 route all mails to	admin	nl	Routeer alle emails naar
+rows	admin	nl	Rijen
 run asynchronous services	admin	nl	Asynchrone services uitvoeren
 save the category	admin	nl	De categorie opslaan
 save the category and return back to the list	admin	nl	De categorie opslaan en teruggaan naar de lijst

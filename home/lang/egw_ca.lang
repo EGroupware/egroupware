@@ -1,0 +1,9 @@
+color	home	ca	Color
+in %1 days (%2) is %3's birthday.	home	ca	En %1 dies (%2) es l'aniversari de %3.
+remove	home	ca	esborrar
+today is %1's birthday!	home	ca	Avui és l'aniversari de %1!
+tomorrow is %1's birthday.	home	ca	Demà és l'aniversari de %1.
+yes, for the next three days	home	ca	Sí, pels propers tres dies
+yes, for the next two weeks	home	ca	Sí, per les properes dues setmanes
+yes, for the next week	home	ca	Sí, per la propera setmana
+yes, for today and tomorrow	home	ca	Sí, per avui i demà

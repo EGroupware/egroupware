@@ -1,5 +1,6 @@
 %1 records imported	infolog	zh	已导入%1条记录
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	zh	已读取%1条记录(但尚未导入，您可以进入%2，返回%3，并且清除"测试导入"复选框)
+(no subject)	infolog	zh	(无主题)
 - subprojects from	infolog	zh	- 子项目来自
 0%	infolog	zh	0%
 10%	infolog	zh	10%
@@ -94,7 +95,7 @@ description	infolog	zh	内容
 determines the order the fields are displayed	infolog	zh	设定字段的显示顺序
 disables a status without deleting it	infolog	zh	禁用状态，但不删除
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	zh	在接受或结束任务时，是否等待确认
-done	common	zh	已完成
+done	infolog	zh	已完成
 download	infolog	zh	下载
 duration	infolog	zh	持续时间
 each value is a line like <id>[=<label>]	infolog	zh	请设定选择框的选项, 格式: <选项名>=<显示名>, 每行代表一个选项.
@@ -122,6 +123,7 @@ fieldseparator	infolog	zh	字段分隔符
 finish	infolog	zh	结束
 for which types should this field be used	infolog	zh	请选择字段所属类型, 即字段对哪些类型的事项可见
 from	infolog	zh	寄件人
+general fields:	infolog	zh	通用字段：
 global categories	infolog	zh	全局类别
 high	infolog	zh	高
 history	infolog	zh	历史记录
@@ -146,12 +148,10 @@ last modified	infolog	zh	最近修改记录
 leave it empty for a full week	infolog	zh	留空表示整个星期
 leave without saveing the entry	infolog	zh	取消, 不保存对该事项的操作
 leaves without saveing	infolog	zh	取消, 不作保存
-length<br>rows	infolog	zh	长度<br>高度
 link	infolog	zh	关联
 links	infolog	zh	关联
 links of this entry	infolog	zh	设定与事项相关的条目或文件
 list all categories	infolog	zh	列出所有类别
-list no subs/childs	infolog	zh	不显示子事项
 location	infolog	zh	位置
 longer textual description	infolog	zh	设定事项的具体内容
 low	infolog	zh	低
@@ -214,6 +214,7 @@ remark	infolog	zh	注释
 remove this link (not the entry itself)	infolog	zh	取消关联
 responsible	infolog	zh	委派给
 returns a list / search for records.	infolog	zh	返回一个清单 / 搜索记录
+rows	infolog	zh	行
 save	infolog	zh	确定
 saves the changes made and leaves	infolog	zh	保存更改, 返回上一级页面
 saves this entry	infolog	zh	保存该条目

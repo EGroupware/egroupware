@@ -19,15 +19,24 @@ check all	resources	nl	Alles markeren
 choose categories admin	resources	nl	kies categorieën beheer
 clear selection	resources	nl	selectie wissen
 configure access permissions	admin	nl	Toegangsrechten configureren
+confirmed addressbook.	resources	nl	Adresboek bevestigd
+conflict	resources	nl	Conflict
 create new accessory for this resource	resources	nl	Nieuw toebehoren voor deze hulpbron aanmaken
 create new links	resources	nl	Nieuwe links aanmaken
+custom etemplate for the contactform	resources	nl	Aangepaste eTemplate voor het contactformulier
+custom fields	resources	nl	Aangepast velden
+days	resources	nl	dagen
 delete selected resources	resources	nl	verwijder de geselecteerde hulpbronnen
 delete this entry	resources	nl	Deze entry verwijderen
+deleted	resources	nl	verwijderd
 description (short)	resources	nl	Beschrijving (kort)
 direct booking permissions	resources	nl	Direct boeken rechten
 don't use vfs (this will need a symlink --> see readme)	resources	nl	VFS niet gebruiken (dit vereist een symlink --> zie README)
 edit this entry	resources	nl	Deze entry bewerken
 existing links	resources	nl	Bestaande links
+exists	resources	nl	Bestaat
+export definition to use for nextmatch export	resources	nl	Export definitie om te gebruiken bij nextmatch export
+export definitition to use for nextmatch export	resources	nl	Export definitie om te gebruiken bij nextmatch export
 general	resources	nl	Algemeen
 general informations about resource	resources	nl	Algemene informatie over hulpbron
 gernal resource	resources	nl	algemene hulpbron
@@ -38,10 +47,12 @@ how many of the resources are useable?	resources	nl	Hoeveel van de hulpbronnen z
 how many of them are useable?	resources	nl	Hoeveel ervan zijn bruikbaar?
 how many of this resource are usable	resources	nl	Hoeveel van deze hulpbron is bruikbaar
 how many of this resource exists	resources	nl	Hoeveel van deze hulpbron bestaat
+if you specify an export definition, it will be used when you export	resources	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 implies booking permission	resources	nl	veronderstelt boekingsrechten
 implies read permission	resources	nl	veronderstelt leesrechten
 information about storage	resources	nl	Informatie over de opslag
 informations about the location of resource	resources	nl	Informatie over de locatie van de hulpbron
+insert	resources	nl	Voeg toe
 inventory number	resources	nl	Inventarisnummer
 inventory number:	resources	nl	Inventarisnummer:
 is resource bookable?	resources	nl	Is hulpbron te boeken?
@@ -85,8 +96,10 @@ something went wrong by deleting resource	resources	nl	Er ging iets mis tijdens 
 something went wrong by saving resource	resources	nl	Er ging iets mis tijdens het bewaren van de hulpbron
 storage information	resources	nl	Opslaginformatie
 storage information:	resources	nl	Opslaginformatie:
+the anonymous user needs add rights for it!	resources	nl	De anonieme gebruiker moet hier toevoegrechten voor hebben!
 the calendar of this resource	resources	nl	De agenda van deze hulpbron
 this module displays the resources app	resources	nl	Deze module toont de hulpbronnen toepassing
+unable to process confirmation.	resources	nl	Bevestiging niet mogelijk
 use general resources icon	resources	nl	Gebruik de algemene hulpbronnen icoon
 use own picture	resources	nl	Gebruik eigen afbeelding
 use the category's icon	resources	nl	Gebruik de categorie icoon
@@ -99,5 +112,7 @@ web-site for this resource	resources	nl	Website voor deze hulpbron
 where to find this resource?	resources	nl	Waar kun je deze hulpbron vinden?
 which category does this resource belong to?	resources	nl	Tot welke categorie behoort deze hulpbron?
 write permissions	resources	nl	Schrijfrechten
+yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
+yes, users can purge their deleted items	admin	nl	Ja, gebruikers kunnen hun verwijderde items defintief verwijderen
 you are not permitted to get information about this resource!	resources	nl	U bent niet bevoegd informatie over deze hulpbron op te vragen!
 you chose more resources than available	resources	nl	U koos meer hulpbronnen dan er beschikbaar zijn

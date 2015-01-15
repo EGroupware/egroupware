@@ -229,6 +229,7 @@ license	common	uk	Ліцензія
 liechtenstein	common	uk	ЛІХТЕНШТЕЙН
 list	common	uk	Перелік
 lithuania	common	uk	ЛИТВА
+load	common	uk	Вгрузити
 local	common	uk	Локальний
 login	common	uk	Login
 loginid	common	uk	LoginID
@@ -272,6 +273,7 @@ nicaragua	common	uk	НІКАРАГУА
 niger	common	uk	НІГЕР
 nigeria	common	uk	НІГЕРІЯ
 no	common	uk	Ні
+no - cancel	common	uk	Ні - Відмовитись
 no entries found, try again ...	common	uk	Записів не знайдено, спробуйте ще...
 no history for this record	common	uk	Немає історії для цього запису
 no subject	common	uk	Немає теми
@@ -320,6 +322,7 @@ please set your global preferences	common	uk	Будь ласка встанов�
 please set your preferences for this application	common	uk	Будь ласка встановіть параметри приложення !
 please wait...	common	uk	Будь ласка, зачекайте...
 poland	common	uk	ПОЛЬЩА
+popup with search	common	uk	Вспливаюче вікно з пошуком
 portugal	common	uk	ПОРТУГАЛІЯ
 postal	common	uk	Поштовий
 preferences	common	uk	Параметри
@@ -458,6 +461,7 @@ written by:	common	uk	Написано:
 year	common	uk	Рік
 yemen	common	uk	ЙЄМЕН
 yes	common	uk	Так
+yes - delete	common	uk	Так - Видалити
 you are required to change your password during your first login	common	uk	Необхідно змінити Ваш пароль на протязі Вашого першого входу.
 you have been successfully logged out	login	uk	Ви вийшли успішно
 you have not entered a title	common	uk	Ви не ввели назву
@@ -471,7 +475,6 @@ your message could <b>not</b> be sent!<br>	common	uk	Ваше повідомле
 your message has been sent	common	uk	Ваше повідомлення відіслано
 your search returned %1 matchs	common	uk	Знайдено %1 відповідностей
 your search returned 1 match	common	uk	Знайдено одну відповідность
-your session could not be verified.	login	uk	Неможливо перевірити Ваш вхід
 your settings have been updated	common	uk	Параметри поновлено
 zambia	common	uk	ЗАМБІЯ
 zimbabwe	common	uk	ЗІМБАБВЕ

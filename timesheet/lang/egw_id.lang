@@ -32,6 +32,7 @@ error deleting the entry!!!	timesheet	id	Error deleting the entry!!!
 error saving the entry!!!	timesheet	id	Error saving the entry!!!
 existing links	timesheet	id	Tautan yang ada
 export to openoffice spreadsheet	timesheet	id	Expor ke OpenOffice Spreadsheet
+favorites	timesheet	id	Favorit
 field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
 general fields:	timesheet	id	Field Umum:

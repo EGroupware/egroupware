@@ -1,4 +1,5 @@
 %1 records processed	importexport	cs	%1 záznamů zpracováno
+all users	importexport	cs	Všichni uživatelé
 allowed users	importexport	cs	Oprávnění uživatelé
 automatically created by importexport	importexport	cs	Automaticky vytvořeno aplikací ImportExport
 basic csv import	importexport	cs	Základní CSV import

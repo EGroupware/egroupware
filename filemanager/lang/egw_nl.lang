@@ -110,6 +110,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	nl	Voorbeeld {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	nl	Voorbeeld {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 executable	filemanager	nl	Uitvoerbaar bestand
+expires	filemanager	nl	Verloopt
 export definition to use for nextmatch export	filemanager	nl	Export definitie om te gebruiken bij volgende export
 extended access control list	filemanager	nl	Uitgebreide toegangscontrolelijst
 extended acl	filemanager	nl	Uitgebreide ACL

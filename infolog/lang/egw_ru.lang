@@ -13,6 +13,7 @@
 %1 you delegated is due at %2	infolog	ru	%1 который вы назначили должен быть завершен в %2
 %1 you delegated is starting at %2	infolog	ru	%1 который вы назначили должен начаться в %2
 (and children) deleted	infolog	ru	(и дочерние) удалены.
+(no subject)	infolog	ru	(без темы)
 - subprojects from	infolog	ru	- Подпроект из
 0%	infolog	ru	0%
 10%	infolog	ru	10%
@@ -119,6 +120,7 @@ custom from	infolog	ru	Пользовательский из (?)
 custom regarding	infolog	ru	Пользовательский относительно (?)
 custom status for typ	infolog	ru	Пользовательское состояние для типа
 customfields	infolog	ru	Пользовательские поля
+data exchange settings	infolog	ru	Установки обмена данных
 date completed	infolog	ru	Дата завершения
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ru	Дата завершения (оставьте незаполненным, если хотите чтобы она автоматически установилась если состояние будет "сделано" или "оплачено")
 datecreated	infolog	ru	дата создания
@@ -157,8 +159,9 @@ do you want a notification, if items you delegated are about to start?	infolog	r
 do you want a notification, if items you delegated are due?	infolog	ru	Вы желаете получать напоминания, если задачи которые вы назначили должны быть уже завершены?
 do you want to receive notifications as html-mails or plain text?	infolog	ru	Вы желаете получать напоминания в виде HTML или обычного текста?
 don't show infolog	infolog	ru	НЕ показывать ИнфоЖурнал
-done	common	ru	Выполнено
+done	infolog	ru	Выполнено
 download	infolog	ru	Загрузить
+download url for links	infolog	ru	Загрузить URL ссылок
 due %1	infolog	ru	Выполнено %1
 duration	infolog	ru	Продолжительность
 e-mail:	infolog	ru	Адрес электронной почты:
@@ -181,11 +184,17 @@ entry and all files	infolog	ru	Запись и все файлы
 error: importing the ical	infolog	ru	Ошибка: импорт iCal
 error: saving the entry	infolog	ru	Ошибка: сохраниние записи
 error: the entry has been updated since you opened it for editing!	infolog	ru	Ошибка: запись была обновлена с тех пор, как Вы открыли её для редактирования!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	ru	Пример: {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}}— поиск по полю "n_prefix" значения "Mr", если найдено, пишет Hello Mr., иначе пишет Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	ru	Пример: {{LETTERPREFIXCUSTOM n_prefix title n_family}}. Результат: Mr. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	ru	Пример: {{NELF role}} — если поле «роль» не пусто, получает новую строку со значением поля «роль»
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	ru	Пример: {{NELFNV role}} — если поле «роль» не пусто, устанавливает поле LF пустым
 execute a further action for this entry	infolog	ru	Выполнит дальнейшие действия для этой записи
 existing links	infolog	ru	Существующие ссылки
 exists	infolog	ru	Существует
+export definition to use for nextmatch export	infolog	ru	Определение экспорта для последующего использования
 exports in ical format.	infolog	ru	Экспорт в формате iCal.
 exports infolog entries into a csv file.	infolog	ru	Экспорт записей ИнфоЖурнала в файл CSV.
+favorites	infolog	ru	Избранное
 fax	infolog	ru	Факс
 field must not be empty !!!	infolog	ru	Поле должно быть заполнено !!!
 fields to exclude when copying an infolog:	infolog	ru	Поля для исключения при копировании записей ИнфоЖурнала:
@@ -197,6 +206,9 @@ for infolog type %1, %2 is required	infolog	ru	Для типа Инфожурн�
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	ru	Для серии писем используйте этот тэг. Поместите содержание, которое вы хотите повторить, между двумя тэгами.
 for which types should this field be used	infolog	ru	для каких типов это поле должно быть использовано
 from	infolog	ru	Из
+full list of placeholder names	infolog	ru	Полный список имён владельцев
+general fields:	infolog	ru	Общие поля:
+general settings	infolog	ru	Основные установки
 global categories	infolog	ru	Общие категории
 group owner for	infolog	ru	Группа-владелец для
 high	infolog	ru	Высокий
@@ -205,10 +217,14 @@ history logging	infolog	ru	Запись истории
 history logging and deleting of items	infolog	ru	Журналирование истории и удаление записей
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	ru	Сколько строк описания должно быть непосредственно видно. Оставшиеся строки доступны через меню прокрутки.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ru	Какова должна быть ширина области описания. Цифровая величина, например, 60.
+html link to the current record	infolog	ru	HTML-ссылка на запись
 id	infolog	ru	ID идентификатор
 id#	infolog	ru	ID # идентификатор
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ru	Если тип имеет группу-владельца, все записи этого типа будут иметь владельцем данную группу, а НЕ пользователя, который их создал!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ru	Если не установлено, строка с поиском и фильтрами скрыта для количества записей меньшего, чем "макс. совпадений на страницу" (как определено в ваших общих настройках)
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	ru	Если указан каталог с полным путем, %1 показывает действие для каждого документа. Это действие позволяет загрузить указанный документ со вставленными данными.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	ru	Если указан документ с полным путем, %1 показывает пиктограмму внешнего документам для каждой записи. Эти пиктограмма позволяет загрузить указанный документ со вставленными данными.
+if you specify an export definition, it will be used when you export	infolog	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 import next set	infolog	ru	Импортировать следующий набор
 importance	infolog	ru	Важность
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	ru	Импорт записей в ИнфоЖурнал из файла формата CSV. CSV означает "величины, разделенные запятой". На вкладке "Дополнительно" можно выбрать другой разделитель.
@@ -247,15 +263,17 @@ leave it empty	infolog	ru	Оставьте это незаполненным
 leave it empty for a full week	infolog	ru	Оставьте пустым для полной недели
 leave without saveing the entry	infolog	ru	выйти без сохранения записи
 leaves without saveing	infolog	ru	выйти без сохранения
-length<br>rows	infolog	ru	Длина<br>Строк
 limit number of description lines (default 5, 0 for no limit)	infolog	ru	Количество строк описания. По умолчанию = 5, 0 = без ограничения.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ru	Ширина столбца описания. Работает только если количество строк установлено 0 = без ограничения
 link	infolog	ru	Ссылка
 linked to %1	infolog	ru	Ссылка на %1
 links	infolog	ru	Ссылки
+links and attached files	infolog	ru	Ссылки и прикреплённые файлы
 links of this entry	infolog	ru	Ссылки этой записи
+links to specified application.  example: {{links/infolog}}	infolog	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
+links wrapped in an href tag with download link	infolog	ru	Ссылки прерваны в HREF тэге с загруженными ссылками
 list all categories	infolog	ru	Список всех категорий
-list no subs/childs	infolog	ru	Не пролистывать Подчиненные/Порожденные
+list of files linked to the current record	infolog	ru	Список файлов, связанных с текущей записью
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	ru	Загрузить пользовательские поля в индексе, если отобраны по типам (например, отобразить их в шаблоне индекса по специальному типу)
 location	infolog	ru	Местоположение
 longer textual description	infolog	ru	Более полное текстовое описание
@@ -291,6 +309,7 @@ notification settings	infolog	ru	Установки уведомлений
 number of records to read (%1)	infolog	ru	Количество записей к чтению (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	ru	количество строк в многострочном поле ввода или списке с множественным выбором
 offer	infolog	ru	Предложено
+old fixed definition	infolog	ru	Ранее исправленное опрделение
 one day after	infolog	ru	Через один день
 one day in advance	infolog	ru	За один день до
 ongoing	infolog	ru	В работе
@@ -365,6 +384,7 @@ responsible upcoming	infolog	ru	Ответственного ожидаемые
 responsible user, priority	infolog	ru	Ответственный пользователь, приоритет
 returns a list / search for records.	infolog	ru	Возвращает список / поиск для записей.
 rights for the responsible	infolog	ru	Права для ответственного
+rows	infolog	ru	Ряды
 same day	infolog	ru	Этот же день
 save	infolog	ru	Сохранить
 saves the changes made and leaves	infolog	ru	Сохраняет сделанные изменения и выходит
@@ -433,12 +453,14 @@ task	infolog	ru	Задание
 tasks of	infolog	ru	Задание
 template	infolog	ru	Шаблон
 test import (show importable records <u>only</u> in browser)	infolog	ru	Тест Импорта (показывает импортируемые записи <u>только</u> в браузере)
+the following document-types are supported:	infolog	ru	Поддерживаются следующие типы документов:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	ru	имя, используется внутри (<=10 символов), его изменение делает существующие данные недоступными
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	ru	имя, используется внутри (<=20 символов), его изменение делает существующие данные недоступными
 the text displayed to the user	infolog	ru	Текст, показываемый пользователю
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	ru	Это фильтр, который Журнал использует, когда вы входите в приложение. Фильтры ограничивают записи, которые надо показать, в текущем режиме показа. Есть фильтры для показа только завершенных, открытых или будущих записей - ваших или всех пользователей.
 til when should the todo or phonecall be finished	infolog	ru	До того как Задание или Звонок будет завершено
 times	infolog	ru	Количество раз (времена?)
+titles of any entries linked to the current record, excluding attached files	infolog	ru	Заголовки записей, ссылающихся на текущую, исключая прикреплённые файлы
 to many might exceed your execution-time-limit	infolog	ru	слишком много превысит ваше ограничение на время исполнения
 to what should the startdate of new entries be set.	infolog	ru	Как должна устанавливаться дата начала новой записи.
 today	infolog	ru	Сегодня
@@ -458,6 +480,7 @@ upcoming	infolog	ru	Наступающие
 urgency	infolog	ru	Срочность
 urgent	infolog	ru	Срочно
 use all	infolog	ru	Использовать все
+use custom notification message	infolog	ru	Использовать пользовательское уведомление
 use field from csv if possible	infolog	ru	Использовать поля из CSV, если возможно
 use search results	infolog	ru	Использовать результаты поиска
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	ru	Используйте этот тэг для меток адресов. Поместите содержимое, которое нужно повторить, между двумя тэгами.

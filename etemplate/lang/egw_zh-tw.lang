@@ -17,6 +17,7 @@ a pattern to be searched for	etemplate	zh-tw	搜尋條件
 accesskey	etemplate	zh-tw	存取鍵值
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	zh-tw	存取鍵值也可以在標籤中包含一個 & （例如 &Name）
 account contactdata	etemplate	zh-tw	新增聯絡人資料
+actions...	etemplate	zh-tw	動作...
 add a new column (after the existing ones)	etemplate	zh-tw	新增欄位(在已存在的之後)
 add a new entry of the selected application	etemplate	zh-tw	在選擇的應用程式中新增一筆資料
 add a new multi-column index	etemplate	zh-tw	新增多欄索引
@@ -30,6 +31,7 @@ alignment of label and input-field in table-cell	etemplate	zh-tw	標題與表格
 alignment of the v/hbox containing table-cell	etemplate	zh-tw	V/HBox的對齊方式
 all days	etemplate	zh-tw	全部日數
 all operations save the template!	etemplate	zh-tw	所有的操作儲存到樣板！
+all users	etemplate	zh-tw	所有使用者
 am	etemplate	zh-tw	上午
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zh-tw	索引欄位可以提高搜尋資料的速度(但是會佔用硬碟的空間！)
 and	etemplate	zh-tw	且
@@ -95,7 +97,6 @@ custom fields	etemplate	zh-tw	自訂欄位
 custom javascript for onchange	etemplate	zh-tw	自訂 onChange 動作的 javascript
 cut	etemplate	zh-tw	剪下
 date+time	etemplate	zh-tw	日期+時間
-datum	etemplate	zh-tw	資料
 day	etemplate	zh-tw	天
 days	etemplate	zh-tw	天
 db ensures that every row has a unique value in that column	etemplate	zh-tw	在那個欄位中資料庫能夠確保每一列可以有一個不重複的數值
@@ -181,6 +182,7 @@ grid	etemplate	zh-tw	表格
 grid column attributes	etemplate	zh-tw	表格欄位屬性
 grid row attributes	etemplate	zh-tw	表格資料列屬性
 groupbox	etemplate	zh-tw	群組區塊
+h	etemplate	zh-tw	時
 hbox	etemplate	zh-tw	HBox
 height	etemplate	zh-tw	高度
 height of row (in % or pixel)	etemplate	zh-tw	資料列高度（百分比或像素）
@@ -194,6 +196,7 @@ hour	etemplate	zh-tw	小時
 hours	etemplate	zh-tw	小時
 how many entries should the list show	etemplate	zh-tw	清單要顯示多少筆資料
 html	etemplate	zh-tw	HTML
+id	etemplate	zh-tw	編號
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	zh-tw	如果儲存格被停用則會顯示一個空白的表格區，藉此(暫時)移除一個儲存格
 image	etemplate	zh-tw	圖片
 import	etemplate	zh-tw	匯入
@@ -231,10 +234,12 @@ linklist	etemplate	zh-tw	連結清單
 linkstring	etemplate	zh-tw	連結文字
 linkto	etemplate	zh-tw	連結網址
 load this template into the editor	etemplate	zh-tw	將這個樣板載入編輯器中
+loading	etemplate	zh-tw	載入中
 middle	etemplate	zh-tw	中間
 minute	etemplate	zh-tw	分
 minutes	etemplate	zh-tw	分
 month	etemplate	zh-tw	月
+more	etemplate	zh-tw	更多
 multicolumn indices	etemplate	zh-tw	多欄索引
 name	etemplate	zh-tw	名稱
 name of other table where column is a key from	etemplate	zh-tw	欄位是鍵值的其他表格名稱
@@ -242,6 +247,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	zh-tw	新增表格的名稱
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	zh-tw	樣板名稱，必須在表單 application.function[.subTemplate] 中
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	zh-tw	在表格中必須是唯一的且不是SQL的保留字，最好加上兩個英文與一個底線當作前置字元來表示應用程式
+new	etemplate	zh-tw	新增
 new search	common	zh-tw	新的搜尋
 new table created	etemplate	zh-tw	建立了新的表格
 newer version '%1' exists !!!	etemplate	zh-tw	更新的版本 '%1'！
@@ -261,6 +267,7 @@ nothing	etemplate	zh-tw	無
 nothing found - try again !!!	etemplate	zh-tw	找不到任何資料 - 重試一次！
 nothing in clipboard to paste !!!	etemplate	zh-tw	剪貼簿沒有資料！
 nothing matched search criteria !!!	etemplate	zh-tw	搜尋條件找不到任何資料
+now	etemplate	zh-tw	現在
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	zh-tw	合併儲存格的數字或是輸入'all'來合併剩下的儲存格、CSS類別名稱(TD標籤)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	zh-tw	V/HBox中列或是行的欄位間隔、文字與框線的距離
 of	etemplate	zh-tw	的
@@ -290,12 +297,15 @@ read a list of entries.	etemplate	zh-tw	讀取事件列表
 read a single entry by passing the id and fieldlist.	etemplate	zh-tw	透過ID與儲存格清單來讀取一筆資料
 read etemplate from database (for the keys above)	etemplate	zh-tw	從資料庫讀取樣板(透過上面的鍵值)
 readonly	etemplate	zh-tw	唯讀
+refresh	etemplate	zh-tw	重新整理
 remove row (can not be undone!!!)	etemplate	zh-tw	移除列(無法還原！)
 remove this link (not the entry itself)	etemplate	zh-tw	移除這個連結(不是它的資料)
 required	etemplate	zh-tw	必填
+reset	etemplate	zh-tw	重設
 returns savely, without deleting	etemplate	zh-tw	回上頁，不儲存
 right	etemplate	zh-tw	正確
 row...	etemplate	zh-tw	資料列...
+save all	etemplate	zh-tw	儲存全部
 save selected columns as default preference for all users.	etemplate	zh-tw	儲存選擇的欄位為所有使用者的預設值。
 save the changes made and close the window	etemplate	zh-tw	儲存異動並且關閉視窗
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	zh-tw	以上面的鍵值(name,...)儲存樣板，另存到其他位置
@@ -404,6 +414,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	zh-tw	欄位寬度（百分比或像素）
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	zh-tw	表格或DIV標籤標籤的寬度（百分比或像素）
 width, disabled	etemplate	zh-tw	寬度，停用
+wk	etemplate	zh-tw	週
 working days	etemplate	zh-tw	工作日
 write <app>/setup/tables_current.inc.php	etemplate	zh-tw	寫入<app>/setup/tables_current.inc.php
 write langfile	etemplate	zh-tw	寫入語言檔

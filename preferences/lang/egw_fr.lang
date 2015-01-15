@@ -36,10 +36,12 @@ deny following groups access to acl (grant access)	admin	fr	Refuser aux groupes 
 deny following groups access to edit categories	admin	fr	Refuser aux groupes suivants de modifier les catégories
 deny following groups access to preferences	admin	fr	Refuser aux groupes suivants l'accès aux préférences
 description can not exceed 255 characters in length !	preferences	fr	La description ne peut pas faire plus de 255 caractères !
+disable	preferences	fr	Désactiver
 display thumbnails for linked images	preferences	fr	Afficher des miniatures pour les images liées
 div	preferences	fr	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fr	Préférez-vous un format d'heure sur 24h, ou un format sur 12h avec indication am/pm.
 edit custom fields	preferences	fr	Modifier les champs personnalisés
+enable	preferences	fr	Activer
 enable drag and drop functionality (experimental)	preferences	fr	Drag & drop
 enable selectbox dropdown resizing for ie (experimental)	preferences	fr	Sélectionner l'ajustement du menu déroulant
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	fr	Active ou désactive les fonctions drag & drop dans toutes les applications. Si le navigateur ne supporte pas le drag & drop, cela sera désactivé automatiquement.

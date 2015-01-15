@@ -1,4 +1,14 @@
+color	home	sl	Barva
 displays home	home	sl	Prikaže domačo stran
 egroupware	home	sl	eGroupWare
 home	home	sl	Domov
+in %1 days (%2) is %3's birthday.	home	sl	V %1 dneh (%2) je rojstni dan %3.
+remove	home	sl	Odstrani
+set as default	home	sl	Nastavi kot privzeto
 there is a new version of egroupware available	home	sl	Na voljo je nova različica eGroupWare-a
+today is %1's birthday!	home	sl	Danes ima rojstni dan %1.
+tomorrow is %1's birthday.	home	sl	Jutri ima rojstni dan %1.
+yes, for the next three days	home	sl	Da, za naslednje tri dni
+yes, for the next two weeks	home	sl	Da, za naslednja dva tedna
+yes, for the next week	home	sl	Da, za naslednji teden
+yes, for today and tomorrow	home	sl	Da, za jutri in pojutrišnjem

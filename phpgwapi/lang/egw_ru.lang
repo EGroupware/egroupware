@@ -7,6 +7,7 @@
 %1 to sync	groupdav	ru	%1 синхронизировать
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
+'%1' is no php file in the egw server root (%2)!	common	ru	'%1' нет файла php в корневом каталоге eGW (%2)!
 (session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
 (shift-)click or drag to change value	jscalendar	ru	(Shift-)Клик или перетащите для изменения значения
 - click on any of the time parts to increase it	jscalendar	ru	- Кликните на любой части времени для увеличения
@@ -42,6 +43,7 @@ actions	common	ru	Действия
 active	common	ru	Активно
 add	common	ru	Добавить
 add %1 category for	common	ru	Добавить %1 категорию для
+add a new contact	common	ru	Добавить новый контакт
 add category	common	ru	Добавить категорию
 add shortcut	common	ru	Добавить ярлык
 add sub	common	ru	Добавить подпункт
@@ -148,6 +150,7 @@ centered	common	ru	по центру
 central african republic	common	ru	Центральноафриканская Республика
 chad	common	ru	Чад
 change	common	ru	Изменить
+change owner	common	ru	Сменить владельца
 charset	common	ru	utf-8
 check installation	common	ru	Проверить установку
 check now	common	ru	Проверить сейчас
@@ -214,6 +217,7 @@ delete	common	ru	Удалить
 delete category	common	ru	Удалить категорию
 delete file	common	ru	Удалить файл
 delete row	common	ru	Удалить строку
+delete selected entries?	common	ru	Удалить выбранные записи?
 delete these entries	common	ru	Удалить эти записи
 delete this entry	common	ru	Удалить эту запись
 denmark	common	ru	Дания
@@ -257,6 +261,7 @@ edit categories	common	ru	Редактировать Категории
 edit category	common	ru	Редактировать категорию
 egroupware	common	ru	eGroupWare
 egroupware api version	common	ru	Версия API eGroupWare
+egroupware version	common	ru	Версия EGroupware
 egroupware: login blocked for user '%1', ip %2	common	ru	eGroupWare: вход для пользователя '%1', IP %2 заблокирован
 egypt	common	ru	Египет
 el salvador	common	ru	Сальвадор
@@ -283,9 +288,11 @@ etag	common	ru	ETag
 ethiopia	common	ru	Эфиопия
 everything	common	ru	Все
 exact	common	ru	точно
+failed to change password.	common	ru	Ошибка при смене пароля
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	ru	Нет связи с сервером или неправильный ответ сервера. Попробуйте повторить вход. В случае неудачи свяжитесь с вашим системным администратором.
 falkland islands (malvinas)	common	ru	Фолклендские (Мальдивские) О-ва
 faroe islands	common	ru	Фарерские О-ва
+favorites	common	ru	Избранное
 fax number	common	ru	номер факса
 features of the editor?	common	ru	Особенности редактора
 february	common	ru	Февраль
@@ -434,6 +441,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	ru	Список
 list members	common	ru	Список участников
 lithuania	common	ru	Литва
+load	common	ru	Загрузить
 local	common	ru	Местный
 location calendars	groupdav	ru	Местные календари
 locations	common	ru	Местоположения
@@ -496,6 +504,7 @@ netherlands antilles	common	ru	Нидерландские Антильские �
 never	common	ru	Никогда
 new caledonia	common	ru	Новая Каледония
 new entry added sucessfully	common	ru	Новая запись успешно добавлена
+new favorite	common	ru	Новое избранное
 new main category	common	ru	Новая основная категория
 new value	common	ru	Новое значение
 new zealand	common	ru	Новая Зеландия
@@ -508,6 +517,7 @@ niger	common	ru	Нигер
 nigeria	common	ru	Нигерия
 niue	common	ru	Ниуэ
 no	common	ru	Нет
+no - cancel	common	ru	Нет - Отменить
 no entries found, try again ...	common	ru	записей не найдено, попробуйте еще ...
 no history for this record	common	ru	Нет истории для этой записи
 no savant2 template directories were found in:	common	ru	Каталог с шаблонами Savant2 не найден в:
@@ -524,6 +534,7 @@ not assigned	common	ru	не назначено
 not readable %1 entry of user %2	common	ru	Запись %1 не может быть прочитана пользователем %2
 note	common	ru	Заметка
 notes	common	ru	Заметки
+nothing to save.	common	ru	Нет ничего для сохранения.
 notifications	common	ru	Уведомления
 notify window	common	ru	Окно извещения
 notify your administrator to correct this situation	common	ru	Свяжитесь с Вашим системным администратором для исправления этой ситуации.
@@ -588,6 +599,7 @@ please set your preferences for this application	common	ru	Пожалуйста 
 please wait...	common	ru	Пожалуйста подождите...
 please, check back with us shortly.	common	ru	Пожалуйста, заходите еще поскорее.
 poland	common	ru	Польша
+popup with search	common	ru	Всплывающее окна поиска
 portugal	common	ru	Португалия
 postal	common	ru	Почтовый
 powered by	common	ru	Под управлением
@@ -655,10 +667,12 @@ search accounts	common	ru	Поиск учетных записей
 search or select accounts	common	ru	поиск или выбор учетных записей
 second	common	ru	второй
 section	common	ru	Секция
+securest	common	ru	Более безопасно
 select	common	ru	Выбрать
 select "%1", if your client does not support multiple addressbooks.	groupdav	ru	Выберите "%1", если ваш клиент не поддерживает несколько адресных книг.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	ru	Выберите "%1", если ваш клиент поддерживает группы, например OS X или iOS адресные книги.
 select action	common	ru	Выберите действие
+select all	common	ru	Выбрать все
 select all %1 %2 for %3	common	ru	Выберите все %1 %2 для %3
 select category	common	ru	Выберите Категорию
 select date	common	ru	Выберите дату
@@ -785,6 +799,7 @@ tuvalu	common	ru	о-ва Тувалу
 type	common	ru	Тип
 uganda	common	ru	Уганда
 ukraine	common	ru	Украина
+un-delete	common	ru	Отменить удаление
 underline	common	ru	Подчеркивание
 united arab emirates	common	ru	ОАЭ
 united kingdom	common	ru	Англия
@@ -838,6 +853,8 @@ written by:	common	ru	Записано:
 year	common	ru	Год
 yemen	common	ru	Йемен
 yes	common	ru	Да
+yes - delete	common	ru	Да - Удалить
+yes - delete including sub-entries	common	ru	Да - Удалить включая дочерние записи
 you are required to change your password during your first login	common	ru	Вам необходимо изменить свой пароль при первом входе в систему
 you can customize how many icons and toolbars the editor shows.	common	ru	Вы можете указать как много пиктограмм и панелей инструментов показывает редактор.
 you have been successfully logged out	login	ru	Вы успешно вышли
@@ -859,9 +876,7 @@ your message has been sent	common	ru	Ваше сообщение отправл�
 your password is about to expire in %1 days, you may change your password now	common	ru	Ваш пароль заканчивается через %1 дней, вы можете изменить его сейчас.
 your search returned %1 matchs	common	ru	ваш поиск вернул %1 совпадений
 your search returned 1 match	common	ru	ваш поиск вернул 1 совпадение
-your session could not be verified.	login	ru	Ваш сеанс не может быть удостоверен.
 your settings have been updated	common	ru	Ваши установки обновлены
 zambia	common	ru	Замбия
 zimbabwe	common	ru	Зимбабве
 zoom	common	ru	Масштаб
-nothing to save.	common	ru	Нет ничего для сохранения.

@@ -2,4 +2,4 @@
 add	infolog	hi	जमा करो
 cancel	infolog	hi	रद्दा कर्ना
 change	infolog	hi	परिवर्तन्
-done	common	hi	हो गया
+done	infolog	hi	हो गया

@@ -1,13 +1,17 @@
 (no subject)	mail	hr	(nema teme)
 add to addressbook	mail	hr	dodaj u adrersar
 always show html emails	mail	hr	Uvijek prikaži HTML e-mailove
+attachments	mail	hr	Privitci
 compose	mail	hr	Pisanje nove poruke
 compress folder	mail	hr	Smanjii mapu
 contains	mail	hr	sadrži
+copy to	mail	hr	Kopiraj u
 date(newest first)	mail	hr	po datumu (noviji prvo)
 date(oldest first)	mail	hr	po datumu (stariji prvo)
 default sorting order	mail	hr	Početno postavljen redoslijed sortiranja
+delete folder	mail	hr	Obriši mapu
 deleted	mail	hr	Obrisano
+disable	mail	hr	Onesposobi
 display of html emails	mail	hr	Prikaz HTML emailova
 display only when no plain text is available	mail	hr	Prikaži samo u neprisutnosti običnog teksta
 does not contain	mail	hr	ne sadrži
@@ -15,19 +19,25 @@ does not match	mail	hr	nema podudarnosti
 does not match regexp	mail	hr	nema podudarnosti regexp
 don't use sent	mail	hr	Ne upotrebljavaj Pošiljanje
 don't use trash	mail	hr	Ne upotrebljavaj Smeće
+edit account	mail	hr	Uredi korisnički račun
 empty trash	mail	hr	isprazni Smeće
+enable	mail	hr	Omogući
 event details follow	mail	hr	Slijede detalji obveze
-felamimail	admin	hr	FelaMiMail
+everyone	mail	hr	svi
+extended	mail	hr	Produži
 file into	mail	hr	informacije o datoteci
 filemanager	mail	hr	Filemanager
 flagged	mail	hr	flagged
 folder	mail	hr	Mapa
 folder settings	mail	hr	Postavke mape
+forward	mail	hr	Proslijedi
 from	mail	hr	From
 from(a->z)	mail	hr	po pošaljitelju (silazno A->Z)
 from(z->a)	mail	hr	po pošaljitelju (uzlazno Z->A)
+header lines	mail	hr	Linije zaglavlja
 html	mail	hr	Html
 if	mail	hr	AKO
+imap	mail	hr	IMAP
 imap server	mail	hr	IMAP Poslužitelj
 inbox	mail	hr	Inbox
 mail settings	mail	hr	Postavke pošte
@@ -35,17 +45,24 @@ mark as deleted	mail	hr	Označi obrisanim
 matches	mail	hr	podudarnosti
 matches regexp	mail	hr	podudara se sa regexp
 move selected to	mail	hr	premjesti izabrano u
+move to	mail	hr	premjesti izabrano u
 move to trash	mail	hr	Premjesti u Smeće
 never display html emails	mail	hr	Nikad ne prikaži HTML emailove
 organisation	admin	hr	organizacija
 organization	mail	hr	organization
+permission denied	mail	hr	Uskraćena dozvola
 quicksearch	mail	hr	Brza pretraga
 refresh time in minutes	mail	hr	Obnovi vrijeme u minutama
 remove all	mail	hr	Remove All
 remove immediately	mail	hr	Obriši odmah
+rename folder	mail	hr	Preimenuj mapu
 replied	mail	hr	odgovoreno
+reply	mail	hr	Odgovori
+reply all	mail	hr	Odgovori svima
+reply to	mail	hr	Odgovori
 replyto	mail	hr	Odgovori
 save all	mail	hr	Spremi sve
+select all	mail	hr	Označi Sve
 sent folder	mail	hr	Mapa poslano
 signature	mail	hr	Potpis
 size(...->0)	mail	hr	po veličini (silazno ...->0)
@@ -53,9 +70,11 @@ size(0->...)	mail	hr	po veličini (uzlazno 0->...)
 small view	mail	hr	smanji pogled
 subject(a->z)	mail	hr	po temi (silazno A->Z)
 subject(z->a)	mail	hr	po temi (uzlazno Z->A)
+text	mail	hr	Text
 then	mail	hr	TADA
 trash folder	mail	hr	Mapa Smeće
+unflagged	mail	hr	unflagged
 unread	mail	hr	nepročitano
-urgent	mail	hr	hitan
 when deleting messages	mail	hr	Prilikom brisanja poruka
+write	mail	hr	Zapiši
 wrote	mail	hr	zapisano (zapisao je)

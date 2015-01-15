@@ -6,16 +6,19 @@ all projects	timesheet	pt-br	Todos projetos
 applies the changes	timesheet	pt-br	aplicar as alterações
 both: allow to use projectmanager and free project-names	admin	pt-br	Ambos: permitir usar Gerenciador de Projetos e nomes de projetos livres
 by	timesheet	pt-br	por
+change category	timesheet	pt-br	alterar categoria
 check all	timesheet	pt-br	Verificar todos
 comment by %1 at %2:	timesheet	pt-br	Comentário feito por %1 em %2:
 create new links	timesheet	pt-br	Criar novos links
 creates a new field	timesheet	pt-br	criar um novo campo
 creating new entry	timesheet	pt-br	criando novo registro
 custom fields	timesheet	pt-br	Campos personalizados
+default document to insert entries	timesheet	pt-br	Documento padrão para inserir entradas
 delete this status	timesheet	pt-br	Remover este status
 deleted	timesheet	pt-br	removido
 deletes this field	timesheet	pt-br	Remover este campo
 determines the order the fields are displayed	timesheet	pt-br	determinar a ordem de exibição dos campos
+directory with documents to insert entries	timesheet	pt-br	Diretório com documentos para inserir entradas
 each value is a line like <id>[=<label>]	timesheet	pt-br	cada valor é uma linha como <id>[=<label>]
 edit status	timesheet	pt-br	Editar o Status
 edit this entry	timesheet	pt-br	Editar este registro
@@ -26,6 +29,8 @@ entry saved	timesheet	pt-br	Registro salvo
 error deleting the entry!!!	timesheet	pt-br	Erro removendo o registro!!
 error saving the entry!!!	timesheet	pt-br	Erro salvando o registro!!
 existing links	timesheet	pt-br	Links existentes
+exists	timesheet	pt-br	Existe
+export definition to use for nextmatch export	timesheet	pt-br	Definição Exportar para usar para exportação NextMatch
 export to openoffice spreadsheet	timesheet	pt-br	Exportar como Planilha do OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	pt-br	Exporta registros de sua Planilha de Tempo em um arquivo CSV. CSV significa 'Valores Separados por Vírgula'. Entretando, na aba Opções você pode escolher outros separadores.
 field must not be empty !!!	timesheet	pt-br	Campo não pode estar vazio !!!
@@ -35,8 +40,10 @@ general fields:	timesheet	pt-br	Campos gerais:
 global categories	timesheet	pt-br	Categorias Globais
 history	timesheet	pt-br	Histórico
 history logging	admin	pt-br	Registro de histórico
+html link to the current record	timesheet	pt-br	Link HTML para o registro atual
 id	timesheet	pt-br	ID
 ignore	timesheet	pt-br	Ignorar
+insert	timesheet	pt-br	Inserir
 last modified	timesheet	pt-br	Modificado por último
 last month	timesheet	pt-br	Último mês
 last week	timesheet	pt-br	Última semana
@@ -45,8 +52,11 @@ leave it empty for a full week	timesheet	pt-br	Deixar vazio para uma semana inte
 leaves without saveing	timesheet	pt-br	sair sem salvar
 length<br>rows	timesheet	pt-br	Tamanho<br>Linhas
 links	timesheet	pt-br	Links
+links and attached files	timesheet	pt-br	Links e arquivos anexados
+list of files linked to the current record	timesheet	pt-br	Lista de arquivos vinculados ao registro atual
 max length of the input [, length of the inputfield (optional)]	timesheet	pt-br	tamanho máximo da entrada [, tamanho do campo de entrada (opcional)]
 modified	timesheet	pt-br	Modificado
+modify status	timesheet	pt-br	modificar o estado
 name of current user, all other contact fields are valid too	timesheet	pt-br	Nome do usuário atual, todos outros campos são válidos também
 new ticket submitted by %1 at %2	timesheet	pt-br	Novo ticket adicionado por %1 em %2
 no details	timesheet	pt-br	Sem detalhes
@@ -60,6 +70,7 @@ permission denied!!!	timesheet	pt-br	Permissão negada !!
 price	timesheet	pt-br	Preço
 projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos
 quantity	timesheet	pt-br	Quantidade
+replacements for inserting entries into documents	timesheet	pt-br	Substitutos para a inserção de entradas em documentos
 save & new	timesheet	pt-br	Salvar e Novo
 saves the changes made	timesheet	pt-br	Salvar as alterações feitas
 saves the changes made and leaves	timesheet	pt-br	salvar as alterações feitas e sair
@@ -71,6 +82,8 @@ start	timesheet	pt-br	Início
 starttime	timesheet	pt-br	Horário inicial
 starttime has to be before endtime !!!	timesheet	pt-br	Horário inicial deve ser anterior ao horário final !!!
 sum %1:	timesheet	pt-br	Soma %1:
+tag to mark positions for address labels	timesheet	pt-br	Tag para marcar posições para etiquetas de endereço
+the following document-types are supported:	timesheet	pt-br	Os seguintes tipos de documentos são suportados:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	pt-br	o nome usado internamente (<= 20 caracteres), alterando-o fará dados existentes ficarem inacessíveis
 the text displayed to the user	timesheet	pt-br	o texto exibido para o usuário
 this month	timesheet	pt-br	Este mês
@@ -84,5 +97,6 @@ unitprice	timesheet	pt-br	Unidade de preço
 values for selectbox	timesheet	pt-br	Valores para a caixa de seleção
 view this entry	timesheet	pt-br	Exibir este registro
 week	timesheet	pt-br	Semana
+yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
 yesterday	timesheet	pt-br	Ontem
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt-br	Sua base de dados NÃO está atualizada (%1 x %2). Por favor execute %3setup%4 para atualizá-la.

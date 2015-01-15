@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	sk	%1 %2 v %3
 %1 event(s) %2	calendar	sk	%1 udalost(i) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	sk	%1 udalost(i) %2, %3 zlyhalo kvôli nedostatočným oprávneniam !!!
+%1 hours	calendar	sk	%1 hodín
 %1 participants removed because of missing invite grants	calendar	sk	%1 účastníkov odstránených kvôli chýbajúcim oprávneniam k (ich) pozvaniu
 %1 records imported	calendar	sk	Naimportovaných bolo %1 záznamov
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sk	načítalo sa %1 záznamov (zatiaľ neboli naimportované, vraťte sa a ODznačte Test importu)
@@ -106,6 +107,7 @@ creator	calendar	sk	Tvorca
 csv	calendar	sk	CSV
 csv-fieldname	calendar	sk	Pole v CSV
 csv-filename	calendar	sk	CSV súbor
+custom	calendar	sk	Vlastné
 custom fields	common	sk	Vlastné polia
 custom_2	common	sk	zaneprázdnenosť
 daily	calendar	sk	Denne

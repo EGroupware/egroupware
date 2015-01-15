@@ -19,13 +19,14 @@ date format	preferences	cs	Formát datumu
 default	preferences	cs	výchozí
 default application	preferences	cs	Výchozí aplikace
 default preferences	preferences	cs	Výchozí předvolby
-default theme	preferences	cs	Výchozí téma
 delete categories	preferences	cs	Vymazat kategorie
 description can not exceed 255 characters in length !	preferences	cs	Popis nemůže být delší jak 255 znaků!
+disable	preferences	cs	Zakázat
 display thumbnails for linked images	preferences	cs	Zobrazovat náhledy pro odkazované obrázky
 div	preferences	cs	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	cs	Preferujete 24ti hodinový formát času nebo 12ti hodinový s dodatkem am/pm.
 edit custom fields	preferences	cs	editovat uživatelsky definované položky
+enable	preferences	cs	povolit
 enable drag and drop functionality (experimental)	preferences	cs	Povolit funkcionalitu táhni a pusť (experimentální)
 enable selectbox dropdown resizing for ie (experimental)	preferences	cs	Povolit změnu velikosti rozbalovacích nabídek pro IE (experimentální)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	cs	Povoluje nebo zakazuje funkce táhni a pusť ve všech aplikacích. Pokud webový prohlížeč ovládání způsobem táhni a pusť nepodporuje, bude automaticky zakázáno. Tato vlastnost je v současnosti v experimentálním stádiu.
@@ -55,7 +56,6 @@ no user-selection at all	common	cs	Žádný výběr uživatelem
 note: this feature does *not* change your email password. this will	preferences	cs	Poznámka: Tato funkce NEZMĚNÍ Vaše heslo pro e-mail. To bude
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	cs	Poznámka: Tato funkce NEZMĚNÍ Vaše heslo pro e-mail. To budete muset změnit ručně.
 number format	preferences	cs	Formát čísel
-office 2003 theme	preferences	cs	Téma Office 2003
 p: paragraph	preferences	cs	p: Odstavec
 permanent time zone selection	preferences	cs	Trvalá volba časové zóny
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	cs	Vyberte prosím časové zóny, mezi kterými chcete mít možnost rychle přepínat. Přepínač se nezobrazuje, pokud nejsou vybrány alespoň dvě zóny.
@@ -84,7 +84,6 @@ show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako
 show number of current users	preferences	cs	Zobrazovat počet připojených uživatelů
 show text on navigation icons	preferences	cs	Zobrazovat text u navigačních ikon
 show_more_apps	common	cs	Zobrazit více aplikací
-silver theme	preferences	cs	Stříbrné téma
 spellchecker language	addressbook	cs	Jazyk kontroly pravopisu
 text only	preferences	cs	Jen text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	cs	Výchozí aplikace bude spuštěna když se přihlásíte do eGroupWaru nebo kliknete na ikonu hlavní strany.<br>Také můžete na hlavní straně zobrazit více aplikací, pokud zde žádnou konkrétní nevyberete (lze nakonfigurovat v předvolbách každé aplikace).

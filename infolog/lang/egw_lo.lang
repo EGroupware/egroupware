@@ -25,13 +25,13 @@ error: the entry has been updated since you opened it for editing!	infolog	lo	�
 execute a further action for this entry	infolog	lo	ການຈັດການ/ການປະຕິບັດ ການດໍາເນີນການເພີ່ມເຕີມສໍາລັບລາຍການນີ້
 existing links	infolog	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
 exists	infolog	lo	ມີຢູ່ແລ້ວ
+favorites	infolog	lo	ລາຍການທີ່ມັກ
 fieldseparator	infolog	lo	ການແຍກຟີລ
 global categories	infolog	lo	ໝວດທົ່ວໄປ
 history	infolog	lo	ປະຫວັດສາດ
 id	infolog	lo	ລະຫັດ
 leave without saveing the entry	infolog	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກການເຂົ້າ
 leaves without saveing	infolog	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກ
-length<br>rows	infolog	lo	ຄວາມຍາວ <br> ແຖວ
 link	infolog	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
 links	infolog	lo	ເຊື່ອມຕໍ່
 location	infolog	lo	ສະຖານທີ່

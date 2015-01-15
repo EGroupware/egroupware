@@ -96,7 +96,6 @@ charset of file	addressbook	ru	Кодировка файла
 check all	addressbook	ru	Отметить все
 choose an icon for this contact type	admin	ru	Выберите пиктограмму для этого типа контактов
 choose charset	addressbook	ru	Выберите кодировку
-choose export options	addressbook	ru	Выберите дополнительные параметры экспорта
 choose owner of imported data	addressbook	ru	Выберите владельца импортированных данных
 chosse an etemplate for this contact type	admin	ru	Выбирите e-Шаблон для этого типа контакта
 city	common	ru	Город
@@ -119,6 +118,7 @@ contact repository	admin	ru	Хранилище контакта
 contact saved	addressbook	ru	Контакт сохранён
 contact settings	admin	ru	Установки контакта
 contactform	addressbook	ru	Форма контакта
+contacts	common	ru	Контакты
 contacts and account contact-data to ldap	admin	ru	Контакты и данные контакта для учётной записи в LDAP
 contacts and account contact-data to sql	admin	ru	Контакты и контактные данные учётной записи в SQL
 contacts to ldap	admin	ru	Контакты в LDAP
@@ -138,6 +138,7 @@ csv-filename	addressbook	ru	Имя файла CSV
 custom	addressbook	ru	Пользовательский
 custom etemplate for the contactform	addressbook	ru	Пользовательский е-Шаблон для формы контактов
 custom fields	addressbook	ru	Пользовательские поля
+data exchange settings	addressbook	ru	Установки обмена данных
 debug output in browser	addressbook	ru	Отладочный вывод в браузере
 default	addressbook	ru	По умолчанию
 default address format	addressbook	ru	Формат адреса по умолчанию
@@ -207,8 +208,10 @@ exported	addressbook	ru	Экспортировано
 exports contacts from your addressbook into a csv file.	addressbook	ru	Экспорт контактов из адресной книги в файл формата CSV
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	ru	Экспортировать контакты из адресной книги в файл CSV. CSV (Comma Seperated Values) — «Значения, разделенные запятыми». Однако на вкладке параметров можно выбрать и другие разделители.
 extra	addressbook	ru	Дополнительно
+extra encodings	addressbook	ru	Дополнительные кодировки
 extra private	addressbook	ru	Дополнительные личные
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ru	Ошибка при изменении %1 участника(ов) организации (недостаточно прав)!
+favorites	addressbook	ru	Избранное
 fax	addressbook	ru	Факс
 fax number	common	ru	Номер факса
 field %1 has been added !	addressbook	ru	Добавлено поле %1 !
@@ -225,6 +228,7 @@ freebusy uri	addressbook	ru	URI занятости
 full name	addressbook	ru	Полное имя
 general	admin	ru	Общие
 general fields:	addressbook	ru	Общие поля:
+general settings	addressbook	ru	Основные установки
 geo	addressbook	ru	ГЕО
 global categories	addressbook	ru	Общие категории
 grant addressbook access	common	ru	Предоставить доступ к адресной книге
@@ -244,6 +248,7 @@ home state	addressbook	ru	Домашний - регион
 home street	addressbook	ru	Домашний - улица
 home zip code	addressbook	ru	Домашний почтовый индекс
 how many contacts should non-admins be able to export	admin	ru	Сколько контактов может экспортировать не-администратор
+html link to the current record	addressbook	ru	HTML-ссылка на запись
 icon	addressbook	ru	Пиктограмма
 if accounts are already in ldap	admin	ru	Если учётная запись уже в LDAP
 ignore first line	addressbook	ru	Не учитывать первую строку
@@ -338,7 +343,6 @@ phone numbers	common	ru	Номера телефонов
 photo	addressbook	ru	Фото
 please enter a name for that field !	addressbook	ru	Пожалуйста, введите имя поля!
 please select only one category	addressbook	ru	Пожалуйста, выберите только одну категорию
-please update the templatename in your customfields section!	addressbook	ru	Пожалуйста, измените название шаблона в разделе пользовательских полей!
 postal	common	ru	Почтовый
 pref	addressbook	ru	Предпочтительный
 preferred email address to use in distribution lists	addressbook	ru	Предпочтительный адрес электронной почты
@@ -407,6 +411,7 @@ that field name has been used already !	addressbook	ru	Поле с таким и
 the anonymous user has probably no add rights for this addressbook.	addressbook	ru	Анонимный пользователь обычно не имеет прав на добавление записей в эту адресную книгу
 the anonymous user needs add rights for it!	addressbook	ru	Для этого анонимному пользователю нужны права на добавление!
 the anonymous user needs read it!	addressbook	ru	Анонимный пользователь должен иметь права на чтение!
+the following document-types are supported:	addressbook	ru	Поддерживаются следующие типы документов:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	ru	Для вставки контактных данных в документы OpenOffice или MS Office требуется zip-расширение
 there was an error saving your data :-(	addressbook	ru	При сохранении данных произошла ошибка
 this module displays a contactform, that stores direct into the addressbook.	addressbook	ru	Модуль отображает форму с данными контакта в том виде, как она сохраняется в адресной книге
@@ -424,6 +429,7 @@ two of: %1	addressbook	ru	Два из: %1
 type	addressbook	ru	Тип
 un-delete	addressbook	ru	Отменить удаление
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	ru	Невозможно преобразовать "%1" в ID учётной записи. Используйте расширение (%2), установленное для владельца
+unable to delete	addressbook	ru	Невозможно удалить
 unique id (uid)	addressbook	ru	Уникальный ID (UID)
 unique id<br />(to update existing records)	addressbook	ru	Уникальный ID<br /> для обновления существующих записей
 update a single entry by passing the fields.	addressbook	ru	Обновление записи при помощи передачи полей
@@ -446,7 +452,6 @@ verification	addressbook	ru	Проверка
 view linked infolog entries	addressbook	ru	Смотреть связанные записи ИнфоЖурнала
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ru	ПРЕДУПРЕЖДЕНИЕ!! LDAP доступен только в случае, если контакты НЕ использовались для хранения учётных записей!
 warning: all contacts found will be deleted!	addressbook	ru	ПРЕДУПРЕЖДЕНИЕ: Все найденные контакты будут удалены!
-warning: template "%1" not found, using default template instead.	addressbook	ru	ВНИМАНИЕ: Шаблон "%1" не найден, взамен используется шаблон по умолчанию
 weekday	addressbook	ru	Рабочий день
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ru	Изображение перехода к адресной книге в других приложениях. Значение «пусто» не допустимо. После изменения данной настройки следует выполнить вход в систему снова
 where to add the email address	addressbook	ru	Куда добавлять адреса электронной почты
@@ -477,5 +482,6 @@ you must select a vcard. (*.vcf)	addressbook	ru	Вы должны выбрать
 you must select at least 1 column to display	addressbook	ru	Вы должны выбрать хотя бы одну колонку для показа
 you need to select a distribution list	addressbook	ru	Вы должны выбрать список рассылки
 you need to select some contacts first	addressbook	ru	Вы должны сначала выбрать несколько контактов
+you need to select some entries first	addressbook	ru	Необходимо сначала выбрать записи.
 zip code	common	ru	Почтовый индекс
 zip_note	addressbook	ru	Файл может быть zip-архивом файлов .csv, .vcf, или .ldif, однако не смешивайте разные типы при импорте

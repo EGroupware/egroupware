@@ -82,9 +82,11 @@ creator	calendar	nl	Melder
 csv	calendar	nl	CSV
 csv-fieldname	calendar	nl	CSV-veldnaam
 csv-filename	calendar	nl	CSV-bestandsnaam
+custom	calendar	nl	Aangepast
 custom fields	common	nl	Aangepaste velden
 custom_2	common	nl	vrij/bezet
 daily	calendar	nl	Dagelijks
+data exchange settings	calendar	nl	Data exchange instellingen
 day	calendar	nl	Dag
 days	calendar	nl	dagen
 days of the week for a weekly repeated event	calendar	nl	Dagen van de week voor een wekelijks herhalende gebeurtenis
@@ -93,6 +95,7 @@ dayview	calendar	nl	Dagweergave
 default appointment length (in minutes)	calendar	nl	standaard afspraakduur (in minuten)
 default calendar filter	calendar	nl	Standaard agendafilter
 default calendar view	calendar	nl	Standaard agendaoverzicht
+default document to insert entries	calendar	nl	Standaard dokument voor het invoegen van gegevens
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	nl	Standaard lengte van nieuw aangemaakte afspraken. De lengte is in minuten, bijv. 60 voor 1 uur.
 default type of resources application selected in the calendar particpants research form.	calendar	nl	Standaard type van resources toepassing dat gekozen is in het deelnemers onderzoeks formulier.
 default type of resources selection	calendar	nl	Standaard type van hulpmiddelen selectie
@@ -105,6 +108,7 @@ delete this exception	calendar	nl	Deze uitzondering verwijderen
 delete this series of recuring events	calendar	nl	Deze serie herhalende gebeurtenissen verwijderen
 deleted	calendar	nl	verwijderd
 deny ressources reservation for private events	calendar	nl	Verbied hulpmiddelen reserveringen voor privë gebeurtenissen
+directory with documents to insert entries	calendar	nl	Map met dokumenten om gegevens in tevoeren
 disinvited	calendar	nl	Uitnodiging teruggetrokken
 display status of events	calendar	nl	Status van afspraken weergeven
 displayed view	calendar	nl	getoonde weergave
@@ -139,11 +143,17 @@ event deleted	calendar	nl	Gebeurtenis verwijderd
 event details follow	calendar	nl	Afspraak details volgen
 event saved	calendar	nl	Gebeurtenis opgeslagen
 event will occupy the whole day	calendar	nl	Gebeurtenis duurt de hele dag
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	nl	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	nl	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 exception	calendar	nl	Uitzondering
 exception created - you can now edit or delete it	calendar	nl	Uitzondering aangemaakt - u kunt het nu bewerken of verwijderen
 exceptions	calendar	nl	Uitzonderingen
 execute a further action for this entry	calendar	nl	Voer een vervolg actie uit voor dit record
 existing links	calendar	nl	Bestaande links
+exists	calendar	nl	Bestaat
+export definition to use for nextmatch export	calendar	nl	Export definitie om te gebruiken bij nextmatch export
 extended	calendar	nl	Uitgebreid
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	nl	Uitgebreide updates bevatten altijd de complete afspraakdetails. iCal's kunnen worden geïmporteerd door aan aantal agendatoepassingen
 fieldseparator	calendar	nl	Veldscheidingssymbool
@@ -166,6 +176,7 @@ fri	calendar	nl	Vri
 full description	calendar	nl	Volledige omschrijving
 fullname of person to notify	calendar	nl	Volledige naam van persoon om te op de hoogte te brengen
 general fields:	calendar	nl	Algemene velden:
+general settings	calendar	nl	Algemene instellingen
 global categories	calendar	nl	Globale categoriën
 global public and group public	calendar	nl	Globaal publiek en group publiek
 global public only	calendar	nl	Alleen globaal publiek
@@ -186,6 +197,7 @@ hours	calendar	nl	uren
 how far to search (from startdate)	calendar	nl	hoe ver vooruit zoeken (vanaf de begindatum)
 how many minutes should each interval last?	calendar	nl	Hoeveel minuten moet ieder interval duren?
 how many weeks should the multiple week view show?	calendar	nl	Hoeveel weken moet de meerweekse weergave tonen?
+html link to the current record	calendar	nl	HTML link naar huidig record
 ical	calendar	nl	iCal
 ical / rfc2445	calendar	nl	iCal / rfc2445
 ical export	calendar	nl	iCal export
@@ -194,10 +206,13 @@ ical import	calendar	nl	iCal import
 ical successful imported	calendar	nl	iCal goed geimporteerd
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	nl	wanneer deze optie is geactiveerd zullen feestdagen die vallen in het weekend, genomen worden op de maandag daarna.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	nl	Indien u hier geen wachtwoord instelt, is de informatie beschikbaar voor iedereen die de URL kent!!!
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
+if you specify an export definition, it will be used when you export	calendar	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 ignore conflict	calendar	nl	Conflict negeren
 import	calendar	nl	Importeren
 import csv-file	common	nl	CSV-bstand importeren
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	nl	Importeer gebeurtenissen in uw agenda vanuit een CSV bestand. CSV betekent 'Komma gescheiden velden'. Maar in het Opties tabblad kunt u ook andere scheidingstekens kiezen.
+insert	calendar	nl	Voeg toe
 insert in document	calendar	nl	Invoegen in document
 interval	calendar	nl	Interval
 invalid email-address "%1" for user %2	calendar	nl	Ongeldig emailadres "%1" voor gebruiker %2
@@ -207,7 +222,10 @@ lastname of person to notify	calendar	nl	Achternaam van persoon om te op de hoog
 length of the time interval	calendar	nl	Lengte van het tijdsinterval
 link to view the event	calendar	nl	Link om het evenement te bekijken
 links	calendar	nl	Links
+links and attached files	calendar	nl	Link naar bijgesloten bestand
+links to specified application.  example: {{links/infolog}}	calendar	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
 links, attachments	calendar	nl	Links, bijlagen
+list of files linked to the current record	calendar	nl	Lijs van bestanden gelinkt aan huidig record
 listview	calendar	nl	Lijstweergave
 location	calendar	nl	Plaats
 location to autoload from	admin	nl	Plaats om van te laden
@@ -273,6 +291,7 @@ quantity	calendar	nl	Hoeveelheid
 re-edit event	calendar	nl	Afspraak opnieuw bewerken
 receive email updates	calendar	nl	Ontvang email updates
 receive summary of appointments	calendar	nl	Ontvang overzicht van afspraken
+recovered	calendar	nl	Teruggezet
 recurrence	calendar	nl	Herhalingen
 recurring event	calendar	nl	terugkerende afspraak
 rejected	calendar	nl	Afgewezen
@@ -323,8 +342,11 @@ startrecord	calendar	nl	Startregel
 status changed	calendar	nl	Status gewijzigd
 submit to repository	calendar	nl	Naar repository inzenden
 sun	calendar	nl	Zon
+tag to mark positions for address labels	calendar	nl	Tag voor markering tbv adreslabels
 tentative	calendar	nl	op proef
 test import (show importable records <u>only</u> in browser)	calendar	nl	Test import (te impoteren records alleen in uw browser weergeven)
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
+the following document-types are supported:	calendar	nl	De volgende document types worden ondersteund :
 the resource you selected is already overbooked:	calendar	nl	De bron die u selecteerde is reeds over bezet:
 this day is shown as first day in the week or month view.	calendar	nl	Deze dag wordt weergegeven als de eerste dag in de week- and maandweergave.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	nl	Dit definieert het einde van uw dagweergave. Afspraken die na deze tijd plaatsvinden worden  onderaan de dagweergave weergegeven.
@@ -346,6 +368,7 @@ timeframe	calendar	nl	Tijdskader
 timeframe to search	calendar	nl	Tijdskader om te zoeken
 timezone	calendar	nl	Tijdszone
 title of the event	calendar	nl	Titel van afspraak
+titles of any entries linked to the current record, excluding attached files	calendar	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 to many might exceed your execution-time-limit	calendar	nl	te veel kan mogelijk uw uitvoertijd van dit programme overschrijden
 translation	calendar	nl	Vertaling
 tue	calendar	nl	Din
@@ -353,6 +376,7 @@ two weeks	calendar	nl	twee weken
 updated	calendar	nl	Bijgewerkt
 use end date	calendar	nl	Gebruik einddatum
 use the selected time and close the popup	calendar	nl	gebruik de geselecteerde tijd en sluit het popupvenster
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	nl	Gebruik deze tag voor adres labels.Plaats de inhoud welke je wilt herhalen tussen twee tags.
 user or group	calendar	nl	Gebruiker of groep
 view this event	calendar	nl	Bekijk deze gebeurtenis
 views with fixed time intervals	calendar	nl	Weergaves met vaste tijdsintervallen
@@ -374,6 +398,7 @@ work day starts on	calendar	nl	Werkdag begint om
 yearly	calendar	nl	Jaarlijks
 yearview	calendar	nl	Jaarweergave
 yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
+yes, users can purge their deleted items	admin	nl	Ja, gebruikers kunnen hun verwijderde items defintief verwijderen
 you are not allowed to book the resource selected:	calendar	nl	U bent niet bevoegd om de geselecteerde bron te boeken:
 you can either set a year or a occurence, not both !!!	calendar	nl	U kunt een of een jaar of een gebeurtenis instellen, niet beiden !!!
 you can only set a year or a occurence !!!	calendar	nl	U kunt alleen een Jaar of een Gebeurtenis instellen !!!

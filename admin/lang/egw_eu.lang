@@ -162,6 +162,7 @@ file space must be an integer	admin	eu	Fitxategiaren espazioa oso bat izan behar
 for the times above	admin	eu	goran aipatutako orduetan
 force selectbox	admin	eu	Aukeraketa koadroa indartu
 full name	admin	eu	Izen osoa
+general	admin	eu	Orokorra
 global categories	common	eu	Kategoria orokorrak
 group ?	admin	eu	taldea?
 group has been added	common	eu	Taldea gehitua izan da
@@ -246,6 +247,7 @@ percent of users that logged out	admin	eu	Saioa utzi duten erabiltzaile portzent
 percent this user has logged out	admin	eu	Erabiltzaile honek saioa utzi duen portzentajea
 permission denied	admin	eu	Baimena ukatuta
 permission denied !!!	admin	eu	Baimena ukatua!
+permission denied!!!	admin	eu	Baimena ukatuta!
 permissions	admin	eu	Baimenak
 permissions this group has	admin	eu	Talde honek dituen baimenak
 phpinfo	admin	eu	PHP informazioa

@@ -198,6 +198,7 @@ error renaming %1 %2 directory	common	hr	Greška pri preimenovanju %1 %2 mape
 estonia	common	hr	ESTONIA
 ethiopia	common	hr	ETHIOPIA
 exact	common	hr	exact
+failed to change password.	common	hr	Nisam mogao promijeniti zaporku.
 falkland islands (malvinas)	common	hr	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	hr	FAROE ISLANDS
 fax number	common	hr	fax number
@@ -316,6 +317,7 @@ liechtenstein	common	hr	LIECHTENSTEIN
 list	common	hr	List
 list members	common	hr	List members
 lithuania	common	hr	LITHUANIA
+load	common	hr	Unesi
 local	common	hr	Local
 login	common	hr	Prijava
 loginid	common	hr	LoginID
@@ -379,6 +381,7 @@ niger	common	hr	NIGER
 nigeria	common	hr	NIGERIA
 niue	common	hr	NIUE
 no	common	hr	Ne
+no - cancel	common	hr	Ne - Otkaži
 no entries found, try again ...	common	hr	no entries found, try again ...
 no history for this record	common	hr	No history for this record
 no subject	common	hr	No Subject
@@ -437,6 +440,7 @@ please set your global preferences	common	hr	Please set your global preferences 
 please set your preferences for this application	common	hr	Please set your preferences for this application !
 please wait...	common	hr	Please Wait...
 poland	common	hr	POLAND
+popup with search	common	hr	Popup with search
 portugal	common	hr	PORTUGAL
 postal	common	hr	Postal
 preferences	common	hr	Postavke
@@ -482,6 +486,7 @@ search accounts	common	hr	Traži korisničke račune
 search or select accounts	common	hr	Search or select accounts
 section	common	hr	Section
 select	common	hr	Select
+select all	common	hr	Označi Sve
 select all %1 %2 for %3	common	hr	Select all %1 %2 for %3
 select category	common	hr	Select Category
 select date	common	hr	Select date
@@ -618,6 +623,7 @@ written by:	common	hr	Napisao:
 year	common	hr	Godina
 yemen	common	hr	YEMEN
 yes	common	hr	Da
+yes - delete	common	hr	Da - Obriši
 you are required to change your password during your first login	common	hr	You are required to change your password during your first login
 you have been successfully logged out	login	hr	Uspješno ste odjavljeni
 you have not entered a title	common	hr	You have not entered a title
@@ -632,7 +638,6 @@ your message could <b>not</b> be sent!<br>	common	hr	Your message could <b>not</
 your message has been sent	common	hr	Vaša poruka je poslana
 your search returned %1 matchs	common	hr	your search returned %1 matches
 your search returned 1 match	common	hr	Vaša pretraga je vratila 1 rezultat
-your session could not be verified.	login	hr	Vašu sesiju nije moguće potvrditi.
 your settings have been updated	common	hr	Vaše postavke su Ažurirane
 zambia	common	hr	ZAMBIA
 zimbabwe	common	hr	ZIMBABWE

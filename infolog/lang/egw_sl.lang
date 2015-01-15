@@ -9,6 +9,7 @@
 %1 you are responsible for is starting at %2	infolog	sl	%1, za katerega ste odgovorni, se začne %2
 %1 you delegated is due at %2	infolog	sl	%1, katerega ste dodelili, poteče %2
 %1 you delegated is starting at %2	infolog	sl	%1, katerega ste dodelili, se začne %2
+(no subject)	infolog	sl	(brez zadeve)
 - subprojects from	infolog	sl	- Podprojekt iz
 0%	infolog	sl	0%
 10%	infolog	sl	10%
@@ -126,7 +127,7 @@ do you want a notification, if items you delegated are about to start?	infolog	s
 do you want a notification, if items you delegated are due?	infolog	sl	Želite prejeti obvestilo, če so elementi, za katere ste odgovorni pretečeni?
 do you want to receive notifications as html-mails or plain text?	infolog	sl	Želite prejemati obvestila v obliki HTML ali kot navadno besedilo?
 don't show infolog	infolog	sl	Ne prikaži InfoDnevnika
-done	common	sl	Končano
+done	infolog	sl	Končano
 download	infolog	sl	Prenos
 duration	infolog	sl	Trajanje
 each value is a line like <id>[=<label>]	infolog	sl	vsaka vrednost je vrstice kot <šifra>[=<oznaka>]
@@ -151,6 +152,7 @@ error: the entry has been updated since you opened it for editing!	infolog	sl	Na
 execute a further action for this entry	infolog	sl	Izvede dodatna dejanja za ta vnos
 existing links	infolog	sl	Obstoječe povezave
 exists	infolog	sl	Obstaja
+favorites	infolog	sl	Priljubljene
 fax	infolog	sl	Faks
 field must not be empty !!!	infolog	sl	Polje ne sme biti prazno!
 fieldseparator	infolog	sl	Ločilo polj
@@ -158,6 +160,7 @@ finish	infolog	sl	Konec
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
 for which types should this field be used	infolog	sl	Za ketere tipe naj bo to polje uporabljeno
 from	infolog	sl	Od
+general fields:	infolog	sl	Splošna polja:
 global categories	infolog	sl	Globalne kategorije
 group owner for	infolog	sl	Skupinski lastnik za
 high	infolog	sl	Visoko
@@ -191,12 +194,10 @@ last modified	infolog	sl	Zadnjič prilagojeno
 leave it empty	infolog	sl	Pusti prazno
 leave without saveing the entry	infolog	sl	Zapusti brez shranjevanja zapisa
 leaves without saveing	infolog	sl	Zapusti brez shranjevanja
-length<br>rows	infolog	sl	Dolžina<br>Vrstice
 link	infolog	sl	Povezava
 links	infolog	sl	Povezave
 links of this entry	infolog	sl	Povezave tega zapisa
 list all categories	infolog	sl	Seznam vseh kategorij.
-list no subs/childs	infolog	sl	Seznam nima podrejenih seznamov
 location	infolog	sl	Lokacija
 longer textual description	infolog	sl	Daljši opis
 low	infolog	sl	Nizko
@@ -280,6 +281,7 @@ responsible upcoming	infolog	sl	Odgovoren prihajajoč
 responsible user, priority	infolog	sl	Odgovoren uporabnik, prioriteta
 returns a list / search for records.	infolog	sl	Vrne seznam / iskanje zapisov.
 rights for the responsible	infolog	sl	Pravice odgovornega
+rows	infolog	sl	Vrstice
 same day	infolog	sl	Isti dan
 save	infolog	sl	Shrani
 saves the changes made and leaves	infolog	sl	Shrani spremembe in zapusti

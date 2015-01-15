@@ -1,4 +1,13 @@
+color	home	sv	Färg
 displays home	home	sv	Visar Hemsidan
 egroupware	home	sv	eGroupWare
 home	home	sv	Hem
+in %1 days (%2) is %3's birthday.	home	sv	Om %1 dagar (%2) fyller %3 år
+remove	home	sv	Radera
 there is a new version of egroupware available	home	sv	En uppdaterad version av eGroupWare är tillgänglig
+today is %1's birthday!	home	sv	I dag har %1 födelsedag!
+tomorrow is %1's birthday.	home	sv	I morgon är det %1's födelsedag.
+yes, for the next three days	home	sv	Ja, för kommande tre dagar
+yes, for the next two weeks	home	sv	Ja, för kommande två veckor
+yes, for the next week	home	sv	Ja, för nästa vecka
+yes, for today and tomorrow	home	sv	Ja, för kommande två dagar

@@ -1,4 +1,5 @@
 %1 records processed	importexport	es-es	%1 registros procesados
+all users	importexport	es-es	Todos los usuarios
 allowed users	importexport	es-es	Usuarios permitidos
 automatically created by importexport	importexport	es-es	Creados automáticamente por importexport
 basic csv import	importexport	es-es	Importación CSV básica
@@ -54,6 +55,7 @@ true	importexport	es-es	verdadero
 unable to schedule	importexport	es-es	No se pudo planificar
 use default	importexport	es-es	Usar predeterminado
 use field from csv if possible	importexport	es-es	Usar el campo de CSV si es posible
+use search results	common	es-es	Usar los resultados de la búsqueda
 which useres are allowed for this definition	importexport	es-es	Qué usuarios pueden usar esta definición
 which users are allowed to use this definition	importexport	es-es	Qué usuarios pueden usar esta definición
 you need to select an app and format first!	importexport	es-es	¡Necesita seleccionar una aplicación y un formato antes!

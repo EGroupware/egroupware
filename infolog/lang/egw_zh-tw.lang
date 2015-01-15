@@ -9,6 +9,7 @@
 %1 you are responsible for is starting at %2	infolog	zh-tw	您負責的 %1 開始日期為 %2
 %1 you delegated is due at %2	infolog	zh-tw	您委派的 %1 到期日為 %2
 %1 you delegated is starting at %2	infolog	zh-tw	您委派的 %1 開始日期為 %2
+(no subject)	infolog	zh-tw	(沒有標題)
 - subprojects from	infolog	zh-tw	- 附加專案來自
 0%	infolog	zh-tw	0%
 10%	infolog	zh-tw	10%
@@ -124,7 +125,7 @@ do you want a notification, if items you delegated are about to start?	infolog	z
 do you want a notification, if items you delegated are due?	infolog	zh-tw	您指派的項目過期時，您是否想要收到提醒？
 do you want to receive notifications as html-mails or plain text?	infolog	zh-tw	您希望收到的提醒信件格式為 html 或純文字？
 don't show infolog	infolog	zh-tw	不要顯示記事本
-done	common	zh-tw	完成
+done	infolog	zh-tw	完成
 download	infolog	zh-tw	下載
 duration	infolog	zh-tw	進行期間
 each value is a line like <id>[=<label>]	infolog	zh-tw	每個值都是這樣的線 <id>[=<label>]
@@ -154,6 +155,7 @@ fieldseparator	infolog	zh-tw	欄位分隔字元
 finish	infolog	zh-tw	完成
 for which types should this field be used	infolog	zh-tw	這個欄位使用什麼格式
 from	infolog	zh-tw	從
+general fields:	infolog	zh-tw	一般欄位：
 global categories	infolog	zh-tw	全域類別
 group owner for	infolog	zh-tw	群組擁有者
 high	infolog	zh-tw	高
@@ -187,12 +189,10 @@ leave it empty	infolog	zh-tw	保持空白
 leave it empty for a full week	infolog	zh-tw	空白表示整個星期
 leave without saveing the entry	infolog	zh-tw	離開並且不要儲存這個事件
 leaves without saveing	infolog	zh-tw	離開並且不要儲存
-length<br>rows	infolog	zh-tw	長度<br>列
 link	infolog	zh-tw	連結
 links	infolog	zh-tw	連結
 links of this entry	infolog	zh-tw	這個事件的連結
 list all categories	infolog	zh-tw	列出所有類別
-list no subs/childs	infolog	zh-tw	不要列出附屬資訊
 location	infolog	zh-tw	位置
 longer textual description	infolog	zh-tw	較長的原文描述
 low	infolog	zh-tw	低
@@ -278,6 +278,7 @@ responsible upcoming	infolog	zh-tw	即將產生的責任
 responsible user, priority	infolog	zh-tw	負責人、順序
 returns a list / search for records.	infolog	zh-tw	傳回一個清單 / 搜尋記錄
 rights for the responsible	infolog	zh-tw	負責人權限
+rows	infolog	zh-tw	列
 same day	infolog	zh-tw	同一天
 save	infolog	zh-tw	儲存
 saves the changes made and leaves	infolog	zh-tw	儲存後離開

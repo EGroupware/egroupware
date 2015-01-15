@@ -21,17 +21,24 @@ clear selection	resources	pt	Limpar selecção
 configure access permissions	admin	pt	Configurar permissões de acesso
 create new accessory for this resource	resources	pt	Criar novo acessório para este recurso
 create new links	resources	pt	Criar novas ligações
+custom fields	resources	pt	Personalizar campos
+days	resources	pt	Dias
 delete selected resources	resources	pt	Eliminar recursos seleccionados
 delete this entry	resources	pt	Eliminar este registo
+deleted	resources	pt	eliminado/a
 description (short)	resources	pt	Descrição (breve)
 direct booking permissions	resources	pt	Permissões de agendamento directo
 don't use vfs (this will need a symlink --> see readme)	resources	pt	Não utilize vfs (necessitará de um symlink --> ver README)
 edit this entry	resources	pt	Editar este registo
 existing links	resources	pt	Ligações existentes
+exists	resources	pt	Existe
+export definition to use for nextmatch export	resources	pt	Definição Exportar para usar para exportação NextMatch
+export definitition to use for nextmatch export	resources	pt	Definição Exportar para usar para exportação NextMatch
 general	resources	pt	Geral
 general informations about resource	resources	pt	Informações gerais sobre recurso
 gernal resource	resources	pt	Recurso geral
 global categories	resources	pt	Categorias gerais
+history logging	admin	pt	Logging História
 hours	resources	pt	Horas
 how many of the resources are useable?	resources	pt	Quantos recursos estão funcionais?
 how many of them are useable?	resources	pt	Quantos deles estão funcionais?
@@ -41,6 +48,7 @@ implies booking permission	resources	pt	implica permissão de agendamento
 implies read permission	resources	pt	implica permissão de leitura
 information about storage	resources	pt	Informações sobre armazenamento
 informations about the location of resource	resources	pt	Informações sobre a localização do recurso
+insert	resources	pt	Inserir
 inventory number	resources	pt	Número de inventário
 inventory number:	resources	pt	Número de inventário:
 is resource bookable?	resources	pt	É possível agendar recurso?
@@ -51,6 +59,7 @@ links	resources	pt	Ligações
 location	resources	pt	Local
 location of resource	resources	pt	Local do recurso
 location:	resources	pt	Local:
+manage mapping	resources	pt	Gerenciar mapeamento
 name of resource	resources	pt	Nome do recurso
 name:	resources	pt	Nome:
 no description available	resources	pt	sem descrição disponível
@@ -97,5 +106,6 @@ web-site for this resource	resources	pt	Página Web para este recurso
 where to find this resource?	resources	pt	Onde encontrar este recurso?
 which category does this resource belong to?	resources	pt	A que categoria pertence este recurso?
 write permissions	resources	pt	Permissões de escrita
+yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
 you are not permitted to get information about this resource!	resources	pt	Não tem permissões para aceder a informações sobre este recurso!
 you chose more resources than available	resources	pt	Escolheu mais recursos do que os disponíveis

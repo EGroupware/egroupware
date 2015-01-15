@@ -15,7 +15,7 @@ custom fields	infolog	tr	Özel Alanlar
 days	infolog	tr	gün
 deleted	infolog	tr	Silindi
 description	infolog	tr	Açýklama
-done	common	tr	tamam
+done	infolog	tr	tamam
 download	infolog	tr	?ndir
 duration	infolog	tr	Süre
 edit	infolog	tr	Düzenle

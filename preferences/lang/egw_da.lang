@@ -20,8 +20,10 @@ default application	preferences	da	Standard applikation
 default preferences	preferences	da	Standard Præferencer
 delete categories	preferences	da	Slet kategorier
 description can not exceed 255 characters in length !	preferences	da	Beskrivelse må ikke være over 255 tegn!
+disable	preferences	da	Deaktivere
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	da	Foretrækker du et 24 timers tids format, eller 12 timers med AM og PM
 edit custom fields	preferences	da	Ret valgfrie felter
+enable	preferences	da	aktivere
 enter your new password	preferences	da	Indtast din nye adgangskode
 enter your old password	preferences	da	Indtast din gamle adgangskode
 failed to change password.	preferences	da	Det lykkedes ikke at ændre adgangskoden.

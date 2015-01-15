@@ -6,6 +6,7 @@
 %1 to sync	groupdav	es-es	%1 para sincronizar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2<br />o dar a %3 permiso de escritura para el servidor web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
+'%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de eGroupWare (%2)!
 (session restored in %1 seconds)	common	es-es	(la sesión se ha restaurado en %1 segundos)
 (shift-)click or drag to change value	jscalendar	es-es	Pulse mayúsculas o arrastre para cambiar el valor
 - click on any of the time parts to increase it	jscalendar	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
@@ -42,6 +43,7 @@ active	common	es-es	Activo
 active directory requires ssl or tls to change passwords!	common	es-es	¡El directorio activo requiere SSL o TLS para cambiar las contraseñas!
 add	common	es-es	Añadir
 add %1 category for	common	es-es	Añadir %1 categoría para
+add a new contact	common	es-es	Añadir un contacto nuevo
 add category	common	es-es	Añadir categoría
 add current	common	es-es	Añadir actual
 add shortcut	common	es-es	Añadir acceso directo
@@ -149,6 +151,7 @@ centered	common	es-es	centrado
 central african republic	common	es-es	CENTRAL AFRICAN REPUBLIC
 chad	common	es-es	CHAD
 change	common	es-es	Cambiar
+change owner	common	es-es	Cambiar el propietario
 charset	common	es-es	utf-8
 check installation	common	es-es	Comprobar la instalación
 check now	common	es-es	Comprobar ahora
@@ -217,6 +220,7 @@ delete	common	es-es	Eliminar
 delete category	common	es-es	Borrar categoría
 delete file	common	es-es	Borrar fichero
 delete row	common	es-es	Eliminar una fila
+delete selected entries?	common	es-es	¿Borrar las entradas seleccionadas?
 delete these entries	common	es-es	Borrar estas entradas
 delete this entry	common	es-es	eliminar esta entrada
 denmark	common	es-es	DINAMARCA
@@ -260,6 +264,7 @@ edit categories	common	es-es	Editar categorías
 edit category	common	es-es	Editar categoría
 egroupware	common	es-es	eGroupWare
 egroupware api version	common	es-es	Versión de la API eGroupWare
+egroupware version	common	es-es	Versión de EGroupware
 egroupware: login blocked for user '%1', ip %2	common	es-es	eGroupWare: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGIPTO
 el salvador	common	es-es	EL SALVADOR
@@ -294,6 +299,7 @@ failed to move unconnected %1 %2 to %3!	admin	es-es	¡Fallo al mover los descone
 falkland islands (malvinas)	common	es-es	MALVINAS
 faroe islands	common	es-es	ISLAS FEROE
 favorite queries	common	es-es	Consultas favoritas
+favorites	common	es-es	Favoritos
 fax number	common	es-es	Fax
 features of the editor?	common	es-es	¿Características del editor?
 february	common	es-es	Febrero
@@ -438,6 +444,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	es-es	Lista
 list members	common	es-es	Lista de miembros
 lithuania	common	es-es	LITUANIA
+load	common	es-es	Cargar
 local	common	es-es	Local
 locations	common	es-es	ubicaciones
 login	common	es-es	Entrar
@@ -507,6 +514,7 @@ niger	common	es-es	NIGER
 nigeria	common	es-es	NIGERIA
 niue	common	es-es	NIUE
 no	common	es-es	No
+no - cancel	common	es-es	No - Cancelar
 no entries found, try again ...	common	es-es	No se encontraron entradas, inténtelo de nuevo
 no history for this record	common	es-es	No hay historial para este registro
 no savant2 template directories were found in:	common	es-es	No se encontraron directorios para plantillas Savant2 en:
@@ -582,6 +590,7 @@ please set your preferences for this application	common	es-es	Por favor, elija s
 please wait...	common	es-es	Por favor, espere...
 please, check back with us shortly.	common	es-es	Por favor, vuelva a comprobar dentro de un rato.
 poland	common	es-es	POLONIA
+popup with search	common	es-es	Ventana emergente con búsqueda
 portugal	common	es-es	PORTUGAL
 postal	common	es-es	Postal
 powered by	common	es-es	Proporcionado por
@@ -645,6 +654,7 @@ second	common	es-es	segundo
 section	common	es-es	Sección
 select	common	es-es	Seleccionar
 select action	common	es-es	Seleccionar acción
+select all	common	es-es	Seleccionar todo
 select all %1 %2 for %3	common	es-es	Seleccionar todos los %1 %2 para %3
 select category	common	es-es	Seleccionar categoría
 select date	common	es-es	Seleccionar fecha
@@ -814,6 +824,8 @@ written by:	common	es-es	Escrito por:
 year	common	es-es	Año
 yemen	common	es-es	YEMEN
 yes	common	es-es	Sí
+yes - delete	common	es-es	Sí - Eliminar
+yes - delete including sub-entries	common	es-es	Sí - Eliminar incluso las subentradas
 you are required to change your password during your first login	common	es-es	Es necesario que cambie la contraseña durante su primer inicio de sesión.
 you can customize how many icons and toolbars the editor shows.	common	es-es	Puede personalizar el número de iconos y barras de herramientas que muestra el editor.
 you have been successfully logged out	login	es-es	Usted ha salido correctamente
@@ -832,7 +844,6 @@ your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se 
 your message has been sent	common	es-es	Su mensaje ha sido enviado
 your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados
 your search returned 1 match	common	es-es	su búsqueda devolvió 1 resultado
-your session could not be verified.	login	es-es	Su sesión no pudo ser verificada.
 your settings have been updated	common	es-es	Sus preferencias fueron actualizadas
 zambia	common	es-es	ZAMBIA
 zimbabwe	common	es-es	ZIMBAWE

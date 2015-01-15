@@ -19,7 +19,7 @@ accessrights	filemanager	lo	ສິດການເຂົ້າ
 acl added.	filemanager	lo	ໄດ້ເພີ່ມ ACL.
 acl deleted.	filemanager	lo	ໄດ້ລຶບ ACL.
 actions	filemanager	lo	ປະຕິບັດ
-all files	common	lo	ຟາຍທັງໝົດ
+all files	filemanager	lo	ຟາຍທັງໝົດ
 and all it's childeren	filemanager	lo	ແລະ ປີກຍ່ອຍທັງໝົດຂອງມັນ
 applications	common	lo	ແອບພຼິເຄຊັນ
 basedirectory	filemanager	lo	ໄດເລັກເທີລີພື້ນຖານ
@@ -72,12 +72,13 @@ error adding the acl!	filemanager	lo	ຂໍ້ຜິດພາດການເພ�
 error creating symlink to target %1!	filemanager	lo	ຂໍ້ຜິດພາດໃນການສ້າງ symlink ເພື່ອເປົ້າໝາຍ %1!
 error deleting the acl entry!	filemanager	lo	ຂໍ້ຜິດພາດໃນການລຶບລາຍການ acl!
 executable	filemanager	lo	ປະຕິບັດການ
+expires	filemanager	lo	ໝົດອາຍຸ
 extended access control list	filemanager	lo	ຂະຫຍາຍລາຍການຄວບຄຸມການເຂົ້າໃຊ້
 extended acl	filemanager	lo	ຂະຫຍາຍ ALC
 failed to change permissions of %1!	filemanager	lo	ລົ້ມເຫຼວໃນການປ່ຽນແປງສິດຂອງ % 1!
 failed to create directory!	filemanager	lo	ລົ້ມເຫຼວໃນການສ້າງໄດເລັກເທີລີ!
 favorites	filemanager	lo	ລາຍການທີ່ມັກ
-file	filemanager	lo	ຟາຍ
+file	common	lo	ຟາຍ
 file %1 could not be created.	filemanager	lo	ຟາຍ %1 ມີຢູ່ແລ້ວ. ກະລຸນາແກ້ໄຂຫຼືລຶບມັນກອ່ນ
 file %1 may be too big. contact your systemadministrator for further info	filemanager	lo	ຟາຍ %1 ອາດມີຂະໜາດໃຫ່ຍເກີນໄປ
 file deleted.	filemanager	lo	ຟາຍທີ່ຖືກລົບ

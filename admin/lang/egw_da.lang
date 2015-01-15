@@ -133,7 +133,6 @@ do you also want to delete all global subcategories ?	admin	da	Vil du også slet
 do you want to delete all global subcategories ?	admin	da	Vil du slette alle globale underkategorier?
 do you want to move all global subcategories one level down ?	admin	da	Vil du flytte alle globale underkategorier et tak ned?
 down	admin	da	ned
-each value is a line like <id>[=<label>]	admin	da	hver værdi er en linie som <id>[=<label>]
 edit account	admin	da	Redigér konto
 edit application	admin	da	Redigér applikation
 edit email settings	admin	da	redigere e-mail indstillingerne
@@ -192,6 +191,7 @@ force selectbox	admin	da	Tving Selectboks
 forward also to	admin	da	videresend også til
 forward only	admin	da	videresend kun
 full name	admin	da	Fulde Navn
+general	admin	da	Generelt
 global categories	common	da	Globale Kategorier
 group ?	admin	da	gruppe?
 group has been added	common	da	Gruppen er tilføjet
@@ -250,7 +250,6 @@ loginid	admin	da	LoginID
 mail settings	admin	da	Post indstillinger
 main screen message	admin	da	Startside besked
 manager	admin	da	Håndtering
-max length of the input [, length of the inputfield (optional)]	admin	da	maks længde af inputtet [længde af input feltet (valg frit)]
 maximum account id (e.g. 65535 or 1000000)	admin	da	Maksimum konto id (f.eks. 65535 eller 10000000)
 maximum entries in click path history	admin	da	Maksimum antal i klik sti historie
 message has been updated	admin	da	beskeden er opdateret
@@ -303,6 +302,7 @@ remove all users from this group	admin	da	Fjern alle brugere fra denne gruppe
 remove all users from this group ?	admin	da	Fjern alle brugere fra denne gruppe?
 return to admin mainscreen	admin	da	gå tilbage til admin startside
 return to view account	admin	da	Tilbage til konto visning
+rows	admin	da	Rækker
 save the category	admin	da	gem kategorien
 save the category and return back to the list	admin	da	gem kategorien og vend tilbage til listen
 saves the changes made and leaves	admin	da	gem ændringerne og afslut

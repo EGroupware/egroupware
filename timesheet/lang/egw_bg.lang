@@ -75,5 +75,6 @@ unitprice	timesheet	bg	Цена на артикул
 values for selectbox	timesheet	bg	Стойности за избор
 view this entry	timesheet	bg	Преглед на записа
 week	timesheet	bg	Седмица
+yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи
 yesterday	timesheet	bg	Вчера
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	bg	Вашата база данни НЕ Е актуална (%1 вм. %2)! Моля, стартирайте %3setup%4 за да я актуализирате.

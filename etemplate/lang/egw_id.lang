@@ -22,6 +22,7 @@ a pattern to be searched for	etemplate	id	pola untuk pencarian
 accesskey	etemplate	id	Accesskey
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	id	Accesskeys can also be specified with an & in the label (eg. &Name)
 account contactdata	etemplate	id	Datakontak Akoun
+actions...	etemplate	id	Tindakan...
 add column	etemplate	id	Add Column
 add index	etemplate	id	Add Index
 add new	etemplate	id	Tambah baru
@@ -29,6 +30,7 @@ add table	etemplate	id	Add Index
 advanced search	etemplate	id	Pencarian Canggih
 align	etemplate	id	Align
 all days	etemplate	id	seharian
+all users	etemplate	id	Semua pengguna
 allowed file type: %1	etemplate	id	Tipe yang dibolehkan: %1
 am	etemplate	id	am
 and	etemplate	id	Dan
@@ -69,6 +71,7 @@ contact	etemplate	id	Kontak
 contact field to show	etemplate	id	Field Kontak untuk ditampilkan
 contact fields	etemplate	id	Field Kontak
 contains	etemplate	id	mengandung
+copy to clipboard	etemplate	id	Salin ke klipbord
 creator	preferences	id	Creator
 css properties	etemplate	id	properti CSS
 css-styles	etemplate	id	Gaya-CSS
@@ -76,7 +79,6 @@ custom	etemplate	id	custom
 custom fields	etemplate	id	custom fields
 cut	etemplate	id	Cut
 date+time	etemplate	id	Date+Time
-datum	etemplate	id	Datum
 day	etemplate	id	Hari
 days	etemplate	id	hari
 db-tools	etemplate	id	DB-Tools
@@ -125,6 +127,7 @@ foreign key	etemplate	id	Foreign Key
 general fields:	preferences	id	Field Umum:
 grid	etemplate	id	Grid
 groupbox	etemplate	id	GroupBox
+h	etemplate	id	h
 hbox	etemplate	id	HBox
 height	etemplate	id	Height
 height, disabled	etemplate	id	Height, Disabled
@@ -134,6 +137,7 @@ horizontal rule	etemplate	id	Horizontal Rule
 hour	etemplate	id	Jam
 hours	etemplate	id	jam
 html	etemplate	id	HTML
+id	etemplate	id	ID
 image	etemplate	id	Image
 import	etemplate	id	Impor
 import xml	etemplate	id	Impor XML
@@ -153,15 +157,18 @@ linklist	etemplate	id	LinkList
 linkstring	etemplate	id	LinkString
 linkto	etemplate	id	LinkTo
 load this template into the editor	etemplate	id	muatkan templat ini ke editor
+loading	etemplate	id	memuatkan
 maximum size for uploads	filemanager	id	Ukuran unggah maksimum
 message ...	etemplate	id	Pesan...
 middle	etemplate	id	Middle
 minute	etemplate	id	Menit
 minutes	etemplate	id	Menit
 month	etemplate	id	Bulan
+more	etemplate	id	Lagi
 more than 1 match for '%1'	etemplate	id	Lebih dari 1 kecocokan untuk '%1'
 multicolumn indices	etemplate	id	Multicolumn Indices
 name	etemplate	id	Nama
+new	etemplate	id	Baru
 new search	common	id	Pencarian baru
 new table created	etemplate	id	Tabel baru dibuat
 newer version '%1' exists !!!	etemplate	id	tersedia versi '%1' terbaru !!!
@@ -176,6 +183,7 @@ no matches found	etemplate	id	Tiada yang cocok
 not null	etemplate	id	NOT NULL
 nothing	etemplate	id	tiada
 nothing found - try again !!!	etemplate	id	Tiada ditemukan - coba lagi !!!
+now	etemplate	id	Sekarang
 of	etemplate	id	dari
 onchange	etemplate	id	onChange
 onclick	etemplate	id	onClick
@@ -193,9 +201,12 @@ primary key	etemplate	id	Primary Key
 radiobutton	etemplate	id	Radiobutton
 read	etemplate	id	Baca
 readonly	etemplate	id	hanyabaca
+refresh	etemplate	id	Refresh
 required	etemplate	id	Diperlukan
+reset	etemplate	id	Reset
 right	etemplate	id	Kanan
 row...	etemplate	id	Baris...
+save all	etemplate	id	Simpan semuanya
 scale	etemplate	id	Skala
 search	etemplate	id	Cari
 select a category	etemplate	id	pilih Kategori
@@ -217,6 +228,7 @@ select priority	etemplate	id	Pilih Prioritas
 select state	etemplate	id	Pilih Provinsi
 select year	etemplate	id	Pilih Tahun
 selectbox	etemplate	id	Selectbox
+set as default	etemplate	id	Tetapkan sbg bawaan
 show	etemplate	id	Tampilkan
 show (no save)	etemplate	id	Tampilkan (tanpa menyimpan)
 show all / cancel filter	etemplate	id	Tamplikan semua / batalkan saringan
@@ -254,6 +266,7 @@ view this etemplate	etemplate	id	lihat eTemplat ini
 weekend	etemplate	id	akhir minggu
 width	etemplate	id	Width
 width, disabled	etemplate	id	Width, Disabled
+wk	etemplate	id	Mg
 working days	etemplate	id	hari kerja
 write <app>/setup/tables_current.inc.php	etemplate	id	Tulis <app>/setup/tables_current.inc.php
 write langfile	etemplate	id	Tulis berkas bahasa

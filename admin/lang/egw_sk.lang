@@ -15,6 +15,7 @@
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sk	(Pre nainštalovanie nových aplikácií použite<br><a href="setup/" target="setup">Inštalátor</a> [Správa aplikácií] !!!)
 -  type	admin	sk	- typ
 accesslog and bruteforce defense	admin	sk	Prístupové záznamy a Ochrana proti útoku hrubou silou
+account	admin	sk	Účet
 account "%1" has no email address --> not notified!	admin	sk	Účet "%1" nemá emailovú adresu --> nedostal pripomienku!
 account "%1" has no plaintext password!	admin	sk	Účet "%1" nemá heslo v čistom texte!
 account %1 %2	admin	sk	Účet %1 %2
@@ -28,6 +29,8 @@ account list	admin	sk	Zoznam účtov
 account permissions	admin	sk	Prístupové oprávnenia účtu
 account preferences	admin	sk	Predvoľby účtu
 account-id's have to be integers!	admin	sk	ID účtov musia byť celé čísla!
+acl added.	admin	sk	ACL bolo pridané.
+acl deleted.	admin	sk	ACL bolo odstránené.
 acl manager	admin	sk	Správa prístupov (ACL)
 acl rights	common	sk	Prístupové práva (ACL)
 action	admin	sk	Akcia
@@ -175,6 +178,7 @@ delete this user	admin	sk	odstráň tohto používateľa
 deleted	admin	sk	Odstránené
 deletes this field	admin	sk	odstráni túto položku
 deliver extern	admin	sk	doručiť extern
+deny access	admin	sk	Zakáž prístup
 deny access to access log	admin	sk	Zakáž prístup do prístupových záznamov
 deny access to application registery	admin	sk	Zakáž prístup do registrov aplikácie
 deny access to applications	admin	sk	Zakáž prístup do aplikácií
@@ -206,8 +210,6 @@ do you want to move all global subcategories one level down ?	admin	sk	Chcete pr
 document root (default)	admin	sk	Koreňový adresár dokumentov
 down	admin	sk	Dole
 download csv	admin	sk	Stiahnuť CSV
-each value is a line like <id>[=<label>]	admin	sk	každá hodnota je riadok ako <id>[=<label>]
-each value is a line like id[=label]	admin	sk	každá hodnota je riadok ako <id>[=<label>]
 edit account	admin	sk	Upraviť účet
 edit application	admin	sk	Upraviť aplikáciu
 edit email settings	admin	sk	upraviť nastavenia E-mailu
@@ -293,6 +295,7 @@ forward also to	admin	sk	Preposlať ešte (komu)
 forward emails to	admin	sk	Preposlať správy (komu)
 forward only	admin	sk	Iba preposlať
 full name	admin	sk	Plné meno
+general	admin	sk	Všeobecné
 global categories	common	sk	Globálne kategórie
 go directly to admin menu, returning here the next time you click on administration.	admin	sk	Choďte priamo do správcovskej ponuky, vrátite sa sem ďalším kliknutím na Správu.
 governmental: incl. state or municipal authorities or services	admin	sk	Úradné: vrátane štátnej správy, samosprávy alebo ich služieb...
@@ -382,7 +385,6 @@ main email-address	admin	sk	Hlavná E-mailová adresa
 main screen message	admin	sk	Text správy hlavnej stránky
 manage mapping	admin	sk	Správa mapovania
 manager	admin	sk	Správca
-max length of the input [, length of the inputfield (optional)]	admin	sk	Maximálna dĺžka vstupu [, dĺžka vstupného poľa (nepovinné)]
 maximum account id (e.g. 65535 or 1000000)	admin	sk	Maximálne ID účtu (napr. 65535 alebo 1000000)
 maximum entries in click path history	admin	sk	Maximálny počet záznamov v histórii kliknutí
 members	admin	sk	Členovia
@@ -446,6 +448,7 @@ percent of users that logged out	admin	sk	Koľko percent používateľov sa odhl
 percent this user has logged out	admin	sk	Na koľko percent sa odhlasoval tento používateľ
 permission denied	admin	sk	Prístup bol odmietnutý
 permission denied !!!	admin	sk	Prístup bol odmietnutý!!!
+permission denied!!!	admin	sk	Prístup bol odmietnutý !!!
 permissions	admin	sk	Oprávnenia
 permissions this group has	admin	sk	Oprávnenia prináležiace tejto skupine
 personal: eg. within a family	admin	sk	Osobné: napr. v rámci rodiny
@@ -477,7 +480,9 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	sk	Vyžiadané
 return to admin mainscreen	admin	sk	návrat do správcovej hlavnej stránky
 return to view account	admin	sk	Návrat na zobrazenie účtov
+rights	admin	sk	Oprávnenia
 route all mails to	admin	sk	Všetky správy smerovať cez
+rows	admin	sk	Riadky
 rpm or debian package	admin	sk	RPM alebo balíček Debian
 run asynchronous services	admin	sk	Spustiť asynchrónne služby
 save the category	admin	sk	Uložiť kategóriu.

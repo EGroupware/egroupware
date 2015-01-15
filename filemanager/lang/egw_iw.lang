@@ -1,5 +1,6 @@
 %1 already exists as a file	filemanager	iw	%1 כבר קיים כקובץ
 actions	filemanager	iw	פעולות
+administrators	filemanager	iw	מנהלים
 applications	common	iw	יישומים
 cancel editing %1 without saving	filemanager	iw	בטל עריכת %1 בלי לשמור
 cannot create directory because it begins or ends in a space	filemanager	iw	לא יכול ליצור את המחיצה כי שמה מתחיל או נגמר ברווח
@@ -21,9 +22,13 @@ deleted %1	filemanager	iw	מחקתי %1
 directory	filemanager	iw	מחיצה
 directory %1 already exists	filemanager	iw	מחיצה %1 קיימת כבר
 directory %1 does not exist	filemanager	iw	מחיצה %1 לא קיימת
+disable	filemanager	iw	הפוך ללא פעיל
 download	filemanager	iw	הורד
 edit comments	filemanager	iw	ערוך הערות
-file	filemanager	iw	קובץ
+enable	filemanager	iw	אפשר
+everyone	filemanager	iw	כולם
+expires	filemanager	iw	פג תוקף
+file	common	iw	קובץ
 file %1 could not be created.	filemanager	iw	לא התלחתי ליצור את הקובץ %1.
 file names cannot contain "%1"	filemanager	iw	שמות קבצים לא יכולים להכיל "%1"
 filemanager	common	iw	מנהל הקבצים
@@ -45,6 +50,7 @@ no files in this directory.	filemanager	iw	אין קבצים במחיצה זו
 no version history for this file/directory	filemanager	iw	אין היסטוריה של גירסאות עבור קובץ/מחיצה זו
 open	filemanager	iw	פתח
 operation	filemanager	iw	פעולה
+percentage	filemanager	iw	אחוז
 permissions	filemanager	iw	הרשאות
 please select a file to delete.	filemanager	iw	נא לבחור קובץ למחוק
 preview	filemanager	iw	תצוגה מקדימה

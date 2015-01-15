@@ -75,5 +75,6 @@ unitprice	timesheet	zh-tw	單位價格
 values for selectbox	timesheet	zh-tw	選單的值
 view this entry	timesheet	zh-tw	檢視這筆資料
 week	timesheet	zh-tw	週
+yes, only admins can purge deleted items	admin	zh-tw	是，只有管理者可以排除刪除的項目
 yesterday	timesheet	zh-tw	昨天
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	zh-tw	您的資料庫不是最新版本（%1 vs. %2），請執行 %3安裝程式%4來更新您的資料庫。

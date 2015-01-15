@@ -7,6 +7,7 @@ cannot create directory because it begins or ends in a space	filemanager	sv	Kan 
 check all	filemanager	sv	Markera alla
 clear search	filemanager	sv	Rensa sökning
 comment	filemanager	sv	Kommentar
+configuration changed.	filemanager	sv	Konfigurationen ändrad
 copied %1 to %2	filemanager	sv	Kopierade %1 till %2
 copy to	filemanager	sv	Kopiera
 could not copy %1 to %2	filemanager	sv	Kunde inte kopiera %1 till %2
@@ -25,9 +26,13 @@ deleted %1	filemanager	sv	Raderade %1
 directory	filemanager	sv	Katalog
 directory %1 already exists	filemanager	sv	Katalogen %1 finns redan
 directory %1 does not exist	filemanager	sv	Katalogen %1 finns inte
+disable	filemanager	sv	Inaktivera
 download	filemanager	sv	Ladda ned
 edit comments	filemanager	sv	Ändra kommentar
-file	filemanager	sv	Fil
+enable	filemanager	sv	Aktivera
+everyone	filemanager	sv	Alla
+expires	filemanager	sv	Förfaller
+file	common	sv	Fil
 file %1 could not be created.	filemanager	sv	Fil % kunde inte skapas
 file names cannot contain "%1"	filemanager	sv	Filnamn kan inte innehålla "%1"
 filemanager	common	sv	Filhanterare
@@ -48,6 +53,7 @@ move to	filemanager	sv	Flytta
 moved %1 to %2	filemanager	sv	Flyttade %1 till %2
 no files in this directory.	filemanager	sv	Inga filer i katalogen
 no version history for this file/directory	filemanager	sv	Ingen versionshistorik för filen/katalogen
+noone	filemanager	sv	Ingen
 open	filemanager	sv	Öppen
 operation	filemanager	sv	Åtgärd
 permissions	filemanager	sv	Behörigheter

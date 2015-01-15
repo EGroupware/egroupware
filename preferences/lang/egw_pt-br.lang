@@ -16,23 +16,26 @@ charset for the csv export	addressbook	pt-br	Códificação de caracteres para a
 click to select a color	preferences	pt-br	Clique para selecionar uma cor
 color	preferences	pt-br	Cor
 country	preferences	pt-br	País
+data exchange settings	preferences	pt-br	Configurações de troca de dados
 date format	preferences	pt-br	Formato de data
 default	preferences	pt-br	padrão
 default application	preferences	pt-br	Aplicação padrão
 default preferences	preferences	pt-br	Preferências padrões
-default theme	preferences	pt-br	Tema padrão
 delete categories	preferences	pt-br	Apagar Categorias
 description can not exceed 255 characters in length !	preferences	pt-br	A Descrição não deve exceder 255 caracteres!
+disable	preferences	pt-br	Desabilitada
 display thumbnails for linked images	preferences	pt-br	Exibir miniaturas para imagens linkadas
 div	preferences	pt-br	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pt-br	Você prefere o formato de 24 horas, ou 12 horas acompanhado de am/pm?
 edit custom fields	preferences	pt-br	Editar campos personalizados
+enable	preferences	pt-br	habilitado
 enable drag and drop functionality (experimental)	preferences	pt-br	Habilitar a funcionalidade arrastar e soltar (experimental)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pt-br	Habilitar ou desabilitar funções de arrastar e soltar em todos os aplicativos. Se o navegador não suportar tal funcionalidade, esta será desabilitada automaticamente. Esta função é experimental no momento.
 enter your new password	preferences	pt-br	Digite sua nova senha
 enter your old password	preferences	pt-br	Digite sua antiga senha
 failed to change password.	preferences	pt-br	Erro ao moudar a senha.
 forced preferences	preferences	pt-br	Preferências obrigatórias
+general settings	preferences	pt-br	Definições gerais
 help off	preferences	pt-br	Desligar ajuda
 hours	preferences	pt-br	horas
 how do you like to display accounts	preferences	pt-br	Como você gostaria que as contas fossem mostradas
@@ -53,7 +56,7 @@ no default	preferences	pt-br	Sem padrão
 no user-selection at all	common	pt-br	Sem nenhuma seleção de usuário
 note: this feature does *not* change your email password. this will	preferences	pt-br	Atenção: Esta função NÃO altera sua senha de e-mail.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pt-br	Nota: Esta função <b>NÃO</b> altera sua senha de email. Você deverá fazer isto manualmente.
-office 2003 theme	preferences	pt-br	Tema Office 2003
+notification settings	preferences	pt-br	Configurações de notificação
 p: paragraph	preferences	pt-br	p: Parágrafo
 please, select a new theme	preferences	pt-br	Por favor, selecione um novo tema
 popup with search	preferences	pt-br	Janela  instantânea com busca
@@ -79,7 +82,6 @@ show navigation bar as	preferences	pt-br	Exibir barra de navegação como
 show number of current users	preferences	pt-br	Exibir o número de usuários correntes
 show text on navigation icons	preferences	pt-br	Exibir texto na barra de navegação
 show_more_apps	common	pt-br	Exibir mais Aplicativos
-silver theme	preferences	pt-br	Tema Prata
 spellchecker language	addressbook	pt-br	Idioma do corretor gramatical
 text only	preferences	pt-br	Somente texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pt-br	O aplicativo padrão será iniciado quando você entrar no eGroupWare ou clicar no ícone página inicial.<br>Você pode ter mais de um aplicativo padrão mostrado na página inicial, caso não seja especificado aqui (precisa ser configurado nas preferências de cada aplicativo)

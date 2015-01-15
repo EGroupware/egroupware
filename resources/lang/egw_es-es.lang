@@ -19,16 +19,22 @@ check all	resources	es-es	Marcar todo
 choose categories admin	resources	es-es	Elegir administrador de categorías
 clear selection	resources	es-es	Limpiar selección
 configure access permissions	admin	es-es	Configurar permisos de acceso
+conflict	resources	es-es	Conflicto
 create new accessory for this resource	resources	es-es	Crear nuevo accesorio para este recurso
 create new links	resources	es-es	Crear nuevos enlaces
+custom etemplate for the contactform	resources	es-es	Plantilla personalizada para el formulario del contacto
+custom fields	resources	es-es	Campos personalizados
+days	resources	es-es	días
 delete selected resources	resources	es-es	Borrar los recursos seleccionados
 delete this entry	resources	es-es	Borrar esta entrada
+deleted	resources	es-es	borrado
 description (short)	resources	es-es	Descripción (corta)
 direct booking permissions	resources	es-es	Permisos de reserva directa
 don't use vfs (this will need a symlink --> see readme)	resources	es-es	No usar vfs (esto necesitaría un enlace simbólico --> ver README)
 edit this entry	resources	es-es	Editar esta entrada
 existing links	resources	es-es	Enlaces existentes
 exists	resources	es-es	Existe
+export definition to use for nextmatch export	resources	es-es	Exportar la definición a usar para exportar nextmatch
 export definitition to use for nextmatch export	resources	es-es	Exportar la definición a usar para exportar nextmatch
 exports a list of resources to a csv file.	resources	es-es	Exportar una lista de recursos a un fichero CSV
 general	resources	es-es	General
@@ -98,6 +104,7 @@ something went wrong by saving resource	resources	es-es	Ocurrió algo extraño a
 storage	resources	es-es	Almacenamiento
 storage information	resources	es-es	Información del almacenamiento
 storage information:	resources	es-es	Información del almacenamiento:
+the anonymous user needs add rights for it!	resources	es-es	¡El usuario anónimo necesita derechos de añadir para esto!
 the calendar of this resource	resources	es-es	El calendario de este recurso
 this module displays the resources app	resources	es-es	Este módulo muestra la aplicación de recursos
 use general resources icon	resources	es-es	Usar icono de recursos generales
@@ -112,6 +119,8 @@ web-site for this resource	resources	es-es	Sitio web para este recurso
 where to find this resource?	resources	es-es	¿Dónde encontrar este recurso?
 which category does this resource belong to?	resources	es-es	¿A qué categoría pertenece este recurso?
 write permissions	resources	es-es	Permiso de escritura
+yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
+yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden purgar sus elementos borrados
 you are not permitted to delete this resource!	resources	es-es	¡No tiene permiso para borrar este recurso!
 you are not permitted to edit this resource!	resources	es-es	¡No tiene permiso para editar este recurso!
 you are not permitted to get information about this resource!	resources	es-es	¡No le está permitido obtener información sobre este recurso!

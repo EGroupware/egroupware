@@ -20,13 +20,14 @@ date format	preferences	id	Format tanggal
 default	preferences	id	bawaan
 default application	preferences	id	Aplikasi Bawaan
 default preferences	preferences	id	Kesukaan Bawaan
-default theme	preferences	id	Tema Bawaan
 delete categories	preferences	id	Hapus Kategori
 description can not exceed 255 characters in length !	preferences	id	Panjang uraian tidak boleh melebihi 255 karakter!
+disable	preferences	id	Disable
 display thumbnails for linked images	preferences	id	Tampilkan <em>thumbnail</em> gambar terkait
 div	preferences	id	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	id	Apakah anda lebih suka tampilan waktu 24 jam, atau 12 jam dengan simbol am/pm.
 edit custom fields	preferences	id	edit custom fields
+enable	preferences	id	enable
 enter your new password	preferences	id	Masukan password baru anda
 enter your old password	preferences	id	Masukan password lama anda
 failed to change password.	preferences	id	Gagal mengubah password.
@@ -50,7 +51,6 @@ no user-selection at all	common	id	Tanpa pilihan pengguna
 note: this feature does *not* change your email password. this will	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus dikerjakan sendiri.
 number format	preferences	id	Format bilangan
-office 2003 theme	preferences	id	Office 2003 theme
 p: paragraph	preferences	id	p: Paragraph
 permanent time zone selection	preferences	id	Pilihan zona-waktu tetap
 please select your timezone.	preferences	id	Pilih zonawaktu anda.
@@ -70,7 +70,6 @@ show navigation bar as	preferences	id	Tampilkan baris navigasi sebagai
 show number of current users	preferences	id	Tampilkan jumlah pengguna saat ini
 show text on navigation icons	preferences	id	Tampilkan teks pada ikon navigasi
 show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
-silver theme	preferences	id	Silver theme
 spellchecker language	addressbook	id	Bahasa untuk Cek ejaan
 text only	preferences	id	Hanya teks
 the old password is not correct	preferences	id	Password lama keliru

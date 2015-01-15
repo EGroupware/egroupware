@@ -21,16 +21,23 @@ check all	resources	ru	Отметить все
 choose categories admin	resources	ru	выбрать администратора категорий
 clear selection	resources	ru	очистить выбор
 configure access permissions	admin	ru	Настроить разрешения доступа
+confirmed addressbook.	resources	ru	Книга подтвержденных адресов
+conflict	resources	ru	Конфликт
 create new accessory for this resource	resources	ru	Создать новое комплектующее для этого ресурса
 create new links	resources	ru	Создать новые ссылки
+custom etemplate for the contactform	resources	ru	Пользовательский е-Шаблон для формы контактов
+custom fields	resources	ru	Пользовательские поля
+days	resources	ru	Дней
 delete selected resources	resources	ru	Удалить выбранные ресурсы
 delete this entry	resources	ru	Удалить эту запись
+deleted	resources	ru	Удалено
 description (short)	resources	ru	Описание (краткое)
 direct booking permissions	resources	ru	Разрешения прямого бронирования
 don't use vfs (this will need a symlink --> see readme)	resources	ru	Не использовать vfs (это требует применеия символических ссылок --> см. README)
 edit this entry	resources	ru	Редактировать эту запись
 existing links	resources	ru	Существующие ссылки
 exists	resources	ru	Существуют
+export definition to use for nextmatch export	resources	ru	Определение экспорта для последующего использования
 export definitition to use for nextmatch export	resources	ru	Экспортное определение для использование при последующем экспорте
 exports a list of resources to a csv file.	resources	ru	Экспортирует список ресурсов в файл формата CSV.
 general	resources	ru	Общий
@@ -68,6 +75,7 @@ name:	resources	ru	Имя:
 new accessory	resources	ru	Новое комплектующее
 new resource	resources	ru	Новый ресурс
 no description available	resources	ru	описание недоступно
+no matches	resources	ru	Совпадений нет
 no resources selected	resources	ru	Ресурсы не выбраны
 notify your administrator to correct this situation	resources	ru	Сообщите Вашему администратору для исправления этой ситуации
 picture	resources	ru	Изображение
@@ -104,8 +112,12 @@ something went wrong by saving resource	resources	ru	Что-то пошло не
 storage	resources	ru	Хранилище
 storage information	resources	ru	Информация о хранилище:
 storage information:	resources	ru	Информация о хранилище:
+the anonymous user needs add rights for it!	resources	ru	Для этого анонимному пользователю нужны права на добавление!
 the calendar of this resource	resources	ru	Календарь этого ресурса
 this module displays the resources app	resources	ru	Этот модуль показывает приложение ресурсов
+too many matches	resources	ru	Слишком много совпадений
+unable to link to %1 "%2"	resources	ru	Невозможно связать %1 с "%2"
+unable to process confirmation.	resources	ru	Невозможно обработать подтверждение
 use general resources icon	resources	ru	Использовать общую пиктограмму ресурсов
 use own picture	resources	ru	Использовать своё изображение
 use the category's icon	resources	ru	Использовать пиктограмму категории
@@ -119,6 +131,8 @@ web-site for this resource	resources	ru	Веб-Сайт этого ресурс�
 where to find this resource?	resources	ru	Где искать этот ресурс
 which category does this resource belong to?	resources	ru	К какой категории относится этот ресурс
 write permissions	resources	ru	Разрешение на запись
+yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут очистить удалённые записи
+yes, users can purge their deleted items	admin	ru	Да, пользователи могут очистить удалённые ими записи
 you are not permitted to delete this resource!	resources	ru	У вас нет прав на удаление этого ресурса!
 you are not permitted to edit this resource!	resources	ru	У вас нет прав на редактирование этого ресурса!
 you are not permitted to get information about this resource!	resources	ru	Вам не разрешено получать информацию об этом ресурсе!

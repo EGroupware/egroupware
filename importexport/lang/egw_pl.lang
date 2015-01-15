@@ -1,5 +1,6 @@
 %1 records processed	importexport	pl	Przetworzono %1 wpisów
 addressbook csv import	importexport	pl	Import książki adresowej z CSV
+all users	importexport	pl	Wszyscy użytkownicy
 allowed users	importexport	pl	Użytkownicy z dostępem
 automatically created by importexport	importexport	pl	Automatycznie utworzone przez Import/Export
 basic csv import	importexport	pl	Prosty import CSV

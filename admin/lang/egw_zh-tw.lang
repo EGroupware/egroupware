@@ -129,6 +129,7 @@ delete this user	admin	zh-tw	刪除這個使用者
 deleted	admin	zh-tw	刪除了
 deletes this field	admin	zh-tw	刪除這個欄位
 deliver extern	admin	zh-tw	外來的傳輸
+deny access	admin	zh-tw	拒絕存取
 deny access to access log	admin	zh-tw	禁止對存取紀錄的存取
 deny access to application registery	admin	zh-tw	禁止存取應用程式註冊設定
 deny access to applications	admin	zh-tw	無法存取應用程式
@@ -157,8 +158,6 @@ do you want to delete all global subcategories ?	admin	zh-tw	您確定要刪除�
 do you want to move all global subcategories one level down ?	admin	zh-tw	您要將所有的子類別向下移一個階層？
 document root (default)	admin	zh-tw	文件根目錄（預設）
 down	admin	zh-tw	下
-each value is a line like <id>[=<label>]	admin	zh-tw	每個數值是一行像是 <id>[=<label>] 這樣的文字
-each value is a line like id[=label]	admin	zh-tw	每個數值是一行像是 id[=label] 這樣的文字
 edit account	admin	zh-tw	編輯帳號
 edit application	admin	zh-tw	編輯應用程式
 edit email settings	admin	zh-tw	編輯郵件設定
@@ -226,6 +225,7 @@ forward also to	admin	zh-tw	同時轉寄到
 forward emails to	admin	zh-tw	轉寄信件到
 forward only	admin	zh-tw	轉寄
 full name	admin	zh-tw	全名
+general	admin	zh-tw	一般
 global categories	common	zh-tw	全區分類
 group ?	admin	zh-tw	群組？
 group has been added	common	zh-tw	成功新增群組
@@ -289,7 +289,6 @@ main email-address	admin	zh-tw	主要信箱
 main screen message	admin	zh-tw	主畫面訊息
 manage mapping	admin	zh-tw	管理對應
 manager	admin	zh-tw	管理者
-max length of the input [, length of the inputfield (optional)]	admin	zh-tw	輸入資料長度上限[, 輸入欄位長度（選填）]
 maximum account id (e.g. 65535 or 1000000)	admin	zh-tw	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
 maximum entries in click path history	admin	zh-tw	點選紀錄的最大項目數
 members	admin	zh-tw	成員
@@ -330,6 +329,7 @@ percent of users that logged out	admin	zh-tw	使用者登出比例
 percent this user has logged out	admin	zh-tw	這個使用者登出的比例
 permission denied	admin	zh-tw	拒絕存取
 permission denied !!!	admin	zh-tw	沒有權限！
+permission denied!!!	admin	zh-tw	沒有權限！
 permissions	admin	zh-tw	權限
 permissions this group has	admin	zh-tw	群組權限
 phpinfo	admin	zh-tw	PHP 資訊
@@ -352,6 +352,7 @@ remove all users from this group ?	admin	zh-tw	移除這個群組的所有使用
 return to admin mainscreen	admin	zh-tw	回到管理者主畫面
 return to view account	admin	zh-tw	回到帳號瀏覽
 route all mails to	admin	zh-tw	轉遞所有信件到
+rows	admin	zh-tw	列
 run asynchronous services	admin	zh-tw	執行非同步服務
 save the category	admin	zh-tw	儲存類別
 save the category and return back to the list	admin	zh-tw	儲存類別並且回到列表

@@ -9,6 +9,7 @@
 %1 you are responsible for is starting at %2	infolog	hu	%1 felelőseként  a kezdés ideje %2
 %1 you delegated is due at %2	infolog	hu	%1 megbízottjaként a határidő %2
 %1 you delegated is starting at %2	infolog	hu	%1 megbízottjaként a kezdés ideje %2
+(no subject)	infolog	hu	(nincs tárgy)
 - subprojects from	infolog	hu	- Alprojektek innen
 0%	infolog	hu	0%
 10%	infolog	hu	10%
@@ -129,7 +130,7 @@ do you want a notification, if items you delegated are about to start?	infolog	h
 do you want a notification, if items you delegated are due?	infolog	hu	Kér értesítést, ha egy megbízásos feladatának határideje rövidesen elérkezik?
 do you want to receive notifications as html-mails or plain text?	infolog	hu	Az értesítést html vagy normál szöveges formában kéri?
 don't show infolog	infolog	hu	Infolog bejegyzés elrejtése
-done	common	hu	kész
+done	infolog	hu	kész
 download	infolog	hu	Letölt
 duration	infolog	hu	Időtartam
 e-mail:	infolog	hu	E-mail:
@@ -154,12 +155,14 @@ error: saving the entry	infolog	hu	Hiba a bejegyzés mentésekor
 error: the entry has been updated since you opened it for editing!	infolog	hu	Hiba: a bejegyzés megváltozott azóta, hogy megnyitotta szerkesztésre! Másvalaki frissítette.
 execute a further action for this entry	infolog	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	infolog	hu	Létező hivatkozások
+favorites	infolog	hu	Kedvencek
 fax	infolog	hu	Fax
 field must not be empty !!!	infolog	hu	A mezőt ki kell tölteni!!!
 fieldseparator	infolog	hu	Mező elválasztó
 finish	infolog	hu	befejez
 for which types should this field be used	infolog	hu	használható típusok a mezőben
 from	infolog	hu	Feladó
+general fields:	infolog	hu	Általános mezők:
 global categories	infolog	hu	Globális kategóriák
 group owner for	infolog	hu	Csoport tulajdonos
 high	infolog	hu	magas
@@ -196,13 +199,11 @@ leave it empty	infolog	hu	hagyja üresen
 leave it empty for a full week	infolog	hu	Teljes héthez hagyja üresen
 leave without saveing the entry	infolog	hu	kilépés mentés nélkül
 leaves without saveing	infolog	hu	kilépés mentés nélkül
-length<br>rows	infolog	hu	Sorok<br>Hossza
 limit number of description lines (default 5, 0 for no limit)	infolog	hu	A leírás sorainak felső határa (5 alapértelmezésben, 0 korlátlan számú sorhoz)
 link	infolog	hu	Hivatkozás
 links	infolog	hu	Hivatkozások
 links of this entry	infolog	hu	Aktuális bejegyzés hivatkozásai
 list all categories	infolog	hu	Összes kategória listázása
-list no subs/childs	infolog	hu	Albejegyzések elrejtése
 location	infolog	hu	Hely
 longer textual description	infolog	hu	hosszabb szöveges leírás
 low	infolog	hu	alacsony
@@ -291,6 +292,7 @@ responsible upcoming	infolog	hu	Felelős közelgő
 responsible user, priority	infolog	hu	Felelős felhasználó, prioritás
 returns a list / search for records.	infolog	hu	Lista visszaadása / bejegyzés keresése
 rights for the responsible	infolog	hu	Felelős jogai
+rows	infolog	hu	Sorok
 same day	infolog	hu	azonos napon
 save	infolog	hu	Mentés
 saves the changes made and leaves	infolog	hu	Változás mentése és kilépés

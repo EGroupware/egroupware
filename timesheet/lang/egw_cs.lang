@@ -33,6 +33,7 @@ error saving the entry!!!	timesheet	cs	Chyba při ukládání záznamu!!!
 existing links	timesheet	cs	Stávající odkazy
 export to openoffice spreadsheet	timesheet	cs	Exportovat do formátu tabulky OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho Pracovního výkazu do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
+favorites	timesheet	cs	Oblíbené
 field must not be empty !!!	timesheet	cs	Položka nesmí být prázdná !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
 full: use only projectmanager	admin	cs	Plné: použít jen Správce projektů
@@ -106,5 +107,6 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 values for selectbox	timesheet	cs	Hodnoty pro rozbalovací nabídku
 view this entry	timesheet	cs	Zobrazit tento záznam
 week	timesheet	cs	Týden
+yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 yesterday	timesheet	cs	Včera
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	cs	Vaše databáze NENÍ aktuální (%1 vs. %2), spusťte prosím %3setup%4 a zaktualizujte Vaší databázi.

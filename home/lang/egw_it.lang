@@ -1,7 +1,17 @@
+color	home	it	Colore
 displays home	home	it	Mostra home
 egroupware	home	it	eGroupware
 entry	home	it	Voce
 home	home	it	Home
+in %1 days (%2) is %3's birthday.	home	it	Tra %1 giorni (%2) sarà il compleanno di %3.
+remove	home	it	Rimuovi
+set as default	home	it	Imposta come predefinito
 show a list of entries	home	it	Mostra una lista di voci
 show one entry	home	it	Visualizza una singola voce
 there is a new version of egroupware available	home	it	C'è una nuova versione di eGroupWare disponibile
+today is %1's birthday!	home	it	Oggi è il compleanno di %1!
+tomorrow is %1's birthday.	home	it	Domani è il compleanno di %1.
+yes, for the next three days	home	it	Sì, per i prossimi tre giorni
+yes, for the next two weeks	home	it	Sì, per le prossime due settimane
+yes, for the next week	home	it	Sì, per la prossima settimana
+yes, for today and tomorrow	home	it	Sì, per oggi e domani

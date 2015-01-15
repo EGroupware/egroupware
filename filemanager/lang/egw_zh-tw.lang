@@ -1,12 +1,14 @@
 %1 already exists as a file	filemanager	zh-tw	%1 檔案已經存在
 %1 starts with '%2'	filemanager	zh-tw	%1 開始於 '%2'
 actions	filemanager	zh-tw	動作
+administrators	filemanager	zh-tw	管理者
 applications	common	zh-tw	應用程式
 cancel editing %1 without saving	filemanager	zh-tw	取消編輯%1，不儲存
 cannot create directory because it begins or ends in a space	filemanager	zh-tw	資料夾名稱包含空白字元，無法建立資料夾
 check all	filemanager	zh-tw	全選
 clear search	filemanager	zh-tw	清除搜尋
 comment	filemanager	zh-tw	備註
+configuration changed.	filemanager	zh-tw	組態更新了
 copied %1 to %2	filemanager	zh-tw	複製 %1 到 %2
 copy to	filemanager	zh-tw	複製到
 could not copy %1 to %2	filemanager	zh-tw	無法複製 %1 到 %2
@@ -25,9 +27,13 @@ deleted %1	filemanager	zh-tw	刪除%1
 directory	filemanager	zh-tw	資料夾
 directory %1 already exists	filemanager	zh-tw	資料夾 %1 已經存在
 directory %1 does not exist	filemanager	zh-tw	資料夾 %1 不存在
+disable	filemanager	zh-tw	停用
 download	filemanager	zh-tw	下載
 edit comments	filemanager	zh-tw	編輯備註
-file	filemanager	zh-tw	檔案
+enable	filemanager	zh-tw	啟用
+everyone	filemanager	zh-tw	所有人
+expires	filemanager	zh-tw	過期
+file	common	zh-tw	檔案
 file %1 could not be created.	filemanager	zh-tw	檔案 %1 無法建立。
 file %1 may be too big. contact your systemadministrator for further info	filemanager	zh-tw	檔案 %1 也許太大，請聯絡管理員取得更多資訊
 file names cannot contain "%1"	filemanager	zh-tw	檔案名不能包含 "%1"
@@ -52,8 +58,10 @@ moved %1 to %2	filemanager	zh-tw	把 %1搬到%2
 name of current user, all other contact fields are valid too	filemanager	zh-tw	目前使用者的名稱，所有其他聯絡人欄位也是正確的
 no files in this directory.	filemanager	zh-tw	資料夾中沒有任何檔案
 no version history for this file/directory	filemanager	zh-tw	這個檔案/資料夾沒有版本歷史
+noone	filemanager	zh-tw	無
 open	filemanager	zh-tw	開啟
 operation	filemanager	zh-tw	操作
+percentage	filemanager	zh-tw	比例
 permissions	filemanager	zh-tw	權限
 please select a file to delete.	filemanager	zh-tw	請選擇要刪除的檔案
 preview	filemanager	zh-tw	預覽

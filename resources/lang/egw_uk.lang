@@ -1,7 +1,10 @@
 actions	resources	uk	Дії
 configure access permissions	admin	uk	Надати Права доступу
 create new links	resources	uk	Створити нові посилання
+custom fields	resources	uk	Власні поля
+days	resources	uk	Дні
 delete this entry	resources	uk	видалити цей запис
+deleted	resources	uk	Видалено
 edit this entry	resources	uk	Редагувати цей запис
 existing links	resources	uk	Існуючі посилання
 global categories	resources	uk	Глобальні категорії

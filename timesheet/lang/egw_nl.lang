@@ -12,10 +12,12 @@ create new links	timesheet	nl	Creëer nieuwe links
 creates a new field	timesheet	nl	creëert een nieuw veld
 creating new entry	timesheet	nl	een nieuw item aanmaken
 custom fields	timesheet	nl	Aangepast velden
+default document to insert entries	timesheet	nl	Standaard dokument voor het invoegen van gegevens
 delete this status	timesheet	nl	Verwijder deze status
 deleted	timesheet	nl	verwijderd
 deletes this field	timesheet	nl	verwijdert dit veld
 determines the order the fields are displayed	timesheet	nl	bepaalt de volgorde waarin de velden worden getoond
+directory with documents to insert entries	timesheet	nl	Map met dokumenten om gegevens in tevoeren
 each value is a line like <id>[=<label>]	timesheet	nl	iedere waarde is een regel zoals <id>[=<label>]
 edit status	timesheet	nl	Wijzig status
 edit this entry	timesheet	nl	Wijzig dit item
@@ -25,7 +27,13 @@ entry deleted	timesheet	nl	Item verwijderd
 entry saved	timesheet	nl	Item opgeslagen
 error deleting the entry!!!	timesheet	nl	Fout bij verwijderen van het item !!!
 error saving the entry!!!	timesheet	nl	Fout bij opslaan van het item !!!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	nl	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	nl	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 existing links	timesheet	nl	Bestaande links
+exists	timesheet	nl	Bestaat
+export definition to use for nextmatch export	timesheet	nl	Export definitie om te gebruiken bij nextmatch export
 export to openoffice spreadsheet	timesheet	nl	Export naar OpenOffice rekenblad
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
 field must not be empty !!!	timesheet	nl	Veld mag niet leeg zijn !!!
@@ -35,8 +43,13 @@ general fields:	timesheet	nl	Algemene velden:
 global categories	timesheet	nl	Algemene categoriën
 history	timesheet	nl	Historie
 history logging	admin	nl	Historie vastleggen
+html link to the current record	timesheet	nl	HTML link naar huidig record
 id	timesheet	nl	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Die actie staat dan toe dat het document wordt gedownload met de data %1 toegevoegd.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
+if you specify an export definition, it will be used when you export	timesheet	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 ignore	timesheet	nl	Negeren
+insert	timesheet	nl	Voeg toe
 last modified	timesheet	nl	Laatst gewijzigd
 last month	timesheet	nl	Vorige maand
 last week	timesheet	nl	Vorige week
@@ -45,6 +58,9 @@ leave it empty for a full week	timesheet	nl	Laat het leeg voor een volle week
 leaves without saveing	timesheet	nl	verlaat zonder opslaan
 length<br>rows	timesheet	nl	Lengte<br />Rijen
 links	timesheet	nl	Links
+links and attached files	timesheet	nl	Link naar bijgesloten bestand
+links to specified application.  example: {{links/infolog}}	timesheet	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
+list of files linked to the current record	timesheet	nl	Lijs van bestanden gelinkt aan huidig record
 max length of the input [, length of the inputfield (optional)]	timesheet	nl	max lengte van de invoer [, lengte van het invoerveld (optioneel)]
 modified	timesheet	nl	Gewijzigd
 name of current user, all other contact fields are valid too	timesheet	nl	Naam van de huidige gebruiker, alle andere contactvelden zijn ook geldig
@@ -60,6 +76,8 @@ permission denied!!!	timesheet	nl	Toegang geweigerd!!!
 price	timesheet	nl	Tarief
 projectmanager integration	admin	nl	ProjectManager integratie
 quantity	timesheet	nl	Hoeveelheid
+recovered	timesheet	nl	Teruggezet
+replacements for inserting entries into documents	timesheet	nl	Vervanging voor het invoeren van gegevens in documenten
 save & new	timesheet	nl	Opslaan & Nieuw
 saves the changes made	timesheet	nl	Bewaar de gemaakte wijzigingen
 saves the changes made and leaves	timesheet	nl	bewaart de gemaakte wijzigingen en verlaat
@@ -71,6 +89,9 @@ start	timesheet	nl	Start
 starttime	timesheet	nl	Aanvangstijd
 starttime has to be before endtime !!!	timesheet	nl	Aanvangstijd moet voor de eindtijd liggen !!!
 sum %1:	timesheet	nl	Sommeer %1:
+tag to mark positions for address labels	timesheet	nl	Tag voor markering tbv adreslabels
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
+the following document-types are supported:	timesheet	nl	De volgende document types worden ondersteund :
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	nl	de intern gebruikte naam (<= 20 tekens), wijziging maakt bestaande gegevens onbereikbaar
 the text displayed to the user	timesheet	nl	de tekst die aan de gebruiker getoond wordt
 this month	timesheet	nl	Deze maand
@@ -80,9 +101,13 @@ ticket modified by %1 at %2	timesheet	nl	Melding gewijzigd door %1 op %2
 timesheet	common	nl	Urenregistratie
 timesheet csv export	timesheet	nl	Urenregistratie CSV export
 timesheet openoffice export	timesheet	nl	Urenregistratie OpenOffice export
+titles of any entries linked to the current record, excluding attached files	timesheet	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 unitprice	timesheet	nl	Eenheidstarief
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	nl	Gebruik deze tag voor adres labels.Plaats de inhoud welke je wilt herhalen tussen twee tags.
 values for selectbox	timesheet	nl	Waarden voor selectbox
 view this entry	timesheet	nl	Dit item weergeven
 week	timesheet	nl	Week
+yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
+yes, users can purge their deleted items	admin	nl	Ja, gebruikers kunnen hun verwijderde items defintief verwijderen
 yesterday	timesheet	nl	Gisteren
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	nl	Uw database is niet up to date (%1 vs. %2), draai s.v.p. %3setup%4 om uw database bij te werken.

@@ -35,11 +35,17 @@ entry deleted	timesheet	ru	Запись удалена
 entry saved	timesheet	ru	Запись сохранена
 error deleting the entry!!!	timesheet	ru	Ошибка при удалении записи!!!
 error saving the entry!!!	timesheet	ru	Ошибка при сохранении записи!!!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	ru	Пример: {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}}— поиск по полю "n_prefix" значения "Mr", если найдено, пишет Hello Mr., иначе пишет Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	ru	Пример: {{LETTERPREFIXCUSTOM n_prefix title n_family}}. Результат: Mr. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	ru	Пример: {{NELF role}} — если поле «роль» не пусто, получает новую строку со значением поля «роль»
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	ru	Пример: {{NELFNV role}} — если поле «роль» не пусто, устанавливает поле LF пустым
 existing links	timesheet	ru	Существующие ссылки
 exists	timesheet	ru	Существует
+export definition to use for nextmatch export	timesheet	ru	Определение экспорта для последующего использования
 export to openoffice spreadsheet	timesheet	ru	Экспорт в электронную таблицу OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	ru	Экспортирует записи Табеля в файл формата CSV
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
+favorites	timesheet	ru	Избранное
 field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ru	Для серии писем используйте этот тэг. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
@@ -47,7 +53,11 @@ general fields:	timesheet	ru	Общие поля:
 global categories	timesheet	ru	Общие категории
 history	timesheet	ru	История
 history logging	admin	ru	История записей
+html link to the current record	timesheet	ru	HTML-ссылка на запись
 id	timesheet	ru	ID Идентификатор
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	ru	Если здесь указать каталог с полным путем, %1 покажет действие для каждого документа. Действие позволит загрузить указанный документ с %1 вставленными данными.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	ru	Если указан документ с полным путем, %1 показывает пиктограмму внешнего документам для каждой записи. Эти пиктограмма позволяет загрузить указанный документ со вставленными данными.
+if you specify an export definition, it will be used when you export	timesheet	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 ignore	timesheet	ru	Игнорировать
 import options	timesheet	ru	Свойства импорта
 imports entries into the timesheet from a csv file.	timesheet	ru	Импортировать записи в Табель из файла формата CSV
@@ -62,6 +72,9 @@ leave it empty for a full week	timesheet	ru	Оставьте незаполне�
 leaves without saveing	timesheet	ru	Оставить без сохранения
 length<br>rows	timesheet	ru	Длина<br>Ряды
 links	timesheet	ru	Ссылки
+links and attached files	timesheet	ru	Ссылки и прикреплённые файлы
+links to specified application.  example: {{links/infolog}}	timesheet	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
+list of files linked to the current record	timesheet	ru	Список файлов, связанных с текущей записью
 max length of the input [, length of the inputfield (optional)]	timesheet	ru	Максимальная длина ввода  [, длина поля ввода (дополнительно)]
 modified	timesheet	ru	Изменено
 modify status	timesheet	ru	Состояние изменено
@@ -80,10 +93,12 @@ order	timesheet	ru	Назначение
 parent	timesheet	ru	Родитель
 permission denied!!!	timesheet	ru	Доступ запрещен!!!
 permissions error - %1 could not %2	timesheet	ru	Ошибка доступа - %1 не может быть %2
+prevent deleting	admin	ru	Предотвращение удаления
 price	timesheet	ru	Цена
 project fields	timesheet	ru	Поля проекта
 projectmanager integration	admin	ru	Интеграция Управления проектами
 quantity	timesheet	ru	Количество
+recovered	timesheet	ru	Восстановлено
 replacements for inserting entries into documents	timesheet	ru	Замены для вставки записей в документы
 save & new	timesheet	ru	Сохранить и добавить новый
 saves the changes made	timesheet	ru	Сохраняет внесенные изменения
@@ -108,6 +123,8 @@ status of created timesheets	timesheet	ru	Состояние созданной 
 status updated.	timesheet	ru	Состояние обновлено.
 sum %1:	timesheet	ru	Сумма %1:
 tag to mark positions for address labels	timesheet	ru	Тэг для отметки позиции для адресных меток
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	ru	Документ может содержать местоположение типа {{%3}} для замены данными. %1 полный список местоположений%2.
+the following document-types are supported:	timesheet	ru	Поддерживаются следующие типы документов:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	ru	Имя используется внутри, <= 20 символов, изменение его сделает существующие данные недоступными
 the text displayed to the user	timesheet	ru	Текст выведен для пользователя
 this month	timesheet	ru	Этот месяц
@@ -124,11 +141,14 @@ timesheet openoffice export	timesheet	ru	Экспорт Табеля в OpenOffi
 timesheet status-%1 '%2' added.	timesheet	ru	Состояние записи Табеля - %1 '%2' добавлено.
 timesheet-%1 '%2' updated.	timesheet	ru	Запись Табеля -  %1 '%2' обновлено.
 timesheet-%1 deleted.	timesheet	ru	Запись Табеля - %1 удалена.
+titles of any entries linked to the current record, excluding attached files	timesheet	ru	Заголовки записей, ссылающихся на текущую, исключая прикреплённые файлы
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ru	Невозможно преобразовать "%1" в ID учетной записи. Используйте установленный планин (%2) для %3.
 unitprice	timesheet	ru	Цена за ед.
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	ru	Используйте этот тэг для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 values for selectbox	timesheet	ru	Значения для выбранного ящика
 view this entry	timesheet	ru	Показать запись
 week	timesheet	ru	Неделя
+yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут очистить удалённые записи
+yes, users can purge their deleted items	admin	ru	Да, пользователи могут очистить удалённые ими записи
 yesterday	timesheet	ru	Вчера
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ru	Ваша база данных устарела (%1 вместо %2), пожалуйста, запустите %3Установку%4 чтобы обновить вашу базу данных.

@@ -120,6 +120,7 @@ delete this user	admin	fa	حذف این کاربر
 deleted	admin	fa	حذف شد
 deletes this field	admin	fa	حذف این فیلد
 deliver extern	admin	fa	حمل خارجی
+deny access	admin	fa	دسترسی ممنوع
 deny access to access log	admin	fa	ممنوعیت دسترسی به ثبت دسترسی
 deny access to application registery	admin	fa	ممنوعیت  دسترسی به ثبات کاربرد
 deny access to applications	admin	fa	ممنوعیت دسترسی به کاربردها
@@ -147,8 +148,6 @@ do you also want to delete all global subcategories ?	admin	fa	آیا میخوا
 do you want to delete all global subcategories ?	admin	fa	آیا میخواهید همه زیر دسته های عمومی را هم حذف کنید؟
 do you want to move all global subcategories one level down ?	admin	fa	آیا میخواهید که همه زیر دسته های عمومی را تا یک سطح پایینترحذف کنید؟
 down	admin	fa	پائین
-each value is a line like <id>[=<label>]	admin	fa	هر مقدار در یک خط مثل [<id>[=<label>
-each value is a line like id[=label]	admin	fa	هر مقدار در یک خط مثل [id[=label
 edit account	admin	fa	ویراستن حساب
 edit application	admin	fa	ویراستن کاربرد
 edit email settings	admin	fa	ویراستن تنظیمات رایانامه
@@ -206,6 +205,7 @@ forward also to	admin	fa	پیش سو به
 forward emails to	admin	fa	پیش سوی رایانامه به
 forward only	admin	fa	فقط پیش سو
 full name	admin	fa	نام کامل
+general	admin	fa	عمومی
 global categories	common	fa	دسته های عمومی
 group ?	admin	fa	گروه؟
 group has been added	common	fa	گروه اضافه شد
@@ -266,7 +266,6 @@ mail settings	admin	fa	تنظیمات رایانامه
 main email-address	admin	fa	نشانی رایانامه اصلی
 main screen message	admin	fa	پیام صفحه اصلی
 manager	admin	fa	مدیر
-max length of the input [, length of the inputfield (optional)]	admin	fa	حداکثر اندازه ورودی [طول فیلد ورودی] (دلخواه)
 maximum account id (e.g. 65535 or 1000000)	admin	fa	حداکثر شناسه حساب (مثلا:65535 یا 1000000)
 maximum entries in click path history	admin	fa	حداکثر ورودیها در مسیر تاریخچه
 members	admin	fa	اعضا
@@ -304,6 +303,7 @@ percent of users that logged out	admin	fa	درصد کاربرانی که خار�
 percent this user has logged out	admin	fa	درصدی که این کاربر خارج شده
 permission denied	admin	fa	دسترسی ممنوع
 permission denied !!!	admin	fa	دسترسی غیر ممکن!!!
+permission denied!!!	admin	fa	دسترسی ممنوع!!!
 permissions	admin	fa	مجورها
 permissions this group has	admin	fa	مجوزهایی که این گروه دارد
 phpinfo	admin	fa	اطلاعات PHP
@@ -324,6 +324,7 @@ remove all users from this group ?	admin	fa	همه کاربران از این گ
 return to admin mainscreen	admin	fa	بازگشت به صفحه اصلی مدیر
 return to view account	admin	fa	بازگشت برای دیدن حساب
 route all mails to	admin	fa	همه رایانامه ها را مسیر دهی کن به
+rows	admin	fa	سطور
 run asynchronous services	admin	fa	اجرای خدمات ناهماهنگ
 save the category	admin	fa	ذخیره دسته
 save the category and return back to the list	admin	fa	ذخیره دسته و بازگشت به فهرست

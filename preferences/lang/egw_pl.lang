@@ -20,13 +20,14 @@ date format	preferences	pl	Format daty
 default	preferences	pl	domyślne
 default application	preferences	pl	Domyślna aplikacja
 default preferences	preferences	pl	Ustawienia domyślne
-default theme	preferences	pl	Domyślna kompozycja
 delete categories	preferences	pl	Kategorie domyślne
 description can not exceed 255 characters in length !	preferences	pl	Opis nie może przekraczać 255 znaków!
+disable	preferences	pl	Wyłącz
 display thumbnails for linked images	preferences	pl	Wyświetlaj miniatury linkowanych obrazków
 div	preferences	pl	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pl	Czy preferujesz wyświetlanie godziny w formacie 24 godzinnym czy w 12 godzinnym z dołączeniem przed południem/po południu?
 edit custom fields	preferences	pl	Edytuj pola użytkownika
+enable	preferences	pl	włącz
 enable drag and drop functionality (experimental)	preferences	pl	Włącz funkcjonalność przeciągnij i upuść (eksperymentalne)
 enable selectbox dropdown resizing for ie (experimental)	preferences	pl	Aktywuj skalowanie pola rozwijanego dla IE
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pl	Włącza obsługę przeciągnij i upuść we wszystkich aplikacjach. Jeśli przeglądarka tego nie wspiera zostanie automatycznie wyłączone. To funkcja eksperymentalna.
@@ -57,7 +58,6 @@ no user-selection at all	common	pl	Bez sekcji użytkownika
 note: this feature does *not* change your email password. this will	preferences	pl	Zauważ: To ustawienie nie zmieni Twojego hasła konta poczty elektronicznej. Ono tylko
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia hasła do twojej skrzynki pocztowej! Należy to zrobić ręcznie.
 number format	preferences	pl	Format liczbowy
-office 2003 theme	preferences	pl	Temat Office 2003
 p: paragraph	preferences	pl	p: Paragraf
 permanent time zone selection	preferences	pl	Wybór stałej strefy czasowej
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	pl	Wybierz strefę czasową, będziesz mógł szybko przełączać się między strefami. Przełączanie nie jest możliwe jeśli mniej niż dwie strefy są wskazane.
@@ -86,7 +86,6 @@ show navigation bar as	preferences	pl	Wyświetlaj pasek nawigacji jako
 show number of current users	preferences	pl	Wyświetlaj liczbe zalogowanych użytkowników
 show text on navigation icons	preferences	pl	Wyświetlaj tekst na ikonach nawigacji
 show_more_apps	common	pl	Wyświetl wiecej aplikacji
-silver theme	preferences	pl	Temat srebrny
 spellchecker language	addressbook	pl	Język sprawdzania pisowni
 text only	preferences	pl	Tylko tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pl	Aplikacja domyślna będzie wywoływana za każdym razem kiedy będziesz się rejestrował do eGroupWare lub wybierzesz ikonę strony głównej.<br>Możesz także wyświetlać dane z kilku aplikacji na stronie głównej jeżeli nie wybierzesz żadnej domyślnej aplikacji w tym polu (wyświetlanie na stronie głównej jest ustawiane dla każdej aplikacji w jej menu ustawień oddzielnie).

@@ -1,6 +1,7 @@
 %1 %2 in %3	calendar	it	%1 %2 in %3
 %1 event(s) %2	calendar	it	%1 evento(i) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	it	%1 evento(i) %2, %3 non riusciti per mancanza di diritti sufficienti!
+%1 hours	calendar	it	%1 ore
 %1 participants removed because of missing invite grants	calendar	it	%1 partecipanti rimossi a causa di permessi di invito mancanti.
 %1 records imported	calendar	it	%1 record importato/i
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	it	%1 record letto/i (non ancora importato/i, torna indietro e deseleziona Test Import)
@@ -111,6 +112,7 @@ creator	calendar	it	Creatore
 csv	calendar	it	CSV
 csv-fieldname	calendar	it	Campi-CSV
 csv-filename	calendar	it	Nomefile-CSV
+custom	calendar	it	Personalizzato
 custom fields	common	it	Personalizza i Campi
 custom_2	common	it	Libero/Impegnato
 daily	calendar	it	Giornaliero

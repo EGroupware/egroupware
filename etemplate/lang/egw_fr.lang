@@ -34,6 +34,7 @@ add column	etemplate	fr	Ajouter une colonne
 add index	etemplate	fr	Ajouter un index
 add new	etemplate	fr	Ajouter un nouveau
 add table	etemplate	fr	Ajouter une table
+add to clipboard	etemplate	fr	Ajouter au presse-papier
 advanced search	etemplate	fr	Recherche avancée
 align	etemplate	fr	Aligner
 alignment of label and input-field in table-cell	etemplate	fr	Alignement du label et du champ de saisie dans la cellule de la table
@@ -99,6 +100,7 @@ contact	etemplate	fr	Contact
 contact field to show	etemplate	fr	Champ contact à afficher
 contact fields	etemplate	fr	Champs contact
 contains	etemplate	fr	Contient
+copy to clipboard	etemplate	fr	Copier vers le presse-papier
 create a new table for the application	etemplate	fr	Créer une nouvelle table pour l'application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fr	Crée un fichier lang anglais ('en') à partir du label et des textes d'aide (pour l'application dans Nom)
 creator	preferences	fr	Créateur
@@ -208,6 +210,7 @@ grid	etemplate	fr	Grille
 grid column attributes	etemplate	fr	Attributs de la colonne dans la grille
 grid row attributes	etemplate	fr	Attributs de la ligne dans la grille
 groupbox	etemplate	fr	GroupBox
+h	etemplate	fr	h
 hbox	etemplate	fr	BoiteH
 height	etemplate	fr	Hauteur
 height of row (in % or pixel)	etemplate	fr	hauteur d'une ligne (en % ou pixel)
@@ -224,6 +227,8 @@ html	etemplate	fr	Html
 html link to the current record	etemplate	fr	Lien HTML vers l'enregistrement courant
 id	etemplate	fr	id
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fr	Si le champ est désactivé, une cellule de table vide est affiché pour suppression (temporaire) d'un champ/cellule
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
 image	etemplate	fr	Image
 import	etemplate	fr	Importer
 import an etemplate from a xml-file	etemplate	fr	import an eTemplate from a xml-file
@@ -265,6 +270,7 @@ linkstring	etemplate	fr	ChaîneDeLien
 linkto	etemplate	fr	LierVers
 list of files linked to the current record	preferences	fr	Listes des fichiers liés à l'enregistrement courant
 load this template into the editor	etemplate	fr	Charger ce template dans l'éditeur
+loading	etemplate	fr	chargement
 maximum size for uploads	filemanager	fr	Taille maximale d'un upload
 message ...	etemplate	fr	Message...
 message prepared for sending.	etemplate	fr	Message prêt pour l'envoi.
@@ -355,6 +361,7 @@ right	etemplate	fr	Droite
 row...	etemplate	fr	Ligne...
 sa	etemplate	fr	Sa
 save all	etemplate	fr	Tout enregistrer
+save as	etemplate	fr	Enregistrer comme
 save selected columns as default preference for all users.	etemplate	fr	Enregistrer les colonnes sélectionnées comme préférence par défaut pour tous les utilisateurs.
 save the changes made and close the window	etemplate	fr	Enregistrer les modifications et fermer la fenêtre
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fr	Enregistrer l'eTemplate sous les clés ci-dessus (nom, ...), changez-les pour un Sauvegarder-sous
@@ -363,6 +370,7 @@ saves the template with given version number and closes the window	etemplate	fr	
 scale	etemplate	fr	Echelle
 scale for float	etemplate	fr	échelle pour les flottants
 search	etemplate	fr	Rechercher
+search letter	etemplate	fr	Chercher sur une lettre
 search...	etemplate	fr	Rechercher...
 select a category	etemplate	fr	choisissez une catégorie
 select a primary contact, to show in the list	etemplate	fr	Choisissez un contact primaire, à montrer dans la liste
@@ -399,6 +407,7 @@ select which accounts to show	etemplate	fr	sélectionnez quels comptes à affich
 select which values to show	etemplate	fr	sélectionnez les valeurs à afficher
 select year	etemplate	fr	Choisissez l'année
 selectbox	etemplate	fr	Boîte de sélection
+set as default	etemplate	fr	Définir par défaut
 set these columns as the default	etemplate	fr	Définir ces colonnes par défaut
 sets today as date	etemplate	fr	Fixe la date à aujourd'hui
 should the form be submitted or any custom javascript be executed	etemplate	fr	Est-ce que le formulaire doit être soumis ou un script java doit être exécuté
@@ -437,6 +446,7 @@ th	etemplate	fr	Je
 the following document-types are supported:	preferences	fr	Les types de documents suivant sont autorisés :
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 time	etemplate	fr	Heure
+titles of any entries linked to the current record, excluding attached files	preferences	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	fr	pour désactiver: [! = not]<value>[=<vérification>] p.ex.: '!@data' désactive si les données sont vides
 to start the db-tools	etemplate	fr	Pour lancer les outils base de données
 to start the etemplate editor	etemplate	fr	Pour lancer l'éditeur d'eTemplate

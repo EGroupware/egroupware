@@ -14,6 +14,7 @@ addressbook csv import	importexport	ru	Импорт адресной книги 
 addressbook vcard import	importexport	ru	Адресная книга, импорт vCard
 admin disabled exporting	importexport	ru	Администратор отключил экспортирование.
 all encodings	importexport	ru	Все кодировки
+all users	importexport	ru	Все пользователи
 allowed users	importexport	ru	Пользователи имеющие доступ
 automatically created by importexport	importexport	ru	Автоматически создано с помощью"ИмпортЭкспорт"
 basic csv import	importexport	ru	Основной импорт CSV
@@ -87,6 +88,7 @@ lock expired on previous run	importexport	ru	Блокировка сработа
 manage mapping	importexport	ru	управление наложением(mapping)
 next	importexport	ru	следующий
 next run	importexport	ru	Следующий запуск
+no custom field "%1" for %2.	importexport	ru	Нет пользовательского поля "%1" для %2.
 no matches	importexport	ru	Совпадений нет
 no matching records	importexport	ru	Нет совпадающих записей
 no notifications	importexport	ru	Без уведомлений
@@ -126,6 +128,7 @@ unable to schedule	importexport	ru	Невозможно планировать.
 update categories	importexport	ru	Обновить категории
 use default	importexport	ru	Используйте значение по умолчанию
 use field from csv if possible	importexport	ru	Использовать поля из CSV, если возможно
+use search results	common	ru	Использовать результаты поиска
 user preference	importexport	ru	Предпочтения пользователя
 user template folder	importexport	ru	Шаблон папки пользователя.
 users allowed to create their own definitions	importexport	ru	Пользователи могут создавать свои собственные определения

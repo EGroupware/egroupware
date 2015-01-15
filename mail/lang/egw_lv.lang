@@ -1,50 +1,70 @@
 (no subject)	mail	lv	(nav temata)
 add to addressbook	mail	lv	pievienot adrešu grāmatai
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
+attachments	mail	lv	Pielikumi
 compose	mail	lv	Rakstīt jaunu
 compress folder	mail	lv	Kompresēt mapi
 contains	mail	lv	satur
+copy to	mail	lv	Kopēt Uz:
 date(newest first)	mail	lv	Datums (jaunākais pirmais)
 date(oldest first)	mail	lv	Datums (vecākais pirmais)
 default sorting order	mail	lv	Noklusētā kārtošanas secība
+delete folder	mail	lv	Izdzēst mapi
 deleted	mail	lv	Izdzēsts
+disable	mail	lv	Deaktivizēt
 display of html emails	mail	lv	Parādīt HTML vēstules
 display only when no plain text is available	mail	lv	Parādīt tikai tad, kad pieejams atklāts teksts
 does not contain	mail	lv	nesatur
 does not match	mail	lv	neatbilst
 don't use sent	mail	lv	Nelieto nosūtīts
 don't use trash	mail	lv	Nelieto atkritui
+edit account	mail	lv	Rediģēt kontu
 empty trash	mail	lv	atbrīvot atkritumus
-felamimail	admin	lv	ViA e-pasts
+enable	mail	lv	Aktivizēt
+everyone	mail	lv	ikviens
+extended	mail	lv	Paplašinats
 file into	mail	lv	ievietot
 filemanager	mail	lv	Datņu pārvaldnieks
 flagged	mail	lv	arkarodziņiem
 folder	mail	lv	Mape
 folder settings	mail	lv	Mapes uzstādījumi
+forward	mail	lv	Pārsūtīt
 from	mail	lv	No
 from(a->z)	mail	lv	No (A->Z)
 from(z->a)	mail	lv	No (Z->A)
+general	admin	lv	Vispārējs
 greater than	mail	lv	lielāks nekā
+header lines	mail	lv	Galvenes rindas
 html	mail	lv	HTML
 if	mail	lv	Ja
+imap	mail	lv	IMAP
 imap server	mail	lv	IMAP serveris
 inbox	mail	lv	Iesūtne
+keep a copy of the message in your inbox	mail	lv	saglabāt vēstules kopiju IESŪTNĒ
+kilobytes	mail	lv	kb
 less than	mail	lv	mazāk nekā
 mail settings	mail	lv	Sūtījumu uzstādījumi
 mark as deleted	mail	lv	Atzīmēt kā izdzēstu
 move selected to	mail	lv	pārvietot atlasītās uz
+move to	mail	lv	pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
 never display html emails	mail	lv	Nekas nerādīt HTML vēstules
 on	mail	lv	ieslēgts
 organization	mail	lv	organizācija
+permission denied	mail	lv	Atļauja liegta
 please select a address	mail	lv	Lūdzu, izvēlieties adresi
 quicksearch	mail	lv	Ātrā meklēšana
 refresh time in minutes	mail	lv	Atjaunošanas laiks ( minūtēs )
 remove all	mail	lv	Pārvietot visu
 remove immediately	mail	lv	Pārvietot nekavējoties
+rename folder	mail	lv	Pārsaukt mapi
 replied	mail	lv	atbildēts
+reply	mail	lv	Atbildēt
+reply all	mail	lv	Atbildēt visiem
+reply to	mail	lv	Atbildēt
 replyto	mail	lv	Atbildēt
 save all	mail	lv	Saglabāt visus
+select all	mail	lv	Iezīmēt visus
 sent folder	mail	lv	Mape nosūtīts
 signature	mail	lv	Paraksts
 size(...->0)	mail	lv	Izmērs (...->0)
@@ -53,10 +73,11 @@ small view	mail	lv	mazais skats
 sort order	mail	lv	Vieta pēc kārtas
 subject(a->z)	mail	lv	Tēma (A->Z)
 subject(z->a)	mail	lv	Tēma (Z->A)
+text	mail	lv	Teksts
 then	mail	lv	THEN
 trash folder	mail	lv	Atkritumu mape
 unread	mail	lv	Nelasīts
-urgent	mail	lv	nepieciešams
-vacation notice	admin	lv	norāde par atrašanos atvaļinājumā
+vacation notice	mail	lv	norāde par atrašanos atvaļinājumā
 when deleting messages	mail	lv	Kad dzēš vēstules
+write	mail	lv	Rakstīt
 wrote	mail	lv	rakstīja

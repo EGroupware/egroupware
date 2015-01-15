@@ -91,7 +91,6 @@ charset for the vcard export	addressbook	sk	Znaková sada pre export vCard
 charset of file	addressbook	sk	Znaková sada súboru
 check all	addressbook	sk	Označiť všetko
 choose an icon for this contact type	admin	sk	Zvoľte ikonu pre tento typ kontaktu
-choose export options	addressbook	sk	Zvoľte možnosti exportu
 choose owner of imported data	addressbook	sk	Vyberte vlastníka naimportovaných údajov
 chosse an etemplate for this contact type	admin	sk	Zvoľte eŠablónu pre tento typ kontaktu
 city	common	sk	Mesto
@@ -202,8 +201,10 @@ exported	addressbook	sk	Exportované.
 exports contacts from your addressbook into a csv file.	addressbook	sk	Vyexportuje kontakty z adresára do súboru CSV.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súboru CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
 extra	addressbook	sk	Extra
+extra encodings	addressbook	sk	Extra kódovania
 extra private	addressbook	sk	Extra súkromné
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sk	Nepodarilo sa vykonať zmeny u %1 členov organizácie -nedostatočné práva !!!
+favorites	addressbook	sk	Obľúbené
 fax	addressbook	sk	Fax
 fax number	common	sk	Číslo faxu
 field %1 has been added !	addressbook	sk	Pole %1 bolo pridané
@@ -329,7 +330,6 @@ phone numbers	common	sk	Telefónne čísla
 photo	addressbook	sk	Fotografia
 please enter a name for that field !	addressbook	sk	Prosím zadajte meno pre toto pole!
 please select only one category	addressbook	sk	Prosím, vyberte iba jednu kategóriu
-please update the templatename in your customfields section!	addressbook	sk	Prosím aktualizujte názov šablóny v sekcii vlastného poľa!
 postal	common	sk	Poštové
 pref	addressbook	sk	Titul
 preferred email address to use in distribution lists	addressbook	sk	Predvolená E-mailová adresa použitá v distribučných zoznamoch
@@ -397,6 +397,7 @@ that field name has been used already !	addressbook	sk	Takýto názov poľa už 
 the anonymous user has probably no add rights for this addressbook.	addressbook	sk	Anonymný používateľ pravdepodobne nemá právo pridávať do tohto adresára.
 the anonymous user needs add rights for it!	addressbook	sk	Anonymný používateľ by na to potreboval pridať práva!
 the anonymous user needs read it!	addressbook	sk	Anonymný používateľ by to potreboval čítať!
+the following document-types are supported:	addressbook	sk	Podporované sú nasledovné typy dokumentov:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	sk	Aby bolo možné vložiť kontaktné údaje v dokumentoch OpenOffice alebo MSOffice, je potrebná prípona zip.
 there was an error saving your data :-(	addressbook	sk	Pri ukladaní Vašich údajov nastala chyba :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	sk	Tento modul zobrazuje formulár kontaktu, ktorý ukladá priamo do adresára.
@@ -414,6 +415,7 @@ two of: %1	addressbook	sk	dva z: %1
 type	addressbook	sk	Typ
 un-delete	addressbook	sk	Obnoviť vymazané
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	sk	Nepodarila sa konverzia "%1" na ID účtu. Používam nastavenie zásuvného modulu (%2) pre vlastníka.
+unable to delete	addressbook	sk	Nedá sa odstrániť
 unique id (uid)	addressbook	sk	Jedinečné ID (UID)
 unique id<br />(to update existing records)	addressbook	sk	Jedinečné ID<br />(pre aktualizáciu existujúcich záznamov)
 update a single entry by passing the fields.	addressbook	sk	Aktualizovať jednotlivý záznam podľa zadaných polí
@@ -436,7 +438,6 @@ verification	addressbook	sk	Kontrola
 view linked infolog entries	addressbook	sk	Zobraziť pripojené položky Záznamníka
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sk	VAROVANIE!! LDAP sa dá použiť jedine ak NEPOUŽÍVATE kontakty na uchovanie používateľských účtov!
 warning: all contacts found will be deleted!	addressbook	sk	POZOR: Všetky kontakty budú odstránené!
-warning: template "%1" not found, using default template instead.	addressbook	sk	VAROVANIE: Šablóna "%1" sa nenašla, používam namiesto nej predvolenú šablónu.
 weekday	addressbook	sk	Deň v týždni
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sk	Čo sa má v iných aplikáciách zobraziť na mieste odkazu na adresár. Prázdne hodnoty sa vynechajú. Ak zmeníte toto nastavenie, musíte sa znovu prihlásiť!
 where to add the email address	addressbook	sk	Kde pridať E-mailovú adresu
@@ -466,5 +467,6 @@ you must select a vcard. (*.vcf)	addressbook	sk	Musíte vybrať VCard (*.vcf)
 you must select at least 1 column to display	addressbook	sk	Musíte vybrať aspoň 1 stĺpec k zobrazeniu.
 you need to select a distribution list	addressbook	sk	Najprv musíte vybrať distribučný zoznam
 you need to select some contacts first	addressbook	sk	Najprv musíte vybrať nejaké kontakty.
+you need to select some entries first	addressbook	sk	Najprv vyberte nejaké položky.
 zip code	common	sk	PSČ
 zip_note	addressbook	sk	<p><b>Poznámka:</b>Súbor môže byť archív formátu zip s kolekciou súborov .csv, .vcf alebo .ldif. V žiadnom prípade pri importe nemiešajte rôzne typy súborov.

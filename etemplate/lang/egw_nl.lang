@@ -5,6 +5,7 @@
 %1 matches on search criteria	etemplate	nl	%1 komt overeen met zoekcriteria
 %1 more...	etemplate	nl	%1 meer...
 %1 new etemplates imported for application '%2'	etemplate	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
+%1 not implemented for %2!	etemplate	nl	%1 niet geimplemnteerd voor %2!
 %s disabled	etemplate	nl	%s uitgeschakeld
 %s needed	etemplate	nl	%s nodig
 %s notranslation	etemplate	nl	%s GeenVertaling
@@ -20,6 +21,7 @@ a pattern to be searched for	etemplate	nl	een patroon waarnaar gezocht moet word
 accesskey	etemplate	nl	Toegangssleutel
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	nl	Accesskeys kunnen ook gedefinieerd worden door een & in het label te plaatsen (bijvoorbeeld: &Naam)
 account contactdata	etemplate	nl	Account contactgegevens
+actions...	etemplate	nl	Acties...
 add a new column (after the existing ones)	etemplate	nl	Voeg een nieuwe kolom toe (achter de bestaande kolommen)
 add a new entry of the selected application	etemplate	nl	Voeg een nieuw record toe van de geselecteerde toepassing
 add a new multi-column index	etemplate	nl	Een nieuwe multi-column index toevoegen
@@ -27,12 +29,14 @@ add column	etemplate	nl	Kolom toevoegen
 add index	etemplate	nl	Index toevoegen
 add new	etemplate	nl	Nieuwe toevoegen
 add table	etemplate	nl	Tabel toevoegen
+add to clipboard	etemplate	nl	Voeg toe aan klembord
 advanced search	etemplate	nl	Geavanceerd zoeken
 align	etemplate	nl	Uitlijnen
 alignment of label and input-field in table-cell	etemplate	nl	uitlijning van label en inputveld in tabelcel
 alignment of the v/hbox containing table-cell	etemplate	nl	Uitlijning van de V/Hbox die de tabelcel bevat
 all days	etemplate	nl	alle dagen
 all operations save the template!	etemplate	nl	alle bewerkingen slaan de template op!
+all users	etemplate	nl	Alle gebruikers
 am	etemplate	nl	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	nl	een geindexeerde kolom versnelt zoekopdrachten op dit kolom (kost wel ruimte op de schijf !!!)
 and	etemplate	nl	En
@@ -86,6 +90,7 @@ contact	etemplate	nl	Contact
 contact field to show	etemplate	nl	Contact veld dat getoond moet worden
 contact fields	etemplate	nl	Veldnamen contacten
 contains	etemplate	nl	bevat
+copy to clipboard	etemplate	nl	Kopieer naar klembord
 create a new table for the application	etemplate	nl	Maak een nieuwe tabel voor de applicatie
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
 creator	preferences	nl	Melder
@@ -99,7 +104,6 @@ custom fields	etemplate	nl	aangepaste velden
 custom javascript for onchange	etemplate	nl	aangepaste javascript voor onChange
 cut	etemplate	nl	Knippen
 date+time	etemplate	nl	Datum+Tijd
-datum	etemplate	nl	Datum
 day	etemplate	nl	Dag
 days	etemplate	nl	dagen
 db ensures that every row has a unique value in that column	etemplate	nl	Database zorgt ervoor dat elk record een unieke waarde heeft in deze kolom
@@ -162,6 +166,9 @@ etemplate '%1' written to '%2'	etemplate	nl	eTemplate '%1' geschreven naar '%2'
 etemplate editor	etemplate	nl	eTemplate Editor
 etemplate reference	etemplate	nl	eTemplate Referentie
 etemplate tutorial	etemplate	nl	eTemplate Tutorial
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	nl	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 exchange this row with the one above	etemplate	nl	verwissel deze rij met die erboven
 exchange this two columns	etemplate	nl	verwissel deze twee kolommen
 export the loaded etemplate into a xml-file	etemplate	nl	exporteer de geladen eTemplate in een XML-bestand
@@ -186,6 +193,7 @@ grid	etemplate	nl	Grid
 grid column attributes	etemplate	nl	Grid kolomattributen
 grid row attributes	etemplate	nl	Grid rijattributen
 groupbox	etemplate	nl	Groepskader
+h	etemplate	nl	u
 hbox	etemplate	nl	Hbox
 height	etemplate	nl	Hoogte
 height of row (in % or pixel)	etemplate	nl	hoogte van de rij (in % of pixels)
@@ -199,7 +207,10 @@ hour	etemplate	nl	Uur
 hours	etemplate	nl	uren
 how many entries should the list show	etemplate	nl	Hoeveel items mogen er in de lijst getoond worden
 html	etemplate	nl	HTML
+html link to the current record	etemplate	nl	HTML link naar huidig record
+id	etemplate	nl	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	nl	indien het veld is uitgeschakeld wordt een lege tabelcel getoond, voor (tijdelijke) verwijdering van een veld/cel
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
 image	etemplate	nl	Afbeelding
 import	etemplate	nl	Importeren
 import an etemplate from a xml-file	etemplate	nl	importeer een eTemplate vanuit een XML-bestand
@@ -230,18 +241,23 @@ last	etemplate	nl	Laatste
 left	etemplate	nl	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	nl	lengte voor char+varchar, precisie integer 2,4,8 en decimalen 4,8
 link	etemplate	nl	Link
+link target %1 not found!	etemplate	nl	Link doel %1 niet gevonden !
 linkapps	etemplate	nl	Linktoepassingen
 linkentry	etemplate	nl	Linkitem
 linklist	etemplate	nl	Linklijst
+links and attached files	preferences	nl	Link naar bijgesloten bestand
 linkstring	etemplate	nl	LinkString
 linkto	etemplate	nl	LinkNaar
+list of files linked to the current record	preferences	nl	Lijs van bestanden gelinkt aan huidig record
 load this template into the editor	etemplate	nl	laad deze tempate in de editor
+loading	etemplate	nl	wordt geladen
 maximum size for uploads	filemanager	nl	Maximum grootte voor uploads
 message ...	etemplate	nl	Bericht...
 middle	etemplate	nl	Midden
 minute	etemplate	nl	Minuut
 minutes	etemplate	nl	Minuten
 month	etemplate	nl	Maand
+more	etemplate	nl	Meer
 more than 1 match for '%1'	etemplate	nl	Meer dan 1 overeenkomst voor '%1'
 multicolumn indices	etemplate	nl	Multi-column Indices
 name	etemplate	nl	Naam
@@ -250,6 +266,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	nl	Naam van de toe te voegen tabel
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	nl	naam van de eTemplate, moet voorkomen in de vorm van application,function[,subTemplate)
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	nl	moet uniek zijn in de tabel en mag geen gereserveerd woord van SQL zijn, het is verstandig om alles een prefix te geven van een 2 letterige afkorting voor de toepassing, bijvoorbeeld 'et_'
+new	etemplate	nl	Nieuw
 new search	common	nl	Nieuwe zoekopdracht
 new table created	etemplate	nl	Nieuwe tabel gemaakt
 newer version '%1' exists !!!	etemplate	nl	niewere versie '%1' bestaat reeds !!!
@@ -269,6 +286,7 @@ nothing	etemplate	nl	niets
 nothing found - try again !!!	etemplate	nl	Niets gevonden - probeer opnieuw !!!
 nothing in clipboard to paste !!!	etemplate	nl	niets in het klembord om te plakken !!!
 nothing matched search criteria !!!	etemplate	nl	Niets kwam overeen met de zoekcriteria !!!
+now	etemplate	nl	Nu
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	nl	aantal kolommen waarover het veld/de kolom een span moet leggen of 'all' voor de overgebleven kolommen, CSS-klasse naam (voor de TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	nl	aantal rijen/kolommen in een V/HBox, Cellpadding, Cellspacing
 of	etemplate	nl	van
@@ -298,12 +316,17 @@ read a list of entries.	etemplate	nl	Lees een lijst van entries.
 read a single entry by passing the id and fieldlist.	etemplate	nl	Lees één entry door het ID en veldlijst mee te geven
 read etemplate from database (for the keys above)	etemplate	nl	lees eTemplate uit de database (voor de sleutels hierboven)
 readonly	etemplate	nl	alleen lezen
+refresh	etemplate	nl	Verversen
 remove row (can not be undone!!!)	etemplate	nl	Rij verwijderen (kan NIET ongedaan gemaakt worden)
 remove this link (not the entry itself)	etemplate	nl	Verwijder deze link (niet de entry zelf)
 required	etemplate	nl	Vereist
+reset	etemplate	nl	Herstel
 returns savely, without deleting	etemplate	nl	komt veilig terug ZONDER te vewijderen
 right	etemplate	nl	Rechts
 row...	etemplate	nl	Rij...
+save all	etemplate	nl	Bewaar alle
+save as	etemplate	nl	Bewaar als
+save as zip	etemplate	nl	Bewaar als Zip
 save selected columns as default preference for all users.	etemplate	nl	Bewaar geselecteerde kolommen als voorkeursstandaard voor alle gebruikers.
 save the changes made and close the window	etemplate	nl	Bewaar de gemaakte wijzigingen en sluit het venster
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	nl	bewaar de eTemaplate onder de hierboven genoemde sleutels (naam, ...), wijzig ze om Opslaan Als uit te voeren
@@ -312,6 +335,7 @@ saves the template with given version number and closes the window	etemplate	nl	
 scale	etemplate	nl	Schaal
 scale for float	etemplate	nl	schaal voor drijvende komma
 search	etemplate	nl	Zoeken
+search letter	etemplate	nl	Zoek letter
 select a category	etemplate	nl	Selecteer een categorie
 select a primary contact, to show in the list	etemplate	nl	Selecteer een primaire contact om in de lijst weer te geven
 select access	etemplate	nl	Selecteer toegang
@@ -330,6 +354,7 @@ select country	etemplate	nl	Selecteer land
 select day	etemplate	nl	Selecteer dag
 select day of week	etemplate	nl	Selecteer dag van de week
 select entry	etemplate	nl	Selecteer entry
+select file(s) from vfs	etemplate	nl	Selecteer bestand(en) van VFS
 select hour	etemplate	nl	Selecteer uur
 select if content of field should not be translated (label gets always translated)	etemplate	nl	markeer als de inhoud van het veld niet vertaald mag worden (label wordt altijd vertaald)
 select language	etemplate	nl	Selecteer taal
@@ -346,6 +371,7 @@ select which accounts to show	etemplate	nl	selecteer welke accounts u wilt weerg
 select which values to show	etemplate	nl	Selecteer welke waarden uw wilt weergeven
 select year	etemplate	nl	Selecteer jaar
 selectbox	etemplate	nl	Selectieveld
+set as default	etemplate	nl	Instellen als standaard
 sets today as date	etemplate	nl	Zet vandaag als datum
 should the form be submitted or any custom javascript be executed	etemplate	nl	Moet het formulier verzonden worden of aangepaste javascript worden uitgevoerd
 show	etemplate	nl	Weergeven
@@ -377,8 +403,11 @@ template deleted	etemplate	nl	Template verwijderd
 template saved	etemplate	nl	Template opgeslagen
 text	etemplate	nl	Tekst
 textarea	etemplate	nl	Textruimte
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
+the following document-types are supported:	preferences	nl	De volgende document types worden ondersteund :
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	nl	tekst wordt getoond als het invoerveld lees is en niet de focus heeft (blur)
 time	etemplate	nl	Tijd
+titles of any entries linked to the current record, excluding attached files	preferences	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	nl	om uit te schakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt uit als data geen inhoud heeft
 to start the db-tools	etemplate	nl	om de DB-tools te starten
 to start the etemplate editor	etemplate	nl	om de eTemplate editor te starten
@@ -412,6 +441,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	nl	kolombreedte (in % of pixels)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	nl	Tabelbreedte in % of pixels voor de table-tag en (optionele) div
 width, disabled	etemplate	nl	Breedte, uitgeschakeld
+wk	etemplate	nl	Wk
 working days	etemplate	nl	werkdagen
 write <app>/setup/tables_current.inc.php	etemplate	nl	Schrijf <app>setup/tables_current.inc.php
 write langfile	etemplate	nl	Taalbestand wegschrijven

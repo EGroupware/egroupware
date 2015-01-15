@@ -3,7 +3,9 @@ all categories	resources	et	Kõik kategooriad
 check all	resources	et	Kontrolli kõik
 configure access permissions	admin	et	Konfigureeri Ligipääsu Õigusi
 create new links	resources	et	Tee uued lingid
+days	resources	et	päeva
 delete this entry	resources	et	kustuta see kirje
+deleted	resources	et	kustutatud
 edit this entry	resources	et	Muuda seda kirjet
 existing links	resources	et	Eksisteerivad lingid
 general	resources	et	Üldine

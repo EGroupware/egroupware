@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	ca	%1 %2 en %3
+%1 hours	calendar	ca	%1 hores
 %1 records imported	calendar	ca	%1 registres importats
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ca	%1 registres llegits (encara sense importar, podeu tornar enrere i desmarcar Prova d'Importació)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	ca	<b>Atenció</b>: El calendari utilitza els festius del teu país, que és %1. Ho pots canviar al %2.<br />Els festius són %3 automàtic instal·lat de %4. Ho pots canviar a %5.
@@ -66,6 +67,7 @@ created	calendar	ca	Creat per
 csv	calendar	ca	CSV
 csv-fieldname	calendar	ca	CSV- Nom de camp
 csv-filename	calendar	ca	CSV- Nom d'arxiu
+custom	calendar	ca	Personalitzat
 custom fields	common	ca	Camps personalitzats
 daily	calendar	ca	Diari
 day	calendar	ca	Dia

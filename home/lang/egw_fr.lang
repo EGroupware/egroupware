@@ -1,7 +1,17 @@
+color	home	fr	Couleur
 displays home	home	fr	Afficher l'écran d'accueil
 egroupware	home	fr	eGroupWare
 entry	home	fr	Entrée
 home	home	fr	Accueil
+in %1 days (%2) is %3's birthday.	home	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
+remove	home	fr	Supprimer
+set as default	home	fr	Définir par défaut
 show a list of entries	home	fr	Montrer une liste d'entrées
 show one entry	home	fr	Montrer une entrée
 there is a new version of egroupware available	home	fr	Une nouvelle version de eGroupWare est disponible
+today is %1's birthday!	home	fr	Aujourd'hui c'est l'anniversaire de %1 !
+tomorrow is %1's birthday.	home	fr	Demain c'est l'anniversaire de %1.
+yes, for the next three days	home	fr	Oui, pour les trois prochains jours
+yes, for the next two weeks	home	fr	Oui, pour les deux prochaines semaines
+yes, for the next week	home	fr	Oui, pour la semaine prochaine
+yes, for today and tomorrow	home	fr	Oui, pour aujourd'hui et demain

@@ -16,8 +16,10 @@ default application	preferences	lv	Noklusējuma programmatūra
 default preferences	preferences	lv	Noklusējuma iestatījumi
 delete categories	preferences	lv	Dzēst kategorijas
 description can not exceed 255 characters in length !	preferences	lv	Apraksts nevar pārsniegt 255 simbolu garumu!
+disable	preferences	lv	Deaktivizēt
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	lv	Vai tev labāk patīk 24stundu formāts, vai arī 12, pievienojot am/pm?
 edit custom fields	preferences	lv	rediģēt klientu laukus
+enable	preferences	lv	Aktivizēt
 enter your new password	preferences	lv	Ievadi jauno paroli
 failed to change password.	preferences	lv	Neizdevād nomainīt paroli.
 forced preferences	preferences	lv	Vajadzīgie iestatījumi

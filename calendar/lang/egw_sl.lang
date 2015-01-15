@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	sl	%1 %2 v %3
+%1 hours	calendar	sl	%1 ur
 %1 records imported	calendar	sl	%1 zapisov uvoženih
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sl	%1 zapisov prebranih (niso še uvoženi, lahko greste nazaj in pregledate test uvoza)
 %1 weeks	calendar	sl	%1 tednov
@@ -92,6 +93,7 @@ created	calendar	sl	Ustvarjeno
 csv	calendar	sl	CSV
 csv-fieldname	calendar	sl	CSV-Ime polja
 csv-filename	calendar	sl	CSV-Ime datoteke
+custom	calendar	sl	Lasten
 custom fields	common	sl	Lastno polje
 custom_2	common	sl	Prosto/zasedeno
 daily	calendar	sl	Dnevno

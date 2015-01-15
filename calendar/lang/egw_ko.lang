@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	ko	%3에 %1 %2
+%1 hours	calendar	ko	%1 시간
 %1 records imported	calendar	ko	%1개의 레코드를 가져왔습니다.
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ko	%1개 항목을 읽음 ( 아직 가져오기를 수행하지 않음, 뒤로돌아가기를 선택해서 가져오기테스트를 체크해제 할 수 있습니다)
 accept	calendar	ko	수락
@@ -48,6 +49,7 @@ create new links	calendar	ko	새 링크개설
 created	calendar	ko	생성됨
 csv-fieldname	calendar	ko	컴마구분값-필드이름
 csv-filename	calendar	ko	컴마구분값-파일이름
+custom	calendar	ko	사용자정의
 custom fields	common	ko	사용자정의 필드
 daily	calendar	ko	매일
 day	calendar	ko	날

@@ -1,5 +1,6 @@
 %1 already exists as a file	filemanager	no	%1 finnes allerede som en fil
 actions	filemanager	no	Funksjoner
+administrators	filemanager	no	administratorer
 applications	common	no	Applikasjoner
 cancel editing %1 without saving	filemanager	no	Avbryt redigering %1 uten å lagre
 cannot create directory because it begins or ends in a space	filemanager	no	Kan ikke opprette mappe fordi den begynner eller slutter med mellomrom
@@ -23,9 +24,13 @@ deleted %1	filemanager	no	Slettet %1
 directory	filemanager	no	Mappe
 directory %1 already exists	filemanager	no	Mappe %1 finnes allerede
 directory %1 does not exist	filemanager	no	Mappe %1 finnes ikke
+disable	filemanager	no	Deaktiver
 download	filemanager	no	Last ned
 edit comments	filemanager	no	Rediger kommentarer
-file	filemanager	no	Fil
+enable	filemanager	no	muliggjør
+everyone	filemanager	no	Alle
+expires	filemanager	no	Går ut
+file	common	no	Fil
 file %1 could not be created.	filemanager	no	Filen %1 kunne ikke opprettes
 file names cannot contain "%1"	filemanager	no	Filnavn kan ikke inneholde "%1"
 filemanager	common	no	Filhåndterer
@@ -48,6 +53,7 @@ no files in this directory.	filemanager	no	Ingen filer i mappen
 no version history for this file/directory	filemanager	no	Ingen versjon for denne filen/mappen
 open	filemanager	no	åpen
 operation	filemanager	no	Operasjon
+percentage	filemanager	no	Prosent
 permissions	filemanager	no	Tillatelser
 please select a file to delete.	filemanager	no	Vennligst velg en fil å slette
 preview	filemanager	no	Forhåndsvis

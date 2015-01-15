@@ -3,7 +3,11 @@ all categories	resources	el	Όλες οι κατηγορίες
 check all	resources	el	Έλεγχος όλων
 configure access permissions	admin	el	Τροποποίηση Άδειας Εισόδου
 create new links	resources	el	Δημιουργία νέων συνδέσμων
+custom etemplate for the contactform	resources	el	Προσαρμογή eΤαμπλέτας για τη φόρμα επαφών
+custom fields	resources	el	Προσαρμοσμένα πεδία
+days	resources	el	ημέρες
 delete this entry	resources	el	δαγραφή αυτής της καταχώρησης
+deleted	resources	el	διεγράφη
 edit this entry	resources	el	Επιμέλεια αυτής της καταχώρησης
 existing links	resources	el	Υπάρχοντες σύνδεσμοι
 general	resources	el	Γενικά
@@ -17,4 +21,6 @@ quantity	resources	el	Ποσότητα
 read permissions	resources	el	Ανάγνωση αδειών
 resources	common	el	Πόροι
 select resources	common	el	Επιλέξτε πόρους
+the anonymous user needs add rights for it!	resources	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα για να προσθέσει σε αυτό!
 write permissions	resources	el	Γραφή αδειών
+yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί

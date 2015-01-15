@@ -12,6 +12,7 @@
 %1 you delegated is due at %2	infolog	sk	%1 - delegovali ste, termín je %2
 %1 you delegated is starting at %2	infolog	sk	%1 - delegovali ste, začína sa %2
 (and children) deleted	infolog	sk	(a potomkov) odstránených.
+(no subject)	infolog	sk	(bez predmetu)
 - subprojects from	infolog	sk	- Podprojekty od (z)
 0%	infolog	sk	0%
 10%	infolog	sk	10%
@@ -154,7 +155,7 @@ do you want a notification, if items you delegated are about to start?	infolog	s
 do you want a notification, if items you delegated are due?	infolog	sk	Chcete dostať pripomienku, keď nastane termín splnenia tých položiek, ktoré ste delegovali?
 do you want to receive notifications as html-mails or plain text?	infolog	sk	E-mailové pripomienky chcete dostávať ako HTML, alebo ako čistý text?
 don't show infolog	infolog	sk	NEzobrazovať Záznamník
-done	common	sk	Hotovo
+done	infolog	sk	Hotovo
 download	infolog	sk	Stiahnuť
 due %1	infolog	sk	Termín %1
 duration	infolog	sk	Trvanie
@@ -178,10 +179,16 @@ entry and all files	infolog	sk	Záznam a všetky súbory
 error: importing the ical	infolog	sk	Chyba: import iCal-u
 error: saving the entry	infolog	sk	Chyba pri ukladaní záznamu
 error: the entry has been updated since you opened it for editing!	infolog	sk	Chyba: odkedy ste záznam otvorili pre úpravy, bol medzitým aktualizovaný!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 execute a further action for this entry	infolog	sk	Vykonať ďalšiu akciu pre túto položku
 existing links	infolog	sk	Existujúce odkazy
 exists	infolog	sk	Existuje
+export definition to use for nextmatch export	infolog	sk	Exportná definícia pre použitie v exporte
 exports infolog entries into a csv file.	infolog	sk	Exportuje položky Záznamníka do CSV súboru.
+favorites	infolog	sk	Obľúbené
 fax	infolog	sk	Fax
 field must not be empty !!!	infolog	sk	Pole nesmie byť prázdne!!!
 fields to exclude when copying an infolog:	infolog	sk	Polia, ktoré vynechať pri kopírovaní Záznamníka:
@@ -192,6 +199,7 @@ first argument for preg_replace	infolog	sk	Prvý parameter pre preg_replace
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	sk	Použite túto značku pre hromadnú správu. Obsah, ktorý chcete opakovať, umiestnite medzi dve takéto značky.
 for which types should this field be used	infolog	sk	Pre ktoré typy sa má použiť toto pole
 from	infolog	sk	Od
+general fields:	infolog	sk	Všeobecné polia:
 global categories	infolog	sk	Globálne kategórie
 group owner for	infolog	sk	Skupinový vlastník pre
 high	infolog	sk	Vysoká
@@ -204,6 +212,9 @@ id	infolog	sk	ID
 id#	infolog	sk	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sk	Ak tento typ MÁ skupinového vlastníka, všetky záznamy tohto typu bude vlastniť zadaná skupina a NIE používateľ, ktorý záznam vytvoril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sk	Ak nie je nastavené, riadok vyhľadávania a filtrov je skrytý pre menej záznamov než "maximálny počet záznamov zobrazených na stránke" (ako je definované v bežných nastaveniach).
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	sk	Ak zadáte priečinok, plnú vfs cestu, %1 zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť vybraný dokument s vloženými dátami.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	sk	Ak zadáte dokument, plnú vfs cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
+if you specify an export definition, it will be used when you export	infolog	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch.
 import next set	infolog	sk	Importovať ďalšiu sadu
 importance	infolog	sk	Dôležitosť
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	sk	Naimportuje položky do Záznamníka z CSV súboru. CSV znamená 'Comma Separated Values'. V karte možností môžete vybrať aj iné oddeľovače.
@@ -239,15 +250,16 @@ leave it empty	infolog	sk	Ponechať prázdne
 leave it empty for a full week	infolog	sk	Ponechať prázdne po celý týždeň
 leave without saveing the entry	infolog	sk	Odísť bez uloženia záznamu
 leaves without saveing	infolog	sk	Odísť bez uloženia
-length<br>rows	infolog	sk	Dĺžka<br>Riadky
 limit number of description lines (default 5, 0 for no limit)	infolog	sk	Obmedziť počet riadkov opisu (0 znamená bez limitu; predvolené: 5)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	sk	Obmedziť šírku stĺpca popisu. Uplatní sa len ak je nastavené obmedzenie riadkov. 0 = bez obmedzenia.
 link	infolog	sk	Odkaz
 linked to %1	infolog	sk	Pripojené na %1
 links	infolog	sk	Odkazy
+links and attached files	infolog	sk	Odkazy a priložené súbory
 links of this entry	infolog	sk	Odkazy pre tento záznam
+links to specified application.  example: {{links/infolog}}	infolog	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 list all categories	infolog	sk	Zobraziť všetky kategórie
-list no subs/childs	infolog	sk	Neukazuj Podradené / Dcérske
+list of files linked to the current record	infolog	sk	Zoznam súborov priložených k súčasnému záznamu
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	sk	Načítať vlastné polia v indexe, ak je filtrovanie podľa vybraných typov (napr. aby sa zobrazili v typovo-špecifickej indexovej šablóne)
 location	infolog	sk	Umiestnenie
 longer textual description	infolog	sk	Dlhší opisný text
@@ -281,6 +293,7 @@ note	infolog	sk	Poznámka
 number of records to read (%1)	infolog	sk	Počet záznamov, ktoré sa majú načítať (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	sk	číslo riadku pre viacriadkové vstupné pole alebo riadok vo výberovom okne
 offer	infolog	sk	Ponuka
+old fixed definition	infolog	sk	Stará pevná definícia
 one day after	infolog	sk	Deň po
 one day in advance	infolog	sk	1 deň v predstihu
 ongoing	infolog	sk	Prebiehajúce
@@ -353,6 +366,7 @@ responsible upcoming	infolog	sk	Zodpovednosť - blížiace sa
 responsible user, priority	infolog	sk	Zodpovedný používateľ, priorita
 returns a list / search for records.	infolog	sk	Vráti zoznam / hľadanie záznamov.
 rights for the responsible	infolog	sk	Práva pre zodpovednú osobu
+rows	infolog	sk	Riadky
 same day	infolog	sk	V ten deň
 save	infolog	sk	Uložiť
 saves the changes made and leaves	infolog	sk	Uloží vykonané zmeny a odíde
@@ -420,12 +434,14 @@ task	infolog	sk	Úloha
 tasks of	infolog	sk	Úlohy pre
 template	infolog	sk	Šablóna
 test import (show importable records <u>only</u> in browser)	infolog	sk	Test importu (zobraz importovateľné záznamy <u>iba</u> v prehliadači)
+the following document-types are supported:	infolog	sk	Podporované sú nasledovné typy dokumentov:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne používané meno (<= 10 znakov), jeho zmena zneprístupní existujúce údaje
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne používané meno (<= 20 znakov), jeho zmena zneprístupní existujúce údaje
 the text displayed to the user	infolog	sk	Text zobrazený používateľovi
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sk	Toto je filter, ktorý Záznamník používa keď otvoríte aplikáciu. Filtre obmedzujú, ktoré záznamy sú zobrazené vo vybranom pohľade. Sú tu filtre na zobrazenie iba dokončených záznamov, alebo naopak -ešte otvorených, alebo budúcich záznamov, a to buď Vaších, alebo všetkých používateľov.
 til when should the todo or phonecall be finished	infolog	sk	Dokiaľ sa nedokončí Úloha alebo Telefonát
 times	infolog	sk	Časy
+titles of any entries linked to the current record, excluding attached files	infolog	sk	Názvy akýchkoľvek položiek pripojených na súčasný záznam, okrem priložených súborov
 to many might exceed your execution-time-limit	infolog	sk	Ak priveľa, môže dôjsť k prekročeniu Vašich obmedzení ohľadom povoleného času behu aplikácie
 to what should the startdate of new entries be set.	infolog	sk	Ako má byť nastavený dátum začatia u nových záznamov?
 today	infolog	sk	Dnes

@@ -37,6 +37,7 @@ actions	common	hu	Műveletek
 active	common	hu	Aktív
 add	common	hu	Hozzáad
 add %1 category for	common	hu	%1 kategória hozzáadása
+add a new contact	common	hu	Új kapcsolat hozzáadása
 add category	common	hu	Kategória hozzáadása
 add shortcut	common	hu	Gyorsbillentyű hozzáadása
 add sub	common	hu	Albejegyzés hozzáadása
@@ -246,9 +247,11 @@ estonia	common	hu	Észtország
 ethiopia	common	hu	Etiópia
 everything	common	hu	Minden
 exact	common	hu	pontos
+failed to change password.	common	hu	Sikertelen jelszó változtatás.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	hu	Szerverhez csatlakozás sikertelen vagy a szerver válasza érvénytelen. Próbáljon újra bejelentkezni. Hiba esetén értesítse az adminisztrátort.
 falkland islands (malvinas)	common	hu	Falkland-szigetek
 faroe islands	common	hu	Faroe-szigetek
+favorites	common	hu	Kedvencek
 fax number	common	hu	faxszám
 features of the editor?	common	hu	A szerkesztő tulajdonságai?
 february	common	hu	Február
@@ -387,6 +390,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	hu	Lista
 list members	common	hu	Listatagok
 lithuania	common	hu	Litvánia
+load	common	hu	Betöltés
 local	common	hu	Helyi
 locations	common	hu	helyek
 login	common	hu	Belépés
@@ -455,6 +459,7 @@ niger	common	hu	Niger
 nigeria	common	hu	Nigéria
 niue	common	hu	Niue
 no	common	hu	Nem
+no - cancel	common	hu	Nem - Mégsem
 no entries found, try again ...	common	hu	nem található bejegyzés, próbálja újra
 no history for this record	common	hu	Ehhez a rekordhoz nem tartoznak előzmények
 no savant2 template directories were found in:	common	hu	Nem található Savant2 sablon könyvtár ezen a helyen:
@@ -529,6 +534,7 @@ please set your preferences for this application	common	hu	Kérem állítsa be s
 please wait...	common	hu	Kérem várjon és figyelje a homokórát a szemközti falon...
 please, check back with us shortly.	common	hu	Kérlek nézz vissza kicsit később.
 poland	common	hu	Lengyelország
+popup with search	common	hu	Felugró ablak kereséssel
 portugal	common	hu	Portugália
 postal	common	hu	Postai
 powered by	common	hu	Powered by
@@ -587,6 +593,7 @@ search or select accounts	common	hu	Fiók keresés vagy kiválasztás
 second	common	hu	másodperc
 section	common	hu	Bekezdés
 select	common	hu	Kiválaszt
+select all	common	hu	Minden kiválasztása
 select all %1 %2 for %3	common	hu	Mindet kiválaszt %1 %2 innen %3
 select category	common	hu	Kategória választás
 select date	common	hu	dátum választás
@@ -751,6 +758,8 @@ written by:	common	hu	Írta:
 year	common	hu	Év
 yemen	common	hu	Jemen
 yes	common	hu	Igen
+yes - delete	common	hu	Igen - Töröl
+yes - delete including sub-entries	common	hu	Igen - Törlés az összes albejegyzéssel együtt
 you are required to change your password during your first login	common	hu	Első bejelentkezéskor meg kell változtatnia a jelszavát
 you can customize how many icons and toolbars the editor shows.	common	hu	Beállíthatja a szerkesztőben megjelenítendő ikonokat és eszköztárakat.
 you have been successfully logged out	login	hu	Sikeresen kijelentkezett a rendszerből
@@ -768,7 +777,6 @@ your message could <b>not</b> be sent!<br>	common	hu	Az üzenet <b>nem<b> kerül
 your message has been sent	common	hu	Üzenet elküldve
 your search returned %1 matchs	common	hu	Keresés végeredménye: %1 találat
 your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
-your session could not be verified.	login	hu	A hozzáférése nem ellenőrizhető.
 your settings have been updated	common	hu	A beállításai módosításra kerültek
 zambia	common	hu	Zambia
 zimbabwe	common	hu	Zimbabwe

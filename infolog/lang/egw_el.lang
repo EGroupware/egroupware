@@ -5,6 +5,7 @@
 %1 modified by %2 at %3	infolog	el	%1 επεξεργάστηκαν από %2 στις %3
 %1 records imported	infolog	el	%1 εγγραφές εισήχθησαν
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	el	Έχουν διαβαστεί %1 εγγραφές (δεν έχουν εισαχθεί ακόμη, μπορείτε να πάτε %2 πίσω %3 και να ξετσεκάρετε το Τεστ Εισαγωγής)
+(no subject)	infolog	el	(κανένα θέμα)
 - subprojects from	infolog	el	- Υποκατηγορίες σχεδίων από
 0%	infolog	el	0%
 10%	infolog	el	10%
@@ -113,7 +114,7 @@ do you want a notification, if items you delegated are about to start?	infolog	e
 do you want a notification, if items you delegated are due?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε εξουσιοδοτημένος έχουν καθυστερήσει;
 do you want to receive notifications as html-mails or plain text?	infolog	el	Επιθυμείτε να λαμβάνετε ειδοποιήσεις ως html-mails ή απλό κείμενο;
 don't show infolog	infolog	el	ΜΗΝ εμφανίζετε το InfoLog
-done	common	el	ολοκληρώθηκε
+done	infolog	el	ολοκληρώθηκε
 download	infolog	el	Download
 duration	infolog	el	Διάρκεια
 each value is a line like <id>[=<label>]	infolog	el	κάθε αξία είναι μία γραμμή όπως <id>[=<label>]
@@ -142,6 +143,7 @@ fieldseparator	infolog	el	Διαχωριστής πεδίων
 finish	infolog	el	τέλος
 for which types should this field be used	infolog	el	για ποιους τύπους να χρησιμοποιηθεί αυτό το πεδίο
 from	infolog	el	Από
+general fields:	infolog	el	Γενικά πεδία:
 global categories	infolog	el	Παγκόσμιες κατηγορίες
 high	infolog	el	υψηλή
 history	infolog	el	Ιστορικό
@@ -171,12 +173,10 @@ last modified	infolog	el	Τελευταία προσαρμογή
 leave it empty	infolog	el	να μείνει κενό
 leave without saveing the entry	infolog	el	αποχώρηση χωρίς αποθήκευση της καταχώρησης
 leaves without saveing	infolog	el	αποχωρεί χωρίς αποθήκευση
-length<br>rows	infolog	el	Μήκος<br>Γραμμών
 link	infolog	el	Σύνδεσμος
 links	infolog	el	Σύνδεσμοι
 links of this entry	infolog	el	Σύνδεσμοι αυτής της καταχώρησης
 list all categories	infolog	el	Να μπουν σε λίστα όλες οι κατηγορίες
-list no subs/childs	infolog	el	Να μην εμφανίζονται οι υπο- καταχωρήσεις
 location	infolog	el	Τοποθεσία
 longer textual description	infolog	el	εκτενέστερη περιγραφή κειμένου
 low	infolog	el	χαμηλή
@@ -257,6 +257,7 @@ responsible upcoming	infolog	el	υπεύθυνος επερχόμενα
 responsible user, priority	infolog	el	υπεύθυνος χρήστης, προτεραιότητα
 returns a list / search for records.	infolog	el	Επιστρέφει μια λίστα/αναζήτηση για εγγραφές
 rights for the responsible	infolog	el	Δικαιώματα για τον υπεύθυνο
+rows	infolog	el	Γραμμές
 same day	infolog	el	ίδια ημέρα
 save	infolog	el	Αποθήκευση
 saves the changes made and leaves	infolog	el	αποθηκεύει τις αλλαγές που έγιναν και αποχωρεί

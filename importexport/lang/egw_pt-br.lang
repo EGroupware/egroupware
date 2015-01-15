@@ -12,6 +12,7 @@ addressbook csv import	importexport	pt-br	Endereços CSV Import
 addressbook vcard import	importexport	pt-br	Importação de endereços vCard
 admin disabled exporting	importexport	pt-br	Exportação desativado Administrador
 all encodings	importexport	pt-br	Todas as codificações
+all users	importexport	pt-br	Todos usuários
 allowed users	importexport	pt-br	Usuários permitidos
 automatically created by importexport	importexport	pt-br	Automaticamente criado por importar/exportar
 basic csv import	importexport	pt-br	Importação CSV Básico

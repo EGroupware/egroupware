@@ -21,8 +21,11 @@ clear selection	resources	eu	Garbitu hautaketa
 configure access permissions	admin	eu	Sarrera Baimenak Kudeatu
 create new accessory for this resource	resources	eu	Osagarri berria sortu errekurtsoarendako
 create new links	resources	eu	Esteka berria sortu
+custom fields	resources	eu	Egokitu Eremuak
+days	resources	eu	egunak
 delete selected resources	resources	eu	Ezabatu hautatutako errekurtsoak
 delete this entry	resources	eu	Sarrera hau ezabatu
+deleted	resources	eu	ezabatua
 description (short)	resources	eu	Deskribapena (motza)
 direct booking permissions	resources	eu	Zuzeneko erretserbarako baimenak
 don't use vfs (this will need a symlink --> see readme)	resources	eu	ez erabili VFS (symlink bat beharko luke --> ikusi README)

@@ -19,8 +19,11 @@ check all	resources	lo	ເລືອກທັງໝົດ
 choose categories admin	resources	lo	ເລືອກໝວດໝູ່ຜູ້ຄຸ້ມຄອງລະບົບ
 clear selection	resources	lo	ລຶບລ້າງການເລືອກ
 configure access permissions	admin	lo	ກຳໜົດສິດໃນການເຂົ້າໃຊ້
+conflict	resources	lo	ການຂັດແຍ່ງ
 create new accessory for this resource	resources	lo	ສ້າງອຸປະກອນເສີມໃໝ່ສຳລັບຊັບພະຍາກອນນີ້
 create new links	resources	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+custom fields	resources	lo	ກໍານົດ fields
+days	resources	lo	ວັນ
 delete selected resources	resources	lo	ລຶບຊັບພະຍາກອນທີ່ໄດ້ເລືອກ
 delete this entry	resources	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
 description (short)	resources	lo	ລາຍລະອຽດ(ສັ້ນໆ)

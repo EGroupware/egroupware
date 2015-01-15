@@ -4,14 +4,18 @@ check all	filemanager	et	Kontrolli kõik
 comment	filemanager	et	Kommentaar
 created	filemanager	et	Tehtud
 cut	filemanager	et	Lõika
+disable	filemanager	et	Keela
 download	filemanager	et	Lae alla
-file	filemanager	et	Pail
+enable	filemanager	et	luba
+expires	filemanager	et	Aegub
+file	common	et	Pail
 general	filemanager	et	Üldine
 id	filemanager	et	Id
 link	filemanager	et	Link
 location	filemanager	et	Asukoht
 modified	filemanager	et	Muudetud
 move	filemanager	et	liiguta
+noone	filemanager	et	Mittekeegi
 open	filemanager	et	avatud
 permissions	filemanager	et	Õigused
 preview	filemanager	et	Eelvaade

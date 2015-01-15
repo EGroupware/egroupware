@@ -6,6 +6,8 @@ all projects	timesheet	it	Tutti i progetti
 applies the changes	timesheet	it	applica le modifiche
 both: allow to use projectmanager and free project-names	admin	it	Entrambi: permetti di usare Gestione Progetti e nomi-progetto liberi
 by	timesheet	it	di
+change category	timesheet	it	Modifica categoria
+changed category to %1	timesheet	it	Categoria modificata in %1
 check all	timesheet	it	Seleziona tutto
 comment by %1 at %2:	timesheet	it	Commento di %1 il %2:
 create new links	timesheet	it	Crea nuovi collegamenti
@@ -27,15 +29,26 @@ entry deleted	timesheet	it	Voce eliminata
 entry saved	timesheet	it	Voce salvata
 error deleting the entry!!!	timesheet	it	Errore durante cancellazione voce!!!
 error saving the entry!!!	timesheet	it	Errore durante salvataggio voce!!!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} Esempio: Sig. Dott. Giorgio Rossi
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	it	Esempio {{NELFNV role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
 existing links	timesheet	it	Collegamenti esistenti
 exists	timesheet	it	Esiste
+export definition to use for nextmatch export	timesheet	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
+favorites	timesheet	it	Preferiti
 field must not be empty !!!	timesheet	it	Il campo non può essere vuoto !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
 full: use only projectmanager	admin	it	Pieno: usa solo Gestione Progetti
+general fields:	timesheet	it	Campi generali
 global categories	timesheet	it	Categorie Globali
 history	timesheet	it	Storico
 history logging	admin	it	Registrazione dello storico
+html link to the current record	timesheet	it	Collegamento HTML al record attuale
 id	timesheet	it	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà l'azione per ogni documento. Quella azione permette di scaricare il documento specificato con i dati %1 inseriti
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
+if you specify an export definition, it will be used when you export	timesheet	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 ignore	timesheet	it	Ignora
 insert	timesheet	it	Inserisci
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	it	ID proprietario non valido: %1. Potrebbe essere una traduzione errata del campo. Usare %2.
@@ -47,6 +60,9 @@ leave it empty for a full week	timesheet	it	Lascia vuoto per una settimana compl
 leaves without saveing	timesheet	it	esce senza salvare
 length<br>rows	timesheet	it	Lunghezza<br>Righe
 links	timesheet	it	Collegamenti
+links and attached files	timesheet	it	Collegamenti e file allegati
+links to specified application.  example: {{links/infolog}}	timesheet	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
+list of files linked to the current record	timesheet	it	Elenco dei file collegati al record attuale
 max length of the input [, length of the inputfield (optional)]	timesheet	it	lunghezza massima del input [, length of the inputfield (optional)]
 modified	timesheet	it	Modificato
 name of current user, all other contact fields are valid too	timesheet	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
@@ -59,9 +75,12 @@ or endtime	timesheet	it	o OraFine
 order	timesheet	it	Ordine
 parent	timesheet	it	Superiore
 permission denied!!!	timesheet	it	Permesso negato!!!
+permissions error - %1 could not %2	timesheet	it	Errore di permessi - %1 non può %2
 price	timesheet	it	Prezzo
 projectmanager integration	admin	it	Integrazione Gestione Progetti
 quantity	timesheet	it	Quantità
+recovered	timesheet	it	recuperato
+replacements for inserting entries into documents	timesheet	it	Sostituzioni per inserimento voci in documenti
 save & new	timesheet	it	Salva & Nuovo
 saves the changes made	timesheet	it	Salva le modifiche fatte
 saves the changes made and leaves	timesheet	it	salva le modifiche fatte ed esce
@@ -72,6 +91,8 @@ start	timesheet	it	Inizio
 starttime	timesheet	it	OraInizio
 sum %1:	timesheet	it	Somma %1:
 tag to mark positions for address labels	timesheet	it	Tagga per marcare le posizioni per le etichette di indirizzo
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
+the following document-types are supported:	timesheet	it	I seguenti tipi di documenti sono supportati:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	it	il nome usato internamente (<= 20 caratteri), cambiarlo rende i dati esistenti indisponibili
 the text displayed to the user	timesheet	it	il testo mostrato all'utente
 this month	timesheet	it	Questo mese
@@ -79,10 +100,13 @@ this week	timesheet	it	Questa settimana
 this year	timesheet	it	Questo anno
 ticket modified by %1 at %2	timesheet	it	Ticket modificato da %1 al %2
 timesheet	common	it	Foglio Ore
+titles of any entries linked to the current record, excluding attached files	timesheet	it	I titoli delle voci collegate a questa, allegati esclusi
 unitprice	timesheet	it	Prezzo unitario
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 values for selectbox	timesheet	it	Valori per la selectbox
 view this entry	timesheet	it	Vedi questa voce
 week	timesheet	it	Settimana
+yes, only admins can purge deleted items	admin	it	Sì, solo gli amministratori possono cancellare definitivamente gli elementi
+yes, users can purge their deleted items	admin	it	Sì, gli utenti possono rimuovere definitivamente gli elementi eliminati.
 yesterday	timesheet	it	Ieri
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	it	Il tuo database NON è aggiornato (%1 contro %2), prego esegui %3setup%4 per aggiornare il database.

@@ -26,7 +26,8 @@ acl added.	filemanager	fr	ACL ajouté
 acl deleted.	filemanager	fr	ACL supprimé
 actions	filemanager	fr	Actions
 add to clipboard	filemanager	fr	Ajouter au presse-papier
-all files	common	fr	Tous les fichiers
+administrators	filemanager	fr	Administrateurs
+all files	filemanager	fr	Tous les fichiers
 allow a maximum of the above configured folderlinks to be configured in settings	admin	fr	Nombre max de liens vers des dossiers pouvant être configuré dans les préférences.
 and all it's childeren	filemanager	fr	et tous ses sous-éléments
 application fields	filemanager	fr	Champs de l'application
@@ -36,13 +37,15 @@ can't open directory %1!	filemanager	fr	Ne peut pas ouvrir le répertoire %1 !
 cancel editing %1 without saving	filemanager	fr	Annuler les modifications de "%1"
 cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
 check all	filemanager	fr	Vérifier tout
-check virtual filesystem	filemanager	fr	Vérifier le système de fichiers virtuel
+check virtual filesystem	common	fr	Vérifier le système de fichiers virtuel
 clear search	filemanager	fr	réinitialiser termes de la recherche
 clipboard is empty!	filemanager	fr	Le presse-papier est vide !
 comment	filemanager	fr	Commentaire
+configuration changed.	filemanager	fr	La configuration a été modifiée
 copied	filemanager	fr	Copié
 copied %1 to %2	filemanager	fr	Copié %1 vers %2
 copy	filemanager	fr	Copier
+copy into folder	filemanager	fr	Copier dans le dossier
 copy to	filemanager	fr	Copier vers
 copy to clipboard	filemanager	fr	Copier vers le presse-papier
 could not copy %1 to %2	filemanager	fr	N'a pas pu copier %1 vers %2
@@ -72,12 +75,14 @@ directory %1 does not exist	filemanager	fr	Le répertoire %1 n'existe pas
 directory not found or no permission to access it!	filemanager	fr	Répertoire non trouvé ou pas de permission d'accès !
 directory successfully created.	filemanager	fr	Répertoire créé avec succès !
 directory with documents to insert entries	filemanager	fr	Répertoire avec les documents pour insérer les entrées
+disable	filemanager	fr	Désactiver
 display and modification of content	filemanager	fr	Affichage et modification de contenu
 display of content	filemanager	fr	Affichage de contenu
 do you want to overwrite the existing file %1?	filemanager	fr	Voulez-vous écraser le fichier existant %1 ?
 download	filemanager	fr	Downloader
 edit comments	filemanager	fr	Modifier les commentaires
 edit settings	filemanager	fr	Modifier les paramètres
+enable	filemanager	fr	Activer
 enter setup user and password	filemanager	fr	Entrer un login et mot de passe de setup
 enter setup user and password to get root rights	filemanager	fr	Entrer un login et mot de passe de setup pour obtenir les droits root
 enter the complete vfs path to specify a fast access link to a folder	filemanager	fr	Entrer le chemin VFS complet pour spécifier un accès rapide à un dossier.
@@ -87,14 +92,16 @@ error creating symlink to target %1!	filemanager	fr	Erreur à la création du li
 error deleting the acl entry!	filemanager	fr	Erreur à la suppression de l'entrée ACL !
 error uploading file!	filemanager	fr	Erreur à l'upload du fichier !
 error while creating directory.	filemanager	fr	Erreur à la création du dossier
+everyone	filemanager	fr	Tout le monde
 executable	filemanager	fr	Exécutable
+expires	filemanager	fr	Expire
 export definition to use for nextmatch export	filemanager	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 extended access control list	filemanager	fr	Droits d'accès (ACL) étendus
 extended acl	filemanager	fr	ACL étendus
 failed to change permissions of %1!	filemanager	fr	Echec du changement des droits sur %1 !
 failed to create directory!	filemanager	fr	Echec de la création du répertoire !
 favorites	filemanager	fr	Favoris
-file	filemanager	fr	Fichier
+file	common	fr	Fichier
 file %1 could not be created.	filemanager	fr	Le fichier %1 n'a pas pu être créé.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	fr	Le fichier %1 est peut-être trop volumineux.
 file deleted.	filemanager	fr	Fichier supprimé
@@ -118,7 +125,9 @@ go to	filemanager	fr	Aller dans
 go to your home directory	filemanager	fr	Aller dans votre répertoire "home" (maison)
 go up	filemanager	fr	Remonter
 id	filemanager	fr	Id
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
 if you specify an export definition, it will be used when you export	filemanager	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
+if you specify an export definition, it will be used when you export*	filemanager	fr	Si vous spécifier un format d'export, il sera utilisé à l'export*
 inherited	filemanager	fr	hérité
 link	filemanager	fr	Lien
 link %1: %2	filemanager	fr	Lien %1: %2
@@ -133,6 +142,7 @@ modified	filemanager	fr	Modifié
 modified between	filemanager	fr	Modifié entre
 modify all subdirectories and their content	filemanager	fr	Modifier tous les sous-répertoires et leurs contenus
 move	filemanager	fr	Déplacer
+move into folder	filemanager	fr	Déplacer vers un dossier
 move to	filemanager	fr	Déplacer dans
 moved %1 to %2	filemanager	fr	Déplacé %1 dans %2
 name of current user, all other contact fields are valid too	filemanager	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
@@ -141,9 +151,11 @@ no access	filemanager	fr	Pas d'accès
 no files in this directory.	filemanager	fr	Pas de fichiers dans ce répertoire.
 no preview available	filemanager	fr	Aucune prévisualisation disponible.
 no version history for this file/directory	filemanager	fr	Pas d'historique de versions pour ce fichier/répertoire
+noone	filemanager	fr	Personne
 only owner can rename or delete the content	filemanager	fr	Seul le propriétaire peut renommer ou supprimer le contenu.
 open	filemanager	fr	Ouvrir
 operation	filemanager	fr	Opération
+percentage	filemanager	fr	Pourcentage
 permission denied!	filemanager	fr	Permission refusée !
 permissions	filemanager	fr	Permissions
 permissions of %1 changed.	filemanager	fr	Permissions de %1 modifiées !

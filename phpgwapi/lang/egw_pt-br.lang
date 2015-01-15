@@ -6,6 +6,7 @@
 %1 to sync	groupdav	pt-br	1% para sincronizar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
+'%1' is no php file in the egw server root (%2)!	common	pt-br	'%1' não é um arquivo php na pasta raiz do servidor eGW (%2)!
 (session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
 (shift-)click or drag to change value	jscalendar	pt-br	(Shift-) Clique ou arraste para alterar o valor
 - click on any of the time parts to increase it	jscalendar	pt-br	- Clique sobre as horas para alterá-las
@@ -78,6 +79,7 @@ are you sure you want to delete this entry ?	common	pt-br	Deseja remover este re
 argentina	common	pt-br	ARGENTINA
 armenia	common	pt-br	ARMENIA
 aruba	common	pt-br	ARUBA
+attachment	common	pt-br	acessório
 august	common	pt-br	Agosto
 australia	common	pt-br	AUSTRALIA
 austria	common	pt-br	AUSTRIA
@@ -869,7 +871,6 @@ your password failed the following criteria:	common	pt-br	Sua senha falhou os se
 your password might not match the password policy.	common	pt-br	Sua senha pode não coincidir com a política de senha.
 your search returned %1 matchs	common	pt-br	Sua pesquisa retornou %1 ocorrências
 your search returned 1 match	common	pt-br	Sua pesquisa retornou 1 ocorrência
-your session could not be verified.	login	pt-br	Sua sessão não pôde ser verificada
 your settings have been updated	common	pt-br	Suas preferências foram atualizadas
 zambia	common	pt-br	ZÂMBIA
 zimbabwe	common	pt-br	ZIMBABUE

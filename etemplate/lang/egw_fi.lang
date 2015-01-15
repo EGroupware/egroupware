@@ -22,6 +22,7 @@ a pattern to be searched for	etemplate	fi	Hakuehdot
 accesskey	etemplate	fi	Käyttöavain
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	fi	Käyttöavaimet voidaan myös määritellä & merkeillä otsikossa (esim. &nimi)
 account contactdata	etemplate	fi	Tilin yhteystieto
+actions...	etemplate	fi	Toiminnot
 add a new column (after the existing ones)	etemplate	fi	Lisää uusi sarake
 add a new entry of the selected application	etemplate	fi	Lisää uusi merkintä sovellukseen
 add a new multi-column index	etemplate	fi	Lisää uusi monisarakkeen indeksi
@@ -29,12 +30,14 @@ add column	etemplate	fi	Lisää sarake
 add index	etemplate	fi	Lisää indeksi
 add new	etemplate	fi	Lisää uusi
 add table	etemplate	fi	Lisää taulukko
+add to clipboard	etemplate	fi	Lisää leikepöydälle
 advanced search	etemplate	fi	Tarkempi haku
 align	etemplate	fi	Tasaa
 alignment of label and input-field in table-cell	etemplate	fi	Otsikon ja syöttökentän tasaus taulukon solussa
 alignment of the v/hbox containing table-cell	etemplate	fi	Sisennys V/HBox:ssaa sisältäen taulukon solun
 all days	etemplate	fi	Kaikki päivät
 all operations save the template!	etemplate	fi	Kaikki toiminnot tallentavat mallipohjan!
+all users	etemplate	fi	Kaikki käyttäjät
 allowed file type: %1	etemplate	fi	Sallittu tiedostotyyppi: %1
 am	etemplate	fi	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fi	Indeksoitu sarake nopeuttaa kyselyjen käyttöä sarakkeessa, maksaa tilaa levyllä!
@@ -90,6 +93,7 @@ contact	etemplate	fi	Yhteystiedot
 contact field to show	etemplate	fi	Näytä yhteystietokenttä
 contact fields	etemplate	fi	Yhteystietokentät
 contains	etemplate	fi	Sisältää
+copy to clipboard	etemplate	fi	Kopioi leikepöydälle
 create a new table for the application	etemplate	fi	Luo uusi taulukko sovellukselle
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fi	Luodaan englanninkielinen ('en') kielitiedosto otsikosta ja ohjetekstit
 creator	preferences	fi	Luoja
@@ -102,9 +106,8 @@ custom	etemplate	fi	Valinnan mukaan
 custom fields	etemplate	fi	Lisäkentät
 custom javascript for onchange	etemplate	fi	Oma javascripti kohtaan onChange
 cut	etemplate	fi	Leikkaa
-date	preferences	fi	Päiväys
+date	etemplate	fi	Päiväys
 date+time	etemplate	fi	Päivämäärä ja aika
-datum	etemplate	fi	Päiväys
 day	etemplate	fi	Päivä
 days	etemplate	fi	Päivää
 db ensures that every row has a unique value in that column	etemplate	fi	DB varmistaa että jokaisella rivillä on ainutlaatuinen arvo sarakkeessa.
@@ -195,6 +198,7 @@ go to the previous page of entries	etemplate	fi	Mene edellisen sivun merkintöih
 grid	etemplate	fi	Ruudukko (Grid)
 grid column attributes	etemplate	fi	Ruudukon sarake-atribuutit
 grid row attributes	etemplate	fi	Ruudukon rivi-atribuutit
+h	etemplate	fi	t
 hbox	etemplate	fi	HBox
 height	etemplate	fi	Korkeus
 height of row (in % or pixel)	etemplate	fi	Rivin korkeus (% tai pikseleinä)
@@ -208,6 +212,7 @@ hour	etemplate	fi	Tunti
 hours	etemplate	fi	Tuntia
 how many entries should the list show	etemplate	fi	Kuinka monta merkintää näytetään listalla
 html	etemplate	fi	HTML
+id	etemplate	fi	Id
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fi	Jo kenttä ei ole sallittu, tyhjä solu näytetään
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fi	Määrittele kansio (koko vfs polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
@@ -246,6 +251,7 @@ linkstring	etemplate	fi	Linkki merkkijonoon
 linkto	etemplate	fi	Linkki
 list of files linked to the current record	preferences	fi	Lista liitetyistä tiedostoista
 load this template into the editor	etemplate	fi	Lataa mallipohja muokattavaksi
+loading	etemplate	fi	Ladataan
 maximum size for uploads	filemanager	fi	Latauksen maksimikoko
 message ...	etemplate	fi	Viesti...
 message(s) send failed!	etemplate	fi	Lähetys epäonnistui!
@@ -256,12 +262,14 @@ minutes	etemplate	fi	Minuuttia
 missing: %1	etemplate	fi	Puuttuva: %1
 modifier	preferences	fi	Muokkaaja
 month	etemplate	fi	Kuukausi
+more	etemplate	fi	Enemmän
 more than 1 match for '%1'	etemplate	fi	Useampi kuin yksi osuma kohteelle '%1'
 multicolumn indices	etemplate	fi	Usean sarakkeen indeksi
 name	etemplate	fi	Nimi
 name of other table where column is a key from	etemplate	fi	Toisen taulukon nimi missä sarake on avain
 name of table to add	etemplate	fi	Lisää taulukon nimi
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	fi	Mallipohjan nimi, täytyy olla lomakkeessa sovellus.funktio[.alimalli]
+new	etemplate	fi	Uusi
 new search	common	fi	Uusi haku
 new table created	etemplate	fi	Uusi taulukon nimi
 newer version '%1' exists !!!	etemplate	fi	Uudempi versio %1 havaittu !!!
@@ -276,6 +284,7 @@ nothing	etemplate	fi	Ei mitään
 nothing found - try again !!!	etemplate	fi	Mitään ei löydetty - yritä uudelleen !!!
 nothing in clipboard to paste !!!	etemplate	fi	Leikepöydällä ei ole mitään liitettävää !!!
 nothing matched search criteria !!!	etemplate	fi	Mikään ei ole yhteensopiva haun kriteerien kanssa !!!
+now	etemplate	fi	Nyt
 of	etemplate	fi	/
 onchange	etemplate	fi	onChange
 onclick	etemplate	fi	onClick
@@ -303,14 +312,18 @@ read a list of entries.	etemplate	fi	Lue tietueiden listaa
 read a single entry by passing the id and fieldlist.	etemplate	fi	Lue yksittäinen tietue ohittaen id ja kentän lista.
 read etemplate from database (for the keys above)	etemplate	fi	Lue eMallipohja tietokannasta (avaimet yläpuolella)
 readonly	etemplate	fi	Vain lukuoikeus
+refresh	etemplate	fi	Päivitä
 remove row (can not be undone!!!)	etemplate	fi	Siirrä rivi (lopullinen, ei voida palauttaa !!!)
 remove this link (not the entry itself)	etemplate	fi	Poista tämä linkki (ei poista itse merkintää)
 required	etemplate	fi	Vaaditut
+reset	etemplate	fi	Tyhjennä
 restore all	etemplate	fi	Palauta kaikki
 restore all application templates, overwriting existing ones with identical version number	etemplate	fi	Palauta kaikki sovellusmallipohjat. Päällekirjoittaa samalla versionumerolla olevat mallipohjat.
 returns savely, without deleting	etemplate	fi	Palauta säästäen, ILMAN poistamista
 right	etemplate	fi	Oikea
 row...	etemplate	fi	Rivi...
+save all	etemplate	fi	Tallenna kaikki
+save as	etemplate	fi	Tallenna nimellä
 save selected columns as default preference for all users.	etemplate	fi	Tallenna valitut sarakkeet oletusasetuksiksi kaikille käyttäjille.
 save the changes made and close the window	etemplate	fi	Tallenna muutokset ja sulje ikkuna.
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fi	Tallenna mallipohja yllä olevien avaimien (nimi,...) alle, muuta ne "tallenna nimellä..."
@@ -353,6 +366,7 @@ select which accounts to show	etemplate	fi	Valitse mitkä käyttäjätilit näyt
 select which values to show	etemplate	fi	Valitse mitkä arvot näytetään
 select year	etemplate	fi	Valitse vuosi
 selectbox	etemplate	fi	Valintalaatikko
+set as default	etemplate	fi	Aseta oletukseksi
 sets today as date	etemplate	fi	aseta tämä päivä päivämääräksi
 show	etemplate	fi	Näytä
 show (no save)	etemplate	fi	Näytä (ei tallenna)
@@ -418,6 +432,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	fi	Sarakkeen leveys (% tai pikseleinä)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	fi	Taulukon leveys % tai pikseleinä table tagissa tai (vaihtoehtoisesti) div tagissa.
 width, disabled	etemplate	fi	Leveys, estetty
+wk	etemplate	fi	Vk
 working days	etemplate	fi	Työpäivät
 write <app>/setup/tables_current.inc.php	etemplate	fi	Kirjoita <app>/setup/tables_current.inc.php
 write langfile	etemplate	fi	Kirjoita kielitiedosto

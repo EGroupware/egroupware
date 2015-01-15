@@ -268,7 +268,6 @@ phone numbers	common	zh-tw	電話號碼
 photo	addressbook	zh-tw	照片
 please enter a name for that field !	addressbook	zh-tw	請輸入欄位名稱！
 please select only one category	addressbook	zh-tw	請選擇唯一的類別
-please update the templatename in your customfields section!	addressbook	zh-tw	請在自訂欄位區更新樣板名稱！
 postal	common	zh-tw	郵政信箱
 pref	addressbook	zh-tw	主要
 preferred phone	addressbook	zh-tw	偏好聯絡方式
@@ -346,7 +345,6 @@ verification	addressbook	zh-tw	確認
 view linked infolog entries	addressbook	zh-tw	檢視連結的記事資料
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh-tw	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
 warning: all contacts found will be deleted!	addressbook	zh-tw	警告：找到的所有聯絡人都會被刪除！
-warning: template "%1" not found, using default template instead.	addressbook	zh-tw	警告：找不到樣板 "%1" ，使用預設樣板替代。
 weekday	addressbook	zh-tw	星期幾
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	zh-tw	在其他程式連結到通訊錄的顯示文字，空白會被忽略，任何的修正必須在重新登入後才會套用！
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	zh-tw	通訊錄在不清楚住址格式的國家要使用的住址格式，如果已經知道，它會使用獨立的設定。

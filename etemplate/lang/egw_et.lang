@@ -1,4 +1,6 @@
+actions...	etemplate	et	Tegevused...
 advanced search	etemplate	et	Laiendatud Otsing
+all users	etemplate	et	Kõik kasutajad
 and	etemplate	et	Ja
 applications	etemplate	et	Rakendused
 attach file	etemplate	et	Kaasa fail
@@ -39,6 +41,7 @@ help	etemplate	et	Abi
 hour	etemplate	et	Tund
 hours	etemplate	et	tundi
 html	etemplate	et	Html
+id	etemplate	et	Id
 image	etemplate	et	Pilt
 import	etemplate	et	Import
 import xml	etemplate	et	Impordi XML
@@ -47,18 +50,22 @@ last	etemplate	et	Viimane
 link	etemplate	et	Link
 minutes	etemplate	et	minutit
 month	etemplate	et	Kuu
+more	etemplate	et	Rohkem
 name	etemplate	et	Nimi
+new	etemplate	et	Uus
 new search	common	et	Uus otsing
 newer version '%1' exists !!!	etemplate	et	uuem versioon '%1' eksisteerib !!!
 no file	etemplate	et	pole faili
 no matches found	etemplate	et	sobivaid ei leitud
 nothing found - try again !!!	etemplate	et	Midagi ei leitud - proovi uuesti !!!
+now	etemplate	et	Nüüd
 options	etemplate	et	Omadused
 or	etemplate	et	või
 path	etemplate	et	Teekond
 read	etemplate	et	Loe
 readonly	etemplate	et	loeainult
 required	etemplate	et	Nõutav
+reset	etemplate	et	Tühista
 right	etemplate	et	Parem
 row...	etemplate	et	Rida ...
 search	etemplate	et	Otsi
@@ -91,6 +98,7 @@ tree	etemplate	et	Puu
 type	etemplate	et	Tüüp
 version	etemplate	et	Versioon
 width	etemplate	et	Laius
+wk	etemplate	et	Nd
 write langfile	etemplate	et	Kirjuta Keel
 write tables	etemplate	et	Kirjuta Tabelid
 year	etemplate	et	Aasta

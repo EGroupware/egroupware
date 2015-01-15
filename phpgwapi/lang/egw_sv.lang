@@ -31,6 +31,7 @@ actions	common	sv	Åtgärder
 active	common	sv	Aktiv
 add	common	sv	Lägg till
 add %1 category for	common	sv	Lägg till %1 kategori för
+add a new contact	common	sv	Lägg till ny kontakt
 add category	common	sv	Lägg till kategori
 add shortcut	common	sv	Lägg till genväg
 add sub	common	sv	Lägg till under
@@ -227,6 +228,7 @@ error renaming %1 %2 directory	common	sv	Fel vid namnbyte på %1 %2 katalog
 estonia	common	sv	ESTLAND
 ethiopia	common	sv	ETIOPIEN
 exact	common	sv	Exakt
+failed to change password.	common	sv	Kunde inte ändra lösenordet.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sv	Kunde inte kontakta server eller felaktigt svar. Försökt att uppdatera igen eller kontakta administratör om felet kvarstår.
 falkland islands (malvinas)	common	sv	FALKLANDSÖARNA
 faroe islands	common	sv	FÄRÖARNA
@@ -360,6 +362,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	sv	Lista
 list members	common	sv	Lista medlemmar
 lithuania	common	sv	LITAUEN
+load	common	sv	Ladda
 local	common	sv	Lokal
 locations	common	sv	Placering
 login	common	sv	Inloggning
@@ -427,6 +430,7 @@ niger	common	sv	NIGER
 nigeria	common	sv	NIGERIA
 niue	common	sv	NIUE
 no	common	sv	Nej
+no - cancel	common	sv	Nej - Avbryt
 no entries found, try again ...	common	sv	Inga poster hittades, försök igen ...
 no history for this record	common	sv	Ingen historik för posten
 no savant2 template directories were found in:	common	sv	Ingen Savant2 mall katalog hittades i:
@@ -497,6 +501,7 @@ please set your global preferences	common	sv	Gör dina globala inställningar
 please set your preferences for this application	common	sv	Gör dina inställningar för applikationen
 please wait...	common	sv	Var god vänta ...
 poland	common	sv	POLEN
+popup with search	common	sv	Popup med sökning
 portugal	common	sv	PORTUGAL
 postal	common	sv	Post adress
 preferences	common	sv	Alternativ
@@ -552,6 +557,7 @@ search or select accounts	common	sv	Sök eller välj konton
 second	common	sv	Sekund
 section	common	sv	Avsnitt
 select	common	sv	Välj
+select all	common	sv	Välj samtliga
 select all %1 %2 for %3	common	sv	Välj alla %1 %2 för %3
 select category	common	sv	Välj kategori
 select date	common	sv	Välj datum
@@ -710,6 +716,8 @@ written by:	common	sv	Skriven av:
 year	common	sv	År
 yemen	common	sv	YEMEN
 yes	common	sv	Ja
+yes - delete	common	sv	Ja - Radera
+yes - delete including sub-entries	common	sv	Ja - Radera inklusive under
 you are required to change your password during your first login	common	sv	Du måste byta lösenord vid första inloggningen
 you have been successfully logged out	login	sv	Du är utloggad
 you have not entered a title	common	sv	Rubriken saknas
@@ -724,7 +732,6 @@ your message could <b>not</b> be sent!<br>	common	sv	Meddelandet <b>inte</b> ski
 your message has been sent	common	sv	Meddelandet skickat
 your search returned %1 matchs	common	sv	Sökning gav %1 träffar
 your search returned 1 match	common	sv	Sökning gav 1 träff
-your session could not be verified.	login	sv	Din session kunde inte verifieras
 your settings have been updated	common	sv	Inställningarna uppdaterade
 zambia	common	sv	ZAMBIA
 zimbabwe	common	sv	ZIMBABWE

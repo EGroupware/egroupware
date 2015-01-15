@@ -1,7 +1,10 @@
 actions	filemanager	tr	Eylemler
 applications	common	tr	Uygulamalar
 custom fields	filemanager	tr	Özel Alanlar
+disable	filemanager	tr	Engelle
 download	filemanager	tr	?ndir
+enable	filemanager	tr	Etkinleþtir
+expires	filemanager	tr	Sona Eriyor
 link	filemanager	tr	Link
 location	filemanager	tr	Konum
 modified	filemanager	tr	Deðiþtirilmiþ

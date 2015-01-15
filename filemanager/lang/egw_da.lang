@@ -1,5 +1,6 @@
 %1 already exists as a file	filemanager	da	%1 eksistere allerede som fil
 actions	filemanager	da	Handling
+administrators	filemanager	da	administratorer
 applications	common	da	Applikationer
 cancel editing %1 without saving	filemanager	da	annullere redigéring af %1 uden at gemme
 cannot create directory because it begins or ends in a space	filemanager	da	Kan ikke oprette biblioteket fordi den begynder eller slutter med et mellemrum
@@ -21,9 +22,13 @@ deleted %1	filemanager	da	Slettede %1
 directory	filemanager	da	Bibliotek
 directory %1 already exists	filemanager	da	Biblioteket %1 findes eksistere allerede
 directory %1 does not exist	filemanager	da	Biblioteket %1 eksistere ikke
+disable	filemanager	da	Deaktivere
 download	filemanager	da	Hent
 edit comments	filemanager	da	Redigér kommentar
-file	filemanager	da	Fil
+enable	filemanager	da	aktivere
+everyone	filemanager	da	enhver
+expires	filemanager	da	Udløber
+file	common	da	Fil
 file %1 could not be created.	filemanager	da	Filen %1 kunne ikke oprettes.
 file names cannot contain "%1"	filemanager	da	Filnavne kan ikke indeholde "%1"
 filemanager	common	da	Filhåndtering

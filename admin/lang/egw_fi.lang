@@ -28,6 +28,8 @@ account list	admin	fi	Käyttäjätilit
 account permissions	admin	fi	Käyttäjätilien oikeudet
 account preferences	admin	fi	Käyttäjätilien asetukset
 account-id's have to be integers!	admin	fi	Käyttäjätilien ID täytyy olla kokonaisluku!
+acl added.	admin	fi	Käyttöoikeus lisätty.
+acl deleted.	admin	fi	Käyttöoikeus poistettu.
 acl manager	admin	fi	ACL -hallinta
 acl rights	common	fi	ACL -oikeudet
 action	admin	fi	Toimenpide
@@ -165,6 +167,7 @@ delete this user	admin	fi	Poista tämä käyttäjä
 deleted	admin	fi	Poistettu
 deletes this field	admin	fi	Poista tämä kenttä
 deliver extern	admin	fi	Deliver extern
+deny access	admin	fi	Estä käyttöoikeus
 deny access to access log	admin	fi	Estä pääsy käyttölokiin
 deny access to application registery	admin	fi	Estä pääsy sovellusrekisteriin
 deny access to applications	admin	fi	Estä pääsy sovelluksiin
@@ -196,8 +199,6 @@ do you want to move all global subcategories one level down ?	admin	fi	Haluatko 
 document root (default)	admin	fi	Tiedostojen juurihakemisto (oletus)
 down	admin	fi	Alas
 download csv	admin	fi	Lataa CSV
-each value is a line like <id>[=<label>]	admin	fi	Jokainen arvo on rivillä kuten <id>[=<label>]
-each value is a line like id[=label]	admin	fi	Jokainen arvo on rivillä kuten id[=label]
 edit account	admin	fi	Muokkaa käyttäjätiliä
 edit application	admin	fi	Muokkaa sovellusta
 edit email settings	admin	fi	Muokkaa sähköpostin asetuksia
@@ -281,6 +282,7 @@ forward also to	admin	fi	Välitä eteenpäin myös
 forward emails to	admin	fi	Eteenpäin välitetyt sähköpostit
 forward only	admin	fi	Välitä vain eteenpäin
 full name	admin	fi	Koko nimi
+general	admin	fi	Yleinen
 global categories	common	fi	Yleiset kategoriat
 governmental: incl. state or municipal authorities or services	admin	fi	Hallituksellinen: Sisältää osavaltioiden ja paikallishallinnot ja palvelut
 grant	admin	fi	Myönnä
@@ -368,7 +370,6 @@ main email-address	admin	fi	Pääsähköpostiosoite
 main screen message	admin	fi	Päänäytön viesti
 manage mapping	admin	fi	Valitse kentät
 manager	admin	fi	Hallinnoija
-max length of the input [, length of the inputfield (optional)]	admin	fi	Max. sisällön pituus [,sisältökenttä pituus (valinnainen)]
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
 maximum entries in click path history	admin	fi	Navigointihistorian maksimikoko
 members	admin	fi	Jäsenet
@@ -430,6 +431,7 @@ percent of users that logged out	admin	fi	Uloskirjautuneiden käyttäjien osuus
 percent this user has logged out	admin	fi	Tämä käyttäjä on lopettanut istunnon
 permission denied	admin	fi	Pääsy estetty
 permission denied !!!	admin	fi	Pääsy estetty!
+permission denied!!!	admin	fi	Pääsy estetty!
 permissions	admin	fi	Oikeudet
 permissions this group has	admin	fi	Tämän ryhmän oikeudet
 personal: eg. within a family	admin	fi	Kotitaloudet
@@ -457,7 +459,9 @@ remove all users from this group ?	admin	fi	Poistetaanko kaikki käyttäjät tä
 requested	admin	fi	Vaadittu
 return to admin mainscreen	admin	fi	Takaisin hallinnan päänäyttöön
 return to view account	admin	fi	Palaa käyttäjätilin tietoihin
+rights	admin	fi	ACL -oikeudet
 route all mails to	admin	fi	Reititä kaikki viestit
+rows	admin	fi	Rivit
 rpm or debian package	admin	fi	RPM tai Debian paketti
 run asynchronous services	admin	fi	Suorita ajastetut palvelut
 save the category	admin	fi	Tallenna kategoria

@@ -1,3 +1,4 @@
+%1 not implemented for %2!	addressbook	pt	% 1 não implementado para% 2!
 %1 records imported	addressbook	pt	%1 registos importados
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt	%1 registos lidos (ainda por importar: pode %2voltar%3 atrás e desmarcar a opção Importação de Teste)
 (e.g. 1969)	addressbook	pt	(ex: 1969)
@@ -34,10 +35,12 @@ business state	addressbook	pt	Bairro
 business street	addressbook	pt	Rua
 business zip code	addressbook	pt	Código postal
 car phone	addressbook	pt	Telefone do carro
+category tree	admin	pt	Categoria árvore
 cell phone	addressbook	pt	Telemóvel
 charset of file	addressbook	pt	Charset do ficheiro
 check all	addressbook	pt	Marcar todas
 choose an icon for this contact type	admin	pt	Escolha um ícone para este tipo de contacto
+choose owner of imported data	addressbook	pt	Escolha proprietário de dados importada
 chosse an etemplate for this contact type	admin	pt	Escolha um modelo Web para este tipo de contacto
 city	common	pt	Cidade
 company	common	pt	Empresa
@@ -58,6 +61,7 @@ csv-fieldname	addressbook	pt	CSV - Nome do campo
 csv-filename	addressbook	pt	CSV - Nome do ficheiro
 custom	addressbook	pt	Personalizar
 custom fields	addressbook	pt	Personalizar campos
+data exchange settings	addressbook	pt	Configurações de troca de dados
 debug output in browser	addressbook	pt	Fazer debug do resultado no navegador
 default	addressbook	pt	Por omissão
 default filter	addressbook	pt	Filtro padrão
@@ -81,10 +85,14 @@ end	addressbook	pt	Fim
 enter the path to the exported file here	addressbook	pt	Inserir o caminho para o ficheiro exportado aqui
 error: the entry has been updated since you opened it for editing!	addressbook	pt	Erro: o registo foi actualizado desde que começou a editar!
 existing links	addressbook	pt	Ligações existentes
+exists	addressbook	pt	Existe
 export contacts	addressbook	pt	Exportar contactos
+export definition to use for nextmatch export	addressbook	pt	Definição Exportar para usar para exportação NextMatch
+export definitition to use for nextmatch export	addressbook	pt	Definição Exportar para usar para exportação NextMatch
 export file name	addressbook	pt	Exportar nome de ficheiro
 export from addressbook	addressbook	pt	Exportar do livro de endereços
 extra	addressbook	pt	Extra
+favorites	addressbook	pt	Favoritos
 fax	addressbook	pt	Fax
 fax number	common	pt	Número de fax
 field %1 has been added !	addressbook	pt	Campo %1 foi adicionado !
@@ -94,10 +102,13 @@ fields to show in address list	addressbook	pt	Campos a exibir na lista de endere
 fieldseparator	addressbook	pt	Separador de campos
 full name	addressbook	pt	Nome completo
 general	admin	pt	Geral
+general fields:	addressbook	pt	Campos gerais:
+general settings	addressbook	pt	Definições gerais
 geo	addressbook	pt	GEO
 global categories	addressbook	pt	Categorias gerais
 grant addressbook access	common	pt	Permitir acesso ao livro de endereços
 h	addressbook	pt	h
+history logging	admin	pt	Logging História
 home city	addressbook	pt	Cidade
 home country	addressbook	pt	País
 home email	addressbook	pt	Endereço de correio electrónico
@@ -105,6 +116,7 @@ home phone	addressbook	pt	Telefone
 home state	addressbook	pt	Bairro
 home street	addressbook	pt	Rua
 home zip code	addressbook	pt	Código postal
+html link to the current record	addressbook	pt	Link HTML para o registro atual
 icon	addressbook	pt	Ícone
 import	addressbook	pt	Importar
 import contacts	addressbook	pt	Importar contactos
@@ -118,6 +130,7 @@ import next set	addressbook	pt	Importar o conjunto seguinte
 import_instructions	addressbook	pt	No Netscape, abra o Livro de endereços e seleccione <b>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formato LDIF.<p>No Outlook, seleccione a sua pasta de contactos, seleccione <br>Importar e Exportar...</b> do menu <b>Ficheiro</b> e exporte os seus contactos, separados por vírgulas, num ficheiro de texto (CSV).<br>No Palm Desktop 4.0 ou superior, visite o seu livro de endereços e seleccione <br>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formado VCard.
 income	addressbook	pt	Entrada
 infolog	addressbook	pt	Acesso à informação
+insert	addressbook	pt	Inserir
 international	addressbook	pt	Internacional
 label	addressbook	pt	Comentário
 last modified	addressbook	pt	última modificação
@@ -126,10 +139,13 @@ ldap host for contacts	admin	pt	servidor LDAP para contactos
 ldif	addressbook	pt	LDIF
 line 2	addressbook	pt	Linha 2
 links	addressbook	pt	Ligações
+links and attached files	addressbook	pt	Links e arquivos anexados
 list all categories	addressbook	pt	Listar todas as categorias
 list all customfields	addressbook	pt	Listar todos os campos personalizados
+list of files linked to the current record	addressbook	pt	Lista de arquivos vinculados ao registro atual
 load vcard	addressbook	pt	Carregar VCard
 location	addressbook	pt	Local
+manage mapping	addressbook	pt	Gerenciar mapeamento
 mark records as private	addressbook	pt	Marcar registos como privados
 message phone	addressbook	pt	Telefone de mensagens
 middle name	addressbook	pt	Nome do meio
@@ -166,6 +182,7 @@ record owner	addressbook	pt	Dono do registo
 repetition	addressbook	pt	Repetição
 role	addressbook	pt	Papel
 select all	addressbook	pt	Seleccionar tudo
+select multiple contacts for a further action	addressbook	pt	Selecionar vários contatos para uma nova acção
 select the type of conversion	addressbook	pt	Seleccionar o tipo de conversão
 select the type of conversion:	addressbook	pt	Seleccionar o tipo de conversão:
 show	addressbook	pt	Exibir
@@ -176,9 +193,11 @@ state	common	pt	Bairro
 street	common	pt	Rua
 successfully imported %1 records into your addressbook.	addressbook	pt	%1 registo(s) importado(s) para o seu livro de endereços com sucesso.
 suffix	addressbook	pt	Sufixo
+tag to mark positions for address labels	addressbook	pt	Tag para marcar posições para etiquetas de endereço
 tel home	addressbook	pt	telefone de casa
 test import (show importable records <u>only</u> in browser)	addressbook	pt	Importação de Teste (exibir no navegador <u>apenas</u> os registos importáveis)
 that field name has been used already !	addressbook	pt	Esse nome do campo já existe !
+the following document-types are supported:	addressbook	pt	Os seguintes tipos de documentos são suportados:
 this person's first name was not in the address book.	addressbook	pt	O primeiro nome desta pessoa não estava no Livro de Endereços
 this person's last name was not in the address book.	addressbook	pt	O apelido desta pessoa não foi encontrado no livro de endereços
 to many might exceed your execution-time-limit	addressbook	pt	Demasiados podem exceder o seu tempo limite de execução
@@ -193,13 +212,17 @@ vcards require a first name entry.	addressbook	pt	VCards requer um primeiro nome
 vcards require a last name entry.	addressbook	pt	VCards requer um apelido.
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt	Aviso!! LDAP é válido apenas se não estiver a utilizar contactos para armazenamento de contas!
 warning: all contacts found will be deleted!	addressbook	pt	Aviso: Todos os contactos encontrados serão eliminados!
+whole query	addressbook	pt	Consulta Whole
 work phone	addressbook	pt	Telefone de trabalho
 write (update or add) a single entry by passing the fields.	addressbook	pt	Editar (actualizar ou adicionar) um registo único passando os campos.
+yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
 you are not permitted to delete contact %1	addressbook	pt	Não tem permissões para eliminar o contacto %1
 you are not permittet to delete this contact	addressbook	pt	Não tem permissões para eliminar este contacto
 you are not permittet to edit this contact	addressbook	pt	Não tem permissões para editar este contacto
 you are not permittet to view this contact	addressbook	pt	Não tem permissões para ver este contacto
+you can respond by visiting:	addressbook	pt	Você pode responder, visitando
 you must select a vcard. (*.vcf)	addressbook	pt	É necessário seleccionar um vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	pt	É necessário seleccionar pelo menos uma coluna a apresentar
+you need to select some entries first	addressbook	pt	Você precisa selecionar algumas entradas em primeiro lugar.
 zip code	common	pt	Código postal
 zip_note	addressbook	pt	<p><b>Nota:</b> O ficheiro pode ser um ficheiro .zip com uma colecção de ficheiros .csv, .vcf ou .ldif. No entanto, não misture os tipos de ficheiro por importação.

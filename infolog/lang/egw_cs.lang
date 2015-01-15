@@ -9,6 +9,7 @@
 %1 you are responsible for is starting at %2	infolog	cs	%1 za který jste odpovědný  začíná k %2
 %1 you delegated is due at %2	infolog	cs	%1 který jste delegoval má termín ukončení k %2
 %1 you delegated is starting at %2	infolog	cs	%1 který jste delegoval začíná k %2
+(no subject)	infolog	cs	(žádný předmět)
 - subprojects from	infolog	cs	- Podprojekty od (z)
 0%	infolog	cs	0%
 10%	infolog	cs	10%
@@ -131,7 +132,7 @@ do you want a notification, if items you delegated are about to start?	infolog	c
 do you want a notification, if items you delegated are due?	infolog	cs	Chcete dostávat upozornění na konečný termín položek, které jste delegoval(a)?
 do you want to receive notifications as html-mails or plain text?	infolog	cs	Chcete dostávat upozornění jako html e-maily nebo jako prostý text?
 don't show infolog	infolog	cs	NEzobrazovat InfoLog
-done	common	cs	hotovo
+done	infolog	cs	hotovo
 download	infolog	cs	Stáhnout
 due %1	infolog	cs	Do %1
 duration	infolog	cs	Trvání
@@ -157,6 +158,7 @@ error: saving the entry	infolog	cs	Chyba při ukládání záznamu
 error: the entry has been updated since you opened it for editing!	infolog	cs	Chyba: záznam byl zaktualizován v době, kdy jste ho měl(a) otevřený pro editaci!
 execute a further action for this entry	infolog	cs	Spustit další akci pro tento záznam
 existing links	infolog	cs	Stávající odkazy
+favorites	infolog	cs	Oblíbené
 fax	infolog	cs	Fax
 field must not be empty !!!	infolog	cs	Položka nesmí být prázdná!!!
 fieldseparator	infolog	cs	Oddělovač položek
@@ -164,6 +166,7 @@ finish	infolog	cs	dokončit
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
 for which types should this field be used	infolog	cs	pro které typy má být tato položka použita
 from	infolog	cs	Od
+general fields:	infolog	cs	Obecné položky:
 global categories	infolog	cs	Globální kategorie
 group owner for	infolog	cs	Skupinový vlastník pro
 high	infolog	cs	Vysoká
@@ -202,13 +205,11 @@ leave it empty	infolog	cs	ponechat prázdné
 leave it empty for a full week	infolog	cs	Ponechte prázdné pro celý týden
 leave without saveing the entry	infolog	cs	ukončit bez uložení záznamu
 leaves without saveing	infolog	cs	ukončí bez ukládání
-length<br>rows	infolog	cs	Délka<br>Řádky
 limit number of description lines (default 5, 0 for no limit)	infolog	cs	Omezit počet řádek popisu (výchozí 5, pro zrušení limitu 0)
 link	infolog	cs	Odkaz
 links	infolog	cs	Odkazy
 links of this entry	infolog	cs	Odkazy tohoto záznamu
 list all categories	infolog	cs	Vypsat všechny kategorie
-list no subs/childs	infolog	cs	Vypsat bez Podpoložek/Potomků
 location	infolog	cs	Umístění
 longer textual description	infolog	cs	delší textový popis
 low	infolog	cs	Nízká
@@ -302,6 +303,7 @@ responsible upcoming	infolog	cs	odpovědný - nastávající
 responsible user, priority	infolog	cs	odpovědný uživatel, priorita
 returns a list / search for records.	infolog	cs	Vrací seznam / vyhledání záznamů.
 rights for the responsible	infolog	cs	Práva pro odpovědnou osobu
+rows	infolog	cs	Ŕádky
 same day	infolog	cs	stejný den
 save	infolog	cs	Uložit
 saves the changes made and leaves	infolog	cs	uloží provedené změny a ukončí

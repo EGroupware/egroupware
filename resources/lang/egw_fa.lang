@@ -21,8 +21,11 @@ clear selection	resources	fa	پاک کردن انتخاب
 configure access permissions	admin	fa	پیکربندی مجوز دسترسی
 create new accessory for this resource	resources	fa	ایجاد ملزومه جدید برای این منبع
 create new links	resources	fa	ایجاد پیوندهای جدید
+custom fields	resources	fa	فیلدهای سفارشی
+days	resources	fa	روز
 delete selected resources	resources	fa	حذف منابع انتخاب شده
 delete this entry	resources	fa	حذف این ورودی
+deleted	resources	fa	حذف شد
 description (short)	resources	fa	شرح مختصر
 direct booking permissions	resources	fa	مجوزهای رزور مستقیم
 don't use vfs (this will need a symlink --> see readme)	resources	fa	از vfs استفاده نکن

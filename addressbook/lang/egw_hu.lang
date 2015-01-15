@@ -158,6 +158,7 @@ exported	addressbook	hu	exportálva
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	hu	Kapcsolatok exportálása a Címjegyzékből CSV formátumban. CSV jelentése 'Comma Separated Values'. Az opcióknál kiválasztható más elválasztó karakter is, nem csak a vessző.
 extra	addressbook	hu	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	hu	%1
+favorites	addressbook	hu	Kedvencek
 fax	addressbook	hu	Fax
 fax number	common	hu	Fax Szám
 field %1 has been added !	addressbook	hu	%1 mező hozzáadva!
@@ -330,7 +331,6 @@ verification	addressbook	hu	Hitelesítés
 view linked infolog entries	addressbook	hu	Kapcsolat InfoLog bejegyzések megtekintése
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	hu	Figyelem!! Az LDAP csak akkor érvényes, ha felhasználói azonosítók tárolására NEM használjuk a kapcsolatokat!
 warning: all contacts found will be deleted!	addressbook	hu	FIGYELMEZTETÉS: Az összes fellelhető kapcsolat törlődni fog!
-warning: template "%1" not found, using default template instead.	addressbook	hu	FIGYELMEZTETÉS: %1 sablon nem található, helyette az alapértelmezettet használjuk.
 weekday	addressbook	hu	Hétköznap
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	hu	Milyen karakterkódolást alkalmazzunk CSV exportnál? Az alapértelmezett karakterkódolás az eGroupWare rendszer alapértelmezett karakterkódolásával egyezik meg.
 whole query	addressbook	hu	teljes lekérdezés

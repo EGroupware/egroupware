@@ -1,7 +1,10 @@
 actions	resources	ko	액션
 all categories	resources	ko	모든 카테고리
 create new links	resources	ko	새 링크 만들기
+custom fields	resources	ko	사용자정의 필드
+days	resources	ko	일동안
 delete this entry	resources	ko	이 엔트리 삭제
+deleted	resources	ko	삭제됨
 edit this entry	resources	ko	이 엔트리 수정
 existing links	resources	ko	기존링크
 general	resources	ko	일반

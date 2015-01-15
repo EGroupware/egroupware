@@ -4,12 +4,14 @@ accessrights	filemanager	id	Hak akses
 acl added.	filemanager	id	ACL ditambakan.
 acl deleted.	filemanager	id	ACL dihapus.
 actions	filemanager	id	Tindakan
-all files	common	id	Semua berkas
+administrators	filemanager	id	Administrators
+all files	filemanager	id	Semua berkas
 applications	common	id	Aplikasi
 basedirectory	filemanager	id	Direktori basis
 check all	filemanager	id	Contreng semua
 clear search	filemanager	id	bersihkan pencarian
 comment	filemanager	id	Komentar
+configuration changed.	filemanager	id	Konfigurasi changed.
 copied	filemanager	id	disalin
 copied %1 to %2	filemanager	id	%1 disalin ke %2
 copy	filemanager	id	Salin
@@ -26,13 +28,17 @@ custom fields	filemanager	id	Custom fields
 cut	filemanager	id	cut
 deleted %1	filemanager	id	Menghapus %1
 directory	filemanager	id	Direktori
+disable	filemanager	id	Disable
 download	filemanager	id	Unduh
 edit comments	filemanager	id	Edit komentar
 edit settings	filemanager	id	Edit pengaturan
+enable	filemanager	id	enable
+everyone	filemanager	id	everyone
 executable	filemanager	id	Executable
+expires	filemanager	id	Kadaluarsa
 extended acl	filemanager	id	Extended ACL
 favorites	filemanager	id	Favorit
-file	filemanager	id	Berkas
+file	common	id	Berkas
 file deleted.	filemanager	id	Berkas dihapus.
 filemanager	common	id	Manajer Berkas
 filemanager configuration	admin	id	konfigurasi manajer berkas
@@ -54,8 +60,10 @@ move	filemanager	id	Pindahkan
 move to	filemanager	id	Pindahkan ke
 moved %1 to %2	filemanager	id	%1 dipindahkan ke %2
 no access	filemanager	id	No access
+noone	filemanager	id	Noone
 open	filemanager	id	Open
 operation	filemanager	id	Operasi
+percentage	filemanager	id	Percentage
 permission denied!	filemanager	id	Ijin ditolak!
 permissions	filemanager	id	Ijin
 preview	filemanager	id	Preview

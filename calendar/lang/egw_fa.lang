@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	fa	در %3 %2 %1
+%1 hours	calendar	fa	%1 ساعت
 %1 records imported	calendar	fa	%1 رکورد وارد شد
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	fa	رکوردهای خوانده شده (هنوز وارد نشده، شما می توانید به عقب برگردید و بررسی آزمایش واردات را غیر فعال کنید)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	fa	<b> به خاطر داشته باشید:</b> تقویم، از روزهای تعطیل کشور شما استفاده میکند که تنظیم شده روی %1. شما می توانید آنرا در %2 خود تغییر دهید.<br /> تعطیلات %3  بطور خودکار از %4 نصب شده اند. شما می توانید آنرا در %5 تغییر دهید.
@@ -59,6 +60,7 @@ created	calendar	fa	ایجاد شد
 csv	calendar	fa	CSV
 csv-fieldname	calendar	fa	نام فیلد CSV
 csv-filename	calendar	fa	نام پرونده CSV
+custom	calendar	fa	سفارشی
 custom fields	common	fa	فیلدهای سفارشی
 daily	calendar	fa	روزانه
 day	calendar	fa	روز

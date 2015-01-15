@@ -100,13 +100,14 @@ error uploading file!	filemanager	pt-br	Erro carregando arquivo!
 error while creating directory.	filemanager	pt-br	Erro ao criar diretório
 everyone	filemanager	pt-br	todo o mundo
 executable	filemanager	pt-br	Executável
+expires	filemanager	pt-br	Expira
 export definition to use for nextmatch export	filemanager	pt-br	Definição Exportar para usar para o próximo jogo exportação
 extended access control list	filemanager	pt-br	Lista de controle de acesso ampliada
 extended acl	filemanager	pt-br	ACL ampliada
 failed to change permissions of %1!	filemanager	pt-br	Falha ao alterar as permissões de% 1!
 failed to create directory!	filemanager	pt-br	Falha ao criar diretório!
 favorites	filemanager	pt-br	Favoritos
-file	filemanager	pt-br	Arquivo
+file	common	pt-br	Arquivo
 file %1 already exists	filemanager	pt-br	Arquivo% 1 já existe
 file %1 could not be created.	filemanager	pt-br	Arquivo %1 não pôde ser criado.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	pt-br	Arquivo %1 pode ser muito grande. Entre em contato com o administrador do sistema para maiores informações.

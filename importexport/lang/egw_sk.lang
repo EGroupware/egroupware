@@ -13,6 +13,7 @@
 addressbook csv import	importexport	sk	CSV import Adresára
 admin disabled exporting	importexport	sk	Export zakázaný správcom
 all encodings	importexport	sk	Všetky kódovania
+all users	importexport	sk	Všetci používatelia
 allowed users	importexport	sk	Oprávnení používatelia
 automatically created by importexport	importexport	sk	Automaticky vytvorené aplikáciou importexport
 basic csv import	importexport	sk	Základný CSV import
@@ -110,6 +111,7 @@ unable to schedule	importexport	sk	Nedá sa plánovať.
 update categories	importexport	sk	Aktualizovať kategórie
 use default	importexport	sk	Použiť predvolené
 use field from csv if possible	importexport	sk	Použiť pole z CSV ak je možné
+use search results	common	sk	Použiť výsledok vyhľadávania
 user preference	importexport	sk	Používateľská voľba
 user template folder	importexport	sk	Použiť priečinok šablón
 users allowed to create their own definitions	importexport	sk	Používatelia si smú vytvoriť svoje vlastné definície

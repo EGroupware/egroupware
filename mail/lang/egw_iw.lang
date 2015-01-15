@@ -1,13 +1,17 @@
 (no subject)	mail	iw	(ללא נושא)
 add to addressbook	mail	iw	הוסף לספר כתובות
 always show html emails	mail	iw	HTML תמיד להציג דואר אלקטרוני
+attachments	mail	iw	מצורפים
 compose	mail	iw	חדש
 compress folder	mail	iw	קבץ תיקיה
 contains	mail	iw	מכיל
+copy to	mail	iw	העתק אל
 date(newest first)	mail	iw	(תאריך (חדשים תחילה
 date(oldest first)	mail	iw	(תאריך (ישנים תחילה
 default sorting order	mail	iw	סדר מיון מחדלי
+delete folder	mail	iw	מחק תיקיה
 deleted	mail	iw	נמחקו
+disable	mail	iw	הפוך ללא פעיל
 display of html emails	mail	iw	HTML הצגת דואר
 display only when no plain text is available	mail	iw	הצג רק כאשר טקסט פשוט לא זמין
 does not contain	mail	iw	אינו מכיל
@@ -15,16 +19,23 @@ does not match	mail	iw	אינו תואם
 does not match regexp	mail	iw	regexp אינו תואם
 don't use sent	mail	iw	לא להשתמש בתיקית פריטים שנשלחו
 don't use trash	mail	iw	לא להשתמש בתיקית אשפה
+edit account	mail	iw	ערוך חשבון
+edit vacation settings	mail	iw	ערוך הגדרת חופשות
 empty trash	mail	iw	רוקן אשפה
+enable	mail	iw	אפשר
 event details follow	mail	iw	פרטי האירוע בהמשך
+everyone	mail	iw	כולם
+extended	mail	iw	מורחב
 file into	mail	iw	תייק בתוך
 filemanager	mail	iw	מנהל הקבצים
 flagged	mail	iw	מדוגל
 folder	mail	iw	מחיצה
 folder settings	mail	iw	הגדרות תיקיה
+forward	mail	iw	העבר
 from	mail	iw	מאת
 from(a->z)	mail	iw	(מאת (א ->ת
 from(z->a)	mail	iw	(מאת (ת->א
+header lines	mail	iw	שורות כותרת
 if	mail	iw	אם
 imap server	mail	iw	שרת IMAP
 inbox	mail	iw	תיבת דואר נכנס
@@ -33,18 +44,25 @@ mark as deleted	mail	iw	סמן כמחוק
 matches	mail	iw	התאמות
 matches regexp	mail	iw	התאמות regexp
 move selected to	mail	iw	הזז הודעות אל
+move to	mail	iw	הזז הודעות אל
 move to trash	mail	iw	הזז לאשפה
 never display html emails	mail	iw	לעולם לא להציג הודעות HTML
 on	mail	iw	-ב
 organisation	admin	iw	אירגון
 organization	mail	iw	אירגון
+permission denied	mail	iw	הגישה אסורה
 quicksearch	mail	iw	חיפוש מהיר
 refresh time in minutes	mail	iw	זמן רענון בדקות
 remove all	mail	iw	הסר הכל
 remove immediately	mail	iw	הסר מיד
+rename folder	mail	iw	שנה שם תיקיה
 replied	mail	iw	הישיב
+reply	mail	iw	השב
+reply all	mail	iw	השב לכל
+reply to	mail	iw	השב ל
 replyto	mail	iw	השב ל
 save all	mail	iw	שמור הכל
+select all	mail	iw	בחר הכל
 sent folder	mail	iw	תיקיית נשלחו
 signature	mail	iw	חתימה
 size(...->0)	mail	iw	גודל (...->0)
@@ -53,8 +71,10 @@ small view	mail	iw	תצוגה קטנה
 sort order	mail	iw	סדר אתר
 subject(a->z)	mail	iw	נושא (א -> ת)
 subject(z->a)	mail	iw	נושא (ת -> א)
+text	mail	iw	טקסט
 trash folder	mail	iw	תיקיית אשפה
+unflagged	mail	iw	לא מדוגלים
 unread	mail	iw	לא נקרא
-urgent	mail	iw	דחוף
 when deleting messages	mail	iw	בשעת מחיקת הדעות
+write	mail	iw	כתוב
 wrote	mail	iw	כתב

@@ -118,6 +118,7 @@ delete this user	admin	no	slett denne brukere
 deleted	admin	no	slettet
 deletes this field	admin	no	sletter dette feltet
 deliver extern	admin	no	lever eksternt
+deny access	admin	no	Nekte adgang
 deny access to access log	admin	no	Nekt tilgang til tilgangslogg
 deny access to application registery	admin	no	Nekt tilgang til applikasjonsregister
 deny access to applications	admin	no	Nekt tilgang til applikasjoner
@@ -145,7 +146,6 @@ do you also want to delete all global subcategories ?	admin	no	Vil du også slet
 do you want to delete all global subcategories ?	admin	no	Vil du slette alle globale underkategorier?
 do you want to move all global subcategories one level down ?	admin	no	Vil du flytte alle globale underkategorier ett steg ned?
 down	admin	no	ned
-each value is a line like <id>[=<label>]	admin	no	hver verdi er en linje som <id>[=<label>]
 edit account	admin	no	Rediger konto
 edit application	admin	no	Rediger applikasjon
 edit email settings	admin	no	Rediger e-mail oppsett
@@ -207,6 +207,7 @@ force selectbox	admin	no	Tving frem Selectbox
 forward also to	admin	no	videresend også til
 forward only	admin	no	bare videresend
 full name	admin	no	Fullt Navn
+general	admin	no	Generell
 global categories	common	no	Globale kategorier
 group ?	admin	no	gruppe?
 group has been added	common	no	Gruppen er lagt til
@@ -266,7 +267,6 @@ mail settings	admin	no	Epost innstillinger
 main email-address	admin	no	E-mailadresse på forsiden
 main screen message	admin	no	Melding på hovedside
 manager	admin	no	Manager
-max length of the input [, length of the inputfield (optional)]	admin	no	maks. lengde på innslag [,feltlengde (valgfri)]
 maximum account id (e.g. 65535 or 1000000)	admin	no	Maksimal kontoID (f.eks. 65535 eller 100000)
 members	admin	no	Medlemmer
 message has been updated	admin	no	meldingen er oppdatert
@@ -304,6 +304,7 @@ percent of users that logged out	admin	no	Prosent av brukere som logget ut
 percent this user has logged out	admin	no	Prosent denne brukeren har logget ut
 permission denied	admin	no	Ingen tilgang
 permission denied !!!	admin	no	Adgang nektet !
+permission denied!!!	admin	no	Adgang nektes!
 permissions	admin	no	Tillatelser
 permissions this group has	admin	no	Tillatelser denne gruppen har
 phpinfo	admin	no	PHP informasjon
@@ -326,6 +327,7 @@ remove all users from this group ?	admin	no	Fjerne alle brukere fra denne gruppe
 return to admin mainscreen	admin	no	returner til admin hovedside
 return to view account	admin	no	Returner for å se konto
 route all mails to	admin	no	Send alle mail til
+rows	admin	no	Rader
 run asynchronous services	admin	no	Kjør asonkrone serviser
 save the category	admin	no	lagre kategorien
 save the category and return back to the list	admin	no	lagre kategorien og returner til listen

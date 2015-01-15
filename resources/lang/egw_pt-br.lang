@@ -19,15 +19,22 @@ check all	resources	pt-br	Checar tudo
 choose categories admin	resources	pt-br	Escolha o administrador de categorias
 clear selection	resources	pt-br	Limpar seleção
 configure access permissions	admin	pt-br	Configurar permissões de acesso
+conflict	resources	pt-br	Conflito
 create new accessory for this resource	resources	pt-br	Criar novo acessório para este recurso
 create new links	resources	pt-br	Criar novos links
+custom etemplate for the contactform	resources	pt-br	eModelo personalizado para o formulário de contatos
+custom fields	resources	pt-br	Campos personalizados
+days	resources	pt-br	dias
 delete selected resources	resources	pt-br	Remover recursos selecionados
 delete this entry	resources	pt-br	Remover este registro
+deleted	resources	pt-br	removido
 description (short)	resources	pt-br	Descrição (curta)
 direct booking permissions	resources	pt-br	Permissões de reserva direta
 don't use vfs (this will need a symlink --> see readme)	resources	pt-br	Não usar vfs (isto necessitará de um symlink --> veja o README)
 edit this entry	resources	pt-br	Editar este registro
 existing links	resources	pt-br	Links existentes
+exists	resources	pt-br	Existe
+export definition to use for nextmatch export	resources	pt-br	Definição Exportar para usar para exportação NextMatch
 general	resources	pt-br	Geral
 general informations about resource	resources	pt-br	Informações gerais sobre recursos
 gernal resource	resources	pt-br	Recurso geral
@@ -42,6 +49,7 @@ implies booking permission	resources	pt-br	Envolve permissões de reserva
 implies read permission	resources	pt-br	Envolve permissões de leitura
 information about storage	resources	pt-br	Informação sobre estoque
 informations about the location of resource	resources	pt-br	Informações sobre o local do recurso
+insert	resources	pt-br	Inserir
 inventory number	resources	pt-br	Número do inventário
 inventory number:	resources	pt-br	Número do inventário:
 is resource bookable?	resources	pt-br	Recurso pode ser reservado?
@@ -56,6 +64,7 @@ manage mapping	resources	pt-br	Gerenciar mapeamento
 name of resource	resources	pt-br	Nome do recurso
 name:	resources	pt-br	Nome:
 no description available	resources	pt-br	Nenhuma descrição disponível
+no matches	resources	pt-br	nenhuma correspondência
 no resources selected	resources	pt-br	Nenhum recurso selecionado
 notify your administrator to correct this situation	resources	pt-br	Notifique seu administrador para corrigir esta situação
 picture	resources	pt-br	Figura
@@ -85,8 +94,11 @@ something went wrong by deleting resource	resources	pt-br	Algo de errado ocorreu
 something went wrong by saving resource	resources	pt-br	Algo de errado ocorreu salvando o recurso
 storage information	resources	pt-br	Informação de estoque
 storage information:	resources	pt-br	Informação de estoque
+the anonymous user needs add rights for it!	resources	pt-br	O usuário anônimo precisa de permissão para adicioná-lo!
 the calendar of this resource	resources	pt-br	A agenda deste recurso
 this module displays the resources app	resources	pt-br	Este módulo exibe o aplicativo Recursos
+too many matches	resources	pt-br	muitas correspondências
+unable to link to %1 "%2"	resources	pt-br	Incapaz de ligação para% 1 "% 2"
 use general resources icon	resources	pt-br	Usar ícone comum para recursos
 use own picture	resources	pt-br	Usar própria figura
 use the category's icon	resources	pt-br	Usar o ícone da categoria
@@ -99,5 +111,6 @@ web-site for this resource	resources	pt-br	Site para este recurso
 where to find this resource?	resources	pt-br	Onde encontrar este recurso?
 which category does this resource belong to?	resources	pt-br	Qual categoria este recurso pertence?
 write permissions	resources	pt-br	Permissões de escrita
+yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
 you are not permitted to get information about this resource!	resources	pt-br	Você não tem permissão para ver informações sobre este recurso!
 you chose more resources than available	resources	pt-br	Você escolheu mais recursos do que disponível

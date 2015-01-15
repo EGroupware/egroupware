@@ -1,3 +1,13 @@
+color	home	pl	Kolor
 displays home	home	pl	Wyświetla stronę główną
 egroupware	home	pl	eGroupWare
+in %1 days (%2) is %3's birthday.	home	pl	Za %1 dni są urodziny %3
+remove	home	pl	usuń
+set as default	home	pl	Ustaw jako domyslne
 there is a new version of egroupware available	home	pl	Dostępna jest aktualizacja eGroupware
+today is %1's birthday!	home	pl	Dzi s urodziny %1
+tomorrow is %1's birthday.	home	pl	Jutro s urodziny  %1
+yes, for the next three days	home	pl	Tak, dla następnych trzech dni
+yes, for the next two weeks	home	pl	Tak, dla następnych dwuch tygodni
+yes, for the next week	home	pl	Tak, dla następnego tygodnia
+yes, for today and tomorrow	home	pl	Tak, na dziś i jutro

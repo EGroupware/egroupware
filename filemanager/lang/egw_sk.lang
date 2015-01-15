@@ -26,7 +26,8 @@ acl added.	filemanager	sk	ACL bolo pridané.
 acl deleted.	filemanager	sk	ACL bolo odstránené.
 actions	filemanager	sk	Akcie
 add to clipboard	filemanager	sk	Pridať do schránky
-all files	common	sk	Všetky súbory
+administrators	filemanager	sk	Správcovia
+all files	filemanager	sk	Všetky súbory
 allow a maximum of the above configured folderlinks to be configured in settings	admin	sk	povoliť, aby bolo maximum z vyššienastavených priečinkov možné konfigurovať pomocou nastavení
 and all it's childeren	filemanager	sk	a všetkých jeho potomkov
 applications	common	sk	Aplikácie
@@ -36,10 +37,11 @@ cancel editing %1 without saving	filemanager	sk	Zrušiť úpravy %1 bez uloženi
 cannot create directory because it begins or ends in a space	filemanager	sk	Nemôžem vytvoriť priečinok lebo začína alebo končí medzerou
 cautiously rejecting to remove folder '%1'!	filemanager	sk	Z opatrnosti odmietam odstrániť priečinok '%1'!
 check all	filemanager	sk	Označiť všetko
-check virtual filesystem	filemanager	sk	Skontrolovať virtuálny súborový systém
+check virtual filesystem	common	sk	Skontrolovať virtuálny súborový systém
 clear search	filemanager	sk	Vyčistiť hľadanie
 clipboard is empty!	filemanager	sk	Schránka je prázdna!
 comment	filemanager	sk	Poznámka
+configuration changed.	filemanager	sk	Konfigurácia bola zmenená.
 copied	filemanager	sk	skopírované
 copied %1 to %2	filemanager	sk	Skopírované %1 do %2
 copy	filemanager	sk	Kopírovať
@@ -73,12 +75,14 @@ directory %1 does not exist	filemanager	sk	Priečinok %1 neexistuje
 directory not found or no permission to access it!	filemanager	sk	Priečinok sa nenašiel alebo nemáme k nemu prístupové práva!
 directory successfully created.	filemanager	sk	Priečinok úspešne vytvorený.
 directory with documents to insert entries	filemanager	sk	Priečinok s dokumentami pre vloženie položiek
+disable	filemanager	sk	Vypnúť
 display and modification of content	filemanager	sk	Zobrazenie a úprava obsahu
 display of content	filemanager	sk	Zobrazenie obsahu
 do you want to overwrite the existing file %1?	filemanager	sk	Chcete prepísať existujúci súbor "%1"?
 download	filemanager	sk	Stiahnuť
 edit comments	filemanager	sk	Upraviť poznámky
 edit settings	filemanager	sk	Upraviť nastavenia
+enable	filemanager	sk	Zapnúť
 enter setup user and password	filemanager	sk	Zadajte používateľa a heslo inštalácie
 enter setup user and password to get root rights	filemanager	sk	Ak chcete získať administrátorské oprávnenia, zadajte používateľa a heslo inštalácie
 enter the complete vfs path to specify a fast access link to a folder	filemanager	sk	Zadajte úplnú cestu VFS pre odkaz pre rýchly prístup do priečinku
@@ -88,18 +92,20 @@ error creating symlink to target %1!	filemanager	sk	Chyba pri vytváraní symbol
 error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
 error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
 error while creating directory.	filemanager	sk	Chyba pri vytváraní priečinku
+everyone	filemanager	sk	Každý
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 executable	filemanager	sk	Spustiteľný
+expires	filemanager	sk	Vyprší
 export definition to use for nextmatch export	filemanager	sk	Exportná definícia pre použitie v exporte
 extended access control list	filemanager	sk	Rozšírený zoznam prístupových oprávnení (ACL)
 extended acl	filemanager	sk	Rozšírený ACL
 failed to change permissions of %1!	filemanager	sk	Nepodarilo sa zmeniť oprávnenia ku %1!
 failed to create directory!	filemanager	sk	Vytvorenie adresára sa nepodarilo!
 favorites	filemanager	sk	Obľúbené
-file	filemanager	sk	Súbor
+file	common	sk	Súbor
 file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvoriť.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	sk	Súbor %1 je zrejme priveľký. Kontaktujte svojho správcu systému.
 file deleted.	filemanager	sk	Súbor bol odstránený.
@@ -148,6 +154,7 @@ no access	filemanager	sk	Bez prístupu
 no files in this directory.	filemanager	sk	Žiadne súbory v tomto priečinku.
 no preview available	filemanager	sk	Nie je k dispozícii žiadny náhľad
 no version history for this file/directory	filemanager	sk	Žiadna história verzií pre tento súbor/priečinok.
+noone	filemanager	sk	Nikto
 only owner can rename or delete the content	filemanager	sk	Iba vlastník môže premenovať alebo odstrániť obsah
 open	filemanager	sk	Otvoriť
 operation	filemanager	sk	Operácia

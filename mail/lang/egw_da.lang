@@ -1,13 +1,17 @@
 (no subject)	mail	da	(ingen emne)
 add to addressbook	mail	da	tilføj til adressebog
 always show html emails	mail	da	Vis altid HTML e-mails
+attachments	mail	da	vedhæftet filer
 compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
 contains	mail	da	indeholder
+copy to	mail	da	Kopier til
 date(newest first)	mail	da	Dato (nyeste først)
 date(oldest first)	mail	da	Dato (ældste først)
 default sorting order	mail	da	Standart soterings rækkefølge
+delete folder	mail	da	Slet Mappe
 deleted	mail	da	slettet
+disable	mail	da	Deaktivere
 display of html emails	mail	da	Vis HTML i emails
 display only when no plain text is available	mail	da	Vis kun når ren tekst version er tilgængelig
 does not contain	mail	da	indeholder ikke
@@ -15,19 +19,25 @@ does not match	mail	da	passer ikke sammen
 does not match regexp	mail	da	passer ikke til regexp
 don't use sent	mail	da	Brug ikke Sendt
 don't use trash	mail	da	Brug ikke skraldespand
+edit account	mail	da	Redigér konto
 empty trash	mail	da	tøm skraldespanden
+enable	mail	da	aktivere
 event details follow	mail	da	Hændelses detajler følger
-felamimail	admin	da	FelaMiMail
+everyone	mail	da	enhver
+extended	mail	da	Udvidet
 file into	mail	da	akivere til
 filemanager	mail	da	Filhåndtering
 flagged	mail	da	Flag sat
 folder	mail	da	Bibliotek
 folder settings	mail	da	Mappe indstillinger
+forward	mail	da	Vidersend
 from	mail	da	Fra
 from(a->z)	mail	da	Fra (A->Z)
 from(z->a)	mail	da	Fra (Z->A)
+general	admin	da	Generelt
 html	mail	da	HTML
 if	mail	da	HVIS
+imap	mail	da	IMAP
 imap server	mail	da	IMAP Server
 inbox	mail	da	Indbakke
 mail settings	mail	da	Post indstillinger
@@ -35,16 +45,23 @@ mark as deleted	mail	da	Marker som slettet
 matches	mail	da	resultater
 matches regexp	mail	da	resultater regexp
 move selected to	mail	da	flyt valgte til
+move to	mail	da	flyt valgte til
 move to trash	mail	da	Flyt til skraldespanden
 never display html emails	mail	da	Vis aldrig HTML emails
 organisation	admin	da	Organisation
 organization	mail	da	organisation
+permission denied	mail	da	Adgang nægtet
 quicksearch	mail	da	Hurtig søg.
 refresh time in minutes	mail	da	Opdaterings interval i minutter
 remove immediately	mail	da	Fjern nu
+rename folder	mail	da	Omdøb mappe
 replied	mail	da	Besvaret
+reply	mail	da	Besvar
+reply all	mail	da	Besvar Alle
+reply to	mail	da	Besvar Til
 replyto	mail	da	Besvar Til
 save all	mail	da	Gem alle
+select all	mail	da	Vælg alle
 sent folder	mail	da	Sendt Mappe
 signature	mail	da	Signatur
 size(...->0)	mail	da	Størrelse (...->0)
@@ -53,9 +70,11 @@ small view	mail	da	Lille overblik
 sort order	mail	da	Soterings rækkefølge
 subject(a->z)	mail	da	Emne (A->Z)
 subject(z->a)	mail	da	Emne (Z->A)
+text	mail	da	Tekst
 then	mail	da	SÅ
 trash folder	mail	da	Skraldespands mappen
+unflagged	mail	da	Flag ikke sat
 unread	mail	da	ulæst
-urgent	mail	da	haster
 when deleting messages	mail	da	Når meddelser slettes
+write	mail	da	Skriv
 wrote	mail	da	skrev

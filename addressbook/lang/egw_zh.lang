@@ -271,7 +271,6 @@ phone numbers	common	zh	电话号码
 photo	addressbook	zh	照片
 please enter a name for that field !	addressbook	zh	请输入字段名称！
 please select only one category	addressbook	zh	请选择唯一的类别
-please update the templatename in your customfields section!	addressbook	zh	请在自定义字段区更新模板名！
 postal	common	zh	邮政信箱
 pref	addressbook	zh	设为首选
 preferred email address to use in distribution lists	addressbook	zh	分发列表使用的首选电子邮件地址
@@ -352,7 +351,6 @@ verification	addressbook	zh	认证
 view linked infolog entries	addressbook	zh	查看链接的记事条目
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh	警告！只有当您不为联系人账户存储时，LDAP才是有效的！
 warning: all contacts found will be deleted!	addressbook	zh	警告：找到的所有联系人都会被删除！
-warning: template "%1" not found, using default template instead.	addressbook	zh	警告：未找到模板"%1"，将改为使用默认模板。
 weekday	addressbook	zh	星期几
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	zh	如何在其他应用程序中显示链接的通讯簿，空的数值数据将被省略。如果您要修改此设置，您需要重新登录！
 where to add the email address	addressbook	zh	在哪里添加邮件地址

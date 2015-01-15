@@ -24,6 +24,8 @@ account list	admin	pl	Lista kont
 account permissions	admin	pl	Prawa do konta
 account preferences	admin	pl	Ustawienia konta
 account-id's have to be integers!	admin	pl	ID konta musi być liczbą!
+acl added.	admin	pl	Dodano ACL.
+acl deleted.	admin	pl	Usunięto ACL.
 acl manager	admin	pl	Meneder ACL
 acl rights	common	pl	Prawa ACL
 action	admin	pl	Czynność
@@ -159,6 +161,7 @@ delete this user	admin	pl	usuń tego użytkownika
 deleted	admin	pl	skasowany
 deletes this field	admin	pl	usuwa to pole
 deliver extern	admin	pl	dostarczaj gdzie indziej
+deny access	admin	pl	Odmów dostępu
 deny access to access log	admin	pl	Odmów dostępu do dziennika dostępu
 deny access to application registery	admin	pl	Odmów dostępu do rejestru aplikacji
 deny access to applications	admin	pl	Odmów dostępu do aplikacji
@@ -187,8 +190,6 @@ do you want to delete all global subcategories ?	admin	pl	Czy chcesz usunąć ws
 do you want to move all global subcategories one level down ?	admin	pl	Czy przenieść wszystkie podkategorie o jeden poziom w dół?
 document root (default)	admin	pl	Katalog główny serwera WWW (domyślnie)
 down	admin	pl	w dół
-each value is a line like <id>[=<label>]	admin	pl	każda wartość jest linią jak <id>[=<label>]
-each value is a line like id[=label]	admin	pl	każda wartość jest linią jak <id>[=label]
 edit account	admin	pl	Edytuj konto użytkownika
 edit application	admin	pl	Edycja aplikacji
 edit email settings	admin	pl	edytuj ustawienia  emaila
@@ -267,6 +268,7 @@ forward also to	admin	pl	prześlij także do
 forward emails to	admin	pl	prześlij maile dalej do
 forward only	admin	pl	tylko przesyłaj dalej
 full name	admin	pl	Pełna nazwa
+general	admin	pl	Główne
 global categories	common	pl	Kategorie globalne
 go directly to admin menu, returning here the next time you click on administration.	admin	pl	Przy powrocie do storny administracji przejdź bezpośrednio do menu administracyjnego.
 governmental: incl. state or municipal authorities or services	admin	pl	Rządowe: instytucje państwowe, lokalne, etc.
@@ -350,7 +352,6 @@ main email-address	admin	pl	Główny adres mailowy
 main screen message	admin	pl	Wiadomość na stronie gwnej
 manage mapping	admin	pl	Zarządzaj mapowaniem
 manager	admin	pl	Menedżer
-max length of the input [, length of the inputfield (optional)]	admin	pl	maksymalna długość danych [,długość pola (opcjonalnie)]
 maximum account id (e.g. 65535 or 1000000)	admin	pl	Maksymalny ID konta (np: 65535 lub 100000)
 maximum entries in click path history	admin	pl	Maksymlna ilość zapamiętanych kliknięć
 members	admin	pl	Członkowie
@@ -403,6 +404,7 @@ percent of users that logged out	admin	pl	Procent wylogowanych użytkowników
 percent this user has logged out	admin	pl	Procent wylogowań tego użytkownika
 permission denied	admin	pl	Dostęp zabroniony
 permission denied !!!	admin	pl	Dostęp wzbroniony !!!
+permission denied!!!	admin	pl	Dostęp zabroniony !!!
 permissions	admin	pl	Uprawnienia
 permissions this group has	admin	pl	Uprawnienia grupy
 personal: eg. within a family	admin	pl	Osobiste: np. w rodzinie
@@ -431,7 +433,9 @@ remove all users from this group ?	admin	pl	Usuń wszystkich użytkownikw z grup
 requested	admin	pl	Żądany
 return to admin mainscreen	admin	pl	powrót do głównej strony administracji
 return to view account	admin	pl	Wróć do wyświetlania konta
+rights	admin	pl	Prawa
 route all mails to	admin	pl	Przesyłaj maile do
+rows	admin	pl	Wiersze
 rpm or debian package	admin	pl	Paczka RPM albo Debian
 run asynchronous services	admin	pl	Uruchom usługi asynchroniczne
 save the category	admin	pl	zapisz kategorię

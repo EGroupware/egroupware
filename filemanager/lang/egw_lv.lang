@@ -1,5 +1,6 @@
 %1 already exists as a file	filemanager	lv	%1 jau pastāv kā fails
 actions	filemanager	lv	Darbības
+administrators	filemanager	lv	administratori
 applications	common	lv	Aplikācijas
 cancel editing %1 without saving	filemanager	lv	Pārtraukt rediģēt %1 un nesaglabāt izmaiņas
 cannot create directory because it begins or ends in a space	filemanager	lv	Nevar izveidot mapi jo tās nosaukums sākas vai beidzas ar atstarpi
@@ -22,9 +23,13 @@ deleted %1	filemanager	lv	Izdzēsa %1
 directory	filemanager	lv	Direktorija
 directory %1 already exists	filemanager	lv	Direktorija %1 jau pastāv
 directory %1 does not exist	filemanager	lv	Direktorija %1 nepastāv
+disable	filemanager	lv	Deaktivizēt
 download	filemanager	lv	Lejupielādēt
 edit comments	filemanager	lv	Rediģēt komentārus
-file	filemanager	lv	Datne
+enable	filemanager	lv	Aktivizēt
+everyone	filemanager	lv	ikviens
+expires	filemanager	lv	Beigas
+file	common	lv	Datne
 file %1 could not be created.	filemanager	lv	Datne %1 netika izveidota.
 file names cannot contain "%1"	filemanager	lv	Datnes nosaukumā nedrīkst būt "%1"
 filemanager	common	lv	Datņu pārvaldnieks
@@ -47,6 +52,7 @@ no files in this directory.	filemanager	lv	Šajā direktorijā datņu nav.
 no version history for this file/directory	filemanager	lv	Nav vēstures par šo datni vai direktoriju
 open	filemanager	lv	atvērt
 operation	filemanager	lv	Operācija
+percentage	filemanager	lv	Procenti
 permissions	filemanager	lv	Atļaujas
 please select a file to delete.	filemanager	lv	Lūdzu norādi failu, kuru izdzēst
 preview	filemanager	lv	Priekšskatījums

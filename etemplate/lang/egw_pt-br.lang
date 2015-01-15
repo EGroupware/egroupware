@@ -20,6 +20,7 @@ a pattern to be searched for	etemplate	pt-br	um padrão a ser procurado
 accesskey	etemplate	pt-br	Tecla de atalho
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	pt-br	Teclas de atalho também pode ser especificadas com um '&' no rótulo (exemplo: &Nome).
 account contactdata	etemplate	pt-br	Dados do contato
+actions...	etemplate	pt-br	Ações...
 add a new column (after the existing ones)	etemplate	pt-br	Adicionar uma nova coluna (após as existentes)
 add a new entry of the selected application	etemplate	pt-br	Adicionar um novo registro do aplicativo selecionado
 add a new multi-column index	etemplate	pt-br	Adicionar um index de novas multi-colunas
@@ -27,12 +28,14 @@ add column	etemplate	pt-br	Adicionar Coluna
 add index	etemplate	pt-br	Adicionar Index
 add new	etemplate	pt-br	Adicionar novo
 add table	etemplate	pt-br	Adicionar Tabela
+add to clipboard	etemplate	pt-br	Adicionar à prancheta
 advanced search	etemplate	pt-br	Pesquisa avançada
 align	etemplate	pt-br	Alinhar
 alignment of label and input-field in table-cell	etemplate	pt-br	alinhamento da etiqueta e campo de entrada na célula da tabela
 alignment of the v/hbox containing table-cell	etemplate	pt-br	Alinhamento da V/HBox contendo a célula da tabela
 all days	etemplate	pt-br	Todos os dias
 all operations save the template!	etemplate	pt-br	Todas as operações salvam o modelo!
+all users	etemplate	pt-br	Todos usuários
 am	etemplate	pt-br	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pt-br	uma coluna indexada posicionada acima das querys (custa espaço no disco)
 and	etemplate	pt-br	E
@@ -86,6 +89,7 @@ contact	etemplate	pt-br	Contato
 contact field to show	etemplate	pt-br	Campo do contato a ser exibido
 contact fields	etemplate	pt-br	Campos de contatos
 contains	etemplate	pt-br	contém
+copy to clipboard	etemplate	pt-br	Copiar para a área de transferência
 create a new table for the application	etemplate	pt-br	Criar uma nova tabela para aplicação
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pt-br	criados em um arquivo de idioma inglês ('en') da etiqueta e arquivos de ajuda (para a aplicação em nome)
 creator	preferences	pt-br	Criador
@@ -142,6 +146,7 @@ editable templates - delete template	etemplate	pt-br	Modelos editáveis - Remove
 editable templates - editor	etemplate	pt-br	Modelos editáveis - Editor
 editable templates - search	etemplate	pt-br	Modelos editáveis - Localizar
 editable templates - show template	etemplate	pt-br	Modelos editáveis - Visualizar Modelo
+element role title	etemplate	pt-br	Título papel de elemento
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	pt-br	encaixado estivo CSS, ex. '.red { background: red; }' (note o '.' antes do nome-da-classe) ou '@import url(...)' (nomes de classe são globais para a página inteira!)
 enable javascript onchange submit	etemplate	pt-br	ativar JavaScript sobre as alterações submetidas
 enter '' for an empty default, nothing mean no default	etemplate	pt-br	informe '' para campos vazios, nada não significa padrão algum
@@ -185,6 +190,7 @@ grid	etemplate	pt-br	Grade
 grid column attributes	etemplate	pt-br	Atributos das colunas da grade
 grid row attributes	etemplate	pt-br	Atributos das linhas da grade
 groupbox	etemplate	pt-br	Caixa de seleção
+h	etemplate	pt-br	h
 hbox	etemplate	pt-br	HBox
 height	etemplate	pt-br	Altura
 height of row (in % or pixel)	etemplate	pt-br	Altura da linha (em % ou pixel)
@@ -198,6 +204,8 @@ hour	etemplate	pt-br	Hora
 hours	etemplate	pt-br	Horas
 how many entries should the list show	etemplate	pt-br	Quantos items a lista deverá exibir
 html	etemplate	pt-br	Html
+html link to the current record	etemplate	pt-br	Link HTML para o registro atual
+id	etemplate	pt-br	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	pt-br	se o campo for desativado uma célula vazia na tabela será mostrada, para remoção (temporária) de um campo/célula
 image	etemplate	pt-br	Imagem
 import	etemplate	pt-br	Importar
@@ -229,18 +237,24 @@ last	etemplate	pt-br	Última
 left	etemplate	pt-br	Esquerda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	pt-br	tamanho para char+varchar, precisões em: 2, 4, 8 e flutuante: 4, 8
 link	etemplate	pt-br	Link
+link target %1 not found!	etemplate	pt-br	Destino do link% 1 não encontrado!
 linkapps	etemplate	pt-br	Link de aplicativos
 linkentry	etemplate	pt-br	Entradas de link
 linklist	etemplate	pt-br	Listar link
+links and attached files	preferences	pt-br	Links e arquivos anexados
 linkstring	etemplate	pt-br	Texto para link
 linkto	etemplate	pt-br	Linkar para
+list of files linked to the current record	preferences	pt-br	Lista de arquivos vinculados ao registro atual
 load this template into the editor	etemplate	pt-br	carregar este modelo para o editor
+loading	etemplate	pt-br	carregando
 maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads
 message ...	etemplate	pt-br	Mensagem...
 middle	etemplate	pt-br	Meio
 minute	etemplate	pt-br	Minuto
 minutes	etemplate	pt-br	Minutos
+modifier	preferences	pt-br	Modifier
 month	etemplate	pt-br	Mês
+more	etemplate	pt-br	Mais
 more than 1 match for '%1'	etemplate	pt-br	mais de 1 combinação para '%1'
 multicolumn indices	etemplate	pt-br	Indices de multicolunas
 name	etemplate	pt-br	Nome
@@ -249,6 +263,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	pt-br	Nome da tabela a adicionar
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pt-br	nome para o eModelo, se estiver na aplicação de formulário. Função[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	pt-br	precisa ser original na tabela e nenhuma palavra que seja reservada do SQL, os melhores prefixos recomendados são os atalhos com dois dígitos seguidos de traço-baixo, ex.: 'et_'
+new	etemplate	pt-br	Novo
 new search	common	pt-br	Nova pesquisa
 new table created	etemplate	pt-br	Nova tabela criada
 newer version '%1' exists !!!	etemplate	pt-br	Existe(m) '%1' versão(ões) mais atual(ais) !!!
@@ -262,12 +277,14 @@ no column to swap with !!!	etemplate	pt-br	sem coluna para trocar !!!
 no file	etemplate	pt-br	sem arquivo
 no filename given or selected via browse...	etemplate	pt-br	sem nome de arquivo atribuído ou selecionado através do localizar...
 no matches found	etemplate	pt-br	Nenhuma combinação encontrada
+no rights to export more than %1 entries!	common	pt-br	Nenhum direito a exportar mais de 1% entradas!
 no row to swap with !!!	etemplate	pt-br	sem linha para trocar !!!
 not null	etemplate	pt-br	NÃO PODE SER VAZIO
 nothing	etemplate	pt-br	nada
 nothing found - try again !!!	etemplate	pt-br	Nada encontrado - tente novamente !!!
 nothing in clipboard to paste !!!	etemplate	pt-br	nada na área de transferência para colar !!!
 nothing matched search criteria !!!	etemplate	pt-br	Nada encontrado de acordo com os critérios de pesquisa!!!
+now	etemplate	pt-br	Agora
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	pt-br	número de colunas que deve medir a célula/campo ou 'all' para as colunas restantes, nome da classe-CSS (para a tag TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	pt-br	número de linhas/colunas em um V/HBox, Estofamento de célula, Espaçamento de célula
 of	etemplate	pt-br	de
@@ -297,12 +314,16 @@ read a list of entries.	etemplate	pt-br	Ler uma lista de registro
 read a single entry by passing the id and fieldlist.	etemplate	pt-br	Ler uma entrada única passando o ID e a lista de campo.
 read etemplate from database (for the keys above)	etemplate	pt-br	Ler eModelo da base de dados (para as chaves acima)
 readonly	etemplate	pt-br	somente leitura
+refresh	etemplate	pt-br	Atualizar
 remove row (can not be undone!!!)	etemplate	pt-br	remover Linha (NÃO pode ser desfeito!!!)
 remove this link (not the entry itself)	etemplate	pt-br	Remover este link (não a própria entrada)
 required	etemplate	pt-br	Requerido
+reset	etemplate	pt-br	Limpar
 returns savely, without deleting	etemplate	pt-br	retornar ao documento salvo, SEM apagar
 right	etemplate	pt-br	Direita
 row...	etemplate	pt-br	Linha...
+save as	etemplate	pt-br	salvar como
+save as zip	etemplate	pt-br	Salvar como Zip
 save selected columns as default preference for all users.	etemplate	pt-br	Salvar colunas selecionadas como padrão para todos os usuários.
 save the changes made and close the window	etemplate	pt-br	Salvar as alterações feitas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	pt-br	salvar o eModelo sobre as chaves (nome, ...), alterando e salvando como
@@ -329,6 +350,7 @@ select country	etemplate	pt-br	Selecione o País
 select day	etemplate	pt-br	Selecione o Dia
 select day of week	etemplate	pt-br	Selecione o dia da semana
 select entry	etemplate	pt-br	Selecionar entrada
+select file(s) from vfs	etemplate	pt-br	Selecione o arquivo (s) a partir de VFS
 select hour	etemplate	pt-br	Selecionar hora
 select if content of field should not be translated (label gets always translated)	etemplate	pt-br	selecione o conteúdo do campo caso o índice não seja traduzido (a etiqueta inicia sempre traduzida)
 select language	etemplate	pt-br	Selecione idioma
@@ -345,6 +367,7 @@ select which accounts to show	etemplate	pt-br	Selecione qual conta exibir
 select which values to show	etemplate	pt-br	selecione que valores devem ser visualizados
 select year	etemplate	pt-br	Selecione o Ano
 selectbox	etemplate	pt-br	Caixa de seleção
+set as default	etemplate	pt-br	Definir como padrão
 sets today as date	etemplate	pt-br	marque hoje como a data
 should the form be submitted or any custom javascript be executed	etemplate	pt-br	Deverá o formulário ser submetido ou qualquer javascript personalizado ser executado
 show	etemplate	pt-br	Exibir
@@ -376,6 +399,7 @@ template deleted	etemplate	pt-br	Modelo removido
 template saved	etemplate	pt-br	Modelo salvo
 text	etemplate	pt-br	Texto
 textarea	etemplate	pt-br	Área para texto
+the following document-types are supported:	preferences	pt-br	Os seguintes tipos de documentos são suportados:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	pt-br	este texto será indicado quando um campo de entrada estiver vazio e sem foco (borrão).
 time	etemplate	pt-br	Tempo
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	pt-br	para desabilitar: [! = não]<valor>[=<check>]. Exemplo: '!data' desabilita se o conteúdo de 'data' estiver vazio.
@@ -411,6 +435,7 @@ width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@dat
 width of column (in % or pixel)	etemplate	pt-br	Largura da coluna (em % ou pixels)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	pt-br	Largura da tabela em % ou pixels para a tab de tabela e (opcional) div
 width, disabled	etemplate	pt-br	Largura, Desabilitada
+wk	etemplate	pt-br	Semana
 working days	etemplate	pt-br	Dias de trabalho
 write <app>/setup/tables_current.inc.php	etemplate	pt-br	Escrever <app>/setup/tables_current.inc.php
 write langfile	etemplate	pt-br	Escrever o arquivo de idioma

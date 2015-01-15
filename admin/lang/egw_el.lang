@@ -152,8 +152,6 @@ do you want to delete all global subcategories ?	admin	el	Θέλεις να δι
 do you want to move all global subcategories one level down ?	admin	el	Θέλεις να μετακινήσεις όλες τις γενικές υποκατηγορίες ένα επίπεδο κάτω?
 document root (default)	admin	el	Document root
 down	admin	el	κάτω
-each value is a line like <id>[=<label>]	admin	el	κάθε τιμή είναι μία γραμμή σαν <id>[=<label>]
-each value is a line like id[=label]	admin	el	κάθε τιμή είναι μία γραμμή σαν id[=label]
 edit account	admin	el	Επεξεργασία λογαριασμού
 edit application	admin	el	Επεξεργασία εφαρμογής
 edit email settings	admin	el	επεξεργασία ρυθμίσεων email
@@ -216,6 +214,7 @@ forward also to	admin	el	προώθηση επίσης στο
 forward emails to	admin	el	προώθηση των emails στο
 forward only	admin	el	μόνο προώθηση
 full name	admin	el	Πλήρες όνομα
+general	admin	el	Γενικά
 global categories	common	el	Γενικές κατηγορίες
 group ?	admin	el	ομαδα ?
 group has been added	common	el	Ομάδα προστέθηκε
@@ -278,7 +277,6 @@ mail settings	admin	el	Ρυθμίσεις μηνυμάτων
 main email-address	admin	el	Κύρια Διεύθυνση Email
 main screen message	admin	el	Μήνυμα κύριας οθόνης
 manager	admin	el	Διαχειριστής
-max length of the input [, length of the inputfield (optional)]	admin	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
 maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
 maximum entries in click path history	admin	el	Μέγιστος αριθμός εισόδων στο click path ιστορικό
 message has been updated	admin	el	το μήνυμα έχει ενημερωθεί
@@ -338,6 +336,7 @@ remove all users from this group ?	admin	el	Θα διαγράψετε όλους
 return to admin mainscreen	admin	el	Επιστροφή στην κύρια οθόνη του admin
 return to view account	admin	el	Επιστροφή στην εμφάνηση του λογαριασμού
 route all mails to	admin	el	Δρομολογήστε όλα τα Μηνύματα στο
+rows	admin	el	Γραμμές
 run asynchronous services	admin	el	Τρέξτε Ασύνχρονες υπηρεσίες
 save the category	admin	el	σώστε την κατηγορία
 save the category and return back to the list	admin	el	σώστε την κατηγορία και επιστρέψτε πίσω στη λίστα

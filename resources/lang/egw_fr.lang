@@ -21,16 +21,24 @@ check all	resources	fr	Tout cocher
 choose categories admin	resources	fr	Choisissez les administrateurs de la catégorie
 clear selection	resources	fr	Vider la sélection
 configure access permissions	admin	fr	Configurer les droits d'accès
+confirmed addressbook.	resources	fr	Carnet d'adresses des contacts confirmés
+conflict	resources	fr	Conflit
 create new accessory for this resource	resources	fr	Créer de nouveaux accessoires pour cette ressource
 create new links	resources	fr	Créer de nouveaux liens
+custom etemplate for the contactform	resources	fr	eTemplate personnalisé pour le formulaire contact
+custom fields	resources	fr	Champs personnalisés
+days	resources	fr	jours
 delete selected resources	resources	fr	Supprimer les ressources selectionnées
 delete this entry	resources	fr	Supprimer cette entrée
+deleted	resources	fr	supprimé
 description (short)	resources	fr	Description (courte)
 direct booking permissions	resources	fr	Permissions directes de réservation
 don't use vfs (this will need a symlink --> see readme)	resources	fr	Ne pas utilisé VFS (ceci nécessitera un lien symbolique --> voir README)
 edit this entry	resources	fr	Modifier cette entrée
 existing links	resources	fr	Liens existants
 exists	resources	fr	Existe
+export definition to use for nextmatch export	resources	fr	Définition de l'export à utiliser pour l'export "nextmatch"
+export definitition to use for nextmatch export	resources	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports a list of resources to a csv file.	resources	fr	Exporter une liste de ressources dans un fichier csv
 general	resources	fr	Général
 general informations about resource	resources	fr	Informations générales au sujet des ressources
@@ -67,6 +75,7 @@ name:	resources	fr	Nom :
 new accessory	resources	fr	Nouveaux accessoires
 new resource	resources	fr	Nouvelle resource
 no description available	resources	fr	Aucune description disponible
+no matches	resources	fr	pas de résutlat
 no resources selected	resources	fr	Aucune ressource choisie
 notify your administrator to correct this situation	resources	fr	Informez votre administrateur afin qu'il corrige cette situation.
 picture	resources	fr	Image
@@ -103,8 +112,12 @@ something went wrong by saving resource	resources	fr	Erreur à l'enregistrement 
 storage	resources	fr	Stockage
 storage information	resources	fr	Information de stockage
 storage information:	resources	fr	Information de stockage :
+the anonymous user needs add rights for it!	resources	fr	L'utilisateur anonyme doit avoir des droits d'ajout !
 the calendar of this resource	resources	fr	Le calendrier de cette ressource
 this module displays the resources app	resources	fr	Ce module montre l'application ressources
+too many matches	resources	fr	trop de résultats
+unable to link to %1 "%2"	resources	fr	Incapable de lier %1 "%2"
+unable to process confirmation.	resources	fr	Incapable de procéder à la confirmation
 use general resources icon	resources	fr	Utilisez  l'icône de la ressource générale
 use own picture	resources	fr	Utilisez  votre propre propre image
 use the category's icon	resources	fr	Utilisez l'icône de la catégorie
@@ -118,6 +131,8 @@ web-site for this resource	resources	fr	Site web de cette ressource
 where to find this resource?	resources	fr	Ou trouver cette ressource ?
 which category does this resource belong to?	resources	fr	À quelle catégorie cette ressource appartient-elle?
 write permissions	resources	fr	Permissions d'écriture
+yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
+yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
 you are not permitted to delete this resource!	resources	fr	Vous n'êtes pas autorisé à supprimer cette ressource !
 you are not permitted to edit this resource!	resources	fr	Vous n'êtes pas autorisé à modifier cette ressource !
 you are not permitted to get information about this resource!	resources	fr	Vous n'êtes pas autorisé à obtenir des informations sur cette ressource !

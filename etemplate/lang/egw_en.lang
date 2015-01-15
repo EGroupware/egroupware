@@ -7,6 +7,7 @@
 %1 more...	etemplate	en	%1 more...
 %1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for application '%2'
 %1 not implemented for %2!	etemplate	en	%1 not implemented for %2!
+%1' han an invalid format !!!	etemplate	en	%1' han an invalid format !!!
 %1, duplicate id	etemplate	en	%1, duplicate ID
 %s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
@@ -60,6 +61,7 @@ applies the changes to the given version of the template	etemplate	en	Applies th
 as default	etemplate	en	As default
 attach	etemplate	en	Attach
 attach file	etemplate	en	Attach file
+automatically refresh list	etemplate	en	Automatically refresh list
 baseline	etemplate	en	Baseline
 blurtext	etemplate	en	blurText
 border	etemplate	en	Border
@@ -107,6 +109,7 @@ contains	etemplate	en	Contains
 copy "%1"	etemplate	en	Copy "%1"
 copy to clipboard	etemplate	en	Copy to clipboard
 create a new table for the application	etemplate	en	Create a new table for the application
+create link	etemplate	en	Create link
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	Creates an English ('en') langfile from label and help texts (for application in Name)
 creator	preferences	en	Creator
 css class for the table-tag	etemplate	en	CSS class for the table tag
@@ -118,6 +121,7 @@ custom	etemplate	en	Custom
 custom fields	etemplate	en	Custom fields
 custom javascript for onchange	etemplate	en	Custom javascript for onChange
 cut	etemplate	en	Cut
+data type	etemplate	en	Data type
 date	etemplate	en	Date
 date+time	etemplate	en	Date+Time
 day	etemplate	en	Day
@@ -132,6 +136,8 @@ delete all selected etemplates, without further inquiry	etemplate	en	Delete ALL 
 delete and cut save the template!	etemplate	en	Delete and cut save the template!
 delete column	etemplate	en	Delete column
 delete index	etemplate	en	Delete index
+delete link	etemplate	en	Delete link
+delete link?	etemplate	en	Delete link?
 delete the spezified etemplate	etemplate	en	Delete eTemplate
 delete this column	etemplate	en	Delete column
 delete this etemplate	etemplate	en	Delete eTemplate
@@ -182,6 +188,7 @@ error: template not found !!!	etemplate	en	Error: Template not found!
 error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: web server is not allowed to write into '%1' !!!
 error: while saving !!!	etemplate	en	Error while saving!
 error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error writing file, no write permission for the web server!
+et2 rendering took %1s	etemplate	en	eT2 rendering took %1s
 etemplate	common	en	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, click Save to store it in the database
 etemplate '%1' written to '%2'	etemplate	en	eTemplate '%1' written to '%2'
@@ -192,6 +199,7 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	en	Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+example {} - gives a letter prefix without double spaces, if the title is empty for example	preferences	en	Example {} - Gives a letter prefix without double spaces, if the title is empty for example
 exchange this row with the one above	etemplate	en	Exchange this row with the one above
 exchange this two columns	etemplate	en	Exchange these two columns
 export the loaded etemplate into a xml-file	etemplate	en	Export the loaded eTemplate into a xml-file
@@ -202,7 +210,9 @@ field must not be empty !!!	etemplate	en	Field must not be empty!
 file	etemplate	en	File
 file '%1' not found!	etemplate	en	File '%1' not found!
 file contains more than one etemplate, last one is shown !!!	etemplate	en	File contains more than one eTemplate, last one is shown!
+file information	etemplate	en	File information
 file is of wrong type (%1 != %2)!	etemplate	en	File is wrong type (%1 != %2)!
+file too large.  maximum %1	etemplate	en	File too large.  Maximum %1
 file writen	etemplate	en	File written.
 fileupload	etemplate	en	File upload
 first	etemplate	en	First
@@ -221,6 +231,7 @@ grid	etemplate	en	Grid
 grid column attributes	etemplate	en	Grid column attributes
 grid row attributes	etemplate	en	Grid row attributes
 groupbox	etemplate	en	GroupBox
+h	etemplate	en	h
 hbox	etemplate	en	HBox
 height	etemplate	en	Height
 height of row (in % or pixel)	etemplate	en	Height of row (in % or pixel)
@@ -272,6 +283,7 @@ length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	Le
 link	etemplate	en	Link
 link target %1 not found!	etemplate	en	Link target %1 not found!
 linkapps	etemplate	en	Link apps
+linked	etemplate	en	Linked
 linkentry	etemplate	en	Link entry
 linklist	etemplate	en	Link list
 links and attached files	preferences	en	Links and attached files
@@ -280,7 +292,10 @@ linkstring	etemplate	en	Link string
 linkto	etemplate	en	Link to
 list of files linked to the current record	preferences	en	List of files linked to the current record
 load this template into the editor	etemplate	en	Load template to the editor
+loading	etemplate	en	Loading
+m	etemplate	en	m
 maximum size for uploads	filemanager	en	Maximum upload size
+maybe	etemplate	en	Maybe
 message ...	etemplate	en	Message ...
 message prepared for sending.	etemplate	en	Message prepared for sending.
 message(s) send failed!	etemplate	en	Message(s) send failed!
@@ -313,12 +328,14 @@ nextmatch filterheader	etemplate	en	Nextmatch filter header
 nextmatch header	etemplate	en	Nextmatch header
 nextmatch sortheader	etemplate	en	Nextmatch sort header
 no column to swap with !!!	etemplate	en	No column to swap with!
+no default set	etemplate	en	No default set
 no file	etemplate	en	No file
 no filename given or selected via browse...	etemplate	en	No filename
 no filters	etemplate	en	No filters
 no matches found	etemplate	en	No matches found.
 no rights to export more than %1 entries!	common	en	No rights to export more than %1 entries!
 no row to swap with !!!	etemplate	en	No row to swap with!
+no suggestions	etemplate	en	No suggestions
 not null	etemplate	en	NOT NULL
 nothing	etemplate	en	Nothing
 nothing found - try again !!!	etemplate	en	Nothing found - try again!
@@ -351,6 +368,7 @@ precision	etemplate	en	Precision
 preference	etemplate	en	Preference
 primary key	etemplate	en	Primary key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automatically indexed
+protocol is required	etemplate	en	Protocol is required
 radiobutton	etemplate	en	Radio button
 read	etemplate	en	Read
 read a list of entries.	etemplate	en	Read a list of entries.
@@ -370,6 +388,8 @@ right	etemplate	en	Right
 row...	etemplate	en	Row...
 sa	etemplate	en	Sa
 save all	etemplate	en	Save all
+save as	etemplate	en	Save as
+save as zip	etemplate	en	Save as Zip
 save selected columns as default preference for all users.	etemplate	en	Save columns as default preference for all users.
 save the changes made and close the window	etemplate	en	Save changes and close
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	Save eTemplate under the above keys (name, ...), change them for a SaveAs
@@ -378,6 +398,7 @@ saves the template with given version number and closes the window	etemplate	en	
 scale	etemplate	en	Scale
 scale for float	etemplate	en	Scale for float
 search	etemplate	en	Search
+search letter	etemplate	en	Search letter
 search...	etemplate	en	Search...
 select a category	etemplate	en	Select category
 select a primary contact, to show in the list	etemplate	en	Select primary contact, to show in the list
@@ -392,11 +413,13 @@ select an table of the application	etemplate	en	Select application table
 select application	etemplate	en	Select application
 select application to search	etemplate	en	Select application to search
 select category	etemplate	en	Select category
+select color	etemplate	en	Select color
 select columns	etemplate	en	Select columns
 select country	etemplate	en	Select country
 select day	etemplate	en	Select day
 select day of week	etemplate	en	Select week day
 select entry	etemplate	en	Select entry
+select file(s) from vfs	etemplate	en	Select file(s) from VFS
 select files from filemanager ...	etemplate	en	Select files from Filemanager ...
 select hour	etemplate	en	Select hour
 select if content of field should not be translated (label gets always translated)	etemplate	en	Select if field content should not be translated, label gets always translated.
@@ -415,6 +438,8 @@ select which accounts to show	etemplate	en	Select accounts to show
 select which values to show	etemplate	en	Select values to show
 select year	etemplate	en	Select year
 selectbox	etemplate	en	Select box
+server error	etemplate	en	Server error
+set as default	etemplate	en	Set as default
 set these columns as the default	etemplate	en	Set these columns as the default
 sets today as date	etemplate	en	Set today as date
 should the form be submitted or any custom javascript be executed	etemplate	en	Should form be submitted or any custom javascript executed
@@ -434,6 +459,7 @@ start new search for the above pattern	etemplate	en	Start new search for the abo
 su	etemplate	en	Su
 submit form	etemplate	en	Submit form
 submitbutton	etemplate	en	Submit button
+sure	etemplate	en	Sure
 swap	etemplate	en	Swap
 swap widget with next one	etemplate	en	Swap widget with next one
 swap with next column	etemplate	en	Swap with next column
@@ -504,6 +530,7 @@ xml-file to import	etemplate	en	Xml file to import
 xslt template	etemplate	en	XSLT Template
 year	etemplate	en	Year
 you are not allowed to export more than %1 entries!	common	en	You are not allowed to export more than %1 entries!
+you can not choose more then %1 item(s)!	etemplate	en	You can not choose more then %1 item(s)!
 you can respond by visiting:	etemplate	en	You can respond by visiting
 you need to select a file first!	etemplate	en	Select a file first!
 your code is incorrect !!!	etemplate	en	Code is incorrect!

@@ -19,7 +19,6 @@ date format	preferences	lo	ຮູບແບບວັນທີ
 default	preferences	lo	ຄ່າເລີ່ມຕົ້ນ
 default application	preferences	lo	ແອັບພຼິເຄເຊັນເລີ່ມຕົ້ນ
 default preferences	preferences	lo	ການຕັ້ງຄ່າເລີ່ມຕົ້ນ
-default theme	preferences	lo	ຮູບແບບຄ່າເລີ່ມຕົ້ນ
 delete categories	preferences	lo	ລຶບໝວດໝູ່
 description can not exceed 255 characters in length !	preferences	lo	ລາຍລະອຽດບໍ່ເກີນ 255 ຕົວອັກສອນ
 display thumbnails for linked images	preferences	lo	ສະແດງພາບຂະໜາດຫຍໍ້ສຳລັບການເຊື່ອມຕໍ່ຮູບ
@@ -52,7 +51,6 @@ no user-selection at all	common	lo	ບໍ່ມີຜູ້ໃຊ້ເລືອ
 note: this feature does *not* change your email password. this will	preferences	lo	ໝາຍເຫດ: ຄຸນສົມບັດນີ້ *ບໍ່* ໄດ້ປ່ຽນລະຫັດຜ່ານອີເມວຂອງທ່ານ. ນີ້ຈະ
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	lo	ໝາຍເຫດ: ຄຸນສົມບັດນີ້ *ບໍ່* ໄດ້ປ່ຽນລະຫັດຜ່ານອີເມວຂອງທ່ານ. ຈະຕ້ອງດຳເນີນດ້ວຍຕົນເອງ
 number format	preferences	lo	ຮູບແບບຕົວເລກ
-office 2003 theme	preferences	lo	ຮູບແບບ Office 2003
 p: paragraph	preferences	lo	p: ຫຍໍ້ໜ້າ
 permanent time zone selection	preferences	lo	ການເລືອກເຂດເວລາແບບຖາວອນ
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	lo	ກະລຸນາເລືອກເຂດເວລາ, ທ່ານສາມາດສະລັບໄປມາຢ່າງໄວ. ຖ້າເລືອກໜ້ອຍກວ່າສອງ ຈະບໍ່ສະແດງ
@@ -79,7 +77,6 @@ show navigation bar as	preferences	lo	ສະແດງຊ່ອງຕົວເລ
 show number of current users	preferences	lo	ສະແດງຈໍານວນຂອງຜູ້ໃຊ້ປັດຈຸບັນ
 show text on navigation icons	preferences	lo	ສະແດງຂໍ້ຄວາມໃນຊ່ອງຕົວເລືອກໄອຄ໋ອນ
 show_more_apps	common	lo	ສະແດງແອບພຼິເຄຊັນຕື່ມອີກ
-silver theme	preferences	lo	ຮູບແບບສີເງິນ
 spellchecker language	addressbook	lo	ຕົວກວດສອບສະກົດຄຳຂອງພາສາ
 text only	preferences	lo	ສະເພາະຂໍ້ຄວາມ
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	lo	ຄ່າເລີ່ມຕົ້ນແອບພຼິເຄຊັນຈະເລີ່ມເມື່ອທ່ານໃຊ້ຕາຕະລາງເວລາ ຫຼື ຄຼິກທີ່ໄອຄ໋ອນໜ້າທຳອິດ. <br> ທ່ານຍັງສາມາດມີຫຼາຍກວ່າໜຶ່ງແອບພຼິເຄຊັນທີ່ສະແດງໃນໜ້າທຳອິດ, ຖ້າທ່ານບໍ່ເລືອກໃຊ້ງານສະເພາະບ່ອນນີ້(ຕ້ອງມີການກຳໜົດຄ່າໃນການຕິດຕັ້ງຄ່າຂອງແຕ່ລະແອບພຼິເຄຊັນ)

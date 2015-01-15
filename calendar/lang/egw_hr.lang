@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	hr	%1 %2 u %3
+%1 hours	calendar	hr	%1 sati
 %1 records imported	calendar	hr	Podataka %1 uneseno
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	hr	%1 podataka pročitano (još nije uneseno, možete se vratiti i deselektirati testno unošenje)
 accept	calendar	hr	Prihvati
@@ -30,6 +31,7 @@ create new links	calendar	hr	Create new links
 created	calendar	hr	Napravljeno
 csv-fieldname	calendar	hr	CSV-Ime polja
 csv-filename	calendar	hr	CSV-Ime datoteke
+custom	calendar	hr	Proizvoljno
 custom fields	common	hr	Proizvoljna polja
 daily	calendar	hr	Dnevno
 day	calendar	hr	Dan

@@ -18,6 +18,7 @@
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ru	Для установки новых приложений используйте<br><a href="setup/" target="setup">Установка</a> [Управление приложениями]!
 -  type	admin	ru	- тип
 accesslog and bruteforce defense	admin	ru	Журнал доступа и защита от взлома подбором
+account	admin	ru	Учетная запись
 account "%1" has no email address --> not notified!	admin	ru	Учётная запись «%1» не имеет E-mail адреса и поэтому не получает извещений!
 account "%1" has no plaintext password!	admin	ru	Учётная запись «%1» не имеет plaintext пароля
 account %1 %2	admin	ru	Учётная запись %1 %2
@@ -31,6 +32,8 @@ account list	admin	ru	Список учётных записей
 account permissions	admin	ru	Разрешения учётной записи
 account preferences	admin	ru	Настройки учётной записи
 account-id's have to be integers!	admin	ru	Идентификаторы учётных записей должны быть целыми числами!
+acl added.	admin	ru	Права доступа ACL добавлены.
+acl deleted.	admin	ru	Права доступа ACL удалены.
 acl manager	admin	ru	Менеджер ACL
 acl rights	common	ru	Права ACL
 action	admin	ru	Действие
@@ -183,6 +186,7 @@ delete this user	admin	ru	Удалить этого пользователя
 deleted	admin	ru	Удалено
 deletes this field	admin	ru	Удалить это поле
 deliver extern	admin	ru	Доставка извне
+deny access	admin	ru	Отменить доступ
 deny access to access log	admin	ru	Закрыть доступ к журналу доступа
 deny access to application registery	admin	ru	Закрыть доступ к реестру приложений
 deny access to applications	admin	ru	Закрыть доступ к приложениям
@@ -215,8 +219,6 @@ do you want to move all global subcategories one level down ?	admin	ru	Вы хо
 document root (default)	admin	ru	Корневой каталог документов (по умолчанию)
 down	admin	ru	Вниз
 download csv	admin	ru	Загрузить CSV
-each value is a line like <id>[=<label>]	admin	ru	Каждое значение – это строка вида <идентификатор>[=<метка>]
-each value is a line like id[=label]	admin	ru	Каждое значение – это строка вида <идентификатор>[=<метка>]
 edit account	admin	ru	Редактировать учётную запись
 edit application	admin	ru	Редактировать приложение
 edit email settings	admin	ru	Редактировать настройки e-mail
@@ -303,6 +305,7 @@ forward also to	admin	ru	Перенаправить также на
 forward emails to	admin	ru	Перенаправить почту на
 forward only	admin	ru	Только перенаправить
 full name	admin	ru	Полное имя
+general	admin	ru	Общие
 global categories	common	ru	Общие категории
 go directly to admin menu, returning here the next time you click on administration.	admin	ru	Перейти прямо в меню администрирования, возвращаясь сюда при следующем клике на Администратор
 governmental: incl. state or municipal authorities or services	admin	ru	Государственные, включая федеральные и местные органы власти или службы
@@ -395,7 +398,6 @@ main email-address	admin	ru	Основной адрес электронной �
 main screen message	admin	ru	Сообщение главной страницы
 manage mapping	admin	ru	Управлять сопоставлением
 manager	admin	ru	Менеджер
-max length of the input [, length of the inputfield (optional)]	admin	ru	Максимальная длина строки ввода [, длина поля ввода (необязательно)]
 maximum account id (e.g. 65535 or 1000000)	admin	ru	Максимальный идентификатор учётной записи (например: 65535 или 1000000)
 maximum entries in click path history	admin	ru	Максимальное количество записей в истории пути кликов
 members	admin	ru	Участники
@@ -460,6 +462,7 @@ percent of users that logged out	admin	ru	Процент неподключён�
 percent this user has logged out	admin	ru	Процент этого пользователя, когда он не подключён
 permission denied	admin	ru	Доступ запрещён
 permission denied !!!	admin	ru	Доступ запрещён!
+permission denied!!!	admin	ru	Доступ запрещен!!!
 permissions	admin	ru	Разрешения
 permissions this group has	admin	ru	Разрешения, которые есть у этой группы
 personal: eg. within a family	admin	ru	Личное. Например: для семьи
@@ -491,7 +494,9 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	ru	Запрошен
 return to admin mainscreen	admin	ru	Вернуться к главной странице приложения «Администратор»
 return to view account	admin	ru	Вернуться к просмотру учётных записей
+rights	admin	ru	Права
 route all mails to	admin	ru	Направлять всю почту к
+rows	admin	ru	Ряды
 rpm or debian package	admin	ru	Пакеты RPM или Debian
 run asynchronous services	admin	ru	Запустить асинхронные сервисы
 save the category	admin	ru	Записать категорию

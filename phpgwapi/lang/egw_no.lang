@@ -210,6 +210,7 @@ error renaming %1 %2 directory	common	no	Feil under omdøping av %1 %2 mappe
 estonia	common	no	ESTLAND
 ethiopia	common	no	ETIOPIA
 exact	common	no	eksakt
+failed to change password.	common	no	Passordet kunne ikke endres.
 falkland islands (malvinas)	common	no	FALKLANDSØYENE
 faroe islands	common	no	FÆRØYENE
 fax number	common	no	Telefaksnummer
@@ -335,6 +336,7 @@ liechtenstein	common	no	LIECHTENSTEIN
 list	common	no	Liste
 list members	common	no	Liste medlemmer
 lithuania	common	no	LITAUEN
+load	common	no	Last inn
 local	common	no	Lokal
 login	common	no	Login
 loginid	common	no	LoginID
@@ -400,6 +402,7 @@ niger	common	no	NIGER
 nigeria	common	no	NIGERIA
 niue	common	no	NIUE
 no	common	no	Nei
+no - cancel	common	no	Nei - Avbryt
 no entries found, try again ...	common	no	ingen treff prøv igjen ...
 no history for this record	common	no	Ingen historie for denne posten
 no subject	common	no	Ingen Overskrift
@@ -462,6 +465,7 @@ please set your global preferences	common	no	Sett dine globale preferanser
 please set your preferences for this application	common	no	Sett dine preferanser for denne applikasjonen
 please wait...	common	no	Vennligst vent...
 poland	common	no	POLEN
+popup with search	common	no	Sprett-opp meny for søking
 portugal	common	no	PORTUGAL
 postal	common	no	Post
 preferences	common	no	Preferanser
@@ -513,6 +517,7 @@ search accounts	common	no	Søk kontoer
 search or select accounts	common	no	Søk eller velg konti
 section	common	no	Avsnitt
 select	common	no	Velg
+select all	common	no	Velg alle
 select all %1 %2 for %3	common	no	Velg alle %1 %2 for %3
 select category	common	no	Velg kategori
 select date	common	no	Velg dato
@@ -651,6 +656,8 @@ written by:	common	no	Skrevet av:
 year	common	no	År
 yemen	common	no	JEMEN
 yes	common	no	Ja
+yes - delete	common	no	Ja - Slett
+yes - delete including sub-entries	common	no	Ja - Slett inklusiv underordnede
 you are required to change your password during your first login	common	no	Du må endre passord etter din første innlogging
 you have been successfully logged out	login	no	Du har nå logget ut
 you have not entered a title	common	no	Du har ikke tastet inn en tittel
@@ -665,7 +672,6 @@ your message could <b>not</b> be sent!<br>	common	no	Meldingen kunne <b>ikke</b>
 your message has been sent	common	no	Din melding har blitt sent
 your search returned %1 matchs	common	no	ditt søk gav %1 treff
 your search returned 1 match	common	no	ditt søk gav 1 treff
-your session could not be verified.	login	no	Din sesjon kunne ikke bekreftes
 your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
 zambia	common	no	ZAMBIA
 zimbabwe	common	no	ZIMBABWE

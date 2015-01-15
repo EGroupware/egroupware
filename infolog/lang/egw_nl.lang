@@ -9,6 +9,7 @@
 %1 you are responsible for is starting at %2	infolog	nl	%1 waar jij verantwoordelijk voor bent start op %2
 %1 you delegated is due at %2	infolog	nl	%1 die jij gedelegeerd hebt vervalt op %2
 %1 you delegated is starting at %2	infolog	nl	%1 die jij gedelegeerd hebt start op %2
+(no subject)	infolog	nl	(geen onderwerp)
 - subprojects from	infolog	nl	- Subprojecten van
 0%	infolog	nl	0%
 10%	infolog	nl	10%
@@ -95,12 +96,14 @@ custom from	infolog	nl	Aangepast van
 custom regarding	infolog	nl	Aangepast m.b.t.
 custom status for typ	infolog	nl	Aangepaste status voor type
 customfields	infolog	nl	Aanpaste velden
+data exchange settings	infolog	nl	Data exchange instellingen
 date completed	infolog	nl	Datum voltooid
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	nl	Datum voltooid (leeg laten als je het automatisch wilt laten vullen indien de status op gedaan of gefactureerd wordt gezet)
 datecreated	infolog	nl	datum aangemaakt
 dates, status, access	infolog	nl	Data, Status, Toegang
 days	infolog	nl	dagen
 default category for new infolog entries	infolog	nl	Standaard categorie voor nieuwe InfoLog invoer
+default document to insert entries	infolog	nl	Standaard dokument voor het invoegen van gegevens
 default filter for infolog	infolog	nl	Standaard filter voor InfoLog
 default status for a new log entry	infolog	nl	Standaard status voor een nieuwe infolog
 delegated	infolog	nl	gedelegeerd
@@ -117,6 +120,7 @@ deletes this field	infolog	nl	verwijderd dit veld
 deletes this status	infolog	nl	verwijderd deze status
 description	infolog	nl	Beschrijving
 determines the order the fields are displayed	infolog	nl	bepaald hoe de volgorde van de velden wordt weergegeven
+directory with documents to insert entries	infolog	nl	Map met dokumenten om gegevens in tevoeren
 disables a status without deleting it	infolog	nl	deactiveerd een status zonder het te verwijderen
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	nl	Wilt een een bevestiging van de verantwoordelijke voor accepteren, voor beëindigen, of voor beide
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	nl	Wilt u een notificatie ontvangen indien items aan u toegewezen worden of toegewezen items gewijzigd worden?
@@ -127,7 +131,7 @@ do you want a notification, if items you delegated are about to start?	infolog	n
 do you want a notification, if items you delegated are due?	infolog	nl	Wilt u een notificatie ontvangen indien items, die u heeft gedelegeerd, op het punt staan te vervallen?
 do you want to receive notifications as html-mails or plain text?	infolog	nl	Wilt u notificaties ontvangen als html-emails of als platte tekst?
 don't show infolog	infolog	nl	InfoLog NIET weergeven
-done	common	nl	gereed
+done	infolog	nl	gereed
 download	infolog	nl	Downloaden
 duration	infolog	nl	Duur
 each value is a line like <id>[=<label>]	infolog	nl	elke waarde is een regel zoals <id>[=<label>]
@@ -149,8 +153,14 @@ entry and all files	infolog	nl	Infolog en alle bestanden
 error: importing the ical	infolog	nl	Fout: importing van de iCal
 error: saving the entry	infolog	nl	Fout: bij opslaan van de infolog
 error: the entry has been updated since you opened it for editing!	infolog	nl	Fout: de infolog is gewijzigd sinds dat u het opende voor bewerking!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	nl	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	nl	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 execute a further action for this entry	infolog	nl	Voer een vervolg actie uit voor dit record
 existing links	infolog	nl	Bestaande links
+exists	infolog	nl	Bestaat
+export definition to use for nextmatch export	infolog	nl	Export definitie om te gebruiken bij nextmatch export
 fax	infolog	nl	Fax
 field must not be empty !!!	infolog	nl	Veld mag niet leeg zijn !!!
 fieldseparator	infolog	nl	Veldonderbreker
@@ -158,16 +168,21 @@ finish	infolog	nl	Einde
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
 for which types should this field be used	infolog	nl	Voor welke type wordt dit veld gebruikt
 from	infolog	nl	Van
+general fields:	infolog	nl	Algemene velden:
+general settings	infolog	nl	Algemene instellingen
 global categories	infolog	nl	Algemene categoriën
 group owner for	infolog	nl	Groepseigenaar
 high	infolog	nl	hoog
 history	infolog	nl	Historie
 history logging	infolog	nl	Historie vastleggen
 history logging and deleting of items	infolog	nl	Historie vastleggen en verwijdering van items
+html link to the current record	infolog	nl	HTML link naar huidig record
 id	infolog	nl	ID
 id#	infolog	nl	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	nl	Indien een type een groepseigenaar heeft wordt alle invoer van dat type eigendom van de betreffende groep en NIET de gebruiker die ze heeft aangemaakt!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	nl	Indien niet ingesteld wordt de regel met zoeken en filters verborgen in het geval van minder entries dan "maximum aantal matches per pagina" (zoals bepaald in uw algemene voorkeuren).
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
+if you specify an export definition, it will be used when you export	infolog	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 import next set	infolog	nl	Volgende set imporeten
 importance	infolog	nl	Belangrijk
 info log	common	nl	InfoLog
@@ -184,6 +199,7 @@ infolog filter for the main screen	infolog	nl	InfoLog filter tbv de voorpagina
 infolog list	infolog	nl	InfoLog lijst
 infolog preferences	common	nl	InfoLog voorkeuren
 infolog-fieldname	infolog	nl	InfoLog-veldnaam
+insert	infolog	nl	Voeg toe
 insert in document	infolog	nl	Invoegen in document
 invalid filename	infolog	nl	Ongeldige bestandsnaam
 label<br>helptext	infolog	nl	Label<br/>Helptekst
@@ -194,12 +210,13 @@ leave it empty	infolog	nl	leeg laten
 leave it empty for a full week	infolog	nl	Laat het leeg voor een volle week
 leave without saveing the entry	infolog	nl	weggaan zonder op te slaan
 leaves without saveing	infolog	nl	weggaan zonder op te slaan
-length<br>rows	infolog	nl	Lengte<br/>Regels
 link	infolog	nl	Link
 links	infolog	nl	Links
+links and attached files	infolog	nl	Link naar bijgesloten bestand
 links of this entry	infolog	nl	Links van deze infolog
+links to specified application.  example: {{links/infolog}}	infolog	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
 list all categories	infolog	nl	Toon alle categorieën
-list no subs/childs	infolog	nl	Sub's niet weergeven
+list of files linked to the current record	infolog	nl	Lijs van bestanden gelinkt aan huidig record
 location	infolog	nl	Locatie
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
@@ -282,6 +299,7 @@ receive notifications about starting entries you delegated	infolog	nl	Ontvang no
 receive notifications as html-mails	infolog	nl	Ontvang notificaties als html-emails
 remark	infolog	nl	aandachtspunt
 remove this link (not the entry itself)	infolog	nl	Verwijder deze link (niet het record zeld)
+replacements for inserting entries into documents	infolog	nl	Vervanging voor het invoeren van gegevens in documenten
 responsible	infolog	nl	verantwoordelijk
 responsible open	infolog	nl	verantwoordelijk open
 responsible overdue	infolog	nl	verantwoordelijk te laat
@@ -289,6 +307,7 @@ responsible upcoming	infolog	nl	verantwoordelijk toekomstige
 responsible user, priority	infolog	nl	verantwoordelijke gebruiker, prioriteit
 returns a list / search for records.	infolog	nl	Toont een lijst / zoek records
 rights for the responsible	infolog	nl	Rechten voor de verantwoordelijke
+rows	infolog	nl	Rijen
 same day	infolog	nl	dezelfde dag
 save	infolog	nl	Opslaan
 saves the changes made and leaves	infolog	nl	Slaat wijzigingen op en verlaat het scherm
@@ -337,15 +356,18 @@ sub	infolog	nl	Onderliggende
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	nl	Sub infologs worden subs van de bovenliggende of hoofd infologs als er geen boven liggende infolog is
 subject	infolog	nl	Onderwerp
 sum	infolog	nl	Som
+tag to mark positions for address labels	infolog	nl	Tag voor markering tbv adreslabels
 task	infolog	nl	Taak
 template	infolog	nl	Template
 test import (show importable records <u>only</u> in browser)	infolog	nl	Test Import (te importeren record weergeven in uw browser)
+the following document-types are supported:	infolog	nl	De volgende document types worden ondersteund :
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	nl	de naam die intern gebruikt wordt (<= 10 tekens), als je dit wijzigt worden de huidige gegevens onbereikbaar
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	nl	de naam die intern gebruikt wordt (<= 20 tekens), als je dit wijzigt worden de huidige gegevens onbereikbaar
 the text displayed to the user	infolog	nl	De tekst die wordt weergegeven aan de gebruiker
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	nl	Dit is het filter dat InfoLog standaard gebruikt wanneer u InfoLog opent. Filters geven een selectie weer van het totale aantal infologs. Er zijn filters voor AFGEWERKTE, OPENSTAANDE of TOEKOMSTIGE infologs voor U of ALLE gebruikers.
 til when should the todo or phonecall be finished	infolog	nl	Wanneer moet de taak of het telefoongesprek afgehandeld zijn?
 times	infolog	nl	Tijden
+titles of any entries linked to the current record, excluding attached files	infolog	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 to many might exceed your execution-time-limit	infolog	nl	Te veel kan mogelijk de uitvoertijd van dit programme overschrijden.
 to what should the startdate of new entries be set.	infolog	nl	Waarop moet de startdatum van nieuwe items ingesteld worden.
 today	infolog	nl	Vandaag
@@ -361,6 +383,7 @@ unlink	infolog	nl	Maak link ongedaan
 upcoming	infolog	nl	aankomende
 urgency	infolog	nl	Prioriteit
 urgent	infolog	nl	dringend
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	nl	Gebruik deze tag voor adres labels.Plaats de inhoud welke je wilt herhalen tussen twee tags.
 used time	infolog	nl	gebruikte tijd
 values for selectbox	infolog	nl	Waarden voor selectbox
 view all subs of this entry	infolog	nl	Alle sub's van deze infolog weergeven

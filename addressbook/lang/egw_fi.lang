@@ -91,7 +91,6 @@ charset for the vcard export	addressbook	fi	vCard -viennissä käytettävä merk
 charset of file	addressbook	fi	Tiedoston merkistö
 check all	addressbook	fi	Valitse kaikki
 choose an icon for this contact type	admin	fi	Valitse kuvake tälle yhteystietotyypille
-choose export options	addressbook	fi	Valitse Vienti asetukset
 choose owner of imported data	addressbook	fi	Valitse omistaja tuoduille tiedoille
 chosse an etemplate for this contact type	admin	fi	Valitse eMallipohja tälle yhteystietotyypille
 city	common	fi	Kaupunki
@@ -114,6 +113,7 @@ contact repository	admin	fi	Yhteystietojen varasto
 contact saved	addressbook	fi	Yhteystieto tallennettu
 contact settings	admin	fi	Yhteystiedot - asetukset
 contactform	addressbook	fi	Yhteystietokaavake
+contacts	common	fi	Osoitteet
 contacts and account contact-data to ldap	admin	fi	Yhteystiedot ja käyttäjätilien yhteystiedot LDAP:iin
 contacts and account contact-data to sql	admin	fi	Yhteystiedot ja käyttäjätilien yhteystiedot SQL:ään
 contacts to ldap	admin	fi	Yhteystiedot LDAP:iin
@@ -203,6 +203,7 @@ exports contacts from your addressbook into a csv file. csv means 'comma seperat
 extra	addressbook	fi	Lisätiedot
 extra private	addressbook	fi	Yksityiset tiedot
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fi	%1 organisaation jäsen(ien) muutos epäonnistui (Puutteelliset oikeudet) !!!
+favorites	addressbook	fi	Suosikit
 fax	addressbook	fi	Faksi
 fax number	common	fi	Faksinumero
 field %1 has been added !	addressbook	fi	Kenttä %1 on lisätty!
@@ -331,7 +332,6 @@ phone numbers	common	fi	Puhelinnumerot
 photo	addressbook	fi	Kuva
 please enter a name for that field !	addressbook	fi	Anna kentän nimi!
 please select only one category	addressbook	fi	Valitse vain yksi kategoria
-please update the templatename in your customfields section!	addressbook	fi	Päivitä mallipohjan nimi lisäkentissä!
 postal	common	fi	Postal
 pref	addressbook	fi	Oletus
 preferred email address to use in distribution lists	addressbook	fi	Ensisijainen sähköpostiosoite käytettäväksi jakelulistoilla.
@@ -400,6 +400,7 @@ that field name has been used already !	addressbook	fi	Kentän nimi on jo käyt�
 the anonymous user has probably no add rights for this addressbook.	addressbook	fi	Tuntemattomalla käyttäjällä ei ole lisäämiseen tarvittavia ACL-oikeuksia tässä osoitekirjassa.
 the anonymous user needs add rights for it!	addressbook	fi	Tuntematon käyttäjä tarvitsee lisäämiseen tarvittavat ACL-oikeudet!
 the anonymous user needs read it!	addressbook	fi	Tuntematon käyttäjä tarvitsee lukemiseen tarvittavat ACL-oikeudet!
+the following document-types are supported:	addressbook	fi	Seuraavat tiedostotyypit ovat tuettuja:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	fi	Zip extension vaaditaan OpenOffice ja MSOffice tiedostoille (yhteystietojen syöttämiseen).
 there was an error saving your data :-(	addressbook	fi	Virhe tallennettaessa!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	fi	Tämä moduuli näyttää yhteydenottokaavakkeen, mikä varastoi osoitteen suoraan osoitekirjaan.
@@ -436,7 +437,6 @@ verification	addressbook	fi	Varmentaminen
 view linked infolog entries	addressbook	fi	Näytä linkitetyt InfoLog-merkinnät
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fi	VAROITUS!! LDAP soveltuu vain, jos sitä ei käytetä käyttäjättilien tallentamiseen!
 warning: all contacts found will be deleted!	addressbook	fi	VAROITUS: Kaikki löytyneet osoitteet poistetaan!
-warning: template "%1" not found, using default template instead.	addressbook	fi	VAROITUS: Mallipohjaa "%1" ei löytynyt, käyttää oletusmallipohjaa sen sijaan.
 weekday	addressbook	fi	Viikonpäivä
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fi	Mitä osoitekirjan linkin tulisi sisältää muissa sovelluksissa esim. InfoLogissa. Tyhjiä kenttiä ei kuitenkaan näytetä. Kirjaudu sisään uudellen, jos muutat tätä asetusta!
 where to add the email address	addressbook	fi	Mihin sähköpostiosoite tulisi lisätä?
@@ -465,5 +465,6 @@ you must select a vcard. (*.vcf)	addressbook	fi	Valitse vCard -tiedosto. (*.vcf)
 you must select at least 1 column to display	addressbook	fi	Valitse ainakin yksi näytettävä sarake
 you need to select a distribution list	addressbook	fi	Valitse ensin jakelulista
 you need to select some contacts first	addressbook	fi	Valitse ensin joku yhteystieto
+you need to select some entries first	addressbook	fi	Valitse merkintä
 zip code	common	fi	Postinumero
 zip_note	addressbook	fi	<p><b>Huom:</b> Tiedosto voi olla usean .csv-, .vcf- tai .ldif -tiedoston zip-paketti.  Älä kuitenkaan tuo useampaa tiedostotyyppiä kerralla.

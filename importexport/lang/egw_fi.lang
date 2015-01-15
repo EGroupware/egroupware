@@ -9,6 +9,7 @@
 (0-6, 0=sun)	importexport	fi	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	fi	*Käyttäjätilin IDtä EI voi muuttaa tuonnissa
 addressbook csv import	importexport	fi	Osoitekirjan CSV-vienti
+all users	importexport	fi	Kaikki käyttäjät
 allowed users	importexport	fi	Sallittu käyttäjille
 automatically created by importexport	importexport	fi	Luotu automaattisesti tuonnissa/viennissä.
 basic csv import	importexport	fi	Perus CSV -tuonti
@@ -92,6 +93,7 @@ unable to schedule	importexport	fi	Virhe ajastettaessa
 update categories	importexport	fi	Päivitä kategoriat
 use default	importexport	fi	Käytä oletusta
 use field from csv if possible	importexport	fi	CSV tiedoston kenttään merkitty
+use search results	common	fi	Hakutuloksien mukaan
 user preference	importexport	fi	Käyttäjäasetukset
 user template folder	importexport	fi	Käyttäjän mallipohjakansio
 users allowed to create their own definitions	importexport	fi	Käyttäjien sallitaan luoda omia tuonti | vienti oletusasetuksia

@@ -1,5 +1,6 @@
 %1 email addresses inserted	common	id	%1 alamat email disisipkan
 %1 file	common	id	berkas %1
+'%1' is no php file in the egw server root (%2)!	common	id	'%1' is no php file in the eGW server root (%2)!
 (shift-)click or drag to change value	jscalendar	id	(Shift-)Klik atau seret untuk mengubah nilai
 00 (disable)	admin	id	00 (disable)
 1 day	common	id	1 Hari
@@ -25,6 +26,7 @@ actions	common	id	Tindakan
 active	common	id	Aktif
 add	common	id	Tambah
 add %1 category for	common	id	Tambah %1 kategori untuk
+add a new contact	common	id	Tambah kontak baru
 add category	common	id	Tambah kategori
 add shortcut	common	id	Tambah Shortcut
 add sub	common	id	Tambah sub
@@ -180,6 +182,7 @@ edit categories	common	id	Edit Kategori
 edit category	common	id	Edit kategori
 egroupware	common	id	eGroupWare
 egroupware api version	common	id	Versi API eGroupWare
+egroupware version	common	id	Versi EGroupware
 egypt	common	id	MESIR
 el salvador	common	id	EL SALVADOR
 email	common	id	E-Mail
@@ -196,8 +199,10 @@ etag	common	id	ETag
 ethiopia	common	id	ETHIOPIA
 everything	common	id	Segalanya
 exact	common	id	eksak
+failed to change password.	common	id	Gagal mengubah password.
 falkland islands (malvinas)	common	id	KEPULAUAN FALKLAND (MALVINAS)
 faroe islands	common	id	KEPULAUAN FAROE
+favorites	common	id	Favorit
 fax number	common	id	nomor fax
 february	common	id	Pebruari
 fields	common	id	Field
@@ -321,6 +326,7 @@ liechtenstein	common	id	LIECHTENSTEIN
 list	common	id	Daftar
 list members	common	id	Daftar anggota
 lithuania	common	id	LITHUANIA
+load	common	id	Muatkan
 local	common	id	Lokal
 locations	common	id	lokasi
 login	common	id	Masuk
@@ -387,6 +393,7 @@ niger	common	id	NIGER
 nigeria	common	id	NIGERIA
 niue	common	id	NIUE
 no	common	id	Tidak
+no - cancel	common	id	Tidak - Batal
 no entries found, try again ...	common	id	tiada entri ditemukan, coba lagi ...
 no subject	common	id	Tanpa Subyek
 none	common	id	Tiada
@@ -438,6 +445,7 @@ please enter a name	common	id	Mohon masukan nama
 please select	common	id	Pilihlah
 please wait...	common	id	Tunggu...
 poland	common	id	POLANDIA
+popup with search	common	id	Popup dengan pencarian
 portugal	common	id	PORTUGAL
 postal	common	id	Pos
 powered by	common	id	Digerakan oleh
@@ -494,6 +502,7 @@ second	common	id	detik
 section	common	id	Seksi
 select	common	id	Pilih
 select action	common	id	Pilih tindakan
+select all	common	id	Pilih semua
 select all %1 %2 for %3	common	id	Pilih semua %1 %2 untuk %3
 select category	common	id	Pilih Kategori
 select date	common	id	Pilih tanggal
@@ -619,10 +628,11 @@ written by:	common	id	Ditulis oleh:
 year	common	id	Tahun
 yemen	common	id	YAMAN
 yes	common	id	Ya
+yes - delete	common	id	Ya - Hapus
+yes - delete including sub-entries	common	id	Ya - Hapus berikut sub-entrinya
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi eGroupWare: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini.
 your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!<br>
 your message has been sent	common	id	Pesan telah terkirim
-your session could not be verified.	login	id	Sesi anda tidak dapat diperiksa.
 zambia	common	id	ZAMBIA
 zimbabwe	common	id	ZIMBABWE
 zoom	common	id	Zoom

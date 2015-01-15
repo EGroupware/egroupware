@@ -110,6 +110,7 @@ delete this group	admin	ko	그룹 삭제
 delete this user	admin	ko	사용자 삭제
 deleted	admin	ko	삭제됨
 deletes this field	admin	ko	이 필드 삭제
+deny access	admin	ko	접근 금지
 deny access to access log	admin	ko	거부된 접근을 접근 로그로
 deny access to application registery	admin	ko	거부된 접근을 응용프로그램 레지스트리로
 deny access to applications	admin	ko	거부된 접근을 응용프로그램으로
@@ -185,6 +186,7 @@ for the times above	admin	ko	위와 같은 시간
 for the times below (empty values count as '*', all empty = every minute)	admin	ko	이하와 같은 시간 (빈 값은 '*'로 처리되고, 모두 비어있으면 매 분마다입니다)
 force selectbox	admin	ko	강제 선택박스
 full name	admin	ko	이름
+general	admin	ko	일반
 global categories	common	ko	전역 카테고리
 group ?	admin	ko	그룹 ?
 group has been added	common	ko	그룹이 추가되었습니다
@@ -292,6 +294,7 @@ remove all users from this group	admin	ko	이 그룹의 모든 사용자를 삭�
 remove all users from this group ?	admin	ko	이 그룹의 모든 사용자를 삭제?
 return to admin mainscreen	admin	ko	관리자 주화면으로 돌아가기
 return to view account	admin	ko	계정 보기로 돌아가기
+rows	admin	ko	줄
 run asynchronous services	admin	ko	비동기 서비스 실행
 save the category	admin	ko	카테고리 저장
 save the category and return back to the list	admin	ko	카테고리를 저장하고 목록으로 돌아가기

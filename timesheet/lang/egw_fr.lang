@@ -37,6 +37,7 @@ error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entr
 error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !!!
 existing links	timesheet	fr	Liens existants
 exists	timesheet	fr	Existe
+export definition to use for nextmatch export	timesheet	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 export to openoffice spreadsheet	timesheet	fr	Export vers un classeur OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. CSV tient pour "Comma Separated Values". Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
@@ -47,7 +48,10 @@ general fields:	timesheet	fr	Champs généraux :
 global categories	timesheet	fr	Catégorie globale
 history	timesheet	fr	Historique
 history logging	admin	fr	Enregistrement de l'historique
+html link to the current record	timesheet	fr	Lien HTML vers l'enregistrement courant
 id	timesheet	fr	Id
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
+if you specify an export definition, it will be used when you export	timesheet	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 ignore	timesheet	fr	Ignorer
 import options	timesheet	fr	Options d'imports
 imports entries into the timesheet from a csv file.	timesheet	fr	Importer des éléments d'un fichier CSV vers les feuilles de temps.
@@ -62,6 +66,9 @@ leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
 leaves without saveing	timesheet	fr	Quitter sans enregistrer
 length<br>rows	timesheet	fr	Longueur<br>lignes
 links	timesheet	fr	Liens
+links and attached files	timesheet	fr	Liens et fichiers attachés
+links to specified application.  example: {{links/infolog}}	timesheet	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
+list of files linked to the current record	timesheet	fr	Listes des fichiers liés à l'enregistrement courant
 max length of the input [, length of the inputfield (optional)]	timesheet	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
 modified	timesheet	fr	Modifié
 modify status	timesheet	fr	Modifier le statut
@@ -80,10 +87,12 @@ order	timesheet	fr	Ordre
 parent	timesheet	fr	Parent
 permission denied!!!	timesheet	fr	Autorisation refusée!!!
 permissions error - %1 could not %2	timesheet	fr	Error de permission - %1 ne peut %2
+prevent deleting	admin	fr	Empêcher la suppression
 price	timesheet	fr	Prix
 project fields	timesheet	fr	Champs du projet
 projectmanager integration	admin	fr	Intégration au Gestionnaire de projets
 quantity	timesheet	fr	Quantité
+recovered	timesheet	fr	Récupéré
 replacements for inserting entries into documents	timesheet	fr	Remplacements pour insertion d'entrées dans des documents
 save & new	timesheet	fr	Enregistrer & Nouveau
 saves the changes made	timesheet	fr	Enregistrer les modifications
@@ -107,6 +116,7 @@ status of created timesheets	timesheet	fr	Statut des feuilles de temps créés.
 status updated.	timesheet	fr	Statut mis à jour.
 sum %1:	timesheet	fr	Somme %1 :
 tag to mark positions for address labels	timesheet	fr	Balise pour marquer les positions des étiquettes d'adresses
+the following document-types are supported:	timesheet	fr	Les documents types suivants sont supportés :
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fr	Nom utilisé en interne (<= 20 caractères), le changer rendra certaines données inaccessibles.
 the text displayed to the user	timesheet	fr	le texte montré à l'utilisateur
 this month	timesheet	fr	Ce mois
@@ -123,11 +133,14 @@ timesheet openoffice export	timesheet	fr	Export OpenOffice de feuille de temps
 timesheet status-%1 '%2' added.	timesheet	fr	Statut de feuille de temps - %1 '%2' ajouté.
 timesheet-%1 '%2' updated.	timesheet	fr	Feuille de temps - %1 '%2' mis à jour.
 timesheet-%1 deleted.	timesheet	fr	Feuille de temps - %1 supprimé.
+titles of any entries linked to the current record, excluding attached files	timesheet	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	fr	Incapable de convertir "%1" vers un compte ID. Utilisation du paramètre de plugin (%2) pour %3.
 unitprice	timesheet	fr	Prix à l'unité
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 values for selectbox	timesheet	fr	Valeurs des boîtes de sélection
 view this entry	timesheet	fr	Voir cette entrée
 week	timesheet	fr	Semaine
+yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
+yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
 yesterday	timesheet	fr	Hier
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fr	Votre base de données n'est PAS à jour (%1 contre %2), veuillez exécuter %3setup%4 pour mettre à jour votre base de données.

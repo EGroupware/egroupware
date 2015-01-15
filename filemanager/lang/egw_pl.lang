@@ -19,7 +19,8 @@ accessrights	filemanager	pl	Prawa dostępu
 acl added.	filemanager	pl	Dodano ACL.
 acl deleted.	filemanager	pl	Usunięto ACL.
 actions	filemanager	pl	Polecenia
-all files	common	pl	Wszystkie pliki
+administrators	filemanager	pl	Administratorzy
+all files	filemanager	pl	Wszystkie pliki
 allow a maximum of the above configured folderlinks to be configured in settings	admin	pl	zezwól na konfigurację maksymalnie powyższej liczby linków folderów
 and all it's childeren	filemanager	pl	i wszystkie elementy podrzędne
 applications	common	pl	Aplikacje
@@ -31,6 +32,7 @@ cautiously rejecting to remove folder '%1'!	filemanager	pl	Z ostrożności nie u
 check all	filemanager	pl	Zaznacz wszystkie
 clear search	filemanager	pl	wyczyść wyszukiwanie
 comment	filemanager	pl	Komentarz
+configuration changed.	filemanager	pl	Konfiguracja została zmieniona
 copied	filemanager	pl	skopiowano
 copied %1 to %2	filemanager	pl	Skopiowano %1 do %2
 copy to	filemanager	pl	Kopiuj do
@@ -59,12 +61,14 @@ directory	filemanager	pl	Katalog
 directory %1 already exists	filemanager	pl	Katalog %1 już istnieje
 directory %1 does not exist	filemanager	pl	Katalog %1 nie istnieje
 directory not found or no permission to access it!	filemanager	pl	Nie znaleziono katalogu lub brak uprawnień
+disable	filemanager	pl	Wyłącz
 display and modification of content	filemanager	pl	Wyświetlanie i modyfikacja zawartości
 display of content	filemanager	pl	Wyświetlanie zawartości
 do you want to overwrite the existing file %1?	filemanager	pl	Czy chcesz nadpisać istniejący plik %1?
 download	filemanager	pl	Pobierz
 edit comments	filemanager	pl	Edycja komentarza
 edit settings	filemanager	pl	Edytuj ustawienia
+enable	filemanager	pl	włącz
 enter setup user and password	filemanager	pl	Wprowadź nazwę użytkownika setup i hasło
 enter setup user and password to get root rights	filemanager	pl	Wprowadź nazwę użytkownika setup i hasło aby uzyskać prawa roota
 enter the complete vfs path to specify a fast access link to a folder	filemanager	pl	Wprowadź ścieżkę w systemie plików aby zdefiniować link szybkiego dostępu do folderu
@@ -73,13 +77,15 @@ error adding the acl!	filemanager	pl	Błąd przy dodawaniu ACL!
 error creating symlink to target %1!	filemanager	pl	Błąd przy tworzeniu linku do %1!
 error deleting the acl entry!	filemanager	pl	Błąd przy usuwaniu wpisu ACL!
 error uploading file!	filemanager	pl	Błąd przy ładowaniu pliku!
+everyone	filemanager	pl	każdy
 executable	filemanager	pl	Wykonywalny
+expires	filemanager	pl	Ważne do
 extended access control list	filemanager	pl	Rozszerzona lista kontroli dostępu
 extended acl	filemanager	pl	Rozszerzona ACL
 failed to change permissions of %1!	filemanager	pl	Błąd przy zmianie uprawnień do %1!
 failed to create directory!	filemanager	pl	Błąd przy tworzeniu katalogu!
 favorites	filemanager	pl	Ulubione
-file	filemanager	pl	Plik
+file	common	pl	Plik
 file %1 could not be created.	filemanager	pl	Plik %1 nie może być utworzony
 file %1 may be too big. contact your systemadministrator for further info	filemanager	pl	Plik %1 może być za duży. Skontaktuj się z administratorem systemu aby uzyskać więcej informacji.
 file deleted.	filemanager	pl	Plik usunięty.
@@ -118,9 +124,11 @@ no access	filemanager	pl	Brak dostępu
 no files in this directory.	filemanager	pl	Nie ma plików w tym katalogu
 no preview available	filemanager	pl	Podgląd niedostępny
 no version history for this file/directory	filemanager	pl	Nie istnieje historia wersji tego pliku/katalogu
+noone	filemanager	pl	Nikt, ale naprawdę nikt
 only owner can rename or delete the content	filemanager	pl	Tylko właściciel może zmienić nazwę lub usunąć zawartość
 open	filemanager	pl	Otwórz
 operation	filemanager	pl	Operacja
+percentage	filemanager	pl	w procentach
 permission denied!	filemanager	pl	Dostęp zabroniony!
 permissions	filemanager	pl	Uprawnienia
 permissions of %1 changed.	filemanager	pl	Zmieniono uprawnienia do %1

@@ -1,4 +1,7 @@
 actions	resources	tr	Eylemler
+custom fields	resources	tr	Özel Alanlar
+days	resources	tr	gün
+deleted	resources	tr	Silindi
 global categories	resources	tr	Genel kategoriler
 hours	resources	tr	saat
 location	resources	tr	Konum

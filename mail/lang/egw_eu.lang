@@ -4,14 +4,20 @@ all of	mail	eu	guztiak
 allways a new window	mail	eu	beti leiho berri bat
 always show html emails	mail	eu	Betik erakutsi HTML  formatuan emailak
 any of	mail	eu	batekin
+attachments	mail	eu	Atxikiak
 compose	mail	eu	Idatzi
 compress folder	mail	eu	Karpeta konprimatu
+condition	mail	eu	baldintza
 contains	mail	eu	dauka
+copy to	mail	eu	Kopiatu Hona
 date(newest first)	mail	eu	Data (berriak lehenik)
 date(oldest first)	mail	eu	Data (Zaharrak lehenik)
 default sorting order	mail	eu	sailkapen lehenetsia
+delete folder	mail	eu	Karpeta ezabatu
 deleted	mail	eu	ezabatua
+disable	mail	eu	Ezgaitu
 discard	mail	eu	baztertu
+discard message	mail	eu	mezua baztertu
 display of html emails	mail	eu	HTML emailak erakutzi
 display only when no plain text is available	mail	eu	Erakutsi soilik testu sinpleko bertsiorik ez denean
 does not contain	mail	eu	ez da agertzen
@@ -19,42 +25,57 @@ does not match	mail	eu	ez du parekatzen
 does not match regexp	mail	eu	ez du parekatzen regexp
 don't use sent	mail	eu	Ez erabili Bidalitakoak karpeta
 don't use trash	mail	eu	Ez erabili Zakarra karpeta
+edit account	mail	eu	Kontua editatu
+edit vacation settings	mail	eu	oporrent lehentasunak aldatu
 emailaddress	admin	eu	helbide elektronikoa
 empty trash	mail	eu	Zakarra hutsik
+enable	mail	eu	indarrean jarri
 event details follow	mail	eu	Gertakariaren detaileak
-felamimail	admin	eu	Posta
+extended	mail	eu	Luzatua
 file into	mail	eu	Filtroa
 filemanager	mail	eu	Fitxategi-kudeatzailea
 flagged	mail	eu	Bandera du
 folder	mail	eu	Karpeta
 folder settings	mail	eu	Karpeta ezarpenak
+forward	mail	eu	Birbidali
 forward to	mail	eu	Birbidali hona
 from	mail	eu	Norena
 from(a->z)	mail	eu	Nork (A->Z)
 from(z->a)	mail	eu	Nork (Z->A)
+general	admin	eu	Orokorra
+header lines	mail	eu	Goiburua
 html	mail	eu	Html
+identity	mail	eu	identitate
 if	mail	eu	baldin
+imap	mail	eu	IMAP
 imap server	mail	eu	IMAP Zerbitzaria
 mail settings	mail	eu	Posta elektronikoaren konfigurazioa
 mark as deleted	mail	eu	Guztiak ezabatzeko hautatu
 matches	mail	eu	Parekatuak
 matches regexp	mail	eu	Regexp parekatuak
 move selected to	mail	eu	mugitu hautatuak
+move to	mail	eu	mugitu hautatuak
 move to trash	mail	eu	Mugitu Zakarra karpetara
 never display html emails	mail	eu	Inoiz ez bistaratu HTML emailak
 one address is not valid	mail	eu	Helbideetako baten formatua okerra da
 only one window	mail	eu	leiho bat bakarrik
 organisation	admin	eu	antolaketa
 organization	mail	eu	erakundea
+permission denied	mail	eu	Baimena ukatuta
 please select a address	mail	eu	Mesedez hautatu helbide da
 please select the number of days to wait between responses	mail	eu	Mesedez hautatu erantzunen artean itxaron beharreko tartea
 please supply the message to send with auto-responses	mail	eu	Sar ezazu erantzun automatikoetan bidali beharreko mezua
 quicksearch	mail	eu	Bilaketa azkarra
 refresh time in minutes	mail	eu	Eguneratze denbora tartea minututan
 remove immediately	mail	eu	ezabatu bat batean
+rename folder	mail	eu	Karpeta izena aldatu
 replied	mail	eu	erantzunda
+reply	mail	eu	Erantzun
+reply all	mail	eu	Erantzun guztiei
+reply to	mail	eu	Erantzun
 replyto	mail	eu	Erantzun
 save all	mail	eu	Gorde dena
+select all	mail	eu	Guztiak hautatu
 sent folder	mail	eu	Bidalitakoen karpeta
 signature	mail	eu	Sinadura
 size(...->0)	mail	eu	Tamainua (...->0)
@@ -64,8 +85,8 @@ subject(a->z)	mail	eu	Gaia (A->Z)
 subject(z->a)	mail	eu	Gaia (Z->A)
 then	mail	eu	ORDUAN
 trash folder	mail	eu	Zakar karpeta
+unflagged	mail	eu	bandera gabea
 unread	mail	eu	Irakurri gabea
-urgent	mail	eu	presazko
-vacation notice	admin	eu	Opor abisua
+vacation notice	mail	eu	Opor abisua
 when deleting messages	mail	eu	Mezuak ezabatzerakoan
 wrote	mail	eu	Idatzia

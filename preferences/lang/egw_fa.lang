@@ -20,8 +20,10 @@ default application	preferences	fa	کاربرد پیش فرض
 default preferences	preferences	fa	تنظیمات پیش فرض
 delete categories	preferences	fa	حذف دسته ها
 description can not exceed 255 characters in length !	preferences	fa	توضیحات (شرح) نمی تواند بیش از ۲۵۵ کاراکتر باشد.
+disable	preferences	fa	غیر فعال
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fa	شما سبک ساعتی ۲۴ ساعته را در نظر دارید یا ۱۲ ساعته با نوشتار «صبح» و «عصر» در کنار آن
 edit custom fields	preferences	fa	ویرایش فیلدهای سفارشی
+enable	preferences	fa	فعال
 enter your new password	preferences	fa	گذرواژه جدبد را وارد کنید
 enter your old password	preferences	fa	گذرواژه قبلی خود را وارد کنید
 failed to change password.	preferences	fa	ناتوان از تغییر گذرواژه. لطفا با مدیر سیستم تماس بگیرید

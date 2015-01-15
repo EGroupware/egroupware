@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	bg	%1 %2 в %3
+%1 hours	calendar	bg	%1 часа
 %1 records imported	calendar	bg	%1 записа бяха импортирани
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	bg	Прочетени са %1 записа, но не са импортирани. Можете да се върнете на предната съпка и да демаркирате "Тест импорт".
 %1 weeks	calendar	bg	%1 седмици
@@ -69,6 +70,7 @@ created	calendar	bg	Създаден
 csv	calendar	bg	CSV
 csv-fieldname	calendar	bg	Име на полето в CSV
 csv-filename	calendar	bg	Име на CSV файла
+custom	calendar	bg	по избор
 custom fields	common	bg	Полета по избор
 daily	calendar	bg	Дневен
 days	calendar	bg	дни
