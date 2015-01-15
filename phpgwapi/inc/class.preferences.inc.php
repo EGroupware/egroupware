@@ -98,7 +98,7 @@ class preferences
 	/**
 	 * Contstructor
 	 *
-	 * @param int|string $account_id=''
+	 * @param int|string $account_id =''
 	 * @return preferences
 	 */
 	function __construct($account_id = '')
@@ -167,7 +167,7 @@ class preferences
 	/**
 	 * Old PHP4 contstructor
 	 *
-	 * @param int|string $account_id=''
+	 * @param int|string $account_id =''
 	 * @return preferences
 	 * @deprecated
 	 */
@@ -231,9 +231,9 @@ class preferences
 	 * parses a notify and replaces the substitutes
 	 *
 	 * @param string $msg message to parse / substitute
-	 * @param array $values=array() extra vars to replace in addition to $this->values, vars are in an array with \
+	 * @param array $values =array() extra vars to replace in addition to $this->values, vars are in an array with \
 	 * 	$key => $value pairs, $key does not include the $'s and is the *untranslated* name
-	 * @param boolean $use_standard_values=true should the standard values are used
+	 * @param boolean $use_standard_values =true should the standard values are used
 	 * @return string with parsed notify-msg
 	 */
 	function parse_notify($msg,$values=array(),$use_standard_values=True)
@@ -258,9 +258,9 @@ class preferences
 	 * replaces the english key's with translated ones, or if $un_lang the opposite
 	 *
 	 * @param string $msg message to translate
-	 * @param array $values=array() extra vars to replace in addition to $this->values, vars are in an array with \
+	 * @param array $vals =array() extra vars to replace in addition to $this->values, vars are in an array with \
 	 * 	$key => $value pairs, $key does not include the $'s and is the *untranslated* name
-	 * @param boolean $un_lang=false if true translate back
+	 * @param boolean $un_lang =false if true translate back
 	 * @return string
 	 */
 	function lang_notify($msg,$vals=array(),$un_lang=False)
@@ -397,7 +397,7 @@ class preferences
 	 *
 	 * the function ready all 3 prefs user/default/forced and merges them to the effective ones
 	 *
-	 * @param boolean $use_session=true should the session prefs get used (default true) or not (false)
+	 * @param boolean $use_session =true should the session prefs get used (default true) or not (false)
 	 * @return array with effective prefs ($this->data)
 	 */
 	function read_repository($use_session=true)
@@ -512,8 +512,8 @@ class preferences
 	/**
 	 * Get default preferences (also taking forced preferences into account!)
 	 *
-	 * @param string $app=null
-	 * @param string $name=null
+	 * @param string $app =null
+	 * @param string $name =null
 	 * @return mixed
 	 */
 	function default_prefs($app=null,$name=null)
@@ -582,8 +582,8 @@ class preferences
 	 *
 	 * @param string $app_name name of the app
 	 * @param string $var name of preference to be stored
-	 * @param mixed $value='##undef##' value of the preference, if not given $GLOBALS[$var] is used
-	 * @param $type='user' of preference to set: forced, default, user
+	 * @param mixed $value ='##undef##' value of the preference, if not given $GLOBALS[$var] is used
+	 * @param string $type ='user' of preference to set: forced, default, user
 	 * @return array with new effective prefs (even when forced or default prefs are set !)
 	 */
 	function add($app_name,$var,$value = '##undef##',$type='user')
@@ -640,8 +640,8 @@ class preferences
 	 * the effektive prefs ($this->data) are updated to reflect the change
 	 *
 	 * @param string $app_name name of app
-	 * @param string $var=false variable to be deleted
-	 * @param string $type='user' of preference to set: forced, default, user
+	 * @param string $var =false variable to be deleted
+	 * @param string $type ='user' of preference to set: forced, default, user
 	 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 	 */
 	function delete($app_name, $var = False,$type = 'user')
@@ -794,7 +794,7 @@ class preferences
 	 *
 	 * @param string $app Application name
 	 * @param string $name Preference name
-	 * @param string $type='user' of preference to set: forced, default, user
+	 * @param string $type ='user' of preference to set: forced, default, user
 	 */
 	public static function delete_preference($app, $name, $type='user')
 	{
@@ -806,7 +806,7 @@ class preferences
 	 *
 	 * @param string $from_app
 	 * @param string $to_app
-	 * @param array $names=null array of names to copy or null for all
+	 * @param array $names =null array of names to copy or null for all
 	 */
 	public static function copy_preferences($from_app, $to_app, array $names=null)
 	{
@@ -850,9 +850,9 @@ class preferences
 	 *
 	 * User prefs for saveing are in $this->user not in $this->data, which are the effectiv prefs only!
 	 *
-	 * @param boolean $update_session_info=false old param, seems not to be used (not used anymore)
-	 * @param string $type='user' which prefs to update: user/default/forced
-	 * @param boolean $invalid_cache=true should we invalidate the cache, default true (not used anymore)
+	 * @param boolean $update_session_info =false old param, seems not to be used (not used anymore)
+	 * @param string $type ='user' which prefs to update: user/default/forced
+	 * @param boolean $invalid_cache =true should we invalidate the cache, default true (not used anymore)
 	 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 	 */
 	function save_repository($update_session_info = False,$type='user',$invalid_cache=true)
@@ -880,7 +880,7 @@ class preferences
 		//echo "<p>preferences::save_repository(,$type): account_id=$account_id, prefs="; print_r($prefs); echo "</p>\n";
 
 		if (isset($GLOBALS['egw_setup']) || !$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences') &&
-			(!($old_prefs = $this->cache_read($account_id)) || $old_prefs[$account_id] != $prefs))
+			(!($old_prefs = $this->cache_read($account_id)) || $old_prefs != $prefs))
 		{
 			//error_log(__METHOD__."(type=$type) saved, because old_prefs[$account_id] != prefs=".array2string($prefs));
 			$changed = 0;
@@ -938,7 +938,7 @@ class preferences
 	 * In the absence of a custom ['email']['address'], this function should be used to set it.
 	 *
 	 * @access public
-	 * @param int $accountid - as determined in and/or passed to "create_email_preferences"
+	 * @param int $account_id as determined in and/or passed to "create_email_preferences"
 	 * @return string with email-address
 	 */
 	function email_address($account_id='')
