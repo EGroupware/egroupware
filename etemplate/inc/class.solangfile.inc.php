@@ -213,7 +213,7 @@ class solangfile
 				{
 					$this->special_file($app,$fd.$fn,$this->files[$fn]);
 				}
-				if (strpos($fn,'.php') === False)
+				if (strpos($fn,'.php') === False && strpos($fn,'.js') === False)
 				{
 					continue;
 				}
