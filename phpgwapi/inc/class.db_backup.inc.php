@@ -921,7 +921,7 @@ class db_backup
 					// limit by maximum primary key already received
 					empty($pk) || !$max ? false : $pk.' > '.$this->db->quote($max, $schema['fd'][$pk]['type']),
 					__LINE__, __FILE__,
-					empty($pk) ? $total : 0,					// if no primary limit by number of received rows
+					empty($pk) ? false : 0,					// if no primary key, query all rows
 					empty($pk) ? '' : 'ORDER BY '.$pk.' ASC',	// order by primary key
 					false, self::ROW_CHUNK) as $row)
 				{
@@ -934,7 +934,7 @@ class db_backup
 					++$num_rows;
 				}
 			}
-			while(!($total % self::ROW_CHUNK) && $num_rows);
+			while(!empty($pk) && !($total % self::ROW_CHUNK) && $num_rows);
 		}
 		if(!$zippresent)  // save without files
 		{
