@@ -302,6 +302,8 @@ function egwDragActionImplementation()
 							},
 							mouseup: function (){
 								$j(node).draggable("enable");
+								// Set cursor back to auto. Seems FF can't handle cursor reversion
+								$j('body').css({cursor:'auto'});
 							}
 				});
 			}
@@ -368,8 +370,7 @@ function egwDragActionImplementation()
 									egw.lang("Ctrl") : egw.lang("Command ⌘");
 								egw.message(egw.lang('Hold [%1] key to select text eg. to copy it', key), 'info');
 							}
-							// Set cursor back to auto. Seems FF can't handle cursor reversion
-							$j('body').css({cursor:'auto'});
+							
 							// Invalid target
 							return true;
 						}
