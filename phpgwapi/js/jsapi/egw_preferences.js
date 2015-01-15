@@ -66,9 +66,10 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 				request.sendRequest(false, 'GET');	// use synchronous (cachable) GET request
 				if (typeof prefs[_app] == 'undefined') prefs[_app] = {};
 			}
-			if(_name == "*") return typeof prefs[_app] ==='object'?jQuery.extend({},prefs[_app]):prefs[_app];
+			if (_name == "*") return typeof prefs[_app] ==='object' ? jQuery.extend({},prefs[_app]) : prefs[_app];
 
-			return typeof prefs[_app][_name] ==='object'?jQuery.extend({},prefs[_app][_name]):prefs[_app][_name];
+			return typeof prefs[_app][_name] === 'object' && prefs[_app][_name] !== null ?
+				jQuery.extend({},prefs[_app][_name]) : prefs[_app][_name];
 		},
 
 		/**
