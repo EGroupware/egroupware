@@ -287,7 +287,8 @@ in %1 days (%2) is %3's birthday.	addressbook	fr	Dans %1 jours (%2) c'est l'anni
 income	addressbook	fr	Revenus
 infolog	addressbook	fr	InfoLog
 insert	addressbook	fr	Insérer
-insufficent rights to delete this list!	addressbook	fr	Autorisations insuffisantes pour supprimer cette liste!
+insufficent rights to delete this list!	addressbook	fr	Autorisations insuffisantes pour supprimer cette liste !
+insufficent rights to edit this list!	addressbook	fr	Autorisations insuffisantes pour modifier cette list e!
 international	addressbook	fr	International
 internet	addressbook	fr	Internet
 label	addressbook	fr	Label
@@ -335,13 +336,15 @@ multiple vcard	addressbook	fr	VCard multiples
 name for the distribution list	addressbook	fr	Nom de la liste de diffusino
 name of current user, all other contact fields are valid too	addressbook	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
 name, address	addressbook	fr	Nom, adresse
-new contact submitted by %1 at %2	addressbook	fr	Nouveau contact soumis de %1 à %2 .
+new contact submitted by %1 at %2	addressbook	fr	Nouveau contact soumis par %1 à %2.
 new window opened to edit infolog for your selection	addressbook	fr	Nouvelle fenêtre ouverte pour modifier un infolog.
-next date	addressbook	fr	Prochain contact
+next date	addressbook	fr	Date de prochain contact
 no categories selected	addressbook	fr	Aucune catégorie sélectionnée
+no fallback	addressbook	fr	Pas de fallback
 no vcard	addressbook	fr	Pas de VCard
 number	addressbook	fr	Numéro
 number of records to read (%1)	addressbook	fr	Nombre d'enregistrements à lire (%1)
+open %1 crm view	addressbook	fr	Ouvrir la vue CRM %1
 open email addresses in external mail program	addressbook	fr	Ouvrir les adresses email dans un programme externe
 open for editing?	addressbook	fr	Ouvrir en modification ?
 open infolog crm view	preferences	fr	Ouvrir la vue CRM de l'Infolog
@@ -366,7 +369,7 @@ please select only one category	addressbook	fr	Sélectionnez une seule catégori
 postal	common	fr	Postal
 pref	addressbook	fr	pref
 preferred email address to use in distribution lists	addressbook	fr	Adresse email préférée
-preferred phone	addressbook	fr	Numéro de téléphone préférentiel
+preferred phone	addressbook	fr	Numéro de téléphone préféré
 preferred type of email address to add for distribution lists	addressbook	fr	Type d'adresse email préférée pour les listes de diffusion
 prefix	addressbook	fr	Préfixe
 prevent deleting of contacts	admin	fr	Empecher la suppression de contacts
@@ -414,6 +417,7 @@ show infolog entries for this organisation	addressbook	fr	Montre les entrées In
 show the contacts of this organisation	addressbook	fr	Montrer les contacts de l'organisation
 similar contacts found:	addressbook	fr	Contacts similaires trouvés :
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	fr	Taille du popup (LxH, p.ex.400x300, si un popup doit être utilisé)
+special	addressbook	fr	Spécial
 stadt	addressbook	fr	Ville
 start	admin	fr	Début
 startrecord	addressbook	fr	Enregistrement de départ

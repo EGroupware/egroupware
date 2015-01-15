@@ -9,6 +9,7 @@ a theme defines the colors and fonts used by the template.	preferences	fr	Un th�
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans eGroupWare affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
+audio effect	preferences	fr	Effet audio
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
 bootstrap theme for ckeditor	preferences	fr	Thème Bootstrap pour le CKEditor

@@ -1,16 +1,27 @@
+a quick note	home	fr	Une note rapide
+birthday reminders	home	fr	Rappel des anniversaires
 color	home	fr	Couleur
+configure	home	fr	Configurer
 displays home	home	fr	Afficher l'écran d'accueil
 egroupware	home	fr	eGroupWare
 entry	home	fr	Entrée
+favorite	home	fr	Favoris
+forced	home	fr	Forcé
 home	home	fr	Accueil
-in %1 days (%2) is %3's birthday.	home	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
+in %1 days (%2) is %3's birthday.	home	fr	L'anniversaire de %3 est dans %1 jours (%2)
+list of entries	home	fr	Liste des entrées
 remove	home	fr	Supprimer
+remove default %1	home	fr	Supprimer %1 par défaut
+removed default	home	fr	Supprimer le défaut
 set as default	home	fr	Définir par défaut
+set default	home	fr	Définir par défaut
 show a list of entries	home	fr	Montrer une liste d'entrées
+show all the entries using a favorite	home	fr	Afficher toutes les entrées via un favoris
 show one entry	home	fr	Montrer une entrée
+single entry	home	fr	Entrée seule
 there is a new version of egroupware available	home	fr	Une nouvelle version de eGroupWare est disponible
-today is %1's birthday!	home	fr	Aujourd'hui c'est l'anniversaire de %1 !
-tomorrow is %1's birthday.	home	fr	Demain c'est l'anniversaire de %1.
+today is %1's birthday!	home	fr	Aujourd'hui, c'est l'anniversaire de %1 !
+tomorrow is %1's birthday.	home	fr	Demain, c'est l'anniversaire de %1 !
 yes, for the next three days	home	fr	Oui, pour les trois prochains jours
 yes, for the next two weeks	home	fr	Oui, pour les deux prochaines semaines
 yes, for the next week	home	fr	Oui, pour la semaine prochaine

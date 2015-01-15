@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
 %1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
+%1 access to other data	admin	fr	%1 accès aux données des autres
 %1 acl entries deleted.	admin	fr	%1 entrées ACL supprimées.
 %1 acl records of not (longer) existing accounts deleted.	admin	fr	%1 droits d'accès de comptes inexistants supprimés.
 %1 categories of not (longer) existing accounts deleted.	admin	fr	%1 catégories de comptes inexistants supprimées
@@ -114,6 +115,7 @@ attribute accountstatus explained	admin	fr	Ceci modifie l'attribut <b><i>account
 attribute mail explained	admin	fr	Ceci modifie l'attribut <b><i>-mail-</b></i> du schéma QMAIL. Cet attribut doit toujours être renseigné, c'est aussi le champ de l'adresse de courriel interne de eGW.
 attribute mailalternateaddress explained	admin	fr	Ceci modifie l'attribut <b><i>-mailAlternateAddress-</i></b> (adresse de messagerie alternative) du schéma QMAIL. Cela peut être utilisé comme un alias ou un adressage virtuel.
 attribute mailforwardingaddress explained	admin	fr	Ceci modifie l'attribut <b><i>-mailForwardingAddress-</i></b> (adresse de routage de messagerie) du schéma QMAIL. En cas d'utilisation de cette valeur, elle ne peut être vide.
+attributes	admin	fr	Attributs
 authentication / accounts	admin	fr	Authentification / Comptes
 auto create account records for authenticated users	admin	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
 available placeholders	admin	fr	Mots clés disponibles
@@ -629,6 +631,7 @@ two months	admin	fr	Deux mois
 two weeks	admin	fr	Deux semaines
 type '%1' already exists !!!	admin	fr	Le type '%1'  existe déjà !
 type of customfield	admin	fr	Type de champ personnalisé
+type of field	admin	fr	Type de champ
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fr	Sous windows vous devez installer les services asynchrones %1manuellement%2  ou utiliser le mode "fallback". "Fallback" veut dire que les travaux ne sont vérifiés qu'après chaque affichage de page !!!
 unknown account: %1 !!!	admin	fr	Compte inconnu: %1 !
 unknown command %1!	admin	fr	Commande inconnue %1 !
