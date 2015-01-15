@@ -76,7 +76,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			// Bind to removal to remove from list
 			$j(et2.DOMContainer).on('clear', function(e) {
-				delete app.filemanager.path_widget[e.target.id];
+				if (app.filemanager && app.filemanager.path_widget) delete app.filemanager.path_widget[e.target.id];
 			});
 		}
 
@@ -124,7 +124,7 @@ app.classes.filemanager = AppJS.extend(
 			}
 		}
 		var result = this._super.call(this,state);
-		
+
 		// This has to happen after the parent, changing to tile recreates
 		// nm controller
 		if(typeof state == "object" && state.state && state.state.view)
@@ -262,7 +262,7 @@ app.classes.filemanager = AppJS.extend(
 			'preset[filemode]': _action.id.substr(5)
 		});
 	},
-	
+
 	/**
 	 * Trigger Upload after each file is uploaded
 	 * @param {type} _event
@@ -271,7 +271,7 @@ app.classes.filemanager = AppJS.extend(
 	{
 		this.upload(_event,1);
 	},
-	
+
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
 	 *
@@ -682,7 +682,7 @@ app.classes.filemanager = AppJS.extend(
 
 	/**
 	 * Toggle view between tiles and rows
-	 * 
+	 *
 	 * @param {string|Event} [view] - Specify what to change the view to.  Either 'tile' or 'row'.
 	 *	Or, if this is used as a callback view is actually the event, and we need to find the view.
 	 * @param {et2_widget} [button_widget] - The widget that's calling
