@@ -988,7 +988,7 @@ class mail_ui
 			if (!is_array($insert) || !isset($insert['item']))
 			{
 				// throwing an exeption here seems to be unrecoverable, even if the cause is a something that can be handeled by the mailserver
-				error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
+				if (mail_bo::$debug) error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
 				break;
 			}
 			foreach($insert['item'] as &$item)
@@ -3605,7 +3605,7 @@ class mail_ui
 	 */
 	function ajax_renameFolder($_folderName, $_newName)
 	{
-		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
+		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
 			translation::add_app('mail');
@@ -3802,7 +3802,7 @@ class mail_ui
 	 */
 	function ajax_MoveFolder($_folderName, $_target)
 	{
-		//error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
+		if (mail_bo::$debug) error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
 		if ($_folderName)
 		{
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
