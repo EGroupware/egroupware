@@ -46,8 +46,8 @@
 	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
 		<hbox span="all" class="filemanager_navigation">
 			<image label="Up" src="goup" onclick="app.filemanager.change_dir('..');" id="up"/>
-			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~');" id="home"/>
-			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~');} return true;" size="80" class="address"/>
+			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"/>
+			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
 			<hbox id="buttons">
 				<button label="Go to" id="button[go]" image="key_enter"/>
 				<buttononly label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" options="list_tile"/>
