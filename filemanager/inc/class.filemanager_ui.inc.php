@@ -860,6 +860,12 @@ class filemanager_ui
 		}
 		// query comments and cf's for the displayed rows
 		$cols_to_show = explode(',',$GLOBALS['egw_info']['user']['preferences']['filemanager']['nextmatch-filemanager.index.rows']);
+		
+		// Always include comment in tiles
+		if($query['view'] == 'tile')
+		{
+			$cols_to_show[] = 'comment';
+		}
 		$all_cfs = in_array('customfields',$cols_to_show) && $cols_to_show[count($cols_to_show)-1][0] != '#';
 		if ($path2n && (in_array('comment',$cols_to_show) || in_array('customfields',$cols_to_show)) &&
 			($path2props = egw_vfs::propfind(array_keys($path2n))))
