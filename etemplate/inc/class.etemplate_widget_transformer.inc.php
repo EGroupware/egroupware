@@ -141,8 +141,11 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 						// If the widget has been transformed into a template, we
 						// also need to try and instanciate & parse the template too
 						$transformed_template = etemplate_widget_template::instance($attrs['template']);
-						$this->expand_widget($transformed_template, $expand);
-						$transformed_template->run('beforeSendToClient',array($cname,$expand));
+						if($transformed_template)
+						{
+							$this->expand_widget($transformed_template, $expand);
+							$transformed_template->run('beforeSendToClient',array($cname,$expand));
+						}
 					}
 				default:
 					self::setElementAttribute($form_name, $attr, $val);
