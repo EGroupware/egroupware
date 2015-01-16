@@ -300,6 +300,7 @@ class filemanager_ui
 				$content['nm']['path'] = static::get_home_dir();
 			}
 			$content['nm']['home_dir'] = static::get_home_dir();
+			$content['nm']['view'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'];
 
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
@@ -782,6 +783,13 @@ class filemanager_ui
 		if($query['view'])
 		{
 			$query['template'] = ($query['view'] == 'row' ? 'filemanager.index.rows' : 'filemanager.tile');
+
+			// Store as preference but only for index, not home
+			if($query['get_rows'] == 'filemanager.filemanager_ui.get_rows')
+			{
+				$GLOBALS['egw']->preferences->add('filemanager','nm_view',$query['view']);
+				$GLOBALS['egw']->preferences->save_repository();
+			}
 		}
 		// be tolerant with (in previous versions) not correct urlencoded pathes
 		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))

@@ -31,7 +31,7 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 		$ui = new filemanager_ui();
 
 		$this->nm_settings += array(
-			'get_rows'       => 'filemanager.filemanager_ui.get_rows',
+			'get_rows'       => 'filemanager.filemanager_favorite_portlet.get_rows',
 			'csv_export'     => true,
 			// Use a different template so it can be accessed from client side
 			'template'       => ($this->nm_settings['view'] == 'tile' ? 'filemanager.tile' : 'filemanager.home.rows' ),
