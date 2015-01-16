@@ -39,10 +39,8 @@ function home_upgrade14_1()
 		}
 		if($values['portlets'] && is_array($values['portlets']))
 		{
-			error_log("Portlets:");
 			foreach($values['portlets'] as $id => $settings)
 			{
-				error_log($id);
 				$values["portlet_$id"] = $settings;
 			}
 			unset($values['portlets']);

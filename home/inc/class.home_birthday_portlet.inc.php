@@ -108,7 +108,6 @@
 		}
 		unset($bdays2); unset($extra_accounts_search);
 		unset($month_start); unset($month_end);
-error_log(array2string($bdays));
 		if ($bdays)
 		{
 			for($n = 0; $n <= $days; ++$n)

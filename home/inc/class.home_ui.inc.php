@@ -240,7 +240,6 @@ class home_ui
 			if(is_array($setting) && !array_key_exists('type',$setting)) unset($settings[$key]);
 		}
 		$settings += $context;
-		error_log(__LINE__ . ' ' . array2string($context));
 		foreach(home_portlet::$common_attributes as $attr)
 		{
 			unset($settings[$attr]);
@@ -491,7 +490,7 @@ class home_ui
 	 */
 	public function ajax_set_properties($portlet_id, $attributes, $values, $group = false)
 	{
-		error_log(__METHOD__ . "($portlet_id, " .array2string($attributes).','.array2string($values).",$group)");
+		//error_log(__METHOD__ . "($portlet_id, " .array2string($attributes).','.array2string($values).",$group)");
 		if(!$attributes)
 		{
 			$attributes = array();
@@ -598,8 +597,6 @@ class home_ui
 			$response->data($update);
 
 			// Store for preference update
-			error_log("Storing " . $portlet_id);
-			error_log(array2string($context));
 			$prefs->add('home', $portlet_id, $context, $type);
 		}
 
@@ -652,7 +649,6 @@ class home_ui
 			foreach($portlet_ids as $id)
 			{
 				egw_json_response::get()->call('egw.message', lang("Removed default"));
-				error_log("Clearing $type $group default $id");
 				$prefs->delete('home',$id, $type);
 			}
 		}
