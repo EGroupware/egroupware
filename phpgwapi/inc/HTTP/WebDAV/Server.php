@@ -1314,14 +1314,14 @@ class HTTP_WebDAV_Server
                                     return;
                                 }
 
-                                if (isset($range['end'])) {
+                                if (!empty($range['end'])) {
                                     $size = $range['end']-$range['start']+1;
                                     $this->http_status("206 Partial content");
                                     if (!self::use_compression()) header("Content-Length: $size");
                                     header("Content-Range: bytes $range[start]-$range[end]/"
                                            . (isset($options['size']) ? $options['size'] : "*"));
-                                    while ($size && !feof($options['stream'])) {
-                                        $buffer = fread($options['stream'], 4096);
+                                    while ($size > 0 && !feof($options['stream'])) {
+                                        $buffer = fread($options['stream'], $size < 8192 ? $size : 8192);
                                         $size  -= self::bytes($buffer);
                                         echo $buffer;
                                     }
@@ -1329,8 +1329,9 @@ class HTTP_WebDAV_Server
                                     $this->http_status("206 Partial content");
                                     if (isset($options['size'])) {
                                         if (!self::use_compression()) header("Content-Length: ".($options['size'] - $range['start']));
-                                        header("Content-Range: bytes ".$range['start']."-".$range['end']."/"
-                                               . (isset($options['size']) ? $options['size'] : "*"));
+                                        header("Content-Range: bytes ".$range['start']."-".
+											(isset($options['size']) ? $options['size']-1 : "")."/"
+										   . (isset($options['size']) ? $options['size'] : "*"));
                                     }
                                     fpassthru($options['stream']);
                                 }
