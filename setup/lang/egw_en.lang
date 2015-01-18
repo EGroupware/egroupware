@@ -58,6 +58,7 @@ allow password migration	setup	en	Allow password migration
 allow usernames identical to system users?	setup	en	Allow usernames identical to system users?
 allowed migration types (comma-separated)	setup	en	Allowed migration types (comma-separated)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	en	Alternatively domains can be accessed by logging in with <i>username@domain</i>.
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	en	Alternatively you can use %1Composer%2 to install all requirements at once. Downloading it and run:
 and is up to date	setup	en	and is up to date
 and reload your webserver, so the above changes take effect !!!	setup	en	AND reload your web server, so the above changes take effect !!!
 app details	setup	en	App details

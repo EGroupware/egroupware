@@ -1648,7 +1648,9 @@ function __autoload($class)
 		// include PEAR and PSR0 classes from include_path
 		// need to use include (not include_once) as eg. a previous included EGW_API_INC/horde/Horde/String.php causes
 		// include_once('Horde/String.php') to return true, even if the former was included with an absolute path
-		!isset($GLOBALS['egw_info']['apps'][$app]) && @include($file = strtr($class, array('_'=>'/','\\'=>'/')).'.php'))
+		// only use include_path, if no Composer vendor directory exists
+		!isset($GLOBALS['egw_info']['apps'][$app]) && !file_exists(EGW_SERVER_ROOT.'/vendor') &&
+			@include($file = strtr($class, array('_'=>'/','\\'=>'/')).'.php'))
 	{
 		include_once($file);
 		//if (!class_exists($class, false) && !interface_exists($class, false)) error_log("autoloading class $class by include_once($file) failed!");
@@ -1661,6 +1663,12 @@ function __autoload($class)
 }
 // register our autoloader with sql, so other PHP code can use spl_autoload_register, without stalling our autoloader
 spl_autoload_register('__autoload');
+
+// if we have a Composer vendor directory, also load it's autoloader, to allow manage our requirements with Composer
+if (file_exists(EGW_SERVER_ROOT.'/vendor'))
+{
+	require_once EGW_SERVER_ROOT.'/vendor/autoload.php';
+}
 
 /**
  * Clasify exception for a headline and log it to error_log, if not running as cli

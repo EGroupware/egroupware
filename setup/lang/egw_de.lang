@@ -58,6 +58,7 @@ allow password migration	setup	de	Erlaube Password Migration
 allow usernames identical to system users?	setup	de	Erlaube Benutzernamen identisch zu denen von Systembenutzern?
 allowed migration types (comma-separated)	setup	de	Erlaubte Migrationstypen (Komma separiert)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	de	Auf Domains kann alternative auch durch Anmelden als <i>benutzer@domain</i> zugegriffen werden.
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	de	Alternativ können Sie auch %1Composer%2 verwenden um alle Abhängigkeiten auf einmal zu installieren. Laden Sie es herunter und starten:
 and is up to date	setup	de	und ist aktuell
 and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
 app details	setup	de	Details der Anwendung

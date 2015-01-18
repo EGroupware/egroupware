@@ -310,6 +310,29 @@ function php_version($name,$args)
 }
 
 /**
+ * Check if given package is installed via composer in EGroupware's vendor directory
+ *
+ * @param string $package package-name in composer notation eg. "pear-pear.horde.org/Horde_Imap_Client" or "pear-pear.php.net/Net_Sieve"
+ */
+function composer_check($package)
+{
+	static $installed=null;
+	if (!isset($installed))
+	{
+		$installed = array();
+		if (file_exists(EGW_SERVER_ROOT.'/vendor') && file_exists($json=EGW_SERVER_ROOT.'/vendor/composer/installed.json'))
+		{
+			foreach(json_decode(file_get_contents($json), true) as $package_data)
+			{
+				$installed[strtolower($package_data['name'])] = $package_data['version'];
+			}
+		}
+	}
+	//error_log(__METHOD__."('$package') returning ".array2string($installed[strtolower($package)]));
+	return $installed[strtolower($package)];
+}
+
+/**
  * quering the pear registry to find out which pear packages and versions are installed
  *
  * @param $channel =null use default or given channel
@@ -372,38 +395,44 @@ function pear_check($package,$args)
 	}
 	$min_version = isset($args['version']) ? $args['version'] : null;
 
-	if (!isset($channel_packages[(string)$channel]))
+	// first check if package is available via composer installed vendor directory
+	$composer_name = 'pear-'.($channel ? $channel : 'pear.php.net').'/'.($package ? $package : 'pear');
+	$version_available = composer_check($composer_name);
+	if ((!($found = !empty($version_available))))
 	{
-		$channel_packages[(string)$channel] = get_installed_pear_packages($channel);
-	}
-	$pear_packages = $channel_packages[(string)$channel];
-	$version_available = false;
-
-	// packages found in the pear registry --> use that info
-	if ($pear_packages)
-	{
-		$pear_available = $found = true;
-		// check if package is installed
-		if ($package && isset($pear_packages[$package])) $available = true;
-		// check if it's the right version
-		$version_available = $pear_packages[$package ? $package : 'PEAR'];
-	}
-	else	// use the old checks as fallback
-	{
-		if (is_null($pear_available))
+		if (!isset($channel_packages[(string)$channel]))
 		{
-			$pear_available = @include_once('PEAR.php');
-
-			if (!class_exists('PEAR')) $pear_available = false;
+			$channel_packages[(string)$channel] = get_installed_pear_packages($channel);
 		}
-		$found = $pear_available;
-		if ($pear_available && $package)
+		$pear_packages = $channel_packages[(string)$channel];
+		$version_available = false;
+
+		// packages found in the pear registry --> use that info
+		if ($pear_packages)
 		{
-			$file = str_replace('_','/',$package == 'Mail_Mime' ? 'Mail_mime' : $package).'.php';
+			$pear_available = $found = true;
+			// check if package is installed
+			if ($package && isset($pear_packages[$package])) $available = true;
+			// check if it's the right version
+			$version_available = $pear_packages[$package ? $package : 'PEAR'];
+		}
+		else	// use the old checks as fallback
+		{
+			if (is_null($pear_available))
+			{
+				$pear_available = @include_once('PEAR.php');
 
-			$found = @include_once($file);
+				if (!class_exists('PEAR')) $pear_available = false;
+			}
+			$found = $pear_available;
+			if ($pear_available && $package)
+			{
+				$file = str_replace('_','/',$package == 'Mail_Mime' ? 'Mail_mime' : $package).'.php';
 
-			if (!class_exists($package)) $found = false;
+				$found = @include_once($file);
+
+				if (!class_exists($package)) $found = false;
+			}
 		}
 	}
 	// is the right version availible
@@ -418,25 +447,37 @@ function pear_check($package,$args)
 		echo '<div class="setup_info">' . lang('PEAR%1 is needed by: %2.',$package ? '::'.$package : '',
 			is_array($args['from']) ? implode(', ',$args['from']) : $args['from']);
 
-		if (!$pear_available)
-		{
-			echo '<br/>'.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
-				'<a href="http://pear.php.net" target="_blank">pear.php.net</a>','php-pear');
-		}
-		elseif ($package && !$found)
+		// if using Composer, dont confuse user with PEAR ;-)
+		if (file_exists(EGW_SERVER_ROOT.'/vendor'))
 		{
 			echo '<br/>'.lang('You can install it by running:').
-				($channel ? ' pear channel-discover '.$channel.' ;' : '').
-				' pear install '.($channel ? $channel.'/' : '').$package;
+				' cd '.realpath(EGW_SERVER_ROOT).'; php composer.phar install';
 		}
-		elseif ($min_version && !$version_available)
+		else
 		{
-			echo '<br/>'.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version);
-		}
-		elseif ($min_version && version_compare($min_version,$version_available) > 0)
-		{
-			echo '<br/>'.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
-				$package,$version_available,$min_version).' pear upgrade '.$package;
+			if (!$pear_available)
+			{
+				echo '<br/>'.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
+					'<a href="http://pear.php.net" target="_blank">pear.php.net</a>','php-pear');
+			}
+			elseif ($package && !$found)
+			{
+				echo '<br/>'.lang('You can install it by running:').
+					($channel ? ' pear channel-discover '.$channel.' ;' : '').
+					' pear install '.($channel ? $channel.'/' : '').$package;
+			}
+			elseif ($min_version && !$version_available)
+			{
+				echo '<br/>'.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version);
+			}
+			elseif ($min_version && version_compare($min_version,$version_available) > 0)
+			{
+				echo '<br/>'.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
+					$package,$version_available,$min_version).' pear upgrade '.$package;
+			}
+			echo '<br/>'.lang('Alternatively you can use %1Composer%2 to install all requirements at once. Downloading it and run:',
+				'<a href="https://getcomposer.org/" target="_blank">', '</a>').
+				' cd '.realpath(EGW_SERVER_ROOT).'; php composer.phar install';
 		}
 		echo "</div>";
 	}
