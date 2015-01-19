@@ -186,9 +186,9 @@ function expose (widget)
 			{
 				this._super.apply(this,arguments)
 				var self=this;
-				this.image.on('click', function(){
+				jQuery(this.node).on('click', function(){
 					self._init_blueimp_gallery(_value);
-				});
+					});
 			},
 			
 			_init_blueimp_gallery: function (_value)

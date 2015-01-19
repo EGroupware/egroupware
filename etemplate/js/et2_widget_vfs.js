@@ -287,15 +287,15 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 	{
 		var self=this;
 		if (this.options.expose_callback)
-		{
-			jQuery(this.expose_options.container).on ('slide', function (event) {
-				if (this.getIndex() - this.getNum() -1 == 0 && typeof self.expose_callback == 'function')
-				{
-					//Call the callback to load more items
-					var content = self.expose_callback.call(this,{})
-					if (content) this.add(content);
-				}
-			});
+	{
+		jQuery(this.expose_options.container).on ('slide', function (event) {
+			if (this.getIndex() - this.getNum() -1 == 0 && typeof self.expose_callback == 'function')
+			{
+				//Call the callback to load more items
+				var content = self.expose_callback.call(this,{})
+				if (content) this.add(content);
+			}
+		});
 		}
 	},
 	/**
@@ -381,12 +381,13 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 		_attrs.push("value", "class");
 	},
 	getDetachedNodes: function() {
-		return [this.iconOverlayContainer[0]];
+		return [this.node];
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
 		this.iconOverlayContainer = jQuery(_nodes[0]);
 		this.image = jQuery(_nodes[0].children[0]);
+		this.node = _nodes[0];
 		this.overlayContainer = _nodes[0].children[1];
 		if(typeof _values['class'] != "undefined") {
 			this.image.addClass(_values['class']);
