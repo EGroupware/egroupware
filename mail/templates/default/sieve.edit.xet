@@ -92,7 +92,7 @@
 								<row>
 									<radio label="File into:" id="action" options="folder"/>
 									<hbox>
-										<taglist id="action_folder_text"  width="40%" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
+										<taglist id="action_folder_text"  width="40%" autocomplete_url="mail.mail_sieve.ajax_getFolders" autocomplete_params="" allowFreeEntries="false" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
 									</hbox>
 								</row>
 								<row>

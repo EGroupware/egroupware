@@ -3084,8 +3084,16 @@ class mail_compose
 			return $_string;
 		}
 	}
-
-	function ajax_searchFolder($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null) {
+	/**
+	 * Callback function to search mail folders
+	 *
+	 * @param int $_searchStringLength
+	 * @param boolean $_returnList
+	 * @param int $_mailaccountToSearch
+	 * @param boolean $_noPrefixID = false, if set to true folders name does not get prefixed by account id
+	 * @return type
+	 */
+	function ajax_searchFolder($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null, $_noPrefixId=false) {
 		//error_log(__METHOD__.__LINE__.':'.array2string($_REQUEST));
 		static $useCacheIfPossible = null;
 		if (is_null($useCacheIfPossible)) $useCacheIfPossible = true;
@@ -3116,7 +3124,7 @@ class mail_compose
 			{
 				//error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
 				$f=false;
-				$key = $_mailaccountToSearch.'::'.$k;
+				$key = $_noPrefixId?$k:$_mailaccountToSearch.'::'.$k;
 				if ($_searchStringLength<=0)
 				{
 					$f=true;

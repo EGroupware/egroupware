@@ -223,7 +223,7 @@ class mail_sieve
 	{
 		//Instantiate an etemplate_new object, representing sieve.edit template
 		$etmpl = new etemplate_new('mail.sieve.edit');
-
+		$etmpl->setElementAttribute('action_folder_text','autocomplete_params', array('noPrefixId'=> true));
 		if (!is_array($content))
 		{
 			if ( $this->getRules($_GET['ruleID']) && isset($_GET['ruleID']))
@@ -376,8 +376,7 @@ class mail_sieve
 		);
 
 		//Set the preselect_options for mail/folders as we are not allow free entry for folder taglist
-		$mailCompose = new mail_compose();
-		$sel_options['action_folder_text'] = $mailCompose->ajax_searchFolder(0,true);
+		$sel_options['action_folder_text'] = $this->ajax_getFolders(0,true,null,true);
 
 		return $etmpl->exec('mail.mail_sieve.edit',$content,$sel_options,$readonlys,array(),2);
 	}
@@ -1232,6 +1231,19 @@ class mail_sieve
 
 		);
 		return $actions;
+	}
+	/**
+	 * Callback function to get mail folders
+	 * int $_searchStringLength
+	 * @param boolean $_returnList
+	 * @param int $_mailaccountToSearch
+	 * @param boolean $_noPrefixID = false, if set to true folders name does not get prefixed by account id
+	 */
+	function ajax_getFolders ($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null, $_noPrefixId=false)
+	{
+		$mailCompose = new mail_compose();
+		if ($_REQUEST['noPrefixId']) $_noPrefixID = $_REQUEST['noPrefixId'];
+		$mailCompose->ajax_searchFolder($_searchStringLength,$_returnList,$_mailaccountToSearch,$_noPrefixID);
 	}
 }
 
