@@ -417,7 +417,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * - name,path => pattern with *,? wildcards, eg. "*.php"
 	 * - name_preg,path_preg => preg regular expresion, eg. "/(vfs|wrapper)/"
 	 * - uid,user,gid,group,nouser,nogroup file belongs to user/group with given name or (numerical) id
-	 * - mime => type[/subtype]
+	 * - mime => type[/subtype] or perl regular expression starting with a "/" eg. "/^(image|video)\\//i"
 	 * - empty,size => (+|-|)N
 	 * - cmin/mmin => (+|-|)N file/dir create/modified in the last N minutes
 	 * - ctime/mtime => (+|-|)N file/dir created/modified in the last N days
@@ -667,11 +667,21 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		if (isset($options['mime']) && $options['mime'] != $stat['mime'])
 		{
-			list($type,$subtype) = explode('/',$options['mime']);
-			// no subtype (eg. 'image') --> check only the main type
-			if ($subtype || substr($stat['mime'],0,strlen($type)+1) != $type.'/')
+			if ($options['mime'][0] == '/')	// perl regular expression given
 			{
-				return;	// wrong mime-type
+				if (!preg_match($options['mime'], $stat['mime']))
+				{
+					return;	// wrong mime-type
+				}
+			}
+			else
+			{
+				list($type,$subtype) = explode('/',$options['mime']);
+				// no subtype (eg. 'image') --> check only the main type
+				if ($subtype || substr($stat['mime'],0,strlen($type)+1) != $type.'/')
+				{
+					return;	// wrong mime-type
+				}
 			}
 		}
 		if (isset($options['size']) && !self::_check_num($stat['size'],$options['size']) ||
