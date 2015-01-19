@@ -131,8 +131,8 @@
 				}
 			});
 			// diverse change handlers appending a name=value to url
-			$j('#calendar_merge,#calendar_filter,#calendar_cat_id').change(function(){
-				var val = $j(this).val();
+			$j('#calendar_merge,#calendar_filter,#calendar_cat_id,#calendar_test').change(function(){
+				var val = this.name == 'test' ? this.checked.toString() : $j(this).val();
 				if ($j.isArray(val)) val = val.join(',');
 				var url = current_view_url+(current_view_url.search.length ? '&' : '?')+this.name+'='+val;
 				if (url.match('&ajax=true')) url = url.replace('&ajax=true', '')+'&ajax=true';

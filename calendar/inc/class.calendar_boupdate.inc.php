@@ -250,6 +250,7 @@ class calendar_boupdate extends calendar_bo
 					$quantity[$uid] = $q;
 				}
 			}
+			//$start = microtime(true);
 			$overlapping_events =& $this->search(array(
 				'start' => $event['start'],
 				'end'   => $event['end'],
@@ -259,8 +260,9 @@ class calendar_boupdate extends calendar_bo
 				'query' => array(
 					'cal_non_blocking' => 0,
 				),
-				'use_so_events' => true,// use new calendar_so::events instead of ::search
+				'no_integration' => true,	// do NOT use integration of other apps
 			));
+			//error_log(__METHOD__."() conflict check took ".number_format(microtime(true)-$start, 3).'s');
 			if ($this->debug > 2 || $this->debug == 'update')
 			{
 				$this->debug_message('calendar_boupdate::update() checking for potential overlapping events for users %1 from %2 to %3',false,$users,$event['start'],$event['end']);

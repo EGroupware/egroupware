@@ -136,20 +136,54 @@ class calendar_so
 	 *
 	 * @param int $start
 	 * @param int $end
-	 * @param array $where =null
+	 * @param array $_where =null
 	 * @param boolean $deleted =false
 	 * @return string
 	 */
-	protected function sql_range_view($start, $end, array $where=null, $deleted=false)
+	protected function cal_range_view($start, $end, array $_where=null, $deleted=false)
 	{
-		$sql = "SELECT * ".
-			"FROM $this->cal_table ".
-			"WHERE range_start<".(int)$end.
-			" AND (range_end IS NULL OR range_end>".(int)$start.")";
+		if (!$start)	// using view without start-date is slower!
+		{
+			return $this->cal_table;	// no need / use for a view
+		}
 
-		if ($where) $sql .= " AND ".$this->db->expression($this->table, $where);
+		$where = array();
+		if (isset($deleted)) $where[] = "cal_deleted IS ".($deleted ? '' : 'NOT').' NULL';
+		if ($end) $where[] = "range_start<".(int)$end;
+		if ($start) $where[] = "(range_end IS NULL OR range_end>".(int)$start.")";
+		if ($_where) $where = array_merge($where, $_where);
 
-		if (isset($deleted)) $sql .= " AND cal_deleted IS ".($deleted ? '' : 'NOT').' NULL';
+		$sql = "(SELECT * FROM $this->cal_table WHERE ".$this->db->expression($this->cal_table, $where).") $this->cal_table";
+
+		return $sql;
+	}
+
+	/**
+	 * Return sql to fetch all dates in a given timerange, to be used instead of full dates table in further sql queries
+	 *
+	 * @param int $start
+	 * @param int $end
+	 * @param array $_where =null
+	 * @param boolean $deleted =false
+	 * @return string
+	 */
+	protected function dates_range_view($start, $end, array $_where=null, $deleted=false)
+	{
+		if (!$start || !$end)	// using view without start- AND end-date is slower!
+		{
+			return $this->dates_table;	// no need / use for a view
+		}
+
+		$where = array();
+		if (isset($deleted)) $where['recur_exception'] = $deleted;
+		if ($end) $where[] = "cal_start<".(int)$end;
+		if ($start) $where[] = "cal_end>".(int)$start;
+		if ($_where) $where = array_merge($where, $_where);
+
+		// egw_db::union uses egw_db::select which check if join contains "WHERE"
+		// to support old join syntax like ", other_table WHERE ...",
+		// therefore we have to use eg. "WHERe" instead!
+		$sql = "(SELECT * FROM $this->dates_table WHERe ".$this->db->expression($this->dates_table, $where).") $this->dates_table";
 
 		return $sql;
 	}
@@ -182,45 +216,71 @@ class calendar_so
 	 * @param int $remove_rejected_by_user =null add join to remove entry, if given user has rejected it
 	 * @return array of events
 	 */
-	function &events($start,$end,$users,$cat_id=0,$filter='default',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
+	function &events($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
 	{
+		error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
+		$start_time = microtime(true);
 		// not everything is supported by now
-		if ($filter != 'default' || !$start || !$end || is_string($params['query']) || //isset($remove_rejected_by_user) ||
+		if (!$start || !$end || is_string($params['query']) ||
+			//in_array($filter,array('owner','deleted')) ||
 			$params['enum_recuring']===false)
 		{
 			throw new egw_exception_assertion_failed("Unsupported value for parameters!");
 		}
 		$where = is_array($params['query']) ? $params['query'] : array();
 		if ($cat_id) $where[] = $this->cat_filter($cat_id);
+		$egw_cal = $this->cal_range_view($start, $end, $where, $filter == 'everything' ? null : $filter != 'deleted');
 
-		// fix $users to also prefix system users and groups (with 'u')
-		if (!is_array($users)) $users = $users ? (array)$users : array();
-		foreach($users as &$uid)
-		{
-			if (is_numeric($uid)) $uid = 'u'.$uid;
-		}
-
-		$egw_cal = $this->sql_range_view($start, $end, $where, $filter != 'deleted');
+		$status_filter = $this->status_filter($filter, $params['enum_recuring']);
 
 		$sql = "SELECT DISTINCT {$this->cal_table}_repeats.*,$this->cal_table.*,\n".
 			"	CASE WHEN recur_type IS NULL THEN egw_cal.range_start ELSE cal_start END AS cal_start,\n".
 			"	CASE WHEN recur_type IS NULL THEN egw_cal.range_end ELSE cal_end END AS cal_end\n".
 			// using time-limited range view, instead of complete table, give a big performance plus
-			"FROM ($egw_cal) egw_cal\n".
+			"FROM $egw_cal\n".
 			"JOIN egw_cal_user ON egw_cal_user.cal_id=egw_cal.cal_id\n".
 			// need to left join dates, as egw_cal_user.recur_date is null for non-recuring event
 			"LEFT JOIN egw_cal_dates ON egw_cal_user.cal_id=egw_cal_dates.cal_id AND egw_cal_dates.cal_start=egw_cal_user.cal_recur_date\n".
 			"LEFT JOIN egw_cal_repeats ON egw_cal_user.cal_id=egw_cal_repeats.cal_id\n".
-			"WHERE cal_status NOT IN ('X','R','E')\n".	// "default" filter for enum_recuring
-			"	AND CASE WHEN recur_type IS NULL THEN egw_cal.range_start ELSE cal_start END<".(int)$end."\n".
-			"	AND CASE WHEN recur_type IS NULL THEN egw_cal.range_end ELSE cal_end END>".(int)$start."\n";
+			"WHERE ".($status_filter ? $this->db->expression($this->table, $status_filter, " AND \n") : '').
+			"	CASE WHEN recur_type IS NULL THEN egw_cal.range_start ELSE cal_start END<".(int)$end." AND\n".
+			"	CASE WHEN recur_type IS NULL THEN egw_cal.range_end ELSE cal_end END>".(int)$start;
 
 		if ($users)
 		{
-			$sql .= "	AND CONCAT(cal_user_type,cal_user_id) IN (".implode(',', array_map(array($this->db, 'quote'), $users)).")";
+			// fix $users to also prefix system users and groups (with 'u')
+			if (!is_array($users)) $users = $users ? (array)$users : array();
+			foreach($users as &$uid)
+			{
+				if (is_numeric($uid)) $uid = 'u'.$uid;
+			}
+			$sql .= " AND\n	CONCAT(cal_user_type,cal_user_id) IN (".implode(',', array_map(array($this->db, 'quote'), $users)).")";
 		}
-		//error_log(__METHOD__."(".array2string(func_get_args()).") $sql");
-		return $this->get_events($this->db->query($sql, __LINE__, __FILE__, $offset, $num_rows));
+
+		if ($remove_rejected_by_user && !in_array($filter, array('everything', 'deleted')))
+		{
+			$sql .= " AND\n	(cal_user_type!='u' OR cal_user_id!=".(int)$remove_rejected_by_user." OR cal_status!='R')";
+		}
+
+		if (!empty($params['sql_filter']) && is_string($params['sql_filter']))
+		{
+			$sql .= " AND\n	".$params['sql_filter'];
+		}
+
+		if ($params['order'])	// only order if requested
+		{
+			if (!preg_match('/^[a-z_ ,c]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
+			$sql .= "\nORDER BY ".$params['order'];
+		}
+
+		if ($offset === false)	// return all rows --> egw_db::query wants offset=0, num_rows=-1
+		{
+			$offset = 0;
+			$num_rows = -1;
+		}
+		$events =& $this->get_events($this->db->query($sql, __LINE__, __FILE__, $offset, $num_rows));
+		error_log(__METHOD__."(...) $sql --> ".number_format(microtime(true)-$start_time, 3));
+		return $events;
 	}
 
 	/**
@@ -538,6 +598,67 @@ class calendar_so
 	}
 
 	/**
+	 * Return filters to filter by given status
+	 *
+	 * @param string $filter "default", "all", ...
+	 * @param boolean $enum_recuring are recuring events enumerated or not
+	 * @param array $where =array() array to add filters too
+	 * @return array
+	 */
+	protected function status_filter($filter, $enum_recuring=true, array $where=array())
+	{
+		if($filter != 'deleted' && $filter != 'everything')
+		{
+			$where[] = 'cal_deleted IS NULL';
+		}
+		switch($filter)
+		{
+			case 'everything':	// no filter at all
+				break;
+			case 'showonlypublic':
+				$where['cal_public'] = 1;
+				$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
+				break;
+			case 'deleted':
+				$where[] = 'cal_deleted IS NOT NULL';
+				break;
+			case 'unknown':
+				$where[] = "$this->user_table.cal_status='U'";
+				break;
+			case 'not-unknown':
+				$where[] = "$this->user_table.cal_status NOT IN ('U','X','E')";
+				break;
+			case 'accepted':
+				$where[] = "$this->user_table.cal_status='A'";
+				break;
+			case 'tentative':
+				$where[] = "$this->user_table.cal_status='T'";
+				break;
+			case 'rejected':
+				$where[] = "$this->user_table.cal_status='R'";
+				break;
+			case 'delegated':
+				$where[] = "$this->user_table.cal_status='D'";
+				break;
+			case 'all':
+			case 'owner':
+				$where[] = "$this->user_table.cal_status NOT IN ('X','E')";
+				break;
+			default:
+				if ($enum_recuring)	// regular UI
+				{
+					$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
+				}
+				else	// CalDAV / eSync / iCal need to include 'E' = exceptions
+				{
+					$where[] = "$this->user_table.cal_status NOT IN ('R','X')";
+				}
+				break;
+		}
+		return $where;
+	}
+
+	/**
 	 * Searches / lists calendar entries, including repeating ones
 	 *
 	 * @param int $start startdate of the search/list (servertime)
@@ -562,20 +683,23 @@ class calendar_so
 	 * @param boolean $params['enum_recuring'] =true enumerate recuring events
 	 * @param boolean $params['use_so_events'] =false, true return result of new $this->events()
 	 * @param int $remove_rejected_by_user =null add join to remove entry, if given user has rejected it
-	 * @return array of events
+	 * @return Iterator|array of events
 	 */
 	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array(),$remove_rejected_by_user=null)
 	{
 		//error_log(__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
 
+		/* not using new events method currently, as it not yet fully working and
+		   using time-range views in old code gives simmilar improvments
 		// uncomment to use new events method for supported parameters
-		//$params['use_so_events'] = $params['use_so_events'] || $start && $end && $filter=='default' && $params['enum_recuring']!==false;
+		//if (!isset($params['use_so_events'])) $params['use_so_events'] = $params['use_so_events'] || $start && $end && !in_array($filter, array('owner', 'deleted')) && $params['enum_recuring']!==false;
 
 		// use new events method only if explicit requested
 		if ($params['use_so_events'])
 		{
 			return call_user_func_array(array($this,'events'), func_get_args());
 		}
+		*/
 		if (isset($params['cols']))
 		{
 			$cols = $params['cols'];
@@ -659,7 +783,7 @@ class calendar_so
 					),' AND '.$this->user_table.'.',array(
 						'cal_user_id'   => $ids,
 					));
-					if ($type == 'u' && ($filter == 'owner'))
+					if ($type == 'u' && $filter == 'owner')
 					{
 						$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
 						$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
@@ -669,54 +793,7 @@ class calendar_so
 			// this is only used, when we cannot use UNIONS
 			if (!$useUnionQuery) $where[] = '('.implode(' OR ',$to_or).')';
 
-			if($filter != 'deleted' && $filter != 'everything')
-			{
-				$where[] = 'cal_deleted IS NULL';
-			}
-			switch($filter)
-			{
-				case 'everything':	// no filter at all
-					break;
-				case 'showonlypublic':
-					$where['cal_public'] = 1;
-					$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
-					break;
-				case 'deleted':
-					$where[] = 'cal_deleted IS NOT NULL';
-					break;
-				case 'unknown':
-					$where[] = "$this->user_table.cal_status='U'";
-					break;
-				case 'not-unknown':
-					$where[] = "$this->user_table.cal_status NOT IN ('U','X','E')";
-					break;
-				case 'accepted':
-					$where[] = "$this->user_table.cal_status='A'";
-					break;
-				case 'tentative':
-					$where[] = "$this->user_table.cal_status='T'";
-					break;
-				case 'rejected':
-					$where[] = "$this->user_table.cal_status='R'";
-					break;
-				case 'delegated':
-					$where[] = "$this->user_table.cal_status='D'";
-					break;
-				case 'all':
-				case 'owner':
-					$where[] = "$this->user_table.cal_status NOT IN ('X','E')";
-					break;
-				default:
-					if ($params['enum_recuring'])	// regular UI
-					{
-						$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
-					}
-					else	// CalDAV / eSync / iCal need to include 'E' = exceptions
-					{
-						$where[] = "$this->user_table.cal_status NOT IN ('R','X')";
-					}
-					break;
-			}
+			$where = $this->status_filter($filter, $params['enum_recuring'], $where);
 		}
 		if ($cat_id)
 		{
@@ -762,6 +839,20 @@ class calendar_so
 			if ($filter == 'owner') $or_required[] = 'cal_owner='.(int)$remove_rejected_by_user;
 			$where[] = '('.implode(' OR ',$or_required).')';
 		}
+		// using a time-range and deleted attribute limited view instead of full table
+		$cal_table = $this->cal_range_view($start, $end, null, $filter == 'everything' ? null : $filter != 'deleted');
+		$cal_table_def = $this->db->get_table_definitions('calendar', $this->cal_table);
+
+		$join = "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id ".
+			"LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id ".
+			$rejected_by_user_join;
+		// dates table join only needed to enum recuring events, we use a time-range limited view here too
+		if ($params['enum_recuring'])
+		{
+			$join = "JOIN ".$this->dates_range_view($start, $end, null, $filter == 'everything' ? null : $filter == 'deleted').
+				" ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$join;
+		}
+
 		//$starttime = microtime(true);
 		if ($useUnionQuery)
 		{
@@ -769,18 +860,16 @@ class calendar_so
 			if (!isset($params['cols'])) $cols .= ',NULL AS participants,NULL AS icons';
 
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
+			// with time-range views benefit is now at best slim for huge tables or none at all!
 			$select = array(
-				'table' => $this->cal_table,
-				'join'  => "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id $rejected_by_user_join",
+				'table' => $cal_table,
+				'join'  => $join,
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
 				'append'=> $params['append'],
+				'table_def' => $cal_table_def,
 			);
-			if ($params['enum_recuring'])	// dates table join only needed to enum recuring events
-			{
-				$select['join'] = "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$select['join'];
-			}
 			$selects = array();
 			// we check if there are parts to use for the construction of our UNION query,
 			// as replace the OR by construction of a suitable UNION for performance reasons
@@ -836,40 +925,57 @@ class calendar_so
 							array('range_start AS cal_start','range_end AS cal_end'), $selects[$key]['cols']);
 					}
 				}
-				if (!isset($params['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+				if (!isset($params['cols']) && !$params['no_integration']) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 
 				// restore original cols / selects
 				$selects = $save_selects; unset($save_selects);
 			}
-			if (!isset($params['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+			if (!isset($params['cols']) && !$params['no_integration']) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
-			$where[] = "(recur_type IS NULL AND $this->user_table.cal_recur_date=0)";// OR $this->user_table.cal_recur_date=cal_start)";
+			$where[] = "(recur_type IS NULL AND $this->user_table.cal_recur_date=0 OR $this->user_table.cal_recur_date=cal_start)";
 
-			//_debug_array($where);
-			if (is_numeric($offset))	// get the total too
+			$selects = array(array(
+				'table' => $cal_table,
+				'join'  => $join,
+				'cols'  => $cols,
+				'where' => $where,
+				'app'   => 'calendar',
+				'append'=> $params['append'],
+				'table_def' => $cal_table_def,
+			));
+
+			if (is_numeric($offset) && !$params['no_total'])	// get the total too
 			{
+				$save_selects = $selects;
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-				$this->total = $this->db->select($this->cal_table,"DISTINCT ".$cols,//$this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
-					$where,__LINE__,__FILE__,false,'','calendar',0,
-					// dates table join only needed to enum recuring events
-					($params['enum_recuring'] ? "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id " : '').
-					"JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
+				$selects[0]['cols'] = "$this->cal_table.cal_id,cal_start";
+				if (!isset($params['cols']) && !$params['no_integration'] && $this->db->capabilities['union'])
+				{
+					self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+				}
+				$this->total = $this->db->union($selects, __LINE__, __FILE__)->NumRows();
+				$selects = $save_selects;
 			}
-			$rs = $this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').$cols,
-				$where,__LINE__,__FILE__,$offset,$params['append'].' ORDER BY '.$params['order'],'calendar',$num_rows,
-				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
+			if (!isset($params['cols']) && !$params['no_integration'] && $this->db->capabilities['union'])
+			{
+				self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+			}
+			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
 		}
-		//error_log(__METHOD__."() useUnionQuery=$useUnionQuery --> query took ".(microtime(true)-$starttime));
+		//error_log(__METHOD__."() useUnionQuery=$useUnionQuery --> query took ".(microtime(true)-$starttime).'s '.$rs->sql);
+
 		if (isset($params['cols']))
 		{
 			return $rs;	// if colums are specified we return the recordset / iterator
 		}
+		// Todo: return $this->get_events($rs);
+
 		$events = $ids = $recur_dates = $recur_ids = array();
 		foreach($rs as $row)
 		{

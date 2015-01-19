@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-15 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -110,6 +110,10 @@ class calendar_ui
 	 * @var string $view menuaction of the selected view
 	 */
 	var $view_menuaction;
+	/**
+	 * @var boolean test checkbox checked
+	 */
+	var $test;
 
 	/**
 	 * @var int $first first day of the shown view
@@ -302,6 +306,7 @@ class calendar_ui
 			'planner_days'=> 0,	// full month
 			'view'       => ($this->bo->cal_prefs['defaultcalendar']?$this->bo->cal_prefs['defaultcalendar']:'day'), // use pref, if exists else use the dayview
 			'listview_days'=> '',	// no range
+			'test'       => 'false',
 		) as $state => $default)
 		{
 			if (isset($set_states[$state]))
@@ -747,12 +752,6 @@ class calendar_ui
 
 		$file[++$n] = array('text' => $jscalendar,'no_lang' => True,'link' => False,'icon' => False);
 
-		// set a baseurl for selectboxes, if we are not running inside calendar (eg. prefs or admin)
-		if (substr($_GET['menuaction'],0,9) != 'calendar.')
-		{
-			$baseurl = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiviews.index'),false);
-		}
-
 		// Category Selection
 		$cat_id = explode(',',$this->cat_id);
 
@@ -828,6 +827,8 @@ class calendar_ui
 			$filter_options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
 		}
 		$file[] = $this->_select_box('Filter','filter',$filter_options,'86%');
+		// enable this to get checkbox setting $this->test eg. usable to trigger different code in calendar_so
+		//$file[count($file)-1]['text'] .= html::checkbox('test', $this->test==='true', 'true', 'id="calendar_test"');
 
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
