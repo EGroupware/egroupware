@@ -80,7 +80,7 @@ function expose (widget)
 					displayTransition: true,
 					// Defines if the gallery slides are cleared from the gallery modal,
 					// or reused for the next gallery initialization:
-					clearSlides: false,
+					clearSlides: true,
 					// Defines if images should be stretched to fill the available space,
 					// while maintaining their aspect ratio (will only be enabled for browsers
 					// supporting background-size="contain", which excludes IE < 9).
