@@ -32,7 +32,7 @@ function expose (widget)
 			 */
 			init: function() {
 				this._super.apply(this, arguments);
-				expose.options = {
+				this.expose_options = {
 					// The Id, element or querySelector of the gallery widget:
 					container: '#blueimp-gallery',
 					// The tag name, Id, element or querySelector of the slides container:
@@ -180,14 +180,21 @@ function expose (widget)
 					$body.append($expose_node);
 				}
 				
-				jQuery(this.node).on('click', function (){
-					self._init_blueimp_gallery();
+			},
+			
+			set_value:function (_value)
+			{
+				this._super.apply(this,arguments)
+				var self=this;
+				this.image.on('click', function(){
+					self._init_blueimp_gallery(_value);
 				});
 			},
-			_init_blueimp_gallery: function ()
+			
+			_init_blueimp_gallery: function (_value)
 			{
-				var mediaContent = this.getMedia();
-				blueimp.Gallery(mediaContent, expose.options);
+				var mediaContent = this.getMedia(_value);
+				blueimp.Gallery(mediaContent, this.expose_options);
 			},
 			expose_event:function (event){
 				console.log(event);

@@ -259,7 +259,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			"description": "Size of icon / thumbnail, in pixels",
 			"default": et2_no_init
 		},
-		expose_callback:{
+		"expose_callback":{
 			"name": "expose_callback",
 			"type": "js",
 			"default": et2_no_init,
@@ -279,7 +279,13 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 		this.iconOverlayContainer = jQuery(document.createElement('span')).addClass('iconOverlayContainer');
 		this.image = jQuery(document.createElement("img"));
 		this.image.addClass("et2_vfs vfsMimeIcon");
-		var self= this;
+		this.iconOverlayContainer.append(this.image);
+		this.setDOMNode(this.iconOverlayContainer[0]);
+	},
+	
+	set_expose_callback: function(_callback)
+	{
+		var self=this;
 		if (this.options.expose_callback)
 		{
 			jQuery(this.expose_options.container).on ('slide', function (event) {
@@ -291,10 +297,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				}
 			});
 		}
-		this.iconOverlayContainer.append(this.image);
-		this.setDOMNode(this.iconOverlayContainer[0]);
 	},
-	
 	/**
 	 * Function to get media content to feed the expose
 	 * @param {type} _value
