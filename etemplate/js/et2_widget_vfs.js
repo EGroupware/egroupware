@@ -18,6 +18,7 @@
 	et2_core_valueWidget;
 	et2_widget_description;
 	et2_widget_file;
+	/etemplate/js/expose.js;
 */
 
 /**
@@ -245,7 +246,7 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
  *
  * @augments et2_valueWidget
  */
-var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"value": {
@@ -257,6 +258,12 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 			"type": "integer",
 			"description": "Size of icon / thumbnail, in pixels",
 			"default": et2_no_init
+		},
+		expose_callback:{
+			"name": "expose_callback",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "JS code which is executed when expose slides."
 		}
 	},
 
@@ -272,9 +279,57 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.iconOverlayContainer = jQuery(document.createElement('span')).addClass('iconOverlayContainer');
 		this.image = jQuery(document.createElement("img"));
 		this.image.addClass("et2_vfs vfsMimeIcon");
+		var self= this;
+		if (this.options.expose_callback)
+		{
+			jQuery(this.expose_options.container).on ('slide', function (event) {
+				if (this.getIndex() - this.getNum() -1 == 0 && typeof self.expose_callback == 'function')
+				{
+					//Call the callback to load more items
+					var content = self.expose_callback.call(this,{})
+					if (content) this.add(content);
+				}
+			});
+		}
 		this.iconOverlayContainer.append(this.image);
 		this.setDOMNode(this.iconOverlayContainer[0]);
 	},
+	
+	/**
+	 * Function to get media content to feed the expose
+	 * @param {type} _value
+	 * @returns {Array|Array.getMedia.mediaContent}
+	 */
+	getMedia: function (_value)
+	{
+		var base_url = egw(window).window.location.origin + egw.webserverUrl;
+		_value.mime.match(/video|audio|media|image/,'ig')
+		var mediaContent = [];
+		if (_value.mime.match(/video/,'ig'))
+		{
+			mediaContent = [{
+				title: _value.name,
+				type: 'video/*',
+				sources:[{
+						href: base_url + _value.download_url,
+						type: _value.mime,
+				}]
+
+			}];
+
+		}
+		else
+		{
+			mediaContent = [{
+				title: _value.name,
+				href: base_url + _value.download_url,
+				type: _value.mime,
+				thumbnail: base_url+this.image.attr('src')
+			}];
+		}
+		return mediaContent;
+	},
+	
 	set_value: function(_value) {
 		if (typeof _value !== 'object')
 		{
@@ -337,7 +392,7 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.set_value(_values['value']);
 		}
 	}
-});
+}));
 et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 
 /**

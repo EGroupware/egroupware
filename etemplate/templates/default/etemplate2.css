@@ -7,6 +7,8 @@
  * Magic suggest / tag list widget
  */
 @import url("../../../phpgwapi/js/jquery/magicsuggest/magicsuggest.css");
+@import url("../../../phpgwapi/js/jquery/blueimp/css/blueimp-gallery.min.css");
+
 
 
 /**
