@@ -264,6 +264,12 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			"type": "js",
 			"default": et2_no_init,
 			"description": "JS code which is executed when expose slides."
+		},
+		expose_view: {
+			name: "Expose view",
+			type: "boolean",
+			default: true,
+			description: "Clicking on an image would popup an expose view"
 		}
 	},
 
@@ -283,32 +289,38 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 		this.setDOMNode(this.iconOverlayContainer[0]);
 	},
 	
-	set_expose_callback: function(_callback)
+	/**
+	 * Handler for expose slide action, from expose
+	 * Returns data needed for the given index, or false to let expose handle it
+	 *
+	 * @param {Gallery} gallery
+	 * @param {integer} index
+	 * @param {DOMNode} slide
+	 * @return {Array} array of objects consist of media contnet 
+	 */
+	expose_onslide: function(gallery, index, slide)
 	{
-		var self=this;
-		if (this.options.expose_callback)
-	{
-		jQuery(this.expose_options.container).on ('slide', function (event) {
-			if (this.getIndex() - this.getNum() -1 == 0 && typeof self.expose_callback == 'function')
-			{
-				//Call the callback to load more items
-				var content = self.expose_callback.call(this,{})
-				if (content) this.add(content);
-			}
-		});
+		var content = false;
+		if (this.options.expose_callback && typeof this.options.expose_callback == 'function')
+		{
+			//Call the callback to load more items
+			content = this.options.expose_callback.call(this,[gallery, index]);
+			if (content) this.add(content);
 		}
+		return content;
 	},
+	
 	/**
 	 * Function to get media content to feed the expose
+	 * 
 	 * @param {type} _value
-	 * @returns {Array|Array.getMedia.mediaContent}
+	 * @returns {Array} return an array of object consists of media content
 	 */
 	getMedia: function (_value)
 	{
 		var base_url = egw(window).window.location.origin + egw.webserverUrl;
-		_value.mime.match(/video|audio|media|image/,'ig')
 		var mediaContent = [];
-		if (_value.mime.match(/video/,'ig'))
+		if (_value && _value.mime && _value.mime.match(/video/,'ig'))
 		{
 			mediaContent = [{
 				title: _value.name,
@@ -381,12 +393,12 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 		_attrs.push("value", "class");
 	},
 	getDetachedNodes: function() {
-		return [this.node];
+		return [this.node, this.iconOverlayContainer[0], this.image[0]];
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
-		this.iconOverlayContainer = jQuery(_nodes[0]);
-		this.image = jQuery(_nodes[0].children[0]);
+		this.iconOverlayContainer = jQuery(_nodes[1]);
+		this.image = jQuery(_nodes[2]);
 		this.node = _nodes[0];
 		this.overlayContainer = _nodes[0].children[1];
 		if(typeof _values['class'] != "undefined") {
