@@ -165,7 +165,6 @@ class calendar_so
 			// We want only the parents to match
 			$where['cal_uid'] = $ids;
 			$where['cal_reference'] = 0;
-			$where['cal_recurrence'] = 0;
 		}
 		elseif(is_array($ids) && isset($ids[count($ids)-1]) || is_scalar($ids))	// one or more cal_id's
 		{
