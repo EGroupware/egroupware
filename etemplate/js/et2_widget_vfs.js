@@ -318,7 +318,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	getMedia: function (_value)
 	{
-		var base_url = egw(window).window.location.origin + egw.webserverUrl;
+		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin + egw.webserverUrl:egw.webserverUrl;
 		var mediaContent = [];
 		if (_value && _value.mime && _value.mime.match(/video/,'ig'))
 		{
