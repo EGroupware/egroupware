@@ -747,7 +747,7 @@ class mail_sieve
 
 		try
 		{
-			$ret = $icServer->setVacationUser($_vacation['account_id'], null, $_vacation);
+			$ret = $icServer->setVacationUser($_vacation['account_id'], $_vacation);
 			self::setAsyncJob($_vacation);
 		}
 		// if mail account no longer exists --> remove async job
