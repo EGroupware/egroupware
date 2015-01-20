@@ -183,7 +183,15 @@ function expose (widget)
 			
 			set_value:function (_value)
 			{
-				this._super.apply(this,arguments)
+				// Do not run set value of expose if expose_view is not set
+				// it causes a wired error on nested image widgets which
+				// seems the expose is not its child widget
+				if (!this.options.expose_view )
+				{
+					return;
+				}
+				this._super.apply(this,arguments);
+					
 				var self=this;
 				// If the media type is not supported do not bind the click handler
 				if (_value && typeof _value.mime != 'undefined' && !_value.mime.match(/^(video|image|audio|media)\//,'ig'))
