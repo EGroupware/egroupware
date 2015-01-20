@@ -698,7 +698,9 @@ class calendar_groupdav extends groupdav_handler
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
 		// only add master if we are not expanding and current user participates in master (and not just some exceptions)
-		if (!$expand && (!$user || isset($master['participants'][$user])))
+		if (!$expand && (!$user || isset($master['participants'][$user]) ||
+			// for group-invitations we need to check memberships of $user too
+			array_intersect(array_keys($master['participants']), $GLOBALS['egw']->accounts->memberships($user, true))))
 		{
 			$events = array_merge(array($master), $events);
 		}
