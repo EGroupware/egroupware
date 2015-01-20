@@ -1,3 +1,15 @@
+/**
+ * EGroupware eTemplate2 - JS object implementing expose view of media and a gallery view
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @link http://www.egroupware.org
+ * @author Hadi Nategh <hn[at]stylite.de>
+ * @copyright Stylite AG
+ * @version $Id$
+ */
+
 /*egw:uses
 	jquery.jquery;
 	/phpgwapi/js/jquery/blueimp/js/jquery.blueimp-gallery.min.js;
@@ -6,32 +18,32 @@
 /**
  * Interface all exposed widget must support in order to getMedia for the blueimp Gallery.
  */
-var et2_IExposable = new Interface({
-
+var et2_IExposable = new Interface(
+{
 	/**
-	 * get media an array of media objects to pass to blueimp Gallery 
+	 * get media an array of media objects to pass to blueimp Gallery
 	 * @param {array} _attrs
 	 */
-	getMedia: function(_attrs) {},
-	
+	getMedia: function(_attrs) {}
 });
 
 /**
  * This function extends the given widget with blueimp gallery plugin
- * 
+ *
  * @param {type} widget
  * @returns {widget}
  */
 function expose (widget)
 {
-	return widget.extend([et2_IExposable],{
-		
+	return widget.extend([et2_IExposable],
+	{
 			/**
 			 * Initialize the expose media gallery
 			 */
-			init: function() {
+			init: function()
+			{
 				this._super.apply(this, arguments);
-				
+
 				this.expose_options = {
 					// The Id, element or querySelector of the gallery widget:
 					container: '#blueimp-gallery',
@@ -103,7 +115,7 @@ function expose (widget)
 					emulateTouchEvents: true,
 					// Stop touch events from bubbling up to ancestor elements of the Gallery:
 					stopTouchEventsPropagation: false,
-					// Hide the page scrollbars: 
+					// Hide the page scrollbars:
 					hidePageScrollbars: true,
 					// Stops any touches on the container from scrolling the page:
 					disableScroll: true,
@@ -178,9 +190,9 @@ function expose (widget)
 					// Append the gallery Node to DOM
 					$body.append($expose_node);
 				}
-				
+
 			},
-			
+
 			set_value:function (_value)
 			{
 				// Do not run set value of expose if expose_view is not set
@@ -191,7 +203,7 @@ function expose (widget)
 					return;
 				}
 				this._super.apply(this,arguments);
-					
+
 				var self=this;
 				// If the media type is not supported do not bind the click handler
 				if (_value && typeof _value.mime != 'undefined' && !_value.mime.match(/^(video|image|audio|media)\//,'ig'))
@@ -202,10 +214,10 @@ function expose (widget)
 				{
 					jQuery(this.node).on('click', function(){
 						self._init_blueimp_gallery(_value);
-					});
+					}).addClass('et2_clickable');
 				}
 			},
-			
+
 			_init_blueimp_gallery: function (_value)
 			{
 				var mediaContent = this.getMedia(_value);
@@ -217,15 +229,14 @@ function expose (widget)
 			expose_onopen: function (event){},
 			expose_onopened: function (event){},
 			/**
-			 * Trigger on slide left/right 
+			 * Trigger on slide left/right
 			 * @param {type} event
-			 * @param {type} _callback
 			 */
 			expose_onslide: function (event){},
 			expose_onslideend: function (event){},
 			expose_onslidecomplete:function (event){},
 			expose_onclose: function(event){},
 			expose_onclosed: function (event){}
-			
+
 	});
 }
