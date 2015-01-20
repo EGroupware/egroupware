@@ -1748,3 +1748,15 @@ span.et2_egw_action_ddHelper_itemsCnt {
 	text-align: center;
 	font-weight: bold;
 }
+
+
+/**
+ * Etemplate exposé CSS
+ */
+/* Paginating with nextmatch */
+.blueimp-gallery-controls > .indicator.paginating {
+	max-height: 2em;
+	left: 0px;
+	right: auto;
+	white-space: nowrap;
+}

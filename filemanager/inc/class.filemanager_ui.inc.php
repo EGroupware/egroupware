@@ -837,7 +837,7 @@ class filemanager_ui
 		$maxdepth = $filter && $filter != 4 ? (int)(boolean)$filter : null;
 		if($filter == 5) $maxdepth = 2;
 		$n = 0;
-		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],array(
+		$vfs_options = array(
 			'mindepth' => 1,
 			'maxdepth' => $maxdepth,
 			'dirsontop' => $filter <= 1,
@@ -848,7 +848,12 @@ class filemanager_ui
 			'name_preg' => $namefilter,
 			'hidden' => $filter == 3,
 			'follow' => $filter == 5,
-		),true) as $path => $row)
+		);
+		if($query['col_filter']['mime'])
+		{
+			$vfs_options['mime'] = $query['col_filter']['mime'];
+		}
+		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],$vfs_options,true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
 
