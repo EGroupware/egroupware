@@ -633,7 +633,7 @@ class calendar_uiforms extends calendar_ui
 				else	// conflict or error, we need to reset everything to the state befor we tried to save it
 				{
 					$event['id'] = $event['reference'];
-					unset($event['reference']);
+					$event['reference'] = $event['recurrence'] = 0;
 					$event['uid'] = $content['uid'];
 				}
 			}
