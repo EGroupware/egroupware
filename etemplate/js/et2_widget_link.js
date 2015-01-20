@@ -1647,17 +1647,25 @@ var et2_link_list = et2_link_string.extend(
 		{
 			var icon_widget = et2_createWidget("image");
 			var src = '';
+			// Creat a mime widget if the link has type
 			if(_link_data.type)
 			{
 				// VFS - file
-				src = this.egw().mime_icon(_link_data.type, _link_data.icon);
+				var vfs_widget = et2_createWidget('vfs-mime');
+				vfs_widget.set_value({
+					download_url:_link_data.download_url,
+					name:_link_data.title,
+					mime:_link_data.type,
+					path:_link_data.icon
+				});
+				icon.append(vfs_widget.getDOMNode());
 			}
 			else
 			{
 				src = this.egw().image(_link_data.icon);
+				if(src)	icon_widget.set_src(src);
+				icon.append(icon_widget.getDOMNode());
 			}
-			if(src)	icon_widget.set_src(src);
-			icon.append(icon_widget.getDOMNode());
 		}
 
 		var columns = ['title','remark'];
@@ -1667,7 +1675,18 @@ var et2_link_list = et2_link_string.extend(
 			$j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.click( function(){self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);})
+				.click( function(){
+					// Check if the link entry is mime with media type, in order to open it in expose view
+					if (typeof _link_data.type != 'undefined' && _link_data.type.match(/^(video|audio|image|media)\//,'ig'))
+					{
+						var $vfs_img_node = jQuery(this).parent().find('.vfsMimeIcon');
+						if ($vfs_img_node.length > 0) $vfs_img_node.click();
+					}
+					else
+					{
+						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);
+					}
+				})
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
 		}
 
