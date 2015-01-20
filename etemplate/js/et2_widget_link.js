@@ -1463,7 +1463,7 @@ var et2_link_list = et2_link_string.extend(
 				function(button, comment) {
 					if(button != et2_dialog.OK_BUTTON) return;
 					var remark = jQuery('#link_'+(self.context.data.dom_id ? self.context.data.dom_id : link_id), self.list).children('.remark');
-					if(isNaN(self.context.data.id) || isNaN(self.context.data.link_id == 'undefined'))
+					if(isNaN(self.context.data.link_id))	// new entry, not yet stored
 					{
 						remark.text(comment);
 						// Look for a link-to with the same ID, refresh it
