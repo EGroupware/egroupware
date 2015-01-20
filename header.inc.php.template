@@ -86,7 +86,8 @@ $GLOBALS['egw_info']['server']['versions']['header'] = '1.29';
 if(!isset($GLOBALS['egw_info']['flags']['noapi']) || !$GLOBALS['egw_info']['flags']['noapi'])
 {
 	if (substr($_SERVER['SCRIPT_NAME'],-7) != 'dav.php' &&	// dont do it for webdav/groupdav, as we can not safely switch it off again
-		(!isset($_GET['menuaction']) || substr($_GET['menuaction'],-10) != '_hooks.log'))
+		(!isset($_GET['menuaction']) || substr($_GET['menuaction'],-10) != '_hooks.log') &&
+		substr($_SERVER['SCRIPT_NAME'],-10) != '/share.php')
 	{
 		ob_start();	// to prevent error messages to be send before our headers
 	}

@@ -6,7 +6,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2014 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
@@ -94,9 +94,9 @@ class egw_sharing
 	}
 
 	/**
-	 * Init sharing by setting PHP_AUTH_USER from token in url
+	 * Get token from url
 	 */
-	public static function init()
+	public static function get_token()
 	{
         // WebDAV has no concept of a query string and clients (including cadaver)
         // seem to pass '?' unencoded, so we need to extract the path info out
@@ -110,22 +110,45 @@ class egw_sharing
         $path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
 		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
 
-		$_SERVER['PHP_AUTH_USER'] = $token;
-		if (!isset($_SERVER['PHP_AUTH_PW'])) $_SERVER['PHP_AUTH_PW'] = '';
-
 		return $token;
+	}
+
+	/**
+	 * Get root of share
+	 *
+	 * @return string
+	 */
+	public function get_root()
+	{
+		return $this->share['share_root'];
 	}
 
 	/**
 	 * Create sharing session
 	 *
+	 * @param boolean $keep_session =false false: create a new session, true: try mounting it into existing (already verified) session
 	 * @return string with sessionid, does NOT return if no session created
 	 */
-	public static function create_session()
+	public static function create_session($keep_session=false)
 	{
 		self::$db = $GLOBALS['egw']->db;
 
-		$token = $_SERVER['PHP_AUTH_USER'];
+		$token = self::get_token();
+
+		// are we called from header include, because session did not verify
+		// --> check if it verifys for our token
+		if ($token && !$keep_session)
+		{
+			$_SERVER['PHP_AUTH_USER'] = $token;
+			if (!isset($_SERVER['PHP_AUTH_PW'])) $_SERVER['PHP_AUTH_PW'] = '';
+
+			unset($GLOBALS['egw_info']['flags']['autocreate_session_callback']);
+			if ($GLOBALS['egw']->session->verify() && isset($GLOBALS['egw']->sharing) &&
+				$GLOBALS['egw']->sharing->share['share_token'] === $token)
+			{
+				return $GLOBALS['egw']->session->sessionid;
+			}
+		}
 
 		if (empty($token) || !($share = self::$db->select(self::TABLE, '*', array(
 			'share_token' => $token,
@@ -156,21 +179,6 @@ class egw_sharing
 			common::egw_exit();
 		}
 
-		// create session without checking auth: create(..., false, false)
-		if (!($sessionid = $GLOBALS['egw']->session->create('anonymous', '', 'text', false, false)))
-		{
-			sleep(1);
-			$status = '500 Internal Server Error';
-			header("HTTP/1.1 $status");
-			header("X-WebDAV-Status: $status", true);
-			echo "Failed to create session: ".$GLOBALS['egw']->session->reason."\n";
-			common::egw_exit();
-		}
-		// only allow filemanager app
-		$GLOBALS['egw_info']['user']['apps'] = array(
-			'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
-		);
-
 		$share['resolve_url'] = egw_vfs::resolve_url($share['share_path']);
 		// if share not writable append ro=1 to mount url to make it readonly
 		if (!self::$db->from_bool($share['share_writable']))
@@ -179,9 +187,56 @@ class egw_sharing
 		}
 		//_debug_array($share);
 
-		// arrange vfs to only contain shared url and use share-owner as user
+		if ($keep_session)	// add share to existing session
+		{
+			$share['share_root'] = '/'.$share['share_token'];
+
+			// if current user is not the share owner, we need to give him access to mounted share
+			if (egw_vfs::$user != $share['share_owner'])
+			{
+				// check if sharing user has owner rights for shared path
+				egw_vfs::$user = $share['share_owner'];
+				egw_vfs::clearstatcache();
+				if (egw_vfs::has_owner_rights($share['share_path']))
+				{
+					$rights = $share['share_writable'] && egw_vfs::is_writable($share['share_path']) ? 7 : 5;
+					egw_vfs::$user = $GLOBALS['egw']->session->account_id;
+					egw_vfs::eacl($share['share_root'], $rights, egw_vfs::$user, true);	// true = session-only, not permanent
+				}
+				// if not, we must not use an eacl, as it grants recursive rights!
+				// (one could eg. create a writable share for / and use it to escalate his own rights)
+				// --> create a new session with propper rights (loosing current session)
+				else
+				{
+					$keep_session = false;
+				}
+			}
+		}
+		if (!$keep_session)	// do NOT change to else, as we might have set $keep_session=false!
+		{
+			// create session without checking auth: create(..., false, false)
+			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous', '', 'text', false, false)))
+			{
+				sleep(1);
+				$status = '500 Internal Server Error';
+				header("HTTP/1.1 $status");
+				header("X-WebDAV-Status: $status", true);
+				echo "Failed to create session: ".$GLOBALS['egw']->session->reason."\n";
+				common::egw_exit();
+			}
+			// only allow filemanager app
+			$GLOBALS['egw_info']['user']['apps'] = array(
+				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
+			);
+
+			$share['share_root'] = '/';
+			// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
+			$GLOBALS['egw_info']['user']['vfs_user'] = egw_vfs::$user = $share['share_owner'];
+		}
+
+		// mounting share
 		egw_vfs::$is_root = true;
-		if (!egw_vfs::mount($share['resolve_url'], '/', false, false, true))
+		if (!egw_vfs::mount($share['resolve_url'], $share['share_root'], false, false, !$keep_session))
 		{
 			sleep(1);
 			$status = '404 Not Found';
@@ -191,9 +246,8 @@ class egw_sharing
 			common::egw_exit();
 		}
 		egw_vfs::$is_root = false;
-		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
+
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = egw_vfs::mount();
-		$GLOBALS['egw_info']['user']['vfs_user'] = egw_vfs::$user = $share['share_owner'];
 		egw_vfs::clearstatcache();
 
 		// update accessed timestamp
@@ -206,6 +260,15 @@ class egw_sharing
 		// store sharing object in egw object and therefore in session
 		$GLOBALS['egw']->sharing = new egw_sharing($share);
 
+		// for an existing session we need to store modified egw and egw_info again in session
+		if ($keep_session)
+		{
+			$_SESSION[egw_session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
+			unset($_SESSION[egw_session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
+
+			$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
+		}
+
 		return $sessionid;
 	}
 
@@ -214,25 +277,32 @@ class egw_sharing
 	 */
 	public function ServeRequest()
 	{
+		// sharing is for a different share, change to current share
+		if ($this->share['share_token'] !== self::get_token())
+		{
+			self::create_session($GLOBALS['egw']->session->session_flags === 'N');
+
+			return $GLOBALS['egw']->sharing->ServeRequest();
+		}
 		// use pure WebDAV for everything but GET requests to directories
-		if (!egw_vfs::is_dir('/') || $_SERVER['REQUEST_METHOD'] != 'GET' ||
+		if (!egw_vfs::is_dir($this->share['share_root']) || $_SERVER['REQUEST_METHOD'] != 'GET' ||
 			// or unsupported browsers like ie < 10
 			html::$user_agent == 'msie' && html::$ua_version < 10.0 ||
 			// or if no filemanager installed (WebDAV has own autoindex)
 			!file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'))
 		{
 			// send a content-disposition header, so browser knows how to name downloaded file
-			if (!egw_vfs::is_dir($this->share['share_path']))
+			if (!egw_vfs::is_dir($this->share['share_root']))
 			{
 				html::content_disposition_header(egw_vfs::basename($this->share['share_path']), false);
 			}
 			//$GLOBALS['egw']->session->commit_session();
 			$webdav_server = new vfs_webdav_server();
-			$webdav_server->ServeRequest('/'.$this->share['share_token']);
+			$webdav_server->ServeRequest(egw_vfs::concat($this->share['share_root'], $this->share['share_token']));
 			return;
 		}
 		// run full eTemplate2 UI for directories
-		$_GET['path'] = '/';
+		$_GET['path'] = $this->share['share_root'];
 		$_GET['cd'] = 'no';
 		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
 		egw_framework::includeCSS('/filemanager/templates/default/sharing.css');
@@ -557,7 +627,7 @@ if (file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'))
 		 */
 		static function get_home_dir()
 		{
-			return '/';
+			return $GLOBALS['egw']->sharing->get_root();
 		}
 	}
 }

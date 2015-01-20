@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -928,6 +928,11 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * Name of EACL array in session
+	 */
+	const SESSION_EACL = 'session-eacl';
+
+	/**
 	 * Set or delete extended acl for a given path and owner (or delete  them if is_null($rights)
 	 *
 	 * Does NOT check if user has the rights to set the extended acl for the given url/path!
@@ -935,10 +940,21 @@ class egw_vfs extends vfs_stream_wrapper
 	 * @param string $url string with path
 	 * @param int $rights =null rights to set, or null to delete the entry
 	 * @param int|boolean $owner =null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param boolean $session_only =false true: set eacl only for this session, does NO further checks currently!
 	 * @return boolean true if acl is set/deleted, false on error
 	 */
-	static function eacl($url,$rights=null,$owner=null)
+	static function eacl($url,$rights=null,$owner=null,$session_only=false)
 	{
+		if ($session_only)
+		{
+			$session_eacls =& egw_cache::getSession(__CLASS__, self::SESSION_EACL);
+			$session_eacls[] = array(
+				'path'   => $url[0] == '/' ? $url : egw_vfs::parse_url($url, PHP_URL_PATH),
+				'owner'  => $owner ? $owner : egw_vfs::$user,
+				'rights' => $rights,
+			);
+			return true;
+		}
 		return self::_call_on_backend('eacl',array($url,$rights,$owner));
 	}
 
@@ -952,7 +968,31 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function get_eacl($path)
 	{
-		return self::_call_on_backend('get_eacl',array($path),true);	// true = fail silent (no PHP Warning)
+		$eacls = self::_call_on_backend('get_eacl',array($path),true);	// true = fail silent (no PHP Warning)
+
+		$session_eacls =& egw_cache::getSession(__CLASS__, self::SESSION_EACL);
+		if ($session_eacls)
+		{
+			// eacl is recursive, therefore we have to match all parent-dirs too
+			$paths = array($path);
+			while ($path && $path != '/')
+			{
+				$paths[] = $path = egw_vfs::dirname($path);
+			}
+			foreach((array)$session_eacls as $eacl)
+			{
+				if (in_array($eacl['path'], $paths))
+				{
+					$eacls[] = $eacl;
+				}
+			}
+
+			// sort by length descending, to show precedence
+			usort($eacls, function($a, $b) {
+				return strlen($b['path']) - strlen($a['path']);
+			});
+		}
+		return $eacls;
 	}
 
 	/**

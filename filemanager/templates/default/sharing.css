@@ -5,7 +5,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2014 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
@@ -21,6 +21,12 @@ div#popupMainDiv {
 div#filemanager-index_buttons img, div#filemanager-index_favorite_wrapper,
 div.header_row_right, span.header_count, select#filemanager-index_filter, span.selectcols {
 	display: none !important;
+}
+div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
+	display: inline-block !important;
+	position: relative;
+	left: -230px;
+	top: 3px;
 }
 
 div.filemanager_navigation label {
