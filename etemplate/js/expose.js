@@ -26,12 +26,12 @@ function expose (widget)
 {
 	return widget.extend([et2_IExposable],{
 		
-			
 			/**
 			 * Initialize the expose media gallery
 			 */
 			init: function() {
 				this._super.apply(this, arguments);
+				
 				this.expose_options = {
 					// The Id, element or querySelector of the gallery widget:
 					container: '#blueimp-gallery',
@@ -168,7 +168,6 @@ function expose (widget)
 					// Is called with the gallery instance as "this" object:
 					onclosed: jQuery.proxy(this.expose_onclosed,this)
 				};
-				var self = this;
 				var $body = jQuery('body');
 				if ($body.find('#blueimp-gallery').length == 0)
 				{
@@ -186,9 +185,12 @@ function expose (widget)
 			{
 				this._super.apply(this,arguments)
 				var self=this;
-				jQuery(this.node).on('click', function(){
-					self._init_blueimp_gallery(_value);
+				if (typeof this.options.expose_view != 'undefined' && this.options.expose_view )
+				{
+					jQuery(this.node).on('click', function(){
+						self._init_blueimp_gallery(_value);
 					});
+				}
 			},
 			
 			_init_blueimp_gallery: function (_value)
