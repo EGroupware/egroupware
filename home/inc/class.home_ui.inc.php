@@ -779,7 +779,8 @@ class home_ui
 				$preferences->add($app, $name, $value, 'default');
 			}
 		}
-		$preferences->save_repository(null, 'default');
+		// assigning saved preferences to egw_info, which is used for this request
+		$GLOBALS['egw_info']['user']['preferences'] = $preferences->save_repository(null, 'default');
 	}
 
 	/**
