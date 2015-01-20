@@ -185,6 +185,11 @@ function expose (widget)
 			{
 				this._super.apply(this,arguments)
 				var self=this;
+				// If the media type is not supported do not bind the click handler
+				if (_value && typeof _value.mime != 'undefined' && !_value.mime.match(/^(video|image|audio|media)\//,'ig'))
+				{
+					return;
+				}
 				if (typeof this.options.expose_view != 'undefined' && this.options.expose_view )
 				{
 					jQuery(this.node).on('click', function(){
