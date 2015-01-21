@@ -41,7 +41,7 @@ install: build
 
 	# customize apache config
 	mkdir -p $(CURDIR)/debian/egroupware-epl-core/etc/egroupware
-	sed 's/\/usr\/share\/pear/\/usr\/share\/php:\/usr\/local\/zend\/share\/pear/' $(CURDIR)/doc/rpm-build/apache.conf > $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
+	cp $(CURDIR)/doc/rpm-build/apache.conf $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
 
 	# install core modules
 
