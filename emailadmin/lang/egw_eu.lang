@@ -1,0 +1,34 @@
+(no subject)	emailadmin	eu	(gai gabe)
+advanced options	emailadmin	eu	Aukera aurreratuak
+alternate email address	emailadmin	eu	Helbide elektroniko alternatiboa
+bad login name or password.	emailadmin	eu	Izen edo pasahitz okerra
+default	emailadmin	eu	Lehenetsia
+email address	emailadmin	eu	Helbide elektronikoa
+encrypted connection	emailadmin	eu	konexioa enkriptatua
+entry saved	emailadmin	eu	Sarrera gordeta
+error saving the entry!!!	emailadmin	eu	Errorea sarrera gordetzerakoan
+event details follow	emailadmin	eu	Gertakariaren detaileak
+imap server	emailadmin	eu	IMAP Zerbitzaria
+imap server closed the connection.	emailadmin	eu	IMAP zerbitzariak konexioa itxi du
+in mbyte	emailadmin	eu	MByte-sen
+leave empty for no quota	emailadmin	eu	zurian utzi kuotarik ez badago
+mail settings	admin	eu	Posta elektronikoaren konfigurazioa
+no alternate email address	emailadmin	eu	ez da ordezko helbide elektronikorik
+no message returned.	emailadmin	eu	Ez da mezurik itzuli
+order	emailadmin	eu	Ordena
+organisation	emailadmin	eu	antolaketa
+port	emailadmin	eu	ataka
+postfix with ldap	emailadmin	eu	Postfix-ak LDAP-arekin
+quota settings	emailadmin	eu	kuotaren konfigurazioa
+quota size in mbyte	emailadmin	eu	kuotaren tamaina MBytes-etan
+remove	emailadmin	eu	ezabatu
+sieve settings	emailadmin	eu	SIEVE ren lehentasunak
+smtp settings	emailadmin	eu	SMTP lehentasunak
+standard	emailadmin	eu	estandar
+standard imap server	emailadmin	eu	IMAP zerbitzari estandarra
+standard pop3 server	emailadmin	eu	POP3 zerbitzari estandarra
+standard smtp-server	emailadmin	eu	SMTP zerbitzari estandarra
+this php has no imap support compiled in!!	emailadmin	eu	PHParendako IMAPa konpilatu gabe
+use default	emailadmin	eu	Lehenetsia erabili
+use smtp auth	emailadmin	eu	SMTP autentifikazioa erabili
+users can define their own emailaccounts	emailadmin	eu	Erabiltzaileek euren posta kontuak defini ditzazkete
