@@ -75,12 +75,18 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			type: "js",
 			default: et2_no_init,
 			description: "Set default onExecute javascript method for action not specifying their own"
-		}, 
+		},
 		resize_ratio: {
 			name: "Resize height of the widget on callback resize",
 			type:"string",
 			default: '',
 			description: "Allow Resize height of the widget based on exess height and given ratio"
+		},
+		data: {
+			name: "comma-separated name:value pairs set as data attributes on DOM node",
+			type: "string",
+			default: '',
+			description: 'data="mime:${row}[mime]" would generate data-mime="..." in DOM, eg. to use it in CSS on a parent'
 		}
 	},
 
@@ -126,7 +132,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			this._actionManager.remove();
 			this._actionManager = null;
 		}
-		
+
 		if (this._surroundingsMgr)
 		{
 			this._surroundingsMgr.free();
@@ -155,7 +161,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 		return true;
 	},
-	
+
 	/**
 	 * Detaches the widget from the DOM tree, if it had been attached to the
 	 * DOM-Tree using the attachToDOM method.
@@ -401,6 +407,20 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		if (node)
 		{
 			$j(node).css("overflow", _value);
+		}
+	},
+
+	set_data: function(_value)
+	{
+		var node = this.getDOMNode(this);
+		if (node && _value)
+		{
+			var pairs = _value.split(/,/g);
+			for(var i=0; i < pairs.length; ++i)
+			{
+				var name_value = pairs[i].split(':');
+				$j(node).attr('data-'+name_value[0], name_value[1]);
+			}
 		}
 	},
 

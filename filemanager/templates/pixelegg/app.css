@@ -100,19 +100,36 @@ table.egwGridView_grid .tile .file_tile {
   display: block;
   max-width: 140px;
 }
-#filemanager-index_nm .file_tile img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
-  height: auto;
-  max-height: 128px;
-}
 .tile .file_tile img.vfsMimeIcon {
   height: auto;
   width: auto;
-  max-height: 64px;
+  max-height: 48px;
   display: block;
   margin: 0 auto;
 }
 .tile .file_tile .et2_label {
   word-wrap: break-word;
+}
+.tile .file_tile {
+  position: relative;
+}
+.tile .file_tile[data-mime^="image"] .et2_label {
+  display: none;
+}
+.tile .file_tile[data-mime^="image"]:hover .et2_label {
+  display: block;
+  position: absolute;
+  top: 10px;
+  color: white;
+  text-shadow: 2px 2px 8px black;
+  width: 100%;
+}
+.tile .file_tile[data-mime^="image"]:hover .et2_label[id*=comment] {
+  top: 30px;
+}
+#filemanager-index_nm .file_tile[data-mime^="image"] img.vfsMimeIcon {
+  height: auto;
+  max-height: 100px;
 }
 /**
  * Select file dialog

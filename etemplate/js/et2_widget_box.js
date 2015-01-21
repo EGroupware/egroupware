@@ -129,6 +129,7 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
+		_attrs.push('data');
 	},
 
 	getDetachedNodes: function()
@@ -138,6 +139,15 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
+		if (_values.data)
+		{
+			var pairs = _values.data.split(/,/g);
+			for(var i=0; i < pairs.length; ++i)
+			{
+				var name_value = pairs[i].split(':');
+				$j(_nodes[0]).attr('data-'+name_value[0], name_value[1]);
+			}
+		}
 	}
 
 });
