@@ -303,6 +303,7 @@ class egw_sharing
 		}
 		// run full eTemplate2 UI for directories
 		$_GET['path'] = $this->share['share_root'];
+		$GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'] = 'tile';
 		$_GET['cd'] = 'no';
 		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
 		egw_framework::includeCSS('/filemanager/templates/default/sharing.css');
