@@ -111,21 +111,40 @@ function read_thumbnail($src)
 	// Get the maxsize of an thumbnail. If thumbnailing is turned off, the value
 	// will be 0
 	$maxsize = get_maxsize();
+	if (isset($_GET['thheight']) && (int)$_GET['thheight'] > 0)
+	{
+		$height = (int)$_GET['thheight'];
+		$maxh = $minh = $height;
+	}
+	elseif (isset($_GET['thwidth']) && (int)$_GET['thwidth'] > 0)
+	{
+		$width = (int)$_GET['thwidth'];
+		$maxw = $minw = $width;
+	}
+	elseif (isset($_GET['thminsize']) && (int)$_GET['thminsize'] > 0)
+	{
+		$minsize = (int)$_GET['thminsize'];
+		$minw = $minh = $minsize;
+	}
+	else
+	{
+		$maxw = $maxh = $maxsize;
+	}
+	//error_log(__METHOD__."() maxsize=$maxsize, width=$width, height=$height, minsize=$minsize --> maxw=$maxw, maxh=$maxh, minw=$minw, minh=$minh");
 
 	// Generate the destination filename and check whether the destination directory
 	// had been successfully created (the cache class used in gen_dstfile does that).
-	$dst = gen_dstfile($src, $maxsize);
+	$dst = gen_dstfile($src, $maxsize, $height, $width, $minsize);
 	$dst_dir = dirname($dst);
 	if(file_exists($dst_dir))
 	{
 		// Check whether the destination file already exists and is newer than
 		// the source file. Assume the file doesn't exist if thumbnailing is turned off.
-		$exists = ($maxsize > 0) && (file_exists($dst) && filemtime($dst) >= filemtime($src));
-
+		$exists = file_exists($dst) && filemtime($dst) >= filemtime($src);
 		// Only generate the thumbnail if the destination file does not match the
 		// conditions mentioned above. Abort if $maxsize is 0.
-		$gen_thumb = ($maxsize > 0) && (!$exists);
-		if ($gen_thumb && ($thumb = gd_image_thumbnail($src, $maxsize, $maxsize)))
+		$gen_thumb = !$exists;
+		if ($gen_thumb && ($thumb = gd_image_thumbnail($src, $maxw, $maxh, $minw, $minh)))
 		{
 			// Save the file to disk...
 			imagepng($thumb, $dst);
@@ -167,13 +186,25 @@ function read_thumbnail($src)
 	return false;
 }
 
-function gen_dstfile($src, $maxsize)
+/**
+ * Get filename for thumbnail used for caching depending on it's size
+ *
+ * Priority is (highest to lowest) if given is: $height, $width, $minsize, $maxsize
+ *
+ * @param string $src
+ * @param int $maxsize
+ * @param int $height =null
+ * @param int $width =null
+ * @param int $minsize =null
+ * @return string
+ */
+function gen_dstfile($src, $maxsize, $height=null, $width=null, $minsize=null)
 {
-	// Use the egroupware file cache to store the thumbnails on a per instance
-	// basis
+	// Use the egroupware file cache to store the thumbnails on a per instance basis
 	$cachefile = new egw_cache_files(array());
+	$size = ($height > 0 ? 'h'.$height : ($width > 0 ? 'w'.$height : ($minsize > 0 ? 'm'.$minsize : $maxsize)));
 	return $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'etemplate',
-		'thumb_'.md5($src.$maxsize).'.png'), true);
+		'thumb_'.md5($src.$size).'.png'), true);
 }
 
 /**
@@ -185,25 +216,27 @@ function gen_dstfile($src, $maxsize)
  * @param int $h original height of the image
  * @param int $maxw maximum width of the image
  * @param int $maxh maximum height of the image
+ * @param int $minw the minimum width of the thumbnail
+ * @param int $minh the minimum height of the thumbnail
  * @returns an array with two elements, w, h or "false" if the original dimensions
  *   of the image are that "odd", that one of the output sizes is smaller than one pixel.
  *
  * TODO: As this is a general purpose function, it might probably be moved
  *   to some other php file or an "image utils" class.
  */
-function get_scaled_image_size($w, $h, $maxw, $maxh)
+function get_scaled_image_size($w, $h, $maxw, $maxh, $minw, $minh)
 {
 	//Scale will contain the factor by which the image has to be scaled down
 	$scale = 1.0;
 
 	//Select the constraining dimension
-	if ($w > $h) //The constraining factor will be $maxw
+	if ($w > $h) // landscape image: constraining factor $minh or $maxw
 	{
-		$scale = $maxw / $w;
+		$scale = $minh ? $minh / $h : $maxw / $w;
 	}
-	else //The constraning factor will be $maxh
+	else // portrail image: constraining factor $minw or $maxh
 	{
-		$scale = $maxh / $h;
+		$scale = $minw ? $minw / $w : $maxh / $h;
 	}
 
 	// Don't scale images up
@@ -212,8 +245,9 @@ function get_scaled_image_size($w, $h, $maxw, $maxh)
 		$scale = 1.0;
 	}
 
-	$wout = $w * $scale;
-	$hout = $h * $scale;
+	$wout = round($w * $scale);
+	$hout = round($h * $scale);
+	//error_log(__METHOD__."(w=$w, h=$h, maxw=$maxw, maxh=$maxh, minw=$minw, minh=$minh) --> wout=$wout, hout=$hout");
 
 	//Return the calculated values
 	if ($wout < 1 || $hout < 1)
@@ -222,7 +256,7 @@ function get_scaled_image_size($w, $h, $maxw, $maxh)
 	}
 	else
 	{
-		return array(round($wout), round($hout));
+		return array($wout, $hout);
 	}
 }
 
@@ -371,10 +405,12 @@ function gd_create_transparent_image($w, $h)
  * @param string $file the filename of the file
  * @param int $maxw the maximum width of the thumbnail
  * @param int $maxh the maximum height of the thumbnail
+ * @param int $minw the minimum width of the thumbnail
+ * @param int $minh the minimum height of the thumbnail
  * @return the gd_image or false if one of the steps taken to produce the thumbnail
  *   failed.
  */
-function gd_image_thumbnail($file, $maxw, $maxh)
+function gd_image_thumbnail($file, $maxw, $maxh, $minw, $minh)
 {
 	//Load the image
 	if (($img_src = gd_image_load($file)) !== false)
@@ -384,7 +420,7 @@ function gd_image_thumbnail($file, $maxw, $maxh)
 		$h = imagesy($img_src);
 
 		//Calculate the actual size of the thumbnail
-		$scaled = get_scaled_image_size($w, $h, $maxw, $maxh);
+		$scaled = get_scaled_image_size($w, $h, $maxw, $maxh, $minw, $minh);
 		if ($scaled !== false)
 		{
 			list($sw, $sh) = $scaled;
