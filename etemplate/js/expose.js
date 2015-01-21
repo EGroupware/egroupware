@@ -296,13 +296,13 @@ function expose (widget)
 				}
 				if (typeof this.options.expose_view != 'undefined' && this.options.expose_view )
 				{
-					jQuery(this.node).on('click', function(){
-						self._init_blueimp_gallery(_value);
+					jQuery(this.node).on('click', function(event){
+						self._init_blueimp_gallery(event, _value);
 					}).addClass('et2_clickable');
 				}
 			},
 
-			_init_blueimp_gallery: function (_value)
+			_init_blueimp_gallery: function (event, _value)
 			{
 				var mediaContent = [];
 				var nm = find_nextmatch(this);
@@ -310,7 +310,7 @@ function expose (widget)
 				if(nm)
 				{
 					// Get the row that was clicked, find its index in the list
-					var current_entry = nm.controller.getRowByNode(window.event.srcElement);
+					var current_entry = nm.controller.getRowByNode(event.target);
 					current_index = current_entry.idx || 0;
 
 					// But before it goes, we'll pull everything we can
