@@ -1,3 +1,12 @@
+egroupware-epl (14.1.20150121-1) hardy; urgency=low
+
+  * Backup: fixed broken backup of tables without an auto index
+  * WebDAV: fixed not working range requests causing eg. direct playing of video files to fail
+  * Calendar/CalDAV/eSync: fixed not synced events constructed from exceptions
+  * All application: Fix unintentional dragging happens while user tries to do scrolling over a draggable item in FF(e.g. scrolling over an scrollable infolog entry)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 21 Jan 2015 21:49:40 +0100
+
 egroupware-epl (14.1.20150113-1) hardy; urgency=low
 
   * Mail: fix for Horde_Imap_Client-2.26.0 requiring Horde_Mail-2.5.1 requring Horde_Idna-1.0.1 which stalls our autoloader by calling spl_autoload_register
