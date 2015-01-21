@@ -456,13 +456,17 @@ type	addressbook	fr	Type
 un-delete	addressbook	fr	Dé-supprimer
 unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	fr	Impossible de convertir "%1" vers un compte.  Utilisation du paramètre de plugin (%2) pour le propriétaire.
 unable to delete	addressbook	fr	impossible de supprimer
+unable to import into %1, using %2	addressbook	fr	Impossible d'importer dans %1, utilisation de %2
 unique id (uid)	addressbook	fr	ID unique (UID)
 unique id<br />(to update existing records)	addressbook	fr	ID Unique<br />pour mettre à jour des enregistrements existants
+unknown type %1, imported as %2	addressbook	fr	Type %1 inconnu, importé comme %2
 update a single entry by passing the fields.	addressbook	fr	Mettre à jour une seule entrée en passant les champs.
+update fields by edited organisations?	admin	fr	Champs à mettre à jour pour les organisations modifiées
 updated	addressbook	fr	Mis à jour
 upload or delete the photo	addressbook	fr	Envoyez ou supprimez la photo
 url (business)	addressbook	fr	url (pro)
 url (private)	addressbook	fr	url (privé)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	fr	URL pour le lien téléphone. %1 = numéro à 'appeler, %u = nom du compte, %t = téléphone du compte.
 use addressbooks "own sorting" attribute	addressbook	fr	Utiliser l'attribut "tri perso" (own sorting) du carnet d'adresses
 use an extra category tab?	addressbook	fr	Utiliser un onglet supplémentaire pour la catégorie?
 use an extra tab for private custom fields?	admin	fr	Utiliser un onglet supplémentaire pour les champs privés extra

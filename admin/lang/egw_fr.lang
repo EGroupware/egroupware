@@ -123,8 +123,8 @@ back to the list	admin	fr	Retour à la liste
 backup directory %1 mounted as %2	admin	fr	Répertoire de backup %1 monté comme %2
 bi-dir passthrough	admin	fr	passage bidirectionnel
 bi-directional	admin	fr	bidirectionnel
-bottom	admin	fr	bas
-bulk password reset	admin	fr	Réinitailisation en série des mots de passe
+bottom	admin	fr	Bas
+bulk password reset	admin	fr	Reset des mots de passe
 calculate next run	admin	fr	Calculer la prochaine exécution
 calendar recurrence horizont in days (default 1000)	admin	fr	Horizon de la récurrence des calendrier en jours. Défaut = 1000.
 can change password	admin	fr	Peut modifier son mot de passe
@@ -332,6 +332,8 @@ go directly to admin menu, returning here the next time you click on administrat
 governmental: incl. state or municipal authorities or services	admin	fr	Gouvernemental: incluant les autorités et services d'état ou de municipalité
 grant	admin	fr	Accorder
 group #%1 must have negative sign!	admin	fr	Le groupe #%1 doit avoir un signe négatif !
+group %1 %2	admin	fr	Groupe %1 %2
+group '%1' deleted.	admin	fr	Group '%1' supprimé.
 group ?	admin	fr	Groupe ?
 group csv export	admin	fr	Export de groupe en CSV
 group csv import	admin	fr	Import de groupe en CSV
@@ -501,6 +503,7 @@ please enter a name	admin	fr	Entrez un nom
 please enter a name for that server !	admin	fr	Entrez un nom pour ce serveur !
 please run setup to become current	admin	fr	Exécutez le setup pour mettre à jour
 please select	admin	fr	SVP choisissez
+please submit (or postpone) statistic first	admin	fr	Veuillez d'abord soumettre (ou reporter) vos statistiques
 postfix with ldap	admin	fr	Postfix avec support LDAP
 postpone for	admin	fr	Reporter à
 preferences	admin	fr	Préférences

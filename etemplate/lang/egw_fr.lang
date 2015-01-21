@@ -7,6 +7,7 @@
 %1 more...	etemplate	fr	%1 plus...
 %1 new etemplates imported for application '%2'	etemplate	fr	%1 eTemplate(s) importé(s) pour l'Application '%2'
 %1 not implemented for %2!	etemplate	fr	%1 pas implémenté pour %2 !
+%1, duplicate id	etemplate	fr	%1, ID en doublon
 %s disabled	etemplate	fr	%s désactivé
 %s needed	etemplate	fr	%s nécessaire
 %s notranslation	etemplate	fr	%s PasDeTraduction
@@ -19,7 +20,10 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	fr	'%1' n'est pas un nombre à virgule flottante valide !
 '%1' is not a valid integer !!!	etemplate	fr	'%1' n'est pas un entier valide !
 '%1' is not allowed ('%2')!	etemplate	fr	'%1' n'est PAS permis ('%2') !
+'%1' is not allowed%2)!	etemplate	fr	'%1' n'est PAS permis '%2' !
 1 minute	etemplate	fr	1 minute
+15 minutes	etemplate	fr	15 Minutes
+30 minutes	etemplate	fr	30 Minutes
 30 seconds	etemplate	fr	30 secondes
 5 minutes	etemplate	fr	5 minutes
 a pattern to be searched for	etemplate	fr	Chaine de caractères à rechercher
@@ -56,6 +60,7 @@ applies the changes to the given version of the template	etemplate	fr	Applique l
 as default	etemplate	fr	comme par défaut
 attach	etemplate	fr	Joindre
 attach file	etemplate	fr	Joindre un fichier
+automatically refresh list	etemplate	fr	Rafraîchir la liste automatiquement
 baseline	etemplate	fr	Baseline
 blurtext	etemplate	fr	texteFlou
 border	etemplate	fr	Bord
@@ -100,8 +105,10 @@ contact	etemplate	fr	Contact
 contact field to show	etemplate	fr	Champ contact à afficher
 contact fields	etemplate	fr	Champs contact
 contains	etemplate	fr	Contient
+copy "%1"	etemplate	fr	Copier "%1"
 copy to clipboard	etemplate	fr	Copier vers le presse-papier
 create a new table for the application	etemplate	fr	Créer une nouvelle table pour l'application
+create link	etemplate	fr	Créer le lien
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fr	Crée un fichier lang anglais ('en') à partir du label et des textes d'aide (pour l'application dans Nom)
 creator	preferences	fr	Créateur
 css class for the table-tag	etemplate	fr	Classe CSS pour le tag de la table
@@ -113,6 +120,7 @@ custom	etemplate	fr	Personnalisé
 custom fields	etemplate	fr	Champs personnalisés
 custom javascript for onchange	etemplate	fr	Javascript personnalisé pour onChange
 cut	etemplate	fr	Couper
+data type	etemplate	fr	Type de donnée
 date	etemplate	fr	Date
 date+time	etemplate	fr	Date+Heure
 day	etemplate	fr	Jour
@@ -127,6 +135,8 @@ delete all selected etemplates, without further inquiry	etemplate	fr	Supprimer T
 delete and cut save the template!	etemplate	fr	Supprimer et couper enregistre le modèle !
 delete column	etemplate	fr	Effacer la colonne
 delete index	etemplate	fr	Effacer l'index
+delete link	etemplate	fr	Supprimer le lien
+delete link?	etemplate	fr	Supprimer le lien ?
 delete the spezified etemplate	etemplate	fr	Supprimer l'eTemplate spécifié
 delete this column	etemplate	fr	Supprimer cette colonne
 delete this etemplate	etemplate	fr	Effacer cet eTemplate
@@ -176,6 +186,7 @@ error: template not found !!!	etemplate	fr	Erreur : Template non trouvé !
 error: webserver is not allowed to write into '%1' !!!	etemplate	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !!!
 error: while saving !!!	etemplate	fr	Erreur lors de l'enregistrement !
 error: writing file (no write-permission for the webserver) !!!	etemplate	fr	Erreur sur l'écriture du fichier (pas d'autorisation pour le serveur Web) !
+et2 rendering took %1s	etemplate	fr	Le rendu eT2 a pris %1s
 etemplate	common	fr	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	fr	eTemplate '%1' importé, utilisez Enregistrer pour le mettre dans la base de données
 etemplate '%1' written to '%2'	etemplate	fr	eTemplate '%1' écrit dans '%2'
@@ -192,7 +203,9 @@ field must not be empty !!!	etemplate	fr	Le champ ne doit pas être vide !
 file	etemplate	fr	Fichier
 file '%1' not found!	etemplate	fr	Fichier  '%1'  non trouvé !
 file contains more than one etemplate, last one is shown !!!	etemplate	fr	Le fichier contient plus d'un eTemplate, le dernier est affiché !!!
+file information	etemplate	fr	Informations du fichier
 file is of wrong type (%1 != %2)!	etemplate	fr	Le fichier est de mauvais type (%1 != %2) !
+file too large.  maximum %1	etemplate	fr	Le fichier est trop volumineux. Maximum %1
 file writen	etemplate	fr	Fichier écrit
 fileupload	etemplate	fr	UploadFichier
 first	etemplate	fr	Premier
@@ -262,6 +275,7 @@ length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	fr	Lo
 link	etemplate	fr	Lien
 link target %1 not found!	etemplate	fr	Cible de lien %1 non trouvé
 linkapps	etemplate	fr	LinkApps
+linked	etemplate	fr	Ligé
 linkentry	etemplate	fr	LinkEntry
 linklist	etemplate	fr	Liste de liens
 links and attached files	preferences	fr	Liens et fichiers attachés
@@ -271,7 +285,9 @@ linkto	etemplate	fr	LierVers
 list of files linked to the current record	preferences	fr	Listes des fichiers liés à l'enregistrement courant
 load this template into the editor	etemplate	fr	Charger ce template dans l'éditeur
 loading	etemplate	fr	chargement
+m	etemplate	fr	m
 maximum size for uploads	filemanager	fr	Taille maximale d'un upload
+maybe	etemplate	fr	Peut-être
 message ...	etemplate	fr	Message...
 message prepared for sending.	etemplate	fr	Message prêt pour l'envoi.
 message(s) send failed!	etemplate	fr	Envoi de message(s) en échec !
@@ -304,13 +320,15 @@ nextmatch filterheader	etemplate	fr	Prochaine occurence Entête de Filtre
 nextmatch header	etemplate	fr	Prochaine occurence Entête
 nextmatch sortheader	etemplate	fr	Prochaine occurence Entête de tri
 no column to swap with !!!	etemplate	fr	aucune colonne à intervertir !
+no default set	etemplate	fr	Aucun défaut défini
 no file	etemplate	fr	Pas de fichier
 no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec le navigateur...
 no filters	etemplate	fr	Pas de filtre
 no matches found	etemplate	fr	Aucune occurrence trouvée
 no rights to export more than %1 entries!	common	fr	Pas de droits pour exporter plus que %1 éléments !
 no row to swap with !!!	etemplate	fr	Aucune ligne à échanger !
-not null	etemplate	fr	PAS NULL
+no suggestions	etemplate	fr	Pas de suggestio
+not null	etemplate	fr	NOT NULL
 nothing	etemplate	fr	rien
 nothing found - try again !!!	etemplate	fr	Rien trouvé - essayez encore !
 nothing in clipboard to paste !!!	etemplate	fr	Rien à coller !
@@ -342,6 +360,7 @@ precision	etemplate	fr	Précision
 preference	etemplate	fr	Préférence
 primary key	etemplate	fr	Clé primaire
 primary key for the table, gets automaticaly indexed	etemplate	fr	Clé primaire pour la table, est automatiquement indexée
+protocol is required	etemplate	fr	Le protocole est requis
 radiobutton	etemplate	fr	BoutonRadio
 read	etemplate	fr	Lire
 read a list of entries.	etemplate	fr	Lire une liste d'entrées.
@@ -362,6 +381,7 @@ row...	etemplate	fr	Ligne...
 sa	etemplate	fr	Sa
 save all	etemplate	fr	Tout enregistrer
 save as	etemplate	fr	Enregistrer comme
+save as zip	etemplate	fr	Sauvegarder en zip
 save selected columns as default preference for all users.	etemplate	fr	Enregistrer les colonnes sélectionnées comme préférence par défaut pour tous les utilisateurs.
 save the changes made and close the window	etemplate	fr	Enregistrer les modifications et fermer la fenêtre
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fr	Enregistrer l'eTemplate sous les clés ci-dessus (nom, ...), changez-les pour un Sauvegarder-sous
@@ -385,11 +405,14 @@ select an table of the application	etemplate	fr	Choisissez une table pour l'appl
 select application	etemplate	fr	Choisissez une application
 select application to search	etemplate	fr	Sélectionnez une application à chercher
 select category	etemplate	fr	Choisissez une catégorie
+select color	etemplate	fr	Choisir une couleur
 select columns	etemplate	fr	Sélectionnez les colonnes
 select country	etemplate	fr	Choisissez un pays
 select day	etemplate	fr	Choisissez un jour
 select day of week	etemplate	fr	sélectionnez le jour de la semaine
 select entry	etemplate	fr	Sélectionnez l'entrée
+select file(s) from vfs	etemplate	fr	Sélectionner des fichiers du VFS
+select files from filemanager ...	etemplate	fr	Sélectionner dans le gestionnaire de fichiers...
 select hour	etemplate	fr	Sélectionnez l'heure
 select if content of field should not be translated (label gets always translated)	etemplate	fr	choisissez si le contenu du champ ne devrait pas être traduit (le label est toujours traduit)
 select language	etemplate	fr	Sélectionnez la langue
@@ -407,6 +430,7 @@ select which accounts to show	etemplate	fr	sélectionnez quels comptes à affich
 select which values to show	etemplate	fr	sélectionnez les valeurs à afficher
 select year	etemplate	fr	Choisissez l'année
 selectbox	etemplate	fr	Boîte de sélection
+server error	etemplate	fr	Erreur du serveur
 set as default	etemplate	fr	Définir par défaut
 set these columns as the default	etemplate	fr	Définir ces colonnes par défaut
 sets today as date	etemplate	fr	Fixe la date à aujourd'hui
@@ -427,6 +451,7 @@ start new search for the above pattern	etemplate	fr	Démarre une nouvelle recher
 su	etemplate	fr	Di
 submit form	etemplate	fr	soumettre le formulaire
 submitbutton	etemplate	fr	BoutonSoumettre
+sure	etemplate	fr	Sûr
 swap	etemplate	fr	rocade
 swap widget with next one	etemplate	fr	faire une rocade du widget avec le suivant
 swap with next column	etemplate	fr	faire une rocade avec la colonne suivante
@@ -464,6 +489,7 @@ unlink	etemplate	fr	Délier
 update a single entry by passing the fields.	etemplate	fr	Mettre à jour une entrée unique  en passant les champs.
 update from version '%s' to	etemplate	fr	Mettre à jour depuis la Version '%s' vers
 upload	etemplate	fr	Uploader
+upload file(s) from filemanager...	etemplate	fr	Uploader des fichiers depuis le gestionnaire de fichiers
 user	etemplate	fr	Utilisateur
 valign	etemplate	fr	vAlign
 value	etemplate	fr	Valeur
@@ -494,6 +520,7 @@ xml-file to import	etemplate	fr	Fichier XML à importer
 xslt template	etemplate	fr	Template XSLT
 year	etemplate	fr	Année
 you are not allowed to export more than %1 entries!	common	fr	Vous n'êtes pas autorisé à exporter plus que %1 éléments !
+you can not choose more then %1 item(s)!	etemplate	fr	Vous ne pouvez séléctionner plus que %1 élément(s) !
 you can respond by visiting:	etemplate	fr	Pour le voir, visitez:
 you need to select a file first!	etemplate	fr	Sélectionner d'abord un fichier !
 your code is incorrect !!!	etemplate	fr	Ce code est incorrect !
