@@ -337,7 +337,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				title: _value.name,
 				href: base_url + _value.download_url,
 				type: _value.mime,
-				thumbnail: _value.path && _value.mime ? egw(window).window.location.origin + this.egw().mime_icon(_value['mime'], _value['path']) : this.image.attr('src')
+				thumbnail: _value.path && _value.mime ? this.egw().mime_icon(_value['mime'], _value['path']) : this.image.attr('src')
 			}];
 		}
 		return mediaContent;
