@@ -1,21 +1,26 @@
 %1 attachments	mail	fr	%1 pièces jointes
 %1 is not writable by you!	mail	fr	%1 n'est pas accessible en écriture !
 %1 mails selected	mail	fr	% mails sélectionnés
+(leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet
 (not connected)	mail	fr	(non connecté)
 (select mails by clicking on the line, like a checkbox)	mail	fr	(sélectionner des emails en cliquant sur la ligne, comme pour une case à cocher)
 (with checkbox enforced)	mail	fr	avec les cases à cocher forcées
 account editable by user	mail	fr	compte modifiable par l'utilisateur
+acl rights retrived successfully	mail	fr	Droits ACL récupérés avec succès
+acl rights retrived successfully!	mail	fr	Droits ACL récupérés avec succès
 action	mail	fr	Action
 activating by date requires a start- and end-date!	mail	fr	Activation par date nécessite une date de début ET de fin !
 add a new folder to %1:	mail	fr	Ajouter un nouveau dossier à %1:
 add all my aliases	mail	fr	Ajouter tous mes alias
 add folder	mail	fr	Ajouter un dossier
 add to addressbook	mail	fr	Ajouter au carnet d'adresses
+aliases+forwards	mail	fr	Alias + Transferts
 all	mail	fr	tout
 all adresses:	mail	fr	toutes les adresses
 all available info	admin	fr	Toutes les informations disponibles
 all messages in the folder will be lost	mail	fr	Tous les messages du dossier seront perdus
+all my email addresses	mail	fr	toutes mes adresses email
 all of	mail	fr	tous de
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	fr	Tous les sous-dossiers seront aussi détruits et tous les messages affectés à ces dossiers seront perdus
 allow external images	mail	fr	Autoriser les images externes
@@ -35,6 +40,10 @@ available personal email-accounts/profiles	mail	fr	Profils et comptes emails per
 but check shared folders	mail	fr	sauf les dossiers partagés sélectionnés
 by date	mail	fr	Par date
 changed profile	mail	fr	Profil changé
+check message against next rule also	mail	fr	vérifiez le message avec la prochaine règle également
+check to save as infolog on send	mail	fr	cocher pour sauvegarder comme Infolog après l'envoi
+choose file	mail	fr	Sélectionner un fichier
+common acl	mail	fr	ACL communs
 compose	mail	fr	Composer
 compose as new	mail	fr	Composer comme nouveau
 compress folder	mail	fr	Compresser le dossier
@@ -42,14 +51,17 @@ condition	mail	fr	Condition
 configuration settings	mail	fr	Paramètres de configuration
 confirm attach message	mail	fr	Confirmer l'attachement au message
 confirm move to folder	mail	fr	Confirmer le déplacement vers un dossier
+connect to profile %1	mail	fr	Connexion au profil %1
 connection status	mail	fr	Statut de la connexion
 contains	mail	fr	contient
 contains(*)	mail	fr	Contient(*)
 convert mail to item and attach its attachments to this item (standard)	mail	fr	Convertir le message en item et y attacher ses pièces jointes
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	fr	Convertir le mesasge en item, attacher ses pièces jointes et ajouter le message brut (message/rfc822 (.eml)) en tant que pièce jointe
 create new account	mail	fr	Créer un nouveau compte
+currently:	mail	fr	Actuellement :
 date(newest first)	mail	fr	Date (plus récente d'abord)
 date(oldest first)	mail	fr	Date (plus ancienne d'abord)
+deactive	mail	fr	Désactiver
 default sorting order	mail	fr	Ordre de tri par défaut
 default your name and email	common	fr	Votre nom et email par défaut
 delete folder	mail	fr	Supprimer le dossier
@@ -57,6 +69,8 @@ delete folder %1 ?	mail	fr	Supprimer le dossier %1
 deleted	mail	fr	supprimé
 deleted %1 messages in %2	mail	fr	Supprimer %1 messages dans %2
 deleted!	mail	fr	supprimé !
+deny certain groups access to following features	mail	fr	Refuser à certains groupes l'accès aux fonctions suivantes
+directories have to be shared.	mail	fr	Les dossiers doivent être partagés.
 disable	mail	fr	Désactiver
 disabled!	mail	fr	désactivé
 discard	mail	fr	annuler
@@ -68,6 +82,7 @@ display only when no plain text is available	mail	fr	Afficher seulement quand le
 displaying html messages is disabled	mail	fr	L'affichage des messages html est désactivé.
 displaying plain messages is disabled	mail	fr	L'affichage des texte brut est désactivé.
 do not auto create folders	mail	fr	Ne pas créer autoamtiquement les dossiers.
+do not forward	mail	fr	Ne pas transférer
 do you really want to apply %1 to all messages in the current view?	mail	fr	Voulez-vous vraiment appliquer %1 à TOUS les messages de la vue courante ?
 do you really want to delete folder %1 ?	mail	fr	Voulez-vous vraiment supprimer le dossier %1 ?
 do you really want to mark all messages as read in the current folder?	mail	fr	Voulez-vous vraiment marquer TOUS les messages de ce dossier comme "lus" ?
@@ -85,6 +100,7 @@ don't use draft folder	mail	fr	Ne pas utiliser un dossier brouillon
 don't use sent	mail	fr	Ne pas utiliser Eléments envoyés
 don't use template folder	mail	fr	Ne pas utiliser le dossier des modèles
 don't use trash	mail	fr	Ne pas utiliser la Corbeille
+download attachments	mail	fr	Télécharger les pièces jointes
 draft folder	mail	fr	dossier brouillon
 drafts	mail	fr	Projets
 drafts folder	mail	fr	Dossier brouillons
@@ -102,6 +118,8 @@ enable	mail	fr	Autoriser
 enabled!	mail	fr	autorisé
 enter the name for the new folder:	mail	fr	Entrer le nom du nouveau dossier
 error saving %1!	mail	fr	Erreur durant l'enregistrement de %1 !
+error while setting acl for folder %1!	mail	fr	Erreur au paramétrage des ACL du dossier du dossier %1 !
+error while setting folder	mail	fr	Erreur au paramétrage du dossier
 error:	mail	fr	Erreur :
 error: could not save acl	mail	fr	Erreur : impossible d'enregistrer ACL
 error: could not save message as draft	mail	fr	Erreur : impossible d'enregistrer le message comme brouillon.
@@ -111,6 +129,7 @@ error: message could not be displayed.	mail	fr	ERREUR: Impossible d'afficher le 
 event details follow	mail	fr	Les détails de l'événement suivent
 every:	mail	fr	Tout :
 everyone	mail	fr	Tout le monde
+extra sent folders	mail	fr	Dossiers supplémentaires pour les messages envoyés
 failed to delete %1 ! reason: %2	mail	fr	Impossible de supprimer %1! Motif : %2
 failed to move %1 ! reason: %2	mail	fr	Impossible de déplacer %1! Motif : 2%
 failed to rename %1 ! reason: %2	mail	fr	Impossible de renommer %1! Motif : 2%
@@ -126,6 +145,8 @@ flagged	mail	fr	Marqué
 flagged / unflagged	mail	fr	Marqué / Non marqué
 folder	mail	fr	Dossier
 folder settings	mail	fr	Paramètres du dossier
+for e.g.: mpeg	mail	fr	par exemple : mpeg
+for eg.: mpeg	mail	fr	par ex. : mpeg
 force html	mail	fr	Forcer le HTML
 force plain text	mail	fr	Forcer le texte brut
 forward	mail	fr	Transférer
@@ -156,6 +177,9 @@ identity+signature	mail	fr	identité + signature
 if	mail	fr	SI
 if authentication required	mail	fr	Si identification requise
 if different from email address	mail	fr	Si différent de l'adresse mail
+if from contains:(*)	mail	fr	Si "de" contient : (*)
+if mail body content / attachment type	mail	fr	Si le type de corps de message ou de pièce jointe
+if mail body message type	mail	fr	Si le type de corps de message
 if mail header	mail	fr	si l'en-tête du mail
 if message size	mail	fr	si la taille du message
 if subject contains:(*)	mail	fr	Si le sujet contient : (*)
@@ -182,6 +206,7 @@ mail settings	mail	fr	Réglages email
 mail-address	mail	fr	Adresse email
 mailaccount	mail	fr	Compte mail
 mailinglist	mail	fr	liste de diffusion
+mails	common	fr	Emails
 mark all as read	mail	fr	Marquer tout comme lu
 mark as deleted	mail	fr	Marquer comme effacé
 matches	mail	fr	correspond
@@ -223,15 +248,27 @@ organisation	admin	fr	organisation
 organization	mail	fr	Entreprise
 original message	mail	fr	message d'origine
 outbox	mail	fr	Boîte d'envoi
+password protect	mail	fr	protection par mot de passe
+permission denied	mail	fr	Permission refusée
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
 please select a address	mail	fr	Sélectionner une adresse
 please select the number of days to wait between responses	mail	fr	Sélectionner le nombre de jours pour attendre entre les réponses
 please supply the message to send with auto-responses	mail	fr	Ecriver le message pour envoyer en réponse automatique
+prevent managing filters	mail	fr	Empêcher la gestion des filtres
+prevent managing folders	mail	fr	Empêcher la gestion des dossiers
+prevent managing notifications	mail	fr	Empêcher la gestion des notifications
+prevent managing vacation notice	mail	fr	Empêcher la gestion des messages d'absence
+primary profile	mail	fr	Profil primaire
 printview	mail	fr	aperçu avant impression
 quicksearch	mail	fr	Recherche Rapide
+quota not provided by server	mail	fr	Quota non indiqué par le serveur
+quota: %1	mail	fr	Quota : %1
 read	mail	fr	Lu
 read / unread	mail	fr	Lu / Non lu
+readable	mail	fr	lisible
 reason!	mail	fr	motif !
+recieve notification	mail	fr	Recevoir une notification
+recursively	mail	fr	Récursivement
 refresh time in minutes	mail	fr	Temps de rafraîchissement en minutes
 refused to delete folder inbox	mail	fr	Impossible de supprimer le dossier "boîte de réception"
 refused to delete folder with subfolders	mail	fr	Impossible de supprimer le dossier et ses sous-dossiers
@@ -244,24 +281,37 @@ rename folder %1 to:	mail	fr	Renommer le dossier %1 en :
 replied	mail	fr	Répondu
 reply	mail	fr	Répondre
 reply all	mail	fr	Répondre à tous
+reply message type	mail	fr	Type de réponse
 reply to	mail	fr	Répondre à
 replyto	mail	fr	Répondre A
+required pear class mail/mimedecode.php not found.	mail	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
+resend after how many days?	mail	fr	Ré-envoyer après combien de jours ?
+respond to mail sent to:	mail	fr	Répondre à l'email envoyé à :
 row order style	mail	fr	style d'ordonnancement de ligne
+rule priority position	mail	fr	position des règles
+rule with priority	mail	fr	règle avec la priorité
 rules	mail	fr	règles
 save all	mail	fr	Enregistrer tout
 save as	mail	fr	Enregistrer comme
+save as default	mail	fr	enregistrer par défaut
 save as draft	mail	fr	Enregistrer comme brouillon
 save as draft and print	mail	fr	Enregistrer comme brouillon et imprimer
 save as infolog	mail	fr	Enregistrer comme Infolog
+save as infolog on send	mail	fr	Enregistrer comme Infolog après l'envoi
 save as ticket	mail	fr	Enregistrer comme ticket
+save as tracker on send	mail	fr	Enregistrer comme traqueur après l'envoi
+save into vfs	mail	fr	Enregistrer dans le VFS
 save message to disk	mail	fr	Enregistrer message sur le disque
 save message to filemanager	mail	fr	Enregistrer le message dans le gestionnaire de fichier
 save to disk	mail	fr	Enregistrer sur le disque
 save to filemanager	mail	fr	Enregistrer dans le gestionnaire de fichier
+save to vfs	mail	fr	Enregistrer dans le VFS
 save:	mail	fr	Enregistrer :
 select all	mail	fr	Tout sélectionner
 select file to attach to message	mail	fr	Sélectionner le fichier à joindre au message
 select file to import into folder	mail	fr	Sélectionner le fichier à importer dans le dossier
+select file(s) from vfs	mail	fr	Sélectionner des fichiers du VFS
+select files to upload	mail	fr	Sélectionner des fichiers à envoyer
 selected	mail	fr	sélectionné
 send message and move to send folder (if configured)	mail	fr	Envoyer le message et le déplacer vers le dossier des messages envoyés
 sender	mail	fr	Emetteur

@@ -196,11 +196,13 @@ error: saving the event !!!	calendar	fr	Erreur à 'enregistrement de l'événeme
 error: starttime has to be before the endtime !!!	calendar	fr	Erreur : le début doit être antérieur à la fin !!!
 error: the entry has been updated since you opened it for editing!	calendar	fr	Erreur: cette entrée a été mise à jour depuis que vous l'avez ouverte pour la modifier !
 error: you can't shift a series from the past!	calendar	fr	Erreur : vous ne pouvez pas déplacer une série du passé !
+event	common	fr	Evénement
 event copied - the copy can now be edited	calendar	fr	Evénement copié - la copie peut maintenant être modifiée.
 event deleted	calendar	fr	Evénement supprimé.
 event details follow	calendar	fr	Les détails de l'événement suivent
 event saved	calendar	fr	Evénement enregistré.
 event will occupy the whole day	calendar	fr	L'événement occupera la journée entière
+events	common	fr	Evénements
 every user can invite other users and groups	admin	fr	Tous les utilisateur peuvent inviter d'autres utilisateurs ou groupes
 exception	calendar	fr	Exception
 exception created - you can now edit or delete it	calendar	fr	Exception créée - vous pouvez maintenant la modifier ou la supprimer.
@@ -373,6 +375,7 @@ one week	calendar	fr	une semaine
 one year	calendar	fr	un an
 only group-events	calendar	fr	Uniquement les evts de groupe
 only the initial date of that recuring event is checked!	calendar	fr	Seule la première date de cet événement récurrent est vérifiée
+only used for first viewing of calendar, afterwards last selected view is used.	calendar	fr	Utiliser seulement au premier affichage du calendrier, après cela, la dernière vue est utilisée.
 open todo's:	calendar	fr	Tâches ouvertes
 optional	calendar	fr	Optionnel
 overlap holiday	calendar	fr	Jour fériés chevauchant
@@ -430,11 +433,11 @@ role	calendar	fr	Rôle
 rule	calendar	fr	Règle
 sat	calendar	fr	Sa
 save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	fr	Sauvegarder l'événement comme une exception - supprimer l'occurrence orpheline - Changer les status ou les alarmes sur ce jour en particulier.
-saves the changes made	calendar	fr	Enregistre les modifications
+saves the changes made	calendar	fr	Enregistre les modifications.
 saves the event ignoring the conflict	calendar	fr	Enregistre l'événement en ignorant le conflit
 scheduling conflict	calendar	fr	Conflit de planification
 search string for the events	calendar	fr	Chaîne de recherche sur les événements
-select a %1	calendar	fr	sélectionnez un %1
+select a %1	calendar	fr	Sélectionnez un %1
 select a color for this calendar	calendar	fr	Sélectionner une couleur pour le calendrier
 select a time	calendar	fr	Sélectionnez une heure
 select an action	calendar	fr	Sélectionner une action
@@ -504,9 +507,9 @@ the resource you selected is already overbooked:	calendar	fr	La ressource sélec
 this day is shown as first day in the week or month view.	calendar	fr	Ce jour est affiché comme le premier jour de la vue hebdomadaire ou mensuelle.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	fr	Ceci définit la fin de votre vue journalière. Les événements après cette heure sont montrés dans la vue journalière.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	fr	Ceci définit le début de votre vue journalière. Les événements avant cette heure sont affichés au-dessus de la vue journalière.<br>Cette heure est aussi utilisée comme l'heure de début par défaut pour les nouveaux événements.
-this entry is currently opened by %1!	calendar	fr	Cet élément est actuellement ouvert par %1!
+this entry is currently opened by %1!	calendar	fr	Cet élément est actuellement ouvert par %1 !
 this entry is opened by user:	calendar	fr	Cet élément a été ouvert dans l'interface de temps défini par l'utilisateur :
-this event is part of a series	calendar	fr	Cet événements fait partie d'une série
+this event is part of a series	calendar	fr	Cet événement fait partie d'une série
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fr	Ce groupe qui est présélectionné quand vous entrez dans le planificateur. Vous pouvez le modifier dans le planning chaque fois que vous le désirez.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	fr	Ceci est un événement récurrent. Souhaitez-vous supprimer juste cette occurrence ou bien toute la série ?
 this mail contains a meeting request	calendar	fr	Cet email contient une demande de rendez-vous
