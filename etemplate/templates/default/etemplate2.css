@@ -1760,12 +1760,13 @@ span.et2_egw_action_ddHelper_itemsCnt {
 	left: 0px;
 	right: auto;
 	white-space: nowrap;
+	bottom:0;
 }
 /*Carousel thumbnails*/
 .blueimp-gallery>.indicator>li {
 	display: inline-block;
-	width: 46px;
-	height: 46px;
+	width: 134px;
+	height: 100px;
 	margin: none;
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
@@ -1775,13 +1776,32 @@ span.et2_egw_action_ddHelper_itemsCnt {
 	background: rgba(255, 255, 255, 0.17)center no-repeat;
 	border-radius: 5px;
 	box-shadow: 0 0 2px #000;
-	opacity: .5;
+	opacity: 1;
 	cursor: pointer;
 	background-repeat: no-repeat;
-	margin: 2px;
+	margin: 1px;
+	border:0;
+	background-size: content;
+}
+/*Thumbnail border on hover*/
+.blueimp-gallery>.indicator>li:hover {
+	-webkit-box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
+	-moz-box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
+	box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
+}
+/*Active thumbnail border*/
+.blueimp-gallery>.indicator>.active
+{
+	-webkit-box-shadow: inset 0px 1px 0px 4px #0c5da5;
+	-moz-box-shadow: inset 0px 1px 0px 4px #0c5da5;
+	box-shadow: inset 0px 1px 0px 4px #0c5da5;
 }
 /*Slideshow Play/Pause button*/
 .blueimp-gallery>.play-pause{
 	right: 42px;
 	top: 23px;
+}
+/*Give room to Carousel indicator when the gallery controls is on*/
+.blueimp-gallery-controls>.slides {
+	height:85%;
 }
