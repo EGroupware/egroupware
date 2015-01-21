@@ -270,11 +270,18 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			type: "boolean",
 			default: true,
 			description: "Clicking on an image would popup an expose view"
+		},
+		thumb_mime_size:{
+			name: "Image thumbnail size",
+			type: "string",
+			default:"",
+			description:" Size of thumbnail in pixel for specified mime type with syntax of: mime_type(s),size (eg. image,video,128)"
 		}
+				
 	},
 
 	legacyOptions:["size"],
-
+	
 	/**
 	 * Constructor
 	 *
@@ -358,6 +365,16 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				if(this.options.size)
 				{
 					src += "&thsize="+this.options.size;
+				}
+				else if (this.options.thumb_mime_size)
+				{
+					var mime_size = this.options.thumb_mime_size.split(',');
+					var mime_regex = RegExp(_value.mime.split('/')[0]);
+					if (typeof mime_size != 'undefined' && jQuery.isArray(mime_size) 
+							&& !isNaN(mime_size[mime_size.length-1]) && isNaN(mime_size[0]) && this.options.thumb_mime_size.match(mime_regex[0], 'ig'))
+					{
+						src += "&thsize=" + mime_size[mime_size.length-1];
+					}	
 				}
 				this.image.css("max-width", "100%");
 			}
