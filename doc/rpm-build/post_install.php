@@ -16,7 +16,6 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling post_insta
 $verbose = false;
 $config = array(
 	'php'         => '/usr/bin/php',
-	'pear'        => '/usr/bin/pear',
 	'source_dir'  => '/usr/share/egroupware',
 	'data_dir'    => '/var/lib/egroupware',
 	'header'      => '$data_dir/header.inc.php',	// symlinked to source_dir by rpm
@@ -102,7 +101,6 @@ function set_distro_defaults($distro=null)
 		case 'suse':
 			// openSUSE 12.1+ no longer uses php5
 			if (file_exists('/usr/bin/php5')) $config['php'] = '/usr/bin/php5';
-			if (file_exists('/usr/bin/pear5')) $config['pear'] = '/usr/bin/pear5';
 			$config['start_db'] = '/sbin/service mysql';
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
 			$config['start_webserver'] = '/sbin/service apache2';
@@ -260,9 +258,6 @@ foreach(array('php','source_dir','data_dir','setup-cli') as $name)
 
 // fix important php.ini and conf.d/*.ini settings
 check_fix_php_apc_ini();
-
-// install/upgrade required pear packages
-check_install_pear_packages();
 
 $setup_cli = $config['php'].' -d memory_limit=256M '.$config['setup-cli'];
 
@@ -577,151 +572,6 @@ function usage($error=null)
 	}
 	exit(0);
 }
-
-/**
- * Get installed pear packages, optional from a certain channel
- *
- * @global type $config
- * @param string $channel=''
- * @return null|array with package => version
- */
-function pear_list($channel='')
-{
-	global $config;
-
-	$out = $ret = null;
-	exec($config['pear'].' list'.($channel?' -c '.$channel:''),$out,$ret);
-	if ($channel && $ret == 1)
-	{
-		return null;
-	}
-	if ($ret)
-	{
-		echo "Error running pear command ($config[pear])!\n";
-		exit(95);
-	}
-	$packages_installed = array();
-	foreach($out as $line)
-	{
-		$matches = null;
-		if (preg_match('/^([a-z0-9_]+)\s+([0-9.]+[a-z0-9]*)\s+([a-z]+)/i',$line,$matches))
-		{
-			$packages_installed[($channel?$channel.'/':'').$matches[1]] = $matches[2];
-		}
-	}
-	return $packages_installed;
-}
-
-/**
- * Check if required PEAR packges are installed and install them if not, update pear packages with to low version
- */
-function check_install_pear_packages()
-{
-	global $config;
-	$packages_installed = pear_list();
-
-	// some setup files use autoloader
-	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
-	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
-	define('EGW_API_INC', EGW_SERVER_ROOT.'/phpgwapi/inc');
-	include_once(EGW_API_INC.'/common_functions.inc.php');
-
-	// read required packages from apps
-	$packages = array('PEAR' => true);	// pear must be the first, to run it's update first!
-	$channels = array();
-	$setup_info = array();
-	foreach(scandir($config['source_dir']) as $app)
-	{
-		if (is_dir($dir=$config['source_dir'].'/'.$app) && file_exists($file=$dir.'/setup/setup.inc.php')) include $file;
-	}
-	foreach($setup_info as $app => $data)
-	{
-		if (isset($data['check_install']))
-		{
-			foreach($data['check_install'] as $package => $args)
-			{
-				if ($args['func'] == 'pear_check')
-				{
-					if (!$package) $package = 'PEAR';
-					// if package is prefixed with a channel, list or discover it first
-					if (strpos($package, '/'))
-					{
-						list($channel) = explode('/', $package);
-						if (!in_array($channel, $channels))
-						{
-							if (($channel_packages = pear_list($channel)))
-							{
-								$packages_installed += $channel_packages;
-							}
-							else
-							{
-								$discover_cmd = $config['pear'].' channel-discover '.$channel;
-								echo "$discover_cmd\n";	system($discover_cmd);
-							}
-							$channels[] = $channel;
-						}
-					}
-					// only overwrite lower version or no version
-					if (!isset($packages[$package]) || $packages[$package] === true || isset($args['version']) && version_compare($args['version'],$packages[$package],'>'))
-					{
-						$packages[$package] = isset($args['version']) ? $args['version'] : true;
-					}
-				}
-			}
-		}
-	}
-	//echo 'Installed: '; print_r($packages_installed);
-	//echo 'Required: '; print_r($packages);
-	$to_install = array_diff(array_keys($packages),array_keys($packages_installed));
-
-	$need_upgrade = array();
-	foreach($packages as $package => $version)
-	{
-		if ($version !== true && $version !== '999.egw-pear' && isset($packages_installed[$package]) &&
-			version_compare($version, $packages_installed[$package], '>'))
-		{
-			$need_upgrade[] = $package;
-		}
-	}
-	//echo 'Need upgrade: '; print_r($need_upgrade);
-	//echo 'To install: '; print_r($to_install);
-	if (($to_install || $need_upgrade))
-	{
-		if (getmyuid())
-		{
-			echo "You need to run as user root to be able to install/upgrade required PEAR packages!\n";
-		}
-		else
-		{
-			echo "Install/upgrade required PEAR packages:\n";
-			// need to run upgrades first, they might be required for install!
-			if ($need_upgrade)
-			{
-				if (in_array('PEAR',$need_upgrade))	// updating pear itself can be very tricky, this is what's needed for stock RHEL pear
-				{
-					$cmd = $config['pear'].' channel-update pear.php.net';
-					echo "$cmd\n";	system($cmd);
-					$cmd = $config['pear'].' upgrade --force Console_Getopt Archive_Tar';
-					echo "$cmd\n";	system($cmd);
-				}
-				$cmd = $config['pear'].' upgrade '.implode(' ',$need_upgrade);
-				echo "$cmd\n";	system($cmd);
-			}
-			if ($to_install)
-			{
-				// package install can fail if a required package of one to install is of an older version
-				// unfortunately there is no option to automatic update the required packages automatic
-				// as a quick fix for that situation, we always run "pear upgrade-all" first
-				$cmd = $config['pear'].' upgrade-all';
-				echo "$cmd\n";	system($cmd);
-				$cmd = $config['pear'].' install '.implode(' ', $to_install);
-				echo "$cmd\n";	system($cmd);
-			}
-		}
-	}
-}
-
-function lang() {}	// required to be able to include */setup/setup.inc.php files
 
 /**
  * fix egw_cache perms evtl. created by root, stoping webserver from accessing it

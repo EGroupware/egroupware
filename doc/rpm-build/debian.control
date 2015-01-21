@@ -10,6 +10,7 @@ Package: egroupware-epl
 Architecture: all
 Depends:
  egroupware-epl-core (= ${binary:Version}),
+ egroupware-epl-vendor (= ${binary:Version}),
  egroupware-epl-jdots (= ${binary:Version}),
  egroupware-epl-pixelegg (= ${binary:Version}),
  egroupware-epl-stylite (= ${binary:Version}),
@@ -53,8 +54,7 @@ Depends: apache2,
  php5-sqlite,
  php5-mysql | php5-pgsql | php5-odbc,
  php5-json,
- php5-gd, php-pear,
- egroupware-epl-egw-pear,
+ php5-gd,
  php5-mcrypt,
  php5-xsl,
  ${misc:Depends}
@@ -335,6 +335,17 @@ Description: web-based groupware suite - tracker application
  .
  This EGroupware application is a universal tracker for bugs, feature
  requests, etc. with voting and bounties.
+
+Package: egroupware-epl-vendor
+Architecture: all
+Depends: ${misc:Depends}
+Description: web-based groupware suite - external dependencies
+ ${commondesc}
+ .
+ With this package EGroupware no longer depends on PEAR.
+ Dependencies include:
+ - diverse Horde framework packages like Horde_Imap_Client
+ - some PEAR packages incl. PEAR itself
 
 Package: egroupware-epl-wiki
 Architecture: all

@@ -43,14 +43,12 @@ Prefix: /usr/share
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
-	%define pear_dir \\/usr\\/share\\/php5\\/PEAR:\\/etc\\/php5
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
 	%define cron crontabs
 	%define apache_user apache
 	%define apache_group apache
-	%define pear_dir \\/usr\\/share\\/pear
 %endif
 
 %define install_log /root/%{name}-install.log
@@ -82,7 +80,6 @@ Prefix: /usr/share
 Distribution: %{distribution}
 
 Source0: %{name}-%{version}.tar.gz
-#Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 #Source3: %{name}-pixelegg-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
@@ -127,6 +124,7 @@ Requires: %{name}-sambaadmin      = %{version}
 Requires: %{name}-sitemgr         = %{version}
 Requires: %{name}-timesheet       = %{version}
 Requires: %{name}-tracker         = %{version}
+Requires: %{name}-vendor          = %{version}
 Requires: %{name}-wiki            = %{version}
 Obsoletes: %{egw_packagename}
 Obsoletes: %{egw_packagename}-core
@@ -176,10 +174,6 @@ Obsoletes: %{name}-egw-pear
         echo "Installing php -> php5 alternative"; \
         /usr/sbin/update-alternatives --install /usr/bin/php php /usr/bin/php5 99; \
     fi
-    if [ ! -f /usr/bin/pear -a -x /usr/bin/pear5 ]; then \
-        echo "Installing pear -> pear5 alternative"; \
-        /usr/sbin/update-alternatives --install /usr/bin/pear pear /usr/bin/pear5 99; \
-    fi
 %endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
@@ -211,7 +205,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.3.2
-Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
+Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-posix %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
 Provides: egw-core %{version}
 Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
@@ -487,6 +481,18 @@ Obsoletes: %{egw_packagename}-wiki
 %description wiki
 This is the wiki app for EGroupware.
 
+%package vendor
+Version: %{version}
+Summary: External EGroupware dependencies
+Group: Web/Database
+AutoReqProv: no
+%description vendor
+Dependencies have been installed using Composer.
+With this package EGroupware no longer depends on PEAR.
+Dependencies include:
+- diverse Horde framework packages like Horde_Imap_Client
+- some PEAR packages incl. PEAR itself
+
 %package esyncpro
 Version: %{version}
 Summary: Stylite eSync Provisioning
@@ -495,8 +501,8 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}, %{name}-esync >= %{version}
 %description esyncpro
-Stylite's eSync Provisioning app allows to edit and assign 
-policies to devices and keeps a central list of syncing devices. 
+Stylite's eSync Provisioning app allows to edit and assign
+policies to devices and keeps a central list of syncing devices.
 It also allows to remote wipe or view sync logs of all devices.
 
 %post esyncpro
@@ -524,7 +530,7 @@ echo "post_install: %{post_install}"
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT%{egwdir}
 mkdir -p $RPM_BUILD_ROOT%{httpdconfd}
-sed 's/\/usr\/share\/pear/%{pear_dir}/' egroupware/doc/rpm-build/apache.conf > $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
+cp egroupware/doc/rpm-build/apache.conf > $RPM_BUILD_ROOT%{httpdconfd}/egroupware.conf
 mkdir -p $RPM_BUILD_ROOT/etc/cron.d
 sed 's/apache/%{apache_user}/' egroupware/doc/rpm-build/egroupware.cron > $RPM_BUILD_ROOT/etc/cron.d/egroupware
 mkdir -p $RPM_BUILD_ROOT%{egwdatadir}/default/files
@@ -547,6 +553,8 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %dir %{egwdir}
 %{egwdir}/about.php
+%{egwdir}/composer.json
+%{egwdir}/composer.lock
 %{egwdir}/header.inc.php
 %{egwdir}/header.inc.php.template
 %{egwdir}/index.php
@@ -683,6 +691,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files tracker
 %defattr(-,root,root)
 %{egwdir}/tracker
+
+%files vendor
+%defattr(-,root,root)
+%{egwdir}/vendor
 
 %files wiki
 %defattr(-,root,root)
