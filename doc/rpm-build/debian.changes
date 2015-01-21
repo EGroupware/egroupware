@@ -1,3 +1,22 @@
+egroupware-epl (14.2.20150121-1) hardy; urgency=low
+
+  * 2. release candidate for upcomming 14.2 release
+  * Filemanager: click on image opens expose view incl. gallery and slide-show
+  * Filemanager: enhance sharing to keep session of already logged in user, when he clicks on a share
+  * Mail/SMTP: fixed not working sending of mails, if secure connection setting was different from IMAP server "cound not connect to SMTP server"
+  * Mail/Sieve: fixed not running/set async vacation notice
+  * Mail/Sieve: remove prefix (of mail-account) for sieve save into folder
+  * All application: Fix unintentional dragging happens while user try to do scrolling over a dragging item in FF(e.g. scrolling over an scrollable infolog entry)
+  * Backup: fixed broken backup of tables without an auto index
+  * WebDAV: fixed not working range requests causing eg. direct playing of video files to fail
+  * Calendar: speed improvments for huge calendar databases
+  * Calendar/CalDAV/eSync: fixed not synced events constructed from exceptions
+  * ProjectManager: fix SQL error "unknown column pe_* in order clause"
+  * Setup: allow to use Composer (https://getcomposer.org/) to manager requirements (instead of PEAR)
+  * no longer requiring php(5)-pear, but new egroupware-epl-vendor package containing all dependencies
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 21 Jan 2015 13:58:07 +0100
+
 egroupware-epl (14.2.20150113-1) hardy; urgency=low
 
   * Release candidate for 14.2
