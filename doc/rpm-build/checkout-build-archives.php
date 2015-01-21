@@ -32,18 +32,23 @@ $config = array(
 	'aliasdir' => 'egroupware',             // directory created by the alias
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
-	'svn' => '/usr/bin/svn',
-	'rsync' => 'rsync --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
-	'clamscan' => '/usr/bin/clamscan',
-	'freshclam' => '/usr/bin/freshclam',
-	'gpg' => '/usr/bin/gpg',
+	// diverse binaries we need
+	'svn' => trim(`which svn`),
+	'tar' => trim(`which tar`),
+	'mv' => trim(`which mv`),
+	'zip' => trim(`which zip`),
+	'clamscan' => trim(`which clamscan`),
+	'freshclam' => trim(`which freshclam`),
+	'gpg' => trim(`which gpg`),
+	'editor' => trim(`which vi`),
+	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
+	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --optimize-autoloader' : '',
 	'packager' => 'build@stylite.de',
 	'obs' => './obs',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editsvnchangelog' => '* ',
-	'editor' => '/usr/bin/vi',
 	'svntag' => 'tags/$version.$packaging',
 	'release' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	'copychangelog' => '$sourcedir/README', //'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
@@ -93,7 +98,7 @@ while(($arg = array_shift($argv)))
 			case 'release':
 			case 'copychangelog':
 				$config[$name] = $value;
-				array_unshift($config['run'],$name);
+				if ($value) array_unshift($config['run'],$name);
 				break;
 
 			case 'editsvnchangelog':
@@ -141,19 +146,33 @@ function do_release()
 {
 	global $config,$verbose;
 
-	$target = $config['release'];
-	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
-	{
-		$translate = array();
-		foreach($config as $name => $value)
-		{
-			$translate['$'.$name] = $value;
-		}
-		$target = strtr($target,$translate);
-	}
+	$target = config_translate('release');	// allow to use config vars like $svnbranch in module
 	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
 	if ($verbose) echo $cmd."\n";
 	passthru($cmd);
+}
+
+/**
+ * Fetch a config value allowing to use config vars like $svnbranch in it
+ *
+ * @param string $name
+ * @param string $value =null value to use, default $config[$name]
+ */
+function config_translate($name, $value=null)
+{
+	global $config;
+
+	if (!isset($value)) $value = $config[$name];
+	if (is_string($value) && strpos($value, '$') !== false)
+	{
+		$translate = array();
+		foreach($config as $n => $val)
+		{
+			if (is_string($val)) $translate['$'.$n] = $val;
+		}
+		$value = strtr($value, $translate);
+	}
+	return $value;
 }
 
 /**
@@ -161,17 +180,10 @@ function do_release()
  */
 function do_copychangelog()
 {
-	global $config,$verbose;
+	global $config;
 
 	$changelog = __DIR__.'/debian.changes';
-	$target = $config['copychangelog'];
-	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
-	{
-		$translate = array();
-		foreach($config as $name => $value) $translate['$'.$name] = $value;
-		$target = strtr($target,$translate);
-	}
-	$cmd = $config['rsync'].' '.$changelog.' '.$target;
+	$cmd = $config['rsync'].' '.$changelog.' '.config_translate('copychangelog');
 	passthru($cmd);
 }
 
@@ -180,7 +192,7 @@ function do_copychangelog()
  */
 function do_editsvnchangelog()
 {
-	global $config,$svn,$verbose;
+	global $config,$svn;
 
 	echo "Querying changelog from SVN\n";
 	if (!isset($config['modules']))
@@ -189,7 +201,7 @@ function do_editsvnchangelog()
 	}
 	// query changelog per repo
 	$changelog = '';
-	foreach($config['modules'] as $repo => $modules)
+	foreach($config['modules'] as /*$repo =>*/ $modules)
 	{
 		$branch_url = '';
 		$revision = null;
@@ -235,14 +247,14 @@ function do_editsvnchangelog()
 /**
  * Read changelog for given branch from (last) tag or given revision from svn
  *
- * @param string $branch_url='svn+ssh://svn@svn.stylite.de/egroupware/branches/Stylite-EPL-10.1'
- * @param string $log_pattern=null	a preg regular expression or start of line a log message must match, to be returned
+ * @param string $branch_url ='svn+ssh://svn@svn.stylite.de/egroupware/branches/Stylite-EPL-10.1'
+ * @param string $log_pattern =null	a preg regular expression or start of line a log message must match, to be returned
  * 	if regular perl regular expression given only first expression in brackets \\1 is used,
  * 	for a start of line match, only the first line is used, otherwise whole message is used
- * @param string $revision=null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
- * @param string $prefix='* ' prefix, which if not presend should be added to all log messages
+ * @param string $revision =null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
+ * @param string $prefix ='* ' prefix, which if not presend should be added to all log messages
  */
-function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix='* ')
+function get_changelog_from_svn($branch_url, $log_pattern=null, &$revision=null, $prefix='* ')
 {
 	//echo __FUNCTION__."('$branch_url','$log_pattern','$revision','$prefix')\n";
 	global $config,$verbose,$svn;
@@ -253,6 +265,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 		if (empty($branch)) $branch = $config['version'];
 		$tags_url .= '/tags';
 		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
+		$matches = null;
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
 		$tag = $matches[1];
 	}
@@ -309,7 +322,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
  */
 function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 {
-	global $config,$verbose,$svn;
+	global $verbose,$svn;
 
 	$cmd = $svn.' log --xml --limit 40 '.escapeshellarg($tags_url);
 	if (($v = $verbose))
@@ -339,7 +352,7 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 /**
  * Copy archive files to obs checkout and commit them
  *
- * @param boolean $only_update_changelog=false true update debian.changes, but nothing else, nor commit it
+ * @param boolean $only_update_changelog =false true update debian.changes, but nothing else, nor commit it
  */
 function do_obs($only_update_changelog=false)
 {
@@ -362,6 +375,7 @@ function do_obs($only_update_changelog=false)
 		{
 			continue;
 		}
+		$matches = null;
 		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9.]+[0-9](\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
 		{
@@ -430,7 +444,7 @@ function do_obs($only_update_changelog=false)
  */
 function parse_current_changelog()
 {
-	global $config,$verbose;
+	global $config;
 
 	$changelog = file_get_contents(__DIR__.'/debian.changes');
 	$lines = explode("\n", $changelog, 100);
@@ -459,10 +473,10 @@ function parse_current_changelog()
  */
 function update_changelog($content)
 {
-	global $config,$verbose;
+	global $config;
 
-	list($new_header) = explode("\n",$content);
-	$new_header = preg_replace('/\('.preg_quote($config['version']).'\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
+	list($header) = explode("\n", $content);
+	$new_header = preg_replace('/\('.preg_quote($config['version']).'\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)', $header);
 	if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
 	$content = $new_header."\n\n".$config['changelog'].
 		"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
@@ -475,7 +489,7 @@ function update_changelog($content)
  */
 function do_sign()
 {
-	global $config,$verbose;
+	global $config;
 
 	if (substr($config['sourcedir'],0,2) == '~/')	// sha1_file cant deal with '~/rpm'
 	{
@@ -506,7 +520,7 @@ function do_sign()
  */
 function do_create()
 {
-	global $config,$verbose;
+	global $config;
 
 	if (!file_exists($config['sourcedir'])) mkdir($config['sourcedir'],0755,true);
 	if (substr($config['sourcedir'],0,2) == '~/')	// sha1_file cant deal with '~/rpm'
@@ -536,12 +550,12 @@ function do_create()
 		{
 			case 'tar.bz2':
 			case 'tar.gz':
-				$cmd = '/bin/tar --owner=root --group=root -c'.$tar_type.'f '.$file.' '.$exclude_extra.' egroupware';
+				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' '.$exclude_extra.' egroupware';
 				break;
 			case 'zip':
-				$cmd = '/bin/mv egroupware/'.implode(' egroupware/',$config['extra']).' . ;';
-				$cmd .= '/usr/bin/zip -q -r -9 '.$file.' egroupware ;';
-				$cmd .= '/bin/mv '.implode(' ',$config['extra']).' egroupware';
+				$cmd = $config['mv'].' egroupware/'.implode(' egroupware/',$config['extra']).' . ;';
+				$cmd .= $config['zip'].' -q -r -9 '.$file.' egroupware ;';
+				$cmd .= $config['mv'].' '.implode(' ',$config['extra']).' egroupware';
 				break;
 		}
 		run_cmd($cmd);
@@ -554,10 +568,10 @@ function do_create()
 			{
 				case 'tar.bz2':
 				case 'tar.gz':
-					$cmd = '/bin/tar --owner=root --group=root -c'.$tar_type.'f '.$file.' egroupware/'.$module;
+					$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' egroupware/'.$module;
 					break;
 				case 'zip':
-					$cmd = '/usr/bin/zip -q -r -9 '.$file.' egroupware/'.$module;
+					$cmd = $config['zip'].' -q -r -9 '.$file.' egroupware/'.$module;
 					break;
 			}
 			run_cmd($cmd);
@@ -586,6 +600,7 @@ function do_virusscan()
 		echo "Updating virus signatures\n";
 		$cmd = '/usr/bin/sudo '.$config['freshclam'];
 		if (!$verbose && function_exists('posix_getuid') && posix_getuid()) echo $cmd."\n";
+		$output = null;
 		run_cmd($cmd,$output,1);	// 1 = ignore already up to date database
 	}
 	echo "Starting virusscan\n";
@@ -606,24 +621,16 @@ function do_copy()
 	$cmd = '/usr/bin/rsync -r --delete --exclude .svn '.$config['svndir'].'/'.$config['aliasdir'].' '.$config['egw_buildroot'];
 	run_cmd($cmd);
 
-	if (($cmd = $config['patchCmd']) && $cmd[0] != '#')
+	if (($cmd = config_translate('patchCmd')) && $cmd[0] != '#')
 	{
-		if (strpos($cmd,'$') !== false)	// allow to use config vars like $svnbranch in module
-		{
-			$translate = array();
-			foreach($config as $name => $value) $translate['$'.$name] = $value;
-			$cmd = strtr($cmd,$translate);
-		}
 		echo "Running $cmd\n";
 		run_cmd($cmd);
 	}
 	// fix permissions
 	echo "Fixing permissions\n";
 	chdir($config['egw_buildroot'].'/'.$config['aliasdir']);
-	$cmd = '/bin/chmod -R a-x,u=rwX,g=rX,o=rX .';
-	run_cmd($cmd);
-	$cmd = '/bin/chmod +x */*cli.php phpgwapi/cron/*.php svn-helper.php doc/rpm-build/*.php';
-	run_cmd($cmd);
+	run_cmd('/bin/chmod -R a-x,u=rwX,g=rX,o=rX .');
+	run_cmd('/bin/chmod +x */*cli.php phpgwapi/cron/*.php svn-helper.php doc/rpm-build/*.php');
 }
 
 /**
@@ -633,7 +640,7 @@ function do_copy()
  */
 function do_checkout()
 {
-	global $config,$svn,$verbose;
+	global $config,$svn;
 
 	echo "Starting svn checkout/update\n";
 	if (!file_exists($config['svndir']))
@@ -653,12 +660,8 @@ function do_checkout()
 		{
 			get_modules_per_repro();
 		}
-		if (strpos($config['svntag'],'$') !== false)	// in case svntag command did not run, translate tag name
-		{
-			$translate = array();
-			foreach($config as $name => $value) $translate['$'.$name] = $value;
-			$config['svntag'] = strtr($config['svntag'],$translate);
-		}
+		$config['svntag'] = config_translate('svntag');	// in case svntag command did not run, translate tag name
+
 		if (file_exists($config['aliasdir']))
 		{
 			system('/bin/rm -rf .svn '.$config['aliasdir']);	// --> remove the whole checkout, as we dont implement switching tags
@@ -685,47 +688,50 @@ function do_checkout()
 			}
 			run_cmd($cmd);
 		}
-		return;
 	}
 	// regular branch update, without tag
-	$svnbranch = $config['svnbase'].'/'.$config['svnbranch'];
-	if (file_exists($config['aliasdir']))
+	else
 	{
-		// check if correct branch
-		$cmd = 'LANG=C '.$svn.' info';
-		exec($cmd,$output,$ret);
-		foreach($output as $line)
+		$svnbranch = $config['svnbase'].'/'.$config['svnbranch'];
+		if (file_exists($config['aliasdir']))
 		{
-			if ($ret || substr($line,0,5) == 'URL: ')
+			// check if correct branch
+			$cmd = 'LANG=C '.$svn.' info';
+			$output = $ret = null;
+			exec($cmd,$output,$ret);
+			foreach($output as $line)
 			{
-				$url = substr($line,5);
-				if ($ret || substr($url,0,strlen($svnbranch)) != $svnbranch)	// wrong branch (or no svn dir)
+				if ($ret || substr($line,0,5) == 'URL: ')
 				{
-					echo "Checkout is of wrong branch --> deleting it\n";
-					system('/bin/rm -rf .svn '.$config['aliasdir']);	// --> remove the whole checkout
-					clearstatcache();
+					$url = substr($line,5);
+					if ($ret || substr($url,0,strlen($svnbranch)) != $svnbranch)	// wrong branch (or no svn dir)
+					{
+						echo "Checkout is of wrong branch --> deleting it\n";
+						system('/bin/rm -rf .svn '.$config['aliasdir']);	// --> remove the whole checkout
+						clearstatcache();
+					}
+					break;
 				}
-				break;
 			}
 		}
-	}
-	$url = $svnbranch.'/'.$config['svnalias'];
-	$cmd = $svn.' co '.$url.' .';
-	run_cmd($cmd);
-
-	chdir($config['aliasdir']);
-	foreach($config['extra'] as $module)
-	{
-		if (strpos($module,'$') !== false)	// allow to use config vars like $svnbranch in module
-		{
-			$translate = array();
-			foreach($config as $name => $value) $translate['$'.$name] = $value;
-			$module = strtr($module,$translate);
-		}
-		$url = strpos($module,'://') === false ? $svnbranch.'/' : '';
-		$url .= $module;
-		$cmd = $svn.' co '.$url;
+		$url = $svnbranch.'/'.$config['svnalias'];
+		$cmd = $svn.' co '.$url.' .';
 		run_cmd($cmd);
+
+		chdir($config['aliasdir']);
+		foreach($config['extra'] as $module)
+		{
+			$module = config_translate(null, $module);	// allow to use config vars like $svnbranch in module
+			$url = strpos($module,'://') === false ? $svnbranch.'/' : '';
+			$url .= $module;
+			$cmd = $svn.' co '.$url;
+			run_cmd($cmd);
+		}
+	}
+	// do composer install to fetch dependencies
+	if ($config['composer'])
+	{
+		run_cmd($config['composer']);
 	}
 }
 
@@ -738,14 +744,12 @@ function get_modules_per_repro()
 {
 	global $config,$svn,$verbose;
 
-	$translate = array();
-	foreach($config as $name => $value) $translate['$'.$name] = $value;
-
 	// process alias/externals
 	$svnbranch = $config['svnbase'].'/'.$config['svnbranch'];
 	$url = $svnbranch.'/'.$config['svnalias'];
 	$cmd = $svn.' propget svn:externals --strict '.$url;
 	if ($verbose) echo $cmd."\n";
+	$output = $ret = null;
 	exec($cmd,$output,$ret);
 	$config['modules'] = array();
 	foreach($output as $line)
@@ -753,6 +757,7 @@ function get_modules_per_repro()
 		$line = trim($line);
 		if (empty($line) || $line[0] == '#') continue;
 		list($path,$url) = preg_split('/[ \t\r\n]+/',$line);
+		$matches = null;
 		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die("Invalid SVN URL: $url\n");
 		$repo = $matches[1];
 		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
@@ -761,10 +766,7 @@ function get_modules_per_repro()
 	// process extra modules
 	foreach($config['extra'] as $module)
 	{
-		if (strpos($module,'$') !== false)	// allow to use config vars like $svnbranch in module
-		{
-			$module = strtr($module,$translate);
-		}
+		$module = config_translate(null, $module);	// allow to use config vars like $svnbranch in module
 		$url = strpos($module,'://') === false ? $svnbranch.'/' : '';
 		$url .= $module;
 		if (strpos($module,'://') !== false) $module = basename($module);
@@ -781,15 +783,12 @@ function get_modules_per_repro()
  */
 function do_svntag()
 {
-	global $config,$svn,$verbose;
+	global $config,$svn;
 
-	$translate = array();
-	foreach($config as $name => $value) $translate['$'.$name] = $value;
+	if (empty($config['svntag'])) return;	// otherwise we copy everything in svn root!
 
-	if (strpos($config['svntag'],'$') !== false)	// allow to use config vars like $version in tag
-	{
-		$config['svntag'] = strtr($config['svntag'],$translate);
-	}
+	$config['svntag'] = config_translate('svntag');	// allow to use config vars like $version in tag
+
 	echo "Creating SVN tag $config[svntag]\n";
 	if (!isset($config['modules']))
 	{
@@ -808,7 +807,7 @@ function do_svntag()
  *
  * @param string $cmd
  * @param array &$output=null $output of command, only if !$verbose !!!
- * @param int|array $no_bailout=null exit code(s) to NOT bail out
+ * @param int|array $no_bailout =null exit code(s) to NOT bail out
  * @return int exit code of $cmd
  */
 function run_cmd($cmd,array &$output=null,$no_bailout=null)
@@ -818,6 +817,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 	if ($verbose)
 	{
 		echo $cmd."\n";
+		$ret = null;
 		system($cmd,$ret);
 	}
 	else
@@ -834,9 +834,36 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 }
 
 /**
+ * Format array or other types as (one-line) string, eg. for error_log statements
+ *
+ * @param mixed $var variable to dump
+ * @return string
+ */
+function array2string($var)
+{
+	switch (($type = gettype($var)))
+	{
+		case 'boolean':
+			return $var ? 'TRUE' : 'FALSE';
+		case 'string':
+			return "'$var'";
+		case 'integer':
+		case 'double':
+		case 'resource':
+			return $var;
+		case 'NULL':
+			return 'NULL';
+		case 'object':
+		case 'array':
+			return str_replace(array("\n",'    '/*,'Array'*/),'',print_r($var,true));
+	}
+	return 'UNKNOWN TYPE!';
+}
+
+/**
  * Give usage information and an optional error-message, before stoping program execution with exit-code 90 or 0
  *
- * @param string $error=null optional error-message
+ * @param string $error =null optional error-message
  */
 function usage($error=null)
 {
