@@ -76,7 +76,8 @@ function expose (widget)
 		if(nextmatch == null || nextmatch.controller == null) return null;
 
 		return nextmatch;
-	}
+	};
+
 	/**
 	 * Read images out of the data for the nextmatch
 	 * 
@@ -89,14 +90,15 @@ function expose (widget)
 		if(!start_at) start_at = 0;
 		var stop = Math.max.apply(null,Object.keys(nm.controller._indexMap));
 
-		for(var i = start_at; i < stop; i++)
+		for(var i = start_at; i <= stop; i++)
 		{
 			if(!nm.controller._indexMap[i] || !nm.controller._indexMap[i].uid)
 			{
 				// Returning instead of using IMAGE_DEFAULT means we stop as
 				// soon as a hole is found, instead of getting everything that is
 				// available.  The gallery can't fill in the holes.
-				return;
+				images[i] = IMAGE_DEFAULT;
+				continue;
 			}
 			var uid = nm.controller._indexMap[i].uid;
 			if(!uid) continue;
@@ -104,12 +106,86 @@ function expose (widget)
 			if(data && data.data && data.data.mime && mime_regex.test(data.data.mime))
 			{
 				var media = this.getMedia(data.data);
-				images.push(jQuery.extend({}, data.data, media[0]));
+				images[i] = jQuery.extend({}, data.data, media[0]);
 			}
 		}
-
-
 	}
+
+	/**
+	 * Set a particular index/image in the gallery instead of just appending
+	 * it to the end
+	 *
+	 * @param {integer} index
+	 * @param {Object} image
+	 * @returns {undefined}
+	 */
+	var set_slide = function(index, image)
+	{
+		var active = (index == gallery.index);
+
+		// Pad with blanks until length is right
+		while(index > gallery.getNumber())
+		{
+			gallery.add([jQuery.extend({}, IMAGE_DEFAULT)]);
+		}
+
+		// Don't bother with adding a default, we just did that
+		if(image.loading)
+		{
+			$j(gallery.slides[index])
+				.addClass(gallery.options.slideLoadingClass)
+				.removeClass(gallery.options.slideErrorClass);
+			return;
+		}
+
+		// Just use add to let gallery create everything it needs
+		var new_index = gallery.num;
+		gallery.add([image]);
+
+		// Move it to where we want it.
+		// Gallery uses arrays and indexes and has several internal variables
+		// that need to be updated.
+		// 
+		// list
+		gallery.list[index] = gallery.list[new_index];
+		gallery.list.splice(new_index,1)
+
+		// indicators & slides
+		var dom_nodes = ['indicators','slides'];
+		for(var i in dom_nodes)
+		{
+			var var_name = dom_nodes[i];
+			// Remove old one from DOM
+			$j(gallery[var_name][index]).remove();
+			// Move new one into it's place in gallery
+			gallery[var_name][index] = gallery[var_name][new_index];
+			// Move into place in DOM
+			var node = $j(gallery[var_name][index]);
+			node.attr('data-index', index)
+				.insertAfter($j("[data-index='"+(index-1)+"']",node.parent()));
+			if(active) node.addClass(gallery.options.activeIndicatorClass);
+			gallery[var_name].splice(new_index,1);
+		}
+		if(active)
+		{
+			gallery.activeIndicator = $j(gallery.indicators[index]);
+		}
+		
+		// positions
+		gallery.positions[index] = active ? 0 : (index > gallery.index ? gallery.slideWidth : -gallery.slideWidth);
+		gallery.positions.splice(new_index,1);
+
+		// elements - removing will allow to re-do the slide
+		if(gallery.elements[index])
+		{
+			delete gallery.elements[index];
+			gallery.loadElement(index);
+		}
+
+		// Remove the one we just added
+		gallery.num -= 1;
+	};
+
 	return widget.extend([et2_IExposable],{
 		
 			/**
@@ -344,8 +420,8 @@ function expose (widget)
 							.addClass('paginating')
 							.mousewheel(function(event, delta) {
 								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2) return;
-								// Move it about 10 indicators
-								$j(this).css('left',parseInt($j(this).css('left'))-(-delta*150)+'px');
+								// Move it about 5 indicators
+								$j(this).css('left',parseInt($j(this).css('left'))-(-delta*gallery.activeIndicator.width()*5)+'px');
 								event.preventDefault();
 							})
 							.swipe(function(event, direction, distance) {
@@ -397,19 +473,38 @@ function expose (widget)
 					// Check to see if we're near the end, or maybe some pagination
 					// would be good.
 					var total_count = nm.controller._grid.getTotalCount();
-					if(!gallery.list[index+1] || gallery.list[index+1].loading ||
+					
+					// Already at the end, don't bother
+					if(index == total_count) return;
+
+					// Try to determine direction from state of next & previous slides
+					var direction = 1;
+					for(var i in gallery.elements)
+					{
+						// Loading or error
+						if(gallery.elements[i] == 1 || gallery.elements[i] == 3 || gallery.list[i].loading)
+						{
+							direction = i >= index ? 1 : -1;
+							break;
+						}
+					}
+					
+					if(!gallery.list[index+direction] || gallery.list[index+direction].loading ||
 						total_count > gallery.getNumber() && index + ET2_DATAVIEW_STEPSIZE > gallery.getNumber())
 					{
-						// Well, this will get the next batch of rows
-						nm.controller._gridCallback(index, index + ET2_DATAVIEW_STEPSIZE);
+						// This will get the next batch of rows
+						var start = Math.max(0, direction > 0 ? index : index - ET2_DATAVIEW_STEPSIZE);
+						var end = Math.min(total_count - 1, start + ET2_DATAVIEW_STEPSIZE);
+						nm.controller._gridCallback(start, end);
 						var images = [];
-						read_from_nextmatch.call(this, nm, images, index);
+						read_from_nextmatch.call(this, nm, images, start);
 
 						// Gallery always adds to the end, causing problems with pagination
 						for(var i in images)
 						{
-							if(i == index || i < gallery.num) continue;
-							gallery.add([images[i]]);
+							//if(i == index || i < gallery.num) continue;
+							set_slide(i, images[i]);
+							//gallery.add([images[i]]);
 						}
 					}
 				}
