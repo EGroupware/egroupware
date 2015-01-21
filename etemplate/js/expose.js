@@ -67,7 +67,7 @@ function expose (widget)
 		while(nextmatch == null && current)
 		{
 			current = current.getParent();
-			if(current.instanceOf(et2_nextmatch))
+			if(typeof current !='undefined' && current.instanceOf(et2_nextmatch))
 			{
 				nextmatch = current;
 			}
@@ -104,7 +104,7 @@ function expose (widget)
 			if(data && data.data && data.data.mime && mime_regex.test(data.data.mime))
 			{
 				var media = this.getMedia(data.data);
-				images[i] = (jQuery.extend({}, data.data, media[0]));
+				images.push(jQuery.extend({}, data.data, media[0]));
 			}
 		}
 
@@ -214,6 +214,8 @@ function expose (widget)
 					preloadRange: 2,
 					// The transition speed between slide changes in milliseconds:
 					transitionSpeed: 400,
+					//Hide controls when the slideshow is playing
+					hideControlsOnSlideshow: true,
 					// The transition speed for automatic slide changes, set to an integer
 					// greater 0 to override the default transition speed:
 					slideshowTransitionSpeed: undefined,
@@ -288,7 +290,7 @@ function expose (widget)
 
 				var self=this;
 				// If the media type is not supported do not bind the click handler
-				if (_value && typeof _value.mime != 'undefined' && !_value.mime.match(/^(video|image|audio|media)\//,'ig'))
+				if (_value && typeof _value.mime != 'undefined' && !_value.mime.match(mime_regex,'ig'))
 				{
 					return;
 				}

@@ -1755,8 +1755,33 @@ span.et2_egw_action_ddHelper_itemsCnt {
  */
 /* Paginating with nextmatch */
 .blueimp-gallery-controls > .indicator.paginating {
-	max-height: 2em;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+	border-top: 2px solid rgba(255, 255, 255, 0.5);
 	left: 0px;
 	right: auto;
 	white-space: nowrap;
+}
+/*Carousel thumbnails*/
+.blueimp-gallery>.indicator>li {
+	display: inline-block;
+	width: 46px;
+	height: 46px;
+	margin: none;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	border: 1px solid transparent;
+	background: #ccc;
+	background: rgba(255, 255, 255, 0.17)center no-repeat;
+	border-radius: 5px;
+	box-shadow: 0 0 2px #000;
+	opacity: .5;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	margin: 2px;
+}
+/*Slideshow Play/Pause button*/
+.blueimp-gallery>.play-pause{
+	right: 42px;
+	top: 23px;
 }
