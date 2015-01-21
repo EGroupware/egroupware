@@ -100,6 +100,10 @@ table.egwGridView_grid .tile .file_tile {
   display: block;
   max-width: 140px;
 }
+#filemanager-index_nm .file_tile img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
+  height: auto;
+  max-height: 128px;
+}
 .tile .file_tile img.vfsMimeIcon {
   height: auto;
   width: auto;
