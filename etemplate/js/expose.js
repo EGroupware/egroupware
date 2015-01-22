@@ -49,14 +49,14 @@ function expose (widget)
 
 	// For filtering to only show things we can handle
 	var mime_regex = new RegExp(/video\/|image\//);
-	
+
 	// Only one gallery
 	var gallery = null;
 
 	/**
 	 * See if the current widget is in a nextmatch, as this allows us to display
 	 * thumbnails underneath
-	 * 
+	 *
 	 * @param {et2_IExposable} widget
 	 * @returns {et2_nextmatch | null}
 	 */
@@ -80,9 +80,10 @@ function expose (widget)
 
 	/**
 	 * Read images out of the data for the nextmatch
-	 * 
+	 *
 	 * @param {et2_nextmatch} nm
 	 * @param {Object[]} images
+	 * @param {number} start_at
 	 * @returns {undefined}
 	 */
 	var read_from_nextmatch = function(nm, images, start_at)
@@ -106,10 +107,10 @@ function expose (widget)
 			if(data && data.data && data.data.mime && mime_regex.test(data.data.mime))
 			{
 				var media = this.getMedia(data.data);
-				images[i] = jQuery.extend({}, data.data, media[0]);
+				images.push(jQuery.extend({}, data.data, media[0]));
 			}
 		}
-	}
+	};
 
 	/**
 	 * Set a particular index/image in the gallery instead of just appending
@@ -145,10 +146,10 @@ function expose (widget)
 		// Move it to where we want it.
 		// Gallery uses arrays and indexes and has several internal variables
 		// that need to be updated.
-		// 
+		//
 		// list
 		gallery.list[index] = gallery.list[new_index];
-		gallery.list.splice(new_index,1)
+		gallery.list.splice(new_index,1);
 
 		// indicators & slides
 		var dom_nodes = ['indicators','slides'];
@@ -170,7 +171,7 @@ function expose (widget)
 		{
 			gallery.activeIndicator = $j(gallery.indicators[index]);
 		}
-		
+
 		// positions
 		gallery.positions[index] = active ? 0 : (index > gallery.index ? gallery.slideWidth : -gallery.slideWidth);
 		gallery.positions.splice(new_index,1);
@@ -187,7 +188,7 @@ function expose (widget)
 	};
 
 	return widget.extend([et2_IExposable],{
-		
+
 			/**
 			 * Initialize the expose media gallery
 			 */
@@ -316,21 +317,21 @@ function expose (widget)
 					// current index and slide as arguments:
 					onslide: function(index, slide) {
 						// Call our onslide method, and include gallery as an attribute
-						self.expose_onslide.apply(self, [this, index,slide])
+						self.expose_onslide.apply(self, [this, index,slide]);
 					},
 					// Callback function executed after the slide change transition.
 					// Is called with the gallery instance as "this" object and the
 					// current index and slide as arguments:
 					onslideend: function(index, slide) {
 						// Call our onslide method, and include gallery as an attribute
-						self.expose_onslideend.apply(self, [this, index,slide])
+						self.expose_onslideend.apply(self, [this, index,slide]);
 					},
 					//// Callback function executed on slide content load.
 					// Is called with the gallery instance as "this" object and the
 					// slide index and slide element as arguments:
 					onslidecomplete: function(index, slide) {
 						// Call our onslide method, and include gallery as an attribute
-						self.expose_onslidecomplete.apply(self, [this, index,slide])
+						self.expose_onslidecomplete.apply(self, [this, index,slide]);
 					},
 					//// Callback function executed when the Gallery is about to be closed.
 					// Is called with the gallery instance as "this" object:
@@ -350,7 +351,7 @@ function expose (widget)
 					// Append the gallery Node to DOM
 					$body.append($expose_node);
 				}
-	
+
 			},
 
 			set_value:function (_value)
@@ -387,10 +388,18 @@ function expose (widget)
 				{
 					// Get the row that was clicked, find its index in the list
 					var current_entry = nm.controller.getRowByNode(event.target);
-					current_index = current_entry.idx || 0;
 
 					// But before it goes, we'll pull everything we can
 					read_from_nextmatch.call(this, nm, mediaContent);
+					// find current_entry in array and set it's array-index
+					for(var i; i < mediaContent.length; i++)
+					{
+						if ('filemanager::'+mediaContent[i].path == current_entry.uid)
+						{
+							current_index = i;
+							break;
+						}
+					}
 
 					// This will trigger nm to refresh and get just the ones we can handle
 					// but it might take a while, so do it later - make sure our current
@@ -403,7 +412,7 @@ function expose (widget)
 				{
 					mediaContent = this.getMedia(_value);
 				}
-				this.expose_options.index = Math.min(current_index, mediaContent.length-1);
+				this.expose_options.index = current_index;
 				gallery = blueimp.Gallery(mediaContent, this.expose_options);
 			},
 			expose_onopen: function (event){},
@@ -473,7 +482,7 @@ function expose (widget)
 					// Check to see if we're near the end, or maybe some pagination
 					// would be good.
 					var total_count = nm.controller._grid.getTotalCount();
-					
+
 					// Already at the end, don't bother
 					if(index == total_count) return;
 
@@ -488,7 +497,7 @@ function expose (widget)
 							break;
 						}
 					}
-					
+
 					if(!gallery.list[index+direction] || gallery.list[index+direction].loading ||
 						total_count > gallery.getNumber() && index + ET2_DATAVIEW_STEPSIZE > gallery.getNumber())
 					{
