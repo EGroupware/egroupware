@@ -100,25 +100,40 @@ function etemplate2(_container, _menuaction)
 }
 
 // List of templates (XML) that are known, not always used.  Indexed by id.
-etemplate2.prototype.templates = {};
+// We share list of templates with iframes and popups
+try {
+	if (opener && opener.etemplate2)
+	{
+		etemplate2.prototype.templates = opener.etemplate2.prototype.templates;
+	}
+}
+catch (e) {
+	// catch security exception if opener is from a different domain
+}
+if (typeof etemplate2.prototype.templates == "undefined")
+{
+	etemplate2.prototype.templates = top.etemplate2.prototype.templates || {};
+}
 
 
 /**
  * Calls the resize event of all widgets
+ *
+ * @param {jQuery.event} e
  */
 etemplate2.prototype.resize = function(e)
 {
 	var event = e;
 	var self = this;
 	var excess_height = false;
-	
+
 	// Check if the framework has an specific excess height calculation
 	if (typeof window.framework != 'undefined' && typeof window.framework.get_wExcessHeight != 'undefined')
 	{
 		excess_height = window.framework.get_wExcessHeight(window);
 	}
-	
-	//@TODO implement getaccess height for other framework and remove 
+
+	//@TODO implement getaccess height for other framework and remove
 	if (typeof event != 'undefined' && event.type == 'resize')
 	{
 		setTimeout(function(){
@@ -180,19 +195,6 @@ etemplate2.prototype.clear = function()
 		this.widgetContainer = null;
 	}
 	$j(this.DOMContainer).empty();
-
-	// Remove self from the index
-	for(name in this.templates)
-	{
-		if(typeof etemplate2._byTemplate[name] == "undefined") continue;
-		for(var i = 0; i < etemplate2._byTemplate[name].length; i++)
-		{
-			if(etemplate2._byTemplate[name][i] == this)
-			{
-				etemplate2._byTemplate[name].splice(i,1);
-			}
-		}
-	}
 };
 
 /**
@@ -448,7 +450,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			// Wait for everything to be loaded, then finish it up
 			jQuery.when.apply(jQuery, deferred).done(jQuery.proxy(function() {
 				egw.debug("log", "Finished loading %s, triggering load event", _name);
-				
+
 				if (typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined')
 				{
 					//Call loading finished method of the framework with local window
@@ -469,7 +471,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 						return !$this.attr('tabindex') || $this.attr('tabIndex')>=0;
 					}).first().focus();
 				};
-				
+
 				// Tell others about it
 				if(typeof _callback == "function")
 				{

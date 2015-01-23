@@ -88,7 +88,7 @@ var et2_template = et2_DOMWidget.extend(
 
 			// Check to see if XML is known
 			var xml = null;
-			var templates = etemplate2.prototype.templates || this.getRoot().getInstanceManager().templates;
+			var templates = etemplate2.prototype.templates;	// use global eTemplate cache
 			if(!(xml = templates[template_name]))
 			{
 				// Check to see if ID is short form --> prepend parent/top-level name
@@ -105,12 +105,13 @@ var et2_template = et2_DOMWidget.extend(
 					var splitted = template_name.split('.');
 					// use template base url from initial template, to continue using webdav, if that was loaded via webdav
 					var path = this.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
-						splitted.join('.')+ ".xet" + (cache_buster ? '?'+cache_buster : '');
+						splitted.join('.')+ ".xet" + (cache_buster ? '?'+cache_buster :
+						// if server did not give a cache-buster, fall back to current time
+						'?download='+(new Date).valueOf());
 
 					if(splitted.length)
 					{
 						et2_loadXMLFromURL(path, function(_xmldoc) {
-							var templates = this.getInstanceManager().templates || {};
 							// Scan for templates and store them
 							for(var i = 0; i < _xmldoc.childNodes.length; i++) {
 								var template = _xmldoc.childNodes[i];
