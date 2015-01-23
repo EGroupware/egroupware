@@ -1170,6 +1170,7 @@ class infolog_bo
 				'to_id' => 0,
 			),
 		);
+		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['cat_add_default']) $info['info_cat'] = $GLOBALS['egw_info']['user']['preferences']['infolog']['cat_add_default'];
 		// find the addressbookentry to link with
 		$addressbook = new addressbook_bo();
 		$contacts = array();
