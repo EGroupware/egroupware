@@ -392,7 +392,7 @@ function expose (widget)
 					// But before it goes, we'll pull everything we can
 					read_from_nextmatch.call(this, nm, mediaContent);
 					// find current_entry in array and set it's array-index
-					for(var i; i < mediaContent.length; i++)
+					for(var i=0; i < mediaContent.length; i++)
 					{
 						if ('filemanager::'+mediaContent[i].path == current_entry.uid)
 						{
