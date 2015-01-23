@@ -54,6 +54,7 @@
 	et2_widget_vfs;
 	et2_widget_video;
 	et2_widget_itempicker;
+	et2_widget_script;
 
 	et2_extension_nextmatch;
 	et2_extension_customfields;
