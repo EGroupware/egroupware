@@ -48,7 +48,7 @@ function expose (widget)
 	};
 
 	// For filtering to only show things we can handle
-	var mime_regex = new RegExp(/video\/|image\//);
+	var mime_regex = new RegExp(/video\/|image|audio\//);
 
 	// Only one gallery
 	var gallery = null;
