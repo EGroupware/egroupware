@@ -203,6 +203,7 @@ vacation messages with start- and end-date require an admin account to be set	em
 virtual mail manager	emailadmin	it	ManaGeR MAIL Virtuale
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	it	Sì, utilizza le credenziali sottostanti solo per allarmi e notifiche, altrimenti usa le credenziali dell'utente attuale
 yes, use credentials of current user or if given credentials below	emailadmin	it	Sì, utilizza le credenziali dell'utente attuale oppure, se date, e credenziali qui sotto
+you can use wizard to fix account settings or delete account.	emailadmin	it	Si può usare il wizard (procedura guidata) per riparare le impostazioni o eliminare un account
 you have received a new message on the	emailadmin	it	Hai ricevuto un nuovo messaggio sul
 you need to specify a forwarding address, when checking "%1"!	emailadmin	it	Bisogna specificare un indirizzo di inoltro, quando si contolla "%1""
 your message to  %1 was displayed.	emailadmin	it	Il tuo messaggio per %1 è stato visualizzato

@@ -9,8 +9,10 @@ a theme defines the colors and fonts used by the template.	preferences	it	Un Tem
 acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state aggiornate
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in eGroupWare visualizzerà questo numero di voci o di linee per pagina.<br>Un numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
 are you sure you want to delete this category ?	preferences	it	Sei sicuro di voler eliminare questa categoria?
+audio effect	preferences	it	Avviso sonoro
 automatically start with this font	preferences	it	Comincia automaticamente con questo font
 automatically start with this font size	preferences	it	Comincia automaticamente con questa dimensione font
+bootstrap theme for ckeditor	preferences	it	Tema Bootstrap per l'editor ckeditor
 br	preferences	it	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	it	Modifica la password di un utente passando la vecchia e nuova password. Restituisce TRUE se ha successo, FALSE se fallisce.
 change password	preferences	it	Cambia password
@@ -22,6 +24,7 @@ charset for the csv export/import	preferences	it	Set di caratteri
 click to select a color	preferences	it	Clicca per selezionare un colore
 color	preferences	it	Colore
 country	preferences	it	Nazione
+dark moono theme	preferences	it	Tema Dark Moono
 data exchange settings	preferences	it	Impostazioni di scambio dati
 date format	preferences	it	Formato data
 default	preferences	it	predefinito
@@ -73,12 +76,14 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	it	In quale nazione sei. Sarà usato per impostare alcuni parametri predefiniti.
 interface/template selection	preferences	it	Selezione Interfaccia/Template
 just clicking on the line, like a checkbox	preferences	it	semplicemente cliccando sulla riga come se fosse una casella da spuntare
+kama theme	preferences	it	Tema Kama
 language	preferences	it	Lingua
 look & feel	preferences	it	Look & Feel
 lowercase letters	preferences	it	lettere minuscole
 max matches per page	preferences	it	Numero massimo di risultati per pagina
 max number of icons in navbar	preferences	it	Numero massimo di icone nella barra di navigazione
 moono color theme	preferences	it	Colori tema Moono
+moono theme (default)	preferences	it	Tema Moono (predefinito)
 no default	preferences	it	Nessun predefinito
 no user-selection at all	common	it	Nessuna selezione
 note: this feature does *not* change your email password. this will	preferences	it	nota: Questa funzione *non* cambia la tua password email.

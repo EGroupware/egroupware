@@ -1,14 +1,25 @@
+a quick note	home	it	Appunto veloce
+birthday reminders	home	it	Promemoria compleanni
 color	home	it	Colore
+configure	home	it	Configura
 displays home	home	it	Mostra home
 egroupware	home	it	eGroupware
 entry	home	it	Voce
+favorite	home	it	Preferito
+forced	home	it	Forzato
 home	home	it	Home
 in %1 days (%2) is %3's birthday.	home	it	Tra %1 giorni (%2) sarà il compleanno di %3.
+list of entries	home	it	Elenco voci
 remove	home	it	Rimuovi
+remove default %1	home	it	Rimuovi predefinito %1
+removed default	home	it	Predefinito rimosso
 set as default	home	it	Imposta come predefinito
+set default	home	it	Imposta predefinito
 show a list of entries	home	it	Mostra una lista di voci
+show all the entries using a favorite	home	it	Mostra tutte le voci usando un preferito
 show one entry	home	it	Visualizza una singola voce
-there is a new version of egroupware available	home	it	C'è una nuova versione di eGroupWare disponibile
+single entry	home	it	Voce singola
+there is a new version of egroupware available	home	it	C'è una nuova versione di EGroupware disponibile
 today is %1's birthday!	home	it	Oggi è il compleanno di %1!
 tomorrow is %1's birthday.	home	it	Domani è il compleanno di %1.
 yes, for the next three days	home	it	Sì, per i prossimi tre giorni

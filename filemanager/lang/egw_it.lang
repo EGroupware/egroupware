@@ -1,4 +1,5 @@
 %1 already exists as a file	filemanager	it	%1 esiste già come file
+%1 already mounted on %2!	filemanager	it	%1 è già montato su %2
 %1 directories and %2 files copied.	filemanager	it	%1 cartelle e %2 files copiati.
 %1 directories and %2 files deleted.	filemanager	it	%1 cartelle e %2 files eliminati.
 %1 elements linked.	filemanager	it	%1 elementi collegati.
@@ -11,6 +12,7 @@
 %1 files copied.	filemanager	it	%1 files copiati.
 %1 files deleted.	filemanager	it	%1 files rimossi.
 %1 files moved.	filemanager	it	%1 files spostati.
+%1 shares deleted.	filemanager	it	%1 dcondivisioni eliminate
 %1 starts with '%2'	filemanager	it	%1 inizia con '%2'
 %1 successful unmounted.	filemanager	it	%1 smontato conrrettamente
 %1 successful uploaded.	filemanager	it	%1 caricati con successo.
@@ -29,6 +31,7 @@ actions	filemanager	it	Azioni
 add to clipboard	filemanager	it	Aggiungi agli appunti.
 administrators	filemanager	it	amministratori
 all files	filemanager	it	Tutti i file
+all types	filemanager	it	Tutti i tipi
 allow a maximum of the above configured folderlinks to be configured in settings	admin	it	Numero massimo di collegamenti a cartelle da configurare nelle preferenze
 and all it's childeren	filemanager	it	e tutti i figli
 application fields	filemanager	it	Campi di applicazione
@@ -72,6 +75,7 @@ cut to clipboard	filemanager	it	Taglia e metti negli appunti
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	it	Predefinito: No. Il collegamento non verrà mostrato, ma potrai comunque raggiungere questo percorso, oppure configurarlo come cartella di avvio o collegamento a cartella.
 default document to insert entries	filemanager	it	Documento predefinito per l'inserimento
 delete these files or directories?	filemanager	it	Eliminare i file o le cartelle?
+delete these shares?	filemanager	it	Eliminare queste condivisioni?
 delete this file or directory	filemanager	it	Elimina questo file o questa cartella
 deleted %1	filemanager	it	Eliminato %1
 directories sorted in	filemanager	it	Cartelle ordinate per
@@ -128,6 +132,8 @@ filemanager	common	it	Filemanager
 filemanager configuration	admin	it	Configurazione filemanager
 filemanager fields:	filemanager	it	Campi del filemanager:
 filename must not be empty!	filemanager	it	Il nome del file non può essere vuoto!
+files	common	it	File
+files from links	filemanager	it	File da collegamenti
 files from subdirectories	filemanager	it	File da sottocartelle
 files in this directory	filemanager	it	File in questa cartella
 filesystem check reported no problems.	filemanager	it	Non sono stati individuati problemi dopo il controllo del filesystem.
@@ -149,18 +155,23 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 if you specify an export definition, it will be used when you export*	filemanager	it	Verrà usata quando esporti, se specifichi qui una definizione di esportazione
 inherited	filemanager	it	Ereditato
+last accessed	filemanager	it	Ultimoaccesso
 link	filemanager	it	Collegamento
 link %1: %2	filemanager	it	Collegamento %1: %2
+link into folder	filemanager	it	Collegamento in cartella
 link target	filemanager	it	Destinazione collegamento
 link target %1 not found!	filemanager	it	Destinazione %1 del collegamento non trovata!
 location	filemanager	it	Percorso
 log out as superuser	filemanager	it	Esci come super utente
 mail files	filemanager	it	Invia file per email
+mail paste	filemanager	it	Incolla in email
 max folderlinks	admin	it	Numero massimo di collegamenti a cartella
 mime type	filemanager	it	Tipo MIME
 modified	filemanager	it	Modificato
 modified between	filemanager	it	Modificato tra
 modify all subdirectories and their content	filemanager	it	Modifica tutte le sottocartelle e il loro contenuto
+mount	filemanager	it	Montaggio
+mountpoints	filemanager	it	Punti di montaggio
 move	filemanager	it	Sposta
 move into folder	filemanager	it	Sposta nella cartella
 move to	filemanager	it	Sposta in
@@ -172,9 +183,12 @@ no files in this directory.	filemanager	it	Nessun File in questa directory.
 no preview available	filemanager	it	L'anteprima non è disponibile
 no version history for this file/directory	filemanager	it	Nessuna cronologia versioni per questo file/directory
 noone	filemanager	it	Nessuno
+older versions or deleted files	filemanager	it	Versioni vecchie o file eliminati
 only owner can rename or delete the content	filemanager	it	Solo il proprietario può rinominare o eliminare il contenuto
 open	filemanager	it	Apri
 operation	filemanager	it	Operazione
+paste link	filemanager	it	Incolla collegamento
+path %1 not found or not a directory!	filemanager	it	Il percorso %1 non è stato trovato, oppure non è una directory!
 percentage	filemanager	it	Percentuale
 permission denied!	filemanager	it	Permesso negato
 permissions	filemanager	it	Permessi
@@ -202,6 +216,7 @@ root access stopped.	filemanager	it	Accesso root fermato.
 save %1	filemanager	it	Salva %1
 save %1, and go back to file listing	filemanager	it	Salva %1 e torna alla lista dei file
 save as	filemanager	it	Salva con nome
+save as zip	filemanager	it	Salva come file compresso (zip)
 save changes	filemanager	it	Salva le modifiche
 saved %1	filemanager	it	Ho salvato %1
 saving properties failed!	filemanager	it	Non è stato possibile salvare le proprietà
@@ -212,6 +227,8 @@ select action...	filemanager	it	Scegli azione...
 select file to upload in current directory	filemanager	it	Seleziona il file da caricare nella cartella corrente
 select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (vfs)
 setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.
+shared files	filemanager	it	File condivisi
+shared with	filemanager	it	Condivisi con
 show	filemanager	it	Mostra
 show hidden files	filemanager	it	Mostra i file nascosti
 show link "%1" in side box menu?	filemanager	it	Mostra il collegamento "%1" nel menù laterale
@@ -221,8 +238,10 @@ show link "your home directory" in side box menu?	filemanager	it	Mostra collegam
 show link "your home directory*" in side box menu?*	filemanager	it	Mostra collegamento "La tua direcroy principale*" nel menù laterale*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	it	Mostrare il collegamento alla cartella principale (/) nel menù laterale?
 size	filemanager	it	Dimensione
+sqlfs statistics	filemanager	it	Statistiche filesystem sql
 start search	filemanager	it	Avvia ricerca
 startfolder	filemanager	it	Cartella di avvio
+successful mounted %1 on %2.	filemanager	it	Montato con successo %1 su %2
 superuser	filemanager	it	Super utente
 superuser (root)	filemanager	it	Super utente (root)
 symlink to %1 created.	filemanager	it	Link simbolico a %1 creato.
@@ -233,6 +252,7 @@ the following document-types are supported:	filemanager	it	I seguenti tipi di do
 the requested path %1 is not available.	filemanager	it	Il percorso %1 non è disponibile!
 there's already a directory with that name!	filemanager	it	Esiste già una cartella con questo nome!
 there's already a file with that name!	filemanager	it	Esiste già un file con questo nome!
+tile view	filemanager	it	Vista affiancata
 to overwrite the existing file store again.	filemanager	it	Per sovrascrivere l'esistente salva di nuovo
 total files	filemanager	it	File totali
 unmount	filemanager	it	Smonta
@@ -245,10 +265,13 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used space	filemanager	it	Spazio utilizzato
 users and groups	filemanager	it	Utenti e gruppo
 versioning	filemanager	it	Registrazione Versioni di file
+vfs mounts and versioning	common	it	Montaggi VFS e registrazione versioni
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	it	Chi dovrebbe poter eliminare definitivamente file o vecchie versioni di file:
 wrong username or password!	filemanager	it	Nome utente o password errati!
 you are not allowed to upload a script!	filemanager	it	Non hai il permesso di caricamento di script!
 you can only grant additional rights, you can not take rights away!	filemanager	it	Puoi soltanto concedere diritti aggiuntivi, non puoi toglierne!
 you do not have access to %1	filemanager	it	Non hai accesso a %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	it	Devi accedere come super utente amministrativo (root) per abilitare o disabilitare la registrazione delle versioni in una cartella!
 you need to select an owner!	filemanager	it	Devi selezionare un proprietario!
 you need to select some files first!	filemanager	it	Devi selezionare alcuni file prima!
 you will be redirected to your home directory.	filemanager	it	Sarai reindirizzato alla tua cartella personale

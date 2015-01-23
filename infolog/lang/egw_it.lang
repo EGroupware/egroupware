@@ -54,6 +54,7 @@ all other %1 fields are valid	infolog	it	Tutti gli altri %1 campi sono validi
 all projects	infolog	it	Tutti i progetti
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	it	pemette di impostare lo stato di una voce, es. impostare completato un ToDo finito (i valori dipendono dal tipo di voce)
 alternatives	infolog	it	Alternative
+always show them	infolog	it	Mostra sempre
 application mail expected but got: %1	infolog	it	Si aspettava l'applicazione mail ma invece si ha: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	it	Applica l'azione su tutta la query, NON solo le voci visualizzate!
 apply the changes	infolog	it	Applica le modifiche
@@ -268,6 +269,7 @@ leave it empty	infolog	it	lascia vuoto
 leave it empty for a full week	infolog	it	Lascia vuoto per una settimana completa
 leave without saveing the entry	infolog	it	uscire senza salvare la voce
 leaves without saveing	infolog	it	uscire senza salvare
+length	infolog	it	Lunghezza
 limit number of description lines (default 5, 0 for no limit)	infolog	it	Limita il numero di righe di descrizione. Predefinito = 5, 0 = nessun limite
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	it	Limita la larghezza della colonna di descrizione. Predefinito = 5, 0 = nessun limite
 link	infolog	it	Link
@@ -320,6 +322,8 @@ one day in advance	infolog	it	Un giorno in anticipo
 ongoing	infolog	it	In corso
 only for details	infolog	it	Solo per dettagli
 only if i get assigned or removed	infolog	it	Solo se vengo assegnato o rimosso
+only show them if there is a filter	infolog	it	Mostra solo se c'è un filtro
+only show them while searching	infolog	it	Mostra solo durante la ricerca
 only the attachments	infolog	it	Solo gli allegati
 only the links	infolog	it	Solo i collegamenti
 open and upcoming	infolog	it	Aperte prossime
@@ -436,6 +440,7 @@ show full usernames	infolog	it	Mostra nomi utente completi
 show in the infolog list	infolog	it	Visualizza nella lista di Attività
 show last modified	infolog	it	Mostra ultima modifica
 show status and percent done separate	infolog	it	Mostra status e percentuale completamento separati
+show sub-entries	infolog	it	Mostra sottovoci
 show ticket id	infolog	it	Mostra ID ticket
 show times	infolog	it	Mostra tempi
 small view	infolog	it	vista ridotta
@@ -479,6 +484,7 @@ typ '%1' already exists !!!	infolog	it	Il tipo '%1' esiste già !!!
 type	infolog	it	Tipo
 type ...	infolog	it	Tipo ...
 type of customfield	infolog	it	Tipo di campo personalizzato
+type of field	infolog	it	Tipo di campo
 type of the log-entry: note, phonecall or todo	infolog	it	Tipo di log per la voce: Note, Chiamate o ToDo
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	it	Impossibile collegare a %3 da campo personalizzato "%1": "%4". %2 corrispondenze
 unknown type: %1	infolog	it	Tipo ignoto: %1
