@@ -452,7 +452,7 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								$participantURL = empty($info['email']) ? '' : 'MAILTO:' . $info['email'];
+								$participantURL = empty($info['email']) ? '' : 'mailto:' . $info['email'];
 							}
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
@@ -475,7 +475,7 @@ class calendar_ical extends calendar_boupdate
 										($members = $GLOBALS['egw']->accounts->members($uid, true)) && in_array($this->user, $members))
 									{
 										$user = $this->resource_info($this->user);
-										$attributes['ATTENDEE'][] = 'MAILTO:' . $user['email'];
+										$attributes['ATTENDEE'][] = 'mailto:' . $user['email'];
 			    						$parameters['ATTENDEE'][] = array(
 			    							'CN'		=>	$user['name'],
 			    							'ROLE'		=> 'REQ-PARTICIPANT',
@@ -515,7 +515,7 @@ class calendar_ical extends calendar_boupdate
 							if (!empty($status)) $options['PARTSTAT'] = $status;
 							if (!empty($cutype)) $options['CUTYPE'] = $cutype;
 							if (!empty($rsvp)) $options['RSVP'] = $rsvp;
-							if (!empty($info['email']) && $participantURL != 'MAILTO:'.$info['email'])
+							if (!empty($info['email']) && $participantURL != 'mailto:'.$info['email'])
 							{
 								$options['EMAIL'] = $info['email'];	// only add EMAIL attribute, if not already URL, as eg. Akonadi is reported to have problems with it
 							}
@@ -544,7 +544,7 @@ class calendar_ical extends calendar_boupdate
 			    			}
 			    			else
 			    			{
-		    					$organizerURL = empty($organizerEMail) ? '' : 'MAILTO:' . $organizerEMail;
+		    					$organizerURL = empty($organizerEMail) ? '' : 'mailto:' . $organizerEMail;
 			    			}
 			    			$organizerUID = $event['owner'];
 		    				if (!isset($event['participants'][$event['owner']]))
@@ -2661,7 +2661,7 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'ORGANIZER':
 					$event['organizer'] = $attributes['value'];	// no egw field, but needed in AS
-					if (strtoupper(substr($event['organizer'],0,7)) == 'MAILTO:')
+					if (strtlower(substr($event['organizer'],0,7)) == 'mailto:')
 					{
 						$event['organizer'] = substr($event['organizer'],7);
 					}
@@ -2692,14 +2692,14 @@ class calendar_ical extends calendar_boupdate
 						$role = $attributes['params']['ROLE'];
 					}
 					// CN explicit given --> use it
-					if (strtoupper(substr($attributes['value'], 0, 7)) == 'MAILTO:' &&
+					if (strtolower(substr($attributes['value'], 0, 7)) == 'mailto:' &&
 						!empty($attributes['params']['CN']))
 					{
 						$email = substr($attributes['value'], 7);
 						$cn = $attributes['params']['CN'];
 					}
 					// try parsing email and cn from attendee
-					elseif (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+					elseif (preg_match('/mailto:([@.a-z0-9_-]+)|mailto:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
 					{
 						$email = $matches[1] ? $matches[1] : $matches[3];
