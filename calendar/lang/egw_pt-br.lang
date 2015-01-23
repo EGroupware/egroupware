@@ -1,13 +1,13 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
-%1 days	calendar	pt-br	% 1 dias
-%1 event(s) %2	calendar	pt-br	% 1 evento (s) 2%
+%1 days	calendar	pt-br	%1 dias
+%1 event(s) %2	calendar	pt-br	%1 evento (s) 2%
 %1 hours	calendar	pt-br	% uma hora
-%1 minutes	calendar	pt-br	% 1 minuto
+%1 minutes	calendar	pt-br	%1 minuto
 %1 records imported	calendar	pt-br	%1 registro(s) importado(s)
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar "Testar Importação")
 %1 weeks	calendar	pt-br	%1 semanas
 %s the event	calendar	pt-br	% Do evento
-(%1 events in %2 seconds)	calendar	pt-br	(% 1% 2 eventos em segundos)
+(%1 events in %2 seconds)	calendar	pt-br	(%1% 2 eventos em segundos)
 (empty = use global limit, no = no export at all)	admin	pt-br	(= Vazias usar limite global, não = nenhuma exportação em tudo)
 , exceptions preserved	calendar	pt-br	, Exceções preservados
 , stati of participants reset	calendar	pt-br	, Estado de participantes redefinir
@@ -81,7 +81,7 @@ calendar-fieldname	calendar	pt-br	Agenda-Nome do Campo
 can't add alarms in the past !!!	calendar	pt-br	Não é possível incluir alarmes no passado !!
 can't aquire lock!	calendar	pt-br	Não foi possível acesso exclusivo ao registro!
 canceled	calendar	pt-br	Cancelado
-category %1 removed because of missing rights	calendar	pt-br	Categoria% 1 removido por causa de direitos perdidos
+category %1 removed because of missing rights	calendar	pt-br	Categoria %1 removido por causa de direitos perdidos
 category acl	common	pt-br	Categoria ACL
 chair	calendar	pt-br	Cadeira
 change history	calendar	pt-br	Mudar a história
@@ -255,7 +255,7 @@ interval	calendar	pt-br	Intervalo
 invalid email-address "%1" for user %2	calendar	pt-br	E-mail %1 inválido para o usuário %2
 invitations	calendar	pt-br	Convites
 invite	calendar	pt-br	Convidar
-it can not read timezones from sqlite database %1!	calendar	pt-br	Ele não pode ler fusos horários a partir de banco de dados SQLite% 1!
+it can not read timezones from sqlite database %1!	calendar	pt-br	Ele não pode ler fusos horários a partir de banco de dados SQLite %1!
 keep exceptions	calendar	pt-br	Mantenha exceções
 keep the series unchanged.	calendar	pt-br	Manter a série inalterada.
 last	calendar	pt-br	Último
@@ -305,7 +305,7 @@ no rights to export more than %1 entries!	calendar	pt-br	Nenhum direito a export
 non blocking	calendar	pt-br	Posse compartilhada
 not	calendar	pt-br	não
 not rejected	calendar	pt-br	Não rejeitado
-nothing to update, version is already %1.	calendar	pt-br	Nada de atualização, versão já é% 1.
+nothing to update, version is already %1.	calendar	pt-br	Nada de atualização, versão já é %1.
 notification messages for added events	calendar	pt-br	Mensagem para notificação de eventos adicionados
 notification messages for canceled events	calendar	pt-br	Mensagem para notificação de eventos cancelados
 notification messages for disinvited participants	calendar	pt-br	Mensagem para notificação de participantes desconvidados
