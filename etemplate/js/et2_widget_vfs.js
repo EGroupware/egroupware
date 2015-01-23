@@ -277,11 +277,11 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			default:"",
 			description:" Size of thumbnail in pixel for specified mime type with syntax of: mime_type(s),size (eg. image,video,128)"
 		}
-				
+
 	},
 
 	legacyOptions:["size"],
-	
+
 	/**
 	 * Constructor
 	 *
@@ -295,7 +295,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 		this.iconOverlayContainer.append(this.image);
 		this.setDOMNode(this.iconOverlayContainer[0]);
 	},
-	
+
 	/**
 	 * Handler for expose slide action, from expose
 	 * Returns data needed for the given index, or false to let expose handle it
@@ -303,7 +303,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {Gallery} gallery
 	 * @param {integer} index
 	 * @param {DOMNode} slide
-	 * @return {Array} array of objects consist of media contnet 
+	 * @return {Array} array of objects consist of media contnet
 	 */
 	expose_onslide: function(gallery, index, slide)
 	{
@@ -316,10 +316,10 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		return content;
 	},
-	
+
 	/**
 	 * Function to get media content to feed the expose
-	 * 
+	 *
 	 * @param {type} _value
 	 * @returns {Array} return an array of object consists of media content
 	 */
@@ -334,7 +334,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				type: 'video/*',
 				sources:[{
 						href: base_url + _value.download_url,
-						type: _value.mime,
+						type: _value.mime
 				}]
 			}];
 		}
@@ -344,12 +344,12 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				title: _value.name,
 				href: base_url + _value.download_url,
 				type: _value.mime,
-				thumbnail: _value.path && _value.mime ? this.egw().mime_icon(_value['mime'], _value['path']) + '&thheight=128' : this.image.attr('src')+ '&thheight=128'
+				thumbnail: _value.path && _value.mime ? this.egw().mime_icon(_value['mime'], _value['path']) : this.image.attr('src')+ '&thheight=128'
 			}];
 		}
 		return mediaContent;
 	},
-	
+
 	set_value: function(_value) {
 		if (typeof _value !== 'object')
 		{
@@ -370,11 +370,11 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					var mime_size = this.options.thumb_mime_size.split(',');
 					var mime_regex = RegExp(_value.mime.split('/')[0]);
-					if (typeof mime_size != 'undefined' && jQuery.isArray(mime_size) 
+					if (typeof mime_size != 'undefined' && jQuery.isArray(mime_size)
 							&& !isNaN(mime_size[mime_size.length-1]) && isNaN(mime_size[0]) && this.options.thumb_mime_size.match(mime_regex[0], 'ig'))
 					{
 						src += "&thsize=" + mime_size[mime_size.length-1];
-					}	
+					}
 				}
 				this.image.css("max-width", "100%");
 			}
@@ -705,7 +705,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		"value": {
 			"type": "any", // Object
 			"description": "Array of paths (strings)"
-		}, 
+		},
 		"button_caption":{
 			name: "button caption",
 			type: "string",
@@ -728,12 +728,12 @@ var et2_vfsSelect = et2_inputWidget.extend(
 
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
-		
+
 		this.button = $j(document.createElement("button"))
 			.attr("title", this.egw().lang("Select file(s) from VFS"))
 			.addClass("et2_button et2_button_text et2_vfs_btn")
 			.css("background-image","url("+this.egw().image("filemanager/navbar")+")");
-			
+
 		if (this.options.button_caption != "")
 		{
 			this.button.text(this.options.button_caption);
@@ -819,17 +819,17 @@ var et2_vfsSelect = et2_inputWidget.extend(
 	{
 		this.options.button_label = label;
 	},
-	
+
 	/**
 	 * Set the caption for vfs-select button
-	 * 
+	 *
 	 * @param {string} caption string value as a caption
 	 */
 	set_button_caption: function (caption)
 	{
 		this.options.button_caption = caption;
 	},
-	
+
 	/**
 	 * Set the ID passed to the server side callback
 	 *
