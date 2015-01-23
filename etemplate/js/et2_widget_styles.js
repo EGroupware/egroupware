@@ -23,14 +23,14 @@
  * TODO: The style data could be parsed for rules and appended using the JS
  * stylesheet interface, allowing the style only to modifiy nodes of the current
  * template.
- * 
+ *
  * @augments et2_widget
  */
 var et2_styles = et2_widget.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_styles
 	 */
 	init: function() {
@@ -64,8 +64,32 @@ var et2_styles = et2_widget.extend(
 		{
 			this.styleNode.appendChild(document.createTextNode(_content));
 		}
-	}
+	},
 
+	/**
+	 * Sets the id of the DOM-Node.
+	 *
+	 * DOM id's have dots "." replaced with dashes "-"
+	 *
+	 * @param {string} _value id to set
+	 */
+	set_id: function(_value) {
+
+		this.id = _value;
+		this.dom_id = _value ? this.getInstanceManager().uniqueId+'_'+_value.replace(/\./g, '-') : _value;
+
+		if (this.styleNode)
+		{
+			if (_value != "")
+			{
+				this.styleNode.setAttribute("id", this.dom_id);
+			}
+			else
+			{
+				this.styleNode.removeAttribute("id");
+			}
+		}
+	}
 });
 et2_register_widget(et2_styles, ["styles"]);
 
