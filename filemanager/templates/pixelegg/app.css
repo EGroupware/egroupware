@@ -365,14 +365,6 @@ table.egwGridView_grid img {
 div#filemanager-file {
   margin: 0.5em;
 }
-div#filemanager-file_tabs {
-  width: 564px;
-  /*eacl*/
-  /*Abonements*/
-}
-div#filemanager-file_tabs .et2_tabs {
-  width: 554px;
-}
 div#filemanager-file_tabs img {
   width: 24px;
   height: 24px;
