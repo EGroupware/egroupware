@@ -1,7 +1,9 @@
 %1 %2 in %3	calendar	it	%1 %2 in %3
+%1 days	calendar	it	%1 giorni
 %1 event(s) %2	calendar	it	%1 evento(i) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	it	%1 evento(i) %2, %3 non riusciti per mancanza di diritti sufficienti!
 %1 hours	calendar	it	%1 ore
+%1 minutes	calendar	it	%1 minuti
 %1 participants removed because of missing invite grants	calendar	it	%1 partecipanti rimossi a causa di permessi di invito mancanti.
 %1 records imported	calendar	it	%1 record importato/i
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	it	%1 record letto/i (non ancora importato/i, torna indietro e deseleziona Test Import)
@@ -23,6 +25,8 @@ actions	calendar	it	Azioni
 actions...	calendar	it	Azioni
 add alarm	calendar	it	Aggiungi Allarme
 add current view as favorite	calendar	it	Aggiungi questa visualizzazione come preferita
+add new alarm	calendar	it	Aggiungi allarme
+add new participants or resource	calendar	it	Aggiungi nuovi partecipanti o risorse
 add timesheet entry	calendar	it	Aggiungi foglio ore
 added	calendar	it	Aggiunto
 added by synchronisation	calendar	it	Aggiunto da sincronizzazione
@@ -32,6 +36,7 @@ after current date	calendar	it	Dopo la data attuale
 age:	calendar	it	Età:
 alarm	calendar	it	Sveglia
 alarm added	calendar	it	Sveglia aggiunta
+alarm added automatic to new events before event start-time	calendar	it	Allarme aggiunto automaticamente a nuovi eventi prima dell'orario di inizio
 alarm deleted	calendar	it	Sveglia cancellata
 alarm for %1 at %2 in %3	calendar	it	Allarme per %1 a %2 in %3
 alarm management	calendar	it	Gestione Allarmi
@@ -125,6 +130,8 @@ days	calendar	it	giorni
 days of the week for a weekly repeated event	calendar	it	Giorni della settimana per un evento con ricorrenza settimanale
 days repeated	calendar	it	giorni ripetuti
 dayview	calendar	it	Vista Giornaliera
+default alarm for regular events	calendar	it	Allarme predefinito per eventi regolari
+default alarm for whole-day events	calendar	it	Allarme predefinito per eventi di un giorno intero
 default appointment length (in minutes)	calendar	it	lunghezza predefinita degli appuntamenti (in minuti)
 default calendar filter	calendar	it	Filtro agenda predefinito
 default calendar view	calendar	it	Vista agenda predefinita
@@ -140,6 +147,7 @@ delete series	calendar	it	Cancella serie
 delete this alarm	calendar	it	Cancella questa sveglia
 delete this event	calendar	it	Cancella questo evento
 delete this exception	calendar	it	Cancella questa eccezione
+delete this recurrence	calendar	it	Elimina la ricorrenza
 delete this series of recuring events	calendar	it	Cancella questa serie di eventi ricorrenti
 deleted	calendar	it	Cancellati
 deny ressources reservation for private events	calendar	it	Nega la prenotazione di risorse per eventi privati
@@ -170,6 +178,7 @@ edit series	calendar	it	Modifica Serie
 edit status or alarms for this particular day	calendar	it	Modifica lo stato degli allarmi per questo giorno in particolare
 edit this event	calendar	it	Modifica questo evento
 edit this series of recuring events	calendar	it	Modifica questa serie di eventi ricorrenti
+empty = no alarm	calendar	it	vuoto = nessun allarme
 empty for all	calendar	it	vuoto per tutti
 end	calendar	it	Fine
 end date/time	calendar	it	Data/Ora finale
@@ -188,11 +197,13 @@ error: saving the event !!!	calendar	it	Errore: durante il salvataggio dell'even
 error: starttime has to be before the endtime !!!	calendar	it	Errore: Inizio deve essere prima della Fine !!!
 error: the entry has been updated since you opened it for editing!	calendar	it	L'inserimento è stato modificato dall'ultima volta che l'hai aperto per la modifica!
 error: you can't shift a series from the past!	calendar	it	Non puoi spostare una serie dal passato
+event	common	it	Evento
 event copied - the copy can now be edited	calendar	it	Evento copiato - la copia può ora essere modificata
 event deleted	calendar	it	Evento cancellato
 event details follow	calendar	it	Dettagli dell'evento
 event saved	calendar	it	Evento salvato
 event will occupy the whole day	calendar	it	L'evento occuperà l'intera giornata
+events	common	it	Eventi
 every user can invite other users and groups	admin	it	Ogni utente può invitare altri utenti o gruppi
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} Esempio: Sig. Dott. Giorgio Rossi
@@ -314,6 +325,7 @@ maximum available quantity of %1 exceeded!	calendar	it	Quantità massima di %1 e
 meeting request	calendar	it	Richiesta meeting
 meetingrequest to all participants	calendar	it	Richiesta di riunione a tutti i partecipanti
 merge document...	calendar	it	Unire documento...
+midnight	calendar	it	Mezzanotte
 minutes	calendar	it	Minuti
 modified	calendar	it	Modificato
 modifier	calendar	it	Modificatore
@@ -369,6 +381,7 @@ one week	calendar	it	una settimana
 one year	calendar	it	un anno
 only group-events	calendar	it	Eventi solo per gruppi
 only the initial date of that recuring event is checked!	calendar	it	Solo la data iniziale di quel evento ricorrente è selezionata!
+only used for first viewing of calendar, afterwards last selected view is used.	calendar	it	Usato solo per la prima visualizzazione del calendario, dopo viene usata l'ultima visualizzazione scelta
 open todo's:	calendar	it	ToDo Aperti:
 optional	calendar	it	Opzionale
 overlap holiday	calendar	it	sovrapposizione di una festività
@@ -506,6 +519,7 @@ this entry is currently opened by %1!	calendar	it	La scheda è attualmente apert
 this entry is opened by user:	calendar	it	Questa scheda è stata aperta nell'intervallo di tempo preconfigurato dall'utente:
 this event is part of a series	calendar	it	Questo evento è parte di una serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	it	Questo gruppo è preselezionato quando entri nel pianificatore. Quando vorrai potrai cambiarlo nel pianificatore.
+this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	it	Questo è un evento ricorrente. Si vuole eliminare solo questa istanza oppure tutta la serie?
 this mail contains a meeting request	calendar	it	Questo messaggio contiene una richiesta di riunione
 this mail contains a reply to a meeting request	calendar	it	Questo messaggio contiene una risposta alla richiesta di riunione
 this message is sent for canceled or deleted events.	calendar	it	Questo messaggio è inviato per gli eventi annullati o cancellati.

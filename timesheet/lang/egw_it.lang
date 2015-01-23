@@ -1,14 +1,20 @@
+%1 timesheets(s) %2	timesheet	it	%1 fogli ore %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	it	%1 fogli ore %2, %3 falliti a causa di permessi insufficienti
 --> enter new name	timesheet	it	->> inserisci nuovo nome
 2 month ago	timesheet	it	2 mesi fa
 2 years ago	timesheet	it	2 anni fa
 3 years ago	timesheet	it	3 anni fa
 all projects	timesheet	it	Tutti i progetti
+and its members	timesheet	it	E i suoi membri
 applies the changes	timesheet	it	applica le modifiche
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	it	Applica l'azione all'intera query, NON solo i fogli ore visibili
 both: allow to use projectmanager and free project-names	admin	it	Entrambi: permetti di usare Gestione Progetti e nomi-progetto liberi
 by	timesheet	it	di
 change category	timesheet	it	Modifica categoria
 changed category to %1	timesheet	it	Categoria modificata in %1
+changed status	timesheet	it	Stato modificato
 check all	timesheet	it	Seleziona tutto
+choose 'creator' of imported data	timesheet	it	Seleziona "creatore" dei dati importati
 comment by %1 at %2:	timesheet	it	Commento di %1 il %2:
 create new links	timesheet	it	Crea nuovi collegamenti
 creates a new field	timesheet	it	Crea un nuovo campo
@@ -36,6 +42,9 @@ example {{nelfnv role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	it	Collegamenti esistenti
 exists	timesheet	it	Esiste
 export definition to use for nextmatch export	timesheet	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
+export to openoffice spreadsheet	timesheet	it	Esporta in openoffice calc
+exports entries from your timesheet into a csv file.	timesheet	it	Esporta fogli ore in CSV
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	it	Esporta fogli ore in CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni è possibile scegliere altri separatori
 favorites	timesheet	it	Preferiti
 field must not be empty !!!	timesheet	it	Il campo non può essere vuoto !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
@@ -50,7 +59,10 @@ if you specify a directory (full vfs path) here, %1 displays an action for each 
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
 if you specify an export definition, it will be used when you export	timesheet	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 ignore	timesheet	it	Ignora
+import options	timesheet	it	Importa opzioni
+imports entries into the timesheet from a csv file.	timesheet	it	Importa voci foglio ore da file CSV
 insert	timesheet	it	Inserisci
+invalid field: %1 = %2, it needs to be a number.	timesheet	it	Campo non valido: %1 = %2, deve essere un numero
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	it	ID proprietario non valido: %1. Potrebbe essere una traduzione errata del campo. Usare %2.
 last modified	timesheet	it	Ultima modifica
 last month	timesheet	it	Mese scorso
@@ -65,18 +77,25 @@ links to specified application.  example: {{links/infolog}}	timesheet	it	Collega
 list of files linked to the current record	timesheet	it	Elenco dei file collegati al record attuale
 max length of the input [, length of the inputfield (optional)]	timesheet	it	lunghezza massima del input [, length of the inputfield (optional)]
 modified	timesheet	it	Modificato
+modify status	timesheet	it	Modifica stato
 name of current user, all other contact fields are valid too	timesheet	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
-new ticket submitted by %1 at %2	timesheet	it	Nuovo ticket inoltrato da %1 al %2
-no details	timesheet	it	no dettagli
-no project	timesheet	it	Nessun progetto
-none: use only free project-names	admin	it	Nessuno: usa solo nomi-progetto liberi
+new ticket submitted by %1 at %2	timesheet	it	Nuovo ticket inoltrato da %1 alle %2
+new timesheet submitted by %1 at %2	timesheet	it	Nuovo ticket inoltrato da %1 alle %2
+no details	timesheet	it	Non mostrare dettagli
+no project	timesheet	it	Non mostrare progetto
+no status	timesheet	it	Non mostrare stato
+none: use only free project-names	admin	it	Nessuno: usa solo nomi progetto liberi
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	it	Numero di righe per un campo di testo oppure un campo di selezione multipla
+only admin	timesheet	it	Solo amministratori
+only admin can edit this status	timesheet	it	Solo gli amministratori possono modificare fogli ore con stato
 or endtime	timesheet	it	o OraFine
 order	timesheet	it	Ordine
 parent	timesheet	it	Superiore
 permission denied!!!	timesheet	it	Permesso negato!!!
 permissions error - %1 could not %2	timesheet	it	Errore di permessi - %1 non può %2
+prevent deleting	admin	it	Prevenzione eliminazioni
 price	timesheet	it	Prezzo
+project fields	timesheet	it	Campi progetto
 projectmanager integration	admin	it	Integrazione Gestione Progetti
 quantity	timesheet	it	Quantità
 recovered	timesheet	it	recuperato
@@ -87,8 +106,21 @@ saves the changes made and leaves	timesheet	it	salva le modifiche fatte ed esce
 saves this entry and add a new one	timesheet	it	Salva questa voce e ne aggiunge una nuova
 select a price	timesheet	it	Seleziona un prezzo
 select a project	timesheet	it	Seleziona un progetto
+select a status of the timesheet	timesheet	it	Seleziona uno status del foglio ore
+select infolog	timesheet	it	Seleziona scheda attività
+select multiple timeshhets for a further action	timesheet	it	Seleziona fogli ore multipli per ulteriori azioni
+select the predefined status, whan creating a new timesheet	preferences	it	Seleziona lo stato predefinito, quando si crea una nuova voce
+select the predefined status, when creating a new timesheet	preferences	it	Seleziona lo stato predefinito, quando si crea una nuova voce
+set to	timesheet	it	Imposta a
+show a quantity sum (eg. to sum up negative overtime)	admin	it	Mostra una somma p.es somma dello straordinario negativo
+skip record	timesheet	it	Salta voce
 start	timesheet	it	Inizio
 starttime	timesheet	it	OraInizio
+starttime has to be before endtime !!!	timesheet	it	L'orario di inizio deve essere prima della fine
+status	timesheet	it	Stato
+status deleted.	timesheet	it	Stato eliminato
+status of created timesheets	timesheet	it	Stato di fogli ore creati
+status updated.	timesheet	it	Stato aggiornato
 sum %1:	timesheet	it	Somma %1:
 tag to mark positions for address labels	timesheet	it	Tagga per marcare le posizioni per le etichette di indirizzo
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
@@ -100,7 +132,17 @@ this week	timesheet	it	Questa settimana
 this year	timesheet	it	Questo anno
 ticket modified by %1 at %2	timesheet	it	Ticket modificato da %1 al %2
 timesheet	common	it	Foglio Ore
+timesheet csv export	timesheet	it	Esportazione folgio ore in CSV
+timesheet csv import	timesheet	it	Importazione folgio ore da CSV
+timesheet fields:	timesheet	it	Campi foglio ore:
+timesheet id	timesheet	it	ID foglio ore
+timesheet modified by %1 at %2	timesheet	it	Foglio ore modificato da %1 alle %2
+timesheet openoffice export	timesheet	it	Esportazione foglio ore  in openoffice
+timesheet status-%1 '%2' added.	timesheet	it	Stato %1 '%2' aggiunto al foglio ore
+timesheet-%1 '%2' updated.	timesheet	it	Stato %1 '%2' aggiornato
+timesheet-%1 deleted.	timesheet	it	Stato %1 eliminato
 titles of any entries linked to the current record, excluding attached files	timesheet	it	I titoli delle voci collegate a questa, allegati esclusi
+unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	it	Impossibile convertire "%1" a ID account. Impostazione plugin (%2) per %3 in uso.
 unitprice	timesheet	it	Prezzo unitario
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 values for selectbox	timesheet	it	Valori per la selectbox

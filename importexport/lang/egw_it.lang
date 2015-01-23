@@ -56,6 +56,7 @@ export data as	importexport	it	Esporta la data come
 export definition to use for nextmatch export	preferences	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 export spreadsheet	importexport	it	Esporta foglio di calcolo
 exported	importexport	it	Esportato
+extra %1	importexport	it	Extra %1
 extra charsets for import / export	importexport	it	Set di caratteri extra per l'importazione/esportazione
 extra encodings	importexport	it	Codifiche extra
 false	importexport	it	Falso
@@ -99,6 +100,7 @@ old fixed definition	preferences	it	Vecchia definizione fissa
 please select file to import	importexport	it	Per favore selezionare il file da importare
 plugin	importexport	it	Plugin
 preview	importexport	it	Anteprima
+preview not supported by %1	importexport	it	Anteprima non supportata da %1
 previous	importexport	it	Precedente
 problems during import:	importexport	it	Problemi durante l'importazione:
 save as definition	importexport	it	Salva come definizione

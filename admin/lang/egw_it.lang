@@ -67,6 +67,7 @@ add new application	admin	it	Aggiungi nuova applicazione
 add peer server	admin	it	Aggiungi Peer Server
 add sub-category	admin	it	Aggiungi sotto-categoria
 add user	admin	it	Aggiungi utente
+add user or group	admin	it	Aggiungi utente o gruppo
 admin email	admin	it	Email Amministratore
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	it	Indirizzo e-mail dell'amministratore (separato da virgole) che sarà avvisato del blocco (vuoto per nessun avviso)
 admin name	admin	it	Nome Amministratore
@@ -115,6 +116,7 @@ attribute accountstatus explained	admin	it	Questo gestisce l'attributo <b><i>-ac
 attribute mail explained	admin	it	Questo gestisce l'attributo <b><i>-mail-</i></b> dallo schema QMAIL e non deve mai essere vuoto. Esso è anche il campo interno di email di eGW.
 attribute mailalternateaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailAlternateAddress-</i></b> dallo schema QMAIL e può essere gestito come mappe virtuali o alias.
 attribute mailforwardingaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailForwardingAddress-</i></b> dallo schema QMAIL e non deve essere vuoto se assegnato.
+attributes	admin	it	Attributi
 authentication / accounts	admin	it	Autenticazione / Account
 auto create account records for authenticated users	admin	it	Crea automaticamente gli account per gli utenti autenticati
 available placeholders	admin	it	Variabili disponibili
@@ -230,6 +232,7 @@ disable minifying of javascript and css files	admin	it	Disabilita la compression
 disable wysiwyg-editor	admin	it	disabilita editor WYSIWYG
 disabled (not recomended)	admin	it	disabilitato (non consigliato)
 display	admin	it	Visualizza
+displayed length of input field (set rows=1 to limit length)	admin	it	lunghezza del campo di inserimento (impostare righe=1 per limitare la lunghezza)
 do not delete the category and return back to the list	admin	it	NON eliminare la categoria e torna alla lista
 do you also want to delete all global subcategories ?	admin	it	Vuoi eliminare anche tutte le sotto-categorie globali ?
 do you want to delete all global subcategories ?	admin	it	Vuoi cancellare tutte le sotto-categorie globali ?
@@ -237,6 +240,8 @@ do you want to move all global subcategories one level down ?	admin	it	Vuoi spos
 document root (default)	admin	it	Directory di default del webserver
 down	admin	it	Giù
 download csv	admin	it	Scarica CSV
+each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	it	ogni valore è una riga come  id[=label], oppure usare @percorso per le opzioni di lettura da un file nella directory EPL
+each value is a line like label=[javascript]	admin	it	ogni valore è una riga come label=[javascript]
 edit account	admin	it	Modifica account
 edit application	admin	it	Modifica Applicazione
 edit email settings	admin	it	Modifica impostazioni email
@@ -331,6 +336,8 @@ go directly to admin menu, returning here the next time you click on administrat
 governmental: incl. state or municipal authorities or services	admin	it	Governativo: incluse autorità o servizi municipali
 grant	admin	it	Consenti
 group #%1 must have negative sign!	admin	it	Il gruppo #%1 deve avere segno negativo!
+group %1 %2	admin	it	Gruppo %1 %2
+group '%1' deleted.	admin	it	Gruppo '%1' eliminato
 group ?	admin	it	Gruppo ?
 group csv export	admin	it	Esportazione gruppi CSV
 group csv import	admin	it	Esportazione gruppi CSV
@@ -398,6 +405,7 @@ leave the group untouched and return back to the list	admin	it	Lascia i gruppi i
 leave unchanged	admin	it	Lascia inalterato
 leave without saveing the entry	admin	it	Esci senza salvare la voce
 leaves without saveing	admin	it	esce senza salvare
+length	admin	it	Lunghezza
 length<br>rows	admin	it	Lunghezza<br>Righe
 limit global category to members of a certain group	admin	it	Limita la categoria globale ai soli membri di un certo gruppo.
 limit to members of	admin	it	Limita ai membri di
@@ -443,7 +451,8 @@ new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in b
 next run	admin	it	Prossima esecuzione
 no algorithms available	admin	it	nessun algoritmo disponibile
 no alternate email address	admin	it	nessun indirizzo email alternativo
-no jobs in the database !!!	admin	it	Nessun job nel database !!!
+no default account found!	admin	it	Nessun account predefinito trovato!
+no jobs in the database !!!	admin	it	Nessun job nel database!
 no login history exists for this user	admin	it	Non esiste una cronologia di login per questo utente
 no matches found	admin	it	Nessuna corrispondenza trovata.
 no modes available	admin	it	nessuna modalità disponibile
@@ -500,6 +509,7 @@ please enter a name	admin	it	Per favore inserisci un nome
 please enter a name for that server !	admin	it	Per favore inserisci un nome per quel server
 please run setup to become current	admin	it	Per favore lancia il setup
 please select	admin	it	Per favore selezionare
+please submit (or postpone) statistic first	admin	it	Per favore inviare i dati statistici adesso, o rimandare, prima di continuare
 postfix with ldap	admin	it	Postfix con LDAP
 postpone for	admin	it	Rimanda per
 preferences	admin	it	Preferenze
@@ -630,6 +640,7 @@ two months	admin	it	Due mesi
 two weeks	admin	it	Due settimane
 type '%1' already exists !!!	admin	it	il tipo '%1' esiste già !!!
 type of customfield	admin	it	Tipo di campo personalizzato
+type of field	admin	it	Tipo di campo
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	it	Sotto windows devi installare lo schedulatore %1manualmente%2 o usare la modalità fallback. Fallback significa che i lavori vengono controllati solo dopo ogni vista pagina !!!
 unknown account: %1 !!!	admin	it	Account ignoto: %1 !
 unknown command %1!	admin	it	Comando %1 ignoto !
@@ -680,8 +691,8 @@ you can not use --dry-run together with --skip-checks!	admin	it	Non è possibile
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	it	Puoi cambiare solo l'hash, se impostassi una pasword casuale o se usassi attualmente password di testo semplice.
 you have entered an invalid expiration date	admin	it	Hai inserito una data di scadenza non valida
 you have no email address for your user set !!!	admin	it	Non hai inserito un indirizzo email per il tuo utente!
-you have to enter a name, to create a new field!!!	admin	it	Devi inserire un nome, per creare un nuovo campo!!!
-you have to enter a name, to create a new type!!!	admin	it	Devi inserire un nome, per creare un nuovo tipo!!!
+you have to enter a name, to create a new field!!!	admin	it	Devi inserire un nome, per creare un nuovo campo!
+you have to enter a name, to create a new type!!!	admin	it	Devi inserire un nome, per creare un nuovo tipo!
 you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
 you must enter a group name.	admin	it	Devi inserire un nome di gruppo
 you must enter a lastname	admin	it	Devi inserire un cognome

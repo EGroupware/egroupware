@@ -1,13 +1,94 @@
+(update in sec. %s)	notifications	it	(Aggiorna in sec. %s)
+account:	notifications	it	Account:
+all possible notification backends	notifications	it	Tutti i backend di notifica possibili
+browser	notifications	it	Browser
+browser is starting.	notifications	it	Il browser si sta avviando.
+cancal settings?	notifications	it	Cancellare impostazioni?
+cancal?	notifications	it	Cancellare?
+certification-information:	notifications	it	Informazioni cerificazione:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	it	Controllare entrambi. Prima provare con l'account attivo altrimenti usa il profilo emailadmin
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	it	Seleziona catena di notifica. Sarai notificato dai backend inseriti nella catena. <br /> Nota: Se una catena di notifiche è segnalata come disabilitata, il tuo amministratore non permette uno o più backend della catena. Le notifiche passano all'impostazione "Email" per inviarti notifiche.
+choose from mailsettings used for notification	admin	it	Seleziona impostazioni email da usare per le notifiche
+common chains	notifications	it	Catene comuni
+connection error.	notifications	it	Errore connessione
+connection error. please check connection to server.	notifications	it	Errore connessione. Per favore controllare connessione al server
+continue to connect?	notifications	it	Continuare la connessione?
+cookies are required to login to this site.	notifications	it	Sono necessari i cookie per accedere al sito
+disabled chains	notifications	it	Catene disabilitate
+do not notify me at all	notifications	it	Non notificarmi affatto
+domain not found, please check serveraddress.	notifications	it	Dominio non trovato, controllare indirizzo server
+e-mail only	notifications	it	Solo email
+egroupware has notifications for you	notifications	it	EGroupware ha delle notifiche per te
+egroupware login is starting, please wait.	notifications	it	Il login a EGroupware si sta avviando, attendere prego...
+egroupware logindomain:	notifications	it	Dominio di login EGroupware
+egroupware logindomains founds, please select.	notifications	it	Domini di login EGroupware trovati, per favore scegliere
+egroupware not found by url or connection lost to server.	notifications	it	EGroupware non trovato sotto questa URL oppure connessione al server persa
+egroupware not found by url.	notifications	it	EGroupware non trovato sotto questa URL
+egroupware-popup and e-mail	notifications	it	Popup EGroupware e email
+egroupware-popup and windows-popup	notifications	it	Popup in EGroupware e WIndows
+egroupware-popup backend	admin	it	Popup backend EGroupware
+egroupware-popup first, if that fails notify me by e-mail	notifications	it	Prima popup di EGroupware, se fallisce, mandami email
+egroupware-popup only	notifications	it	Solo popup EGroupware
+egroupware-popup verbosity	notifications	it	Verbosità popup EGroupware
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	it	Solo profilo emailadmin. NON usare profili email attivi definiti da utenti per le notifiche
+enable egroupware-popup backend	admin	it	Abilita il backend popup di EGroupware
+enable windows-popup backend	admin	it	Abilita il backend popup di Windows
+enabled chains	notifications	it	Catene abilitate
+error browser can`t start.	notifications	it	Errore, il browser non si avvia
+error on loading tray icon	notifications	it	Errore nel caricamento dell'icona nel tray
+error ssl	notifications	it	Errore SSL
+exit	notifications	it	Esci
 folder	notifications	it	Cartella
 from	notifications	it	Da
+host:	notifications	it	Host:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	it	Quanti dettagli dare nel popup di EGroupware se una notifica viene inviata all'utente: <br /> bassa: mostra solo la campanella di notifica nel menù in alto (se abilitato) <br /> medio: porta la finestra di notifica in primo piano <br /> alto: porta la finestra di notifica in primo piano e lascia che il browser faccia qualcosa per annunciarsi
+if set, embedded links get rendered special for external clients	notifications	it	Se impostato, i collegamenti incorporati vengono resi speciali per client esterni
+info on load config file: create config file.	notifications	it	Informazioni sul caricamento config: creare file config
+issuer dn:	notifications	it	DN emettitore:
+java desktop notification app	preferences	it	App Java di notifica
+linked entries:	common	it	Voci collegate:
+login aborted, application exit?	notifications	it	Accesso rigettato, uscita da applicazione?
+login in egroupware:	notifications	it	login in EGroupware
+mail backend	admin	it	Backend email
 message from	notifications	it	Messaggio da
 minutes	notifications	it	Minuti
 notification	common	it	Notifica
-permission	notifications	it	permesso
+notifier	notifications	it	Chi avvisa
+notify me by	notifications	it	Avvisami da
+optimize e-mails for external mail client	notifications	it	Ottimizza email per client esterni
+page not found, please check serveraddress.	notifications	it	Pagina non trovata, per favore usare indirizzo server
+password:	notifications	it	Password:
+permission	notifications	it	Permesso
+permission denied for notifications application.	notifications	it	Permesso negato per l'applicazione notifiche
+placeholders with user/ prefix	admin	it	segnaposto con utente/prefisso
+please contact your egroupware admin.	notifications	it	Per favore contatta l'amministratore di EGroupware
+please enter the url of your egroupware.	notifications	it	Per favore inserisci l'URL di EGroupware
+please enter your egroupware username.	notifications	it	Per favore inserisci il nome utente EGroupware
+please enter your password	notifications	it	Per favore inserisci la tua password
+poll interval	notifications	it	Intervallo di controllo
 preferences for notification	notifications	it	Preferenze per Notifica
+received	notifications	it	Ricevuti
+repeat login?	notifications	it	Ripetere il login?
+run application	notifications	it	esegui applicazione
+save password	notifications	it	salva password
+setting	notifications	it	Impostazione
+setting aborted, application exit	notifications	it	Impostazione non accettata, uscita applicazione
 settings	notifications	it	Impostazioni
 signature	admin	it	Firma
+signature added to every change notification	admin	it	Firma inserita per ogni modifica di notifica
+sorry, your login has expired	notifications	it	Spiacente, il tuo accesso è scaduto
 step	notifications	it	Fase
+subject dn:	notifications	it	DN oggetto
+the server certificate is not a valid trust center certificate!	notifications	it	Il certificato del server non è un certificato trust valido!
+this egroupware notification has been sent to you by mail because your	notifications	it	Questa notifica di EGroupware ti viene inviata via email perché
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	it	Questa notifica di EGroupware ti viene inviata via email perché la tua catena di notifica è stata disabilitata dall'amministratore. Per favore seleiziona un'altra catena di notifica nelle tue preferenze!
+user:	notifications	it	Utente:
 warning	notifications	it	Avvertenza
+windows-popup and e-mail	notifications	it	Popup di Windows e email
+windows-popup backend	admin	it	Backend di popup di Windows
+windows-popup first, if that fails notify me by e-mail	notifications	it	Prima popup di windows, se fallisce mandami email
+windows-popup only	notifications	it	Solo popup di Windows
+you can also use	admin	it	Puoi anche usare
+you have been successfully logged out	notifications	it	Hai effetttuato il logout con successo
 you've got new mail	notifications	it	Hai nuovi messaggi
-your session could not be verified.	notifications	it	La sessione non può essere verificata.
+your session could not be verified.	notifications	it	La tua sessione non può essere verificata.

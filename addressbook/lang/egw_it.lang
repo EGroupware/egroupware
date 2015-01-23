@@ -1,10 +1,13 @@
 %1 added	addressbook	it	%1 aggiunto
 %1 contact(s) %2	addressbook	it	%1 contatto(i) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti !!!
+%1 contacts updated (%2 errors).	addressbook	it	%1 contatti aggiornati (%2 errori)
 %1 fields in %2 other organisation member(s) changed	addressbook	it	%1 campi in %2 altro/i membro/i dell'organizzazione modificati.
+%1 not implemented for %2!	addressbook	it	%1 non implementato per %2!
 %1 records imported	addressbook	it	%1 record importati
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibile tornare %2indietro%3 e deselezionare Test Importazione)
 %1 starts with '%2'	addressbook	it	%1 inizia con '%2'
+%s please calculate the result	addressbook	it	%s per favore calcolare il risultato
 (e.g. 1969)	addressbook	it	(es. 1969)
 (empty = use global limit, no = no export at all)	admin	it	(vuoto = usa limite globale, no = non esportare nulla)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione <nessuno> non è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
@@ -15,43 +18,67 @@ accounts	addressbook	it	Account
 actions	addressbook	it	Azioni
 add %1	addressbook	it	Aggiungi %1
 add a contact to this organisation	addressbook	it	Aggiungi un contatto a questa organizzazione
+add a customfield to link title	addressbook	it	Aggiungi un campo personalizzato al titolo del collegamento
 add a new contact	addressbook	it	Aggiungi un nuovo contatto
+add a new infolog	addressbook	it	Aggiungi una scheda Attività
+add a new list	addressbook	it	Aggiungi elenco
 add a single entry by passing the fields.	addressbook	it	Aggiungi un solo elemento passando i campi.
+add appointment	addressbook	it	Aggiungi appuntamento
+add business email of whole distribution list?	addressbook	it	Aggiungere l'email dell'ufficio di tutta la lista di distribuzione?
 add custom field	addressbook	it	Aggiungi campo personalizzato
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	it	Aggiungi campo personalizzato ai collegamenti della rubrica, che vengono mostrati in altre applicazioni. Il predefinito è nessun campo personalizzato.
+add emails of whole distribution list?	addressbook	it	Aggiugere gli indirizzi di tutta la lista di distribuzione?
+add or delete categories	addressbook	it	Aggiungere o eliminare categorie
+add to bcc	addressbook	it	Aggiungere a Ccn:
+add to cc	addressbook	it	Aggiungere a Cc:
+add to distribution list	addressbook	it	Aggiungi alla lista di distribuzione
+add to distribution list:	addressbook	it	Aggiungi alla lista di distribuzione:
+add to to	addressbook	it	Aggiungi ad "A:"
 added	addressbook	it	Aggiunto
 added by synchronisation	addressbook	it	Aggiunto da sincronizzazione
+added to distribution list	addressbook	it	Aggiunto alla lista di distribuzione
 additional information about using ldap as contact repository	admin	it	Informazione aggiuntiva riguardante l'utilizzo di LDAP come archivio contatti
 address book	common	it	Rubrica
 address book - vcard in	addressbook	it	Rubrica - VCard in
 address book - view	addressbook	it	Rubrica - visualizza
 address line 2	addressbook	it	Indirizzo linea 2
+address line 2 (private)	addressbook	it	Indirizzo linea 2 (privato)
 address type	addressbook	it	Tipo di indirizzo
 addressbook	common	it	Rubrica
+addressbook csv export	addressbook	it	Esportazione CSV della Rubrica
 addressbook csv import	addressbook	it	Importazione da CSV rubrica
+addressbook field	addressbook	it	Campo della Rubrica
 addressbook menu	addressbook	it	Menù Rubrica
+addressbook of	addressbook	it	Rubrica di
 addressbook preferences	addressbook	it	Preferenze Rubrica
 addressbook the contact should be saved to	addressbook	it	Rubrica nella quale salvare il contatto
+addressbook the contact should be shown	addressbook	it	La rubrica in cui il contatto dovrà essere mostrato
+addressbook vcard export	addressbook	it	Esportazione vCard
 addressbook vcard import	addressbook	it	Importazione da vCard rubrica
 addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
 addvcard	addressbook	it	Aggiungi Vcard
 advanced search	addressbook	it	Ricerca avanzata
 all contacts	addressbook	it	Tutti i contatti
+all in one field	addressbook	it	Tutto in un Campo
+allow members of following groups to edit contact-data of accounts	addressbook	it	Permettere ai membri dei seguenti gruppi di modificare i dati di contatto degli account
 allow users to maintain their own account-data	admin	it	Permetti agli utenti di gestire i dati del proprio account
 alt. csv import	addressbook	it	Importazione CSV Alternativa
-always	addressbook	it	sempre
+always	addressbook	it	Sempre
 apply changes to all members, whose fields have the same previous content	addressbook	it	Applica le modifiche a tutti i membri i cui campi hanno lo stesso contenuto precedente
 apply the action on the whole query, not only the shown contacts!!!	addressbook	it	Applica l'azione a tutta la query, NON solo ai contatti mostrati!!!
 are you shure you want to delete this contact?	addressbook	it	Vuoi davvero eliminare questo contatto?
 are you sure you want to delete this field?	addressbook	it	Vuoi davvero eliminare questo campo?
 assistent	addressbook	it	Assistente
-assistent phone	addressbook	it	telefono assistente
+assistent phone	addressbook	it	Telefono assistente
 birthday	common	it	Data di nascita
 birthdays	common	it	Compleanni
-blank	addressbook	it	In bianco
+blank	addressbook	it	Vuoto
 business	common	it	Ufficio
-business address	addressbook	it	Indirizzo Ufficio
+business address	addressbook	it	Indirizzo ufficio
+business address line 2	addressbook	it	Indirizzo ufficio riga 2
 business city	addressbook	it	Città Ufficio
 business country	addressbook	it	Nazione Ufficio
+business country code	addressbook	it	Codice nazione ufficio
 business email	addressbook	it	Email Ufficio
 business fax	addressbook	it	Fax ufficio
 business phone	addressbook	it	Telefono ufficio
@@ -61,71 +88,125 @@ business zip code	addressbook	it	CAP ufficio
 calendar fields:	addressbook	it	Campi agenda:
 calendar uri	addressbook	it	URI Agenda
 can be changed via setup >> configuration	admin	it	Può essere modificato tramite Setup >> Configurazione
+can't create dn %1	addressbook	it	Impossibile creare dn %1
 car phone	addressbook	it	Telefono veicolare
+categorie	addressbook	it	Categoria
+categorie added	addressbook	it	Categoria aggiunta.
+categorie delete	addressbook	it	Categoria eliminata
+categories, notes, ...	addressbook	it	Categorie, Note, ...
+category path	addressbook	it	Percorso categoria
+category tree	admin	it	Albero categoria
 cell phone	addressbook	it	Telefono cellulare
 change all organisation members	addressbook	it	modifica tutti i membri dell'organizzazione
-charset for the csv export	addressbook	it	Set di Caratteri per esportazione CSV
+charset for the csv export	addressbook	it	Set di caratteri per esportazione CSV
+charset for the vcard export	addressbook	it	Set di caratteri per l'esportazione vCard
+charset for the vcard import and export	addressbook	it	Set di caratteri per l'esportazione e l'importazione vCard
 charset of file	addressbook	it	Set di Caratteri del file
 check all	addressbook	it	Seleziona tutto
 choose an icon for this contact type	admin	it	Scegli un'icona per questo tipo di contatto
+choose charset	addressbook	it	Seleziona set di caratteri
 choose owner of imported data	addressbook	it	Modifica proprietario dei dati importati
 chosse an etemplate for this contact type	admin	it	Scegli un eTemplate per questo tipo di contatto
 city	common	it	Città
+city (private)	addressbook	it	Città (privato)
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	it	Ripulire i campi della rubrica se la sincronizzazione avesse creato duplicati
 company	common	it	Società
 company name	addressbook	it	Nome società
 configuration	common	it	Configurazione
 contact	common	it	Contatto
 contact application	admin	it	Applicativo Contatti
 contact copied	addressbook	it	Contatto copiato
+contact data	addressbook	it	Dati di contatto
 contact deleted	addressbook	it	Contatto cancellato
+contact fields to show	addressbook	it	Campi di contatto da mostrare
+contact fields:	addressbook	it	Campi di contatto:
 contact id	addressbook	it	ID contatto
+contact id cannot be changed by import	addressbook	it	L'ID del contatto non può essere modificato dall'importazione!
+contact maintenance	admin	it	Manutenzione contatti
+contact modified by %1 at %2	addressbook	it	Contatto modificato da %1 alle %2
 contact not found!	addressbook	it	Contatto non trovato!
 contact repository	admin	it	Archivio contatti
 contact saved	addressbook	it	Contatto salvato
 contact settings	admin	it	Impostazioni Contatto
-contacts to ldap	admin	it	contatti a LDAP
+contactform	addressbook	it	Modulo di contatto
+contacts	common	it	Contatti
+contacts and account contact-data to ldap	admin	it	Contatti e account a LDAP
+contacts and account contact-data to sql	admin	it	Contatti e account a SQL
+contacts to ldap	admin	it	Contatti a LDAP
+contacts to ldap, account contact-data to sql	admin	it	Contatti a LDAP e dati account a SQL
 contains	addressbook	it	contiene
 copied	addressbook	it	Copiato
 copied by %1, from record #%2.	addressbook	it	Copiato %1, dal record n.%2.
 copy a contact and edit the copy	addressbook	it	Copia un contatto e modifica la copia
+copy instead of move	addressbook	it	Copia invece di spostare
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	it	Copia le tue modifiche negli appunti, %1aggiorna l'inserimento%2 e uniscili.
 country	common	it	Nazione
+country (private)	addressbook	it	Nazione (privato)
+country code	addressbook	it	Codice nazione
+country code (private)	addressbook	it	Codice nazione (privato)
 create new links	addressbook	it	Crea nuovi collegamenti
 created	addressbook	it	Creato
 credit	addressbook	it	Credito
+crm view list	addressbook	it	Vista elenco CRM
+crm-view	addressbook	it	Vista CRM
 csv-fieldname	addressbook	it	CSV-Nome del Campo
 csv-filename	addressbook	it	CSV-Nome del File
 custom	addressbook	it	Personalizzato
+custom etemplate for the contactform	addressbook	it	Template personalizzato per il modulo di contatto
 custom fields	addressbook	it	Campi Personalizzati
 data exchange settings	addressbook	it	Impostazioni di scambio dati
 debug output in browser	addressbook	it	Visualizza nel browser
 default	addressbook	it	Predefinito
+default action on double-click	addressbook	it	Azione predefinita al doppio click
+default address format	addressbook	it	Formato indirizzo predefinito
 default addressbook for adding contacts	addressbook	it	Rubrica predefinita per l'aggiunta di contatti
+default document to insert contacts	addressbook	it	Documento predefinito per l'inserimento di contatti
+default file as format	addressbook	it	File predefinito come formato
 default filter	addressbook	it	Filtro predefinito
-delete a single entry by passing the id.	addressbook	it	Cancella un singola voce passando l'ID.
-delete this contact	addressbook	it	Cancella questo contatto
+default format for fileas, eg. for new entries.	addressbook	it	Formato predefinito p.es. per nuove voci
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	it	L'azione predefinita è aprire gli indirizzi email nell'applicazione EMail, se l'utente ha diritto di accesso ad essa.
+defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	it	Quale indirizzo email viene utilizzato come preferito nelle liste di distribuzione
+delete a single entry by passing the id.	addressbook	it	Elimina un singola voce passando l'ID.
+delete selected distribution list!	addressbook	it	Elimina la lista di distribuzione selezionata!
+delete this contact	addressbook	it	Elimina questo contatto
 delete this organisation including all its contacts	addressbook	it	Cancella questa organizzazione inclusi TUTTI i suoi contatti
-deleted	addressbook	it	cancellato
-deletes the photo	addressbook	it	Cancella la foto
+deleted	addressbook	it	Eliminato
+deletes the photo	addressbook	it	Elimina la foto
 department	common	it	Dipartimento
-departments	addressbook	it	dipartimenti
+departments	addressbook	it	Dipartimenti
+directory with documents to insert contacts	addressbook	it	Cartella con documenti in cui inserire contatti
+display contact	addressbook	it	Mostra contatto
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	it	Visualizza un promemoria per i compleanni sulla pagina iniziale (pagina che vedi quando entri in eGroupWare o clicchi sull'icona Home).
+distribution list deleted	addressbook	it	La lista di distribuzione è stata rimossa
+distribution list renamed	addressbook	it	La lista di distribuzione è stata rinominata
+distribution lists	addressbook	it	Liste di distribuzione
+distribution lists, ...	addressbook	it	Liste di distribuzione, ...
+do you really want to delete this contact?	addressbook	it	Confermi di voler eliminare questo contatto?
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	it	Vuoi una rubrica privata, che non può essere vista dagli utenti, autorizzi l'accesso alla tua rubrica personale?
-do your really want to delete this contact?	addressbook	it	Vuoi davvero eliminare questo contatto
-doesn't matter	addressbook	it	non importa
+do your really want to delete this contact?	addressbook	it	Vuoi davvero eliminare questo contatto?
+doesn't matter	addressbook	it	Non importa
 domestic	addressbook	it	Nazionale
+don't hide empty columns	addressbook	it	Nascondi colonne vuote
 download	addressbook	it	Download
 download export file (uncheck to debug output in browser)	addressbook	it	Download del file export (Deseleziona per visualizzarlo nel browser)
 download this contact as vcard file	addressbook	it	scarica questo contatto come file vCard
 duration	addressbook	it	Durata
+each category in its own field	addressbook	it	Ogni categoria nel suo campo
+each option in its own field	addressbook	it	Ogni opzione nel suo cao
+edit contact	addressbook	it	Modifica contatto
 edit custom field	addressbook	it	Modifica campo personalizzato
 edit custom fields	admin	it	Modifica campi personalizzati
 edit extra account-data in the addressbook	admin	it	Modifica dati-account extra nella rubrica
+edit phonenumbers	addressbook	it	Modifica numeri telefonici
 edit phonenumbers -	addressbook	it	Modifica Numeri telefonici -
+either the configured email addesses are wrong or the mail configuration.	addressbook	it	La configurazione della posta elettronica o gli indirizzi configurati presentano errori.
 email & internet	addressbook	it	Email e Internet
+email (private)	addressbook	it	Email (privato)
+email addresses (comma separated) to send the contact data	addressbook	it	Indirizzi email, separati da virgola, per l'invio dei dati di contatto
 empty	admin	it	Vuoto
 empty for all	addressbook	it	per tutti vuoto
 enable an extra private addressbook	addressbook	it	Abilita una rubrica extra privata
+enclosure	addressbook	it	Inclusione
 end	addressbook	it	Fine
 enter the path to the exported file here	addressbook	it	Inserisci qui il percorso per il file esportato
 error deleting the contact !!!	addressbook	it	Errore cancellando il contatto !!!
@@ -146,18 +227,28 @@ export file name	addressbook	it	Esporta nome file
 export from addressbook	addressbook	it	Esporta dalla Rubrica
 export selection	addressbook	it	Esporta selezione
 exported	addressbook	it	esportato
+exports contacts from your addressbook into a csv file.	addressbook	it	Esporta i contatti della rubrica in un file CSV
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	it	Esporta i contatti della rubrica in un file CSV. CSV significa 'Comma Separated Values' ovvero valori separati da virgola. Si possono scegliere anche separatori diversi.
+exports contacts from your addressbook into a vcard file.	addressbook	it	Esporta i contatti della rubrica in file vCard
 extra	addressbook	it	Extra
 extra encodings	addressbook	it	Codifiche extra
+extra private	addressbook	it	Extra privato
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	it	Permessi insufficenti per modificare %1 membri dell'organizzazione
 favorites	addressbook	it	Preferiti
 fax	addressbook	it	Fax
+fax (private)	addressbook	it	Fax (privato)
 fax number	common	it	Numero Fax
 field %1 has been added !	addressbook	it	Il campo %1 è stato aggiunto!
 field %1 has been updated !	addressbook	it	Il campo %1 è stato aggiornato!
 field name	addressbook	it	Nome Campo
 fields for the csv export	addressbook	it	Campi per l'esportazione CSV
+fields the user is allowed to edit himself	admin	it	Campi che l'utente ha il permesso di modificare
+fields to copy when copying an address?	admin	it	Campi da copiare quando si copia un indirizzo
 fields to show in address list	addressbook	it	Campi da visualizzare nella lista degli indirizzi
 fieldseparator	addressbook	it	Separatore dei campi
+for read only ldap	admin	it	Per LDAP di sola lettura
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
+freebusy uri	addressbook	it	URI per Libero/Occupato
 full name	addressbook	it	Nome completo
 general	admin	it	Generale
 general fields:	addressbook	it	Campi generali
@@ -167,18 +258,24 @@ global categories	addressbook	it	Categorie Globali
 grant addressbook access	common	it	Permetti accesso alla Rubrica
 group %1	addressbook	it	Gruppo %1
 h	addressbook	it	h
+hide accounts from addressbook	addressbook	it	Nascondi account utente
+hides accounts completly from the adressbook.	addressbook	it	Nascondi completamente gli account degli utenti EPL dalla rubrica.
 history logging	admin	it	Registrazione dello storico
-home address	addressbook	it	Indirizzo Abitazione
-home city	addressbook	it	Città Abitazione
-home country	addressbook	it	Nazione Abitazione
-home email	addressbook	it	Email Abitazione
-home phone	addressbook	it	Telefono Abitazione
-home state	addressbook	it	Provincia Abitazione
-home street	addressbook	it	Via Abitazione
-home zip code	addressbook	it	CAP Abitazione
+home address	addressbook	it	Indirizzo abitazione
+home address, birthday, ...	addressbook	it	Indirizzo abitazione, compleanno, ...
+home city	addressbook	it	Città abitazione
+home country	addressbook	it	Nazione abitazione
+home email	addressbook	it	Email abitazione
+home email if given, else work email	addressbook	it	Se inserito, email abitazione, altrimenti email ufficio
+home phone	addressbook	it	Telefono abitazione
+home state	addressbook	it	Provincia abitazione
+home street	addressbook	it	Via abitazione
+home zip code	addressbook	it	CAP abitazione
+how many contacts should non-admins be able to export	admin	it	Quanti contatti dovrebbero essere in grado di esportare gli utenti semplici (non amministratori)?
 html link to the current record	addressbook	it	Collegamento HTML al record attuale
 icon	addressbook	it	Icona
 if accounts are already in ldap	admin	it	se gli account sono già in LDAP
+ignore first line	addressbook	it	Ignora la prima riga
 import	addressbook	it	Importa
 import contacts	addressbook	it	Importa Contatti
 import csv-file into addressbook	addressbook	it	Importa file CSV nella Rubrica
@@ -189,12 +286,19 @@ import from outlook	addressbook	it	Importa da Outlook
 import multiple vcard	addressbook	it	Importa Molteplici VCard
 import next set	addressbook	it	Import il prossimo set
 import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato VCard.
+importer's personal	addressbook	it	Personale dell'account importatore
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	it	Importa i contatti da file CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni sarà possibile selezionare anche altri separatori.
+imports contacts into your addressbook from a vcard file.	addressbook	it	Importa contatti nella tua rubrica da un file vCard.
 in %1 days (%2) is %3's birthday.	addressbook	it	Tra %1 giorni (%2) sarà il compleanno di %3.
 income	addressbook	it	Entrata
 infolog	addressbook	it	Attività
 insert	addressbook	it	Inserisci
+insufficent rights to delete this list!	addressbook	it	Permessi insufficienti per eliminare questa lista!
+insufficent rights to edit this list!	addressbook	it	Permessi insufficienti per modificare questa lista!
 international	addressbook	it	Internazionale
+internet	addressbook	it	Internet
 label	addressbook	it	Etichetta
+last date	addressbook	it	Ultima data
 last modified	addressbook	it	ultima modifica
 last modified by	addressbook	it	ultima modifica di
 ldap context for contacts	admin	it	Contesto LDAP per i contatti
@@ -202,39 +306,63 @@ ldap host for contacts	admin	it	Server LDAP per i contatti
 ldap settings for contacts	admin	it	Impostazioni LDAP per i contatti
 ldif	addressbook	it	LDIF
 line 2	addressbook	it	Linea 2
+link title for contacts show	addressbook	it	Link per i contatti
 links	addressbook	it	Collegamenti
 links and attached files	addressbook	it	Collegamenti e file allegati
 links to specified application.  example: {{links/infolog}}	addressbook	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
 list all categories	addressbook	it	Elenca tutte le categorie
 list all customfields	addressbook	it	Elenca tutti i campi personalizzati
+list already exists!	addressbook	it	Lista già esistente!
+list created	addressbook	it	Lista creata
+list creation failed, no rights!	addressbook	it	La creazione della lista è fallita, non ci sono i permessi sufficienti
 list of files linked to the current record	addressbook	it	Elenco dei file collegati al record attuale
 load vcard	addressbook	it	Carica VCard
 location	addressbook	it	Località
-locations	addressbook	it	località
+locations	addressbook	it	Località
+mail vcard	addressbook	it	Invia email vCard
+main categories in their own field	addressbook	it	Categorie principale nel loro campo
 manage mapping	addressbook	it	Gestisci la mappatura
 mark records as private	addressbook	it	Marca i record come privati
+merge contacts	addressbook	it	Unisci contatti
+merge into first or account, deletes all other!	addressbook	it	L'unione nel primo o account, elimina tutti gli altri!
+merged	addressbook	it	Uniti
+message after submitting the form	addressbook	it	Messaggio dopo l'invio del modulo
 message phone	addressbook	it	Telefono per Messaggi
 middle name	addressbook	it	Secondo Nome
 migration finished	addressbook	it	Migrazione terminata
 migration to ldap	admin	it	Migrazione a LDAP
 mobile	addressbook	it	Mobile
-mobile phone	addressbook	it	Telefono Mobile
-modem phone	addressbook	it	Telefono Modem
+mobile phone	addressbook	it	Telefono cellulare
+mobile phone (private)	addressbook	it	Telefono cellulare
+modem phone	addressbook	it	Telefono modem
 more ...	addressbook	it	Altro ...
+move to addressbook	addressbook	it	Sposta alla rubrica
 moved	addressbook	it	spostato
 multiple vcard	addressbook	it	Molteplici VCard
+name for the distribution list	addressbook	it	Nome della lista di distribuzione
 name of current user, all other contact fields are valid too	addressbook	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
+name, address	addressbook	it	Nome, Indirizzo
+new contact submitted by %1 at %2	addressbook	it	Nuovo contatto inviato da %1 alle %2
+new window opened to edit infolog for your selection	addressbook	it	Nuova finestra aperta per modificare la scheda di Attività
+next date	addressbook	it	Prossima data
+no categories selected	addressbook	it	Nessuna categoria selezionata
+no fallback	addressbook	it	Nessun fallback
 no vcard	addressbook	it	Nessuna VCard
 number	addressbook	it	Numero
 number of records to read (%1)	addressbook	it	Numero di record da leggere (%1)
+open %1 crm view	addressbook	it	Apri %1 in vista CRM
+open email addresses in external mail program	addressbook	it	Apri indirizzi email con programmi esterni
+open for editing?	addressbook	it	Aprire per la modifica?
+open infolog crm view	preferences	it	Apri vista CRM di Attività
+open tracking system crm view	preferences	it	Apri vista CRM di Tracking
 options for type	admin	it	Opzioni per tipo
-organisation	addressbook	it	organizzazione
+organisation	addressbook	it	Organizzazione
 organisations	addressbook	it	Organizzazioni
 organisations by departments	addressbook	it	Organizzazioni per dipartimenti
 organisations by location	addressbook	it	Organizzazioni per località
 other number	addressbook	it	Altro Numero
 other phone	addressbook	it	Altro Telefono
-own sorting	addressbook	it	proprio ordinamento
+own sorting	addressbook	it	Proprio ordinamento
 pager	common	it	Cercapersone
 parcel	addressbook	it	Parcel
 participants	addressbook	it	Partecipanti
@@ -246,72 +374,137 @@ please enter a name for that field !	addressbook	it	Per favore inserire un nome 
 please select only one category	addressbook	it	Per favore seleziona solo una categoria
 postal	common	it	Postale
 pref	addressbook	it	pref
+preferred email address to use in distribution lists	addressbook	it	Indirizzo email preferito
 preferred phone	addressbook	it	telefono preferito
+preferred type of email address to add for distribution lists	addressbook	it	Tipo di emai preferito per le liste di distribuzione
 prefix	addressbook	it	Prefisso
+prevent deleting of contacts	admin	it	Proteggi i contatti dall'eliminazione
+private custom fields	addressbook	it	Campi personalizzati privati
 public key	addressbook	it	Chiave Pubblica
 publish into groups:	addressbook	it	Pubblica nei gruppi:
 read a list / search for entries.	addressbook	it	Leggi un elenco / cerca delle voci.
 read a list of entries.	addressbook	it	Leggi un elenco di voci
 read a single entry by passing the id and fieldlist.	addressbook	it	Leggi una singola voce passando l'ID e elenco campi.
-read only	addressbook	it	sola lettura
+read only	addressbook	it	Sola lettura
 record access	addressbook	it	Accesso alla scheda
 record owner	addressbook	it	Proprietario della scheda
-recovered	addressbook	it	recuperato
+recovered	addressbook	it	Recuperato
+region	addressbook	it	Regione
+remove from distribution list	addressbook	it	Rimuovi dalla lista di ditribuzione
+remove selected contacts from distribution list	addressbook	it	Rimuovi i contatti selezionati dalla lista di distribuzione
+removed from distribution list	addressbook	it	Rimosso dalla lista di distribuzione
 repetition	addressbook	it	Ripetizione
+replacements for inserting contacts into documents	addressbook	it	Sostituzioni per l'inserimento dei contatti nei documenti
+required fields *	addressbook	it	Campi obbligatori *
 role	addressbook	it	Ruolo
 room	addressbook	it	Stanza
 search for '%1'	addressbook	it	Cerca '%1'
+search letter	addressbook	it	Cerca per lettera
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	it	Seleziona una foto jpeg in formato ritratto. Sarà ridimensionata ad una larghezza di 60 pixel.
 select a view	addressbook	it	Seleziona una vista
 select addressbook type	addressbook	it	Seleziona il tipo di rubrica
 select all	addressbook	it	Seleziona tutto
+select an action or addressbook to move to	addressbook	it	Seleziona una azione o una rubrica per lo spostamento
+select an action or addressbook to move to...	addressbook	it	Seleziona una azione o una rubrica per lo spostamento...
+select migration type	admin	it	Seleziona tipo di migrazione
 select multiple contacts for a further action	addressbook	it	Seleziona contatti multipli per azioni ulteriori
+select phone number as prefered way of contact	addressbook	it	Seleziona il numero di telefono come modalità di contatto preferita
 select the type of conversion	addressbook	it	Seleziona il tipo di conversione
 select the type of conversion:	addressbook	it	Seleziona il tipo di conversione:
 select where you want to store / retrieve contacts	admin	it	Seleziona dove vuoi registrare / recuperare i contatti
-selected contacts	addressbook	it	contatti selezionati
+selected contacts	addressbook	it	Contatti selezionati
+send emailcopy to receiver	addressbook	it	Invia copia al destinatario
+send succeeded to %1	common	it	Inviato con successo a %1
+seperator	addressbook	it	Separatore
+set full name and file as field in contacts of all users (either all or only empty values)	admin	it	Imposta i campi nome completo e "salva come" nei contatti di tutti gli utenti. Tutti o solo quelli vuoti.
+set only full name	addressbook	it	Imposta solo nome completo
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	it	Mostrare foto e indirizzo abitazione sempre, anche se le colonne sono vuote
 show	addressbook	it	Mostra
 show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
+show infolog entries for this organisation	addressbook	it	Mostra tutte le attività per questa organizzazione
 show the contacts of this organisation	addressbook	it	Mostra i contatti di questa organizzazione
+similar contacts found:	addressbook	it	Contatti simili trovati:
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	it	Dimensioni finestra popup: 400x300
+special	addressbook	it	Speciale
+stadt	addressbook	it	Città
 start	admin	it	Inizio
 startrecord	addressbook	it	Record Iniziale
 state	common	it	Provincia
+state (private)	addressbook	it	Stato o provincia (privato)
 street	common	it	Via
+street (private)	addressbook	it	Via (privato)
+subject for email	addressbook	it	Oggeto dell'email
 successfully imported %1 records into your addressbook.	addressbook	it	Nella tua rubrica sono state importate con successo %1 schede.
 suffix	addressbook	it	Suffisso
 tag to mark positions for address labels	addressbook	it	Tagga per marcare le posizioni per le etichette di indirizzo
 tel home	addressbook	it	tel abitazione
 telephony integration	admin	it	Integrazione telefonia
 test import (show importable records <u>only</u> in browser)	addressbook	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
+thank you for contacting us.	addressbook	it	Grazie per averci contattato
 that field name has been used already !	addressbook	it	Il nome di campo è già stato utilizzato
+the anonymous user has probably no add rights for this addressbook.	addressbook	it	L'utente anonimo non ha permessi di inserimento per questa rubrica
+the anonymous user needs add rights for it!	addressbook	it	L'utente anonimo ha bisogno di permessi di inserimento
+the anonymous user needs read it!	addressbook	it	L'utente anonimo ha bisogno di permessi di lettura
 the following document-types are supported:	addressbook	it	I seguenti tipi di documenti sono supportati:
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	it	L'estensione "zip" è necessaria per inserire dati di contatto in documenti OpenOffice o MS Office
+there was an error saving your data :-(	addressbook	it	ERRORE durante il salvataggio dei dati!
+this module displays a contactform, that stores direct into the addressbook.	addressbook	it	Questo modulo mostra un form di contatto, che salva direttamente nella rubrica!
+this module displays block from a adddressbook group.	addressbook	it	Questo modulo mostra un blocco di indirizzi dalla rubrica di gruppo
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
 this person's last name was not in the address book.	addressbook	it	Il cognome di questa persona non era nella rubrica.
 timezone	addressbook	it	Fuso orario
+title	addressbook	it	Titolo professionale
 titles of any entries linked to the current record, excluding attached files	addressbook	it	I titoli delle voci collegate a questa, allegati esclusi
 to many might exceed your execution-time-limit	addressbook	it	troppi potrebbero far superare il tempo-limite-esecuzione
 today is %1's birthday!	common	it	Oggi è il compleanno di %1!
 tomorrow is %1's birthday.	common	it	Domani è il compleanno di %1.
 translation	addressbook	it	Traduzione
+two of: %1	addressbook	it	Due di: %1
 type	addressbook	it	Tipo
+un-delete	addressbook	it	Ripristina
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	it	Impossibile convertire "%1" all'ID di account. Viene usata l'impostazione (%2) per il proprietario.
 unable to delete	addressbook	it	Impossibile eliminare
+unable to import into %1, using %2	addressbook	it	Impossibile importare %1, usando %2
+unique id (uid)	addressbook	it	ID univoco (UID)
+unique id<br />(to update existing records)	addressbook	it	ID univoco<br /> per l'aggiornamento di voci esistenti
+unknown type %1, imported as %2	addressbook	it	Tipo %1 sconosciuto, importato come %2
 update a single entry by passing the fields.	addressbook	it	Aggiorna una singola voce passando i campi.
+update fields by edited organisations?	admin	it	Campi di organizzazioni modificate da aggiornare
 updated	addressbook	it	Aggiornato
 upload or delete the photo	addressbook	it	Carica o cancella la foto
+url (business)	addressbook	it	URL (ufficio)
+url (private)	addressbook	it	URL (privato)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	it	URL per collegare numeri di telefono. Usare %1 = numero da chiamare, %u = nome account, %t = telefono acccount
 use addressbooks "own sorting" attribute	addressbook	it	usare il "proprio ordinamento" della rubrica
+use an extra category tab?	addressbook	it	Usa una liguetta extra per le categorie
+use an extra tab for private custom fields?	admin	it	Usa una liguetta extra per i campi personalizzati privati
 use country list	addressbook	it	Usa la lista delle nazioni
+use setup for a full account-migration	admin	it	Usare il setup per una migrazione account completa
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used for links and for the own sorting of the list	addressbook	it	usato per collegamenti e per il proprio ordinamento della lista
 user preference	addressbook	it	Preferenza utente
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
 vcards require a last name entry.	addressbook	it	Le Vcards richiedono un valore per il cognome
+verification	addressbook	it	Verifica
+view linked infolog entries	addressbook	it	Visualizzare le schede Attività collegate
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 warning: all contacts found will be deleted!	addressbook	it	ATTENZIONE: Tutti i contatti trovati saranno cancellati!
 weekday	addressbook	it	Giorno della settimana
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	it	Collegamenti della rubrica, visibili nelle altre applicazioni. I valori vuoti resteranno fuori. Bisognera uscire e accedere di nuovo a EPL se si cambia questa impostazione
+when viewing a contact, show linked entries from the selected application	addressbook	it	Quando si visualizza un contatto, mostra le voci collegate dalla applicazione selezionata
+where to add the email address	addressbook	it	Dove aggiungere l'indirizzo email
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	it	Seleziona il formato di indirizzo da usare per Paesi con formati sconosciuti
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	it	La rubrica da usare per l'aggiunta di contatti, quando non si hanno i permessi per la rubrica corrente
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	it	Seleziona un set di caratteri per l'importazione/esportazione CSV
-whole query	addressbook	it	intera query
-work phone	addressbook	it	Telefono Ufficio
+which charset should be used for the vcard export.	addressbook	it	Quale set di caratteri usare per l'esportazione in vCard?
+which charset should be used for the vcard import and export.	addressbook	it	Quale set di caratteri usare per l'esportazione e l'importazione di vCard?
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	it	Quali campi esportare? Si intendono tutti i campi della rubrica, campi personalizzati inclusi. L'indirizzo di lavoro (ufficio) o dell'abitazione contiene solo nome, azienda e l'indirizzo selezionato.
+whole query	addressbook	it	Intera query
+work email if given, else home email	addressbook	it	Email ufficio se fornito, altrimenti email personale (abitazione)
+work phone	addressbook	it	Telefono ufficio
+write (update or add) a single entry by passing the fields.	addressbook	it	Aggiorna o aggiungi una singola voce bypassando i campi.
+wrong - try again ...	addressbook	it	Errato - riprovare ...
 yes, for the next three days	addressbook	it	Sì, per i prossimi tre giorni
 yes, for the next two weeks	addressbook	it	Sì, per le prossime due settimane
 yes, for the next week	addressbook	it	Sì, per la prossima settimana
@@ -322,10 +515,13 @@ you are not permitted to delete contact %1	addressbook	it	Non hai il permesso di
 you are not permittet to delete this contact	addressbook	it	Non hai il permesso di cancellare questo contatto
 you are not permittet to edit this contact	addressbook	it	Non hai il permesso di modificare questo contatto
 you are not permittet to view this contact	addressbook	it	Non hai il permesso di visualizzare questo contatto
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	it	LDAP può essere usato come repository di contatto solo se gli account sono memorizzati anche in LDAP!
 you can respond by visiting:	addressbook	it	Puoi rispondere visitando:
 you must select a vcard. (*.vcf)	addressbook	it	Devi selezionare una vcard (*.vcf)
 you must select at least 1 column to display	addressbook	it	Devi selezionare almeno una colonna da visualizzare
+you need to select a distribution list	addressbook	it	Seleziona lista di distribuzione
 you need to select some contacts first	addressbook	it	Devi prima selezionare qualche contatto
 you need to select some entries first	addressbook	it	Devi prima selezionare alcune voci.
 zip code	common	it	CAP
+zip code (private)	addressbook	it	CAP (privato)
 zip_note	addressbook	it	<p><b>Note:</b> Il file deve essere uno zip contentente file .csv, .vcf, o .ldif.  Tuttavia, non mischiare i tipi di file da importare
