@@ -939,7 +939,7 @@ class groupdav_principals extends groupdav_handler
 			'schedule-inbox-URL' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-inbox-URL',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/inbox/'))),
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']),
+				HTTP_WebDAV_Server::mkprop('href','mailto:'.$account['account_email']),
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(true).'/principals/users/'.$account['account_lid'].'/'),
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(false).'/principals/users/'.$account['account_lid'].'/'),
 				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])),
@@ -955,7 +955,7 @@ class groupdav_principals extends groupdav_handler
 			'group-membership' => $this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
 				array('calendar', 'resources'), $account['account_id']),	// add proxy-rights
 			'alternate-URI-set' => array(
-				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email'])),
+				HTTP_WebDAV_Server::mkprop('href','mailto:'.$account['account_email'])),
 			// CardDAV
 			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
 			'principal-address' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'principal-address',
