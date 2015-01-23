@@ -990,7 +990,18 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 		{
 			// apply the ratio
 			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
-			if (_height != 0) this.table.height(this.table.height() + _height );
+			if (_height != 0)
+			{
+				if (this.wrapper)
+				{
+					this.wrapper.height(this.wrapper.height() + _height);
+				}
+				else
+				{
+					this.table.height(this.table.height() + _height );
+				}
+			}
+			
 		}
 	}
 });
