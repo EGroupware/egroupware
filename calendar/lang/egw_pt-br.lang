@@ -1,13 +1,13 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
 %1 days	calendar	pt-br	%1 dias
 %1 event(s) %2	calendar	pt-br	%1 evento (s) 2%
-%1 hours	calendar	pt-br	% uma hora
+%1 hours	calendar	pt-br	%1 uma hora
 %1 minutes	calendar	pt-br	%1 minuto
 %1 records imported	calendar	pt-br	%1 registro(s) importado(s)
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar "Testar Importação")
 %1 weeks	calendar	pt-br	%1 semanas
-%s the event	calendar	pt-br	% Do evento
-(%1 events in %2 seconds)	calendar	pt-br	(%1% 2 eventos em segundos)
+%s the event	calendar	pt-br	%1 do evento
+(%1 events in %2 seconds)	calendar	pt-br	(%1 eventos em %2 segundos)
 (empty = use global limit, no = no export at all)	admin	pt-br	(= Vazias usar limite global, não = nenhuma exportação em tudo)
 , exceptions preserved	calendar	pt-br	, Exceções preservados
 , stati of participants reset	calendar	pt-br	, Estado de participantes redefinir
@@ -17,7 +17,7 @@ accept	calendar	pt-br	aceitar
 accept or reject an invitation	calendar	pt-br	Aceitar ou rejeitar um convite
 accepted	calendar	pt-br	Aceito
 access denied to the calendar of %1 !!!	calendar	pt-br	Acesso negado à agenda de %1
-access to calendar of %1 denied!	calendar	pt-br	Acesso ao calendário de 1% negada!
+access to calendar of %1 denied!	calendar	pt-br	Acesso ao calendário de %1 negada!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt-br	Ação que provocou a notificação: (Adicionada, Cancelada, Aceita, Rejeitada, ...)
 actions	calendar	pt-br	Ações
 actions...	calendar	pt-br	Ações...
@@ -273,7 +273,7 @@ location, start- and endtimes, ...	calendar	pt-br	Local, Horários de início e 
 mail all participants	calendar	pt-br	Enviar e-mail para todos os participantes
 make freebusy information available to not loged in persons?	calendar	pt-br	Mostrar informação de disponibilidade para pessoas não logadas?
 manage mapping	calendar	pt-br	Gerenciar mapeamento
-maximum available quantity of %1 exceeded!	calendar	pt-br	A quantidade máxima disponível de 1% excedido!
+maximum available quantity of %1 exceeded!	calendar	pt-br	A quantidade máxima disponível de %1 excedido!
 meeting request	calendar	pt-br	Pedido de reunião
 meetingrequest to all participants	calendar	pt-br	Meetingrequest a todos os participantes
 merge document...	calendar	pt-br	Mesclar documento ...
@@ -300,7 +300,7 @@ no owner selected	calendar	pt-br	Nenhum proprietário selecionado.
 no preview for ical	calendar	pt-br	Pré-visualização para iCal
 no recurrence	calendar	pt-br	Sem retorno
 no response	calendar	pt-br	Sem resposta
-no rights to export more than %1 entries!	calendar	pt-br	Nenhum direito a exportar mais de 1% entradas!
+no rights to export more than %1 entries!	calendar	pt-br	Nenhum direito a exportar mais de %1 entradas!
 non blocking	calendar	pt-br	Posse compartilhada
 not	calendar	pt-br	não
 not rejected	calendar	pt-br	Não rejeitado
