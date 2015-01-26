@@ -33,17 +33,12 @@ class etemplate_widget_vfs extends etemplate_widget_file
 	{
 		if($this->type == 'vfs-upload')
 		{
-echo "EXPAND";
-_debug_array($expand);
 			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont'=>self::$request->content));
 
-echo "this-ID: {$this->id}<br />";
-echo "Form name: $form_name<br />";
 			// ID maps to path - check there for any existing files
 			list($app,$id,$relpath) = explode(':',$this->id,3);
 			if($app && $id)
 			{
-echo "ID: $id<br />";
 				if(!is_numeric($id))
 				{
 					$_id = self::expand_name($id,0,0,0,0,self::$request->content);
@@ -51,11 +46,9 @@ echo "ID: $id<br />";
 					{
 						$id = $_id;
 						$form_name = "$app:$id:$relpath";
-echo "Form name: $form_name<br />";
 					}
 				}
 				$value =& self::get_array(self::$request->content, $form_name, true);
-echo "ID: $id<br />";
 				$path = egw_link::vfs_path($app,$id,'',true);
 				if (!empty($relpath)) $path .= '/'.$relpath;
 
@@ -67,23 +60,17 @@ echo "ID: $id<br />";
 				else if (substr($path, -1) == '/' && egw_vfs::is_dir($path))
 				{
 					$value = egw_vfs::scandir($path);
-echo 'HERE!';
 					foreach($value as &$file)
 					{
-echo $file.'<br />';
 						$file = egw_vfs::stat("$path$file");
-_debug_array($file);
 					}
 				}
 			}
-echo $this;
-_debug_array($value);
 		}
 	}
 
 	public static function ajax_upload() {
 		parent::ajax_upload();
-		error_log(array2string($_FILES));
 		foreach($_FILES as $field => $file)
 		{
 			self::store_file($field, $file);
@@ -91,15 +78,14 @@ _debug_array($value);
 	}
 
 	/**
-         * Ajax callback to receive an incoming file
-         *
-         * The incoming file is automatically placed into the appropriate VFS location.
-	 * If the entry is not yet created, the file information is stored into the widget's value.
-	 * When the form is submitted, the information for all files uploaded is available in the returned
-	 * $content array and the application should deal with the file.
-         */
+	* Ajax callback to receive an incoming file
+	*
+	* The incoming file is automatically placed into the appropriate VFS location.
+	* If the entry is not yet created, the file information is stored into the widget's value.
+	* When the form is submitted, the information for all files uploaded is available in the returned
+	* $content array and the application should deal with the file.
+	*/
 	public static function store_file($path, $file) {
-error_log(array2string($file));
 		$name = $path;
 
 		// Find real path
@@ -124,13 +110,11 @@ error_log(array2string($file));
 		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
 		{
 			self::set_validation_error($name,lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
-error_log(lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
 			return false;
 		}
 		if (!copy($file['tmp_name'],egw_vfs::PREFIX.$path))
 		{
 			self::set_validation_error($name,lang('Error copying uploaded file to vfs!'));
-error_log(lang('Error copying uploaded file to vfs!'));
 			return false;
 		}
 
