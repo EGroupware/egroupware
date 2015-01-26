@@ -657,6 +657,11 @@ etemplate2.prototype.submit = function(button, async, no_validation)
 			var api = this.widgetContainer.egw();
 			var request = api.json(this.menuaction, [this.etemplate_exec_id, values, no_validation], null, this, async);
 			request.sendRequest();
+
+			// Submit the template to an empty iframe (egw_iframe_autocomplete_helper)
+			// in order to get default browser autocomplete working
+			// maybe later we find better solution then we can remove this part
+			jQuery("form#egw_form_autocomplete_helper").submit();
 		}
 		else
 		{
