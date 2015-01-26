@@ -101,7 +101,7 @@ class mail_compose
 			$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 		}
 	}
-	
+
 	/**
 	 * Provide toolbar actions used for compose toolbar
 	 * @param array $content content of compose temp
@@ -110,6 +110,7 @@ class mail_compose
 	 */
 	function getToolbarActions($content)
 	{
+		$group = 0;
 		$actions = array(
 			'send' => array(
 				'caption' => 'Send',
@@ -183,7 +184,7 @@ class mail_compose
 				'children' => array(),
 				'toolbarDefault' => true,
 				'hint' => 'Select the message priority tag',
-				
+
 			),
 			'save2vfs' => array (
 				'caption' => 'Save to VFS',
@@ -218,7 +219,7 @@ class mail_compose
 		{
 			$actions['prty']['children'][$content['priority']]['default'] = true;
 		}
-		
+
 		return $actions;
 	}
 
@@ -1240,7 +1241,7 @@ class mail_compose
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
-			
+
 		$etpl->setElementAttribute('composeToolbar', 'actions', $this->getToolbarActions($_content));
 		if ($content['mimeType']=='html')
 		{
@@ -1526,7 +1527,7 @@ class mail_compose
 			}
 		}
 		// if the message is located within the draft folder, add it as last drafted version (for possible cleanup on abort))
-		if ($mail_bo->isDraftFolder($_folder)) $this->sessionData['lastDrafted'] = mail_ui::createRowID($_folder, $_uid);//array('uid'=>$_uid,'folder'=>$_folder);
+		if ($mail_bo->isDraftFolder($_folder)) $this->sessionData['lastDrafted'] = mail_ui::generateRowID($this->mail_bo->profileID, $_folder, $_uid);//array('uid'=>$_uid,'folder'=>$_folder);
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['isDraft'] = true;
@@ -2455,7 +2456,7 @@ class mail_compose
 				$messageUid = ($messageUid===true ? $status['uidnext'] : $messageUid);
 				if (is_array($this->mail_bo->getMessageHeader($messageUid, '',false, false, $folder)))
 				{
-					$draft_id = mail_ui::createRowID($folder, $messageUid);
+					$draft_id = mail_ui::generateRowID($this->mail_bo->profileID, $folder, $messageUid);
 					if ($content['lastDrafted'] != $draft_id && isset($content['lastDrafted']))
 					{
 						$dhA = mail_ui::splitRowID($content['lastDrafted']);
@@ -3090,7 +3091,7 @@ class mail_compose
 	 * @param int $_searchStringLength
 	 * @param boolean $_returnList
 	 * @param int $_mailaccountToSearch
-	 * @param boolean $_noPrefixID = false, if set to true folders name does not get prefixed by account id
+	 * @param boolean $_noPrefixId = false, if set to true folders name does not get prefixed by account id
 	 * @return type
 	 */
 	function ajax_searchFolder($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null, $_noPrefixId=false) {
