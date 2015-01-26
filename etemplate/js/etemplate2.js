@@ -936,7 +936,6 @@ etemplate2.getById = function(id)
 {
 	for( var name in etemplate2._byTemplate)
 	{
-		console.log(name, etemplate2._byTemplate[name]);
 		for(var i = 0; i < etemplate2._byTemplate[name].length; i++)
 		{
 			var et = etemplate2._byTemplate[name][i];
