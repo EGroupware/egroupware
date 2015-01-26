@@ -75,7 +75,7 @@ class egw_favorites
 			//filter must not be empty if there's one, ignore it at the moment but it need to be checked how it got there in database
 			if (!$filter)
 			{
-				error_log(__METHOD__.'Favorite filter is not suppose to be empty, it should be an array. filter = '. array2string($filters[$name]));
+				error_log(__METHOD__.'Favorite filter "'.$name.'" is not supposed to be empty, it should be an array.  Skipping, more investigation needed. filter = '. array2string($filters[$name]));
 				continue;
 			}
 
