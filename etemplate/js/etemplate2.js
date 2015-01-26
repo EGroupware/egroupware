@@ -196,6 +196,19 @@ etemplate2.prototype.clear = function()
 		this.widgetContainer = null;
 	}
 	$j(this.DOMContainer).empty();
+
+	// Remove self from the index
+	for(name in this.templates)
+	{
+		if(typeof etemplate2._byTemplate[name] == "undefined") continue;
+		for(var i = 0; i < etemplate2._byTemplate[name].length; i++)
+		{
+			if(etemplate2._byTemplate[name][i] == this)
+			{
+				etemplate2._byTemplate[name].splice(i,1);
+			}
+		}
+	}
 };
 
 /**
