@@ -164,6 +164,14 @@ class home_ui
 			) continue;
 
 			$classname = $context['class'];
+
+			// Avoid portlets for apps user can't use (eg. from defaults/forced)
+			list($app,$other) = explode('_',$classname);
+			if(!$GLOBALS['egw_info']['apps'][$app]) $app .='_'.$other;
+			if(!$GLOBALS['egw_info']['user']['apps'][$app]) {
+				continue;
+			}
+
 			$portlet = new $classname($context);
 			$desc = $portlet->get_description();
 			$portlet_content = array(
