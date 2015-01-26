@@ -1675,18 +1675,7 @@ var et2_link_list = et2_link_string.extend(
 			$j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.click( function(){
-					// Check if the link entry is mime with media type, in order to open it in expose view
-					if (typeof _link_data.type != 'undefined' && _link_data.type.match(/^(video|audio|image|media)\//,'ig'))
-					{
-						var $vfs_img_node = jQuery(this).parent().find('.vfsMimeIcon');
-						if ($vfs_img_node.length > 0) $vfs_img_node.click();
-					}
-					else
-					{
-						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);
-					}
-				})
+				.click( function(){self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);})
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
 		}
 
