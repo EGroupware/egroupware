@@ -1,15 +1,19 @@
 <?php
 /**
- * eGroupWare API: VFS - stream wrapper to access the regular filesystem (setting a given user, group and mode)
+ * EGroupware API: VFS - stream wrapper to access the regular filesystem (setting a given user, group and mode)
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\Vfs\Filesystem;
+
+use EGroupware\Api\Vfs;
 
 /**
  * eGroupWare API: VFS - stream wrapper to access the regular filesystem (setting a given user, group and mode)
@@ -33,12 +37,12 @@
  *
  * (admin / secret is username / password of setup user, "root_" prefix differenciate from regular EGw-user!)
  *
- * To correctly support characters with special meaning in url's (#?%), we urlencode them with egw_vfs::encodePathComponent
+ * To correctly support characters with special meaning in url's (#?%), we urlencode them with Vfs::encodePathComponent
  * and urldecode all path again, before passing them to php's filesystem functions.
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
-class filesystem_stream_wrapper implements iface_stream_wrapper
+class StreamWrapper implements Vfs\StreamWrapperIface
 {
 	/**
 	 * Scheme / protocol used for this stream-wrapper
@@ -47,7 +51,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */
-	const DIR_MIME_TYPE = egw_vfs::DIR_MIME_TYPE ;
+	const DIR_MIME_TYPE = Vfs::DIR_MIME_TYPE ;
 
 	/**
 	 * mode-bits, which have to be set for files
@@ -121,16 +125,18 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
+		unset($opened_path);	// not used, but required by interface
+
 		$this->opened_stream = $this->opened_stream_url = null;
 		$read_only = str_replace('b','',$mode) == 'r';
 
 		// check access rights, based on the eGW mount perms
 		if (!($stat = self::url_stat($url,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
-			$dir = egw_vfs::dirname($url);
+			$dir = Vfs::dirname($url);
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' ||	// or file should not exist, but does
-				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))	// or we are not allowed to 																																			create it
+				!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))	// or we are not allowed to 																																			create it
 			{
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
 				if (!($options & STREAM_URL_STAT_QUIET))
@@ -140,7 +146,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 		}
-		elseif (!$read_only && !egw_vfs::check_access($url,egw_vfs::WRITABLE,$stat))	// we are not allowed to edit it
+		elseif (!$read_only && !Vfs::check_access($url,Vfs::WRITABLE,$stat))	// we are not allowed to edit it
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be edited!");
 			if (!($options & STREAM_URL_STAT_QUIET))
@@ -160,7 +166,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		}
 
 		// open the "real" file
-		if (!($this->opened_stream = fopen($path=egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH)),$mode,$options)))
+		if (!($this->opened_stream = fopen($path=Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH)),$mode,$options)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) fopen('$path','$mode',$options) returned false!");
 			return false;
@@ -302,10 +308,10 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function unlink ( $url )
 	{
-		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
+		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
 
 		// check access rights (file need to exist and directory need to be writable
-		if (!file_exists($path) || is_dir($path) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
+		if (!file_exists($path) || is_dir($path) || !Vfs::check_access(Vfs::dirname($url),Vfs::WRITABLE))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;	// no permission or file does not exist
@@ -327,17 +333,17 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rename ( $url_from, $url_to )
 	{
-		$from = egw_vfs::parse_url($url_from);
-		$to   = egw_vfs::parse_url($url_to);
+		$from = Vfs::parse_url($url_from);
+		$to   = Vfs::parse_url($url_to);
 
 		// check access rights
-		if (!($from_stat = self::url_stat($url_from,0)) || !egw_vfs::check_access(egw_vfs::dirname($url_from),egw_vfs::WRITABLE))
+		if (!($from_stat = self::url_stat($url_from,0)) || !Vfs::check_access(Vfs::dirname($url_from),Vfs::WRITABLE))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $from[path] permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		$to_dir = egw_vfs::dirname($url_to);
-		if (!egw_vfs::check_access($to_dir,egw_vfs::WRITABLE,$to_dir_stat = self::url_stat($to_dir,0)))
+		$to_dir = Vfs::dirname($url_to);
+		if (!Vfs::check_access($to_dir,Vfs::WRITABLE,$to_dir_stat = self::url_stat($to_dir,0)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $to_dir permission denied!");
 			return false;	// no permission or parent-dir does not exist
@@ -357,12 +363,12 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			return false;	// no permission or file does not exist
 		}
 		// if destination file already exists, delete it
-		if ($to_stat && !self::unlink($url_to,$operation))
+		if ($to_stat && !self::unlink($url_to))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
 			return false;
 		}
-		return rename(egw_vfs::decodePath($from['path']),egw_vfs::decodePath($to['path']));
+		return rename(Vfs::decodePath($from['path']),Vfs::decodePath($to['path']));
 	}
 
 	/**
@@ -378,24 +384,26 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function mkdir ( $url, $mode, $options )
 	{
-		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
+		unset($mode);	// not used, but required by interface
+
+		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
 		$recursive = (bool)($options & STREAM_MKDIR_RECURSIVE);
 
 		// find the real parent (might be more then one level if $recursive!)
 		do {
 			$parent = dirname($parent ? $parent : $path);
-			$parent_url = egw_vfs::dirname($parent_url ? $parent_url : $url);
+			$parent_url = Vfs::dirname($parent_url ? $parent_url : $url);
 		}
 		while ($recursive && $parent != '/' && !file_exists($parent));
-		//echo __METHOD__."($url,$mode,$options) path=$path, recursive=$recursive, parent=$parent, egw_vfs::check_access(parent_url=$parent_url,egw_vfs::WRITABLE)=".(int)egw_vfs::check_access($parent_url,egw_vfs::WRITABLE)."\n";
+		//echo __METHOD__."($url,$mode,$options) path=$path, recursive=$recursive, parent=$parent, Vfs::check_access(parent_url=$parent_url,Vfs::WRITABLE)=".(int)Vfs::check_access($parent_url,Vfs::WRITABLE)."\n";
 
 		// check access rights (in real filesystem AND by mount perms)
-		if (file_exists($path) || !file_exists($parent) || !is_writable($parent) || !egw_vfs::check_access($parent_url,egw_vfs::WRITABLE))
+		if (file_exists($path) || !file_exists($parent) || !is_writable($parent) || !Vfs::check_access($parent_url,Vfs::WRITABLE))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;
 		}
-		return mkdir($path,$mode=0700,$recursive);	// setting mode 0700 allows (only) apache to write into the dir
+		return mkdir($path, 0700, $recursive);	// setting mode 0700 allows (only) apache to write into the dir
 	}
 
 	/**
@@ -410,11 +418,13 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rmdir ( $url, $options )
 	{
-		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
+		unset($options);	// not used, but required by interface
+
+		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
-		if (!file_exists($path) || !is_writable($parent) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
+		if (!file_exists($path) || !is_writable($parent) || !Vfs::check_access(Vfs::dirname($url),Vfs::WRITABLE))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;
@@ -425,18 +435,18 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
-	 * @param string $path
-	 * @param int $time=null modification time (unix timestamp), default null = current time
-	 * @param int $atime=null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 * @param string $url
+	 * @param int $time =null modification time (unix timestamp), default null = current time
+	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
 	 * @return boolean true on success, false otherwise
 	 */
 	static function touch($url,$time=null,$atime=null)
 	{
-		$path = egw_vfs::decodePath(egw_vfs::parse_url($url,PHP_URL_PATH));
+		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
-		if (!file_exists($path) || !is_writable($parent) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
+		if (!file_exists($path) || !is_writable($parent) || !Vfs::check_access(Vfs::dirname($url),Vfs::WRITABLE))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;
@@ -450,11 +460,13 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 * Not supported, as it would require root rights!
 	 *
 	 * @param string $path
-	 * @param string $mode mode string see egw_vfs::mode2int
+	 * @param string $mode mode string see Vfs::mode2int
 	 * @return boolean true on success, false otherwise
 	 */
 	static function chmod($path,$mode)
 	{
+		unset($path, $mode);	// not used, but required by interface
+
 		return false;
 	}
 
@@ -469,6 +481,8 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function chown($path,$owner)
 	{
+		unset($path, $owner);	// not used, but required by interface
+
 		return false;
 	}
 
@@ -483,6 +497,8 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function chgrp($path,$group)
 	{
+		unset($path, $group);	// not used, but required by interface
+
 		return false;
 	}
 
@@ -499,7 +515,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 
 		$this->opened_dir = null;
 
-		$path = egw_vfs::decodePath(egw_vfs::parse_url($this->opened_dir_url = $url,PHP_URL_PATH));
+		$path = Vfs::decodePath(Vfs::parse_url($this->opened_dir_url = $url,PHP_URL_PATH));
 
 		// ToDo: check access rights
 
@@ -539,18 +555,18 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function url_stat ( $url, $flags )
 	{
-		$parts = egw_vfs::parse_url($url);
-		$path = egw_vfs::decodePath($parts['path']);
+		$parts = Vfs::parse_url($url);
+		$path = Vfs::decodePath($parts['path']);
 
 		$stat = @stat($path);	// suppressed the stat failed warnings
 
 		if ($stat)
 		{
 			// set owner, group and mode from mount options
+			$uid = $gid = $mode = null;
 			if (!self::parse_query($parts['query'],$uid,$gid,$mode))
 			{
 				return false;
-				if (self::LOG_LEVEL > 0) error_log(__METHOD__."($url,$flags) can NOT self::parse_query('$parts[query]')!");
 			}
 			$stat['uid'] = $stat[4] = $uid;
 			$stat['gid'] = $stat[5] = $gid;
@@ -561,7 +577,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 				$stat['mode'] = $stat[2] = $stat['mode'] & ~0222;
 			}
 		}
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags) path=$path, mount_mode=".sprintf('0%o',$mode).", mode=".sprintf('0%o',$stat['mode']).'='.egw_vfs::int2mode($stat['mode']));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags) path=$path, mount_mode=".sprintf('0%o',$mode).", mode=".sprintf('0%o',$stat['mode']).'='.Vfs::int2mode($stat['mode']));
 		return $stat;
 	}
 
@@ -587,7 +603,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		while ($ignore);
 
 		// encode special chars messing up url's
-		if ($file !== false) $file = egw_vfs::encodePathComponent($file);
+		if ($file !== false) $file = Vfs::encodePathComponent($file);
 
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'() returning '.array2string($file));
 
@@ -634,6 +650,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function parse_query($query,&$uid,&$gid,&$mode)
 	{
+		$params = null;
 		parse_str(is_array($query) ? $query['query'] : $query,$params);
 
 		// setting the default perms root.root r-x for other
@@ -690,7 +707,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 					$gid = (int)$value;
 					break;
 				case 'mode':
-					$mode = egw_vfs::mode2int($value);
+					$mode = Vfs::mode2int($value);
 					break;
 				case 'url':
 					// ignored, only used for download_url method
@@ -712,7 +729,8 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function deny_script($url)
 	{
-		$parts = egw_vfs::parse_url($url);
+		$parts = Vfs::parse_url($url);
+		$get = null;
 		parse_str($parts['query'],$get);
 
 		$deny = !$get['exec'] && preg_match(self::SCRIPT_EXTENSIONS_PREG,$parts['path']);
@@ -730,24 +748,26 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 * We use our webdav handler as download url instead of an own download method.
 	 * The webdav hander (filemanager/webdav.php) recognices eGW's session cookie and of cause understands regular GET requests.
 	 *
-	 * @param string $url
-	 * @param boolean $force_download=false add header('Content-disposition: filename="' . basename($path) . '"'), currently not supported!
+	 * @param string $_url
+	 * @param boolean $force_download =false add header('Content-disposition: filename="' . basename($path) . '"'), currently not supported!
 	 * @todo get $force_download working through webdav
 	 * @return string|false string with full download url or false to use default webdav.php url
 	 */
-	static function download_url($url,$force_download=false)
+	static function download_url($_url,$force_download=false)
 	{
-		list(,$query) = explode('?',$url,2);
+		unset($force_download);	// not used, but required by interface
+
+		list($url,$query) = explode('?',$_url,2);
+		$get = null;
 		parse_str($query,$get);
 		if (empty($get['url'])) return false;	// no download url given for this mount-point
 
-		if (!($mount_url = egw_vfs::mount_url($url))) return false;	// no mount url found, should not happen
+		if (!($mount_url = Vfs::mount_url($_url))) return false;	// no mount url found, should not happen
 		list($mount_url) = explode('?',$mount_url);
 
-		list($url,$query) = explode('?',$url,2);
 		$relpath = substr($url,strlen($mount_url));
 
-		$download_url = egw_vfs::concat($get['url'],$relpath);
+		$download_url = Vfs::concat($get['url'],$relpath);
 		if ($download_url[0] == '/')
 		{
 			$download_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
@@ -757,6 +777,14 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		//die(__METHOD__."('$url') --> relpath = $relpath --> $download_url");
 		return $download_url;
 	}
+
+	/**
+	 * Register our stream-wrapper
+	 */
+	public static function register()
+	{
+		stream_register_wrapper(self::SCHEME, __CLASS__);
+	}
 }
 
-stream_register_wrapper(filesystem_stream_wrapper::SCHEME ,'filesystem_stream_wrapper');
+StreamWrapper::register();

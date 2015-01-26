@@ -1,15 +1,23 @@
 <?php
 /**
- * eGroupWare API: VFS - stream wrapper interface
+ * EGroupware API: VFS - stream wrapper interface
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\Vfs;
+
+use EGroupware\Api\Vfs;
+
+// explicitly import old phpgwapi classes used:
+use mime_magic;
+use egw_exception_db;
 
 /**
  * eGroupWare API: VFS - stream wrapper interface
@@ -19,7 +27,7 @@
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
-class vfs_stream_wrapper implements iface_stream_wrapper
+class StreamWrapper implements StreamWrapperIface
 {
 	/**
 	 * Scheme / protocol used for this stream-wrapper
@@ -224,7 +232,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 				{
 					self::load_wrapper($scheme);
 				}
-				$url = egw_vfs::concat($url,substr($parts['path'],strlen($mounted)));
+				$url = Vfs::concat($url,substr($parts['path'],strlen($mounted)));
 
 				if ($replace_user_pass_host)
 				{
@@ -703,7 +711,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * Requires owner or root rights!
 	 *
 	 * @param string $path
-	 * @param string $mode mode string see egw_vfs::mode2int
+	 * @param string $mode mode string see Vfs::mode2int
 	 * @return boolean true on success, false otherwise
 	 */
 	static function chmod($path,$mode)
@@ -845,15 +853,15 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
 		}
-		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
+		$this->opened_dir_writable = Vfs::check_access($this->opened_dir_url,Vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = self::parse_url($path,PHP_URL_PATH);
 		foreach(array_keys(self::$fstab) as $mounted)
 		{
-			if (((egw_vfs::dirname($mounted) == $basepath || egw_vfs::dirname($mounted).'/' == $basepath) && $mounted != '/') &&
+			if (((Vfs::dirname($mounted) == $basepath || Vfs::dirname($mounted).'/' == $basepath) && $mounted != '/') &&
 				// only return children readable by the user, if dir is not writable
 				(!self::HIDE_UNREADABLES || $this->opened_dir_writable ||
-					egw_vfs::check_access($mounted,egw_vfs::READABLE)))
+					Vfs::check_access($mounted,Vfs::READABLE)))
 			{
 				$this->extra_dirs[] = basename($mounted);
 			}
@@ -918,9 +926,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 					{
 						if ($lpath[0] != '/')	// concat relative path
 						{
-							$lpath = egw_vfs::concat(self::parse_url($path,PHP_URL_PATH),'../'.$lpath);
+							$lpath = Vfs::concat(self::parse_url($path,PHP_URL_PATH),'../'.$lpath);
 						}
-						$url = egw_vfs::PREFIX.$lpath;
+						$url = Vfs::PREFIX.$lpath;
 						if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
 						// try reading the stat of the link
 						if (($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1)))
@@ -934,19 +942,19 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		catch (egw_exception_db $e) {
 			// some long running operations, eg. merge-print, run into situation that DB closes our separate sqlfs connection
-			// we try now to reconnect sqlfs_stream_wrapper once
+			// we try now to reconnect Vfs\Sqlfs\StreamWrapper once
 			// it's done here in vfs_stream_wrapper as situation can happen in sqlfs, links, stylite.links or stylite.versioning
 			if ($try_reconnect)
 			{
 				// reconnect to db
-				sqlfs_stream_wrapper::reconnect();
+				Vfs\Sqlfs\StreamWrapper::reconnect();
 				return self::url_stat($path, $flags, $try_create_home, $check_symlink_components, $check_symlink_depth, false);
 			}
 			// if numer of tries is exceeded, re-throw exception
 			throw $e;
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
-		if (!$stat && $try_create_home && egw_vfs::dirname(self::parse_url($path,PHP_URL_PATH)) == '/home' &&
+		if (!$stat && $try_create_home && Vfs::dirname(self::parse_url($path,PHP_URL_PATH)) == '/home' &&
 			($id = $GLOBALS['egw']->accounts->name2id(basename($path))) &&
 			$GLOBALS['egw']->accounts->id2name($id) == basename($path))	// make sure path has the right case!
 		{
@@ -979,8 +987,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 		/* Todo: if we hide non readables, we should return false on url_stat for consitency (if dir is not writabel)
 		// Problem: this does NOT stop (calles itself infinit recursive)!
-		if (self::HIDE_UNREADABLES && !egw_vfs::check_access($path,egw_vfs::READABLE,$stat) &&
-			!egw_vfs::check_access(egw_vfs::dirname($path,egw_vfs::WRITABLE)))
+		if (self::HIDE_UNREADABLES && !Vfs::check_access($path,Vfs::READABLE,$stat) &&
+			!Vfs::check_access(Vfs::dirname($path,Vfs::WRITABLE)))
 		{
 			return false;
 		}
@@ -1004,8 +1012,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url'): ".function_backtrace(1));
 
-		while (($rel_path = egw_vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
-		       ($url = egw_vfs::dirname($url)))
+		while (($rel_path = Vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
+		       ($url = Vfs::dirname($url)))
 		{
 			if (($stat = self::url_stat($url,0,false,false)))
 			{
@@ -1015,14 +1023,14 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 					if ($lpath[0] != '/')
 					{
-						$lpath = egw_vfs::concat(self::parse_url($url,PHP_URL_PATH),'../'.$lpath);
+						$lpath = Vfs::concat(self::parse_url($url,PHP_URL_PATH),'../'.$lpath);
 					}
-					//self::symlinkCache_add($path,egw_vfs::PREFIX.$lpath);
-					$url = egw_vfs::PREFIX.egw_vfs::concat($lpath,$rel_path);
+					//self::symlinkCache_add($path,Vfs::PREFIX.$lpath);
+					$url = Vfs::PREFIX.Vfs::concat($lpath,$rel_path);
 					if (self::LOG_LEVEL > 1) error_log("$log --> lpath='$lpath', url='$url'");
 					return self::url_stat($url,$flags);
 				}
-				$url = egw_vfs::concat($url,$rel_path);
+				$url = Vfs::concat($url,$rel_path);
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url') returning null");
 				return null;
 			}
@@ -1110,10 +1118,10 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * Clears our internal stat and symlink cache
 	 *
-	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS egw_vfs::$user changes!
+	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS Vfs::$user changes!
 	 *
 	 * We have to clear the symlink cache before AND after calling the backend,
-	 * because auf traversal rights may be different when egw_vfs::$user changes!
+	 * because auf traversal rights may be different when Vfs::$user changes!
 	 *
 	 * @param string $path ='/' path of backend, whos cache to clear
 	 */
@@ -1150,7 +1158,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			while($file !== false &&
 				(is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) || // do NOT return extra_dirs twice
 				self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
-				!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE)));
+				!Vfs::check_access(Vfs::concat($this->opened_dir_url,$file),Vfs::READABLE)));
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $this->opened_dir ) = '$file'");
 		return $file;
@@ -1247,7 +1255,16 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function scheme2class($scheme)
 	{
-		return str_replace('.','_',$scheme).'_stream_wrapper';
+		list($app, $app_scheme) = explode('.', $scheme);
+		foreach(array(
+			empty($app_scheme) ? 'EGroupware\\Api\\Vfs\\'.ucfirst($scheme).'\\StreamWrapper' :	// streamwrapper in Api\Vfs
+				'EGroupware\\'.ucfirst($app).'\\Vfs\\'.ucfirst($app_scheme).'\\StreamWrapper', // streamwrapper in $app\Vfs
+			str_replace('.','_',$scheme).'_stream_wrapper',	// old (flat) name
+		) as $class)
+		{
+			//error_log(__METHOD__."('$scheme') class_exists('$class')=".array2string(class_exists($class)));
+			if (class_exists($class))  return $class;
+		}
 	}
 
 	/**
@@ -1360,4 +1377,4 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	}
 }
 
-vfs_stream_wrapper::init_static();
+StreamWrapper::init_static();

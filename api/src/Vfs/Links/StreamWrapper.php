@@ -7,18 +7,26 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id: class.sqlfs_stream_wrapper.inc.php 24997 2008-03-02 21:44:15Z ralfbecker $
  */
 
+namespace EGroupware\Api\Vfs\Links;
+
+use EGroupware\Api\Vfs;
+
+// explicitly import old phpgwapi classes used:
+use egw_link;
+use addressbook_vcal;
+
 /**
- * Define parent for links_stream_wrapper, if not already defined
+ * Define parent for Vfs\Links\StreamWrapper, if not already defined
  *
- * Allows to base links_stream_wrapper on an other wrapper
+ * Allows to base Vfs\Links\StreamWrapper on an other wrapper
  */
-if (!class_exists('links_stream_wrapper_parent',false))
+if (!class_exists('EGroupware\\Api\\Vfs\\Links\\LinksParent', false))
 {
-	class links_stream_wrapper_parent extends sqlfs_stream_wrapper {}
+	class LinksParent extends Vfs\Sqlfs\StreamWrapper {}
 }
 
 /**
@@ -42,7 +50,7 @@ if (!class_exists('links_stream_wrapper_parent',false))
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
-class links_stream_wrapper extends links_stream_wrapper_parent
+class StreamWrapper extends LinksParent
 {
 	/**
 	 * Scheme / protocoll used for this stream-wrapper
@@ -70,11 +78,11 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	static function check_extended_acl($url,$check)
 	{
-		if (egw_vfs::$is_root)
+		if (Vfs::$is_root)
 		{
 			return true;
 		}
-		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
+		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
 
@@ -85,7 +93,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		}
 		elseif (!$app)
 		{
-			$access = !($check & egw_vfs::WRITABLE);	// always grant read access to /apps
+			$access = !($check & Vfs::WRITABLE);	// always grant read access to /apps
 			$what = '!$app';
 		}
 		elseif(!isset($GLOBALS['egw_info']['user']['apps'][$app]))
@@ -104,11 +112,11 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		else
 		{
 			// vfs & stream-wrapper use posix rights, egw_link::file_access uses EGW_ACL_{EDIT|READ}!
-			$required = $check & egw_vfs::WRITABLE ? EGW_ACL_EDIT : EGW_ACL_READ;
-			$access = egw_link::file_access($app,$id,$required,$rel_path,egw_vfs::$user);
-			$what = "from egw_link::file_access('$app',$id,$required,'$rel_path,".egw_vfs::$user.")";
+			$required = $check & Vfs::WRITABLE ? EGW_ACL_EDIT : EGW_ACL_READ;
+			$access = egw_link::file_access($app,$id,$required,$rel_path,Vfs::$user);
+			$what = "from egw_link::file_access('$app',$id,$required,'$rel_path,".Vfs::$user.")";
 		}
-		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".egw_vfs::$user." ($what) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
+		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".Vfs::$user." ($what) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;
 	}
 
@@ -118,7 +126,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 * Reimplemented from sqlfs, as we have to pass the value of check_extends_acl(), due to the lack of late static binding.
 	 * And to return vcard for url /apps/addressbook/$id/.entry
 	 *
-	 * @param string $path
+	 * @param string $url
 	 * @param int $flags holds additional flags set by the streams API. It can hold one or more of the following values OR'd together:
 	 * - STREAM_URL_STAT_LINK	For resources with the ability to link to other resource (such as an HTTP Location: forward,
 	 *                          or a filesystem symlink). This flag specified that only information about the link itself should be returned,
@@ -131,7 +139,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	static function url_stat ( $url, $flags )
 	{
-		$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE);
+		$eacl_check=self::check_extended_acl($url,Vfs::READABLE);
 
 		// return vCard as /.entry
 		if ( $eacl_check && substr($url,-7) == '/.entry' &&
@@ -140,7 +148,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 			$ret = array(
 				'ino'   => md5($url),
 				'name'  => '.entry',
-				'mode'  => self::MODE_FILE|egw_vfs::READABLE,	// required by the stream wrapper
+				'mode'  => self::MODE_FILE|Vfs::READABLE,	// required by the stream wrapper
 				'size'  => 1024,	// fmail does NOT attach files with size 0!
 				'uid'   => 0,
 				'gid'   => 0,
@@ -154,7 +162,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		// if entry directory does not exist --> return fake directory
 		elseif (!($ret = parent::url_stat($url,$flags,$eacl_check)) && $eacl_check)
 		{
-			list(,/*$apps*/,/*$app*/,$id,$rel_path) = explode('/', egw_vfs::parse_url($url, PHP_URL_PATH), 5);
+			list(,/*$apps*/,/*$app*/,$id,$rel_path) = explode('/', Vfs::parse_url($url, PHP_URL_PATH), 5);
 			if ($id && !isset($rel_path))
 			{
 				$ret = array(
@@ -168,7 +176,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 					'ctime' => time(),
 					'nlink' => 2,
 					// eGW addition to return some extra values
-					'mime'  => egw_vfs::DIR_MIME_TYPE,
+					'mime'  => Vfs::DIR_MIME_TYPE,
 				);
 			}
 		}
@@ -182,9 +190,9 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 * Reimplemented, to NOT call the sqlfs functions, as we dont allow to modify the ACL (defined by the apps)
 	 *
 	 * @param string $path string with path
-	 * @param int $rights=null rights to set, or null to delete the entry
-	 * @param int/boolean $owner=null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
-	 * @param int $fs_id=null fs_id to use, to not query it again (eg. because it's already deleted)
+	 * @param int $rights =null rights to set, or null to delete the entry
+	 * @param int/boolean $owner =null owner for whom to set the rights, null for the current user, or false to delete all rights for $path
+	 * @param int $fs_id =null fs_id to use, to not query it again (eg. because it's already deleted)
 	 * @return boolean true if acl is set/deleted, false on error
 	 */
 	static function eacl($path,$rights=null,$owner=null,$fs_id=null)
@@ -230,22 +238,22 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 
 		if($path[0] != '/')
 		{
-			if (strpos($path,'?') !== false) $query = egw_vfs::parse_url($path,PHP_URL_QUERY);
-			$path = egw_vfs::parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
+			if (strpos($path,'?') !== false) $query = Vfs::parse_url($path,PHP_URL_QUERY);
+			$path = Vfs::parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
 		}
 		list(,$apps,$app,$id) = explode('/',$path);
 
 		$ret = false;
-		if ($apps == 'apps' && $app && !$id || self::check_extended_acl($path,egw_vfs::WRITABLE))	// app directory itself is allways ok
+		if ($apps == 'apps' && $app && !$id || self::check_extended_acl($path,Vfs::WRITABLE))	// app directory itself is allways ok
 		{
-			$current_is_root = egw_vfs::$is_root; egw_vfs::$is_root = true;
-			$current_user = egw_vfs::$user; egw_vfs::$user = 0;
+			$current_is_root = Vfs::$is_root; Vfs::$is_root = true;
+			$current_user = Vfs::$user; Vfs::$user = 0;
 
 			$ret = parent::mkdir($path,0,$options|STREAM_MKDIR_RECURSIVE);
 			if ($id) parent::chmod($path,0);	// no other rights
 
-			egw_vfs::$user = $current_user;
-			egw_vfs::$is_root = $current_is_root;
+			Vfs::$user = $current_user;
+			Vfs::$is_root = $current_is_root;
 		}
 		//error_log(__METHOD__."($path,$mode,$options) apps=$apps, app=$app, id=$id: returning $ret");
 		return $ret;
@@ -277,21 +285,20 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
 		{
 			list($id) = array_slice(explode('/',$url),-2,1);
-			$name = md5($url);
 			$ab_vcard = new addressbook_vcal('addressbook','text/vcard');
-			if (!($GLOBALS[$name] =& $ab_vcard->getVCard($id)))
+			if (!($vcard =& $ab_vcard->getVCard($id)))
 			{
 				error_log(__METHOD__."('$url', '$mode', $options) addressbook_vcal::getVCard($id) returned false!");
 				return false;
 			}
 			//error_log(__METHOD__."('$url', '$mode', $options) addressbook_vcal::getVCard($id) returned ".$GLOBALS[$name]);
-			require_once(EGW_API_INC.'/class.global_stream_wrapper.inc.php');
-			$this->opened_stream = fopen('global://'.$name,'r');
-			unset($GLOBALS[$name]);	// unset it, so it does not use up memory, once the stream is closed
+			$this->opened_stream = fopen('php://temp', 'wb');
+			fwrite($this->opened_stream, $vcard);
+			fseek($this->opened_stream, 0, SEEK_SET);
 			return true;
 		}
 		// create not existing entry directories on the fly
-		if ($mode[0] != 'r' && !parent::url_stat($dir = egw_vfs::dirname($url),0) && self::check_extended_acl($dir,egw_vfs::WRITABLE))
+		if ($mode[0] != 'r' && !parent::url_stat($dir = Vfs::dirname($url),0) && self::check_extended_acl($dir,Vfs::WRITABLE))
 		{
 			self::mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
@@ -303,7 +310,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 *
 	 * Reimplemented to give no error, if entry directory does not exist.
 	 *
-	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
+	 * @param string $url URL that was passed to opendir() and that this object is expected to explore.
 	 * @param $options
 	 * @return booelan
 	 */
@@ -316,6 +323,14 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 		}
 		return parent::dir_opendir($url, $options);
 	}
+
+	/**
+	 * Register this stream-wrapper
+	 */
+	public static function register()
+	{
+		stream_register_wrapper(self::SCHEME, __CLASS__);
+	}
 }
 
-stream_register_wrapper(links_stream_wrapper::SCHEME ,'links_stream_wrapper');
+StreamWrapper::register();
