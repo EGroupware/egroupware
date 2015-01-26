@@ -1,8 +1,8 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
 %1 days	calendar	pt-br	%1 dias
 %1 event(s) %2	calendar	pt-br	%1 evento (s) 2%
-%1 hours	calendar	pt-br	%1 uma hora
-%1 minutes	calendar	pt-br	%1 minuto
+%1 hours	calendar	pt-br	%1 horas
+%1 minutes	calendar	pt-br	%1 minutos
 %1 records imported	calendar	pt-br	%1 registro(s) importado(s)
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar "Testar Importação")
 %1 weeks	calendar	pt-br	%1 semanas
