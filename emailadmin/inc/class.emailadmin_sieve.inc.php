@@ -195,7 +195,7 @@ class emailadmin_sieve extends Net_Sieve
 			$this->_timeout = $timeout;
 		}
 
-		if(PEAR::isError($this->error = $this->connect($sieveHost , $sievePort, $options, $useTLS) ) )
+		if(self::isError($this->error = $this->connect($sieveHost , $sievePort, $options, $useTLS) ) )
 		{
 			if ($this->debug)
 			{
@@ -215,7 +215,7 @@ class emailadmin_sieve extends Net_Sieve
 			$this->supportedAuthMethods = $sieveAuthMethods[$_icServerID];
 		}
 
-		if(PEAR::isError($this->error = $this->login($username, $password, 'LOGIN', $euser) ) )
+		if(self::isError($this->error = $this->login($username, $password, 'LOGIN', $euser) ) )
 		{
 			if ($this->debug)
 			{
@@ -274,7 +274,7 @@ class emailadmin_sieve extends Net_Sieve
             return PEAR::raiseError('Not currently in DISCONNECTED state', 1);
         }
 
-		if (PEAR::isError($res = $this->_sock->connect($host, $port, false, ($this->_timeout?$this->_timeout:10), $options))) {
+		if (self::isError($res = $this->_sock->connect($host, $port, false, ($this->_timeout?$this->_timeout:10), $options))) {
             return $res;
         }
 
@@ -282,14 +282,14 @@ class emailadmin_sieve extends Net_Sieve
             $this->_state = NET_SIEVE_STATE_TRANSACTION;
         } else {
             $this->_state = NET_SIEVE_STATE_AUTHORISATION;
-            if (PEAR::isError($res = $this->_doCmd())) {
+            if (self::isError($res = $this->_doCmd())) {
                 return $res;
             }
         }
 
         // Explicitly ask for the capabilities in case the connection is
         // picked up from an existing connection.
-        if (PEAR::isError($res = $this->_cmdCapability())) {
+        if (self::isError($res = $this->_cmdCapability())) {
             return PEAR::raiseError(
                 'Failed to connect, server said: ' . $res->getMessage(), 2
             );
@@ -299,7 +299,7 @@ class emailadmin_sieve extends Net_Sieve
         if ($useTLS && !empty($this->_capability['starttls'])
             && function_exists('stream_socket_enable_crypto')
         ) {
-            if (PEAR::isError($res = $this->_startTLS())) {
+            if (self::isError($res = $this->_startTLS())) {
                 return $res;
             }
         }
@@ -368,14 +368,14 @@ class emailadmin_sieve extends Net_Sieve
      */
     function _cmdAuthenticate($uid , $pwd , $userMethod = null , $euser = '' )
     {
-        if ( PEAR::isError( $method = $this->_getBestAuthMethod($userMethod) ) ) {
+        if ( self::isError( $method = $this->_getBestAuthMethod($userMethod) ) ) {
             return $method;
         }
         //error_log(__METHOD__.__LINE__.' using AuthMethod: '.$method);
         switch ($method) {
             case 'DIGEST-MD5':
                 $result = $this->_authDigestMD5( $uid , $pwd , $euser );
-                if (!PEAR::isError($result))
+                if (!self::isError($result))
 				{
 					break;
 				}
@@ -385,7 +385,7 @@ class emailadmin_sieve extends Net_Sieve
                 return $this->_cmdAuthenticate($uid , $pwd, null, $euser);
             case 'CRAM-MD5':
                 $result = $this->_authCRAMMD5( $uid , $pwd, $euser);
-                if (!PEAR::isError($result))
+                if (!self::isError($result))
 				{
 					break;
 				}
@@ -395,7 +395,7 @@ class emailadmin_sieve extends Net_Sieve
                 return $this->_cmdAuthenticate($uid , $pwd, null, $euser);
             case 'LOGIN':
                 $result = $this->_authLOGIN( $uid , $pwd , $euser );
-                if (!PEAR::isError($result))
+                if (!self::isError($result))
 				{
 					break;
 				}
@@ -410,16 +410,16 @@ class emailadmin_sieve extends Net_Sieve
                 $result = new PEAR_Error( "$method is not a supported authentication method" );
                 break;
         }
-        if (PEAR::isError($result))
+        if (self::isError($result))
 		{
 			return $result;
 		}
-		if (PEAR::isError($res = $this->_doCmd())) {
+		if (self::isError($res = $this->_doCmd())) {
             return $res;
         }
 
         // Query the server capabilities again now that we are authenticated.
-        if (PEAR::isError($res = $this->_cmdCapability())) {
+        if (self::isError($res = $this->_cmdCapability())) {
             return PEAR::raiseError(
                 'Failed to connect, server said: ' . $res->getMessage(), 2
             );
@@ -531,5 +531,26 @@ class emailadmin_sieve extends Net_Sieve
 		$this->emailNotification =& $script->emailNotification; // Added email notifications
 
 		return $script;
+	}
+
+	/**
+	 * Tell whether a value is a PEAR error.
+	 *
+	 * Implemented here to get arround: PHP Deprecated:  Non-static method self::isError() should not be called statically
+	 *
+	 * @param   mixed $data   the value to test
+	 * @param   int   $code   if $data is an error object, return true
+	 *                        only if $code is a string and
+	 *                        $obj->getMessage() == $code or
+	 *                        $code is an integer and $obj->getCode() == $code
+	 * @access  public
+	 * @return  bool    true if parameter is an error
+	 */
+	protected static function isError($data, $code = null)
+	{
+		static $pear=null;
+		if (!isset($pear)) $pear = new PEAR();
+
+		return $pear->isError($data, $code);
 	}
 }

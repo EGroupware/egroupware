@@ -101,13 +101,12 @@ class emailadmin_script {
 
 		#print "<br><br><br><br>get Script ". $this->name ."<bR>";
 
-		if(PEAR::isError($script = $connection->getScript($this->name))) {
+		if(self::isError($script = $connection->getScript($this->name))) {
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error retrieving script: ".$script->getMessage());
 			return $script;
 		}
 
 		#print "<br>AAA: Script is ". htmlentities($script) ."<br>";
-		$lines = array();
 		$lines = preg_split("/\n/",$script); //,PREG_SPLIT_NO_EMPTY);
 
 		$rules = array();
@@ -125,8 +124,8 @@ class emailadmin_script {
 
 		/* next line should be the recognised encoded head. if not, the script
 		 * is of an unrecognised format, and we should not overwrite it. */
-		$line = array_shift($lines);
-		if (!preg_match("/^# ?Mail(.*)rules for/", $line)){
+		$line1 = array_shift($lines);
+		if (!preg_match("/^# ?Mail(.*)rules for/", $line1)){
 				$this->errstr = 'retrieveRules: encoding not recognised';
 				$this->so = false;
 				if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": encoding not recognised");
@@ -136,7 +135,9 @@ class emailadmin_script {
 
 		$line = array_shift($lines);
 
-		while (isset($line)){
+		while (isset($line))
+		{
+			$matches = null;
 			if (preg_match("/^ *#(#PSEUDO|rule|vacation|mode|notify)/i",$line,$matches)){
 				$line = rtrim($line);
 				switch ($matches[1]){
@@ -182,9 +183,7 @@ class emailadmin_script {
 						if (preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
 							preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
 							$vacation['days'] = $bits[1];
-							$vaddresslist = $bits[2];
-							$vaddresslist = preg_replace("/\"|\s/","",$vaddresslist);
-							$vaddresses = array();
+							$vaddresslist = preg_replace("/\"|\s/","",$bits[2]);
 							$vaddresses = preg_split("/,/",$vaddresslist);
 							$vacation['text'] = $bits[3];
 
@@ -587,11 +586,10 @@ class emailadmin_script {
 		$this->script = $newscript;
 		//error_log(__METHOD__.__LINE__.array2string($newscript));
 		//print "<pre>$newscript</pre>"; exit;
-		$scriptfile = $this->name;
 		//print "<hr><pre>".htmlentities($newscript)."</pre><hr>";
 		$ret = $connection->installScript($this->name, $newscript, true);
-		if (!$ret || PEAR::isError($ret)) {
-			$this->errstr = 'updateScript: putscript failed: ' . (PEAR::isError($ret)?$ret->message:$connection->errstr);
+		if (!$ret || self::isError($ret)) {
+			$this->errstr = 'updateScript: putscript failed: ' . (self::isError($ret)?$ret->message:$connection->errstr);
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
 			error_log(__METHOD__.__LINE__.' # ScriptName:'.$this->name.' Script:'.$newscript);
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
@@ -599,5 +597,26 @@ class emailadmin_script {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Tell whether a value is a PEAR error.
+	 *
+	 * Implemented here to get arround: PHP Deprecated:  Non-static method self::isError() should not be called statically
+	 *
+	 * @param   mixed $data   the value to test
+	 * @param   int   $code   if $data is an error object, return true
+	 *                        only if $code is a string and
+	 *                        $obj->getMessage() == $code or
+	 *                        $code is an integer and $obj->getCode() == $code
+	 * @access  public
+	 * @return  bool    true if parameter is an error
+	 */
+	protected static function isError($data, $code = null)
+	{
+		static $pear=null;
+		if (!isset($pear)) $pear = new PEAR();
+
+		return $pear->isError($data, $code);
 	}
 }
