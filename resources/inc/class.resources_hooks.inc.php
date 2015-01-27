@@ -152,10 +152,14 @@ class resources_hooks
 		$query = array('filter' => $args['cat_id']);
 		$bo = new resources_bo();
 		$bo->get_rows($query, $resources, $readonly);
+		
 		foreach($resources as $resource)
 		{
-			$resource['cat_id'] = $new_cat_id;
-			$bo->save($resource);
+			if(is_array($resource))
+			{
+				$resource['cat_id'] = $new_cat_id;
+				$bo->save($resource);
+			}
 		}
 	}
 
