@@ -2645,7 +2645,7 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'ORGANIZER':
 					$event['organizer'] = $attributes['value'];	// no egw field, but needed in AS
-					if (strtlower(substr($event['organizer'],0,7)) == 'mailto:')
+					if (strtolower(substr($event['organizer'],0,7)) == 'mailto:')
 					{
 						$event['organizer'] = substr($event['organizer'],7);
 					}
