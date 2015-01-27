@@ -12,6 +12,9 @@
  * @version $Id$
  */
 
+include_once EGW_SERVER_ROOT.'/emailadmin/inc/class.ea_preferences.inc.php';
+include_once EGW_SERVER_ROOT.'/emailadmin/inc/class.ea_identity.inc.php';
+include_once EGW_SERVER_ROOT.'/felamimail/inc/class.bopreferences.inc.php';
 /**
  * FMail eSync plugin
  *
