@@ -647,24 +647,28 @@ class calendar_groupdav extends groupdav_handler
 
 		$events =& $bo->search($params);
 
+		// find master, which is not always first event, eg. when first event is an exception
 		$master = null;
 		foreach($events as $k => &$recurrence)
 		{
-			if (!isset($master))	// first event is master
+			if ($recurrence['recur_type'])
 			{
 				$master = $recurrence;
 				$exceptions =& $master['recur_exception'];
 				unset($events[$k]);
-				continue;
+				break;
 			}
+		}
+		foreach($events as $k => &$recurrence)
+		{
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
 			if ($recurrence['id'] != $master['id'])	// real exception
 			{
 				// user is NOT participating in this exception
-				if ($user && !isset($recurrence['participants'][$user]))
+				if ($user && !self::isParticipant($recurrence, $user))
 				{
 					// if he is NOT in master, delete this exception
-					if (!isset($master['participants'][$user]))
+					if (!self::isParticipant($master, $user))
 					{
 						unset($events[$k]);
 						continue;
@@ -698,13 +702,25 @@ class calendar_groupdav extends groupdav_handler
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
 		// only add master if we are not expanding and current user participates in master (and not just some exceptions)
-		if (!$expand && (!$user || isset($master['participants'][$user]) ||
-			// for group-invitations we need to check memberships of $user too
-			array_intersect(array_keys($master['participants']), $GLOBALS['egw']->accounts->memberships($user, true))))
+		if (!$expand && (!$user || self::isParticipant($master, $user)))
 		{
 			$events = array_merge(array($master), $events);
 		}
 		return $events;
+	}
+
+	/**
+	 * Check if $user is a participant of given $event incl. group-invitations
+	 *
+	 * @param array $event
+	 * @param int|string $user
+	 * @return boolean
+	 */
+	public static function isParticipant(array $event, $user)
+	{
+		return isset($event['participants'][$user]) ||
+			// for group-invitations we need to check memberships of $user too
+			array_intersect(array_keys($event['participants']), $GLOBALS['egw']->accounts->memberships($user, true));
 	}
 
 	/**
