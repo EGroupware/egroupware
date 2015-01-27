@@ -434,7 +434,6 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 		// Set up HTML
 		$rows['h1'] = $labels;
-		error_log("Wow, ".count($this->preview_records) . ' preveiw records');
 		foreach($this->preview_records as $i => $row_data)
 		{
 			// Convert to human-friendly
