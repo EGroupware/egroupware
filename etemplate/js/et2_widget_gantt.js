@@ -759,7 +759,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			if(gantt_widget.options.ajax_update)
 			{
 				var request = gantt_widget.egw().json(gantt_widget.options.ajax_update,
-					[task,value]
+					[task, mode, value]
 				).sendRequest(true);
 			}
 		});
