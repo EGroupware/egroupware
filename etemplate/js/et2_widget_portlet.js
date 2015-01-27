@@ -270,7 +270,7 @@ var et2_portlet = et2_valueWidget.extend(
 		this.div.addClass("loading");
 
 		// Pass updated settings, unless we're removing
-		var settings = value == '~remove~' ? {} : this.options.settings || {}
+		var settings = (typeof value == 'string') ? {} : this.options.settings || {}
 		this.egw().jsonq("home.home_ui.ajax_set_properties",[this.id, settings, value,this.settings?this.settings.group:false],
 			function(data) {
 				// This section not for us
