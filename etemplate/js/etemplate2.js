@@ -592,7 +592,8 @@ etemplate2.prototype.autocomplete_fixer = function (_node,_id)
 	{
 		//Creates form wrapper
 		var $form = jQuery(document.createElement('form'))
-				.attr({id:id + '_form_autocomplete_fixer',action:'about:blank', target:'egw_iframe_autocomplete helper'});
+				.attr({id:id + '_form_autocomplete_fixer',action:'about:blank', target:'egw_iframe_autocomplete helper'})
+				.css({height:"100%"});
 		//Creates iframe for fake submission
 		$et2_container.before(jQuery(document.createElement('iframe'))
 				.attr({id:id + '_iframe_autocomplete_fixer',src:'about:blank',name:'egw_iframe_autocomplete helper'}).hide());
