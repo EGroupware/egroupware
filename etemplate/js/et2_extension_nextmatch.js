@@ -68,7 +68,7 @@ var et2_INextmatchSortable = new Interface({
  *
  * @augments et2_DOMWidget
  */
-var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
+var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrint],
 {
 	attributes: {
 		// These normally set in settings, but broken out into attributes to allow run-time changes
@@ -1836,6 +1836,134 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	set_value: function(_value)
 	{
 		this.value = _value;
+	},
+
+	// Printing
+	/**
+	 * Prepare for printing
+	 *
+	 * We check for un-loaded rows, and ask the user what they want to do about them.
+	 * If they want to print them all, we ask the server and print when they're loaded.
+	 */
+	beforePrint: function() {
+		// Check for rows that aren't loaded yet, or lots of rows
+		var range = this.controller._grid.getIndexRange();
+		this.old_height = this.controller._grid._scrollHeight;
+		var loaded_count = range.bottom - range.top;
+		var total = this.controller._grid.getTotalCount();
+		if(loaded_count != total ||
+			this.controller._grid.getTotalCount() > 100)
+		{
+			// Defer the printing
+			var defer = jQuery.Deferred();
+
+			// Something not in the grid, lets ask
+			et2_dialog.show_prompt(jQuery.proxy(function(button, value) {
+					if(button == 'dialog[cancel]') {
+						// Give dialog a chance to close, or it will be in the print
+						window.setTimeout(function() {defer.reject();}, 0);
+						return;
+					}
+					value = parseInt(value);
+					if(value > total)
+					{
+						value = total;
+					}
+					
+					// If they want the whole thing, treat it as all
+					if(button == 'dialog[ok]' && value == this.controller._grid.getTotalCount())
+					{
+						button = 'dialog[all]';
+						// Add the class, gives more reliable sizing
+						this.div.addClass('print');
+					}
+					// We need more rows
+					if(button == 'dialog[all]' || value > loaded_count)
+					{
+						var count = 0;
+						var fetchedCount = 0;
+						var cancel = false;
+						var nm = this;
+						var dialog = et2_dialog.show_dialog(
+							// Abort the long task if they canceled the data load
+							function() {count = total; cancel=true;window.setTimeout(function() {defer.reject();},0)},
+							egw.lang('Loading'), egw.lang('please wait...'),{},[
+								{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}
+							]
+						);
+
+						// dataFetch() is asyncronous, so all these requests just get fired off...
+						// 200 rows chosen arbitrarily to reduce requests.
+						do {
+							var ctx = {
+								"self": this.controller,
+								"start": count,
+								"count": Math.min(value,200),
+								"lastModification": this.controller._lastModification
+							};
+							if(nm.controller.dataStorePrefix)
+							{
+								ctx.prefix = nm.controller.dataStorePrefix;
+							}
+							nm.controller.dataFetch({start:count, num_rows: Math.min(value,200)}, function(data)  {		
+								// Keep track
+								if(data && data.order)
+								{
+									fetchedCount += data.order.length;
+								}
+								nm.controller._fetchCallback.apply(this, arguments);
+								
+								if(fetchedCount >= value)
+								{
+									if(cancel)
+									{
+										dialog.destroy();
+										defer.reject();
+										return;
+									}
+									nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (value+1));
+									// Grid needs to redraw before it can be printed, so wait
+									window.setTimeout(jQuery.proxy(function() {
+										dialog.destroy();
+										// Should be OK to print now
+										defer.resolve();
+									},nm),ET2_GRID_INVALIDATE_TIMEOUT);
+									
+								}
+								
+							},ctx);
+							count += 200;
+						} while (count < value)
+						nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (value+1));
+					}
+					else
+					{
+						// Don't need more rows, limit to requested and finish
+						this.controller._grid.setScrollHeight(this.controller._grid.getAverageHeight() * (value+1));
+						// Give dialog a chance to close, or it will be in the print
+						window.setTimeout(function() {defer.resolve();}, 0);
+					}
+					//this.controller._gridCallback(0, button == et2_dialog.OK_BUTTON ? value : this.controller._grid.getTotalCount());
+				},this),
+				egw.lang('How many rows to print'), egw.lang('Print'),
+				Math.min(100, total),
+				[
+					{"button_id": 1,"text": egw.lang('Ok'), id: 'dialog[ok]', image: 'check', "default":true},
+					// Nice for small lists, kills server for large lists
+					//{"button_id": 2,"text": egw.lang('All'), id: 'dialog[all]', image: ''},
+					{"button_id": 0,"text": egw.lang('Cancel'), id: 'dialog[cancel]', image: 'cancel'},
+				]
+			);
+			return defer;
+		}
+		// Don't return anything, just work normally
+		// Add the class, if needed
+		this.div.addClass('print');
+	},
+	afterPrint: function() {
+		this.div.removeClass('print');
+		this.controller._grid.setScrollHeight(this.old_height);
+		delete this.old_height;
 	}
 });
 et2_register_widget(et2_nextmatch, ["nextmatch"]);

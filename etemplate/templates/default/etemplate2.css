@@ -462,6 +462,12 @@ which caused click on free space infront of a tag stops nm row selection*/
 .et2_nextmatch .egwGridView_grid tr td div.et2_vbox a  {
 	display: table-row;
 }
+.et2_nextmatch.print .egwGridView_scrollarea {
+	height: auto !important;
+}
+.et2_nextmatch.print  > div {
+	height: auto !important;
+}
 /**
  * Diff widget
  */
@@ -1115,13 +1121,16 @@ div.message.floating {
 	.et2_nextmatch .egwGridView_grid > tbody > tr {
 		display: block;
 	}
+	.et2_nextmatch .egwGridView_spacer {
+		display:none;
+	}
 	.egwGridView_grid > tbody > tr {
 		page-break-inside: avoid;
 		-webkit-region-break-inside: avoid;
 	}
 	.et2_nextmatch > div {
 		width: 100% !important;
-		height: auto;
+		height: auto !important;
 	}
 	#cke_1_top.cke_top {
 		display: none;

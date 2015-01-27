@@ -144,3 +144,20 @@ var et2_IDetachedDOM = new Interface({
 
 });
 
+/**
+ * Interface for widgets that need to do something special before printing
+ */
+var et2_IPrint = new Interface({
+	/**
+	 * Set up for printing
+	 *
+	 * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
+	 *  (waiting for data)
+	 */
+	beforePrint: function() {},
+
+	/**
+	 * Reset after printing
+	 */
+	afterPrint: function() {}
+});

@@ -919,6 +919,65 @@ etemplate2.app_refresh = function(_msg, _app, _id, _type)
 	return refresh_done;
 };
 
+/**
+ * "Intelligently" print a given app
+ *
+ * Mostly, we let the nextmatch change how many rows it's showing, so you don't
+ * get just one printed page.
+ */
+etemplate2.print = function(_app)
+{
+	// Allow any widget to change for printing
+	var et2 = etemplate2.getByApplication(_app);
+
+	// Sometimes changes take time
+	var deferred = [];
+	for(var i = 0; i < et2.length; i++)
+	{
+		// Skip hidden templates
+		if(!jQuery(et2[i].DOMContainer).filter(':visible')) continue;
+
+		et2[i].widgetContainer.iterateOver(function(_widget) {
+			var result = _widget.beforePrint();
+			if (typeof result == "object" && result.done)
+			{
+				deferred.push(result);
+			}
+		},et2,et2_IPrint);
+	}
+
+	// Try to clean up after - not guaranteed
+	var afterPrint = function() {
+		for(var i = 0; i < et2.length; i++)
+		{
+			// Skip hidden templates
+			if(!jQuery(et2[i].DOMContainer).filter(':visible')) continue;
+			et2[i].widgetContainer.iterateOver(function(_widget) {
+				_widget.afterPrint();
+			},et2,et2_IPrint);
+		}
+		var mediaQueryList = window.matchMedia('print');
+        mediaQueryList
+	};
+	if(egw.window.matchMedia) {
+		var mediaQueryList = window.matchMedia('print');
+		var listener = function(mql) {
+            if (!mql.matches) {
+                afterPrint();
+				mediaQueryList.removeListener(listener);
+            }
+        };
+		mediaQueryList.addListener(listener);
+    }
+
+    egw.window.onafterprint = afterPrint;
+
+	// Wait for everything to be loaded, then send it off
+	jQuery.when.apply(jQuery, deferred).done(function() {
+		egw.window.print();
+	});
+}
+
 // Some static things to make getting into widget context a little easier //
 
 /**
