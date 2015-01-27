@@ -428,6 +428,121 @@ class emailadmin_sieve extends Net_Sieve
         return $result;
     }
 
+    /**
+     * Send a command and retrieves a response from the server.
+     *
+     * @param string $cmd   The command to send.
+     * @param boolean $auth Whether this is an authentication command.
+     *
+     * @return string|PEAR_Error  Reponse string if an OK response, PEAR_Error
+     *                            if a NO response.
+     */
+    function _doCmd($cmd = '', $auth = false)
+    {
+        $referralCount = 0;
+        while ($referralCount < $this->_maxReferralCount) {
+            if (strlen($cmd)) {
+                $error = $this->_sendCmd($cmd);
+                if (is_a($error, 'PEAR_Error')) {
+                    return $error;
+                }
+            }
+
+            $response = '';
+            while (true) {
+                $line = $this->_recvLn();
+
+                if (is_a($line, 'PEAR_Error')) {
+                    return $line;
+                }
+
+                if (preg_match('/^(OK|NO)/i', $line, $tag)) {
+                    // Check for string literal message.
+                    // ServerResponse may send {nm} (nm representing a number)
+                    // dbmail (in some versions) sends: {nm+} thus breaking RFC5804 rules (Section 4 Formal Syntax)
+                    // {nm+} may only be used in communicating from client TO server; (not Server to Client)
+                    // we work around this bug (allowing +) using a patch introduced with roundcube 2 years ago.
+                    //if (preg_match('/{([0-9]+)}$/', $line, $matches)) { //original
+                    if (preg_match('/{([0-9]+)\+?}$/', $line, $matches)) { //patched to cope with dbmail
+                        $line = substr($line, 0, -(strlen($matches[1]) + 2))
+                            . str_replace(
+                                "\r\n", ' ', $this->_recvBytes($matches[1] + 2)
+                            );
+                    }
+
+                    if ('OK' == $this->_toUpper($tag[1])) {
+                        $response .= $line;
+                        return rtrim($response);
+                    }
+
+                    return $this->_pear->raiseError(trim($response . substr($line, 2)), 3);
+                }
+
+                if (preg_match('/^BYE/i', $line)) {
+                    $error = $this->disconnect(false);
+                    if (is_a($error, 'PEAR_Error')) {
+                        return $this->_pear->raiseError(
+                            'Cannot handle BYE, the error was: '
+                            . $error->getMessage(),
+                            4
+                        );
+                    }
+                    // Check for referral, then follow it.  Otherwise, carp an
+                    // error.
+                    if (preg_match('/^bye \(referral "(sieve:\/\/)?([^"]+)/i', $line, $matches)) {
+                        // Replace the old host with the referral host
+                        // preserving any protocol prefix.
+                        $this->_data['host'] = preg_replace(
+                            '/\w+(?!(\w|\:\/\/)).*/', $matches[2],
+                            $this->_data['host']
+                        );
+                        $error = $this->_handleConnectAndLogin();
+                        if (is_a($error, 'PEAR_Error')) {
+                            return $this->_pear->raiseError(
+                                'Cannot follow referral to '
+                                . $this->_data['host'] . ', the error was: '
+                                . $error->getMessage(),
+                                5
+                            );
+                        }
+                        break;
+                    }
+                    return $this->_pear->raiseError(trim($response . $line), 6);
+                }
+
+                // ServerResponse may send {nm} (nm representing a number)
+                // dbmail (in some versions) sends: {nm+} thus breaking RFC5804 rules (Section 4 Formal Syntax)
+                // {nm+} may only be used in communicating from client TO server; (not Server to Client)
+                // we work around this bug (allowing +) using a patch introduced with roundcube 2 years ago.
+                // although roundcube suggested only the change in line
+                //if (preg_match('/^{([0-9]+)}/', $line, $matches)) { //original
+                if (preg_match('/^{([0-9]+)\+?}/', $line, $matches)) { //patched to cope with dbmail
+                    // Matches literal string responses.
+                    $line = $this->_recvBytes($matches[1] + 2);
+                    if (!$auth) {
+                        // Receive the pending OK only if we aren't
+                        // authenticating since string responses during
+                        // authentication don't need an OK.
+                        $this->_recvLn();
+                    }
+                    return $line;
+                }
+
+                if ($auth) {
+                    // String responses during authentication don't need an
+                    // OK.
+                    $response .= $line;
+                    return rtrim($response);
+                }
+
+                $response .= $line . "\r\n";
+                $referralCount++;
+            }
+        }
+
+        return $this->_pear->raiseError('Max referral count (' . $referralCount . ') reached. Cyrus murder loop error?', 7);
+    }
+
 	function getRules()
 	{
 		if (!isset($this->rules)) $this->retrieveRules();
