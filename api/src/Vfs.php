@@ -1411,13 +1411,13 @@ class Vfs extends Vfs\StreamWrapper
 	 */
 	public static function download_zip(Array $_files, $name = false)
 	{
-		error_log(__METHOD__ . ': '.implode(',',$_files));
+		//error_log(__METHOD__ . ': '.implode(',',$_files));
 
 		// Create zip file
 		$zip_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'zip');
 
-		$zip = new ZipArchive();
-		if (!$zip->open($zip_file, ZipArchive::OVERWRITE))
+		$zip = new \ZipArchive();
+		if (!$zip->open($zip_file, \ZipArchive::OVERWRITE))
 		{
 			throw new egw_exception("Cannot open zip file for writing.");
 		}
