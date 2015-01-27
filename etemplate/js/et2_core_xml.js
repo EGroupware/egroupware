@@ -13,9 +13,14 @@
 "use strict";
 
 /**
- * Loads the given URL asynchronously from the server. When the file is loaded,
- * the given callback function is called, where "this" is set to the given
- * context.
+ * Loads the given URL asynchronously from the server
+ *
+ * We make the Ajax call through main-windows jQuery object, to ensure cached copy
+ * in main-windows etemplate2 prototype works in IE too!
+ *
+ * @param {string} _url
+ * @param {function} _callback function(_xml)
+ * @param {object} _context for _callback
  */
 function et2_loadXMLFromURL(_url, _callback, _context)
 {
@@ -24,53 +29,33 @@ function et2_loadXMLFromURL(_url, _callback, _context)
 		_context = null;
 	}
 
-	if (window.XMLHttpRequest)
-	{
-		// Otherwise make an XMLHttpRequest. Tested with Firefox 3.6, Chrome, Opera
-		var xmlhttp = new XMLHttpRequest();
-
-		// Set the callback function
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4)
-			{
-				if(xmlhttp.responseXML)
-				{
-					var xmldoc = xmlhttp.responseXML.documentElement;
-					_callback.call(_context, xmldoc);
-				}
-				// Sometimes it's not recogized as XML - reason unknown
-				else if (xmlhttp.response)
-				{
-					egw().debug("log","File was not recogized as XML, trying to parse text...");
-					var response = xmlhttp.response.replace(/^\s+|\s+$/g,'');
-					// Manually parse from text
-					var parser = new DOMParser();
-					try {
-						var xmldoc = parser.parseFromString(response, "text/xml");
-						egw().debug("log","Parsed OK");
-						_callback.call(_context, xmldoc.documentElement);
-					} catch (e) {
-						egw().debug("log", "Well, that didn't work");
-					}
-				}
-			}
-		}
-
-		// Force the browser to interpret the result as XML. overrideMimeType is
-		// non-standard, so we check for its existance.
-		if (xmlhttp.overrideMimeType)
+	// use window object from main window with same algorithm as for the template cache
+	var win;
+	try {
+		if (opener && opener.etemplate2)
 		{
-			xmlhttp.overrideMimeType("application/xml");
+			win = opener;
 		}
-
-		// Retrieve the script asynchronously
-		xmlhttp.open("GET", _url, true);
-		xmlhttp.send(null);
 	}
-	else
+	catch (e) {
+		// catch security exception if opener is from a different domain
+	}
+	if (typeof win == "undefined")
 	{
-		throw("XML Request object could not be created!");
+		win = top;
 	}
+	win.jQuery.ajax({
+		url: _url,
+		context: _context,
+		type: 'GET',
+		dataType: 'xml',
+		success: function(_data, _status, _xmlhttp){
+			_callback.call(_context, _data.documentElement);
+		},
+		error: function(_xmlhttp, _err) {
+			alert('Loading eTemplate from '+_url+' failed! '+_err);
+		}
+	});
 }
 
 function et2_directChildrenByTagName(_node, _tagName)
