@@ -2455,6 +2455,11 @@ class calendar_ical extends calendar_boupdate
 					if (preg_match('/UNTIL=([0-9TZ]+)/',$recurence,$matches))
 					{
 						$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($matches[1]);
+						// If it couldn't be parsed, treat it as not set
+						if(is_string($vcardData['recur_enddate']))
+						{
+							unset($vcardData['recur_enddate']);
+						}
 					}
 					elseif (preg_match('/COUNT=([0-9]+)/',$recurence,$matches))
 					{
