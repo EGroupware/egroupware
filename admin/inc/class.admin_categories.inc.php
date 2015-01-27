@@ -471,6 +471,7 @@ class admin_categories
 		}
 		elseif($content['nm']['action'])
 		{
+			$appname = $content['nm']['appname'];
 			// Old buttons
 			foreach(array('delete') as $button)
 			{
@@ -515,6 +516,8 @@ class admin_categories
 				{
 					$msg .= lang('%1 category(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
+				egw_framework::refresh_opener($msg, 'admin');
+				$msg = '';
 			}
 		}
 		$content['msg'] = $msg;
