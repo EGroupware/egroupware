@@ -1849,7 +1849,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		// Check for rows that aren't loaded yet, or lots of rows
 		var range = this.controller._grid.getIndexRange();
 		this.old_height = this.controller._grid._scrollHeight;
-		var loaded_count = range.bottom - range.top;
+		var loaded_count = range.bottom - range.top +1;
 		var total = this.controller._grid.getTotalCount();
 		if(loaded_count != total ||
 			this.controller._grid.getTotalCount() > 100)

@@ -935,9 +935,11 @@ etemplate2.print = function(_app)
 	for(var i = 0; i < et2.length; i++)
 	{
 		// Skip hidden templates
-		if(!jQuery(et2[i].DOMContainer).filter(':visible')) continue;
+		if(!jQuery(et2[i].DOMContainer).filter(':visible').length) continue;
 
 		et2[i].widgetContainer.iterateOver(function(_widget) {
+			// Skip widgets from a different etemplate (home)
+			if(_widget.getInstanceManager() != et2[i]) return;
 			var result = _widget.beforePrint();
 			if (typeof result == "object" && result.done)
 			{
