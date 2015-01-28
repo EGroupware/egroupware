@@ -12,7 +12,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	/phpgwapi/js/jquery/blueimp/js/jquery.blueimp-gallery.min.js;
+	/phpgwapi/js/jquery/blueimp/js/blueimp-gallery.min.js;
 */
 
 /**
@@ -48,7 +48,7 @@ function expose (widget)
 	};
 
 	// For filtering to only show things we can handle
-	var mime_regex = new RegExp(/video\/|image|audio\//);
+	var mime_regex = new RegExp(/video\/|image\/|audio\//);
 
 	// Only one gallery
 	var gallery = null;
@@ -234,6 +234,8 @@ function expose (widget)
 					closeClass: 'close',
 					// The class for the "play-pause" toggle control:
 					playPauseClass: 'play-pause',
+					// The class to add for fullscreen button option
+					fullscreenClass:'fullscreen',
 					// The list object property (or data attribute) with the object type:
 					typeProperty: 'type',
 					// The list object property (or data attribute) with the object title:
@@ -347,7 +349,7 @@ function expose (widget)
 					// Gallery Main DIV container
 					var $expose_node = jQuery(document.createElement('div')).attr({id:"blueimp-gallery", class:"blueimp-gallery"});
 					// Create Gallery DOM NODE
-					$expose_node.append('<div class="slides"></div><h3 class="title"></h3><a class="prev">‹</a><a class="next">›</a><a class="close">×</a><a class="play-pause"></a><ol class="indicator"></ol>');
+					$expose_node.append('<div class="slides"></div><h3 class="title"></h3><a class="prev">‹</a><a class="next">›</a><a class="close">×</a><a class="play-pause"></a><a class="fullscreen"></a><ol class="indicator"></ol>');
 					// Append the gallery Node to DOM
 					$body.append($expose_node);
 				}

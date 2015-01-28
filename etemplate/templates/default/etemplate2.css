@@ -1810,6 +1810,11 @@ span.et2_egw_action_ddHelper_itemsCnt {
 	right: 42px;
 	top: 23px;
 }
+/*fullScreen button*/
+.blueimp-gallery>.fullscreen{
+	right: 75px;
+	top: 25px;
+}
 /*Give room to Carousel indicator when the gallery controls is on*/
 .blueimp-gallery-controls>.slides {
 	height:85%;
