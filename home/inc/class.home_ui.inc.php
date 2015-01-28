@@ -345,7 +345,9 @@ class home_ui
 				'.','..',
 				'class.home_portlet.inc.php',
 				'class.home_legacy_portlet.inc.php',
-				'class.home_favorite_portlet.inc.php'
+				'class.home_favorite_portlet.inc.php',
+				// Weather widget not yet ready for release
+				'class.home_weather_portlet.inc.php'
 			);
 			// Look through all known classes for portlets - for now, they need 'portlet' in the file name
 			foreach(array_keys($GLOBALS['egw_info']['apps']) as $appname)
