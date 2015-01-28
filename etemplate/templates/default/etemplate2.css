@@ -1774,36 +1774,40 @@ span.et2_egw_action_ddHelper_itemsCnt {
 /*Carousel thumbnails*/
 .blueimp-gallery>.indicator>li {
 	display: inline-block;
-	width: 134px;
+	width: auto;
 	height: 100px;
-	margin: none;
-	-webkit-box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	box-sizing: content-box;
-	border: 1px solid transparent;
-	background: #ccc;
-	background: rgba(255, 255, 255, 0.17)center no-repeat;
-	border-radius: 5px;
-	box-shadow: 0 0 2px #000;
+	margin: 0;
+	background: transparent;
 	opacity: 1;
 	cursor: pointer;
-	background-repeat: no-repeat;
-	margin: 1px;
+	border-radius: 0;
 	border:0;
-	background-size: content;
 }
+
+.blueimp-gallery > .indicator > li > img {
+  display: inline-block;
+  width: auto;
+  height: 100px;
+  margin:0;
+  cursor: pointer;
+  z-index: -1;
+  position: relative;
+}
+
 /*Thumbnail border on hover*/
 .blueimp-gallery>.indicator>li:hover {
-	-webkit-box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
-	-moz-box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
-	box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
+	-webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+	-moz-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+	box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+	background: transparent;
 }
 /*Active thumbnail border*/
 .blueimp-gallery>.indicator>.active
 {
-	-webkit-box-shadow: inset 0px 1px 0px 4px #0c5da5;
-	-moz-box-shadow: inset 0px 1px 0px 4px #0c5da5;
-	box-shadow: inset 0px 1px 0px 4px #0c5da5;
+	-webkit-box-shadow: inset 0px 0px 0px 4px #0c5da5;
+	-moz-box-shadow: inset 0px 0px 0px 4px #0c5da5;
+	box-shadow: inset 0px 0px 0px 4px #0c5da5;
+	background: transparent;
 }
 /*Slideshow Play/Pause button*/
 .blueimp-gallery>.play-pause{

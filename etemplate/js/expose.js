@@ -307,6 +307,8 @@ function expose (widget)
 					thumbnailProperty: 'thumbnail',
 					// Defines if the gallery indicators should display a thumbnail:
 					thumbnailIndicators: true,
+					//thumbnail with image tag
+					thumbnailWithImgTag: true,
 					// Callback function executed when the Gallery is initialized.
 					// Is called with the gallery instance as "this" object:
 					onopen: jQuery.proxy(this.expose_onopen,this),
