@@ -591,6 +591,10 @@ etemplate2.prototype.isDirty = function()
  */
 etemplate2.prototype.autocomplete_fixer = function (_node,_id)
 {
+	// Enable autocomplete fixer only for Chrome as
+	// it's the only tested browser which work 100% with this method
+	if (!navigator.userAgent.match(/chrome/i)) return;
+
 	var node = _node||jQuery('.et2_contianer');
 	var id = _id||this.uniqueId;
 
@@ -604,10 +608,7 @@ etemplate2.prototype.autocomplete_fixer = function (_node,_id)
 		var $form = jQuery(document.createElement('form'))
 				.attr({id:id + '_form_autocomplete_fixer',action:'about:blank', target:'egw_iframe_autocomplete helper'})
 				.css({height:"100%"});
-		// Firefox give a security warning when transmitting to "about:blank" from a https site
-		// we work around that by giving existing etemplate/empty.html url
-		if (navigator.userAgent.match(/firefox/i))
-			$form.attr({action: egw.webserverUrl+'/etemplate/empty.html',method:'post'});
+
 		//Creates iframe for fake submission
 		$et2_container.before(jQuery(document.createElement('iframe'))
 				.attr({id:id + '_iframe_autocomplete_fixer',src:'about:blank',name:'egw_iframe_autocomplete helper'}).hide());
@@ -618,11 +619,12 @@ etemplate2.prototype.autocomplete_fixer = function (_node,_id)
 	setTimeout(function(){
 		var $a = jQuery(node).parent();
 		if ($a.length>0 && typeof $a.parent() != 'undefined') $a.submit(); //Submit to iframe
-		//Clean up the mess from DOM
-		if(jQuery(node).parent().is('form'))
-			jQuery(node).unwrap();
-		jQuery('iframe#'+id + '_iframe_autocomplete_fixer').remove();
-	},0);
+		setTimeout(function(){
+			//Clean up the mess from DOM
+			if(jQuery(node).parent().is('form')) jQuery(node).unwrap();
+			jQuery('iframe#'+id + '_iframe_autocomplete_fixer').remove();
+		},1);
+	},1);
 };
 
 /**
