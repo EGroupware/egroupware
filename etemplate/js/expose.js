@@ -89,6 +89,7 @@ function expose (widget)
 	var read_from_nextmatch = function(nm, images, start_at)
 	{
 		if(!start_at) start_at = 0;
+		var image_index = start_at;
 		var stop = Math.max.apply(null,Object.keys(nm.controller._indexMap));
 
 		for(var i = start_at; i <= stop; i++)
@@ -98,7 +99,7 @@ function expose (widget)
 				// Returning instead of using IMAGE_DEFAULT means we stop as
 				// soon as a hole is found, instead of getting everything that is
 				// available.  The gallery can't fill in the holes.
-				images[i] = IMAGE_DEFAULT;
+				images[image_index++] = IMAGE_DEFAULT;
 				continue;
 			}
 			var uid = nm.controller._indexMap[i].uid;
@@ -107,7 +108,7 @@ function expose (widget)
 			if(data && data.data && data.data.mime && mime_regex.test(data.data.mime))
 			{
 				var media = this.getMedia(data.data);
-				images.push(jQuery.extend({}, data.data, media[0]));
+				images[image_index++] = jQuery.extend({}, data.data, media[0]);
 			}
 		}
 	};
@@ -464,7 +465,8 @@ function expose (widget)
 			expose_onslide: function (gallery, index, slide){
 				// First let parent try
 				this._super.apply(this, arguments);
-
+			},
+			expose_onslideend: function (gallery, index, slide){
 				// Check to see if we're in a nextmatch, do magic
 				var nm = find_nextmatch(this);
 				if(nm)
@@ -476,19 +478,12 @@ function expose (widget)
 					{
 						indicator.animate({left: (gallery.container.width() / 2)-current.left});
 					}
-				}
-			},
-			expose_onslideend: function (gallery, index, slide){
-				// Check to see if we're in a nextmatch, do magic
-				var nm = find_nextmatch(this);
-				if(nm)
-				{
 					// Check to see if we're near the end, or maybe some pagination
 					// would be good.
 					var total_count = nm.controller._grid.getTotalCount();
 
 					// Already at the end, don't bother
-					if(index == total_count) return;
+					if(index == total_count -1 || index == 0) return;
 
 					// Try to determine direction from state of next & previous slides
 					var direction = 1;
