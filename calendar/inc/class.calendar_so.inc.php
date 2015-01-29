@@ -1042,15 +1042,24 @@ class calendar_so
 				// set data, if recurrence is requested
 				if (isset($events[$id])) $events[$id]['participants'][$uid] = $status;
 			}
-			// query recurrance exceptions, if needed
-			if (!$params['enum_recuring'])
+			// query recurrance exceptions, if needed: enum_recuring && !daywise is used in calendar_groupdav::get_series($uid,...)
+			if (!$params['enum_recuring'] || !$params['daywise'])
 			{
 				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
 					'cal_id' => $ids,
 					'recur_exception' => true,
 				), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
 				{
-					$events[$row['cal_id']]['recur_exception'][] = $row['cal_start'];
+					// for enum_recurring events are not indexed by cal_id, but $cal_id.'-'.$cal_start
+					// find master, which is first recurrence
+					if (!isset($events[$id=$row['cal_id']]))
+					{
+						foreach($events as $id => $event)
+						{
+							if ($event['id'] == $row['cal_id']) break;
+						}
+					}
+					$events[$id]['recur_exception'][] = $row['cal_start'];
 				}
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
