@@ -465,9 +465,6 @@ function expose (widget)
 			expose_onslide: function (gallery, index, slide){
 				// First let parent try
 				this._super.apply(this, arguments);
-			},
-			expose_onslideend: function (gallery, index, slide){
-				// Check to see if we're in a nextmatch, do magic
 				var nm = find_nextmatch(this);
 				if(nm)
 				{
@@ -478,6 +475,13 @@ function expose (widget)
 					{
 						indicator.animate({left: (gallery.container.width() / 2)-current.left});
 					}
+				}
+			},
+			expose_onslideend: function (gallery, index, slide){
+				// Check to see if we're in a nextmatch, do magic
+				var nm = find_nextmatch(this);
+				if(nm)
+				{
 					// Check to see if we're near the end, or maybe some pagination
 					// would be good.
 					var total_count = nm.controller._grid.getTotalCount();
