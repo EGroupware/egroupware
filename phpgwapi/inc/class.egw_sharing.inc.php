@@ -16,7 +16,13 @@
  * Token generation uses openssl_random_pseudo_bytes, if available, otherwise
  * mt_rand based auth::randomstring is used.
  *
- * @todo handle existing user sessions eg. by mounting share under it's token into vfs and redirect to regular filemanager
+ * Existing user sessions are kept whenever possible by an additional mount into regular VFS:
+ * - share owner is current user (no problems with rights, they simply match)
+ * - share owner has owner-right for share: we create a temp. eACL for current user
+ * --> in all other cases session will be replaced with one of the anonymous user,
+ *     as we dont support mounting with rights of share owner (VFS uses Vfs::$user!)
+ *
+ * @todo handle mounts of an entry directory /apps/$app/$id
  * @todo handle mounts inside shared directory (they get currently lost)
  * @todo handle absolute symlinks (wont work as we use share as root)
  */
