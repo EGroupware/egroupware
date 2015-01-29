@@ -152,7 +152,7 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 			}
 			else
 			{
-				if (!unlink($path.'/'.$file)) return false;
+				if (!unlink($file)) return false;
 			}
 		}
 		return rmdir($path);
