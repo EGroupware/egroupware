@@ -331,11 +331,10 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			mediaContent = [{
 				title: _value.name,
-				type: 'video/*',
-				sources:[{
-						href: base_url + _value.download_url,
-						type: _value.mime
-				}]
+				type: _value.mime,
+				poster:'', // TODO: Should be changed by correct video thumbnail later
+				thumbnail:this.egw().mime_icon(_value['mime'], _value['path']) ,
+				href: base_url + _value.download_url,
 			}];
 		}
 		else
