@@ -426,6 +426,7 @@ function expose (widget)
 			expose_onopened: function (event){
 				// Check to see if we're in a nextmatch, do magic
 				var nm = find_nextmatch(this);
+				var self=this;
 				if(nm)
 				{
 					// Add scrolling to the indicator list
@@ -435,9 +436,18 @@ function expose (widget)
 						gallery.container.find('.indicator').off()
 							.addClass('paginating')
 							.mousewheel(function(event, delta) {
-								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2) return;
+								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2)	return;
+
+								//Reload next pictures into the gallery by scrolling on thumbnails
+								if (delta<0 && $j(this).width() + parseInt($j(this).css('left')) < gallery.container.width())
+								{
+									var nextIndex = gallery.indicatorContainer.find('[title="loading"]')[0];
+									if (nextIndex) self.expose_onslideend(gallery,nextIndex.dataset.index -1);
+									return;
+								}
 								// Move it about 5 indicators
 								$j(this).css('left',parseInt($j(this).css('left'))-(-delta*gallery.activeIndicator.width()*5)+'px');
+
 								event.preventDefault();
 							})
 							.swipe(function(event, direction, distance) {
