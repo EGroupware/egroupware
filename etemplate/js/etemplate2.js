@@ -582,52 +582,6 @@ etemplate2.prototype.isDirty = function()
 };
 
 /**
- * Fixes browser autocomplete issue because of no form submission
- * it wraps the given DOMNode with form tag and add an iframe with
- * about:blank source to fake the submission
- *
- * @param {type} _node DOMNode which needs to be wrapped by autocomplete fixer form tag
- * @param {type} _id uniqu id to remove autocomplete extra tags after the operation
- */
-etemplate2.prototype.autocomplete_fixer = function (_node,_id)
-{
-	// Enable autocomplete fixer only for Chrome as
-	// it's the only tested browser which work 100% with this method
-	if (!navigator.userAgent.match(/chrome/i)) return;
-
-	var node = _node||jQuery('.et2_contianer');
-	var id = _id||this.uniqueId;
-
-	// Submit the template to an empty iframe (egw_iframe_autocomplete_helper)
-	// in order to get default browser autocomplete working
-	// maybe later we find better solution then we can remove this part
-	var $et2_container = jQuery(node);
-	if ($et2_container.length > 0)
-	{
-		//Creates form wrapper
-		var $form = jQuery(document.createElement('form'))
-				.attr({id:id + '_form_autocomplete_fixer',action:'about:blank', target:'egw_iframe_autocomplete helper'})
-				.css({height:"100%"});
-
-		//Creates iframe for fake submission
-		$et2_container.before(jQuery(document.createElement('iframe'))
-				.attr({id:id + '_iframe_autocomplete_fixer',src:'about:blank',name:'egw_iframe_autocomplete helper'}).hide());
-		//Wraps the wrapper
-		$et2_container.wrap($form);
-	}
-	//Activate autocomplete
-	setTimeout(function(){
-		var $a = jQuery(node).parent();
-		if ($a.length>0 && typeof $a.parent() != 'undefined') $a.submit(); //Submit to iframe
-		setTimeout(function(){
-			//Clean up the mess from DOM
-			if(jQuery(node).parent().is('form')) jQuery(node).unwrap();
-			jQuery('iframe#'+id + '_iframe_autocomplete_fixer').remove();
-		},1);
-	},1);
-};
-
-/**
  * Submit form via ajax
  *
  * @param {(et2_button|string)} button button widget or string with id
@@ -707,9 +661,6 @@ etemplate2.prototype.submit = function(button, async, no_validation)
 		// Create the request object
 		if (this.menuaction)
 		{
-			// Call autocomplete fixer
-			this.autocomplete_fixer(this.DOMContainer,this.uniqueId);
-
 			// unbind our session-destroy handler, as we are submitting
 			this.unbind_unload();
 
