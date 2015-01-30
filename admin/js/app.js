@@ -518,27 +518,7 @@ app.classes.admin = AppJS.extend(
 			}
 		}
 
-		// Make sure selected values are there, account might not be in a default group
-		// so not in cache
-		if(content.acl_account && egw.user('apps')['admin'])
-		{
-			var accounts = this.egw.accounts('both');
-			var there = false;
-			for(var i = 0; i < accounts.length; i++)
-			{
-				if(accounts[i].value == content.acl_account)
-				{
-					there = true;
-					break;
-				}
-			}
-			if(!there)
-			{
-				sel_options.acl_account = new Array().concat(sel_options.acl_account);
-				this.egw.link_title('home-accounts', content.acl_account, function(title) {sel_options.acl_account.push({value: content.acl_account, label: title});});
-			}
-		}
-		else if (content.acl_account)
+		if(content.acl_account && !egw.user('apps')['admin'])
 		{
 			readonlys.acl_account = true;
 		}
