@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.acl.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly label="Add" id="add" onclick='app.admin.acl({id:"add"},{0:{id:""}})'/>
+		<buttononly label="Add" id="add" onclick='app.admin.acl({id:"add"},[{id:""}])'/>
 	</template>
 	<template id="admin.acl.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
