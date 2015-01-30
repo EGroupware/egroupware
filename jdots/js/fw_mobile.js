@@ -163,7 +163,7 @@
 			this.$iFrame.attr('src',_url);
 
 			var self = this;
-			
+
 			//After the popup is fully loaded
 			this.$iFrame.on('onpopupload', function (){
 				var popupWindow = this.contentWindow;
@@ -176,16 +176,16 @@
 										.click(function (){self.close(framework.popup_idx(self.$iFrame[0].contentWindow));});
 					if ($appHeader.length > 0)
 					{
-						$appHeader.addClass('egw_fw_mobile_popup_appHeader').prepend($closeBtn);
-					}			
+						setTimeout(function(){$appHeader.addClass('egw_fw_mobile_popup_appHeader').prepend($closeBtn)},0);
+					}
 				}
-				
+
 				//Remove the loading class
 				self.$container.removeClass('egw_fw_mobile_popup_loader');
 				self.$iFrame.css({visibility:'visible'});
 			});
-			
-			
+
+
 			this.$iFrame.on('load',
 				//In this function we can override all popup window objects
 				function ()
@@ -204,8 +204,8 @@
 				}
 			);
 			this.$container.show();
-			
-		},	
+
+		},
 		/**
 		 * Close popup
 		 * @param {type} _idx remove the given popup index from the popups array
@@ -217,7 +217,7 @@
 			//Remove the closed popup from popups array
 			window.framework.popups.splice(_idx,1);
 		},
-		
+
 		/**
 		 * Resize the iFrame popup
 		 * @param {type} _width actuall width
@@ -284,12 +284,12 @@
 			}
 
 			this.sideboxSizeCallback(_sideboxStartSize);
-			
+
 			// Check if user runs the app in full screen or not, then prompt user base on the mode
 			var fullScreen = this.isNotFullScreen()
 			if (fullScreen) egw.message(fullScreen,'info');
 		},
-		
+
 		/**
 		 *
 		 * @returns {undefined}
@@ -364,7 +364,7 @@
 		orientation: function ()
 		{
 			this.arrangeToolbar(this.isLandscape()?'landscape':'portrait');
-			
+
 			//Mail splitter needs to be docked after oriantation
 			if (this.activeApp.appName === 'mail' && egwIsMobile())
 			{
@@ -406,7 +406,7 @@
 				this.setToggleMenuState('on');
 				if (!this.isLandscape()) $tabs.removeClass('tabs-header-portrait-collapsed');
 			}
-			
+
 			//Audio effect for toggleMenu
 			var audio = $j('#egw_fw_menuAudioTag');
 			if (egw.preference('audio_effect','common') == '1')	audio[0].play();
@@ -565,7 +565,7 @@
 			if (_iframe)
 			{
 				height +=25;
-				
+
 				// Fix for iFrame Scrollbar for iOS
 				// ATM safari does not support regular scrolling content insdie an iframe, therefore
 				// we need to wrap them all with a div and apply overflow:scroll
@@ -583,7 +583,7 @@
 				}
 			}
 			height +=  jQuery('#egw_fw_sidebar').offset().top;
-			
+
 			// fullScreen iOS need to be set with different height as safari adds an extra bottom border
 			if (this.getUserAgent() === 'iOS' && !this.isNotFullScreen())
 			{
@@ -593,9 +593,9 @@
 			{
 				height +=20;
 			}
-			
+
 			if (!this.isLandscape()) return height - 30;
-			
+
 			return height;
 		},
 
@@ -636,11 +636,11 @@
 		openPopup: function(_url, _width, _height, _windowName, _app, _returnID, _status, _parentWnd)
 		{
 			if (typeof _returnID == 'undefined') _returnID = false;
-			
+
 			var $wnd = jQuery(_parentWnd.top);
 			var positionLeft = ($wnd.outerWidth()/2)-(_width/2)+_parentWnd.screenX;
 			var positionTop  = ($wnd.outerHeight()/2)-(_height/2)+_parentWnd.screenY;
-			
+
 			var navigate = false;
 			if (typeof _app != 'undefined' && _app !== false)
 			{
@@ -715,7 +715,7 @@
 				window.framework.popups[i].close(i);
 			}
 		},
-		
+
 		resize_popup: function (_w,_h, _wnd)
 		{
 			var i = this.popup_idx(_wnd);
@@ -753,10 +753,10 @@
 						return egw.lang('For better experience please install mobile template in your device: tap on chrome setting and then select Add to Home Screen');
 					}
 				case 'unknown':
-					
+
 			}
 		},
-		
+
 		/**
 		 * get the device platform
 		 * @returns {string} returns device platform name
@@ -767,7 +767,7 @@
 			//  iOS and safari
 			if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
 			{
-				return 'iOS'; 
+				return 'iOS';
 			}
 			// Android
 			if (userAgent.match(/android/i))
@@ -776,10 +776,10 @@
 			}
 			return 'unknown'
 		},
-		
+
 		/**
 		 * Calculate the excess height available on popup frame. The excess height will be use in etemplate2 resize handler
-		 * 
+		 *
 		 * @param {type} _wnd current window
 		 * @returns {Number} excess height
 		 */
@@ -792,14 +792,14 @@
 			var excess_height = egw(_wnd).is_popup()? $j(_wnd).height() - $popup.find('#popupMainDiv').height() - $appHeader.outerHeight()+10: false;
 			// Recalculate excess height if the appheader is shown, e.g. mobile framework dialogs
 			if ($appHeader.length > 0 && $appHeader.is(':visible')) excess_height -= $appHeader.outerHeight()-9;
-			
-			return excess_height; 
+
+			return excess_height;
 		},
-		
+
 		/**
 		 * Function runs after etemplate is fully loaded
 		 * - Triggers onpopupload framework popup's event
-		 * 
+		 *
 		 * @param {type} _wnd local window
 		 */
 		et2_loadingFinished: function (_wnd)
