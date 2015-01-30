@@ -1823,3 +1823,7 @@ span.et2_egw_action_ddHelper_itemsCnt {
 .blueimp-gallery-controls>.slides {
 	height:85%;
 }
+/*indicator bar with controls*/
+.blueimp-gallery-controls>.indicator {
+	white-space: nowrap;
+}
