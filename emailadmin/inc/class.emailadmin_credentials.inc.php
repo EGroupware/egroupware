@@ -233,12 +233,19 @@ class emailadmin_credentials
 			//error_log(__METHOD__."($acc_id, '$username', \$password, $type, $account_id, ".array2string($cred_id).") not storing session credentials!");
 			return;	// do NOT store credentials from session of current user!
 		}
+		// no need to write empty usernames, but delete existing row
+		if ((string)$username === '')
+		{
+			if ($cred_id) self::$db->delete(self::TABLE, array('cred_id' => $cred_id), __LINE__, __FILE__, self::APP);
+			return;	// nothing to save
+		}
 		$pw_enc = self::CLEARTEXT;
 		$data = array(
 			'acc_id' => $acc_id,
 			'account_id' => $account_id,
 			'cred_username' => $username,
-			'cred_password' => self::encrypt($password, $account_id, $pw_enc, $mcrypt),
+			'cred_password' => (string)$password === '' ? '' :
+				self::encrypt($password, $account_id, $pw_enc, $mcrypt),
 			'cred_type' => $type,
 			'cred_pw_enc' => $pw_enc,
 		);
@@ -344,7 +351,7 @@ class emailadmin_credentials
 				{
 					throw new egw_exception_wrong_parameter("Password encryption type $row[cred_pw_enc] NOT available for mail account #$row[acc_id] and user #$row[account_id]/$row[cred_username]!");
 				}
-				return (!empty($row['cred_password'])?trim(mdecrypt_generic($mcrypt, base64_decode($row['cred_password']))):'');
+				return !empty($row['cred_password']) ? trim(mdecrypt_generic($mcrypt, base64_decode($row['cred_password']))) : '';
 		}
 		throw new egw_exception_wrong_parameter("Unknow password encryption type $row[cred_pw_enc]!");
 	}
