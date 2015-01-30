@@ -385,10 +385,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			}
 			else
 			{
-				// we have to wait a little, to give browser time to same autocomplete values
-				_wnd.setTimeout(function() {
-					_wnd.close();
-				}, 20);
+				_wnd.close();
 			}
 		},
 
