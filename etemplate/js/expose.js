@@ -12,7 +12,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	/phpgwapi/js/jquery/blueimp/js/jquery.blueimp-gallery.min.js;
+	/phpgwapi/js/jquery/blueimp/js/blueimp-gallery.min.js;
 */
 
 /**
@@ -48,7 +48,7 @@ function expose (widget)
 	};
 
 	// For filtering to only show things we can handle
-	var mime_regex = new RegExp(/video\/|image|audio\//);
+	var mime_regex = new RegExp(/video\/|image\/|audio\//);
 
 	// Only one gallery
 	var gallery = null;
@@ -89,6 +89,7 @@ function expose (widget)
 	var read_from_nextmatch = function(nm, images, start_at)
 	{
 		if(!start_at) start_at = 0;
+		var image_index = start_at;
 		var stop = Math.max.apply(null,Object.keys(nm.controller._indexMap));
 
 		for(var i = start_at; i <= stop; i++)
@@ -98,7 +99,7 @@ function expose (widget)
 				// Returning instead of using IMAGE_DEFAULT means we stop as
 				// soon as a hole is found, instead of getting everything that is
 				// available.  The gallery can't fill in the holes.
-				images[i] = IMAGE_DEFAULT;
+				images[image_index++] = IMAGE_DEFAULT;
 				continue;
 			}
 			var uid = nm.controller._indexMap[i].uid;
@@ -107,7 +108,7 @@ function expose (widget)
 			if(data && data.data && data.data.mime && mime_regex.test(data.data.mime))
 			{
 				var media = this.getMedia(data.data);
-				images.push(jQuery.extend({}, data.data, media[0]));
+				images[image_index++] = jQuery.extend({}, data.data, media[0]);
 			}
 		}
 	};
@@ -133,9 +134,11 @@ function expose (widget)
 		// Don't bother with adding a default, we just did that
 		if(image.loading)
 		{
-			$j(gallery.slides[index])
-				.addClass(gallery.options.slideLoadingClass)
-				.removeClass(gallery.options.slideErrorClass);
+			//Add load class if it's really a slide with error
+			if (gallery.slidesContainer.find('[data-index="'+index+'"]').hasClass(gallery.options.slideErrorClass))
+				$j(gallery.slides[index])
+					.addClass(gallery.options.slideLoadingClass)
+					.removeClass(gallery.options.slideErrorClass);
 			return;
 		}
 
@@ -234,6 +237,8 @@ function expose (widget)
 					closeClass: 'close',
 					// The class for the "play-pause" toggle control:
 					playPauseClass: 'play-pause',
+					// The class to add for fullscreen button option
+					fullscreenClass:'fullscreen',
 					// The list object property (or data attribute) with the object type:
 					typeProperty: 'type',
 					// The list object property (or data attribute) with the object title:
@@ -305,6 +310,8 @@ function expose (widget)
 					thumbnailProperty: 'thumbnail',
 					// Defines if the gallery indicators should display a thumbnail:
 					thumbnailIndicators: true,
+					//thumbnail with image tag
+					thumbnailWithImgTag: true,
 					// Callback function executed when the Gallery is initialized.
 					// Is called with the gallery instance as "this" object:
 					onopen: jQuery.proxy(this.expose_onopen,this),
@@ -347,7 +354,7 @@ function expose (widget)
 					// Gallery Main DIV container
 					var $expose_node = jQuery(document.createElement('div')).attr({id:"blueimp-gallery", class:"blueimp-gallery"});
 					// Create Gallery DOM NODE
-					$expose_node.append('<div class="slides"></div><h3 class="title"></h3><a class="prev">‹</a><a class="next">›</a><a class="close">×</a><a class="play-pause"></a><ol class="indicator"></ol>');
+					$expose_node.append('<div class="slides"></div><h3 class="title"></h3><a class="prev">‹</a><a class="next">›</a><a class="close">×</a><a class="play-pause"></a><a class="fullscreen"></a><ol class="indicator"></ol>');
 					// Append the gallery Node to DOM
 					$body.append($expose_node);
 				}
@@ -419,6 +426,7 @@ function expose (widget)
 			expose_onopened: function (event){
 				// Check to see if we're in a nextmatch, do magic
 				var nm = find_nextmatch(this);
+				var self=this;
 				if(nm)
 				{
 					// Add scrolling to the indicator list
@@ -428,9 +436,18 @@ function expose (widget)
 						gallery.container.find('.indicator').off()
 							.addClass('paginating')
 							.mousewheel(function(event, delta) {
-								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2) return;
+								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2)	return;
+
+								//Reload next pictures into the gallery by scrolling on thumbnails
+								if (delta<0 && $j(this).width() + parseInt($j(this).css('left')) < gallery.container.width())
+								{
+									var nextIndex = gallery.indicatorContainer.find('[title="loading"]')[0];
+									if (nextIndex) self.expose_onslideend(gallery,nextIndex.dataset.index -1);
+									return;
+								}
 								// Move it about 5 indicators
 								$j(this).css('left',parseInt($j(this).css('left'))-(-delta*gallery.activeIndicator.width()*5)+'px');
+
 								event.preventDefault();
 							})
 							.swipe(function(event, direction, distance) {
@@ -460,14 +477,20 @@ function expose (widget)
 			expose_onslide: function (gallery, index, slide){
 				// First let parent try
 				this._super.apply(this, arguments);
-
-				// Check to see if we're in a nextmatch, do magic
 				var nm = find_nextmatch(this);
 				if(nm)
 				{
 					// See if we need to move the indicator
 					var indicator = gallery.container.find('.indicator');
 					var current = $j('.active',indicator).position();
+					if (current.left == 0)
+					{
+						//As controlsClass activates indicators,
+						//we use it to make indicators available for the first time
+						//which helps to re-calculate the correct position of it, if it's not loaded yet
+						gallery.container.addClass(this.expose_options.controlsClass);
+						current = $j('.active',indicator).position();
+					}
 					if(current)
 					{
 						indicator.animate({left: (gallery.container.width() / 2)-current.left});
@@ -484,7 +507,7 @@ function expose (widget)
 					var total_count = nm.controller._grid.getTotalCount();
 
 					// Already at the end, don't bother
-					if(index == total_count) return;
+					if(index == total_count -1 || index == 0) return;
 
 					// Try to determine direction from state of next & previous slides
 					var direction = 1;

@@ -91,6 +91,8 @@
             closeClass: 'close',
             // The class for the "play-pause" toggle control:
             playPauseClass: 'play-pause',
+			// The class fullscreen button control
+			fullscreenClass:'fullscreen',
             // The list object property (or data attribute) with the object type:
             typeProperty: 'type',
             // The list object property (or data attribute) with the object title:
@@ -113,6 +115,8 @@
             toggleControlsOnReturn: true,
             // Toggle the automatic slideshow interval on pressing the Space key:
             toggleSlideshowOnSpace: true,
+			// Toggle fullscreen mode when slideshow is running
+			toggleFullscreenOnSlideShow: true,
             // Navigate the gallery by pressing left and right on the keyboard:
             enableKeyboardNavigation: true,
             // Close the gallery on pressing the Esc key:
@@ -865,6 +869,10 @@
                 // Click on "play-pause" control
                 this.preventDefault(event);
                 this.toggleSlideshow();
+            }else if (isTarget(options.fullscreenClass)) {
+                // Click on "fullscreen" control
+                this.preventDefault(event);
+                this.toggleFullscreen();
             } else if (parent === this.slidesContainer[0]) {
                 // Click on slide background
                 this.preventDefault(event);
@@ -1128,10 +1136,24 @@
         toggleSlideshow: function () {
             if (!this.interval) {
                 this.play();
+				if (this.options.toggleFullscreenOnSlideShow) this.requestFullScreen(this.container[0]);
             } else {
                 this.pause();
+				if (this.options.toggleFullscreenOnSlideShow) this.exitFullScreen();
             }
         },
+
+		toggleFullscreen: function ()
+		{
+            if (!this.getFullScreenElement())
+			{
+				this.requestFullScreen(this.container[0]);
+			}
+			else
+			{
+				this.exitFullScreen();
+			}
+		},
 
         getNodeIndex: function (element) {
             return parseInt(element.getAttribute('data-index'), 10);
