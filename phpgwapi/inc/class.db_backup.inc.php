@@ -7,12 +7,14 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 /**
  * DB independent backup and restore of EGroupware database
+ *
+ * Backing up bool columns now for all databases as 1 or 0, but understanding PostgreSQL 't' or 'f' too.
  */
 class db_backup
 {
@@ -589,6 +591,14 @@ class db_backup
 				{
 					if ($data['type'] == 'blob') $blobs[] = $col;
 				}
+				// check if we have an old PostgreSQL backup useing 't'/'f' for bool values
+				// --> convert them to MySQL and our new PostgreSQL format of 1/0
+				$bools = array();
+				foreach($this->schemas[$table]['fd'] as $col => $def)
+				{
+					if ($def['type'] === 'bool') $bools[] = $col;
+				}
+				if ($table == 'egw_cal_dates') error_log(__METHOD__."() $table: bools=".array2string($bools).", schema[fd]=".array2string($this->schemas[$table]['fd']));
 
 				if (feof($f)) break;
 				continue;
@@ -606,7 +616,7 @@ class db_backup
 			if ($table)	// do we already reached the data part
 			{
 				$import = true;
-				$data = self::csv_split($line, $cols, $blobs);
+				$data = self::csv_split($line, $cols, $blobs, $bools);
 
 				if ($table == 'egw_async' && in_array('##last-check-run##',$data))
 				{
@@ -742,9 +752,10 @@ class db_backup
 	 * @param string $line line to split
 	 * @param array $keys =null keys to use or null to use numeric ones
 	 * @param array $blobs =array() blob columns
+	 * @param array $bools =array() bool columns, values might be 't'/'f' for old PostgreSQL backups
 	 * @return array
 	 */
-	public static function csv_split($line, $keys=null, $blobs=array())
+	public static function csv_split($line, $keys=null, $blobs=array(), $bools=array())
 	{
 		if (function_exists('str_getcsv'))	// php5.3+
 		{
@@ -783,6 +794,11 @@ class db_backup
 						$fields[$key] = $tmp;
 					}
 				}
+				// decode bool columns, they might be 't'/'f' for old PostgreSQL backups
+				foreach($bools as $key)
+				{
+					$fields[$key] = egw_db::from_bool($fields[$key]);
+				}
 			}
 			return $fields;
 		}
@@ -812,6 +828,10 @@ class db_backup
 			elseif ($keys && strlen($field) > 26)
 			{
 				$arr[$key] = base64_decode($field);
+			}
+			elseif (in_array($key, $bools))
+			{
+				$arr[$key] = egw_db::from_bool($field);
 			}
 			else
 			{
@@ -843,6 +863,9 @@ class db_backup
 					break;
 				case 'blob':
 					$data = base64_encode($data);
+					break;
+				case 'bool':	// we use MySQL 0, 1 in csv, not PostgreSQL 't', 'f'
+					$data = (int)egw_db::from_bool($data);
 					break;
 				default:
 					$data = '"'.str_replace(array('\\',"\n","\r",'"'),array('\\\\','\\n','\\r','\\"'),$data).'"';
