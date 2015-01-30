@@ -134,9 +134,11 @@ function expose (widget)
 		// Don't bother with adding a default, we just did that
 		if(image.loading)
 		{
-			$j(gallery.slides[index])
-				.addClass(gallery.options.slideLoadingClass)
-				.removeClass(gallery.options.slideErrorClass);
+			//Add load class if it's really a slide with error
+			if (gallery.slidesContainer.find('[data-index="'+index+'"]').hasClass(gallery.options.slideErrorClass))
+				$j(gallery.slides[index])
+					.addClass(gallery.options.slideLoadingClass)
+					.removeClass(gallery.options.slideErrorClass);
 			return;
 		}
 
