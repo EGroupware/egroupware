@@ -141,7 +141,7 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 
 	getValue: function()
 	{
-		if(this.options.blur && this.input.val() == this.options.blur) return "";
+		if(this.options && this.options.blur && this.input.val() == this.options.blur) return "";
 		return this._super.apply(this, arguments);
 	},
 

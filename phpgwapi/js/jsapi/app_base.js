@@ -248,10 +248,10 @@ var AppJS = Class.extend(
 	 *
 	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
 	 *	Only state is required, and its contents are application specific.
-	 *
+	 * @param {string} template template name to check, instead of trying all templates of current app
 	 * @return {boolean} false - Returns false to stop event propagation
 	 */
-	setState: function(state)
+	setState: function(state, template)
 	{
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
@@ -279,7 +279,7 @@ var AppJS = Class.extend(
 
 		// Try and find a nextmatch widget, and set its filters
 		var nextmatched = false;
-		var et2 = etemplate2.getByApplication(this.appname);
+		var et2 = template ? etemplate2.getByTemplate(template) : etemplate2.getByApplication(this.appname);
 		for(var i = 0; i < et2.length; i++)
 		{
 			et2[i].widgetContainer.iterateOver(function(_widget) {
@@ -297,11 +297,21 @@ var AppJS = Class.extend(
 			if(nextmatched) return false;
 		}
 
-		// Try a redirect to list
 		// 'blank' is the special name for no filters, send that instead of the nice translated name
 		var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
-		egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
+		var url = '/'+this.appname+'/index.php';
 
+		// Try a redirect to list, if app defines a "list" value in registry
+		if (egw.link_get_registry(this.appname, 'list'))
+		{
+			url = egw.link('/index.php', jQuery.extend({'favorite': safe_name}, egw.link_get_registry(this.appname, 'list')));
+		}
+		// if no list try index value from application
+		else if (egw.app(this.appname).index)
+		{
+			url = egw.link('/index.php', 'menuaction='+egw.app(this.appname).index+'&favorite='+safe_name);
+		}
+		egw.open_link(url, undefined, undefined, this.appname);
 		return false;
 	},
 
@@ -705,9 +715,9 @@ var AppJS = Class.extend(
 
 		return false;
 	},
-	
+
 	/**
-	 * Fix scrolling iframe browsed by iPhone/iPod/iPad touch devices 
+	 * Fix scrolling iframe browsed by iPhone/iPod/iPad touch devices
 	 */
 	_fix_iFrameScrolling: function()
 	{
@@ -732,7 +742,7 @@ var AppJS = Class.extend(
 			});
 		}
 	},
-	
+
 	/**
 	 * Set document title, uses getWindowTitle to get the correct title,
 	 * otherwise set it with uniqueID as default title
@@ -745,11 +755,11 @@ var AppJS = Class.extend(
 			document.title = this.et2._inst.uniqueId + ": " + title;
 		}
 	},
-	
+
 	/**
 	 * Window title getter function in order to set the window title
 	 * this can be overridden on each application app.js file to customize the title value
-	 * 
+	 *
 	 * @returns {string} window title
 	 */
 	getWindowTitle: function ()

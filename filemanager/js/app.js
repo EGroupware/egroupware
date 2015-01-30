@@ -123,7 +123,7 @@ app.classes.filemanager = AppJS.extend(
 				state = JSON.parse(state);
 			}
 		}
-		var result = this._super.call(this,state);
+		var result = this._super.call(this, state, 'filemanager.index');
 
 		// This has to happen after the parent, changing to tile recreates
 		// nm controller
