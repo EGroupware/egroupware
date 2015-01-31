@@ -18,6 +18,7 @@ use EGroupware\Api\Vfs;
 // explicitly import old phpgwapi classes used:
 use mime_magic;
 use egw_exception_assertion_failed;
+use schema_proc;
 
 /**
  * sqlfs stream wrapper utilities: migration db-fs, fsck

@@ -24,7 +24,10 @@ use HTTP_WebDAV_Server;
 use egw_exception_assertion_failed;
 use egw_exception_db;
 use egw_exception_wrong_parameter;
+use egw_exception_wrong_userinput;
+use egw_exception;
 use egw_time;
+use egw_cache;
 
 /**
  * Class containing static methods to use the new eGW virtual file system
