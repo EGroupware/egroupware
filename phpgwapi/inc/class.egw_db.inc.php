@@ -248,7 +248,7 @@ class egw_db
 	/**
 	 * Constructor
 	 *
-	 * @param array $db_data=null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type'
+	 * @param array $db_data =null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type'
 	 */
 	function __construct(array $db_data=null)
 	{
@@ -482,7 +482,7 @@ class egw_db
 	/**
 	 * changes defaults set in class-var $capabilities depending on db-type and -version
 	 *
-	 * @param string $ado_driver mysql, postgres, mssql, sapdb, oci8
+	 * @param string $adodb_driver mysql, postgres, mssql, sapdb, oci8
 	 * @param string $db_version version-number of connected db-server, as reported by ServerInfo
 	 */
 	function set_capabilities($adodb_driver,$db_version)
@@ -616,7 +616,7 @@ class egw_db
 	* @param string $file the file method was called from - use __FILE__
 	* @param int $offset row to start from, default 0
 	* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
-	* @param array/boolean $inputarr array for binding variables to parameters or false (default)
+	* @param array|boolean $inputarr array for binding variables to parameters or false (default)
 	* @param int $fetchmode =egw_db::FETCH_BOTH egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
 	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
 	* @return ADORecordSet or false, if the query fails
@@ -697,7 +697,7 @@ class egw_db
 	* @param int $line the line method was called from - use __LINE__
 	* @param string $file the file method was called from - use __FILE__
 	* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
-	* @param array/boolean $inputarr array for binding variables to parameters or false (default)
+	* @param array|boolean $inputarr array for binding variables to parameters or false (default)
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '',$inputarr=false)
@@ -931,7 +931,7 @@ class egw_db
 	* Return the value of a column
 	*
 	* @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
-	* @param string/integer $Name name of field or positional index starting from 0
+	* @param string|integer $Name name of field or positional index starting from 0
 	* @param bool $strip_slashes string escape chars from field(optional), default false
 	*	depricated param, as correctly quoted values dont need any stripslashes!
 	* @return string the field value
@@ -962,7 +962,7 @@ class egw_db
 	*
 	* @deprecated use foreach(query() or foreach(select() to loop over the query using the global db object
 	* @param bool $do_next_record should next_record() be called or not (default not)
-	* @param string $strip='' string to strip of the column-name, default ''
+	* @param string $strip ='' string to strip of the column-name, default ''
 	* @return array/bool the associative array or False if no (more) result-row is availible
 	*/
 	function row($do_next_record=False,$strip='')
@@ -1043,7 +1043,7 @@ class egw_db
 	/**
 	 * Get a list of table names in the current database
 	 *
-	 * @param boolean $just_naem=false true return array of table-names, false return old format
+	 * @param boolean $just_name =false true return array of table-names, false return old format
 	 * @return array list of the tables
 	 */
 	function table_names($just_name=false)
@@ -1118,7 +1118,7 @@ class egw_db
 	* @param string $adminname name of database administrator user (optional)
 	* @param string $adminpasswd password for the database administrator user (optional)
 	* @param string $charset default charset for the database
-	* @param string $grant_host='localhost' host/ip of the webserver
+	* @param string $grant_host ='localhost' host/ip of the webserver
 	*/
 	function create_database($adminname = '', $adminpasswd = '', $charset='', $grant_host='localhost')
 	{
@@ -1189,8 +1189,8 @@ class egw_db
 	 * Concat grouped values of an expression with optional order and separator
 	 *
 	 * @param string $expr column-name or expression optional prefixed with "DISTINCT"
-	 * @param string $order_by='' optional order
-	 * @param string $separator=',' optional separator, default is comma
+	 * @param string $order_by ='' optional order
+	 * @param string $separator =',' optional separator, default is comma
 	 * @return string|boolean false if not supported by dbms
 	 */
 	function group_concat($expr, $order_by='', $separator=',')
@@ -1336,38 +1336,44 @@ class egw_db
 	* Correctly Quote Identifiers like table- or colmnnames for use in SQL-statements
 	*
 	* This is mostly copy & paste from adodb's datadict class
-	* @param $name string
+	* @param string $_name
 	* @return string quoted string
 	*/
-	function name_quote($name = NULL)
+	function name_quote($_name = NULL)
 	{
-		if (!is_string($name)) {
-			return FALSE;
+		if (!is_string($_name))
+		{
+			return false;
 		}
 
-		$name = trim($name);
+		$name = trim($_name);
 
 		if (!$this->Link_ID && !$this->connect())
 		{
-			return False;
+			return false;
 		}
 
 		$quote = $this->Link_ID->nameQuote;
+		$type = $this->Type;
 
-		// if name is of the form `name`, quote it
-		$matches = null;
-		if ( preg_match('/^`(.+)`$/', $name, $matches) ) {
-			return $quote . $matches[1] . $quote;
-		}
-
-		// if name contains special characters, quote it
-		// always quote for postgreSQL, as this is the only way to support mixed case names
-		if (preg_match('/\W/', $name) || $this->Type == 'pgsql' && preg_match('/[A-Z]+/', $name))
+		// if name is of the form `name`, remove MySQL quotes and leave it to automatic below
+		if ($name[0] === '`' && substr($name, -1) === '`')
 		{
-			return $quote . $name . $quote;
+			$name = substr($name, 1, -1);
 		}
 
-		return $name;
+		$quoted = array_map(function($name) use ($quote, $type)
+		{
+			// if name contains special characters, quote it
+			// always quote for postgreSQL, as this is the only way to support mixed case names
+			if (preg_match('/\W/', $name) || $type == 'pgsql' && preg_match('/[A-Z]+/', $name))
+			{
+				return $quote . $name . $quote;
+			}
+			return $name;
+		}, explode('.', $name));
+
+		return implode('.', $quoted);
 	}
 
 	/**
@@ -1378,10 +1384,10 @@ class egw_db
 	* Arrays of id's stored in strings: quote(array(1,2,3),'string') === "'1,2,3'"
 	*
 	* @param mixed $value the value to be escaped
-	* @param string/boolean $type=false string the type of the db-column, default False === varchar
-	* @param boolean $not_null=true is column NOT NULL, default true, else php null values are written as SQL NULL
-	* @param int $length=null length of the varchar column, to truncate it if the database requires it (eg. Postgres)
-	* @param string $glue=',' used to glue array values together for the string type
+	* @param string|boolean $type =false string the type of the db-column, default False === varchar
+	* @param boolean $not_null =true is column NOT NULL, default true, else php null values are written as SQL NULL
+	* @param int $length =null length of the varchar column, to truncate it if the database requires it (eg. Postgres)
+	* @param string $glue =',' used to glue array values together for the string type
 	* @return string escaped sting
 	*/
 	function quote($value,$type=False,$not_null=true,$length=null,$glue=',')
@@ -1474,12 +1480,12 @@ class egw_db
 	*	If $use_key == True, an ' IN ' instead a '=' is used. Good for category- or user-lists.
 	*	If the key is numerical (no key given in the array-definition) the value is used as is, eg.
 	*	array('visits=visits+1') gives just "visits=visits+1" (no quoting at all !!!)
-	* @param boolean/string $use_key If $use_key===True a "$key=" prefix each value (default), typically set to False
+	* @param boolean|string $use_key If $use_key===True a "$key=" prefix each value (default), typically set to False
 	*	or 'VALUES' for insert querys, on 'VALUES' "(key1,key2,...) VALUES (val1,val2,...)" is returned
-	* @param array/boolean $only if set to an array only colums which are set (as data !!!) are written
+	* @param array|boolean $only if set to an array only colums which are set (as data !!!) are written
 	*	typicaly used to form a WHERE-clause from the primary keys.
 	*	If set to True, only columns from the colum_definitons are written.
-	* @param array/boolean $column_definitions this can be set to the column-definitions-array
+	* @param array|boolean $column_definitions this can be set to the column-definitions-array
 	*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 	*	If its set, the column-type-data determinates if (int) or addslashes is used.
 	* @return string SQL
@@ -1571,7 +1577,7 @@ class egw_db
 	*
 	* @author RalfBecker<at>outdoor-training.de
 	*
-	* @param array/boolean $column_definitions this can be set to the column-definitions-array
+	* @param array|boolean $column_definitions this can be set to the column-definitions-array
 	*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 	*	If its set, the column-type-data determinates if (int) or addslashes is used.
 	*/
@@ -1724,9 +1730,9 @@ class egw_db
 	*	if the row exists db::update is called else a new row with $date merged with $where gets inserted (data has precedence)
 	* @param int $line line-number to pass to query
 	* @param string $file file-name to pass to query
-	* @param string/boolean $app string with name of app or False to use the current-app
+	* @param string|boolean $app string with name of app or False to use the current-app
 	* @param bool $use_prepared_statement use a prepared statement
-	* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
@@ -1832,9 +1838,9 @@ class egw_db
 	* @param array $where column-name / values pairs and'ed together for the where clause
 	* @param int $line line-number to pass to query
 	* @param string $file file-name to pass to query
-	* @param string/boolean $app string with name of app or False to use the current-app
+	* @param string|boolean $app string with name of app or False to use the current-app
 	* @param bool $use_prepared_statement use a prepared statement
-	* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function update($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
@@ -1865,7 +1871,7 @@ class egw_db
 				}
 				break;
 		}
-		$where = $this->column_data_implode(' AND ',$where,True,true,$table_def['fd']);
+		$where_str = $this->column_data_implode(' AND ',$where,True,true,$table_def['fd']);
 
 		if (self::$tablealiases && isset(self::$tablealiases[$table]))
 		{
@@ -1882,7 +1888,7 @@ class egw_db
 					if (!isset($table_def['fd'][$col])) continue;	// ignore columns not in this table
 					$params[] = $this->name_quote($col).'='.$this->Link_ID->Param($col);
 				}
-				$sql = "UPDATE $table SET ".implode(',',$params).' WHERE '.$where;
+				$sql = "UPDATE $table SET ".implode(',',$params).' WHERE '.$where_str;
 				// check if we already prepared that statement
 				if (!isset($this->prepared_sql[$sql]))
 				{
@@ -1894,7 +1900,7 @@ class egw_db
 			else
 			{
 				$sql = "UPDATE $table SET ".
-					$this->column_data_implode(',',$data,True,true,$table_def['fd']).' WHERE '.$where;
+					$this->column_data_implode(',',$data,True,true,$table_def['fd']).' WHERE '.$where_str;
 			}
 			$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
 			if ($this->Debug) echo "<p>db::query('$sql',$line,$file)</p>\n";
@@ -1904,9 +1910,9 @@ class egw_db
 		{
 			foreach($blobs2update as $col => $val)
 			{
-				$ret = $this->Link_ID->UpdateBlob($table,$col,$val,$where,$table_def['fd'][$col]['type'] == 'blob' ? 'BLOB' : 'CLOB');
-				if ($this->Debug) echo "<p>adodb::UpdateBlob('$table','$col','$val','$where') = '$ret'</p>\n";
-				if (!$ret) throw new egw_exception_db_invalid_sql("Error in UpdateBlob($table,$col,\$val,$where)",$line,$file);
+				$ret = $this->Link_ID->UpdateBlob($table,$col,$val,$where_str,$table_def['fd'][$col]['type'] == 'blob' ? 'BLOB' : 'CLOB');
+				if ($this->Debug) echo "<p>adodb::UpdateBlob('$table','$col','$val','$where_str') = '$ret'</p>\n";
+				if (!$ret) throw new egw_exception_db_invalid_sql("Error in UpdateBlob($table,$col,\$val,$where_str)",$line,$file);
 			}
 		}
 		return $ret;
@@ -1921,8 +1927,8 @@ class egw_db
 	* @param array $where column-name / values pairs and'ed together for the where clause
 	* @param int $line line-number to pass to query
 	* @param string $file file-name to pass to query
-	* @param string/boolean $app string with name of app or False to use the current-app
-	* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @param string|boolean $app string with name of app or False to use the current-app
+	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function delete($table,$where,$line,$file,$app=False,$table_def=False)
@@ -1946,7 +1952,7 @@ class egw_db
 	 * eg. db::expression('my_table','(',array('name'=>"test'ed",'lang'=>'en'),') OR ',array('owner'=>array('',4,10)))
 	 * gives "(name='test\'ed' AND lang='en') OR 'owner' IN (0,4,5,6,10)" if name,lang are strings and owner is an integer
 	 *
-	 * @param string/array $table_def table-name or definition array
+	 * @param string|array $table_def table-name or definition array
 	 * @param mixed $args variable number of arguments of the following types:
 	 *	string: get's as is into the result
 	 *	array:	column-name / value pairs: the value gets quoted according to the type of the column and prefixed
@@ -1995,18 +2001,18 @@ class egw_db
 	* @author RalfBecker<at>outdoor-training.de
 	*
 	* @param string $table name of the table
-	* @param array/string $cols string or array of column-names / select-expressions
-	* @param array/string $where string or array with column-name / values pairs AND'ed together for the where clause
+	* @param array|string $cols string or array of column-names / select-expressions
+	* @param array|string $where string or array with column-name / values pairs AND'ed together for the where clause
 	* @param int $line line-number to pass to query
 	* @param string $file file-name to pass to query
-	* @param int/bool $offset offset for a limited query or False (default)
+	* @param int|bool $offset offset for a limited query or False (default)
 	* @param string $append string to append to the end of the query, eg. ORDER BY ...
-	* @param string/boolean $app string with name of app or False to use the current-app
+	* @param string|boolean $app string with name of app or False to use the current-app
 	* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
-	* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	* @param string $join =null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
-	* @param int $fetchmode=egw_db::FETCH_ASSOC egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
+	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+	* @param int $fetchmode =egw_db::FETCH_ASSOC egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=egw_db::FETCH_ASSOC)
@@ -2052,9 +2058,9 @@ class egw_db
 	* @param int $line line-number to pass to query
 	* @param string $file file-name to pass to query
 	* @param string $order_by ORDER BY statement for the union
-	* @param int/bool $offset offset for a limited query or False (default)
+	* @param int|bool $offset offset for a limited query or False (default)
 	* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
-	* @param int $fetchmode=egw_db::FETCH_ASSOC egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
+	* @param int $fetchmode =egw_db::FETCH_ASSOC egw_db::FETCH_BOTH (default), egw_db::FETCH_ASSOC or egw_db::FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function union($selects,$line,$file,$order_by='',$offset=false,$num_rows=0,$fetchmode=egw_db::FETCH_ASSOC)
@@ -2091,7 +2097,7 @@ class egw_db
 	 * Strip eg. a prefix from the keys of an array
 	 *
 	 * @param array $arr
-	 * @param string/array $strip
+	 * @param string|array $strip
 	 * @return array
 	 */
 	static function strip_array_keys($arr,$strip)
@@ -2186,8 +2192,8 @@ class egw_db_callback_iterator implements Iterator
 	 *
 	 * @param Traversable $rs
 	 * @param callback $callback
-	 * @param array $parms=array() additional parameters, row is always first parameter
-	 * @param $key_callback=null optional callback, if you want different keys
+	 * @param array $params =array() additional parameters, row is always first parameter
+	 * @param $key_callback =null optional callback, if you want different keys
 	 */
 	public function __construct(Traversable $rs, $callback, $params=array(), $key_callback=null)
 	{
