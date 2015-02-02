@@ -195,7 +195,7 @@ var et2_vfsName = et2_textbox.extend(
 		this._super.apply(this,[_value]);
 	},
 	getValue: function() {
-		return egw.encodePath(this._super.apply(this));
+		return egw.encodePath(this._super.apply(this)||'');
 	}
 });
 et2_register_widget(et2_vfsName, ["vfs-name"]);
@@ -334,7 +334,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				type: _value.mime,
 				poster:'', // TODO: Should be changed by correct video thumbnail later
 				thumbnail:this.egw().mime_icon(_value['mime'], _value['path']) ,
-				href: base_url + _value.download_url,
+				href: base_url + _value.download_url
 			}];
 		}
 		else
