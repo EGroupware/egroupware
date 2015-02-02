@@ -33,7 +33,7 @@
  * @see http://docs.dhtmlx.com/gantt/index.html
  * @augments et2_valueWidget
  */
-var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
+var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 {
 	// Filters are inside gantt namespace
 	createNamespace: true,
@@ -57,7 +57,10 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			"default": "minute",
 			"description": "The unit for task duration values.  One of minute, hour, week, year."
 		},
-		value: {type: 'any'}
+		value: {type: 'any'},
+		needed: {ignore: true},
+		onfocus: {ignore: true},
+		tabindex: {ignore: true}
 	},
 	
 	// Common configuration for Egroupware/eTemplate
@@ -727,6 +730,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 		});
 
 		this.gantt.attachEvent("onContextMenu",function(taskId, linkId, e) {
+			if(gantt_widget.options.readonly) return false;
 			if(taskId)
 			{
 				gantt_widget._link_task(taskId);
@@ -747,6 +751,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 
 		// Update server after dragging a task
 		this.gantt.attachEvent("onAfterTaskDrag", function(id, mode, e) {
+			if(gantt_widget.options.readonly) return false;
 			var task = jQuery.extend({},this.getTask(id));
 
 			// Gantt chart deals with dates as Date objects, format as server likes
@@ -756,7 +761,13 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 			
 			var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
 
-			if(gantt_widget.options.ajax_update)
+			var set = true;
+			if(gantt_widget.options.onchange)
+			{
+				e.data = {task: task, mode: mode, value: value};
+				set = gantt_widget.change(e, gantt_widget);
+			}
+			if(gantt_widget.options.ajax_update && set)
 			{
 				var request = gantt_widget.egw().json(gantt_widget.options.ajax_update,
 					[task, mode, value]
@@ -766,6 +777,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 
 		// Update server for links
 		var link_update = function(id, link) {
+			if(gantt_widget.options.readonly) return false;
 			if(gantt_widget.options.ajax_update)
 			{
 				link.parent = this.getTask(link.source).parent;
@@ -849,6 +861,7 @@ var et2_gantt = et2_valueWidget.extend([et2_IResizeable,et2_IInput],
 	_bindChildren: function() {
 		var gantt_widget = this;
 		this.iterateOver(function(_widget){
+			if(_widget.instanceOf(et2_gantt)) return;
 			// Existing change function
 			var widget_change = _widget.change;
 
