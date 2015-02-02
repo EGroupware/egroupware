@@ -33,16 +33,18 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		 *
 		 * @param {object} _data object with name: value pairs to set
 		 * @param {string} _app application name, 'common' or undefined to prefes of all apps at once
+		 * @param {boolean} _need_clone _data need to be cloned, as it is from different window context
+		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_preferences: function(_data, _app)
+		set_preferences: function(_data, _app, _need_clone)
 		{
 			if (typeof _app == 'undefined')
 			{
-				prefs = _data;
+				prefs = _need_clone ? jQuery.extend(true, {}, _data) : _data;
 			}
 			else
 			{
-				prefs[_app] = jQuery.extend({}, _data);
+				prefs[_app] = jQuery.extend(true, {}, _data);	// we always clone here, as call can come from this.preferences!
 			}
 		},
 

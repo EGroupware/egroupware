@@ -29,8 +29,8 @@ egw.extend('config', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Query clientside config
 		 *
-		 * @param string _name name of config variable
-		 * @param string _app default "phpgwapi"
+		 * @param {string} _name name of config variable
+		 * @param {string} _app default "phpgwapi"
 		 * @return mixed
 		 */
 		config: function (_name, _app)
@@ -45,11 +45,13 @@ egw.extend('config', egw.MODULE_GLOBAL, function() {
 		/**
 		 * Set clientside configuration for all apps
 		 *
-		 * @param array/object
+		 * @param {object} _configs
+		 * @param {boolean} _need_clone _configs need to be cloned, as it is from different window context
+		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_configs: function(_configs)
+		set_configs: function(_configs, _need_clone)
 		{
-			configs = _configs;
+			configs = _need_clone ? jQuery.extend(true, {}, _configs) : _configs;
 		}
 	};
 });

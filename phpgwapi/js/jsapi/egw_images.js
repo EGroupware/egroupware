@@ -47,10 +47,12 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		 * Set imagemap, called from /phpgwapi/images.php
 		 *
 		 * @param {array|object} _images
+		 * @param {boolean} _need_clone _images need to be cloned, as it is from different window context
+		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_images: function (_images)
+		set_images: function (_images, _need_clone)
 		{
-			images = _images;
+			images = _need_clone ? jQuery.extend(true, {}, _images) : _images;
 		},
 
 		/**

@@ -41,10 +41,12 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * Set data of current user
 		 *
 		 * @param {object} _data
+		 * @param {boolean} _need_clone _data need to be cloned, as it is from different window context
+		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_user: function(_data)
+		set_user: function(_data, _need_clone)
 		{
-			userData = _data;
+			userData = _need_clone ? jQuery.extend(true, {}, _data) : _data;
 		},
 
 		/**
@@ -92,7 +94,9 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			{
 				// Synchronous
 				egw.json('home.egw_framework.ajax_user_list.template',[],
-					function(data) {accountStore = data||{};}
+					function(data) {
+						accountStore = jQuery.extend(true, {}, data||{});
+					}
 				).sendRequest();
 			}
 			if(type == 'both')

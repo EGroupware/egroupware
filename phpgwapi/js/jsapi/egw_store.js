@@ -21,34 +21,34 @@
 
 /**
  * Store is a wrapper around browser based, persistant storage.
- * 
- * 
+ *
+ *
  * @see http://www.w3.org/TR/webstorage/#storage
- * 
- * @param {type} param1
- * @param {type} param2
- * @param {type} param3
+ *
+ * @param {string} _app
+ * @param {DOMWindow} _wnd
  */
 egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 
 	var egw = this;
-	
+
 	/**
 	 * Since the storage is shared across at least all applications, make
 	 * the key include some extra info.
-	 * 
+	 *
+	 * @param {string} application
 	 * @param {string} key
 	 * @returns {undefined}
 	 */
 	function mapKey(application, key)
 	{
-		return egw.config('phpgwapi', 'instance_id') + '-' + application + '-' + key;
+		return application + '-' + key;
 	}
-	
+
 	return {
 		/**
 		 * Retrieve a value from session storage
-		 * 
+		 *
 		 * @param {string} application Name of application, or common
 		 * @param {string} key
 		 * @returns {string}
@@ -60,7 +60,7 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 
 		/**
 		 * Set a value in session storage
-		 * 
+		 *
 		 * @param {string} application Name of application, or common
 		 * @param {string} key
 		 * @param {string} value
@@ -70,7 +70,7 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 			key = mapKey(application, key);
 			return _wnd.sessionStorage.setItem(key, value);
 		},
-		
+
 		/**
 		 * Remove a value from session storage
 		 * @param {string} application
@@ -80,8 +80,6 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		removeSessionItem: function(application, key) {
 			key = uniqueKey(application, key);
 			return _wnd.sessionStorage.removeItem(key);
-		},
-			
-			
-	}
+		}
+	};
 });
