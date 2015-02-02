@@ -140,16 +140,21 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				}
 				unset($send_value['col_filter']);
 			}
+			// Old type
 			if($favorite && $favorite['filter'])
 			{
-				$send_value = array_merge($value, $favorite['filter']);
+				$favorite['state'] = $favorite['filter'];
+			}
+			if($favorite && $favorite['state'])
+			{
+				$send_value = array_merge($value, $favorite['state']);
 
 				// Ajax call can handle the saved sort here, but this can't
-				if($favorite['filter']['sort'])
+				if($favorite['state']['sort'])
 				{
 					unset($send_value['sort']);
-					$send_value['order'] = $favorite['filter']['sort']['id'];
-					$send_value['sort'] = $favorite['filter']['sort']['asc'] ? 'ASC' : 'DESC';
+					$send_value['order'] = $favorite['state']['sort']['id'];
+					$send_value['sort'] = $favorite['state']['sort']['asc'] ? 'ASC' : 'DESC';
 				}
 			}
 		}
