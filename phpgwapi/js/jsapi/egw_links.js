@@ -220,16 +220,18 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param {object} _registry whole registry or entries for just one app
 		 * @param {string} _app
+		 * @param {boolean} _need_clone _images need to be cloned, as it is from different window context
+		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_link_registry: function (_registry, _app)
+		set_link_registry: function (_registry, _app, _need_clone)
 		{
 			if (typeof _app == 'undefined')
 			{
-				link_registry = _registry;
+				link_registry = _need_clone ? jQuery.extend(true, {}, _registry) : _registry;
 			}
 			else
 			{
-				link_registry[_app] = _registry;
+				link_registry[_app] = _need_clone ? jQuery.extend(true, {}, _registry) : _registry;
 			}
 		},
 

@@ -41,8 +41,8 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	common::egw_exit();
 }
 
-$content = 'egw.set_configs('.$config.");\n";
-$content .= 'egw.set_link_registry('.$link_registry.");\n";
+$content = 'egw.set_configs('.$config.", egw && egw.window !== window);\n";
+$content .= 'egw.set_link_registry('.$link_registry.", undefined, egw && egw.window !== window);\n";
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content
 if (in_array('gzip', explode(',',$_SERVER['HTTP_ACCEPT_ENCODING'])) && function_exists('gzencode'))

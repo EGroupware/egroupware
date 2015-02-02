@@ -37,13 +37,16 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		 *
 		 * @param {string} _app
 		 * @param {object} _messages message => translation pairs
+		 * @param {boolean} _need_clone _messages need to be cloned, as it is from different window context
+		 *	and therefore will be inaccessible in IE, after that window is closed
 		 * @memberOf egw
 		 */
-		set_lang_arr: function(_app, _messages)
+		set_lang_arr: function(_app, _messages, _need_clone)
 		{
 			if(!jQuery.isArray(_messages))
 			{
-				lang_arr[_app] = _messages;
+				// no deep clone jQuery.extend(true,...) neccessary, as _messages contains only string values
+				lang_arr[_app] = _need_clone ? jQuery.extend({}, _messages) : _messages;
 			}
 		},
 
