@@ -325,7 +325,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	this.name = _name;	// store top-level template name to have it available in widgets
 	// store template base url, in case initial template is loaded via webdav, to use that for further loads too
 	// need to split off domain first, as it could contain app-name part of template eg. stylite.report.xet and https://my.stylite.de/egw/...
-	if (_url[0] != '/')
+	if (_url && _url[0] != '/')
 	{
 		this.template_base_url = _url.match(/https?:\/\/[^/]+/).shift();
 		_url = _url.split(this.template_base_url)[1];
