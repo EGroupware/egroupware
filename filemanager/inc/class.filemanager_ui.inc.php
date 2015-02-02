@@ -304,6 +304,11 @@ class filemanager_ui
 
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
+			// Blank favorite set via GET needs special handling for path
+			if (isset($_GET['favorite']) && $_GET['favorite'] == 'blank')
+			{
+				$content['nm']['path'] = static::get_home_dir();
+			}
 			// switch to projectmanager folders
 			if (isset($_GET['pm_id']))
 			{
