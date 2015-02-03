@@ -24,7 +24,7 @@
 /**
  * @augments et2_inputWidget
  */
-var et2_htmlarea = et2_inputWidget.extend(
+var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 {
 	modes: ['ascii','simple','extended','advanced'],
 
@@ -267,6 +267,20 @@ var et2_htmlarea = et2_inputWidget.extend(
 			// CK Error
 			this.egw().debug("error",e);
 			return null;
+		}
+	},
+	
+	/**
+	 * Resize htmlNode tag according to window size
+	 * @param {type} _height excess height which comes from window resize
+	 */
+	resize: function (_height)
+	{
+		if (_height)
+		{
+			// apply the ratio
+			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
+			if (_height != 0) this.htmlNode.height(this.htmlNode.height() + _height);
 		}
 	}
 });
