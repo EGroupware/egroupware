@@ -319,9 +319,9 @@ class mail_hooks
 				'help'   => 'Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.',
 				'name'   => 'insertSignatureAtTopOfMessage',
 				'values' => array(
-					'0' => 'After reply, visible during compose',
-					'1' => 'Before reply, visible during compose',
-					'no_belowaftersend'  => 'Appened after reply before sending',
+					'0' => lang('after reply, visible during compose'),
+					'1' => lang('before reply, visible during compose'),
+					'no_belowaftersend'  => lang('appended after reply before sending'),
 				),
 				'xmlrpc' => True,
 				'default'=> '0',
