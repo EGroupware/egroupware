@@ -659,6 +659,11 @@ class calendar_groupdav extends groupdav_handler
 				break;
 			}
 		}
+		if (!isset($master))
+		{
+			error_log(__METHOD__."('$uid', ...) master NOT found!");
+			return array();
+		}
 		foreach($events as $k => &$recurrence)
 		{
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
