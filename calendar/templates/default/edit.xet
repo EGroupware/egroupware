@@ -3,7 +3,7 @@
 <overlay>
 	<template id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
 		<hbox options="0,0">
-			<grid height="250" width="445">
+			<grid width="445">
 				<columns>
 					<column width="80px"/>
 					<column/>
@@ -93,7 +93,7 @@
 		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="240"/>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
-		<grid width="99%" height="250" overflow="auto" id="participants">
+		<grid width="99%" overflow="auto" id="participants">
 			<columns>
 				<column width="85"/>
 				<column/>
@@ -147,7 +147,7 @@
 		</styles>
 	</template>
 	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="250">
+		<grid width="100%">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -206,7 +206,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.custom" template="" lang="" group="0" version="1.4.001">
-		<grid width="100%" height="250" overflow="auto">
+		<grid width="100%" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -218,7 +218,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="250" overflow="auto">
+		<grid width="100%" overflow="auto">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -240,16 +240,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.history" template="" lang="" group="0" version="1.7.002">
-		<grid width="100%" height="250" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<historylog id="history" options="history_status"/>
-				</row>
-			</rows>
-		</grid>
+		<historylog id="history" options="history_status" width="100%" overflow="hidden"/>
 	</template>
 	<template id="calendar.delete_series" template="" lang="" group="0" version="1.7.003">
 		<vbox>
@@ -297,7 +288,7 @@
 					<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
 				</row>
 				<row>
-					<tabbox id="tabs" height="260" span="all">
+					<tabbox id="tabs" span="all" tab_height="250">
 						<tabs>
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
