@@ -143,7 +143,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	createNamespace: true,
 
 	columns: [],
-	
+
 	// Current view, either row or tile.  We store it here as controllers are
 	// recreated when the template changes.
 	view: 'row',
@@ -1120,7 +1120,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 		// Set the view
 		this.controller._view = this.view;
-		
+
 		// Load the initial order
 		/*this.controller.loadInitialOrder(this._getInitialOrder(
 			this.options.settings.rows, this.options.settings.row_id
@@ -1869,7 +1869,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 					{
 						value = total;
 					}
-					
+
 					// If they want the whole thing, treat it as all
 					if(button == 'dialog[ok]' && value == this.controller._grid.getTotalCount())
 					{
@@ -1905,14 +1905,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 							{
 								ctx.prefix = nm.controller.dataStorePrefix;
 							}
-							nm.controller.dataFetch({start:count, num_rows: Math.min(value,200)}, function(data)  {		
+							nm.controller.dataFetch({start:count, num_rows: Math.min(value,200)}, function(data)  {
 								// Keep track
 								if(data && data.order)
 								{
 									fetchedCount += data.order.length;
 								}
 								nm.controller._fetchCallback.apply(this, arguments);
-								
+
 								if(fetchedCount >= value)
 								{
 									if(cancel)
@@ -1928,9 +1928,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 										// Should be OK to print now
 										defer.resolve();
 									},nm),ET2_GRID_INVALIDATE_TIMEOUT);
-									
+
 								}
-								
+
 							},ctx);
 							count += 200;
 						} while (count < value)
@@ -2085,6 +2085,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			.on("keypress", function(event) {
 				if(event.which == 13)
 				{
+					self.getInstanceManager().autocomplete_fixer();
 					self.nextmatch.applyFilters({search: self.search.getValue()});
 				}
 			});
