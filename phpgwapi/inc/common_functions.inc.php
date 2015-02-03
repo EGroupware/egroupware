@@ -14,6 +14,14 @@
  * @version $Id$
  */
 
+// this is only neccessary, if header.inc.php is not included, but common_functions.inc.php directly
+if (!defined('EGW_SERVER_ROOT'))
+{
+	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
+	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
+	define('EGW_API_INC', __DIR__);
+}
+
 /**
  * New PSR-4 autoloader for EGroupware
  *
