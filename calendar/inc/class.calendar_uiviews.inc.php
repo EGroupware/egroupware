@@ -577,7 +577,7 @@ class calendar_uiviews extends calendar_ui
 								$width = $this->time2pos($event['end_m'] - $event['start_m']);
 								$color = $data['color'] ? $data['color'] : 'gray';
 
-								$tooltip = html::htmlspecialchars($data['tooltip'], true);	// true=need double-encoding, as it is transported as attribute!
+								$tooltip = html::htmlspecialchars($data['tooltip']);
 								$content .= $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').
 									'" data-tooltip ="'.$tooltip .
 									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
