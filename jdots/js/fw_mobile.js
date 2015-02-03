@@ -176,7 +176,9 @@
 										.click(function (){self.close(framework.popup_idx(self.$iFrame[0].contentWindow));});
 					if ($appHeader.length > 0)
 					{
-						setTimeout(function(){$appHeader.addClass('egw_fw_mobile_popup_appHeader').prepend($closeBtn)},0);
+						$appHeader.addClass('egw_fw_mobile_popup_appHeader');
+						// Add close button only after everything is loaded
+						setTimeout(function(){$appHeader.prepend($closeBtn)},0);
 					}
 				}
 
