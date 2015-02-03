@@ -1284,7 +1284,7 @@ abstract class egw_framework
 			self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
 
 			// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-			self::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui-1.10.3.custom.css");
+			self::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui.css");
 
 			// eTemplate2 - load in top so sidebox has styles too
 			self::includeCSS('/etemplate/templates/default/etemplate2.css');
