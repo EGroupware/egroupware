@@ -483,7 +483,7 @@ function expose (widget)
 					// See if we need to move the indicator
 					var indicator = gallery.container.find('.indicator');
 					var current = $j('.active',indicator).position();
-					if (current.left == 0)
+					if (current.left == 0 && !gallery.container.hasClass(this.expose_options.playingClass))
 					{
 						//As controlsClass activates indicators,
 						//we use it to make indicators available for the first time
