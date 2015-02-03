@@ -954,9 +954,9 @@ class mail_compose
 			// ON tOP OR BELOW? pREF CAN TELL
 			/*
 				Signature behavior preference changed. New default, if not set -> 0
-						'0' => 'After reply, visible during compose',
-						'1' => 'Before reply, visible during compose',
-						'no_belowaftersend'  => 'Appened after reply before sending',
+						'0' => 'after reply, visible during compose',
+						'1' => 'before reply, visible during compose',
+						'no_belowaftersend'  => 'appended after reply before sending',
 			*/
 			$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:($this->mailPreferences['insertSignatureAtTopOfMessage']?$this->mailPreferences['insertSignatureAtTopOfMessage']:'below'));
 			$sigText = mail_bo::merge($signature['ident_signature'],array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
@@ -2111,9 +2111,9 @@ class mail_compose
 		$signature = $_signature['ident_signature'];
 		/*
 			Signature behavior preference changed. New default, if not set -> 0
-					'0' => 'After reply, visible during compose',
-					'1' => 'Before reply, visible during compose',
-					'no_belowaftersend'  => 'Appened after reply before sending',
+					'0' => 'after reply, visible during compose',
+					'1' => 'before reply, visible during compose',
+					'no_belowaftersend'  => 'appended after reply before sending',
 		*/
 		$sigAlreadyThere = $this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend'?1:0;
 		if ($sigAlreadyThere)

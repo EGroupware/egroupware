@@ -18,6 +18,7 @@ add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
 add folder	mail	de	Neuer Ordner
 add to addressbook	mail	de	zum Adressbuch hinzufügen
+after reply, visible during compose	mail	de	Nach dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase+Weiterleitungen
 all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
@@ -37,12 +38,14 @@ and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Pri
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
 append	mail	de	hinzufügen
+appended after reply before sending	mail	de	Einfügen nach dem zitierten Text im Zuge des Versendens
 attach users vcard at compose to every new mail	mail	de	Füge die VCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang
 attachments	mail	de	Dateien
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
+before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar während der Bearbeitung
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
@@ -375,6 +378,7 @@ set / remove flags	mail	de	Markierung
 set / remove labels	mail	de	Schlagworte setzen / entfernen
 set it as default:	mail	de	als Vorgabe speichern
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur Hinter (gemäß Standart) oder Vor dem zitierten Text einer email eingefügt werden, und soll diese bearbeitbar sein?
 show all folders	mail	de	Darstellung aller E-Mail Ordner
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	de	Zeige alle Ordner, die in Ihrem Postfach eingerichtet sind. Expliziere Deaktivierung des Abonnement-Funktion des E-Mail Programms. Dies kann sich negativ auf die Performance Ihrer EGroupware auswirken.
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite

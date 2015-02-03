@@ -18,6 +18,7 @@ add a new folder to %1:	mail	en	Add a new Folder to %1:
 add all my aliases	mail	en	Add all my aliases
 add folder	mail	en	Add Folder
 add to addressbook	mail	en	add to addressbook
+after reply, visible during compose	mail	en	After reply, visible during compose
 aliases+forwards	mail	en	Aliases+Forwards
 all	mail	en	all
 all adresses:	mail	en	All Adresses:
@@ -37,12 +38,14 @@ and the rule with priority %1, now got the priority %2	mail	en	And the rule with
 any of	mail	en	any of
 any status	mail	en	any status
 append	mail	en	append
+appended after reply before sending	mail	en	Appended after reply before sending
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
 attachment	mail	en	Attachment
 attachments	mail	en	Attachments
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
+before reply, visible during compose	mail	en	Before reply, visible during compose
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 can not open imap connection	mail	en	Can not open IMAP connection
@@ -375,6 +378,7 @@ set / remove flags	mail	en	Set / Remove Flags
 set / remove labels	mail	en	Set / Remove Labels
 set it as default:	mail	en	set it as default:
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.
 show all folders	mail	en	show all Folders
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in Main Screen Folder Pane
 show new messages on home page	mail	en	show new messages on home page
