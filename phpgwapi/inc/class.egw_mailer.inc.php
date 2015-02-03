@@ -707,6 +707,7 @@ class egw_mailer extends Horde_Mime_Mail
 		{
 			case '_bcc':
 				$this->_bcc = $value;	// this is NOT PHPMailer compatibility, but need for working BCC, if $this->_bcc is NOT set
+				break;
 			case 'Sender':
 				$this->addHeader('Return-Path', '<'.$value.'>', true);
 				break;
