@@ -2085,6 +2085,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			.on("keypress", function(event) {
 				if(event.which == 13)
 				{
+					event.preventDefault();
 					self.getInstanceManager().autocomplete_fixer();
 					self.nextmatch.applyFilters({search: self.search.getValue()});
 				}

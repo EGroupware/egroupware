@@ -99,7 +99,8 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		if (!this.options.readonly)
 		{
 			this.btn = $j(document.createElement("button"))
-				.addClass("et2_button et2_button_text");
+				.addClass("et2_button et2_button_text")
+				.attr({type:"button"});
 			this.setDOMNode(this.btn[0]);
 		}
 	},
