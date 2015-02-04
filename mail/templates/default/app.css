@@ -810,7 +810,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		height: auto;
 	}
 
-	div#mail-display.et2_container {
+	#mail-display.et2_container {
 		min-height: initial;
 	}
 
@@ -846,7 +846,7 @@ and (max-device-width:768){
 @media only screen
 and (max-device-width : 1024px)
 and (orientation : landscape) {
-	
+
 }
 
 span#mail-compose_cc_expander,

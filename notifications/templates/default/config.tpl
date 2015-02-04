@@ -30,6 +30,7 @@
     <td>{lang_Poll_interval}</td>
     <td>
      <select name="newsettings[popup_poll_interval]">
+      <option value="5"{selected_popup_poll_interval_60}>5secs</option>
       <option value="60"{selected_popup_poll_interval_60}>1 {lang_minute}</option>
       <option value="120"{selected_popup_poll_interval_120}>2 {lang_minutes}</option>
       <option value="300"{selected_popup_poll_interval_300}>5 {lang_minutes}</option>
