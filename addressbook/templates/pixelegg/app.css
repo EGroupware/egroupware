@@ -103,7 +103,7 @@ input.et2_radiobox {
 /**
  * Index page
  */
-div#addressbook-index img.iphoto {
+#addressbook-index img.iphoto {
   width: 100%;
   height: auto;
 }
