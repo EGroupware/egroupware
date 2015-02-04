@@ -53,5 +53,10 @@ function phpgwapi_upgrade14_1()
  */
 function phpgwapi_upgrade14_1_900()
 {
+	// Create anonymous user for sharing of files
+	$GLOBALS['egw_setup']->add_account('NoGroup', 'No', 'Rights', false, false);
+	$anonymous = $GLOBALS['egw_setup']->add_account('anonymous', 'SiteMgr', 'User', 'anonymous', 'NoGroup');
+	$GLOBALS['egw_setup']->add_acl('phpgwapi', 'anonymous', $anonymous);
+
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.2';
 }

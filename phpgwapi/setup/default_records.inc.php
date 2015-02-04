@@ -234,3 +234,10 @@ foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', '
 }
 $prefs->save_repository(false, 'default');
 egw_vfs::$is_root = false;
+
+/**
+ * Create anonymous user for sharing of files
+ */
+$GLOBALS['egw_setup']->add_account('NoGroup', 'No', 'Rights', false, false);
+$anonymous = $GLOBALS['egw_setup']->add_account('anonymous', 'SiteMgr', 'User', 'anonymous', 'NoGroup');
+$GLOBALS['egw_setup']->add_acl('phpgwapi', 'anonymous', $anonymous);
