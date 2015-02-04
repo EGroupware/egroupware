@@ -77,6 +77,14 @@ var et2_selectAccount = et2_selectbox.extend(
 		// Reference to object with dialog
 		this.dialog = null;
 
+		// Popup does not work with tags
+		var type = this.egw().preference('account_selection', 'common');
+		if(type == 'popup' && _attrs.multiple)
+		{
+			_attrs.tags = false;
+			_attrs.rows = Math.max(2,_attrs.rows);
+		}
+
 		this._super.call(this, _parent, _attrs);
 
 		// Allow certain widgets inside this one
@@ -91,7 +99,7 @@ var et2_selectAccount = et2_selectbox.extend(
 	 * Tell et2 widget framework where to go
 	 *
 	 * @param {object} _sender
-	 */
+	 *
 	getDOMNode: function(_sender) {
 		if(this.search_widget != null && _sender == this.search_widget)
 		{
@@ -99,6 +107,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		}
 		return this._super.apply(this, arguments);
 	},
+	*/
 
 
 	/**
@@ -157,6 +166,7 @@ var et2_selectAccount = et2_selectbox.extend(
 					var value = event.data.search_widget.getValue();
 					event.data.value = typeof value == 'object' && value ? value.id : value;
 					event.data.input.trigger("change");
+					return false;
 				});
 			}
 			var div = jQuery(document.createElement("div")).append(this.search_widget.getDOMNode());
