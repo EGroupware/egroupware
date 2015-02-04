@@ -312,11 +312,14 @@ class addressbook_ui extends addressbook_bo
 		if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = $availabletypes[0];
 		if (count($this->content_types) > 1)
 		{
-			$content['nm']['header_right'] = 'addressbook.index.right_addplus';
 			foreach($this->content_types as $tid => $data)
 			{
 				$sel_options['tid'][$tid] = $data['name'];
 			}
+		}
+		else
+		{
+			$this->tmpl->disableElement('col_filter[tid]');
 		}
 		// get the availible org-views plus the label of the contacts view of one org
 		$sel_options['org_view'] = $this->org_views;
@@ -924,7 +927,7 @@ window.egw_LAB.wait(function() {
 		$list['list_name'] = $new_name;
 
 		$new_id = $this->add_list(array('list_id' => (int)$list_id), $list['list_owner'],array(),$list);
-		
+
 		egw_json_response::get()->apply('egw.message', array(
 			$new_id == $list_id ? lang('Distribution list renamed') : lang('List created'),
 			'success'
@@ -1043,7 +1046,7 @@ window.egw_LAB.wait(function() {
 					egw_session::appsession($session_name,'addressbook',$query);
 				}
 				return false;
-			
+
 			case 'document':
 				if (!$document) $document = $this->prefs['default_document'];
 				$document_merge = new addressbook_merge();
@@ -1745,7 +1748,7 @@ window.egw_LAB.wait(function() {
 		{
 			$icon = common::image('addressbook',$this->content_types[$tid]['name']);
 		}
-		
+
 		// Legacy - from when icons could be anywhere
 		if ($tid != 'n' && $this->content_types[$tid]['options']['icon'])
 		{

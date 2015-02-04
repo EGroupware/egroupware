@@ -103,7 +103,7 @@ div#addressbook_view_sidebox{
 
 
 
-div#addressbook-index{
+#addressbook-index{
 //    min-height: 700px;
 //    height: auto !important;
 
@@ -157,44 +157,19 @@ div#addressbook-index{
             &:focus{.Complete_Button_select_focus;}
         }
 
-        // erweiterte Suche
-        button#addressbook-index_search{
-           .Complete_Button_add_only_plus;
-            .dimension_height_m;
-            margin-right: 0px;
-            background-image:url('../../../pixelegg/images/advanced-search.png') !important;
-            background-repeat: no-repeat;
-            padding-left: 0px;
-            font-size: 0px;
-
-            &:hover{
-                .Complete_Button_add_only_plus_hover;
-                background-image:url('../../../pixelegg/images/advanced-search.png');
-                /*.Complete_Button_text_icon_before_hover;*/
-                /*.dimension_height_m;*/
-            }
-
-            &:focus{
-                background-color: @color_positive_action_active !important;
-                background-image:url('../../../pixelegg/images/advanced-search.png');
-/*                .Complete_Button_text_icon_before_active;
-                .dimension_height_m;*/
-            }
-
-        }
-
         // hinzufügen
-        button#addressbook-index_add{
+        button#addressbook-index_add,button#addressbook-index_search{
 
             .Complete_Button_add_only_plus;
             .dimension_height_m;
-            margin-right: 0px;
 
             &:hover {.Complete_Button_add_only_plus_hover;}
             &:active {background-color: @color_positive_action_active !important;}
 
         }
-
+		button#addressbook-index_add {
+            margin-right: 0px;
+		}
 
 
 
