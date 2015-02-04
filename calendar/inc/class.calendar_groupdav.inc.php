@@ -659,6 +659,11 @@ class calendar_groupdav extends groupdav_handler
 				break;
 			}
 		}
+		// if recurring event starts in future behind horizont, nothing will be returned by bo::search()
+		if (!isset($master) && !($master = $this->bo->read($uid)))
+		{
+			return array();
+		}
 		foreach($events as $k => &$recurrence)
 		{
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
