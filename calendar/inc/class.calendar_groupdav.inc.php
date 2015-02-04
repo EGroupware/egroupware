@@ -660,7 +660,7 @@ class calendar_groupdav extends groupdav_handler
 			}
 		}
 		// if recurring event starts in future behind horizont, nothing will be returned by bo::search()
-		if (!isset($master) && !($master = $this->bo->read($uid)))
+		if (!isset($master) && !($master = $bo->read($uid)))
 		{
 			return array();
 		}
