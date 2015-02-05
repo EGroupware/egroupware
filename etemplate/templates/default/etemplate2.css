@@ -1549,6 +1549,14 @@ div.ui-toolbar-menulist{
 	float:right;
 	direction: rtl;
 }
+div.et2_toolbar_activeList .ui-accordion-header-active {
+	font-weight: normal;
+	color:black;
+}
+div.et2_toolbar_activeList h.ui-accordion-header {
+	padding:4px 14px 6px 25px !important;
+	margin:1px;
+}
 .et2_toolbar_actionlist{
 	float:left;
 	width:80%;
