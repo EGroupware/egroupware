@@ -962,6 +962,8 @@ etemplate2.print = function(_app)
 	// Wait for everything to be loaded, then send it off
 	jQuery.when.apply(jQuery, deferred).done(function() {
 		egw.window.print();
+	}).fail(function() {
+		afterPrint();
 	});
 }
 
