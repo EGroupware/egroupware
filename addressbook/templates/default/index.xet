@@ -11,7 +11,7 @@
 			<menulist>
 				<menupopup align="right" label="Type" id="col_filter[tid]" options="All"/>
 			</menulist>
-			<buttononly align="right" label="Advanced search" image="advanced-search" background_image="1" id="search" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'850','440','_blank','addressbook',null,true); return false;"/>
+			<buttononly align="right" statustext="Advanced search" image="advanced-search" background_image="1" id="search" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'850','440','_blank','addressbook',null,true); return false;"/>
 			<buttononly align="right" statustext="Add a new contact" label="Add" id="add" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
 		</hbox>
 	</template>
