@@ -141,6 +141,11 @@ function expose (widget)
 					.removeClass(gallery.options.slideErrorClass);
 			return;
 		}
+		// Remove the loading class if the slide is loaded
+		else
+		{
+			$j(gallery.slides[index]).removeClass(gallery.options.slideLoadingClass);
+		}
 
 		// Just use add to let gallery create everything it needs
 		var new_index = gallery.num;
