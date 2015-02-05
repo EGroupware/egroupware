@@ -1846,6 +1846,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	 * If they want to print them all, we ask the server and print when they're loaded.
 	 */
 	beforePrint: function() {
+		// Add the class, if needed
+		this.div.addClass('print');
+
+		// Trigger resize, so we can fit on a page
+		this.dynheight.outerNode.css('max-width',this.div.css('max-width'));
+		this.resize();
+
 		// Check for rows that aren't loaded yet, or lots of rows
 		var range = this.controller._grid.getIndexRange();
 		this.old_height = this.controller._grid._scrollHeight;
@@ -1957,13 +1964,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 			return defer;
 		}
 		// Don't return anything, just work normally
-		// Add the class, if needed
-		this.div.addClass('print');
 	},
 	afterPrint: function() {
 		this.div.removeClass('print');
 		this.controller._grid.setScrollHeight(this.old_height);
 		delete this.old_height;
+		this.dynheight.outerNode.css('max-width','inherit');
+		this.resize();
 	}
 });
 et2_register_widget(et2_nextmatch, ["nextmatch"]);

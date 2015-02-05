@@ -462,11 +462,20 @@ which caused click on free space infront of a tag stops nm row selection*/
 .et2_nextmatch .egwGridView_grid tr td div.et2_vbox a  {
 	display: table-row;
 }
+/*
+These are set via javascript before printing to help tame nextmatch's layout
+for printing
+*/
 .et2_nextmatch.print .egwGridView_scrollarea {
 	height: auto !important;
+	width: auto !important;
 }
 .et2_nextmatch.print  > div {
 	height: auto !important;
+}
+.et2_nextmatch.print {
+	/* This is fairly arbitrary, but makes it fit in Chrome and Firefox*/
+	max-width: 700pt !important;
 }
 /**
  * Diff widget
@@ -1129,8 +1138,11 @@ div.message.floating {
 		-webkit-region-break-inside: avoid;
 	}
 	.et2_nextmatch > div {
-		width: 100% !important;
+		width: auto !important;
 		height: auto !important;
+	}
+	.et2_nextmatch table.egwGridView_outer thead tr th div.innerContainer {
+		max-height: inherit;
 	}
 	#cke_1_top.cke_top {
 		display: none;
