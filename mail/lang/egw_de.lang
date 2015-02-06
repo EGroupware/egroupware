@@ -303,6 +303,7 @@ password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
 please configure access to an existing individual imap account.	mail	de	Bitte konfigurieren Sie hier den Zugang zu einem existierenden IMAP Account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie ihren Administrator um sicherzustellen dass ihr Server serverseitige Abwesendheitsnachrichten unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
 please select a address	mail	de	Bitte wählen Sie eine Adresse
 please select the number of days to wait between responses	mail	de	Bitte wählen wie viele Tage zwischen den Antworten gewartet werden soll.
 please supply the message to send with auto-responses	mail	de	Bitte geben Sie eine Nachricht ein, die mit der automatischen Antwort gesendet werden soll
@@ -382,6 +383,7 @@ sent	mail	de	Gesendet
 sent folder	mail	de	Ordner für gesendete Nachrichten
 server supports special-use folders	mail	de	Server unterstützt Funktionsordner
 serverside filterrules (sieve) are not activated	mail	de	Serverseitige Filterregeln (Sieve) sind nicht aktiviert
+serverside vacationnotice (via sieve) are not activated	mail	de	Serverseitige Abwesendheitsbenachrichtigungen (via Sieve) sind nicht aktiviert
 set / remove flags	mail	de	Markierung
 set / remove labels	mail	de	Schlagworte setzen / entfernen
 set it as default:	mail	de	als Vorgabe speichern
