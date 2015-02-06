@@ -958,7 +958,17 @@ var fw_base =  Class.extend({
 			if (appWindow)
 			{
 				appWindow.focus();
-				appWindow.print();
+
+				// et2 available, let its widgets prepare
+				if(typeof etemplate2 == "function" && etemplate2.print)
+				{
+					etemplate2.print(this.activeApp.appName);
+				}
+				else
+				{
+					// Print
+					appWindow.print();
+				}
 			}
 		}
 	}

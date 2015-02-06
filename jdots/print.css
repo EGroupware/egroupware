@@ -18,21 +18,35 @@
 @media print {
 
 	html, body {
-		width: 100% !important;
+		width: auto !important;
+		height: auto !important;
 	}
 	#egw_fw_sidebar, #egw_fw_topmenu, .egw_fw_ui_tabs_header, #egw_fw_topmenu_slide,#egw_fw_print,#egw_fw_logout {
 		display: none;
+		width: 0px;
 	}
 
 	#egw_fw_main, #egw_fw_tabs {
 		margin: 0px !important;
 		float: none !important;
+		width: auto !important;
 	}
 	#egw_fw_basecontainer {
 		position: inherit;
+		width: auto;
 	}
-	.egw_fw_ui_tab_content, .egw_fw_ui_tab_content > div {
-		height: auto;
+	.egw_fw_ui_tab_content {
+		position: relative;
+		float: none;
+		width: auto !important;
+	}
+	#egw_fw_main .egw_fw_ui_tab_content > div {
+		width: auto !important;
+	}
+	.egw_fw_ui_tab_content, .egw_fw_ui_tab_content div.egw_fw_content_browser_div {
+		height: auto !important;
+		overflow-y: hidden;
+		position: relative;
 	}
 	body {
 		background: white;

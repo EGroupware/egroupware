@@ -16,7 +16,7 @@
  */
 
 @media print {
-	#egw_fw_topmenu_addons, #egw_fw_header {
+	#egw_fw_topmenu_addons, #egw_fw_header, #egw_fw_footer {
 		display: none;
 	}
 } /* @media print */
