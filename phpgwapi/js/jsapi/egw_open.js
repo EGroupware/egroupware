@@ -279,7 +279,6 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			if (_popup)
 			{
 				var w_h = _popup.split('x');
-				if (w_h[1] == 'availHeight') w_h[1] = this.availHeight();
 				var popup_window = this.openPopup(url, w_h[0], w_h[1], _target || '_blank', _target_app, true);
 
 				// Remember which windows are open
@@ -320,6 +319,8 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		{
 			// Log for debugging purposes
 			egw.debug("navigation", "openPopup(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
+
+			if (_height == 'availHeight') _height = this.availHeight();
 
 			// if we have a framework and we use mobile template --> let framework deal with opening popups
 			if (!_skip_framework && _wnd.framework)
