@@ -53,7 +53,7 @@ function et2_loadXMLFromURL(_url, _callback, _context)
 			_callback.call(_context, _data.documentElement);
 		},
 		error: function(_xmlhttp, _err) {
-			alert('Loading eTemplate from '+_url+' failed! '+_err);
+			egw().debug('error', 'Loading eTemplate from '+_url+' failed! '+_xmlhttp.status+' '+_xmlhttp.statusText);
 		}
 	});
 }
