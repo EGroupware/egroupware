@@ -227,7 +227,7 @@ function expose (widget)
 					// The class for all slides:
 					slideClass: 'slide',
 					// The slide class for loading elements:
-					slideLoadingClass: 'slide-loading',
+					slideLoadingClass: '',
 					// The slide class for elements that failed to load:
 					slideErrorClass: 'slide-error',
 					// The class for the content element loaded into each slide:
@@ -488,10 +488,10 @@ function expose (widget)
 					// See if we need to move the indicator
 					var indicator = gallery.container.find('.indicator');
 					var current = $j('.active',indicator).position();
-					
+
 					if(current)
 					{
-						indicator.animate({left: (gallery.container.width() / 2)-current.left});
+						indicator.animate({left: (gallery.container.width() / 2)-current.left},10);
 					}
 				}
 			},
