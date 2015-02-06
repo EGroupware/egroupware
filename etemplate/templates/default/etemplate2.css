@@ -1813,7 +1813,13 @@ span.et2_egw_action_ddHelper_itemsCnt {
   z-index: -1;
   position: relative;
 }
-
+/*Make indicator visible all the time to be able accuratley estimate
+  current active slide position in thubmnal bar*/
+.blueimp-gallery>.indicator  {
+	opacity:0; /* Hide it through opacity*/
+	white-space: nowrap;
+	display: inline-block; /* Very important to keep gallery indicator always with display inline-block*/
+}
 /*Thumbnail border on hover*/
 .blueimp-gallery>.indicator>li:hover {
 	-webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
@@ -1846,4 +1852,5 @@ span.et2_egw_action_ddHelper_itemsCnt {
 /*indicator bar with controls*/
 .blueimp-gallery-controls>.indicator {
 	white-space: nowrap;
+	opacity:1; /* When the controls panel is on then we need to show back the indicators*/
 }
