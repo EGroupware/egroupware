@@ -271,7 +271,7 @@ function expose (widget)
 					// Close the gallery on pressing the ESC key:
 					closeOnEscape: true,
 					// Close the gallery when clicking on an empty slide area:
-					closeOnSlideClick: true,
+					closeOnSlideClick: false,
 					// Close the gallery by swiping up or down:
 					closeOnSwipeUpOrDown: true,
 					// Emulate touch events on mouse-pointer devices such as desktop browsers:
@@ -303,6 +303,8 @@ function expose (widget)
 					transitionSpeed: 400,
 					//Hide controls when the slideshow is playing
 					hideControlsOnSlideshow: true,
+					//Request fullscreen on slide show
+					toggleFullscreenOnSlideShow:false,
 					// The transition speed for automatic slide changes, set to an integer
 					// greater 0 to override the default transition speed:
 					slideshowTransitionSpeed: undefined,

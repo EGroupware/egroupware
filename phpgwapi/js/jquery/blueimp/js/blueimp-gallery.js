@@ -116,11 +116,13 @@
             // Toggle the automatic slideshow interval on pressing the Space key:
             toggleSlideshowOnSpace: true,
 			// Toggle fullscreen mode when slideshow is running
-			toggleFullscreenOnSlideShow: true,
+			toggleFullscreenOnSlideShow: false,
             // Navigate the gallery by pressing left and right on the keyboard:
             enableKeyboardNavigation: true,
             // Close the gallery on pressing the Esc key:
             closeOnEscape: true,
+			//Hide controls when the slideshow is playing
+			hideControlsOnSlideshow:false,
             // Close the gallery when clicking on an empty slide area:
             closeOnSlideClick: true,
             // Close the gallery by swiping up or down:
@@ -376,6 +378,7 @@
 
         play: function (time) {
             var that = this;
+			if (this.options.hideControlsOnSlideshow) this.container.removeClass(this.options.controlsClass);
             window.clearTimeout(this.timeout);
             this.interval = time || this.options.slideshowInterval;
             if (this.elements[this.index] > 1) {
