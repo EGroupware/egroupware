@@ -303,6 +303,7 @@ password protect	mail	en	password protect
 permission denied	mail	en	Permission denied
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	en	Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	en	Please contact your Administrator to validate if your Server supports Serverside Vacationmessages, and how to enable them in EGroupware for your active Account (%1) with ID:%2.
 please select a address	mail	en	Please select a address
 please select the number of days to wait between responses	mail	en	Please select the number of days to wait between responses
 please supply the message to send with auto-responses	mail	en	Please supply the message to send with auto-responses
@@ -382,6 +383,7 @@ sent	mail	en	Sent
 sent folder	mail	en	sent folder
 server supports special-use folders	mail	en	Server supports Special-Use Folders
 serverside filterrules (sieve) are not activated	mail	en	Serverside Filterrules (Sieve) are not activated
+serverside vacationnotice (via sieve) are not activated	mail	en	Serverside absent notice messages (via Sieve) are not activated
 set / remove flags	mail	en	Set / Remove Flags
 set / remove labels	mail	en	Set / Remove Labels
 set it as default:	mail	en	set it as default:
