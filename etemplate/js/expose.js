@@ -227,7 +227,7 @@ function expose (widget)
 					// The class for all slides:
 					slideClass: 'slide',
 					// The slide class for loading elements:
-					slideLoadingClass: 'slide-loading',
+					slideLoadingClass: '',
 					// The slide class for elements that failed to load:
 					slideErrorClass: 'slide-error',
 					// The class for the content element loaded into each slide:
@@ -271,7 +271,7 @@ function expose (widget)
 					// Close the gallery on pressing the ESC key:
 					closeOnEscape: true,
 					// Close the gallery when clicking on an empty slide area:
-					closeOnSlideClick: true,
+					closeOnSlideClick: false,
 					// Close the gallery by swiping up or down:
 					closeOnSwipeUpOrDown: true,
 					// Emulate touch events on mouse-pointer devices such as desktop browsers:
@@ -303,6 +303,8 @@ function expose (widget)
 					transitionSpeed: 400,
 					//Hide controls when the slideshow is playing
 					hideControlsOnSlideshow: true,
+					//Request fullscreen on slide show
+					toggleFullscreenOnSlideShow:true,
 					// The transition speed for automatic slide changes, set to an integer
 					// greater 0 to override the default transition speed:
 					slideshowTransitionSpeed: undefined,
@@ -488,17 +490,10 @@ function expose (widget)
 					// See if we need to move the indicator
 					var indicator = gallery.container.find('.indicator');
 					var current = $j('.active',indicator).position();
-					if (current.left == 0 && !gallery.container.hasClass(this.expose_options.playingClass))
-					{
-						//As controlsClass activates indicators,
-						//we use it to make indicators available for the first time
-						//which helps to re-calculate the correct position of it, if it's not loaded yet
-						gallery.container.addClass(this.expose_options.controlsClass);
-						current = $j('.active',indicator).position();
-					}
+
 					if(current)
 					{
-						indicator.animate({left: (gallery.container.width() / 2)-current.left});
+						indicator.animate({left: (gallery.container.width() / 2)-current.left},10);
 					}
 				}
 			},

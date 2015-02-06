@@ -1765,43 +1765,63 @@ span.et2_egw_action_ddHelper_itemsCnt {
 /*Carousel thumbnails*/
 .blueimp-gallery>.indicator>li {
 	display: inline-block;
-	width: 134px;
+	width: auto;
 	height: 100px;
-	margin: none;
-	-webkit-box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	box-sizing: content-box;
-	border: 1px solid transparent;
-	background: #ccc;
-	background: rgba(255, 255, 255, 0.17)center no-repeat;
-	border-radius: 5px;
-	box-shadow: 0 0 2px #000;
+	margin: 0;
+	background: transparent;
 	opacity: 1;
 	cursor: pointer;
-	background-repeat: no-repeat;
-	margin: 1px;
+	border-radius: 0;
 	border:0;
-	background-size: content;
+}
+
+.blueimp-gallery > .indicator > li > img {
+  display: inline-block;
+  width: auto;
+  height: 100px;
+  margin:0;
+  cursor: pointer;
+  z-index: -1;
+  position: relative;
+}
+/*Make indicator visible all the time to be able accuratley estimate
+  current active slide position in thubmnal bar*/
+.blueimp-gallery>.indicator  {
+	opacity:0; /* Hide it through opacity*/
+	white-space: nowrap;
+	display: inline-block; /* Very important to keep gallery indicator always with display inline-block*/
 }
 /*Thumbnail border on hover*/
 .blueimp-gallery>.indicator>li:hover {
-	-webkit-box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
-	-moz-box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
-	box-shadow: inset 0px 1px 0px 4px rgba(255, 255, 255, 1);
+	-webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+	-moz-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+	box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
+	background: transparent;
 }
 /*Active thumbnail border*/
 .blueimp-gallery>.indicator>.active
 {
-	-webkit-box-shadow: inset 0px 1px 0px 4px #0c5da5;
-	-moz-box-shadow: inset 0px 1px 0px 4px #0c5da5;
-	box-shadow: inset 0px 1px 0px 4px #0c5da5;
+	-webkit-box-shadow: inset 0px 0px 0px 4px #0c5da5;
+	-moz-box-shadow: inset 0px 0px 0px 4px #0c5da5;
+	box-shadow: inset 0px 0px 0px 4px #0c5da5;
+	background: transparent;
 }
 /*Slideshow Play/Pause button*/
 .blueimp-gallery>.play-pause{
 	right: 42px;
 	top: 23px;
 }
+/*fullScreen button*/
+.blueimp-gallery>.fullscreen{
+	right: 75px;
+	top: 25px;
+}
 /*Give room to Carousel indicator when the gallery controls is on*/
 .blueimp-gallery-controls>.slides {
 	height:85%;
+}
+/*indicator bar with controls*/
+.blueimp-gallery-controls>.indicator {
+	white-space: nowrap;
+	opacity:1; /* When the controls panel is on then we need to show back the indicators*/
 }
