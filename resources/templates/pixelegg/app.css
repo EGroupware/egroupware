@@ -59,9 +59,9 @@ div.resources_pictureFile div.progress {
   position: absolute;
   width: 226px;
 }
-div#resources-edit {
+#resources-edit {
   margin: 0.5em;
 }
-div#resources-edit .et2_container {
+#resources-edit .et2_container {
   width: 848px;
 }
