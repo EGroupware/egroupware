@@ -582,6 +582,24 @@ etemplate2.prototype.isDirty = function()
 };
 
 /**
+ * Submit the et2_container form to a blank iframe in order to activate browser autocomplete
+ */
+etemplate2.prototype.autocomplete_fixer = function ()
+{
+	var self = this;
+	var form = self.DOMContainer;
+	if (form)
+	{
+		form.onsubmit = function(){return false;};
+		// Firefox give a security warning when transmitting to "about:blank" from a https site
+		// we work around that by giving existing etemplate/empty.html url
+		if (navigator.userAgent.match(/firefox/i)) jQuery(form).attr({action: egw.webserverUrl+'/etemplate/empty.html',method:'post'});
+
+		form.submit();
+	}
+};
+
+/**
  * Submit form via ajax
  *
  * @param {(et2_button|string)} button button widget or string with id
@@ -661,6 +679,10 @@ etemplate2.prototype.submit = function(button, async, no_validation)
 		// Create the request object
 		if (this.menuaction)
 		{
+
+			//Autocomplete
+			this.autocomplete_fixer();
+
 			// unbind our session-destroy handler, as we are submitting
 			this.unbind_unload();
 

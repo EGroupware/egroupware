@@ -272,7 +272,7 @@
 		// rest needs DOM to be ready
 		$j(function() {
 			// load etemplate2 template(s)
-			$j('div.et2_container[data-etemplate]').each(function(index, node){
+			$j('form.et2_container[data-etemplate]').each(function(index, node){
 				var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				var currentapp = data.data.currentapp || window.egw_appName;
 				if(popup || window.opener)

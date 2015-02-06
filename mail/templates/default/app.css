@@ -652,13 +652,13 @@ div.mailPreviewHeaders div.mail_extraEmails {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
+#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 58%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-div#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span {
+#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span {
   white-space: nowrap;
 }
 div.mailPreviewHeaders div.mail_extraEmails.visible,
