@@ -1142,7 +1142,6 @@
 				if (this.options.toggleFullscreenOnSlideShow) this.requestFullScreen(this.container[0]);
             } else {
                 this.pause();
-				if (this.options.toggleFullscreenOnSlideShow) this.exitFullScreen();
             }
         },
 

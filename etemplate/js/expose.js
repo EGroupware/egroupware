@@ -304,7 +304,7 @@ function expose (widget)
 					//Hide controls when the slideshow is playing
 					hideControlsOnSlideshow: true,
 					//Request fullscreen on slide show
-					toggleFullscreenOnSlideShow:false,
+					toggleFullscreenOnSlideShow:true,
 					// The transition speed for automatic slide changes, set to an integer
 					// greater 0 to override the default transition speed:
 					slideshowTransitionSpeed: undefined,
