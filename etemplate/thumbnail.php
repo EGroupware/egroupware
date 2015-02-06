@@ -329,9 +329,6 @@ function gd_image_load($file)
  */
 function get_opendocument_thumbnail($file)
 {
-	// Don't bother if they're using tiny thumbnails
-	if(get_maxsize() < 64) return false;
-
 	list(, $file_type) = $mimetype = explode('/', egw_vfs::mime_content_type($file));
 
 	// Image is already there, but we can't access them directly through VFS
