@@ -218,6 +218,8 @@ class calendar_uiforms extends calendar_ui
 		if ($content['recur_exception']['delete_exception'])
 		{
 			list($date) = each($content['recur_exception']['delete_exception']);
+			// eT2 converts time to
+			if (!is_numeric($date)) $date = egw_time::to (str_replace('Z','', $date), 'ts');
 			unset($content['recur_exception']['delete_exception']);
 			if (($key = array_search($date,$content['recur_exception'])) !== false)
 			{
@@ -1475,6 +1477,11 @@ class calendar_uiforms extends calendar_ui
 				$content['participants']['resource']['extra'] = "values2url(this.form,'start,end,duration,participants,recur_type,whole_day')".
 					"+'&exec[event_id]=".$content['id']."'"."+'&exec[show_conflict]=".
 					(($this->cal_prefs['defaultresource_sel'] == 'resources_without_conflict')? '0':'1')."'";
+			}
+			// check if current pref. is an allowed application for the user
+			if (!isset($GLOBALS['egw_info']['user']['apps'][$content['participants']['resource']['default_sel']]))
+			{
+				$content['participants']['resource']['default_sel'] = 'home-accounts';
 			}
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
