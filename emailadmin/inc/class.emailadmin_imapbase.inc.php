@@ -6228,7 +6228,7 @@ class emailadmin_imapbase
 	{
 		$acc = emailadmin_account::read($this->profileID);
 		$identity = emailadmin_account::read_identity($acc['ident_id'], true, null, $acc);
-
+		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($identity));
 		$headers = $this->getMessageHeader($uid, '', 'object', true, $_folder);
 
 		$mdn = new Horde_Mime_Mdn($headers);

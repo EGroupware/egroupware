@@ -105,8 +105,8 @@ class emailadmin_script {
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error retrieving script: ".$script->getMessage());
 			return $script;
 		}
-
 		#print "<br>AAA: Script is ". htmlentities($script) ."<br>";
+
 		$lines = preg_split("/\n/",$script); //,PREG_SPLIT_NO_EMPTY);
 
 		$rules = array();
@@ -228,6 +228,7 @@ class emailadmin_script {
 		$this->script = $script;
 		$this->rules = $rules;
 		$this->vacation = $vacation;
+		if (!(in_array('vacation',$connection->_capability['extensions'])|| in_array('VACATION', $connection->_capability['extensions']))) $this->vacation = false;
 		$this->emailNotification = $emailNotification; // Added email notifications
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": Script succesful retrieved: ".print_r($vacation,true));
 
@@ -265,11 +266,13 @@ class emailadmin_script {
 #LK		}
 
 		// lets generate the main body of the script from our rules
-
+		//error_log(__METHOD__.__LINE__.array2string($connection->_capability));
 		$enotify = $variables= $supportsbody = false;
 		if (in_array('enotify',$connection->_capability['extensions'])|| in_array('ENOTIFY', $connection->_capability['extensions'])) $enotify = true;
 		if (in_array('variables',$connection->_capability['extensions'])|| in_array('VARIABLES', $connection->_capability['extensions'])) $variables = true;
 		if (in_array('body', $connection->_capability['extensions']) || in_array('BODY', $connection->_capability['extensions'])) $supportsbody = true;
+		if (!(in_array('vacation',$connection->_capability['extensions'])|| in_array('VACATION', $connection->_capability['extensions']))) $this->vacation = false;
+
 		$newscriptbody = "";
 		$continue = 1;
 

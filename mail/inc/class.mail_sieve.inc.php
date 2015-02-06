@@ -69,6 +69,8 @@ class mail_sieve
 		if ($acc_id > 0)
 		{
 			$this->account = emailadmin_account::read($acc_id);
+			$identity = emailadmin_account::read_identity($acc_id,true);
+			$this->currentIdentity = mail_bo::generateIdentityString($identity,false);
 		}
 
 		$this->restoreSessionData();
@@ -111,7 +113,7 @@ class mail_sieve
 		}
 		else
 		{
-			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity,$this->account->acc_id);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$tmpl->exec('mail.mail_sieve.index',$content,$sel_options,array());
@@ -208,7 +210,7 @@ class mail_sieve
 		}
 		else
 		{
-			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity,$this->account->acc_id);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$eNotitmpl->exec('mail.mail_sieve.editEmailNotification', $content,$sel_options);
@@ -524,167 +526,175 @@ class mail_sieve
 		if ($icServer->acc_sieve_enabled)
 		{
 			$vacRules = $this->getVacation($account_id);
-
-			if ($icServer->acc_imap_administration)
+			if ($vacRules['vacation']===false)
 			{
-				$ByDate = array('by_date' => lang('By date'));
+				$content['msg'] = lang('error').':'.lang('Serverside Vacationnotice (via Sieve) are not activated').'. '.
+					lang('Please contact your Administrator to validate if your Server supports Serverside Vacationmessages, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity,$icServer->ImapServerId);
+				$content['hideIfSieveDisabled']='mail_DisplayNone';
 			}
-			if (!is_array($content) || ($content['acc_id'] && !isset($content['button'])))
+			else
 			{
-				$content = $vacation = $vacRules['vacation'];
-				if (!empty($profileID)) $content['acc_id'] = $profileID;
-				if (empty($vacation['addresses']) || implode('',$vacation['addresses']) == '')
+				if ($icServer->acc_imap_administration)
 				{
-					$content['addresses'] = $vacRules['aliases'];
+					$ByDate = array('by_date' => lang('By date'));
 				}
-				if (!empty($vacation['forwards']))
+				if (!is_array($content) || ($content['acc_id'] && !isset($content['button'])))
 				{
-					$content['forwards'] = explode(",",$vacation['forwards']);
+					$content = $vacation = $vacRules['vacation'];
+					if (!empty($profileID)) $content['acc_id'] = $profileID;
+					if (empty($vacation['addresses']) || implode('',$vacation['addresses']) == '')
+					{
+						$content['addresses'] = $vacRules['aliases'];
+					}
+					if (!empty($vacation['forwards']))
+					{
+						$content['forwards'] = explode(",",$vacation['forwards']);
+					}
+					else
+					{
+						$content['forwards'] = '';
+					}
+					if (empty($vacation['text']) && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
+					//Set default value for days new entry
+					if (empty($content['days']))
+					{
+						$content['days'] = '3';
+					}
+					$preserv['is_admin_vac'] = $content['is_admin_vac'] = $this->is_admin_vac;
 				}
 				else
 				{
-					$content['forwards'] = '';
-				}
-				if (empty($vacation['text']) && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
-				//Set default value for days new entry
-				if (empty($content['days']))
-				{
-					$content['days'] = '3';
-				}
-				$preserv['is_admin_vac'] = $content['is_admin_vac'] = $this->is_admin_vac;
-			}
-			else
-			{
-				$this->restoreSessionData();
-				list($button) = @each($content['button']);
-				unset ($content['button']);
+					$this->restoreSessionData();
+					list($button) = @each($content['button']);
+					unset ($content['button']);
 
-				switch($button)
-				{
-					case 'save':
-					case 'apply':
-						if ($GLOBALS['egw_info']['user']['apps']['admin'])
-						{
-							// store text as default
-							if ($content['set_as_default'] == 1)
+					switch($button)
+					{
+						case 'save':
+						case 'apply':
+							if ($GLOBALS['egw_info']['user']['apps']['admin'])
 							{
-								config::save_value('default_vacation_text', $content['text'], 'mail');
-							}
-						}
-						if (isset($content['status']))
-						{
-							//error_log(__METHOD__. 'content:' . array2string($content));
-							$newVacation = $content;
-
-							if (empty($this->mailConfig['prefpreventforwarding']) ||
-								$this->mailConfig['prefpreventforwarding'] == 0 )
-							{
-								if (is_array($content['forwards']) && !empty($content['forwards']))
+								// store text as default
+								if ($content['set_as_default'] == 1)
 								{
+									config::save_value('default_vacation_text', $content['text'], 'mail');
+								}
+							}
+							if (isset($content['status']))
+							{
+								//error_log(__METHOD__. 'content:' . array2string($content));
+								$newVacation = $content;
 
-									$newVacation['forwards'] = implode(",",$content['forwards']);
+								if (empty($this->mailConfig['prefpreventforwarding']) ||
+									$this->mailConfig['prefpreventforwarding'] == 0 )
+								{
+									if (is_array($content['forwards']) && !empty($content['forwards']))
+									{
+
+										$newVacation['forwards'] = implode(",",$content['forwards']);
+									}
+									else
+									{
+										$newVacation ['forwards'] = '';
+									}
 								}
 								else
 								{
-									$newVacation ['forwards'] = '';
+									unset($newVacation ['forwards']);
 								}
-							}
-							else
-							{
-								unset($newVacation ['forwards']);
-							}
 
-							if (!in_array($newVacation['status'],array('on','off','by_date')))
-							{
-								$newVacation['status'] = 'off';
-							}
-
-							$checkAddresses = isset($content['check_mail_sent_to']) && $content['check_mail_sent_to'] != 0;
-							if ($content['addresses'])
-							{
-								$newVacation ['addresses'] = $content['addresses'];
-							}
-
-							if($this->checkRule($newVacation,$checkAddresses))
-							{
-								if (isset($account_id) && $this->mail_admin)
+								if (!in_array($newVacation['status'],array('on','off','by_date')))
 								{
-									$resSetvac = $icServer->setVacationUser($account_id, $newVacation, $this->scriptName);
+									$newVacation['status'] = 'off';
+								}
+
+								$checkAddresses = isset($content['check_mail_sent_to']) && $content['check_mail_sent_to'] != 0;
+								if ($content['addresses'])
+								{
+									$newVacation ['addresses'] = $content['addresses'];
+								}
+
+								if($this->checkRule($newVacation,$checkAddresses))
+								{
+									if (isset($account_id) && $this->mail_admin)
+									{
+										$resSetvac = $icServer->setVacationUser($account_id, $newVacation, $this->scriptName);
+									}
+									else
+									{
+										$resSetvac = $icServer->setVacation($newVacation);
+									}
+
+									if (!$resSetvac)
+									{
+										$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->account->imapServer()->error;
+										break;
+									}
+									// schedule job to switch message on/off, if request and not already in past
+									else
+									{
+										if ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600 > time() ||
+											$vacRules && $vacRules['vacation']['status'] == 'by_date')
+										{
+											self::setAsyncJob($newVacation);
+										}
+										//Reset vacationNotice cache which is used in mail_ui get_rows
+										$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
+										$cachedVacations = array($icServer->acc_id => $newVacation) + (array)$cachedVacations;
+										egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
+
+										$msg = lang('Vacation notice sucessfully updated.');
+									}
 								}
 								else
 								{
-									$resSetvac = $icServer->setVacation($newVacation);
+									$msg .= implode("\n",$this->errorStack);
 								}
-
-								if (!$resSetvac)
+								// refresh vacationNotice on index
+								$response = egw_json_response::get();
+								$response->call('app.mail.mail_callRefreshVacationNotice',$icServer->ImapServerId);
+								egw_framework::refresh_opener($msg, 'mail');
+								if ($button === 'apply' || $icServer->error !=="")
 								{
-									$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->account->imapServer()->error;
 									break;
 								}
-								// schedule job to switch message on/off, if request and not already in past
-								else
-								{
-									if ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600 > time() ||
-										$vacRules && $vacRules['vacation']['status'] == 'by_date')
-									{
-										self::setAsyncJob($newVacation);
-									}
-									//Reset vacationNotice cache which is used in mail_ui get_rows
-									$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
-									$cachedVacations = array($icServer->acc_id => $newVacation) + (array)$cachedVacations;
-									egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
+							}
 
-									$msg = lang('Vacation notice sucessfully updated.');
-								}
-							}
-							else
-							{
-								$msg .= implode("\n",$this->errorStack);
-							}
-							// refresh vacationNotice on index
-							$response = egw_json_response::get();
-							$response->call('app.mail.mail_callRefreshVacationNotice',$this->mailbo->profileID);
-							egw_framework::refresh_opener($msg, 'mail');
-							if ($button === 'apply' || $icServer->error !=="")
-							{
-								break;
-							}
-						}
-
-					case 'cancel':
-						egw_framework::window_close();
+						case 'cancel':
+							egw_framework::window_close();
+					}
 				}
-			}
 
-			$sel_options = array(
-				'status' => array(
-					'on' => lang('Active'),
-					'off' => lang('Deactive'),
-				),
-				'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
-			);
-			if (!isset($account_id))
-			{
-				$readonlys['acc_id'] = true;
+				$sel_options = array(
+					'status' => array(
+						'on' => lang('Active'),
+						'off' => lang('Deactive'),
+					),
+					'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
+				);
+				if (!isset($account_id))
+				{
+					$readonlys['acc_id'] = true;
+				}
+				else
+				{
+					$sel_options['acc_id'] = $allAccounts;
+				}
+				if (!empty($ByDate))
+				{
+					$sel_options['status'] += $ByDate;
+				}
+				if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+				{
+					$content['is_not_admin_user'] = true;
+					$readonlys['set_as_default'] = true;
+				}
+				$content['msg'] = $msg;
 			}
-			else
-			{
-				$sel_options['acc_id'] = $allAccounts;
-			}
-			if (!empty($ByDate))
-			{
-				$sel_options['status'] += $ByDate;
-			}
-			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
-			{
-				$content['is_not_admin_user'] = true;
-				$readonlys['set_as_default'] = true;
-			}
-			$content['msg'] = $msg;
 		}
 		else
 		{
-			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity['identity_string'],$this->mailbo->profileID);
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity,$icServer->ImapServerId);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$readonlys,$preserv,2);
