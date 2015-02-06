@@ -394,7 +394,7 @@ class infolog_ui
 			$tpl = new etemplate_new;
 			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
 			{
-				$query['template'] =& $tpl;
+				$query['template'] = $tpl->name;
 				$query['custom_fields'] = true;	// read the custom fields too
 			}
 			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
