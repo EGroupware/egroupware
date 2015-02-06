@@ -1016,6 +1016,12 @@ class db_backup
 			{
 				array_shift($tlist);
 			}
+			elseif ($file == 'debug.txt' && stripos($f,'activesync')!==false)
+			{
+				// skip activesync debug.txt on backupFiles
+				//error_log(__METHOD__.__LINE__.'->'.$f.'/'.$file);
+				array_shift($tlist);
+			}
 			else
 			{
 				if(is_dir($f.'/'.$file))
