@@ -13,7 +13,7 @@ td.addressbook_sidebox_header {
 	height: 20px;
 	vertical-align: bottom;
 }
-div#addressbook-view.et2_container {
+#addressbook-view.et2_container {
 	height: 0 !important;
 }
 td.addressbook_sidebox_toolbar {
@@ -34,7 +34,7 @@ div#addressbook_view_sidebox img.photo {
 /**
  * new addressbook.edit
  */
-div#addressbook-edit.et2_container {
+#addressbook-edit.et2_container {
 }
 div.addressbook_edit_general_picture {
 	position: relative;
@@ -85,12 +85,13 @@ input.et2_radiobox {
 /**
  * Index page
  */
-div#addressbook-index img.iphoto {
+#addressbook-index img.iphoto {
 	width: 100%;
 	height: auto;
 }
-#addressbook-index_org_view {
-	margin: 5px;
+#addressbook-index_org_view, #addressbook-index_addressbook-index-right_add > div.et2_box_widget {
+	top: 0;
+	padding-top: 0;
 }
 #addressbook-edit_room {
 	float:right;

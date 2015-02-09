@@ -27,7 +27,7 @@ td.addressbook_sidebox_header {
   height: 20px;
   vertical-align: bottom;
 }
-div#addressbook-view.et2_container {
+#addressbook-view.et2_container {
   height: 0 !important;
 }
 td.addressbook_sidebox_toolbar {
@@ -103,12 +103,14 @@ input.et2_radiobox {
 /**
  * Index page
  */
-div#addressbook-index img.iphoto {
+#addressbook-index img.iphoto {
   width: 100%;
   height: auto;
 }
-#addressbook-index_org_view {
-  margin: 5px;
+#addressbook-index_org_view,
+#addressbook-index_addressbook-index-right_add > div.et2_box_widget {
+  top: 0;
+  padding-top: 0;
 }
 #addressbook-edit_room {
   float: right;
@@ -171,13 +173,13 @@ div#addressbook-index img.iphoto {
     min-height: 390px;
     overflow: auto;
   }
-  div#addressbook-index {
+  #addressbook-index {
     /*#############################################################*/
   }
-  div#addressbook-index div.et2_hbox_left {
+  #addressbook-index div.et2_hbox_left {
     padding: 0px 17px 0 13px;
   }
-  div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view {
+  #addressbook-index div.et2_hbox_left select#addressbook-index_org_view {
     /*.box_shadow_standard_light;*/
     width: auto;
     margin: 5px 0em 5px 0px;
@@ -195,22 +197,22 @@ div#addressbook-index img.iphoto {
     -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   }
-  div#addressbook-index div.et2_hbox_left select#addressbook-index_org_view:hover {
+  #addressbook-index div.et2_hbox_left select#addressbook-index_org_view:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
-  div#addressbook-index div.header_row_right div[id$=favorite_wrapper] {
+  #addressbook-index div.header_row_right div[id$=favorite_wrapper] {
     margin-top: 0px;
     top: 6px;
   }
-  div#addressbook-index div.et2_hbox_right {
+  #addressbook-index div.et2_hbox_right {
     padding: 0px 11px 0px 0px;
     width: auto;
     margin-right: 0em;
     margin-top: -5px;
   }
-  div#addressbook-index div.et2_hbox_right select.et2_selectbox {
+  #addressbook-index div.et2_hbox_right select.et2_selectbox {
     /*.box_shadow_standard_light;*/
     width: auto;
     margin: 5px 0em 5px 0px;
@@ -224,12 +226,12 @@ div#addressbook-index img.iphoto {
     height: 24px;
     margin-left: 5px;
   }
-  div#addressbook-index div.et2_hbox_right select.et2_selectbox:hover {
+  #addressbook-index div.et2_hbox_right select.et2_selectbox:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   }
-  div#addressbook-index div.et2_hbox_right select.et2_selectbox:focus {
+  #addressbook-index div.et2_hbox_right select.et2_selectbox:focus {
     outline: 0;
     border-width: 1px;
     border-style: solid;
@@ -238,7 +240,8 @@ div#addressbook-index img.iphoto {
     -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_search {
+  #addressbook-index div.et2_hbox_right button#addressbook-index_add,
+  #addressbook-index div.et2_hbox_right button#addressbook-index_search {
     width: 32px;
     /*border: 1px solid #0C5DA5;*/
     margin: 6px 2px;
@@ -253,13 +256,9 @@ div#addressbook-index img.iphoto {
     border-radius: 3px;
     border-top-left-radius: 10px;
     height: 24px;
-    margin-right: 0px;
-    background-image: url('../../../pixelegg/images/advanced-search.png') !important;
-    background-repeat: no-repeat;
-    padding-left: 0px;
-    font-size: 0px;
   }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_search:before {
+  #addressbook-index div.et2_hbox_right button#addressbook-index_add:before,
+  #addressbook-index div.et2_hbox_right button#addressbook-index_search:before {
     content: "";
     font-size: 2em;
     color: #0c5da5;
@@ -267,60 +266,12 @@ div#addressbook-index img.iphoto {
     padding-left: 0.1em;
     padding-right: 100em;
   }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_search:active {
+  #addressbook-index div.et2_hbox_right button#addressbook-index_add:active,
+  #addressbook-index div.et2_hbox_right button#addressbook-index_search:active {
     background-color: #1aa200;
   }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
-    background-color: #189800 !important;
-    color: #ffc200;
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 10px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 10px;
-    border-radius: 3px;
-    border-top-left-radius: 10px;
-    background-image: url('../../../pixelegg/images/advanced-search.png');
-    /*.Complete_Button_text_icon_before_hover;*/
-    /*.dimension_height_m;*/
-  }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
-    background-color: #1aa200 !important;
-    background-image: url('../../../pixelegg/images/advanced-search.png');
-    /*                .Complete_Button_text_icon_before_active;
-                .dimension_height_m;*/
-  }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_add {
-    width: 32px;
-    /*border: 1px solid #0C5DA5;*/
-    margin: 6px 2px;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-    padding: -0.5em;
-    background-color: #e6e6e6 !important;
-    background-size: 16px 16px;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 10px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 10px;
-    border-radius: 3px;
-    border-top-left-radius: 10px;
-    height: 24px;
-    margin-right: 0px;
-  }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_add:before {
-    content: "";
-    font-size: 2em;
-    color: #0c5da5;
-    line-height: 0.6em;
-    padding-left: 0.1em;
-    padding-right: 100em;
-  }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_add:active {
-    background-color: #1aa200;
-  }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_add:hover {
+  #addressbook-index div.et2_hbox_right button#addressbook-index_add:hover,
+  #addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
     background-color: #189800 !important;
     color: #ffc200;
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -333,20 +284,24 @@ div#addressbook-index img.iphoto {
     border-radius: 3px;
     border-top-left-radius: 10px;
   }
-  div#addressbook-index div.et2_hbox_right button#addressbook-index_add:active {
+  #addressbook-index div.et2_hbox_right button#addressbook-index_add:active,
+  #addressbook-index div.et2_hbox_right button#addressbook-index_search:active {
     background-color: #1aa200 !important;
   }
-  div#addressbook-index div.filters select#infolog-index_cat_id {
+  #addressbook-index div.et2_hbox_right button#addressbook-index_add {
+    margin-right: 0px;
+  }
+  #addressbook-index div.filters select#infolog-index_cat_id {
     width: 10%;
     margin-left: 1em;
   }
-  div#addressbook-index div.filters select#infolog-index_filter {
+  #addressbook-index div.filters select#infolog-index_filter {
     width: 10%;
   }
-  div#addressbook-index div.filters select#infolog-index_filter2 {
+  #addressbook-index div.filters select#infolog-index_filter2 {
     width: 10%;
   }
-  div#addressbook-index table.egwGridView_outer {
+  #addressbook-index table.egwGridView_outer {
     width: 99%;
   }
   /*##################################################################*/
