@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001">
-		<grid width="450px">
+		<grid width="100%">
 			<columns>
 				<column width="100"/>
 				<column width="350"/>
