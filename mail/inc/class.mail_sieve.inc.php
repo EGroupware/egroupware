@@ -69,7 +69,7 @@ class mail_sieve
 		if ($acc_id > 0)
 		{
 			$this->account = emailadmin_account::read($acc_id);
-			$identity = emailadmin_account::read_identity($acc_id,true);
+			$identity = emailadmin_account::read_identity($this->account->ident_id,true);
 			$this->currentIdentity = mail_bo::generateIdentityString($identity,false);
 		}
 
