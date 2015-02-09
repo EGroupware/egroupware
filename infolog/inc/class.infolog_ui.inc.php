@@ -387,7 +387,7 @@ class infolog_ui
 		}
 
 		// check if we have a custom, type-specific template
-		unset($query['template']);
+		$query['template'] = 'infolog.index.rows';
 		unset($query['custom_fields']);
 		if ($query['col_filter']['info_type'])
 		{
@@ -397,7 +397,6 @@ class infolog_ui
 				$query['template'] = $tpl->name;
 				$query['custom_fields'] = true;	// read the custom fields too
 			}
-			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
 			// If status is not valid for selected type, clear status filter
 			if($query['col_filter']['info_status'] && $query['col_filter']['info_status'] != 'deleted' &&
 				!in_array($query['col_filter']['info_status'], $this->bo->status[$query['col_filter']['info_type']]))
@@ -408,8 +407,9 @@ class infolog_ui
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
 		$details = $query['filter2'] == 'all';
-		$columnselection_pref = 'nextmatch-'.($query['action'] ? 'infolog.'.$query['action'] : (is_object($query['template']) ? $query['template']->name : 'infolog.index.rows'))
+		$columnselection_pref = 'nextmatch-'.($query['action'] ? 'infolog.'.$query['action'] : ($tpl && $tpl->name == $query['template'] ? $query['template'] : 'infolog.index.rows'))
 			.($details ? '-details' : '');
+		//error_log(__METHOD__."(start=$query[start], num_rows=$query[num_rows]) query[col_filter][info_type]={$query['col_filter']['info_type']} --> query[template]=$query[template], columselection_pref=$columnselection_pref");
 
 		$columselection = $this->prefs[$columnselection_pref];
 
