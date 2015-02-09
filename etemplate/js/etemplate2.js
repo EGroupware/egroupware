@@ -147,6 +147,10 @@ etemplate2.prototype.resize = function(e)
 				// Recalculate excess height if the appheader is shown
 				if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.outerHeight()-9;
 
+				// Do not resize if the template height is bigger than screen available height
+				// For templates which have sub templates and they are bigger than screenHeight
+				if(screen.availHeight < $j('.et2_container').height()) excess_height = 0;
+
 				// Call the "resize" event of all functions which implement the
 				// "IResizeable" interface
 				self.widgetContainer.iterateOver(function(_widget) {
