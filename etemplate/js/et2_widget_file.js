@@ -246,7 +246,7 @@ var et2_file = et2_inputWidget.extend(
 		var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
 		if(drop_target)
 		{
-			this.resumable.assignDrop(drop_target);
+			this.resumable.assignDrop([drop_target]);
 		}
 		else
 		{
