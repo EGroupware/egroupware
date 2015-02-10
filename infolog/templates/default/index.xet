@@ -55,7 +55,7 @@
 							</row>
 						</rows>
 					</grid>
-					<nextmatch-customfields id="customfields"/>
+					<nextmatch-customfields id="customfields" app="infolog"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<vbox>
 						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
@@ -95,7 +95,7 @@
 						</box>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
-					<customfields-list id="$row" class="customfields"/>
+					<customfields-list id="$row" class="customfields" app="infolog"/>
 					<menulist>
 						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
 					</menulist>

@@ -90,14 +90,22 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		$form_name = self::form_name($cname, $this->id, $expand);
 
 		// Store properties at top level, so all customfield widgets can share
-		$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
-		if($this->getElementAttribute($form_name, 'app'))
+		if($this->attrs['app'])
 		{
-			$app =& $this->getElementAttribute($form_name, 'app');
-		} else
+			$app = $this->attrs['app'];
+		}
+		else
 		{
-			// Checking creates it even if it wasn't there
-			unset(self::$request->modifications[$form_name]['app']);
+			$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
+			if($this->getElementAttribute($form_name, 'app'))
+			{
+				$app =& $this->getElementAttribute($form_name, 'app');
+			}
+			else
+			{
+				// Checking creates it even if it wasn't there
+				unset(self::$request->modifications[$form_name]['app']);
+			}
 		}
 
 		if($this->getElementAttribute($form_name, 'customfields'))
