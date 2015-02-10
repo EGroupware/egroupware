@@ -464,6 +464,7 @@ div.mail-compose_fileselector {
 }
 #mail-compose_composeToolbar {
 	padding: 0px !important;
+	border: none;
 }
 #mail-compose_composeToolbar > button {
 	padding: .2em .4em;
@@ -854,10 +855,10 @@ span#mail-compose_bcc_expander,
 span#mail-compose_folder_expander,
 span#mail-compose_replyto_expander {
 	float: left;
-	width: 55px;
+	width: 100%;
 	margin: 3px;
-	margin-left: 12px;
-	text-align: right;
+	margin-right: 12px;
+	text-align: center;
 	padding: 0;
 }
 /*Make file uploads in compose dialog invisible*/
@@ -870,5 +871,5 @@ div.mail-compose_toolbar_assist div.mail-compose_fileselector, #mail-compose_sel
 }
 
 div.mailComposeHeaderSection>table {
-	padding-top: 10px;
+	padding-top: 35px;
 }
