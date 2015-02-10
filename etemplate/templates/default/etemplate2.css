@@ -131,6 +131,15 @@ div.et2_hbox > div {
 * > .et2_split {
   overflow: hidden;
 }
+/* These need to be applied to tame the sizing before printing */
+.et2_split.print, .et2_split.print > .splitter-pane {
+	height: auto !important;
+	width: auto !important;
+}
+.et2_split.print > * {
+	position: relative !important;
+}
+  
 /**
  * Label widget, and labels for other widgets
  */
@@ -1159,6 +1168,10 @@ div.message.floating {
 	#cke_1_top.cke_top {
 		display: none;
 		border:none;
+	}
+	.et2_split, .et2_split > .splitter-pane {
+		height: auto !important;
+		width: auto !important;
 	}
 }
 /**
