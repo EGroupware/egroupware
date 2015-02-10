@@ -387,6 +387,7 @@ class infolog_ui
 		}
 
 		// check if we have a custom, type-specific template
+		$old_template = $query['template'];
 		$query['template'] = 'infolog.index.rows';
 		unset($query['custom_fields']);
 		if ($query['col_filter']['info_type'])
@@ -404,6 +405,9 @@ class infolog_ui
 				$query['col_filter']['info_status'] = '';
 			}
 		}
+		// Template change forces the UI to do a full update first, no point in getting rows right now
+		if($old_template != $query['template']) return 0;
+		
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
 		$details = $query['filter2'] == 'all';
