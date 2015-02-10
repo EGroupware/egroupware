@@ -1,3 +1,10 @@
+egroupware-epl (14.2.20150210-1) hardy; urgency=low
+
+  * Mail: fixed exception when opening vacation notice or sieve-rules for an account with a changed standard identity or later created account
+  * InfoLog: allow type specific index templates (named infolog.index.rows.$type)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 10 Feb 2015 09:41:22 +0100
+
 egroupware-epl (14.2.20150206-1) hardy; urgency=low
 
   * All apps: Activate cross-browser autocomplete
