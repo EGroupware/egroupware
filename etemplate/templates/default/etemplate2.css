@@ -136,6 +136,7 @@ div.et2_hbox > div {
  */
 .et2_label {
   color: #101050;
+  white-space: pre-wrap;
 }
 #msg,
 .message {

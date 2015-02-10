@@ -102,6 +102,7 @@
  */
   .et2_label {
     color: #1e1e1e;
+    white-space: pre-wrap;
   }
   /**
  * img Icons
