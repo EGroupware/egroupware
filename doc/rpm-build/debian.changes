@@ -1,3 +1,26 @@
+egroupware-epl (14.2.20150210-1) hardy; urgency=low
+
+  * 3. release candidate for upcomming 14.2 release
+  * All apps: Activate cross-browser autocomplete
+  * All apps: printing of lists improved a lot, asks now how many lines to print
+  * Backup: backing up bool columns now for all databases as 1 or 0, but understanding PostgreSQL "t" or "f" too
+  * Mail: fix not working BCC addresses
+  * Mail: fixed exception when opening vacation notice or sieve-rules for an account with a changed standard identity or later created account
+  * InfoLog: allow type specific index templates (named infolog.index.rows.$type)
+  * Calendar/CalDAV: fixed not synced recurrences, because invitation was to a group only or first recurrence was an exception
+  * Calendar/CalDAV: fixed synced events still contained deleted exceptions
+  * Calendar: fix not working tooltip (showing html tags) in year-view
+  * Calendar: fixed deleting exceptions while editing a series
+  * Knowledgebase: use activate_links to make sure links open in new windows
+  * Admin: fix not working setting of ACL for account-selection "select-box with primary group and search", data from contains no selection
+  * Admin: Fix edit groups dialog resize problem
+  * Filemanager/Expose view: enhancements
+  * Mail/IE: fixed compose popup did not open again after it was closed eg. mail was send
+  * Mail/Sieve: check capability if VACATION is supported by SIEVE Server before trying to set an serverside vacation absent notice
+  * Sieve: coping with a dbmail bug in some versions of the Server. Server using formal syntax being reserved for client->server communication
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 10 Feb 2015 09:41:22 +0100
+
 egroupware-epl (14.2.20150121-1) hardy; urgency=low
 
   * 2. release candidate for upcomming 14.2 release
