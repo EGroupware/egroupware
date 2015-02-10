@@ -1275,7 +1275,11 @@ class addressbook_ui extends addressbook_bo
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);
-					$query['col_filter'][$name] = $value;
+					if ($value && ($GLOBALS['egw']->db->get_column_attribute($name, 'egw_addressbook', 'phpgwapi', 'type') ||
+						$GLOBALS['egw']->db->get_column_attribute('contact_'.$name, 'egw_addressbook', 'phpgwapi', 'type')))
+					{
+						$query['col_filter'][$name] = $value;
+					}
 				}
 			}
 			// translate the select order to the really used over all 3 columns
