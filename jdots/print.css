@@ -21,7 +21,7 @@
 		width: auto !important;
 		height: auto !important;
 	}
-	#egw_fw_sidebar, #egw_fw_topmenu, .egw_fw_ui_tabs_header, #egw_fw_topmenu_slide,#egw_fw_print,#egw_fw_logout {
+	#egw_fw_sidebar, #egw_fw_topmenu, .egw_fw_ui_tabs_header, #egw_fw_topmenu_slide,#egw_fw_print,#egw_fw_logout,#divAppboxHeader {
 		display: none;
 		width: 0px;
 	}
@@ -47,6 +47,10 @@
 		height: auto !important;
 		overflow-y: hidden;
 		position: relative;
+		padding: 0px;
+	}
+	.egw_fw_ui_app_header_container {
+		border: none;
 	}
 	body {
 		background: white;

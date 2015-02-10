@@ -1133,6 +1133,17 @@ div.message.floating {
 	.et2_nextmatch .egwGridView_spacer {
 		display:none;
 	}
+	.et2_nextmatch .nextmatch_header {
+		display: none !important;
+	}
+	.egwGridView_outer > thead {
+		border-bottom: 1px solid;
+	}
+	.egwGridView_outer > thead select {
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+	}
 	.egwGridView_grid > tbody > tr {
 		page-break-inside: avoid;
 		-webkit-region-break-inside: avoid;

@@ -1863,7 +1863,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	beforePrint: function() {
 		// Add the class, if needed
 		this.div.addClass('print');
-
+		
 		// Trigger resize, so we can fit on a page
 		this.dynheight.outerNode.css('max-width',this.div.css('max-width'));
 		this.resize();
