@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="45%"/>
+				<column width="15%" disabled="@no_customfields"/>
+				<column/>
+				<column width="120"/>
+				<column/>
+				<column/>
+				<column width="120" disabled="@no_info_owner_info_responsible"/>
+				<column width="120"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<nextmatch-filterheader id="info_type" no_lang="1" options="Type"/>
+						<nextmatch-filterheader align="center" id="info_status" options="Status" class="selectboxFullWidth"/>
+						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
+					</vbox>
+					<grid width="100%" spacing="0" padding="0">
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<nextmatch-customfilter id="linked" options="link-entry"/>
+								<nextmatch-sortheader align="right" label="Priority" id="info_priority" options="DESC" class="noPrint"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Subject" id="info_subject"/>
+								<nextmatch-sortheader align="right" label="Creation" id="info_id" options="DESC" class="noPrint"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Description" id="info_des"/>
+								<nextmatch-sortheader align="right" label="last changed" id="info_datemodified" options="DESC" class="noPrint"/>
+							</row>
+						</rows>
+					</grid>
+					<nextmatch-customfields id="customfields" app="infolog"/>
+					<nextmatch-header label="Category" id="cat_id"/>
+					<vbox>
+						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
+						<nextmatch-sortheader label="Enddate" id="info_enddate" sortmode="DESC"/>
+						<nextmatch-sortheader label="Date completed" id="info_datecompleted" sortmode="DESC"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
+						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
+					</vbox>
+					<vbox>
+						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner,both" class="infolog_user_filter"/>
+						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="infolog_user_filter"/>
+					</vbox>
+					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
+				</row>
+				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
+					<hbox align="center">
+						<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar"/>
+						<image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_status_label]" default_src="status"/>
+						<image label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"/>
+						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
+					</hbox>
+					<vbox class="infolog_fullWidth">
+						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
+						<hbox>
+							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class]"/>
+							<description align="right" id="{$row}[info_number]" no_lang="1" class="infolog_infoId"/>
+						</hbox>
+						<box class="infoDes">
+							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
+						</box>
+						<link-string id="${row}[filelinks]"/>
+					</vbox>
+					<customfields-list id="$row" class="customfields" app="infolog"/>
+					<menulist>
+						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
+					</menulist>
+					<vbox>
+						<date-time id="${row}[info_startdate]" readonly="true" options=",8" class="infolog_fixedHeight"/>
+						<date-time id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] infolog_fixedHeight"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"/>
+					</vbox>
+					<vbox>
+						<hbox readonly="true">
+							<hbox readonly="true">
+								<date-duration id="${row}[info_used_time]" readonly="true" options="@@duration_format"/>
+								<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@@duration_format" class="timesheet"/>
+							</hbox>
+							<description/>
+						</hbox>
+						<date-duration id="${row}[info_planned_time]" readonly="true" options="@@duration_format" span="all" class="infolog_planned"/>
+					</vbox>
+					<vbox>
+						<hbox id="r_used_time">
+							<image label="Times" src="timesheet"/>
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@@duration_format" class="timesheet"/>
+						</hbox>
+						<hbox id="planified">
+							<image label="planned time" src="k_alarm.png"/>
+							<date-duration id="${row}[info_planned_time]" readonly="true" options="@@duration_format" span="all" class="infolog_planned"/>
+						</hbox>
+						<hbox id="replanified">
+							<image label="Re-planned time" src="agt_reload.png"/>
+							<date-duration id="${row}[info_replanned_time]" readonly="true" options="@@duration_format" span="all" class="replanned"/>
+						</hbox>
+					</vbox>
+					<vbox>
+						<menulist>
+							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
+						</menulist>
+						<listbox type="select-account" id="${row}[info_responsible]" readonly="true" rows="5"/>
+					</vbox>
+					<vbox>
+						<date-time id="${row}[info_datemodified]" readonly="true"/>
+						<menulist>
+							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
+						</menulist>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
+		<grid width="100%" border="0" spacing="0" padding="0">
+			<columns>
+				<column width="70%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@css">
+					<html id="css" span="all"/>
+				</row>
+				<row>
+					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
+				</row>
+				<row disabled="1">
+					<template id="dates"/>
+					<template id="header_right"/>
+				</row>
+				<row>
+					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.dates" span="all"/>
+				</row>
+				<row>
+					<hbox class=" ">
+						<box id="responsible_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Change responsible" class="promptheader"/>
+								<description value="Select users or groups"/>
+								<listbox type="select-account" id="responsible" rows="5" account_type="both" class="action_popup-content"/>
+								<hbox>
+									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+						<box id="delete_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Delete" class="promptheader"/>
+								<description value="Delete selected entries?" id="delete_prompt"/>
+								<hbox>
+									<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"/>
+									<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+						<box id="link_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Add / Remove link" class="promptheader"/>
+								<link-entry id="link" class="action_popup-content"/>
+								<hbox>
+									<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+					</hbox>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			/**
+ * Add / remove link or category popup used for actions on multiple entries
+ */
+
+div.action_popup[id] {
+	position: fixed;
+	top: 200px;
+	left: 450px;
+	width: 76ex;
+	z-index: 20000;
+	display: none;
+	border-collapse:collapse;
+	border-spacing:0px
+}
+.action_popup-content {
+	display:block;
+	padding:2ex;
+	color:#666666;
+	margin: -2px -1px 0px -2px;
+}
+.action_popup &gt; table {
+	width: 100%
+}
+.action_popup .promptheader {
+	padding: 1ex;
+	width: 100%
+}
+
+.action_select {
+	width: 100%
+}
+		</styles>
+	</template>
+</overlay>
