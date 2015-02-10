@@ -406,8 +406,8 @@ class infolog_ui
 			}
 		}
 		// Template change forces the UI to do a full update first, no point in getting rows right now
-		if($old_template != $query['template']) return 0;
-		
+		if($old_template && $old_template != $query['template']) return 0;
+
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
 		$details = $query['filter2'] == 'all';
