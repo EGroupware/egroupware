@@ -157,6 +157,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		this._super.apply(this, arguments);
 		this.activeFilters = {col_filter:{}};
 
+		// Directly set current col_filters from settings
+		jQuery.extend(this.activeFilters, this.options.settings.col_filter);
+		
 		/*
 		Process selected custom fields here, so that the settings are correctly
 		set before the row template is parsed
@@ -1509,6 +1512,18 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 			this.dataview.free();
 			this.rowProvider.free();
 			this.controller.free();
+
+			// Free any children from previous template
+			// They may get left behind because of how detached nodes are processed
+			// We don't use iterateOver because it checks sub-children
+			for(var i = this._children.length-1; i >=0 ; i--)
+			{
+				var _node = this._children[i];
+				if(_node != this.header) {
+					this.removeChild(_node);
+					_node.destroy();
+				}
+			}
 
 			// Clear this setting if it's the same as the template, or
 			// the columns will not be loaded
@@ -2960,9 +2975,9 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 		this.nextmatch = _nextmatch;
 
 		// Set current filter value from nextmatch settings
-		if(this.nextmatch.options.settings.col_filter && typeof this.nextmatch.options.settings.col_filter[this.id] != "undefined")
+		if(this.nextmatch.activeFilters.col_filter && typeof this.nextmatch.activeFilters.col_filter[this.id] != "undefined")
 		{
-			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
 
 			// Make sure it's set in the nextmatch
 			_nextmatch.activeFilters.col_filter[this.id] = this.getValue();
@@ -3024,9 +3039,9 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatch
 		this.nextmatch = _nextmatch;
 
 		// Set current filter value from nextmatch settings
-		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
+		if(this.nextmatch.activeFilters.col_filter && this.nextmatch.activeFilters.col_filter[this.id])
 		{
-			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
 		}
 	},
 	// Make sure selectbox is not longer than the column
