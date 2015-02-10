@@ -1275,10 +1275,10 @@ class addressbook_ui extends addressbook_bo
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);
-					if ($value && ($GLOBALS['egw']->db->get_column_attribute($name, 'egw_addressbook', 'phpgwapi', 'type') ||
-						$GLOBALS['egw']->db->get_column_attribute('contact_'.$name, 'egw_addressbook', 'phpgwapi', 'type')))
+					// do NOT set invalid column, as this gives an SQL error ("AND AND" in sql)
+					if (in_array($name, array('org_name','org_unit','adr_one_location')))
 					{
-						$query['col_filter'][$name] = $value;
+							$query['col_filter'][$name] = $value;
 					}
 				}
 			}
