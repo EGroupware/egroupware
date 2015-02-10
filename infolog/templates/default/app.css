@@ -21,7 +21,7 @@ div#infolog-index.et2_container .gridCont_0_div_col_0 {
 table.infolog_fullWidth { width: 100%; }
 #infolog-edit_info_number:before { content:"#" }
 #infolog-edit_info_contact { width: 98%;}
-.infolog_fixedHeight { height: 12px; }
+.infolog_fixedHeight { height: 12px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 .infolog_normalWrap { white-space: normal; }
 .infolog_user_filter select { width: 100px; }
 .inputFullWidth input { width: 100%; }

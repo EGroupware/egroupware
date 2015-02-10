@@ -74,6 +74,9 @@ table.infolog_fullWidth {
 }
 .infolog_fixedHeight {
   height: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .infolog_normalWrap {
   white-space: normal;
