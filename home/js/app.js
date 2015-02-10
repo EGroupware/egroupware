@@ -149,7 +149,7 @@ app.classes.home = AppJS.extend(
 			// Handle bad timing - a sub-template was finished first
 			if(!this.portlet_container)
 			{
-				window.setTimeout(jQuery.proxy(this, function() {this.et2_ready(et2, name);}),200);
+				window.setTimeout(jQuery.proxy(function() {this.et2_ready(et2, name);},this),200);
 				return;
 			}
 

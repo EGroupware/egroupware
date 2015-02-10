@@ -63,7 +63,7 @@ div.calendar_favorite_portlet.et2_portlet.ui-widget-content > div:last-of-type {
 /**
  * Portlet styling (cosmetic)
  */
-.et2_portlet.ui-widget-content > div:last-of-type > div {
+.et2_portlet.ui-widget-content > div:last-of-type > .et2_container {
 	background: linear-gradient(to bottom, rgba(255,255,255,.9) 10%,rgba(255,255,255,.75) 90%) /* W3C */
 }
 
