@@ -134,7 +134,8 @@ function read_thumbnail($src)
 
 	// Generate the destination filename and check whether the destination directory
 	// had been successfully created (the cache class used in gen_dstfile does that).
-	$dst = gen_dstfile($src, $maxsize, $height, $width, $minsize);
+	$stat = egw_vfs::stat(egw_vfs::parse_url($src, PHP_URL_PATH));
+	$dst = gen_dstfile($stat && !empty($stat['url']) ? $stat['url'] : $src, $maxsize, $height, $width, $minsize);
 	$dst_dir = dirname($dst);
 	if(file_exists($dst_dir))
 	{
