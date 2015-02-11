@@ -960,9 +960,48 @@ var fw_base =  Class.extend({
 				appWindow.focus();
 
 				// et2 available, let its widgets prepare
-				if(typeof etemplate2 == "function" && etemplate2.print)
+				var deferred = []
+				var et2_list = [];
+				$j('.et2_container',this.activeApp.tab.contDiv).each(function() {
+					var et2 = etemplate2.getById(this.id);
+					if(et2 && jQuery(et2.DOMContainer).filter(':visible'))
+					{
+						deferred = deferred.concat(et2.print());
+						et2_list.push(et2);
+					}
+				});
+
+				if(et2_list.length)
 				{
-					etemplate2.print(this.activeApp.appName);
+					// Try to clean up after - not guaranteed
+					var afterPrint = function() {
+						for(var i = 0; i < et2_list.length; i++)
+						{
+							et2_list[i].widgetContainer.iterateOver(function(_widget) {
+								_widget.afterPrint();
+							},et2_list[i],et2_IPrint);
+						}
+						appWindow.onafterprint = null;
+					};
+					if(appWindow.matchMedia) {
+						var mediaQueryList = appWindow.matchMedia('print');
+						var listener = function(mql) {
+							if (!mql.matches) {
+								afterPrint();
+								mediaQueryList.removeListener(listener);
+							}
+						};
+						mediaQueryList.addListener(listener);
+					}
+
+					appWindow.onafterprint = afterPrint;
+
+					// Wait for everything to be loaded, then send it off
+					jQuery.when.apply(jQuery, deferred).done(function() {
+						appWindow.print();
+					}).fail(function() {
+						afterPrint();
+					});
 				}
 				else
 				{

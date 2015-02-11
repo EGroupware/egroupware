@@ -1978,6 +1978,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 			);
 			return defer;
 		}
+		else
+		{
+			this.dynheight.innerNode.css('height', 'auto');
+		}
 		// Don't return anything, just work normally
 	},
 	afterPrint: function() {
