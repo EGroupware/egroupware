@@ -440,23 +440,9 @@ function expose (widget)
 					var total_count = nm.controller._grid.getTotalCount();
 					if(total_count >= gallery.num)
 					{
-						gallery.container.find('.indicator').off()
+						var $indicator = gallery.container.find('.indicator');
+						$indicator.off()
 							.addClass('paginating')
-							.mousewheel(function(event, delta) {
-								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2)	return;
-
-								//Reload next pictures into the gallery by scrolling on thumbnails
-								if (delta<0 && $j(this).width() + parseInt($j(this).css('left')) < gallery.container.width())
-								{
-									var nextIndex = gallery.indicatorContainer.find('[title="loading"]')[0];
-									if (nextIndex) self.expose_onslideend(gallery,nextIndex.dataset.index -1);
-									return;
-								}
-								// Move it about 5 indicators
-								$j(this).css('left',parseInt($j(this).css('left'))-(-delta*gallery.activeIndicator.width()*5)+'px');
-
-								event.preventDefault();
-							})
 							.swipe(function(event, direction, distance) {
 								if(direction == jQuery.fn.swipe.directions.LEFT)
 								{
@@ -471,6 +457,23 @@ function expose (widget)
 									return;
 								}
 								$j(this).css('left',min(0,parseInt($j(this).css('left'))-(distance*30))+'px');
+							});
+							// Bind the mousewheel handler for FF (DOMMousewheel), and other browsers (mousewheel)
+							$indicator.bind('mousewheel DOMMousewheel',function(event, _delta) {
+								var delta = _delta || event.originalEvent.wheelDelta / 120;
+								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2)	return;
+
+								//Reload next pictures into the gallery by scrolling on thumbnails
+								if (delta<0 && $j(this).width() + parseInt($j(this).css('left')) < gallery.container.width())
+								{
+									var nextIndex = gallery.indicatorContainer.find('[title="loading"]')[0];
+									if (nextIndex) self.expose_onslideend(gallery,nextIndex.dataset.index -1);
+									return;
+								}
+								// Move it about 5 indicators
+								$j(this).css('left',parseInt($j(this).css('left'))-(-delta*gallery.activeIndicator.width()*5)+'px');
+
+								event.preventDefault();
 							});
 					}
 				}
