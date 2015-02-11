@@ -365,6 +365,12 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 */
 		link_handler: function(_url, _target)
 		{
+			// if url is supposed to open in admin, use admins loader to open it in it's own iframe
+			// (otherwise there's no tree and sidebox!)
+			if (_target === 'admin' && !_url.match(/menuaction=admin\.admin_ui\.index/))
+			{
+				_url = _url.replace(/menuaction=([^&]+)/, 'menuaction=admin.admin_ui.index&load=$1');
+			}
 			if (_wnd.framework)
 			{
 				_wnd.framework.linkHandler(_url, _target);
