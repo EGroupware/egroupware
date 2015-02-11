@@ -293,7 +293,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		if ($mode != 'r' && self::url_is_readonly($url))
+		if (str_replace('b', '', $mode) != 'r' && self::url_is_readonly($url))
 		{
 			return false;
 		}
