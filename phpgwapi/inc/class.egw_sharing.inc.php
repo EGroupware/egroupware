@@ -377,12 +377,15 @@ class egw_sharing
 		{
 			throw new egw_exception_not_found("'$path' NOT found!");
 		}
-		// check if file has been shared before
+		// check if file has been shared before, with identical attributes
 		if (($mode != self::LINK || isset($path2tmp[$path])) &&
-			($share = self::$db->select(self::TABLE, '*', array(
+			($share = self::$db->select(self::TABLE, '*', $extra+array(
 				'share_path' => $mode == 'link' ? $path2tmp[$path] : $vfs_path,
 				'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
-			)+$extra, __LINE__, __FILE__)->fetch()))
+				'share_expires' => null,
+				'share_passwd'  => null,
+				'share_writable'=> false,
+			), __LINE__, __FILE__)->fetch()))
 		{
 			// if yes, just add additional recipients
 			$share['share_with'] = $share['share_with'] ? explode(',', $share['share_with']) : array();
