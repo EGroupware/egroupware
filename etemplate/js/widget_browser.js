@@ -4,6 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Nathan Gray
+ * @author Hadi Nategh
  * @copyright 2013 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -41,6 +42,8 @@ function widget_browser(list_div, widget_div)
 	// Create and popuplate the widget list
 	this._init_list();
 
+	// Build DTD
+	this._init_dtd();
 }
 
 /**
@@ -62,7 +65,7 @@ widget_browser.prototype._init_list = function()
 	for(var type in et2_registry)
 	{
 		types.push(type);
-	}
+		}
 	types.sort();
 	for(var i = 0; i < types.length; i++)
 	{
@@ -160,8 +163,8 @@ widget_browser.prototype.select_widget = function(e,f)
 			if(this.widget.attributes[attr].ignore) continue;
 			this.create_attribute(attr, this.widget.attributes[attr])
 				.appendTo(this.attribute_list);
-		}
-	}
+						}
+						}
 };
 
 
@@ -226,6 +229,197 @@ widget_browser.prototype.create_attribute = function(name, settings)
 
 	return row;
 };
+
+/**
+ * Initialise the DTD generator
+ */
+widget_browser.prototype._init_dtd = function ()
+{
+	//Contains all widgets
+	this.widgets = [];
+
+	//Contains not readonly widgets
+	this.dtd_widgets = [];
+
+	//Contians readonly widgets
+	this.dtd_widgets_ro = [];
+
+	// Contains the whole DTD string
+	this.dtd = "";
+
+	var self = this;
+
+	// Create DTD Generator button and bind click handler on it
+	var dtd_btn = $j(document.createElement('button'))
+			.attr({id:'dtd_btn', title:'Generates Document Type Definition (DTD) for all widgets'})
+			.click(function(){
+				self._dtd_builder();
+			})
+			.addClass('dtd_btn')
+			.appendTo('body');
+	dtd_btn.text('DTD Generator');
+}
+
+/**
+ * Iterates over all et2_widget to build DTD tags
+ * and display them as string
+ *
+ */
+widget_browser.prototype._dtd_builder = function()
+{
+	var dtdContentW = "";
+	var i = 0;
+	for (var widget_type in et2_registry)
+	{
+		var attrs = {};
+
+		// creating a dialog popups an empty dialog,
+		// which we don't want therefore
+		// we eliminate dialog tag from dtd ATM.
+		if (widget_type.match(/dialog/,'i')) continue;
+
+		if (!widget_type.match(/nextmatch/,'i'))
+		{
+
+			this.widgets[i] = et2_createWidget(widget_type ,attrs, this.et2.widgetContainer)
+			if (widget_type.match(/_ro/,'i'))
+			{
+				this.dtd_widgets_ro.push( widget_type.replace('_ro',''));
+			}
+			else
+			{
+				this.dtd_widgets.push(widget_type);
+				dtdContentW += this._dtd_widgets(widget_type, this.widgets[i])
+			}
+			i++;
+		}
+	}
+	// DTD Final Content
+	this.dtd = this._dtd_header() + dtdContentW;
+
+	//Display DTD resault and UI to copy/download them
+	et2_createWidget("dialog", {
+			callback: function() {},
+			title: egw.lang('DTD Result'),
+			buttons:et2_dialog.BUTTONS_OK,
+			value: {
+				content: {
+					value: this.dtd,
+					message: egw.lang('DTD Content')
+				}
+			},
+			template: egw.webserverUrl+'/etemplate/templates/default/dtd.xet',
+			modal:true,
+			resizable:false
+		});
+}
+
+/**
+ * Builds some specific header DTD tags (e.g. ENTITY)
+ *
+ * @returns {String} returns dtd header tags as string
+ */
+widget_browser.prototype._dtd_header = function ()
+{
+	var dtd = '';
+	dtd = '<!ENTITY % Widgets "' + this.dtd_widgets.join('|') + '">\r\n';
+	dtd += '<!ELEMENT overlay (%Widgets;)*>\r\n';
+	return dtd;
+}
+
+/**
+ * Builds DTD ELEMENTS and teir ATTRLIST for given widget
+ *
+ * @param {string} _type widget type
+ * @param {object} _widget widget object
+ * @returns {String} returns generated dtd tags in string
+ */
+widget_browser.prototype._dtd_widgets = function (_type, _widget)
+{
+	var dtd = '';
+	switch (_type)
+	{
+		// Special handling for menulist widget as it has a complicated structure
+		case 'menulist':
+			dtd = '<!ELEMENT menulist (menupopup)>\r\n';
+			break;
+
+		// Special handling for grid widget as it has a complicated structure
+		case 'grid':
+			dtd += '<!ELEMENT grid (columns,rows)>\r\n';
+			dtd += '<!ELEMENT columns (column)*>\r\n\
+					<!ELEMENT column EMPTY >\n\
+					<!ATTLIST column\n\
+						disabled CDATA #IMPLIED\n\
+						class CDATA #IMPLIED\n\
+						width CDATA #IMPLIED><!ELEMENT rows (row)*>\n\
+					<!ELEMENT row (%Widgets;)>\n\
+					<!ATTLIST row\n\
+						class CDATA #IMPLIED\n\
+						height CDATA #IMPLIED\n\
+						valign CDATA #IMPLIED\n\
+						disabled CDATA #IMPLIED\n\
+					>\r\n';
+			break;
+
+		// Special handling for tabbox widget as it has a complicated structure
+		case 'tabbox':
+			dtd += '<!ELEMENT tabbox (tabs,tabpanels)>\r\n';
+			dtd += '<!ELEMENT tabs (tab)>\r\n';
+			dtd += '<!ELEMENT tabpanels (template)>\r\n';
+			break;
+
+		// Widget which can be a parent
+		case 'vbox':
+		case 'hbox':
+		case 'box':
+		case 'groupbox':
+		case 'template':
+			dtd = '<!ELEMENT '+ _type + ' (%Widgets;)*>\r\n';
+			break;
+
+		// Other widgets which only can be used as child
+		default:
+			dtd = '<!ELEMENT '+ _type + ' EMPTY>\r\n';
+	}
+
+	dtd +='<!ATTLIST ' + _type + '\r\n';
+	for(var attr in _widget.attributes)
+	{
+		//DTD attribute helper object
+		var dtdAttrObj = {attrType:'CDATA',attrVal:'', attrReq:' #IMPLIED'};
+
+		//if(_widget.attributes[attr].ignore) continue;
+		switch (_widget.attributes[attr].type)
+		{
+			case 'boolean':
+				dtdAttrObj.attrType = ' (true|false)';
+				dtdAttrObj.attrVal = ' "' + _widget.attributes[attr].default + '"';
+				dtdAttrObj.attrReq = '';
+				break;
+			default:
+				dtdAttrObj.attrType = ' CDATA';
+
+				if (_widget.attributes[attr].default !="" &&
+						typeof _widget.attributes[attr].default != 'undefined' &&
+						!jQuery.isEmptyObject(_widget.attributes[attr].default))
+				{
+					dtdAttrObj.attrReq = '';
+					dtdAttrObj.attrVal  = ' "' + _widget.attributes[attr].default + '"';
+				}
+				else
+				{
+					dtdAttrObj.attrVal  = "";
+				}
+
+		}
+		dtd += attr + dtdAttrObj.attrType +
+				(dtdAttrObj.attrVal !=""?dtdAttrObj.attrVal:'') +
+				dtdAttrObj.attrReq +'\r\n';
+	}
+	dtd += '>\r\n';
+	return dtd;
+}
 
 egw_LAB.wait(function() {
 	var wb = new widget_browser(

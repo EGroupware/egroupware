@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.dtd" template="" lang="" group="0" version="1.9.001">
+		<vbox>
+			<label id="message"/>
+			<textbox multiline="true" id="value" rows="20" class="dtdContent"/>
+		</vbox>
+		<styles>
+			.dtdContent {
+				width: 550px;
+				height: 400px;
+				resize: none;
+			}
+		</styles>
+	</template>
+</overlay>
