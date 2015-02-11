@@ -24,9 +24,9 @@ div.header_row_right, span.header_count, select#filemanager-index_filter, span.s
 }
 div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
 	display: inline-block !important;
-	position: relative;
-	left: -230px;
-	top: 3px;
+	position: absolute;
+	right: 418px;
+	top: 10px;
 }
 
 div.filemanager_navigation label {
