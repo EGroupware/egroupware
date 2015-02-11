@@ -301,7 +301,7 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
-		if ($mode != 'r' && self::url_is_readonly($url))
+		if (str_replace('b', '', $mode) != 'r' && self::url_is_readonly($url))
 		{
 			return false;
 		}
