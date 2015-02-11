@@ -365,7 +365,7 @@ class admin_categories
 			$row['subs'] = count($row['children']);
 
 			$row['class'] = 'level'.$row['level'];
-			if($row['owner'] > 0 && !$GLOBALS['egw_info']['user']['apps']['admin'] && $row['owner'] != $GLOBALS['egw_info']['user']['account_id'])
+			if($row['owner'][0] > 0 && !$GLOBALS['egw_info']['user']['apps']['admin'] && $row['owner'][0] != $GLOBALS['egw_info']['user']['account_id'])
 			{
 				$row['class'] .= ' rowNoEdit rowNoDelete ';
 			}
