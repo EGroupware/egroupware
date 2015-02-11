@@ -1867,6 +1867,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		// Trigger resize, so we can fit on a page
 		this.dynheight.outerNode.css('max-width',this.div.css('max-width'));
 		this.resize();
+		// Reset height to auto (after width resize) so there's no restrictions
+		this.dynheight.innerNode.css('height', 'auto');
 
 		// Check for rows that aren't loaded yet, or lots of rows
 		var range = this.controller._grid.getIndexRange();
@@ -1898,6 +1900,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 						button = 'dialog[all]';
 						// Add the class, gives more reliable sizing
 						this.div.addClass('print');
+						// Show it all
+						$j('.egwGridView_scrollarea',this.div).css('height','auto');
 					}
 					// We need more rows
 					if(button == 'dialog[all]' || value > loaded_count)
@@ -1943,10 +1947,30 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 										defer.reject();
 										return;
 									}
-									nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (value+1));
+									if(value < total)
+									{
+										// Set height to the requested number of rows, using the average height.
+										// We add one, in case there's some larger rows we
+										// try to get most of it but that's pretty hacky
+										nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (value+1));
+									}
+									
 									// Grid needs to redraw before it can be printed, so wait
 									window.setTimeout(jQuery.proxy(function() {
 										dialog.destroy();
+
+										if(value < total)
+										{
+											// Show requested number, based on average height
+											nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (value));
+											// No scrollbar in print view
+											$j('.egwGridView_scrollarea',this.div).css('overflow-y','hidden');
+										}
+										else
+										{
+											// Show it all
+											$j('.egwGridView_scrollarea',this.div).css('height','auto');
+										}
 										// Should be OK to print now
 										defer.resolve();
 									},nm),ET2_GRID_INVALIDATE_TIMEOUT);
@@ -1961,11 +1985,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 					else
 					{
 						// Don't need more rows, limit to requested and finish
-						this.controller._grid.setScrollHeight(this.controller._grid.getAverageHeight() * (value+1));
+						this.controller._grid.setScrollHeight(this.controller._grid.getAverageHeight() * (value));
+						// No scrollbar in print view
+						$j('.egwGridView_scrollarea',this.div).css('overflow-y','hidden');
 						// Give dialog a chance to close, or it will be in the print
 						window.setTimeout(function() {defer.resolve();}, 0);
 					}
-					//this.controller._gridCallback(0, button == et2_dialog.OK_BUTTON ? value : this.controller._grid.getTotalCount());
 				},this),
 				egw.lang('How many rows to print'), egw.lang('Print'),
 				Math.min(100, total),
@@ -1980,7 +2005,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		}
 		else
 		{
+			// Show all rows
 			this.dynheight.innerNode.css('height', 'auto');
+			$j('.egwGridView_scrollarea',this.div).css('height','auto');
 		}
 		// Don't return anything, just work normally
 	},

@@ -748,7 +748,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
   html *,
   .td_display {
-    font-size: 12pt !important;
     border-right: none !important;
     border-left: none !important;
   }

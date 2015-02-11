@@ -477,7 +477,6 @@ These are set via javascript before printing to help tame nextmatch's layout
 for printing
 */
 .et2_nextmatch.print .egwGridView_scrollarea {
-	height: auto !important;
 	width: auto !important;
 }
 .et2_nextmatch.print  > div {
