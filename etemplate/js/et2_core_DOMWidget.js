@@ -527,9 +527,14 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 				objectManager.manager.getActionById(this.id) || objectManager.manager
 			));
 		}
+		else
+		{
+			widget_object.setAOI(new et2_action_object_impl(this, this.getDOMNode()));
+		}
 
 		// Delete all old objects
 		widget_object.clear();
+		widget_object.unregisterActions();
 
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
