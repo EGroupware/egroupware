@@ -381,7 +381,7 @@ function expose (widget)
 
 				var self=this;
 				// If the media type is not supported do not bind the click handler
-				if (_value && typeof _value.mime != 'undefined' && !_value.mime.match(mime_regex,'ig'))
+				if (!_value || typeof _value.mime != 'string' || !_value.mime.match(mime_regex,'ig'))
 				{
 					return;
 				}
