@@ -308,12 +308,18 @@ function gd_image_load($file)
 				return imagecreatefromwbmp($file);
 		}
 	}
-	else if ($type == 'application' && strpos($image_type,'vnd.oasis.opendocument.') === 0)
+	else if ($type == 'application')
 	{
-		// OpenDocuments have thumbnails inside already
-		return get_opendocument_thumbnail($file);
+		if(strpos($image_type,'vnd.oasis.opendocument.') === 0)
+		{
+			// OpenDocuments have thumbnails inside already
+			return get_opendocument_thumbnail($file);
+		}
+		else if($image_type == 'pdf')
+		{
+			return get_pdf_thumbnail($file);
+		}
 	}
-
 	return false;
 }
 
@@ -364,6 +370,30 @@ function get_opendocument_thumbnail($file)
 		imagecopyresampled($image, $mask,0,0,0,0,imagesx($image),imagesy($image),imagesx($mask),imagesy($mask));
 	}
 	return $image;
+}
+
+/**
+ * Extract the thumbnail from a PDF file and apply a colored mask
+ * so you can tell what type it is, and so it looks a little better in larger
+ * thumbnails (eg: in tiled view).
+ *
+ * Requires ImageMagick & ghostscript.
+ *
+ * @param string $file
+ * @return resource GD image
+ */
+function get_pdf_thumbnail($file)
+{
+	if(!class_exists('Imagick')) return false;
+
+	$im = new Imagick($file);
+	$im->setimageformat('png');
+	$im->setresolution(300, 300);
+
+	$gd = imagecreatefromstring($im->getimageblob());
+	//$mask = imagecreatefrompng('templates/default/images/mask_pdf.png');
+	//imagecopyresampled($image, $mask,0,0,0,0,imagesx($mask),imagesy($mask),imagesx($mask),imagesy($mask));
+	return $gd;
 }
 
 /**
