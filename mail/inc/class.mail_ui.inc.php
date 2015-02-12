@@ -1967,7 +1967,7 @@ class mail_ui
 
 		$preventRedirect=false;
 		if(isset($_requesteddata['id'])) $rowID	= $_requesteddata['id'];
-		if(isset($_requesteddata['part'])) $partID = $_requesteddata['part'];
+		if(isset($_requesteddata['part'])) $partID = $_requesteddata['part']!='null'?$_requesteddata['part']:null;
 		if(isset($_requesteddata['mode'])) $preventRedirect   = (($_requesteddata['mode']=='display' || $_requesteddata['mode'] == 'print')?true:false);
 
 		$hA = self::splitRowID($rowID);
