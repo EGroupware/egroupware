@@ -201,6 +201,31 @@
 						$et2_container.css({width:'100%', height:'100%'});
 						if (framework.getUserAgent() === 'iOS' && !framework.isNotFullScreen()) $appHeader.addClass('egw_fw_mobile_iOS_popup_appHeader');
 					}
+					// If the popup is not an et2_popup
+					else if ($et2_container.length == 0)
+					{
+						// Since the popup is  not et2, there's no css loaded
+						// therefore we need to add the style
+						var close_btn_styles = {width: "32px",
+							height: "32px",
+							float:"right",
+							"background-image": 'url(' +egw.webserverUrl+ '/pixelegg/images/cancelled.png)',
+							"-webkit-filter": "contrast(2)",
+							"background-repeat": "no-repeat",
+							"z-index": 999,
+							"padding-right": "5px"};
+
+						var $closeBtn =  $j(document.createElement('span'))
+										.addClass('egw_fw_mobile_popup_close')
+										.click(function (){self.close(framework.popup_idx(self.$iFrame[0].contentWindow));})
+										.css(close_btn_styles);
+						setTimeout(function(){
+							$j('body',popupWindow.document).prepend($closeBtn);
+						},0);
+						self.$container.removeClass('egw_fw_mobile_popup_loader');
+						self.$iFrame.css({visibility:'visible'});
+					}
+
 					// Set the popup opener
 					popupWindow.opener = self.windowOpener;
 				}
