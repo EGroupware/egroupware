@@ -284,7 +284,7 @@ function fetchAll(ids, nextmatch, callback)
 
 /**
  * Fetch all IDs and run a long task.
- * 
+ *
  * @param {String[]} idsArr Array of IDs
  * @param {boolean} all True if all IDs are selected.  They'll have to be fetched if missing.
  * @param {type} _action
@@ -463,11 +463,7 @@ function nm_open_popup(_action, _selected)
  */
 function nm_submit_popup(button)
 {
-	if(button.form)
-	{
-		button.form.submit_button.value = button.name;	// set name of button (sub-action)
-	}
-	else if (nm_popup_action.data.nextmatch)
+	if (nm_popup_action.data.nextmatch)
 	{
 		// Find the associated widget
 		var widget_id = $j(button).attr("id").replace(nm_popup_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
