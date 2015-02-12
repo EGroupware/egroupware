@@ -2239,7 +2239,8 @@ app.classes.mail = AppJS.extend(
 			attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
 			var mailids = this.et2.getArrayMgr("content").getEntry('processedmail_id');
 			var mailida = mailids.split(',');
-			mailid = mailida[widget.id.replace(/\[name\]/,'')];
+			// either several attachments of one email, or multiple emlfiles
+			mailid = mailida.length==1 ? mailida[0] : mailida[widget.id.replace(/\[name\]/,'')];
 			if (typeof attgrid.uid != 'undefined' && attgrid.uid && mailid.indexOf(attgrid.uid)==-1)
 			{
 				for (var i=0; i<mailida.length; i++)
