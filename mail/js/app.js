@@ -38,7 +38,7 @@ app.classes.mail = AppJS.extend(
 	nm_index: 'nm', // nm name of index
 	mail_fileSelectorWindow: null,
 	mail_isMainWindow: true,
-	
+
 	// Some state variables to track preview pre-loading
 	preview_preload: {
 		timeout: null,
@@ -57,7 +57,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 */
 	aclRights:['l','r','s','w','i','p','c','d','a'],
-	
+
 	/**
 	 * In order to store Intervals assigned to window
 	 * @array of setted intervals
@@ -172,6 +172,12 @@ app.classes.mail = AppJS.extend(
 				this.mail_callRefreshVacationNotice();
 				break;
 			case 'mail.display':
+				var self = this;
+				// Prepare display dialog for printing
+				// copies iframe content to a DIV, as iframe causes
+				// trouble for multipage printing
+				jQuery('#mail-display_mailDisplayBodySrc').on('load', function(){self.mail_prepare_print()});
+
 				this.mail_isMainWindow = false;
 				this.mail_display();
 
@@ -3940,10 +3946,13 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Print a mail from Display
+	 * Prepare display dialog for printing
+	 * copies iframe content to a DIV, as iframe causes
+	 * trouble for multipage printing
 	 *
+	 * @returns {undefined}
 	 */
-	mail_display_print: function ()
+	mail_prepare_print: function()
 	{
 		var mainIframe = jQuery('#mail-display_mailDisplayBodySrc');
 		var tmpPrintDiv = jQuery('#tempPrintDiv');
@@ -3964,6 +3973,13 @@ app.classes.mail = AppJS.extend(
 		if (notAttached) jQuery('#mail-display_mailDisplayBodySrc').after(tmpPrintDiv);
 		tmpPrintDiv.find('#divAppboxHeader').remove();
 
+	},
+
+	/**
+	 * Print a mail from Display
+	 */
+	mail_display_print: function ()
+	{
 		this.egw.message('Printing....');
 
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
@@ -4073,7 +4089,7 @@ app.classes.mail = AppJS.extend(
 		//Make used email-tag list widgets in mail compose droppable
 		emailTags.droppable({
 			accept:'.ms-sel-item',
-			
+
 			/**
 			 * Run after a draggable email item dropped over one of the email-taglists
 			 * -Set the dropped item to the dropped current target widget
@@ -4187,7 +4203,7 @@ app.classes.mail = AppJS.extend(
 			document.title = _widget.get_value();
 		}
 	},
-	
+
 	/**
 	 * Clear intervals stored in W_INTERVALS which assigned to window
 	 */
@@ -4199,10 +4215,10 @@ app.classes.mail = AppJS.extend(
 			delete this.W_INTERVALS[i];
 		}
 	},
-	
+
 	/**
 	 * Window title getter function in order to set the window title
-	 * 
+	 *
 	 * @returns {string} window title
 	 */
 	getWindowTitle: function ()
@@ -4220,7 +4236,7 @@ app.classes.mail = AppJS.extend(
 				break;
 		}
 	},
-	
+
 	/**
 	 * Set the relevant widget to toolbar actions and submit
 	 * @param {type} _action toolbar action
@@ -4229,10 +4245,10 @@ app.classes.mail = AppJS.extend(
 	{
 		this.et2._inst.submit(null,null,true);
 	},
-	
+
 	/**
 	 * Set the selected checkbox action
-	 * 
+	 *
 	 * @param {type} _action selected toolbar action with checkbox
 	 * @returns {undefined}
 	 */
@@ -4244,7 +4260,7 @@ app.classes.mail = AppJS.extend(
 			widget.set_value(_action.checked?"on":"off");
 		}
 	},
-	
+
 	/**
 	 * Set the selected priority value
 	 * @param {type} _action selected action
@@ -4258,7 +4274,7 @@ app.classes.mail = AppJS.extend(
 			widget.set_value(_action.id);
 		}
 	},
-	
+
 	/**
 	 * Triger relative widget via its toolbar identical action
 	 * @param {type} _action toolbar action
@@ -4278,7 +4294,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Save drafted compose as eml file into VFS
 	 * @param {type} _action action
