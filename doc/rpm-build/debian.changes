@@ -1,3 +1,15 @@
+egroupware-epl (14.2.20150212-1) hardy; urgency=low
+
+  * 14.2 final release
+  * All apps: improved printing: CRM view and given number or rows
+  * All apps: drag & drop files only worked on input nodes, eg. files draged in from desktop
+  * Filemanager/Mail: fixed not created thumbnails for readable shares
+  * ImportExport: links supposed to open in admin did not show admin sidebox with tree
+  * ProjectManager: add new role with rights limited only to add timesheets
+  * Home: fixed placing of portlets for FireFox and missing context menu after re-opening home tab
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 12 Feb 2015 10:05:47 +0100
+
 egroupware-epl (14.2.20150210-1) hardy; urgency=low
 
   * 3. release candidate for upcomming 14.2 release
