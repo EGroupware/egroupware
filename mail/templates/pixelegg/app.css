@@ -751,6 +751,12 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     border-right: none !important;
     border-left: none !important;
   }
+  /* set font size for printing of text mail body and all headers, attachments */
+  .td_display pre,
+  .mailDisplayHeaders,
+  .mailDisplayAttachments * {
+    font-size: 12pt !important;
+  }
   .mailDisplayHeaders {
     border-bottom: 0.1em solid #d7d7d7;
     padding-top: 4px;
