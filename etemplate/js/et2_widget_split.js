@@ -28,7 +28,7 @@
  * @see http://methvin.com/splitter/ Uses Splitter
  * @augments et2_DOMWidget
  */
-var et2_split = et2_DOMWidget.extend([et2_IResizeable], 
+var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 {
 	attributes: {
 		"orientation": {
@@ -85,6 +85,9 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 
 		// Deferred object so we can wait for children
 		this.loading = jQuery.Deferred();
+
+		// Flag to temporarily ignore resizing
+		this.stop_resize = false;
 	},
 
 	destroy: function() {
@@ -274,7 +277,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		{
 			this._init_splitter();
 		}
-		if(this.dynheight)
+		if(this.dynheight && !this.stop_resize )
 		{
 			var old = {w: this.div.width(), h: this.div.height()};
 			this.dynheight.update(function(w,h) {
@@ -376,6 +379,25 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 	 */
 	toggleDock: function() {
 		this.div.trigger("toggleDock");
+	},
+
+	// Printing
+	/**
+	 * Prepare for printing by stopping all the fuss
+	 *
+	 */
+	beforePrint: function() {
+		// Resizing causes preference changes & relayouts.  Don't do it.
+		this.stop_resize = true;
+
+		// Add the class, if needed
+		this.div.addClass('print');
+
+		// Don't return anything, just work normally
+	},
+	afterPrint: function() {
+		this.div.removeClass('print');
+		this.stop_resize = false;
 	}
 });
 
