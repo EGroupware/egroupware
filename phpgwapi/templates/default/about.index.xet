@@ -119,7 +119,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="&lt;b&gt;This is a list of your available languages&lt;/b&gt;&lt;br /&gt;For a complete list of languages available for eGroupWare visit &lt;a href=&quot;http://www.egroupware.org/languages&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/languages&lt;/a&gt;"/>
+					<description value="&lt;b&gt;This is a list of your available languages&lt;/b&gt;&lt;br /&gt;For a complete list of languages available for eGroupWare visit &lt;a href=&quot;http://community.egroupware.org/languages&quot; target=&quot;_blank&quot;&gt;community.egroupware.org/languages&lt;/a&gt;"/>
 				</row>
 				<row>
 					<grid border="0" id="translations">
