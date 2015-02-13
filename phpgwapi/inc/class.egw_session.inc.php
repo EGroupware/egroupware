@@ -1599,14 +1599,17 @@ class egw_session
 	}
 
 	/**
-	 * Controling caching and expires header, based on $GLOBALS['egw_info']['flags']['nocachecontrol']:
+	 * Controling caching and expires header
+	 *
+	 * Headers are send based on given parameters or $GLOBALS['egw_info']['flags']['nocachecontrol']:
 	 * - not set of false --> no caching (default)
 	 * - true --> private caching by browser (no expires header)
 	 * - "public" or integer --> public caching with given cache_expire in minutes or php.ini default session_cache_expire
 	 *
 	 * @param int $expire =null expiration time in seconds, default $GLOBALS['egw_info']['flags']['nocachecontrol'] or php.ini session.cache_expire
+	 * @param int $private =null allows to set private caching with given expiration time, by setting it to true
 	 */
-	public static function cache_control($expire=null)
+	public static function cache_control($expire=null, $private=null)
 	{
 		if (is_null($expire) && isset($GLOBALS['egw_info']['flags']['nocachecontrol']) && is_int($GLOBALS['egw_info']['flags']['nocachecontrol']))
 		{
@@ -1616,18 +1619,19 @@ class egw_session
 		if (!isset($_SESSION))
 		{
 			// controling caching and expires header
-			if(!isset($GLOBALS['egw_info']['flags']['nocachecontrol']) || !$GLOBALS['egw_info']['flags']['nocachecontrol'])
+			if(!isset($expire) && (!isset($GLOBALS['egw_info']['flags']['nocachecontrol']) ||
+				!$GLOBALS['egw_info']['flags']['nocachecontrol']))
 			{
 				session_cache_limiter('nocache');
 			}
-			elseif ($GLOBALS['egw_info']['flags']['nocachecontrol'] === 'public' || is_int($GLOBALS['egw_info']['flags']['nocachecontrol']))
+			elseif (isset($expire) || $GLOBALS['egw_info']['flags']['nocachecontrol'] === 'public' || is_int($GLOBALS['egw_info']['flags']['nocachecontrol']))
 			{
 				// allow public caching: proxys, cdns, ...
 				if (isset($expire))
 				{
 					session_cache_expire((int)ceil($expire/60));	// in minutes
 				}
-				session_cache_limiter('public');
+				session_cache_limiter($private ? 'private' : 'public');
 			}
 			else
 			{
@@ -1651,6 +1655,11 @@ class egw_session
 				{
 					header('Cache-Control: private, max-age='.(60*session_cache_expire()));
 					header_remove('Expires');
+				}
+				elseif ($private)
+				{
+					header('Cache-Control: private, max-age='.$expire);
+					header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expire) . ' GMT');
 				}
 				else
 				{

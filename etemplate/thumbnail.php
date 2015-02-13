@@ -176,8 +176,8 @@ function read_thumbnail($src)
 		if ($dst)
 		{
 			// Allow client to cache these, makes scrolling in filemanager much nicer
-			header('Pragma: private');
-			header('Cache-Control: max-age=300');
+			// setting maximum allow caching time of one year, if url contains (non-empty) moditication time
+			egw_session::cache_control(empty($_GET['mtime']) ? 300 : 31536000, true);	// true = private / browser only caching
 			header('Content-Type: '.$output_mime);
 			readfile($dst);
 			return true;
@@ -385,6 +385,10 @@ function get_opendocument_thumbnail($file)
 function get_pdf_thumbnail($file)
 {
 	if(!class_exists('Imagick')) return false;
+
+	// switch off max_excution_time, as some thumbnails take longer and
+	// will be startet over and over again, if they dont finish
+	@set_time_limit(0);
 
 	$im = new Imagick($file);
 	$im->setimageformat('png');

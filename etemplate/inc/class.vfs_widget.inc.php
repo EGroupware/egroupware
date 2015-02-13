@@ -337,6 +337,11 @@ class vfs_widget
 					{
 						$thparams['thsize'] = $thsize;
 					}
+					// add modification time to url to allow long caching
+					if (is_array($value) && $value['mtime'])
+					{
+						$thparams['mtime'] = $value['mtime'];
+					}
 
 					$value = $GLOBALS['egw']->link('/etemplate/thumbnail.php', $thparams);
 				}

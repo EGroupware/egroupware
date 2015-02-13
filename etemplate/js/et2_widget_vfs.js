@@ -333,7 +333,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				title: _value.name,
 				type: _value.mime,
 				poster:'', // TODO: Should be changed by correct video thumbnail later
-				thumbnail:this.egw().mime_icon(_value['mime'], _value['path']) ,
+				thumbnail: this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime),
 				href: base_url + _value.download_url
 			}];
 		}
@@ -343,7 +343,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				title: _value.name,
 				href: base_url + _value.download_url,
 				type: _value.mime,
-				thumbnail: _value.path && _value.mime ? this.egw().mime_icon(_value['mime'], _value['path']) : this.image.attr('src')+ '&thheight=128'
+				thumbnail: _value.path && _value.mime ? this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime) : this.image.attr('src')+ '&thheight=128'
 			}];
 		}
 		return mediaContent;
@@ -355,7 +355,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
 			// Keep going, will be 'unknown type'
 		}
-		var src = this.egw().mime_icon(_value['mime'], _value['path']);
+		var src = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
 		if(src)
 		{
 			// Set size of thumbnail

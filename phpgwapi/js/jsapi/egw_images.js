@@ -119,9 +119,10 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		 * @param {string} _mime
 		 * @param {string} _path vfs path to generate thumbnails for images
 		 * @param {number} _size defaults to 128 (only supported size currently)
+		 * @param {number} _mtime current modification time of file to allow infinit caching as url changes
 		 * @returns url of image
 		 */
-		mime_icon: function(_mime, _path, _size)
+		mime_icon: function(_mime, _path, _size, _mtime)
 		{
 			if (typeof _size == 'undefined') _size = 128;
 			if (!_mime) _mime = 'unknown';
@@ -137,13 +138,14 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 			else if (typeof _path == 'string' && (type[0] == 'image' && type[1].match(/^(png|jpe?g|gif|bmp)$/) ||
 				type[0] == 'application' && (type[1].indexOf('vnd.oasis.opendocument.') === 0 || type[1] == 'pdf')))
 			{
-				var thsize = this.config('link_list_thumbnail') || 64;
-				image = this.link('/etemplate/thumbnail.php',{ 'path': _path, 'thsize': thsize});
+				var params = { 'path': _path, 'thsize': this.config('link_list_thumbnail') || 64};
+				if (_mtime) params.mtime = _mtime;
+				image = this.link('/etemplate/thumbnail.php', params);
 			}
 			else
 			{
 				if ((typeof type[1] == 'undefined' || !(image = this.image('mime'+_size+'_'+type[0]+'_'+type[1], 'etemplate')) &&
-					!(typeof mime_alias_map[_mime] != 'undefined' && (image=this.mime_icon(mime_alias_map[_mime], _path, _size)))) &&
+					!(typeof mime_alias_map[_mime] != 'undefined' && (image=this.mime_icon(mime_alias_map[_mime], _path, _size, _mtime)))) &&
 					!(image = this.image('mime'+_size+'_'+type[0], 'etemplate')))
 				{
 					image = this.image('mime'+_size+'_unknown', 'etemplate');
