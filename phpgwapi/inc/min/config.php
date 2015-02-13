@@ -6,6 +6,8 @@
  * @package Minify
  */
 
+// disable execution-time-limit, as on slow boxes configured value might be not enough
+@set_time_limit(0);
 
 /**
  * Allow use of the Minify URI Builder app. Only set this to true while you need it.
