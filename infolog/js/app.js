@@ -511,7 +511,7 @@ app.classes.infolog = AppJS.extend(
 		};
 		egw.open('','infolog','add',extras);
 	},
-	
+
 	/**
 	 * Get title in order to set it as document title
 	 * @returns {string}
@@ -520,5 +520,38 @@ app.classes.infolog = AppJS.extend(
 	{
 		var widget = this.et2.getWidgetById('info_subject');
 		if(widget) return widget.options.value;
+	},
+
+	/**
+	 * View parent entry with all children
+	 *
+	 * @param {aciton object} _action
+	 * @param {object} _selected
+	 */
+	view_parent: function(_action, _selected)
+	{
+		var data = egw.dataGetUIDdata(_selected[0].id);
+		if (data && data.data && data.data.info_id_parent)
+		{
+			egw.link_handler(egw.link('/index.php', {
+				menuaction: "infolog.infolog_ui.index",
+				action: "sp",
+				action_id: data.data.info_id_parent,
+				ajax: "true"
+			}), "infolog");
+		}
+	},
+
+	/**
+	 * Go to parent entry
+	 *
+	 * @param {aciton object} _action
+	 * @param {object} _selected
+	 */
+	has_parent: function(_action, _selected)
+	{
+		var data = egw.dataGetUIDdata(_selected[0].id);
+
+		return data && data.data && data.data.info_id_parent > 0;
 	}
 });
