@@ -502,6 +502,7 @@ values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
 view parent	infolog	de	Elterneintrag anzeigen
+view parent with children	infolog	de	Elterneintrag mit Untereinträgen anzeigen
 view subs	infolog	de	Untereinträge anzeigen
 view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen

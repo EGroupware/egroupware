@@ -503,6 +503,7 @@ values for selectbox	infolog	en	Values for select box
 view all subs of this entry	infolog	en	View all subs of this entry
 view other subs	infolog	en	View other subs
 view parent	infolog	en	View parent
+view parent with children	infolog	en	View parent with children
 view subs	infolog	en	View subs
 view the parent of this entry and all his subs	infolog	en	View the parent of this entry and all other subs
 view this linked entry in its application	infolog	en	View this linked entry in its application

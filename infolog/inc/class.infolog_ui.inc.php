@@ -456,7 +456,7 @@ class infolog_ui
 		$rows = array();
 
 		// Don't add parent in if info_id_parent (expanding to show subs)
-		if ($query['action_id'] && !$query['col_filter']['info_id_parent'])
+		if ($query['action_id'] && $query['csv_export'] !== 'children')
 		{
 			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
 			if (count($parents) == 1 && is_array($query['action_id']))
@@ -1063,6 +1063,14 @@ class infolog_ui
 				'url' => 'menuaction=infolog.infolog_ui.edit&info_id=$id',
 				'popup' => egw_link::get_registry('infolog', 'add_popup'),
 				'group' => $group=1,
+			),
+			'parent' => array(
+				'caption' => 'View parent with children',
+				'icon' => 'up.grey',
+				'allowOnMultiple' => false,
+				'enabled' => 'javaScript:app.infolog.has_parent',
+				'onExecute' => 'javaScript:app.infolog.view_parent',
+				'group' => $group,
 			),
 			'add' => array(
 				'caption' => 'Add',
