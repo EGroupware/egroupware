@@ -107,7 +107,7 @@ from any platform all over the planet. Moreover you also have the choice to acce
 your favorite groupware client (Kontact, Evolution, Outlook, iCal, Lightning) and also with your mobile or PDA
 via eSync.</p>
 <p><b>EGroupware is international.</b> At the time, it supports more than
-<a href="http://www.egroupware.org/languages" target="_blank">25 languages</a> including rtl support.</p>
+<a href="http://community.egroupware.org/languages" target="_blank">25 languages</a> including rtl support.</p>
 <p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems.
 On the client side, all you need is a internet browser such as Chrome, Firefox, Safari or Internet Explorer
 and many more.</p>
