@@ -1756,7 +1756,7 @@ class mail_compose
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
-		html::content_header($attachment['name'], $attachment['type'], 0, True, $_GET['mode'] == "save");
+		html::safe_content_header($attachment['attachment'], $attachment['name'], $attachment['type'], $size=0, true, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
 		common::egw_exit();
