@@ -2348,10 +2348,14 @@ app.classes.mail = AppJS.extend(
 			this.displayAttachment(tag_info, widget, true);
 			return;
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
+		var get_param = {
+			menuaction: 'mail.mail_compose.getAttachment',	// todo compose for Draft folder
+			tmpname: attgrid.tmp_name,
+			etemplate_exec_id: this.et2._inst.etemplate_exec_id
+		};
 		var width;
 		var height;
-		var windowName ='mail';
+		var windowName ='maildisplayAttachment_'+attgrid.file.replace(/\//g,"_");
 		switch(attgrid.type.toUpperCase())
 		{
 			case 'IMAGE/JPEG':
@@ -2362,29 +2366,10 @@ app.classes.mail = AppJS.extend(
 			case 'TEXT/PLAIN':
 			case 'TEXT/HTML':
 			case 'TEXT/DIRECTORY':
-/*
-				$sfxMimeType = $value['mimeType'];
-				$buff = explode('.',$value['name']);
-				$suffix = '';
-				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
-				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
-				if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
-				{
-					$attachments[$key]['mimeType'] = $sfxMimeType;
-					$value['mimeType'] = strtoupper($sfxMimeType);
-				}
-*/
 			case 'TEXT/X-VCARD':
 			case 'TEXT/VCARD':
 			case 'TEXT/CALENDAR':
 			case 'TEXT/X-VCALENDAR':
-				url += 'menuaction=mail.mail_compose.getAttachment';	// todo compose for Draft folder
-				url += '&tmpname='+attgrid.tmp_name;
-				url += '&name='+attgrid.name;
-				//url += '&size='+attgrid.size;
-				url += '&type='+attgrid.type;
-
-				windowName = windowName+'displayAttachment_'+attgrid.file.replace(/\//g,"_");
 				var reg = '800x600';
 				var reg2;
 				// handle calendar/vcard
@@ -2411,30 +2396,13 @@ app.classes.mail = AppJS.extend(
 				height = w_h[1];
 				break;
 			case 'MESSAGE/RFC822':
-/*
-				url += 'menuaction=mail.mail_ui.displayMessage';	// todo compose for Draft folder
-				url += '&id='+mailid;
-				url += '&part='+attgrid.partID;
-				url += '&is_winmail='+attgrid.winmailFlag;
-				windowName = windowName+'displayMessage_'+mailid+'_'+attgrid.partID;
-				width = 870;
-				height = egw_getWindowOuterHeight();
-				break;
-*/
 			default:
-				url += 'menuaction=mail.mail_compose.getAttachment';	// todo compose for Draft folder
-				url += '&tmpname='+attgrid.tmp_name;
-				url += '&name='+attgrid.name;
-				//url += '&size='+attgrid.size;
-				url += '&type='+attgrid.type;
-				url += '&mode='+'save';
-
-				windowName = windowName+'displayAttachment_'+attgrid.file.replace(/\//g,"_");
+				get_param.mode = 'save';
 				width = 870;
 				height = 600;
 				break;
 		}
-		egw_openWindowCentered(url,windowName,width,height);
+		egw.openPopup(egw.link('/index.php', get_param), width, height, windowName);
 	},
 
 	saveAttachment: function(tag_info, widget)
