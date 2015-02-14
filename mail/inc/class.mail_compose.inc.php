@@ -1785,27 +1785,37 @@ class mail_compose
 
 	function getAttachment()
 	{
-		if(isset($_GET['tmpname'])) $attachment['tmp_name']	= $_GET['tmpname'];
-		if(isset($_GET['name'])) $attachment['name']	= $_GET['name'];
-		//if(isset($_GET['size'])) $attachment['size']	= $_GET['size'];
-		if(isset($_GET['type'])) $attachment['type']	= $_GET['type'];
+		// read attachment data from etemplate request, use tmpname only to identify it
+		if (($request = etemplate_request::read($_GET['etemplate_exec_id'])))
+		{
+			foreach($request->preserv['attachments'] as $attachment)
+			{
+				if ($_GET['tmpname'] === $attachment['tmp_name']) break;
+			}
+		}
+		if (!$request || $_GET['tmpname'] !== $attachment['tmp_name'])
+		{
+			header('HTTP/1.1 404 Not found');
+			die('Attachment '.htmlspecialchars($_GET['tmpname']).' NOT found!');
+		}
 
 		//error_log(__METHOD__.__LINE__.array2string($_GET));
-		if (isset($attachment['tmp_name']) && parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs')
+		if (parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs')
 		{
 			egw_vfs::load_wrapper('vfs');
-			$attachment['attachment'] = file_get_contents($attachment['tmp_name']);
 		}
 		// attachment data in temp_dir, only use basename of given name, to not allow path traversal
-		elseif(!file_exists($tmp_path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['tmp_name'])))
+		else
+		{
+			$attachment['tmp_name'] = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['tmp_name']);
+		}
+		if(!file_exists($attachment['tmp_name']))
 		{
 			header('HTTP/1.1 404 Not found');
 			die('Attachment '.htmlspecialchars($attachment['tmp_name']).' NOT found!');
 		}
-		else
-		{
-			$attachment['attachment'] = file_get_contents($tmp_path);
-		}
+		$attachment['attachment'] = file_get_contents($attachment['tmp_name']);
+
 		//error_log(__METHOD__.__LINE__.' FileSize:'.filesize($attachment['tmp_name']));
 		if ($_GET['mode'] != "save")
 		{
