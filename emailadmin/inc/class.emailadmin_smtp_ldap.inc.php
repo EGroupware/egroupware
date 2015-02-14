@@ -5,7 +5,7 @@
  * @link http://www.stylite.de
  * @package emailadmin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -42,6 +42,11 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 * Name of schema for groups, has to be in the right case!
 	 */
 	const GROUP_SCHEMA = 'posixGroup';
+
+	/**
+	 * Attribute with mail address(es)
+	 */
+	const MAIL_ATTR = 'mail';
 
 	/**
 	 * Attribute to enable mail for an account, OR false if existence of ALIAS_ATTR is enough for mail delivery
@@ -144,7 +149,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	/**
 	 * Constructor
 	 *
-	 * @param string $defaultDomain=null
+	 * @param string $defaultDomain =null
 	 */
 	function __construct($defaultDomain=null)
 	{
@@ -218,7 +223,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		}
 		// the new code for postfix+cyrus+ldap
 		$newData = array(
-			'mail'			  => $mailLocalAddress,
+			static::MAIL_ATTR => $mailLocalAddress,
 			'objectclass'	  => $objectClasses
 		);
 		// does schema have explicit alias attribute AND require mail added as alias too
@@ -273,7 +278,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		$emailAddresses	= array();
 		$ds = $this->getLdapConnection();
 		$filter = '(&'.static::USER_FILTER.'('.static::USER_ATTR.'='.ldap::quote($_accountName).'))';
-		$attributes	= array('dn', 'mail', static::ALIAS_ATTR);
+		$attributes	= array('dn', static::MAIL_ATTR, static::ALIAS_ATTR);
 		$sri = @ldap_search($ds, $this->search_base, $filter, $attributes);
 
 		if ($sri)
@@ -281,9 +286,9 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 			$realName = trim($GLOBALS['egw_info']['user']['account_firstname'] . (!empty($GLOBALS['egw_info']['user']['account_firstname']) ? ' ' : '') . $GLOBALS['egw_info']['user']['account_lastname']);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if(isset($allValues[0]['mail']))
+			if(isset($allValues[0][static::MAIL_ATTR]))
 			{
-				foreach($allValues[0]['mail'] as $key => $value)
+				foreach($allValues[0][static::MAIL_ATTR] as $key => $value)
 				{
 					if ($key === 'count') continue;
 
@@ -319,7 +324,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 * from all accounts!
 	 *
 	 * @param int|string $user numerical account-id, account-name or email address
-	 * @param boolean $match_uid_at_domain=true true: uid@domain matches, false only an email or alias address matches
+	 * @param boolean $match_uid_at_domain =true true: uid@domain matches, false only an email or alias address matches
 	 * @return array with values for keys 'mailLocalAddress', 'mailAlternateAddress' (array), 'mailForwardingAddress' (array),
 	 * 	'accountStatus' ("active"), 'quotaLimit' and 'deliveryMode' ("forwardOnly")
 	 */
@@ -355,7 +360,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 			}
 			else
 			{
-				$to_or = array('(mail='.ldap::quote($user).')');
+				$to_or = array('('.static::MAIL_ATTR.'='.ldap::quote($user).')');
 				if ($match_uid_at_domain) $to_or[] = '('.static::USER_ATTR.'='.ldap::quote($namepart).')';
 				if (static::ALIAS_ATTR)
 				{
@@ -372,7 +377,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 			}
 		}
 		$attributes = array_values(array_diff(array(
-			'mail', 'objectclass', static::USER_ATTR, static::MAIL_ENABLE_ATTR, static::ALIAS_ATTR,
+			static::MAIL_ATTR, 'objectclass', static::USER_ATTR, static::MAIL_ENABLE_ATTR, static::ALIAS_ATTR,
 			static::MAILBOX_ATTR, static::FORWARD_ATTR, static::FORWARD_ONLY_ATTR, static::QUOTA_ATTR,
 		), array(false, '')));
 
@@ -400,12 +405,12 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 						$accountStatus = isset($values[static::MAIL_ENABLE_ATTR]) &&
 							(static::MAIL_ENABLED === self::MAIL_ENABLED_USE_MAIL && !empty($values[static::MAIL_ENABLE_ATTR][0]) ||
 							static::MAIL_ENABLED && !strcasecmp($values[static::MAIL_ENABLE_ATTR][0], static::MAIL_ENABLED) ||
-							!static::MAIL_ENABLED && $values[static::ALIAS_ATTR ? static::ALIAS_ATTR : 'mail']['count'] > 0) ?
+							!static::MAIL_ENABLED && $values[static::ALIAS_ATTR ? static::ALIAS_ATTR : static::MAIL_ATTR]['count'] > 0) ?
 								emailadmin_smtp::MAIL_ENABLED : '';
 					}
 					else
 					{
-						$accountStatus = $values[static::ALIAS_ATTR ? static::ALIAS_ATTR : 'mail']['count'] > 0 ?
+						$accountStatus = $values[static::ALIAS_ATTR ? static::ALIAS_ATTR : static::MAIL_ATTR]['count'] > 0 ?
 							emailadmin_smtp::MAIL_ENABLED : '';
 					}
 					if (static::FORWARD_ONLY_ATTR)
@@ -449,7 +454,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 				// regular user-data can only be from users, NOT groups
 				if (in_array(static::GROUP_SCHEMA, $values['objectclass'])) continue;
 
-				$userData['mailLocalAddress'] = $values['mail'][0];
+				$userData['mailLocalAddress'] = $values[static::MAIL_ATTR][0];
 				$userData['accountStatus'] = $accountStatus;
 
 				if (static::ALIAS_ATTR)
@@ -458,7 +463,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 				}
 				else
 				{
-					$userData['mailAlternateAddress']	= (array)$values['mail'];
+					$userData['mailAlternateAddress']	= (array)$values[static::MAIL_ATTR];
 					unset($userData['mailAlternateAddress']['count']);
 					unset($userData['mailAlternateAddress'][0]);
 					$userData['mailAlternateAddress']	= array_values($userData['mailAlternateAddress']);
@@ -503,8 +508,8 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 * @param string $_accountStatus
 	 * @param string $_mailLocalAddress
 	 * @param int $_quota in MB
-	 * @param boolean $_forwarding_only=false not used as we have our own addAccount method
-	 * @param string $_setMailbox=null used only for account migration
+	 * @param boolean $_forwarding_only =false not used as we have our own addAccount method
+	 * @param string $_setMailbox =null used only for account migration
 	 * @return boolean true on success, false on error writing to ldap
 	 */
 	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode,
@@ -544,7 +549,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		sort($_mailAlternateAddress);
 		sort($_mailForwardingAddress);
 
-		$newData['mail'] = $_mailLocalAddress;
+		$newData[static::MAIL_ATTR] = $_mailLocalAddress;
 		// does schema have explicit alias attribute
 		if (static::ALIAS_ATTR)
 		{
@@ -559,7 +564,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		// or de we add them - if existing - to mail attr
 		elseif ($_mailAlternateAddress)
 		{
-			self::setAttributePrefix($newData['mail'], $_mailAlternateAddress, static::ALIAS_PREFIX);
+			self::setAttributePrefix($newData[static::MAIL_ATTR], $_mailAlternateAddress, static::ALIAS_PREFIX);
 		}
 		// does schema support to store forwards
 		if (static::FORWARD_ATTR)
@@ -705,8 +710,8 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	function getMailboxes($return_inactive)
 	{
 		$ds = $this->getLdapConnection();
-		$filter = array("(mail=*)");
-		$attrs = array(static::USER_ATTR, 'mail');
+		$filter = array('('.static::MAIL_ATTR.'=*)');
+		$attrs = array(static::USER_ATTR, static::MAIL_ATTR);
 		if (static::MAILBOX_ATTR)
 		{
 			$filter[] = '('.static::MAILBOX_ATTR.'=*)';
@@ -737,7 +742,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		foreach($entries as $entry)
 		{
 			if ($entry[static::USER_ATTR][0] == 'anonymous') continue;	// anonymous is never a mail-user!
-			list($mailbox) = explode('@', $entry[static::MAILBOX_ATTR ? static::MAILBOX_ATTR : 'mail'][0]);
+			list($mailbox) = explode('@', $entry[static::MAILBOX_ATTR ? static::MAILBOX_ATTR : static::MAIL_ATTR][0]);
 			$mailboxes[$entry[static::USER_ATTR][0]] = $mailbox;
 		}
 		return $mailboxes;
@@ -748,7 +753,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 *
 	 * @param array &$attribute on return array with values set and existing values preseved
 	 * @param string|array $values value(s) to set
-	 * @param string $prefix='' prefix to use or ''
+	 * @param string $prefix ='' prefix to use or ''
 	 */
 	protected static function setAttributePrefix(&$attribute, $values, $prefix='')
 	{
@@ -767,8 +772,8 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 * Get values having an optional prefix from a given LDAP attribute
 	 *
 	 * @param array &$attribute only "count" and prefixed values get removed, get's reindexed, if values have been removed
-	 * @param string $prefix='' prefix to use or ''
-	 * @param boolean $remove=true remove returned values from $attribute
+	 * @param string $prefix ='' prefix to use or ''
+	 * @param boolean $remove =true remove returned values from $attribute
 	 * @return array with values (prefix removed) or array() if nothing found
 	 */
 	protected static function getAttributePrefix(&$attribute, $prefix='', $remove=true)

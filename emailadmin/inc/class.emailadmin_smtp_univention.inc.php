@@ -5,8 +5,8 @@
  * @link http://www.egroupware.org
  * @package emailadmin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2014 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id4$
+ * @copyright (c) 2014-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @version $Id$
  */
 
 /**
@@ -23,6 +23,11 @@ class emailadmin_smtp_univention extends emailadmin_smtp_ldap
 	 * Name of schema, has to be in the right case!
 	 */
 	const SCHEMA = 'univentionMail';
+
+	/**
+	 * Attribute with mail address
+	 */
+	const MAIL_ATTR = 'mailprimaryaddress';
 
 	/**
 	 * Attribute to enable mail for an account, OR false if existence of ALIAS_ATTR is enough for mail delivery

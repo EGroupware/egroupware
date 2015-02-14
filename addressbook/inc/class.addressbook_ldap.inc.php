@@ -261,8 +261,8 @@ class addressbook_ldap
 	/**
 	 * constructor of the class
 	 *
-	 * @param array $ldap_config=null default use from $GLOBALS['egw_info']['server']
-	 * @param resource $ds=null ldap connection to use
+	 * @param array $ldap_config =null default use from $GLOBALS['egw_info']['server']
+	 * @param resource $ds =null ldap connection to use
 	 */
 	function __construct(array $ldap_config=null, $ds=null)
 	{
@@ -292,7 +292,7 @@ class addressbook_ldap
 		}
 		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($this->ldap_config['ldap_contact_host']);
 
-		foreach($this->schema2egw as $schema => $attributes)
+		foreach($this->schema2egw as $attributes)
 		{
 			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
 		}
@@ -312,7 +312,7 @@ class addressbook_ldap
 	/**
 	 * connect to LDAP server
 	 *
-	 * @param boolean $admin=false true (re-)connect with admin not user credentials, eg. to modify accounts
+	 * @param boolean $admin =false true (re-)connect with admin not user credentials, eg. to modify accounts
 	 */
 	function connect($admin = false)
 	{
@@ -395,7 +395,7 @@ class addressbook_ldap
 	/**
 	 * reads contact data
 	 *
-	 * @param string/array $contact_id contact_id or array with values for id or account_id
+	 * @param string|array $contact_id contact_id or array with values for id or account_id
 	 * @return array/boolean data if row could be retrived else False
 	*/
 	function read($contact_id)
@@ -444,11 +444,9 @@ class addressbook_ldap
 		{
 			$this->data = is_array($this->data) ? array_merge($this->data,$keys) : $keys;
 		}
-		$contactUID = '';
 
 		$data =& $this->data;
 		$isUpdate = false;
-		$newObjectClasses = array();
 		$ldapContact = array();
 
 		// generate addressbook dn
@@ -494,7 +492,7 @@ class addressbook_ldap
 
 		$contactUID	= $this->data[$this->contacts_id];
 		if (!empty($contactUID) &&
-			($result = ldap_search($this->ds, $base=$this->allContactsDN, $filter=$this->id_filter($contactUID), $attributes)) &&
+			($result = ldap_search($this->ds, $base=$this->allContactsDN, $this->id_filter($contactUID), $attributes)) &&
 			($oldContactInfo = ldap_get_entries($this->ds, $result)) && $oldContactInfo['count'])
 		{
 			unset($oldContactInfo[0]['objectclass']['count']);
@@ -591,8 +589,8 @@ class addressbook_ldap
 			if ($needRecreation)
 			{
 				$result = ldap_read($this->ds, $dn, 'objectclass=*');
-				$oldContact = ldap_get_entries($this->ds, $result);
-				$oldContact = ldap::result2array($oldContact[0]);
+				$entries = ldap_get_entries($this->ds, $result);
+				$oldContact = ldap::result2array($entries[0]);
 				unset($oldContact['dn']);
 
 				$newContact = $oldContact;
@@ -681,8 +679,8 @@ class addressbook_ldap
 		foreach($keys as $entry)
 		{
 			$entry = ldap::quote(is_array($entry) ? $entry['id'] : $entry);
-			if($result = ldap_search($this->ds, $this->allContactsDN,
-				"(|(entryUUID=$entry)(uid=$entry))", $attributes))
+			if(($result = ldap_search($this->ds, $this->allContactsDN,
+				"(|(entryUUID=$entry)(uid=$entry))", $attributes)))
 			{
 				$contactInfo = ldap_get_entries($this->ds, $result);
 				if(@ldap_delete($this->ds, $contactInfo[0]['dn']))
@@ -699,23 +697,25 @@ class addressbook_ldap
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
 	 *
-	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
-	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard='' appended befor and after each criteria
-	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
-	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
-	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param boolean|string $only_keys =true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start =false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).")");
+		unset($only_keys, $extra_cols, $empty, $join, $need_full_no_count);	// not used, but required by function signature
+
 		if (is_array($filter['owner']))
 		{
 			if (count($filter['owner']) == 1)
@@ -738,6 +738,7 @@ class addressbook_ldap
 		);
 		foreach($filter as $key => $value)
 		{
+			$matches = null;
 			if (is_int($key) && preg_match('/^(contact_)?(modified|created)([<=>]+)([0-9]+)$/', $value, $matches))
 			{
 				$append = '';
@@ -952,6 +953,7 @@ class addressbook_ldap
 					break;
 
 				default:
+					$matches = null;
 					if (!is_int($key))
 					{
 						foreach($this->schema2egw as $mapping)
@@ -996,7 +998,7 @@ class addressbook_ldap
 	 * @param string $_filter
 	 * @param array $_attributes
 	 * @param int $_addressbooktype
-	 * @param array $_skipPlugins=null schema-plugins to skip
+	 * @param array $_skipPlugins =null schema-plugins to skip
 	 * @return array/boolean with eGW contacts or false on error
 	 */
 	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null)
@@ -1062,6 +1064,7 @@ class addressbook_ldap
 				$bin = ldap_get_values_len($this->ds,ldap_first_entry($this->ds,$result),'jpegphoto');
 				$contact['jpegphoto'] = $bin[0];
 			}
+			$matches = null;
 			if(preg_match('/cn=([^,]+),'.preg_quote($this->personalContactsDN,'/').'$/i',$entry['dn'],$matches))
 			{
 				// personal addressbook
@@ -1269,6 +1272,7 @@ class addressbook_ldap
 	 */
 	function _inetorgperson2egw(&$contact, $data, $cn='cn')
 	{
+		$matches = null;
 		if(empty($data['givenname'][0]))
 		{
 			$parts = explode($data['sn'][0], $data[$cn][0]);
@@ -1301,7 +1305,8 @@ class addressbook_ldap
 	 */
 	function _posixaccount2egw(&$contact,$data)
 	{
-		static $shadowExpireNow;
+		unset($contact);	// not used, but required by function signature
+		static $shadowExpireNow=null;
 		if (!isset($shadowExpireNow)) $shadowExpireNow = floor((time()-date('Z'))/86400);
 
 		// exclude expired or deactivated accounts
@@ -1369,6 +1374,7 @@ class addressbook_ldap
 	 */
 	function _mozillaorgperson2egw(&$contact,$data)
 	{
+		unset($contact, $data);	// not used, but required by function signature
 		// no special handling necessary, as it supports two distinct attributes: c, cn
 	}
 
