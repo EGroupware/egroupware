@@ -41,6 +41,10 @@
 class accounts_ldap
 {
 	/**
+	 * Name of mail attribute
+	 */
+	const MAIL_ATTR = 'mail';
+	/**
 	 * resource with connection to the ldap server
 	 *
 	 * @var resource
@@ -84,7 +88,7 @@ class accounts_ldap
 		),
 		'user-if-supported' => array(	// these classes get added, if server supports them
 			'mozillaabpersonalpha', 'mozillaorgperson', 'evolutionperson',
-			'univentionperson', array('univentionobject', 'univentionObjectType' => 'users/user'),
+			'univentionperson', 'univentionmail', array('univentionobject', 'univentionObjectType' => 'users/user'),
 		),
 		'group' => array(
 			'top','posixgroup','groupofnames'
@@ -97,10 +101,9 @@ class accounts_ldap
 	 * Classes allowing to set a mail-address for a group and specify the memberaddresses as forwarding addresses
 	 *
 	 * $objectclass => $forward
-	 * $objectclass => [$forward, $extra_attr, $mail_attr, $keep_objectclass]
+	 * $objectclass => [$forward, $extra_attr, $keep_objectclass]
 	 * $forward          : name of attribute to set forwards for members mail addresses, false if not used/required
 	 * $extra_attr       : required attribute (eg. 'uid'), which need to be set, default none
-	 * $mail_attr        : name of attribute for mail-address, if not 'mail'
 	 * $keep_objectclass : true to not remove objectclass, if not mail set
 	 *
 	 * @var array
@@ -110,7 +113,7 @@ class accounts_ldap
 		'dbmailuser' => array('mailforwardingaddress','uid'),
 		'qmailuser' => array('mailforwardingaddress','uid'),
 		'mailaccount' => 'mailalias',
-		'univentiongroup' => array(false, false, 'mailprimaryaddress', true),
+		'univentiongroup' => array(false, false, true),
 	);
 
 	/**
@@ -294,12 +297,11 @@ class accounts_ldap
 			foreach($this->group_mail_classes as $objectclass => $forward)
 			{
 				$extra_attr = false;
-				$mail_attr = 'mail';
 				$keep_objectclass = false;
-				if (is_array($forward)) list($forward,$extra_attr,$mail_attr,$keep_objectclass) = $forward;
+				if (is_array($forward)) list($forward,$extra_attr,$keep_objectclass) = $forward;
 
 				if ($this->ldapServerInfo->supportsObjectClass($objectclass) &&
-					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old[$mail_attr]))
+					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old[static::MAIL_ATTR]))
 				{
 					if ($data_utf8['account_email'])	// setting an email
 					{
@@ -309,7 +311,7 @@ class accounts_ldap
 							$to_write['objectclass'][] = $objectclass;
 						}
 						if ($extra_attr) $to_write[$extra_attr] = $data_utf8['account_lid'];
-						$to_write[$mail_attr] = $data_utf8['account_email'];
+						$to_write[static::MAIL_ATTR] = $data_utf8['account_email'];
 
 						if ($forward)
 						{
@@ -326,7 +328,7 @@ class accounts_ldap
 					}
 					elseif($old)	// remove the mail and forwards only for existing entries
 					{
-						$to_write[$mail_attr] = array();
+						$to_write[static::MAIL_ATTR] = array();
 						if ($forward) $to_write[$forward] = array();
 						if ($extra_attr) $to_write[$extra_attr] = array();
 						if (!$keep_objectclass && ($key = array_search($objectclass,$old['objectclass'])))
@@ -345,11 +347,11 @@ class accounts_ldap
 		{
 			$to_write = $this->_merge_user($to_write,$data_utf8,!$old);
 			// make sure multiple email-addresses in the mail attribute "survive"
-			if (isset($to_write['mail']) && count($old['mail']) > 1)
+			if (isset($to_write[static::MAIL_ATTR]) && count($old[static::MAIL_ATTR]) > 1)
 			{
-				$mail = $old['mail'];
-				$mail[0] = $to_write['mail'];
-				$to_write['mail'] = array_values(array_unique($mail));
+				$mail = $old[static::MAIL_ATTR];
+				$mail[0] = $to_write[static::MAIL_ATTR];
+				$to_write[static::MAIL_ATTR] = array_values(array_unique($mail));
 			}
 			$data['account_type'] = 'u';
 
@@ -430,23 +432,21 @@ class accounts_ldap
 	 */
 	protected function _read_group($account_id)
 	{
-		$mail_attr = 'mail';
 		$group = array();
 		if (!is_object($this->ldapServerInfo))
 		{
 			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
 		}
-		foreach($this->group_mail_classes as $objectclass => $attrs)
+		foreach(array_keys($this->group_mail_classes) as $objectclass)
 		{
 			if ($this->ldapServerInfo->supportsObjectClass($objectclass))
 			{
 				$group['mailAllowed'] = $objectclass;
-				if (is_array($attrs) && $attrs[2]) $mail_attr = $attrs[2];
 				break;
 			}
 		}
 		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
-			array('dn', 'gidnumber', 'cn', 'objectclass', $mail_attr, 'memberuid'));
+			array('dn', 'gidnumber', 'cn', 'objectclass', static::MAIL_ATTR, 'memberuid'));
 
 		$ldap_data = ldap_get_entries($this->ds, $sri);
 		if (!$ldap_data['count'])
@@ -465,7 +465,7 @@ class accounts_ldap
 			'account_lastname'  => lang('Group'),
 			'account_fullname'  => lang('Group').' '.$data['cn'][0],
 			'objectclass'       => array_map('strtolower', $data['objectclass']),
-			'account_email'     => $data[$mail_attr][0],
+			'account_email'     => $data[static::MAIL_ATTR][0],
 			'members'           => array(),
 		);
 
@@ -495,7 +495,7 @@ class accounts_ldap
 	protected function _read_user($account_id)
 	{
 		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.'))',
-			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword','telephonenumber',
+			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn',static::MAIL_ATTR,'userpassword','telephonenumber',
 				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'));
 
 		$ldap_data = ldap_get_entries($this->ds, $sri);
@@ -514,7 +514,7 @@ class accounts_ldap
 			'account_primary_group' => -$data['gidnumber'][0],
 			'account_firstname' => $data['givenname'][0],
 			'account_lastname'  => $data['sn'][0],
-			'account_email'     => $data['mail'][0],
+			'account_email'     => $data[static::MAIL_ATTR][0],
 			'account_fullname'  => $data['cn'][0],
 			'account_pwd'       => $data['userpassword'][0],
 			'account_phone'     => $data['telephonenumber'][0],
@@ -581,7 +581,7 @@ class accounts_ldap
 		$to_write['sn']        = $data['account_lastname'];
 		if (!$new_entry || $data['account_email'])
 		{
-			$to_write['mail']  = $data['account_email'] ? $data['account_email'] : array();
+			$to_write[static::MAIL_ATTR]  = $data['account_email'] ? $data['account_email'] : array();
 		}
 		$to_write['cn']        = $data['account_fullname'] ? $data['account_fullname'] : $data['account_firstname'].' '.$data['account_lastname'];
 
@@ -707,7 +707,7 @@ class accounts_ldap
 								'firstname' => 'givenname',
 								'lastname'  => 'sn',
 								'lid'       => 'uid',
-								'email'     => 'mail',
+								'email'     => static::MAIL_ATTR,
 							);
 							$filter .= '('.$to_ldap[$param['query_type']].'=*'.$query.'*)';
 							break;
@@ -761,7 +761,7 @@ class accounts_ldap
 					$filter = '(&(objectclass=posixaccount)(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter.')';
 					$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				}
-				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp','objectclass','gidNumber'));
+				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn',static::MAIL_ATTR,'shadowExpire','createtimestamp','modifytimestamp','objectclass','gidNumber'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
 
 				$utc_diff = date('Z');
@@ -779,7 +779,7 @@ class accounts_ldap
 							'account_lastname'  => translation::convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
 							'account_expires'   => isset($allVals['shadowexpire']) && $allVals['shadowexpire'][0] ? $allVals['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
-							'account_email'     => $allVals['mail'][0],
+							'account_email'     => $allVals[static::MAIL_ATTR][0],
 							'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
 							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
 							'account_primary_group' => (string)-$allVals['gidnumber'][0],
@@ -954,7 +954,7 @@ class accounts_ldap
 		}
 		$to_ldap = array(
 			'account_lid'   => 'uid',
-			'account_email' => 'mail',
+			'account_email' => static::MAIL_ATTR,
 			'account_fullname' => 'cn',
 		);
 		if (!isset($to_ldap[$which]) || $account_type === 'g') {

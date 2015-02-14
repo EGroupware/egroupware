@@ -10,11 +10,17 @@
  */
 
 /**
- * Univention backend for accounts
+ * Univention backend for addressbook
  *
- * There's currently no difference to LDAP backend
+ * Different mail attribute is only difference to LDAP backend
  */
 class addressbook_univention extends addressbook_ldap
 {
-
+	function __construct($ldap_config = null, $ds = null)
+	{
+		$this->schema2egw['univentionmail'] = array(
+			'email'			=> accounts_univention::MAIL_ATTR,
+		);
+		parent::__construct($ldap_config, $ds);
+	}
 }

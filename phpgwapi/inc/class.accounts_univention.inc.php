@@ -21,6 +21,11 @@
 class accounts_univention extends accounts_ldap
 {
 	/**
+	 * Attribute with mail address
+	 */
+	const MAIL_ATTR = 'mailprimaryaddress';
+
+	/**
 	 * Name of binary to call
 	 */
 	const DIRECTORY_MANAGER_BIN = '/usr/sbin/univention-directory-manager';
