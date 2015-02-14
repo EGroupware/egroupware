@@ -124,7 +124,7 @@ abstract class admin_cmd
 
 		foreach($data as $name => $value)
 		{
-			$this->$name = $name == 'data' && !is_array($value) ? unserialize($value) : $value;
+			$this->$name = $name == 'data' && !is_array($value) ? json_php_unserialize($value) : $value;
 		}
 		//_debug_array($this); exit;
 	}
@@ -243,7 +243,7 @@ abstract class admin_cmd
 		}
 		//echo "got: $message\n";
 
-		if (($value = unserialize($message)) !== false && $message !== serialize(false))
+		if (($value = json_php_unserialize($message)) !== false && $message !== serialize(false))
 		{
 			$message = $value;
 		}
@@ -304,7 +304,7 @@ abstract class admin_cmd
 				$vars[$name] = $this->$name;
 			}
 		}
-		$vars['data'] = serialize($this->data);	// data is stored serialized
+		$vars['data'] = json_encode($this->data);	// data is stored serialized
 
 		admin_cmd::$sql->init($vars);
 		if (admin_cmd::$sql->save() != 0)
@@ -361,7 +361,7 @@ abstract class admin_cmd
 	{
 		if (isset($data['data']) && !is_array($data['data']))
 		{
-			$data['data'] = unserialize($data['data']);
+			$data['data'] = json_php_unserialize($data['data']);
 		}
 		if (!class_exists($class = $data['type']) || $class == 'admin_cmd')
 		{
