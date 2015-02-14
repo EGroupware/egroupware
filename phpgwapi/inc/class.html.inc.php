@@ -1488,7 +1488,91 @@ egw_LAB.wait(function() {
 	}
 
 	/**
-	 * Output content headers for file downloads
+	 * Output content headers for user-content, mitigating risk of javascript or html
+	 *
+	 * Mitigate risk of serving javascript or css from our domain,
+	 * which will get around same origin policy and CSP!
+	 *
+	 * Mitigate risk of html downloads by using CSP or force download for IE
+	 *
+	 * @param resource|string &$content content might be changed by this call
+	 * @param string $path filename or path for content-disposition header
+	 * @param string &$mime ='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
+	 *	on return used, maybe changed, mime-type
+	 * @param int $length =0 content length, default 0 = skip that header
+	 *  on return changed size
+	 * @param boolean $nocache =true send headers to disallow browser/proxies to cache the download
+	 * @param boolean $force_download =true send content-disposition attachment header
+	 * @param boolean $no_content_type =false do not send actual content-type and content-length header, just content-disposition
+	 */
+	public static function safe_content_header(&$content, $path, &$mime='', &$length=0, $nocache=true, $force_download=true, $no_content_type=false)
+	{
+		// mitigate risk of serving javascript or css via webdav from our domain,
+		// which will get around same origin policy and CSP
+		list($type, $subtype) = explode('/', strtolower($mime));
+		if (!$force_download && in_array($type, array('application', 'text')) &&
+			in_array($subtype, array('javascript', 'x-javascript', 'ecmascript', 'jscript', 'vbscript', 'css')))
+		{
+			// unfortunatly only Chrome and IE >= 8 allow to switch content-sniffing off with X-Content-Type-Options: nosniff
+			if (html::$user_agent == 'chrome' || html::$user_agent == 'msie' && html::$ua_version >= 8)
+			{
+				$mime = 'text/plain';
+				header('X-Content-Type-Options: nosniff');	// stop IE & Chrome from content-type sniffing
+			}
+			// for the rest we change mime-type to text/html and let code below handle it safely
+			// this stops Safari and Firefox from using it as src attribute in a script tag
+			// but only for "real" browsers, we dont want to modify data for our WebDAV clients
+			elseif (isset($_SERVER['HTTP_REFERER']))
+			{
+				$mime = 'text/html';
+				if (is_resource($content))
+				{
+					$data = fread($content, $length);
+					fclose($content);
+					$content =& $data;
+					unset($data);
+				}
+				$content = '<pre>'.$content;
+				$length += 5;
+			}
+		}
+		// mitigate risk of html downloads by using CSP or force download for IE
+		if (!$force_download && in_array($mime, array('text/html', 'application/xhtml+xml')))
+		{
+			// use CSP only for current user-agents/versions I was able to positivly test
+			if (html::$user_agent == 'chrome' && html::$ua_version >= 24 ||
+				// mobile FF 24 on Android does NOT honor CSP!
+				html::$user_agent == 'firefox' && !html::$ua_mobile && html::$ua_version >= 24 ||
+				html::$user_agent == 'safari' && !html::$ua_mobile && html::$ua_version >= 536 ||	// OS X
+				html::$user_agent == 'safari' && html::$ua_mobile && html::$ua_version >= 9537)	// iOS 7
+			{
+				$csp = "script-src 'none'";	// forbid to execute any javascript
+				header("Content-Security-Policy: $csp");
+				header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
+				//header("X-Content-Security-Policy: $csp");	// FF <= 22
+				//error_log(__METHOD__."('$options[path]') ".html::$user_agent.'/'.html::$ua_version.(html::$ua_mobile?'/mobile':'').": using Content-Security-Policy: $csp");
+			}
+			else	// everything else get's a Content-dispostion: attachment, to be on save side
+			{
+				//error_log(__METHOD__."('$options[path]') ".html::$user_agent.'/'.html::$ua_version.(html::$ua_mobile?'/mobile':'').": using Content-disposition: attachment");
+				$force_download = true;
+			}
+		}
+		if ($no_content_type)
+		{
+			if ($force_download) self::content_disposition_header(egw_vfs::basename($path), $force_download);
+		}
+		else
+		{
+			self::content_header(egw_vfs::basename($path), $mime, $length, $nocache, $force_download);
+		}
+	}
+
+	/**
+	 * Output content-type headers for file downloads
+	 *
+	 * This function should only be used for non-user supplied content!
+	 * For uploaded files, mail attachmentes, etc, you have to use safe_content_header!
 	 *
 	 * @author Miles Lott originally in browser class
 	 * @param string $fn filename
@@ -1533,21 +1617,16 @@ egw_LAB.wait(function() {
 	 */
 	public static function content_disposition_header($fn,$forceDownload=true)
 	{
-			if ($forceDownload===true)
-			{
-				$attachment = ' attachment;';
-			}
-			else
-			{
-				$attachment = ' inline;';
-			}
-			// limit IE hack (no attachment in Content-disposition header) to IE < 9
-			if(self::$user_agent == 'msie' && self::$ua_version < 9)
-			{
-				$attachment = '';
-			}
+		if ($forceDownload===true)
+		{
+			$attachment = ' attachment;';
+		}
+		else
+		{
+			$attachment = ' inline;';
+		}
 
-			header('Content-disposition:'.$attachment.' filename="'.translation::to_ascii($fn).'"; filename*=utf-8\'\''.rawurlencode($fn));
+		header('Content-disposition:'.$attachment.' filename="'.translation::to_ascii($fn).'"; filename*=utf-8\'\''.rawurlencode($fn));
 	}
 
 	/**

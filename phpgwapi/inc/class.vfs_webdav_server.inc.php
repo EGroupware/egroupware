@@ -648,55 +648,14 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		}
 		if (($ok = parent::GET($options)))
 		{
-			// mitigate risk of serving javascript or css via webdav from our domain,
-			// which will get around same origin policy and CSP
-			list($type, $subtype) = explode('/', strtolower($options['mimetype']));
-			if (!$this->force_download && in_array($type, array('application', 'text')) &&
-				in_array($subtype, array('javascript', 'x-javascript', 'ecmascript', 'jscript', 'vbscript', 'css')))
+			// mitigate risks of serving javascript or css from our domain
+			html::safe_content_header($options['stream'], $options['path'], $options['mimetype'], $options['size'], false,
+				$this->force_download, true);	// true = do not send content-type and content-length header, but modify values
+
+			if (!is_stream($options['stream']))
 			{
-				// unfortunatly only Chrome and IE >= 8 allow to switch content-sniffing off with X-Content-Type-Options: nosniff
-				if (html::$user_agent == 'chrome' || html::$user_agent == 'msie' && html::$ua_version >= 8)
-				{
-					$options['mimetype'] = 'text/plain';
-					header('X-Content-Type-Options: nosniff');	// stop IE & Chrome from content-type sniffing
-				}
-				// for the rest we change mime-type to text/html and let code below handle it safely
-				// this stops Safari and Firefox from using it as src attribute in a script tag
-				// but only for "real" browsers, we dont want to modify data for our WebDAV clients
-				elseif (isset($_SERVER['HTTP_REFERER']))
-				{
-					$options['mimetype'] = 'text/html';
-					$options['data'] = '<pre>'.fread($options['stream'], $options['size']);
-					$options['size'] += 5;
-					fclose($options['stream']);
-					unset($options['stream']);
-				}
-			}
-			// mitigate risk of html downloads by using CSP or force download for IE
-			if (!$this->force_download && in_array($options['mimetype'], array('text/html', 'application/xhtml+xml')))
-			{
-				// use CSP only for current user-agents/versions I was able to positivly test
-				if (html::$user_agent == 'chrome' && html::$ua_version >= 24 ||
-					// mobile FF 24 on Android does NOT honor CSP!
-					html::$user_agent == 'firefox' && !html::$ua_mobile && html::$ua_version >= 24 ||
-					html::$user_agent == 'safari' && !html::$ua_mobile && html::$ua_version >= 536 ||	// OS X
-					html::$user_agent == 'safari' && html::$ua_mobile && html::$ua_version >= 9537)	// iOS 7
-				{
-					$csp = "script-src 'none'";	// forbid to execute any javascript
-					header("Content-Security-Policy: $csp");
-					header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
-					//header("X-Content-Security-Policy: $csp");	// FF <= 22
-					//error_log(__METHOD__."('$options[path]') ".html::$user_agent.'/'.html::$ua_version.(html::$ua_mobile?'/mobile':'').": using Content-Security-Policy: $csp");
-				}
-				else	// everything else get's a Content-dispostion: attachment, to be on save side
-				{
-					//error_log(__METHOD__."('$options[path]') ".html::$user_agent.'/'.html::$ua_version.(html::$ua_mobile?'/mobile':'').": using Content-disposition: attachment");
-					$this->force_download = true;
-				}
-			}
-			if ($this->force_download)
-			{
-				html::content_disposition_header(egw_vfs::basename($options['path']),true);
+				$options['data'] =& $options['stream'];
+				unset($options['stream']);
 			}
 		}
 		return $ok;

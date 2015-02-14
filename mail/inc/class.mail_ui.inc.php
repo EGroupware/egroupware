@@ -2506,7 +2506,7 @@ class mail_ui
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
 		$filename = ($attachment['name']?$attachment['name']:($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part));
-		html::content_header($filename,$attachment['type'],0,True,($_GET['mode'] == "save"));
+		html::safe_content_header($attachment['attachment'], $filename, $attachment['type'], $size=0, True, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
 		$GLOBALS['egw']->common->egw_exit();
@@ -2550,19 +2550,16 @@ class mail_ui
 		}
 
 		$GLOBALS['egw']->session->commit_session();
-		if ($display==false)
+		if (!$display)
 		{
 			$subject = str_replace('$$','__',mail_bo::decode_header($headers['SUBJECT']));
-			html::content_header($subject .".eml",'message/rfc822',0,True,($display==false));
+			html::safe_content_header($message, $subject.".eml", 'message/rfc822', $size=0, true, true);
 			echo $message;
-
-			$GLOBALS['egw']->common->egw_exit();
-			exit;
 		}
 		else
 		{
-			header('Content-type: text/html; charset=iso-8859-1');
-			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES, 'iso-8859-1') .'</pre>';
+			html::safe_content_header($message, $subject.".eml", 'text/html', $size=0, true, false);
+			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES, 'utf-8') .'</pre>';
 		}
 	}
 
