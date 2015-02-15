@@ -652,7 +652,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			html::safe_content_header($options['stream'], $options['path'], $options['mimetype'], $options['size'], false,
 				$this->force_download, true);	// true = do not send content-type and content-length header, but modify values
 
-			if (!is_stream($options['stream']))
+			if (!is_resource($options['stream']))
 			{
 				$options['data'] =& $options['stream'];
 				unset($options['stream']);
