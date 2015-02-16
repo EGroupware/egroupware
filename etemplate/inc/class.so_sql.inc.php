@@ -1145,6 +1145,18 @@ class so_sql
 		if (!is_array($columns))
 		{
 			$columns = preg_split('/, */', $columns);
+
+			// fix columns containing commas as part of function calls
+			for($n = 0; $n < count($columns); ++$n)
+			{
+				$col =& $columns[$n];
+				while (substr_count($col, '(') > substr_count($col, ')') && ++$n < count($columns))
+				{
+					$col .= ','.$columns[$n];
+					unset($columns[$n]);
+				}
+			}
+			unset($col);
 		}
 		foreach($columns as $n => $col)
 		{
