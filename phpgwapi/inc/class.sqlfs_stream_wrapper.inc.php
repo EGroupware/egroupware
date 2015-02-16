@@ -664,7 +664,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * due to problems with recursive directory creation, we have our own here
 	 */
-	private static function mkdir_recursive($pathname, $mode, $depth=0)
+	protected static function mkdir_recursive($pathname, $mode, $depth=0)
 	{
 		$maxdepth=10;
 		$depth2propagate = (int)$depth + 1;
