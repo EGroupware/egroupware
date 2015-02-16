@@ -2553,12 +2553,12 @@ class mail_ui
 		if (!$display)
 		{
 			$subject = str_replace('$$','__',mail_bo::decode_header($headers['SUBJECT']));
-			html::safe_content_header($message, $subject.".eml", 'message/rfc822', $size=0, true, true);
+			html::safe_content_header($message, $subject.".eml", $mime='message/rfc822', $size=0, true, true);
 			echo $message;
 		}
 		else
 		{
-			html::safe_content_header($message, $subject.".eml", 'text/html', $size=0, true, false);
+			html::safe_content_header($message, $subject.".eml", $mime='text/html', $size=0, true, false);
 			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES, 'utf-8') .'</pre>';
 		}
 	}
