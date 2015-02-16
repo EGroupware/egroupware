@@ -91,6 +91,8 @@ class Utils extends StreamWrapper
 				++$n;
 			}
 			if (!$n) break;	// just in case nothing is found, statement will execute just fine
+
+			$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
 		}
 		unset($row);	// not used, as we access bound variables
 		unset($stmt);
