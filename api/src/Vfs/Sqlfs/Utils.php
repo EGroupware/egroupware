@@ -37,18 +37,21 @@ class Utils extends StreamWrapper
 			self::_pdo();
 		}
 		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
-			' FROM '.self::TABLE.' WHERE fs_content IS NOT NULL';
+		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
+			' FROM '.self::TABLE.' WHERE fs_content IS NOT NULL'.
+			' ORDER BY fs_id LIMIT 5 OFFSET :offset';
 
 		$fs_id = $fs_name = $fs_size = $fs_content = null;
+		$n = 0;
 		$stmt = self::$pdo->prepare($query);
 		$stmt->bindColumn(1,$fs_id);
 		$stmt->bindColumn(2,$fs_name);
 		$stmt->bindColumn(3,$fs_size);
-		$stmt->bindColumn(4,$fs_content,\PDO::PARAM_LOB);
+		$stmt->bindColumn(4,$fs_content,PDO::PARAM_LOB);
+		$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
 
-		if ($stmt->execute())
+		while ($stmt->execute())
 		{
-			$n = 0;
 			foreach($stmt as $row)
 			{
 				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
@@ -86,16 +89,17 @@ class Utils extends StreamWrapper
 				fclose($content); unset($content);
 
 				++$n;
-				unset($row);	// not used, as we access bound variables
 			}
-			unset($stmt);
+			if (!$n) break;	// just in case nothing is found, statement will execute just fine
+		}
+		unset($row);	// not used, as we access bound variables
+		unset($stmt);
 
-			if ($n)	// delete all content in DB, if there was some AND no error (exception thrown!)
-			{
-				$query = 'UPDATE '.self::TABLE.' SET fs_content=NULL WHERE fs_content IS NOT NULL';
-				$stmt = self::$pdo->prepare($query);
-				$stmt->execute();
-			}
+		if ($n)	// delete all content in DB, if there was some AND no error (exception thrown!)
+		{
+			$query = 'UPDATE '.self::TABLE.' SET fs_content=NULL WHERE fs_content IS NOT NULL';
+			$stmt = self::$pdo->prepare($query);
+			$stmt->execute();
 		}
 		return $n;
 	}
