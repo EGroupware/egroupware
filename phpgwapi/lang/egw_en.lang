@@ -405,6 +405,7 @@ if the clock is enabled would you like it to update it every second or every min
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
 image directory relative to document root (use / !), example:	common	en	Image directory relative to document root (use / !), example:
 image url	common	en	Image URL
+in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	en	In order to copy to clipboard, you need to allow Flash player by clicking on gray box.\nYou can permanently allow Flash player for EGroupware in your browser settings.
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
 infolog types to sync	common	en	InfoLog types to sync

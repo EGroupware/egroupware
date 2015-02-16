@@ -405,6 +405,7 @@ if the clock is enabled would you like it to update it every second or every min
 if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bilder im Hintergrund Ordner sind können Sie wählen, welches Sie sehen möchten.
 image directory relative to document root (use / !), example:	common	de	Bildverzeichnis entsprechend zur Dokumentroot (benutze / !), Beispiel:
 image url	common	de	Bild URL
+in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	de	Um in die Zwischenablage zu kopieren, müssen Sie Flash Player durch klicken auf die graue Box erlauben.\nSie können Flash Player für EGroupware in den Einstellungen Ihres Browsers auch permanent erlauben.
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
 infolog types to sync	common	de	InfoLog Typen zum synchronisieren
