@@ -582,7 +582,6 @@ var et2_link_entry = et2_inputWidget.extend(
 
 		// Application selection
 		this.app_select = $j(document.createElement("select")).appendTo(this.div)
-			.val(this.options.value.app||'')
 			.change(function(e) {
 				// Clear cache when app changes
 				self.cache = {};
@@ -606,6 +605,11 @@ var et2_link_entry = et2_inputWidget.extend(
 			this.app_select.val(this.options.only_app);
 			this.app_select.hide();
 			this.div.addClass("no_app");
+		}
+		else
+		{
+			// Now that options are in, set to last used app
+			this.app_select.val(this.options.value.app||'');
 		}
 
 		// Search input
