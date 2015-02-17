@@ -30,17 +30,19 @@ class auth_ads implements auth_backend
 	 * password authentication
 	 *
 	 * @param string $username username of account to authenticate
-	 * @param string $passwd corresponding password
-	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @param string $_passwd corresponding password
+	 * @param string $passwd_type ='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
-	function authenticate($username, $passwd, $passwd_type='text')
+	function authenticate($username, $_passwd, $passwd_type='text')
 	{
 		unset($passwd_type);	// not used by required in function signature
 		if (preg_match('/[()|&=*,<>!~]/',$username))
 		{
 			return False;
 		}
+		// harden ldap auth, by removing \000 bytes, causing passwords to be not empty by php, but empty to c libaries
+		$passwd = str_replace("\000", '', $_passwd);
 
 		$adldap = accounts_ads::get_adldap();
 		// bind with username@ads_domain, only if a non-empty password given, in case anonymous search is enabled
@@ -145,7 +147,7 @@ class auth_ads implements auth_backend
 	 * @param int $account_id account id of user whose passwd should be changed
 	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
 	 * @param int $lastpwdchange must be a unixtimestamp or 0 (force user to change pw) or -1 for current time
-	 * @param boolean $return_mod=false true return ldap modification instead of executing it
+	 * @param boolean $return_mod =false true return ldap modification instead of executing it
 	 * @return boolean|array true if account_lastpwd_change successful changed, false otherwise or array if $return_mod
 	 */
 	static function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL, $return_mod=false)
