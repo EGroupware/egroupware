@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
-<!-- $Id: index.xet 48420 2014-09-03 10:55:56Z ralfbecker $ -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
 <overlay>
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">

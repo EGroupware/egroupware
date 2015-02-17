@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
-<!-- $Id: show.xet 48785 2014-09-29 16:34:16Z hnategh $ -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
 <overlay>
 	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
