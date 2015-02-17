@@ -1,17 +1,25 @@
+%1 accessories now resources	resources	fr	%1 accessoire(s) transformé(s) en ressource
+%1 accessories restored	resources	fr	%1 accessoire(s) restauré(s)
+%1 resource(s) %2	resources	fr	%1 ressource(s) %2
+%1 resource(s) %2, %3 failed	resources	fr	%1 ressource(s) %2, %3 en échec
 accessories	resources	fr	Accessoires
 accessories of	resources	fr	Accessoires de
 accessories:	resources	fr	Accessoires:
+accessory of	resources	fr	Accessoire de
 actions	resources	fr	Actions
 add accessory	resources	fr	Ajouter un accessoire
+add group to event participants	resources	fr	Ajouter le groupe en tant que participant aux événements
 add resource	resources	fr	Ajouter une ressource
 add resources	resources	fr	Ajouter des ressources
 administrator	resources	fr	Administrateur
 all categories	resources	fr	Toutes les catégories
+allow ignore conflicts	admin	fr	Autoriser le fait d'ignorer les conflits
 book	resources	fr	Réserver
 book resource	resources	fr	Réserver une ressouce
 book selected resources	resources	fr	Réserver les ressources selectionnées
 book this resource	resources	fr	Réserver cette ressource
 bookable	resources	fr	Réservable
+booked	resources	fr	réservé(s)
 buy this article	resources	fr	Acheter cet article
 buy this resource	resources	fr	Acheter cette ressource
 buyable	resources	fr	Achetable
@@ -35,8 +43,10 @@ description (short)	resources	fr	Description (courte)
 direct booking permissions	resources	fr	Permissions directes de réservation
 don't use vfs (this will need a symlink --> see readme)	resources	fr	Ne pas utilisé VFS (ceci nécessitera un lien symbolique --> voir README)
 edit this entry	resources	fr	Modifier cette entrée
+event start	resources	fr	Début de l'événement
 existing links	resources	fr	Liens existants
 exists	resources	fr	Existe
+expiry	resources	fr	expiration
 export definition to use for nextmatch export	resources	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 export definitition to use for nextmatch export	resources	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports a list of resources to a csv file.	resources	fr	Exporter une liste de ressources dans un fichier csv
@@ -83,6 +93,7 @@ picture source	resources	fr	Source de l'image
 picture type is not supported, sorry!	resources	fr	Type d'image non supporté, désolé !
 pictures or resource	resources	fr	Images ou ressource
 planer	resources	fr	planificateur
+please choose a different time:	resources	fr	Veuillez sélectionner une autre heure :
 prevent deleting	admin	fr	Empêcher la suppression
 prize	resources	fr	Prix
 prizeing information for booking or buying	resources	fr	Information de Prix  pour la réservation ou les achats
@@ -91,7 +102,13 @@ quantity of resource	resources	fr	Quantité de ressources
 quantity:	resources	fr	Quantité :
 read calendar permissions	resources	fr	Lire les permissions de calendrier
 read permissions	resources	fr	Permissions de lecture
+registration confirmed %1	resources	fr	Réservervation confirmée %1
 related links	resources	fr	Liens relatifs
+require confirmation	resources	fr	Confirmation requise
+reserve	resources	fr	Reserve
+resource	resources	fr	Ressource
+resource %1 deleted!	resources	fr	Ressource %1 supprimée !
+resource %1 saved!	resources	fr	Ressource %1 enregistrée !
 resource id	resources	fr	ID de ressource
 resources	common	fr	Ressources
 resources and accessories	resources	fr	Ressources & Accessoires
@@ -99,6 +116,7 @@ resources csv export	resources	fr	Export CSV de ressources
 resources csv import	resources	fr	Import CSV de ressources
 resources list	resources	fr	Liste des ressources
 responsible:	resources	fr	Responsable:
+restored	resources	fr	restauré
 saves entry and exits	resources	fr	Enregistrer et quitter
 select a category	resources	fr	Choisissez une catégorie
 select resource	resources	fr	Choisissez la ressource
@@ -107,6 +125,7 @@ select/deselect all	resources	fr	Tout cocher/décocher
 short description	resources	fr	Description courte
 short description of resource	resources	fr	Description courte de ressource
 show calendar of resource	resources	fr	Montrez le calendrier de la ressource
+simple reservation of a single item	resources	fr	Réservation simple d'un seul élément
 something went wrong by deleting resource	resources	fr	Erreur à la suppression de la ressource !
 something went wrong by saving resource	resources	fr	Erreur à l'enregistrement de la ressource !
 storage	resources	fr	Stockage

@@ -1,4 +1,5 @@
 %1 already exists as a file	filemanager	sk	%1 už existuje ako súbor
+%1 already mounted on %2!	filemanager	sk	%1 je už pripojené na %2!
 %1 directories and %2 files copied.	filemanager	sk	%1 adresárov a %2 súborov bolo skopírovaných.
 %1 directories and %2 files deleted.	filemanager	sk	%1 adresárov a %2 súborov bolo odstránených.
 %1 elements linked.	filemanager	sk	%1 prvkov bolo odkázaných.
@@ -11,7 +12,9 @@
 %1 files copied.	filemanager	sk	%1 súborov bolo skopírovaných.
 %1 files deleted.	filemanager	sk	%1 súborov bolo odstránených.
 %1 files moved.	filemanager	sk	%1 súborov bolo presunutých.
+%1 shares deleted.	filemanager	sk	%1 zdieľaných priečinkov bolo odstránených.
 %1 starts with '%2'	filemanager	sk	%1 začína na '%2'
+%1 successful unmounted.	filemanager	sk	%1 bol úspešne odpojený.
 %1 successful uploaded.	filemanager	sk	%1 bolo úspešne odovzdané.
 %1 the following files into current directory	filemanager	sk	%1 nasledovné súbory do súčasného priečinka
 %1 urls %2 to clipboard.	filemanager	sk	%1 URL %2 do schránky.
@@ -19,8 +22,8 @@
 %d errors while moving, %d files successfully moved.	filemanager	sk	%d chýb pri presúvaní, %d súborov úspešne presunutých.
 %d erros while copying, %d files successfully copied.	filemanager	sk	%d chýb pri kopírovaní, %d súborov úspešne skopírovaných.
 %d erros while moving, %d files successfully moved.	filemanager	sk	%d chýb pri presúvaní, %d súborov úspešne presunutých.
-%d files successfully copied.	filemanager	sk	%d súborov úspešne skopírovaných.
-%d files successfully moved.	filemanager	sk	%d súborov úspešne presunutých.
+%d files successfully copied.	filemanager	sk	%d súborov bolo úspešne skopírovaných.
+%d files successfully moved.	filemanager	sk	%d súborov bolo úspešne presunutých.
 accessrights	filemanager	sk	Prístupové oprávnenia
 acl added.	filemanager	sk	ACL bolo pridané.
 acl deleted.	filemanager	sk	ACL bolo odstránené.
@@ -28,8 +31,10 @@ actions	filemanager	sk	Akcie
 add to clipboard	filemanager	sk	Pridať do schránky
 administrators	filemanager	sk	Správcovia
 all files	filemanager	sk	Všetky súbory
+all types	filemanager	sk	Všetky typy
 allow a maximum of the above configured folderlinks to be configured in settings	admin	sk	povoliť, aby bolo maximum z vyššienastavených priečinkov možné konfigurovať pomocou nastavení
 and all it's childeren	filemanager	sk	a všetkých jeho potomkov
+application fields	filemanager	sk	Polia aplikácie
 applications	common	sk	Aplikácie
 basedirectory	filemanager	sk	Základný priečinok
 can't open directory %1!	filemanager	sk	Nepodarilo sa otvoriť priečinok %1!
@@ -45,6 +50,7 @@ configuration changed.	filemanager	sk	Konfigurácia bola zmenená.
 copied	filemanager	sk	skopírované
 copied %1 to %2	filemanager	sk	Skopírované %1 do %2
 copy	filemanager	sk	Kopírovať
+copy into folder	filemanager	sk	Kopírovať do priečinka
 copy to	filemanager	sk	Kopírovať (kam)
 copy to clipboard	filemanager	sk	Kopírovať do schránky
 could not copy %1 to %2	filemanager	sk	Nepodarilo sa skopírovať %1 do %2
@@ -56,7 +62,7 @@ create a link	filemanager	sk	Vytvoriť odkaz
 create directory	filemanager	sk	Vytvoriť priečinok
 create file	filemanager	sk	Vytvoriť súbor
 create folder	filemanager	sk	Vytvoriť priečinok
-created	filemanager	sk	vytvorené
+created	filemanager	sk	Vytvorené
 created %1,%2	filemanager	sk	Vytvorené %1, %2
 created directory %1	filemanager	sk	Vytvorený priečinok %1
 current directory	filemanager	sk	Súčasný priečinok
@@ -66,6 +72,7 @@ cut to clipboard	filemanager	sk	Vystrihnúť do schránky
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sk	Predvolené správanie je NIE. Odkaz sa nezobrazí, ale stále je možné dostať sa do tohto umiestnenia, alebo nastaviť niektorú oblasť ako štartovací priečinok alebo priečinkový odkaz.
 default document to insert entries	filemanager	sk	Predvolený dokument pre vloženie položiek
 delete these files or directories?	filemanager	sk	Odstrániť tieto súbory alebo priečinky?
+delete these shares?	filemanager	sk	Odstrániť tieto zdieľané priečinky?
 delete this file or directory	filemanager	sk	Odstrániť tento súbor alebo priečinok
 deleted %1	filemanager	sk	Odstránené %1
 directories sorted in	filemanager	sk	Priečinky zoradené v
@@ -76,13 +83,16 @@ directory not found or no permission to access it!	filemanager	sk	Priečinok sa 
 directory successfully created.	filemanager	sk	Priečinok úspešne vytvorený.
 directory with documents to insert entries	filemanager	sk	Priečinok s dokumentami pre vloženie položiek
 disable	filemanager	sk	Vypnúť
+disable versioning for this mountpoint	filemanager	sk	Vypnúť verzie pre tento prípojný bod
 display and modification of content	filemanager	sk	Zobrazenie a úprava obsahu
 display of content	filemanager	sk	Zobrazenie obsahu
+do you want to overwrite existing file %1 in directory %2?	filemanager	sk	Chcete prepísať existujúci súbor %1 v priečinku %2?
 do you want to overwrite the existing file %1?	filemanager	sk	Chcete prepísať existujúci súbor "%1"?
 download	filemanager	sk	Stiahnuť
 edit comments	filemanager	sk	Upraviť poznámky
 edit settings	filemanager	sk	Upraviť nastavenia
 enable	filemanager	sk	Zapnúť
+enable versioning for given mountpoint	filemanager	sk	Zapnúť verzie pre daný prípojný bod
 enter setup user and password	filemanager	sk	Zadajte používateľa a heslo inštalácie
 enter setup user and password to get root rights	filemanager	sk	Ak chcete získať administrátorské oprávnenia, zadajte používateľa a heslo inštalácie
 enter the complete vfs path to specify a fast access link to a folder	filemanager	sk	Zadajte úplnú cestu VFS pre odkaz pre rýchly prístup do priečinku
@@ -90,6 +100,8 @@ enter the complete vfs path to specify your desired start folder.	filemanager	sk
 error adding the acl!	filemanager	sk	Chyba počas pridávania ACL!
 error creating symlink to target %1!	filemanager	sk	Chyba pri vytváraní symbolického odkazu na cieľ %1!
 error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
+error mounting %1 on %2!	filemanager	sk	Chyba počas pripájania %1 na %2!
+error unmounting %1!	filemanager	sk	Chyba počas odpájania %1!
 error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
 error while creating directory.	filemanager	sk	Chyba pri vytváraní priečinku
 everyone	filemanager	sk	Každý
@@ -106,6 +118,7 @@ failed to change permissions of %1!	filemanager	sk	Nepodarilo sa zmeniť oprávn
 failed to create directory!	filemanager	sk	Vytvorenie adresára sa nepodarilo!
 favorites	filemanager	sk	Obľúbené
 file	common	sk	Súbor
+file %1 already exists	filemanager	sk	Súbor %1 už existuje
 file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvoriť.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	sk	Súbor %1 je zrejme priveľký. Kontaktujte svojho správcu systému.
 file deleted.	filemanager	sk	Súbor bol odstránený.
@@ -114,10 +127,14 @@ file or directory not found!	filemanager	sk	Súbor alebo priečinok sa nenašiel
 file successful uploaded.	filemanager	sk	Súbor bol úspešne odovzdaný.
 filemanager	common	sk	Správca Súborov
 filemanager configuration	admin	sk	Nastavenia Správcu súborov
+filemanager fields:	filemanager	sk	Polia správcu súborov:
 filename must not be empty!	filemanager	sk	Názov súboru nesmie byť prázdny!
+files	common	sk	Súbory
+files from links	filemanager	sk	Súbory v odkazoch
 files from subdirectories	filemanager	sk	Súbory z podpriečinkov
 files in this directory	filemanager	sk	Súbory v tomto priečinku
 filesystem check reported no problems.	filemanager	sk	Kontrola súborového systému nenašla žiadne problémy
+finally delete this version	filemanager	sk	Konečne odstrániť túto verziu
 fix reported problems	filemanager	sk	Opraviť objavené problémy
 folder up	filemanager	sk	O priečinok vyššie
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	sk	Túto značku použite pre hromadný list. Obsah, ktorý chcete opakovať, zadajte medzi dve značky.
@@ -133,19 +150,25 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 if you specify an export definition, it will be used when you export*	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 inherited	filemanager	sk	Dedičné
+last accessed	filemanager	sk	Naposledy otvorené
 link	filemanager	sk	Odkaz
 link %1: %2	filemanager	sk	Odkaz %1: %2
+link into folder	filemanager	sk	Odkaz na priečinok
 link target	filemanager	sk	Cieľ odkazu
 link target %1 not found!	filemanager	sk	Cieľ odkazu %1 sa nenašiel!
 location	filemanager	sk	Umiestnenie
 log out as superuser	filemanager	sk	Odhlásiť sa ako supervízor
 mail files	filemanager	sk	Odoslať súbory mailom
+mail paste	filemanager	sk	Prilepiť správu
 max folderlinks	admin	sk	max priečinkových odkazov
 mime type	filemanager	sk	MIME typ
 modified	filemanager	sk	Zmenené
 modified between	filemanager	sk	Zmenené medzi
 modify all subdirectories and their content	filemanager	sk	Upraviť všetky podadresáre a ich obsah
+mount	filemanager	sk	Pripojiť
+mountpoints	filemanager	sk	Prípojné body
 move	filemanager	sk	Presunúť
+move into folder	filemanager	sk	Presunúť do priečinka
 move to	filemanager	sk	Presunúť do
 moved %1 to %2	filemanager	sk	Presunuté %1 do %2
 name of current user, all other contact fields are valid too	filemanager	sk	Meno súčasného používateľa, ostatné kontaktné polia sú tiež platné.
@@ -155,9 +178,13 @@ no files in this directory.	filemanager	sk	Žiadne súbory v tomto priečinku.
 no preview available	filemanager	sk	Nie je k dispozícii žiadny náhľad
 no version history for this file/directory	filemanager	sk	Žiadna história verzií pre tento súbor/priečinok.
 noone	filemanager	sk	Nikto
+older versions or deleted files	filemanager	sk	Staré verzie alebo odstránené súbory
 only owner can rename or delete the content	filemanager	sk	Iba vlastník môže premenovať alebo odstrániť obsah
 open	filemanager	sk	Otvoriť
 operation	filemanager	sk	Operácia
+paste link	filemanager	sk	Prilepiť odkaz
+path %1 not found or not a directory!	filemanager	sk	Cesta %1 sa nenašla alebo nie je priečinkom!
+percentage	filemanager	sk	Percento
 permission denied!	filemanager	sk	Prístup bol odopretý!
 permissions	filemanager	sk	Prístupové oprávnenia
 permissions of %1 changed.	filemanager	sk	Prístupové oprávnenia ku %1 boli zmenené.
@@ -184,23 +211,34 @@ root access stopped.	filemanager	sk	Správcovské oprávnenia odobraté.
 save %1	filemanager	sk	Uložiť %1
 save %1, and go back to file listing	filemanager	sk	Uložiť %1, a vrátiť sa na zoznam súborov
 save as	filemanager	sk	Uložiť ako
+save as zip	filemanager	sk	Uložiť ako ZIP
 save changes	filemanager	sk	Uložiť zmeny
 saved %1	filemanager	sk	Uložené %1
 saving properties failed!	filemanager	sk	Ukladanie vlastností zlyhalo!
+saving setting for document merge failed!	filemanager	sk	Ukladanie nastavení pre zlučovanie dokumentov zlyhalo!
 search for '%1'	filemanager	sk	Hľadať '%1'
 searchstring	filemanager	sk	Hľadaný reťazec
 select action...	filemanager	sk	Vyberte akciu...
 select file to upload in current directory	filemanager	sk	Vyberte súbor, ktorý sa má odovzdať, v súčasnom adresári
+select file(s) from vfs	common	sk	Vyberte súbor(y) z VFS
+setting for document merge saved.	filemanager	sk	Nastavenia e zlučovanie dokumentov boli uložené.
+shared files	filemanager	sk	Zdieľané súbory
+shared with	filemanager	sk	Zdieľané s
 show	filemanager	sk	Ukázať
 show hidden files	filemanager	sk	Ukázať skryté súbory
 show link "%1" in side box menu?	filemanager	sk	Zobraziť odkaz "%1" vnútri ponuky
+show link "users and groups" in side box menu?	filemanager	sk	Zobraziť odkaz "Použivatelia a skupiny" v bočnej ponuke?
 show link "users and groups*" in side box menu?*	filemanager	sk	Zobraziť odkaz "Používatelia a skupiny" v bočnej ponuke?
+show link "your home directory" in side box menu?	filemanager	sk	Zobraziť odkaz "Váš domovský priečinok" v bočnej ponuke?
 show link "your home directory*" in side box menu?*	filemanager	sk	Zobraziť odkaz "Domovský priečinok" v bočnej ponuke?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	sk	Ukázať odkaz na základný priečinok správcu súborov (/) v bočnej ponuke?
 size	filemanager	sk	Veľkosť
+sqlfs statistics	filemanager	sk	Štatistika sqlFS
 start search	filemanager	sk	Hľadaj
 startfolder	filemanager	sk	Štartovací priečinok
+successful mounted %1 on %2.	filemanager	sk	%1 bol úspešne pripojený na %2.
 superuser	filemanager	sk	Supervízor
+superuser (root)	filemanager	sk	Superpoužívateľ (root)
 symlink to %1 created.	filemanager	sk	Symbolický odkaz na %1 vytvorený.
 tag to mark positions for address labels	filemanager	sk	Značka pre označenie pozícií pre označenie adresy
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sk	Predvolený štartovací priečinok vo vašom osobnom priečinku. Používa sa predvolený, ak ponecháte prázdne, cesta neexistuje alebo ak nemáte potrebné prístupové oprávnenia.
@@ -209,8 +247,10 @@ the following document-types are supported:	filemanager	sk	Podporované sú nasl
 the requested path %1 is not available.	filemanager	sk	Požadované cesta %1 nie je dostupná.
 there's already a directory with that name!	filemanager	sk	Priečinok s týmto názvom už existuje!
 there's already a file with that name!	filemanager	sk	Súbor s týmto menom už existuje!
+tile view	filemanager	sk	Dlaždicové zobrazenie
 to overwrite the existing file store again.	filemanager	sk	Ak chcete prepísať existujúci súbor, uložte znovu.
 total files	filemanager	sk	Súborov celkovo
+unmount	filemanager	sk	Odpojiť
 unused space	filemanager	sk	Nevyužitý priestor
 up	filemanager	sk	Hore
 updated comment for %1	filemanager	sk	Aktualizovaná poznámka ku %1
@@ -220,10 +260,13 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used space	filemanager	sk	Použitý priestor
 users and groups	filemanager	sk	Používatelia a skupiny
 versioning	filemanager	sk	Verziovanie
+vfs mounts and versioning	common	sk	VFS pripájanie a verzie
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	sk	Komu povoliť konečné odstránanie odstránených súborov alebo starých verzií súboru:
 wrong username or password!	filemanager	sk	Chybné meno alebo heslo!
 you are not allowed to upload a script!	filemanager	sk	Nemáte dovolené odovzdávať skript!
 you can only grant additional rights, you can not take rights away!	filemanager	sk	Môžete len pridať ďalšie práva, nemôžete práva odobrať!
 you do not have access to %1	filemanager	sk	Nemáte prístup ku %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	sk	Ak chcete zapnúť verzie pre priečinok, musíte sa stať správcom (root)!
 you need to select an owner!	filemanager	sk	Najprv musíte vybrať vlastníka!
 you need to select some files first!	filemanager	sk	Najprv musíte vybrať nejaké súbory!
 you will be redirected to your home directory.	filemanager	sk	Budete presmerovaní do vášho Domovského priečinka.

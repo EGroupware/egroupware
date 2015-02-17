@@ -1,15 +1,26 @@
-accessories of	resources	it	accessori di
+%1 accessories now resources	resources	it	%1 accessori sono adesso risorse
+%1 accessories restored	resources	it	% accessori ripristinati
+%1 resource(s) %2	resources	it	% risorse %2
+%1 resource(s) %2, %3 failed	resources	it	% risorse %2, %3 fallito
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	it	% risorse %2, %3 fallito a causa di permessi insufficienti
+accessories	resources	it	Accessori
+accessories of	resources	it	Accessori di
 accessories:	resources	it	Accessori:
+accessory of	resources	it	Accessrio di
 actions	resources	it	Azioni
 add accessory	resources	it	Aggiungi accessorio
+add group to event participants	resources	it	Aggiungi gruppo ai partecipanti dell'evento
 add resource	resources	it	aggiungi risorsa
 add resources	resources	it	Aggiungi risorse
 administrator	resources	it	Amministratore
 all categories	resources	it	tutte le categorie
+allow ignore conflicts	admin	it	Permetti di ignorare i conflitti
 book	resources	it	Prenota
+book resource	resources	it	Prenota risorsa
 book selected resources	resources	it	prenota risorse selezionate
 book this resource	resources	it	Prenota questa risorsa
 bookable	resources	it	Prenotabile
+booked	resources	it	prenotato
 buy this article	resources	it	Compra questo articolo
 buy this resource	resources	it	Acquista questa risorsa
 buyable	resources	it	Acquistabile
@@ -19,9 +30,12 @@ check all	resources	it	Seleziona tutto
 choose categories admin	resources	it	gestione scelta categorie
 clear selection	resources	it	cancella selezione
 configure access permissions	admin	it	Configura Permessi Accesso
+confirmation email text	resources	it	Testo email di conferma
+confirmed addressbook.	resources	it	Rubrica confermata
 conflict	resources	it	Conflitto
 create new accessory for this resource	resources	it	Crea un nuovo accessorio per questa risorsa
 create new links	resources	it	Crea nuovi collegamenti
+custom etemplate for the contactform	resources	it	eTemplate personalizzato per i modulo di contatto
 custom fields	resources	it	Campi Personalizzati
 days	resources	it	giorni
 delete selected resources	resources	it	elimina risorse selezionate
@@ -31,10 +45,13 @@ description (short)	resources	it	Descrizione (breve)
 direct booking permissions	resources	it	Permessi di prenotazione diretti
 don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare vfs (servirà un symlink --> vedi README)
 edit this entry	resources	it	Modifica questa voce
+event start	resources	it	Inizio evento
 existing links	resources	it	Collegamenti esistenti
 exists	resources	it	Esiste
+expiry	resources	it	scadenza
 export definition to use for nextmatch export	resources	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 export definitition to use for nextmatch export	resources	it	Esporta la definizione da utilizzare per la esportazione
+exports a list of resources to a csv file.	resources	it	Esporta un elenco di risorse in un file CSV
 general	resources	it	Generale
 general informations about resource	resources	it	Informazioni generali sulla risorsa
 gernal resource	resources	it	risorsa generale
@@ -48,6 +65,7 @@ how many of this resource exists	resources	it	Quante di queste risorse esistono
 if you specify an export definition, it will be used when you export	resources	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 implies booking permission	resources	it	implica permesso di prenotazione
 implies read permission	resources	it	implica permesso di lettura
+imports a list of resources from a csv file.	resources	it	Importa un elenco di risorse da un file CSV
 information about storage	resources	it	Informazioni sullo stoccaggio
 informations about the location of resource	resources	it	Informazioni sulla localizzazione della risorsa
 insert	resources	it	Inserisci
@@ -61,9 +79,13 @@ links	resources	it	Collegamenti
 location	resources	it	Luogo
 location of resource	resources	it	Luogo della risorsa
 location:	resources	it	Localizzazione:
+locations / rooms	resources	it	Ubicazioni / stanze
+long description	resources	it	Descrizione lunga
 manage mapping	resources	it	Gestisci la mappatura
 name of resource	resources	it	Nome della risorsa
 name:	resources	it	Nome:
+new accessory	resources	it	Nuovo accessorio
+new resource	resources	it	Nuova risorsa
 no description available	resources	it	nessuna descrizione disponibile
 no matches	resources	it	nessuna corrispondenza
 no resources selected	resources	it	Nessuna risorsa selezionata
@@ -73,16 +95,32 @@ picture source	resources	it	sorgente immagine
 picture type is not supported, sorry!	resources	it	Tipo immagine non supportato, spiacente!
 pictures or resource	resources	it	Immagini della risorsa
 planer	resources	it	pianificatore
+please choose a different time:	resources	it	Per favore selezionare un altro orario
+prevent deleting	admin	it	Prevenzione eliminazioni
+prize	resources	it	Premio
 prizeing information for booking or buying	resources	it	Prezziario per prenotazione o acquisto
 quantity	resources	it	Quantità
 quantity of resource	resources	it	Quantità della risorsa
 quantity:	resources	it	Quantità:
 read calendar permissions	resources	it	Permessi di lettura calendario
 read permissions	resources	it	Permessi di lettura
+registration confirmed %1	resources	it	Registrazione confermata
 related links	resources	it	Collegamenti relativi
+remove accessories before changing accessory of	resources	it	Rimuovi gli accesso prima di cambiare "accessorio di"
+require confirmation	resources	it	Richiedi conferma
+reserve	resources	it	Riserva
+resource	resources	it	Risorsa
+resource %1 deleted!	resources	it	Risorsa %1 rimossa
+resource %1 faild to be deleted!	resources	it	La risorsa %1 non è stata rimossa!
+resource %1 saved!	resources	it	Risorsa %1 salvata!
+resource id	resources	it	ID risorsa
 resources	common	it	Risorse
-resources list	resources	it	elenco risorse
+resources and accessories	resources	it	Risorse e accessori
+resources csv export	resources	it	Esporta CSV risorse
+resources csv import	resources	it	Importa CSV risorse
+resources list	resources	it	Elenco risorse
 responsible:	resources	it	Responsabile:
+restored	resources	it	ripristinate
 saves entry and exits	resources	it	Salva la voce e esce
 select a category	resources	it	Seleziona una categoria
 select resource	resources	it	seleziona risorsa
@@ -91,27 +129,36 @@ select/deselect all	resources	it	seleziona/deseleziona tutto
 short description	resources	it	Descrizione breve
 short description of resource	resources	it	Descrizione breve della risorsa
 show calendar of resource	resources	it	Mostra calendario della risorsa
+simple reservation of a single item	resources	it	Semplice prenotazione di un singolo elemento
 something went wrong by deleting resource	resources	it	Qualcosa non ha funzionato cancellando la risorsa
 something went wrong by saving resource	resources	it	Qualcosa non ha funzionato salvando la risorsa
+storage	resources	it	Immagazzinamento
 storage information	resources	it	Informazioni stoccaggio
 storage information:	resources	it	Informazioni stoccaggio:
+the anonymous user needs add rights for it!	resources	it	L'utente anonimo ha bisogno di tutti i permessi per questo!
 the calendar of this resource	resources	it	Il Calendario di questa risorsa
 this module displays the resources app	resources	it	Questo modulo visualizza l'applicazione risorse
 too many matches	resources	it	Troppe corrispondenze
 unable to link to %1 "%2"	resources	it	Impossibile collegare %1 a "%2"
+unable to process confirmation.	resources	it	Impossibile processare la conferma
 use general resources icon	resources	it	Usa l'icona risorsa generica
 use own picture	resources	it	Usa propria immagine
 use the category's icon	resources	it	Usa l'icona della categoria
-useable	resources	it	utilizzabile
+useable	resources	it	Utilizzabile
 useable:	resources	it	Utilizzabile:
 view accessories for this resource	resources	it	Vedi accessori per questa risorsa
+view calendar	resources	it	Visualizza calendario
 view this entry	resources	it	Vedi questa voce
 web-page of resource	resources	it	Pagina Web della risorsa
 web-site for this resource	resources	it	Pagina Web di questa risorsa
 where to find this resource?	resources	it	Dove trovare questa risorsa?
 which category does this resource belong to?	resources	it	A quale categoria appartiene questa risorsa?
 write permissions	resources	it	Permessi di scrittura
+yes, all users can ignore conflicts	resources	it	Sì, tutti gli utenti possono ignorare i conflitti
 yes, only admins can purge deleted items	admin	it	Sì, solo gli amministratori possono cancellare definitivamente gli elementi
+yes, only users with direct booking permission	resources	it	Sì, solo utenti con permessi di prenotazione diretta
 yes, users can purge their deleted items	admin	it	Sì, gli utenti possono rimuovere definitivamente gli elementi eliminati.
+you are not permitted to delete this resource!	resources	it	Non sei autorizzato alla rimozione di questa risorsa!
+you are not permitted to edit this resource!	resources	it	Non sei autorizzato alla modifica di questa risorsa!
 you are not permitted to get information about this resource!	resources	it	Non hai il permesso di ottenere informazioni su questa risorsa!
 you chose more resources than available	resources	it	Hai scelto più risorse di quelle disponibili

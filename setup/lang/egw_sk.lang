@@ -1,14 +1,18 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	sk	%1 '%2' NEexistuje, je nečitateľné webserverom alebo neobsahuje inštaláciu EGroupware!
+%1 accounts to copy found.	setup	sk	Našlo sa %1 účtov pre kopírovanie.
 %1 already exists in %2.	setup	sk	%1 už existuje v %2.
 %1 created in %2.	setup	sk	%1 bolo vytvorené v %2.
 %1 database %2 on %3 already contains the following tables:	setup	sk	%1 databáza %2 pre %3 už obsahuje nasledovné tabuľky:
 %1 does not exist !!!	setup	sk	%1 neexistuje !!!
+%1 does not exist in %2.	setup	sk	%1 NEexistuje v %2.
 %1 entries modified.	setup	sk	%1 položiek bolo zmenených.
 %1 entries would have been modified.	setup	sk	%1 položiek by sa malo zmeniť.
 %1 is %2%3 !!!	setup	sk	%1 je %2%3 !!!
 %1 is needed by: %2.	setup	sk	%1 je vyžadované: %2
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	sk	%1 je nastavené na %2, NEBUDE sa dať odovzdať alebo priložiť väčší súbor!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	sk	%1 je nastavené na %2. Toto sa NEodporúča pre produkčný systém, nakoľko zobrazené chybové hlásenia môžu obsahovať heslá alebo iné citlivé údaje!
+%1 password set in %2.	setup	sk	%1 hoslo nastavené v %2.
+%1 passwords updated, %3 errors	setup	sk	%1 hesiel aktualizovaných, %3 chýb
 %1 users and %2 groups created, %3 errors	setup	sk	Bolo vytvorených %1 používateľov a %2 skupín, %3 chýb
 %1, %2 or %3 the configuration file.	setup	sk	%1, %2 alebo %3 konfiguračný súbor.
 '%1' is no valid domain name!	setup	sk	'%1' nie je platný názov domény!
@@ -39,9 +43,11 @@ admin first name	setup	sk	Správcovo krstné meno
 admin last name	setup	sk	Správcovo priezvisko
 admin password	setup	sk	Správcovo heslo
 admin password to header manager	setup	sk	Správcovo heslo do Správy hlavičiek
+admin user	setup	sk	Správca - používateľ
 admin user for header manager	setup	sk	Správcov používateľský účet do Správy hlavičiek
 admin username	setup	sk	Správcovo používateľské meno
 admins	setup	sk	Správcovia
+ads dn "%1" not found!	setup	sk	ADS DN "%1" sa NEnašlo!
 after backing up your tables first.	setup	sk	Až po zálohovaní Vašich tabuliek (databáz).
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	sk	Po získaní súboru, uložte ho na miesto header.inc.php a kliknite na "pokračovať".
 all applications	setup	sk	všetky aplikácie
@@ -55,6 +61,7 @@ allow password migration	setup	sk	Povoliť migráciu hesiel
 allow usernames identical to system users?	setup	sk	Dovoliť používateľské mená totožné so systémovými menami?
 allowed migration types (comma-separated)	setup	sk	Povolené typy migrácie (oddelené čiarkou)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	sk	Alternatívne, k doménam sa dá pristupovať aj prihlásením pomocou <i>používateľ@doména</i>
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	sk	Alternatívne, môžete použiť %1Composer%2 pre nainštalovanie všetkých požiadaviek naraz. Jeho stiahnutie a spustenie:
 and is up to date	setup	sk	a je aktuálne
 and reload your webserver, so the above changes take effect !!!	setup	sk	A reloadnite si webserver, aby sa vyššieuvedené zmeny naozaj uplatnili!!!
 app details	setup	sk	Podrobnosti aplikácie
@@ -77,6 +84,7 @@ at your request, this script is going to attempt to upgrade your old tables to t
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	sk	Na vašu žiadosť, skript vykoná deštruktívnu akciu: odstráni existujúce tabuľky a vytvorí ich v novom formáte
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	sk	Na vašu žiadosť, skript vykoná deštruktívnu akciu: odinštaluje všetky aplikácie, čo odstráni všetky existujúce tabuľky a dáta
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	sk	Pokúsiť sa používať správny MIME typ pre FTP namieste predvoleného 'application/octet-stream'
+attributes for new users	setup	sk	Atribúty pre nových používateľov
 authentication / accounts	setup	sk	Overovanie / Účty
 authentication type for application	setup	sk	Typ autentifikácie pre aplikáciu
 authentification mode:	setup	sk	Režim autentifikácie:
@@ -164,6 +172,7 @@ configuration user	setup	sk	Používateľské meno pre Konfiguráciu
 configure now	setup	sk	Konfiguruj teraz
 confirm to delete this backup?	setup	sk	Naozaj odstrániť túto zálohu?
 contain	setup	sk	obsahuje
+context to create users	setup	sk	Kontext pre vytváranie používateľov
 continue	setup	sk	Pokračovať
 continue to the header admin	setup	sk	Pokračovať k Správcovi hlavičiek
 convert	setup	sk	Konvertovať
@@ -213,6 +222,7 @@ db user	setup	sk	DB používateľ
 default	setup	sk	odporúčaná predvolená hodnota
 default file system space per user/group ?	setup	sk	Predvolený priestor v súborovom systéme na používateľa/skupinu?
 delete	setup	sk	Zmazať
+delete all existing accounts from sql database	setup	sk	Odstrániť všetky existujúce účty z SQL databázy
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	sk	Zmazať všetky existujúce SQL účty, skupiny, ACL (prístupové práva) a nastavenia? Zväčša to nie je nevyhnutné.
 delete all my tables and data	setup	sk	Odstráň všetky moje tabuľky a dáta
 delete all old languages and install new ones	setup	sk	Odstráň všetky staré jazyky a nainštaluj nové
@@ -235,9 +245,11 @@ domain-name	setup	sk	názov domény
 don't change, if you already stored files! you will loose them!	setup	sk	Nemeňte, ak už ste uložili nejaké súbory! Stratíte ich!
 dont touch my data	setup	sk	Nedotýkaj sa mojich dát
 download	setup	sk	Stiahnuť
+easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	sk	Najjednoduchším spôsobom pod win2008r2 je pridať rolu "Active Directory Certificate Services" a reštartovať.
 edit current configuration	setup	sk	Upraviť súčasnú konfiguráciu
 edit your existing header.inc.php	setup	sk	Upraviť existujúci header.inc.php
 edit your header.inc.php	setup	sk	Upraviť header.inc.php
+eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	sk	Napr. "CN=Users,DC=domain,DC=com" pre ADS doménu "domain.com"
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	sk	napríklad /egroupware alebo http://domain.com/egroupware, predvolené: %1
 egroupware administration manual	setup	sk	Správcovský manuál EGroupware
 egroupware api needs a database (schema) update from version %1 to %2!	setup	sk	eGroupWare API potrebuje aktualizáciu databázy (schémy) z verzie %1 na %2!
@@ -249,6 +261,7 @@ egroupware domain/instance %1(%2):	setup	sk	EGroupware doména/inštancia %1(%2)
 egroupware is already installed!	setup	sk	EGroupware je už nainštalovaný!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sk	Zdroje EGroupware v '%1' sú neúplné, súbor '%2' chýba !!!
 email (standard maildomain should be set)	setup	sk	Email (musí byť nastavená štandardná poštová doména)
+email-address	setup	sk	E-mailová adresa
 emailadmin profile updated:	setup	sk	Profil EMailAdmin aktualizovaný:
 enable for extra debug-messages	setup	sk	zapnúť extra ladiace správy
 enable mcrypt	setup	sk	Zapnúť MCrypt
@@ -276,8 +289,10 @@ error in admin-creation !!!	setup	sk	Chyba pri vytváraní správcu!!!
 error in group-creation !!!	setup	sk	Chyba pri vytváraní skupiny!!!
 error listing "dn=%1"!	setup	sk	Chyba pri listovaní "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	sk	Chyba pri menení v dn=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	sk	Chyba pri hľadaní "dn=%1" pre "%2"!
 export has been completed!	setup	sk	Export bol dokončený!
 failed to mount backup directory!	setup	sk	Pripojenie zálohovacieho priečinka zlyhalo!
+failed updating user "%1" dn="%2"!	setup	sk	Akalizácia používateľa "%1" dn="%2" zlyhala!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	sk	Zápis do konfiguračného súboru header.inc.php sa NEPODARIL, skontrolujte prístupové práva !!!
 false	setup	sk	NIE
 file	setup	sk	Súbor
@@ -286,13 +301,16 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	sk	názov súboru
 filesystem	setup	sk	Súborový systém
 filesystem (default)	setup	sk	Súborový systém (predvolené)
+folders: sent,trash,drafts,templates,junk	setup	sk	Priečinky: Odoslaná pošta, Odpadkový kôš, Návrhy, Šablóny, Spam
 force selectbox	setup	sk	Vynúť ponuku pre výber
+found, but unknown version	setup	sk	Našlo sa, ale verzia je neznáma
 give admin access to all installed apps	setup	sk	Dať správcovi prístup ku všetkým nainštalovaným aplikáciám
 gives further options	setup	sk	dáva ďalšie možnosti
 go back	setup	sk	Naspäť
 go to	setup	sk	Choď na
 grant access	setup	sk	Povoľ prístup
 group	setup	sk	Skupina
+group %1 uses identical id %2 as user %3!	setup	sk	Skupina %1 používa rovnaké ID %2 ako používateľ %3 !
 group memberships will be migrated too.	setup	sk	Členstvo v skupinách sa taktiež premigruje.
 has a version mismatch	setup	sk	má zmätok vo verziách
 header admin login	setup	sk	Prihlásenie Správcu hlavičiek
@@ -317,6 +335,7 @@ if using ads (active directory)	setup	sk	Ak používate ADS (ActiveDirectory) au
 if using cas (central authentication service):	setup	sk	Ak používate cas (Centrálnu Autentifikačnú Službu):
 if using ldap	setup	sk	Ak používate LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	sk	Ak používate LDAP, chcete spravovať domovský adresár a atribúty login shell?
+if using mail authentication (requires php imap extension!	setup	sk	V prípade použitia mailovej autentifikácie (vyžaduje rozšírenie PHP IMAP!
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	sk	Ak sa dostanete len na docroot, zvoľte <b>Databáza</b> ako miesto ukladania súborov A použite rovnakú cestu ako pre dočasné súbory.
 if you did not receive any errors, your applications have been	setup	sk	Ak ste neobdržali žiadne chyby, vaše aplikácie boli
 if you did not receive any errors, your tables have been	setup	sk	Ak ste neobdržali žiadne chyby, vaše tabuľky boli
@@ -339,6 +358,7 @@ invalid argument '%1' !!!	setup	sk	Neplatý argument '%1' !!!
 invalid ip address	setup	sk	Chybná IP adresa
 invalid mcrypt algorithm/mode combination	setup	sk	Chybná kombinácia Mcrypt algoritmu/režimu
 invalid password	setup	sk	Chybné heslo
+ip or url	setup	sk	IP alebo URL
 is broken	setup	sk	je pokazené
 is disabled	setup	sk	je vypnuté
 is in the webservers docroot	setup	sk	je v docroot-e webservera
@@ -359,6 +379,7 @@ ldap root password	setup	sk	LDAP root heslo
 ldap rootdn	setup	sk	LDAP koreňový dn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sk	LDAP vyhľadávací filter pre účty, predvolený: "(uid=%user)", %domain=eGW-domain
 leave empty to keep current.	setup	sk	Ponechajte prázdne ak chcete zachovať súčasný stav.
+leave empty to use default	setup	sk	Ponechajte prázdne ak chcete použiť predvolenú hodnotu
 limit access	setup	sk	Obmedziť prístup
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	sk	Povoliť prístup k Inštalátoru len pre nasledujúce adresy, siete alebo hostnames (napr. 127.0.0.1,10.1.1,myhost.dnydns.org)
 list availible values	setup	sk	Vypísať dostupné hodnoty
@@ -383,6 +404,7 @@ mcrypt mode (default cbc)	setup	sk	MCrypt režim (predvolený CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sk	Nastavenia MCrypt (vyžaduje mcrypt PHP rozšírenie)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sk	pamäťový limit je nastavený na menej než %1; niektoré aplikácie v EGroupware potrebujú viac než odporúčaných 8M, okrem výnimočných zlyhaní
 migration between egroupware account repositories	setup	sk	Migrácia medzi zdrojmi EGroupware účtov
+migration of group will fail, as sql does not allow identical ids.	setup	sk	Migácia skupín sa nepodarí, pretože SQL NEdovolí rovnaké ID.
 min backup count	setup	sk	Minimálny počet uchovaných záloh (0: všetky / bez limitu)
 minimum account id (e.g. 500 or 100, etc.)	setup	sk	Najmenšie ID účtu (napr. 500 alebo 100, atď.)
 minute	setup	sk	minúta
@@ -395,6 +417,7 @@ mount backup directory to %1	setup	sk	Primontovať zálohový priečinok na %1
 multi-language support setup	setup	sk	Nastavenie mnohojazyčnej podpory
 name of database	setup	sk	Meno databázy
 name of db user egroupware uses to connect	setup	sk	Meno db používateľa, pod ktorým sa EGroupware pripája
+needs extra configuration on dc and webserver!	setup	sk	Je potrebná samostatná konfigurácia pre DC a webserver!
 never	setup	sk	nikdy
 new	setup	sk	Nové
 next run	setup	sk	ďalší prechod
@@ -424,6 +447,7 @@ one month	setup	sk	jeden mesiac
 one week	setup	sk	jeden týždeň
 only add languages that are not in the database already	setup	sk	Iba pridať tie jazyky, ktoré ešte nie sú v databáze
 only add new phrases	setup	sk	Iba pridať nové frázy
+optional, if only authentication and anonymous search is enabled	setup	sk	nepovinné, ak je zapnuté len overovanie a anonymné vyhľadávanie
 or	setup	sk	alebo
 or %1continue to the header admin%2	setup	sk	alebo %1Pokračovať k Správcovi hlavičiek%2
 or http://webdav.domain.com (webdav)	setup	sk	alebo http://webdav.domain.com (WebDAV)
@@ -432,6 +456,7 @@ or you can install a previous backup.	setup	sk	Alebo môžete nainštalovať pre
 password for smtp-authentication	setup	sk	Heslo pre SMTP overovanie
 password needed for domain configuration.	setup	sk	Heslo potrebné pre konfiguráciu domény
 password of db user	setup	sk	Heslo db používateľa
+passwords --> sql	setup	sk	Heslá --> SQL
 passwords did not match, please re-enter	setup	sk	Heslá sa nezhodujú, prosím zadajte znovu
 path (not url!) to your egroupware installation.	setup	sk	Cesta (nie URL!) k vašej inštalácii EGroupware.
 path information	setup	sk	Informácia o ceste
@@ -458,6 +483,7 @@ please login to egroupware and run the admin application for additional site con
 please make the following change in your php.ini	setup	sk	Prosím vykonajte nasledujúcu zmenu v php.ini
 please wait...	setup	sk	Prosím čakajte...
 pop/imap mail server hostname or ip address	setup	sk	Názov (hostname) alebo IP adresa POP/IMAP servera
+port	setup	sk	port
 possible reasons	setup	sk	Možné príčiny
 possible solutions	setup	sk	Možné riešenia
 post-install dependency failure	setup	sk	Poinštalačné zlyhanie závislostí
@@ -480,6 +506,8 @@ rejected lines	setup	sk	Odmietnuté riadky
 remove	setup	sk	Odstrániť
 remove all	setup	sk	Odstrániť všetko
 rename	setup	sk	Premenovať
+required to change passwords	setup	sk	vyžaduje sa pre zmenu hesla
+requires "reset password" privilege, to change passwords!	setup	sk	Na zmenu hesla je potrebné oprávnenie "reset hesla"!
 requires reinstall or manual repair	setup	sk	Vyžaduje reinštaláciu alebo ručnú opravu
 requires upgrade	setup	sk	Vyžaduje aktualizáciu
 resolve	setup	sk	Vyriešiť
@@ -489,6 +517,8 @@ restore finished	setup	sk	obnova dokončená
 restore started, this might take a few minutes ...	setup	sk	obnova sa začala, potrvá to zopár minút...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	sk	Obnova zo zálohy odstráni/prepíše celý obsah databázy. Ste si istí?
 return to setup	setup	sk	Návrat do Inštalátora
+root dn	setup	sk	Koreňové DN
+root dn password	setup	sk	Heslo pre koreňové DN
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	sk	Spustiť aktualizácie databázovej schémy, ak je nevyhnutné: domain(all),[config user(admin)],password
 run installation tests	setup	sk	Vykonať inštalačné testy
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	sk	bezpečný režim je zapnutý, čo je dobre pretože zvyšuje bezpečnosť vašej inštalácie
@@ -516,6 +546,7 @@ select which user(s) will be modified	setup	sk	Vyberte, ktorí používatelia sa
 select which user(s) will have admin privileges	setup	sk	Vyberte, ktorí používatelia dostanú správcovské oprávnenia
 select your old version	setup	sk	Vyberte vašu starú verziu
 selectbox	setup	sk	Ponuka pre výber
+session expired	setup	sk	Relácia vypršala
 session handler class used.	setup	sk	Použitá trieda obsluhy relácií
 sessions handler	setup	sk	Obsluha relácií
 set	setup	sk	nastav
@@ -612,6 +643,7 @@ uninstall all applications	setup	sk	Odinštalovať všetky aplikácie
 uninstalled	setup	sk	odinštalované
 unknown option '%1' !!!	setup	sk	Neznáma voľba '%1' !!!
 update finished.	setup	sk	Aktualizácia ukončená.
+update of %1 in %2 failed !!!	setup	sk	Aktualizácia %1 v %2 zlyhala!!!
 upgrade	setup	sk	Aktualizovať
 upgrade all	setup	sk	Aktualizovať všetko
 upgraded	setup	sk	aktualizované
@@ -620,6 +652,7 @@ upload backup	setup	sk	Nahrať DB zo zálohy
 uploads a backup and installs it on your db	setup	sk	nahrá zálohu a nainštaluje ju do vašej DB
 uploads a backup to the backup-dir, from where you can restore it	setup	sk	nahrá zálohu do zálohového adresára, odkiaľ ju môžete obnoviť
 usage: %1 command [additional options]	setup	sk	Použitie: %1 príkaz [prídavné voľby]
+use %u for username, leave empty to no set	setup	sk	Použite %u pre používateľské meno, alebo ponechajte prázdne ak nechcete nastavovať
 use --create-header to create the configuration file (--usage gives more options).	setup	sk	Použite --create-header na vytvorenie konfiguračného súboru (--usage zobrazí viacero možností).
 use --install to install egroupware.	setup	sk	Použite --install pre inštaláciu EGroupware.
 use --update to do so.	setup	sk	Použite --update
@@ -627,9 +660,16 @@ use cookies to pass sessionid	setup	sk	Používať cookie na odovzdanie ID seden
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	sk	použiť mcrypt na šifrovanie dát sedenia: {vypnúť(predvolené) | zapnúť},[mcrypt-init-vector(predvolené je náhodné vygenerovanie)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	sk	použiť trvalé pripojenie k db: {zapnúť(predvolené) | vypnúť}
 use pure html compliant code (not fully working yet)	setup	sk	Používať čistý HTML kód (zatiaľ nie je plne funkčné)
+use space to separate multiple	setup	sk	na oddelenie položiek použiť medzerník
+use tls or ssl encryption	setup	sk	Použiť šifrovanie TLS alebo SSL
 user	setup	sk	Používateľ
+user "%1" dn="%2" successful updated.	setup	sk	Používateľ  "%1" dn="%2" bol úspešne aktualizovaný.
+user "%1" not found!	setup	sk	Používateľ "%1" sa nenašiel!
 user account prefix	setup	sk	Predpona používateľského účtu
 user for smtp-authentication (leave it empty if no auth required)	setup	sk	Používateľ pre SMTP-autentifikáciu (ak netreba, nechajte prázdne)
+userid@domain eg. u1234@domain	setup	sk	IDpoužívateľa@doména napr. u1234@domain
+username (standard)	setup	sk	používateľské meno (štandard)
+username@domainname (virtual mail manager)	setup	sk	používateľ@doména (Virtual MAIL ManaGeR)
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	sk	Používateľské mená, oddelené čiarkou, ktoré môžu dostať administrátorský prístup na VFS (popri používateľovi setup)
 usernames are casesensitive	setup	sk	Používateľské mená sú citlivé na veľkosť písma
 users choice	setup	sk	Používateľská voľba

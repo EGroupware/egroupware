@@ -67,6 +67,7 @@ add new application	admin	fr	Ajouter une nouvelle application
 add peer server	admin	fr	Ajouter un Serveur Pair
 add sub-category	admin	fr	Ajouter une sous-catégorie
 add user	admin	fr	Ajouter un utilisateur
+add user or group	admin	fr	Ajouter un utilisateur ou un groupe
 admin email	admin	fr	Email de l'administrateur
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fr	Adresses email (séparées par des virgules) des administrateurs à prévenir en cas de blocage d'un compte ou d'une ip (vide pour aucune notification)
 admin name	admin	fr	Nom de l'administrateur
@@ -238,6 +239,7 @@ do you want to move all global subcategories one level down ?	admin	fr	Voulez-vo
 document root (default)	admin	fr	Racine des documents (défaut)
 down	admin	fr	Bas
 download csv	admin	fr	Télécharger en CSV
+each value is a line like label=[javascript]	admin	fr	chaque valeur est une ligne tel que label=[javascript]
 edit account	admin	fr	Modifier le compte
 edit application	admin	fr	Modifier l'application
 edit email settings	admin	fr	Paramétrage des emails
@@ -401,6 +403,7 @@ leave the group untouched and return back to the list	admin	fr	Laisser le groupe
 leave unchanged	admin	fr	Laisser inchangé
 leave without saveing the entry	admin	fr	Quitter sans enregistrer l'entrée
 leaves without saveing	admin	fr	Quitter sans enregistrer
+length	admin	fr	Longueur
 length<br>rows	admin	fr	Longueur<br>lignes
 limit global category to members of a certain group	admin	fr	Limiter la catégorie globale au membre d'un certain groupe
 limit to members of	admin	fr	Limiter aux membres de
@@ -446,6 +449,7 @@ new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laiss
 next run	admin	fr	Prochain démarrage
 no algorithms available	admin	fr	Pas d'algorithme disponible !
 no alternate email address	admin	fr	Pas d'adresse email alternative !
+no default account found!	admin	fr	Pas de compte par défaut trouvé !
 no jobs in the database !!!	admin	fr	Pas de travaux dans la base de données !
 no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur !
 no matches found	admin	fr	Aucune occurrence trouvée !
