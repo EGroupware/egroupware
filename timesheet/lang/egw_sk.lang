@@ -53,6 +53,7 @@ general fields:	timesheet	sk	Všeobecné polia:
 global categories	timesheet	sk	Globálne kategórie
 history	timesheet	sk	História
 history logging	admin	sk	Zaznamenávanie histórie
+html link to the current record	timesheet	sk	HTML odkaz na aktuálny záznam
 id	timesheet	sk	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	sk	Ak tu určíte adresár (plná cesta VFS), %1 zobrazí akciu pre každý dokument. Táto akcia umožňuje stiahnuť vybraný dokument s vloženými údajmi %1.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	sk	Ak zadáte dokument, plnú vfs cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
@@ -74,6 +75,7 @@ links	timesheet	sk	Odkazy
 links and attached files	timesheet	sk	Odkazy a priložené súbory
 links to specified application.  example: {{links/infolog}}	timesheet	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 list of files linked to the current record	timesheet	sk	Zoznam súborov priložených k súčasnému záznamu
+manage mapping	timesheet	sk	Správa mapovania
 max length of the input [, length of the inputfield (optional)]	timesheet	sk	Maximálna dĺžka vstupu [, dĺžka vstupného poľa (voliteľné)]
 modified	timesheet	sk	Zmenený
 modify status	timesheet	sk	Status zmien
@@ -85,6 +87,7 @@ no project	timesheet	sk	Žiadny projekt
 no status	timesheet	sk	Bez stavu
 none: use only free project-names	admin	sk	Žiadne: použiť iba voľné názvy projektov
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	sk	číslo riadku pre viacriadkové vstupné pole alebo riadku v multi-výberovom tlačidle
+old fixed definition	timesheet	sk	Stará pevná definícia
 only admin	timesheet	sk	Iba správca
 only admin can edit this status	timesheet	sk	iba správca môže upraviť tento stav
 or endtime	timesheet	sk	alebo Čas skončenia
@@ -92,6 +95,7 @@ order	timesheet	sk	Poradie
 parent	timesheet	sk	Rodič
 permission denied!!!	timesheet	sk	Prístup bol odmietnutý !!!
 permissions error - %1 could not %2	timesheet	sk	Chyba oprávnení - %1 nemôže %2
+prevent deleting	admin	sk	Zabrániť odstráneniu
 price	timesheet	sk	Cena
 project fields	timesheet	sk	Polia projektu
 projectmanager integration	admin	sk	integrácia s Projektovníkom

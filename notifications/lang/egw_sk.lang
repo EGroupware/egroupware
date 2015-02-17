@@ -1,12 +1,29 @@
+(update in sec. %s)	notifications	sk	(Aktualizácia v sek. %s)
+account:	notifications	sk	Účet:
 all possible notification backends	notifications	sk	Všetky dostupné mechanizmy pre pripomienky
+browser	notifications	sk	Prehliadač
+browser is starting.	notifications	sk	Prehliadač sa načítava
+cancal settings?	notifications	sk	Zrušiť nastavenia?
+cancal?	notifications	sk	Zrušiť?
+certification-information:	notifications	sk	Informácia o certifikácii:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	sk	Skontrolovať obidvoje (najprv skúsiť (aktívny) používateľom definovaný účet, ak nie je, použiť profil správcu pošty)
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	sk	Vyberte si pripomienkovací reťazec. Budete upozornení cez mechanizmy, ktoré sú zahrnuté v tomto reťazci.<br />Upozornenie: Ak je pripomienkovací reťazec označený ako "zakázaný", váš správca nepovolil jeden alebo viacero mechanizmov v reťazci a pripomienky sa prepnú do režimu "E-Mail".
 choose from mailsettings used for notification	admin	sk	Vyberte z nastavení emailu použitých pre upozornenia emailom
 common chains	notifications	sk	Časté reťazce
+connection error.	notifications	sk	Chyba pripojenia.
+connection error. please check connection to server.	notifications	sk	Chyba pripojenia. Prosím skontrolujte spojenie serverom.
+continue to connect?	notifications	sk	Pokračovať v pripájaní?
+cookies are required to login to this site.	notifications	sk	Ak sa chcete prihlásiť na túto stránku, musíte povoliť cookies.
 disabled chains	notifications	sk	Zakázané reťazce
 do not notify me at all	notifications	sk	Vôbec ma neupozorňujte
+domain not found, please check serveraddress.	notifications	sk	Doména sa nenašla, prosím skontrolujte adresu servera.
 e-mail only	notifications	sk	Len E-mailom
 egroupware has notifications for you	notifications	sk	EGroupware má pre vás pripomienky
+egroupware login is starting, please wait.	notifications	sk	Prihlasovanie k EGroupware sa načítava, prosím čakajte.
+egroupware logindomain:	notifications	sk	Prihlasovacia doména EGroupware:
+egroupware logindomains founds, please select.	notifications	sk	Našli sa prihlasovacie domény EGroupware, prosím vyberte si.
+egroupware not found by url or connection lost to server.	notifications	sk	EGroupware sa na tejto URL nenachádza, alebo je prerušené spojenie so serverom.
+egroupware not found by url.	notifications	sk	EGroupware sa na tejto URL nenachádza.
 egroupware-popup and e-mail	notifications	sk	Vyskakovacie okno EGroupware a E-mail
 egroupware-popup and windows-popup	notifications	sk	Vyskakovacie okno EGroupware a Windows
 egroupware-popup backend	admin	sk	Vyskakovací mechanizmus EGroupware
@@ -17,29 +34,58 @@ emailadmin profile only (do not use user defined (active) mail profiles for noti
 enable egroupware-popup backend	admin	sk	Povoliť vyskakovací mechanizmus EGroupware
 enable windows-popup backend	admin	sk	Povoliť Windows vyskakovací mechanizmus
 enabled chains	notifications	sk	Povolené reťazce
+error browser can`t start.	notifications	sk	Chyba: prehliadač nenaštartoval.
+error on loading tray icon	notifications	sk	Chyba pri načítaní ikony pre lištu
+error ssl	notifications	sk	Chyba SSL
+exit	notifications	sk	Zavrieť
 folder	notifications	sk	Priečinok
 from	notifications	sk	Od
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sk	Nakoľko podrobné má byť Vyskakovacie okno EGroupware, keď sa používateľovi posiela pripomienka:<br />málo: len zobraziť zvonček v hornej ponuke - horná ponuka musí byť zapnutá! <br />stredne: presunúť okno pripomienok dopredu<br />veľmi: presunúť okno pripomienok dopredu a použiť funkcie prehliadača, aby na seba upozornil.
+host:	notifications	sk	Stroj:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sk	Do akej miery má byť podrobné Vyskakovacie okno EGroupware, keď sa používateľovi posiela pripomienka:<br />málo: len zobraziť zvonček v hornej ponuke - horná ponuka musí byť zapnutá! <br />stredne: presunúť okno pripomienok dopredu<br />veľmi: presunúť okno pripomienok dopredu a použiť funkcie prehliadača, aby na seba upozornil.
 if set, embedded links get rendered special for external clients	notifications	sk	Ak je nastavené, pripojené odkazy sa vykreslia špeciálne pre vonkajších klientov
+issuer dn:	notifications	sk	DN žiadateľa:
+java desktop notification app	preferences	sk	Javovská desktopová aplikácia pre upozornenia
 linked entries:	common	sk	Pripojené záznamy:
+login aborted, application exit?	notifications	sk	Prihlásenie bolo zrušené, chcete zavrieť aplikáciu?
+login in egroupware:	notifications	sk	Prihlásiť do EGroupware:
 mail backend	admin	sk	Poštová infraštruktúra
 message from	notifications	sk	Správa od
 minutes	notifications	sk	minút
 notification	common	sk	Pripomienka
+notifier	notifications	sk	Pripomína
 notify me by	notifications	sk	Pripomenúť mi pomocou
 optimize e-mails for external mail client	notifications	sk	Optimizovať E-Maily pre vonkajších poštových klientov
+page not found, please check serveraddress.	notifications	sk	Stránka sa nenašla, prosím skontrolujte adresu servera.
+password:	notifications	sk	Heslo:
 permission	notifications	sk	Oprávnenie
+permission denied for notifications application.	notifications	sk	Aplikácia pre pripomienky: prístup bol odopretý.
+please contact your egroupware admin.	notifications	sk	Prosím obráťte sa na svojho správcu EGroupware.
+please enter the url of your egroupware.	notifications	sk	Prosím zadajte URL vášho EGroupware.
+please enter your egroupware username.	notifications	sk	Prosím zadajte svoje používateľské meno pre EGroupware.
+please enter your password	notifications	sk	Prosím zadajte svoje heslo
 poll interval	notifications	sk	Interval delenia
 preferences for notification	notifications	sk	Predvoľby pre Pripomienky
 received	notifications	sk	Doručené
+repeat login?	notifications	sk	Opakovať prihlásnie?
+run application	notifications	sk	otvoriť aplikáciu
+save password	notifications	sk	uložiť heslo
+setting	notifications	sk	Nastavenie
+setting aborted, application exit	notifications	sk	Nastavenie zrušené, aplikácia sa zatvára
 settings	notifications	sk	Nastavenia
 signature	admin	sk	Podpis
+signature added to every change notification	admin	sk	Podpis bol pridaný do kždej pripomienky o zmene
+sorry, your login has expired	notifications	sk	Prepáčte, čas vášho prihlásenia vypršal
 step	notifications	sk	Krok
-this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	sk	Táto pripomienka EGroupware vám bola odoslané E-mailom, pretože vaša nastavená upozorňovacia postupnosť bola zablokovaná správcom. Prosím, vyberte si inú postupnosť vo svojich predvoľbách!
+the server certificate is not a valid trust center certificate!	notifications	sk	Tento certifikát nie je platným certifikátom centra dôvery!
+this egroupware notification has been sent to you by mail because your	notifications	sk	Túto pripomienku EGroupware ste dostali e-mailom pretože vaša
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	sk	Túto pripomienku EGroupware ste dostali e-mailom pretože vaša nastavená upozorňovacia postupnosť bola zablokovaná správcom. Prosím, vyberte si inú postupnosť vo svojich predvoľbách!
+user:	notifications	sk	Používateľ:
 warning	notifications	sk	Pozor
 windows-popup and e-mail	notifications	sk	Vyskakovacie okno Windows a E-mail
 windows-popup backend	admin	sk	Windows vyskakovací mechanizmus
 windows-popup first, if that fails notify me by e-mail	notifications	sk	Najprv vyskakovacie okno Windows, ak sa nepodarí, použiť E-mail
 windows-popup only	notifications	sk	Iba vyskakovacie okno Windows
+you can also use	admin	sk	Môžete tiež použiť
+you have been successfully logged out	notifications	sk	Úspešne ste sa odhlásili
 you've got new mail	notifications	sk	Máte novú správu
 your session could not be verified.	notifications	sk	Vašu reláciu sa nepodarilo overiť.

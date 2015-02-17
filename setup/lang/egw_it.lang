@@ -1,25 +1,65 @@
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	it	%1 '%2' NON esiste, non è leggibile dal server web, oppure non contiene un'installazione di EGroupware!
+%1 already exists in %2.	setup	it	%1 esiste già in %2
+%1 created in %2.	setup	it	%1 creato in %2
+%1 database %2 on %3 already contains the following tables:	setup	it	%1 il database %1 su %3 contiene già le seguenti tabelle:
 %1 does not exist !!!	setup	it	%1 non esiste !!!
+%1 entries modified.	setup	it	%1 voci modificate
+%1 entries would have been modified.	setup	it	%1 voci sarebbero state modificate
 %1 is %2%3 !!!	setup	it	%1 è %2%3 !!!
+%1 is needed by: %2.	setup	it	%1 è richiesto da: %2
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	it	%1 è impostato a %2, non sarà possibile caricare o allegare file più grandi di questo limite!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	it	%1 è impostato a %2. NON è un valore raccomandabile per un sistema in produzione, poiché i messaggi di errore possono contenere password e/o altre informazioni sensibili!
+%1 users and %2 groups created, %3 errors	setup	it	%1 utenti e %2 gruppi creati, %3 errori
+%1, %2 or %3 the configuration file.	setup	it	%1, %2 oppure %3 il file di configurazione
+'%1' is no valid domain name!	setup	it	'%1' non è un nome di dominio valido!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	it	'%1' non è permesso come %2. Argomenti dell'opzione %3!
+'%1' must be integer	setup	it	%1 deve essere un valore intero
 (searching accounts and changing passwords)	setup	it	(ricerca di account e variazione password)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	it	*** NON aggiornare il tuo database tramite setup, perché l'aggiornamento potrebbe essere interrotto dal max_execution_time, che lascerebbe il tuo DB in uno stato irrecuperabile (dati persi) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	it	*** Devi effettuare manualmente le modifiche al tuo php.ini (di solito in /etc su linux) perché eGW sia completamente funzionante !!!
 00 (disable)	setup	it	00 (disabilitato/ consigliato)
 13 (ntp)	setup	it	13 (ntp)
 80 (http)	setup	it	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	it	<b>set di caratteri da utilizzare</b> Usare utf-8 se si vogliono usare lingue con vari set di caratteri.
+==> different group '%1' under that gidnumber %2, not setting memberships!	setup	it	==> gruppo differente '%1' sotto quel numero did %2, le appartenenze al gruppo NON verranno impostate!
+[header-password],[header-user],[new-password],[new-user]	setup	it	[header-password],[header-user],[new-password],[new-user]
+access denied: wrong username or password for manage-header !!!	setup	it	Accesso negato: nome utente o password errati per la gestione del header!
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	it	Accesso negato: nome utente o password errati per la configurazione del dominio '%1(%2)'!
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	it	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encryption{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | crypt | md5}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	it	Esistono Account
 actions	setup	it	Azioni
+activate safe password check	setup	it	Attiva il controllo sicurezza password
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	it	Aggiungi gli utenti auto-creati a questo gruppo (sarà utilizzato 'Default'se il campo è vuoto)
+add new database instance (egw domain)	setup	it	Aggiungi istanza database (dominio EPL)
+add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	it	aggiungi o modifica un dominio: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
+adding, editing or deleting an egroupware domain / database instance:	setup	it	Aggiungi, modifica o rimuovi una istanza database di EPL
+additional options and there defaults (in brackets)	setup	it	Opzioni aggiuntive e i loro valori predefiniti (fra parentesi)
 additional settings	setup	it	Impostazioni aggiuntive
+admin account successful created.	setup	it	Account amministrativo creato con successo
+admin email address	setup	it	Email amministratore
 admin first name	setup	it	Nome amministratore
 admin last name	setup	it	Cognome amministratore
 admin password	setup	it	Password amministratore
 admin password to header manager	setup	it	Password amministratore per Header manager
+admin user	setup	it	Utente amministrativo
 admin user for header manager	setup	it	User amministratore per Header manager
 admin username	setup	it	Username amministratore
 admins	setup	it	Amministratori
+after backing up your tables first.	setup	it	Dopo aver prima effettuato il backup delle tabelle del DB.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	it	Dopo aver recuperato il file, mettilo al suo posto come header.inc.php. Poi, clicca "continua".
-all applications	setup	it	tutte le applicazioni
+all applications	setup	it	Tutte le applicazioni
+all core tables and the admin and preferences applications	setup	it	tutti le tabelle principali e le preferenze delle applicazioni
+all exit codes of the command line interface	setup	it	Tutti i codici di uscita della CLI
+all hooks registered	setup	it	Tutti gli agganci registrati
+all languages (incl. not listed ones)	setup	it	Tutte le lingue (incluse quelle non elencate)
 all users	setup	it	Tutti gli utenti
+allow authentication via cookie	setup	it	Permetti autenticazione via cookie
+allow password migration	setup	it	Permetti migrazione password
+allow usernames identical to system users?	setup	it	Permetti nomi utente identici a utenti di sistema
+allowed migration types (comma-separated)	setup	it	Tipi di migrazione permessi (separati da virgola)
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	it	Alternativamente i domini possono essere acceduti con <i>nomeutente@domain</i>.
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	it	Alternativamente si può usare %1Composer%2  per installare tutti i requisiti in una volta. Scaricare e eseguire:
+and is up to date	setup	it	ed è aggiornato
 and reload your webserver, so the above changes take effect !!!	setup	it	E riavvia il tuo webserver, così che le modifiche abbiano effetto !!!
 app details	setup	it	Dettagli applicazione
 app install/remove/upgrade	setup	it	installa/rimuovi/aggiorna applicazione
@@ -30,33 +70,73 @@ application management	setup	it	Gestione Applicazioni
 application name and status	setup	it	Nome Applicazione e Stato
 application name and status information	setup	it	Nome Applicazione e Informazioni di Stato
 application title	setup	it	Titolo Applicazione
+application: %1, file: %2, line: "%3"	setup	it	Applicazione: %1, File: %2, Riga: "%3"
 are you sure you want to delete your existing tables and data?	setup	it	Sei sicuro di voler cancellare i dati e le tabelle esistenti?
 are you sure?	setup	it	SEI SICURO?
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di creare il database e di assegnare i privilegi corretti al suo utente
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di aggiornare le tue vecchie applicazioni alla versione corrente
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di aggiornare le tue vecchie tabelle al nuovo formato
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di cancellare le tabelle esistenti e di ricrearle nel nuovo formato
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di disinstallare tutte le tue applicazioni, cosa che canceller&agrave; tutte le tue tabelle e dati esistenti
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	it	In base alla tua richiesta, questa procedura cercherà di creare il database e di assegnare i privilegi corretti al suo utente
+at your request, this script is going to attempt to install a previous backup	setup	it	Alla tua richiesta lo script tenterà di installare un vecchio backup
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	it	Alla tua richiesta, lo script tenterà di installare le tabelle principali e le preferenze delle applicazioni
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	it	In base alla tua richiesta, questa procedura cercherà di aggiornare le tue vecchie applicazioni alla versione corrente
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	it	In base alla tua richiesta, questa procedura cercherà di aggiornare le tue vecchie tabelle al nuovo formato
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	it	In base alla tua richiesta, questa procedura cercherà di cancellare le tabelle esistenti e di ricrearle nel nuovo formato
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	it	In base alla tua richiesta, questa procedura cercherà di disinstallare tutte le tue applicazioni, cosa che cancellerà tutte le tue tabelle e dati esistenti
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	it	Cerca di usare il mimetype corretto per l'FTP invece di quello di predefinito 'application/octet-stream'
 authentication / accounts	setup	it	Autenticazione / Account
+authentication type for application	setup	it	Tipo di autenticazione per applicazione
+authentification mode:	setup	it	Modalità di autenticazione:
 auto create account records for authenticated users	setup	it	Crea automaticamente gli account per gli utenti autenticati
+auto login anonymous user	setup	it	Login aumatico utente anonimo
 auto-created user accounts expire	setup	it	Gli account utente auto-creati scadono
 available version	setup	it	Versione Disponibile
 back to the previous screen	setup	it	Indietro alla schermata precedente
 back to user login	setup	it	Indietro al Login Utente
+back's up your db now, this might take a few minutes	setup	it	efffettua il backup del tuo DB adesso, potrà richiedere alcuni minuti
+backup '%1' deleted	setup	it	Backup '%1' rimosso
+backup '%1' renamed to '%2'	setup	it	Backup '%1' rinominato a '%2'
+backup '%1' restored	setup	it	Backup '%1' ripristinato
+backup and restore	setup	it	Backup e ripristino
 backup directory %1 mounted as %2	setup	it	Cartella di backup %1 montata come %2
+backup failed	setup	it	Backup fallito!
+backup files (needs ziparchive)	setup	it	Effettua anche il backup  dei file (richiede ZipArchive)
+backup finished	setup	it	Backup terminato
+backup housekeeping	setup	it	I backup con nome standard possono essere rimossi automaticamente. Rinominando i file di backup, si escludono dalla rimozione automatica
+backup min count	setup	it	Numero minimo di backup
+backup now	setup	it	Effettua backup adesso
+backup sets	setup	it	Set di backup
+backup skipped!	setup	it	Backup saltato!
+backup started, this might take a few minutes ...	setup	it	Il backup è stato avviato, potrebbero essere richiesti alcuni minuti alla conclusione...
+base dn "%1" not found!	setup	it	Il DN di base non è stao trovato!
 because an application it depends upon was upgraded	setup	it	perché un'applicazione da cui dipende è stata aggiornata
 because it depends upon	setup	it	perché dipende da
 because it is not a user application, or access is controlled via acl	setup	it	perché non si tratta di un'applicazione dell'utente, o l'accesso è controllato tramite ACL
 because it requires manual table installation, <br />or the table definition was incorrect	setup	it	perrché richiede un'installazione manuale delle tabelle, <br />o la definizione delle tabelle non è corretta
 because it was manually disabled	setup	it	perché è stato disabilitato manualmente
+because its sources are missing	setup	it	Poiché i suoi sorgenti mancano
 because of a failed upgrade or install	setup	it	a causa di un aggiornamento o installazione fallita
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	it	poich&eacute; &egrave; avvenuto un aggiornamento non corretto, o il database &egrave; pi&ugrave; recente della versione installata di questa applicazione
-because the enable flag for this app is set to 0, or is undefined	setup	it	poich&eacute; il valore di abilitazione di questa applicazione &egrave; impostato a 0, o &egrave; non definito
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	it	poiché è avvenuto un aggiornamento non corretto, o il database è più recente della versione installata di questa applicazione
+because the enable flag for this app is set to 0, or is undefined	setup	it	poiché il valore di abilitazione di questa applicazione è impostato a 0, o è non definito
 bottom	setup	it	in fondo
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	it	E' estremamente raccomandato effettuare il backup per evitare problemi se lo script danneggiasse dei dati. Gli script automatici possono facilmente distruggere i dati!
+by redirecting to https	setup	it	Reindirizzando a https
+by rewriting links to https (allows eg. sitemgr to run on http)	setup	it	Riscrivendo i collegamenti a https
+ca certificate	setup	it	Certificato CA
+can not connect to %1 database %2 on host %3 using user %4!	setup	it	Non possono connettermi al database %2 sull'host %3 usando l'utente %4!
+can not connect to ldap server on host %1 using dn %2!	setup	it	Non posso connettermi a LDAP sull'host %1 usando DN %2!
+can not create %1 database %2 on %3 for user %4!	setup	it	Impossibile creare ildatabase %2 su %3 per l'utente %4!
+can not create dn %1!	setup	it	Non posso creare il DN %1!
+can not instancate accounts object for %1	setup	it	Non poso istanziare gli oggetti di account pe%1
+can only be change via setup!	setup	it	Può essere modificato solo via setup!
 cancel	setup	it	Annulla
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	it	Non posso creare header.inc.php a causa di permessi insufficienti. Puoi invece %1 o %2 il file.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	it	nome host server CAS: esempio sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	it	porta server CAS
+cas server uri:	setup	it	URI server CAS
+certificate (pem or ca):	setup	it	Certificato(PEM o CA):
 change system-charset	setup	it	Cambia set di caratteri
 charset	setup	it	utf-8
+charset to convert to	setup	it	Set di caratteri a cui convertire
+charsets used by the different languages	setup	it	Set di caratteri usati dalle diverse lingue
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	it	Il controllo può essere effettuato solo se chiamato attraverso un web server, poiché il userid/nome del server web non sono noti
 check installation	setup	it	Controlla installazione
 check ip address of all sessions	setup	it	controlla l'indirizzo ip di tutte le sessioni
 checking php.ini	setup	it	Esecuzione controllo di php.ini
@@ -105,7 +185,7 @@ default	setup	it	Predefinito
 default file system space per user/group ?	setup	it	Spazio sul filesystem predefinito per utente/gruppo ?
 delete	setup	it	Cancella
 delete all my tables and data	setup	it	Cancella tutte le mie tabelle e i dati
-delete all old languages and install new ones	setup	it	Cancella tutte le lingue gi&agrave; presenti e installa quelle nuove
+delete all old languages and install new ones	setup	it	Cancella tutte le lingue già presenti e installa quelle nuove
 deleting tables	setup	it	Cancella Tabelle
 demo server setup	setup	it	Setup del server dimostrativo
 deny access	setup	it	Nega accesso
@@ -140,7 +220,7 @@ has a version mismatch	setup	it	ha un conflitto di versione
 hooks deregistered	setup	it	collegamenti deregistrati
 hooks registered	setup	it	collegamenti registrati
 host information	setup	it	Informazioni host
-however, the application is otherwise installed	setup	it	Tuttavia, l'applicazione &egrave; altrimenti installata
+however, the application is otherwise installed	setup	it	Tuttavia, l'applicazione è altrimenti installata
 if no acl records for user or any group the user is a member of	setup	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	it	Se l'applicazione non ha tabelle definite, selezionando aggiorna il problema dovrebbe risolversi
 if using ldap	setup	it	Se utilizzi LDAP
@@ -159,7 +239,7 @@ invalid argument '%1' !!!	setup	it	Argomento '%1' non valido
 invalid ip address	setup	it	Indirizzo IP errato
 invalid password	setup	it	Password errata
 is broken	setup	it	non funziona
-is disabled	setup	it	&egrave; disabilitato
+is disabled	setup	it	è disabilitato
 ldap accounts context	setup	it	contesto account LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	it	prefisso predefinito per le homedirectory LDAP (es. /home per /home/username)
 ldap default shell (e.g. /bin/bash)	setup	it	shell predefinita LDAP (es: /bin/bash)
@@ -197,7 +277,7 @@ not ready for this stage yet	setup	it	Non ancora pronto per questo passaggio
 not set	setup	it	non impostato
 note: you will be able to customize this later	setup	it	Nota: Potrai personalizzarlo dopo
 ok	setup	it	OK
-once the database is setup correctly	setup	it	Una volta che il database sar&agrave; impostato correttamente
+once the database is setup correctly	setup	it	Una volta che il database sarà impostato correttamente
 one month	setup	it	un mese
 one week	setup	it	una settimana
 only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono già presenti nel database
@@ -275,8 +355,8 @@ text entry	setup	it	Voce di testo
 the file	setup	it	il file
 the tables	setup	it	le tabelle
 this might take a while, please wait ...	setup	it	Questa operazione può richiedere del tempo, prego attendere...
-this program will help you upgrade or install different languages for egroupware	setup	it	Questo programma ti aiuter&agrave; ad aggiornare o ad installare lingue differenti per eGroupWare
-this stage is completed<br />	setup	it	Questo passaggio &egrave; stato completato<br />
+this program will help you upgrade or install different languages for egroupware	setup	it	Questo programma ti aiuterà ad aggiornare o ad installare lingue differenti per eGroupWare
+this stage is completed<br />	setup	it	Questo passaggio è stato completato<br />
 true	setup	it	Vero
 two weeks	setup	it	due settimane
 uninstall	setup	it	disinstalla
@@ -293,13 +373,13 @@ version	setup	it	versione
 version mismatch	setup	it	Incompatibilità versione
 view	setup	it	Vedi
 warning!	setup	it	Attenzione!
-we will automatically update your tables/records to %1	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
+we will automatically update your tables/records to %1	setup	it	Aggiornerò automaticamente le tue tabelle/dati alla %1
 would you like to show each application's upgrade status ?	setup	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
 write	setup	it	Scrivi
 yes	setup	it	Sì
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di eGroupWare.<br />Queste versioni non sono pi&ugrave; supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br /> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br />e poi aggiornare da l&igrave; usando questa versione.
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di eGroupWare.<br />Queste versioni non sono più supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br /> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br />e poi aggiornare da lì usando questa versione.
 you appear to be running version %1 of egroupware	setup	it	Sembra che tu sta utilizzando la versione %1 di eGroupWare
-you are ready for this stage, but this stage is not yet written.<br />	setup	it	Sei pronto per questo passaggio, ma questa procedura non &egrave; ancora stata scritta.<br />
+you are ready for this stage, but this stage is not yet written.<br />	setup	it	Sei pronto per questo passaggio, ma questa procedura non è ancora stata scritta.<br />
 you do not have any languages installed. please install one now <br />	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br />
 you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	it	Dovresti disinstallare e poi reinstallare, oppure tentare riparazioni manuali

@@ -10,7 +10,8 @@
 (0-23)	importexport	sk	(0-23)
 (0-6, 0=sun)	importexport	sk	(0-6, 0=Ne)
 *contact id cannot be changed by import	importexport	sk	*ID kontaktu sa nedá zmeniť importom
-addressbook csv import	importexport	sk	CSV import Adresára
+addressbook csv import	importexport	sk	Adresár - import CSV
+addressbook vcard import	importexport	sk	Adresár - import vCard
 admin disabled exporting	importexport	sk	Export zakázaný správcom
 all encodings	importexport	sk	Všetky kódovania
 all users	importexport	sk	Všetci používatelia
@@ -27,8 +28,12 @@ choose a plugin	importexport	sk	Zvoľte zásuvný modul (plugin)
 choose an application	importexport	sk	Zvoľte aplikáciu
 choose fields to export	importexport	sk	Vyberte ktoré polia exportovať
 choose seperator and charset	importexport	sk	Vyberte si oddeľovač a znakovú sadu
+column mismatch.  expected %1 columns, your file has %2.	importexport	sk	Zmätok v stĺpcoch. Očakával som %1 stĺpcov, váš súbor má %2.
+column mismatch: %1 should be %2, not %3	importexport	sk	Zmätok v stĺpcoch: %1 má byť %2, nie %3
 condition	importexport	sk	Podmienka
 copied	importexport	sk	Skopírované.
+create a <a href="%1">new definition</a> for this file	importexport	sk	Vytvoriť  <a href="%1">novú definíciu</a> pre tento súbor
+create export	importexport	sk	Vytvoriť export
 created	importexport	sk	vytvorené
 csv field	importexport	sk	pole CSV
 database values	importexport	sk	Databázové hodnoty
@@ -37,9 +42,14 @@ define imports|exports	common	sk	Definovať importy|exporty
 definition	importexport	sk	Definícia
 delete all selected definitions	importexport	sk	Odstrániť VŠETKY vybrané definície
 deleted	importexport	sk	Odstránené.
+delimiter	importexport	sk	Oddeľovač
 duplicate name, please choose another.	importexport	sk	Duplicitný názov, prosím zvoľte iný.
 edit conditions	importexport	sk	Upraviť podmienky
+edit definition <a href="%1">%2</a> to match your file	importexport	sk	Upravte definíciu <a href="%1">%2</a> aby sa zosúladila s vaším súborom
+edit your file to match the definition:	importexport	sk	Upravte váš súbor aby sa zosúladil s definíciou:
+encoding mismatch.  expected %1 file, you uploaded %2.<br />\n	importexport	sk	Zmätok v kódovaní. Očakavaný súbor %1, odovzdali ste %2.<br />\n
 errors	importexport	sk	Chyby
+execute	importexport	sk	Vykonať
 expert options	importexport	sk	Možnosti pre expertov
 export	importexport	sk	Export
 export all selected definitions	importexport	sk	Exportovať VŠETKY vybrané definície
@@ -47,20 +57,24 @@ export data as	importexport	sk	Exportovať údaje ako
 export definition to use for nextmatch export	preferences	sk	Exportná definícia pre použitie v exporte
 export spreadsheet	importexport	sk	Export tabuľky
 exported	importexport	sk	Exportované.
+extra %1	importexport	sk	Extra %1
 extra charsets for import / export	importexport	sk	Extra znakové sady pre import / export
 extra encodings	importexport	sk	Extra kódovania
 false	importexport	sk	Nepravda
 field labels	importexport	sk	Označenia polí
 field names	importexport	sk	Názvy polí
 fieldseperator	importexport	sk	Oddeľovač polí
+filters	importexport	sk	Filtre
 finish	importexport	sk	Dokončiť
 from definition	importexport	sk	Z definície
 general	preferences	sk	Hlavné
 general fields:	preferences	sk	Hlavné polia:
 header lines to skip	importexport	sk	Preskočiť riadky hlavičky:
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	sk	Akým spôsobom zlúčiť s xistujúcimi údajmi? Pre každý záznam, všetky podmienky sa vyhodnocujú od vrchu, alebo zastavia. Ak chcete slepý vstup, ponechajte prázdne.
 human friendly values	importexport	sk	Hodnoty čitateľné pre človeka
 if you specify an export definition, it will be used when you export	preferences	sk	Ak určíte exportnú definíciu, použije sa pri exporte.
 import	importexport	sk	Import
+import aborted	importexport	sk	Import bol zrušený
 import definition	importexport	sk	Importná definícia
 import definitions	common	sk	Definície importu
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	sk	Importovať definície (Pozor: Existujúce definície so zhodnými názvami sa prepíšu!!)
@@ -76,6 +90,9 @@ lock expired on previous run	importexport	sk	Zámok vypršal pri predchádzajúc
 manage mapping	importexport	sk	Správa mapovania
 next	importexport	sk	Ďalšie
 next run	importexport	sk	Ďalší prechod
+no custom field "%1" for %2.	importexport	sk	Nie je tu používateľské pole "%1" pre %2.
+no matches	importexport	sk	Žiadne zhody
+no matching records	importexport	sk	Žiadne záznamy spĺňajúce podmienky
 no notifications	importexport	sk	Rôzne
 no records selected	importexport	sk	Neboli vybrané žiadne záznamy
 none found	importexport	sk	Nenašlo sa
@@ -83,6 +100,7 @@ old fixed definition	preferences	sk	Stará pevná definícia
 please select file to import	importexport	sk	Prosím vyberte súbor pre import
 plugin	importexport	sk	Zásuvný modul
 preview	importexport	sk	Náhľad
+preview not supported by %1	importexport	sk	Náhľad nie je podporovaný %1
 previous	importexport	sk	Predchádzajúce
 problems during import:	importexport	sk	Problémy počas importu:
 save as definition	importexport	sk	Uložiť ako definíciu
@@ -103,10 +121,13 @@ target	importexport	sk	Cieľ
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	sk	Príklady cieľa: vfs://default/home/user/export.csv alebo http://server.net/prices.csv
 target field	importexport	sk	Cieľové pole
 test only	importexport	sk	Iba odskúšať
+too many matches	importexport	sk	Priveľa zhôd
 translation	importexport	sk	Preklad
 true	importexport	sk	Pravda
 try	importexport	sk	Odskúšať
 unable to delete	importexport	sk	Nedá sa odstrániť
+unable to link to %1 "%2"	importexport	sk	Nedá sa vytvoriť odkaz na %1 "%2"
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	importexport	sk	Nedá sa vytvoriť odkaz na %3 pomocou používateľského poľa "%1":  "%4". %2 zhôd.
 unable to schedule	importexport	sk	Nedá sa plánovať.
 update categories	importexport	sk	Aktualizovať kategórie
 use default	importexport	sk	Použiť predvolené
@@ -119,4 +140,5 @@ users allowed to share their own definitions	importexport	sk	Používatelia smú
 warnings	importexport	sk	Varovania
 which useres are allowed for this definition	importexport	sk	Ktorí používatelia sú oprávnení pre túto definíciu
 which users are allowed to use this definition	importexport	sk	Ktorí používatelia majú dovolené použiť túto definíciu
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	sk	Možno by ste mali najprv <a href="%1" target="_new">zálohovať</a>.
 you need to select an app and format first!	importexport	sk	Najprv potrebujete vybrať aplikáciu a formát!

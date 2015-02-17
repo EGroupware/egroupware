@@ -177,6 +177,7 @@ directory with documents to insert contacts	addressbook	fr	Répertoire avec les 
 display contact	addressbook	fr	Afficher le contact
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	fr	Affiche un rappel pour les anniversaires sur la page d'accueil (page qui s'affiche quand vous entrez dans eGroupWare ou quand vous cliquez sur l'icône Accueil)
 distribution list deleted	addressbook	fr	La liste de diffusion est supprimée
+distribution list renamed	addressbook	fr	La liste de diffusion est renommée
 distribution lists	addressbook	fr	Listes de diffusion
 distribution lists, ...	addressbook	fr	Listes de diffusion, ...
 do you really want to delete this contact?	addressbook	fr	Confirmez-vous la suppression de ce contact ?
@@ -388,6 +389,7 @@ remove from distribution list	addressbook	fr	Supprimer de la liste de diffusion
 remove selected contacts from distribution list	addressbook	fr	Retirer les contacts sélectionnés de la liste de diffusion
 removed from distribution list	addressbook	fr	retiré de la liste de diffusion
 repetition	addressbook	fr	Répétition
+replacements for inserting contacts into documents	addressbook	fr	Remplacements pour insérer des contacts dans des documents
 required fields *	addressbook	fr	Champs nécessaires *
 role	addressbook	fr	Rôle
 room	addressbook	fr	Salle

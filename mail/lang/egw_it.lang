@@ -71,7 +71,7 @@ copied %1 message(s) from %2 to %3	mail	it	copiato %1 messaggi(o) da %2  %3
 copy to	mail	it	Copia in
 could not append message:	mail	it	Il messaggio non è stato incluso:
 could not save the acl! because some names are empty!	mail	it	Impossibile salvare le regole dei permessi ACL! Alcuni nomi sono vuoti!
-create new account	mail	it	creare nuovo account
+create new account	mail	it	Crea nuovo account
 currently:	mail	it	Al momento:
 date(newest first)	mail	it	Data (prima più recenti)
 date(oldest first)	mail	it	Data (prima meno recenti)
@@ -219,13 +219,13 @@ imap - incoming mail	mail	it	IMAP - posta in arrivo
 imap administration	mail	it	Amministrazione IMAP
 imap server	mail	it	Server IMAP
 imap timeout	mail	it	Timeout del server IMAP
-import message	mail	it	importa messaggio
+import message	mail	it	Importa messaggio
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	it	L'importazione del messaggio %1 è fallita. Il messaggio non è stato salvato nella cartella %2. Causa: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	it	L'importazione del messaggio %1 è fallita. La cartella di destinazione %2 non esiste
 import of message %1 failed. destination folder not set.	mail	it	L'importazione del messaggio %1 è fallita. La cartella di destinazione non esiste
 import of message %1 failed. no contacts to merge and send to specified.	mail	it	L'importazione del messaggio %1 è fallita. Non ci sono contatti da unire e inviare
 importance	mail	it	Importanza
-important	mail	it	importante
+important	mail	it	Importante
 in mailbox: %1, with id: %2, and partid: %3	mail	it	Nella casella: %1, con ID: %2 e PartID: %3
 inbox	mail	it	Posta in arrivo
 inline	mail	it	In linea
@@ -360,7 +360,7 @@ save of message %1 failed. could not save message to folder %2 due to: %3	mail	i
 save the drafted message as eml file into vfs	mail	it	Salva la bozza come file eml nel VFS
 save to disk	mail	it	Salva su disco
 save to filemanager	mail	it	Salva in filemanager
-save to vfs	mail	it	Sala in VFS
+save to vfs	mail	it	Salva in VFS
 save:	mail	it	Salva:
 saving of message %1 failed. destination folder %2 does not exist.	mail	it	Salvataggio del messaggio %1 non riuscito. La cartella %2 non esiste.
 saving of message %1 succeeded. check folder %2.	mail	it	Salvataggio del messaggio %1 riuscito. Controlla la cartella %2

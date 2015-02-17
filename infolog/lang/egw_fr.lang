@@ -47,11 +47,14 @@ add sub	infolog	fr	Ajouter enfant
 add timesheet entry	infolog	fr	Ajouter une entrée feuille de temps
 add:	infolog	fr	Ajouter:
 added	infolog	fr	Ajouté
+addressbook placeholders available	infolog	fr	Mots clés de du carnet d'adresses disponibles
 all	infolog	fr	Tous
 all links and attachments	infolog	fr	Tous les liens et attachements
+all other %1 fields are valid	infolog	fr	Tous les autres %1 champs sont valides
 all projects	infolog	fr	Tous les projets
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	fr	permet de changer le statut d´une entrée, c'est-à-dire de spécifier une tâche à faire si elle est terminée (les valeurs dépendent du type d´entrée).
 alternatives	infolog	fr	Alternatives
+always show them	infolog	fr	Toujours afficher
 apply the action on the whole query, not only the shown entries!!!	infolog	fr	Appliquer l'action sur toute la requête, PAS seulement sur les entrées montrées!!!
 apply the changes	infolog	fr	Appliquer les changements
 archive	infolog	fr	Archiver
@@ -129,10 +132,10 @@ dates, status, access	infolog	fr	Dates, Statut, Accès
 days	infolog	fr	Jours
 default category for new infolog entries	infolog	fr	Catégorie par défaut pour les entrées d'Infolog
 default document to insert entries	infolog	fr	Document par défaut pour insérer les entrées.
-default filter for infolog	infolog	fr	Filtre par défaut pour InfoLog
-default status for a new log entry	infolog	fr	statut par défaut pour une nouvelle entrée de log
+default filter for infolog	infolog	fr	Filtre par défaut pour l'iInfoLog
+default status for a new log entry	infolog	fr	Statut par défaut pour un nouvel infolog
 delegated	infolog	fr	Délégué
-delegated open	infolog	fr	Délégué ourvert
+delegated open	infolog	fr	Délégué ouvert
 delegated open and upcoming	infolog	fr	Délégué ouvert et à venir
 delegated overdue	infolog	fr	Délégué en retard
 delegated upcomming	infolog	fr	Délégué à venir
@@ -150,6 +153,7 @@ determines the order the fields are displayed	infolog	fr	détermine l´ordre d´
 directory with documents to insert entries	infolog	fr	Répertoire avec les documents pour insérer les entrées
 disables a status without deleting it	infolog	fr	désactive un statut sans le supprimer
 do not notify of these changes	infolog	fr	Ne pas notifier de ces changements
+do you really want to delete this rule	infolog	fr	Souhaitez-vous vraiment SUPPRIMER cette règle ?
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fr	Voulez-vous une confirmation du responsable sur: accepter, finir la tâche, ou les deux
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	fr	Être notifié si des entrées vous sont assignées ou si des entrées qui vous en été assignées sont mises à jour
 do you want a notification, if items you are responsible for are about to start?	infolog	fr	Être notifié si des entrées dont vous êtes responsable sont sur le point de commencer.
@@ -202,6 +206,7 @@ for infolog type %1, %2 is required	infolog	fr	Pour un infolog de type %1, %2 es
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 for which types should this field be used	infolog	fr	pour quels types ce champ devrait être utilisé
 from	infolog	fr	De
+full list of placeholder names	infolog	fr	Liste complète de mots clé
 general fields:	infolog	fr	Champs généraux :
 general settings	infolog	fr	Paramètres généraux
 global categories	infolog	fr	Catégories globales
@@ -266,6 +271,7 @@ links	infolog	fr	Liens
 links and attached files	infolog	fr	Liens et fichiers attachés
 links of this entry	infolog	fr	Liens de cette entrée
 links to specified application.  example: {{links/infolog}}	infolog	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
+links wrapped in an href tag with download link	infolog	fr	Liens construits avec une balise href avec le lien de téléchargement
 list all categories	infolog	fr	Liste toutes les catégories
 list of files linked to the current record	infolog	fr	Liste des fichiers liés à l'enregistrement en cours
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	fr	Charge les champs personnalisés dans l'index, si filtré par les types sélectionnés (ex. pour les afficher dans un modèle d'index spécifique au type)
@@ -425,6 +431,7 @@ show full usernames	infolog	fr	Montrer les noms complets d'utilisateurs
 show in the infolog list	infolog	fr	Montrer dans la liste InfoLog
 show last modified	infolog	fr	Montrer les derniers modifiés
 show status and percent done separate	infolog	fr	Montrer les statuts et pourcentage réalisés séparément
+show sub-entries	infolog	fr	Afficher les sous-éléments
 show ticket id	infolog	fr	Montrer le numéro de ticket
 show times	infolog	fr	Montrer les heures
 small view	infolog	fr	vue réduite
@@ -463,10 +470,12 @@ today	infolog	fr	Aujourd'hui
 todays date	infolog	fr	date du jour
 todo	infolog	fr	Tâche
 typ	infolog	fr	Type
-typ '%1' already exists !!!	infolog	fr	Type '%1' existe déjà !!!
+typ '%1' already exists !!!	infolog	fr	Le type '%1' existe déjà !
 type	infolog	fr	Type
+type '%1' already exists !!!	infolog	fr	le type %1 existe déjà !!!
 type ...	infolog	fr	Type ...
 type of customfield	infolog	fr	Type de champ personnalisé
+type of field	infolog	fr	Type de champ
 type of the log-entry: note, phonecall or todo	infolog	fr	Type de l'entrée Log: Note, Appel téléphonique ou tâche
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	fr	Impossible de lie à %3 par le champ personnalisé "%1": "%4". %2 correspond.
 unknown type: %1	infolog	fr	Type inconnu : %1
