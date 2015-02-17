@@ -43,3 +43,12 @@
 	font-size: 1.4em;
 	height: 16px;
 }
+/* DTD Generator Button*/
+.dtd_btn{
+	width: 100px;
+	height: 35px;
+	float: right;
+	box-shadow: 1px 1px 1px 1px gray;
+	border: white solid 1px;
+	border-radius: 10px;
+}
