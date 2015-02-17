@@ -33,5 +33,8 @@ function vfs_image_dir($vfs_image_dir)
 	if ($vfs_image_dir != (string)$GLOBALS['egw_info']['server']['vfs_image_dir'])
 	{
 		common::delete_image_map();
+
+		// Set the global now, or the old value will get re-loaded
+		$GLOBALS['egw_info']['server']['vfs_image_dir'] = $vfs_image_dir;
 	}
 }
