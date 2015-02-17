@@ -196,6 +196,12 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 					this.prefSize = pref[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
 				}
 			}
+			// If there is no preference yet, set it to half size
+			// Otherwise the right pane gets the fullsize
+			else
+			{
+				this.prefSize = this.orientation == "v" ? options.sizeLeft: options.sizeTop;
+			}
 		}
 
 		// Avoid double init
