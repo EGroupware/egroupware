@@ -1247,6 +1247,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 			// Custom fields get listed separately
 			if(widget.instanceOf(et2_nextmatch_customfields))
 			{
+				if(jQuery.isEmptyObject(widget.customfields))
+				{
+					// No customfields defined, don't show column
+					delete(columns[col.id]);
+					continue;
+				}
 				for(var field_name in widget.customfields)
 				{
 					columns[widget.prefix+field_name] = " - "+widget.customfields[field_name].label;
@@ -2753,6 +2759,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 		}
 		var columnMgr = this.nextmatch.dataview.getColumnMgr();
 		var nm_column = null;
+		var set_fields = {};
 		for(var i = 0; i < this.nextmatch.columns.length; i++)
 		{
 			if(this.nextmatch.columns[i].widget == this)
@@ -2816,7 +2823,13 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			{
 				cf.hide();
 			}
+			else if (jQuery.isEmptyObject(this.options.fields))
+			{
+				// If we're showing it make sure it's set, but only after
+				set_fields[field_name] = true;
+			}
 		}
+		jQuery.extend(this.options.fields, set_fields);
 	},
 
 	/**
