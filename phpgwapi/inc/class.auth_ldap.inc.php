@@ -35,15 +35,18 @@ class auth_ldap implements auth_backend
 	/**
 	 * authentication against LDAP
 	 *
-	 * @param string $username username of account to authenticate
-	 * @param string $passwd corresponding password
+	 * @param string $_username username of account to authenticate
+	 * @param string $_passwd corresponding password
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
-	function authenticate($username, $passwd, $passwd_type='text')
+	function authenticate($_username, $_passwd, $passwd_type='text')
 	{
+		unset($passwd_type);	// not used by required by function signature
+
 		// allow non-ascii in username & password
-		$username = translation::convert($username,translation::charset(),'utf-8');
-		$passwd = translation::convert($passwd,translation::charset(),'utf-8');
+		$username = translation::convert($_username,translation::charset(),'utf-8');
+		// harden ldap auth, by removing \000 bytes, causing passwords to be not empty by php, but empty to c libaries
+		$passwd = str_replace("\000", '', translation::convert($_passwd,translation::charset(),'utf-8'));
 
 		if(!$ldap = common::ldapConnect())
 		{
@@ -59,8 +62,8 @@ class auth_ldap implements auth_backend
 		/* find the dn for this uid, the uid is not always in the dn */
 		$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','shadowExpire','homeDirectory');
 
-		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
-		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),$filter);
+		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
+			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
 		{
@@ -133,6 +136,7 @@ class auth_ldap implements auth_backend
 				elseif ($GLOBALS['egw_info']['server']['pwd_migration_allowed'] &&
 					!empty($GLOBALS['egw_info']['server']['pwd_migration_types']))
 				{
+					$matches = null;
 					// try to query password from ldap server (might fail because of ACL) and check if we need to migrate the hash
 					if (($sri = ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
 						($values = ldap_get_entries($ldap, $sri)) && isset($values[0]['userpassword'][0]) &&
@@ -147,7 +151,7 @@ class auth_ldap implements auth_backend
 				return $ret;
 			}
 		}
-		if ($this->debug) error_log(__METHOD__."('$username','$password') dn not found or password wrong!");
+		if ($this->debug) error_log(__METHOD__."('$_username', '$_passwd') dn not found or password wrong!");
 		// dn not found or password wrong
 		return False;
 	}
@@ -155,13 +159,13 @@ class auth_ldap implements auth_backend
 	/**
 	 * fetch the last pwd change for the user
 	 *
-	 * @param string $username username of account to authenticate
+	 * @param string $_username username of account to authenticate
 	 * @return mixed false or shadowlastchange*24*3600
 	 */
-	function getLastPwdChange($username)
+	function getLastPwdChange($_username)
 	{
 		// allow non-ascii in username & password
-		$username = translation::convert($username,translation::charset(),'utf-8');
+		$username = translation::convert($_username,translation::charset(),'utf-8');
 
 		if(!$ldap = common::ldapConnect())
 		{
@@ -177,8 +181,8 @@ class auth_ldap implements auth_backend
 		/* find the dn for this uid, the uid is not always in the dn */
 		$attributes	= array('uid','dn','shadowexpire','shadowlastchange');
 
-		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
-		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),$filter);
+		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
+			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
 		{
@@ -237,8 +241,8 @@ class auth_ldap implements auth_backend
 		}
 		//echo "<p>auth_ldap::change_password('$old_passwd','$new_passwd',$account_id) username='$username'</p>\n";
 
-		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
-		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
+		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),
+			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
 		$ds = common::ldapConnect();
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
@@ -270,7 +274,7 @@ class auth_ldap implements auth_backend
 	 * @param string $old_passwd must be cleartext or empty to not to be checked
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
-	 * @param boolean $update_lastchange=true
+	 * @param boolean $update_lastchange =true
 	 * @return boolean true if password successful changed, false otherwise
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0, $update_lastchange=true)
@@ -286,8 +290,8 @@ class auth_ldap implements auth_backend
 		}
 		if ($this->debug) error_log(__METHOD__."('$old_passwd','$new_passwd',$account_id, $update_lastchange) username='$username'");
 
-		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
-		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
+		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),
+			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
 		$ds = $ds_admin = common::ldapConnect();
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
@@ -308,6 +312,7 @@ class auth_ldap implements auth_backend
 				$ds = $user_ds->ldapConnect('',$dn,$old_passwd);
 			}
 			catch (egw_exception_no_permission $e) {
+				unset($e);
 				return false;	// wrong old user password
 			}
 		}
