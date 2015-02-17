@@ -33,7 +33,6 @@ $setup_info['admin']['description'] = 'EGroupware administration application';
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['admin']['hooks'] = array(
 	'acl_manager',
-	'after_navbar',
 	'config_validate',
 	'deleteaccount',
 	'topmenu_info'
