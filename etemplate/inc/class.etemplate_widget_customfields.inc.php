@@ -129,7 +129,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if ($app && $app != 'stylite' && $app != $GLOBALS['egw_info']['flags']['currentapp'] && (
 			$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' || !$this->attrs['customfields'] ||
 			etemplate::$hooked
-		))
+		) || !isset($customfields))
 		{
 			// app changed
 			$customfields =& egw_customfields::get($app);
