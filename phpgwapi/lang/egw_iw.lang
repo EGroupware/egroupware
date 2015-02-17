@@ -351,12 +351,8 @@ substitutions and their meanings:	common	iw	:חלופות ופירושן
 sunday	common	iw	יום ראשון
 table properties	common	iw	תכונות טבלה
 text color:	common	iw	:צבע טקסט
-the api is current	common	iw	מעודכן API-ה
-the api requires an upgrade	common	iw	זקוק לעדכון API-ה
 the following applications require upgrades	common	iw	היישומים הבאים זקוקים לעדכונים
 the mail server returned	common	iw	שרת הדואר החזיר
-this application is current	common	iw	יישום זה מעודכן
-this application requires an upgrade	common	iw	יישום זה זקוק לעדכון
 this name has been used already	common	iw	!שם זה בשימוש כבר
 thursday	common	iw	יום חמישי
 time	common	iw	שעה

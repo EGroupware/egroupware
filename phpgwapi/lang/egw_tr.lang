@@ -59,10 +59,6 @@ search accounts	common	tr	Hesaplarý ara
 select all	common	tr	Tamam?n? seç
 site configuration	common	tr	Site Ayarlarý
 submit	common	tr	Gönder
-the api is current	common	tr	API güncel
-the api requires an upgrade	common	tr	API güncelleme gerektiriyor
-this application is current	common	tr	Uygulamanýz güncel
-this application requires an upgrade	common	tr	Uygulamanýz güncelleme gerektirmektedir. (Yeni sürüm var)
 title	common	tr	Baþlýk
 today	common	tr	Bugün
 top	common	tr	Maks

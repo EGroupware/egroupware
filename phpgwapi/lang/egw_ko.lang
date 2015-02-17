@@ -305,11 +305,7 @@ subject	common	ko	제목
 submit	common	ko	전송
 sunday	common	ko	일요일
 table properties	common	ko	테이블 속성
-the api is current	common	ko	이 API 는 최신버전입니다.
-the api requires an upgrade	common	ko	이 API 는 업그레이드가 필요합니다.
 the following applications require upgrades	common	ko	다음의 응용프로그램은 업그레이드가 필요합니다.
-this application is current	common	ko	이 응용프로그램은 최신입니다.
-this application requires an upgrade	common	ko	이 응용프로그램은 업그레이드가 필요합니다.
 thursday	common	ko	목요일
 time	common	ko	시간
 time zone offset	common	ko	시간대 변경
