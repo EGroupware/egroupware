@@ -14,8 +14,8 @@
                 <tr class="divLoginboxHeader">
                     <td colspan="3">{website_title}</td>
                 </tr>
-                <tr>
-                    <td colspan="2" height="20">
+                <tr class="hiddenCredential">
+                    <td colspan="2" height="20" >
                         <input type="hidden" name="passwd_type" value="text" />
                         <input type="hidden" name="account_type" value="u" />
                     </td>
@@ -57,7 +57,7 @@
                 </tr>
                 <!-- BEGIN registration -->
                 <tr>
-                    <td colspan="3" height="20" align="center">
+                    <td colspan="3" height="20" align="center" class="registration">
                         {lostpassword_link}
                         {lostid_link}
                         {register_link}
