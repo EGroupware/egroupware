@@ -128,7 +128,9 @@ class accounts_sql
 				$this->contacts_table.'.tel_work AS account_phone,';
 				$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
 		}
-		else
+		// during setup emailadmin might not yet be installed and running below query
+		// will abort transaction in PostgreSQL
+		elseif (!isset($GLOBALS['egw_setup']) || in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
 		{
 			$extra_cols = emailadmin_smtp_sql::TABLE.'.mail_value AS account_email,';
 			$join = 'LEFT JOIN '.emailadmin_smtp_sql::TABLE.' ON '.$this->table.'.account_id=-'.emailadmin_smtp_sql::TABLE.'.account_id AND mail_type='.emailadmin_smtp_sql::TYPE_ALIAS;
