@@ -974,6 +974,7 @@ body > div#egw_message {
 	border: 2px gray solid;
 	min-width: 100px;
 	z-index: 10;
+	white-space: pre-wrap;
 }
 
 /**
