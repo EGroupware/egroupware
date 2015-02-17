@@ -9,5 +9,10 @@
 			<button statustext="Apply the changes" label="Apply" id="apply" image="apply" background_image="1"/>
 			<button statustext="leave without saveing the entry" label="Cancel" id="cancel" onclick="window.close();" image="cancel" background_image="1"/>
 		</hbox>
+		<styles>
+			.home_note_portlet .et2_container > div {
+				overflow: auto;
+			}
+		</styles>
 	</template>
 </overlay>
