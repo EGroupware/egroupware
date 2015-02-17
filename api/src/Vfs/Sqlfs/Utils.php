@@ -30,7 +30,7 @@ class Utils extends StreamWrapper
 	 *
 	 * @param boolean $debug true to echo a message for each copied file
 	 */
-	static function migrate_db2fs($debug=false)
+	static function migrate_db2fs($debug=true)
 	{
 		if (!is_object(self::$pdo))
 		{
@@ -84,7 +84,7 @@ class Utils extends StreamWrapper
 				{
 					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name) $bytes bytes copied != size of $fs_size bytes!");
 				}
-				if ($debug) echo "$fs_id: $fs_name: $bytes bytes copied to fs\n";
+				if ($debug) error_log("$fs_id: $fs_name: $bytes bytes copied to fs");
 				fclose($dest);
 				fclose($content); unset($content);
 
@@ -99,7 +99,7 @@ class Utils extends StreamWrapper
 
 		if ($n)	// delete all content in DB, if there was some AND no error (exception thrown!)
 		{
-			$query = 'UPDATE '.self::TABLE.' SET fs_content=NULL WHERE fs_content IS NOT NULL';
+			$query = 'UPDATE '.self::TABLE.' SET fs_content=NULL';
 			$stmt = self::$pdo->prepare($query);
 			$stmt->execute();
 		}
