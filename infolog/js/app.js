@@ -100,8 +100,13 @@ app.classes.infolog = AppJS.extend(
 				}
 			}
 		}
-		//Refresh handler for infologs integrated in calendar
-		if (_app == 'infolog' && _id && _type !='delete')
+		// Refresh handler for Addressbook CRM view
+		if (_app == 'infolog' && this.et2._inst.app == 'addressbook' && this.et2._inst.name == 'infolog.index')
+		{
+			this.et2._inst.refresh(_msg, _app, _id, _type);
+		}
+		// Refresh handler for infologs integrated in calendar
+		if (_app == 'infolog' && _id && _type != 'delete')
 		{
 			var info_type = egw.dataGetUIDdata(_app+"::"+_id)?egw.dataGetUIDdata(_app+"::"+_id).data.info_type:false;
 			var cal_show = egw.preference('cal_show','infolog')||false;
