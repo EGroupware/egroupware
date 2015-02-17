@@ -11,6 +11,31 @@
  * @version $Id$
  */
 
+function home_upgrade1_0_0()
+{
+	return $GLOBALS['setup_info']['home']['currentver'] = '14.1';
+}
+
+function home_upgrade1_2()
+{
+	return $GLOBALS['setup_info']['home']['currentver'] = '14.1';
+}
+
+function home_upgrade1_4()
+{
+	return $GLOBALS['setup_info']['home']['currentver'] = '14.1';
+}
+
+function home_upgrade1_8()
+{
+	return $GLOBALS['setup_info']['home']['currentver'] = '14.1';
+}
+
+function home_upgrade1_9()
+{
+	return $GLOBALS['setup_info']['home']['currentver'] = '14.1';
+}
+
 function home_upgrade14_1()
 {
 	// Previously all portlets were together in a sub-array, for defaults they
