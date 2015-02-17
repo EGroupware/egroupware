@@ -1878,3 +1878,12 @@ span.et2_egw_action_ddHelper_itemsCnt {
 	white-space: nowrap;
 	opacity:1; /* When the controls panel is on then we need to show back the indicators*/
 }
+#global-zeroclipboard-flash-bridge zeroclipboard-is-hover {
+	background-color: red;
+}
+div.flash-click-to-play-dialog {
+	
+	width:200px !important;
+	height: 200px !important;
+	/*opacity:0;*/
+}
