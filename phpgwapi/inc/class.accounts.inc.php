@@ -505,7 +505,6 @@ class accounts
 				$data['account_description'] = lang('EGroupware anonymous users group, do NOT delete');
 				break;
 		}
-		error_log(__METHOD__."(".array2string($data).")");
 	}
 
 	/**
