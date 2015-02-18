@@ -100,6 +100,11 @@ app.classes.admin = AppJS.extend(
 
 			case 'admin.categories.index':
 				break;
+			case 'admin.customfield_edit':
+				// Load settings appropriate to currently set type
+				var widget = _et2.widgetContainer.getWidgetById('cf_type');
+				this.cf_type_change(null,widget);
+				break;
 		}
 	},
 
@@ -784,5 +789,18 @@ app.classes.admin = AppJS.extend(
 			}
 		};
 		et2_dialog.show_dialog(delDialog_callBack,this.egw.lang("Are you sure you want to delete this category ?"),this.egw.lang("Delete"),{},_buttons,et2_dialog.WARNING_MESSAGE,null,'admin');
+	},
+
+	/**
+	 * Change handler for when you change the type of a custom field.
+	 * It toggles options / attributes as appropriate.
+	 */
+	cf_type_change: function(e,widget) {
+		var root = widget.getRoot();
+		var attributes = widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+']')||{};
+		root.getWidgetById('cf_values').set_statustext(widget.egw().lang(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']'))||'');
+		root.getWidgetById('cf_len').set_disabled(!attributes.cf_len);
+		root.getWidgetById('cf_rows').set_disabled(!attributes.cf_rows);
+		root.getWidgetById('cf_values').set_disabled(!attributes.cf_values);
 	}
 });

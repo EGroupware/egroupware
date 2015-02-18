@@ -29,10 +29,7 @@
 				</row>
 				<row>
 					<description value="Type of field"/>
-					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth" span="2" onchange="widget.getRoot().getWidgetById('cf_values').set_statustext(widget.egw().lang(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']'))||'');
-widget.getRoot().getWidgetById('cf_len').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_len]'));
-widget.getRoot().getWidgetById('cf_rows').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_rows]'));
-widget.getRoot().getWidgetById('cf_values').set_disabled(!widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+'][cf_values]'));"/>
+					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth" span="2" onchange="app.admin.cf_type_change"/>
 					<hbox span="2">
 						<description value="Required"/>
 						<checkbox id="cf_needed"/>

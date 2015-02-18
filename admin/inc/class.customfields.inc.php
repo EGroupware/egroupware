@@ -305,6 +305,10 @@ class customfields
 					break;
 				case 'save':
 				case 'apply':
+					if(empty($content['cf_label']))
+					{
+						$content['cf_label'] = $content['cf_name'];
+					}
 					if (!empty($content['cf_values']))
 					{
 						$values = array();
