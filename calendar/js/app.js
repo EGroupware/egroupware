@@ -811,7 +811,6 @@ app.classes.calendar = AppJS.extend(
 			{
 				case 'print':
 					this.egw.open_link('calendar.calendar_uiforms.edit&cal_id='+id+'&print=1','_blank','700x700');
-					this.et2._inst.submit();
 					break;
 				case 'mail':
 					this.egw.json('calendar.calendar_uiforms.ajax_custom_mail', [event, !event['id'], false],null,null,null,null).sendRequest();
