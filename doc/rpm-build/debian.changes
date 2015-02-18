@@ -1,3 +1,23 @@
+egroupware (1.8.007.20150218) hardy; urgency=low
+
+  * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
+  * Critical: Unauthenticated insecure PHP object deseralization allowing arbitrary code execution
+  * credits to Andreas Fischer (http://www.andreasfischer.net/) and Lukas Reschke (http://www.statuscode.ch)
+  * ProjectManager: fixed switching from account-type "status" to "status and times" set datasource time as overwritten time
+  * Setup: always try to use a TLS connection for mail auth
+  * PHP 5.5: disabling deprecated warnings of 5.5 eg. preg_replace with /e
+  * Setup: fixed CSRF error when trying to save configuration, if session encryption is switched on in header.inc.php ($GLOBALS[egw_info][server][mcrypt_enabled] = true;)
+  * PostgreSQL/Addressbook: fixed not displayed pictures
+  * Backup: backup could contain rows multiple times (which caused restore to fail)
+  * PostgreSQL/Admin/Setup: backup stopped with SQL error
+  * Apache 2.4 and RHEL 7 installation fixes
+  * NewsAdmin: fix SQL error on import, if a number of news items to keep was configured
+  * CalDAV: big calendars with more then 500 events in result-set were missing events
+  * Backup: fixed broken backup of tables without an auto index
+  * Backup: backing up bool columns now for all databases as 1 or 0, but understanding PostgreSQL "t" or "f" too
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 18 Feb 2015 13:35:37 +0100
+
 egroupware (1.8.007.20140512) hardy; urgency=low
 
   * LDAP: prevent CSRF error while saving accounts stored in LDAP
