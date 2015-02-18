@@ -2703,7 +2703,7 @@ class mail_compose
 		//error_log($this->sessionData['mailaccount']);
 		//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['mailidentity']).'->'.array2string($identity));
 		// create the messages
-		$this->createMessage($mail, $_formData, $identity, true);
+		$this->createMessage($mail, $_formData, $identity);
 		// remember the identity
 		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') $fromAddress = $mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
