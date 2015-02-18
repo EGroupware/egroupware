@@ -1207,8 +1207,8 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 
 		$this->setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
 
-		parent::beforeSendToClient($cname, $expand);
 		$this->setElementAttribute($form_name, 'type', $this->attrs['type']);
+		parent::beforeSendToClient($cname, $expand);
 	}
 }
 

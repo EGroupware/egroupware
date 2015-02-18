@@ -150,4 +150,4 @@ var et2_entry = et2_valueWidget.extend(
 	}
 });
 
-et2_register_widget(et2_entry, ["entry", 'contact-value', 'contact-account', 'contact-template', 'infolog-value','tracker-value']);
+et2_register_widget(et2_entry, ["entry", 'contact-value', 'contact-account', 'contact-template', 'infolog-value','tracker-value','records-value']);

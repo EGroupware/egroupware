@@ -122,6 +122,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 
 		//echo $this; _debug_array($unmodified); _debug_array($attrs); _debug_array(array_diff_assoc($attrs, $unmodified));
 		// compute the difference and send it to the client as modifications
+		$type_changed = false;
 		foreach(array_diff_assoc($attrs, $unmodified) as $attr => $val)
 		{
 			switch($attr)
@@ -136,6 +137,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 					self::$request->sel_options[$form_name] = $val;
 					break;
 				case 'type':	// not an attribute in etemplate2
+					$type_changed = true;
 					if($val == 'template')
 					{
 						// If the widget has been transformed into a template, we
@@ -146,11 +148,21 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 							$this->expand_widget($transformed_template, $expand);
 							$transformed_template->run('beforeSendToClient',array($cname,$expand));
 						}
+						$type_changed = false;
 					}
 				default:
 					self::setElementAttribute($form_name, $attr, $val);
 					break;
 			}
+		}
+		if($type_changed)
+		{
+			// Run the new widget type's beforeSendToClient
+			$expanded_child = self::factory($attrs['type'], false,$this->id);
+			$expanded_child->id = $this->id;
+			$expanded_child->type = $attrs['type'];
+			$expanded_child->attrs = $attrs;
+			$expanded_child->run('beforeSendToClient',array($cname,$expand));
 		}
 	}
 
