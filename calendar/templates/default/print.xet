@@ -54,82 +54,80 @@
 		</grid>
 	</template>
 	<template id="calendar.print" template="" lang="" group="0" version="1.6.001">
-		<hbox options="0,0">
-			<grid width="100%" height="200">
-				<columns>
-					<column width="95"/>
-					<column/>
-				</columns>
-				<rows>
-					<row>
-						<hbox>
-							<image src="print" onclick="window.print();" class="calendar_print_button"/>
-							<appicon class="calendar_print_appicon"/>
-						</hbox>
-					</row>
-					<row class="th" height="28">
-						<description value="Title" class="bold" options="bold"/>
-						<textbox id="title" size="80" maxlength="255" readonly="true" span="all" class="bold"/>
-					</row>
-					<row class="row">
-						<description width="95" options=",,,start" value="Start"/>
-						<date-time id="start" readonly="true"/>
-					</row>
-					<row class="row">
-						<description width="0" options=",,,whole_day" value="whole day"/>
-						<checkbox id="whole_day" options=",, ," statustext="Event will occupy the whole day" readonly="true"/>
-					</row>
-					<row class="row">
-						<description width="0" options=",,,duration" value="Duration"/>
-						<hbox options="0,0">
-							<menulist>
-								<menupopup no_lang="1" onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" options="Use end date" statustext="Duration of the meeting" readonly="true"/>
-							</menulist>
-							<date-time id="end" class="end_hide" readonly="true"/>
-						</hbox>
-					</row>
-					<row class="row">
-						<description options=",,,location" value="Location" width="0"/>
-						<textbox maxlength="255" id="location" class="calendar_inputFullWidth" readonly="true"/>
-					</row>
-					<row class="row">
-						<description options=",,,priority" value="Priority" width="0"/>
+		<grid width="100%" height="200">
+			<columns>
+				<column width="95"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<hbox>
+						<image src="print" onclick="window.print();" class="calendar_print_button"/>
+						<appicon class="calendar_print_appicon"/>
+					</hbox>
+				</row>
+				<row class="th" height="28">
+					<description value="Title" class="bold" options="bold"/>
+					<textbox id="title" size="80" maxlength="255" readonly="true" span="all" class="bold"/>
+				</row>
+				<row class="row">
+					<description width="95" options=",,,start" value="Start"/>
+					<date-time id="start" readonly="true"/>
+				</row>
+				<row class="row">
+					<description width="0" options=",,,whole_day" value="whole day"/>
+					<checkbox id="whole_day" options=",, ," statustext="Event will occupy the whole day" readonly="true"/>
+				</row>
+				<row class="row">
+					<description width="0" options=",,,duration" value="Duration"/>
+					<hbox options="0,0">
 						<menulist>
-							<menupopup type="select-priority" id="priority" readonly="true"/>
+							<menupopup no_lang="1" onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" options="Use end date" statustext="Duration of the meeting" readonly="true"/>
 						</menulist>
-					</row>
-					<row class="row">
-						<description value="Non blocking" width="0"/>
-						<checkbox id="non_blocking" options="1,0, ," statustext="A non blocking event will not conflict with other events" readonly="true"/>
-					</row>
-					<row class="row">
-						<description value="Private"/>
-						<checkbox id="public" options="0,1" readonly="true"/>
-					</row>
-					<row class="row calendar_print_cat">
-						<description value="Categories"/>
-						<menulist>
-							<menupopup type="select-cat" id="category" readonly="true"/>
-						</menulist>
-					</row>
-					<row valign="top">
-						<description value="Description"/>
-						<textbox multiline="true" id="description" readonly="true"/>
-					</row>
-					<row class="th">
-						<description value="custom fields" span="all"/>
-					</row>
-					<row>
-						<customfields span="all" readonly="true"/>
-					</row>
-					<row>
-						<template id="calendar.print.participants" span="all"/>
-					</row>
-					<row>
-						<template span="all" id="calendar.print.links"/>
-					</row>
-				</rows>
-			</grid>
-		</hbox>
+						<date-time id="end" class="end_hide" readonly="true"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<description options=",,,location" value="Location" width="0"/>
+					<textbox maxlength="255" id="location" class="calendar_inputFullWidth" readonly="true"/>
+				</row>
+				<row class="row">
+					<description options=",,,priority" value="Priority" width="0"/>
+					<menulist>
+						<menupopup type="select-priority" id="priority" readonly="true"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description value="Non blocking" width="0"/>
+					<checkbox id="non_blocking" options="1,0, ," statustext="A non blocking event will not conflict with other events" readonly="true"/>
+				</row>
+				<row class="row">
+					<description value="Private"/>
+					<checkbox id="public" options="0,1" readonly="true"/>
+				</row>
+				<row class="row calendar_print_cat">
+					<description value="Categories"/>
+					<menulist>
+						<menupopup type="select-cat" id="category" readonly="true"/>
+					</menulist>
+				</row>
+				<row valign="top">
+					<description value="Description"/>
+					<textbox multiline="true" id="description" readonly="true"/>
+				</row>
+				<row class="th">
+					<description value="custom fields" span="all"/>
+				</row>
+				<row>
+					<customfields span="all" readonly="true"/>
+				</row>
+				<row>
+					<template id="calendar.print.participants" span="all"/>
+				</row>
+				<row>
+					<template span="all" id="calendar.print.links"/>
+				</row>
+			</rows>
+		</grid>
 	</template>
 </overlay>
