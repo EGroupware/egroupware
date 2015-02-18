@@ -1,3 +1,25 @@
+egroupware-epl (14.2.20150218-1) hardy; urgency=low
+
+  * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
+  * Critical: Unauthenticated insecure PHP object deseralization allowing arbitrary code execution
+  * High: Cross site scripting by circumventing content security policy
+  * High: Unauthenticated local file access read and write under MS Windows
+  * credits to Andreas Fischer (http://www.andreasfischer.net/) and Lukas Reschke (http://www.statuscode.ch)
+  * Mail: composed mails saved as draft contains again attachments, drafts created by autosaving every 2 minutes do not for performance reasons
+  * Tracker: fixed memberships were not taken into account when opening private tickets or reading restricted comments
+  * InfoLog: new context menu: View parent with children
+  * Univention: mail app was not working for in UCS created users
+  * Admin: add a description to stock groups Admins, Default and NoGroup, allow to edit that description for LDAP and ADS
+  * PostgreSQL: fixed not working new installation
+  * ProjectManager/PostgreSQL: fix SQL error in project-list caused by new resources column
+  * InfoLog/Addressbook: refresh CRM view if InfoLog was edited without having InfoLog tab open
+  * Calendar: fixed week 13 was skiped (due to daylight saving change) when using week navigation, added propper header for multiple week view
+  * SiteMgr: fix not displayed template preferences
+  * SiteMgr: fix accordeon to work in 14.x
+  * Mobile theme: Login page style improvement
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 18 Feb 2015 12:56:48 +0100
+
 egroupware-epl (14.2.20150212-1) hardy; urgency=low
 
   * 14.2 final release
