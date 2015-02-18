@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
 $setup_info['phpgwapi']['title']     = 'EGroupware API';
-$setup_info['phpgwapi']['version']   = '14.2';
+$setup_info['phpgwapi']['version']   = '15.0.001';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
@@ -73,4 +73,5 @@ $setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = arra
 $setup_info['groupdav']['license'] = 'GPL';
 $setup_info['groupdav']['hooks']['preferences']	= 'groupdav_hooks::menus';
 $setup_info['groupdav']['hooks']['settings']	= 'groupdav_hooks::settings';
+
 

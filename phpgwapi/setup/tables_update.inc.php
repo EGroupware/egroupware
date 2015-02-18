@@ -60,3 +60,14 @@ function phpgwapi_upgrade14_1_900()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.2';
 }
+function phpgwapi_upgrade14_2()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_accounts','account_description',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'comment' => 'group description'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '15.0.001';
+}
+

@@ -508,7 +508,7 @@ class accounts_sql
 		$accounts = array();
 		foreach((array) $GLOBALS['egw']->contacts->search($criteria,
 			"1,n_given,n_family,email,id,created,modified,$this->table.account_id AS account_id",
-			$order,"account_lid,account_type,account_status,account_expires,account_primary_group",
+			$order,"account_lid,account_type,account_status,account_expires,account_primary_group,account_description",
 			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
 			$param['offset'] ? array($param['start'], $param['offset']) : (is_null($param['start']) ? false : $param['start']),
 			$filter,$this->contacts_join) as $contact)
@@ -530,6 +530,7 @@ class accounts_sql
 					// addressbook_bo::search() returns everything in user-time, need to convert to server-time
 					'account_created'	=> egw_time::user2server($contact['created']),
 					'account_modified'	=> egw_time::user2server($contact['modified']),
+					'account_description' => $contact['account_description'],
 				);
 			}
 		}
