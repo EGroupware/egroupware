@@ -176,7 +176,7 @@ app.classes.mail = AppJS.extend(
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
-				jQuery('#mail-display_mailDisplayBodySrc').on('load', function(){self.mail_prepare_print()});
+				jQuery('#mail-display_mailDisplayBodySrc').on('load', function(){self.mail_prepare_print();});
 
 				this.mail_isMainWindow = false;
 				this.mail_display();
@@ -199,7 +199,7 @@ app.classes.mail = AppJS.extend(
 
 				// Set autosaving interval to 2 minutes for compose message
 				this.W_INTERVALS.push(window.setInterval(function (){
-					that.saveAsDraft(null,that.et2.getWidgetById('button[saveAsDraft]'),'autosaving');
+					that.saveAsDraft(null, 'autosaving');
 				}, 120000));
 
 				/* Control focus actions on subject to handle expanders properly.*/
@@ -3157,20 +3157,21 @@ app.classes.mail = AppJS.extend(
 	 * Save as Draft (VFS)
 	 * -handel both actions save as draft and save as draft and print
 	 *
-	 * @param {egw object} _egw
-	 * @param {widget object} _widget
-	 * @param {string} _action autosaving trigger action
+	 * @param {egwAction} _egw_action
+	 * @param {array|string} _action string "autosaving", if that triggered the action
 	 */
 	saveAsDraft: function(_egw_action, _action)
 	{
 		//this.et2_obj.submit();
 		var content = this.et2.getArrayMgr('content').data;
-		if (_egw_action )
+		var action = _action;
+		if (_egw_action && _action !== 'autosaving')
 		{
-			var action = _action == 'autosaving'?_action: _egw_action.id;
+			action = _egw_action.id;
 		}
 
-		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount', 'mail_htmltext', 'mail_plaintext', 'lastDrafted'];
+		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
+			'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
 		var widget = {};
 		for (var index in widgets)
 		{
@@ -3183,7 +3184,7 @@ app.classes.mail = AppJS.extend(
 		var self = this;
 		if (content)
 		{
-			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content],function(_data){
+			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
 				self.savingDraft_response(_data,action);
 			}).sendRequest(true);
 		}
