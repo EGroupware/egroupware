@@ -2142,10 +2142,11 @@ class mail_compose
 	 * @param egw_mailer $_mailObject
 	 * @param array $_formData
 	 * @param array $_identity
-	 * @param boolean $_send =false true: create to send message: false: create to save as draft
+	 * @param boolean $_autosaving =false true: autosaving, false: save-as-draft or send
 	 */
-	function createMessage(egw_mailer $_mailObject, array $_formData, array $_identity, $_send=false)
+	function createMessage(egw_mailer $_mailObject, array $_formData, array $_identity, $_autosaving=false)
 	{
+		//error_log(__METHOD__."(, formDate[filemode]=$_formData[filemode], _autosaving=".array2string($_autosaving).') '.function_backtrace());
 		$mail_bo	= $this->mail_bo;
 		$activeMailProfile = emailadmin_account::read($this->mail_bo->profileID);
 
@@ -2233,7 +2234,7 @@ class mail_compose
 			$signature = mail_bo::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		}
 		*/
-		if ($_formData['attachments'] && $_formData['filemode'] != egw_sharing::ATTACH && $_send)
+		if ($_formData['attachments'] && $_formData['filemode'] != egw_sharing::ATTACH && !$_autosaving)
 		{
 			$attachment_links = $this->getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
 				$_formData['mimeType'] == 'html',
@@ -2267,7 +2268,7 @@ class mail_compose
 				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
 			}
 			// convert URL Images to inline images - if possible
-			if ($_send) mail_bo::processURL2InlineImages($_mailObject, $body);
+			if (!$_autosaving) mail_bo::processURL2InlineImages($_mailObject, $body);
 			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
 			{
 				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
@@ -2343,7 +2344,8 @@ class mail_compose
 								break;
 						}
 					}
-					elseif ($_formData['filemode'] == egw_sharing::ATTACH)
+					// attach files not for autosaving
+					elseif ($_formData['filemode'] == egw_sharing::ATTACH && !$_autosaving)
 					{
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
 						{
@@ -2431,9 +2433,11 @@ class mail_compose
 	 * Save compose mail as draft
 	 *
 	 * @param array $content content sent from client-side
+	 * @param string $action ='button[saveAsDraft]' 'autosaving', 'button[saveAsDraft]' or 'button[saveAsDraftAndPrint]'
 	 */
-	public function ajax_saveAsDraft ($content)
+	public function ajax_saveAsDraft ($content, $action='button[saveAsDraft]')
 	{
+		//error_log(__METHOD__."(, action=$action)");
 		$response = egw_json_response::get();
 		$success = true;
 
@@ -2455,7 +2459,7 @@ class mail_compose
 			$folder = $this->mail_bo->getDraftFolder();
 			$this->mail_bo->reopen($folder);
 			$status = $this->mail_bo->getFolderStatus($folder);
-			if (($messageUid = $this->saveAsDraft($formData,$folder)))
+			if (($messageUid = $this->saveAsDraft($formData, $folder, $action)))
 			{
 				// saving as draft, does not mean closing the message
 				$messageUid = ($messageUid===true ? $status['uidnext'] : $messageUid);
@@ -2538,13 +2542,14 @@ class mail_compose
 	/**
 	 * Save message as draft to specific folder
 	 *
-	 * @param type $_formData content
-	 * @param type $savingDestination destination folder
+	 * @param array $_formData content
+	 * @param string &$savingDestination ='' destination folder
+	 * @param string $action ='button[saveAsDraft]' 'autosaving', 'button[saveAsDraft]' or 'button[saveAsDraftAndPrint]'
 	 * @return boolean return messageUID| false due to an error
 	 */
-	function saveAsDraft($_formData, &$savingDestination='')
+	function saveAsDraft($_formData, &$savingDestination='', $action='button[saveAsDraft]')
 	{
-		//error_log(__METHOD__.__LINE__);
+		//error_log(__METHOD__."(..., $savingDestination, action=$action)");
 		$mail_bo	= $this->mail_bo;
 		$mail		= new egw_mailer($this->mail_bo->profileID);
 
@@ -2568,7 +2573,7 @@ class mail_compose
 
 		$flags = '\\Seen \\Draft';
 
-		$this->createMessage($mail, $_formData, $identity);
+		$this->createMessage($mail, $_formData, $identity, $action === 'autosaving');
 
 		// folder list as Customheader
 		if (!empty($this->sessionData['folder']))
