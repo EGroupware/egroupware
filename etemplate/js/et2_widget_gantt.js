@@ -57,6 +57,14 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			"default": "minute",
 			"description": "The unit for task duration values.  One of minute, hour, week, year."
 		},
+		columns: {
+			name: "Columns",
+			type: "any",
+			default: [
+				{name: "text", label: egw.lang('Title'), tree: true, width: '*'}
+			],
+			description: "Columns for the grid portion of the gantt chart.  An array of objects with keys name, label, etc.  See http://docs.dhtmlx.com/gantt/api__gantt_columns_config.html"
+		},
 		value: {type: 'any'},
 		needed: {ignore: true},
 		onfocus: {ignore: true},
@@ -76,6 +84,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		show_progress: true,
 		order_branch: false,
 		min_column_width: 30,
+		min_grid_column_width: 30,
 		task_height: 25,
 		fit_tasks: true,
 		autosize: '',
@@ -177,6 +186,10 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		{
 			this.set_value(this.options.value);
 		}
+		if(this.options.columns)
+		{
+			this.set_columns(this.options.columns);
+		}
 		
 		// Update start & end dates with chart values for consistency
 		if(start_date && this.options.value.data && this.options.value.data.length)
@@ -242,6 +255,81 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			this.gantt.config.end_date = null;
 			this.gantt.refreshData();
 		}
+	},
+
+	/**
+	 * Set the columns for the grid (left) portion
+	 *
+	 * @param {Object[]} columns - A list of columns
+	 * @param {string} columns[].name The column's ID
+	 * @param {string} columns[].label The title for the column header
+	 * @param {string} columns[].width Width of the column
+	 *
+	 * @see http://docs.dhtmlx.com/gantt/api__gantt_columns_config.html for full options
+	 */
+	set_columns: function(columns)
+	{
+		this.gantt_config.columns = columns;
+
+		var displayed_columns = [];
+		var gantt_widget = this;
+
+		// Make sure there's enough room for them all
+		var width = 0;
+		for(var col in columns)
+		{
+			// Preserve original width, gantt will resize column to fit
+			if(!columns[col]._width)
+			{
+				columns[col]._width = columns[col].width;
+			}
+			columns[col].width = columns[col]._width;
+			if(!columns[col].template)
+			{
+				// Use an et2 widget to render the column value, if one was provided
+				// otherwise, just display the value
+				columns[col].template = function(task) {
+					var value = typeof task[this.name] == 'undefined'||task[this.name] == null ? '':task[this.name];
+
+					// No value, but there's a project title.  Try reading the project value.
+					if(!value && this.name.indexOf('pe_') == 0 && task.pm_title)
+					{
+						var pm_col = this.name.replace('pe_','pm_');
+						value = typeof task[pm_col] == 'undefined' || task[pm_col] == null ? '':task[pm_col];
+					}
+					if(this.widget && typeof this.widget == 'string')
+					{
+						this.widget = et2_createWidget(this.widget, {readonly:true}, gantt_widget);
+					}
+					if (this.widget)
+					{
+						this.widget.set_value(value);
+						value = $j(this.widget.getDOMNode()).html();
+					}
+					return value;
+				};
+			}
+
+			// Actual hiding is available in the pro version of gantt chart
+			if(!columns[col].hide)
+			{
+				displayed_columns.push(columns[col]);
+				width += parseInt(columns[col]._width) || 0;
+			}
+
+		}
+		// Add in add column
+		displayed_columns.push({name: 'add', width: 26});
+
+		if(width != this.gantt_config.grid_width || typeof this.gantt_config.grid_width == 'undefined')
+		{
+			this.gantt_config.grid_width = Math.min(Math.max(200, width), this.htmlNode.width());
+		}
+
+		if(this.gantt == null) return;
+		this.gantt.config.columns = displayed_columns;
+		this.gantt.config.grid_width = this.gantt_config.grid_width;
+		this.gantt.render();
 	},
 
 	/**
@@ -700,11 +788,9 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			// Some crazy stuff make sure timing is OK to scroll after re-render
 			// TODO: Make this more consistently go to where you click
 			var id = gantt_widget.gantt.attachEvent("onGanttRender", function() {
-				console.log('Render');
 				gantt_widget.gantt.detachEvent(id);
 				gantt_widget.gantt.scrollTo(parseInt($j('.gantt_task_scale',gantt_widget.gantt_node).width() *current_position),0);
 				window.setTimeout(function() {
-					console.log("Scroll to");
 					gantt_widget.gantt.scrollTo(parseInt($j('.gantt_task_scale',gantt_widget.gantt_node).width() *current_position),0);
 				},100);
 			});
@@ -729,6 +815,12 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			*/
 		});
 
+		this.gantt.attachEvent("onGridHeaderClick", function(column_name, e) {
+			if(column_name === "add")
+			{
+				gantt_widget._column_selection(e);
+			}
+		});
 		this.gantt.attachEvent("onContextMenu",function(taskId, linkId, e) {
 			if(gantt_widget.options.readonly) return false;
 			if(taskId)
@@ -899,6 +991,88 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 
 			if(_widget.change != change) _widget.change = change;
 		}, this, et2_inputWidget);
+	},
+
+	/**
+	 * Start UI for selecting among defined columns
+	 */
+	_column_selection: function(e)
+	{
+		var self = this;
+		var columns = [];
+		var columns_selected = [];
+		for (var i = 0; i < this.gantt_config.columns.length; i++)
+		{
+			var col = this.gantt_config.columns[i];
+			columns.push({
+				value: col.name,
+				label: col.label
+			})
+			if(!col.hide)
+			{
+				columns_selected.push(col.name);
+			}
+		}
+
+		// Build the popup
+		if(!this.selectPopup)
+		{
+			var select = et2_createWidget("select", {
+				multiple: true,
+				rows: 8,
+				empty_label:this.egw().lang("select columns"),
+				selected_first: false
+			}, this);
+			select.set_select_options(columns);
+			select.set_value(columns_selected);
+
+			var okButton = et2_createWidget("buttononly", {}, this);
+			okButton.set_label(this.egw().lang("ok"));
+			okButton.onclick = function() {
+				// Update columns
+				var value = select.getValue();
+				for (var i = 0; i < columns.length; i++)
+				{
+					self.gantt_config.columns[i].hide = value.indexOf(columns[i].value) < 0 ;
+				}
+				self.set_columns(self.gantt_config.columns);
+
+				// Hide popup
+				self.selectPopup.toggle();
+				self.selectPopup.remove();
+				self.selectPopup = null;
+				$j('body').off('click.gantt');
+			};
+
+			var cancelButton = et2_createWidget("buttononly", {}, this);
+			cancelButton.set_label(this.egw().lang("cancel"));
+			cancelButton.onclick = function() {
+				self.selectPopup.toggle();
+				self.selectPopup.remove();
+				self.selectPopup = null;
+				$j('body').off('click.gantt');
+			};
+
+			// Create and add popup
+			this.selectPopup = jQuery(document.createElement("div"))
+				.addClass("colselection ui-dialog ui-widget-content")
+				.append(select.getDOMNode())
+				.append(okButton.getDOMNode())
+				.append(cancelButton.getDOMNode())
+				.appendTo(this.getInstanceManager().DOMContainer);
+			// Bind so if you click elsewhere, it closes
+			window.setTimeout(function() {$j(document).one('mouseup.gantt', function(e){
+				if(!self.selectPopup.is(e.target) && self.selectPopup.has(e.target).length === 0)
+				{
+					cancelButton.onclick();
+				}
+			});},1);
+		}
+		else
+		{
+			this.selectPopup.toggle();
+		}
+		this.selectPopup.position({my:'right top', at:'right bottom', of: e.target});
 	},
 
 	/**

@@ -1623,6 +1623,28 @@ div.et2_toolbar_activeList h.ui-accordion-header {
 {
 	overflow: visible;
 }
+/* Style the gantt grid (left side) allowing 2 lines */
+.et2_gantt .gantt_grid_scale :not(.gantt_grid_head_add) {
+	white-space: normal;
+	line-height: 16px;
+	height: auto;
+}
+/* Column selector */
+.et2_gantt .gantt_grid_scale .gantt_grid_head_add {
+	background-image: url(images/selectcols.png);
+	padding: 0px;
+	margin: 0px;
+}
+.et2_gantt .gantt_grid_data .gantt_add {
+	display: none;
+	padding: 0px;
+	margin: 0px;
+}
+/* Display inline, since there's only 1 line*/
+.et2_gantt .gantt_grid_data li {
+	display: inline-block;
+	padding-right: 0.5ex;
+}
 .et2_gantt .gantt_task_progress
 {
 	text-align: left;
