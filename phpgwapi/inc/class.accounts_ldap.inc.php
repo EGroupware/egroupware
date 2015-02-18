@@ -446,7 +446,7 @@ class accounts_ldap
 			}
 		}
 		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
-			array('dn', 'gidnumber', 'cn', 'objectclass', static::MAIL_ATTR, 'memberuid'));
+			array('dn', 'gidnumber', 'cn', 'objectclass', static::MAIL_ATTR, 'memberuid', 'description'));
 
 		$ldap_data = ldap_get_entries($this->ds, $sri);
 		if (!$ldap_data['count'])
@@ -467,6 +467,7 @@ class accounts_ldap
 			'objectclass'       => array_map('strtolower', $data['objectclass']),
 			'account_email'     => $data[static::MAIL_ATTR][0],
 			'members'           => array(),
+			'account_description' => $data['description'][0],
 		);
 
 		if (isset($data['memberuid']))
@@ -554,6 +555,7 @@ class accounts_ldap
 	{
 		$to_write['gidnumber'] = abs($data['account_id']);
 		$to_write['cn'] = $data['account_lid'];
+		$to_write['description'] = $data['account_description'];
 
 		return $to_write;
 	}

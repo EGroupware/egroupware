@@ -335,6 +335,17 @@ class accounts
 		else
 		{
 			$account_search[$serial]['data'] = $this->backend->search($param);
+			if ($param['type'] !== 'accounts')
+			{
+				foreach($account_search[$serial]['data'] as &$account)
+				{
+					// add default description for Admins and Default group
+					if ($account['account_type'] === 'g' && empty($account['account_description']))
+					{
+						self::add_default_group_description($account);
+					}
+				}
+			}
 			$account_search[$serial]['total'] = $this->total = $this->backend->total;
 		}
 		//echo "<p>accounts::search(".array2string(unserialize($serial)).")= returning ".count($account_search[$serial]['data'])." of $this->total entries<pre>".print_r($account_search[$serial]['data'],True)."</pre>\n";
@@ -429,6 +440,12 @@ class accounts
 
 		$data = self::cache_read($id);
 
+		// add default description for Admins and Default group
+		if ($data['account_type'] === 'g' && empty($data['account_description']))
+		{
+			self::add_default_group_description($data);
+		}
+
 		if ($set_depricated_names && $data)
 		{
 			foreach($this->depricated_names as $name)
@@ -470,6 +487,28 @@ class accounts
 	}
 
 	/**
+	 * Add a default description for stock groups: Admins, Default, NoGroup
+	 *
+	 * @param array &$data
+	 */
+	protected static function add_default_group_description(array &$data)
+	{
+		switch($data['account_lid'])
+		{
+			case 'Default':
+				$data['account_description'] = lang('EGroupware all users group, do NOT delete');
+				break;
+			case 'Admins':
+				$data['account_description'] = lang('EGroupware administrators group, do NOT delete');
+				break;
+			case 'NoGroup':
+				$data['account_description'] = lang('EGroupware anonymous users group, do NOT delete');
+				break;
+		}
+		error_log(__METHOD__."(".array2string($data).")");
+	}
+
+	/**
 	 * Saves / adds the data of one account
 	 *
 	 * If no account_id is set in data the account is added and the new id is set in $data.
@@ -489,6 +528,11 @@ class accounts
 					$data['account_'.$name] =& $data[$name];
 				}
 			}
+		}
+		// add default description for Admins and Default group
+		if ($data['account_type'] === 'g' && empty($data['account_description']))
+		{
+			self::add_default_group_description($data);
 		}
 		if (($id = $this->backend->save($data)) && $data['account_type'] != 'g')
 		{

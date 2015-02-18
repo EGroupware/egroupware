@@ -578,10 +578,6 @@ class accounts_ads
 	protected function _save_group(array &$data, array $old=null)
 	{
 		//error_log(__METHOD__.'('.array2string($data).', old='.array2string($old).')');
-		if (empty($data['account_description']))
-		{
-			$data['account_description'] = 'EGroupware '.lang('Group').' '.$data['account_lid'];
-		}
 
 		if (!$old)	// new entry
 		{
