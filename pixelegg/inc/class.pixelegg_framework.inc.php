@@ -132,11 +132,17 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 /*Login background*/
 #loginMainDiv #divAppIconBar #divLogo img[src$='svg'] {
 	background-image: -webkit-linear-gradient(top, $color, $color);
+	background-image: -moz-linear-gradient(top, $color, $color);
+	background-image: -o-linear-gradient(top,$color, $color);
+	background-image: linear-gradient(to bottom, $color, $color);
 }
 
 /*Center box in login page*/
 #loginMainDiv div#centerBox {
 	background-image: -webkit-linear-gradient(top,$color_hex_dark,$color_hex_darker);
+	background-image: -moz-linear-gradient(top,$color_hex_dark,$color_hex_darker);
+	background-image: -o-linear-gradient(top,$color_hex_dark,$color_hex_darker);
+	background-image: linear-gradient(to bottom, $color_hex_dark,$color_hex_darker);
 	border-top: solid 1px $color_hex_darker;
 	border-left: solid 1px $color_hex_darker;
 	border-right: solid 1px $color_hex_darker;
