@@ -320,6 +320,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		}
 		// Add in add column
 		displayed_columns.push({name: 'add', width: 26});
+		width += 26;
 
 		if(width != this.gantt_config.grid_width || typeof this.gantt_config.grid_width == 'undefined')
 		{
@@ -1030,7 +1031,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			okButton.set_label(this.egw().lang("ok"));
 			okButton.onclick = function() {
 				// Update columns
-				var value = select.getValue();
+				var value = select.getValue() || [];
 				for (var i = 0; i < columns.length; i++)
 				{
 					self.gantt_config.columns[i].hide = value.indexOf(columns[i].value) < 0 ;
