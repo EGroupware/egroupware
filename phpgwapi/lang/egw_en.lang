@@ -277,6 +277,9 @@ edit %1 category for	common	en	Edit %1 category for
 edit categories	common	en	Edit categories
 edit category	common	en	Edit category
 egroupware	common	en	EGroupware
+egroupware administrators group, do not delete	common	en	EGroupware administrators group, do NOT delete
+egroupware all users group, do not delete	common	en	EGroupware all users group, do NOT delete
+egroupware anonymous users group, do not delete	common	en	EGroupware anonymous users group, do NOT delete
 egroupware api version	common	en	EGroupware API version
 egroupware maintenance update %1 available	common	en	EGroupware maintenance update %1 available
 egroupware security update %1 needs to be installed!	common	en	EGroupware security update %1 needs to be installed!

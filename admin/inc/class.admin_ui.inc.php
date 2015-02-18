@@ -426,6 +426,7 @@ class admin_ui
 			{
 				$tree['item'][] = self::fix_userdata(array(
 					'text' => $group['account_lid'],
+					'tooltip' => $group['account_description'],
 					'id' => $root.'/'.$group['account_id'],
 				));
 			}
