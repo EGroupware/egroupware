@@ -655,16 +655,18 @@ class calendar_uiviews extends calendar_ui
 			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
 			$this->last = strtotime("+$weeks weeks",$this->first) - 1;
 			$weekNavH = "$weeks weeks";
+			$navHeader = lang('Week').' '.$this->week_number($this->first).' - '.$this->week_number($this->last).': '.
+				$this->bo->long_date($this->first,$this->last);
 		}
 		else
 		{
 			$this->_week_align_month($this->first,$this->last);
 			$weekNavH = "1 month";
+			$navHeader = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(%1) date=%2: first=%3, last=%4',False,$weeks,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
-		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
-		$navHeader = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
+		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$navHeader;
 
 		$days =& $this->bo->search(array(
 			'start'   => $this->first,
@@ -842,32 +844,15 @@ class calendar_uiviews extends calendar_ui
 			$navHeader = lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 
-        #	temporarly disabled, because it collides with the title for the website
-        #
-		#	// add navigation for previous and next
-		#	// prev. week
-		#	$GLOBALS['egw_info']['flags']['app_header'] = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
-		#		'menuaction' => $this->view_menuaction,
-		#		'date'       => date('Ymd',$this->first-$days*DAY_s),
-		#		)) . ' &nbsp; <b>'.$GLOBALS['egw_info']['flags']['app_header'];
-		#	// next week
-		#	$GLOBALS['egw_info']['flags']['app_header'] .= '</b> &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
-		#		'menuaction' => $this->view_menuaction,
-		#		'date'       => date('Ymd',$this->last+$days*DAY_s),
-		#		));
-		#
-		#		$class = $class == 'row_on' ? 'th' : 'row_on';
-		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
-
 		$navHeader = '<div class="calendar_calWeek calendar_calWeekNavHeader">'
 				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd',$this->first-$days*DAY_s),
+				'date'       => date('Ymd', strtotime("-$days days",$this->first)),
 				)). '<span>'.$navHeader;
 
 		$navHeader = $navHeader.'</span>'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
 				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd',$this->last+$days*DAY_s),
+				'date'       => date('Ymd', strtotime("+$days days",$this->last)),
 				)).'</div>';
 
 		$merge = $this->merge();
