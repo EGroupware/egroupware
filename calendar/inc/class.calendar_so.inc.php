@@ -161,6 +161,9 @@ class calendar_so
 	/**
 	 * Return sql to fetch all dates in a given timerange, to be used instead of full dates table in further sql queries
 	 *
+	 * Currently NOT used, as using two views joined together appears slower in my tests (probably because no index) then
+	 * joining cal_range_view with real dates table (with index).
+	 *
 	 * @param int $start
 	 * @param int $end
 	 * @param array $_where =null
@@ -848,7 +851,8 @@ class calendar_so
 		// dates table join only needed to enum recuring events, we use a time-range limited view here too
 		if ($params['enum_recuring'])
 		{
-			$join = "JOIN ".$this->dates_range_view($start, $end, null, $filter == 'everything' ? null : $filter == 'deleted').
+			$join = "JOIN ".$this->dates_table.	// using dates_table direct seems quicker then an other view
+				//$this->dates_range_view($start, $end, null, $filter == 'everything' ? null : $filter == 'deleted').
 				" ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$join;
 		}
 
