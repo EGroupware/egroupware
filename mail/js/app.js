@@ -1211,6 +1211,25 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Check if SpamFolder is enabled on that account
+	 *
+	 * SpamFolder enabled is stored as data { spamfolder: true/false } on account node.
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
+	 */
+	spamfolder_enabled: function(_action,_senders,_currentNode)
+	{
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var acc_id = _senders[0].id.split('::')[0];
+		var node = ftree ? ftree.getNode(acc_id) : null;
+
+		return node && node.data && node.data.spamfolder;
+	},
+
+
+	/**
 	 * Check if Sieve is enabled on that account
 	 *
 	 * Sieve enabled is stored as data { acl: true/false } on account node.
@@ -1572,6 +1591,38 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_undeleteMessages: function(_messageList) {
 	// setting class of row, the old style
+	},
+
+	/**
+	 * mail_emptySpam
+	 *
+	 * @param {object} action
+	 * @param {object} _senders
+	 */
+	mail_emptySpam: function(action,_senders) {
+		var server = _senders[0].iface.id.split('::');
+		var activeFilters = this.mail_getActiveFilters();
+		var self = this;
+
+		this.egw.message(this.egw.lang('empty spam'));
+		egw.json('mail.mail_ui.ajax_emptySpam',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
+			.sendRequest(true);
+
+		// Directly delete any trash cache for selected server
+		if(window.localStorage)
+		{
+			for(var i = 0; i < window.localStorage.length; i++)
+			{
+				var key = window.localStorage.key(i);
+
+				// Find directly by what the key would look like
+				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+server[0]+'::') == 0 &&
+					key.toLowerCase().indexOf(egw.lang('junk').toLowerCase()) > 0)
+				{
+					window.localStorage.removeItem(key);
+				}
+			}
+		}
 	},
 
 	/**

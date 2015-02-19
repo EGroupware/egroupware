@@ -624,6 +624,19 @@ class mail_ui
 						);
 						break;
 				}
+				++$group;	// put empty spam immediately in own group
+				$junkFolder = $this->mail_bo->getJunkFolder();
+				//error_log(__METHOD__.__LINE__.$junkFolder);
+				if ($junkFolder && !empty($junkFolder))
+				{
+					$tree_actions['empty_spam'] = array(
+						'caption' => 'empty spam',
+						'icon' => 'dhtmlxtree/MailFolderJunk',
+						'enabled'	=> 'javaScript:app.mail.spamfolder_enabled',
+						'onExecute' => 'javaScript:app.mail.mail_emptySpam',
+						'group'	=> $group,
+					);
+				}
 
 				// enforce global (group-specific) ACL
 				if (!mail_hooks::access('aclmanagement'))
@@ -817,7 +830,7 @@ class mail_ui
 				'child'=> (int)($acc_id != $_profileID || $folderObjects), // dynamic loading on unfold
 				'parent' => '',
 				// mark on account if Sieve is enabled
-				'data' => array('sieve' => $accountObj->imapServer()->acc_sieve_enabled),
+				'data' => array('sieve' => $accountObj->imapServer()->acc_sieve_enabled,'spamfolder'=>($accountObj->imapServer()->acc_folder_junk?true:false)),
 			);
 			$this->setOutStructure($oA, $out, self::$delimiter);
 
@@ -4211,6 +4224,56 @@ class mail_ui
 		}
 		$response = egw_json_response::get();
 		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content));
+	}
+
+	/**
+	 * Empty spam/junk folder
+	 *
+	 * @param string $icServerID id of the server to empty its junkFolder
+	 * @param string $selectedFolder seleted(active) folder by nm filter
+	 * @return nothing
+	 */
+	function ajax_emptySpam($icServerID, $selectedFolder)
+	{
+		//error_log(__METHOD__.__LINE__.' '.$icServerID);
+		translation::add_app('mail');
+		$response = egw_json_response::get();
+		$rememberServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
+		$junkFolder = $this->mail_bo->getJunkFolder();
+		if(!empty($junkFolder)) {
+			if ($selectedFolder == $icServerID.self::$delimiter.$junkFolder)
+			{
+				// Lock the tree if the active folder is Trash folder
+				$response->call('app.mail.lock_tree');
+			}
+			$this->mail_bo->deleteMessages('all',$junkFolder,'remove_immediately');
+
+			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
+			$fShortName =  array_pop(explode($heirarchyDelimeter, $junkFolder));
+			$fStatus = array(
+				$icServerID.self::$delimiter.$trashFolder => lang($fShortName)
+			);
+			//Call to reset folder status counter, after junkFolder triggered not from Junk folder
+			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
+			$response->call('app.mail.mail_setFolderStatus',$fStatus);
+		}
+		if ($rememberServerID != $this->mail_bo->profileID)
+		{
+			$oldFolderInfo = $this->mail_bo->getFolderStatus($junkFolder,false,false,false);
+			$response->call('egw.message',lang('empty junk'));
+			$response->call('app.mail.mail_reloadNode',array($icServerID.self::$delimiter.$junkFolder=>$oldFolderInfo['shortDisplayName']));
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$rememberServerID);
+			$this->changeProfile($rememberServerID);
+		}
+		else if ($selectedFolder == $icServerID.self::$delimiter.$junkFolder)
+		{
+			$response->call('egw.refresh',lang('empty junk'),'mail');
+		}
 	}
 
 	/**
