@@ -77,6 +77,10 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				}
 
 				delete (selectors[_selector]);
+				if(!_rule)
+				{
+					selectorCount--;
+				}
 			}
 			else
 			{
