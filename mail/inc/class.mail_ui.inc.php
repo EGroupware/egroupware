@@ -630,7 +630,7 @@ class mail_ui
 				if ($junkFolder && !empty($junkFolder))
 				{
 					$tree_actions['empty_spam'] = array(
-						'caption' => 'empty spam',
+						'caption' => 'empty junk',
 						'icon' => 'dhtmlxtree/MailFolderJunk',
 						'enabled'	=> 'javaScript:app.mail.spamfolder_enabled',
 						'onExecute' => 'javaScript:app.mail.mail_emptySpam',
@@ -4248,7 +4248,7 @@ class mail_ui
 		if(!empty($junkFolder)) {
 			if ($selectedFolder == $icServerID.self::$delimiter.$junkFolder)
 			{
-				// Lock the tree if the active folder is Trash folder
+				// Lock the tree if the active folder is junk folder
 				$response->call('app.mail.lock_tree');
 			}
 			$this->mail_bo->deleteMessages('all',$junkFolder,'remove_immediately');
@@ -4256,10 +4256,10 @@ class mail_ui
 			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
 			$fShortName =  array_pop(explode($heirarchyDelimeter, $junkFolder));
 			$fStatus = array(
-				$icServerID.self::$delimiter.$trashFolder => lang($fShortName)
+				$icServerID.self::$delimiter.$junkFolder => lang($fShortName)
 			);
 			//Call to reset folder status counter, after junkFolder triggered not from Junk folder
-			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
+			//-as we don't have junk folder specific information available on client-side we need to deal with it on server
 			$response->call('app.mail.mail_setFolderStatus',$fStatus);
 		}
 		if ($rememberServerID != $this->mail_bo->profileID)

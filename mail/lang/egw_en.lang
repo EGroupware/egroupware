@@ -135,6 +135,7 @@ email notification update failed	mail	en	email notification update failed
 email notification update failed! you need to set an email address!	mail	en	email notification update failed! You need to set an email address!
 emailaddress	admin	en	emailaddress
 emailadmin: profilemanagement	mail	en	eMailAdmin: Profilemanagement
+empty junk	mail	en	empty junk/spam folder
 empty trash	mail	en	empty trash
 enable	mail	en	Enable
 enabled!	mail	en	enabled!

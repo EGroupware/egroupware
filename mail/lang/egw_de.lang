@@ -135,6 +135,7 @@ email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-
 email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-Mail Benachrichtigungen fehlgeschlagen! Es muss eine E-Mail-Adresse ausgewählt sein!
 emailaddress	admin	de	E-Mail
 emailadmin: profilemanagement	mail	de	E-Mail-Admin: Profilmanagement
+empty junk	mail	de	Junk-/Spam- Ordner leeren
 empty trash	mail	de	Papierkorb leeren
 enable	mail	de	Aktivieren
 enabled!	mail	de	aktiviert!

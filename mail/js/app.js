@@ -1604,7 +1604,7 @@ app.classes.mail = AppJS.extend(
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
 
-		this.egw.message(this.egw.lang('empty spam'));
+		this.egw.message(this.egw.lang('empty junk'));
 		egw.json('mail.mail_ui.ajax_emptySpam',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
 			.sendRequest(true);
 
