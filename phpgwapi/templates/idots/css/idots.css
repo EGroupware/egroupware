@@ -30,6 +30,12 @@
 #tdSidebox {
 	overflow: hidden;
 }
+/*Fix click handler on mail-tree not working because of conflict with draggable
+Although this stops resizable working on mail sidebox*/
+.divSidebox *{
+	position:relative;
+}
+
 .textSidebox {
 	border-top: 1px solid #d3d3d3;
 	padding-left: 1px;
