@@ -150,6 +150,9 @@ function egwPopupActionImplementation()
 			e.stopPropagation();
 			e.cancelBubble = true;
 
+			// remove context menu if we are in mobile theme
+			// and intended to open the entry
+			if (_egw_active_menu && e.which == 1) _egw_active_menu.hide();
 			return false;
 		};
 

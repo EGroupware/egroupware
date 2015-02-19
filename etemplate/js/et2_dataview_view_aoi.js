@@ -77,6 +77,8 @@ function et2_dataview_rowAOI(_node)
 						case "left":
 						case "right":
 							state = 1;
+							// Hide context menu on swip actions
+							if(_egw_active_menu) _egw_active_menu.hide();
 							break;
 					}
 				}
@@ -106,7 +108,7 @@ function et2_dataview_rowAOI(_node)
 				click: function (event)
 				{
 					selectHandler(event);
-				},
+				}
 				
 		});
 	} else {
