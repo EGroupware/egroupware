@@ -982,13 +982,15 @@ var fw_base =  Class.extend({
 							},et2_list[i],et2_IPrint);
 						}
 						appWindow.onafterprint = null;
+						// Reset after removing margin
+						$j('#egw_fw_main').css('margin-left', framework.activeApp.sideboxWidth + "px");
 					};
 					if(appWindow.matchMedia) {
 						var mediaQueryList = appWindow.matchMedia('print');
 						var listener = function(mql) {
 							if (!mql.matches) {
-								afterPrint();
 								mediaQueryList.removeListener(listener);
+								afterPrint();
 							}
 						};
 						mediaQueryList.addListener(listener);
@@ -998,7 +1000,9 @@ var fw_base =  Class.extend({
 
 					// Wait for everything to be loaded, then send it off
 					jQuery.when.apply(jQuery, deferred).done(function() {
-						appWindow.print();
+						// Despite being set in the print CSS, this just doesn't work
+						$j('#egw_fw_main').css('margin-left','0px');
+						appWindow.setTimeout(appWindow.print, 0);
 					}).fail(function() {
 						afterPrint();
 					});
