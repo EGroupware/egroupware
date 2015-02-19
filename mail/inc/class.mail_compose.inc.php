@@ -1025,7 +1025,7 @@ class mail_compose
 
 		// fetch the signature, prepare the select box, ...
 		if (empty($content['mailidentity'])) {
-			$content['mailidentity'] = $acc['ident_id']?$acc['ident_id']:$acc['acc_id'];
+			$content['mailidentity'] = $acc['ident_id'];
 		}
 
 		$disableRuler = false;
