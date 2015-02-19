@@ -489,7 +489,7 @@ function load_wrapper($url)
 				// get eGW's __autoload() function
 				include_once(EGW_API_INC.'/common_functions.inc.php');
 
-				if (!class_exists(str_replace('.','_',$scheme).'_stream_wrapper'))
+				if (!egw_vfs::load_wrapper($scheme))
 				{
 					die("Unknown scheme '$scheme' in $url !!!\n\n");
 				}
