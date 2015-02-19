@@ -374,6 +374,9 @@ class mail_compose
 			$this->changeProfile($_content['serverID']);
 			$composeProfile = $this->mail_bo->profileID;
 		}
+		// make sure $acc is set/initalized properly with the current composeProfile, as $acc is used down there
+		// at several locations and not neccesaryly initialized before
+		$acc = emailadmin_account::read($composeProfile);
 		$buttonClicked = false;
 		if ($_content['composeToolbar'] === 'send')
 		{
@@ -1022,7 +1025,7 @@ class mail_compose
 
 		// fetch the signature, prepare the select box, ...
 		if (empty($content['mailidentity'])) {
-			$content['mailidentity'] = $acc['ident_id'];
+			$content['mailidentity'] = $acc['ident_id']?$acc['ident_id']:$acc['acc_id'];
 		}
 
 		$disableRuler = false;
@@ -3057,8 +3060,8 @@ class mail_compose
 	 */
 	function setDefaults($content=array())
 	{
-		// retrieve the signature accociated with the identity
-		$id = $this->mail_bo->getDefaultIdentity();
+		// retrieve the signature accociated with the identity associated with the current account, rather than the default
+		$id = ($this->mail_bo->icServer->ident_id?$this->mail_bo->icServer->ident_id:$this->mail_bo->getDefaultIdentity());
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
 		{
 			$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
