@@ -975,15 +975,22 @@ var fw_base =  Class.extend({
 				{
 					// Try to clean up after - not guaranteed
 					var afterPrint = function() {
-						for(var i = 0; i < et2_list.length; i++)
-						{
-							et2_list[i].widgetContainer.iterateOver(function(_widget) {
-								_widget.afterPrint();
-							},et2_list[i],et2_IPrint);
-						}
-						appWindow.onafterprint = null;
 						// Reset after removing margin
-						$j('#egw_fw_main').css('margin-left', framework.activeApp.sideboxWidth + "px");
+						$j('#egw_fw_main').css('margin-left', (framework.activeApp.sideboxWidth -1)+ "px");
+						var app = framework.activeApp;
+						framework.activeApp = '';
+						framework.setActiveApp(app);
+
+						// Give framework a chance to deal, then reset the etemplates
+						window.setTimeout(function() {
+							for(var i = 0; i < et2_list.length; i++)
+							{
+								et2_list[i].widgetContainer.iterateOver(function(_widget) {
+									_widget.afterPrint();
+								},et2_list[i],et2_IPrint);
+							}
+						},100);
+						appWindow.onafterprint = null;
 					};
 					if(appWindow.matchMedia) {
 						var mediaQueryList = appWindow.matchMedia('print');
