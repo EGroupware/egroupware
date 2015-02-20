@@ -124,7 +124,7 @@ class pixelegg_framework extends jdots_framework
 */
 div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #divAppIconBar #divLogo,
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active:hover,
-.dialogFooterToolbar, .ui-widget-header{
+.dialogFooterToolbar, .et2_portlet .ui-widget-header{
 	background-color: $color !important;
 }
 
