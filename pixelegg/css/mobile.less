@@ -23,6 +23,7 @@
 @smartphone-max: 768px;
 /*Smartphones Min-Width*/
 @smartphone-min: 321px;
+@handheld: ~"only screen and (max-device-width : @{tablet-max})";
 /*All devices portrait mode*/
 @handheld-portrait: ~"only screen and (max-device-width : @{tablet-max}) and (orientation : portrait)";
 /*All devices landscape mode*/
@@ -35,80 +36,6 @@
 
 @media all {
 	body{
-
-		div#loginMainDiv{
-			#divAppIconBar {
-				#divLogo img[src$="svg"] {
-					width:40%;
-					margin-top: 5px;
-				}
-			}
-			div#centerBox{
-				position:absolute;
-				margin: 0;
-				width: 100%;
-				background-color: transparent;
-				padding: 0;
-				-webkit-border-top-right-radius: 0;
-				-webkit-border-bottom-right-radius:0;
-				-webkit-border-bottom-left-radius: 0;
-				-webkit-border-top-left-radius: 0;
-				-moz-border-radius-topright: 0;
-				-moz-border-radius-bottomright: 0;
-				-moz-border-radius-bottomleft: 0;
-				-moz-border-radius-topleft: 0;
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
-				border-bottom-left-radius: 0;
-				border-top-left-radius: 0;
-				background-color: none;
-				background-image: none;
-				background-image: none;
-				background-image: none;
-				background-image: none;
-				background-image: none;
-				background-image: none;
-				background-image: none;
-				background-repeat: none;
-				border:none;
-				border-radius: none;
-				form {
-					margin-top: -2em;
-					margin-right: 3em;
-
-					table.divLoginbox {
-						width:100%;
-						float:left;
-						tr.hiddenCredential {
-							display:none;
-						}
-						input[type="submit"] {
-							font-size: xx-large;
-
-						}
-						input, select {
-							width:100%;
-							height:60px;
-						}
-						td {
-							font-size: 300%;
-							padding:0.8%;
-							&.registration{
-								font-size: 180%;
-							}
-							select {
-								background-size: 48px auto;
-							}
-						}
-					}
-				}
-				#loginCdMessage {
-					font-size:large;
-					padding:0;
-				}
-			}
-		}
-
 		background-color: transparent;
 		// iOS appHeader class
 		div.egw_fw_mobile_iOS_popup_appHeader{
@@ -828,6 +755,81 @@
 		background-size: 120px 120px;
 		background-position: center;
 	}
+}
+@media @handheld
+{
+	div#loginMainDiv{
+			#divAppIconBar {
+				#divLogo img[src$="svg"] {
+					width:40%;
+					margin-top: 5px;
+				}
+			}
+			div#centerBox{
+				position:absolute;
+				margin: 0;
+				width: 100%;
+				background-color: transparent;
+				padding: 0;
+				-webkit-border-top-right-radius: 0;
+				-webkit-border-bottom-right-radius:0;
+				-webkit-border-bottom-left-radius: 0;
+				-webkit-border-top-left-radius: 0;
+				-moz-border-radius-topright: 0;
+				-moz-border-radius-bottomright: 0;
+				-moz-border-radius-bottomleft: 0;
+				-moz-border-radius-topleft: 0;
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+				background-color: none;
+				background-image: none;
+				background-image: none;
+				background-image: none;
+				background-image: none;
+				background-image: none;
+				background-image: none;
+				background-image: none;
+				background-repeat: none;
+				border:none;
+				border-radius: none;
+				form {
+					margin-top: -2em;
+					margin-right: 3em;
+
+					table.divLoginbox {
+						width:100%;
+						float:left;
+						tr.hiddenCredential {
+							display:none;
+						}
+						input[type="submit"] {
+							font-size: xx-large;
+
+						}
+						input, select {
+							width:100%;
+							height:60px;
+						}
+						td {
+							font-size: 300%;
+							padding:0.8%;
+							&.registration{
+								font-size: 180%;
+							}
+							select {
+								background-size: 48px auto;
+							}
+						}
+					}
+				}
+				#loginCdMessage {
+					font-size:large;
+					padding:0;
+				}
+			}
+		}
 }
 @media @handheld-portrait
 {
