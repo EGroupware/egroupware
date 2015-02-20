@@ -597,8 +597,11 @@ etemplate2.prototype.autocomplete_fixer = function ()
 		form.onsubmit = function(){return false;};
 		// Firefox give a security warning when transmitting to "about:blank" from a https site
 		// we work around that by giving existing etemplate/empty.html url
-		if (navigator.userAgent.match(/firefox/i)) jQuery(form).attr({action: egw.webserverUrl+'/etemplate/empty.html',method:'post'});
-
+		// Safari shows same warning, thought Chrome userAgent also includes Safari
+		if (navigator.userAgent.match(/(firefox|safari)/i) && !navigator.userAgent.match(/chrome/i))
+		{
+			jQuery(form).attr({action: egw.webserverUrl+'/etemplate/empty.html',method:'post'});
+		}
 		form.submit();
 	}
 };
@@ -937,7 +940,7 @@ etemplate2.prototype.print = function()
 	},this,et2_IPrint);
 
 	return deferred;
-}
+};
 
 // Some static things to make getting into widget context a little easier //
 
