@@ -307,6 +307,7 @@ last changed	calendar	en	Last changed
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view. Default is 5, 0 for no limit.
+link title for events to show	calendar	en	Link title for events to show
 link to view the event	calendar	en	Link to view the event
 links	calendar	en	Links
 links and attached files	calendar	en	Links and attached files
