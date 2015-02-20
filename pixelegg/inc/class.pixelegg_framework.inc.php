@@ -98,7 +98,6 @@ class pixelegg_framework extends jdots_framework
 	 */
 	public function _get_css()
 	{
-		if (html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile') return egw_framework::_get_css();
 		$ret = parent::_get_css();
 		// color to use
 		$color = str_replace('custom',$GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'],
@@ -124,9 +123,9 @@ class pixelegg_framework extends jdots_framework
 -popup toolbar
 */
 div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #divAppIconBar #divLogo,
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active:hover,
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active:hover,
 .dialogFooterToolbar, .ui-widget-header{
-	background-color: $color;
+	background-color: $color !important;
 }
 
 /*Login background*/
@@ -150,8 +149,8 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 }
 
 /*Sidebar menu active category*/
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active{
-	background-color: $color_hex_darker;
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{
+	background-color: $color_hex_darker !important;
 }
 ";
 		}
