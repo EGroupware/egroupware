@@ -1,19 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * EGroupware login page javascript
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @link http://www.egroupware.org
+ * @version $Id$
  */
 
-
-egw_LAB.wait(function() {
-	$j.ajax('https://www.egroupware.org/social.js', {
-		dataType: "jsonp",
-		jsonp: false,
-		jsonpCallback: "do_social",
-		cache: true
-	}).done(function(_data)
+egw_LAB.wait(function()
+{
+	$j(document).ready(function()
 	{
-		$j(document).ready(function() {
+		function do_social(_data)
+		{
 			var isPixelegg = $j('link[href*="pixelegg.css"]')[0];
 			var social = $j(document.createElement('div'))
 				.attr({
@@ -34,6 +34,12 @@ egw_LAB.wait(function() {
 				.append($j(document.createElement('img'))
 					.attr('src', data.svg));
 			}
-		});
+		}
+
+		do_social([
+			{ "svg": egw_webserverUrl+"/phpgwapi/templates/default/images/login_contact.svg", "url": "https://www.egroupware.org/en/contact.html", "lang": { "de": "https://www.egroupware.org/de/kontakt.html" }},
+			{ "svg": egw_webserverUrl+"/phpgwapi/templates/default/images/login_facebook.svg", "url": "https://www.facebook.com/egroupware" },
+			{ "svg": egw_webserverUrl+"/phpgwapi/templates/default/images/login_twitter.svg", "url": "https://twitter.com/egroupware" }
+		]);
 	});
 });

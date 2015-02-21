@@ -180,18 +180,50 @@ abstract class egw_framework
 				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
 			}
 		}
-		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_script_src_attrs)).' '.function_backtrace());
+		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_connect_src_attrs)).' '.function_backtrace());
 		return implode(' ', self::$csp_connect_src_attrs);
 	}
 
 	/**
-	 * Query additional CSP frame-src from current app
+	 * Additional attributes or urls for CSP frame-src 'self'
 	 *
-	 * @return array
+	 * @var array
 	 */
-	protected function _get_csp_frame_src()
+	private static $csp_frame_src_attrs;
+
+	/**
+	 * Set/get Content-Security-Policy attributes for frame-src:
+	 *
+	 * Calling this method with an empty array sets no frame-src, but "'self'"!
+	 *
+	 * @param string|array $set =array() URL (incl. protocol!)
+	 * @return string with attributes eg. "'unsafe-inline'"
+	 */
+	public static function csp_frame_src_attrs($set=null)
 	{
-		return $GLOBALS['egw']->hooks->single('csp-frame-src', $GLOBALS['egw_info']['flags']['currentapp']);
+		// set frame-src attrs of API and apps via hook
+		if (!isset(self::$csp_frame_src_attrs) && !isset($set))
+		{
+			$frame_src = array('manual.egroupware.org', 'www.egroupware.org');
+			if (($additional = $GLOBALS['egw']->hooks->single('csp-frame-src', $GLOBALS['egw_info']['flags']['currentapp'])))
+			{
+				$frame_src = array_unique(array_merge($frame_src, $additional));
+			}
+			return self::csp_frame_src_attrs($frame_src);
+		}
+
+		if (!isset(self::$csp_frame_src_attrs)) self::$csp_frame_src_attrs = array();
+
+		foreach((array)$set as $attr)
+		{
+			if (!in_array($attr, self::$csp_frame_src_attrs))
+			{
+				self::$csp_frame_src_attrs[] = $attr;
+				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
+			}
+		}
+		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_frame_src_attrs)).' '.function_backtrace());
+		return implode(' ', self::$csp_frame_src_attrs);
 	}
 
 	/**
@@ -207,13 +239,10 @@ abstract class egw_framework
 		// - "connect-src 'self'" allows ajax requests only to self
 		// - "style-src 'self' 'unsave-inline'" allows only self and inline style, which we need
 		// - "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
-		$frame_src = array("'self'", 'manual.egroupware.org', 'www.egroupware.org');
-		if (($additional = $this->_get_csp_frame_src())) $frame_src = array_unique(array_merge($frame_src, $additional));
-
 		$csp = "script-src 'self' ".self::csp_script_src_attrs().
 			"; connect-src 'self' ".self::csp_connect_src_attrs().
 			"; style-src 'self' ".self::csp_style_src_attrs().
-			"; frame-src ".implode(' ', $frame_src);
+			"; frame-src 'self' ".self::csp_frame_src_attrs();
 
 		//$csp = "default-src * 'unsafe-eval' 'unsafe-inline'";	// allow everything
 		header("Content-Security-Policy: $csp");
@@ -512,8 +541,7 @@ abstract class egw_framework
 	*/
 	function login_screen($extra_vars)
 	{
-		//allow to include JSONP file with social media urls from egroupware.org
-		self::csp_script_src_attrs('https://www.egroupware.org');
+		self::csp_frame_src_attrs(array());	// array() no external frame-sources
 
 		//error_log(__METHOD__."() server[template_dir]=".array2string($GLOBALS['egw_info']['server']['template_dir']).", this->template=$this->template, this->template_dir=$this->template_dir, get_class(this)=".get_class($this));
 		$tmpl = new Template($GLOBALS['egw_info']['server']['template_dir']);
