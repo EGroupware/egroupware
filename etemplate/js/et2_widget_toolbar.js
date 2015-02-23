@@ -110,20 +110,6 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		var that = this;
 		
-		// toolbar preference id correction,
-		// before toolbar used to address pereference with this.id which were not scalable
-		// need to convert them to dom_id prefix for old pref and the new one come with dom_id automatically
-		//TODO: this part of code needs to be removed later
-		var old_pref = egw.preference(this.id,this.egw().getAppName());
-		if (old_pref)
-		{
-			//Set the old preference with correct id
-			egw.set_preference(this.egw().getAppName(), this.dom_id,old_pref);
-			// delete stored pref with wrong id
-			egw.set_preference(this.egw().getAppName(),this.id);
-		}
-		
-		
 		var pref = egw.preference(this.dom_id,this.egw().getAppName());
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 			
