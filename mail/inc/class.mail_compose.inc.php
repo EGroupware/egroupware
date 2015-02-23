@@ -1303,7 +1303,7 @@ class mail_compose
 		$content['mailaccount'] .= ':'.$content['mailidentity'];
 
 		//error_log(__METHOD__.__LINE__.array2string($content));
-		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
+		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**
