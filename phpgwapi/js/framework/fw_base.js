@@ -975,20 +975,29 @@ var fw_base =  Class.extend({
 				{
 					// Try to clean up after - not guaranteed
 					var afterPrint = function() {
-						for(var i = 0; i < et2_list.length; i++)
-						{
-							et2_list[i].widgetContainer.iterateOver(function(_widget) {
-								_widget.afterPrint();
-							},et2_list[i],et2_IPrint);
-						}
+						// Reset after removing margin
+						$j('#egw_fw_main').css('margin-left', (framework.activeApp.sideboxWidth -1)+ "px");
+						var app = framework.activeApp;
+						framework.activeApp = '';
+						framework.setActiveApp(app);
+
+						// Give framework a chance to deal, then reset the etemplates
+						window.setTimeout(function() {
+							for(var i = 0; i < et2_list.length; i++)
+							{
+								et2_list[i].widgetContainer.iterateOver(function(_widget) {
+									_widget.afterPrint();
+								},et2_list[i],et2_IPrint);
+							}
+						},100);
 						appWindow.onafterprint = null;
 					};
 					if(appWindow.matchMedia) {
 						var mediaQueryList = appWindow.matchMedia('print');
 						var listener = function(mql) {
 							if (!mql.matches) {
-								afterPrint();
 								mediaQueryList.removeListener(listener);
+								afterPrint();
 							}
 						};
 						mediaQueryList.addListener(listener);
@@ -998,7 +1007,9 @@ var fw_base =  Class.extend({
 
 					// Wait for everything to be loaded, then send it off
 					jQuery.when.apply(jQuery, deferred).done(function() {
-						appWindow.print();
+						// Despite being set in the print CSS, this just doesn't work
+						$j('#egw_fw_main').css('margin-left','0px');
+						appWindow.setTimeout(appWindow.print, 0);
 					}).fail(function() {
 						afterPrint();
 					});
