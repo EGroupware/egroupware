@@ -3699,9 +3699,9 @@ app.classes.mail = AppJS.extend(
 			{
 				textArea.set_height(bodySize);
 			}
-			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext' && typeof textArea.getParent().node.children[1] != 'undefined')
+			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
 			{
-				jQuery(textArea.getParent().node.children[1].children[1].children[1]).css('height',bodySize -90);
+				textArea.ckeditor.resize('100%', bodySize);
 			}
 			else
 			{
