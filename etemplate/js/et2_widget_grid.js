@@ -886,10 +886,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 			items: "tr:not(.th)",
 			distance: 15,
 			stop: function(event, ui) {
-				self.egw().jsonq(sortable,[self.tbody.sortable("toArray"), self.id],
+				self.egw(window).json(sortable,[self.tbody.sortable("toArray"), self.id],
 					null,
-					self
-				);
+					self,
+					true
+				).sendRequest();
 			}
 		});
 	},
