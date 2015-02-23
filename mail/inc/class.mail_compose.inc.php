@@ -244,6 +244,17 @@ class mail_compose
 		{
 			list($_content['mailaccount'], $_content['mailidentity']) = explode(':', $_content['mailaccount']);
 		}
+		
+		// As CKEditor is not available for mobile devices
+		// we should always switch the compose mimeType to plainText and
+		// disable the html option
+		// TODO: After CKEditor complatibility with all devices, this part needs to be removed
+		if (html::$ua_mobile)
+		{
+			$_content['mimeType'] = 'plain';
+			$readonlys['mimeType'] = true;
+		}
+
 		//error_log(__METHOD__.__LINE__.array2string($sigPref));
 		//lang('compose'),lang('from') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST).function_backtrace());
