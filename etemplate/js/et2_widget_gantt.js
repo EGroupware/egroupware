@@ -306,7 +306,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 						this.widget.set_value(value);
 						value = $j(this.widget.getDOMNode()).html();
 					}
-					return value;
+					return '<div class="gantt_column_'+this.name+'">' + value + '</div>';
 				};
 			}
 
