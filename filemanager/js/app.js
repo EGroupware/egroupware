@@ -822,10 +822,10 @@ app.classes.filemanager = AppJS.extend(
 		var widget = this.et2.getWidgetById('upload');
 
 		// Override finish to specify a potentially different path
-		var old_onfinish = widget.options.onFinish;
+		var old_onfinish = widget.options.onFinishOne;
 
-		widget.options.onFinish = function(_event, _file_count) {
-			widget.options.onFinish = old_onfinish;
+		widget.options.onFinishOne = function(_event, _file_count) {
+			widget.options.onFinishOne = old_onfinish;
 			self.upload(_event, _file_count, path);
 		};
 		// This triggers the upload
