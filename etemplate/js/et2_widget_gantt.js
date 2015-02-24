@@ -1038,6 +1038,9 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 				}
 				self.set_columns(self.gantt_config.columns);
 
+				// Update Implicit preference
+				this.egw().set_preference(self.getInstanceManager().app, 'gantt_columns_' + self.id, value);
+
 				// Hide popup
 				self.selectPopup.toggle();
 				self.selectPopup.remove();
