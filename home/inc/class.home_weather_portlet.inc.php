@@ -25,7 +25,7 @@ class home_weather_portlet extends home_portlet
 
 	const API_URL = "http://api.openweathermap.org/data/2.5/";
 	const ICON_URL = 'http://openweathermap.org/img/w/';
-	const API_KEY = '';
+	const API_KEY = '45484f039c5caa14d31aefe7f5514292';
 	const CACHE_TIME = 3600; // Cache weather for an hour
 
 	/**
@@ -112,16 +112,14 @@ class home_weather_portlet extends home_portlet
 			$query['APPID'] = self::API_KEY;
 		}
 		$data = egw_cache::getTree('home', json_encode($query), function($query) use(&$clear_cache) {
-			$debug = true;
+			$debug = false;
 			if($debug) error_log('Fetching fresh data from ' . static::API_URL);
 
 			$url = static::API_URL.'forecast/daily?'. http_build_query($query);
 			$forecast = file_get_contents($url);
-			if($debug) error_log(__METHOD__ . ' forecast: ' . $weather);
-			if($forecast === FALSE)
 
 			$url = static::API_URL.'weather?'. http_build_query($query);
-			$current = file_get_contents($url) || array();
+			$current = file_get_contents($url);
 			if($debug) error_log(__METHOD__ . ' current: ' . $current);
 
 			return array_merge(array('current' => json_decode($current,true)), json_decode($forecast,true));
@@ -171,7 +169,7 @@ class home_weather_portlet extends home_portlet
 				unset($massage[$i]);
 			}
 		}
-		if($data['current'])
+		if($data['current'] && is_array($data['current']))
 		{
 			// Current weather
 			$data['current']['temp'] = $data['current']['main'];
