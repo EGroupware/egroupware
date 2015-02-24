@@ -73,12 +73,15 @@ div.calendar_favorite_portlet.et2_portlet.ui-widget-content > div:last-of-type {
 	position: relative;
 	top: -20px;
 }
-.et2_portlet.home_link_portlet:hover > .ui-widget-header {
-	display: block;
-	z-index: 90;
-}
 .et2_portlet.home_link_portlet.ui-widget-content > div:last-of-type {
-	top: 0px
+	position: relative;
+	margin-top: -20px;
+	height: 100%;
+	min-height: 45px;
+	transition: none;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
 }
 .et2_portlet.home_link_portlet > div:last-of-type > div {
 	padding: 10px;
@@ -90,6 +93,18 @@ div.calendar_favorite_portlet.et2_portlet.ui-widget-content > div:last-of-type {
 	margin-bottom: 8px;
 	max-width: 100%;
 	max-height: 64px;
+}
+/* Single entry hover */
+.et2_portlet.home_link_portlet:hover > .ui-widget-header {
+	display: block;
+	z-index: 90;
+}
+.et2_portlet.home_link_portlet:hover > div:last-of-type {
+	bottom: inherit;
+	top: 1px;
+	height: auto;
+	z-index: 10;
+	border-bottom: inherit;
 }
 
 /* Favorite / nextmatch
