@@ -91,6 +91,28 @@ var et2_date = et2_inputWidget.extend(
 			this.input_date.addClass("et2_time");
 			this.egw().time(this.input_date);
 		}
+
+		// Avoid collision of datepicker dialog with input field
+		this.input_date.datepicker('option', 'beforeShow', function(input, inst){
+			var cal = inst.dpDiv;
+			setTimeout(function () {
+				var $input = jQuery(input);
+				var inputOffset = $input.offset();
+				// position the datepicker in freespace zone
+				// avoid datepicker calendar collision with input field
+				if (cal.height() + inputOffset.top > window.innerHeight)
+				{
+					cal.position({
+						my: "left center",
+						at: 'right bottom',
+						collision: 'flip fit',
+						of: input,
+					});
+				}
+				
+			},0);
+		});
+		
 		// Update internal value when changed
 		var self = this;
 		this.input_date.bind('change', function(e){
