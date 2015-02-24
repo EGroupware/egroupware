@@ -102,7 +102,7 @@ class home_weather_portlet extends home_portlet
 	 */
 	public function get_weather(Array $query, $api_url = '')
 	{
-		static $debug = true;
+		static $debug = false;
 		if(!$api_url)
 		{
 			$api_url = self::API_URL . '/weather?';
