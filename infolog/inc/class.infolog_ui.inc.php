@@ -388,7 +388,12 @@ class infolog_ui
 
 		// check if we have a custom, type-specific template
 		$old_template = $query['template'];
-		$query['template'] = 'infolog.index.rows';
+
+		// Reset custom, type-specific template if type was cleared (without changing it for home)
+		if(!$query['template'] || stripos($query['template'], 'infolog.index.rows') === 0)
+		{
+			$query['template'] = 'infolog.index.rows';
+		}
 		unset($query['custom_fields']);
 		if ($query['col_filter']['info_type'])
 		{

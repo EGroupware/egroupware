@@ -63,6 +63,16 @@ class infolog_favorite_portlet extends home_favorite_portlet
 	 */
 	public static function get_rows(&$query, &$rows, &$readonlys)
 	{
+		// Make sure we pass the type check
+		if ($query['col_filter']['info_type'])
+		{
+			$tpl = new etemplate_new;
+			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
+			{
+				$query['template'] = $tpl->name;
+				$query['custom_fields'] = true;	// read the custom fields too
+			}
+		}
 		$ui = new infolog_ui();
 		$total = $ui->get_rows($query, $rows, $readonlys);
 		// infolog_ui overwrites what we set in constructor
