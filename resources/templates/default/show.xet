@@ -18,7 +18,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="Image" id="image"/>
+					<nextmatch-header label="Image" id="image"/>
 					<vbox>
 						<nextmatch-sortheader label="Name" id="name"/>
 						<nextmatch-sortheader label="Short description" id="short_description"/>
