@@ -1051,9 +1051,6 @@ div.calendar {
 #calendar-edit .et2_tabs {
   min-height: 246px;
 }
-#calendar-edit .et2_tabcntr {
-  overflow-y: auto;
-}
 #calendar-edit input.hasDatepicker,
 #calendar-edit #calendar-edit_start {
   width: 129px;

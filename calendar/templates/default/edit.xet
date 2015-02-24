@@ -94,7 +94,7 @@
 		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="240"/>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
-		<grid width="99%" overflow="auto" id="participants">
+		<grid width="99%" id="participants">
 			<columns>
 				<column width="85"/>
 				<column/>
