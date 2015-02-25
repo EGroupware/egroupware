@@ -161,7 +161,7 @@ var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		{
 			if (self.options.expose_view)
 			{
-				self._init_blueimp_gallery(_value);
+				self._init_blueimp_gallery(e,_value);
 			}
 			else
 			{
