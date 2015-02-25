@@ -282,9 +282,11 @@ function exif_thumbnail_load($file)
  * otherwise the gd-image is returned.
  *
  * @param string $file the file which to load
+ * @param int $maxw the maximum width of the thumbnail
+ * @param int $maxh the maximum height of the thumbnail
  * @returns boolean|resource false or a gd_image
  */
-function gd_image_load($file)
+function gd_image_load($file,$maxw,$maxh)
 {
 	// Get mime type
 	list($type, $image_type) = explode('/', egw_vfs::mime_content_type($file));
@@ -310,15 +312,40 @@ function gd_image_load($file)
 	}
 	else if ($type == 'application')
 	{
+		$thumb = false;
 		if(strpos($image_type,'vnd.oasis.opendocument.') === 0)
 		{
 			// OpenDocuments have thumbnails inside already
-			return get_opendocument_thumbnail($file);
+			$thumb = get_opendocument_thumbnail($file);
 		}
 		else if($image_type == 'pdf')
 		{
-			return get_pdf_thumbnail($file);
+			$thumb = get_pdf_thumbnail($file);
 		}
+		else if (strpos($image_type, 'vnd.openxmlformats-officedocument.') === 0)
+		{
+			// TODO: Figure out how this can be done reliably
+			//$thumb = get_msoffice_thumbnail($file);
+		}
+		// Mark it with mime type icon
+		if($thumb)
+		{
+			// Need to scale first, or the mark will be wrong size
+			$scaled = get_scaled_image_size(imagesx($thumb), imagesy($thumb), $maxw, $maxh);
+			if ($scaled !== false)
+			{
+				list($sw, $sh) = $scaled;
+
+				//Now scale it down
+				$img_dst = gd_create_transparent_image($sw, $sh);
+				imagecopyresampled($img_dst, $thumb, 0, 0, 0, 0, $sw, $sh, imagesx($thumb), imagesy($thumb));
+				$thumb = $img_dst;
+			}
+			$mime = egw_vfs::mime_content_type($file);
+			corner_tag($thumb, $tag_image, $mime);
+			imagedestroy($tag_image);
+		}
+		return $thumb;
 	}
 	return false;
 }
@@ -346,7 +373,7 @@ function get_opendocument_thumbnail($file)
 	$thumbnail_url = 'zip://'.$archive.'#Thumbnails/thumbnail.png';
 	$image = imagecreatefromstring(file_get_contents($thumbnail_url));
 	unlink($archive);
-
+/*
 	// Mask it with a color by type
 	$mask = imagecreatefrompng('templates/default/images/opendocument.png');
 	if($image)
@@ -369,6 +396,8 @@ function get_opendocument_thumbnail($file)
 		imagefilter($mask, IMG_FILTER_COLORIZE, $filter_color[0],$filter_color[1],$filter_color[2] );
 		imagecopyresampled($image, $mask,0,0,0,0,imagesx($image),imagesy($image),imagesx($mask),imagesy($mask));
 	}
+ *
+ */
 	return $image;
 }
 
@@ -395,9 +424,51 @@ function get_pdf_thumbnail($file)
 	$im->setresolution(300, 300);
 
 	$gd = imagecreatefromstring($im->getimageblob());
-	//$mask = imagecreatefrompng('templates/default/images/mask_pdf.png');
-	//imagecopyresampled($image, $mask,0,0,0,0,imagesx($mask),imagesy($mask),imagesx($mask),imagesy($mask));
 	return $gd;
+}
+
+/**
+ * Put the tag image in the corner of the target image
+ *
+ * Used for thumbnails of documents, so you can still see the mime type
+ *
+ * @param resource $target_image
+ * @param resource|null $tag_image
+ * @param string|null $mime Use correct mime type icon instead of $tag_image
+ */
+function corner_tag(&$target_image, &$tag_image, $mime)
+{
+	$target_width = imagesx($target_image);
+	$target_height = imagesy($target_image);
+
+	// Find mime image, if no tag image set
+	if(!$tag_image && $mime)
+	{
+		list($app, $icon) = explode('/', egw_vfs::mime_icon($mime), 2);
+		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
+			common::image($app, $icon), 2);
+		$dst = EGW_SERVER_ROOT.$path;
+		$tag_image = imagecreatefrompng($dst);
+	}
+
+	// Find correct size - max 1/3 target
+	$tag_size = get_scaled_image_size(imagesx($tag_image), imagesy($tag_image), $target_width / 3, $target_height / 3);
+	if(!$tag_size) return;
+	list($tag_width,$tag_height) = $tag_size;
+
+	// Put it in
+	if($mime)
+	{
+		imagecopyresampled($target_image,$tag_image,
+			$target_width - $tag_width,
+			$target_height - $tag_height,
+			0,0,
+			$tag_width,
+			$tag_height,
+			imagesx($tag_image),
+			imagesy($tag_image)
+		);
+	}
 }
 
 /**
@@ -445,7 +516,7 @@ function gd_create_transparent_image($w, $h)
 function gd_image_thumbnail($file, $maxw, $maxh, $minw, $minh)
 {
 	//Load the image
-	if (($img_src = gd_image_load($file)) !== false)
+	if (($img_src = gd_image_load($file,$maxw,$maxh)) !== false)
 	{
 		//Get the constraints of the image
 		$w = imagesx($img_src);

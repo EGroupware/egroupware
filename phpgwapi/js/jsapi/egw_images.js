@@ -136,7 +136,15 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 
 			}
 			else if (typeof _path == 'string' && (type[0] == 'image' && type[1].match(/^(png|jpe?g|gif|bmp)$/) ||
-				type[0] == 'application' && (type[1].indexOf('vnd.oasis.opendocument.') === 0 || type[1] == 'pdf')))
+				type[0] == 'application' && (
+					// Open Document
+					type[1].indexOf('vnd.oasis.opendocument.') === 0 ||
+					// PDF
+					type[1] == 'pdf' ||
+					// Microsoft
+					type[1].indexOf('vnd.openxmlformats-officedocument.') === 0
+				)
+			))
 			{
 				var params = { 'path': _path, 'thsize': this.config('link_list_thumbnail') || 64};
 				if (_mtime) params.mtime = _mtime;
