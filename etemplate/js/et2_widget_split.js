@@ -63,7 +63,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_split
 	 */
 	init: function() {
@@ -93,7 +93,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 	destroy: function() {
 		// Stop listening
 		this.left.next().off("mouseup");
-		
+
 		// Destroy splitter, restore children
 		this.div.trigger("destroy");
 
@@ -101,7 +101,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 		this.dynheight.free();
 
 		this._super.apply(this, arguments);
-		
+
 		// Remove placeholder children
 		if(this._children.length == 0)
 		{
@@ -152,7 +152,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 		window.setTimeout(function() {
 			self._init_splitter();
 		},1);
-		
+
 
 		// Not done yet, but widget will let you know
 		return this.loading.promise();
@@ -183,12 +183,48 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 			sizeLeft: this.dynheight.outerNode.width() / 2
 		};
 		
+		var widget = this;
+		//Convert percent size to pixel
+		var per2pix = function(_size)
+		{
+			var size = _size.replace("%",'');
+			if (widget.orientation == "v")
+			{
+				return size * widget.dynheight.outerNode.width()  / 100;
+			}
+			else
+			{
+				return size * widget.dynheight.outerNode.height() / 100;
+			}
+		}
+
+		//Convert pixel size to percent
+		var pix2per = function (_size)
+		{
+			if (widget.orientation == "v")
+			{
+				return _size * 100 / widget.dynheight.outerNode.width() + '%';
+			}
+			else
+			{
+				return _size * 100 / widget.dynheight.outerNode.height() + '%';
+			}
+		}
+
 		// Check for position preference, load it in
 		if(this.id)
 		{
 			var pref = this.egw().preference('splitter-size-' + this.id, this.egw().getAppName());
 			if(pref)
 			{
+				// TODO:This condition can be removed for the next release
+				// because this is a correction data and supposely all new prefs size
+				// are all in percent
+				if (pref[Object.keys(pref)].toString().match(/%/g))
+				{
+					pref [Object.keys(pref)] = per2pix(pref [Object.keys(pref)]);
+				}
+
 				if(this.orientation == "v" && pref['sizeLeft'] < this.dynheight.outerNode.width() ||
 					this.orientation == "h" && pref['sizeTop'] < this.dynheight.outerNode.height())
 				{
@@ -214,7 +250,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 		this.div.splitter(options);
 
 		this.div.trigger('resize',[options.sizeTop || options.sizeLeft || 0]);
-		
+
 		// Start docked?
 		if(options.dock)
 		{
@@ -226,10 +262,10 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 				this.dock();
 			}
 		}
-		
+
 		// Add icon to splitter bar
 		var icon = "ui-icon-grip-"
-			+ (this.dock_side ? "solid" : "dotted") + "-" 
+			+ (this.dock_side ? "solid" : "dotted") + "-"
 			+ (this.orientation == "h" ? "horizontal" : "vertical");
 
 		$j(document.createElement("div"))
@@ -245,20 +281,21 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 
 				// Force immediate layout, so proper layout & sizes are available
 				// for resize().  Chrome defers layout, so current DOM node sizes
-				// are not available to widgets if they ask. 
+				// are not available to widgets if they ask.
 				var display = this.style.display;
 				this.style.display = 'none';
 				this.offsetHeight;
 				this.style.display = display;
-				
+
 				if(e.namespace == options.eventNamespace.substr(1) && !self.isDocked())
 				{
 					// Store current position in preferences
 					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
 					self.prefSize = size[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
-					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
+					var prefInPercent = self.orientation == "v" ?{sizeLeft:pix2per(size.sizeLeft)}:{sizeTop:pix2per(size.sizeTop)};
+					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, prefInPercent);
 				}
-				
+
 				// Ok, update children
 				self.iterateOver(function(widget) {
 					if(widget != self)
@@ -328,7 +365,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 	 */
 	set_orientation: function(orient) {
 		this.orientation = orient;
-		
+
 		this._init_splitter();
 	},
 
