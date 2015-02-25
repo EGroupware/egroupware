@@ -83,9 +83,7 @@
 		</box>
 	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
-		<box width="100%" overflow="auto">
-			<historylog id="history"/>
-		</box>
+		<historylog id="history"/>
 	</template>
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">

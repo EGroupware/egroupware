@@ -31,7 +31,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
+var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 {
 	createNamespace: true,
 	attributes: {
@@ -480,5 +480,19 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 		}
 		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)));
 	},
+
+	resize: function (_height)
+	{
+		if (typeof this.options != 'undefined' && _height
+				&& typeof this.options.resize_ratio != 'undefined')
+		{
+			// apply the ratio
+			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
+			if (_height != 0)
+			{
+				this.div.height(this.div.height() + _height);
+			}
+		}
+	}
 });
 et2_register_widget(et2_historylog, ['historylog']);
