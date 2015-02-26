@@ -14,6 +14,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 @define('HORDE_BASE', EGW_API_INC . '/horde/');
 require_once HORDE_BASE . '/lib/core.php';
 require_once HORDE_BASE . 'Horde/RPC.php';
+set_include_path(HORDE_BASE . PATH_SEPARATOR . EGW_BASE . '/egw-pear/' . PATH_SEPARATOR . get_include_path());
 //require_once EGW_API_INC . '/common_functions.inc.php';
 
 $GLOBALS['egw_info'] = array(
