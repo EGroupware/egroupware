@@ -101,7 +101,7 @@ class notifications_email implements notifications_iface {
 
 		$this->mail->setFrom($this->sender->account_email, $this->sender->account_fullname);
 
-		$this->mail->addHeader('Subject', $_subject);
+		$this->mail->addHeader('Subject', trim($_subject)); // trim the subject to avoid strange wrong encoding problem
 		$this->mail->setHtmlBody($body_html, null, false);	// no automatic alternativ
 		$this->mail->setBody($body_plain);
 
