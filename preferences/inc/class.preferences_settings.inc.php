@@ -347,6 +347,7 @@ class preferences_settings
 				case 'textarea':
 					$setting['type'] = is_a($tpl, 'etemplate') ? 'textarea' : 'textbox';
 					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'multiline', 'true');
+					$tpl->setElementAttribute($tab. '[' . $setting['name'] . ']','width', '99%' );
 					// anyway setting via css: width: 99%, height: 5em
 					// for old eT use size attribute
 					if (is_a($tpl, 'etemplate') && (!empty($setting['cols']) || !empty($setting['rows'])))
