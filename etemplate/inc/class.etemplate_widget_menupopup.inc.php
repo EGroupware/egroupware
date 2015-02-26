@@ -220,6 +220,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 			if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $select_pref == 'none')
 			{
+				// Preserve but do not send the value if preference is 'none'
 				self::$request->preserv[$this->id] = self::$request->content[$this->id];
 				unset(self::$request->content[$this->id]);
 				$this->attrs['readonly'] = true;

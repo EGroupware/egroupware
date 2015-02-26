@@ -22,7 +22,7 @@
 /**
  * Account selection widget
  * Changes according to the user's account_selection preference
- * - 'none'	     => Server-side: the read-only widget is used
+ * - 'none'	         => Server-side: the read-only widget is used, and no values are sent or displayed
  * - 'groupmembers'  => Non admins can only select groupmembers  (Server side - normal selectbox)
  * - 'selectbox'     => Selectbox with all accounts and groups (Server side - normal selectbox)
  * - 'primary_group' => Selectbox with primary group and search
