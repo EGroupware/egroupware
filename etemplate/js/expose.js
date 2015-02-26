@@ -73,7 +73,10 @@ function expose (widget)
 			}
 		}
 		// No nextmatch, or nextmatch not quite ready
-		if(nextmatch == null || nextmatch.controller == null) return null;
+		// At the moment only filemanger nm would work
+		// as gallery, thus we disable other nestmatches
+		// to build up gallery but filemanager
+		if(nextmatch == null || nextmatch.controller == null || !nextmatch.dom_id.match(/filemanager/,'ig')) return null;
 
 		return nextmatch;
 	};
