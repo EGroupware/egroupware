@@ -480,7 +480,8 @@ div.mail-compose_fileselector {
   padding: .2em .4em;
 }
 #mail-compose_to div.ms-sel-ctn,
-#mail-compose_cc .ms-sel-ctn {
+#mail-compose_cc .ms-sel-ctn,
+#mail-compose_bcc .ms-sel-ctn {
   max-height: 75px;
 }
 #mail-display_toolbar > button > span {
@@ -1172,6 +1173,10 @@ body {
 #mail-compose .mailComposeHeadersSection select#mail-compose_mailaccount {
   width: 100%;
   height: 30px;
+}
+#mail-compose .mailComposeHeaders #mail-compose_to input,
+#mail-compose .mailComposeHeadersSection #mail-compose_to input {
+  width: auto;
 }
 #mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
 #mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
