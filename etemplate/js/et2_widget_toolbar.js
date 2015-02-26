@@ -293,6 +293,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		toolbar.draggable({
 			cancel:true,
 			zIndex: 1000,
+			delay: 500,
 			//revert:"invalid",
 			containment: "document",
 			cursor: "move",
