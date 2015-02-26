@@ -925,8 +925,14 @@ class common
 				}
 			}
 		}
+		else if ($dir)
+		{
+			// No access to the VFS, don't cache for everyone or custom icons
+			// will be missing.  Just cache for current session.
+			$cache_level = egw_cache::SESSION;
+		}
 		//error_log(__METHOD__."('$template_set') took ".(microtime(true)-$starttime).' secs');
-		egw_cache::setInstance(__CLASS__, $cache_name, $map, 86400);	// cache for one day
+		egw_cache::setCache($cache_level,__CLASS__, $cache_name, $map, 86400);	// cache for one day
 		//echo "<p>template_set=".array2string($template_set)."</p>\n"; _debug_array($map);
 		return $map;
 	}
