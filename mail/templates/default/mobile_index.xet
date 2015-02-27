@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.mobile_index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="25"/>
+				<column width="20"/>
+				<column width="20"/>
+				<column width="40%"/>
+				<column width="95"/>
+				<column width="30%"/>
+				<column width="30%"/>
+				<column width="30%"/>
+				<column width="80"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="ID" id="uid" readonly="true"/>
+					<nextmatch-header statustext="Status" label="St." id="status"/>
+					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
+					<nextmatch-sortheader label="subject" id="subject"/>
+					<nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
+					<nextmatch-sortheader label="mail-address" id="address"/>
+					<nextmatch-sortheader label="to" id="toaddress"/>
+					<nextmatch-sortheader label="from" id="fromaddress"/>
+					<nextmatch-sortheader align="center" label="size" id="size"/>
+				</row>
+				<row class="$row_cont[class]">
+					<description id="${row}[uid]" no_lang="1" readonly="true"/>
+					<description span="1" class="status_img"/>
+					<html id="${row}[attachments]"/>
+					<description id="${row}[subject]" no_lang="1"/>
+					<date-time_today align="center" id="${row}[date]" readonly="true"/>
+					<url-email id="${row}[address]" contact_plus = "true" readonly="true"/>
+					<url-email id="${row}[toaddress]" contact_plus = "true" readonly="true"/>
+					<url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>
+					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="mail.mobile_index" template="" lang="" group="0" version="1.9.001">
+		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target"/>
+		<html id="msg"/>
+		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" parent_node="mail-index_buttonmailcreate"/>
+		<hbox class="mail-index_quotabox"><progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/></hbox>
+		<hbox class="mail-index_vacation"><vbox>
+			<description id="nm[vacationnotice]" class="@nm[vacationclass]"/>
+			<description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/></vbox>
+		</hbox>
+		<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.mobile_index.rows"/>
+		<iframe frameborder="1" id="extra_iframe" scrolling="auto" disabled="true"/>
+	</template>
+</overlay>

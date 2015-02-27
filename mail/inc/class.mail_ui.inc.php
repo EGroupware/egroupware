@@ -479,7 +479,7 @@ class mail_ui
 				$sel_options['filter2'] = $this->searchTypes;
 				$sel_options['filter'] = $this->statusTypes;
 
-				$etpl = new etemplate_new('mail.index');
+				$etpl = new etemplate_new(html::$ua_mobile?'mail.mobile_index':'mail.index');
 				// Start at 2 so auto-added copy+paste actions show up as second group
 				// Needed because there's no 'select all' action to push things down
 				$group=2;
@@ -663,7 +663,7 @@ class mail_ui
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
 
 				// sending preview toolbar actions
-				$etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
+				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
 
 				if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
 				$readonlys = $preserv = array();
