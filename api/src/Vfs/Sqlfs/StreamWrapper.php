@@ -562,7 +562,11 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !Vfs::check_access(Vfs::dirname($path),Vfs::WRITABLE, $parent_stat))
+		// need to get parent stat from Sqlfs, not Vfs
+		if (!isset($parent_stat)) $parent_stat = static::url_stat(Vfs::dirname($path), STREAM_URL_STAT_LINK);
+
+		if (!$parent_stat || !($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) ||
+			!Vfs::check_access(Vfs::dirname($path),Vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
@@ -793,7 +797,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		$parent = Vfs::dirname($path);
 
 		if (!($stat = self::url_stat($path,0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
-			!Vfs::check_access($parent,Vfs::WRITABLE))
+			!Vfs::check_access($parent, Vfs::WRITABLE, static::url_stat($parent,0)))
 		{
 			self::_remove_password($url);
 			$err_msg = __METHOD__."($url,$options) ".(!$stat ? 'not found!' :

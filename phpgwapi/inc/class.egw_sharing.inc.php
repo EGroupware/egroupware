@@ -132,10 +132,22 @@ class egw_sharing
 	/**
 	 * Create sharing session
 	 *
-	 * @param boolean $keep_session =false false: create a new session, true: try mounting it into existing (already verified) session
+	 * Certain cases:
+	 * a) there is not session $keep_session === null
+	 *    --> create new anon session with just filemanager rights and share as fstab
+	 * b) there is a session $keep_session === true
+	 *  b1) current user is share owner (eg. checking the link)
+	 *      --> mount share under token additionally
+	 *  b2) current user not share owner
+	 *  b2a) need/use filemanager UI (eg. directory)
+	 *       --> destroy current session and continue with a)
+	 *  b2b) single file or WebDAV
+	 *       --> modify EGroupware enviroment for that request only, no change in session
+	 *
+	 * @param boolean $keep_session =null null: create a new session, true: try mounting it into existing (already verified) session
 	 * @return string with sessionid, does NOT return if no session created
 	 */
-	public static function create_session($keep_session=false)
+	public static function create_session($keep_session=null)
 	{
 		self::$db = $GLOBALS['egw']->db;
 
@@ -197,39 +209,14 @@ class egw_sharing
 		{
 			$share['share_root'] = '/'.$share['share_token'];
 
-			// if current user is not the share owner, we need to give him access to mounted share
+			// if current user is not the share owner, we cant just mount share
 			if (egw_vfs::$user != $share['share_owner'])
 			{
-				// check if sharing user has owner rights for shared path
-				egw_vfs::$user = $share['share_owner'];
-				egw_vfs::clearstatcache();
-				if (egw_vfs::has_owner_rights($share['share_path']))
-				{
-					$rights = $share['share_writable'] && egw_vfs::is_writable($share['share_path']) ? 7 : 5;
-					egw_vfs::$user = $GLOBALS['egw']->session->account_id;
-					egw_vfs::eacl($share['share_root'], $rights, egw_vfs::$user, true);	// true = session-only, not permanent
-				}
-				// if not, we must not use an eacl, as it grants recursive rights!
-				// (one could eg. create a writable share for / and use it to escalate his own rights)
-				// --> create a new session with propper rights (loosing current session)
-				else
-				{
-					$keep_session = false;
-				}
+				$keep_session = false;
 			}
 		}
 		if (!$keep_session)	// do NOT change to else, as we might have set $keep_session=false!
 		{
-			// create session without checking auth: create(..., false, false)
-			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous', '', 'text', false, false)))
-			{
-				sleep(1);
-				$status = '500 Internal Server Error';
-				header("HTTP/1.1 $status");
-				header("X-WebDAV-Status: $status", true);
-				echo "Failed to create session: ".$GLOBALS['egw']->session->reason."\n";
-				common::egw_exit();
-			}
 			// only allow filemanager app
 			$GLOBALS['egw_info']['user']['apps'] = array(
 				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
@@ -266,8 +253,34 @@ class egw_sharing
 		// store sharing object in egw object and therefore in session
 		$GLOBALS['egw']->sharing = new egw_sharing($share);
 
-		// for an existing session we need to store modified egw and egw_info again in session
-		if ($keep_session)
+		// we have a session we want to keep, but share owner is different from current user and we need filemanager UI, or no session
+		// --> create a new anon session
+		if ($keep_session === false && $GLOBALS['egw']->sharing->use_filemanager() || is_null($keep_session))
+		{
+			// create session without checking auth: create(..., false, false)
+			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous', '', 'text', false, false)))
+			{
+				sleep(1);
+				$status = '500 Internal Server Error';
+				header("HTTP/1.1 $status");
+				header("X-WebDAV-Status: $status", true);
+				echo "Failed to create session: ".$GLOBALS['egw']->session->reason."\n";
+				common::egw_exit();
+			}
+			// only allow filemanager app (gets overwritten by session::create)
+			$GLOBALS['egw_info']['user']['apps'] = array(
+				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
+			);
+		}
+		// we have a session we want to keep, but share owner is different from current user and we dont need filemanager UI
+		// --> we dont need session and close it, to not modifiy it
+		elseif ($keep_session === false)
+		{
+			$GLOBALS['egw']->session->commit_session();
+		}
+
+		// update modified egw and egw_info again in session, if neccessary
+		if ($keep_session || $sessionid)
 		{
 			$_SESSION[egw_session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
 			unset($_SESSION[egw_session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
@@ -276,6 +289,22 @@ class egw_sharing
 		}
 
 		return $sessionid;
+	}
+
+	/**
+	 * Check if we use filemanager UI
+	 *
+	 * Only for directories, if browser supports it and filemanager is installed
+	 *
+	 * @return boolean
+	 */
+	public function use_filemanager()
+	{
+		return !(!egw_vfs::is_dir($this->share['share_root']) || $_SERVER['REQUEST_METHOD'] != 'GET' ||
+			// or unsupported browsers like ie < 10
+			html::$user_agent == 'msie' && html::$ua_version < 10.0 ||
+			// or if no filemanager installed (WebDAV has own autoindex)
+			!file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'));
 	}
 
 	/**
@@ -291,11 +320,7 @@ class egw_sharing
 			return $GLOBALS['egw']->sharing->ServeRequest();
 		}
 		// use pure WebDAV for everything but GET requests to directories
-		if (!egw_vfs::is_dir($this->share['share_root']) || $_SERVER['REQUEST_METHOD'] != 'GET' ||
-			// or unsupported browsers like ie < 10
-			html::$user_agent == 'msie' && html::$ua_version < 10.0 ||
-			// or if no filemanager installed (WebDAV has own autoindex)
-			!file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'))
+		if (!$this->use_filemanager())
 		{
 			// send a content-disposition header, so browser knows how to name downloaded file
 			if (!egw_vfs::is_dir($this->share['share_root']))
