@@ -548,7 +548,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		$path = egw_vfs::parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) || !egw_vfs::check_access(egw_vfs::dirname($path),egw_vfs::WRITABLE, $parent_stat))
+		// need to get parent stat from Sqlfs, not Vfs
+		if (!isset($parent_stat)) $parent_stat = static::url_stat(egw_vfs::dirname($path), STREAM_URL_STAT_LINK);
+
+		if (!$parent_stat || !($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) ||
+			!egw_vfs::check_access(egw_vfs::dirname($path), egw_vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
@@ -779,7 +783,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$parent = egw_vfs::dirname($path);
 
 		if (!($stat = self::url_stat($path,0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
-			!egw_vfs::check_access($parent,egw_vfs::WRITABLE))
+			!egw_vfs::check_access($parent, egw_vfs::WRITABLE, static::url_stat($parent,0)))
 		{
 			self::_remove_password($url);
 			$err_msg = __METHOD__."($url,$options) ".(!$stat ? 'not found!' :

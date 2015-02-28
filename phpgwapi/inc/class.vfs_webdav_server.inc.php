@@ -90,7 +90,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		{
 			// recursive delete the directory
 			try {
-				$ret = egw_vfs::remove($options['path']) && !file_exists($path);
+				$deleted = egw_vfs::remove($options['path']);
+				$ret = !empty($deleted[$options['path']]);
+				//error_log(__METHOD__."() egw_vfs::remove($options[path]) returned ".array2string($deleted)." --> ".array2string($ret));
 			}
 			catch (Exception $e) {
 				return '403 Forbidden: '.$e->getMessage();
@@ -129,7 +131,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             return "403 Forbidden";
         }
 
-        if ( file_exists($parent."/".$name) ) {
+        if ( file_exists($path) ) {
             return "405 Method not allowed";
         }
 
@@ -137,7 +139,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             return "415 Unsupported media type";
         }
 
-        $stat = mkdir($parent."/".$name, 0777);
+        $stat = mkdir($path, 0777);
         if (!$stat) {
             return "403 Forbidden";
         }
