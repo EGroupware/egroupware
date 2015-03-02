@@ -336,6 +336,13 @@ class Vfs extends Vfs\StreamWrapper
 			{
 				self::$fstab = $api_config['vfs_fstab'];
 			}
+			else
+			{
+				self::$fstab = array(
+					'/' => 'sqlfs://$host/',
+					'/apps' => 'links://$host/apps',
+				);
+			}
 			unset($api_config);
 		}
 		if (is_null($url) || is_null($path))

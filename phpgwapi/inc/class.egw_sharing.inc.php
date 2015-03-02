@@ -197,6 +197,13 @@ class egw_sharing
 			common::egw_exit();
 		}
 
+		// need to reset fs_tab, as resolve_url does NOT work with just share mounted
+		if (count($GLOBALS['egw_info']['server']['vfs_fstab']) <= 1)
+		{
+			unset($GLOBALS['egw_info']['server']['vfs_fstab']);	// triggers reset of fstab in mount()
+			$GLOBALS['egw_info']['server']['vfs_fstab'] = egw_vfs::mount();
+			egw_vfs::clearstatcache();
+		}
 		$share['resolve_url'] = egw_vfs::resolve_url($share['share_path']);
 		// if share not writable append ro=1 to mount url to make it readonly
 		if (!self::$db->from_bool($share['share_writable']))
@@ -223,8 +230,7 @@ class egw_sharing
 			);
 
 			$share['share_root'] = '/';
-			// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
-			$GLOBALS['egw_info']['user']['vfs_user'] = egw_vfs::$user = $share['share_owner'];
+			egw_vfs::$user = $share['share_owner'];
 		}
 
 		// mounting share
@@ -239,8 +245,6 @@ class egw_sharing
 			common::egw_exit();
 		}
 		egw_vfs::$is_root = false;
-
-		$GLOBALS['egw_info']['server']['vfs_fstab'] = egw_vfs::mount();
 		egw_vfs::clearstatcache();
 
 		// update accessed timestamp
@@ -278,6 +282,9 @@ class egw_sharing
 		{
 			$GLOBALS['egw']->session->commit_session();
 		}
+		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
+		$GLOBALS['egw_info']['user']['vfs_user'] = egw_vfs::$user;
+		$GLOBALS['egw_info']['server']['vfs_fstab'] = egw_vfs::mount();
 
 		// update modified egw and egw_info again in session, if neccessary
 		if ($keep_session || $sessionid)
