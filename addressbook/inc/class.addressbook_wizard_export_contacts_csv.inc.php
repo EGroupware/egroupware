@@ -24,6 +24,12 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 			$this->export_fields['#'.$name] = $data['label'];
 		}
 		unset($this->export_fields['jpegphoto']);        // can't cvs export that
+
+		// Add in last/next appointments
+		// NB: last_date and next_date are used instead of last_event & next_event
+		// to avoid automatic conversion - we want to export link title, not date-time
+		$this->export_fields['last_date'] = lang('Last date');
+		$this->export_fields['next_date'] = lang('Next date');
 	}
 
 	/**
