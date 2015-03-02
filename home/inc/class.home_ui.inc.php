@@ -404,6 +404,16 @@ class home_ui
 			return $list;
 		}, array(), 60);
 
+		// Filter list by current user's permissions
+		foreach($list as $appname => $children)
+		{
+			if(in_array($appname, array_keys($GLOBALS['egw_info']['apps']))) {
+				if(!in_array($appname, array_keys($GLOBALS['egw_info']['user']['apps'])))
+				{
+					unset($list[$appname]);
+				}
+			}
+		}
 		return $list;
 	}
 
