@@ -125,7 +125,7 @@ app.classes.importexport = AppJS.extend(
 		var value = widget.getValue();
 
 		// Only 1 selected, no checking needed
-		if(value.length <= 1) return;
+		if(value == null || value.length <= 1) return;
 
 		// Don't jump it to the top, it's weird
 		widget.selected_first = false;
