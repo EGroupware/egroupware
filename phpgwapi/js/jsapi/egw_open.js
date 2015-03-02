@@ -57,7 +57,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		};
 
 		// Get open compose windows
-		var compose = egw.getOpenWindows("mail", /^compose_/);
+		var compose = egw.getOpenWindows("mail", /(^compose_)||(^mail.compose)/);
 		if(compose.length == 0)
 		{
 			// No compose windows, might be no mail app.js
