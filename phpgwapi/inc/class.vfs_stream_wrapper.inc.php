@@ -169,6 +169,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	}
 
 	/**
+	 * Cache of already resolved urls
+	 *
+	 * @var array with path => target
+	 */
+	private static $resolve_url_cache = array();
+
+	/**
 	 * Resolve the given path according to our fstab
 	 *
 	 * @param string $_path
@@ -179,15 +186,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true)
 	{
-		static $cache = array();
-
 		$path = self::get_path($_path);
 
 		// we do some caching here
-		if (isset($cache[$path]) && $replace_user_pass_host)
+		if (isset(self::$resolve_url_cache[$path]) && $replace_user_pass_host)
 		{
-			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '{$cache[$path]}' (from cache)");
-			return $cache[$path];
+			if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '".self::$resolve_url_cache[$path]."' (from cache)");
+			return self::$resolve_url_cache[$path];
 		}
 		// check if we can already resolve path (or a part of it) with a known symlinks
 		if ($use_symlinkcache)
@@ -235,7 +240,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = '$url'");
 
-				if ($replace_user_pass_host) $cache[$path] = $url;
+				if ($replace_user_pass_host) self::$resolve_url_cache[$path] = $url;
 
 				return $url;
 			}
@@ -1120,9 +1125,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	static function clearstatcache($path='/')
 	{
 		//error_log(__METHOD__."('$path')");
-		self::$symlink_cache = array();
+		self::$symlink_cache = self::$resolve_url_cache = array();
 		self::_call_on_backend('clearstatcache', array($path), true, 0);
-		self::$symlink_cache = array();
+		self::$symlink_cache = self::$resolve_url_cache = array();
 	}
 
 	/**
