@@ -1532,9 +1532,29 @@ var et2_link_list = et2_link_string.extend(
 			// Download file
 			if(link_data.download_url)
 			{
-				window.location = self.egw().link(link_data.download_url,"download");
-				return;
+				var url = link_data.download_url;
+				if (url[0] == '/') url = egw.link(url);
+
+				var a = document.createElement('a');
+				if(typeof a.download == "undefined")
+				{
+					window.location = url+"?download";
+					return false;
+				}
+				
+				// Multiple file download for those that support it
+				a = $j(a)
+					.prop('href', url)
+					.prop('download', link_data.title || "")
+					.appendTo(self.getInstanceManager().DOMContainer);
+
+				var evt = document.createEvent('MouseEvent');
+				evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+				a[0].dispatchEvent(evt);
+				a.remove();
+				return false;
 			}
+			
 			self.egw().open(link_data, "", "view",'download',link_data.target ? link_data.target : link_data.app,link_data.app);
 		});
 		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item) {
