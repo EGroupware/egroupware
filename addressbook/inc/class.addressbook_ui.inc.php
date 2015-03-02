@@ -234,6 +234,8 @@ class addressbook_ui extends addressbook_bo
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
 				'row_modified'   => 'modified',
+				'is_parent'      => 'org_count',
+				'parent_id'      => 'parent_id',
 				'favorites'      => true,
 				'placeholder_actions' => array('add')
 			);
@@ -1397,8 +1399,11 @@ window.egw_LAB.wait(function() {
 		// enable/disable distribution lists depending on backend
 		$query['no_filter2'] = !$this->lists_available($query['filter']);
 
-		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
+		if (isset($this->org_views[(string) $query['org_view']]) && !$query['col_filter']['parent_id'])	// we have an org view
 		{
+			// Query doesn't like empties
+			unset($query['col_filter']['parent_id']);
+			
 			if($query['actions'] && $query['actions']['open'])
 			{
 				// Just switched from contact view, update actions
@@ -1443,6 +1448,13 @@ window.egw_LAB.wait(function() {
 			{
 				$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
 			}
+			if($query['col_filter']['parent_id'])
+			{
+				$query['org_view'] = $query['col_filter']['parent_id'];
+				$query['template'] = 'addressbook.index.org_rows';
+			}
+			// Query doesn't like parent_id
+			unset($query['col_filter']['parent_id']);
 			if ($query['org_view'])	// view the contacts of one organisation only
 			{
 				if (strpos($query['org_view'],'*AND*') !== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);

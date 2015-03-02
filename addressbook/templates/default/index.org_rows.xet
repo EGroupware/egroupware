@@ -10,6 +10,8 @@
 				<column width="40%"/>
 				<column width="30%"/>
 				<column width="30%"/>
+				<column width="180"/>
+				<column width="180"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -18,20 +20,46 @@
 					<nextmatch-sortheader id="org_name" label="Organisation"/>
 					<nextmatch-header label="Department" id="org_unit"/>
 					<nextmatch-header label="Business address" id="business"/>
+					<vbox>
+						<nextmatch-header label="Business phone" id="tel_work"/>
+						<nextmatch-header label="Mobile phone" id="tel_cell"/>
+						<nextmatch-header label="Home phone" id="tel_home"/>
+						<description value="Fax"/>
+					</vbox>
+					<vbox>
+						<nextmatch-header label="Url" id="url"/>
+						<nextmatch-header label="Business email" id="email"/>
+						<nextmatch-header label="Home email" id="email_home"/>
+					</vbox>
 				</row>
 				<row class="row" valign="top">
 					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
 					<int id="${row}[org_count]" readonly="true" align="center"/>
-					<description id="${row}[org_name]" no_lang="1"/>
+					<vbox>
+						<description id="${row}[org_name]" no_lang="1"/>
+						<description id="${row}[line2]" no_lang="1"/>
+					</vbox>
 					<description id="${row}[org_unit]" no_lang="1"/>
-					<vbox options="0,0">
+					<vbox>
 						<description id="${row}[adr_one_countryname]" no_lang="1"/>
-						<hbox options="0,0" orient="0">
+						<hbox>
 							<description no_lang="1" id="${row}[adr_one_locality]"/>
 							<description id="${row}[adr_one_postalcode]" class="leftPad5" value=" " no_lang="1"/>
 						</hbox>
 						<description no_lang="1" id="${row}[adr_one_street]"/>
 						<description id="${row}[adr_one_street2]" no_lang="1"/>
+					</vbox>
+					<vbox>
+						<url-phone id="${row}[tel_work]" readonly="true" class="telNumbers"/>
+						<url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers"/>
+						<url-phone id="${row}[tel_home]" readonly="true" class="telNumbers"/>
+						<url-phone id="${row}[tel_fax]" readonly="true"/>
+						<description id="${row}[tel_prefered]" no_lang="1" href="$row_cont[tel_prefered_link]" extra_link_target="calling" extra_link_popup="$cont[call_popup]"/>
+					</vbox>
+					<vbox>
+						<url id="${row}[url]" readonly="true" class="fixedHeight"/>
+						<url-email id="${row}[email]" readonly="true" class="fixedHeight"/>
+						<url-email id="${row}[email_home]" readonly="true" class="fixedHeight"/>
 					</vbox>
 				</row>
 			</rows>
