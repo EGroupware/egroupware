@@ -33,6 +33,11 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	*/
 	protected $tracking;
 
+	/**
+	 * @var boolean If import file has no type, it can generate a lot of warnings.
+	 * Users don't like this, so we only warn once.
+	 */
+	private $type_warned = false;
 
 	/**
 	 * imports entries according to given definition object.
@@ -56,7 +61,6 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			$this->lookups['tid'][$tid] = $data['name'];
 		}
 
-	
 		// set contact owner
 		$contact_owner = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
@@ -122,7 +126,12 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		// Do not import into non-existing type, warn and change
 		if(!$record->tid || !$this->lookups['tid'][$record->tid])
 		{
-			$this->warnings[$import_csv->get_current_position()] = lang('Unknown type %1, imported as %2',$record->tid,lang($this->lookups['tid']['n']));
+			// Avoid lots of warnings about type (2 types are contact and deleted)
+			if(!$this->type_warned || count($this->lookups['tid']) == 2 )
+			{
+				$this->warnings[$import_csv->get_current_position()] = lang('Unknown type %1, imported as %2',$record->tid,lang($this->lookups['tid']['n']));
+				$this->type_warned = true;
+			}
 			$record->tid = 'n';
 		}
 

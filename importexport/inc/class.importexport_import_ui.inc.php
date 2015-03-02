@@ -359,6 +359,9 @@
 			// Only CSV files
 			if(!$options['csv_fields']) return true;
 
+			// Can't check if definition has no header
+			if($options['num_header_lines'] == 0) return true;
+
 			$preference = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 			$charset = $options['charset'] == 'user' || !$options['charset'] ? $preference : $options['charset'];
 
