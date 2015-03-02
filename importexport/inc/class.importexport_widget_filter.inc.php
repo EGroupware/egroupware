@@ -35,7 +35,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 	 *
 	 * @param string $cname
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, Array $expand = Array())
 	{
 		$form_name = self::form_name($cname, $this->id);
 		if($this->getElementAttribute($form_name, 'customfields'))
@@ -140,9 +140,13 @@ class importexport_widget_filter extends etemplate_widget_transformer
 						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'tags', TRUE);
 						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'multiple', TRUE);
 					}
+					else if( $GLOBALS['egw_info']['apps'][$field['type']])
+					{
+						// Links
+					}
 					else
 					{
-						error_log('Trying to filter with unsupported field type: ' . $field['type']);
+						error_log('Trying to filter with unsupported field type ' . $lname . ': ' . $field['type']);
 					}
 			}
 
@@ -164,11 +168,11 @@ class importexport_widget_filter extends etemplate_widget_transformer
 			}
 			unset($widget);
 		}
+		
+		parent::beforeSendToClient($cname, $expand);
+
 		$this->setElementAttribute($form_name, 'customfields', $fields);
 		$this->setElementAttribute($form_name, 'fields',array_fill_keys(array_keys($fields), true));
-		
-		parent::beforeSendToClient($cname);
-
 		return false;
 	}
 
