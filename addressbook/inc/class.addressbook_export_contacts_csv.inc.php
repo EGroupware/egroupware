@@ -241,6 +241,24 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 
 		$export_object->set_mapping($options['mapping']);
+		
+		// Add in last/next event, if needed
+		if($options['mapping']['last_date'] || $options['mapping']['next_date'])
+		{
+			$contact_ids = array();
+			foreach($selection as $_contact)
+			{
+				if(is_array($_contact) && $_contact['id'])
+				{
+					$contact_ids[] = $_contact['id'];
+				}
+				else
+				{
+					$contact_ids[] = $contact;
+				}
+			}
+			$events = $this->ui->read_calendar($contact_ids, false);
+		}
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
@@ -256,6 +274,14 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				$contact->set_record($_contact);
 			} else {
 				$contact = new addressbook_egw_record($_contact);
+			}
+
+			if($events && $events[$contact->id])
+			{
+				// NB: last_date and next_date are used instead of last_event & next_event
+				// to avoid automatic conversion - we want to export link title, not date-time
+				$contact->last_date = $events[$contact->id]['last_link']['title'];
+				$contact->next_date = $events[$contact->id]['next_link']['title'];
 			}
 			// Some conversion
 			$this->convert($contact, $options);
@@ -400,12 +426,12 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	 * Adjust automatically generated filter fields
 	 */
 	public function get_filter_fields(Array &$filters)
-        {
+    {
 		unset($filters['last_event']);
 		unset($filters['next_event']);
 		foreach($filters as $field_name => &$settings)
 		{
-				if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
+			if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
 		}
 		$filters['owner'] = array(
 			'name'		=> 'owner',

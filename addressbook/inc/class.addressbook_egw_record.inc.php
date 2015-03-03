@@ -13,7 +13,11 @@
 
 /**
  * class addressbook_egw_record
- * compability layer for iface_egw_record needet for importexport
+ * compability layer for iface_egw_record needed for importexport
+ *
+ * Note that last_event and next_event are not automatically loaded by
+ * addressbook_bo->read(), so if you need them use:
+ * addressbook_bo->read_calendar();
  */
 class addressbook_egw_record implements importexport_iface_egw_record
 {
