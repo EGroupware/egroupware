@@ -3457,10 +3457,16 @@ app.classes.mail = AppJS.extend(
 					'acc_id': acc_id,
 					'ajax': 'true'
 		});
-
-		if (!this.loadIframe(url))
+		
+		// an ugly hack for idots to show up sieve rules not in an iframe
+		// but as new link, better to remove it after get rid of idots template
+		if (typeof window.framework == 'undefined')
 		{
 			this.egw.open_link(url);
+		}
+		else
+		{
+			this.loadIframe(url);
 		}
 	},
 
@@ -3489,7 +3495,11 @@ app.classes.mail = AppJS.extend(
 				quotaipercent.set_disabled(!!_url);
 				iframe.set_disabled(!_url);
 			}
-			else if (iframe.id == "extra_iframe")
+			// extra_iframe used for showing up sieve rules
+			// need some special handling for mobile device
+			// as we wont have splitter, and also a fix for
+			// iframe with display none
+			if (iframe.id == "extra_iframe")
 			{
 				if (egwIsMobile())
 				{
