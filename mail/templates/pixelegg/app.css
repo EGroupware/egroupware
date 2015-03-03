@@ -799,11 +799,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
 @media only screen and (max-device-width: 1024px) {
-  /*Disable the preview spliter*/
-  div#mail-index_mailPreview,
-  div.splitter-bar {
-    display: none !important;
-  }
   div.mailDisplayContainer {
     margin-top: 30px;
     margin-left: 0;
