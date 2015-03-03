@@ -644,7 +644,7 @@ div.mailComposeBody {
 	white-space: normal !important;
 }
 #mail-compose_mail_plaintext {
-	white-space: pre !important;
+	white-space: pre-wrap !important;
 }
 div.mailPreviewHeaders div.mail_extraEmails {
 	display: inline-block;
