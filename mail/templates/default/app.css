@@ -876,3 +876,10 @@ div.mail-compose_toolbar_assist div.mail-compose_fileselector, #mail-compose_sel
 div.mailComposeHeaderSection>table {
 	padding-top: 35px;
 }
+
+.mail-index-extra-iframe {
+	position: relative;
+	z-index: 999;
+	width:100%;
+	height:100%;
+}

@@ -151,6 +151,7 @@ app.classes.mail = AppJS.extend(
 			case 'mail.sieve.vacation':
 				this.vacationFilterStatusChange();
 				break;
+			case 'mail.mobile_index':
 			case 'mail.index':
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
@@ -602,6 +603,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_disablePreviewArea: function(_value) {
 		var splitter = this.et2.getWidgetById('mailSplitter');
+		// return if there's no splitter we maybe in mobile mode
 		if (typeof splitter == 'undefined' || splitter == null) return;
 		var splitterDN = splitter.getDOMNode();
 
@@ -616,7 +618,7 @@ app.classes.mail = AppJS.extend(
 		//this.et2.getWidgetById('mailPreviewHeadersSubject').set_disabled(_value);
 		this.et2.getWidgetById('mailPreview').set_disabled(_value);
 		//Dock the splitter always if we are browsing with mobile
-		if (_value==true || egwIsMobile())
+		if (_value==true)
 		{
 			if (this.mail_previewAreaActive) splitter.dock();
 			this.mail_previewAreaActive = false;
@@ -803,11 +805,15 @@ app.classes.mail = AppJS.extend(
 		else
 		{
 			// Leave if we're here and there is nothing selected, too many, or no data
-			this.et2.getWidgetById('previewAttachmentArea').set_value({content:[]});
-			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
-			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
-			IframeHandle.set_src('about:blank');
-			this.mail_disablePreviewArea(true);
+			var prevAttchArea = this.et2.getWidgetById('previewAttachmentArea');
+			if (prevAttchArea)
+			{
+				prevAttchArea.set_value({content:[]});
+				this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
+				var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+				IframeHandle.set_src('about:blank');
+				this.mail_disablePreviewArea(true);
+			}
 			return;
 		}
 
@@ -888,27 +894,6 @@ app.classes.mail = AppJS.extend(
 			}
 			egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
 		}
-		// Pre-load next email already so user gets it faster
-		// Browser will cache the file for us
-/*
-		var fO = egw_getObjectManager('mail',false,1).getObjectById(this.nm_index).getFocusedObject();
-		var next = false;
-		if (fO) next = fO.getNext(1);
-		// Stop until we get all the details worked out - server marks as seen automatically
-		if(false && next && next.id)
-		{
-			if(this.preview_preload.timer != null)
-			{
-				window.clearTimeout(this.preview_preload.timer);
-			}
-			// Wait 0.5s to avoid flooding server if user is scrolling through their mail
-			this.preview_preload.timer = window.setTimeout( jQuery.proxy(function() {
-				this.preview_preload.request = jQuery.get(
-					egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:next.id})
-				);
-			},this),500);
-		}
-*/
 	},
 
 	/**
@@ -3492,17 +3477,38 @@ app.classes.mail = AppJS.extend(
 		var mailSplitter = this.et2.getWidgetById('mailSplitter');
 		var quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
 		var iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
-		if (typeof iframe != 'undefined')
+		if (typeof iframe != 'undefined' && iframe)
 		{
 			if (_url)
 			{
 				iframe.set_src(_url);
 			}
-			if (typeof mailSplitter != 'undefined' && typeof quotaipercent != 'undefined')
+			if (typeof mailSplitter != 'undefined' && mailSplitter && typeof quotaipercent != 'undefined')
 			{
 				mailSplitter.set_disabled(!!_url);
 				quotaipercent.set_disabled(!!_url);
 				iframe.set_disabled(!_url);
+			}
+			else if (iframe.id == "extra_iframe")
+			{
+				if (egwIsMobile())
+				{
+					var nm = this.et2.getWidgetById(this.nm_index);
+					nm.set_disabled(!!_url)
+					iframe.set_disabled(!_url);
+				}
+				// Set extra_iframe a class with height and width
+				// and position relative, seems iframe display none
+				// with 100% height/width covers mail tree and block
+				// therefore block the click handling
+				if (!iframe.disabled)
+				{
+					iframe.set_class('mail-index-extra-iframe');
+				}
+				else
+				{
+					iframe.set_class('');
+				}
 			}
 			return true;
 		}
