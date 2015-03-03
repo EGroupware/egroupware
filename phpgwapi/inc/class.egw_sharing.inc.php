@@ -262,7 +262,8 @@ class egw_sharing
 		if ($keep_session === false && $GLOBALS['egw']->sharing->use_filemanager() || is_null($keep_session))
 		{
 			// create session without checking auth: create(..., false, false)
-			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous', '', 'text', false, false)))
+			if (!($sessionid = $GLOBALS['egw']->session->create('anonymous@'.$GLOBALS['egw_info']['user']['domain'],
+				'', 'text', false, false)))
 			{
 				sleep(1);
 				$status = '500 Internal Server Error';
