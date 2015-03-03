@@ -188,27 +188,31 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 		var per2pix = function(_size)
 		{
 			var size = _size.replace("%",'');
+			var pix = 0;
 			if (widget.orientation == "v")
 			{
-				return size * widget.dynheight.outerNode.width()  / 100;
+				pix =  size * widget.dynheight.outerNode.width()  / 100;
 			}
 			else
 			{
-				return size * widget.dynheight.outerNode.height() / 100;
+				pix = size * widget.dynheight.outerNode.height() / 100;
 			}
+			return pix.toFixed(2);
 		}
 
 		//Convert pixel size to percent
 		var pix2per = function (_size)
 		{
+			var per = 0;
 			if (widget.orientation == "v")
 			{
-				return _size * 100 / widget.dynheight.outerNode.width() + '%';
+				per = _size * 100 / widget.dynheight.outerNode.width();
 			}
 			else
 			{
-				return _size * 100 / widget.dynheight.outerNode.height() + '%';
+				per = _size * 100 / widget.dynheight.outerNode.height();
 			}
+			return per.toFixed(2) + "%";
 		}
 
 		// Check for position preference, load it in
