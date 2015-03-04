@@ -132,6 +132,14 @@ class home_link_portlet extends home_portlet
 						{
 							$content += $record->get_record_array();
 						}
+						// Use calendar hover for calendar
+						if($this->context['entry']['app'] == 'calendar')
+						{
+							$cal_ui = new calendar_uiviews();
+							$ug = $cal_ui->eventWidget($record->get_record_array(), $this->context['width'] * 50,'',0,true);
+							$content['tooltip'] = htmlspecialchars_decode($ug['tooltip']);
+							$etemplate->setElementAttribute('tooltip','class', 'tooltip calendar_uitooltip');
+						}
 						if($content['image'] == false)
 						{
 							$content['image'] = $record->get_icon();

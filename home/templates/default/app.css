@@ -100,11 +100,7 @@ div.calendar_favorite_portlet.et2_portlet.ui-widget-content > div:last-of-type {
 	z-index: 90;
 }
 .et2_portlet.home_link_portlet:hover > div:last-of-type {
-	bottom: inherit;
 	top: 1px;
-	height: auto;
-	z-index: 10;
-	border-bottom: inherit;
 }
 
 /* Favorite / nextmatch

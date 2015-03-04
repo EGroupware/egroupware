@@ -782,6 +782,46 @@ app.classes.home.home_portlet = Class.extend({
 });
 
 app.classes.home.home_link_portlet = app.classes.home.home_portlet.extend({
+	init: function(portlet) {
+		// call parent
+		this._super.apply(this, arguments);
+
+		// Check for tooltip
+		if(this.portlet)
+		{
+			var content = $j('.tooltip',this.portlet.content);
+			if(content.length && content.children().length)
+			{
+				//Check if the tooltip is already initialized
+				this.portlet.content.tooltip({
+					items: this.portlet.content,
+					content: content.html(),
+					tooltipClass: 'portlet_' + this.portlet.id,
+					show: {effect: 'slideDown', delay:500},
+					hide: {effect: 'slideUp', delay: 500},
+					position: {my: "left top", at:"left bottom", collision: "flipfit"},
+					open: jQuery.proxy(function(event, ui) {
+						// Calendar specific formatting
+						if(ui.tooltip.has('.calendar_calEventTooltip').length)
+						{
+							ui.tooltip.removeClass("ui-tooltip");
+							ui.tooltip.addClass("calendar_uitooltip");
+						}
+					},this),
+					close: function(event,ui) {
+						ui.tooltip.hover(
+							function() {
+								$j(this).stop(true).fadeTo(100,1);
+							},
+							function() {
+								$j(this).slideUp("400",function() {$j(this).remove();});
+							}
+						);
+					}
+				});
+			}
+		}
+	},
 	observer: function(_msg, _app, _id, _type)
 	{
 		if(this.portlet)

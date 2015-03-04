@@ -3,23 +3,21 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.home.link" template="" lang="" group="0" version="1.9.001">
-		<grid>
+		<hbox height="100px">
+			<image src="image" class="photo"/>
+			<vbox>
+				<description id="n_fn" class="addressbook_sidebox_name"/>
+				<description id="org_name" class="addressbook_sidebox_org"/>
+				<description id="org_unit"/>
+				<description id="adr_one_locality"/>
+			</vbox>
+		</hbox>
+		<grid class="tooltip">
 			<columns>
 				<column width="70"/>
 				<column/>
 			</columns>
 			<rows>
-				<row span="all">
-					<hbox height="100px">
-						<image src="image" class="photo"/>
-						<vbox>
-							<description id="n_fn" class="addressbook_sidebox_name"/>
-							<description id="org_name" class="addressbook_sidebox_org"/>
-							<description id="org_unit"/>
-							<description id="adr_one_locality"/>
-						</vbox>
-					</hbox>
-				</row>
 				<row>
 					<description span="2" value="Phone numbers" class="addressbook_sidebox_header"/>
 				</row>

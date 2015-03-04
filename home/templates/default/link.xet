@@ -5,5 +5,11 @@
 	<template id="home.link" template="" lang="" group="0" version="1.9.001">
 		<image id="image" src="image"/>
 		<link id="entry"/>
+		<!--
+			It's the tooltip class that does it, id might cause problems so
+			best to remove it if you're customizing.  The actual widget used is
+			not important.
+		-->
+		<html class="tooltip" id="tooltip" disabled="true"/>
 	</template>
 </overlay>
