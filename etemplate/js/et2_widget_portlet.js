@@ -108,7 +108,7 @@ var et2_portlet = et2_valueWidget.extend(
 		this._super.apply(this, arguments);
 
 		var self = this;
-		
+				
 		// Create DOM nodes
 		this.div = $j(document.createElement("div"))
 			.addClass(this.options.class)
@@ -185,6 +185,8 @@ var et2_portlet = et2_valueWidget.extend(
 		for(var action_name in this.default_actions)
 		{
 			defaults[action_name] = this.default_actions[action_name];
+			// Translate caption here, as translations aren't available earlier
+			defaults[action_name].caption = this.egw().lang(this.default_actions[action_name].caption);
 			if(typeof this[action_name] == "function")
 			{
 				defaults[action_name].onExecute = jQuery.proxy(this[action_name],this);

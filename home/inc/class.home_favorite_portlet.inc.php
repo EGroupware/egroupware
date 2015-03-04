@@ -100,6 +100,8 @@ class home_favorite_portlet extends home_portlet
 			}
 		}
 		$this->nm_settings['columnselection_pref'] = "nextmatch-home.{$this->context['id']}";
+
+		translation::add_app($context['appname']);
 	}
 	public function exec($id = null, etemplate_new &$etemplate = null)
 	{
