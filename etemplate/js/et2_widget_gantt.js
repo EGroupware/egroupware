@@ -845,6 +845,15 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		// Update server after dragging a task
 		this.gantt.attachEvent("onAfterTaskDrag", function(id, mode, e) {
 			if(gantt_widget.options.readonly) return false;
+
+			// Round to nearest 10%
+			var task = this.getTask(id);
+			if(mode==="progress")
+			{
+				task.progress = Math.round(task.progress * 10) / 10;
+				this.updateTask(task.id);
+			}
+
 			var task = jQuery.extend({},this.getTask(id));
 
 			// Gantt chart deals with dates as Date objects, format as server likes
