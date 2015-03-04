@@ -849,7 +849,10 @@ function egw_fw_ui_scrollarea(_contDiv)
 	//Mousewheel handler
 	var self = this;
 	$j(this.scrollDiv).mousewheel(function(e, delta) {
-		if (delta)
+		// Do not scrolldown/up when we are on selectbox items
+		// seems Firefox does not prevent the mousewheel event over
+		// selectbox items with scrollbars
+		if (delta && e.target.tagName != "OPTION")
 		{
 			self.scrollDelta(- delta * 30);
 			if (self.contHeight != this.scrollHeight) self.update();
