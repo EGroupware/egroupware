@@ -370,7 +370,7 @@ app.classes.infolog = AppJS.extend(
 				if (completed != (status.value == 'done' || status.value == 'billed') ||
 					(status.value == 'not-started') != (percent.value == 0))
 				{
-					status.value = percent.value == 0 ? 'not-started' : (percent.value == 100 ? 'done' : 'ongoing');
+					status.value = percent.value == 0 ? ($j('[value="not-started"]',status).length ? 'not-started':'ongoing') : (percent.value == 100 ? 'done' : 'ongoing');
 				}
 				break;
 
