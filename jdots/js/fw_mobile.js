@@ -771,7 +771,8 @@
 					}
 					break;
 				case 'android':
-					if (screen.height - window.outerHeight < 40)
+					if (screen.height - window.outerHeight < 40	||
+							((screen.height > 640 || screen.width>640) && screen.height - window.outerHeight < 82))
 					{
 						return false;
 					}
