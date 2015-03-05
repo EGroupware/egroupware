@@ -13,13 +13,15 @@
 %1 not found or not executable !!!	admin	sk	%1 sa nenašiel alebo nie je spustiteľný !!!
 %1 phrases saved.	admin	sk	%1 fráz uložených.
 %1 rights for %2 and applications %3	admin	sk	%1 práva pre %2 a aplikácie %3
+%1 run rights for applications	admin	sk	%1 práva spustenia aplikácií
 %1 sessions killed	admin	sk	%1 relácií ukončených.
 %1 user %2	admin	sk	%1 používateľ %2
 (default no, leave it off if you dont use it)	admin	sk	(zvyčajne Nie; ak to nepoužívate, ponechajte prázdne)
 (stored password will not be shown here)	admin	sk	(Uložené heslá sa tu nezobrazia)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sk	(Pre nainštalovanie nových aplikácií použite<br><a href="setup/" target="setup">Inštalátor</a> [Správa aplikácií] !!!)
 -  type	admin	sk	- typ
-access control	admin	sk	Riadeie prístupu
+access by	admin	sk	Koho prístup
+access control	admin	sk	Riadenie prístupu
 access to %1 data by others	admin	sk	Prístup ostatných k dátam %1
 accesslog and bruteforce defense	admin	sk	Prístupové záznamy a Ochrana proti útoku hrubou silou
 account	admin	sk	Účet
@@ -67,7 +69,7 @@ add sub-category	admin	sk	Pridať podkategóriu
 add user	admin	sk	Pridať používateľa
 add user or group	admin	sk	Pridať používateľa alebo skupinu
 admin email	admin	sk	Správcova E-mailová adresa
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sk	Správcova E-mailová adresa (oddelené čiarkou), kde sa má zasielať upozornenie o blokovaní (ponechajte prázdne, ak nechcete zasielať upozornenia)
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sk	E-mailové adresy správcov (oddelené čiarkou), kde sa má zasielať upozornenie o blokovaní (ponechajte prázdne, ak nechcete zasielať upozornenia)
 admin name	admin	sk	Meno správcu
 admin queue and history	admin	sk	Správcova fronta a história
 administration	admin	sk	Správa
@@ -123,6 +125,7 @@ backup directory %1 mounted as %2	admin	sk	Zálohovací priečinok %1 primontova
 bi-dir passthrough	admin	sk	obojsmerné prepojenie
 bi-directional	admin	sk	obojsmerné
 bottom	admin	sk	naspodku
+bulk password reset	admin	sk	Reset hesla
 calculate next run	admin	sk	Vypočítať ďalší prechod
 calendar recurrence horizont in days (default 1000)	admin	sk	Horizont opakovania v kalendári (predvolené: 1000)
 can change password	admin	sk	Môže zmeniť heslo
@@ -135,10 +138,10 @@ category deleted.	admin	sk	Kategória odstránená.
 category list	admin	sk	Zoznam kategórií
 category saved.	admin	sk	Kategória uložená.
 change account_id	admin	sk	Zmeniť ID účtu
-change acl rights	admin	sk	zmeniť prístupové (ACL) práva
+change acl rights	admin	sk	Zmeniť prístupové práva (ACL)
 change config settings	admin	sk	Zmeniť voľby nastanení
 change domain of email address and aliases	admin	sk	zmeniť doménu e-mailových adries a aliasov
-change main screen message	admin	sk	Zmeniť správu zobrazovanú na hlavnej stránke
+change main screen message	admin	sk	Zmeniť text na hlavnej stránke
 change owner	admin	sk	Zmeniť vlastníka
 change password for %1	admin	sk	zmeniť heslo pre %1
 change password hash to	admin	sk	Zmeniť hešované heslo na
@@ -157,23 +160,23 @@ commercial: all sorts of companies	admin	sk	Obchodné: všetky typy spoločnost�
 config password or md5 hash from the header.inc.php	admin	sk	Konfiguračné heslo alebo alebo md5 hash zo súboru header.inc.php
 configuration saved.	admin	sk	Konfigrácia bola uložená.
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	sk	Doména cookie (predvolené prázdne znamená, že sa použije plné doménové meno, pre SiteMgr napr. ".domain.com" povoľuje použitie tej istej cookie pre egw.domain.com a www.domain.com)
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sk	Cesta Cookie (umožňuje viacero relácií eGW s rozličnými adresármi, avšak sú tu problémy so SiteMgr!)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sk	Cesta Cookie. Umožňuje viacero relácií EGW s rozličnými priečinkami.
 could not remote execute the command	admin	sk	Nepodarilo sa vzdialene spustiť tento príkaz
 country	admin	sk	Krajina
 country selection	admin	sk	Výber krajiny
 create group	admin	sk	Vytvoriť skupinu
 created	admin	sk	Vytvorený
-created with id #%1	admin	sk	vytvorené s IS #%1
+created with id #%1	admin	sk	Vytvorené s IS #%1
 creates / updates user accounts from csv file	admin	sk	Vytvorí / aktualizuje používateľské účty z CSV súboru
 creates / updates user groups from csv file	admin	sk	Vytvorí / aktualizuje používateľské skupiny z CSV súboru
-creates a new field	admin	sk	vytvorí nové pole
-crontab only (recomended)	admin	sk	iba crontab (odporúča sa)
+creates a new field	admin	sk	Vytvorí nové pole
+crontab only (recomended)	admin	sk	Iba crontab (odporúča sa)
 current hash	admin	sk	Súčasný heš
 custom fields	admin	sk	Vlastné polia
 custom translation	admin	sk	Vlastný preklad
 cyrus imap server	admin	sk	Cyrus IMAP Server
 data	admin	sk	Údaje
-data from	admin	sk	Údaje od
+data from	admin	sk	Koho údaje
 day	admin	sk	Deň
 day of week<br>(0-6, 0=sun)	admin	sk	Deň v týždni<br>(0-6, 0=Ned)
 db backup and restore	admin	sk	Záloha a obnova databáz
@@ -254,7 +257,7 @@ edit this user	admin	sk	uprav tohoto používateľa
 edit user	admin	sk	uprav používateľa
 edit user account	admin	sk	Upraviť používateľský účet
 educational: universities, schools, ...	admin	sk	Vzdelávacie: univerzity, školy,...
-egroupware directory	admin	sk	adresár EGroupware
+egroupware directory	admin	sk	Priečinok EGroupware
 egroupware version	admin	sk	EGroupware verzia
 either install id and config password needed or the remote hash!	admin	sk	Je potrebné buď ID inštalácie A heslo konfigurátora, ALEBO vzdialený hash!
 email account active	admin	sk	E-mailový účet je aktívny
@@ -320,7 +323,7 @@ file space must be an integer	admin	sk	Priestor pre súbory musí byť celé č�
 for the times above	admin	sk	pre vyššieuvedené časy
 for the times below (empty values count as '*', all empty = every minute)	admin	sk	pre nižšieuvedené časy (prázdne hodnoty sa berú ako '*', všetky prázdne = každú minútu)
 force selectbox	admin	sk	Vynútiť ponuku pre výber
-force users to change their password regularily?(empty for no,number for after that number of days	admin	sk	Vynútiť pravidelnú obmenu hesla? (prázdne=nie,číslo určuje po koľkých dňoch)
+force users to change their password regularily?(empty for no,number for after that number of days	admin	sk	Vynútiť pravidelnú obmenu hesla? (prázdne=nie, číslo určuje po koľkých dňoch)
 forward also to	admin	sk	Preposlať ešte (komu)
 forward emails to	admin	sk	Preposlať správy (komu)
 forward only	admin	sk	Iba preposlať
@@ -336,7 +339,7 @@ group '%1' deleted.	admin	sk	Skupina '%1' bola odstránená.
 group ?	admin	sk	Skupina ?
 group csv export	admin	sk	CSV export skupín
 group csv import	admin	sk	CSV import skupín
-group excepted from above export limit (admins are always excepted)	admin	sk	Skupina je vyňatá spod vyššieuvedeného exportného obmedzenia (správcovia majú vždy výnimku)
+group excepted from above export limit (admins are always excepted)	admin	sk	Skupina pre ktorú exportné limity neplatia (správcovia majú vždy výnimku)
 group has been added	common	sk	Skupina bola pridaná
 group has been deleted	common	sk	Skupina bola odstránená
 group has been updated	common	sk	Skupina bola aktualizovaná
@@ -354,7 +357,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 30) ?	admin	sk	Koľko minút má trvať zablokovanie účtu alebo IP? (predvolené: 30)
 how should email addresses for new users be constructed?	admin	sk	Ako sa majú vytvárať E-mailové adresy pre nových používateľov?
 icon	admin	sk	Ikona
-idle	admin	sk	voľné
+idle	admin	sk	Nečinné
 if no acl records for user or any group the user is a member of	admin	sk	Ak pre používateľa alebo akúkoľvek skupinu, ktorej je členom, neexistujú ACL záznamy
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sk	Ak používate LDAP, chcete spravovať domovský adresár a atribúty login shellu?
 in mbyte	admin	sk	v Megabajtoch
@@ -394,7 +397,7 @@ ldap groups context	admin	sk	LDAP kontext skupín
 ldap host	admin	sk	LDAP hostiteľ
 ldap root password	admin	sk	Heslo LDAP root-a
 ldap rootdn	admin	sk	LDAP koreňový dn
-leave empty for no quota	admin	sk	ak nechcete kvóty, ponechajte prázdne
+leave empty for no quota	admin	sk	Ak nechcete kvóty, ponechajte prázdne
 leave the category untouched and return back to the list	admin	sk	nechať kategóriu bezo zmien a vrátiť sa späť na zoznam
 leave the group untouched and return back to the list	admin	sk	Nechať skupinu bezo zmien a vrátiť sa na zoznam
 leave unchanged	admin	sk	Ponechať bez zmeny
@@ -507,10 +510,10 @@ please submit (or postpone) statistic first	admin	sk	Prosím najprv odošlite (a
 postfix with ldap	admin	sk	Postfix + LDAP
 postpone for	admin	sk	Odložiť o
 preferences	admin	sk	Predvoľby
-primary group	admin	sk	primárna skupina
-qmaildotmode	admin	sk	bodkový režim qmail
-quota settings	admin	sk	nastavenia kvót
-quota size in mbyte	admin	sk	veľkosť kvóty v Megabajtoch
+primary group	admin	sk	Primárna skupina
+qmaildotmode	admin	sk	Bodkový režim qmail
+quota settings	admin	sk	Nastavenia kvót
+quota size in mbyte	admin	sk	Veľkosť kvóty v Megabajtoch
 re-enter password	admin	sk	Zadajte heslo znovu
 read this list of methods.	admin	sk	Načítaj tento zoznam metód.
 register application hooks	admin	sk	Zaregistruj všetky aplikácie
@@ -607,10 +610,10 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	sk	Prihlasovacie meno a heslo sa nesmú zhodovať
 the loginid can not be more then 8 characters	admin	sk	Prihlasovacie ID nesmie presahovať 8 znakov
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sk	Vnútorne používané meno (nanajvýš 20 znakov), jeho zmena zneprístupní existujúce údaje
-the testjob sends you a mail everytime it is called.	admin	sk	Testovacia Úloha vám pošle správu, kedykoľvek sa spustí.
+the testjob sends you a mail everytime it is called.	admin	sk	Testovacia úloha vám pošle správu, kedykoľvek sa spustí.
 the text displayed to the user	admin	sk	text zobrazený používateľovi
 the two passwords are not the same	admin	sk	Heslá sa nezhodujú
-the users bellow are still members of group %1	admin	sk	nasledujúci používatelia sú stále členmi skupiny %1
+the users bellow are still members of group %1	admin	sk	Nasledujúci používatelia sú stále členmi skupiny %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	sk	Skupina tohto mena už existuje. ID používateľa a ID skupiny nesmú byť totožné
 they must be removed before you can continue	admin	sk	Než bude možné pokračovať, musia sa odstrániť
 this application is current	admin	sk	Táto aplikácia je aktuálna

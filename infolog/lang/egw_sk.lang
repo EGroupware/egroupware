@@ -106,7 +106,7 @@ convert to a ticket	infolog	sk	Konvertovať na tiket
 copy of:	infolog	sk	Kópia z:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	sk	Skopírujte zmeny do schránky, %1znovunačítajte záznam%2 a zlúčte ich.
 create new links	infolog	sk	Vytvoriť nové odkazy
-creates a new field	infolog	sk	vytvorí nové pole
+creates a new field	infolog	sk	Vytvorí nové pole
 creates a new status with the given values	infolog	sk	Vytvorí nový stav so zadanými hodnotami
 creates a new typ with the given name	infolog	sk	Vytvorí nový typ podľa zadaného mena
 creation	infolog	sk	Poradové číslo
@@ -128,7 +128,7 @@ date completed	infolog	sk	Dátum dokončenia
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	sk	Dátum dokončenia (ak ponecháte prázdne, vyplní sa automaticky podľa toho, kedy bol nastavený stav "hotovo", alebo kedy prebehlo vyúčtovanie).
 datecreated	infolog	sk	Dátum vytvorenia
 dates, status, access	infolog	sk	Dátum, Stav, Prístup
-days	infolog	sk	dní
+days	infolog	sk	Dní
 default category for new infolog entries	infolog	sk	Predvolená kategória pre nové záznamy Záznamníka
 default document to insert entries	infolog	sk	Predvolený dokument pre vloženie položiek
 default filter for infolog	infolog	sk	Predvolený filter pre Záznamník
@@ -145,8 +145,8 @@ delete selected entries?	infolog	sk	Odstrániť vybrané položky?
 delete this entry and all listed sub-entries	infolog	sk	Odstrániť tento záznam a všetky zobrazené podzáznamy
 deleted	infolog	sk	Odstránené
 deletes the selected typ	infolog	sk	Odstráni vybraný typ
-deletes this field	infolog	sk	odstráni toto pole
-deletes this status	infolog	sk	odstráni tento stav
+deletes this field	infolog	sk	Odstráni toto pole
+deletes this status	infolog	sk	Odstráni tento stav
 description	infolog	sk	Popis
 determines the order the fields are displayed	infolog	sk	Určuje poradie, v akom sa polia zobrazujú
 directory with documents to insert entries	infolog	sk	Priečinok s dokumentami pre vloženie položiek
@@ -340,7 +340,7 @@ owner, responsible	infolog	sk	Vlastník, zodpovedný
 parent	infolog	sk	Rodič
 parent infolog	infolog	sk	Rodičovský Záznamník
 participants for scheduling an appointment	infolog	sk	Účastníci pre naplánovanie pozvania
-path on (web-)serverside<br>eg. /var/samba/share	infolog	sk	cesta na strane (web-)servera <br>napr. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	sk	Cesta na strane (web-)servera <br>napr. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!
 pattern for search in addressbook	infolog	sk	Výraz pre hľadanie v Adresári
 pattern for search in projects	infolog	sk	Výraz pre hľadanie v Projektoch
@@ -401,7 +401,7 @@ search	infolog	sk	Hľadať
 search for:	infolog	sk	Hľadať (čo):
 second parameter for preg_replace	infolog	sk	Druhý parameter pre preg_replace
 select	infolog	sk	Vybrať
-select a category for this entry	infolog	sk	vyberte kategóriu pre tento záznam
+select a category for this entry	infolog	sk	Vyberte kategóriu pre tento záznam
 select a price	infolog	sk	Vyberte cenu
 select a priority for this task	infolog	sk	Vyberte prioritu pre túto úlohu
 select a project	infolog	sk	Vyberte projekt
@@ -496,10 +496,11 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used time	infolog	sk	Použitý čas
 values for selectbox	infolog	sk	Hodnoty pre výberovú ponuku
 view all subs of this entry	infolog	sk	Zobraziť všetky podradené záznamy
-view other subs	infolog	sk	Zobraziť ostatné Podradené záznamy
-view parent	infolog	sk	Zobraziť Rodičovský záznam
-view subs	infolog	sk	Zobraziť Podradené záznamy
-view the parent of this entry and all his subs	infolog	sk	Zobraziť Rodičovský záznam a všetky jeho podradené
+view other subs	infolog	sk	Zobraziť ostatné podradené záznamy
+view parent	infolog	sk	Zobraziť rodičovský záznam
+view parent with children	infolog	sk	Zobraziť rodčovské s potomkami
+view subs	infolog	sk	Zobraziť podradené záznamy
+view the parent of this entry and all his subs	infolog	sk	Zobraziť rodičovský záznam a všetky jeho podradené
 view this linked entry in its application	infolog	sk	Zobraziť tento odkaz v jeho aplikácii
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sk	keď má byť začatá Úloha alebo Telefonát, ukáže sa akoby od tohto dátumu vo filtri "otvorené" alebo "moje otvorené" (úvodná stránka)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	sk	Ktoré prídavné položky majú byť zodpovednej osobe prístupné pre úpravy, a to aj bez pridelených práv na úpravy?<br />Stav, percentuálny stav vybavenia a dátum dokončenia sú prístupné vždy.
