@@ -124,7 +124,7 @@
 		</grid>
 	</template>
 	<template id="resources.edit_tabs.history" template="" lang="" group="0" version="">
-		<historylog cols="1" id="history" rows="1"  width="100%"/>
+		<historylog id="history" width="100%"/>
 	</template>
 	<template id="resources.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
@@ -165,7 +165,7 @@
 					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" width="100%">
+					<tabbox id="tabs" span="all" width="100%" tab_height="250">
 						<tabs>
 							<tab id="page" label="Description" statustext="Informations about the location of resource"/>
 							<tab id="general" label="Details" statustext="General informations about resource"/>
