@@ -6,7 +6,7 @@
 %1 minutes	calendar	sk	%1 minút
 %1 participants removed because of missing invite grants	calendar	sk	%1 účastníkov odstránených kvôli chýbajúcim oprávneniam k (ich) pozvaniu
 %1 records imported	calendar	sk	Naimportovaných bolo %1 záznamov
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	sk	načítalo sa %1 záznamov (zatiaľ neboli naimportované, vraťte sa a ODznačte Test importu)
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	sk	Načítalo sa %1 záznamov (zatiaľ neboli naimportované, vráťte sa a ODznačte Test importu).
 %1 weeks	calendar	sk	%1 týždňov
 %s the event	calendar	sk	%s túto udalosť
 (%1 events in %2 seconds)	calendar	sk	(%1 udalostí za %2 sekundy)
@@ -18,7 +18,7 @@ a non blocking event will not conflict with other events	calendar	sk	Neblokujúc
 accept	calendar	sk	Prijať
 accept or reject an invitation	calendar	sk	Prijať alebo odmietnuť pozvanie
 accepted	calendar	sk	Prijaté
-access denied to the calendar of %1 !!!	calendar	sk	Prístup bol ODMIETNUTÝ, kalendár patrí používateľovi %1 !!!
+access denied to the calendar of %1 !!!	calendar	sk	Prístup bol ODMIETNUTÝ, kalendár patrí používateľovi %1 !
 access to calendar of %1 denied!	calendar	sk	Prístup ku kalendáru %1 bol odmietnutý!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sk	Zmena, ktorá vyvolala upozornenie: Nové, Zrušené, Prijaté, Odmietnuté, ...
 actions	calendar	sk	Akcie
@@ -36,7 +36,7 @@ after current date	calendar	sk	Po súčasnom dátume
 age:	calendar	sk	Vek:
 alarm	calendar	sk	Pripomienka
 alarm added	calendar	sk	Pripomienka bola pridaná
-alarm added automatic to new events before event start-time	calendar	sk	Pridaná automatická pripomienka pre nové udalosti na čas pred začiatkom
+alarm added automatic to new events before event start-time	calendar	sk	Pridaná automatická pripomienka pre nové udalosti na čas pred ich začiatkom
 alarm deleted	calendar	sk	Pripomienka bola odstránená
 alarm for %1 at %2 in %3	calendar	sk	Pripomienka %1 %2 v %2
 alarm management	calendar	sk	Pripomienkovač
@@ -52,15 +52,15 @@ allow users to prevent change notifications ('do not notify')	calendar	sk	Povoli
 allows to edit the event again	calendar	sk	Povolí znovu upraviť udalosť
 always	calendar	sk	Vždy
 apply the action on the whole query, not only the shown events	calendar	sk	Vykonať túto akciu pre celý dopyt, NIELEN pre zobrazené udalosti
-apply the changes	calendar	sk	vykonať uvedené zmeny
+apply the changes	calendar	sk	Vykonať uvedené zmeny
 appointment settings	calendar	sk	Nastavenia udalostí
 are you sure you want to delete this country ?	calendar	sk	Naozaj odstrániť túto krajinu?
 are you sure you want to delete this holiday ?	calendar	sk	Naozaj odstrániť tento sviatok?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	sk	Iná možnosť - môžete %1stiahnuť MYSQL dump%2 a naimportovať ho ručne do tabuľky egw_cal_timezones.
 automatically purge old events after	admin	sk	Automaticky vymazať staré udalosti po
-back half a month	calendar	sk	naspäť o pol mesiaca
-back one month	calendar	sk	naspäť o mesiac
-back one year	calendar	sk	späť o rok
+back half a month	calendar	sk	Späť o pol mesiaca
+back one month	calendar	sk	Späť o mesiac
+back one year	calendar	sk	Späť o rok
 before	calendar	sk	Pred
 before %1	calendar	sk	Pred %1
 before current date	calendar	sk	Pred súčasným dátumom
@@ -69,7 +69,7 @@ birthday	calendar	sk	Narodeniny
 birthdays	admin	sk	Narodeniny
 birthdays only	calendar	sk	Iba narodeniny
 both, holidays and birthdays	calendar	sk	Oboje, sviatky aj narodeniny
-busy	calendar	sk	zaneprázdnený
+busy	calendar	sk	Zaneprázdnený
 by	calendar	sk	používateľom
 calendar - list	calendar	sk	Kalendár - Zoznam
 calendar - multi-weekly	calendar	sk	Kalendár - Viactýždenný
@@ -99,7 +99,7 @@ charset of file	calendar	sk	Znaková sada súboru
 check all	calendar	sk	Označiť všetko
 choose a category	calendar	sk	Vyberte kategóriu
 close the window	calendar	sk	Zavrieť okno
-compose a mail to all participants after the event is saved	calendar	sk	po uložení udalosti napísať E-mail všetkým účastníkom
+compose a mail to all participants after the event is saved	calendar	sk	Po uložení udalosti napísať E-mail všetkým účastníkom
 conflict	calendar	sk	Konflikt
 copy of:	calendar	sk	Kópia (čoho):
 copy this event	calendar	sk	Kopírovať udalosť
@@ -206,7 +206,7 @@ event will occupy the whole day	calendar	sk	Udalosť zaberie celý deň
 events	common	sk	Udalosti
 every user can invite other users and groups	admin	sk	Každý používateľ môže pozývať ostatných používateľov a skupiny
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. Jozef Novák
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 exception	calendar	sk	Výnimka
@@ -484,9 +484,9 @@ show only invitations, not yet accepted or rejected	calendar	sk	Zobraziť iba po
 show only rejected events	calendar	sk	Zobraziť iba odmietnuté udalosti
 show only tentative accepted events	calendar	sk	Zobraziť iba predbežne prijaté udalosti
 show only the date, not the year	admin	sk	Zobraziť iba dátum, nie rok
-show this month	calendar	sk	ukáž tento mesiac
-show this week	calendar	sk	ukáž tento týždeň
-single event	calendar	sk	samostatná udalosť
+show this month	calendar	sk	Ukáž tento mesiac
+show this week	calendar	sk	Ukáž tento týždeň
+single event	calendar	sk	Samostatná udalosť
 specify where url of the day links to	calendar	sk	Vyberte, kam odkazuje URL daného dňa
 start	calendar	sk	Začiatok
 start date/time	calendar	sk	Dátum/čas začiatku
@@ -579,7 +579,7 @@ weekday	calendar	sk	Deň týždňa
 weekday starts on	calendar	sk	Ktorým dňom začína týždeň
 weekdays	calendar	sk	Dni v týždni
 weekdays to use in search	calendar	sk	Dni v týždni použité pri hľadaní
-weekly	calendar	sk	Týždne
+weekly	calendar	sk	Týždenne
 weeks in multiple week view	calendar	sk	Počet týždňov v pohľade viacerých týždňov
 weeks offset (for multi-column display)	calendar	sk	Posun týždňov (pre viacstĺpcové zobrazenie)
 weekview	calendar	sk	Týždenný pohľad

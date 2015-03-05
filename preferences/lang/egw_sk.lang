@@ -1,13 +1,13 @@
 %1 - preferences	preferences	sk	%1 - Predvoľby
 %1 hours	preferences	sk	%1 hodín
-%1 is no existing vfs directory!	preferences	sk	%1 je neexistujúci adresár vfs!
-%1 is no existing vfs file!	preferences	sk	%1 je neexistujúci súbor vfs!
+%1 is no existing vfs directory!	preferences	sk	%1 nie je existujúci adresár vfs!
+%1 is no existing vfs file!	preferences	sk	%1 nie je existujúci súbor vfs!
 12 hour	preferences	sk	12 hodinový
 24 hour	preferences	sk	24 hodinový
 a template defines the layout of egroupware and it contains icons for each application.	preferences	sk	Šablóna definuje vzhľad EGroupware a obsahuje ikony pre jednotlivé aplikácie.
 a theme defines the colors and fonts used by the template.	preferences	sk	Téma určuje farby a písma použité šablónou.
-acl grants have been updated	preferences	sk	Práva ACL boli aktualizované
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoľvek zoznam v EGroupware zobrazí tento počet riadkov na stránku.<br>Ak dáte priveľa, stránka sa bude zobrazovať pomaly. Ak dáte málo, zúži sa Váš rozhľad.
+acl grants have been updated	preferences	sk	Práva ACL boli aktualizované.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoľvek zoznam v EGroupware zobrazí tento počet riadkov na stránku.<br>Ak dáte priveľa, stránka sa bude zobrazovať pomaly. Ak dáte málo, zúži sa váš rozhľad.
 are you sure you want to delete this category ?	preferences	sk	Skutočne chcete odstrániť túto kategóriu?
 audio effect	preferences	sk	Zvukový efekt
 automatically start with this font	preferences	sk	Automaticky začať s týmto písmom
@@ -25,7 +25,7 @@ country	preferences	sk	Krajina
 dark moono theme	preferences	sk	Tmavá Moono téma
 data exchange settings	preferences	sk	Nastavenia pre výmenu údajov
 date format	preferences	sk	Formát dátumu
-default	preferences	sk	predvolený
+default	preferences	sk	Predvolený
 default application	preferences	sk	Predvolená aplikácia
 default font	preferences	sk	Predvolené písmo
 default font size	preferences	sk	Predvolená veľkosť písma
@@ -38,13 +38,13 @@ description can not exceed 255 characters in length !	preferences	sk	Dĺžka opi
 disable	preferences	sk	Vypnúť
 display thumbnails for linked images	preferences	sk	Zobraziť náhľady pre odkazované obrázky
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sk	Chcete čas zobrazovať ako 24 hodín, alebo ako 12 hodín s príponami am(dopoludnia) a pm(popoludní).
-edit custom fields	preferences	sk	upraviť vlastné polia
+edit custom fields	preferences	sk	Upraviť vlastné polia
 enable	preferences	sk	Zapnúť
-enable drag and drop functionality (experimental)	preferences	sk	Povoliť funkcionalitu ťahaj-a-pusť (experimentálna!)
+enable drag and drop functionality (experimental)	preferences	sk	Povoliť funkcionalitu ťahaj-a-pusť
 enable selectbox dropdown resizing for ie (experimental)	preferences	sk	Povoliť zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE (experimentálne)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže funkcie ťahaj-a-pusť vo všetkých aplikáciách. Ak váš prehliadač nepodporuje ťahaj-a-pusť, automaticky sa zakáže. Táto funkcia je v súčasnosti iba na experimentálnej úrovni.
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v súčasnosti experimentálna.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletu v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v súčasnosti experimentálna.
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže funkcie ťahaj-a-pusť vo všetkých aplikáciách. Ak váš prehliadač nepodporuje ťahaj-a-pusť, automaticky sa zakáže.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletu v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v zatiaľ experimentálna.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti rozbaľovacieho tlačidla vo všetkých aplikáciách v IE. Keď sa použije iný prehliadač ako IE, táto funkcia sa nepoužije. Táto funkcia je zatiaľ experimentálna.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	sk	Na zmenu hesla je potrebné šifrované spojenie s LDAP, no zatiaľ ho nemáte nastavené v inštalátore.
 enter your new password	preferences	sk	Zadajte vaše heslo
