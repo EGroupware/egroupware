@@ -31,7 +31,9 @@ class resources_hooks
 
 			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
 			$file = array(
-				'Resources list' => egw::link('/index.php',array('menuaction' => 'resources.resources_ui.index' )),
+				'Resources list' => egw::link('/index.php',array(
+				'menuaction' => 'resources.resources_ui.index',
+				'ajax' => 'true')),
 			);
 			if($this->acl->get_cats(EGW_ACL_ADD))
 			{
