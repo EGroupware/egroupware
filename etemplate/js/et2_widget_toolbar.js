@@ -395,6 +395,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			.addClass("et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
 			.attr('title', (action.hint ? action.hint : action.caption))
+			.attr('type', 'button')
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
 		
 		if (action && action.checkbox)
