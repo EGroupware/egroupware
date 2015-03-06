@@ -1287,7 +1287,9 @@ class mail_compose
 		$preserv['processedmail_id'] = $content['processedmail_id'];
 		$preserv['references'] = $content['references'];
 		$preserv['in-reply-to'] = $content['in-reply-to'];
-		$preserv['thread-topic'] = $content['thread-topic'];
+		// thread-topic is a proprietary microsoft header and deprecated with the current version
+		// horde does not support the encoding of thread-topic, and probably will not no so in the future
+		//$preserv['thread-topic'] = $content['thread-topic'];
 		$preserv['thread-index'] = $content['thread-index'];
 		$preserv['list-id'] = $content['list-id'];
 		$preserv['mode'] = $content['mode'];
@@ -1343,8 +1345,9 @@ class mail_compose
 			// this fill the session data with the values from the original email
 			switch($from)
 			{
-				case 'composeasnew':
 				case 'composefromdraft':
+					$content['mode'] = 'composefromdraft';
+				case 'composeasnew':
 					$content = $this->getDraftData($icServer, $folder, $msgUID, $part_id);
 					$content['processedmail_id'] = $mail_id;
 
@@ -1494,8 +1497,11 @@ class mail_compose
 		// get message headers for specified message
 		#$headers	= $mail_bo->getMessageHeader($_folder, $_uid);
 		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
-//_debug_array($headers); exit;
 		$addHeadInfo = $mail_bo->getMessageHeader($_uid, $_partID);
+		// thread-topic is a proprietary microsoft header and deprecated with the current version
+		// horde does not support the encoding of thread-topic, and probably will not no so in the future
+		//if ($addHeadInfo['THREAD-TOPIC']) $this->sessionData['thread-topic'] = $addHeadInfo['THREAD-TOPIC'];
+
 		//error_log(__METHOD__.__LINE__.array2string($headers));
 		if (!empty($addHeadInfo['X-MAILFOLDER'])) {
 			foreach ( explode('|',$addHeadInfo['X-MAILFOLDER']) as $val ) {
@@ -1951,7 +1957,9 @@ class mail_compose
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['in-reply-to'] = ($headers['IN-REPLY-TO']?$headers['IN-REPLY-TO']:$headers['MESSAGE_ID']);
 		$this->sessionData['references'] = ($headers['REFERENCES']?$headers['REFERENCES']:$headers['MESSAGE_ID']);
-		if ($headers['THREAD-TOPIC']) $this->sessionData['thread-topic'] = $headers['THREAD-TOPIC'];
+		// thread-topic is a proprietary microsoft header and deprecated with the current version
+		// horde does not support the encoding of thread-topic, and probably will not no so in the future
+		//if ($headers['THREAD-TOPIC']) $this->sessionData['thread-topic'] = $headers['THREAD-TOPIC'];
 		if ($headers['THREAD-INDEX']) $this->sessionData['thread-index'] = $headers['THREAD-INDEX'];
 		if ($headers['LIST-ID']) $this->sessionData['list-id'] = $headers['LIST-ID'];
 		//error_log(__METHOD__.__LINE__.' Mode:'.$_mode.':'.array2string($headers));
@@ -2185,10 +2193,13 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.'$_mailObject->addHeader(References', $_formData['references'].")");
 			$_mailObject->addHeader('References', $_formData['references']);
 		}
-		if(!empty($_formData['thread-topic'])) {
-			//error_log(__METHOD__.__LINE__.'$_mailObject->addHeader(Tread-Topic', $_formData['thread-topic'].")");
-			$_mailObject->addHeader('Thread-Topic', $_formData['thread-topic']);
-		}
+		// thread-topic is a proprietary microsoft header and deprecated with the current version
+		// horde does not support the encoding of thread-topic, and probably will not no so in the future
+		//if(!empty($_formData['thread-topic']) && class_exists('Horde_Mime_Headers_ThreadTopic')) {
+		//	//$_mailObject->addHeader('Thread-Topic', Horde_Mime::encode($_formData['thread-topic']));
+		//	$_mailObject->addHeader('Thread-Topic', $_formData['thread-topic']);
+		//}
+
 		if(!empty($_formData['thread-index'])) {
 			//error_log(__METHOD__.__LINE__.'$_mailObject->addHeader(Tread-Index', $_formData['thread-index'].")");
 			$_mailObject->addHeader('Thread-Index', $_formData['thread-index']);
@@ -2485,15 +2496,30 @@ class mail_compose
 						$dhA = mail_ui::splitRowID($content['lastDrafted']);
 						$duid = $dhA['msgUID'];
 						$dmailbox = $dhA['folder'];
-						try
+						// beware: do not delete the original mail as found in processedmail_id
+						$pMuid='';
+						if ($content['processedmail_id'])
 						{
-							$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
+							$pMhA = mail_ui::splitRowID($content['processedmail_id']);
+							$pMuid = $pMhA['msgUID'];
+							$pMmailbox = $pMhA['folder'];
 						}
-						catch (egw_exception $e)
+						error_log(__METHOD__.__LINE__.' processedID#'.$content['processedmail_id']);
+						error_log(__METHOD__.__LINE__.' lastDrafted#'.$content['lastDrafted']);
+						//error_log(__METHOD__.__LINE__."#$pMuid#$pMuid!=$duid#".array2string($content['attachments']));
+						// do not delete the original message if attachments are present
+						if (empty($pMuid) || $pMuid!=$duid || empty($content['attachments']))
 						{
-							$msg = str_replace('"',"'",$e->getMessage());
-							$success = false;
-							error_log(__METHOD__.__LINE__.$msg);
+							try
+							{
+								$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
+							}
+							catch (egw_exception $e)
+							{
+								$msg = str_replace('"',"'",$e->getMessage());
+								$success = false;
+								error_log(__METHOD__.__LINE__.$msg);
+							}
 						}
 					}
 				}
@@ -2685,6 +2711,12 @@ class mail_compose
 				$rhA = mail_ui::splitRowID($_formData['processedmail_id']);
 				$this->sessionData['uid'] = $rhA['msgUID'];
 				$this->sessionData['messageFolder'] = $rhA['folder'];
+			}
+			if ($_formData['mode']=='composefromdraft' && !empty($_formData['processedmail_id']))
+			{
+				$dhA = mail_ui::splitRowID($_formData['processedmail_id']);
+				$this->sessionData['uid'] = $dhA['msgUID'];
+				$this->sessionData['messageFolder'] = $dhA['folder'];
 			}
 		}
 		// if the body is empty, maybe someone pasted something with scripts, into the message body
@@ -2959,6 +2991,7 @@ class mail_compose
 			$lastDrafted['folder'] = $dhA['folder'];
 			if (isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid']=trim($lastDrafted['uid']);
 			// manually drafted, do not delete
+			// will be handled later on IF mode was $_formData['mode']=='composefromdraft'
 			if (isset($lastDrafted['uid']) && (empty($lastDrafted['uid']) || $lastDrafted['uid'] == $this->sessionData['uid'])) $lastDrafted=false;
 			//error_log(__METHOD__.__LINE__.array2string($lastDrafted));
 		}
@@ -2986,14 +3019,31 @@ class mail_compose
 			// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
 			if ($mail_bo->isDraftFolder($this->sessionData['messageFolder']) && !$mail_bo->isTemplateFolder($this->sessionData['messageFolder']))
 			{
-				$mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
+				//error_log(__METHOD__.__LINE__."#".$this->sessionData['uid'].'#'.$this->sessionData['messageFolder']);
+				try // message may be deleted already, as it maybe done by autosave
+				{
+					if ($_formData['mode']=='composefromdraft') $mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
+				}
+				catch (egw_exception $e)
+				{
+					//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
+					unset($e);
+				}
 			} else {
 				$mail_bo->flagMessages("answered", $this->sessionData['uid'],($this->sessionData['messageFolder']?$this->sessionData['messageFolder']:$this->sessionData['sourceFolder']));
 				//error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)).':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
 				if (array_key_exists('forwardFlag',$this->sessionData) && $this->sessionData['forwardFlag']=='forwarded')
 				{
-					//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
-					$mail_bo->flagMessages("forwarded", $this->sessionData['forwardedUID'],$this->sessionData['sourceFolder']);
+					try
+					{
+						//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
+						$mail_bo->flagMessages("forwarded", $this->sessionData['forwardedUID'],$this->sessionData['sourceFolder']);
+					}
+					catch (egw_exception $e)
+					{
+						//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
+						unset($e);
+					}
 				}
 			}
 			//$mail_bo->closeConnection();
