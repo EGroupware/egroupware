@@ -473,6 +473,9 @@ app.classes.addressbook = AppJS.extend(
 
 								// Set to new list so they can see it easily
 								lists.set_value(result);
+								// Call cahnge event manually after setting the value
+								// Not sure why our selectbox does not trigger change event
+								jQuery(lists.node).change();
 							}
 						}
 					).sendRequest(true);
