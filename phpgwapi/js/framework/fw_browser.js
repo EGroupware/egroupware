@@ -153,6 +153,11 @@ var fw_browser =  Class.extend({
 			targetUrl = "index.php?menuaction=" + matches[1];
 			useIframe = false;
 		}
+		// External link, but we'd still like to use everything without iframe
+		if(_url.indexOf('no_popup=1') > 0)
+		{
+			useIframe = false;
+		}
 
 		// Destroy application js
 		if(window.app[this.app.appName] && window.app[this.app.appName].destroy)
