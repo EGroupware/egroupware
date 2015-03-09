@@ -158,7 +158,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		this.activeFilters = {col_filter:{}};
 
 		// Directly set current col_filters from settings
-		jQuery.extend(this.activeFilters, this.options.settings.col_filter);
+		jQuery.extend(this.activeFilters.col_filter, this.options.settings.col_filter);
 		
 		/*
 		Process selected custom fields here, so that the settings are correctly
