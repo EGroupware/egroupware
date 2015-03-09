@@ -435,7 +435,7 @@ class egw_customfields implements IteratorAggregate
 	public static function change_account_ids($app, array $ids2change)
 	{
 		$total = 0;
-		if (($cfs = self::get_customfields($app, true)))
+		if (($cfs = self::get($app, true)))
 		{
 			foreach($cfs as &$data)
 			{
@@ -470,7 +470,7 @@ class egw_customfields implements IteratorAggregate
 	public static function get_account_cfs($app)
 	{
 		$types = array();
-		if (($cfs = self::get_customfields($app, true)))
+		if (($cfs = self::get($app, true)))
 		{
 			foreach($cfs as $name => $data)
 			{
