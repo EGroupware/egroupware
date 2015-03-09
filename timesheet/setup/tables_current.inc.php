@@ -27,7 +27,7 @@ $phpgw_baseline = array(
 			'ts_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'date modified ot the timesheet'),
 			'ts_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account id of the last modifier'),
 			'pl_id' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'id of the linked project'),
-			'ts_status' => array('type' => 'int','precision' => '4','comment' => 'status of the timeshhet-emtry')
+			'ts_status' => array('type' => 'int','precision' => '4','comment' => 'status of the timesheet-entry')
 		),
 		'pk' => array('ts_id'),
 		'fk' => array(),
