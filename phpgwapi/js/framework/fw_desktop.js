@@ -351,7 +351,7 @@
 
 			if (typeof _app == 'string') _app = this.getApplicationByName(_app);
 			//Set the sidebox width if a application specific sidebox width is set
-			if (_app == _app.parentFw.activeApp && _app.sideboxWidth !== false )
+			if (_app && _app == _app.parentFw.activeApp && _app.sideboxWidth !== false )
 			{
 				this.splitterUi.constraints[0].size = _app.sideboxWidth;
 			}
