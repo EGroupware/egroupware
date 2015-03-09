@@ -42,7 +42,7 @@ $config = array(
 	'gpg' => trim(`which gpg`),
 	'editor' => trim(`which vi`),
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
-	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --optimize-autoloader' : '',
+	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install' : '',
 	'packager' => 'build@stylite.de',
 	'obs' => './obs',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
