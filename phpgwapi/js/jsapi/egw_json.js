@@ -114,7 +114,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 					this.egw.message.call(this.egw, this.egw.lang('Ajax request failed')+': '+_xmlhttp.statusText+' ('+_xmlhttp.status+
 						")\n\n"+this.egw.lang('Server error log should contain more information about the problem.')+
 						"\n"+this.egw.lang('Trying it again will usually not help!')+
-						"\n\nURL: "+this.url+"\n"+_xmlhttp.getAllResponseHeaders().match(/^Date:.*$/m)[0]);
+						"\n\nURL: "+this.url+"\n"+(_xmlhttp.getAllResponseHeaders() ? _xmlhttp.getAllResponseHeaders().match(/^Date:.*$/m)[0]:''));
 
 					this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, _xmlhttp.status, _xmlhttp.statusText);
 				}
