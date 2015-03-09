@@ -2330,3 +2330,46 @@ ORDER BY master.cal_id DESC", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_AS
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.1.001';
 }
+
+/**
+ * Modify range_end of recurring events to be end-time of last recurrence (and not just a date)
+ *
+ * This fixes not fund last recurrence in day-view.
+ *
+ * @return string
+ */
+function calendar_upgrade14_1_001()
+{
+	foreach($GLOBALS['egw_setup']->db->query(
+"SELECT egw_cal.cal_id AS cal_id,cal_start,cal_end,range_start,range_end,egw_cal_repeats.*,tz_tzid AS tzid
+FROM egw_cal
+JOIN egw_cal_repeats ON egw_cal_repeats.cal_id=egw_cal.cal_id
+JOIN egw_cal_dates ON egw_cal_dates.cal_id=egw_cal.cal_id AND cal_start=range_start
+JOIN egw_cal_timezones ON egw_cal.tz_id=egw_cal_timezones.tz_id", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_ASSOC) as $event)
+	{
+		$event = egw_db::strip_array_keys($event, 'cal_');
+		$event['recur_enddate'] = $event['range_end'];
+		$rrule = calendar_rrule::event2rrule($event, false);
+		$rrule->rewind();
+		$enddate = $rrule->current();
+		do
+		{
+			$rrule->next_no_exception();
+			$occurrence = $rrule->current();
+		}
+		while ($rrule->valid() && ($enddate = $occurrence));
+		$enddate->modify(($event['end'] - $event['start']).' second');
+		if (($range_end = $enddate->format('server')) != $event['range_end'])
+		{
+			$GLOBALS['egw_setup']->db->update('egw_cal',array(
+				'range_end' => $range_end,
+				'cal_etag=cal_etag+1',
+				'cal_modified' => time(),
+			), array(
+				'cal_id' => $event['id'],
+			), __LINE__, __FILE__, 'calendar');
+			//error_log(__FUNCTION__."() #$event[id], start=".date('Y-m-d H:i:s', $event['start']).', end='.date('Y-m-d H:i:s', $event['end']).', range_end='.date('Y-m-d H:i:s', $event['recur_enddate']).' --> '.date('Y-m-d H:i:s', $range_end));
+		}
+	}
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.001';
+}
