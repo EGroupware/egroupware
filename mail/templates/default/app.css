@@ -774,6 +774,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		overflow: visible;
 		height: auto;
 	}
+	pre {
+		width:99% !important;
+	}
 	div.mailDisplayContainer {
 		border-top: none;
 		overflow: visible !important;
