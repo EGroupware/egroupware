@@ -609,19 +609,6 @@ class calendar_ical extends calendar_boupdate
 						$rrule = $rriter->generate_rrule($version);
 						if ($event['recur_enddate'])
 						{
-							if ($this->productManufacturer == 'groupdav' && $this->productName == 'iphone')
-							{
-								// Fix iPhone issue
-								$length = ($event['end'] - $event['start']);
-								$rrule['UNTIL']->modify($length . ' second');
-								$rrule['UNTIL']->setTime(23, 59, 59);
-							}
-							else
-							{
-								$length = ($event['end'] - $event['start']) / 2;
-								$rrule['UNTIL']->modify((int)$length . ' second');
-							}
-
 							if (!$tzid || $version != '1.0')
 							{
 								if (!isset(self::$tz_cache['UTC']))

@@ -215,10 +215,10 @@ class calendar_rrule implements Iterator
 	 *
 	 * @param DateTime $time start of event in it's own timezone
 	 * @param int $type self::NONE, self::DAILY, ..., self::YEARLY
-	 * @param int $interval=1 1, 2, ...
-	 * @param DateTime $enddate=null enddate or null for no enddate (in which case we user '+5 year' on $time)
-	 * @param int $weekdays=0 self::SUNDAY=1|self::MONDAY=2|...|self::SATURDAY=64
-	 * @param array $exceptions=null DateTime objects with exceptions
+	 * @param int $interval =1 1, 2, ...
+	 * @param DateTime $enddate =null enddate or null for no enddate (in which case we user '+5 year' on $time)
+	 * @param int $weekdays =0 self::SUNDAY=1|self::MONDAY=2|...|self::SATURDAY=64
+	 * @param array $exceptions =null DateTime objects with exceptions
 	 */
 	public function __construct(DateTime $time,$type,$interval=1,DateTime $enddate=null,$weekdays=0,array $exceptions=null)
 	{
@@ -238,7 +238,7 @@ class calendar_rrule implements Iterator
 
 		if (!in_array($type,array(self::NONE, self::DAILY, self::WEEKLY, self::MONTHLY_MDAY, self::MONTHLY_WDAY, self::YEARLY)))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."($time,$type,$interval,$enddate,$data,...) type $type is NOT valid!");
+			throw new egw_exception_wrong_parameter(__METHOD__."($time,$type,$interval,$enddate,$weekdays,...) type $type is NOT valid!");
 		}
 		$this->type = $type;
 
@@ -315,7 +315,7 @@ class calendar_rrule implements Iterator
 	 * Get recurrence interval duration in seconds
 	 *
 	 * @param int $type self::(DAILY|WEEKLY|MONTHLY_(M|W)DAY|YEARLY)
-	 * @param int $interval=1
+	 * @param int $interval =1
 	 * @return int
 	 */
 	public static function recurrence_interval($type, $interval=1)
@@ -620,7 +620,7 @@ class calendar_rrule implements Iterator
 
 	/**
 	 * Generate a VEVENT RRULE
-	 * @param string $version='1.0' could be '2.0', too
+	 * @param string $version ='2.0' could be '1.0' too
 	 *
 	 * $return array	vCalendar RRULE
 	 */
@@ -697,15 +697,7 @@ class calendar_rrule implements Iterator
 
 		if ($this->enddate)
 		{
-			$this->rewind();
-			$enddate = $this->current();
-			do
-			{
-				$this->next_no_exception();
-				$occurrence = $this->current();
-			}
-			while ($this->valid() && ($enddate = $occurrence));
-			$rrule['UNTIL'] = $enddate;
+			$rrule['UNTIL'] = $this->enddate;
 		}
 
 		return $rrule;
@@ -715,7 +707,7 @@ class calendar_rrule implements Iterator
 	 * Get instance for a given event array
 	 *
 	 * @param array $event
-	 * @param boolean $usertime=true true: event timestamps are usertime (default for calendar_bo::(read|search), false: servertime
+	 * @param boolean $usertime =true true: event timestamps are usertime (default for calendar_bo::(read|search), false: servertime
 	 * @param string $to_tz			timezone for exports (null for event's timezone)
 	 *
 	 * @return calendar_rrule		false on error
@@ -863,8 +855,8 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	$tz = new DateTimeZone($_REQUEST['tz']);
 	$time = new egw_time($_REQUEST['time'],$tz);
 	if ($_REQUEST['enddate']) $enddate = new egw_time($_REQUEST['enddate'],$tz);
-	$weekdays = 0; foreach((array)$_REQUEST['weekdays'] as $mask) $weekdays |= $mask;
-	if ($_REQUEST['exceptions']) foreach(preg_split("/[,\r\n]+ ?/",$_REQUEST['exceptions']) as $exception) $exceptions[] = new egw_time($exception);
+	$weekdays = 0; foreach((array)$_REQUEST['weekdays'] as $mask) { $weekdays |= $mask; }
+	if ($_REQUEST['exceptions']) foreach(preg_split("/[,\r\n]+ ?/",$_REQUEST['exceptions']) as $exception) { $exceptions[] = new egw_time($exception); }
 
 	$rrule = new calendar_rrule($time,$_REQUEST['type'],$_REQUEST['interval'],$enddate,$weekdays,$exceptions);
 	echo "<h3>".$time->format('l').', '.$time.' ('.$tz->getName().') '.$rrule."</h3>\n";

@@ -1315,6 +1315,23 @@ ORDER BY cal_user_type, cal_usre_id
 			$event['recur_interval'] = 1;
 		}
 
+		// set recur-enddate/range-end to real end-date of last recurrence
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
+		{
+			$rrule = calendar_rrule::event2rrule($event, false);
+			$rrule->rewind();
+			$enddate = $rrule->current();
+			do
+			{
+				$rrule->next_no_exception();
+				$occurrence = $rrule->current();
+			}
+			while ($rrule->valid() && ($enddate = $occurrence));
+			$enddate->modify(($event['end'] - $event['start']).' second');
+			$event['recur_enddate'] = $enddate->format('server');
+			//error_log(__METHOD__."($event[title]) start=".egw_time::to($event['start'],'string').', end='.egw_time::to($event['end'],'string').', range_end='.egw_time::to($event['recur_enddate'],'string'));
+		}
+
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
 		foreach($event as $col => $val)
 		{
