@@ -299,7 +299,8 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 					}
 					if(this.widget && typeof this.widget == 'string')
 					{
-						this.widget = et2_createWidget(this.widget, {readonly:true}, gantt_widget);
+						var attrs = jQuery.extend({readonly:true}, this.widget_attributes||{});
+						this.widget = et2_createWidget(this.widget, attrs, gantt_widget);
 					}
 					if (this.widget)
 					{
