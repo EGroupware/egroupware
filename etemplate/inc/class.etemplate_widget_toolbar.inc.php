@@ -28,7 +28,6 @@ class etemplate_widget_toolbar extends etemplate_widget
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
-		error_log(__METHOD__."('$cname', ".array2string($expand).", ...) $this: get_array(\$content, '$form_name')=".array2string(self::get_array($content, $form_name)));
 
 		if (!$this->is_readonly($cname, $form_name))
 		{
