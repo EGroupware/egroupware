@@ -860,6 +860,8 @@ class mail_ui
 			$cmblevelsCt = count($cmblevels);
 		}
 		//error_log(__METHOD__.__LINE__.function_backtrace());
+		// needed in setOutStructure for namespace consistency in folderstructure of others and/or shared
+		$nameSpace = $this->mail_bo->_getNameSpaces();
 		foreach($folderObjects as $key => $obj)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($key));
@@ -923,7 +925,7 @@ class mail_ui
 			}
 			$oA['parent'] = $parentName;
 
-			$this->setOutStructure($oA,$out,$obj->delimiter);
+			$this->setOutStructure($oA,$out,$obj->delimiter,true,$nameSpace);
 			$c++;
 		}
 		if (!is_null($_nodeID) && $_nodeID !=0 && $_returnNodeOnly==true)
@@ -969,9 +971,11 @@ class mail_ui
 	 * @param array &$out, out array
 	 * @param string $del needed as glue for parent/child operation / comparsion
 	 * @param boolean $createMissingParents a missing parent, instead of throwing an exception
+	 * @param array $nameSpace used to check on creation of nodes in namespaces other than personal
+	 *					as clearance for access may be limited to a single branch-node of a tree
 	 * @return void
 	 */
-	function setOutStructure($data, &$out, $del='.', $createMissingParents=true)
+	function setOutStructure($data, &$out, $del='.', $createMissingParents=true, $nameSpace=array())
 	{
 		//error_log(__METHOD__."(".array2string($data).', '.array2string($out).", '$del')");
 		$components = $data['path'];
@@ -995,16 +999,34 @@ class mail_ui
 
 			if (!is_array($insert) || !isset($insert['item']))
 			{
-				// throwing an exeption here seems to be unrecoverable, even if the cause is a something that can be handeled by the mailserver
+				// throwing an exeption here seems to be unrecoverable,
+				// even if the cause is a something that can be handeled by the mailserver
 				if (mail_bo::$debug) error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
-				break;
-			}
-			foreach($insert['item'] as &$item)
-			{
-				if ($item['id'] == $parent.$component)
+				// should we hit the break? if in personal: sure, something is wrong with the folderstructure
+				// if in shared or others we may proceed as access to folders may very well be limited to
+				// a single folder within the tree
+				$break = true;
+				foreach ($nameSpace as $nsp)
 				{
-					$insert =& $item;
-					break;
+					// if (appropriately padded) namespace prefix of (others or shared) is the leading part of parent
+					// we want to create the node in question as we meet the above considerations
+					if ($nsp['type']!='personal' && $nsp['prefix_present'] && stripos($parent,$data['path'][0].self::$delimiter.$nsp['prefix'])===0)
+					{
+						if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' about to create:'.$parent.' in '.$data['path'][0].self::$delimiter.$nsp['prefix']);
+						$break=false;
+					}
+				}
+				if ($break) break;
+			}
+			if ($insert['item'])
+			{
+				foreach($insert['item'] as &$item)
+				{
+					if ($item['id'] == $parent.$component)
+					{
+						$insert =& $item;
+						break;
+					}
 				}
 			}
 			if ($item['id'] != $parent.$component)
