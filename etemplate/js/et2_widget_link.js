@@ -746,7 +746,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		else
 		{
 			_attrs["select_options"] = this.egw().link_app_list('query');
-			delete _attrs["select_options"]["addressbook-email"];
+			if (typeof _attrs["select_options"]["addressbook-email"] != 'undefined') delete _attrs["select_options"]["addressbook-email"];
 		}
 
 		// Check whether the options entry was found, if not read it from the
