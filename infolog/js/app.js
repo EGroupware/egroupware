@@ -558,5 +558,18 @@ app.classes.infolog = AppJS.extend(
 		var data = egw.dataGetUIDdata(_selected[0].id);
 
 		return data && data.data && data.data.info_id_parent > 0;
+	},
+
+	/**
+	 * Submit template if widget has a value
+	 *
+	 * Used for project-selection to update pricelist items from server
+	 *
+	 * @param {DOMNode} _node
+	 * @param {et2_widget} _widget
+	 */
+	submit_if_not_empty: function(_node, _widget)
+	{
+		if (_widget.get_value()) this.et2._inst.submit();
 	}
 });

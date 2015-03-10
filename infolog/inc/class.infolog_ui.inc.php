@@ -1694,7 +1694,12 @@ class infolog_ui
 							$app = $content['info_contact']['app'];
 							$id = $content['info_contact']['id'];
 						}
-						if($app && $id)
+						// if project has been removed, but is still info_contact --> also remove it
+						if ($app == 'projectmanager' && $id && $id == $content['old_pm_id'] && !$content['pm_id'])
+						{
+							unset($content['info_link_id'], $id, $content['info_contact']['id']);
+						}
+						elseif ($app && $id)
 						{
 							if(!is_array($content['link_to']))
 							{
@@ -1767,8 +1772,8 @@ class infolog_ui
 						{
 							//echo "<p>this->link->unlink2(0,infolog,{$content['link_to']['to_id']},0,'projectmanager',{$content['old_pm_id']});</p>\n";
 							egw_link::unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
-							$content['old_pm_id'] = $content['pm_id'];
 						}
+						$content['old_pm_id'] = $content['pm_id'];
 					}
 					// writing links for a new entry
 					if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))

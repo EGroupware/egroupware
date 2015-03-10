@@ -41,7 +41,7 @@
 				</row>
 				<row class="row">
 					<description value="Project"/>
-					<link-entry id="pm_id" only_app='projectmanager' blur='None' class="infolog_projectName"/>
+					<link-entry id="pm_id" only_app='projectmanager' onchange="app.infolog.submit_if_not_empty" blur="None" class="infolog_projectName"/>
 				</row>
 				<row class="row">
 					<description value="Price"/>
