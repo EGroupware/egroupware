@@ -32,7 +32,7 @@
 						<nextmatch-header label="Home email" id="email_home"/>
 					</vbox>
 				</row>
-				<row class="row" valign="top">
+				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
 					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
 					<int id="${row}[org_count]" readonly="true" align="center"/>
 					<vbox>

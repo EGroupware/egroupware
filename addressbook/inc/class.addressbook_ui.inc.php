@@ -141,7 +141,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					$msg = lang('You need to select some contacts first');
 				}
-				elseif ($content['nm']['action'] == 'view')	// org-view via context menu
+				elseif ($content['nm']['action'] == 'view_org')	// org-view via context menu
 				{
 					$content['nm']['org_view'] = array_shift($content['nm']['selected']);
 				}
@@ -360,83 +360,89 @@ class addressbook_ui extends addressbook_bo
 	 */
 	public function get_actions($tid_filter=null, $org_view=null)
 	{
-		// we have no org view (view of one org has context menu like regular "add contacts" view, as it shows contacts
-		if (!isset($this->org_views[(string) $org_view]))
-		{
-			$actions = array(
-				'view' => array(
-					'caption' => 'CRM-View',
-					'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] != '~edit~',
-					'allowOnMultiple' => false,
-					'group' => $group=1,
-					'onExecute' => 'javaScript:app.addressbook.view',
-					// Children added below
-					'children' => array()
-				),
-				'open' => array(
-					'caption' => 'Open',
-					'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] == '~edit~',
-					'allowOnMultiple' => false,
-					'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
-					'popup' => egw_link::get_registry('addressbook', 'edit_popup'),
-					'group' => $group,
-				),
-				'add' => array(
-					'caption' => 'Add',
-					'group' => $group,
-					'children' => array(
-						'new' => array(
-							'caption' => 'New',
-							'url' => 'menuaction=addressbook.addressbook_ui.edit',
-							'popup' => egw_link::get_registry('addressbook', 'add_popup'),
-							'icon' => 'new',
-						),
-						'copy' => array(
-							'caption' => 'Copy',
-							'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
-							'popup' => egw_link::get_registry('addressbook', 'add_popup'),
-							'allowOnMultiple' => false,
-							'icon' => 'copy',
-						),
+		// Contact view
+		$actions = array(
+			'view' => array(
+				'caption' => 'CRM-View',
+				'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] != '~edit~',
+				'allowOnMultiple' => false,
+				'group' => $group=1,
+				'onExecute' => 'javaScript:app.addressbook.view',
+				'disableClass' => 'contact_organisation',
+				'hideOnDisabled' => true,
+				// Children added below
+				'children' => array()
+			),
+			'open' => array(
+				'caption' => 'Open',
+				'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] == '~edit~',
+				'allowOnMultiple' => false,
+				'disableClass' => 'contact_organisation',
+				'hideOnDisabled' => true,
+				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
+				'popup' => egw_link::get_registry('addressbook', 'edit_popup'),
+				'group' => $group,
+			),
+			'add' => array(
+				'caption' => 'Add',
+				'group' => $group,
+				'disableClass' => 'contact_organisation',
+				'hideOnDisabled' => true,
+				'children' => array(
+					'new' => array(
+						'caption' => 'New',
+						'url' => 'menuaction=addressbook.addressbook_ui.edit',
+						'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+						'icon' => 'new',
+					),
+					'copy' => array(
+						'caption' => 'Copy',
+						'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
+						'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+						'allowOnMultiple' => false,
+						'icon' => 'copy',
 					),
 				),
-			);
-			// CRM view options
-			$crm_count = 0;
-			$crm_apps = array('infolog','tracker');
+			),
+		);
+		// CRM view options
+		$crm_count = 0;
+		$crm_apps = array('infolog','tracker');
+		foreach($crm_apps as $app)
+		{
+			if ($GLOBALS['egw_info']['user']['apps'][$app]) $crm_count++;
+		}
+		if($crm_count > 1)
+		{
 			foreach($crm_apps as $app)
 			{
-				if ($GLOBALS['egw_info']['user']['apps'][$app]) $crm_count++;
-			}
-			if($crm_count > 1)
-			{
-				foreach($crm_apps as $app)
-				{
-					$actions['view']['children']["view-$app"] = array(
-						'caption' => $app,
-						'icon' => "$app/navbar"
-					);
-				}
+				$actions['view']['children']["view-$app"] = array(
+					'caption' => $app,
+					'icon' => "$app/navbar"
+				);
 			}
 		}
-		else	// org view
-		{
-			$actions = array(
-				'view' => array(
-					'caption' => 'View',
-					'default' => true,
-					'allowOnMultiple' => false,
-					'group' => $group=1,
-				),
-				'add' => array(
-					'caption' => 'Add',
-					'group' => $group,
-					'allowOnMultiple' => false,
-					'url' => 'menuaction=addressbook.addressbook_ui.edit&org=$id',
-					'popup' => egw_link::get_registry('addressbook', 'add_popup'),
-				),
-			);
-		}
+		
+		// org view
+		$actions += array(
+			'view_org' => array(
+				'caption' => 'View',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'group' => $group=1,
+				'disableClass' => 'contact_contact',
+				'hideOnDisabled' => true
+			),
+			'add_org' => array(
+				'caption' => 'Add',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'disableClass' => 'contact_contact',
+				'hideOnDisabled' => true,
+				'url' => 'menuaction=addressbook.addressbook_ui.edit&org=$id',
+				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+			),
+		);
 
 		++$group;	// other AB related stuff group: lists, AB's, categories
 		// categories submenu
@@ -1612,6 +1618,7 @@ window.egw_LAB.wait(function() {
 					$row['class'] .= 'rowNoDelete ';
 				}
 				$row['class'] .= 'rowNoEdit ';	// no edit in OrgView
+				$row['class'] .= 'contact_organisation ';
 			}
 			else
 			{
@@ -1645,6 +1652,7 @@ window.egw_LAB.wait(function() {
 				{
 					$row['class'] .= 'rowNoEdit ';
 				}
+				$row['class'] .= 'contact_contact ';
 
 				unset($row['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 
