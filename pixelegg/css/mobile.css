@@ -2527,6 +2527,11 @@ body {
   background-position: center;
   float: right;
 }
+.egw_fw_ui_tab_content > .loading {
+  background-image: url('../images/ajax-loader.gif');
+  text-align: center;
+  line-height: 400px;
+}
 /**
  * EGroupware: Stylite Pixelegg template
  *

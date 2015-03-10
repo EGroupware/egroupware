@@ -36,6 +36,8 @@ var fw_browser =  Class.extend({
 		this.heightCallback = _heightCallback;
 		this.app = _app;
 		this.currentLocation = '';
+		this.ajaxLoaderDiv = null;
+		this.loadingDeferred = null;
 	},
 	
 	/**
@@ -88,7 +90,10 @@ var fw_browser =  Class.extend({
 			$j(this.baseDiv).empty();
 			this.iframe = null;
 			this.contentDiv = null;
-			this.ajaxLoaderDiv = null;
+			if(this.loadingDeferred && this.type)
+			{
+				this.loadingDeferred.reject();
+			}
 
 			switch (_type)
 			{
@@ -121,6 +126,7 @@ var fw_browser =  Class.extend({
 	/**
 	 * Sets url to browse and load the content in proper content browser
 	 * @param {string} _url
+	 * @return {Deferred} Returns a Deferred promise object
 	 */
 	browse: function(_url)
 	{
@@ -139,6 +145,24 @@ var fw_browser =  Class.extend({
 		}
 		var useIframe = true;
 		var targetUrl = _url;
+		if(_url == this.currentLocation && this.loadingDeferred != null)
+		{
+			// Still loading
+			return this.loadingDeferred.promise();
+		}
+
+		// Show loader div, start blocking
+		var self = this;
+		this.ajaxLoaderDiv = jQuery('<div class="loading ui-widget-overlay ui-front">'+egw.lang('please wait...')+'</div>').insertBefore(this.baseDiv);
+		this.loadingDeferred = new jQuery.Deferred();
+		this.loadingDeferred.always(function() {
+			if(self.ajaxLoaderDiv)
+			{
+				self.ajaxLoaderDiv.hide().remove();
+				self.ajaxLoaderDiv = null;
+			}
+			self.loadingDeferred = null;
+		});
 
 		// Check whether the given url is a pseudo url which should be executed
 		// by calling the ajax_exec function
@@ -204,7 +228,6 @@ var fw_browser =  Class.extend({
 
 			//Postpone the actual "navigation" - gives some speedup with internet explorer
 			//as it does no longer blocks the complete page until all frames have loaded.
-			var self = this;
 			window.setTimeout(function() {
 				//Load the iframe content
 				self.iframe.src = _url;
@@ -224,6 +247,11 @@ var fw_browser =  Class.extend({
 					catch (e) {
 						// ignoer SecurityError: Blocked a frame ..., caused by different origin
 					}
+				}
+
+				if(self.loadingDeferred)
+				{
+					self.loadingDeferred.resolve();
 				}
 			}, 1);
 		}
@@ -257,6 +285,7 @@ var fw_browser =  Class.extend({
 				req.sendRequest();
 			}
 		}
+		return this.loadingDeferred.promise();
 	},
 	
 	/**
@@ -299,6 +328,11 @@ var fw_browser =  Class.extend({
 		// Run the javascript code
 		//console.log(content.js);
 		$j(this.contentDiv).append(content.js);
+
+		if(this.loadingDeferred)
+		{
+			this.loadingDeferred.resolve();
+		}
 	},
 	
 	/**
