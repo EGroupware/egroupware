@@ -1702,14 +1702,24 @@ class infolog_ui
 							}
 							$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
 						}
+						else
+						{
+							unset($content['info_link_id']);
+						}
 						if ($old_link_id && $old_link_id != $content['info_link_id'])
 						{
 							$link = egw_link::get_link($old_link_id);
-							// Keep projectmanager link if it's the same project as before
-							if(!($link['link_app2'] == 'projectmanager' && $link['link_id2'] == $content['old_pm_id']))
+							// remove selected project, if removed link is that project
+							if($link['link_app2'] == 'projectmanager' && $link['link_id2'] == $content['old_pm_id'])
 							{
-								egw_link::unlink($old_link_id);
+								unset($content['pm_id'], $content['old_pm_id']);
 							}
+							egw_link::unlink($old_link_id);
+						}
+						// if added link is a project and no other project selected, also add as project
+						if ($app == 'projectmanager' && $id && !$content['pm_id'])
+						{
+							$content['old_pm_id'] = $content['pm_id'] = $id;
 						}
 					}
 					if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
