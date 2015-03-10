@@ -390,7 +390,22 @@ var et2_selectAccount = et2_selectbox.extend(
 				}
 			}
 		}
-		return this.options.select_options.concat(this.egw().accounts(this.options.account_type));
+		var type = this.egw().preference('account_selection', 'common');
+		var accounts = [];
+		// for primary_group we only display owngroups == own memberships, not other groups
+		if (type == 'primary_group' && this.options.account_type != 'accounts')
+		{
+			if (this.options.account_type == 'both')
+			{
+				accounts = this.egw().accounts('accounts');
+			}
+			accounts = accounts.concat(this.egw().accounts('owngroups'));
+		}
+		else
+		{
+			accounts = this.egw().accounts(this.options.account_type);
+		}
+		return this.options.select_options.concat(accounts);
 	},
 
 	/**
