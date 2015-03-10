@@ -110,7 +110,7 @@
 				<row class="row optional" disabled="@no_add">
 					<vbox span="2">
 						<menulist>
-							<menupopup type="select-account" statustext="User or group" id="account" multiple="true" no_lang="true" tags="true" account_type="both" empty_label="User or group" class="et2_fullWidth"/>
+							<menupopup type="select-account" statustext="User or group" id="account" multiple="true" no_lang="true" tags="true" account_type="both" empty_label="User or group" class="et2_fullWidth" width="99%"/>
 						</menulist>
 						<link-entry id="resource" options="@cal_resources"/>
 					</vbox>
