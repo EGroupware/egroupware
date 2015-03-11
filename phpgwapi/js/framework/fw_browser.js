@@ -161,7 +161,6 @@ var fw_browser =  Class.extend({
 				self.ajaxLoaderDiv.hide().remove();
 				self.ajaxLoaderDiv = null;
 			}
-			self.loadingDeferred = null;
 		});
 
 		// Check whether the given url is a pseudo url which should be executed
