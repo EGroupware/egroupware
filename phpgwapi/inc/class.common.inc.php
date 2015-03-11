@@ -924,9 +924,13 @@ class common
 					$app_map[$name] = egw_vfs::download_url($img);
 				}
 			}
-			egw_cache::setInstance(__CLASS__, $cache_name, $map, 86400);	// cache for one day
+		}
+		else if ($dir)
+		{
+			return $map;
 		}
 		//error_log(__METHOD__."('$template_set') took ".(microtime(true)-$starttime).' secs');
+		egw_cache::setInstance(__CLASS__, $cache_name, $map, 86400);	// cache for one day
 		//echo "<p>template_set=".array2string($template_set)."</p>\n"; _debug_array($map);
 		return $map;
 	}
