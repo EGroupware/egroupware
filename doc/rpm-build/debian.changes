@@ -1,3 +1,17 @@
+egroupware-epl (14.2.20150310-1) hardy; urgency=low
+
+  * Mail/idots: fix not be able to open mail folders from the mail-tree
+  * Safari: fix security warning caused by auto-complete when submitting from https to about:blank
+  * Notification/Mail: Fix / work around for BAD Header problem encountered in notifications for insufficiently encoded subject
+  * ProjectManager: additional columns for Gantt chart
+  * Sharing: fixed not accessible share, if user already logged into same EGroupware instance, also fixed WebDAV problems using a share URL
+  * Calendar: fix not shown last recurrence of limited recurring event in day-view (requires database update for existing events)
+  * Mail: fixed problem with space in folder names under current PHP 5.5.22 or 5.6.6 by updating to newest Horde and PEAR versions
+  * InfoLog: fixed not able to remove already selected project
+  * Infolog: add update script to recover any InfoLogs hidden because of missing status
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 10 Mar 2015 13:28:34 +0100
+
 egroupware-epl (14.2.20150218-1) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
