@@ -570,6 +570,8 @@ class addressbook_ui extends addressbook_bo
 						'icon' => 'infolog/navbar',
 						'onExecute' => 'javaScript:app.addressbook.view_infolog',
 						'allowOnMultiple' => true,
+						'disableClass' => 'contact_organisation',
+						'hideOnDisabled' => true,
 					),
 					'infolog_add' => array(
 						'caption' => 'Add a new Infolog',
@@ -592,7 +594,9 @@ class addressbook_ui extends addressbook_bo
 						'caption' => 'Show',
 						'icon' => 'view',
 						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id&ajax=true',
-						'targetapp' => 'calendar',	// open in calendar tab
+						'targetapp' => 'calendar',	// open in calendar tab,
+						'disableClass' => 'contact_organisation',
+						'hideOnDisabled' => true,
 					),
 					'calendar_add' => array(
 						'caption' => 'Add appointment',
@@ -608,6 +612,8 @@ class addressbook_ui extends addressbook_bo
 		$actions['email'] = array(
 				'caption' => 'Email',
 				'icon'	=> 'mail/navbar',
+				'disableClass' => 'contact_organisation',
+				'hideOnDisabled' => true,
 				'group' => $group,
 				'children' => array(
 						'add_to_to' => array(
@@ -659,7 +665,7 @@ class addressbook_ui extends addressbook_bo
 				'allowOnMultiple' => false,
 				'group' => $group,
 				// disable for for org-views, as it needs contact-ids
-				'enabled' => !isset($this->org_views[(string) $org_view]),
+				'disableClass' => 'contact_organisation',
 			);
 		}
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
@@ -697,6 +703,8 @@ class addressbook_ui extends addressbook_bo
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.addressbook.adb_mail_vcard',
+				'disableClass' => 'contact_organisation',
+				'hideOnDisabled' => true,
 			);
 		}
 		++$group;
@@ -1067,24 +1075,20 @@ window.egw_LAB.wait(function() {
 				return false;
 
 			case 'infolog_add':
-				list($width,$height) = explode('x',egw_link::get_registry('infolog', 'add_popup'));
-				egw_framework::set_onload(
-					"egw_openWindowCentered2('".egw::link('/index.php',array(
+				egw_framework::popup(egw::link('/index.php',array(
 						'menuaction' => 'infolog.infolog_ui.edit',
 						'type' => 'task',
 						'action' => 'addressbook',
 						'action_id' => implode(',',$checked),
-					))."','_blank',$width,$height);");
+					)),'_blank',egw_link::get_registry('infolog', 'add_popup'));
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 
 			case 'calendar_add':	// add appointment for org-views, other views are handled directly in javascript
-				list($width,$height) = explode('x',egw_link::get_registry('calendar', 'add_popup'));
-				egw_framework::set_onload(
-					"egw_openWindowCentered2('".egw::link('/index.php',array(
+				egw_framework::popup(egw::link('/index.php',array(
 						'menuaction' => 'calendar.calendar_uiforms.edit',
 						'participants' => 'c'.implode(',c',$checked),
-					))."','_blank',$width,$height);");
+					)),'_blank',egw_link::get_registry('calendar', 'add_popup'));
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 
@@ -1299,7 +1303,7 @@ window.egw_LAB.wait(function() {
 		{
 			$old_state = egw_session::appsession($what,'addressbook');
 		}
-		if (!isset($this->org_views[(string) $query['org_view']]))   // we dont have an org view, unset the according col_filters
+		if (!isset($this->org_views[(string) $query['org_view']]) || strpos($query['org_view'],':') === false)   // we dont have an org view, unset the according col_filters
 		{
 			if (isset($query['col_filter']['org_name'])) unset($query['col_filter']['org_name']);
 			if (isset($query['col_filter']['adr_one_locality'])) unset($query['col_filter']['adr_one_locality']);
