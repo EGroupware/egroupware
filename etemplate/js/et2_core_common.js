@@ -30,7 +30,7 @@ if (typeof Array.prototype.indexOf == "undefined")
 /**
  * Array with all types supported by the et2_checkType function.
  */
-var et2_validTypes = ["boolean", "string", "html", "float", "integer", "any", "js", "dimension"];
+var et2_validTypes = ["boolean", "string", "rawstring", "html", "float", "integer", "any", "js", "dimension"];
 
 /**
  * Object whith default values for the above types. Do not specify array or
