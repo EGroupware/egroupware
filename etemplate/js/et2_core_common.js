@@ -40,6 +40,7 @@ var et2_validTypes = ["boolean", "string", "html", "float", "integer", "any", "j
 var et2_typeDefaults = {
 	"boolean": false,
 	"string": "",
+	"rawstring": "",	// no html-entity decoding
 	"html": "",
 	"js": null,
 	"float": 0.0,
@@ -153,7 +154,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 	}
 
 	// Check whether the given value is of the type "string"
-	if (_type == "string" || _type == "html")
+	if (_type == "string" || _type == "html" || _type == "rawstring")
 	{
 		if (typeof _val == "number")	// as php is a bit vague here, silently convert to a string
 		{
@@ -162,7 +163,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 
 		if (typeof _val == "string")
 		{
-			return _type == "html" ? _val : html_entity_decode(_val);
+			return _type == "string" ? html_entity_decode(_val) : _val;
 		}
 
 		// Handle some less common possibilities

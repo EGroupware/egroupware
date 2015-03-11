@@ -21,7 +21,7 @@
  * et2_valueWidget is the base class for et2_inputWidget - valueWidget introduces
  * the "value" attribute and automatically loads it from the "content" array
  * after loading from XML.
- * 
+ *
  * @augments et2_baseWidget
  */
 var et2_valueWidget = et2_baseWidget.extend(
@@ -37,14 +37,14 @@ var et2_valueWidget = et2_baseWidget.extend(
 		"value": {
 			"name": "Value",
 			"description": "The value of the widget",
-			"type": "string",
+			"type": "rawstring",	// no html-entity decoding
 			"default": et2_no_init
 		}
 	},
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @memberOf et2_valueWidget
 	 * @param _attrs
 	 */
