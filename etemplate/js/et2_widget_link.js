@@ -522,7 +522,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			"name": "Query callback",
 			"type": "js",
 			"default": et2_no_init,
-			"description": "Callback before query to server.  Must return true, or false to abort query."
+			"description": "Callback before query to server.  It will be passed the request & et2_link_entry objects.  Must return true, or false to abort query."
 		},
 		"select": {
 			"name": "Select callback",
@@ -921,7 +921,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		// Allow hook / tie in
 		if(this.options.query && typeof this.options.query == 'function')
 		{
-			if(!this.options.query(request, response)) return false;
+			if(!this.options.query(request, this)) return false;
 		}
 
 		if((typeof request.no_cache == 'undefined' && !request.no_cache) && request.term in this.cache) {
