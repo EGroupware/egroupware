@@ -588,11 +588,11 @@ class resources_bo
 		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
-		if (is_array($pattern) && isset($pattern['exec']) )
+		if ($options['exec'])
 		{
 			// we'll use a cache for resources info taken from database
 			static $res_info_cache = array();
-			$cal_info=$pattern['exec'];
+			$cal_info=$options['exec'];
 			if ( isset($cal_info['start']) && isset($cal_info['duration']))
 			{
 				//get a calendar objet for reservations
@@ -602,11 +602,7 @@ class resources_bo
 					$this->bocal =& CreateObject('calendar.calendar_bo');
 				}
 
-				//get the real timestamps from infos we have on the event
-				//use etemplate date widget to handle date values
-				require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.jscalendar.inc.php');
-				$jscal=& CreateObject('phpgwapi.jscalendar');
-				$startarr= $jscal->input2date($cal_info['start']['str'],$raw='raw',$day='day',$month='month',$year='year');
+				$startarr= getdate(strtotime($cal_info['start']));
 				if (isset($cal_info['whole_day'])) {
 					$startarr['hour'] = $startarr['minute'] = 0;
 					unset($startarr['raw']);
@@ -673,7 +669,7 @@ class resources_bo
 			}
 		}
 		if (isset($res_info_cache)) {
-			$show_conflict= (isset($pattern['exec']['show_conflict'])&& ($pattern['exec']['show_conflict']=='0'))? False:True;
+			$show_conflict= (isset($options['exec']['show_conflict'])&& ($options['exec']['show_conflict']=='0'))? False:True;
 			// if we have this array indexed on resource id it means non-bookable resource are removed and we are working for calendar
 			// so we'll loop on this one and not $data
 			foreach($res_info_cache as $id => $resource) {

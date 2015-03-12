@@ -1472,10 +1472,6 @@ class calendar_uiforms extends calendar_ui
 			{
 				// fix real app string
 				$content['participants']['resource']['app'] = 'resources';
-				// this will be used to get reservation information on the resource select list
-				$content['participants']['resource']['extra'] = "values2url(this.form,'start,end,duration,participants,recur_type,whole_day')".
-					"+'&exec[event_id]=".$content['id']."'"."+'&exec[show_conflict]=".
-					(($this->cal_prefs['defaultresource_sel'] == 'resources_without_conflict')? '0':'1')."'";
 			}
 			// check if current pref. is an allowed application for the user
 			if (!isset($GLOBALS['egw_info']['user']['apps'][$content['participants']['resource']['app']]))
