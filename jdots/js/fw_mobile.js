@@ -282,6 +282,9 @@
 
 			// Stores opened popups object
 			this.popups = [];
+			
+			// The size that sidebox should be opened with
+			this.sideboxSize = _sideboxStartSize;
 
 			//Bind handler to orientation change
 			$j(window).on("orientationchange",function(){
@@ -359,7 +362,7 @@
 			if (orientation === 'landscape')
 			{
 				$toolbar.css('height','auto');
-				this.toggleMenuResizeHandler(this.getToggleMenuState() === "off"?72:280);
+				this.toggleMenuResizeHandler(this.getToggleMenuState() === "off"?72:this.sideboxSize);
 				$tabs.appendTo('#egw_fw_sidemenu');
 				// Remove tabs header portriat's specific styles
 				$tabs.removeClass('tabs-header-portrait-collapsed');
@@ -368,7 +371,7 @@
 			{
 				$toolbar.css('height','60px');
 				$tabs.appendTo($toolbar);
-				this.toggleMenuResizeHandler(this.getToggleMenuState() === "off"?1:280);
+				this.toggleMenuResizeHandler(this.getToggleMenuState() === "off"?1:this.sideboxSize);
 				if (this.getToggleMenuState() === "off")
 				{
 					$tabs.addClass('tabs-header-portrait-collapsed');
@@ -415,7 +418,7 @@
 		{
 			var state = _state || this.getToggleMenuState();
 			var collapseSize = this.isLandscape()?72:1;
-			var expandSize = 280;
+			var expandSize = this.sideboxSize;
 			var $toggleMenu = $j(this.baseContainer);
 			var $tabs =  $j('.egw_fw_ui_tabs_header');
 			if (state === 'on')
@@ -492,7 +495,7 @@
 			else
 			{
 				$toggleMenu.removeClass('sidebar-toggle');
-				this.toggleMenuResizeHandler(280);
+				this.toggleMenuResizeHandler(this.sideboxSize);
 			}
 		},
 
@@ -575,7 +578,7 @@
 
 		toggleMenuResizeHandler:function(_size)
 		{
-			var size= _size || 280;
+			var size= _size || this.sideboxSize;
 			this.sideboxSizeCallback(size);
 			this.appData.browser.callResizeHandler();
 		},
@@ -867,7 +870,7 @@
 
 		$j(document).ready(function() {
 			window.framework = new fw_mobile("egw_fw_sidemenu", "egw_fw_tabs",
-					window.egw_webserverUrl, egw_setSideboxSize, 280, 'egw_fw_basecontainer', 'egw_fw_menu');
+					window.egw_webserverUrl, egw_setSideboxSize, 350, 'egw_fw_basecontainer', 'egw_fw_menu');
 			window.callManual = window.framework.callManual;
 			jQuery('#egw_fw_print').click(function(){window.framework.print();});
 			jQuery('#egw_fw_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });

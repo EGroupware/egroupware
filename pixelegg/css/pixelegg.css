@@ -4313,7 +4313,7 @@ td.message span.message {
   width: 12px;
   height: 12px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_preferences:before {
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password:before {
   background-image: url(../images/topmenu_items/password.png);
   padding-right: 20px;
   content: "";

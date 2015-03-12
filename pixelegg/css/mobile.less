@@ -104,13 +104,13 @@
 		#egw_fw_top_toolbar{
 			div.egw_fw_ui_tabs_header{
 				max-height: 60px;
-				width: 69%;
+				width: 60%;
 				margin-left: 0;
 				overflow-x: scroll;
 				position: initial;
 				white-space: nowrap;
 				position: fixed;
-				left: 30%;
+				left: 40%;
 				top: 15px;
 				height: 50px;
 				span{
@@ -134,7 +134,7 @@
 		}
 		//FW Logout
 		div#egw_fw_logout{
-			left: 235px;
+			left: 310px;
 			top: 20px;
 			width: 24px;
 			height: 24px;
@@ -144,12 +144,12 @@
 
 		//FW Print
 		div#egw_fw_print{
-			display:none; //ATM set it to not displayed
-			left: 180px;
+			left: 268px;
 			top: 20px;
 			width: 24px;
 			height: 24px;
 			background-size: 24px 24px;
+			z-index: 1;
 		}
 		.egw_fw_top_toolbar>div:hover{
 			-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -172,6 +172,11 @@
 			background-size: 32px 32px;
 			background-repeat: no-repeat;
 			z-index: 999;
+			&:hover {
+				-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+				-moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+				box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+			}
 		}
 		div#egw_fw_menu:active {
 			-webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -191,8 +196,14 @@
 				margin:0;
 				list-style-type: none;
 				li{
-					display:inline;
-					padding-right: 6px;
+					display: -webkit-inline-box;
+					display: -moz-inline-box;
+					padding-right: 0.5em;
+					&:hover {
+						-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+						-moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+						box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+					}
 				}
 				a#topmenu_home:before {
 					content: " ";
@@ -201,6 +212,7 @@
 					width: 32px;
 					height: 32px;
 					background-size: 32px 32px;
+					/*display:inline-block;*/
 					display:none;
 				}
 				a#topmenu_prefs {
@@ -238,7 +250,7 @@
 					background-size: 32px 32px;
 					display: inline-block;
 				}
-				a#topmenu_preferences:before {
+				a#topmenu_password:before {
 					background-image: url(../images/topmenu_items/mobile/password.png);
 					content: "";
 					background-repeat: no-repeat;
@@ -258,19 +270,21 @@
 					display: inline-block;
 				}
 
-				a#topmenu_search:before {
-					background-image: url(../images/topmenu_items/mobile/search.png);
-					content: "";
-					background-repeat: no-repeat;
-					width: 32px;
-					height: 32px;
-					background-size: 32px 32px;
-					display: inline-block;
-				}
-				a#topmenu_search:active {
-					transform: scale(-2);
-					-webkit-transform:scale(-2);
-					-webkit-transition: 1s ease;
+				a#topmenu_search{
+					&:before {
+						background-image: url(../images/topmenu_items/mobile/search.png);
+						content: "";
+						background-repeat: no-repeat;
+						width: 32px;
+						height: 32px;
+						background-size: 32px 32px;
+						display: inline-block;
+					}
+					&:active {
+						transform: scale(-2);
+						-webkit-transform:scale(-2);
+						-webkit-transition: 1s ease;
+					}
 				}
 			}
 		}
@@ -703,7 +717,7 @@
 				}
 			}
 		}
-		#egw_fw_logout, #egw_fw_topmenu_items{
+		#egw_fw_logout, #egw_fw_topmenu_items, #egw_fw_print{
 			display:none !important;
 		}
 	}
