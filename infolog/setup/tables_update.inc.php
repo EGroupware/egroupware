@@ -746,7 +746,7 @@ function infolog_upgrade1_9_006()
 function infolog_upgrade14_1()
 {
 	// Restore any hiding infologs
-	$GLOBALS['egw_setup']->db->query('UPDATE egw_infolog SET info_status = "not-started" WHERE info_status is null;', __LINE__, __FILE__);
-	return $GLOBALS['setup_info']['infolog']['currentver'] = '14.2';
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_status='not-started' WHERE info_status IS NULL", __LINE__, __FILE__);
 
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '14.2';
 }
