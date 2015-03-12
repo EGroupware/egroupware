@@ -1466,21 +1466,21 @@ class calendar_uiforms extends calendar_ui
 			}
 			// adding extra content for the resource link-entry widget to
 			// * select resources or addressbook as a default selection on the app selectbox based on prefs
-			$content['participants']['resource']['default_sel'] = $this->cal_prefs['defaultresource_sel'];
+			$content['participants']['resource']['app'] = $this->cal_prefs['defaultresource_sel'];
 			// * get informations from the event on the ajax callback
-			if (in_array($content['participants']['resource']['default_sel'],array('resources_conflict','resources_without_conflict')))
+			if (in_array($content['participants']['resource']['app'],array('resources_conflict','resources_without_conflict')))
 			{
 				// fix real app string
-				$content['participants']['resource']['default_sel'] = 'resources';
+				$content['participants']['resource']['app'] = 'resources';
 				// this will be used to get reservation information on the resource select list
 				$content['participants']['resource']['extra'] = "values2url(this.form,'start,end,duration,participants,recur_type,whole_day')".
 					"+'&exec[event_id]=".$content['id']."'"."+'&exec[show_conflict]=".
 					(($this->cal_prefs['defaultresource_sel'] == 'resources_without_conflict')? '0':'1')."'";
 			}
 			// check if current pref. is an allowed application for the user
-			if (!isset($GLOBALS['egw_info']['user']['apps'][$content['participants']['resource']['default_sel']]))
+			if (!isset($GLOBALS['egw_info']['user']['apps'][$content['participants']['resource']['app']]))
 			{
-				$content['participants']['resource']['default_sel'] = 'home-accounts';
+				$content['participants']['resource']['app'] = 'home-accounts';
 			}
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
