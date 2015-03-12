@@ -965,9 +965,12 @@ app.classes.calendar = AppJS.extend(
 				duration: values.duration,
 				participants: values.participants,
 				recur_type: values.recur_type,
-				whole_day: values.whole_day,
 				event_id: values.link_to.to_id, // cal_id, if available
 				show_conflict: (egw.preference('defaultresource_sel','calendar') == 'resources_without_conflict') ? '0' : '1'
+			};
+			if(values.whole_day)
+			{
+				request.options.exec.whole_date = true;
 			}
 		}
 		return true;

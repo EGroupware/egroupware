@@ -601,18 +601,14 @@ class resources_bo
 					require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_bo.inc.php');
 					$this->bocal =& CreateObject('calendar.calendar_bo');
 				}
-
-				$startarr= getdate(strtotime($cal_info['start']));
+				$start = new egw_time($cal_info['start']);
+				$startarr= getdate($start->format('ts'));
 				if (isset($cal_info['whole_day'])) {
 					$startarr['hour'] = $startarr['minute'] = 0;
-					unset($startarr['raw']);
-					$start = $this->bocal->date2ts($startarr);
-					$end = $start + 86399;
+					$start = new egw_time($startarr);
+					$end = $start->format('ts') + 86399;
 				} else {
-					$startarr['hour'] = $cal_info['start']['H'];
-					$startarr['minute'] = $cal_info['start']['i'];
-					unset($startarr['raw']);
-					$start = $this->bocal->date2ts($startarr);
+					$start = $start->format('ts');
 					$end = $start + ($cal_info['duration']);
 				}
 
