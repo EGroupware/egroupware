@@ -152,6 +152,8 @@ var fw_base =  Class.extend({
 	 * @param {bool} _hidden specifies, whether the application should be set active
 	 *   after opening the tab
 	 * @param {int} _pos
+	 *
+	 * @return {Deferred|null} Deferred Promise, will be resolved when the tab is loaded
 	 */
 	applicationTabNavigate: function(_app, _url, _hidden, _pos)
 	{
@@ -161,6 +163,9 @@ var fw_base =  Class.extend({
 
 		//Create the tab for that application
 		this.createApplicationTab(_app, _pos);
+
+		// Response
+		var deferred = new jQuery.Deferred();
 
 		if (typeof _url == 'undefined' || _url == null)
 		{
@@ -178,7 +183,8 @@ var fw_base =  Class.extend({
 			{
 				this.setActiveApp(_app);
 			}
-			return;
+			deferred.resolve();
+			return deferred.promise();
 		}
 
 		if (_app.browser == null)
@@ -191,13 +197,15 @@ var fw_base =  Class.extend({
 
 		if (typeof _hidden == 'undefined' || !_hidden)
 		{
-			_app.browser.browse(_url);
+			deferred = _app.browser.browse(_url);
 			this.setActiveApp(_app);
 		}
 		else
 		{
-			this.notifyTabChange();
+			this.notifyTabChange(deferred);
 		}
+
+		return deferred.promise();
 	},
 
 	/**
@@ -348,9 +356,11 @@ var fw_base =  Class.extend({
 		}
 	},
 	/**
+	 * Notify a tab that it was changed, update preferences
 	 *
+	 * @param {Deferred} deferred Someone is listening, and wants to know when done.
 	 */
-	notifyTabChange: function()
+	notifyTabChange: function(deferred)
 	{
 		// Call the "resize" function of the currently active app
 		if (this.activeApp)
@@ -372,6 +382,10 @@ var fw_base =  Class.extend({
 					else
 					{
 						window.focus();
+					}
+					if(deferred)
+					{
+						deferred.resolve();
 					}
 				}, 100);
 			}
@@ -722,7 +736,7 @@ var fw_base =  Class.extend({
 				this.tabsUi.showTab(_app.tab);
 
 				//Going to a new tab changes the tab state
-				this.notifyTabChange(_app.tab);
+				this.notifyTabChange();
 			}
 		}
 	},

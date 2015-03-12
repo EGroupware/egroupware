@@ -241,7 +241,13 @@ html, body {
 	background-position: center;
 	float: right;
 }
-
+.egw_fw_ui_tab_content > .loading {
+	background-image:url(images/ajax-loader.gif);
+	background-repeat: no-repeat;
+	background-position: center;
+	text-align: center;
+	line-height: 400px;
+}
 .egw_fw_ui_sidemenu_entry_header h1, .egw_fw_ui_sidemenu_marker h1{
 	display: inline;
 	font-size: 10pt;
