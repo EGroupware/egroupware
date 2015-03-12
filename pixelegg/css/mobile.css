@@ -4324,7 +4324,7 @@ td.message span.message {
   width: 12px;
   height: 12px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_preferences:before {
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password:before {
   background-image: url(../images/topmenu_items/password.png);
   padding-right: 20px;
   content: "";
@@ -6309,13 +6309,13 @@ a.textSidebox {
   }
   #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header {
     max-height: 60px;
-    width: 69%;
+    width: 60%;
     margin-left: 0;
     overflow-x: scroll;
     position: initial;
     white-space: nowrap;
     position: fixed;
-    left: 30%;
+    left: 40%;
     top: 15px;
     height: 50px;
   }
@@ -6336,7 +6336,7 @@ a.textSidebox {
     display: none;
   }
   #egw_fw_basecontainer div#egw_fw_logout {
-    left: 235px;
+    left: 310px;
     top: 20px;
     width: 24px;
     height: 24px;
@@ -6344,12 +6344,12 @@ a.textSidebox {
     z-index: 1;
   }
   #egw_fw_basecontainer div#egw_fw_print {
-    display: none;
-    left: 180px;
+    left: 268px;
     top: 20px;
     width: 24px;
     height: 24px;
     background-size: 24px 24px;
+    z-index: 1;
   }
   #egw_fw_basecontainer .egw_fw_top_toolbar > div:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -6369,6 +6369,11 @@ a.textSidebox {
     background-size: 32px 32px;
     background-repeat: no-repeat;
     z-index: 999;
+  }
+  #egw_fw_basecontainer div#egw_fw_menu:hover {
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   }
   #egw_fw_basecontainer div#egw_fw_menu:active {
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -6390,8 +6395,14 @@ a.textSidebox {
     list-style-type: none;
   }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul li {
-    display: inline;
-    padding-right: 6px;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    padding-right: 0.5em;
+  }
+  #egw_fw_basecontainer div#egw_fw_topmenu_items ul li:hover {
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home:before {
     content: " ";
@@ -6400,6 +6411,7 @@ a.textSidebox {
     width: 32px;
     height: 32px;
     background-size: 32px 32px;
+    /*display:inline-block;*/
     display: none;
   }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs:before {
@@ -6433,7 +6445,7 @@ a.textSidebox {
     background-size: 32px 32px;
     display: inline-block;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_preferences:before {
+  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_password:before {
     background-image: url(../images/topmenu_items/mobile/password.png);
     content: "";
     background-repeat: no-repeat;
@@ -6952,7 +6964,8 @@ a.textSidebox {
     display: none;
   }
   .sidebar-toggle #egw_fw_logout,
-  .sidebar-toggle #egw_fw_topmenu_items {
+  .sidebar-toggle #egw_fw_topmenu_items,
+  .sidebar-toggle #egw_fw_print {
     display: none !important;
   }
   .tabs-header-portrait-collapsed {
