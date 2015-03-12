@@ -634,7 +634,7 @@ class nextmatch_widget
 			'add'  => 'new',
 			'new'  => 'new',
 			'delete' => 'delete',
-			'cat'  => 'attach',		// add as category icon to api
+			'cat'  => 'category',		// add as category icon to api
 			'document' => 'etemplate/merge',
 			'print'=> 'print',
 			'copy' => 'copy',

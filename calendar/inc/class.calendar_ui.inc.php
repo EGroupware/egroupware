@@ -764,7 +764,7 @@ class calendar_ui
 			lang('Select a %1',lang('Category')). '"'.($cat_id && count($cat_id) > 1 ? ' multiple=true size=4':''). '>'.
 			'<option value="0">'.lang('All categories').'</option>'.
 				$this->categories->formatted_list('select','all',$cat_id,'True').
-			"</select>\n" . html::image('phpgwapi','attach','','id="calendar_cat_id_multiple"')."
+			"</select>\n" . html::image('phpgwapi','category','','id="calendar_cat_id_multiple"')."
 			<script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\"".
 			" data-link-day-url =\"".htmlspecialchars($link['day']).
 			"\" data-link-week-url=\"".htmlspecialchars($link['week']).
