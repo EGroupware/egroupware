@@ -49,3 +49,6 @@ tr.prefRow:hover .prefHelp {
 	margin-top: 10px;
 	margin-right: 5px;
 }
+#preferences-password .dialogHeader td {
+	text-align: center;
+}

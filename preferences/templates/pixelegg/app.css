@@ -66,6 +66,9 @@ textarea.prefValue {
   margin-top: 10px;
   margin-right: 5px;
 }
+#preferences-password .dialogHeader td {
+  text-align: center;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
@@ -100,7 +103,7 @@ tr.prefRow > td {
   /* otherwise help will cover bigger prefValue */
 }
 .prefHelp {
-  position: fixed;
+  position: absolute;
   background-color: #e6e6e6;
   /*border-radius: 10px;*/
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -188,7 +191,6 @@ div#preferences-settings {
 }
 div#preferences-settings div.dialogHeader {
   height: 50px;
-  font-size: 100% !important;
 }
 div#preferences-settings div.dialogHeader select#preferences-settings_appname {
   min-width: 47%;
