@@ -205,9 +205,12 @@ abstract class egw_framework
 		if (!isset(self::$csp_frame_src_attrs) && !isset($set))
 		{
 			$frame_src = array('manual.egroupware.org', 'www.egroupware.org');
-			if (($additional = $GLOBALS['egw']->hooks->single('csp-frame-src', $GLOBALS['egw_info']['flags']['currentapp'])))
+			if (($app_additional = $GLOBALS['egw']->hooks->process('csp-frame-src')))
 			{
-				$frame_src = array_unique(array_merge($frame_src, $additional));
+				foreach($app_additional as $addtional)
+				{
+					if ($addtional) $frame_src = array_unique(array_merge($frame_src, $addtional));
+				}
 			}
 			return self::csp_frame_src_attrs($frame_src);
 		}
