@@ -6998,6 +6998,9 @@ a.textSidebox {
   }
 }
 @media only screen and (max-device-width : 1024px) {
+  #egw_fw_print {
+    display: none;
+  }
   div#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
     width: 40%;
     margin-top: 5px;
