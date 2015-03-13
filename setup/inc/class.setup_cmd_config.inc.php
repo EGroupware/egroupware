@@ -199,7 +199,7 @@ class setup_cmd_config extends setup_cmd
 		'--ldap-context' => 'ldap_context',
 		'--ldap-search-filter' => 'ldap_search_filter',
 		'--ldap-group-context' => 'ldap_group_context',
-		'--sambaadmin-sid' => 'sambaadmin/sambaSID',
+		'--sambaadmin-sid' => 'sambaadmin/sambasid',
 		'--allow-remote-admin' => 'allow_remote_admin',
 		'--install-id' => 'install_id',
 		'--ads-host' => 'ads_host',

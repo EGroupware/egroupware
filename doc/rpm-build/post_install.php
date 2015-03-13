@@ -56,7 +56,7 @@ $config = array(
 	'ldap_search_filter' => '(uid=%user)',
 	'ldap_group_context' => 'ou=groups,$base',
 	'ldap_encryption_type' => '',
-	'sambaadmin/sambaSID'=> '',	// SID for sambaadmin
+	'sambaadmin/sambasid'=> '',	// SID for sambaadmin
 	'mailserver'    => '',
 	'smtpserver'    => 'localhost,25',
 	'smtp'          => '',	// see setup-cli.php --help config
@@ -300,7 +300,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 		foreach(array(
 			'domain','ldap_suffix','ldap_host','ldap_admin','ldap_admin_pw',	// non-egw params: only used for create
 			'ldap_base','ldap_root_dn','ldap_root_pw','ldap_context','ldap_search_filter','ldap_group_context',	// egw params
-			'ldap_encryption_type', 'sambaadmin/sambaSID',
+			'ldap_encryption_type', 'sambaadmin/sambasid',
 		) as $name)
 		{
 			if (strpos($value=$config[$name],'$') !== false)
@@ -636,7 +636,7 @@ function set_univention_defaults()
 		$config['account-auth'] = 'univention,ldap';
 
 		// set sambaadmin sambaSID
-		$config['sambaadmin/sambaSID'] = exec('/usr/bin/univention-ldapsearch -x "(objectclass=sambadomain)" sambaSID|sed -n "s/sambaSID: \(.*\)/\1/p"');
+		$config['sambaadmin/sambasid'] = exec('/usr/bin/univention-ldapsearch -x "(objectclass=sambadomain)" sambaSID|sed -n "s/sambaSID: \(.*\)/\1/p"');
 
 		// mailserver, see setup-cli.php --help config
 		if (($mailserver = exec('/usr/bin/univention-ldapsearch -x "(univentionAppID=mailserver_*)" univentionAppInstalledOnServer|sed -n "s/univentionAppInstalledOnServer: \(.*\)/\1/p"')) &&
