@@ -3492,42 +3492,62 @@ class emailadmin_imapbase
 			$source->openMailbox($sourceFolder);
 			$uidsToFetch = new Horde_Imap_Client_Ids();
 			$uidsToFetch->add($_messageUID);
-
 			$fquery = new Horde_Imap_Client_Fetch_Query();
-			$fquery->fullText(array('peek'=>true));
 			$fquery->flags();
+			$fquery->headerText(array('peek'=>true));
+			$fquery->fullText(array('peek'=>true));
+			$fquery->imapDate();
 			$headersNew = $source->fetch($sourceFolder, $fquery, array(
 				'ids' => $uidsToFetch,
 			));
+
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' mailheaders:'.array2string($headersNew));
 
 			if (is_object($headersNew)) {
-				$target = emailadmin_account::read($_targetProfileID)->imapServer();
-				$foldername = $target->getMailbox($_foldername);
-				//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($foldername));
 				$c=0;
 				$retUid = new Horde_Imap_Client_Ids();
-				// make sure the target folder is open and ready
-				$target->openMailbox($foldername);
 				// we copy chunks of 5 to avoid too much memory and/or server stress
+				// some servers seem not to allow/support the appendig of multiple messages. so we are down to one
 				foreach($headersNew as $id=>$_headerObject) {
 					$c++;
 					$flags = $_headerObject->getFlags(); //unseen status seems to be lost when retrieving the full message
+					$date = $_headerObject->getImapDate();
+					$currentDate =  new Horde_Imap_Client_DateTime();
+					// if the internal Date of the message equals the current date; try using the header date
+					if ($date==$currentDate)
+					{
+						$headerForPrio = array_change_key_case($_headerObject->getHeaderText(0,Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
+						//error_log(__METHOD__.__LINE__.'#'.array2string($date).'#'.array2string($currentDate).'#'.$headerForPrio['DATE']);
+						$date = new Horde_Imap_Client_DateTime($headerForPrio['DATE']);
+						//error_log(__METHOD__.__LINE__.'#'.array2string($date).'#'.array2string($currentDate).'#');
+					}
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($id));
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($flags));
 					$body = $_headerObject->getFullMsg();
-					$dataNflags[] = array('data'=>$body, 'flags'=>$flags, 'internaldate'=>$_headerObject->getImapDate());
-					if ($c==5)
+					$dataNflags[] = array('data'=>$body, 'flags'=>$flags, 'internaldate'=>$date);
+					if ($c==1)
 					{
+						$target = emailadmin_account::read($_targetProfileID)->imapServer();
+						//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($foldername));
+						$foldername = $target->getMailbox($_foldername);
+						// make sure the target folder is open and ready
+						$target->openMailbox($foldername);
 						$ret = $target->append($foldername,$dataNflags);
 						$retUid->add($ret);
 						unset($dataNflags);
-						time_nanosleep(0,500000);// sleep 500 miliseconds
+						// sleep 500 miliseconds; AS some sERVERs seem not to be capable of the load this is
+						// inflicting in them. they "reply" with an unspecific IMAP Error
+						time_nanosleep(0,500000);
 						$c=0;
 					}
 				}
 				if (isset($dataNflags))
 				{
+					$target = emailadmin_account::read($_targetProfileID)->imapServer();
+					//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($foldername));
+					$foldername = $target->getMailbox($_foldername);
+					// make sure the target folder is open and ready
+					$target->openMailbox($foldername);
 					$ret = $target->append($foldername,$dataNflags);
 					$retUid->add($ret);
 					unset($dataNflags);
