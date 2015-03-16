@@ -570,7 +570,6 @@ class addressbook_ui extends addressbook_bo
 						'icon' => 'infolog/navbar',
 						'onExecute' => 'javaScript:app.addressbook.view_infolog',
 						'allowOnMultiple' => true,
-						'disableClass' => 'contact_organisation',
 						'hideOnDisabled' => true,
 					),
 					'infolog_add' => array(
