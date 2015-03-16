@@ -91,7 +91,7 @@ function egw_getObjectManager(_id, _create, _search_depth) {
 		res = egw_globalObjectManager.getObjectById(_id, _search_depth);
 		if (res == null && _create) {
 			res = new egwActionObjectManager(_id,
-				egw_getActionManager(_id));
+				egw_getActionManager(_id,true,_search_depth));
 			egw_globalObjectManager.addObject(res);
 		}
 	}
