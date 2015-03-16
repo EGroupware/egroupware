@@ -178,7 +178,7 @@
 					{
 						$appHeader.addClass('egw_fw_mobile_popup_appHeader');
 						// Add close button only after everything is loaded
-						setTimeout(function(){$appHeader.prepend($closeBtn)},0);
+						setTimeout(function(){$appHeader.prepend($closeBtn);},0);
 					}
 				}
 
@@ -316,7 +316,7 @@
 			this.sideboxSizeCallback(_sideboxStartSize);
 
 			// Check if user runs the app in full screen or not, then prompt user base on the mode
-			var fullScreen = this.isNotFullScreen()
+			var fullScreen = this.isNotFullScreen();
 			if (fullScreen) egw.message(fullScreen,'info');
 		},
 
@@ -500,13 +500,32 @@
 		},
 
 		/**
-		 *
+		 * Load applications
+		 * 
+		 * @param {object} _apps object list of applications
 		 * @returns {undefined}
 		 */
-		loadApplications: function ()
+		loadApplications: function (_apps)
 		{
 			var restore = this._super.apply(this, arguments);
 			var activeApp = '';
+
+			/**
+			 * Check if the given app is in the navbar or not
+			 *
+			 * @param {string} appName application name
+			 * @returns {Boolean} returns true if it is in the navbar, otherwise false
+			 */
+			var app_navbar_lookup  = function (appName)
+			{
+				for(var i=0; i< _apps.length; i++)
+				{
+					// Do not show applications which are not suppose to be shown on nabvar, except home
+					if ((appName == _apps[i].name && !_apps[i]['noNavbar']) ||
+							(appName == _apps[i].name && _apps[i]['name'] == 'home')) return true;
+				}
+				return false;
+			};
 
 			//Now actually restore the tabs by passing the application, the url, whether
 			//this is an legacyApp (null triggers the application default), whether the
@@ -525,8 +544,8 @@
 				{
 					activeApp = app;
 				}
-				this.applicationTabNavigate(restore[app].app, restore[app].url, app == activeApp?false:true,
-					-1);
+				// Do not load the apps which are not in the navbar
+				if (app_navbar_lookup(app)) this.applicationTabNavigate(restore[app].app, restore[app].url, app == activeApp?false:true,-1);
 			}
 			//Set the current state of the tabs and activate TabChangeNotification.
 			this.serializedTabState = egw.jsonEncode(this.assembleTabList());
@@ -580,7 +599,7 @@
 		{
 			var size= _size || this.sideboxSize;
 			this.sideboxSizeCallback(size);
-			this.appData.browser.callResizeHandler();
+			this.activeApp.browser.callResizeHandler();
 		},
 
 		/**
@@ -805,7 +824,7 @@
 			{
 				return 'android';
 			}
-			return 'unknown'
+			return 'unknown';
 		},
 
 		/**
