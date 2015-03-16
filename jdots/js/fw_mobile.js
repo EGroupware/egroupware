@@ -395,19 +395,6 @@
 		{
 			this.arrangeToolbar(this.isLandscape()?'landscape':'portrait');
 
-			//Mail splitter needs to be docked after oriantation
-			if (this.activeApp.appName === 'mail' && egwIsMobile())
-			{
-				var splitter = etemplate2?etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailSplitter'):false;
-				if (splitter)
-				{
-					splitter.undock();
-					//Try to make sure that the docking happens after the mail index rendered by browser
-					setTimeout(function(){
-						splitter.dock();
-					},500);
-				}
-			}
 		},
 
 		/**
