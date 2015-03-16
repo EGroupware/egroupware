@@ -101,7 +101,7 @@ app.classes.infolog = AppJS.extend(
 			}
 		}
 		// Refresh handler for Addressbook CRM view
-		if (_app == 'infolog' && this.et2._inst.app == 'addressbook' && this.et2._inst.name == 'infolog.index')
+		if (_app == 'infolog' && this.et2.getInstanceManager() && this.et2.getInstanceManager().app == 'addressbook' && this.et2.getInstanceManager().name == 'infolog.index')
 		{
 			this.et2._inst.refresh(_msg, _app, _id, _type);
 		}
