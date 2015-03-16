@@ -1056,18 +1056,24 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			{
 				$GLOBALS['egw']->preferences->delete($app,$pref_name,'forced');
 				$GLOBALS['egw']->preferences->delete($app,$refresh_pref_name,'forced');
+				$GLOBALS['egw']->preferences->delete($app,$pref_name.'-size','forced');
+				$GLOBALS['egw']->preferences->delete($app,$pref_name.'-lettersearch','forced');
 				$GLOBALS['egw']->preferences->save_repository(true,'forced');
 			}
 
 			// Set columns + refresh as default for all users
 			// Columns included in submit, preference might not be updated yet
 			$cols = $value['selectcols'];
-			$GLOBALS['egw']->preferences->read();
+			$GLOBALS['egw']->preferences->read_repository(true);
 			$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols, $pref_level);
 
 			// Autorefresh
 			$refresh = $value['nm_autorefresh'];
 			$GLOBALS['egw']->preferences->add($app,$refresh_pref_name,(int)$refresh,$pref_level);
+
+			// Lettersearch
+			$lettersearch = is_array($cols) && in_array('lettersearch', $cols);
+			$GLOBALS['egw']->preferences->add($app,$pref_name.'-lettersearch',(int)$lettersearch,$pref_level);
 
 			$GLOBALS['egw']->preferences->save_repository(true,$pref_level);
 			$GLOBALS['egw']->preferences->read(true);
@@ -1077,6 +1083,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				// Clear column + refresh preference so users go back to default
 				$GLOBALS['egw']->preferences->delete_preference($app,$pref_name);
 				$GLOBALS['egw']->preferences->delete_preference($app,$pref_name.'-size');
+				$GLOBALS['egw']->preferences->delete_preference($app,$pref_name.'-lettersearch');
 				$GLOBALS['egw']->preferences->delete_preference($app,$refresh_pref_name);
 			}
 		}

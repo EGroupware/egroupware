@@ -1379,6 +1379,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 				// Set default or clear forced?
 				if(defaultCheck.get_value())
 				{
+					if(show_letters)
+					{
+						self.activeFilters.selectcols.push('lettersearch');
+					}
 					self.getInstanceManager().submit();
 				}
 				self.selectPopup = null;
