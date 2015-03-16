@@ -21,7 +21,7 @@ tr.prefRow > td {
 	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
 }
 .prefHelp {
-	position: absolute;
+	position: fixed;
 	display: none;
 	width: 98%;
 	background-color: lightyellow;
