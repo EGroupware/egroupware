@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.table_test" template="" lang="" group="0" version="">
+		<grid id="rows" order="first" sort="asc" onsort="alert">
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row part="header">
+					<description value="Header" span="all"/>
+					<description/>
+				</row>
+				<row part="footer">
+					<description value="Footer" span="all"/>
+					<description/>
+				</row>
+				<row class="th">
+					<grid-sortheader label="Col 1 Header" id="first" custom-sort="app.method"/>
+					<grid-sortheader label="Col 2 Header" id="second"/>
+					<description value="Col 3 Header"/>
+				</row>
+				<row class="row">
+					<description id="${row}[first]"/>
+					<description id="${row}[second]"/>
+					<description id="${row}[third]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

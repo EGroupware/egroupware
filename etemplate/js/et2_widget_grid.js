@@ -62,10 +62,14 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 	 */
 	init: function() {
 		// Create the table body and the table
-		this.tbody = $j(document.createElement("tbody"));
 		this.table = $j(document.createElement("table"))
 			.addClass("et2_grid");
-		this.table.append(this.tbody);
+		this.thead = $j(document.createElement("thead"))
+			.appendTo(this.table);
+		this.tfoot = $j(document.createElement("tfoot"))
+			.appendTo(this.table);
+		this.tbody = $j(document.createElement("tbody"))
+			.appendTo(this.table);
 
 		// Call the parent constructor
 		this._super.apply(this, arguments);
@@ -180,7 +184,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 				colDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
 				colDataEntry["align"] = et2_readAttrWithDefault(node, "align", "");
 				colDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
-				
+
 				// Keep any others attributes set, there's no 'column' widget
 				for(var i in node.attributes)
 				{
@@ -212,6 +216,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 				rowDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
 				rowDataEntry["valign"] = et2_readAttrWithDefault(node, "valign", "");
 				rowDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
+				rowDataEntry["part"] = et2_readAttrWithDefault(node, "part", "body");
 
 				var id = et2_readAttrWithDefault(node, "id", "");
 				if(id)
@@ -645,7 +650,23 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 		for (var y = 0; y < h; y++)
 		{
 			var row = _cells[y];
-			var tr = $j(document.createElement("tr")).appendTo(this.tbody)
+			var parent = this.tbody;
+			switch(this.rowData[y]["part"])
+			{
+				case 'header':
+					if (!this.tbody.children().length && !this.tfoot.children().length)
+					{
+						parent = this.thead;
+					}
+					break;
+				case 'footer':
+					if (!this.tbody.children().length)
+					{
+						parent = this.tfoot;
+					}
+					break;
+			}
+			var tr = $j(document.createElement("tr")).appendTo(parent)
 				.addClass(this.rowData[y]["class"]);
 
 			if (this.rowData[y].disabled)
@@ -838,6 +859,8 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 			}
 		}
 		this.managementArray = [];
+		this.thead.empty();
+		this.tfoot.empty();
 		this.tbody.empty();
 
 		// Update array managers
@@ -983,7 +1006,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 		}
 		return ids.join('_');
 	},
-	
+
 	resize: function (_height)
 	{
 		if (typeof this.options != 'undefined' && _height
@@ -1002,7 +1025,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 					this.table.height(this.table.height() + _height );
 				}
 			}
-			
+
 		}
 	}
 });
