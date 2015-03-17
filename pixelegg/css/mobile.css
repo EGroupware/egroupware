@@ -6976,6 +6976,8 @@ a.textSidebox {
     position: fixed;
     display: none;
     z-index: 999;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
     background: white;
   }
   .egw_fw_mobile_popup_container .egw_fw_mobile_popupFrame {
