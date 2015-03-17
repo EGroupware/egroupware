@@ -367,13 +367,15 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 		$this->tpl->set_var('sidebox_width', self::get_global_sidebar_width());
 		$this->tpl->set_var('sidebox_min_width', self::MIN_SIDEBAR_WIDTH);
 
-		// logout button
-		$this->tpl->set_var('title_logout', lang("Logout"));
-		$this->tpl->set_var('link_logout', egw::link('/logout.php'));
-
-		//Print button title
-		$this->tpl->set_var('title_print', lang("Print current view"));
-
+		if (!(html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile'))
+		{
+			// logout button
+			$this->tpl->set_var('title_logout', lang("Logout"));
+			$this->tpl->set_var('link_logout', egw::link('/logout.php'));
+			//Print button title
+			$this->tpl->set_var('title_print', lang("Print current view"));
+		}
+		
 		// add framework div's
 		$this->tpl->set_var($this->_get_footer());
 		$content .= $this->tpl->fp('out','framework');
@@ -443,7 +445,15 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 		switch($app_data['name'])
 		{
 			case 'logout':
-				return;	// no need for logout in topmenu on jdots
+				if (html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
+				{
+					
+				}
+				else
+				{
+					return;	// no need for logout in topmenu on jdots
+				}
+				break;
 
 			case 'manual':
 				$app_data['url'] = "javascript:callManual();";

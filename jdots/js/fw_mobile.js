@@ -534,6 +534,14 @@
 				// Do not load the apps which are not in the navbar
 				if (app_navbar_lookup(app)) this.applicationTabNavigate(restore[app].app, restore[app].url, app == activeApp?false:true,-1);
 			}
+			// Check if there is no activeApp active the Home app if exist
+			// otherwise the first app in the list
+			if (activeApp =="" || !activeApp)
+			{
+				this.setActiveApp(typeof this.applications.home !='undefined'?
+					this.applications.home:this.applications[Object.keys(this.applications)[0]]);
+			}
+
 			//Set the current state of the tabs and activate TabChangeNotification.
 			this.serializedTabState = egw.jsonEncode(this.assembleTabList());
 
@@ -876,7 +884,7 @@
 
 		$j(document).ready(function() {
 			window.framework = new fw_mobile("egw_fw_sidemenu", "egw_fw_tabs",
-					window.egw_webserverUrl, egw_setSideboxSize, 350, 'egw_fw_basecontainer', 'egw_fw_menu');
+					window.egw_webserverUrl, egw_setSideboxSize, 300, 'egw_fw_basecontainer', 'egw_fw_menu');
 			window.callManual = window.framework.callManual;
 			jQuery('#egw_fw_print').click(function(){window.framework.print();});
 			jQuery('#egw_fw_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });

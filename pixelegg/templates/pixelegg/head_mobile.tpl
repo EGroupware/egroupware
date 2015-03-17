@@ -28,8 +28,6 @@
 		{hook_after_navbar}
 		<div id="egw_fw_basecontainer">
 			<div id="egw_fw_top_toolbar">
-				<div id="egw_fw_logout" title="{title_logout}" data-logout-url="{link_logout}"></div>
-				<div id="egw_fw_print" title="{title_print}"></div>
 				<div id="egw_fw_topmenu_items">{topmenu_items}</div>
 				<div id="egw_fw_menu" title="{title_menu}">
 					<audio id="egw_fw_menuAudioTag" autobuffer="autobuffer">

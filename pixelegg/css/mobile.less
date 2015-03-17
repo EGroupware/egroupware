@@ -132,25 +132,7 @@
 				}
 			}
 		}
-		//FW Logout
-		div#egw_fw_logout{
-			left: 310px;
-			top: 20px;
-			width: 24px;
-			height: 24px;
-			background-size: 24px 24px;
-			z-index: 1;
-		}
 
-		//FW Print
-		div#egw_fw_print{
-			left: 268px;
-			top: 20px;
-			width: 24px;
-			height: 24px;
-			background-size: 24px 24px;
-			z-index: 1;
-		}
 		.egw_fw_top_toolbar>div:hover{
 			-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 			-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -184,7 +166,7 @@
 			box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 		}
 		div#egw_fw_topmenu_items{
-			width: 250px;
+			width: 280px;
 			display: inline;
 			float: left;
 			position: fixed;
@@ -198,11 +180,23 @@
 				li{
 					display: -webkit-inline-box;
 					display: -moz-inline-box;
-					padding-right: 0.5em;
+					padding:2px;
 					&:hover {
 						-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 						-moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
 						box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+					}
+				}
+				a#topmenu_logout{
+					&:before {
+						content: "";
+						background-image: url(../images/logout.png);
+						background-repeat: no-repeat;
+						width: 32px;
+						height: 32px;
+						background-size: 30px 30px;
+						display: inline-block;
+						background-position: center;
 					}
 				}
 				a#topmenu_home:before {
@@ -224,6 +218,7 @@
 						height: 32px;
 						background-size: 32px 32px;
 						display: inline-block;
+						background-position: center;
 					}
 					&:active {
 						-webkit-transform:rotate(180deg);
@@ -239,6 +234,7 @@
 					background-size: 32px 32px;
 					background-image: url(../images/topmenu_items/mobile/access.png);
 					display: inline-block;
+					background-position: center;
 				}
 
 				a#topmenu_cats:before {
@@ -249,6 +245,7 @@
 					height: 32px;
 					background-size: 32px 32px;
 					display: inline-block;
+					background-position: center;
 				}
 				a#topmenu_password:before {
 					background-image: url(../images/topmenu_items/mobile/password.png);
@@ -258,6 +255,7 @@
 					height: 32px;
 					background-size: 32px 32px;
 					display: inline-block;
+					background-position: center;
 				}
 
 				a#topmenu_manual:before {
@@ -279,11 +277,7 @@
 						height: 32px;
 						background-size: 32px 32px;
 						display: inline-block;
-					}
-					&:active {
-						transform: scale(-2);
-						-webkit-transform:scale(-2);
-						-webkit-transition: 1s ease;
+						background-position: center;
 					}
 				}
 			}
@@ -717,7 +711,7 @@
 				}
 			}
 		}
-		#egw_fw_logout, #egw_fw_topmenu_items, #egw_fw_print{
+		#egw_fw_topmenu_items {
 			display:none !important;
 		}
 	}
