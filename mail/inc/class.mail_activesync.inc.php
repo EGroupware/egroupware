@@ -732,14 +732,14 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
 		if (preg_match("^text/html^i", $ContentType))
 		{
-			if ($html_body = $mailObject->findBody('html')) $html_body->setContents($body);
-			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body));
+			if ($html_body = $mailObject->findBody('html')) $html_body->setContents($body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		else
 		{
-			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body));
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
-        //advanced debugging
+		//advanced debugging
 		// Horde SMTP Class uses utf-8 by default.
         //debugLog("IMAP-SendMail: parsed message: ". print_r($message,1));
 		if ($this->debugLevel>2) debugLog("IMAP-SendMail: MailObject:".array2string($mailObject));
@@ -820,9 +820,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					if ($this->mail->folderExists($folderName)) {
 						try
 						{
-							$this->mail->appendMessage($folderName,
-									$BCCmail.$mailObject->getMessageHeader(),
-									$mailObject->getMessageBody(),
+							$this->mail->appendMessage($folderName,$mailObject->getRaw(), null,
 									$flags);
 						}
 						catch (egw_exception_wrong_userinput $e)
@@ -1497,7 +1495,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	public function getSearchResultsMailbox($searchquery)
 	{
 		if (!is_array($searchquery)) return array();
-		if ($this->debugLevel>0); debugLog(__METHOD__.__LINE__.array2string($searchquery));
+		if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.array2string($searchquery));
 		// 19.10.2011 16:28:59 [24502] mail_activesync::getSearchResultsMailbox1408
 		//Array(
 		//	[query] => Array(
@@ -1541,7 +1539,10 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//foreach($searchquery['query'] as $k => $value) {
 		//	$query = $value;
 		//}
-		if (isset($searchquery['query'][0]['value']['FolderId'])) $folderid = $searchquery['query'][0]['value']['FolderId'];
+		if (isset($searchquery['query'][0]['value']['FolderId']))
+		{
+			$folderid = $searchquery['query'][0]['value']['FolderId'];
+		}
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
 		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]))
 		{
@@ -1565,6 +1566,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 //if (isset($searchquery['query'][0]['value'][subquery][1][value][POOMMAIL:DateReceived]));
 //$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
+		$this->_connect($account);
 		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]?'quick':'subject'),
 						 'string'=> $searchText,
 						 'status'=>'any',
@@ -1584,8 +1586,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				"searchfolderid" => $folderid,
 			);
 		}
-		debugLog(__METHOD__.__LINE__.array2string($list));
-		return $list;//array();
+		//error_log(__METHOD__.__LINE__.array2string($list));
+		//debugLog(__METHOD__.__LINE__.array2string($list));
+		return $list;//array('rows'=>$list,'status'=>1,'global_search_status'=>1);//array();
 	}
 
 	/**
