@@ -275,7 +275,7 @@
 			$j('form.et2_container[data-etemplate]').each(function(index, node){
 				var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				var currentapp = data.data.currentapp || window.egw_appName;
-				if(popup || window.opener)
+				if(popup || window.opener && !egwIsMobile())
 				{
 					// Resize popup when et2 load is done
 					jQuery(node).on('load', function() {
