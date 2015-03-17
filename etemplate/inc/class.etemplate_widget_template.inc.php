@@ -76,9 +76,9 @@ class etemplate_widget_template extends etemplate_widget
 			if (is_array(self::$request->content))
 			{
 				$expand_name = self::expand_name($name, '','','','',self::$cont);
-				if($expand_name && $expand_name != $name)
+				if ($expand_name && $expand_name != $name &&
+					($template = self::instance($expand_name, $template_set, $version, $load_via)))
 				{
-					$template = self::instance($expand_name, $template_set, $version, $load_via);
 					// Remember original, un-expanded name in case content changes while still cached
 					$template->original_name = $name;
 					return $template;
