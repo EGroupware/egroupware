@@ -90,9 +90,14 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			var file = _urls[i];
 			// check if egw_url is only path and urls contains full url incl. protocol
 			// --> prefix it with our protocol and host, as eg. splitting by just '/' will fail!
-			var need_full_url = egw_url[0] == '/' && file.substr(4) == 'http' ? window.location.protocol+'://'+window.location.host : '';
-			var parts = file.split(need_full_url+egw_url,2);
-			if (parts.length == 2) _urls[i] = parts[1];
+			var need_full_url = egw_url[0] == '/' && file.substr(0,4) == 'http' ? window.location.protocol+'//'+window.location.host : '';
+			var parts = file.split(need_full_url+egw_url);
+			if (parts.length > 1)
+			{
+				// discard protocol and host
+				parts.shift();
+				_urls[i] = parts.join(need_full_url+egw_url);
+			}
 		}
 		return _urls;
 	}
