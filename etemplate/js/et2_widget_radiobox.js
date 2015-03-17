@@ -135,7 +135,7 @@ var et2_radiobox = et2_inputWidget.extend(
 
 		return val == this.options.set_value ? this.options.set_value : null;
 	},
-	
+
 	/**
 	 * Overridden from parent so if it's required, only 1 in a group needs a value
 	 */
@@ -143,7 +143,8 @@ var et2_radiobox = et2_inputWidget.extend(
 		var ok = true;
 
 		// Check for required
-		if(this.options && this.options.needed && !this.options.readonly && (this.getValue() == null || this.getValue().valueOf() == ''))
+		if (this.options && this.options.needed && !this.options.readonly && !this.disabled &&
+			(this.getValue() == null || this.getValue().valueOf() == ''))
 		{
 			if(jQuery.isEmptyObject(this.getInstanceManager().getValues(this.getInstanceManager().widgetContainer)[this.id.replace('[]', '')]))
 			{

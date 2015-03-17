@@ -120,7 +120,7 @@ var et2_template = et2_DOMWidget.extend(
 							}
 
 							// Read the XML structure of the requested template
-							this.loadFromXML(templates[template_name]);
+							if (typeof templates[template_name] != 'undefined') this.loadFromXML(templates[template_name]);
 
 							// Update flag
 							this.loading.resolve();
