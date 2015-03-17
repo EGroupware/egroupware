@@ -238,8 +238,9 @@ var et2_arrayMgr = Class.extend(
 			// Get the content array for the current row
 			var row = this.perspectiveData.row;
 			var row_cont = this.data[row] || {};
-			var cont = this.getRoot().data;
-			var _cont = this.data;
+			// $cont is NOT root but current name-space in old eTemplate
+			var cont = this.data;//getRoot().data;
+			var _cont = this.data;// according to a grep only used in ImportExport just twice
 
 			// Check whether the expression has already been compiled - if not,
 			// try to compile it first. If an error occurs, the identifier
