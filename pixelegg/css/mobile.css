@@ -6381,6 +6381,7 @@ a.textSidebox {
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul li {
     display: -webkit-inline-box;
     display: -moz-inline-box;
+    display: inline;
     padding: 2px;
   }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul li:hover {
