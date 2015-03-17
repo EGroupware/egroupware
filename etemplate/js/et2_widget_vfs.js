@@ -764,27 +764,31 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		};
 
 		// Open the filemanager select in a popup
-		var popup = this.egw().open_link(
+		var popup = this.egw(window).open_link(
 			this.egw().link('/index.php', attrs),
 			'link_existing',
 			'680x400'
 		);
 		if(popup)
 		{
+			// Safari and IE lose reference to global variables after window close
+			// Try to get updated data before window is closed then later we trigger
+			// change event on widget
+			self.egw().window.setTimeout(function(){
+				jQuery(popup).bind('unload',function(){
+					// Set selected files to widget
+					self.value = this.selected_files;
+
+					// Update path to where the user wound up]
+					if (typeof this.etemplate2 !='undefined') self.options.path = this.etemplate2.getByApplication('filemanager')[0].widgetContainer.getArrayMgr("content").getEntry('path');
+				});
+			},1000);
+			
 			// Update on close doesn't always (ever, in chrome) work, so poll
 			var poll = self.egw().window.setInterval(
 				function() {
 					if(popup.closed) {
 						self.egw().window.clearInterval(poll);
-
-						// Update path to where the user wound up
-						var path = popup.etemplate2.getByApplication('filemanager')[0].widgetContainer.getArrayMgr("content").getEntry('path') || '';
-						self.options.path = path;
-
-						// Get the selected files
-						var files = popup.selected_files || [];
-						self.value = files;
-
 						// Fire a change event so any handlers run
 						$j(self.node).change();
 					}
