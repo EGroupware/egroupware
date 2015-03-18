@@ -216,7 +216,8 @@ class etemplate_widget_template extends etemplate_widget
 		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content'], $params[1]);
 
 		// Check for template from content, and run over it
-		$expand_name = self::expand_name($this->id, '','','','',self::$request->content);
+		// templates included via template tag have their name to load them from in attribute "template"
+		$expand_name = self::expand_name($this->id ? $this->id : $this->attrs['template'], '','','','',self::$request->content);
 		if($this->original_name)
 		{
 			$expand_name = self::expand_name($this->original_name, '','','','',self::$request->content);
@@ -224,8 +225,10 @@ class etemplate_widget_template extends etemplate_widget
 		//error_log("$this running $method_name() cname: {$this->id} -> expand_name: $expand_name");
 		if($expand_name && $expand_name != $this->id)
 		{
-			$row_template = etemplate_widget_template::instance($expand_name);
-			$row_template->run($method_name, $params, $respect_disabled);
+			if (($row_template = etemplate_widget_template::instance($expand_name)))
+			{
+				$row_template->run($method_name, $params, $respect_disabled);
+			}
 		}
 		else
 		{
