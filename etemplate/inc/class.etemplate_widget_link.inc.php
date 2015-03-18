@@ -179,10 +179,6 @@ class etemplate_widget_link extends etemplate_widget
 				$link['target'] = '_blank';
 				$link['label'] = 'Delete';
 				$link['help'] = lang('Delete this file');
-				if ($GLOBALS['egw_info']['user']['preferences']['common']['link_list_format'] != 'text')
-				{
-					$link['title'] = preg_replace('/: ([^ ]+) /',': ',$link['title']);        // remove mime-type, it's alread in the icon
-				}
 				$link['title'] = egw_vfs::decodePath($link['title']);
 				$link['icon'] = egw_link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
 				$link['download_url'] = egw_vfs::download_url($link['icon']);
