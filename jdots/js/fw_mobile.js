@@ -888,7 +888,7 @@
 					window.egw_webserverUrl, egw_setSideboxSize, 300, 'egw_fw_basecontainer', 'egw_fw_menu');
 			window.callManual = window.framework.callManual;
 			jQuery('#egw_fw_print').click(function(){window.framework.print();});
-			jQuery('#egw_fw_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });
+			jQuery('#topmenu_logout').click(function(){ window.framework.redirect(this.getAttribute('href')); return false;});
 			jQuery('form[name^="tz_selection"]').children().on('change', function(){framework.tzSelection(this.value);	return false;});
 			window.egw.link_quick_add('quick_add');
 
