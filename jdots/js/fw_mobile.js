@@ -615,10 +615,11 @@
 				// we need to wrap them all with a div and apply overflow:scroll
 				if (this.getUserAgent() === 'iOS')
 				{
+					$j(_iframe.parentNode).css({"-webkit-overflow-scrolling": "touch", "overflow-y":"scroll"});
 					var $body =  $j(_iframe.contentWindow.document).find('body');
 					if ($body.children().length >1)
 					{
-						$body.children().wrapAll('<div style="height:100%;overflow:scroll;"></div>');
+						$body.children().wrapAll('<div style="height:100%;overflow:scroll;-webkit-overflow-scrolling:touch;"></div>');
 					}
 					else if ($body.children().length == 1 && !$body.children().css('overflow') === 'scroll')
 					{
