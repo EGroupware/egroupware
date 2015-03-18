@@ -154,7 +154,7 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 	{
 		var ok = true;
 		// Check input is valid
-		if(this.options && this.options.validator && !this.options.readonly)
+		if(this.options && this.options.validator && !this.options.readonly && !this.disabled)
 		{
 			if (typeof this.options.validator == 'string')
 			{
