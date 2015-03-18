@@ -2579,7 +2579,7 @@ app.classes.mail = AppJS.extend(
 		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
 		url += '&mode=saveas';
 		var subject = dataElem? dataElem.data.subject: _elems[0].subject;
-		var filename = subject.replace(/[\f\n\t\v/\\:*#?<>\|]/g,"_")|| 'unknown';
+		var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
 		url += '&name='+encodeURIComponent(filename+'.eml');
 		url += '&mime=message'+encodeURIComponent('/')+'rfc822';
 		url += '&method=mail.mail_ui.vfsSaveMessage';
@@ -3508,7 +3508,7 @@ app.classes.mail = AppJS.extend(
 					'acc_id': acc_id,
 					'ajax': 'true'
 		});
-		
+
 		// an ugly hack for idots to show up sieve rules not in an iframe
 		// but as new link, better to remove it after get rid of idots template
 		if (typeof window.framework == 'undefined')
@@ -3739,7 +3739,7 @@ app.classes.mail = AppJS.extend(
 		// ckeditor may causes performance regression, especially on devices with
 		// very limited resources and slow proccessor.
 		if (egwIsMobile()) return;
-		
+
 		var bodyH = egw_getWindowInnerHeight();
 		var textArea = this.et2.getWidgetById('mail_plaintext');
 		var $headerSec = jQuery('.mailComposeHeaderSection');

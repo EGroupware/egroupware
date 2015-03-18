@@ -168,6 +168,11 @@ class filemanager_select
 						case 'select-dir':
 							$files = $content['path'];
 							break;
+						
+						case 'saveas':
+							// Don't trust the name the user gives, encode it
+							$content['name'] = egw_vfs::encodePathComponent($content['name']);
+							// Fall through
 
 						default:
 							$files = egw_vfs::concat($content['path'],$content['name']);
