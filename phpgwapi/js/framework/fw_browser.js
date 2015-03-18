@@ -19,9 +19,9 @@ EGW_BROWSER_TYPE_IFRAME = 1;
 EGW_BROWSER_TYPE_DIV = 2;
 "use strict";
 var fw_browser =  Class.extend({
-	
-	
-	
+
+
+
 	/**
 	 * @param {string} _app
 	 * @param {function} _heightCallback
@@ -39,7 +39,7 @@ var fw_browser =  Class.extend({
 		this.ajaxLoaderDiv = null;
 		this.loadingDeferred = null;
 	},
-	
+
 	/**
 	 * Triggers resize event on window
 	 */
@@ -57,7 +57,7 @@ var fw_browser =  Class.extend({
 			wnd.$j(wnd).trigger("resize");
 		}
 	},
-	
+
 	/**
 	* Resizes both, the contentDiv and the iframe to the size returned from the heightCallback
 	*/
@@ -75,10 +75,10 @@ var fw_browser =  Class.extend({
 			this.iframe.style.height = height;
 		}
 	},
-	
+
 	/**
 	 * Sets browser type either DIV or IFRAME
-	 * 
+	 *
 	 * @param {int} _type
 	 */
 	setBrowserType: function(_type)
@@ -122,7 +122,7 @@ var fw_browser =  Class.extend({
 			this.type = _type;
 		}
 	},
-	
+
 	/**
 	 * Sets url to browse and load the content in proper content browser
 	 * @param {string} _url
@@ -220,6 +220,9 @@ var fw_browser =  Class.extend({
 			catch(e) {}	// catch error if eg. SiteMgr runs a different origin, otherwise tab cant be closed
 		}
 
+		// Save the actual url which has been passed as parameter
+		this.currentLocation = _url;
+
 		//Set the browser type
 		if (useIframe)
 		{
@@ -258,9 +261,6 @@ var fw_browser =  Class.extend({
 		{
 			this.setBrowserType(EGW_BROWSER_TYPE_DIV);
 
-			// Save the actual url which has been passed as parameter
-			this.currentLocation = _url;
-
 			//Special treatement of "about:blank"
 			if (targetUrl == "about:blank")
 			{
@@ -286,9 +286,9 @@ var fw_browser =  Class.extend({
 		}
 		return this.loadingDeferred.promise();
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @param {type} _data
 	 * @return {undefined} return undefined if data is not from the right response
 	 */
@@ -300,7 +300,7 @@ var fw_browser =  Class.extend({
 		this.data = _data[0];
 		this.browse_finished();
 	},
-	
+
 	/**
 	 *  Get call via browse_callback in order to attaching nodes to the DOM
 	 */
@@ -333,7 +333,7 @@ var fw_browser =  Class.extend({
 			this.loadingDeferred.resolve();
 		}
 	},
-	
+
 	/**
 	 * REload the content of the browser object
 	 */
@@ -351,9 +351,9 @@ var fw_browser =  Class.extend({
 				break;
 		}
 	},
-	
+
 	/**
-	 * 
+	 *
 	 */
 	blank: function()
 	{
@@ -361,5 +361,5 @@ var fw_browser =  Class.extend({
 	}
 
 
-	
+
 });
