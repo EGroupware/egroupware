@@ -933,12 +933,13 @@ class StreamWrapper implements StreamWrapperIface
 						{
 							$lpath = Vfs::concat(self::parse_url($path,PHP_URL_PATH),'../'.$lpath);
 						}
+						$u_query = parse_url($url,PHP_URL_QUERY);
 						$url = Vfs::PREFIX.$lpath;
 						if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
 						// try reading the stat of the link
 						if (($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1)))
 						{
-							if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
+							if(isset($stat['url'])) $url = $stat['url'] .($u_query ? '?'.$u_query:'');	// if stat returns an url use that, as there might be more links ...
 							self::symlinkCache_add($path,$url);
 						}
 					}
@@ -973,10 +974,11 @@ class StreamWrapper implements StreamWrapperIface
 			unset($hook_data);
 			$stat = self::url_stat($path,$flags,false);
 		}
+		$query = parse_url($url, PHP_URL_QUERY);
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
 		{
 			$stat = self::check_symlink_components($path,$flags,$url);
-			if ($stat && isset($stat['url'])) self::symlinkCache_add($path,$stat['url']);
+			if ($stat && isset($stat['url']) && !$query) self::symlinkCache_add($path,$stat['url']);
 		}
 		elseif(is_array($stat) && !isset($stat['url']))
 		{
@@ -986,6 +988,11 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			$stat['mode'] &= ~0222;
 		}
+		if($query && strpos($stat['url'],'?'.$query)===false)
+		{
+			$stat['url'] .= '?'.$query;
+		}
+
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components) returning ".array2string($stat));
 
 		return $stat;
