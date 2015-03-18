@@ -128,9 +128,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {object|string} extra extra url parameters to append as object or string
 		 * @param {string} target target of window to open
 		 * @param {string} target_app target application to open in that tab
+		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+		 * - This option only makes sense to be enabled when the open_link requested without user interaction
 		 * @memberOf egw
 		 */
-		open: function(id_data, app, type, extra, target, target_app)
+		open: function(id_data, app, type, extra, target, target_app, _check_popup_blocker)
 		{
 			// Log for debugging purposes - special log tag 'navigation' always
 			// goes in user log, if user log is enabled
@@ -229,7 +231,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 				popup = app_registry[type+'_popup'];
 			}
-			return this.open_link(this.link(url, params), target, popup, target_app);
+			return this.open_link(this.link(url, params), target, popup, target_app, _check_popup_blocker);
 		},
 
 		/**
@@ -343,7 +345,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
 			// inject egw object
-			windowID.egw = _wnd.egw;
+			if (windowID) windowID.egw = _wnd.egw;
 
 			// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
 			if (_returnID !== false) return windowID;
