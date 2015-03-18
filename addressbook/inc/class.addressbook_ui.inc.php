@@ -831,11 +831,9 @@ window.egw_LAB.wait(function() {
 		if(!is_array($org)) $org = array($org);
 		foreach($org as $org_name)
 		{
-			error_log("Org: $org_name");
 			$query['org_view'] = $org_name;
 			$checked = array();
 			$count = $this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
-			error_log("Count: $count " . array2string($checked));
 			if($checked[0])
 			{
 				$org_contacts = array_merge($org_contacts,$checked);
