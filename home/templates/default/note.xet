@@ -4,7 +4,7 @@
 <overlay>
 	<template id="home.note" template="" lang="" group="0" version="1.9.001">
 		<htmlarea id="note"/>
-		<hbox id="button">
+		<hbox id="button" class="dialogFooterToolbar">
 			<button statustext="Saves this entry" label="Save" id="save" image="save" background_image="1"/>
 			<button statustext="Apply the changes" label="Apply" id="apply" image="apply" background_image="1"/>
 			<button statustext="leave without saveing the entry" label="Cancel" id="cancel" onclick="window.close();" image="cancel" background_image="1"/>
@@ -12,6 +12,9 @@
 		<styles>
 			.home_note_portlet .et2_container > div {
 				overflow: auto;
+			}
+			.home_note_portlet .et2_container div.dialogFooterToolbar {
+				display:none;
 			}
 		</styles>
 	</template>
