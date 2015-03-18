@@ -156,7 +156,8 @@ var et2_arrayMgr = Class.extend(
 
 		if (this.perspectiveData.key != null)
 		{
-			_path.unshift(this.perspectiveData.key);
+			// prepend components of this.perspectiveData.key to path, can be more then one eg. "nm[rows]"
+			_path = this.perspectiveData.key.replace(/]/g, '').split('[').concat(_path);
 		}
 
 		if (this.parentMgr != null)
