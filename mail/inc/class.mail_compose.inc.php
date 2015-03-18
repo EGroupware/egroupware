@@ -1015,24 +1015,14 @@ class mail_compose
 		// default => fetches the default, which is standard behavior
 		if (!empty($_REQUEST['signature']) && (strtolower($_REQUEST['signature']) == 'no' || strtolower($_REQUEST['signature']) == 'system'))
 		{
-			$presetSig = (strtolower($_REQUEST['signature']) == 'no' ? -2 : -1);
-		}
-		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['mailidentity'])) $presetSig = (int)$content['mailidentity'];
-		//if (($suppressSigOnTop || $content['isDraft']) && !empty($content['stationeryID'])) $presetStationery = $content['stationeryID'];
-		$presetId = NULL;
-		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['mailaccount'])) $presetId = (int)$content['mailaccount'];
-		if (!empty($sigPref[$this->mail_bo->profileID]) && (empty($presetSig) || $presetSig==-1 || empty($content['mailidentity']) || $content['mailidentity']==-1)) $presetSig=$sigPref[$this->mail_bo->profileID];
-
-		// fetch the signature, prepare the select box, ...
-		if (empty($content['mailidentity'])) {
-			$content['mailidentity'] = $acc['ident_id'];
+			$content['mailidentity'] = $presetSig = (strtolower($_REQUEST['signature']) == 'no' ? -2 : -1);
 		}
 
 		$disableRuler = false;
 		//_debug_array(($presetSig ? $presetSig : $content['mailidentity']));
 		try
 		{
-			$signature = emailadmin_account::read_identity(($presetSig ? $presetSig : $content['mailidentity']),true);
+			$signature = emailadmin_account::read_identity($content['mailidentity'] ? $content['mailidentity'] : $presetSig,true);
 		}
 		catch (Exception $e)
 		{
@@ -1146,10 +1136,6 @@ class mail_compose
 			}
 			unset($account);
 		}
-
-		// signature stuff set earlier
-		if ($presetSig) $content['mailidentity'] = $presetSig;
-		// end signature stuff
 
 		//$content['bcc'] = array('kl@stylite.de','kl@leithoff.net');
 		// address stuff like from, to, cc, replyto
@@ -3110,27 +3096,34 @@ class mail_compose
 	 */
 	function setDefaults($content=array())
 	{
-		// retrieve the signature accociated with the identity associated with the current account, rather than the default
-		$id = ($this->mail_bo->icServer->ident_id?$this->mail_bo->icServer->ident_id:$this->mail_bo->getDefaultIdentity());
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
+		// if there's not already an identity selected for current account
+		if (empty($content['mailidentity']))
 		{
-			$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
-			if (!empty($sigPref[$this->mail_bo->profileID]) && $sigPref[$this->mail_bo->profileID]>0)
+			// check if there a preference / previous selection of identity for current account
+			if (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
 			{
-				try
+				$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
+				if (!empty($sigPref[$this->mail_bo->profileID]) && $sigPref[$this->mail_bo->profileID]>0)
 				{
-					$id = $sigPref[$this->mail_bo->profileID];
-				}
-				catch (Exception $e)
-				{
-					unset($e);
-					unset($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'][$this->mail_bo->profileID]);
+					$content['mailidentity'] = $sigPref[$this->mail_bo->profileID];
 				}
 			}
+			// if we have no preference search for first identity with non-empty signature
+			if (empty($content['mailidentity']))
+			{
+				$default_identity = null;
+				foreach(emailadmin_account::identities($this->mail_bo->profileID, true, 'params') as $identity)
+				{
+					if (!isset($default_identity)) $default_identity = $identity['ident_id'];
+					if (!empty($identity['ident_signature']))
+					{
+						$content['mailidentity'] = $identity['ident_id'];
+						break;
+					}
+				}
+			}
+			if (empty($content['mailidentity'])) $content['mailidentity'] = $default_identity;
 		}
-
-		if ((!isset($content['mailaccount']) || empty($content['mailaccount'])) && $id) $content['mailidentity'] = $id;
-		if (!isset($content['mailidentity']) || empty($content['mailidentity'])) $content['mailidentity'] = $id;
 		if (!isset($content['mimeType']) || empty($content['mimeType']))
 		{
 			$content['mimeType'] = 'html';
