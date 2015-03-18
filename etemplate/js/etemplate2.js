@@ -490,15 +490,19 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				// Automatically set focus to first visible input for popups
 				if(this.widgetContainer._egw.is_popup() && $j('[autofocus]',this.DOMContainer).focus().length == 0)
 				{
-					$j('input:visible',this.DOMContainer)
+					var $input = $j('input:visible',this.DOMContainer)
 						// Date fields open the calendar popup on focus
 						.not('.et2_date')
 						.filter(function() {
 						// Skip inputs that are out of tab ordering
 						$this = $j(this);
 						return !$this.attr('tabindex') || $this.attr('tabIndex')>=0;
-					}).first().focus();
-				};
+					}).first();
+					
+					// mobile device, focus only if the field is empty (usually means new entry)
+					// should focus always for non-mobile one
+					if (egwIsMobile() && $input.val() == "" || !egwIsMobile()) $input.focus();
+				}
 
 				// Tell others about it
 				if(typeof _callback == "function")
