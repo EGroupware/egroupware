@@ -149,8 +149,22 @@ var et2_number_ro = et2_textbox_ro.extend(
 	attributes: {
 		min: { ignore: true},
 		max: { ignore: true},
-		precision: { ignore: true},
+		precision: {
+			name: "Precision",
+			type: "integer",
+			default: et2_no_init,
+			description: "Allowed precision - # of decimal places",
+			ignore: true
+		},
 		value: { type: "float" }
+	},
+	set_value: function(_value)
+	{
+		if (typeof this.options.precision != 'undefined' && ""+_value != "")
+		{
+			_value = parseFloat(_value).toFixed(this.options.precision);
+		}
+		this._super.call(this, _value);
 	}
 });
 et2_register_widget(et2_number_ro, ["int_ro", "integer_ro", "float_ro"]);
