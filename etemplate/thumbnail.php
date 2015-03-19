@@ -225,7 +225,7 @@ function gen_dstfile($src, $maxsize, $height=null, $width=null, $minsize=null)
  * TODO: As this is a general purpose function, it might probably be moved
  *   to some other php file or an "image utils" class.
  */
-function get_scaled_image_size($w, $h, $maxw, $maxh, $minw, $minh)
+function get_scaled_image_size($w, $h, $maxw, $maxh, $minw=0, $minh=0)
 {
 	//Scale will contain the factor by which the image has to be scaled down
 	$scale = 1.0;
