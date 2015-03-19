@@ -74,6 +74,12 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 			"type": "string",
 			"default": "",
 			"description": "Weither or not browser should autocomplete that field: 'on', 'off', 'default' (use attribute from form)"
+		},
+		onkeypress: {
+			name: "onKeypress",
+			type: "js",
+			default: et2_no_init,
+			description: "JS code or app.$app.$method called when key is pressed, return false cancels it."
 		}
 	},
 
@@ -137,6 +143,21 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 		{
 			this.set_value(this.options.value);
 		}
+		if (this.options.onkeypress && typeof this.options.onkeypress == 'function')
+		{
+			var self = this;
+			this.input.keypress(function(_ev)
+			{
+				return self.options.onkeypress.call(this, _ev, self);
+			});
+		}
+	},
+
+	destroy: function() {
+		var node = this.getInputNode();
+		if (node) $j(node).unbind("keypress");
+
+		this._super.apply(this, arguments);
 	},
 
 	getValue: function()
