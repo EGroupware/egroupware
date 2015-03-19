@@ -279,7 +279,7 @@
 			// call fw_base constructor, in order to build basic DOM elements
 			this._super.apply(this,arguments);
 			var self = this;
-
+			
 			// Stores opened popups object
 			this.popups = [];
 			
@@ -315,9 +315,17 @@
 
 			this.sideboxSizeCallback(_sideboxStartSize);
 
-			// Check if user runs the app in full screen or not, then prompt user base on the mode
+			// Check if user runs the app in full screen or not,
+			// then prompt user base on the mode, and if the user
+			// dismisses the message do not show it again
 			var fullScreen = this.isNotFullScreen();
-			if (fullScreen) egw.message(fullScreen,'info');
+			if (fullScreen && !egw.getLocalStorageItem('fw_mobile', 'fullscreen_message')){
+				egw.message(fullScreen,'info');
+				jQuery('#egw_message').on('click', function(e){
+					egw.setLocalStorageItem('fw_mobile','fullscreen_message', 'true');
+					return true;
+				});
+			}
 		},
 
 		/**
