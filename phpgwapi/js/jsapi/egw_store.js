@@ -80,6 +80,43 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 		removeSessionItem: function(application, key) {
 			key = uniqueKey(application, key);
 			return _wnd.sessionStorage.removeItem(key);
+		},
+		
+		/**
+		 * Set an item to localStorage
+		 * 
+		 * @param {string} application an application name or a prefix
+		 * @param {string} item 
+		 * @param {any} value
+		 * @returns {undefined} returns undefined
+		 */
+		setLocalStorageItem: function(application, item, value){
+			item = mapKey (application, item);
+			return localStorage.setItem(item,value);
+		},
+		
+		/**
+		 * Get an item from localStorage 
+		 * 
+		 * @param {string} application an application name or prefix
+		 * @param {stirng} item an item name stored in localStorage
+		 * @return {string|null} reutrns requested item value otherwise null
+		 */
+		getLocalStorageItem: function(application, item){
+			item = mapKey(application, item);
+			return localStorage.getItem(item);
+		},
+		
+		/**
+		 * Remove an item from localStorage
+		 * 
+		 * @param {string} application application name or prefix
+		 * @param {string} item an item name to remove
+		 * @return {undefined} returns undefined 
+		 */
+		removeLocalStorageItem: function (application, item){
+			item = mapKey(application, item);
+			return localStorage.removeItem(item);
 		}
 	};
 });
