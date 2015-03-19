@@ -94,7 +94,14 @@ var et2_number = et2_textbox.extend(
 		this.input.addClass("et2_textbox");
 		// bind invalid event to change, to trigger our validation
 		this.input.on('invalid', jQuery.proxy(this.change, this));
-
+		if (this.options.onkeypress && typeof this.options.onkeypress == 'function')
+		{
+			var self = this;
+			this.input.keypress(function(_ev)
+			{
+				return self.options.onkeypress.call(this, _ev, self);
+			});
+		}
 		this.setDOMNode(this.input[0]);
 	},
 
