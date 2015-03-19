@@ -649,7 +649,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			// Translate the options
 			if(!this.options.no_lang)
 			{
-				if (typeof _options[key] === 'object')
+				if (typeof _options[key] === 'object' && _options[key] !== null)
 				{
 					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
 					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
@@ -660,7 +660,7 @@ var et2_selectbox = et2_inputWidget.extend(
 				}
 			}
 
-			if (typeof _options[key] === 'object' && _options[key] != null)
+			if (typeof _options[key] === 'object' && _options[key] !== null)
 			{
 				// Optgroup
 				if(typeof _options[key]["label"] == 'undefined' && typeof _options[key]["title"] == "undefined")
@@ -677,7 +677,7 @@ var et2_selectbox = et2_inputWidget.extend(
 
 					for(var sub in _options[key])
 					{
-						if (typeof _options[key][sub] === 'object')
+						if (typeof _options[key][sub] === 'object' && _options[key][sub] !== null)
 						{
 							this._appendOptionElement(sub,
 								_options[key][sub]["label"] ? _options[key][sub]["label"] : "",
