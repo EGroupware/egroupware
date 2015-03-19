@@ -88,6 +88,7 @@ class mail_ui
 		'from'		=> 'from',			// lang('from')
 		'to'		=> 'to',			// lang('to')
 		'cc'		=> 'cc',			// lang('cc')
+		'text'		=> 'whole message'	// lang('whole message')
 	);
 
 	/**
