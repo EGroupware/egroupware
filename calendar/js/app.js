@@ -940,6 +940,43 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * In edit popup, search for calendar participants.
+	 * Resources need to have the start & duration (etc.)
+	 * passed along in the query.
+	 *
+	 * @param {Object} request
+	 * @param {et2_link_entry} widget
+	 *
+	 * @returns {boolean} True to continue with the search
+	 */
+	edit_participant_search: function(request, widget)
+	{
+		if(widget.app_select.val() == 'resources')
+		{
+			// Resources search is expecting exec
+			var values = widget.getInstanceManager().getValues(widget.getRoot());
+			if(typeof request.options != 'object' || request.options == null)
+			{
+				request.options = {};
+			}
+			request.options.exec = {
+				start: values.start,
+				end: values.end,
+				duration: values.duration,
+				participants: values.participants,
+				recur_type: values.recur_type,
+				event_id: values.link_to.to_id, // cal_id, if available
+				show_conflict: (egw.preference('defaultresource_sel','calendar') == 'resources_without_conflict') ? '0' : '1'
+			};
+			if(values.whole_day)
+			{
+				request.options.exec.whole_date = true;
+			}
+		}
+		return true;
+	},
+	
+	/**
 	 * Handles to select freetime, and replace the selected one on Start,
 	 * and End date&time in edit calendar entry popup.
 	 *

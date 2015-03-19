@@ -112,7 +112,7 @@
 						<menulist>
 							<menupopup type="select-account" statustext="User or group" id="account" multiple="true" no_lang="true" tags="true" account_type="both" empty_label="User or group" class="et2_fullWidth" width="99%"/>
 						</menulist>
-						<link-entry id="resource" options="@cal_resources"/>
+						<link-entry id="resource" options="@cal_resources" query="app.calendar.edit_participant_search"/>
 					</vbox>
 					<vbox span="2" valign="middle">
 						<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
