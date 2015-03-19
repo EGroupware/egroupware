@@ -158,6 +158,57 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
+	 * Open the calender to view the selected contacts
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _senders
+	 */
+	view_calendar: function(_action, _senders)
+	{
+		var extras = {
+			filter: 'all',
+			owner: []
+		};
+		var orgs = [];
+		for(var i = 0; i < _senders.length; i++)
+		{
+			// Remove UID prefix for just contact_id
+			var ids = _senders[i].id.split('::');
+			ids.shift();
+			ids = ids.join('::');
+
+			// Orgs need to get all the contact IDs first
+			if (ids.substr(0,9) == 'org_name:')
+			{
+				orgs.push(ids);
+			}
+			else
+			{
+				extras.owner.push('c'+ids);
+			}
+		}
+		
+		if(orgs.length > 0)
+		{
+			// Get organisation contacts, then show infolog list
+			this.egw.json('addressbook.addressbook_ui.ajax_organisation_contacts',
+				[orgs],
+				function(contacts) {
+					for(var i = 0; i < contacts.length; i++)
+					{
+						extras.owner.push('c'+contacts[i]);
+					}
+					extras.owner = extras.owner.join(',');
+					this.egw.open('','calendar','list',extras,'calendar');
+				},this,true,this
+			).sendRequest();
+		}
+		else
+		{
+			extras.owner = extras.owner.join(',');
+			egw.open('', 'calendar', 'list', extras, 'calendar');
+		}
+	},
+	/**
 	 * Add appointment or show calendar for selected contacts, call default nm_action after some checks
 	 *
 	 * @param _action

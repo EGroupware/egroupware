@@ -579,15 +579,16 @@ class addressbook_ui extends addressbook_bo
 					'calendar_view' => array(
 						'caption' => 'Show',
 						'icon' => 'view',
-						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id&ajax=true',
-						'targetapp' => 'calendar',	// open in calendar tab
+						'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=c$id',
+						'onExecute' => 'javaScript:app.addressbook.view_calendar',
+						'targetapp' => 'calendar',	// open in calendar tab,
+						'hideOnDisabled' => true,
 					),
 					'calendar_add' => array(
 						'caption' => 'Add appointment',
 						'icon' => 'new',
-						'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=c$id',
 						'popup' => egw_link::get_registry('calendar', 'add_popup'),
-						'onExecute' => 'javaScript:app.addressbook.add_cal',	// call server for org-view only
+						'onExecute' => 'javaScript:app.addressbook.add_cal',
 					),
 				),
 			);
@@ -1076,7 +1077,7 @@ window.egw_LAB.wait(function() {
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 
-			case 'calendar_view':	// show calendar for org-views, other views are handled directly in javascript
+			case 'calendar_view':	// show calendar for org-views, although all views are handled directly in javascript
 				list($width,$height) = explode('x',egw_link::get_registry('calendar', 'add_popup'));
 				egw::redirect_link('/index.php',array(
 					'menuaction' => 'calendar.calendar_uiviews.index',
