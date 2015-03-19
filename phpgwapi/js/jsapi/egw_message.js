@@ -100,7 +100,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					.attr('id','egw_message')
 					.text(_msg)
 					.addClass(_type+'_message')
-					.click(function() {this.remove();})
+					.click(function() {$j(this).remove();})
 					.css('position', 'absolute');
 				parent.prepend(msg_div);
 
