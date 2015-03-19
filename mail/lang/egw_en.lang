@@ -484,6 +484,7 @@ when sending messages	mail	en	when sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder View Schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
+whole message	mail	en	whole message
 with message:	mail	en	With message:
 write	mail	en	write
 wrote	mail	en	wrote
