@@ -1278,7 +1278,14 @@ class mail_compose
 		$etpl->setElementAttribute('folder','autocomplete_params',array('mailaccount'=>$content['mailaccount']));
 		// join again mailaccount and identity
 		$content['mailaccount'] .= ':'.$content['mailidentity'];
-
+		
+		// Resolve distribution list before send content to client
+		foreach(array('to', 'cc', 'bcc', 'replyto')  as $f)
+		{
+			if (is_array($content[$f])) $content[$f]= self::resolveEmailAddressList ($content[$f]);
+		}
+		
+		$content['to'] = self::resolveEmailAddressList($content['to']);
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
 	}
@@ -2551,7 +2558,7 @@ class mail_compose
 				if (!empty($addr)) $_emailAddressList[]=$addr;
 			}
 		}
-		return $_emailAddressList;
+		return array_values($_emailAddressList);
 	}
 
 	/**
