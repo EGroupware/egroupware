@@ -2262,6 +2262,11 @@ class calendar_uiviews extends calendar_ui
 		$users = $resources = array();
 		foreach(explode(',',$this->owner) as $user)
 		{
+			if($user === '0')
+			{
+				// 0 means current user
+				$user = $this->user;
+			}
 			if (!is_numeric($user))		// resources
 			{
 				$resources[$user] = $this->bo->participant_name($user);
