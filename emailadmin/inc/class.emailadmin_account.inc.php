@@ -704,7 +704,7 @@ class emailadmin_account implements ArrayAccess
 				$err = null;
 				$value = $merge->merge_string($value,
 					(array)accounts::id2name($account_id, 'person_id'),
-					$err, $name == 'ident_signature' ? 'text/html' : 'text/plain');
+					$err, $name == 'ident_signature' ? 'text/html' : 'text/plain', null, 'utf-8');
 			}
 		}
 		//error_log(__METHOD__."(".array2string($identity).") returning ".array2string($to_replace));
