@@ -1498,7 +1498,13 @@ class emailadmin_account implements ArrayAccess
 						$account = array_merge($account, emailadmin_credentials::from_session($account));
 					}
 				}
-				if (empty($account['ident_email']) && !empty($account['acc_imap_username']))
+				// fill an empty ident_realname or ident_email of current user with data from user account
+				if ($replace_placeholders && (!isset($account_id) || $account_id == $GLOBALS['egw_info']['user']['acount_id']))
+				{
+					if (empty($account['ident_realname'])) $account['ident_realname'] = $GLOBALS['egw_info']['user']['account_fullname'];
+					if (empty($account['ident_email'])) $account['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];
+				}
+				if (empty($account['ident_email']) && !empty($account['acc_imap_username']) && strpos($account['acc_imap_username'], '@') !== false)
 				{
 					$account['ident_email'] = $account['acc_imap_username'];
 				}
