@@ -210,13 +210,18 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			$form_name = $matches[1];
 		}
+		// happens with autorepeated grids: this->id='some[$row_cont[thing]][else]' --> just use 'else'
+		elseif (preg_match('/\$row.*\[([^]]+)\]$/', $this->id, $matches))
+		{
+			$form_name = $matches[1];
+		}
 		else
 		{
 			$form_name = self::form_name($cname, $this->id, $expand);
 		}
 		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
 		$type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;
-		if ($type != 'select')
+		if ($type != 'select' && $type != 'menupopup')
 		{
 			// Check selection preference, we may be able to skip reading some data
 			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
@@ -228,22 +233,30 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$this->attrs['readonly'] = true;
 			}
 
-			// += to keep further options set by app code
+			// adding type specific options here, while keep further options set by app code
+			// we need to make sure to run only once for auto-repeated rows, because
+			// array_merge used to keep options from app would otherwise add
+			// type-specific ones multiple time (and of cause better performance)
 			$no_lang = null;
-			self::$request->sel_options[$form_name] += self::typeOptions($this,
+			static $form_names_done = array();
+			if (!isset($form_names_done[$form_name]) &&
+				($type_options = self::typeOptions($this,
 				// typeOptions thinks # of rows is the first thing in options
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
-				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name);
-
-			// if no_lang was modified, forward modification to the client
-			if ($no_lang != $this->attr['no_lang'])
+				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name)))
 			{
-				self::setElementAttribute($form_name, 'no_lang', $no_lang);
+				self::fix_encoded_options($type_options);
+
+				self::$request->sel_options[$form_name] = array_merge(self::$request->sel_options[$form_name], $type_options);
+
+				// if no_lang was modified, forward modification to the client
+				if ($no_lang != $this->attr['no_lang'])
+				{
+					self::setElementAttribute($form_name, 'no_lang', $no_lang);
+				}
 			}
+			$form_names_done[$form_name] = true;
 		}
-		// need to run that here manually for select-* and customfield widgets
-		// (automatic run through etemplate_new::exec() already happend)
-		self::fix_encoded_options(self::$request->sel_options[$form_name]);
 
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
 		$options = (isset(self::$request->sel_options[$form_name]) ? $form_name : $this->id);
