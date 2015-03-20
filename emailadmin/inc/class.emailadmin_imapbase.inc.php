@@ -772,10 +772,11 @@ class emailadmin_imapbase
 	static function generateIdentityString($identity, $fullString=true)
 	{
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($identity));
-		if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
+		//if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
 		// not set? -> use default, means full display of all available data
-		if (!isset(self::$mailConfig['how2displayIdentities'])) self::$mailConfig['how2displayIdentities']='';
-		switch (self::$mailConfig['how2displayIdentities'])
+		//if (!isset(self::$mailConfig['how2displayIdentities'])) self::$mailConfig['how2displayIdentities']='';
+		$how2displayIdentities = '';
+		switch ($how2displayIdentities)
 		{
 			case 'email';
 				//$retData = str_replace('@',' ',$identity->emailAddress).($fullString===true?' <'.$identity->emailAddress.'>':'');

@@ -2205,9 +2205,10 @@ class mail_compose
 		if($_formData['disposition']=='on') {
 			$_mailObject->addHeader('Disposition-Notification-To', $_identity['ident_email']);
 		}
-		if(!empty($_identity->organization) && (mail_bo::$mailConfig['how2displayIdentities'] == '' || mail_bo::$mailConfig['how2displayIdentities'] == 'orgNemail')) {
-			$_mailObject->addHeader('Organization', $_identity['ident_org']);
-		}
+		//error_log(__METHOD__.__LINE__.' Organization:'.array2string($_identity));
+		//if(!empty($_identity['ident_org'])) {
+		//	$_mailObject->addHeader('Organization', $_identity['ident_org']);
+		//}
 
 		// Expand any mailing lists
 		foreach(array('to', 'cc', 'bcc', 'replyto')  as $field)
