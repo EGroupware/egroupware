@@ -11,23 +11,6 @@
 <!-- END header -->
 <!-- BEGIN body -->
    <tr class="th">
-    <td colspan="2"><b>{lang_General}</b></td>
-   </tr>
-   <tr class="row_on">
-    <td>
-	 <b>{lang_display_of_identities}</b><br/>
-	 {lang_how_should_the_available_information_on_identities_be_displayed}
-	</td>
-    <td>
-	 <select name="newsettings[how2displayIdentities]">
-      <option value=""{selected_how2displayIdentities_full}>{lang_all_available_info}</option>
-      <option value="email"{selected_how2displayIdentities_email}>{lang_emailaddress}</option>
-      <option value="nameNemail"{selected_how2displayIdentities_nameNemail}>{lang_name} &amp; {lang_emailaddress}</option>
-      <option value="orgNemail"{selected_how2displayIdentities_orgNemail}>{lang_organisation} &amp; {lang_emailaddress}</option>
-     </select>
-	</td>
-   </tr>
-   <tr class="th">
 	   <td colspan="2"><b>{lang_Deny_certain_groups_access_to_following_features}</b></td>
    </tr>
    <tr class="row_on">
