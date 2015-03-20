@@ -52,6 +52,7 @@ div.et2_hbox > * {
   text-align: left;
   white-space: normal;
   padding-right: 5px;
+  display: inline-block;
 }
 div.et2_hbox > *:empty {
   padding-right: 0;
@@ -139,7 +140,7 @@ div.et2_hbox > div {
 .et2_split.print > * {
 	position: relative !important;
 }
-  
+
 /**
  * Label widget, and labels for other widgets
  */
@@ -1907,7 +1908,7 @@ span.et2_egw_action_ddHelper_itemsCnt {
 	background-color: red;
 }
 div.flash-click-to-play-dialog {
-	
+
 	width:200px !important;
 	height: 200px !important;
 	/*opacity:0;*/
