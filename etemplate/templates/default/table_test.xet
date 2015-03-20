@@ -13,14 +13,14 @@
 					<description value="Header" span="all"/>
 					<description/>
 				</row>
-				<row part="footer">
-					<description value="Footer" span="all"/>
-					<description/>
-				</row>
-				<row class="th">
+				<row class="th" part="header">
 					<grid-sortheader label="Col 1 Header" id="first" custom-sort="app.method"/>
 					<grid-sortheader label="Col 2 Header" id="second"/>
 					<description value="Col 3 Header"/>
+				</row>
+				<row part="footer">
+					<description value="Footer" span="all"/>
+					<description/>
 				</row>
 				<row class="row">
 					<description id="${row}[first]"/>

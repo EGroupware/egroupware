@@ -498,7 +498,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 						$this = $j(this);
 						return !$this.attr('tabindex') || $this.attr('tabIndex')>=0;
 					}).first();
-					
+
 					// mobile device, focus only if the field is empty (usually means new entry)
 					// should focus always for non-mobile one
 					if (egwIsMobile() && $input.val() == "" || !egwIsMobile()) $input.focus();
@@ -616,23 +616,25 @@ etemplate2.prototype.autocomplete_fixer = function ()
  * @param {(et2_button|string)} button button widget or string with id
  * @param {boolean} async true: do an asynchronious submit, default is synchronious
  * @param {boolean} no_validation - Do not do individual widget validation, just submit their current values
+ * @param {et2_widget|undefined} _container container to submit, default whole template
  * @return {boolean} true if submit was send, false if eg. validation stoped submit
  */
-etemplate2.prototype.submit = function(button, async, no_validation)
+etemplate2.prototype.submit = function(button, async, no_validation, _container)
 {
 	if(typeof no_validation == 'undefined')
 	{
 		no_validation = false;
 	}
+	var container = _container || this.widgetContainer;
 
 	// Get the form values
-	var values = this.getValues(this.widgetContainer);
+	var values = this.getValues(container);
 
 	// Trigger the submit event
 	var canSubmit = true;
 	if(!no_validation)
 	{
-		this.widgetContainer.iterateOver(function(_widget) {
+		container.iterateOver(function(_widget) {
 			if (_widget.submit(values) === false)
 			{
 				canSubmit = false;

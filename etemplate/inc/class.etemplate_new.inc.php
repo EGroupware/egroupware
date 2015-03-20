@@ -95,6 +95,7 @@ class etemplate_new extends etemplate_widget_template
 	 *	-1 = first time return html, after use 0 (echo html incl. navbar), eg. for home
 	 *	 2 = echo without navbar (eg. for popups)
 	 *	 3 = return eGW independent html site
+	 *	 4 = json response
 	 * @param string $ignore_validation if not empty regular expression for validation-errors to ignore
 	 * @param array $changes change made in the last call if looping, only used internaly by process_exec
 	 * @return string html for $output_mode == 1, else nothing
@@ -106,6 +107,11 @@ class etemplate_new extends etemplate_widget_template
 
 		if (!$this->rel_path) throw new egw_exception_assertion_failed("No (valid) template '$this->name' found!");
 
+		if ($output_mode == 4)
+		{
+			$output_mode = 0;
+			self::$response = egw_json_response::get();
+		}
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->content = self::$cont = $content;
 		self::$request->changes = $changes;

@@ -718,6 +718,22 @@ class etemplate_widget
 	}
 
 	/**
+	 * return a reference to $arr[$idx]
+	 *
+	 * This works for non-trival indexes like 'a[b][c]' too: it returns &$arr[a][b][c]
+	 * $sub = get_array($arr,'a[b]'); $sub = 'c'; is equivalent to $arr['a']['b'] = 'c';
+	 *
+	 * @param array& $_arr the array to search, referenz as a referenz gets returned
+	 * @param string $_idx the index, may contain sub-indices like a[b], see example below
+	 * @param mixed $_value value to set
+	 */
+	static function set_array(&$_arr, $_idx, $_value)
+	{
+		$ref =& self::get_array($_arr, $_idx, true);
+		if (true) $ref = $_value;
+	}
+
+	/**
 	 * Checks if a widget is readonly:
 	 * - readonly attribute set
 	 * - $readonlys[__ALL__] set and $readonlys[$form_name] !== false
