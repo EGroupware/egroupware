@@ -820,7 +820,7 @@ class mail_ui
 				// not to be used for IMAP Foldertree, as there is no Imap host
 				continue;
 			}
-			$identity_name = emailadmin_account::identity_name($accountObj);
+			$identity_name = emailadmin_account::identity_name($accountObj,true,$GLOBALS['egw_info']['user']['acount_id']);
 			$oA = array('id' => $acc_id,
 				'text' => str_replace(array('<','>'),array('[',']'),$identity_name),// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
 				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
@@ -1082,7 +1082,7 @@ class mail_ui
 					// not to be used for IMAP Foldertree, as there is no Imap host
 					continue;
 				}
-				$identity_name = emailadmin_account::identity_name($accountObj);
+				$identity_name = emailadmin_account::identity_name($accountObj,true,$GLOBALS['egw_info']['user']['acount_id']);
 				$accArray[$acc_id] = str_replace(array('<','>'),array('[',']'),$identity_name);// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
 			}
 		}
