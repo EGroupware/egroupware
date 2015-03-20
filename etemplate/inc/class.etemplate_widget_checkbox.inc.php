@@ -52,6 +52,7 @@ class etemplate_widget_checkbox extends etemplate_widget
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = self::get_array($content, $form_name);
+			if (!isset($value))	return;	// value not transmitted --> nothing to validate
 			$valid =& self::get_array($validated, $form_name, true);
 
 			if (!$value && $this->attrs['needed'])

@@ -131,7 +131,6 @@ class etemplate_widget_textbox extends etemplate_widget
 			}
 
 			$value = $value_in = self::get_array($content, $form_name);
-			$valid =& self::get_array($validated, $form_name, true);
 
 			// passwords are not transmitted back to client (just asterisks)
 			// therefore we need to replace it again with preserved value
@@ -185,8 +184,11 @@ class etemplate_widget_textbox extends etemplate_widget
 					}
 				}
 			}
-			if (true) $valid = $value;
-			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
+			if (isset($value))
+			{
+				self::set_array($validated, $form_name, $value);
+				//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
+			}
 		}
 	}
 }

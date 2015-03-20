@@ -1027,6 +1027,47 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 			}
 
 		}
+	},
+
+	/**
+	 * Get a dummy row object containing all widget of a row
+	 *
+	 * This is only a temp. solution until rows are implemented as eT2 containers and
+	 * _sender.getParent() will return a real row container.
+	 *
+	 * @param {et2_widget} _sender
+	 * @returns {Array|undefined}
+	 */
+	getRow: function(_sender)
+	{
+		if (!_sender || !this.cells) return;
+
+		for(var r=0; r < this.cells.length; ++r)
+		{
+			var row = this.cells[r];
+			for(var c=0; c < row.length; ++c)
+			{
+				if (!row[c].widget) continue;
+
+				var found = row[c].widget === _sender;
+				if (!found) row[c].widget.iterateOver(function(_widget) {if (_widget === _sender) found = true;});
+				if (found)
+				{
+					// return a fake row object allowing to iterate over it's children
+					var row_obj = new et2_widget(this, {});
+					for(var c=0; c < row.length; ++c)
+					{
+						if (row[c].widget) row_obj._children.push(row[c].widget);
+					}
+					row_obj.isInTree = jQuery.proxy(this.isInTree, this);
+					// we must not free the children!
+					row_obj.destroy = function(){
+						delete row_obj._children;
+					};
+					return row_obj;
+				}
+			}
+		}
 	}
 });
 et2_register_widget(et2_grid, ["grid"]);
