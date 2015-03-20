@@ -114,7 +114,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			if(isNaN(this.options.rows))
 			{
-				this.options.empty_label = this.options.rows;
+				this.options.empty_label = this.egw().lang(this.options.rows);
 				this.options.rows = 1;
 			}
 			else
