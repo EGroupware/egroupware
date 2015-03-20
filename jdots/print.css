@@ -48,6 +48,7 @@
 		overflow-y: hidden;
 		position: relative;
 		padding: 0px;
+		border: none;
 	}
 	.egw_fw_ui_app_header_container {
 		border: none;
