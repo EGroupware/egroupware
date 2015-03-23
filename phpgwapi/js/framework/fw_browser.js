@@ -254,6 +254,7 @@ var fw_browser =  Class.extend({
 				if(self.loadingDeferred)
 				{
 					self.loadingDeferred.resolve();
+					self.loadingDeferred = null;
 				}
 			}, 1);
 		}
