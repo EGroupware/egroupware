@@ -123,6 +123,13 @@ class StreamWrapper implements StreamWrapperIface
 	 * @var string
 	 */
 	private $opened_dir_url;
+
+	/**
+	 * Options for the opened directory
+	 * (backup, etc.)
+	 */
+	protected $dir_url_params = array();
+
 	/**
 	 * Flag if opened dir is writable, in which case we return un-readable entries too
 	 *
@@ -846,6 +853,7 @@ class StreamWrapper implements StreamWrapperIface
 	function dir_opendir ( $path, $options )
 	{
 		$this->opened_dir = $this->extra_dirs = null;
+		$this->dir_url_params = array();
 		$this->extra_dir_ptr = 0;
 
 		if (!($this->opened_dir_url = self::resolve_url_symlinks($path)))
@@ -857,7 +865,7 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
-		}
+		}		
 		$this->opened_dir_writable = Vfs::check_access($this->opened_dir_url,Vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = self::parse_url($path,PHP_URL_PATH);
@@ -871,6 +879,8 @@ class StreamWrapper implements StreamWrapperIface
 				$this->extra_dirs[] = basename($mounted);
 			}
 		}
+
+		
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $path,$options): opendir($this->opened_dir_url)=$this->opened_dir, extra_dirs=".array2string($this->extra_dirs).', '.function_backtrace());
 		return true;
 	}
@@ -939,7 +949,16 @@ class StreamWrapper implements StreamWrapperIface
 						// try reading the stat of the link
 						if (($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1)))
 						{
-							if(isset($stat['url'])) $url = $stat['url'] .($u_query ? '?'.$u_query:'');	// if stat returns an url use that, as there might be more links ...
+							$stat_query = parse_url($stat['url'], PHP_URL_QUERY);
+							if($u_query || $stat_query)
+							{
+								$stat_url = parse_url($stat['url']);
+								parse_str($stat_query,$stat_query);
+								parse_str($u_query, $u_query);
+								$stat_query = http_build_query(array_merge($stat_query, $u_query));
+								$stat['url'] = $stat_url['scheme'].'://'.$stat_url['host'].$stat_url['path'].'?'.$stat_query;
+							}
+							if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
 							self::symlinkCache_add($path,$url);
 						}
 					}
