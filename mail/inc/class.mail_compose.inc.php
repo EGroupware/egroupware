@@ -3302,6 +3302,22 @@ class mail_compose
 			}
 		}
 
+		// Add groups
+		$group_options = array('account_type' => 'groups');
+		$groups = $GLOBALS['egw']->accounts->link_query($_searchString, $group_options);
+		foreach($groups as $g_id => $name)
+		{
+			$group = $GLOBALS['egw']->accounts->read($g_id);
+			if(!$group['account_email']) continue;
+			$completeMailString = trim($name) .' <'. trim($group['account_email']) .'>';
+			$results[] = array(
+				'id' => $completeMailString,
+				'label' => $completeMailString,
+				'name'	=> $name,
+				'title' => $group['account_email']
+			);
+		}
+		
 		// Add up to 5 matching mailing lists
 		if($include_lists)
 		{
