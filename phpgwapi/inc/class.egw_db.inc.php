@@ -1301,6 +1301,24 @@ class egw_db
 	}
 
 	/**
+	 * Cast a column or sql expression to integer, necessary at least for postgreSQL or MySQL for sorting
+	 *
+	 * @param string $expr
+	 * @return string
+	 */
+	function to_double($expr)
+	{
+		switch($this->Type)
+		{
+			case 'pgsql':
+				return $expr.'::double';
+			case 'mysql':
+				return 'CAST('.$expr.' AS DECIMAL(24,3))';
+		}
+		return $expr;
+	}
+
+	/**
 	 * Cast a column or sql expression to integer, necessary at least for postgreSQL
 	 *
 	 * @param string $expr
@@ -1312,6 +1330,8 @@ class egw_db
 		{
 			case 'pgsql':
 				return $expr.'::integer';
+			case 'mysql':
+				return 'CAST('.$expr.' AS SIGNED)';
 		}
 		return $expr;
 	}

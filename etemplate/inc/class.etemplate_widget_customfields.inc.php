@@ -29,6 +29,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 	 */
 	protected static $cf_types = array(
 		'text'     => 'Text',
+		'int'      => 'Integer',
 		'float'    => 'Float',
 		'label'    => 'Label',
 		'select'   => 'Selectbox',
