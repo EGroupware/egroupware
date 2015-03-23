@@ -521,7 +521,7 @@ class admin_categories
 			}
 		}
 		$content['msg'] = $msg;
-		$content['add_link']= $this->add_link.'&appname='.$appname;
+		$content['nm']['add_link']= egw_framework::link('/index.php','menuaction='.$this->add_link . '&cat_id=&appname='.$appname);
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
 		$content['owner'] = '';
 

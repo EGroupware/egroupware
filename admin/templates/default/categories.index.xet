@@ -4,7 +4,7 @@
 <overlay>
 	<template id="admin.categories.index.right" template="" lang="" group="0" version="1.9.001">
 		<hbox>
-			<buttononly align="right" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=$cont[add_link]&amp;cat_id=&amp;appname=$cont[nm][appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
+			<buttononly align="right" label="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
 	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
