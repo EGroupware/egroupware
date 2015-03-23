@@ -1834,7 +1834,7 @@ class calendar_bo
 	 * @param type $event
 	 * @return array array of selected calendar fields
 	 */
-	function get_link_options ($event)
+	function get_link_options ($event = array())
 	{
 		$options = array (
 			'end' => lang('End date'),

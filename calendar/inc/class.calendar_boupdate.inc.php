@@ -1775,13 +1775,10 @@ class calendar_boupdate extends calendar_bo
 		);
 
 		// Repeated Events
-		if($event['recur_type'] != MCAL_RECUR_NONE)
-		{
-			$var['recur_type'] = Array(
-				'field'	=> lang('Repetition'),
-				'data'	=> $this->recure2string($event),
-			);
-		}
+		$var['recur_type'] = Array(
+			'field'	=> lang('Repetition'),
+			'data'	=> ($event['recur_type'] != MCAL_RECUR_NONE) ? $this->recure2string($event) : '',
+		);
 		return $var;
 	}
 
