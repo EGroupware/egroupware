@@ -1912,3 +1912,8 @@ div.flash-click-to-play-dialog {
 	height: 200px !important;
 	/*opacity:0;*/
 }
+/*Generic class for text overflow ellipsis*/
+.et2_ellipsis {
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
