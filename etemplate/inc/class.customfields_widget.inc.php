@@ -45,6 +45,7 @@ class customfields_widget
 	 */
 	var $cf_types = array(
 		'text'     => 'Text',
+		'int'      => 'Integer',
 		'float'    => 'Float',
 		'label'    => 'Label',
 		'select'   => 'Selectbox',
@@ -333,6 +334,7 @@ class customfields_widget
 						}
 						break;
 					case 'float':
+					case 'int':
 						$known_options = array('min'=>null, 'max'=>null,'size' => $field['len'], 'precision' => null);
 						$options = array_merge($known_options, $field['values']);
 						$input =& boetemplate::empty_cell($field['type'],$this->prefix.$lname,array(

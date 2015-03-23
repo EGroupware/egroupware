@@ -712,7 +712,7 @@ class infolog_so
 				if ($val[0] == '#')
 				{
 					$sortbycf = substr($val,1);
-					$val = "cfsortcrit";
+					$val = "cfsortcrit IS NULL,cfsortcrit";
 				}
 				else
 				{
@@ -862,7 +862,18 @@ class infolog_so
 			$info_customfield = '';
 			if ($sortbycf != '')
 			{
-				$info_customfield = ", (SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 WHERE sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).") AS cfsortcrit ";
+				$sort_col = "(SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 WHERE sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).")";
+				if (!isset($custom_fields)) $custom_fields = config::get_customfields('infolog');
+				switch($custom_fields[$sortbycf]['type'])
+				{
+					case 'int':
+						$sort_col = $this->db->to_int($sort_col);
+						break;
+					case 'float':
+						$sort_col = $this->db->to_double($sort_col);
+						break;
+				}
+				$info_customfield = ", $sort_col AS cfsortcrit ";
 			}
 			//echo "SELECT $distinct main.* $info_customfield $sql_query $ordermethod"."<br>";
 			do

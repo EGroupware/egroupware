@@ -534,8 +534,21 @@ class so_sql_cf extends so_sql
 					// we found a customfield, so we split that part by space char in order to get Sorting Direction and Fieldname
 					$buff = explode(' ',trim($v));
 					$orderDir = array_pop($buff);
-					$key = trim(implode(' ',$buff));
-					$order_by = str_replace($v,'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.$this->extra_value.' '.$orderDir,$order_by);
+					$key = substr(trim(implode(' ',$buff)), 1);
+					switch($this->customfields[$key]['type'])
+					{
+						case 'int':
+							$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,'.
+								$this->db->to_int('extra_order.'.$this->extra_value).' '.$orderDir, $order_by);
+							break;
+						case 'float':
+							$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,'.
+								$this->db->to_double('extra_order.'.$this->extra_value).' '.$orderDir, $order_by);
+							break;
+						default:
+							$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.
+								$this->extra_value.' '.$orderDir, $order_by);
+					}
 					// postgres requires that expressions in order by appear in the columns of a distinct select
 					if ($this->db->Type != 'mysql')
 					{
@@ -546,7 +559,7 @@ class so_sql_cf extends so_sql
 						$extra_cols[] = 'extra_order.'.$this->extra_value;
 						$extra_cols[] = 'extra_order.'.$this->extra_value.' IS NULL';
 					}
-					$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote(substr($key,1));
+					$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote($key);
 				}
 			}
 		}
