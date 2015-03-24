@@ -1213,11 +1213,36 @@ class calendar_uiforms extends calendar_ui
 				unset($event['participants']);
 				return $this->process_edit($event);
 			}
-			if (!empty($_GET['ical']) || !empty($_GET['ical_vfs']) && egw_vfs::file_exists($_GET['ical_vfs']))
+			// vfs path passed in --> url
+			if (!empty($_GET['ical_vfs']) && egw_vfs::file_exists($_GET['ical_vfs']))
+			{
+				$_GET['ical_url'] = egw_vfs::PREFIX.$_GET['ical_vfs'];
+			}
+			// url passed in --> read it making sure to prepend own host if it starts with a /
+			if (!empty($_GET['ical_url']))
+			{
+				$schema = (string)parse_url($_GET['ical_url'], PHP_URL_SCHEME);
+				switch($schema)
+				{
+					case '':	// own url with webserver_url is a path
+						$_GET['ical_url'] = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_GET['ical_url'];
+						// fall through
+					case 'vfs':
+					case 'http':
+					case 'https':
+						$_GET['ical'] = file_get_contents($_GET['ical_url']);
+						break;
+					default:
+						error_log(__METHOD__."() Error: importing the iCal: unsupported schema '$schema'");
+						$msg = lang('Error: importing the iCal').': '.lang('unsupported schema').' '.$schema;
+						$event =& $this->default_add_event();
+						break;
+				}
+			}
+			if (!empty($_GET['ical']))
 			{
 				$ical = new calendar_ical();
-				$ical_string = !empty($_GET['ical']) ? $_GET['ical'] : file_get_contents(egw_vfs::PREFIX.$_GET['ical_vfs']);
-				if (!($events = $ical->icaltoegw($ical_string, '', 'utf-8')) || count($events) != 1)
+				if (!($events = $ical->icaltoegw($_GET['ical_url'], '', 'utf-8')) || count($events) != 1)
 				{
 					error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
 					$msg = lang('Error: importing the iCal');
@@ -1245,7 +1270,6 @@ class calendar_uiforms extends calendar_ui
 					//error_log(__METHOD__."(...) parsed as ".array2string($event));
 				}
 				unset($ical);
-				unset($ical_string);
 			}
 			elseif (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id)))
 			{

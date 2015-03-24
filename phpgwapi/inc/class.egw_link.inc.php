@@ -73,8 +73,7 @@
  *          'entries' => 'Contacts',				// Optional name for multiple entries of app, eg. "contacts" used instead of appname
  *          'mime' => array(						// Optional register mime-types application can open
  *          	'text/something' => array(
- *          		'mime_id' => 'path',			// one of id (path) or url is required!
- *          		'mime_url' => 'url',
+ *          		'mime_url' => 'url',			// required (!)
  *          		'menuaction' => 'app.class.method',	// method to call
  *          		'mime_popup' => '400x300',		// optional size of popup
  *          		'mime_target' => '_self',		// optional target, default _blank

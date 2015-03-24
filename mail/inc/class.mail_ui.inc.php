@@ -3386,14 +3386,14 @@ class mail_ui
 		$draftFolder = $this->mail_bo->getDraftFolder(false);
 		$importID = mail_bo::getRandomString();
 		// name should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['name']) || empty($formData['name'])))
+		if (in_array(parse_url($formData['file'],PHP_URL_SCHEME), array('vfs', 'http', 'https')) && (!isset($formData['name']) || empty($formData['name'])))
 		{
 			$buff = explode('/',$formData['file']);
 			$suffix = '';
 			if (is_array($buff)) $formData['name'] = array_pop($buff); // take the last part as name
 		}
 		// type should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['type']) || empty($formData['type'])))
+		if (in_array(parse_url($formData['file'],PHP_URL_SCHEME), array('vfs', 'http', 'https')) && (!isset($formData['type']) || empty($formData['type'])))
 		{
 			$buff = explode('.',$formData['file']);
 			$suffix = '';
@@ -3401,7 +3401,7 @@ class mail_ui
 			if (!empty($suffix)) $formData['type'] = mime_magic::ext2mime($suffix);
 		}
 		// size should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && !isset($formData['size']))
+		if (in_array(parse_url($formData['file'],PHP_URL_SCHEME), array('vfs', 'http', 'https')) && !isset($formData['size']))
 		{
 			$formData['size'] = strlen($formData['file']); // set some size, to meet requirements of checkFileBasics
 		}

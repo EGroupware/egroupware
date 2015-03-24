@@ -164,9 +164,6 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 						case 'mime_url':
 							data[mime_info.mime_url] = 'vfs://default' + path;
 							break;
-						case 'mime_id':
-							data[mime_info.mime_id] = path;
-							break;
 						default:
 							data[attr] = mime_info[attr];
 					}

@@ -243,8 +243,9 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {string} _target_app app-name for opener
 		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 		 * - This option only makes sense to be enabled when the open_link requested without user interaction
+		 * @param {string} _mime_type if given, we check if any app has registered a mime-handler for that type and use it
 		 */
-		open_link: function(_link, _target, _popup, _target_app, _check_popup_blocker)
+		open_link: function(_link, _target, _popup, _target_app, _check_popup_blocker, _mime_type)
 		{
 			// Log for debugging purposes - don't use navigation here to avoid
 			// flooding log with details already captured by egw.open()
@@ -277,6 +278,23 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			if (url[0] == '/' && this.webserverUrl && this.webserverUrl != '/' && url.indexOf(this.webserverUrl+'/') != 0)
 			{
 				url = this.webserverUrl + url;
+			}
+			var mime_info = _mime_type ? this.get_mime_info(_mime_type) : undefined;
+			if (mime_info && mime_info[mime_info.mime_url])
+			{
+				if (mime_info.mime_popup)
+				{
+					_popup = mime_info.mime_popup;
+					delete mime_info.mime_popup;
+				}
+				if (mime_info.mime_target)
+				{
+					_target = mime_info.mime_target;
+					delete mime_info.mime_target;
+				}
+				mime_info[mime_info.mime_url] = url;
+				delete mime_info.mime_url;
+				url = egw.link('/index.php', mime_info);
 			}
 			if (_popup)
 			{
