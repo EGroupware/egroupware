@@ -955,6 +955,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 					{
 						this.span.text(label);
 						if (typeof option == 'object' && option.title) this.set_statustext(option.title);
+						break;
 					}
 					else
 					{
@@ -962,6 +963,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 							.text(label)
 							.attr('data-value', _value[i])
 							.appendTo(this.span);
+						break;
 					}
 				}
 			}
