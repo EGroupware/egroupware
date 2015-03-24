@@ -105,7 +105,7 @@ var et2_template = et2_DOMWidget.extend(
 					var splitted = template_name.split('.');
 					// use template base url from initial template, to continue using webdav, if that was loaded via webdav
 					var path = this.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
-						splitted.join('.')+ ".xet" + (cache_buster ? '?'+cache_buster :
+						splitted.join('.')+ ".xet" + (cache_buster ? '?download='+cache_buster :
 						// if server did not give a cache-buster, fall back to current time
 						'?download='+(new Date).valueOf());
 
