@@ -456,6 +456,16 @@ class country
 				$this->countries_translated[$k] = $translated;
 			}
 		}
-		asort($this->countries_translated);
+
+		if(class_exists('Collator') && class_exists('Locale'))
+		{
+			$col = new \Collator($GLOBALS['egw_info']['user']['preferences']['common']['lang'].'_'.
+				$GLOBALS['egw_info']['user']['preferences']['common']['country']);
+			$col->asort($this->countries_translated);
+		}
+		else
+		{
+			asort($this->countries_translated);
+		}
 	}
 }
