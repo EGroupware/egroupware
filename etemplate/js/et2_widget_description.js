@@ -95,6 +95,12 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 			type: "string",
 			default: '',
 			description: "Mime type of the registered link"
+		},
+		mime_data:{
+			name: "Mime data",
+			type: "string",
+			default: '',
+			description: "hash for data stored on service-side with egw_link::(get|set)_data()"
 		}
 	},
 
@@ -229,19 +235,21 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		if(this.options.extra_link_popup || this.options.mime)
 		{
 			var self= this;
-			jQuery('a',this.span)
-				.click(function(e) {
-					if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(/video\/|image\/|audio\//,'ig'))
-					{
-						self._init_blueimp_gallery(e,self.options.href);
-					}
-					else
-					{
-						egw(window).open_link(self.options.href, self.options.extra_link_title,self.options.extra_link_popup,null,null,self.options.mime);
-					}
-					e.preventDefault();
-					return false;
-				});
+			var $span =  this.options.mime_data? jQuery(this.span): jQuery('a',this.span);
+			$span.click(function(e) {
+				if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(/video\/|image\/|audio\//,'ig'))
+				{
+					// Do not show thumbnail indicator for single expose view
+					self.expose_options.thumbnailIndicators = false;
+					self._init_blueimp_gallery(e,self.options.href);
+				}
+				else
+				{
+					egw(window).open_link(self.options.mime_data || self.options.href, self.options.extra_link_title,self.options.extra_link_popup,null,null,self.options.mime);
+				}
+				e.preventDefault();
+				return false;
+			});
 		}
 	},
 
