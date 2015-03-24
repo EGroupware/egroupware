@@ -161,6 +161,8 @@ var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		{
 			if (self.options.expose_view)
 			{
+				// Do not show thumbnail indicator on single expose view
+				self.expose_options.thumbnailIndicators = false;
 				self._init_blueimp_gallery(e,_value);
 			}
 			else
