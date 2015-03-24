@@ -1007,7 +1007,7 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			$stat['mode'] &= ~0222;
 		}
-		if($query && strpos($stat['url'],'?'.$query)===false)
+		if($stat['url'] && $query && strpos($stat['url'],'?'.$query)===false)
 		{
 			$stat['url'] .= '?'.$query;
 		}
