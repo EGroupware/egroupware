@@ -2181,24 +2181,25 @@ class mail_ui
 						$attachmentHTML[$key]['filename'] = $x;
 					}
 				}
-//error_log(array2string($value));
-//error_log(strtoupper($value['mimeType']) .'<->'. mime_magic::filename2mime($attachmentHTML[$key]['filename']));
+				//error_log(array2string($value));
+				//error_log(strtoupper($value['mimeType']) .'<->'. mime_magic::filename2mime($attachmentHTML[$key]['filename']));
 				if (strtoupper($value['mimeType']=='APPLICATION/OCTET-STREAM')) $value['mimeType'] = mime_magic::filename2mime($attachmentHTML[$key]['filename']);
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);
 				$attachmentHTML[$key]['size']=egw_vfs::hsize($value['size']);
 				$attachmentHTML[$key]['attachment_number']=$key;
 				$attachmentHTML[$key]['partID']=$value['partID'];
+				$attachmentHTML[$key]['mail_id'] = $rowID;
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
-
+				
 				switch(strtoupper($value['mimeType']))
 				{
 					case 'MESSAGE/RFC822':
 						$linkData = array
 						(
 							'menuaction'	=> 'mail.mail_ui.displayMessage',
-							//'mode'		=> 'display', //message/rfc822 attachments should be opened in display mode
+							'mode'		=> 'display', //message/rfc822 attachments should be opened in display mode
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
 							'is_winmail'    => $value['is_winmail']
@@ -2265,6 +2266,9 @@ class mail_ui
 						$linkView = "window.location.href = '".egw::link('/index.php',$linkData)."';";
 						break;
 				}
+				$attachmentHTML[$key]['href_link'] = egw::link('/index.php',$linkData);
+				$attachmentHTML[$key]['windowName'] = $windowName;
+				
 				//error_log(__METHOD__.__LINE__.$linkView);
 				$attachmentHTML[$key]['link_view'] = '<a href="#" ." title="'.$attachmentHTML[$key]['filename'].'" onclick="'.$linkView.' return false;"><b>'.
 					($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)')).

@@ -72,7 +72,7 @@
 								<description id="${row}[partID]" />
 								<description id="${row}[type]" />
 								<description id="${row}[winmailFlag]" />
-								<description class="useEllipsis et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
+								<description class="useEllipsis et2_link" id="${row}[filename]" expose_view="true" mime="$row_cont[type]" no_lang="1" href="$row_cont[href_link]" extra_link_title="$row_cont[windowName]" />
 								<description align="right" id="${row}[size]" />
 								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
 								<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>

@@ -15,6 +15,7 @@
 /*egw:uses
 	jquery.jquery;
 	et2_core_baseWidget;
+	/etemplate/js/expose.js;
 */
 
 /**
@@ -22,7 +23,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
+var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"label": {
@@ -82,6 +83,18 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			"type": "string",
 			"description": "Link title which is displayed on mouse over.",
 			"translate": true
+		},
+		"expose_view":{
+			name: "Expose view",
+			type: "boolean",
+			default: false,
+			description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
+		},
+		mime:{
+			name: "Mime type",
+			type: "string",
+			default: '',
+			description: "Mime type of the registered link"
 		}
 	},
 
@@ -142,7 +155,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 					.addClass("et2_label");
 				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 			}
-
+			
 			// Clear the label container.
 			this._labelContainer.empty();
 
@@ -175,14 +188,33 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			}
 			this._labelContainer = null;
 		}
-
+		
 		// Update the surroundings in order to reflect the change in the label
 		this.getSurroundings().update();
 
 		// Copy the given value
 		this.label = _value;
 	},
-
+	/**
+	 * Function to get media content to feed the expose
+	 * @param {type} _value
+	 * @returns {Array|Array.getMedia.mediaContent}
+	 */
+	getMedia: function (_value)
+	{
+		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin :egw.webserverUrl + '/';
+		var mediaContent = [];
+		if (_value)
+		{
+			mediaContent = [{
+				title: this.options.label,
+				href: base_url + _value,
+				type: this.options.type + "/*",
+				thumbnail: base_url + _value
+			}];
+		}
+		return mediaContent;
+	},
 	set_value: function(_value) {
 		if (!_value) _value = "";
 		if (!this.options.no_lang) _value = this.egw().lang(_value);
@@ -194,14 +226,19 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			this.span[0],
 			this.options.href ? this.options.extra_link_target : '_blank'
 		);
-		if(this.options.extra_link_popup)
+		if(this.options.extra_link_popup || this.options.mime)
 		{
-			var href = this.options.href;
-			var title = this.options.extra_link_title;
-			var popup = this.options.extra_link_popup;
+			var self= this;
 			jQuery('a',this.span)
 				.click(function(e) {
-					egw.open_link(href, title,popup);
+					if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(/video\/|image\/|audio\//,'ig'))
+					{
+						self._init_blueimp_gallery(e,self.options.href);
+					}
+					else
+					{
+						egw(window).open_link(self.options.href, self.options.extra_link_title,self.options.extra_link_popup,null,null,self.options.mime);
+					}
 					e.preventDefault();
 					return false;
 				});
@@ -280,6 +317,6 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			_nodes[0].setAttribute("class", _values["class"]);
 		}
 	}
-});
+}));
 et2_register_widget(et2_description, ["description", "label"]);
 
