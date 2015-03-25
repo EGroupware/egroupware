@@ -459,13 +459,12 @@ class country
 
 		if(class_exists('Collator') && class_exists('Locale'))
 		{
-			$col = new \Collator($GLOBALS['egw_info']['user']['preferences']['common']['lang'].'_'.
-				$GLOBALS['egw_info']['user']['preferences']['common']['country']);
+			$col = new \Collator(common::setlocale());
 			$col->asort($this->countries_translated);
 		}
 		else
 		{
-			asort($this->countries_translated);
+			natcasesort($this->countries_translated);
 		}
 	}
 }
