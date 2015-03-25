@@ -1513,7 +1513,8 @@ var et2_link_list = et2_link_string.extend(
 			var link_data = self.context.data;
 			if(link_data.app == 'file')
 			{
-				var url = self.egw().mime_open(link_data);
+				// File info is always the same
+				var url = '/apps/'+link_data.app2+'/'+link_data.id2+'/'+decodeURIComponent(link_data.id);
 				if(typeof url == 'string' && url.indexOf('webdav.php'))
 				{
 					// URL is url to file in webdav, so get rid of that part
