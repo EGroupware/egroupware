@@ -1213,36 +1213,30 @@ class calendar_uiforms extends calendar_ui
 				unset($event['participants']);
 				return $this->process_edit($event);
 			}
-			// vfs path passed in --> url
-			if (!empty($_GET['ical_vfs']) && egw_vfs::file_exists($_GET['ical_vfs']))
+			// vfs url
+			if (!empty($_GET['ical_url']) && parse_url($_GET['ical_url'], PHP_URL_SCHEME) == 'vfs')
 			{
-				$_GET['ical_url'] = egw_vfs::PREFIX.$_GET['ical_vfs'];
+				$_GET['ical_vfs'] = parse_url($_GET['ical_url'], PHP_URL_PATH);
 			}
-			// url passed in --> read it making sure to prepend own host if it starts with a /
-			if (!empty($_GET['ical_url']))
+			// vfs path
+			if (!empty($_GET['ical_vfs']) &&
+				(!egw_vfs::file_exists($_GET['ical_vfs']) || !($_GET['ical'] = file_get_contents(egw_vfs::PREFIX.$_GET['ical_vfs']))))
 			{
-				$schema = (string)parse_url($_GET['ical_url'], PHP_URL_SCHEME);
-				switch($schema)
-				{
-					case '':	// own url with webserver_url is a path
-						$_GET['ical_url'] = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_GET['ical_url'];
-						// fall through
-					case 'vfs':
-					case 'http':
-					case 'https':
-						$_GET['ical'] = file_get_contents($_GET['ical_url']);
-						break;
-					default:
-						error_log(__METHOD__."() Error: importing the iCal: unsupported schema '$schema'");
-						$msg = lang('Error: importing the iCal').': '.lang('unsupported schema').' '.$schema;
-						$event =& $this->default_add_event();
-						break;
-				}
+				//error_log(__METHOD__."() Error: importing the iCal: vfs file not found '$_GET[ical_vfs]'!");
+				$msg = lang('Error: importing the iCal').': '.lang('VFS file not found').': '.$_GET['ical_vfs'];
+				$event =& $this->default_add_event();
+			}
+			if (!empty($_GET['ical_data']) &&
+				!($_GET['ical'] = egw_link::get_data($_GET['ical_data'])))
+			{
+				//error_log(__METHOD__."() Error: importing the iCal: data not found '$_GET[ical_data]'!");
+				$msg = lang('Error: importing the iCal').': '.lang('Data not found').': '.$_GET['ical_data'];
+				$event =& $this->default_add_event();
 			}
 			if (!empty($_GET['ical']))
 			{
 				$ical = new calendar_ical();
-				if (!($events = $ical->icaltoegw($_GET['ical_url'], '', 'utf-8')) || count($events) != 1)
+				if (!($events = $ical->icaltoegw($_GET['ical'], '', 'utf-8')) || count($events) != 1)
 				{
 					error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
 					$msg = lang('Error: importing the iCal');

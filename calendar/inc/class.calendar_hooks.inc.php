@@ -45,6 +45,7 @@ class calendar_hooks
 			'mime' => array(
 				'text/calendar' => array(
 					'menuaction' => 'calendar.calendar_uiforms.edit',
+					'mime_data' => 'ical_data',
 					'mime_url' => 'ical_url',
 					'mime_popup' => '750x400',
 				),
