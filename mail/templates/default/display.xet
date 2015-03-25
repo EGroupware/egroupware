@@ -19,7 +19,7 @@
 					<date-time id="mail_displaydate" readonly="true"/>
 				</hbox>
 			</hbox>
-			
+
 			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
 				<description value="on behalf of"/>
 				<url-email id="SENDER" readonly="true"/>
@@ -51,7 +51,7 @@
 			<box class="$cont[mailDisplayContainerClass]">
 				<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"/>
 			</box>
-			
+
 			<box class="$cont[mailDisplayAttachmentsClass]">
 				<grid disabled="@no_griddata" id="mail_displayattachments" class="egwGridView_grid" width="100%">
 						<columns>
@@ -72,7 +72,7 @@
 								<description id="${row}[partID]" />
 								<description id="${row}[type]" />
 								<description id="${row}[winmailFlag]" />
-								<description class="useEllipsis et2_link" id="${row}[filename]" expose_view="true" mime="$row_cont[type]" no_lang="1" href="$row_cont[href_link]" extra_link_title="$row_cont[windowName]" />
+								<description class="useEllipsis et2_link" id="${row}[filename]" expose_view="true" mime="$row_cont[type]" no_lang="1" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
 								<description align="right" id="${row}[size]" />
 								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
 								<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>

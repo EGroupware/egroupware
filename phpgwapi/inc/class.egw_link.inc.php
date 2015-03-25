@@ -25,7 +25,7 @@
  * 	/**
  *	 * Hook called by link-class to include app in the appregistry of the linkage
  *	 *
- *	 * @param array/string $location location and other parameters (not used)
+ *	 * @param array|string $location location and other parameters (not used)
  *	 * @return array with method-names
  *	 *%
  *	function search_link($location)
@@ -73,7 +73,8 @@
  *          'entries' => 'Contacts',				// Optional name for multiple entries of app, eg. "contacts" used instead of appname
  *          'mime' => array(						// Optional register mime-types application can open
  *          	'text/something' => array(
- *          		'mime_url' => 'url',			// required (!)
+ *          		'mime_url'  => $attr,			// either mime_url or mime_data is required for server-side processing!
+ *          		'mime_data' => $attr,			// md5-hash returned from egw_link::set_data() to retrive content (only server-side)
  *          		'menuaction' => 'app.class.method',	// method to call
  *          		'mime_popup' => '400x300',		// optional size of popup
  *          		'mime_target' => '_self',		// optional target, default _blank
@@ -140,6 +141,19 @@ class egw_link extends solink
 			'view' => array('menuaction'=>'addressbook.addressbook_ui.view'),
 			'view_id' => 'account_id'
 		),
+		'home' => array(
+			// handling of text or pdf files by browser in a popup window
+			'mime' => array(
+				'application/pdf' => array(
+					'mime_popup' => '640x480',
+					'mime_target' => '_blank',
+				),
+				'/^text\\//' => array(	// text/* as preg, no modifier!
+					'mime_popup' => '640x480',
+					'mime_target' => '_blank',
+				),
+			),
+		),
 	);
 	/**
 	 * Caches link titles for a better performance
@@ -169,6 +183,11 @@ class egw_link extends solink
 	 */
 	static function init_static( )
 	{
+		// FireFox 36 can not display pdf with it's internal viewer in an iframe used by mobile theme/template for popups
+		if (html::$user_agent == 'firefox' && $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
+		{
+			unset(self::$app_register['home']['mime']['application/pdf']['mime_popup']);
+		}
 		// other apps can participate in the linking by implementing a search_link hook, which
 		// has to return an array in the format of an app_register entry
 		// for performance reasons, we do it only once / cache it in the session
@@ -280,21 +299,21 @@ class egw_link extends solink
 	 * File-attachments return a negative link-id !!!
 	 *
 	 * @param string $app1 app of $id1
-	 * @param string/array &$id1 id of item to linkto or 0 if item not yet created or array with links
+	 * @param string|array &$id1 id of item to linkto or 0 if item not yet created or array with links
 	 * 	of not created item or $file-array if $app1 == self::VFS_APPNAME (see below).
 	 * 	If $id==0 it will be set on return to an array with the links for the new item.
-	 * @param string/array $app2 app of 2.linkend or array with links ($id2 not used)
-	 * @param string $id2='' id of 2. item of $file-array if $app2 == self::VFS_APPNAME (see below)<br>
+	 * @param string|array $app2 app of 2.linkend or array with links ($id2 not used)
+	 * @param string $id2 ='' id of 2. item of $file-array if $app2 == self::VFS_APPNAME (see below)<br>
 	 * 	$file array with informations about the file in format of the etemplate file-type<br>
 	 * 	$file['name'] name of the file (no directory)<br>
 	 * 	$file['type'] mine-type of the file<br>
 	 * 	$file['tmp_name'] name of the uploaded file (incl. directory)<br>
 	 * 	$file['path'] path of the file on the client computer<br>
 	 * 	$file['ip'] of the client (path and ip in $file are only needed if u want a symlink (if possible))
-	 * @param string $remark='' Remark to be saved with the link (defaults to '')
-	 * @param int $owner=0 Owner of the link (defaults to user)
-	 * @param int $lastmod=0 timestamp of last modification (defaults to now=time())
-	 * @param int $no_notify=0 &1 dont notify $app1, &2 dont notify $app2
+	 * @param string $remark ='' Remark to be saved with the link (defaults to '')
+	 * @param int $owner =0 Owner of the link (defaults to user)
+	 * @param int $lastmod =0 timestamp of last modification (defaults to now=time())
+	 * @param int $no_notify =0 &1 dont notify $app1, &2 dont notify $app2
 	 * @return int/boolean False (for db or param-error) or on success link_id (Please not the return-value of $id1)
 	 */
 	static function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0,$no_notify=0 )
@@ -406,12 +425,12 @@ class egw_link extends solink
 	 *
 	 * @param string $app appname
 	 * @param string|array $id id(s) in $app
-	 * @param string $only_app='' if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
-	 * @param string $order='link_lastmod DESC' defaults to newest links first
-	 * @param boolean $cache_titles=false should all titles be queryed and cached (allows to query each link app only once!)
+	 * @param string $only_app ='' if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+	 * @param string $order ='link_lastmod DESC' defaults to newest links first
+	 * @param boolean $cache_titles =false should all titles be queryed and cached (allows to query each link app only once!)
 	 * 	This option also removes links not viewable by current user from the result!
-	 * @param boolean $deleted=false Include links that have been flagged as deleted, waiting for purge of linked record.
-	 * @param int $limit=null number of entries to return, only affects links, attachments are allways reported!
+	 * @param boolean $deleted =false Include links that have been flagged as deleted, waiting for purge of linked record.
+	 * @param int $limit =null number of entries to return, only affects links, attachments are allways reported!
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
 	static function get_links($app, $id, $only_app='', $order='link_lastmod DESC',$cache_titles=false, $deleted=false, $limit=null)
@@ -479,10 +498,10 @@ class egw_link extends solink
 	 * @ToDo also query the attachments in a single query, eg. via a directory listing of /apps/$app
 	 * @param string $app
 	 * @param array $ids
-	 * @param boolean $cache_titles=true should all titles be queryed and cached (allows to query each link app only once!)
+	 * @param boolean $cache_titles =true should all titles be queryed and cached (allows to query each link app only once!)
 	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
-	 * @param string $order='link_lastmod DESC' defaults to newest links first
-	 * @param boolean $deleted=false Include links that have been flagged as deleted, waiting for purge of linked record.
+	 * @param string $order ='link_lastmod DESC' defaults to newest links first
+	 * @param boolean $deleted =false Include links that have been flagged as deleted, waiting for purge of linked record.
 	 * @return array of $id => array($links) pairs
 	 */
 	static function get_links_multiple($app,array $ids,$cache_titles=true,$only_app='',$order='link_lastmod DESC', $deleted=false )
@@ -535,10 +554,10 @@ class egw_link extends solink
 	 *
 	 * If $id is an array (links not yet created) only link_ids are allowed.
 	 *
-	 * @param int/string $app_link_id > 0 link_id of link or app-name of link
-	 * @param string/array $id='' id if $app_link_id is an appname or array with links, if 1. entry not yet created
-	 * @param string $app2='' second app
-	 * @param string $id2='' id in $app2
+	 * @param int|string $app_link_id > 0 link_id of link or app-name of link
+	 * @param string|array $id ='' id if $app_link_id is an appname or array with links, if 1. entry not yet created
+	 * @param string $app2 ='' second app
+	 * @param string $id2 ='' id in $app2
 	 * @return array with link-data or False
 	 */
 	static function get_link($app_link_id,$id='',$app2='',$id2='')
@@ -579,11 +598,11 @@ class egw_link extends solink
 	 * 	unlink has to be called with &$id to see the result (depricated) or unlink2 has to be used !!!
 	 *
 	 * @param $link_id link-id to remove if > 0
-	 * @param string $app='' appname of first endpoint
-	 * @param string/array $id='' id in $app or array with links, if 1. entry not yet created
-	 * @param int $owner=0 account_id to delete all links of a given owner, or 0
-	 * @param string $app2='' app of second endpoint
-	 * @param string $id2='' id in $app2
+	 * @param string $app ='' appname of first endpoint
+	 * @param string|array $id ='' id in $app or array with links, if 1. entry not yet created
+	 * @param int $owner =0 account_id to delete all links of a given owner, or 0
+	 * @param string $app2 ='' app of second endpoint
+	 * @param string $id2 ='' id in $app2
 	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
 	 * @return the number of links deleted
 	 */
@@ -596,11 +615,11 @@ class egw_link extends solink
 	 * Remove link with $link_id or all links matching given $app,$id
 	 *
 	 * @param $link_id link-id to remove if > 0
-	 * @param string $app='' appname of first endpoint
-	 * @param string/array &$id='' id in $app or array with links, if 1. entry not yet created
-	 * @param int $owner=0 account_id to delete all links of a given owner, or 0
-	 * @param string $app2='' app of second endpoint, or !file (other !app are not yet supported!)
-	 * @param string $id2='' id in $app2
+	 * @param string $app ='' appname of first endpoint
+	 * @param string|array &$id='' id in $app or array with links, if 1. entry not yet created
+	 * @param int $owner =0 account_id to delete all links of a given owner, or 0
+	 * @param string $app2 ='' app of second endpoint, or !file (other !app are not yet supported!)
+	 * @param string $id2 ='' id in $app2
 	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
 	 * @return the number of links deleted
 	 */
@@ -768,7 +787,7 @@ class egw_link extends solink
 	 *
 	 * @param string $app appname
 	 * @param string $id id in $app
-	 * @param array $link=null link-data for file-attachments
+	 * @param array $link =null link-data for file-attachments
 	 * @return string/boolean string with title, null if $id does not exist in $app or false if no perms to view it
 	 */
 	static function title($app,$id,$link=null)
@@ -883,7 +902,7 @@ class egw_link extends solink
 	 * Add new entry to $app, evtl. already linked to $to_app, $to_id
 	 *
 	 * @param string $app appname of entry to create
-	 * @param string $to_app='' appname to link the new entry to
+	 * @param string $to_app ='' appname to link the new entry to
 	 * @param string $to_id =''id in $to_app
 	 * @return array/boolean with name-value pairs for link to add-methode of $app or false if add not supported
 	 */
@@ -937,7 +956,7 @@ class egw_link extends solink
 	 *
 	 * @param string $app appname
 	 * @param string $id id in $app
-	 * @param array $link=null link-data for file-attachments
+	 * @param array $link =null link-data for file-attachments
 	 * @return array with name-value pairs for link to view-methode of $app to view $id
 	 */
 	static function view($app,$id,$link=null)
@@ -974,6 +993,8 @@ class egw_link extends solink
 	 *
 	 * Only return information from apps the user has access too (incl. registered sub-types of that apps).
 	 *
+	 * We prefer full matches over wildcards like "text/*" written as regexp "/^text\\//".
+	 *
 	 * @param string $type
 	 * @return array with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 	 */
@@ -988,17 +1009,21 @@ class egw_link extends solink
 				foreach($registry['mime'] as $mime => $data)
 				{
 					if ($mime == $type) return $data;
+					if ($mime[0] == '/' && preg_match($mime.'i', $type))
+					{
+						$wildcard_mime = $data;
+					}
 				}
 			}
 		}
-		return null;
+		return isset($wildcard_mime) ? $wildcard_mime : null;
 	}
 
 	/**
 	 * Get handler (link-data) for given path and mime-type
 	 *
 	 * @param string $path vfs path
-	 * @param string $type=null default to egw_vfs::mime_content_type($path)
+	 * @param string $type =null default to egw_vfs::mime_content_type($path)
 	 * @param string &$popup=null on return popup size or null
 	 * @return string|array string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
 	 */
@@ -1036,8 +1061,8 @@ class egw_link extends solink
 	 * Check if $app uses a popup for $action
 	 *
 	 * @param string $app app-name
-	 * @param string $action='view' name of the action, atm. 'view' or 'add'
-	 * @param array $link=null link-data for file-attachments
+	 * @param string $action ='view' name of the action, atm. 'view' or 'add'
+	 * @param array $link =null link-data for file-attachments
 	 * @return boolean|string false if no popup is used or $app is not registered, otherwise string with the prefered popup size (eg. '640x400)
 	 */
 	static function is_popup($app, $action='view', $link=null)
@@ -1101,9 +1126,9 @@ class egw_link extends solink
 	 * All link-files are based in the vfs-subdir '/apps/'.$app
 	 *
 	 * @param string $app appname
-	 * @param string $id='' id in $app
-	 * @param string $file='' filename
-	 * @param boolean $just_the_path=false return url or just the vfs path
+	 * @param string $id ='' id in $app
+	 * @param string $file ='' filename
+	 * @param boolean $just_the_path =false return url or just the vfs path
 	 * @return string/array path or array with path and relatives, depending on $relatives
 	 */
 	static function vfs_path($app,$id='',$file='',$just_the_path=false)
@@ -1149,7 +1174,7 @@ class egw_link extends solink
 	 * 	$file['tmp_name'] name of the uploaded file (incl. directory)
 	 * 	$file['path'] path of the file on the client computer
 	 * 	$file['ip'] of the client (path and ip are only needed if u want a symlink (if possible))
-	 * @param string $comment='' comment to add to the link
+	 * @param string $comment ='' comment to add to the link
 	 * @return int negative id of egw_sqlfs table as negative link-id's are for vfs attachments
 	 */
 	static function attach_file($app,$id,$file,$comment='')
@@ -1177,7 +1202,7 @@ class egw_link extends solink
 	 * @param string $app appname to link the file to
 	 * @param string $id id in $app
 	 * @param string $file VFS path to link to
-	 * @param string $comment='' comment to add to the link
+	 * @param string $comment ='' comment to add to the link
 	 */
 	static function link_file($app,$id,$file)//,$comment='')
 	{
@@ -1201,9 +1226,9 @@ class egw_link extends solink
 	/**
 	 * deletes a single or all attached files of an entry (for all there's no acl check, as the entry probably not exists any more!)
 	 *
-	 * @param int/string $app > 0: file_id of an attchemnt or $app/$id entry which linked to
-	 * @param string $id='' id in app
-	 * @param string $fname='' filename
+	 * @param int|string $app > 0: file_id of an attchemnt or $app/$id entry which linked to
+	 * @param string $id ='' id in app
+	 * @param string $fname ='' filename
 	 * @return boolean|array false on error ($app or $id not found), array with path as key and boolean result of delete
 	 */
 	static function delete_attached($app,$id='',$fname='')
@@ -1272,7 +1297,7 @@ class egw_link extends solink
 	/**
 	 * converts a fileinfo (row in the vfs-db-table) in a link
 	 *
-	 * @param array/int $fileinfo a row from the vfs-db-table (eg. returned by the vfs ls static function) or a file_id of that table
+	 * @param array|int $fileinfo a row from the vfs-db-table (eg. returned by the vfs ls static function) or a file_id of that table
 	 * @return array a 'kind' of link-array
 	 */
 	static function fileinfo2link($fileinfo,$url=null)
@@ -1366,7 +1391,7 @@ class egw_link extends solink
 	 *
 	 * @param string $app name of app in which the updated happend
 	 * @param string $id id in $app of the updated entry
-	 * @param array $data=null updated data of changed entry, as the read-method of the BO-layer would supply it
+	 * @param array $data =null updated data of changed entry, as the read-method of the BO-layer would supply it
 	 */
 	static function notify_update($app,$id,$data=null)
 	{
@@ -1401,7 +1426,7 @@ class egw_link extends solink
 	 * @param string $notify_id id in $notify_app
 	 * @param string $target_app name of app whos entry changed, linked or deleted
 	 * @param string $target_id id in $target_app
-	 * @param array $data=null data of entry in app2 (optional)
+	 * @param array $data =null data of entry in app2 (optional)
 	 */
 	static private function notify($type,$notify_app,$notify_id,$target_app,$target_id,$link_id,$data=null)
 	{
@@ -1461,7 +1486,7 @@ class egw_link extends solink
 	 *
 	 * @param string $app
 	 * @param string|int $id
-	 * @param string $type='title' 'title' or 'file_access'
+	 * @param string $type ='title' 'title' or 'file_access'
 	 * @return int|string can be null, if cache not yet set
 	 */
 	private static function &get_cache($app,$id,$type = 'title')
@@ -1487,7 +1512,7 @@ class egw_link extends solink
 	 * @param string $app
 	 * @param int|string $id
 	 * @param string $title title string or null
-	 * @param int $file_access=null EGW_ACL_READ, EGW_ACL_EDIT or both or'ed together
+	 * @param int $file_access =null EGW_ACL_READ, EGW_ACL_EDIT or both or'ed together
 	 */
 	public static function set_cache($app,$id,$title,$file_access=null)
 	{
@@ -1515,6 +1540,68 @@ class egw_link extends solink
 	}
 
 	/**
+	 * Store function call and parameters in session and return id to retrieve it result
+	 *
+	 * @param string $mime_type
+	 * @param string $method
+	 * @param array $params
+	 * @return string|null md5 hash of stored data of server-side supported mime-type or null otherwise
+	 */
+	public static function set_data($mime_type, $method, array $params)
+	{
+		if (!($info = self::get_mime_info($mime_type)) || empty($info['mime_data']))
+		{
+			return null;
+		}
+		array_unshift($params, $method);
+		$id = md5(json_encode($params));
+		egw_cache::setSession(__CLASS__, $id, $params);
+		return $id;
+	}
+
+	/**
+	 * Call stored function with parameters and return result
+	 *
+	 * @param string $id
+	 * @param boolean $return_resource =false false: return string, true: return resource
+	 * @return mixed null if id is not found or invalid
+	 * @throws egw_exception_wrong_parameter
+	 */
+	public static function get_data($id, $return_resource=false)
+	{
+		$data = egw_cache::getSession(__CLASS__, $id);
+
+		if (!isset($data) || empty($data[0]))
+		{
+			throw new egw_exception_wrong_parameter(__METHOD__."('$id')");
+		}
+		$ret = call_user_func_array('ExecMethod2', $data);
+
+		if ($return_resource != is_resource($ret))
+		{
+			if ($return_resource && ($fp = fopen('php://temp', 'w')))
+			{
+				fwrite($fp, $ret);
+				fseek($fp, 0);
+				$ret = $fp;
+			}
+			if (!$return_resource)
+			{
+				$fp = $ret;
+				$ret = '';
+				fseek($fp, 0);
+				while(!feof($fp))
+				{
+					$ret .= fread($fp, 8192);
+				}
+				fclose($fp);
+			}
+		}
+		//error_log(__METHOD__."('$id') returning ".gettype($ret).'='.array2string($ret));
+		return $ret;
+	}
+
+	/**
 	 * Check the file access perms for $app/id and given user $user
 	 *
 	 * If $user given and != current user AND app does not set file_access_user=true,
@@ -1523,9 +1610,9 @@ class egw_link extends solink
 	 * @ToDo $rel_path is not yet implemented, as no app use it currently
 	 * @param string $app
 	 * @param string|int $id id of entry
-	 * @param int $required=EGW_ACL_READ EGW_ACL_{READ|EDIT}
-	 * @param string $rel_path=null
-	 * @param int $user=null default null = current user
+	 * @param int $required =EGW_ACL_READ EGW_ACL_{READ|EDIT}
+	 * @param string $rel_path =null
+	 * @param int $user =null default null = current user
 	 * @return boolean true if access granted, false otherwise
 	 */
 	static function file_access($app,$id,$required=EGW_ACL_READ,$rel_path=null,$user=null)

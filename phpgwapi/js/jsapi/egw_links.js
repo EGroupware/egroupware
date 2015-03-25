@@ -105,11 +105,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		/**
 		 * Get mime-type information from app-registry
 		 *
+		 * We prefer a full match over a wildcard like 'text/*' (written as regualr expr. "/^text\\//"
+		 *
 		 * @param {string} _type
 		 * @return {object} with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 		 */
 		get_mime_info: function(_type)
 		{
+			var wildcard_mime;
 			for(var app in link_registry)
 			{
 				var reg = link_registry[app];
@@ -118,16 +121,20 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					for(var mime in reg.mime)
 					{
 						if (mime == _type) return reg.mime[_type];
+						if (mime[0] == '/' && _type.match(new RegExp(mime.substring(1, mime.length-1), 'i')))
+						{
+							wildcard_mime = reg.mime[mime];
+						}
 					}
 				}
 			}
-			return null;
+			return wildcard_mime ? wildcard_mime : null;
 		},
 
 		/**
 		 * Get handler (link-data) for given path and mime-type
 		 *
-		 * @param {string|object} _path vfs path or object with attr path or id, app2 and id2 (path=/apps/app2/id2/id)
+		 * @param {string|object} _path vfs path, egw_link::set_data() id or object with attr path or id, app2 and id2 (path=/apps/app2/id2/id)
 		 * @param {string} _type mime-type, if not given in _path object
 		 * @return {string|object} string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
 		 */
@@ -149,6 +156,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					_type = _path.type;
 				}
 			}
+			else if(_path[0] != '/')
+			{
+
+			}
 			else
 			{
 				path = _path;
@@ -164,9 +175,19 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 						case 'mime_url':
 							data[mime_info.mime_url] = 'vfs://default' + path;
 							break;
+						case 'mime_data':
+							break;
+						case 'mime_type':
+							data[mime_info.mime_type] = _type;
+							break;
 						default:
 							data[attr] = mime_info[attr];
 					}
+				}
+				// if mime_info did NOT define mime_url attribute, we use a WebDAV url drived from path
+				if (typeof mime_info.mime_url == 'undefined')
+				{
+					data.url = '/webdav.php' + path;
 				}
 			}
 			else

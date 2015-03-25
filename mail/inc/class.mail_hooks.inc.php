@@ -93,6 +93,8 @@ class mail_hooks
 				'message/rfc822' => array(
 					'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_url'   => 'formData[file]',
+					'mime_data'  => 'formData[data]',
+					'formData[type]' => 'message/rfc822',
 					'mime_popup' => '870xavailHeight',
 				),
 			),

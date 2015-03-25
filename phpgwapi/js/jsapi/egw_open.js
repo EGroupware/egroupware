@@ -187,8 +187,15 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 						target = url.mime_target;
 						delete url.mime_target;
 					}
-					params = url;
-					url = '/index.php';
+					if (typeof url.url == 'string')
+					{
+						url = url.url;
+					}
+					else
+					{
+						params = url;
+						url = '/index.php';
+					}
 				}
 			}
 			else
@@ -280,21 +287,39 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				url = this.webserverUrl + url;
 			}
 			var mime_info = _mime_type ? this.get_mime_info(_mime_type) : undefined;
-			if (mime_info && mime_info[mime_info.mime_url])
+			if (mime_info && (mime_info.mime_url || mime_info.mime_data))
 			{
-				if (mime_info.mime_popup)
+				var data = {};
+				for(var attr in mime_info)
 				{
-					_popup = mime_info.mime_popup;
-					delete mime_info.mime_popup;
+					switch(attr)
+					{
+						case 'mime_popup':
+							_popup = mime_info.mime_popup;
+							break;
+						case 'mime_target':
+							_target = mime_info.mime_target;
+							break;
+						case 'mime_type':
+							data[mime_info.mime_type] = _mime_type;
+							break;
+						case 'mime_data':
+							data[mime_info[attr]] = _link;
+							break;
+						case 'mime_url':
+							data[mime_info[attr]] = url;
+							break;
+						default:
+							data[attr] = mime_info[attr];
+							break;
+					}
 				}
-				if (mime_info.mime_target)
-				{
-					_target = mime_info.mime_target;
-					delete mime_info.mime_target;
-				}
-				mime_info[mime_info.mime_url] = url;
-				delete mime_info.mime_url;
-				url = egw.link('/index.php', mime_info);
+				url = egw.link('/index.php', data);
+			}
+			else if (mime_info)
+			{
+				if (mime_info.mime_popup) _popup = mime_info.mime_popup;
+				if (mime_info.mime_target) _target = mime_info.mime_target;
 			}
 			if (_popup)
 			{
