@@ -416,6 +416,18 @@ class accounts_sql
 		}
 		if ($param['sort']) $order = implode(' '.$param['sort'].',', explode(',', $order)).' '.$param['sort'];
 
+		$search_cols = array('account_lid','n_family','n_given','email');
+		$join = $this->contacts_join;
+		$email_cols = array('email');
+
+		// Add in group email searching
+		if (!isset($GLOBALS['egw_setup']) || in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
+		{
+			$email_cols = array('coalesce('.$this->contacts_table.'.contact_email,'.emailadmin_smtp_sql::TABLE.'.mail_value) as email');
+			$search_cols[] = emailadmin_smtp_sql::TABLE.'.mail_value';
+			$join .= ' LEFT JOIN '.emailadmin_smtp_sql::TABLE.' ON '.$this->table.'.account_id=-'.emailadmin_smtp_sql::TABLE.'.account_id AND mail_type='.emailadmin_smtp_sql::TYPE_ALIAS;
+		}
+
 		$filter = array();
 		switch($param['type'])
 		{
@@ -480,7 +492,7 @@ class accounts_sql
 				case 'all':
 				default:
 				case 'exact':
-					foreach(array('account_lid','n_family','n_given','email') as $col)
+					foreach($search_cols as $col)
 					{
 						$criteria[$col] = $query;
 					}
@@ -500,6 +512,11 @@ class accounts_sql
 				case 'account_email':
 				case 'email':
 					$criteria['email'] = $query;
+					// Group email
+					if(in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
+					{
+						$criteria[emailadmin_smtp_sql::TABLE.'.mail_value'] = $query;
+					}
 					break;
 			}
 		}
@@ -507,11 +524,11 @@ class accounts_sql
 
 		$accounts = array();
 		foreach((array) $GLOBALS['egw']->contacts->search($criteria,
-			"1,n_given,n_family,email,id,created,modified,$this->table.account_id AS account_id",
+			array_merge(array(1,'n_given','n_family','id','created','modified',$this->table.'.account_id AS account_id'),$email_cols),
 			$order,"account_lid,account_type,account_status,account_expires,account_primary_group,account_description",
 			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
 			$param['offset'] ? array($param['start'], $param['offset']) : (is_null($param['start']) ? false : $param['start']),
-			$filter,$this->contacts_join) as $contact)
+			$filter,$join) as $contact)
 		{
 			if ($contact)
 			{
