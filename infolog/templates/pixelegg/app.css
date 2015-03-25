@@ -129,6 +129,10 @@ tr.dialogOperators td,
 #infolog-edit_infolog-edit-project .et2_link_entry.no_app input.ui-autocomplete-input {
   width: 291px;
 }
+/*get <a> tags inside description in listview with no breakline*/
+.et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a {
+  display: inline-table;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
