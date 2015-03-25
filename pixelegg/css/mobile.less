@@ -50,16 +50,7 @@
 			border-top: none !important;
 			width: 100%;
 			line-height: 32px !important;
-			.egw_fw_mobile_popup_close {
-				width: 32px;
-				height: 32px;
-				float:right;
-				background-image: url('../images/cancelled.png');/*url(../images/topmenu_items/mobile/menu_active.png);*/
-				-webkit-filter: contrast(2);
-				background-repeat: no-repeat;
-				z-index: 999;
-				padding-right: 5px;
-			}
+
 		}
 		//###################
 		//#					#
@@ -759,6 +750,19 @@
 			width: 100%;
 			height: 100%;
 			visibility: hidden;
+		}
+		span.egw_fw_mobile_popup_close {
+				width: 32px;
+				height: 32px;
+				float:right;
+				background-image: url('../images/cancelled.png');/*url(../images/topmenu_items/mobile/menu_active.png);*/
+				-webkit-filter: contrast(2);
+				background-repeat: no-repeat;
+				z-index: 1000;
+				padding-right: 5px;
+				top:0;
+				right:2px;
+				position: absolute;
 		}
 	}
 	.egw_fw_mobile_popup_loader {
