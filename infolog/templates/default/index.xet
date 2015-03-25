@@ -88,7 +88,7 @@
 					<vbox class="infolog_fullWidth">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<hbox>
-							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class]"/>
+							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="85%"/>
 							<description align="right" id="{$row}[info_number]" no_lang="1" class="infolog_infoId"/>
 						</hbox>
 						<box class="infoDes">
