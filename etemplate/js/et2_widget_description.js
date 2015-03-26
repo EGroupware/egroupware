@@ -208,7 +208,7 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 	 */
 	getMedia: function (_value)
 	{
-		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin :egw.webserverUrl + '/';
+		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin :'';
 		var mediaContent = [];
 		if (_value)
 		{
