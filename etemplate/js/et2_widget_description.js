@@ -245,7 +245,7 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 				}
 				else
 				{
-					egw(window).open_link(self.options.mime_data || self.options.href, self.options.extra_link_title, self.options.extra_link_popup, null, null, self.options.mime);
+					egw(window).open_link(self.options.mime_data || self.options.href, self.options.extra_link_target, self.options.extra_link_popup, null, null, self.options.mime);
 				}
 				e.preventDefault();
 				return false;
