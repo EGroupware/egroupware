@@ -144,7 +144,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				$negate_field_filter = true;
 				$this->attrs['field-names'] = substr($this->attrs['field-names'],1);
 			}
-			$field_filter = explode(',', $this->attrs['field_names']);
+			$field_filter = explode(',', $this->attrs['field-names']);
 		}
 		$fields = $customfields;
 
@@ -169,11 +169,11 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		// check if name refers to a single custom field --> show only that
 		$matches = null;
 		if (($pos=strpos($form_name,self::$prefix)) !== false && // allow the prefixed name to be an array index too
-			preg_match("/$this->prefix([^\]]+)/",$form_name,$matches) && isset($fields[$name=$matches[1]]))
+			preg_match($preg = '/'.self::$prefix.'([^\]]+)/',$form_name,$matches) && isset($fields[$name=$matches[1]]))
 		{
 			$fields = array($name => $fields[$name]);
-			$value = array($this->prefix.$name => $value);
-			$form_name = substr($form_name,0,-strlen("[$this->prefix$name]"));
+			$value = array(self::$prefix.$name => $value);
+			$form_name = substr($form_name,0,-strlen('['.self::$prefix.$name.']'));
 		}
 
 		if(!is_array($fields)) $fields = array();
@@ -199,7 +199,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				{
 					if (!empty($this->attrs['sub-type']) && !empty($field['type2']) &&
 						strpos(','.$field['type2'].',',','.$field['type2'].',') === false) continue;    // not for our content type//
-					if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') //break;
+					if (isset($value[self::$prefix.$lname]) && $value[self::$prefix.$lname] !== '') //break;
 					{
 						$fields_with_vals[]=$lname;
 					}
