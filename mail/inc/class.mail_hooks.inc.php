@@ -96,6 +96,7 @@ class mail_hooks
 					'mime_data'  => 'formData[data]',
 					'formData[type]' => 'message/rfc822',
 					'mime_popup' => '870xavailHeight',
+					'mime_target' => '_blank'
 				),
 			),
 			'entry' => 'Mail',
