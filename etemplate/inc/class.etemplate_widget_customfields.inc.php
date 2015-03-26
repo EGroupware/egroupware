@@ -142,7 +142,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			if($this->attrs['field-names'][0] == '!')
 			{
 				$negate_field_filter = true;
-				$this->attrs['field-names'] = substr($this->attrs['field_names'],1);
+				$this->attrs['field-names'] = substr($this->attrs['field-names'],1);
 			}
 			$field_filter = explode(',', $this->attrs['field_names']);
 		}
