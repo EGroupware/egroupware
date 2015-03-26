@@ -48,6 +48,7 @@ class calendar_hooks
 					'mime_data' => 'ical_data',
 					'mime_url' => 'ical_url',
 					'mime_popup' => '750x400',
+					'mime_target' => '_blank'
 				),
 			),
 			'merge' => true,
