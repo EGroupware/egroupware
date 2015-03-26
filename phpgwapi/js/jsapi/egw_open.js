@@ -321,6 +321,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				if (mime_info.mime_popup) _popup = mime_info.mime_popup;
 				if (mime_info.mime_target) _target = mime_info.mime_target;
 			}
+			
 			if (_popup)
 			{
 				var w_h = _popup.split('x');
@@ -333,16 +334,30 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			}
 			else if ((typeof _target == 'undefined' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
 			{
+				// No mime type registered, set target properly based on browsing environment
+				if (!mime_info)
+				{
+					_target = egwIsMobile()?'_self':'_blank';
+				}
 				if(_target == '_self')
 				{
 					// '_self' isn't allowed, but we can handle it
 					_target = undefined;
+				}
+				else
+				{
+					return _wnd.open(url, _target);
 				}
 				// Use framework's link handler, if present
 				return this.link_handler(url,_target);
 			}
 			else
 			{
+				// No mime type registered, set target properly based on browsing environment
+				if (!mime_info)
+				{
+					_target = egwIsMobile()?'_self':'_blank';
+				}
 				return _wnd.open(url, _target);
 			}
 		},
