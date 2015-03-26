@@ -529,7 +529,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 					{
 						$_status[strtoupper($key)]=$v;
 					}
-					$_status['HIERACHY_DELIMITER'] = $_status['delimiter'] = $box['delimiter'];//$this->getDelimiter('user');
+					$_status['HIERACHY_DELIMITER'] = $_status['delimiter'] = ($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal'));
 					$_status['ATTRIBUTES'] = $box['attributes'];
 					//error_log(__METHOD__.__LINE__.$k.'->'.array2string($_status));
 					return $_status;
@@ -600,7 +600,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		foreach ((array)$mailboxes as $k =>$box)
 		{
 			//error_log(__METHOD__.__LINE__.' Box:'.$k.'->'.array2string($box));
-			$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>$box['delimiter'],'SUBSCRIBED'=>true);
+			$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal')),'SUBSCRIBED'=>true);
 		}
 		// for unknown reasons on ALL, UNSUBSCRIBED are not returned
 		//always fetch unsubscribed, think about only fetching it when $options['attributes'] is set
@@ -616,7 +616,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 				//error_log(__METHOD__.__LINE__.' Box:'.$k.' already In?'.array_key_exists($k,$boxexists).'->'.array2string($box));
 				if(!array_key_exists($k,$ret))
 				{
-					$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>$box['delimiter'],'SUBSCRIBED'=>false);
+					$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal')),'SUBSCRIBED'=>false);
 				}
 				else
 				{
@@ -689,7 +689,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			}
 			else
 			{
-				$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>$box['delimiter'],'SUBSCRIBED'=>true);
+				$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal')),'SUBSCRIBED'=>true);
 			}
 		}
 		return $ret;
@@ -946,6 +946,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		static $nameSpace=null;
 		$foldersNameSpace = array();
 		$delimiter = $this->getDelimiter();
+		if (empty($delimiter)) $delimiter='/';
 		if (is_null($nameSpace)) $nameSpace = $this->getNameSpaceArray();
 		if (is_array($nameSpace)) {
 			foreach($nameSpace as $type => $singleNameSpaceArray)
@@ -1004,7 +1005,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		$namespaces = $this->getNamespaces();
 		foreach ($namespaces as $nsp)
 		{
-			if ($nsp['type']==$type) return $nsp['delimiter'];
+			if ($nsp['type']==$type && $nsp['delimiter']) return $nsp['delimiter'];
 		}
 		return "/";
 	}
@@ -1122,7 +1123,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			$username .= '@'. $this->domainName;
 		}
 
-		$mailboxString = $nameSpaces['others'][0]['name'] . $username . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
+		$mailboxString = $nameSpaces['others'][0]['name'] . $username . (!empty($_folderName) ? ($nameSpaces['others'][0]['delimiter']?$nameSpaces['others'][0]['delimiter']:'/') . $_folderName : '');
 
 		return $mailboxString;
 	}
@@ -1151,7 +1152,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 					'name' => $data['name'],
 					'prefix' => $data['name'],
 					'prefix_present' => !empty($data['name']),
-					'delimiter' => $data['delimiter'],
+					'delimiter' => ($data['delimiter']?$data['delimiter']:'/'),
 				);
 			}
 		}
