@@ -53,7 +53,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 	},
 
-	legacyOptions: ["type_filter","private"], // Field restriction & private done server-side
+	legacyOptions: ["type_filter","private", "fields"], // Field restriction & private done server-side
 
 	prefix: '#',
 

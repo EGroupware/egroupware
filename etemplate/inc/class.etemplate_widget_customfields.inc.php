@@ -135,17 +135,21 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			// app changed
 			$customfields =& egw_customfields::get($app);
 		}
-
 		// Filter fields
 		if($this->attrs['field-names'])
 		{
-			if($this->attrs['field-names'][0] == '!')
+			$fields_name = explode(',', $this->attrs['field-names']);
+			foreach($fields_name as &$f)
 			{
-				$negate_field_filter = true;
-				$this->attrs['field-names'] = substr($this->attrs['field-names'],1);
+				if ($f[0] == "!")
+				{
+					$f= substr($f,1);
+					$negate_fields[]= $f;
+				}
+				$field_filters []= $f;
 			}
-			$field_filter = explode(',', $this->attrs['field-names']);
 		}
+		
 		$fields = $customfields;
 
 		$use_private = self::expand_name($this->attrs['use-private'],0,0,'','',self::$cont);
@@ -160,8 +164,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			}
 
 			// Remove filtered fields
-			if($field_filter && (!$negate_field_filter && !in_array($key, $field_filter) ||
-				$negate_field_filter && in_array($key, $field_filter)))
+			if($field_filters && in_array($key, $negate_fields) && in_array($key, $field_filters))
 			{
 				unset($fields[$key]);
 			}
@@ -173,7 +176,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		{
 			$fields = array($name => $fields[$name]);
 			$value = array(self::$prefix.$name => $value);
-			$form_name = substr($form_name,0,-strlen('['.self::$prefix.$name.']'));
+			$form_name = self::$prefix.$name;
 		}
 
 		if(!is_array($fields)) $fields = array();
