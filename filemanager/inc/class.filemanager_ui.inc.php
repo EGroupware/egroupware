@@ -872,13 +872,14 @@ class filemanager_ui
 				$row['class'] = 'isDir';
 			}
 			$row['download_url'] = egw_vfs::download_url($path);
+			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
 
 			$rows[++$n] = $row;
 			$path2n[$path] = $n;
 		}
 		// query comments and cf's for the displayed rows
 		$cols_to_show = explode(',',$GLOBALS['egw_info']['user']['preferences']['filemanager']['nextmatch-filemanager.index.rows']);
-		
+
 		// Always include comment in tiles
 		if($query['view'] == 'tile')
 		{
