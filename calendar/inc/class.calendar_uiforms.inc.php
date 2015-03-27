@@ -923,7 +923,7 @@ class calendar_uiforms extends calendar_ui
 
 		case 'freetime':
 			// the "click" has to be in onload, to make sure the button is already created
-			egw_framwork::set_onload("document.getElementsByName('exec[freetime]')[0].click();");
+			egw_framework::set_onload("document.getElementsByName('exec[freetime]')[0].click();");
 			break;
 
 		case 'add_alarm':
