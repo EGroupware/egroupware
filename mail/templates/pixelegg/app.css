@@ -823,6 +823,10 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   div.mailPreviewHeaders > * {
     font-size: small !important;
   }
+  .mailDisplayHeaders,
+  .mailDisplayAttachments > * {
+    font-size: large !important;
+  }
 }
 /* tablets and smartphones (portrait) ----------- */
 @media only screen and (max-device-width: 1024px) and (orientation: portrait) {
