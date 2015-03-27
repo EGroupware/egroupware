@@ -41,7 +41,7 @@
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
 	var start_time = (new Date).getTime();
-	if(typeof console != "undefined" && console.timeline) console.timeline("egw");
+	if(typeof console != "undefined" && console.time) console.time("egw");
 
 	// set opener as early as possible for framework popups (not real popups)
 	if (!window.opener && window.parent !== window)
@@ -199,7 +199,7 @@
 			egw.open_link.apply(egw, egw_popup);
 		}
 
-		if(typeof console != "undefined" && console.timelineEnd) console.timelineEnd("egw");
+		if(typeof console != "undefined" && console.timeEnd) console.timeEnd("egw");
 		var end_time = (new Date).getTime();
 		var gen_time_div = $j('#divGenTime_'+window.egw_appName);
 		if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');

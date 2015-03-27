@@ -358,9 +358,9 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	{
 		egw.window.console.groupCollapsed("Loading %s into ", _name, '#'+this.DOMContainer.id);
 	}
-	if(console.timeline)
+	if(console.time)
 	{
-		console.timeline(_name);
+		console.time(_name);
 	}
 	if(console.profile)
 	{
@@ -523,9 +523,9 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				$j(this.DOMContainer).trigger('load', this);
 
 				// Profiling
-				if(console.timelineEnd)
+				if(console.timeEnd)
 				{
-					console.timelineEnd(_name);
+					console.timeEnd(_name);
 				}
 				if(console.profileEnd)
 				{
