@@ -3252,6 +3252,8 @@ class mail_ui
 				$file = $content['uploadForImport'];
 			}
 			$destination = $content['FOLDER'][0];
+			if (stripos($destination,self::$delimiter)!==false) list($serverId,$destination) = explode(self::$delimiter,$destination,2);
+			//error_log(__METHOD__.__LINE__.self::$delimiter.array2string($destination));
 			$importID = mail_bo::getRandomString();
 			$importFailed = false;
 			try
