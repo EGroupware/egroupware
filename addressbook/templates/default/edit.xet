@@ -181,7 +181,7 @@
 						<rows>
 							<row valign="top">
 								<description value="Notes"/>
-								<textbox multiline="true" id="note" rows="10" class="et2_fullWidth"/>
+								<textbox multiline="true" id="note" rows="10" class="et2_fullWidth" height="100"/>
 							</row>
 							<row disabled="@hidebuttons">
 								<description value="Last date"/>
