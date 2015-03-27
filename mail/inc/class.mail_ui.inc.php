@@ -2186,7 +2186,10 @@ class mail_ui
 				if (strtoupper($value['mimeType']=='APPLICATION/OCTET-STREAM')) $value['mimeType'] = mime_magic::filename2mime($attachmentHTML[$key]['filename']);
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);
-				list(, $acc_id) = explode(self::$delimiter, $rowID);
+				$hA = self::splitRowID($rowID);
+				$uid = $hA['msgUID'];
+				$mailbox = $hA['folder'];
+				$acc_id = $hA['profileID'];
 
 				$attachmentHTML[$key]['mime_data'] = egw_link::set_data($value['mimeType'], 'emailadmin_imapbase::getAttachmentAccount', array(
 					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'], true
@@ -3252,7 +3255,14 @@ class mail_ui
 				$file = $content['uploadForImport'];
 			}
 			$destination = $content['FOLDER'][0];
-			if (stripos($destination,self::$delimiter)!==false) list($serverId,$destination) = explode(self::$delimiter,$destination,2);
+			$rememberServerID = $icServerID = $this->mail_bo->profileID;
+
+			if (stripos($destination,self::$delimiter)!==false) list($icServerID,$destination) = explode(self::$delimiter,$destination,2);
+			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+				$this->changeProfile($icServerID);
+			}
 			//error_log(__METHOD__.__LINE__.self::$delimiter.array2string($destination));
 			$importID = mail_bo::getRandomString();
 			$importFailed = false;
