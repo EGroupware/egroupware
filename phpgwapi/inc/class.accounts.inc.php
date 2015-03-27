@@ -563,7 +563,10 @@ class accounts
 				$this->set_memberships($memberships, $id);	// invalidates cache for account_id and primary group
 			}
 		}
-		self::cache_invalidate($data['account_id']);
+		// as some backends set (group-)members in save, we need to invalidate their members too!
+		$invalidate = isset($data['account_members']) ? $data['account_members'] : array();
+		$invalidate[] = $data['account_id'];
+		self::cache_invalidate($invalidate);
 
 		return $id;
 	}
