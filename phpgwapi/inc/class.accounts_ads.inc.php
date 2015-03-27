@@ -819,7 +819,7 @@ class accounts_ads
 	 *	or integer group-id for a list of members of that group
 	 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
 	 * @param $param['order'] string column to sort after, default account_lid if unset
-	 * @param $param['sort'] string 'ASC' or 'DESC', default 'DESC' if not set
+	 * @param $param['sort'] string 'ASC' or 'DESC', default 'ASC' if not set
 	 * @param $param['query'] string to search for, no search if unset or empty
 	 * @param $param['query_type'] string:
 	 *	'all'   - query all fields for containing $param[query]
@@ -955,7 +955,7 @@ class accounts_ads
 	 *
 	 * @var string
 	 */
-	private $_callback_sort = 'DESC';
+	private $_callback_sort = 'ASC';
 	/**
 	 * column_names to sort by
 	 *
@@ -974,7 +974,7 @@ class accounts_ads
 	{
 		foreach($this->_callback_order as $col )
 		{
-			if($this->_callback_sort == 'ASC')
+			if($this->_callback_sort != 'DESC')
 			{
 				$cmp = strcasecmp( $a[$col], $b[$col] );
 			}
