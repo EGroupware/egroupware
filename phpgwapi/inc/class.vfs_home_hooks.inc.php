@@ -120,7 +120,7 @@ class vfs_home_hooks
 		if (egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0070,0))
 		{
 			egw_vfs::chown($dir,0);
-			egw_vfs::chgrp($dir,$data['account_id']);
+			egw_vfs::chgrp($dir,abs($data['account_id']));	// gid in Vfs is positiv!
 			egw_vfs::chmod($dir,0070);	// only group has access
 		}
 		egw_vfs::$is_root = false;
