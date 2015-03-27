@@ -70,7 +70,7 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		"extra_link_target": {
 			"name": "Link target",
 			"type": "string",
-			"default": "_self",
+			"default": "_browser",
 			"description": "Link target for href attribute"
 		},
 		"extra_link_popup": {
