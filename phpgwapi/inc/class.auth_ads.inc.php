@@ -219,14 +219,15 @@ class auth_ads implements auth_backend
 			$admin = true;
 			$username = $GLOBALS['egw']->accounts->id2name($account_id);
 		}
-		// Check the old_passwd to make sure this is legal
-		if(!$admin && !$this->authenticate($username, $old_passwd))
+		// Check the old_passwd to make sure this is legal, if we dont support password change
+		if (!$admin && (!method_exists($adldap->user(), 'passwordChangeSupported') ||
+			!$adldap->user()->passwordChangeSupported()) && !$this->authenticate($username, $old_passwd))
 		{
 			//error_log(__METHOD__."() old password '$old_passwd' for '$username' is wrong!");
 			return false;
 		}
 		try {
-			$ret = $adldap->user()->password($username, $new_passwd);
+			$ret = $adldap->user()->password($username, $new_passwd, false, $old_passwd);
 			//error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) admin=$admin adldap->user()->password('$username', '$new_passwd') returned ".array2string($ret));
 			return $ret;
 		}
@@ -243,7 +244,7 @@ class auth_ads implements auth_backend
 				'Server is unwilling to perform.' => lang('Server is unwilling to perform.'),
 				'Your password might not match the password policy.' => lang('Your password might not match the password policy.'),
 			));
-			throw new egw_exception('<p><b>'.lang('Failed to change password.')."</b></p>\n".$msg.($error ? "\n<p>".$error."</p>\n" : ''));
+			throw new egw_exception('<p>'.lang('Failed to change password.')."</p>\n".$msg.($error ? "\n<p>".$error."</p>\n" : ''));
 		}
 		return false;
 	}

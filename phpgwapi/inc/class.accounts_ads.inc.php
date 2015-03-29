@@ -1433,6 +1433,80 @@ class adLDAPUsers_egw extends adLDAPUsers
     	return $result;
     }
 
+	/**
+	 * Check if we can to a real password change, not just a password reset
+	 *
+	 * Requires PHP 5.4 >= 5.4.26, PHP 5.5 >= 5.5.10 or PHP 5.6 >= 5.6.0
+	 *
+	 * @return boolean
+	 */
+	public static function changePasswordSupported()
+	{
+		return function_exists('ldap_modify_batch');
+	}
+
+    /**
+    * Set the password of a user - This must be performed over SSL
+    *
+    * @param string $username The username to modify
+    * @param string $password The new password
+    * @param bool $isGUID Is the username passed a GUID or a samAccountName
+	* @param string $old_password old password for password change, if supported
+    * @return bool
+    */
+    public function password($username, $password, $isGUID = false, $old_password=null)
+    {
+        if ($username === NULL) { return false; }
+        if ($password === NULL) { return false; }
+        if (!$this->adldap->getLdapBind()) { return false; }
+        if (!$this->adldap->getUseSSL() && !$this->adldap->getUseTLS()) {
+            throw new adLDAPException('SSL must be configured on your webserver and enabled in the class to set passwords.');
+        }
+
+        $userDn = $this->dn($username, $isGUID);
+        if ($userDn === false) {
+            return false;
+        }
+
+        $add=array();
+
+		if (empty($old_password) || !function_exists('ldap_modify_batch')) {
+			$add["unicodePwd"][0] = $this->encodePassword($password);
+
+			$result = @ldap_mod_replace($this->adldap->getLdapConnection(), $userDn, $add);
+		}
+		else {
+			$mods = array(
+				array(
+					"attrib"  => "unicodePwd",
+					"modtype" => LDAP_MODIFY_BATCH_REMOVE,
+					"values"  => array($this->encodePassword($old_password)),
+				),
+				array(
+					"attrib"  => "unicodePwd",
+					"modtype" => LDAP_MODIFY_BATCH_ADD,
+					"values"  => array($this->encodePassword($password)),
+				),
+			);
+			$result = ldap_modify_batch($this->adldap->getLdapConnection(), $userDn, $mods);
+		}
+        if ($result === false){
+            $err = ldap_errno($this->adldap->getLdapConnection());
+            if ($err) {
+                $msg = 'Error ' . $err . ': ' . ldap_err2str($err) . '.';
+                if($err == 53) {
+                    $msg .= ' Your password might not match the password policy.';
+                }
+                throw new adLDAPException($msg);
+            }
+            else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
     * Modify a user
     *
@@ -1550,4 +1624,24 @@ class adLDAPUtils_egw extends adLDAPUtils
 	{
 		return $this->adldap->encode8bit($item, $key);
 	}
+
+    /**
+    * Escape strings for the use in LDAP filters
+    *
+    * DEVELOPERS SHOULD BE DOING PROPER FILTERING IF THEY'RE ACCEPTING USER INPUT
+    * Ported from Perl's Net::LDAP::Util escape_filter_value
+    *
+    * @param string $str The string the parse
+    * @author Port by Andreas Gohr <andi@splitbrain.org>
+    * @return string
+    */
+    public function ldapSlashes($str){
+        return preg_replace_callback(
+      		'/([\x00-\x1F\*\(\)\\\\])/',
+        	function ($matches) {
+            	return "\\".join("", unpack("H2", $matches[1]));
+        	},
+        	$str
+    	);
+    }
 }
