@@ -51,7 +51,7 @@ by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
 changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
-check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. mache Empfänger keine Bestätigung senden möchten.)
+check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
 check to save as infolog on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Infolog erstellt wird.
 check to save as trackerentry on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Ticket erstell werden kann.
 choose file	mail	de	Datei
@@ -68,7 +68,7 @@ connection status	mail	de	Verbindungsstatus
 contains	mail	de	beinhaltet
 contains(*)	mail	de	enthält(*)
 convert mail to item and attach its attachments to this item (standard)	mail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge hinzu (Standard)
-convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge, sowie die Original Nachricht, als message/rfc (.eml) Datei hinzu.
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	de	konvertiere E-Mail zum Eintrag und füge die Mailanhänge sowie die Original Nachricht als message/rfc (.eml) Datei hinzu.
 convert only mail to item (ignore possible attachments)	mail	de	konvertiere nur den E-Mail-Text zum Eintrag ohne mögliche Anhänge zu beachten
 copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
 copy to	mail	de	Kopieren
@@ -130,7 +130,7 @@ edit folder acl	mail	de	Berechtigungen bearbeiten
 edit folder acl ...	mail	de	Zugriffsrechte bearbeiten ...
 edit vacation settings	mail	de	Abwesenheitsnotiz bearbeiten
 effective only if server supports acl at all	admin	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
-email notification successfully updated!	mail	de	E--mail Benachrichtigungen erfolgreich aktualisiert!
+email notification successfully updated!	mail	de	E-mail Benachrichtigungen erfolgreich aktualisiert!
 email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-Status der E-Mail ist fehlgeschlagen.
 email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-Mail Benachrichtigungen fehlgeschlagen! Es muss eine E-Mail-Adresse ausgewählt sein!
 emailaddress	admin	de	E-Mail
@@ -237,7 +237,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	de	dienstlich
 junk	mail	de	Spam
 junk folder	mail	de	Ordner für SPAM Nachrichten
-keep a copy of the message in your inbox	mail	de	eine Kopie der Nachricht in der INBOX behalten
+keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht in der INBOX behalten
 kilobytes	mail	de	Kilobytes
 later	mail	de	später
 less than	mail	de	kleiner als
@@ -303,8 +303,8 @@ outbox	mail	de	Postausgang
 password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
 please configure access to an existing individual imap account.	mail	de	Bitte konfigurieren Sie hier den Zugang zu einem existierenden IMAP Account.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie ihren Administrator um sicherzustellen dass ihr Server serverseitige Abwesendheitsnachrichten unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie Ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie Ihren Administrator um sicherzustellen dass ihr Server serverseitige Abwesenheitsnachricht unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
 please select a address	mail	de	Bitte wählen Sie eine Adresse
 please select the number of days to wait between responses	mail	de	Bitte wählen wie viele Tage zwischen den Antworten gewartet werden soll.
 please supply the message to send with auto-responses	mail	de	Bitte geben Sie eine Nachricht ein, die mit der automatischen Antwort gesendet werden soll
@@ -360,7 +360,7 @@ save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
 save into vfs	mail	de	In das virtuelle Dateisystem (VFS) speichern
 save message to disk	mail	de	Nachricht auf Ihrer Festplatte speichern
-save message to filemanager	mail	de	Im EGroupware Dateimanger speichern
+save message to filemanager	mail	de	Im EGroupware Dateimanager speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf in das VFS als .eml Datei ab.
 save to disk	mail	de	Speichern
@@ -378,20 +378,20 @@ select files to upload	mail	de	Dateien anhängen.
 selected	mail	de	ausgewählt
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
-send message and move to send folder (if configured)	mail	de	Versende Nachricht, und kopiere diese in den konfigurierten Gesendet Ordner
+send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet Ordner
 sender	mail	de	Absender
 sent	mail	de	Gesendet
 sent folder	mail	de	Ordner für gesendete Nachrichten
 server supports special-use folders	mail	de	Server unterstützt Funktionsordner
 serverside filterrules (sieve) are not activated	mail	de	Serverseitige Filterregeln (Sieve) sind nicht aktiviert
-serverside vacationnotice (via sieve) are not activated	mail	de	Serverseitige Abwesendheitsbenachrichtigungen (via Sieve) sind nicht aktiviert
+serverside vacationnotice (via sieve) are not activated	mail	de	Serverseitige Abwesenheitsbenachrichtigungen (via Sieve) sind nicht aktiviert
 set / remove flags	mail	de	Markierung
 set / remove labels	mail	de	Schlagworte setzen / entfernen
 set it as default:	mail	de	als Vorgabe speichern
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
-should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur Hinter (gemäß Standart) oder Vor dem zitierten Text einer email eingefügt werden, und soll diese bearbeitbar sein?
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur nach (gemäß Standard) oder vor dem zitierten Text einer email eingefügt werden und soll diese bearbeitbar sein?
 show all folders	mail	de	Darstellung aller E-Mail Ordner
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	de	Zeige alle Ordner, die in Ihrem Postfach eingerichtet sind. Expliziere Deaktivierung des Abonnement-Funktion des E-Mail Programms. Dies kann sich negativ auf die Performance Ihrer EGroupware auswirken.
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	de	Zeige alle Ordner, die in Ihrem Postfach eingerichtet sind. Expliziere Deaktivierung der Abonnement-Funktion des E-Mail Programms. Dies kann sich negativ auf die Performance Ihrer EGroupware auswirken.
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
 show test connection section and control the level of info displayed?	mail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
 show test connection section and control the level of info displayed??	mail	de	Soll der Verbindungstest und die dazugehörigen Informationen angezeigt werden?
@@ -436,7 +436,7 @@ the %1 's acl removed from the %2	mail	de	Die Zugriffskontrollrechte von %1 wurd
 the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriffskontrollrechte inkl. Unterordner von %1 wurden von %2 entfernt
 the folder %1 's acls saved	mail	de	Die Zugriffskontrollrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
-the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat ein Empfangsbestätigung angefordert, um sicherzustellen, das Sie diese E-Mail gelesen haben. Möchten Sie ein Empfangsbestätigung senden?
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicherzustellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann
@@ -460,10 +460,10 @@ use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
 use username+password from current user	mail	de	verwendet Benutzername+Passwort des angemeldeten Benutzers
-vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheits-Nachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
+vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheitsnachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
 vacation notice	mail	de	Abwesenheitsnotiz
 vacation notice is active	mail	de	Abwesenheitsnotiz ist aktiv
-vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)
+vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standardwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)
 vacation notice sucessfully updated.	mail	de	Abwesenheitsnotiz erfolgreich aktualisiert.
 vacation notice update failed	mail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
 vacation start-date must be before the end-date!	mail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Enddatum liegen!
@@ -494,7 +494,7 @@ yes, offer copy option	mail	de	Ja, mit Kopieroption
 yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen der Verbindung aus
 yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
-you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht als beides gleichzeitig.
+you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
 you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail in das VFS speichern können.
 you've got new mail	mail	de	Sie haben neue E-Mails
