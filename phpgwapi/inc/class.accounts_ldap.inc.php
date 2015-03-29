@@ -285,7 +285,7 @@ class accounts_ldap
 		// now we merge the user or group data
 		if ($is_group)
 		{
-			$to_write = $this->_merge_group($to_write,$data_utf8);
+			$to_write = $this->_merge_group($to_write, $data_utf8, $old);
 			$data['account_type'] = 'g';
 
 			$objectclass = $old ? $old['objectclass'] : $to_write['objectclass'];
@@ -551,12 +551,14 @@ class accounts_ldap
 	 * @param array $data array with account-data in utf-8
 	 * @return array merged data
 	 */
-	protected function _merge_group($to_write,$data)
+	protected function _merge_group($to_write,$data,$old=null)
 	{
 		$to_write['gidnumber'] = abs($data['account_id']);
 		$to_write['cn'] = $data['account_lid'];
-		$to_write['description'] = $data['account_description'];
-
+		if (!empty($data['account_description']) || $old)
+		{
+			$to_write['description'] = !empty($data['account_description']) ? $data['account_description'] : array();
+		}
 		return $to_write;
 	}
 
