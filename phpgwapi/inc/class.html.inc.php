@@ -62,11 +62,19 @@ class html
 	static function _init_static()
 	{
 		// should be Ok for all HTML 4 compatible browsers
-		$parts = null;
+		$parts = $all_parts = null;
 		if(!preg_match('/compatible; ([a-z]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts))
 		{
-			preg_match_all('/([a-z]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts,PREG_SET_ORDER);
-			$parts = $parts[2][1] == 'Chrome' ? $parts[2] : array_pop($parts);
+			preg_match_all('/([a-z]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$all_parts,PREG_SET_ORDER);
+			$parts = array_pop($all_parts);
+			foreach($all_parts as $p)
+			{
+				if ($p[1] == 'Chrome')
+				{
+					$parts = $p;
+					break;
+				}
+			}
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
 		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
