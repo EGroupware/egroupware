@@ -184,9 +184,10 @@ class egw_link extends solink
 	static function init_static( )
 	{
 		// FireFox 36 can not display pdf with it's internal viewer in an iframe used by mobile theme/template for popups
-		if (html::$user_agent == 'firefox' && $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
+		// same is true for all mobile devices
+		if (html::$user_agent == 'firefox' && $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' || html::$ua_mobile)
 		{
-			unset(self::$app_register['home']['mime']['application/pdf']['mime_popup']);
+			unset(self::$app_register['home']['mime']['application/pdf']);
 		}
 		// other apps can participate in the linking by implementing a search_link hook, which
 		// has to return an array in the format of an app_register entry
