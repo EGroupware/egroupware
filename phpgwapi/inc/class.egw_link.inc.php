@@ -1043,11 +1043,14 @@ class egw_link extends solink
 				$data[$data['mime_id']] = $path;
 				unset($data['mime_id']);
 			}
+			elseif(isset($data['mime_popup']))
+			{
+				$popup = $data['mime_popup'];
+			}
 			else
 			{
 				throw new egw_exception_assertion_failed("Missing 'mime_id' or 'mime_url' for mime-type '$type'!");
 			}
-			$popup = $data['mime_popup'];
 			unset($data['mime_popup']);
 		}
 		else
