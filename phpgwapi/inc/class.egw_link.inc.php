@@ -148,9 +148,6 @@ class egw_link extends solink
 					'mime_popup' => '640x480',
 					'mime_target' => '_blank',
 				),
-				'text\\//' => array( // text/* as preg, no modifier!
-					'mime_target' => '_browser',
-				),
 				'/^text\\/(plain|html|diff)/' => array(	// text/(mimetypes which can be opened as recognised popups)
 					'mime_popup' => '640x480',
 					'mime_target' => '_blank',
