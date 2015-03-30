@@ -1372,37 +1372,44 @@ class egw_db
 	* Correctly Quote Identifiers like table- or colmnnames for use in SQL-statements
 	*
 	* This is mostly copy & paste from adodb's datadict class
-	* @param $name string
+	* @param string $_name
 	* @return string quoted string
 	*/
-	function name_quote($name = NULL)
+	function name_quote($_name = NULL)
 	{
-		if (!is_string($name)) {
-			return FALSE;
+		if (!is_string($_name))
+		{
+			return false;
 		}
 
-		$name = trim($name);
+		$name = trim($_name);
 
 		if (!$this->Link_ID && !$this->connect())
 		{
-			return False;
+			return false;
 		}
 
 		$quote = $this->Link_ID->nameQuote;
+		$type = $this->Type;
 
-		// if name is of the form `name`, quote it
-		if ( preg_match('/^`(.+)`$/', $name, $matches) ) {
-			return $quote . $matches[1] . $quote;
-		}
-
-		// if name contains special characters, quote it
-		// always quote for postgreSQL, as this is the only way to support mixed case names
-		if (preg_match('/\W/', $name) || $this->Type == 'pgsql' && preg_match('/[A-Z]+/', $name))
+		// if name is of the form `name`, remove MySQL quotes and leave it to automatic below
+		if ($name[0] === '`' && substr($name, -1) === '`')
 		{
-			return $quote . $name . $quote;
+			$name = substr($name, 1, -1);
 		}
 
-		return $name;
+		$quoted = array_map(function($name) use ($quote, $type)
+		{
+			// if name contains special characters, quote it
+			// always quote for postgreSQL, as this is the only way to support mixed case names
+			if (preg_match('/\W/', $name) || $type == 'pgsql' && preg_match('/[A-Z]+/', $name) || $name == 'index')
+			{
+				return $quote . $name . $quote;
+			}
+			return $name;
+		}, explode('.', $name));
+
+		return implode('.', $quoted);
 	}
 
 	/**
