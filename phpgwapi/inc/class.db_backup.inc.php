@@ -945,7 +945,7 @@ class db_backup
 					empty($pk) || !$max ? false : $pk.' > '.$this->db->quote($max, $schema['fd'][$pk]['type']),
 					__LINE__, __FILE__,
 					empty($pk) ? false : 0,					// if no primary key, query all rows
-					empty($pk) ? '' : 'ORDER BY '.$pk.' ASC',	// order by primary key
+					empty($pk) ? '' : 'ORDER BY '.$this->db->name_quote($pk).' ASC',	// order by primary key
 					false, self::ROW_CHUNK) as $row)
 				{
 					if (!empty($pk)) $max = $row[$pk];
