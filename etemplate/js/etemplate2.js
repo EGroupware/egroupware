@@ -495,7 +495,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 						.not('.et2_date')
 						.filter(function() {
 						// Skip inputs that are out of tab ordering
-						$this = $j(this);
+						var $this = $j(this);
 						return !$this.attr('tabindex') || $this.attr('tabIndex')>=0;
 					}).first();
 
