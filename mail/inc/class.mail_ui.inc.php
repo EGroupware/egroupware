@@ -2168,14 +2168,20 @@ class mail_ui
 						$attachmentHTML[$key]['filename'] = $x;
 					}
 				}
-//error_log(array2string($value));
-//error_log(strtoupper($value['mimeType']) .'<->'. mime_magic::filename2mime($attachmentHTML[$key]['filename']));
+				//error_log(array2string($value));
+				//error_log(strtoupper($value['mimeType']) .'<->'. mime_magic::filename2mime($attachmentHTML[$key]['filename']));
 				if (strtoupper($value['mimeType']=='APPLICATION/OCTET-STREAM')) $value['mimeType'] = mime_magic::filename2mime($attachmentHTML[$key]['filename']);
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);
+				list(, $acc_id) = explode(self::$delimiter, $rowID);
+
+				$attachmentHTML[$key]['mime_data'] = egw_link::set_data($value['mimeType'], 'emailadmin_imapbase::getAttachmentAccount', array(
+					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'], true
+				));
 				$attachmentHTML[$key]['size']=egw_vfs::hsize($value['size']);
 				$attachmentHTML[$key]['attachment_number']=$key;
 				$attachmentHTML[$key]['partID']=$value['partID'];
+				$attachmentHTML[$key]['mail_id'] = $rowID;
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
 
@@ -2185,7 +2191,7 @@ class mail_ui
 						$linkData = array
 						(
 							'menuaction'	=> 'mail.mail_ui.displayMessage',
-							//'mode'		=> 'display', //message/rfc822 attachments should be opened in display mode
+							'mode'		=> 'display', //message/rfc822 attachments should be opened in display mode
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
 							'is_winmail'    => $value['is_winmail']
@@ -2252,6 +2258,14 @@ class mail_ui
 						$linkView = "window.location.href = '".egw::link('/index.php',$linkData)."';";
 						break;
 				}
+				// we either use mime_data for server-side supported mime-types or mime_url for client-side or download
+				if (empty($attachmentHTML[$key]['mime_data']))
+				{
+					$attachmentHTML[$key]['mime_url'] = egw::link('/index.php',$linkData);
+					unset($attachmentHTML[$key]['mime_data']);
+				}
+				$attachmentHTML[$key]['windowName'] = $windowName;
+
 				//error_log(__METHOD__.__LINE__.$linkView);
 				$attachmentHTML[$key]['link_view'] = '<a href="#" ." title="'.$attachmentHTML[$key]['filename'].'" onclick="'.$linkView.' return false;"><b>'.
 					($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)')).
@@ -2532,8 +2546,7 @@ class mail_ui
 		html::safe_content_header($attachment['attachment'], $filename, $attachment['type'], $size=0, True, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
-		$GLOBALS['egw']->common->egw_exit();
-		exit;
+		common::egw_exit();
 	}
 
 
@@ -3295,8 +3308,6 @@ class mail_ui
 		if ($importfailed === false)
 		{
 			$mailObject = new egw_mailer();
-			$Header = '';
-			$Body = '';
 			try
 			{
 				$this->mail_bo->parseFileIntoMailObject($mailObject, $tmpFileName);
@@ -3381,15 +3392,20 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.':'.array2string($formData).' Mode:'.$mode.'->'.function_backtrace());
 		$draftFolder = $this->mail_bo->getDraftFolder(false);
 		$importID = mail_bo::getRandomString();
+
+		// handling for mime-data hash
+		if (!empty($formData['data']))
+		{
+			$formData['file'] = 'egw-data://'.$formData['data'];
+		}
 		// name should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['name']) || empty($formData['name'])))
+		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && empty($formData['name']))
 		{
 			$buff = explode('/',$formData['file']);
-			$suffix = '';
 			if (is_array($buff)) $formData['name'] = array_pop($buff); // take the last part as name
 		}
 		// type should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['type']) || empty($formData['type'])))
+		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && empty($formData['type']))
 		{
 			$buff = explode('.',$formData['file']);
 			$suffix = '';
@@ -3419,18 +3435,12 @@ class mail_ui
 			{
 				$linkData['mode']=$mode;
 			}
-
+			egw::redirect_link('/index.php',$linkData);
 		}
 		catch (egw_exception_wrong_userinput $e)
 		{
-		    $linkData = array
-		    (
-		        'menuaction'    => 'mail.mail_ui.importMessage',
-				'msg'		=> htmlspecialchars($e->getMessage()),
-		    );
+			egw_framework::window_close($e->getMessage());
 		}
-		egw::redirect_link('/index.php',$linkData);
-		exit;
 	}
 
 	/**

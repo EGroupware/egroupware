@@ -6284,17 +6284,6 @@ a.textSidebox {
     width: 100%;
     line-height: 32px !important;
   }
-  body div.egw_fw_mobile_popup_appHeader .egw_fw_mobile_popup_close {
-    width: 32px;
-    height: 32px;
-    float: right;
-    background-image: url('../images/cancelled.png');
-    /*url(../images/topmenu_items/mobile/menu_active.png);*/
-    -webkit-filter: contrast(2);
-    background-repeat: no-repeat;
-    z-index: 999;
-    padding-right: 5px;
-  }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
     font-size: medium;
     margin-top: 15px;
@@ -6979,7 +6968,6 @@ a.textSidebox {
     display: none;
     z-index: 999;
     -webkit-overflow-scrolling: touch;
-    overflow-y: scroll;
     background: white;
   }
   .egw_fw_mobile_popup_container .egw_fw_mobile_popupFrame {
@@ -6987,10 +6975,30 @@ a.textSidebox {
     height: 100%;
     visibility: hidden;
   }
+  .egw_fw_mobile_popup_container span.egw_fw_mobile_popup_close {
+    width: 32px;
+    height: 32px;
+    float: right;
+    background-image: url('../images/cancelled.png');
+    /*url(../images/topmenu_items/mobile/menu_active.png);*/
+    -webkit-filter: contrast(2);
+    background-repeat: no-repeat;
+    z-index: 1000;
+    padding-right: 5px;
+    top: 0;
+    right: 2px;
+    position: absolute;
+  }
   .egw_fw_mobile_popup_loader {
     background: url(../images/loading.gif) center no-repeat;
     background-size: 120px 120px;
     background-position: center;
+  }
+  #mail-display {
+    min-height: initial !important;
+  }
+  #mail-display .mailDisplayContainer {
+    top: 140px;
   }
 }
 @media only screen and (max-device-width : 1024px) {

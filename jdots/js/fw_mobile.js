@@ -139,11 +139,19 @@
 		 */
 		init:function(_wnd)
 		{
+			var self = this;
 			this.$container = $j(document.createElement('div')).addClass('egw_fw_mobile_popup_container egw_fw_mobile_popup_loader');
 			this.$iFrame = $j(document.createElement('iframe'))
 					.addClass('egw_fw_mobile_popupFrame')
 					.appendTo(this.$container);
 			this.$container.appendTo('body');
+			// Create close button for popups
+			var $closeBtn = $j(document.createElement('span'))
+				.addClass('egw_fw_mobile_popup_close')
+				.click(function (){self.close(framework.popup_idx(self.$iFrame[0].contentWindow));});
+			if (framework.getUserAgent() === 'iOS' && !framework.isNotFullScreen()) $closeBtn.css({top:"15px"});
+			this.$container.prepend($closeBtn);
+			
 			this.windowOpener = _wnd;
 		},
 
@@ -168,20 +176,8 @@
 			this.$iFrame.on('onpopupload', function (){
 				var popupWindow = this.contentWindow;
 				var $appHeader = $j(popupWindow.document).find('#divAppboxHeader');
-				var $closeBtn = $appHeader.find('.egw_fw_mobile_popup_close');
-				if ($closeBtn.length  == 0)
-				{
-					$closeBtn =  $j(document.createElement('span'))
-										.addClass('egw_fw_mobile_popup_close')
-										.click(function (){self.close(framework.popup_idx(self.$iFrame[0].contentWindow));});
-					if ($appHeader.length > 0)
-					{
-						$appHeader.addClass('egw_fw_mobile_popup_appHeader');
-						// Add close button only after everything is loaded
-						setTimeout(function(){$appHeader.prepend($closeBtn);},0);
-					}
-				}
-
+				$appHeader.addClass('egw_fw_mobile_popup_appHeader');
+				
 				//Remove the loading class
 				self.$container.removeClass('egw_fw_mobile_popup_loader');
 				self.$iFrame.css({visibility:'visible'});
@@ -204,24 +200,6 @@
 					// If the popup is not an et2_popup
 					else if ($et2_container.length == 0)
 					{
-						// Since the popup is  not et2, there's no css loaded
-						// therefore we need to add the style
-						var close_btn_styles = {width: "32px",
-							height: "32px",
-							float:"right",
-							"background-image": 'url(' +egw.webserverUrl+ '/pixelegg/images/cancelled.png)',
-							"-webkit-filter": "contrast(2)",
-							"background-repeat": "no-repeat",
-							"z-index": 999,
-							"padding-right": "5px"};
-
-						var $closeBtn =  $j(document.createElement('span'))
-										.addClass('egw_fw_mobile_popup_close')
-										.click(function (){self.close(framework.popup_idx(self.$iFrame[0].contentWindow));})
-										.css(close_btn_styles);
-						setTimeout(function(){
-							$j('body',popupWindow.document).prepend($closeBtn);
-						},0);
 						self.$container.removeClass('egw_fw_mobile_popup_loader');
 						self.$iFrame.css({visibility:'visible'});
 					}
@@ -401,6 +379,7 @@
 		 */
 		orientation: function ()
 		{
+			if (!this.isLandscape()) this.toggleMenu('on');
 			this.arrangeToolbar(this.isLandscape()?'landscape':'portrait');
 
 		},

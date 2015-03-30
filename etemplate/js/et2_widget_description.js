@@ -15,6 +15,7 @@
 /*egw:uses
 	jquery.jquery;
 	et2_core_baseWidget;
+	/etemplate/js/expose.js;
 */
 
 /**
@@ -22,9 +23,16 @@
  *
  * @augments et2_baseWidget
  */
-var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
+var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
+		"label": {
+			"name": "Label",
+			"default": "",
+			"type": "string",
+			"description": "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
+			"translate": true
+		},
 		"value": {
 			"name": "Value",
 			"type": "string",
@@ -62,7 +70,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 		"extra_link_target": {
 			"name": "Link target",
 			"type": "string",
-			"default": "_self",
+			"default": "_browser",
 			"description": "Link target for href attribute"
 		},
 		"extra_link_popup": {
@@ -75,6 +83,24 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			"type": "string",
 			"description": "Link title which is displayed on mouse over.",
 			"translate": true
+		},
+		"expose_view":{
+			name: "Expose view",
+			type: "boolean",
+			default: false,
+			description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
+		},
+		mime:{
+			name: "Mime type",
+			type: "string",
+			default: '',
+			description: "Mime type of the registered link"
+		},
+		mime_data:{
+			name: "Mime data",
+			type: "string",
+			default: '',
+			description: "hash for data stored on service-side with egw_link::(get|set)_data()"
 		}
 	},
 
@@ -119,6 +145,82 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 	},
 
+	set_label: function(_value) {
+		// Abort if ther was no change in the label
+		if (_value == this.label)
+		{
+			return;
+		}
+
+		if (_value)
+		{
+			// Create the label container if it didn't exist yet
+			if (this._labelContainer == null)
+			{
+				this._labelContainer = $j(document.createElement("label"))
+					.addClass("et2_label");
+				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
+			}
+
+			// Clear the label container.
+			this._labelContainer.empty();
+
+			// Create the placeholder element and set it
+			var ph = document.createElement("span");
+			this.getSurroundings().setWidgetPlaceholder(ph);
+
+			// Split the label at the "%s"
+			var parts = et2_csvSplit(_value, 2, "%s");
+
+			// Update the content of the label container
+			for (var i = 0; i < parts.length; i++)
+			{
+				if (parts[i])
+				{
+					this._labelContainer.append(document.createTextNode(parts[i]));
+				}
+				if (i == 0)
+				{
+					this._labelContainer.append(ph);
+				}
+			}
+		}
+		else
+		{
+			// Delete the labelContainer from the surroundings object
+			if (this._labelContainer)
+			{
+				this.getSurroundings().removeDOMNode(this._labelContainer[0]);
+			}
+			this._labelContainer = null;
+		}
+
+		// Update the surroundings in order to reflect the change in the label
+		this.getSurroundings().update();
+
+		// Copy the given value
+		this.label = _value;
+	},
+	/**
+	 * Function to get media content to feed the expose
+	 * @param {type} _value
+	 * @returns {Array|Array.getMedia.mediaContent}
+	 */
+	getMedia: function (_value)
+	{
+		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin :'';
+		var mediaContent = [];
+		if (_value)
+		{
+			mediaContent = [{
+				title: this.options.label,
+				href: base_url + _value,
+				type: this.options.type + "/*",
+				thumbnail: base_url + _value
+			}];
+		}
+		return mediaContent;
+	},
 	set_value: function(_value) {
 		if (!_value) _value = "";
 		if (!this.options.no_lang) _value = this.egw().lang(_value);
@@ -130,17 +232,24 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			this.span[0],
 			this.options.href ? this.options.extra_link_target : '_blank'
 		);
-		if(this.options.extra_link_popup)
+		if(this.options.extra_link_popup || this.options.mime)
 		{
-			var href = this.options.href;
-			var title = this.options.extra_link_title;
-			var popup = this.options.extra_link_popup;
-			jQuery('a',this.span)
-				.click(function(e) {
-					egw.open_link(href, title,popup);
-					e.preventDefault();
-					return false;
-				});
+			var self= this;
+			var $span =  this.options.mime_data? jQuery(this.span): jQuery('a',this.span);
+			$span.click(function(e) {
+				if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(/video\/|image\/|audio\//,'ig'))
+				{
+					// Do not show thumbnail indicator for single expose view
+					self.expose_options.thumbnailIndicators = false;
+					self._init_blueimp_gallery(e,self.options.href);
+				}
+				else
+				{
+					egw(window).open_link(self.options.mime_data || self.options.href, self.options.extra_link_target, self.options.extra_link_popup, null, null, self.options.mime);
+				}
+				e.preventDefault();
+				return false;
+			});
 		}
 	},
 
@@ -216,6 +325,6 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			_nodes[0].setAttribute("class", _values["class"]);
 		}
 	}
-});
+}));
 et2_register_widget(et2_description, ["description", "label"]);
 

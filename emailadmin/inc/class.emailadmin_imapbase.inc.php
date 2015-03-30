@@ -5124,20 +5124,40 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * retrieve a attachment
+	 * Get attachment data as string, to be used with egw_link::(get|set)_data()
 	 *
-	 * @param int _uid the uid of the message
-	 * @param string _partID the id of the part, which holds the attachment
-	 * @param int _winmail_nr winmail.dat attachment nr.
-	 * @param boolean _returnPart flag to indicate if the attachment is to be returned as horde mime part object
-	 * @param boolean _stream flag to indicate if the attachment is to be fetched or returned as filepointer
+	 * @param int $acc_id
+	 * @param string $_mailbox
+	 * @param int $_uid
+	 * @param string $_partID
+	 * @param int $_winmail_nr
+	 * @return resource stream with attachment content
+	 */
+	public static function getAttachmentAccount($acc_id, $_mailbox, $_uid, $_partID, $_winmail_nr)
+	{
+		$bo = self::getInstance(false, $acc_id);
+
+		$attachment = $bo->getAttachment($_uid, $_partID, $_winmail_nr, false, true, $_mailbox);
+
+		return $attachment['attachment'];
+	}
+
+	/**
+	 * Retrieve a attachment
+	 *
+	 * @param int $_uid the uid of the message
+	 * @param string $_partID the id of the part, which holds the attachment
+	 * @param int $_winmail_nr = 0 winmail.dat attachment nr.
+	 * @param boolean $_returnPart =true flag to indicate if the attachment is to be returned as horde mime part object
+	 * @param boolean $_stream =false flag to indicate if the attachment is to be fetched or returned as filepointer
+	 * @param string $_folder =null folder to use if not current folder
 	 *
 	 * @return array
 	 */
-	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false)
+	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
 		//error_log(__METHOD__.__LINE__."Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr, ReturnPart:$_returnPart, Stream:$_stream");
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (!isset($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
@@ -5733,6 +5753,8 @@ class emailadmin_imapbase
 	 */
 	static function checkFileBasics(&$_formData, $IDtoAddToFileName='', $reqMimeType='message/rfc822')
 	{
+		if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'egw-data') return $_formData['file'];
+
 		//error_log(__METHOD__.__FILE__.array2string($_formData).' Id:'.$IDtoAddToFileName.' ReqMimeType:'.$reqMimeType);
 		$importfailed = $tmpFileName = false;
 		// ignore empty files, but allow to share vfs directories (which can have 0 size)
@@ -6162,11 +6184,20 @@ class emailadmin_imapbase
 	 */
 	function parseFileIntoMailObject(egw_mailer $mailer, $tmpFileName)
 	{
-		if (parse_url($tmpFileName, PHP_URL_SCHEME) != 'vfs')
+		switch (parse_url($tmpFileName, PHP_URL_SCHEME))
 		{
-			$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($tmpFileName);
+			case 'vfs':
+				break;
+			case 'egw-data':
+				$message = egw_link::get_data(parse_url($tmpFileName, PHP_URL_HOST), true);
+				break;
+			default:
+				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($tmpFileName);
+				break;
 		}
-		if (!($message = fopen($tmpFileName, 'r')))
+		if (!isset($message)) $message = fopen($tmpFileName, 'r');
+
+		if (!$message)
 		{
 			throw new egw_exception_not_found("File '$tmpFileName' not found!");
 		}

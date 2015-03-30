@@ -373,6 +373,9 @@ function expose (widget)
 
 			set_value:function (_value)
 			{
+				if (typeof this._super == 'undefined') return;
+				
+				this._super.apply(this,arguments);
 				// Do not run set value of expose if expose_view is not set
 				// it causes a wired error on nested image widgets which
 				// seems the expose is not its child widget
@@ -380,7 +383,7 @@ function expose (widget)
 				{
 					return;
 				}
-				this._super.apply(this,arguments);
+				
 
 				var self=this;
 				// If the media type is not supported do not bind the click handler
@@ -488,6 +491,7 @@ function expose (widget)
 			 * @param {DOMNode} slide
 			 */
 			expose_onslide: function (gallery, index, slide){
+				if (typeof this._super == 'undefined') return;
 				// First let parent try
 				this._super.apply(this, arguments);
 				var nm = find_nextmatch(this);

@@ -813,7 +813,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		height: auto;
 	}
 
-	div#mail-display.et2_container {
+	#mail-display.et2_container {
 		min-height: initial;
 	}
 

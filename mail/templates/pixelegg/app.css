@@ -807,7 +807,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     margin-left: 0;
     height: auto;
   }
-  div#mail-display.et2_container {
+  #mail-display.et2_container {
     min-height: initial;
   }
   table.egwGridView_grid tbody td {

@@ -1213,11 +1213,30 @@ class calendar_uiforms extends calendar_ui
 				unset($event['participants']);
 				return $this->process_edit($event);
 			}
-			if (!empty($_GET['ical']) || !empty($_GET['ical_vfs']) && egw_vfs::file_exists($_GET['ical_vfs']))
+			// vfs url
+			if (!empty($_GET['ical_url']) && parse_url($_GET['ical_url'], PHP_URL_SCHEME) == 'vfs')
+			{
+				$_GET['ical_vfs'] = parse_url($_GET['ical_url'], PHP_URL_PATH);
+			}
+			// vfs path
+			if (!empty($_GET['ical_vfs']) &&
+				(!egw_vfs::file_exists($_GET['ical_vfs']) || !($_GET['ical'] = file_get_contents(egw_vfs::PREFIX.$_GET['ical_vfs']))))
+			{
+				//error_log(__METHOD__."() Error: importing the iCal: vfs file not found '$_GET[ical_vfs]'!");
+				$msg = lang('Error: importing the iCal').': '.lang('VFS file not found').': '.$_GET['ical_vfs'];
+				$event =& $this->default_add_event();
+			}
+			if (!empty($_GET['ical_data']) &&
+				!($_GET['ical'] = egw_link::get_data($_GET['ical_data'])))
+			{
+				//error_log(__METHOD__."() Error: importing the iCal: data not found '$_GET[ical_data]'!");
+				$msg = lang('Error: importing the iCal').': '.lang('Data not found').': '.$_GET['ical_data'];
+				$event =& $this->default_add_event();
+			}
+			if (!empty($_GET['ical']))
 			{
 				$ical = new calendar_ical();
-				$ical_string = !empty($_GET['ical']) ? $_GET['ical'] : file_get_contents(egw_vfs::PREFIX.$_GET['ical_vfs']);
-				if (!($events = $ical->icaltoegw($ical_string, '', 'utf-8')) || count($events) != 1)
+				if (!($events = $ical->icaltoegw($_GET['ical'], '', 'utf-8')) || count($events) != 1)
 				{
 					error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
 					$msg = lang('Error: importing the iCal');
@@ -1245,7 +1264,6 @@ class calendar_uiforms extends calendar_ui
 					//error_log(__METHOD__."(...) parsed as ".array2string($event));
 				}
 				unset($ical);
-				unset($ical_string);
 			}
 			elseif (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id)))
 			{

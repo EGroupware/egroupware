@@ -3682,6 +3682,13 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_resizeHandler: function()
 	{
+		// Do not resize compose dialog if it's running on mobile device
+		// in this case user would be able to edit mail body by scrolling down,
+		// which is more convenient on small devices. Also resize mailbody with
+		// ckeditor may causes performance regression, especially on devices with
+		// very limited resources and slow proccessor.
+		if (egwIsMobile()) return;
+
 		var bodyH = egw_getWindowInnerHeight();
 		var textArea = this.et2.getWidgetById('mail_plaintext');
 		var $headerSec = jQuery('.mailComposeHeaderSection');

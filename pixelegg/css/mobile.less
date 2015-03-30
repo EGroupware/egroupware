@@ -50,16 +50,7 @@
 			border-top: none !important;
 			width: 100%;
 			line-height: 32px !important;
-			.egw_fw_mobile_popup_close {
-				width: 32px;
-				height: 32px;
-				float:right;
-				background-image: url('../images/cancelled.png');/*url(../images/topmenu_items/mobile/menu_active.png);*/
-				-webkit-filter: contrast(2);
-				background-repeat: no-repeat;
-				z-index: 999;
-				padding-right: 5px;
-			}
+
 		}
 		//###################
 		//#					#
@@ -753,18 +744,42 @@
 		display: none;
 		z-index: 999;
 		-webkit-overflow-scrolling: touch;
-		overflow-y:scroll;
 		background: white;
 		.egw_fw_mobile_popupFrame {
 			width: 100%;
 			height: 100%;
 			visibility: hidden;
 		}
+		span.egw_fw_mobile_popup_close {
+				width: 32px;
+				height: 32px;
+				float:right;
+				background-image: url('../images/cancelled.png');/*url(../images/topmenu_items/mobile/menu_active.png);*/
+				-webkit-filter: contrast(2);
+				background-repeat: no-repeat;
+				z-index: 1000;
+				padding-right: 5px;
+				top:0;
+				right:2px;
+				position: absolute;
+		}
 	}
 	.egw_fw_mobile_popup_loader {
 		background: url(../images/loading.gif) center no-repeat;
 		background-size: 120px 120px;
 		background-position: center;
+	}
+	
+	//###################################
+	//#									#
+	//#		Mail App specific style		#
+	//#									#
+	//###################################
+	#mail-display {
+		min-height: initial !important;
+		.mailDisplayContainer {
+			top:140px;
+		}
 	}
 }
 @media @handheld

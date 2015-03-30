@@ -745,7 +745,7 @@ app.classes.filemanager = AppJS.extend(
 		}
 		else
 		{
-			egw.open({path: path, type: data.data.mime}, 'file');
+			egw.open({path: path, type: data.data.mime}, 'file','view',null,'_browser');
 		}
 		return false;
 	},
