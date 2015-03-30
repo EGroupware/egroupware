@@ -189,7 +189,8 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			{
 
 				var row = jQuery(document.createElement("tr"))
-					.appendTo(this.tbody);
+					.appendTo(this.tbody)
+					.addClass(this.id+'_'+id);
 				var cf = jQuery(document.createElement("td"))
 					.appendTo(row);
 				if(!field.type) field.type = 'text";'
