@@ -500,11 +500,11 @@ var et2_selectbox = et2_inputWidget.extend(
 				return;
 			}
 		}
+		this.value = _value;
 		if(this.isAttached() && this._oldValue !== et2_no_init && this._oldValue !== _value)
 		{
 			this.input.change();
 		}
-		this.value = _value;
 	},
 
 	set_multi_value: function(_value) {
