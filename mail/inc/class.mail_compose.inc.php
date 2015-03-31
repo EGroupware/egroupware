@@ -1040,8 +1040,8 @@ class mail_compose
 			// User preferences for style
 			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 			$font_size = egw_ckeditor_config::font_size_from_prefs();
-			$font_part = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
-			$font_span = $font_part.'&nbsp;'.'</span>';
+			$font_part = '<span style="width:100%; display: inline-block; '.($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
+			$font_span = $font_part.'&#8203;</span>';
 			if (empty($font) && empty($font_size)) $font_span = '';
 		}
 		// the font span should only be applied on first load or on switch plain->html and the absence of the font_part of the span
@@ -1073,8 +1073,8 @@ class mail_compose
 				}
 			}
 			if($content['mimeType'] == 'html') {
-				$before = (!empty($font_span) && !($insertSigOnTop === 'below')?$font_span:'&nbsp;').($disableRuler?''/*($sigTextStartsWithBlockElement?'':'<p style="margin:0px;"/>')*/:'<hr style="border:1px dotted silver; width:90%;">');
-				$inbetween = '&nbsp;<br>';
+				$before = $disableRuler ? '' : '<hr style="border:1px dotted silver; width:100%;">';
+				$inbetween = '';
 			} else {
 				$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
 				$inbetween = "\r\n";
@@ -1090,7 +1090,7 @@ class mail_compose
 			}
 			else
 			{
-				$content['body'] = $before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
+				$content['body'] = $font_span.$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
 			}
 		}
 		else
@@ -1278,13 +1278,13 @@ class mail_compose
 		$etpl->setElementAttribute('folder','autocomplete_params',array('mailaccount'=>$content['mailaccount']));
 		// join again mailaccount and identity
 		$content['mailaccount'] .= ':'.$content['mailidentity'];
-		
+
 		// Resolve distribution list before send content to client
 		foreach(array('to', 'cc', 'bcc', 'replyto')  as $f)
 		{
 			if (is_array($content[$f])) $content[$f]= self::resolveEmailAddressList ($content[$f]);
 		}
-		
+
 		$content['to'] = self::resolveEmailAddressList($content['to']);
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
@@ -3317,7 +3317,7 @@ class mail_compose
 				'title' => $group['account_email']
 			);
 		}
-		
+
 		// Add up to 5 matching mailing lists
 		if($include_lists)
 		{

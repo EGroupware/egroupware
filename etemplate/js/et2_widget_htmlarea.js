@@ -151,22 +151,9 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 				// Add in user font preferences
 				if (self.options.config.preference_style && !e.editor.getData())
 				{
-					e.editor.document.getBody().appendHtml(self.options.config.preference_style);
+					e.editor.document.getBody().setHtml(self.options.config.preference_style);
 					delete self.options.config.preference_style;
 				}
-
-				var range = e.editor.createRange();
-				range.collapse(true);
-				range.selectNodeContents(e.editor.document.getBody());
-				range.collapse(true);
-				range.select();
-
-				//this stuff is needed, as the above places the caret just before the span tag
-				var sN = range.startContainer.getNextSourceNode();
-				//FF is selecting the span with getNextSourceNode, other browsers need to fetch it with getNext
-				range.selectNodeContents(((typeof sN.getName==="function") && sN.getName()=="span"?range.startContainer.getNextSourceNode():range.startContainer.getNextSourceNode().getNext()));
-				range.collapse(true);
-				range.select();
 			});
 
 			// Drag & drop of images inline won't work, because of database
@@ -269,7 +256,7 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 			return null;
 		}
 	},
-	
+
 	/**
 	 * Resize htmlNode tag according to window size
 	 * @param {type} _height excess height which comes from window resize
