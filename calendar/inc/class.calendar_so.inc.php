@@ -142,7 +142,7 @@ class calendar_so
 	 */
 	protected function cal_range_view($start, $end, array $_where=null, $deleted=false)
 	{
-		if (!$start)	// using view without start-date is slower!
+		if ($GLOBALS['egw_info']['server']['no_timerange_views'] || !$start)	// using view without start-date is slower!
 		{
 			return $this->cal_table;	// no need / use for a view
 		}
@@ -172,7 +172,7 @@ class calendar_so
 	 */
 	protected function dates_range_view($start, $end, array $_where=null, $deleted=false)
 	{
-		if (!$start || !$end)	// using view without start- AND end-date is slower!
+		if ($GLOBALS['egw_info']['server']['no_timerange_views'] || !$start || !$end)	// using view without start- AND end-date is slower!
 		{
 			return $this->dates_table;	// no need / use for a view
 		}
