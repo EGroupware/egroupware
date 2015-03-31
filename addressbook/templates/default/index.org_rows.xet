@@ -25,13 +25,17 @@
 					<description id="${row}[org_name]" no_lang="1"/>
 					<description id="${row}[org_unit]" no_lang="1"/>
 					<vbox options="0,0">
-						<description id="${row}[adr_one_countryname]" no_lang="1"/>
-						<hbox options="0,0" orient="0">
-							<description no_lang="1" id="${row}[adr_one_locality]"/>
-							<description id="${row}[adr_one_postalcode]" class="leftPad5" value=" " no_lang="1"/>
-						</hbox>
-						<description no_lang="1" id="${row}[adr_one_street]"/>
+						<description id="${row}[adr_one_street]" no_lang="1"/>
 						<description id="${row}[adr_one_street2]" no_lang="1"/>
+						<hbox options="0,0" orient="0">
+							<description id="${row}[adr_one_postalcode]" no_lang="1"/>
+							<description value=" " id="${row}[adr_one_locality]" no_lang="1" class="leftPad5"/>
+							<description id="${row}[adr_one_region]" no_lang="1" class="leftPad5"/>
+						</hbox>
+						<description id="${row}[adr_one_countryname]" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
+						</menulist>
 					</vbox>
 				</row>
 			</rows>
