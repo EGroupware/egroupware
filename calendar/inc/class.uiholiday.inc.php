@@ -42,6 +42,7 @@
 
 		function uiholiday()
 		{
+			egw_framework::csp_script_src_attrs('unsafe-inline');
 			$this->bo =& CreateObject('calendar.boholiday');
 			$this->bo->check_admin();
 			$this->base_url = $this->bo->base_url;
