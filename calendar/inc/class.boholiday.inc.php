@@ -245,15 +245,21 @@
 			{
 				foreach($this->locales as $local)
 				{
-					$this->auto_load_holidays($local);
+					$this->auto_load_holidays($local, $year);
 				}
 			}
 		}
 
-		function auto_load_holidays($locale)
+		function auto_load_holidays($locale, $year=0)
 		{
-			if($this->so->holiday_total($locale) == 0)
+			//error_log(__METHOD__."('$locale', $year)");
+			if (!egw_cache::getInstance(__CLASS__, $locale.'-'.$year) &&	// check if autoload has been tried for this locale and year
+				(!($total_year = $this->so->holiday_total($locale, '', $year)) ||
+				// automatic try load new holidays, if there are no irregular ones for queried year
+				$total_year == $this->so->holiday_total($locale, '', 1901)))
 			{
+				//error_log(__METHOD__."('$locale', $year) attemption autoload ...");
+				egw_cache::setInstance(__CLASS__, $locale.'-'.$year, true, 86400);	// do NOT try again for 1 day
 				@set_time_limit(0);
 
 				/* get the file that contains the calendar events for your locale */
@@ -265,19 +271,9 @@
 				}
 				else
 				{
-					$pos = strpos(' '.$GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_HOST']);
-					if($pos == 0)
+					if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
 					{
-						switch($_SERVER['SERVER_PORT'])
-						{
-							case 80:
-								$http_protocol = 'http://';
-								break;
-							case 443:
-								$http_protocol = 'https://';
-								break;
-						}
-						$server_host = $http_protocol.$_SERVER['HTTP_HOST'].$GLOBALS['egw_info']['server']['webserver_url'];
+						$server_host = ($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$GLOBALS['egw_info']['server']['webserver_url'];
 					}
 					else
 					{
@@ -299,18 +295,17 @@
 					return false;
 				}
 				// reading the holidayfile from egroupware.org via network::gethttpsocketfile contains all the headers!
-				foreach($lines as $n => $line)
+				foreach($lines as $line)
 				{
 					$fields = preg_split("/[\t\n ]+/",$line);
 
 					if ($fields[0] == 'charset' && $fields[1])
 					{
-						$lines = $GLOBALS['egw']->translation->convert($lines,$fields[1]);
+						$lines = translation::convert($lines,$fields[1]);
 						break;
 					}
 				}
-				$c_lines = count($lines);
-				foreach ($lines as $i => $line)
+				foreach ($lines as $line)
 				{
 //					echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
 					$holiday = explode("\t",$line);
