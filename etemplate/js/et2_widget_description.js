@@ -234,6 +234,8 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		);
 		if(this.options.extra_link_popup || this.options.mime)
 		{
+			var href = this.options.href;
+			var mime_data = this.options.mime_data;
 			var self= this;
 			var $span =  this.options.mime_data? jQuery(this.span): jQuery('a',this.span);
 			$span.click(function(e) {
@@ -241,11 +243,11 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 				{
 					// Do not show thumbnail indicator for single expose view
 					self.expose_options.thumbnailIndicators = false;
-					self._init_blueimp_gallery(e,self.options.href);
+					self._init_blueimp_gallery(e, href);
 				}
 				else
 				{
-					egw(window).open_link(self.options.mime_data || self.options.href, self.options.extra_link_target, self.options.extra_link_popup, null, null, self.options.mime);
+					egw(window).open_link(mime_data || href, self.options.extra_link_target, self.options.extra_link_popup, null, null, self.options.mime);
 				}
 				e.preventDefault();
 				return false;
@@ -257,7 +259,7 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		if (this.options.href)
 		{
 			var href = this.options.href;
-                	if (href.indexOf('/')==-1 && href.split('.').length >= 3 &&
+			if (href.indexOf('/')==-1 && href.split('.').length >= 3 &&
 				!(href.indexOf('mailto:')!=-1 || href.indexOf('://') != -1 || href.indexOf('javascript:') != -1)
 			)
 			{
