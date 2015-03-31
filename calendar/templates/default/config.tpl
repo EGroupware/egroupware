@@ -10,13 +10,6 @@
 
 <!-- BEGIN body -->
    <tr class="row_on">
-    <td colspan="2">&nbsp;</td>
-   </tr>
-
-   <tr class="row_off">
-    <td colspan="2">&nbsp;<b>{lang_Calendar} {lang_site_configuration}</b></td>
-   </tr>
-   <tr class="row_on">
     <td>&nbsp;{lang_Do_you_wish_to_autoload_calendar_holidays_files_dynamically?}</td>
     <td>
      <select name="newsettings[auto_load_holidays]">
@@ -72,6 +65,15 @@
     </td>
    </tr>
    <tr class="row_off">
+	<td>&nbsp;{lang_Use_range-views_to_optimise_calendar_queries?}</td>
+    <td>
+     <select name="newsettings[no_timerange_views]">
+      <option value="">{lang_Yes}</option>
+      <option value="true"{selected_no_timerange_views_true}>{lang_No}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_on">
     <td>&nbsp;<b>{lang_Security}</b>: {lang_How_many_appointments_should_non-admins_be_able_to_export}
     {lang_(empty_=_use_global_limit,_no_=_no_export_at_all)}:</td>
     <td><input name="newsettings[calendar_export_limit]" value="{value_calendar_export_limit}" size="5"></td>
