@@ -48,7 +48,7 @@ function expose (widget)
 	};
 
 	// For filtering to only show things we can handle
-	var mime_regex = new RegExp(/video\/|image\/|audio\//);
+	var mime_regex = new RegExp(/(video\/)|(image\/:*(?!tif|x-xcf))|(audio\/)/);
 
 	// Only one gallery
 	var gallery = null;
@@ -206,7 +206,7 @@ function expose (widget)
 			init: function()
 			{
 				this._super.apply(this, arguments);
-
+				this.mime_regexp = mime_regex;
 				var self=this;
 				this.expose_options = {
 					// The Id, element or querySelector of the gallery widget:

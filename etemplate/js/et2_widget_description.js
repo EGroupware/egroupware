@@ -239,7 +239,7 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 			var self= this;
 			var $span =  this.options.mime_data? jQuery(this.span): jQuery('a',this.span);
 			$span.click(function(e) {
-				if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(/video\/|image\/|audio\//,'ig'))
+				if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(self.mime_regexp,'ig'))
 				{
 					self._init_blueimp_gallery(e, href);
 				}
