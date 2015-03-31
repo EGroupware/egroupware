@@ -287,15 +287,22 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			// Set the value for this element
 			var contentMgr = this.getArrayMgr("content");
 			if (contentMgr != null) {
-				var val = contentMgr.getEntry(this.id);
+				var val = contentMgr.getEntry(this.id);				
 				_attrs["value"] = {};
 				if (val !== null)
 				{
-					// Only set the values that match desired custom fields
-					for(var key in val)
+					if(this.id.indexOf(this.prefix) === 0 && data.fields[this.id.replace(this.prefix,'')] === true)
 					{
-						if(key.indexOf(this.prefix) == 0) {
-							_attrs["value"][key] = val[key];
+						_attrs['value'][this.id] = val;
+					}
+					else
+					{
+						// Only set the values that match desired custom fields
+						for(var key in val)
+						{
+							if(key.indexOf(this.prefix) == 0) {
+								_attrs["value"][key] = val[key];
+							}
 						}
 					}
 					//_attrs["value"] = val;

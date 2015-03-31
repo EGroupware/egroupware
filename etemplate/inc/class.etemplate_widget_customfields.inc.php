@@ -371,7 +371,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					{
 						self::set_validation_error($field,lang('Field must not be empty !!!'),'');
 					}
-					$field_name = self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+					$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,1)] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
 					$valid =& self::get_array($validated, $field_name, true);
 
 					if (is_array($valid)) $valid = implode(',', $valid);
