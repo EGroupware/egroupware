@@ -602,7 +602,7 @@ etemplate2.prototype.autocomplete_fixer = function ()
 		// Firefox give a security warning when transmitting to "about:blank" from a https site
 		// we work around that by giving existing etemplate/empty.html url
 		// Safari shows same warning, thought Chrome userAgent also includes Safari
-		if (navigator.userAgent.match(/(firefox|safari)/i) && !navigator.userAgent.match(/chrome/i))
+		if (navigator.userAgent.match(/(firefox|safari|iceweasel)/i) && !navigator.userAgent.match(/chrome/i))
 		{
 			jQuery(form).attr({action: egw.webserverUrl+'/etemplate/empty.html',method:'post'});
 		}

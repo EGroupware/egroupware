@@ -86,6 +86,11 @@ class html
 			self::$ua_version = preg_match('|Trident/[0-9.]+; rv:([0-9.]+)|i', $_SERVER['HTTP_USER_AGENT'], $matches) ?
 				$matches[1] : 11.0;
 		}
+		// iceweasel is based on mozilla and we treat it like as firefox
+		if (self::$user_agent == 'iceweasel')
+		{
+			self::$user_agent = 'firefox';
+		}
 		self::$ua_mobile = preg_match('/(iPhone|iPod|iPad|Android|SymbianOS|Blackberry|Kindle|Opera Mobi|Windows Phone)/i',
 			$_SERVER['HTTP_USER_AGENT'], $matches) ? strtolower($matches[1]) : null;
 
