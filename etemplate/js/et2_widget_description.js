@@ -241,8 +241,6 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 			$span.click(function(e) {
 				if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(/video\/|image\/|audio\//,'ig'))
 				{
-					// Do not show thumbnail indicator for single expose view
-					self.expose_options.thumbnailIndicators = false;
 					self._init_blueimp_gallery(e, href);
 				}
 				else

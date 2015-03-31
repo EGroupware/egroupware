@@ -431,6 +431,8 @@ function expose (widget)
 				else
 				{
 					mediaContent = this.getMedia(_value);
+					// Do not show thumbnail indicator on single expose view
+					this.expose_options.thumbnailIndicators = false;
 				}
 				this.expose_options.index = current_index;
 				gallery = blueimp.Gallery(mediaContent, this.expose_options);
