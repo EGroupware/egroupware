@@ -314,6 +314,11 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 		$part = new Horde_Mime_Part();
 		$part->setType($type ? $type : egw_vfs::mime_content_type($file));
+		$matches = null;
+		if (preg_match('/^([^;]+);\s*([^=]+)=([^;]+)$/', $type, $matches))
+		{
+			$part->setContentTypeParameter($matches[2], $matches[3]);
+		}
 		$part->setContents($resource);
 		$part->setName($name ? $name : egw_vfs::basename($file));
 
@@ -380,6 +385,11 @@ class egw_mailer extends Horde_Mime_Mail
 
 		$part = new Horde_Mime_Part();
 		$part->setType($type);
+		$matches = null;
+		if (preg_match('/^([^;]+);\s*([^=]+)=([^;]+)$/', $type, $matches))
+		{
+			$part->setContentTypeParameter($matches[2], $matches[3]);
+		}
 		$part->setCharset('utf-8');
 		$part->setContents($content);
 		// this should not be necessary, because binary data get detected by mime-type,
