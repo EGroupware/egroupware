@@ -1147,8 +1147,9 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(_value.id && _value.app)
 		{
 			this.link.addClass("et2_link");
-			this.link.click( function(){
+			this.link.click( function(e){
 				self.egw().open(_value, "", "view",null,_value.app,_value.app);
+				e.stopImmediatePropagation();
 			});
 		}
 		else
@@ -1344,7 +1345,10 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
 			.addClass("et2_link loading")
-			.click( function(){self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);});
+			.click( function(e){
+				self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);
+				e.stopImmediatePropagation();
+			});
 
 		if(_link_data.title) link.text(_link_data.title);
 
