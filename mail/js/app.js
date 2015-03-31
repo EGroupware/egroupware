@@ -223,6 +223,30 @@ app.classes.mail = AppJS.extend(
 
 				//Call drag_n_drop initialization for emails on compose
 				this.init_dndCompose();
+				
+				// Set focus on To/body field
+				// depending on To field value
+				var to = this.et2.getWidgetById('to');
+				if (to && to.get_value() && to.get_value() != '')
+				{
+					var content = this.et2.getArrayMgr('content').data;
+					if (content.is_plain)
+					{
+						var plainText = this.et2.getWidgetById('mail_plaintext');
+						// focus
+						jQuery(plainText.node).focus();
+						// get the cursor to the top of the textarea
+						if (typeof plainText.node.setSelectionRange !='undefined') plainText.node.setSelectionRange(0);
+					}
+					else
+					{
+						this.et2.getWidgetById('mail_htmltext').ckeditor.focus();
+					}
+				}
+				else if(to)
+				{
+					jQuery('input',to.node).focus();
+				}
 				break;
 		}
 	},
