@@ -170,7 +170,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			return;
 		}
 
-		var sel_options = et2_selectbox.find_select_options(this, _attrs['select_options']);
+		var sel_options = et2_selectbox.find_select_options(this, _attrs['select_options'], _attrs);
 		if(!jQuery.isEmptyObject(sel_options))
 		{
 			_attrs['select_options'] = sel_options;
@@ -748,7 +748,7 @@ var et2_selectbox = et2_inputWidget.extend(
 	}
 });
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
-	"select-percent", 'select-priority', 'select-access',
+	"select-percent", 'select-priority',
 	'select-country', 'select-state', 'select-year', 'select-month',
 	'select-day', 'select-dow', 'select-hour', 'select-number', 'select-app',
 	'select-lang', 'select-bool', 'select-timezone' ]);
@@ -756,20 +756,35 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-ca
 // Static class stuff
 jQuery.extend(et2_selectbox,
 {
+	type_cache: {},
+
 	/**
 	 * Find the select options for a widget, out of the many places they could be.
 	 * @param {et2_widget} widget to check for.  Should be some sort of select widget.
 	 * @param {object} attr_options Select options in attributes array
+	 * @param {object} attrs Widget attributes
 	 * @return {object} Select options, or empty object
 	 */
-	find_select_options: function(widget, attr_options)
+	find_select_options: function(widget, attr_options, attrs)
 	{
 		var name_parts = widget.id.replace(/&#x5B;/g,'[').replace(/]|&#x5D;/g,'').split('[');
 
 		var content_options = {};
 
-		// Try to find the options inside the "sel-options" array
-		if(widget.getArrayMgr("sel_options"))
+		// First check type, there may be static options.  There's some special handling
+		// for filterheaders, which have the wrong type.
+		var type = widget.instanceOf(et2_nextmatch_filterheader) ? attrs.widget_type || '' : widget._type;
+		var type_function = type.replace('select-','').replace('_ro','')+'_options';
+		if(typeof this[type_function] == 'function')
+		{
+			var old_type = widget._type;
+			widget._type = type;
+			content_options = this[type_function].call(this, widget, attrs);
+			widget._type = old_type;
+		}
+
+		// Try to find the options inside the "sel-options"
+		if(jQuery.isEmptyObject(content_options) && widget.getArrayMgr("sel_options"))
 		{
 			// Try first according to ID
 			content_options = widget.getArrayMgr("sel_options").getEntry(widget.id);
@@ -860,6 +875,199 @@ jQuery.extend(et2_selectbox,
 			content_options = {};
 		}
 		return content_options;
+	},
+	
+	/**
+	 * Some static options, no need to transfer them over and over.
+	 * We still need the same thing on the server side to validate, so they
+	 * have to match.  See etemplate_widget_menupopup::typeOptions()
+	 * The type specific legacy options wind up in attrs.other.
+	 */
+	priority_options: function(widget) {
+		return [
+			{value: 1, label: 'low'},
+			{value: 2, label: 'normal'},
+			{value: 3, label: 'high'}
+		];
+	},
+	bool_options: function(widget) {
+		return [
+			{value: 0, label: 'no'},
+			{value: 1, label: 'yes'}
+		];
+	},
+	month_options: function(widget) {
+		return [
+			{value: 1, label:'January'},
+			{value: 2, label:'February'},
+			{value: 3, label:'March'},
+			{value: 4, label:'April'},
+			{value: 5, label:'May'},
+			{value: 6, label:'June'},
+			{value: 7, label:'July'},
+			{value: 8, label:'August'},
+			{value: 9, label:'September'},
+			{value: 10, label:'October'},
+			{value: 11, label:'November'},
+			{value: 12, label:'December'}
+		];
+	},
+	number_options: function(widget, attrs) {
+		if(typeof attrs.other != 'object')
+		{
+			attrs.other = [];
+		}
+		var options = [];
+		var min = typeof(attrs.other[0]) == 'undefined' ? 1 : parseInt(attrs.other[0]);
+		var max = typeof(attrs.other[1]) == 'undefined' ? 10: parseInt(attrs.other[1]);
+		var interval = typeof(attrs.other[2]) == 'undefined' ? 1: parseInt(attrs.other[2]);
+		var format = '%d';
+
+		// leading zero specified in interval
+		if (attrs.other[2] && attrs.other[2][0] == '0')
+		{
+			format = '%0'+(''+interval).length+'d';
+		}
+		// Suffix
+		if(attrs.other[3])
+		{
+			format += widget.egw().lang(attrs.other[3]);
+		}
+
+		// Avoid infinite loop if interval is the wrong direction
+		if ((min <= max) != (interval > 0))
+		{
+			interval = -interval;
+		}
+
+		for (var i=0, n=min; n <= max && i <= 100; n += interval,++i)
+		{
+			options.push({value: n, label: sprintf(format,n)});
+		}
+		return options;
+	},
+	percent_options: function(widget, attrs)
+	{
+		if(typeof attrs.other != 'object')
+		{
+			attrs.other = [];
+		}
+		attrs.other[0] = 0;
+		attrs.other[1] = 100;
+		attrs.other[2] = typeof(attrs.other[2]) == 'undefined' ? 10 : parseInt(attrs.other[2]);
+		attrs.other[3] = '%%';
+		return this.number_options(widget,attrs);
+	},
+	year_options: function(widget, attrs)
+	{
+		if(typeof attrs.other != 'object')
+		{
+			attrs.other = [];
+		}
+		var t = new Date();
+		attrs.other[0] = t.getFullYear() - (typeof(attrs.other[0]) == 'undefined' ? 3 : parseInt(attrs.other[0]));
+		attrs.other[1] = t.getFullYear() + (typeof(attrs.other[1]) == 'undefined' ? 2 : parseInt(attrs.other[1]));
+		attrs.other[2] = typeof(attrs.other[2]) == 'undefined' ? 1 : parseInt(attrs.other[2]);
+		return this.number_options(widget,attrs);
+	},
+	day_options: function(widget, attrs)
+	{
+		attrs.other = [1,31,1];
+		return this.number_options(widget,attrs);
+	},
+	hour_options: function(widget, attrs)
+	{
+		var options = [];
+		var timeformat = egw.preference('common','timeformat');
+		for (var h = 0; h <= 23; ++h)
+		{
+			options.push({
+				value: h,
+				label: timeformat == 12 ?
+					(( 12 ? h % 12 : 12)+' '+(h < 12 ? egw.lang('am') : egw.lang('pm'))) :
+					sprintf('%02d',h)
+			});
+		}
+		return options;
+	},
+	app_options: function(widget,attrs) {
+		var options = ','+(attrs.other||[]).join(',');
+		return this.cached_server_side_options(widget, options, attrs);
+	},
+	cat_options: function(widget, attrs) {
+		// Add in application, if not there
+		if(typeof attrs.other == 'undefined')
+		{
+			attrs.other = new Array(4);
+		}
+		if(typeof attrs.other[3] == 'undefined')
+		{
+			attrs.other[3] = attrs.application || widget.getInstanceManager().app;
+		}
+		var options =(attrs.other||[]).join(',');
+		return this.cached_server_side_options(widget, options, attrs);
+	},
+	country_options: function(widget, attrs) {
+		var options = ','+(attrs.other||[]).join(',');
+		return this.cached_server_side_options(widget, options, attrs);
+	},
+	dow_options: function(widget,attrs) {
+		var options = ','+(attrs.other||[]).join(',');
+		return this.cached_server_side_options(widget, options, attrs);
+	},
+	lang_options: function(widget,attrs) {
+		var options = ','+(attrs.other||[]).join(',');
+		return this.cached_server_side_options(widget, options, attrs);
+	},
+	timezone_options: function(widget,attrs) {
+		var options = ','+(attrs.other||[]).join(',');
+		return this.cached_server_side_options(widget, options, attrs);
+	},
+	/**
+	 * Some options change, or are too complicated to have twice, so we get the
+	 * options from the server once, then keep them to use if they're needed again.
+	 * We use the options string to keep the different possibilites (eg. categories
+	 * for different apps) seperate.
+	 * 
+	 * @param {et2_selectbox} widget Selectbox we're looking at
+	 * @param {string} options_string
+	 * @param {Object} attrs Widget attributes (not yet fully set)
+	 * @returns {Object} Array of options, or empty and they'll get filled in later
+	 */
+	cached_server_side_options: function(widget, options_string, attrs)
+	{
+		var cache_id = widget._type+'_'+options_string;
+		var cache = egw.window.et2_selectbox.type_cache[cache_id];
+		if (typeof cache == 'undefined')
+		{
+			// Fetch with json instead of jsonq because there may be more than
+			// one widget listening for the response by the time it gets back,
+			// and we can't do that when it's queued.
+			egw.window.et2_selectbox.type_cache[cache_id] = egw.json(
+				widget.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
+				[widget._type,options_string]
+			).sendRequest();
+		}
+		cache = egw.window.et2_selectbox.type_cache[cache_id];
+		if(typeof cache.done == 'function')
+		{
+			// pending, wait for it
+			cache.done(jQuery.proxy(function(response) {
+				egw.window.et2_selectbox.type_cache[this.cache_id] = response.response[0].data||undefined;
+				// Set select_options in attributes in case we get a resonse before
+				// the widget is finished loading (otherwise it will re-set to {})
+				attrs.select_options = egw.window.et2_selectbox.type_cache[this.cache_id];
+
+				egw.window.setTimeout(jQuery.proxy(function() {
+					this.widget.set_select_options(egw.window.et2_selectbox.type_cache[this.cache_id]||{});
+				},this),1);
+			},{widget:widget,cache_id:cache_id}));
+			return {};
+		}
+		else
+		{
+			return cache;
+		}
 	}
 });
 

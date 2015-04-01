@@ -1206,6 +1206,10 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 				list($type) = explode('-',$this->attrs['type']);
 				if($type == 'select')
 				{
+					if(in_array($this->attrs['type'], etemplate_widget_menupopup::$cached_types))
+					{
+						$widget_type = $this->attrs['type'];
+					}
 					$this->attrs['type'] = 'nextmatch-filterheader';
 				}
 				self::$transformation['type'] = $this->attrs['type'];
@@ -1215,6 +1219,10 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 		$this->setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
 
 		$this->setElementAttribute($form_name, 'type', $this->attrs['type']);
+		if($widget_type)
+		{
+			$this->setElementAttribute($form_name, 'widget_type', $widget_type);
+		}
 		parent::beforeSendToClient($cname, $expand);
 	}
 }

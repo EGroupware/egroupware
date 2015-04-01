@@ -24,6 +24,27 @@ class etemplate_widget_menupopup extends etemplate_widget
 	const SEARCH_ROW_LIMIT = PHP_INT_MAX; // Automatic disabled, only explicit
 
 	/**
+	 * These types are either set or cached on the client side, so we don't send
+	 * their options unless asked via AJAX
+	 */
+	public static $cached_types = array(
+		'select-account',
+		'select-app',
+		'select-bool',
+		'select-country',
+		'select-dow',
+		'select-number',
+		'select-priority',
+		'select-percent',
+		'select-year',
+		'select-month',
+		'select-day',
+		'select-hour',
+		'select-lang',
+		'select-timezone'
+	);
+
+	/**
 	 * @var array
 	 */
 	protected static $monthnames = array(
@@ -41,6 +62,19 @@ class etemplate_widget_menupopup extends etemplate_widget
 		11 => 'November',
 		12 => 'December'
 	);
+
+	/**
+	 * Constructor
+	 *
+	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @throws egw_exception_wrong_parameter
+	 */
+	public function __construct($xml = '')
+	{
+		if($xml) {
+			parent::__construct($xml);
+		}
+	}
 
 	/**
 	 * Parse and set extra attributes from xml in template object
@@ -92,6 +126,11 @@ class etemplate_widget_menupopup extends etemplate_widget
 			$value = $value_in = self::get_array($content, $form_name);
 
 			$allowed = self::selOptions($form_name, true);	// true = return array of option-values
+			$type_options = self::typeOptions($this,
+					// typeOptions thinks # of rows is the first thing in options
+					($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']));
+			$allowed = array_merge($allowed,array_keys($type_options));
+			
 			if (!$this->attrs['multiple'] || !($this->attrs['options'] > 1)) $allowed[] = '';
 
 			foreach((array) $value as $val)
@@ -232,30 +271,32 @@ class etemplate_widget_menupopup extends etemplate_widget
 				unset(self::$request->content[$this->id]);
 				$this->attrs['readonly'] = true;
 			}
-
-			// adding type specific options here, while keep further options set by app code
-			// we need to make sure to run only once for auto-repeated rows, because
-			// array_merge used to keep options from app would otherwise add
-			// type-specific ones multiple time (and of cause better performance)
-			$no_lang = null;
-			static $form_names_done = array();
-			if (!isset($form_names_done[$form_name]) &&
-				($type_options = self::typeOptions($this,
-				// typeOptions thinks # of rows is the first thing in options
-				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
-				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name)))
+			if(!in_array($this->attrs['type'], self::$cached_types))
 			{
-				self::fix_encoded_options($type_options);
-
-				self::$request->sel_options[$form_name] = array_merge(self::$request->sel_options[$form_name], $type_options);
-
-				// if no_lang was modified, forward modification to the client
-				if ($no_lang != $this->attr['no_lang'])
+				// adding type specific options here, while keep further options set by app code
+				// we need to make sure to run only once for auto-repeated rows, because
+				// array_merge used to keep options from app would otherwise add
+				// type-specific ones multiple time (and of cause better performance)
+				$no_lang = null;
+				static $form_names_done = array();
+				if (!isset($form_names_done[$form_name]) &&
+					($type_options = self::typeOptions($this,
+					// typeOptions thinks # of rows is the first thing in options
+					($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
+					$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name)))
 				{
-					self::setElementAttribute($form_name, 'no_lang', $no_lang);
+					self::fix_encoded_options($type_options);
+
+					self::$request->sel_options[$form_name] = array_merge(self::$request->sel_options[$form_name], $type_options);
+
+					// if no_lang was modified, forward modification to the client
+					if ($no_lang != $this->attr['no_lang'])
+					{
+						self::setElementAttribute($form_name, 'no_lang', $no_lang);
+					}
 				}
+				$form_names_done[$form_name] = true;
 			}
-			$form_names_done[$form_name] = true;
 		}
 
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
@@ -431,15 +472,16 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			$widget = $widget_type;
 			$widget_type = $widget->attrs['type'] ? $widget->attrs['type'] : $widget->type;
-			// Legacy / static support
-			// Have to do this explicitly, since legacy options is not defined on class level
-			$legacy_options = explode(',',$_legacy_options);
-			foreach($legacy_options as &$field)
-			{
-				$field = self::expand_name($field, 0, 0,'','',self::$cont);
-			}
-			list($rows,$type,$type2,$type3,$type4,$type5) = $legacy_options;
 		}
+		// Legacy / static support
+		// Have to do this explicitly, since legacy options is not defined on class level
+		$legacy_options = explode(',',$_legacy_options);
+		foreach($legacy_options as &$field)
+		{
+			$field = self::expand_name($field, 0, 0,'','',self::$cont);
+		}
+		
+		list($rows,$type,$type2,$type3,$type4,$type5) = $legacy_options;
 		$no_lang = false;
 		$options = array();
 		switch ($widget_type)
@@ -464,14 +506,6 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 			case 'select-bool':	// equal to checkbox, can be used with nextmatch-customfilter to filter a boolean column
 				$options = array(0 => 'no',1 => 'yes');
-				break;
-
-			case 'select-access':
-				$options = array(
-					'private' => 'Private',
-					'public' => 'Global public',
-					'group' => 'Group public'
-				);
 				break;
 
 			case 'select-country':	// #Row|Extralabel,1=use country name, 0=use 2 letter-code,custom country field name
@@ -789,6 +823,22 @@ class etemplate_widget_menupopup extends etemplate_widget
 			);
 		}
 		return $info;
+	}
+
+	/**
+	 * Some select options are fairly static, but can only be generated on the server
+	 * so we generate them here, then cache them client-side
+	 *
+	 * @param string $type
+	 * @param Array|String $attributes
+	 *
+	 */
+	public static function ajax_get_options($type, $attributes)
+	{
+		$options = self::typeOptions($type, $attributes);
+		self::fix_encoded_options($options,true);
+		$response = egw_json_response::get();
+		$response->data($options);
 	}
 }
 
