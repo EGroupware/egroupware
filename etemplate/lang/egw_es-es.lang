@@ -332,7 +332,6 @@ returns savely, without deleting	etemplate	es-es	Vuelve de forma segura, SIN bor
 right	etemplate	es-es	Derecha
 row...	etemplate	es-es	Fila...
 save all	etemplate	es-es	Guardar todo
-save as	etemplate	es-es	Guardar como
 save selected columns as default preference for all users.	etemplate	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
 save the changes made and close the window	etemplate	es-es	Guardar los cambios realizados y cerrar la ventana
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.

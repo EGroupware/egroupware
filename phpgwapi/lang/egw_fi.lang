@@ -639,6 +639,7 @@ saturday	common	fi	Lauantai
 saudi arabia	common	fi	SAUDI ARABIA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fi	Savant2 versio eroaa Savant2 wrapperista.<br>Tämä versio: %1 </br>Savantin versio: %2
 save	common	fi	Tallenna
+save as	common	fi	Tallenna nimellä
 search	common	fi	Haku
 search %1 '%2'	common	fi	Etsi %1 '%2'
 search accounts	common	fi	Etsi käyttäjätilejä

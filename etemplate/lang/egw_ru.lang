@@ -351,7 +351,6 @@ returns savely, without deleting	etemplate	ru	возвращает безопа�
 right	etemplate	ru	Вправо
 row...	etemplate	ru	Строка...
 save all	etemplate	ru	Сохранить всё
-save as	etemplate	ru	Сохранить как
 save selected columns as default preference for all users.	etemplate	ru	Записать выбранные столбцы как настройки по-умолчанию для всех пользователей.
 save the changes made and close the window	etemplate	ru	Сохранить изменения и закрыть окно
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	ru	записать еШаблон под вышеуказанными ключами (имя, ...), изменить их для СохранитьКак

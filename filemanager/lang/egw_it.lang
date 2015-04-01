@@ -215,7 +215,6 @@ root access granted.	filemanager	it	Accesso root conesso
 root access stopped.	filemanager	it	Accesso root fermato.
 save %1	filemanager	it	Salva %1
 save %1, and go back to file listing	filemanager	it	Salva %1 e torna alla lista dei file
-save as	filemanager	it	Salva con nome
 save as zip	filemanager	it	Salva come file compresso (zip)
 save changes	filemanager	it	Salva le modifiche
 saved %1	filemanager	it	Ho salvato %1

@@ -181,7 +181,6 @@ root access granted.	filemanager	sl	Dostop do root je bil odobren.
 root access stopped.	filemanager	sl	Dostop do korena je bil ustavljen.
 save %1	filemanager	sl	Shrani %1
 save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na seznam datotek
-save as	filemanager	sl	Shrani kot
 save changes	filemanager	sl	Shrani spremembe
 saved %1	filemanager	sl	Shranjen %1
 saving properties failed!	filemanager	sl	Shranjevanje lastnosti ni uspelo!

@@ -210,7 +210,6 @@ root access granted.	filemanager	nl	Root toegang verleend.
 root access stopped.	filemanager	nl	Root toegang ingetrokken.
 save %1	filemanager	nl	Bewaar %1
 save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
-save as	filemanager	nl	Bewaar als
 save as zip	filemanager	nl	Bewaar als Zip
 save changes	filemanager	nl	Wijzigingen bewaren
 saved %1	filemanager	nl	%1 is bewaard

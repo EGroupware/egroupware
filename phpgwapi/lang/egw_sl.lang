@@ -581,6 +581,7 @@ saturday	common	sl	Sobota
 saudi arabia	common	sl	SAVDSKA ARABIJA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sl	Različica Savant2 se razlikuje od ovojnice Savant2. <br/>Ta različica: %1 <br/>Različica Savant: %2
 save	common	sl	Shrani
+save as	common	sl	Shrani kot
 search	common	sl	Išči
 search %1 '%2'	common	sl	Išči %1 '%2'
 search accounts	common	sl	Išči po računih

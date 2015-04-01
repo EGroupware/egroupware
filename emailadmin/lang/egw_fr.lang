@@ -115,6 +115,7 @@ qmaildotmode	emailadmin	fr	qmaildotmode
 quota settings	emailadmin	fr	Paramètres de quota
 quota size in mbyte	emailadmin	fr	Taille des quota en Mo
 remove	emailadmin	fr	Supprimer
+required pear class mail/mimedecode.php not found.	emailadmin	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
 reset filter	emailadmin	fr	Réinitialiser le filtre
 select type of imap server	emailadmin	fr	Sélectionner le type de serveur IMAP
 select type of imap/pop3 server	emailadmin	fr	Sélectionner le type de serveur IMAP/POP3

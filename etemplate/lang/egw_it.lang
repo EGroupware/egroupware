@@ -4,6 +4,7 @@
 %1 etemplates found	etemplate	it	%1 eTemplate trovati
 %1 matches on search criteria	etemplate	it	%1 occorrenze trovate
 %1 new etemplates imported for application '%2'	etemplate	it	%1 nuovi eTemplate importati per l'Applicazione '%2'
+%1 not implemented for %2!	etemplate	it	%1 non implementato per %2!
 %s disabled	etemplate	it	%s disabilitato
 %s needed	etemplate	it	%s necessario
 %s notranslation	etemplate	it	%s NoTranslation
@@ -54,6 +55,7 @@ cant delete a single widget from a grid !!!	etemplate	it	non si può cancellare 
 cant delete the only column of a grid !!!	etemplate	it	non si può cancellare l'unica colonna di una griglia !!!
 cant delete the only row in a grid !!!	etemplate	it	non si può cancellare l'unica riga di una griglia !!!
 category	etemplate	it	Categoria
+category tree	etemplate	it	Albero categoria
 cellpadding for the table-tag	etemplate	it	Cellpadding per table-tag
 cells	etemplate	it	Celle
 cellspacing for the table-tag	etemplate	it	Spaziatura celle per table-tag
@@ -122,6 +124,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	it	displayed in statusline of browser if input-field gets focus
 displayed in the top line of the groupbox (legend)	etemplate	it	visualizzato nella riga più alta del groupbox (legenda)
 do you want to save the changes you made in table %s?	etemplate	it	Vuoi salvare i cambiamenti fatti nella tabella %s?
+document '%1' does not exist or is not readable for you!	preferences	it	Il documento '%1' non esiste o non è leggibile da te!
 documentation	etemplate	it	Documentazione
 doesn't matter	etemplate	it	non importa
 drop a table - this can not be undone	etemplate	it	Drop di una tabella - questo NON può essere annullato
@@ -137,6 +140,7 @@ editable templates - delete template	etemplate	it	Editable Templates - Delete Te
 editable templates - editor	etemplate	it	Editable Templates - Editor
 editable templates - search	etemplate	it	Editable Templates - Search
 editable templates - show template	etemplate	it	Editable Templates - Show Template
+element role title	etemplate	it	Titolo ruolo elemento
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	it	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 enable javascript onchange submit	etemplate	it	abilita JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	it	inserisci '' per un predefinito vuoto, niente significa nessun predefinito
@@ -311,7 +315,7 @@ returns savely, without deleting	etemplate	it	returns savely, WITHOUT deleting
 right	etemplate	it	Destra
 row...	etemplate	it	Riga...
 save all	etemplate	it	Salva tutti
-save as	etemplate	it	Salva come
+save as zip	etemplate	it	Salva come file compresso (zip)
 save the changes made and close the window	etemplate	it	Salva le modifiche fatte e chiude la finestra
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	it	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	it	saves changes to tables_current.inc.php
@@ -319,6 +323,7 @@ saves the template with given version number and closes the window	etemplate	it	
 scale	etemplate	it	Scala
 scale for float	etemplate	it	scale for float
 search	etemplate	it	Cerca
+search letter	etemplate	it	Cerca per lettera
 select a category	etemplate	it	seleziona una Categoria
 select a primary contact, to show in the list	etemplate	it	Seleziona un contatto primario, da mostrare in elenco
 select access	etemplate	it	Seleziona Accesso

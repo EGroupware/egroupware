@@ -215,7 +215,6 @@ root access granted.	filemanager	en	Root access granted.
 root access stopped.	filemanager	en	Root access stopped.
 save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing.
-save as	filemanager	en	Save as
 save as zip	filemanager	en	Save as Zip
 save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1

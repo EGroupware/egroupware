@@ -181,7 +181,7 @@ root access granted.	filemanager	fr	Attribution de l'accès root
 root access stopped.	filemanager	fr	Fin de l'attribution de l'accès root
 save %1	filemanager	fr	Enregistrer %1
 save %1, and go back to file listing	filemanager	fr	Enregistrer %1, et retour au listing
-save as	filemanager	fr	Enregistrer comme
+save as zip	filemanager	fr	Sauvegarder en zip
 save changes	filemanager	fr	Enregistrer les changements
 saved %1	filemanager	fr	%1 enregistré
 saving properties failed!	filemanager	fr	Echec de l'enregistrement des propriétés !
@@ -189,6 +189,7 @@ search for '%1'	filemanager	fr	Recherche de '%1'
 searchstring	filemanager	fr	Chaine de recherche
 select action...	filemanager	fr	Sélectionner une acion...
 select file to upload in current directory	filemanager	fr	Choisissez un fichier à télécharger dans le répertoire courant
+select file(s) from vfs	common	fr	Sélectionner des fichiers du VFS
 show	filemanager	fr	Afficher
 show hidden files	filemanager	fr	Afficher les fichiers cachés
 show link "%1" in side box menu?	filemanager	fr	Afficher un lien "%1" dans le menu latéral

@@ -705,6 +705,7 @@ saturday	common	sk	Sobota
 saudi arabia	common	sk	SAUDSKÁ ARÁBIA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2. <br/>Táto verzia: %1 <br/>Verzia Savant: %2
 save	common	sk	Uložiť
+save as	common	sk	Uložiť ako
 search	common	sk	Hľadať
 search %1 '%2'	common	sk	Hľadaj %1 '%2'
 search accounts	common	sk	Hľadať v účtoch
@@ -762,7 +763,6 @@ show page generation time	common	sk	Ukázať čas generovania stránky
 show page generation time on the bottom of the page?	common	sk	Ukázať čas generovania stránky na jej spodku?
 show page generation time?	common	sk	Ukázať čas generovania stránky?
 show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazovať na desktope logá EGroupware a x-desktopu.
-show this month	common	sk	Zobraziť tento mesiac
 show_more_apps	common	sk	ukázať viacero aplikácií
 showing %1	common	sk	zobrazujem %1
 showing %1 - %2 of %3	common	sk	zobrazujem %1 - %2 z %3

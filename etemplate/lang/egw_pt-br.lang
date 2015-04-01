@@ -322,7 +322,6 @@ reset	etemplate	pt-br	Limpar
 returns savely, without deleting	etemplate	pt-br	retornar ao documento salvo, SEM apagar
 right	etemplate	pt-br	Direita
 row...	etemplate	pt-br	Linha...
-save as	etemplate	pt-br	salvar como
 save as zip	etemplate	pt-br	Salvar como Zip
 save selected columns as default preference for all users.	etemplate	pt-br	Salvar colunas selecionadas como padrão para todos os usuários.
 save the changes made and close the window	etemplate	pt-br	Salvar as alterações feitas e fechar a janela

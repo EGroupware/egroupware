@@ -170,6 +170,7 @@ editable templates - delete template	etemplate	fr	Templates modifiables - efface
 editable templates - editor	etemplate	fr	Templates modifiables - éditeur
 editable templates - search	etemplate	fr	Templates modifiables - rechercher
 editable templates - show template	etemplate	fr	Templates modifiables - montrer le template
+element role title	etemplate	fr	Titre du rôle
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	fr	Styles CSS incorporés, p.e. '.rouge { fond: rouge; }' (notez le '.' avant le nom de la classe) ou '@import url(...)' (les noms de classe sont globaux pour la page entière!)
 enable javascript onchange submit	etemplate	fr	Activer la soumission sur changement en JavaScript
 enter '' for an empty default, nothing mean no default	etemplate	fr	Entrez '' pour une valeur par défaut vide, rien signifie pas de valeur par défaut
@@ -380,7 +381,6 @@ right	etemplate	fr	Droite
 row...	etemplate	fr	Ligne...
 sa	etemplate	fr	Sa
 save all	etemplate	fr	Tout enregistrer
-save as	etemplate	fr	Enregistrer comme
 save as zip	etemplate	fr	Sauvegarder en zip
 save selected columns as default preference for all users.	etemplate	fr	Enregistrer les colonnes sélectionnées comme préférence par défaut pour tous les utilisateurs.
 save the changes made and close the window	etemplate	fr	Enregistrer les modifications et fermer la fenêtre

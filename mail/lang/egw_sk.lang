@@ -347,7 +347,6 @@ rule priority position	mail	sk	Pozícia priority pravidla
 rule with priority	mail	sk	Pravidlo s prioritou
 rules	mail	sk	Pravidlá
 save all	mail	sk	Uložiť všetko
-save as	mail	sk	Uložiť ako
 save as default	mail	sk	Uložiť ako predvolené
 save as draft	mail	sk	Uložiť ako návrh
 save as draft and print	mail	sk	Uložiť ako návrh a vytlačiť

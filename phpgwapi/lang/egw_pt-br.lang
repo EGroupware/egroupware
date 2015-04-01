@@ -657,6 +657,7 @@ saturday	common	pt-br	Sábado
 saudi arabia	common	pt-br	ARÁBIA SAUDITA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt-br	Versão do Savant2 difere do validador Savant2.<br/> Esta versão: %1 <br/> Versão do Savant: %2
 save	common	pt-br	Salvar
+save as	common	pt-br	salvar como
 scheduling inbox	common	pt-br	Agendamento de caixa de entrada
 scheduling outbox	common	pt-br	Agendamento de caixa de saída
 search	common	pt-br	Procura

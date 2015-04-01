@@ -10,7 +10,6 @@ forced	home	sk	Vynútené
 home	home	sk	Domov
 in %1 days (%2) is %3's birthday.	home	sk	O %1 dní (%2) bude mať narodeniny %3.
 list of entries	home	sk	Zoznam položiek
-location	home	sk	Miesto
 remove	home	sk	Odstrániť
 remove default %1	home	sk	Odstrániť predvolené %1
 removed default	home	sk	Predvolené bolo odstránené
@@ -23,8 +22,6 @@ single entry	home	sk	Jedna položka
 there is a new version of egroupware available	home	sk	Už existuje novšia verzia EGroupware
 today is %1's birthday!	home	sk	Dnes má narodeniny %1!
 tomorrow is %1's birthday.	home	sk	Zajtra má narodeniny %1.
-weather	home	sk	Počasie
-weekview	home	sk	Týždenný pohľad
 yes, for the next three days	home	sk	Áno, pre nasledujúce 3 dni
 yes, for the next two weeks	home	sk	Áno, pre nasledujúce 2 týždne
 yes, for the next week	home	sk	Áno, pre nasledujúci týždeň

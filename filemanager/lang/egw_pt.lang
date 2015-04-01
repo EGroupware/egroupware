@@ -75,7 +75,6 @@ replaced %1	filemanager	pt	Substituído %1
 replacements for inserting entries into documents	filemanager	pt	Substitutos para a inserção de entradas em documentos
 save %1	filemanager	pt	Guardar %1
 save %1, and go back to file listing	filemanager	pt	Guardar %1, e voltar à lista de ficheiros
-save as	filemanager	pt	Salvar como
 save changes	filemanager	pt	Guardar alterações
 saved %1	filemanager	pt	%1 guardado
 select file(s) from vfs	common	pt	Selecione o arquivo (s) a partir de VFS

@@ -192,7 +192,6 @@ required pear class mail/mimedecode.php not found.	mail	ru	Необходимы�
 restrict acl management	admin	ru	Ограничение управления правами ACL
 row order style	mail	ru	Порядок сортировки строк
 save all	mail	ru	Сохранить всё
-save as	mail	ru	Сохранить как
 save as draft	mail	ru	Сохранить как черновик
 save as infolog	mail	ru	Сохранить в ИнфоЖурнале
 save as ticket	mail	ru	Сохранить как запись Трекера
