@@ -1963,8 +1963,12 @@ class infolog_ui
 					$pm_links = array($action_id);
 				default:	// to allow other apps to participate
 					$content['info_subject'] = egw_link::title($action, $id);
-					$content['info_contact'] = $action.':'.$action_id;
-					foreach (explode(',', $action_id) as $n => $id)
+					$action_ids = explode(',',$action_id);
+					if(count($action_ids) == 1)
+					{
+						$content['info_contact'] = $action.':'.$action_id;
+					}
+					foreach ($action_ids as $n => $id)
 					{
 						egw_link::link('infolog', $content['link_to']['to_id'], $action, $id);
 
