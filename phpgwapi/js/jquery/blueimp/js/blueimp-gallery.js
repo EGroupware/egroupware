@@ -881,7 +881,7 @@
             }
 			else if (isTarget(options.downloadClass)) {
 				// Click on "download" control
-				if (typeof event.target.download_href != 'undefined')
+				if (this.list[this.getIndex()] && typeof this.list[this.getIndex()].download_href != 'undefined')
 				{
 					event.target.href = this.list[this.getIndex()].download_href;
 				}
