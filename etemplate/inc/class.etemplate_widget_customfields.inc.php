@@ -135,17 +135,21 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			// app changed
 			$customfields =& egw_customfields::get($app);
 		}
-
 		// Filter fields
 		if($this->attrs['field-names'])
 		{
-			if($this->attrs['field-names'][0] == '!')
+			$fields_name = explode(',', $this->attrs['field-names']);
+			foreach($fields_name as &$f)
 			{
-				$negate_field_filter = true;
-				$this->attrs['field-names'] = substr($this->attrs['field_names'],1);
+				if ($f[0] == "!")
+				{
+					$f= substr($f,1);
+					$negate_fields[]= $f;
+				}
+				$field_filters []= $f;
 			}
-			$field_filter = explode(',', $this->attrs['field_names']);
 		}
+		
 		$fields = $customfields;
 
 		$use_private = self::expand_name($this->attrs['use-private'],0,0,'','',self::$cont);
@@ -160,8 +164,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			}
 
 			// Remove filtered fields
-			if($field_filter && (!$negate_field_filter && !in_array($key, $field_filter) ||
-				$negate_field_filter && in_array($key, $field_filter)))
+			if($field_filters && in_array($key, $negate_fields) && in_array($key, $field_filters))
 			{
 				unset($fields[$key]);
 			}
@@ -169,11 +172,11 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		// check if name refers to a single custom field --> show only that
 		$matches = null;
 		if (($pos=strpos($form_name,self::$prefix)) !== false && // allow the prefixed name to be an array index too
-			preg_match("/$this->prefix([^\]]+)/",$form_name,$matches) && isset($fields[$name=$matches[1]]))
+			preg_match($preg = '/'.self::$prefix.'([^\]]+)/',$form_name,$matches) && isset($fields[$name=$matches[1]]))
 		{
 			$fields = array($name => $fields[$name]);
-			$value = array($this->prefix.$name => $value);
-			$form_name = substr($form_name,0,-strlen("[$this->prefix$name]"));
+			$value = array(self::$prefix.$name => $value);
+			$form_name = self::$prefix.$name;
 		}
 
 		if(!is_array($fields)) $fields = array();
@@ -199,7 +202,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				{
 					if (!empty($this->attrs['sub-type']) && !empty($field['type2']) &&
 						strpos(','.$field['type2'].',',','.$field['type2'].',') === false) continue;    // not for our content type//
-					if (isset($value[$this->prefix.$lname]) && $value[$this->prefix.$lname] !== '') //break;
+					if (isset($value[self::$prefix.$lname]) && $value[self::$prefix.$lname] !== '') //break;
 					{
 						$fields_with_vals[]=$lname;
 					}
@@ -368,7 +371,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					{
 						self::set_validation_error($field,lang('Field must not be empty !!!'),'');
 					}
-					$field_name = self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+					$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,1)] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
 					$valid =& self::get_array($validated, $field_name, true);
 
 					if (is_array($valid)) $valid = implode(',', $valid);

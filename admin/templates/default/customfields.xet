@@ -63,7 +63,7 @@
 					<menulist>
 						<menupopup id="${row}[cf_type2]" no_lang="1" multiple="true" empty_label="All"/>
 					</menulist>
-					<description id="${row}[cf_name]" />
+					<description id="${row}[cf_name]" no_lang="1" />
 					<vbox>
 						<description id="${row}[cf_label]" no_lang="1"/>
 						<description id="${row}[cf_label]"/>
