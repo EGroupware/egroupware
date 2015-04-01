@@ -135,6 +135,7 @@ email notification update failed	mail	sk	Aktualizácia potvrdenia e-mailu zlyhal
 email notification update failed! you need to set an email address!	mail	sk	Aktualizácia potvrdenia e-mailu zlyhala! Musíte zadať e-mailovú adresu!
 emailaddress	admin	sk	E-mailová adresa
 emailadmin: profilemanagement	mail	sk	eMailAdmin: Správa profilu
+empty junk	mail	sk	Vyprázdniť priečinok SPAM
 empty trash	mail	sk	Vyprázdniť Odpadkový kôš
 enable	mail	sk	Zapnúť
 enabled!	mail	sk	zapnuté!
