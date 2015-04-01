@@ -319,6 +319,7 @@ list of files linked to the current record	addressbook	sk	Zoznam súborov prilo�
 load vcard	addressbook	sk	Nahrať vizitku VCard
 location	addressbook	sk	Umiestnenie
 locations	addressbook	sk	Umiestnenia
+mail vcard	addressbook	sk	Poslať VCard e-mailom
 main categories in their own field	addressbook	sk	Hlavné kategórie v samostatných poliach
 manage mapping	addressbook	sk	Správa mapovania
 mark records as private	addressbook	sk	Označiť záznamy ako súkromé
@@ -398,7 +399,7 @@ required fields *	addressbook	sk	Požadované polia *
 role	addressbook	sk	Pozícia
 room	addressbook	sk	Miestnosť
 search for '%1'	addressbook	sk	Hľadať '%1'
-search letter	addressbook	sk	Hľadať znak
+search letter	addressbook	sk	Hľadať podľa písmena
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sk	Vyberte obrázok jpeg orientovaný na výšku. Bude prispôsobený na výškový rozmer 60 pixlov.
 select a view	addressbook	sk	Vyberte pohľad
 select addressbook type	addressbook	sk	Vyberte typ Adresára
@@ -413,6 +414,7 @@ select the type of conversion:	addressbook	sk	Vyberte typ prevodu:
 select where you want to store / retrieve contacts	admin	sk	Vyberte, kde chcete ukladať / získavať kontakty
 selected contacts	addressbook	sk	vybrané kontakty
 send emailcopy to receiver	addressbook	sk	Poslať kópiu e-mailu adresátovi
+send succeeded to %1	common	sk	Odoslanie sa podarilo pre %1
 seperator	addressbook	sk	Oddeľovač
 set full name and file as field in contacts of all users (either all or only empty values)	admin	sk	Nastaviť plné meno a súbor ako pole v kontaktoch všetkých používateľov (buď všetky alebo len prázdne hodnoty)
 set only full name	addressbook	sk	Nastaviť len plné meno

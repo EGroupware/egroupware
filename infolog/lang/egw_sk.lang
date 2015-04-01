@@ -466,7 +466,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne používané meno (<= 20 znakov), jeho zmena zneprístupní existujúce údaje
 the text displayed to the user	infolog	sk	Text zobrazený používateľovi
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sk	Toto je filter, ktorý Záznamník používa keď otvoríte aplikáciu. Filtre obmedzujú, ktoré záznamy sú zobrazené vo vybranom pohľade. Sú tu filtre na zobrazenie iba dokončených záznamov, alebo naopak -ešte otvorených, alebo budúcich záznamov, a to buď Vaších, alebo všetkých používateľov.
-til when should the todo or phonecall be finished	infolog	sk	Dokiaľ sa nedokončí Úloha alebo Telefonát
+til when should the todo or phonecall be finished	infolog	sk	Dokedy treba vybaviť Úlohu alebo Telefonát
 times	infolog	sk	Časy
 titles of any entries linked to the current record, excluding attached files	infolog	sk	Názvy akýchkoľvek položiek pripojených na súčasný záznam, okrem priložených súborov
 to many might exceed your execution-time-limit	infolog	sk	Ak priveľa, môže dôjsť k prekročeniu Vašich obmedzení ohľadom povoleného času behu aplikácie
