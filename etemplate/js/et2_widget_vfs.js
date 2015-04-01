@@ -346,6 +346,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				thumbnail: _value.path && _value.mime ? this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime) : this.image.attr('src')+ '&thheight=128'
 			}];
 		}
+		if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/,'ig')) mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
 		return mediaContent;
 	},
 

@@ -1237,7 +1237,7 @@ et2_register_widget(et2_link, ["link", "link-entry_ro"]);
  *
  * @augments et2_valueWidget
  */
-var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"application": {
@@ -1261,7 +1261,13 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 			"type": "string",
 			"default":"",
 			"description": "Sub-type key to list only entries of that type"
-		}
+		},
+		"expose_view":{
+			name: "Expose view",
+			type: "boolean",
+			default: true,
+			description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
+		},
 	},
 
 	/**
@@ -1339,14 +1345,52 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.egw().jsonq(this.egw().getAppName()+'.etemplate_widget_link.ajax_link_list', [_value], this.set_value, this);
 		return;
 	},
-
+	/**
+	 * Function to get media content to feed the expose
+	 * @param {type} _value
+	 * @returns {Array|Array.getMedia.mediaContent}
+	 */
+	getMedia: function (_value)
+	{
+		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
+		var mediaContent = [];
+		if (_value && typeof _value.type !='undefined' && _value.type.match(/video\/|audio\//,'ig'))
+		{
+			mediaContent = [{
+					title: _value.id,
+					type: _value.type,
+					poster:'', // TODO: Should be changed by correct video thumbnail later
+					href: base_url + egw().mime_open(_value),
+					download_href: base_url + egw().mime_open(_value) + '?download',
+				}];
+		}
+		else if(_value)
+		{
+			mediaContent = [{
+				title: _value.id,
+				href: base_url + egw().mime_open(_value).url,
+				download_href: base_url + egw().mime_open(_value).url + '?download',
+				type: _value.type,
+			}];
+		}
+		if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/,'ig')) mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
+		return mediaContent;
+	},
 	_add_link: function(_link_data) {
 		var self = this;
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
 			.addClass("et2_link loading")
 			.click( function(e){
-				self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);
+				if (self.options.expose_view && typeof _link_data.type !='undefined' 
+					&& _link_data.type.match(self.mime_regexp,'ig'))
+				{
+					self._init_blueimp_gallery(e, _link_data);
+				}
+				else
+				{
+					self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);
+				}
 				e.stopImmediatePropagation();
 			});
 
@@ -1423,7 +1467,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 			this._labelContainer.contents().not(this.list).remove();
 		}
 	}
-});
+}));
 et2_register_widget(et2_link_string, ["link-string"]);
 
 /**
