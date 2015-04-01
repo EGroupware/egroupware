@@ -100,7 +100,7 @@
 			<rows>
 				<row disabled="@ts_viewtype" class="dialogHeader">
 					<description value="Title" for="ts_title"/>
-					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" class="et2_fullWidth et2_required" tabindex="1" span="4"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="255" class="et2_fullWidth et2_required" tabindex="1" span="4"/>
 					<textbox type="integer" id="ts_id" readonly="true"/>
 					<appicon src="timesheet"/>
                     <description/>
