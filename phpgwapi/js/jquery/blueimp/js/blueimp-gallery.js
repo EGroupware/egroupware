@@ -93,6 +93,8 @@
             playPauseClass: 'play-pause',
 			// The class fullscreen button control
 			fullscreenClass:'fullscreen',
+			// The class download button control
+			downloadClass:'download',
             // The list object property (or data attribute) with the object type:
             typeProperty: 'type',
             // The list object property (or data attribute) with the object title:
@@ -876,7 +878,21 @@
                 // Click on "fullscreen" control
                 this.preventDefault(event);
                 this.toggleFullscreen();
-            } else if (parent === this.slidesContainer[0]) {
+            }
+			else if (isTarget(options.downloadClass)) {
+				// Click on "download" control
+				if (typeof event.target.download_href != 'undefined')
+				{
+					event.target.href = this.list[this.getIndex()].download_href;
+				}
+				else
+				{
+					event.target.href = this.list[this.getIndex()].href;
+				}
+				
+				if (typeof event.target.download != 'undefined') event.target.download = this.list[this.getIndex()].title;
+			}
+			else if (parent === this.slidesContainer[0]) {
                 // Click on slide background
                 this.preventDefault(event);
                 if (options.closeOnSlideClick) {
