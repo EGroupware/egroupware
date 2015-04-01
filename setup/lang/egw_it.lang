@@ -276,6 +276,7 @@ not completed	setup	it	Non Completato
 not ready for this stage yet	setup	it	Non ancora pronto per questo passaggio
 not set	setup	it	non impostato
 note: you will be able to customize this later	setup	it	Nota: Potrai personalizzarlo dopo
+nothing to change.	setup	it	Nulla da modificare
 ok	setup	it	OK
 once the database is setup correctly	setup	it	Una volta che il database sarà impostato correttamente
 one month	setup	it	un mese
@@ -381,6 +382,7 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running version %1 of egroupware	setup	it	Sembra che tu sta utilizzando la versione %1 di eGroupWare
 you are ready for this stage, but this stage is not yet written.<br />	setup	it	Sei pronto per questo passaggio, ma questa procedura non è ancora stata scritta.<br />
 you do not have any languages installed. please install one now <br />	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br />
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	it	Non hai JPGraph nella versione %1 o superiore installato! E' un componente necessario per la generazione del grafico Gantt.
 you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	it	Dovresti disinstallare e poi reinstallare, oppure tentare riparazioni manuali
 your applications are current	setup	it	Le tue applicazioni sono aggiornate

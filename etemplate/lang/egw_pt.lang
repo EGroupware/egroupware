@@ -351,7 +351,6 @@ right	etemplate	pt	Direita
 row...	etemplate	pt	Linha...
 sa	etemplate	pt	Sa
 save all	etemplate	pt	Salve todo
-save as	etemplate	pt	Salvar como
 save the changes made and close the window	etemplate	pt	Guardar as alterações efectuadas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	pt	Guardar o modelo Web com as chaves de cima (nome, ...). Terá de alterá-las para "Guardar como..."
 saves changes to tables_current.inc.php	etemplate	pt	Guarda as alterações em tables_current.inc.php

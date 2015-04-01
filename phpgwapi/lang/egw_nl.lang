@@ -690,6 +690,7 @@ saturday	common	nl	Zaterdag
 saudi arabia	common	nl	SAUDI ARABIË
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	nl	Savant2 versie verschilt van Savant2 wrapper.<br />Deze versie: %1<br />Savants versie: %2
 save	common	nl	Opslaan
+save as	common	nl	Bewaar als
 scheduling inbox	common	nl	Planning inbox
 scheduling outbox	common	nl	Planning verzend map
 search	common	nl	Zoeken

@@ -210,7 +210,6 @@ root access granted.	filemanager	sk	Správcovské oprávnenia pridelené.
 root access stopped.	filemanager	sk	Správcovské oprávnenia odobraté.
 save %1	filemanager	sk	Uložiť %1
 save %1, and go back to file listing	filemanager	sk	Uložiť %1, a vrátiť sa na zoznam súborov
-save as	filemanager	sk	Uložiť ako
 save as zip	filemanager	sk	Uložiť ako ZIP
 save changes	filemanager	sk	Uložiť zmeny
 saved %1	filemanager	sk	Uložené %1

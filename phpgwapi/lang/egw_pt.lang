@@ -560,6 +560,7 @@ saturday	common	pt	Sábado
 saudi arabia	common	pt	Arábia Saudita
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt	A versão Savant2 é diferente da Savant2 wrapper.<br/>Esta versão: %1 <br/>Versão Savant2:%2
 save	common	pt	Guardar
+save as	common	pt	Salvar como
 search	common	pt	Pesquisar
 search %1 '%2'	common	pt	Pesquisar %1 '%2'
 search accounts	common	pt	Pesquisar contas

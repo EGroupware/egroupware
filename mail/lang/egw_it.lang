@@ -345,7 +345,6 @@ rule priority position	mail	it	Posizione di priorità della regola
 rule with priority	mail	it	regola con priorità
 rules	mail	it	regole
 save all	mail	it	Salva tutti
-save as	mail	it	Salva come
 save as default	mail	it	salva come predefinito
 save as draft	mail	it	Salva come Bozza
 save as draft and print	mail	it	Salva come Bozza e Stampa

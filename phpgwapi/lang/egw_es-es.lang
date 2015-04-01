@@ -646,6 +646,7 @@ saturday	common	es-es	Sábado
 saudi arabia	common	es-es	ARABIA SAUDI
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	es-es	La versión de Savant2 difiere del wrapper Savant2. <br/>Esta versión: %1 <br>Versión de Savant: %2
 save	common	es-es	Grabar
+save as	common	es-es	Guardar como
 search	common	es-es	Buscar
 search %1 '%2'	common	es-es	Buscar %1 '%2'
 search accounts	common	es-es	Buscar cuentas

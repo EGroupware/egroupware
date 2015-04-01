@@ -465,6 +465,7 @@ task	infolog	de	Aufgabe
 tasks of	infolog	de	Aufgaben von
 template	infolog	de	Vorlage
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	de	Das Dokument kann Platzhalter wie {{%1}} enthalten, die mit den Daten ersetzt werden.
 the following document-types are supported:	infolog	de	Folgende Dateitypen werden unterstützt:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 10 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 20 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich

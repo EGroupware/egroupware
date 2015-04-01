@@ -350,7 +350,6 @@ rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
 rules	mail	en	rules
 save all	mail	en	Save all
-save as	mail	en	Save as
 save as default	mail	en	save as default
 save as draft	mail	en	Save as Draft
 save as draft and print	mail	en	Save as Draft and Print

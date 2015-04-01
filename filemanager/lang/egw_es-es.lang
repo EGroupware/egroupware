@@ -192,7 +192,6 @@ root access granted.	filemanager	es-es	Permiso de administrador concedido.
 root access stopped.	filemanager	es-es	Acceso de administrador detenido.
 save %1	filemanager	es-es	Guardar %1
 save %1, and go back to file listing	filemanager	es-es	Guardar %1, y volver al listado
-save as	filemanager	es-es	Guardar como
 save changes	filemanager	es-es	Guardar cambios
 saved %1	filemanager	es-es	Guardado %1
 saving properties failed!	filemanager	es-es	¡Fallo al guardar las propiedades!

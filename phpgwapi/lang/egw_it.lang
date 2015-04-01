@@ -709,6 +709,7 @@ saturday	common	it	Sabato
 saudi arabia	common	it	ARABIA SAUDITA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	it	La versione Savant2 è diversa dal wrapper Savant2. <br/>Questa versione: %1 <br/> Versione di Savant: %2
 save	common	it	Salva
+save as	common	it	Salva con nome
 scheduling inbox	common	it	Programmazione inbox
 scheduling outbox	common	it	Programmazione outbox
 search	common	it	Cerca

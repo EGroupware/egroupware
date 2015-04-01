@@ -297,7 +297,6 @@ rule priority position	mail	fr	position des règles
 rule with priority	mail	fr	règle avec la priorité
 rules	mail	fr	règles
 save all	mail	fr	Enregistrer tout
-save as	mail	fr	Enregistrer comme
 save as default	mail	fr	enregistrer par défaut
 save as draft	mail	fr	Enregistrer comme brouillon
 save as draft and print	mail	fr	Enregistrer comme brouillon et imprimer

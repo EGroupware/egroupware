@@ -333,7 +333,6 @@ rule priority position	mail	nl	Regel prioriteit positie
 rule with priority	mail	nl	regels met prioriteit
 rules	mail	nl	regels
 save all	mail	nl	Bewaar alle
-save as	mail	nl	Bewaar als
 save as default	mail	nl	Bewaar als standaard
 save as draft	mail	nl	Bewaar als concept
 save as draft and print	mail	nl	Bewaar als concept en Afdruk

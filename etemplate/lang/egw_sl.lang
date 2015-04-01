@@ -312,7 +312,6 @@ returns savely, without deleting	etemplate	sl	Vrne varno, BREZ brisanja
 right	etemplate	sl	Desno
 row...	etemplate	sl	Vrstica ...
 save all	etemplate	sl	Shrani vse
-save as	etemplate	sl	Shrani kot
 save selected columns as default preference for all users.	etemplate	sl	Shrani izbrane stolpce kot privzeto nastavitev za vse uporabnike.
 save the changes made and close the window	etemplate	sl	Shrani spremembe in zapri okno
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sl	Shrani ePredlogo pod gornjimi ključi (ime,...), spremeni jih za Shrani kot

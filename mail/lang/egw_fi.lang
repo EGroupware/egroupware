@@ -139,7 +139,6 @@ reply to	mail	fi	Vastaanottaja
 replyto	mail	fi	Vastaanottaja
 row order style	mail	fi	Rivijärjestyksen muotoilu
 save all	mail	fi	Tallenna kaikki
-save as	mail	fi	Tallenna nimellä
 save as draft	mail	fi	Tallenna luonnoksena
 save as infolog	mail	fi	Tallenna InfoLogina
 save as ticket	mail	fi	Tallenna reklamaationa

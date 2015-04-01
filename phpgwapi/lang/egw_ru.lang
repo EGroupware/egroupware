@@ -659,6 +659,7 @@ saturday	common	ru	Суббота
 saudi arabia	common	ru	Саудовская Аравия
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ru	Версия Savant2 отличается от  оболочки Savant2. <br/>Эта версия: %1 <br/>Версия Savant: %2
 save	common	ru	Сохранить
+save as	common	ru	Сохранить как
 scheduling inbox	common	ru	Входящие
 scheduling outbox	common	ru	Исходящие
 search	common	ru	Поиск

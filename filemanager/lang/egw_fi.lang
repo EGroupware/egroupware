@@ -191,7 +191,6 @@ root access granted.	filemanager	fi	Root -access myönnetty.
 root access stopped.	filemanager	fi	Root -access katkaistu.
 save %1	filemanager	fi	Tallenna %1
 save %1, and go back to file listing	filemanager	fi	Tallenna %1 ja palaa hakemistoon
-save as	filemanager	fi	Tallenna nimellä
 save changes	filemanager	fi	Tallenna muutokset
 saved %1	filemanager	fi	Tallennettiin %1
 saving properties failed!	filemanager	fi	Asetusten tallentaminen epäonnistui!

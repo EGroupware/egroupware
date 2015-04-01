@@ -201,7 +201,6 @@ root access granted.	filemanager	ru	Доступ с правами root пред
 root access stopped.	filemanager	ru	Доступ с правами root прекращен.
 save %1	filemanager	ru	Сохранить %1
 save %1, and go back to file listing	filemanager	ru	Сохранить %1 и вернуться к списку файлов.
-save as	filemanager	ru	Сохранить как
 save changes	filemanager	ru	Сохранить изменения
 saved %1	filemanager	ru	Сохранено %1
 saving properties failed!	filemanager	ru	Сохранение свойств завершилось неудачно!

@@ -192,7 +192,6 @@ root access granted.	filemanager	pt-br	Acesso Root concedido.
 root access stopped.	filemanager	pt-br	Acesso Root parado.
 save %1	filemanager	pt-br	Salvar %1
 save %1, and go back to file listing	filemanager	pt-br	Salvar %1 e voltar à lista de arquivos
-save as	filemanager	pt-br	salvar como
 save as zip	filemanager	pt-br	Salvar como Zip
 save changes	filemanager	pt-br	Salvar alterações
 saved %1	filemanager	pt-br	%1 salvo

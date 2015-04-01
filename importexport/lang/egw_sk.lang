@@ -47,7 +47,6 @@ duplicate name, please choose another.	importexport	sk	Duplicitný názov, pros�
 edit conditions	importexport	sk	Upraviť podmienky
 edit definition <a href="%1">%2</a> to match your file	importexport	sk	Upravte definíciu <a href="%1">%2</a> aby sa zosúladila s vaším súborom
 edit your file to match the definition:	importexport	sk	Upravte váš súbor aby sa zosúladil s definíciou:
-encoding mismatch.  expected %1 file, you uploaded %2.<br />\n	importexport	sk	Zmätok v kódovaní. Očakavaný súbor %1, odovzdali ste %2.<br />\n
 errors	importexport	sk	Chyby
 execute	importexport	sk	Vykonať
 expert options	importexport	sk	Možnosti pre expertov
@@ -127,7 +126,6 @@ true	importexport	sk	Pravda
 try	importexport	sk	Odskúšať
 unable to delete	importexport	sk	Nedá sa odstrániť
 unable to link to %1 "%2"	importexport	sk	Nedá sa vytvoriť odkaz na %1 "%2"
-unable to link to %3 by custom field "%1": "%4".  %2 matches.	importexport	sk	Nedá sa vytvoriť odkaz na %3 pomocou používateľského poľa "%1":  "%4". %2 zhôd.
 unable to schedule	importexport	sk	Nedá sa plánovať.
 update categories	importexport	sk	Aktualizovať kategórie
 use default	importexport	sk	Použiť predvolené

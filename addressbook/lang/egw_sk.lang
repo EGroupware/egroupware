@@ -2,8 +2,6 @@
 %1 contact(s) %2	addressbook	sk	%1 kontakt(ov) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sk	%1 kontakt(ov) %2, %3 sa nepodarilo z dôvodu nedostatočných práv !!!
 %1 contacts updated (%2 errors).	addressbook	sk	%1 kontaktov bolo zaktualizovaných (%2 chýb).
-%1 entries %2, %3 failed because of insufficent rights !!!	addressbook	sk	%1 položiek %2, %3 zlyhalo z dôvodu nedostatočných práv !!!
-%1 entries %2, %3 failed.	addressbook	sk	%1 položiek %2, %3 zlyhalo.
 %1 fields in %2 other organisation member(s) changed	addressbook	sk	%1 položiek u %2 členov iných organizácií sa zmenilo
 %1 not implemented for %2!	addressbook	sk	%1 nebolo implementované pre %2!
 %1 records imported	addressbook	sk	Bolo naimportovaných %1 záznamov
@@ -24,7 +22,6 @@ add a customfield to link title	addressbook	sk	Pridať vlastné pole k titulu od
 add a new contact	addressbook	sk	Pridať nový kontakt
 add a new infolog	addressbook	sk	Pridať nový záznam
 add a new list	addressbook	sk	Pridať nový zoznam
-add a new list...	addressbook	sk	Pridať nový zoznam...
 add a single entry by passing the fields.	addressbook	sk	Pridať záznam pomocou zadania polí.
 add appointment	addressbook	sk	Pridať schôdzku
 add business email of whole distribution list?	addressbook	sk	Pridať Zamestnanie - Email celého distribučného zoznamu
@@ -108,7 +105,6 @@ charset of file	addressbook	sk	Znaková sada súboru
 check all	addressbook	sk	Označiť všetko
 choose an icon for this contact type	admin	sk	Zvoľte ikonu pre tento typ kontaktu
 choose charset	addressbook	sk	Zvoľte si znakovú sadu
-choose export options	addressbook	sk	Zvoľte možnosti exportu
 choose owner of imported data	addressbook	sk	Vyberte vlastníka naimportovaných údajov
 chosse an etemplate for this contact type	admin	sk	Vyberte si eŠablónu pre tento typ kontaktu
 city	common	sk	Mesto
@@ -279,7 +275,6 @@ how many contacts should non-admins be able to export	admin	sk	Koľko kontaktov 
 html link to the current record	addressbook	sk	HTML odkaz na aktuálny záznam
 icon	addressbook	sk	Ikona
 if accounts are already in ldap	admin	sk	ak sú účty už v LDAP
-if you specify an export definition, it will be used when you export	addressbook	sk	Ak tu vyberiete nejakú exportnú definíciu, bude sa používať pri exporte
 ignore first line	addressbook	sk	Ignorovať prvý riadok
 import	addressbook	sk	Import
 import contacts	addressbook	sk	Importovať kontakty
@@ -354,7 +349,6 @@ no fallback	addressbook	sk	Bez návratu
 no vcard	addressbook	sk	Žiadna vizitka
 number	addressbook	sk	Číslo
 number of records to read (%1)	addressbook	sk	Počet záznamov k načítaniu (%1)
-old fixed definition	addressbook	sk	Stará pevná definícia
 open %1 crm view	addressbook	sk	Otvoriť %1 CRM obrazenie
 open email addresses in external mail program	addressbook	sk	Otvoriť e-mailové adresy v externom e-mailovom programe
 open for editing?	addressbook	sk	Otvoriť pre úpravu?
@@ -377,7 +371,6 @@ phone numbers	common	sk	Telefónne čísla
 photo	addressbook	sk	Fotografia
 please enter a name for that field !	addressbook	sk	Prosím zadajte meno pre toto pole!
 please select only one category	addressbook	sk	Prosím, vyberte iba jednu kategóriu
-please update the templatename in your customfields section!	addressbook	sk	Prosím aktualizujte názov šablóny v sekcii vlastných polí!
 postal	common	sk	Poštové
 pref	addressbook	sk	Titul
 preferred email address to use in distribution lists	addressbook	sk	Predvolená E-mailová adresa použitá v distribučných zoznamoch
@@ -399,13 +392,13 @@ region	addressbook	sk	Región
 remove from distribution list	addressbook	sk	Odstrániť z distribučného zoznamu
 remove selected contacts from distribution list	addressbook	sk	Odstrániť vybrané kontakty z distribučného zoznamu
 removed from distribution list	addressbook	sk	Odstránené z distribučného zoznamu
-rename list	addressbook	sk	Premenovať zoznam
 repetition	addressbook	sk	Opakovanie
 replacements for inserting contacts into documents	addressbook	sk	Náhrady pre vkladanie kontaktov do dokumentov
 required fields *	addressbook	sk	Požadované polia *
 role	addressbook	sk	Pozícia
 room	addressbook	sk	Miestnosť
 search for '%1'	addressbook	sk	Hľadať '%1'
+search letter	addressbook	sk	Hľadať znak
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sk	Vyberte obrázok jpeg orientovaný na výšku. Bude prispôsobený na výškový rozmer 60 pixlov.
 select a view	addressbook	sk	Vyberte pohľad
 select addressbook type	addressbook	sk	Vyberte typ Adresára
@@ -463,7 +456,6 @@ titles of any entries linked to the current record, excluding attached files	add
 to many might exceed your execution-time-limit	addressbook	sk	Príliš veľa záznamov môže spôsobiť prekročenie povoleného časového limitu
 today is %1's birthday!	common	sk	Dnes má narodeniny %1!
 tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
-tracker	addressbook	sk	Sledovač
 translation	addressbook	sk	Preklad
 two of: %1	addressbook	sk	dva z: %1
 type	addressbook	sk	Typ
@@ -496,7 +488,6 @@ verification	addressbook	sk	Kontrola
 view linked infolog entries	addressbook	sk	Zobraziť pripojené položky Záznamníka
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sk	VAROVANIE!! LDAP sa dá použiť jedine ak NEPOUŽÍVATE kontakty na uchovanie používateľských účtov!
 warning: all contacts found will be deleted!	addressbook	sk	POZOR: Všetky kontakty budú odstránené!
-warning: template "%1" not found, using default template instead.	addressbook	sk	POZOR: Šablóna "%1" sa nenašla, používam namiesto nej predvolenú.
 weekday	addressbook	sk	Deň v týždni
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sk	Čo sa má v iných aplikáciách zobraziť na mieste odkazu na adresár. Prázdne hodnoty sa vynechajú. Ak zmeníte toto nastavenie, musíte sa znovu prihlásiť!
 when viewing a contact, show linked entries from the selected application	addressbook	sk	Pri zobrazení kontaktu ukázať odkazované položky z vybranej ikácie

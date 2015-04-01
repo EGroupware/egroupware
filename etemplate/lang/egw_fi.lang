@@ -323,7 +323,6 @@ returns savely, without deleting	etemplate	fi	Palauta säästäen, ILMAN poistam
 right	etemplate	fi	Oikea
 row...	etemplate	fi	Rivi...
 save all	etemplate	fi	Tallenna kaikki
-save as	etemplate	fi	Tallenna nimellä
 save selected columns as default preference for all users.	etemplate	fi	Tallenna valitut sarakkeet oletusasetuksiksi kaikille käyttäjille.
 save the changes made and close the window	etemplate	fi	Tallenna muutokset ja sulje ikkuna.
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fi	Tallenna mallipohja yllä olevien avaimien (nimi,...) alle, muuta ne "tallenna nimellä..."

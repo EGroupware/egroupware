@@ -713,6 +713,7 @@ saturday	common	de	Samstag
 saudi arabia	common	de	SAUDI ARABIEN
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	de	Savant2 Version unterscheidet sich von Savant2 Wrapper<br />Diese Version: %1<br />Savant version: %2
 save	common	de	Speichern
+save as	common	de	Speichern unter
 scheduling inbox	common	de	Posteingang Terminplanung
 scheduling outbox	common	de	Postausgang Terminplanung
 search	common	de	Suchen

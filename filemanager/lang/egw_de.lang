@@ -215,7 +215,6 @@ root access granted.	filemanager	de	Root Zugriff gewährt.
 root access stopped.	filemanager	de	Root Zugriff gestoppt.
 save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Verzeichnisansicht
-save as	filemanager	de	Speichern als
 save as zip	filemanager	de	Als ZIP-Datei speichern
 save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert

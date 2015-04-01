@@ -153,7 +153,6 @@ determines the order the fields are displayed	infolog	fr	détermine l´ordre d´
 directory with documents to insert entries	infolog	fr	Répertoire avec les documents pour insérer les entrées
 disables a status without deleting it	infolog	fr	désactive un statut sans le supprimer
 do not notify of these changes	infolog	fr	Ne pas notifier de ces changements
-do you really want to delete this rule	infolog	fr	Souhaitez-vous vraiment SUPPRIMER cette règle ?
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fr	Voulez-vous une confirmation du responsable sur: accepter, finir la tâche, ou les deux
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	fr	Être notifié si des entrées vous sont assignées ou si des entrées qui vous en été assignées sont mises à jour
 do you want a notification, if items you are responsible for are about to start?	infolog	fr	Être notifié si des entrées dont vous êtes responsable sont sur le point de commencer.
@@ -186,6 +185,7 @@ enter a textual description of the log-entry	infolog	fr	Entrez une description t
 enter the query pattern	infolog	fr	Entrez le champ de requête
 entry and all files	infolog	fr	Entrée et tous les fichiers
 error: importing the ical	infolog	fr	Erreur : lors de l'importation de l'iCal
+error: no mail (mailbox / uid) given!	infolog	fr	Erreur : pas d'email indiqué (mailbox / uid) !
 error: saving the entry	infolog	fr	Erreur: lors de l'enregistrement de l'entrée
 error: the entry has been updated since you opened it for editing!	infolog	fr	Erreur: cette entrée a été mise à jour pendant que vous l'aviez ouverte pour la modifier!
 execute a further action for this entry	infolog	fr	Exécuter une action de plus pour cette entrée
@@ -263,6 +263,7 @@ leave it empty	infolog	fr	laisser vide
 leave it empty for a full week	infolog	fr	Laisser vide pour une semaine complète
 leave without saveing the entry	infolog	fr	quitter sans enregistrer l'entrée
 leaves without saveing	infolog	fr	quitte sans enregistrer
+length	infolog	fr	Longueur
 limit number of description lines (default 5, 0 for no limit)	infolog	fr	Limiter le nombre de lignes de description. Défaut = 5, 0 = pas de limite.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	fr	Limiter la largeur de la colonne de description. Ne fonctionne que si le nombre de ligne est défini. 0 = pas de limite.
 link	infolog	fr	Lien
@@ -472,7 +473,6 @@ todo	infolog	fr	Tâche
 typ	infolog	fr	Type
 typ '%1' already exists !!!	infolog	fr	Le type '%1' existe déjà !
 type	infolog	fr	Type
-type '%1' already exists !!!	infolog	fr	le type %1 existe déjà !!!
 type ...	infolog	fr	Type ...
 type of customfield	infolog	fr	Type de champ personnalisé
 type of field	infolog	fr	Type de champ

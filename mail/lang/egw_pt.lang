@@ -283,7 +283,6 @@ row order style	mail	pt	estilo ordem de linha
 rule priority position	mail	pt	Regra posição prioridade
 rule with priority	mail	pt	governar com prioridade
 save all	mail	pt	Guardar tudo
-save as	mail	pt	Salvar como
 save as default	mail	pt	salvar como padrão
 save as draft	mail	pt	Salvar como rascunho
 save as draft and print	mail	pt	Salvar como rascunho e impressão
