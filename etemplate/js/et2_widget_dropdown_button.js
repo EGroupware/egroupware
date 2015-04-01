@@ -146,12 +146,14 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		// Left side - activates click action
 		this.button = $j(document.createElement("button"))
 			.attr("id", this.internal_ids.button)
+			.attr("type", "button")
 			.addClass("ui-widget ui-corner-left").removeClass("ui-corner-all")
 			.appendTo(this.buttons);
 
 		// Right side - shows dropdown
 		this.arrow = $j(document.createElement("button"))
 			.addClass("ui-widget ui-corner-right").removeClass("ui-corner-all")
+			.attr("type", "button")
 			.click(function() {
 				// Clicking it again hides menu
 				if(self.menu.is(":visible"))
