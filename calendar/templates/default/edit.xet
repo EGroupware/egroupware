@@ -40,7 +40,7 @@
 								<row class="row add_alarm_action" valign="top" disabled="@no_add_alarm">
 									<hbox span="all">
 										<menulist>
-											<menupopup type="select-number" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
+											<menupopup type="select" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
 										</menulist>
 										<date-time id="new_alarm[date]" class="calendar_alarm_date_display"/>
 										<menulist>
