@@ -249,6 +249,14 @@ class historylog
 		) as $row) {
 			$row['user_ts'] = $GLOBALS['egw']->db->from_timestamp($row['history_timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 
+			// Explode multi-part values
+			foreach(array('history_new_value','history_old_value') as $field)
+			{
+				if(strpos($row[$field],bo_tracking::ONE2N_SEPERATOR) !== false)
+				{
+					$row[$field] = explode(bo_tracking::ONE2N_SEPERATOR,$row[$field]);
+				}
+			}
 			// Get information needed for proper display
 			if($row['history_appname'] == 'filemanager')
 			{

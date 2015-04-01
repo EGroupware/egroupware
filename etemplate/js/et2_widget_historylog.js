@@ -285,9 +285,40 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 			var field = this.options.value['status-widgets'][key];
 			var attrs = {'readonly': true, 'id': key};
 			var options = null;
+			var widget = null;
 			if(typeof field == 'object')
 			{
-				attrs['select_options'] = field;
+				var need_box = false;
+				for(var j in field)
+				{
+					if(et2_registry[field[j]])
+					{
+						need_box = true;
+						break;
+					}
+				}
+				if(need_box)
+				{
+					// Multi-part value needs multiple widgets
+					widget = et2_createWidget('vbox', attrs, this);
+					for(var i in field)
+					{
+						if(typeof field[i] == 'object')
+						{
+							attrs['select_options'] = field[i];
+						}
+						else
+						{
+							delete attrs['select_options'];
+						}
+						var child = et2_createWidget(typeof field[i] == 'string' ? field[i] : 'select', attrs, widget);
+						child.transformAttributes(attrs);
+					}
+				}
+				else
+				{
+					attrs['select_options'] = field;
+				}
 			}
 			// Check for options after the type, ex: link-entry:infolog
 			else if (field.indexOf(':') > 0)
@@ -296,7 +327,10 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 				field = options.shift();
 			}
 
-			var widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
+			if(widget == null)
+			{
+				widget = et2_createWidget(typeof field == 'string' ? field : 'select', attrs, this);
+			}
 
 			// Parse / set legacy options
 			if(options)
@@ -336,10 +370,15 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 			widget.transformAttributes(attrs);
 
 			// Save to use for each row
+			var nodes = widget._children.length ? [] : jQuery(widget.getDetachedNodes());
+			for(var i = 0; i < widget._children.length; i++)
+			{
+				nodes.push(jQuery(widget._children[i].getDetachedNodes()));
+			}
 			this.fields[key] = {
 				attrs: attrs,
 				widget: widget,
-				nodes: jQuery(widget.getDetachedNodes())
+				nodes: nodes
 			};
 		}
 		// Widget for text diffs
@@ -351,18 +390,18 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 	},
 
 	getDOMNode: function(_sender) {
-                if (_sender == this)
-                {
-                        return this.div[0];
-                }
+		if (_sender == this)
+		{
+				return this.div[0];
+		}
 
-                for (var i = 0; i < this.columns.length; i++)
-                {
-                        if (_sender == this.columns[i].widget)
-                        {
-                                return this.dataview.getHeaderContainerNode(i);
-                        }
-                }
+		for (var i = 0; i < this.columns.length; i++)
+		{
+			if (_sender == this.columns[i].widget)
+			{
+				return this.dataview.getHeaderContainerNode(i);
+			}
+		}
 		return null;
 	},
 
@@ -410,8 +449,15 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 			var widget = self.columns[i].widget;
 			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined')
 			{
-				nodes = self.fields[_data.status].nodes.clone();
 				widget = self.fields[_data.status].widget;
+				if(!widget._children.length)
+				{
+					nodes = self.fields[_data.status].nodes.clone();
+				}
+				for(var j = 0; j < widget._children.length; j++)
+				{
+					nodes.push(self.fields[_data.status].nodes[j].clone());
+				}
 			}
 			else if (widget)
 			{
@@ -461,7 +507,24 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 				// No widget fallback - display actual value
 				nodes = '<span>'+_data[self.columns[i].id] + '</span>';
 			}
-			if(widget) widget.setDetachedAttributes(nodes, {value:_data[self.columns[i].id]});
+			if(widget)
+			{
+				if(widget._children.length)
+				{
+					// Multi-part values
+					var box = $j(widget.getDOMNode()).clone();
+					for(var j = 0; j < widget._children.length; j++)
+					{
+						widget._children[j].setDetachedAttributes(nodes[j], {value:_data[self.columns[i].id][j]});
+						box.append(nodes[j]);
+					}
+					nodes = box;
+				}
+				else
+				{
+					widget.setDetachedAttributes(nodes, {value:_data[self.columns[i].id]});
+				}
+			}
 			$j(this).append(nodes);
 		});
 		$j(tr).append(row.children());
