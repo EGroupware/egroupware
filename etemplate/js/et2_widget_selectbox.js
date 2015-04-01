@@ -447,6 +447,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			// No options set yet
 			this.set_select_options(this.options.select_options);
 		}
+		this._oldValue = this.value;
 		if(this.input !== null && (this.options.tags || this.options.search))
 		{
 			// Value must be a real Array, not an object
@@ -499,8 +500,11 @@ var et2_selectbox = et2_inputWidget.extend(
 				return;
 			}
 		}
-
 		this.value = _value;
+		if(this.isAttached() && this._oldValue !== et2_no_init && this._oldValue !== _value)
+		{
+			this.input.change();
+		}
 	},
 
 	set_multi_value: function(_value) {

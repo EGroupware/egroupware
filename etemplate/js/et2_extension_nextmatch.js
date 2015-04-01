@@ -405,6 +405,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	applyFilters: function(_set) {
 		var changed = false;
 
+		// Avoid loops cause by change events
+		if(this.update_in_progress) return;
+		this.update_in_progress = true;
+
 		// Cleared explicitly
 		if(typeof _set != 'undefined' && jQuery.isEmptyObject(_set))
 		{
@@ -496,6 +500,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 		// Trigger an update
 		this.controller.update(true);
+
+		this.update_in_progress = false;
 	},
 
 	/**
