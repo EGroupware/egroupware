@@ -240,7 +240,9 @@ app.classes.mail = AppJS.extend(
 					}
 					else
 					{
-						this.et2.getWidgetById('mail_htmltext').ckeditor.focus();
+						this.et2.getWidgetById('mail_htmltext').ckeditor.on('instanceReady', function(e) {
+							this.focus();
+						});
 					}
 				}
 				else if(to)
