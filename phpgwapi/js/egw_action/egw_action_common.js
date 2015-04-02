@@ -512,7 +512,7 @@ function sprintf() {
 				case 'd': a = parseInt(a); break;
 				case 'e': a = m[6] ? a.toExponential(m[6]) : a.toExponential(); break;
 				case 'f': a = m[6] ? parseFloat(a).toFixed(m[6]) : parseFloat(a); break;
-				case 'o': a = a.toString(8); break;
+				case 'o': a = typeof(a) == 'number' ? a.toString(8):JSON.stringify(a); break;
 				case 's': a = ((a = String(a)) && m[6] ? a.substring(0, m[6]) : a); break;
 				case 'u': a = Math.abs(a); break;
 				case 'x': a = a.toString(16); break;
@@ -525,7 +525,7 @@ function sprintf() {
 			o.push(s + (m[4] ? a + p : p + a));
 		}
 		else {
-			throw('Huh ?!');
+			throw('Invalid sprintf format "' + arguments[0]+'"');
 		}
 		f = f.substring(m[0].length);
 	}
