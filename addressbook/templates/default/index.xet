@@ -4,13 +4,13 @@
 <overlay>
 	<template id="addressbook.index.left" template="" lang="" group="0" version="1.3.001">
 		<menulist class="bold">
-			<menupopup cols="1" statustext="Select a view" id="org_view" no_lang="1" rows="1" options="All contacts"/>
+			<menupopup statustext="Select a view" id="org_view" no_lang="1" rows="1" empty_label="All contacts"/>
 		</menulist>
 	</template>
 	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
 		<hbox>
 			<menulist>
-				<menupopup align="right" label="Type" id="col_filter[tid]" options="All"/>
+				<menupopup align="right" label="Type" id="col_filter[tid]" empty_label="All"/>
 			</menulist>
 			<buttononly align="right" statustext="Advanced search" image="advanced-search" background_image="1" id="search" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'850','440','_blank','addressbook',null,true); return false;"/>
 			<buttononly align="right" statustext="Add a new contact" label="Add" id="add" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
@@ -40,7 +40,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Type" id="type" options="1"/>
+					<nextmatch-header label="Type" id="type"/>
 					<grid spacing="0" padding="0">
 						<columns>
 							<column/>
@@ -74,23 +74,23 @@
 					<nextmatch-header label="Category" id="cat_id"/>
 					<nextmatch-header label="Photo" id="photo"/>
 					<nextmatch-header label="Birthday" id="bday"/>
-					<vbox options="0,0">
+					<vbox>
 						<nextmatch-header label="Business address" id="business"/>
 						<nextmatch-customfilter id="adr_one_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
 						<nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<nextmatch-header label="Home address" id="home"/>
 						<nextmatch-customfilter id="adr_two_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
 						<nextmatch-sortheader label="zip code" id="adr_two_postalcode"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<nextmatch-header label="Business phone" id="tel_work"/>
 						<nextmatch-header label="Mobile phone" id="tel_cell"/>
 						<nextmatch-header label="Home phone" id="tel_home"/>
 						<description value="Fax"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<nextmatch-header label="Url" id="url"/>
 						<nextmatch-header label="Business email" id="email"/>
 						<nextmatch-header label="Home email" id="email_home"/>
@@ -101,18 +101,18 @@
 					<nextmatch-header label="Distribution lists" id="distribution_list"/>
 					<nextmatch-header label="Addressbook" id="owner"/>
 					<nextmatch-sortheader label="ID" id="contact_id"/>
-					<vbox options="0,0">
+					<vbox>
 						<nextmatch-header label="Last date" id="calendar"/>
 						<nextmatch-header label="Next date" id="calendar"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<nextmatch-sortheader label="Created" id="contact_created" sortmode="DESC"/>
 						<nextmatch-sortheader label="Last modified" id="contact_modified" sortmode="DESC"/>
 					</vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
 					<image align="center" label="$row_cont[type_label]" src="${row}[type]" no_lang="1"/>
-					<vbox id="${row}[id]" options="0,0">
+					<vbox id="${row}[id]">
 						<description id="${row}[line1]" no_lang="1"/>
 						<description id="${row}[line2]" no_lang="1"/>
 						<description id="${row}[org_unit]" no_lang="1"/>
@@ -123,10 +123,10 @@
 					<listbox type="select-cat" id="${row}[cat_id]" readonly="true" rows="2"/>
 					<image src="${row}[photo]" class="iphoto"/>
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
-					<vbox options="0,0">
+					<vbox>
 						<description id="${row}[adr_one_street]" no_lang="1"/>
 						<description id="${row}[adr_one_street2]" no_lang="1"/>
-						<hbox orient="0" options="0,0">
+						<hbox>
 							<description id="${row}[adr_one_postalcode]" no_lang="1"/>
 							<description value=" " id="${row}[adr_one_locality]" no_lang="1" class="leftPad5"/>
 							<description id="${row}[adr_one_region]" no_lang="1" class="leftPad5"/>
@@ -136,10 +136,10 @@
 							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<description id="${row}[adr_two_street]" no_lang="1"/>
 						<description id="${row}[adr_two_street2]" no_lang="1"/>
-						<hbox options="0,0">
+						<hbox>
 							<description id="${row}[adr_two_postalcode]" no_lang="1"/>
 							<description value=" " id="${row}[adr_two_locality]" no_lang="1" class="leftPad5"/>
 							<description id="${row}[adr_two_region]" no_lang="1" class="leftPad5"/>
@@ -149,14 +149,14 @@
 							<menupopup type="select-country" id="${row}[adr_two_countrycode]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<url-phone id="${row}[tel_work]" readonly="true" class="telNumbers"/>
 						<url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers"/>
 						<url-phone id="${row}[tel_home]" readonly="true" class="telNumbers"/>
 						<url-phone id="${row}[tel_fax]" readonly="true"/>
 						<description id="${row}[tel_prefered]" no_lang="1" href="$row_cont[tel_prefered_link]" extra_link_target="calling" extra_link_popup="$cont[call_popup]"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<url id="${row}[url]" readonly="true" class="fixedHeight"/>
 						<url-email id="${row}[email]" readonly="true" class="fixedHeight"/>
 						<url-email id="${row}[email_home]" readonly="true" class="fixedHeight"/>
@@ -169,11 +169,11 @@
 						<menupopup id="${row}[owner]" readonly="true"/>
 					</menulist>
 					<description id="${row}[id]" class="contactid"/>
-					<vbox options="0,0">
+					<vbox>
 						<link id="${row}[last_link]"/>
 						<link id="${row}[next_link]"/>
 					</vbox>
-					<vbox options="0,0">
+					<vbox>
 						<date-time id="${row}[created]" readonly="true" class="noWrap"/>
 						<menulist>
 							<menupopup type="select-account" id="${row}[creator]" readonly="true"/>
