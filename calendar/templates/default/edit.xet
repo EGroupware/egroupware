@@ -4,7 +4,7 @@
 <overlay>
 	<template id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
 		<hbox options="0,0">
-			<grid width="445">
+			<grid width="60%">
 				<columns>
 					<column width="80px"/>
 					<column/>
@@ -28,7 +28,7 @@
 						</hbox>
 					</row>
 					<row>
-						<grid width="445">
+						<grid width="100%">
 							<columns>
 								<column width="80px" height="30px"/>
 								<column/>
@@ -83,7 +83,7 @@
 					</row>
 				</rows>
 			</grid>
-			<vbox align="right" options="0,0" class="calendar_category_details">
+			<vbox align="right" options="0,0" width="100%">
 				<description/>
 				<description for="category" value="Categories" class="row_on"/>
 				<listbox type="select-cat" id="category" rows="9" />
@@ -289,7 +289,7 @@
 					<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" tab_height="250">
+					<tabbox id="tabs" span="all" tab_height="260">
 						<tabs>
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>

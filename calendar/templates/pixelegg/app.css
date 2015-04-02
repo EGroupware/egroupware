@@ -1088,6 +1088,7 @@ div.calendar {
 }
 #calendar-edit #calendar-edit_calendar-edit-details .et2_hbox_right {
   overflow-y: auto;
+  width: 30%;
 }
 #calendar-edit #calendar-edit_calendar-edit-details .et2_selectbox .ui-multiselect-checkboxes {
   min-height: 229px;
