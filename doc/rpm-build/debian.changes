@@ -1,3 +1,30 @@
+egroupware-epl (14.2.20150402-1) hardy; urgency=low
+
+  * LDAP,ActiveDirectory: setting default sorting of accounts to ascending, as in SQL backend
+  * LDAP/AD/UCS/Filemanager: group-names were displayed as "#123" instead of name
+  * LDAP/AD/UCS/Filemanager: new created groups home-directory was not displayed in filemanager
+  * LDAP: fixed not working creation of new groups (with empty describtion)
+  * LDAP/UCS/Admin: empty groups showed all users, if selected in accounts-list
+  * Univention: Samba SID was not propagated to config of SambaAdmin app
+  * Admin/ActiveDirectory: filtering user-list by groups was not implemented
+  * ActiveDirectory: real password change (not reset) for PHP 5.4>=5.4.26, 5.5>=5.5.10, 5.6+ (subject to minimum password age policy!)
+  * Calendar: meeting requests were not recogniced by other clients as such because of lost method parameter
+  * Calendar: automatic load new holidays, if there are no irregular ones for a given year, plus new Germany holidays for 2016
+  * Calendar: added configuration "Use range-views to optimise calendar queries?", to go back to algorithm before 14.2.20150121
+  * Infolog: Fix favorits are not working with details/no detail filter
+  * Mail: fix fatal error / white screen when parsing winmal.dat (by updating to fixed Horde_Compress-2.1.1)
+  * Mail: if user never send a mail from an account select first identity with an non-empty signature, not default identity
+  * Mail: setting default font-face and -size reliable and remove space in front of cursor
+  * Mail: on attachment/body retrieval BINARY retrieval may fail on certain servers; if so retry and fetch bodypart with BODY instead leaving the decoding to the library
+  * All apps: use now same handling for pdf, text or html are opened now in popup, fixes viewing of attachments using mobile theme
+  * All apps: expose view has not a save icon
+  * All apps: nummeric custom-fields (float or new integer) sort nummeric in lists
+  * All apps: Add a loading overlay while an application is loading
+  * All apps: fix custom-fields with multiple not displayed fields
+  * API/CKEditor: update to version 4.4.7
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 02 Apr 2015 13:51:10 +0200
+
 egroupware-epl (14.2.20150310-1) hardy; urgency=low
 
   * Mail/idots: fix not be able to open mail folders from the mail-tree
