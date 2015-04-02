@@ -2991,7 +2991,7 @@ class emailadmin_imapbase
 		if ($_checkexistance && !$this->folderExists($_folderName)) {
 			return false;
 		}
-
+		if (is_a($_folderName,"Horde_Imap_Client_Mailbox")) $_folderName = $_folderName->utf8;
 		if(false !== stripos($_folderName, $draftFolder)) {
 			return true;
 		} else {
@@ -3063,6 +3063,9 @@ class emailadmin_imapbase
 			if ($_forceCheck===true) error_log(__METHOD__.' ('.__LINE__.') '.' Called with empty Folder:'.$_folder.function_backtrace());
 			return false;
 		}
+		// when check is not enforced , we assume a folder represented as Horde_Imap_Client_Mailbox as existing folder
+		if (is_a($_folder,"Horde_Imap_Client_Mailbox")&&$_forceCheck===false) return true;
+		if (is_a($_folder,"Horde_Imap_Client_Mailbox")) $_folder =  $_folder->utf8;
 		// reduce traffic within the Instance per User; Expire every 5 hours
 		//error_log(__METHOD__.' ('.__LINE__.') '.' Called with Folder:'.$_folder.function_backtrace());
 		if (is_null($folderInfo)) $folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*5);
@@ -4035,7 +4038,7 @@ class emailadmin_imapbase
 	 */
 	function getBodyPart($_uid, $_partID=null, $_folder=null, $_preserveSeen=false, $_stream=false, &$_encoding=null, $_tryDecodingServerside=true)
 	{
-		if (self::$debug) error_log( __METHOD__."($_uid, $_partID, $_folder, $_preserveSeen)");
+		if (self::$debug) error_log( __METHOD__."(".array2string($_uid).", $_partID, $_folder, $_preserveSeen)");
 
 		if (empty($_folder))
 		{
@@ -4052,7 +4055,13 @@ class emailadmin_imapbase
 			'peek' => $_preserveSeen,
 			'decode' => true,	// try decode on server, does NOT neccessary work
 		);
-		if ($_tryDecodingServerside===false) unset($fetchParams['decode']);
+		if ($_tryDecodingServerside===false)// || ($_tryDecodingServerside&&$this->isDraftFolder($_folder)))
+		{
+			$_tryDecodingServerside=false;
+			$fetchParams = array(
+				'peek' => $_preserveSeen,
+			);
+		}
 		$fquery->bodyPart($_partID, $fetchParams);
 
 		$part = $this->icServer->fetch($_folder, $fquery, array(
@@ -5203,7 +5212,7 @@ class emailadmin_imapbase
 						$structure_mime=$part->getType();
 						$structure_partID=$part->getMimeId();
 						$filename=$part->getName();
-						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true);
+						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true,$structure_mime);
 						if ($_returnPart) return $part;
 					}
 				}
@@ -5346,15 +5355,18 @@ class emailadmin_imapbase
 	 * @param Horde_Mime_Part $part
 	 * @param boolean $_stream=false true return a stream, false a string
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @param string  $_mimetype to decide wether to try to fetch part as binary or not
 	 * @return Horde_Mime_Part
 	 */
-	public function fetchPartContents($_uid, Horde_Mime_Part $part=null, $_stream=false, $_preserveSeen=false)
+	public function fetchPartContents($_uid, Horde_Mime_Part $part=null, $_stream=false, $_preserveSeen=false, $_mimetype=null)
 	{
 		if (is_null($part)) return null;//new Horde_Mime_Part;
 		$encoding = null;
+		$fetchAsBinary = true;
+		if ($_mimetype && strtolower($_mimetype)=='message/rfc822') $fetchAsBinary = false;
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
-			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding),
+			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding, $fetchAsBinary),
 			array('encoding' => $encoding));
 
 		return $part;
