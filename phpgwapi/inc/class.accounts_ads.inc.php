@@ -860,7 +860,7 @@ class accounts_ads
 			$query = ldap::quote(strtolower($param['query']));
 
 			$accounts = array();
-			if($param['type'] != 'groups')
+			if($param['type'] !== 'groups')
 			{
 				if (!empty($query) && $query != '*')
 				{
@@ -890,6 +890,11 @@ class accounts_ads
 							break;
 					}
 				}
+				if (is_numeric($param['type']))
+				{
+					$membership_filter = '(memberOf='.$this->id2name((int)$param['type'], 'account_dn').')';
+					$filter = $filter ? "(&$membership_filter$filter)" : $membership_filter;
+				}
 				foreach($this->filter($filter, 'u', self::$user_attributes) as $account_id => $data)
 				{
 					$account = $this->_ldap2user($data);
@@ -901,7 +906,7 @@ class accounts_ads
 					$accounts[$account_id] = $account;
 				}
 			}
-			if ($param['type'] == 'groups' || $param['type'] == 'both')
+			if ($param['type'] === 'groups' || $param['type'] === 'both')
 			{
 				$query = ldap::quote(strtolower($param['query']));
 
