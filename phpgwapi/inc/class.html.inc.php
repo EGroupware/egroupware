@@ -1630,7 +1630,7 @@ egw_LAB.wait(function() {
 	 */
 	public static function content_disposition_header($fn,$forceDownload=true)
 	{
-		if ($forceDownload===true)
+		if ($forceDownload)
 		{
 			$attachment = ' attachment;';
 		}
