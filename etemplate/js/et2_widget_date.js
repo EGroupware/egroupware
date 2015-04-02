@@ -683,6 +683,9 @@ var et2_date_duration = et2_date.extend(
 				value *= 60;
 				break;
 		}
+		// Minutes should be an integer.  Floating point math.
+		value = Math.round(value);
+		
 		switch(this.options.data_format)
 		{
 			case 'd':
