@@ -627,7 +627,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function __construct()
 	{
-		if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($this->force_download = strpos($_SERVER['REQUEST_URI'],'?download') !== false))
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($this->force_download = strpos($_SERVER['REQUEST_URI'],'?download') !== false &&
+			// do NOT send content-disposition attachment for etemplates containing ?download=$timestamp
+			strpos($_SERVER['REQUEST_URI'],'?download=') === false))
 		{
 			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,$this->force_download);
 		}
