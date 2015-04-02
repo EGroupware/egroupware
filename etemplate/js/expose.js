@@ -364,7 +364,7 @@ function expose (widget)
 					// Gallery Main DIV container
 					var $expose_node = jQuery(document.createElement('div')).attr({id:"blueimp-gallery", class:"blueimp-gallery"});
 					// Create Gallery DOM NODE
-					$expose_node.append('<div class="slides"></div><h3 class="title"></h3><a class="prev">‹</a><a class="next">›</a><a class="close">×</a><a class="play-pause"></a><a class="fullscreen"></a><ol class="indicator"></ol>');
+					$expose_node.append('<div class="slides"></div><h3 class="title"></h3><a class="prev">‹</a><a class="next">›</a><a title="'+ egw().lang('Close') + '" class="close">×</a><a title="'+ egw().lang('Play/Pause') + '"  class="play-pause"></a><a title="'+ egw().lang('Fullscreen') + '" class="fullscreen"></a><a title="'+ egw().lang('Save') +'" class="download"></a><ol class="indicator"></ol>');
 					// Append the gallery Node to DOM
 					$body.append($expose_node);
 				}

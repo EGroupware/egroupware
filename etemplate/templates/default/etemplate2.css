@@ -1885,14 +1885,33 @@ span.et2_egw_action_ddHelper_itemsCnt {
 	background: transparent;
 }
 /*Slideshow Play/Pause button*/
-.blueimp-gallery>.play-pause{
-	right: 42px;
-	top: 23px;
+body:last-child .blueimp-gallery>.play-pause, .blueimp-gallery>.play-pause{
+	right: 50px;
+	top: 20px;
+	background-size: 44px 24px;
+	width:24px;
+	height:24px;
 }
 /*fullScreen button*/
 .blueimp-gallery>.fullscreen{
-	right: 75px;
-	top: 25px;
+	right: 85px;
+	top: 20px;
+	background-size: 24px;
+	width:24px;
+	height:24px;
+}
+/* download button*/
+.blueimp-gallery>.download{
+	right: 120px;
+	top: 20px;
+	background: url(images/download.png) 0 0 no-repeat;
+	background-size: 24px;
+	height:24px;
+	width:24px;
+}
+/*close button*/
+.blueimp-gallery>.close{
+	font-size: 40px;
 }
 /*Give room to Carousel indicator when the gallery controls is on*/
 .blueimp-gallery-controls>.slides {

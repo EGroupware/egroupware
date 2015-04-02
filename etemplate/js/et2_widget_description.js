@@ -218,6 +218,7 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 				type: this.options.type + "/*",
 				thumbnail: base_url + _value
 			}];
+			if (_value.match(/\/webdav.php/,'ig')) mediaContent[0]["download_href"] = base_url + _value + '?download';
 		}
 		return mediaContent;
 	},

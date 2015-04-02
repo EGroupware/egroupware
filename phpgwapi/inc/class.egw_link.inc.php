@@ -152,6 +152,10 @@ class egw_link extends solink
 					'mime_popup' => '640x480',
 					'mime_target' => '_blank',
 				),
+				'/^image\\//' => array(	// image
+					'mime_popup' => '640x480',
+					'mime_target' => '_blank',
+				),
 			),
 		),
 	);

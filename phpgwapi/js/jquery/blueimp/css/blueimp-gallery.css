@@ -166,10 +166,21 @@
 .blueimp-gallery > .fullscreen {
   position: absolute;
   right: 15px;
-  bottom: 30px;
+  bottom: 15px;
   width: 15px;
   height: 15px;
   background: url(../img/fullscreen.png) 0 0 no-repeat;
+  cursor: pointer;
+  opacity: 0.5;
+  display:none;
+}
+.blueimp-gallery > .download {
+  position: absolute;
+  right: 45px;
+  bottom: 15px;
+  width: 15px;
+  height: 15px;
+  background: url(../img/download.png) 0 0 no-repeat;
   cursor: pointer;
   opacity: 0.5;
   display:none;
@@ -179,7 +190,8 @@
 .blueimp-gallery > .close:hover,
 .blueimp-gallery > .title:hover,
 .blueimp-gallery > .play-pause:hover,
-.blueimp-gallery > .fullscreen:hover{
+.blueimp-gallery > .fullscreen:hover,
+.blueimp-gallery > .download:hover{
   color: #fff;
   opacity: 1;
 }
@@ -188,7 +200,8 @@
 .blueimp-gallery-controls > .close,
 .blueimp-gallery-controls > .title,
 .blueimp-gallery-controls > .play-pause,
-.blueimp-gallery-controls > .fullscreen{
+.blueimp-gallery-controls > .fullscreen,
+.blueimp-gallery-controls > .download{
   display: block;
   /* Fix z-index issues (controls behind slide element) on Android: */
   -webkit-transform: translateZ(0);
@@ -209,7 +222,8 @@
 .blueimp-gallery > .next,
 .blueimp-gallery > .close,
 .blueimp-gallery > .play-pause,
-.blueimp-gallery > .fullscreen{
+.blueimp-gallery > .fullscreen,
+.blueimp-gallery > .download{
   -webkit-user-select: none;
    -khtml-user-select: none;
      -moz-user-select: none;
