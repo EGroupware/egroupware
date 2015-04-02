@@ -751,11 +751,7 @@ class accounts_ldap
 						$relevantAccounts = array();
 						$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
 						$group = ldap_get_entries($this->ds, $sri);
-
-						if (isset($group[0]['memberuid']))
-						{
-							$fullSet = array_intersect_key($fullSet, array_flip($group[0]['memberuid']));
-						}
+						$fullSet = $group[0]['memberuid'] ? array_intersect_key($fullSet, array_flip($group[0]['memberuid'])) : array();
 					}
 					$totalcount = count($fullSet);
 
