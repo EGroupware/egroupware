@@ -4030,9 +4030,10 @@ class emailadmin_imapbase
 	 * @param boolean $_preserveSeen=false
 	 * @param boolean $_stream=false true return a stream, false return string
 	 * @param string &$_encoding=null on return: transfer encoding of returned part
+	 * @param boolean $_tryDecodingServerside=true; wether to try to fetch Data with BINARY instead of BODY
 	 * @return string|resource
 	 */
-	function getBodyPart($_uid, $_partID=null, $_folder=null, $_preserveSeen=false, $_stream=false, &$_encoding=null)
+	function getBodyPart($_uid, $_partID=null, $_folder=null, $_preserveSeen=false, $_stream=false, &$_encoding=null, $_tryDecodingServerside=true)
 	{
 		if (self::$debug) error_log( __METHOD__."($_uid, $_partID, $_folder, $_preserveSeen)");
 
@@ -4047,10 +4048,12 @@ class emailadmin_imapbase
 		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->bodyPart($_partID, array(
+		$fetchParams = array(
 			'peek' => $_preserveSeen,
 			'decode' => true,	// try decode on server, does NOT neccessary work
-		));
+		);
+		if ($_tryDecodingServerside===false) unset($fetchParams['decode']);
+		$fquery->bodyPart($_partID, $fetchParams);
 
 		$part = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
@@ -4059,8 +4062,15 @@ class emailadmin_imapbase
 		if (!$part) return null;
 
 		$_encoding = $part->getBodyPartDecode($_partID);
-
-		return $part->getBodyPart($_partID, $_stream);
+		$partToReturn = $part->getBodyPart($_partID, $_stream);
+		// if we get an empty result, server may have trouble fetching data with UID FETCH $_uid (BINARY.PEEK[$_partID])
+		// thus we trigger a second go with UID FETCH $_uid (BODY.PEEK[$_partID])
+		if (empty($partToReturn)&&$_tryDecodingServerside===true)
+		{
+			error_log(__METHOD__.__LINE__.' failed to fetch bodyPart in  BINARY. Try BODY');
+			$partToReturn = $this->getBodyPart($_uid, $_partID, $_folder, $_preserveSeen, $_stream, $_encoding, false);
+		}
+		return $partToReturn;
 	}
 
 	/**
