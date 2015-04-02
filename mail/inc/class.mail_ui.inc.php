@@ -2595,7 +2595,7 @@ class mail_ui
 		else
 		{
 			html::safe_content_header($message, $subject.".eml", $mime='text/html', $size=0, true, false);
-			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES, 'utf-8') .'</pre>';
+			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES|ENT_SUBSTITUTE, 'utf-8') .'</pre>';
 		}
 	}
 
