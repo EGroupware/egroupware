@@ -213,11 +213,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 						}
 					}
 			}
-			if (isset($value))
-			{
-				self::set_array($validated, $form_name, $value);
+
+			self::set_array($validated, $form_name, $value);
 				//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
-			}
 		}
 		else
 		{
