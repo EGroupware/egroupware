@@ -1149,6 +1149,11 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 		{
 			_value = _value.match(this._is_multiple_regexp) !== null ? _value.split(',') : [_value];
 		}
+		// need to handle numerical values too
+		else if (typeof _value == 'number')
+		{
+			_value = [_value];
+		}
 		this.span.empty();
 
 		if(_value)
