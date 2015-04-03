@@ -130,7 +130,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					// typeOptions thinks # of rows is the first thing in options
 					($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']));
 			$allowed = array_merge($allowed,array_keys($type_options));
-			
+
 			if (!$this->attrs['multiple'] || !($this->attrs['options'] > 1)) $allowed[] = '';
 
 			foreach((array) $value as $val)
@@ -213,9 +213,11 @@ class etemplate_widget_menupopup extends etemplate_widget
 						}
 					}
 			}
-
-			self::set_array($validated, $form_name, $value);
+			if (isset($value))
+			{
+				self::set_array($validated, $form_name, $value);
 				//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
+			}
 		}
 		else
 		{
@@ -478,7 +480,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			$field = self::expand_name($field, 0, 0,'','',self::$cont);
 		}
-		
+
 		list($rows,$type,$type2,$type3,$type4,$type5) = $legacy_options;
 		$no_lang = false;
 		$options = array();

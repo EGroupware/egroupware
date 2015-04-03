@@ -725,11 +725,12 @@ var et2_selectbox = et2_inputWidget.extend(
 			var value = [];
 			jQuery("input:checked",this.multiOptions).each(function(){value.push(this.value);});
 			// we need to return null for no value instead of empty array, which gets overwritten by preserved value on server-side
-			this.value = value.length > 0 ? value : null;
+			this.value = value;
 		}
 		else
 		{
 			this.value = this._super.apply(this, arguments);
+			if (this.value === null) this.value = [];	// do NOT return null, as it does not get transmitted to server
 		}
 		return this.value;
 	},
@@ -876,7 +877,7 @@ jQuery.extend(et2_selectbox,
 		}
 		return content_options;
 	},
-	
+
 	/**
 	 * Some static options, no need to transfer them over and over.
 	 * We still need the same thing on the server side to validate, so they
@@ -1028,7 +1029,7 @@ jQuery.extend(et2_selectbox,
 	 * options from the server once, then keep them to use if they're needed again.
 	 * We use the options string to keep the different possibilites (eg. categories
 	 * for different apps) seperate.
-	 * 
+	 *
 	 * @param {et2_selectbox} widget Selectbox we're looking at
 	 * @param {string} options_string
 	 * @param {Object} attrs Widget attributes (not yet fully set)

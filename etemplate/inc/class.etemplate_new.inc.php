@@ -520,7 +520,7 @@ class etemplate_new extends etemplate_widget_template
 			{
 				if (!is_array($v) || !isset($old[$k]) || 	// no array or a new array
 					isset($v[0]) && !is_array($v[0]) && isset($v[count($v)-1])	|| // or no associative array, eg. selecting multiple accounts
-					is_array($v) && count($v) == 0 && is_array($old[$k])) // Empty array replacing non-empty
+					is_array($v) && count($v) == 0)			// Empty array replacing non-empty
 				{
 					$old[$k] = $v;
 				}

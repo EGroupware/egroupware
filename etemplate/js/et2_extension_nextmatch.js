@@ -159,7 +159,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 		// Directly set current col_filters from settings
 		jQuery.extend(this.activeFilters.col_filter, this.options.settings.col_filter);
-		
+
 		/*
 		Process selected custom fields here, so that the settings are correctly
 		set before the row template is parsed
@@ -1879,13 +1879,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	beforePrint: function() {
 		// Add the class, if needed
 		this.div.addClass('print');
-		
+
 		// Trigger resize, so we can fit on a page
 		this.dynheight.outerNode.css('max-width',this.div.css('max-width'));
 		this.resize();
 		// Reset height to auto (after width resize) so there's no restrictions
 		this.dynheight.innerNode.css('height', 'auto');
-		
+
 		// Check for rows that aren't loaded yet, or lots of rows
 		var range = this.controller._grid.getIndexRange();
 		this.old_height = this.controller._grid._scrollHeight;
@@ -1972,11 +1972,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 									$j('.egwGridView_scrollarea',this.div).css('overflow-y','hidden');
 									// Show it all
 									$j('.egwGridView_scrollarea',this.div).css('height','auto');
-									
+
 									// Grid needs to redraw before it can be printed, so wait
 									window.setTimeout(jQuery.proxy(function() {
 										dialog.destroy();
-										
+
 										// Should be OK to print now
 										defer.resolve();
 									},nm),ET2_GRID_INVALIDATE_TIMEOUT);
@@ -1991,7 +1991,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 					else
 					{
 						// Don't need more rows, limit to requested and finish
-						
+
 						// Show it all
 						$j('.egwGridView_scrollarea',this.div).css('height','auto');
 
@@ -2031,7 +2031,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	 * in beforePrint()
 	 */
 	afterPrint: function() {
-		
+
 		this.div.removeClass('print');
 
 		// Put scrollbar back
@@ -2040,7 +2040,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		// Correct size of grid, and trigger resize to fix it
 		this.controller._grid.setScrollHeight(this.old_height);
 		delete this.old_height;
-		
+
 		// Remove CSS rule hiding extra rows
 		if(this.print_row_selector)
 		{
@@ -2394,7 +2394,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 
 		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' || options[0].value != ''))
+		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' || typeof options[0] != 'undefined' && options[0].value != ''))
 		{
 			widget_options.empty_label = this.egw().lang('All');
 		}
