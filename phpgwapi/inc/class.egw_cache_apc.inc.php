@@ -50,8 +50,9 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	 */
 	public static function available()
 	{
-		$available = false;
-		if (function_exists('apc_fetch') && (PHP_SAPI != 'cli' || ini_get('apc.enable_cli')))
+		$available = (bool)ini_get('apc.enabled');
+
+		if ($available && function_exists('apc_fetch') && (PHP_SAPI != 'cli' || ini_get('apc.enable_cli')))
 		{
 			$size = ini_get('apc.shm_size');
 			// ancent APC (3.1.3) in Debian 6/Squezze has size in MB without a unit
