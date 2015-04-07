@@ -73,8 +73,9 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange,
 
 			// Update context
 			var self = this;
-			this.expansionButton.off("click").on("click", function () {
+			this.expansionButton.off("click").on("click", function (e) {
 					self._handleExpansionButtonClick(_callback, _context);
+					e.stopImmediatePropagation();
 			});
 
 			$j("td:first", this.tr).prepend(this.expansionButton);
