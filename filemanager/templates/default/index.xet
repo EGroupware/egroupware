@@ -5,7 +5,7 @@
 	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%">
 			<columns>
-				<column width="50"/>
+				<column width="150"/>
 				<column width="50%"/>
 				<column width="80"/>
 				<column width="120"/>
