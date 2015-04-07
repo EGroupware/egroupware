@@ -59,3 +59,7 @@ tr.dialogOperators td,.dialogFooterToolbar {
 .et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a{
 	display: inline-table;
 }
+/* Put line break for the first column*/
+#infolog-index .egwGridView_grid .et2_hbox.et2_box_widget.infolog_CompletedClmn {
+	white-space: normal;
+}
