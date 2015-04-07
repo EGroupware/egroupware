@@ -676,3 +676,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 .calendar_favorite_portlet .calendar_plannerScale a img{
 	display: none;
 }
+
+#calendar-edit select#calendar-edit_duration {
+	width: 133px;
+}
