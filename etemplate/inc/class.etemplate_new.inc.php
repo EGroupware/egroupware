@@ -634,7 +634,7 @@ foreach($widgets as $app => $list)
 	{
 		try
 		{
-			__autoload($class);
+			class_exists($class);	// trigger autoloader
 		}
 		catch(Exception $e)
 		{
