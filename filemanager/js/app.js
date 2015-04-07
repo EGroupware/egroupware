@@ -738,10 +738,18 @@ app.classes.filemanager = AppJS.extend(
 	{
 		var data = egw.dataGetUIDdata(_senders[0].id);
 		var path = this.id2path(_senders[0].id);
+		var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+		// try to get mime widget DOM node out of the row DOM
+		var mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
+		
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
 		{
 			this.change_dir(path,_action.parent.data.nextmatch || this.et2);
+		}
+		else if(mime && data.data.mime.match(mime.mime_regexp) && mime_dom.length>0)
+		{
+			mime_dom.click();
 		}
 		else
 		{
