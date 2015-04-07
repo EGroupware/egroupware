@@ -303,11 +303,11 @@
 			if($scheme == '' || $scheme == 'file') {
 				return 'Direct file access not allowed';
 			}
-			if($scheme == vfs_stream_wrapper::SCHEME && !in_array(vfs_stream_wrapper::SCHEME, stream_get_wrappers())) {
-				stream_wrapper_register(vfs_stream_wrapper::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
+			if($scheme == EGroupware\Api\Vfs::SCHEME  && !in_array(EGroupware\Api\Vfs::SCHEME, stream_get_wrappers())) {
+				stream_wrapper_register(EGroupware\Api\Vfs::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
 			}
 
-			if ($data['type'] == 'import' && ($scheme == egw_vfs::SCHEME && !egw_vfs::is_readable($data['target'])))
+			if ($data['type'] == 'import' && ($scheme == EGroupware\Api\Vfs::SCHEME && !egw_vfs::is_readable($data['target'])))
 			{
 				return lang('%1 is not readable',$data['target']);
 			}
