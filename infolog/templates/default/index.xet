@@ -79,7 +79,7 @@
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
-					<hbox align="center">
+					<hbox align="center"  class="infolog_CompletedClmn">
 						<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar"/>
 						<image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_status_label]" default_src="status"/>
 						<image label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"/>
