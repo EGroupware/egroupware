@@ -241,7 +241,7 @@ class mail_sieve
 						break;
 					case 'address':
 
-						$content['action_address_text'][] = $rules['action_arg'];
+						$content['action_address_text'] = explode(',', $rules['action_arg']);
 						break;
 					case 'reject':
 						$content['action_reject_text'] = $rules['action_arg'];
@@ -288,7 +288,7 @@ class mail_sieve
 								$newRule['action_arg'] = translation::convert(implode($content['action_folder_text']), 'utf7-imap', 'utf-8');
 								break;
 							case 'address':
-								$newRule['action_arg'] = implode($content['action_address_text']);
+								$newRule['action_arg'] = implode(',',$content['action_address_text']);
 								//error_log(__METHOD__. '() newRules_address '. array2string($newRule['action_arg']));
 								break;
 							case 'reject':
