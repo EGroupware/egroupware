@@ -68,7 +68,7 @@
 					</grid>
 					<description/>
 					<vbox>
-						<image src="resource_picture" align="center" />
+						<image src="resource_picture" href="$cont[picture_original]" extra_link_popup="600x480" extra_link_target="_blank" align="center" />
 					</vbox>
 				</row>
 			</rows>
