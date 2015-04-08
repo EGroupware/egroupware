@@ -288,10 +288,13 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 			var widget = null;
 			if(typeof field == 'object')
 			{
+				// Check for multi-part statuses needing multiple widgets
 				var need_box = false;
 				for(var j in field)
 				{
-					if(et2_registry[field[j]])
+					// Require widget to be a valueWidget, to avoid invalid widgets
+					// (and template, which is a widget and an infolog todo status)
+					if(et2_registry[field[j]] && et2_registry[field[j]].prototype.instanceOf(et2_valueWidget))
 					{
 						need_box = true;
 						break;
