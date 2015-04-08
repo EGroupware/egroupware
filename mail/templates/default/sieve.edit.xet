@@ -8,19 +8,16 @@
 				<column width="100%"/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<description id="msg" class="message"/>
-				</row>
 				<row>
 					<groupbox>
 						<caption label="Condition"/>
-						<grid>
+						<grid width="100%">
 							<columns>
-								<column/>
-								<column/>
+								<column width="40%"/>
+								<column width="60%"/>
 							</columns>
 							<rows>
-								<row class="th">
+								<row>
 									<description value="Match:"/>
 									<menulist>
 										<menupopup id="anyof"/>
@@ -28,15 +25,15 @@
 								</row>
 								<row class="sieveRowActive">
 									<description value="If from contains:(*)"/>
-									<textbox id="from"/>
+									<textbox id="from" class="et2_fullWidth"/>
 								</row>
 								<row>
 									<description value="If to contains:(*)"/>
-									<textbox id="to"/>
+									<textbox id="to" class="et2_fullWidth"/>
 								</row>
 								<row>
 									<description value="If subject contains:(*)"/>
-									<textbox id="subject"/>
+									<textbox id="subject" class="et2_fullWidth"/>
 								</row>
 								<row>
 									<description value="If message size"/>
@@ -53,7 +50,7 @@
 									<hbox>
 										<textbox id="field"/>
 										<description value="Contains(*)"/>
-										<textbox id="field_val"/>
+										<textbox id="field_val" width="38%"/>
 									</hbox>
 								</row>
 								<row>
@@ -63,7 +60,7 @@
 											<menupopup id="bodytransform"/>
 										</menulist>
 										<description value="Contains(*)"/>
-										<textbox id="field_bodytransform"/>
+										<textbox id="field_bodytransform"  width="62%"/>
 									</hbox>
 								</row>
 								<row>
@@ -73,7 +70,7 @@
 											<menupopup id="ctype"/>
 										</menulist>
 										<description value="/"/>
-										<textbox blur="for eg.: mpeg" id="field_ctype_val"/>
+										<textbox blur="for eg.: mpeg" id="field_ctype_val" width="71%"/>
 									</hbox>
 								</row>
 							</rows>
@@ -84,7 +81,7 @@
 				<row>
 					<groupbox>
 						<caption label="Action"/>
-						<grid>
+						<grid width="100%">
 							<columns>
 								<column/>
 								<column/>
@@ -93,22 +90,25 @@
 								<row>
 									<radio label="File into:" id="action" options="folder"/>
 									<hbox>
-										<taglist id="action_folder_text"  width="40%" autocomplete_url="mail.mail_sieve.ajax_getFolders" autocomplete_params="" allowFreeEntries="false" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
+										<taglist id="action_folder_text"  class="et2_fullWidth" autocomplete_url="mail.mail_sieve.ajax_getFolders" autocomplete_params="" allowFreeEntries="false" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
 									</hbox>
 								</row>
 								<row>
-									<radio label="Forward to address:" id="action" options="address"/>
+									<radio label="Forward to address (*):" id="action" options="address"/>
 									<hbox>
-										<taglist-email allowFreeEntries="true" id="action_address_text" width="40%" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
+										<taglist-email allowFreeEntries="true" id="action_address_text" class="et2_fullWidth" onfocus="app.mail.sieve_focus_radioBtn" />
 									</hbox>
 								</row>
 								<row>
 									<radio label="Send a reject message:" id="action" options="reject"/>
-									<textbox multiline="true" id="action_reject_text" onfocus="app.mail.sieve_focus_radioBtn" />
+									<textbox multiline="true" id="action_reject_text" onfocus="app.mail.sieve_focus_radioBtn" width="100%" height="100" />
 								</row>
 								<row>
 									<radio label="Discard message" id="action" options="discard"/>
 									<description/>
+								</row>
+								<row>
+									<description value="(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the limit, which in must mail servers the limit is 4 by default, please contact your mail server administrator for further info."/>
 								</row>
 							</rows>
 						</grid>
