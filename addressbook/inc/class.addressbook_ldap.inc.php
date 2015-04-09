@@ -316,20 +316,23 @@ class addressbook_ldap
 	 */
 	function connect($admin = false)
 	{
+		// if egw object does not yet exists (eg. in sharing), we have to use our own ldap instance!
+		$ldap = isset($GLOBALS['egw']) ? $GLOBALS['egw']->ldap : new ldap();
+
 		if ($admin)
 		{
-			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
+			$this->ds = $ldap->ldapConnect();
 		}
 		// if ldap is NOT the contact repository, we only do accounts and need to use the account-data
 		elseif (substr($GLOBALS['egw_info']['server']['contact_repository'],-4) != 'ldap')	// not (ldap or sql-ldap)
 		{
 			$this->ldap_config['ldap_contact_host'] = $this->ldap_config['ldap_host'];
 			$this->allContactsDN = $this->ldap_config['ldap_context'];
-			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
+			$this->ds = $ldap->ldapConnect();
 		}
 		else
 		{
-			$this->ds = $GLOBALS['egw']->ldap->ldapConnect(
+			$this->ds = $ldap->ldapConnect(
 				$this->ldap_config['ldap_contact_host'],
 				$GLOBALS['egw_info']['user']['account_dn'],
 				$GLOBALS['egw_info']['user']['passwd']
