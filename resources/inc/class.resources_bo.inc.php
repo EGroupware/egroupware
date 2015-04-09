@@ -251,7 +251,17 @@ class resources_bo
 			}
 			else
 			{
-				$rows[$num]['picture_thumb'] = $this->get_picture($resource, true);
+				$rows[$num]['picture_thumb'] = $this->get_picture($resource, false);
+				if ($rows[$num]['picture_src'] == 'own_src')
+				{
+					// VFS picture fullsize
+					$rows[$num]['picture_original'] = 'webdav.php/apps/resources/'.$rows[$num]['res_id'].'/.picture.jpg';
+				}
+				else
+				{
+					// cat or generic icon fullsize
+					$rows[$num]['picture_original'] = $this->get_picture($resource, true);
+				}
 			}
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
@@ -751,7 +761,7 @@ class resources_bo
 	}
 
 	/**
-	 * resizes and saves an pictures in vfs
+	 * saves a pictures in vfs
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $file array with key => value
@@ -777,23 +787,8 @@ class resources_bo
 				return lang('Picture type is not supported, sorry!');
 		}
 
-		$src_img_size = getimagesize($file['tmp_name']);
-		$dst_img_size = array( 0 => 320, 1 => 240);
-
 		$tmp_name = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'resources-picture');
-		if($src_img_size[0] > $dst_img_size[0] || $src_img_size[1] > $dst_img_size[1])
-		{
-			$f = $dst_img_size[0] / $src_img_size[0];
-			$f = $dst_img_size[1] / $src_img_size[1] < $f ? $dst_img_size[1] / $src_img_size[1] : $f;
-			$dst_img = imagecreatetruecolor($src_img_size[0] * $f, $src_img_size[1] * $f);
-			imagecopyresized($dst_img,$src_img,0,0,0,0,$src_img_size[0] * $f,$src_img_size[1] * $f,$src_img_size[0],$src_img_size[1]);
-			imagejpeg($dst_img,$tmp_name);
-			imagedestroy($dst_img);
-		}
-		else
-		{
-			imagejpeg($src_img,$tmp_name);
-		}
+		imagejpeg($src_img,$tmp_name);
 		imagedestroy($src_img);
 
 		egw_link::attach_file('resources',$resouce_id,array(
@@ -822,6 +817,12 @@ class resources_bo
 				{
 					$picture = egw::link(egw_vfs::download_url($picture));
 				}
+				else
+				{
+					$picture = egw::link('/etemplate/thumbnail.php', array(
+						'path' => $picture
+					));
+				}
 				break;
 
 			case 'cat_src':
@@ -829,14 +830,14 @@ class resources_bo
 				$picture = unserialize($picture['data']);
 				if($picture['icon'])
 				{
-					$picture = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
+					$picture = !$fullsize?$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon']:'/phpgwapi/images/'.$picture['icon'];
 					break;
 				}
 				// fall through
 			case 'gen_src':
 			default :
 				$src = $resource['picture_src'];
-				$picture = $GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons;
+				$picture = !$fullsize?$GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons:$this->resource_icons;
 				$picture .= strpos($src,'.') !== false ? $src : 'generic.png';
 		}
 		return $picture;

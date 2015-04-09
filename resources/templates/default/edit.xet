@@ -67,9 +67,7 @@
 						</rows>
 					</grid>
 					<description/>
-					<vbox>
-						<image src="resource_picture" align="center" />
-					</vbox>
+					<image src="resource_picture" href="$cont[picture_original]" expose_view="true" align="center"/>
 				</row>
 			</rows>
 		</grid>

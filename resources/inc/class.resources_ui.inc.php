@@ -505,7 +505,11 @@ class resources_ui
 		if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
 
 		// some presetes
-		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
+		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],false);
+		// Set original size picture
+		$content['picture_original'] = $content['picture_src'] == 'own_src'?
+				'webdav.php/apps/resources/'.$content['res_id'].'/.picture.jpg': $this->bo->get_picture($content['res_id'],true);
+		
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
