@@ -157,11 +157,12 @@ var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		var popup = this.options.extra_link_popup;
 		var target = this.options.extra_link_target;
 		var self = this;
-		this.image.parent().click(function(e)
+		this.image.click(function(e)
 		{
 			if (self.options.expose_view)
 			{
 				self._init_blueimp_gallery(e,_value);
+				e.stopImmediatePropagation();
 			}
 			else
 			{
