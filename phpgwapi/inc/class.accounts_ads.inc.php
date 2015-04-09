@@ -892,7 +892,7 @@ class accounts_ads
 				}
 				if (is_numeric($param['type']))
 				{
-					$membership_filter = '(memberOf='.$this->id2name((int)$param['type'], 'account_dn').')';
+					$membership_filter = '(|(memberOf='.$this->id2name((int)$param['type'], 'account_dn').')(PrimaryGroupId='.abs($param['type']).'))';
 					$filter = $filter ? "(&$membership_filter$filter)" : $membership_filter;
 				}
 				foreach($this->filter($filter, 'u', self::$user_attributes) as $account_id => $data)
