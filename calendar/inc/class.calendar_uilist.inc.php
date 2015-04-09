@@ -481,6 +481,12 @@ class calendar_uilist extends calendar_ui
 
 			// set id for grid
 			$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.$event['recur_date'] : '');
+			
+			// Format start and end with timezone
+			foreach(array('start','end') as $time)
+			{
+				$event[$time] = egw_time::to($event[$time],'Y-m-d\TH:i:s\Z');
+			}
 
 			$rows[] = $event;
 			unset($app);
