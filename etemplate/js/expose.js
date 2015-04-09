@@ -394,7 +394,8 @@ function expose (widget)
 				if (typeof this.options.expose_view != 'undefined' && this.options.expose_view )
 				{
 					jQuery(this.node).on('click', function(event){
-						self._init_blueimp_gallery(event, _value);
+						// Do not trigger expose view if one of the operator keys are held
+						if (!event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey) self._init_blueimp_gallery(event, _value);
 					}).addClass('et2_clickable');
 				}
 			},
