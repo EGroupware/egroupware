@@ -127,7 +127,7 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('info_access',1,'admin'))
 			{
-				$file['phpInfo']         = "javascript:egw_openWindowCentered2('" . egw::link('/admin/phpinfo.php','',false) . "','phpinfoWindow',700,600,'yes')";
+				$file['phpInfo']         = "javascript:egw.openPopup('" . egw::link('/admin/phpinfo.php','',false) . "',960,600,'phpinfoWindow')";
 			}
 			$file['Admin queue and history'] = egw::link('/index.php','menuaction=admin.admin_cmds.index');
 			$file['Remote administration instances'] = egw::link('/index.php','menuaction=admin.admin_cmds.remotes');
