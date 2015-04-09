@@ -820,8 +820,7 @@ class resources_bo
 				else
 				{
 					$picture = egw::link('/etemplate/thumbnail.php', array(
-						'path' => $picture,
-						'thheight' => 128,
+						'path' => $picture
 					));
 				}
 				break;

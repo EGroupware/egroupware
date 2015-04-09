@@ -506,7 +506,10 @@ class resources_ui
 
 		// some presetes
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],false);
-		$content['picture_original'] = $this->bo->get_picture($content['res_id'],true);
+		// Set original size picture
+		$content['picture_original'] = $content['picture_src'] == 'own_src'?
+				'webdav.php/apps/resources/'.$content['res_id'].'/.picture.jpg': $this->bo->get_picture($content['res_id'],true);
+		
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
