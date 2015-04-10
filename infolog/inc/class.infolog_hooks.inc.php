@@ -451,7 +451,7 @@ class infolog_hooks
 				'type'   => 'multiselect',
 				'label'  => 'Which types should the calendar show',
 				'name'   => 'cal_show',
-				'values' => $info->enums['type'],
+				'values' => array(0 => lang('None')) + $info->enums['type'],
 				'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
 				'xmlrpc' => True,
 				'admin'  => False,
