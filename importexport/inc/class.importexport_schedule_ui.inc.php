@@ -526,8 +526,6 @@
 						$buffer += "$record\t$msg\n";
 					}
 					error_log($buffer);
-				} else {
-					unset($data['warnings'][$target]);
 				}
 				if(method_exists($po, 'get_errors') && $po->get_errors()) {
 					$buffer = 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n";
@@ -536,8 +534,6 @@
 						$buffer += "$record\t$error\n";
 					}
 					error_log($buffer);
-				} else {
-					unset($data['errors'][$target]);
 				}
 
 				if($po instanceof importexport_iface_import_plugin) {
