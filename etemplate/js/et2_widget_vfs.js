@@ -326,27 +326,31 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 	getMedia: function (_value)
 	{
 		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin + egw.webserverUrl:egw.webserverUrl;
-		var mediaContent = [];
+		var mediaContent = [{
+			title: _value.name,
+			type: _value.mime,
+			href: _value.download_url
+		}];
+		// check if download_url is not already an url (some stream-wrappers allow to specify that!)
+		if (_value.download_url[0] == '/' || _value.download_url.substr(0, 4) != 'http')
+		{
+			mediaContent[0].href = base_url + _value.download_url;
+
+			if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/,'ig'))
+			{
+				mediaContent[0].download_href = mediaContent[0].href + '?download';
+			}
+		}
 		if (_value && _value.mime && _value.mime.match(/video\/|audio\//,'ig'))
 		{
-			mediaContent = [{
-				title: _value.name,
-				type: _value.mime,
-				poster:'', // TODO: Should be changed by correct video thumbnail later
-				thumbnail: this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime),
-				href: base_url + _value.download_url
-			}];
+			mediaContent[0].thumbnail = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
 		}
 		else
 		{
-			mediaContent = [{
-				title: _value.name,
-				href: base_url + _value.download_url,
-				type: _value.mime,
-				thumbnail: _value.path && _value.mime ? this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime) : this.image.attr('src')+ '&thheight=128'
-			}];
+			mediaContent[0].thumbnail = _value.path && _value.mime ?
+				this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime) :
+				this.image.attr('src')+ '&thheight=128';
 		}
-		if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/,'ig')) mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
 		return mediaContent;
 	},
 
@@ -784,7 +788,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 					if (typeof this.etemplate2 !='undefined') self.options.path = this.etemplate2.getByApplication('filemanager')[0].widgetContainer.getArrayMgr("content").getEntry('path');
 				});
 			},1000);
-			
+
 			// Update on close doesn't always (ever, in chrome) work, so poll
 			var poll = self.egw().window.setInterval(
 				function() {
