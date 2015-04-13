@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id:$ -->
+<overlay>
+	<template id="infolog.home.link" template="" lang="" group="0" version="1.9.001">
+		<hbox class="infolog_CompletedClmn" height="45px">
+			<image label="$cont[info_status]" id="edit_status[$cont[info_id]]" href="javascript:egw.open($cont[info_id],'infolog');" src="image" default_src="status"/>
+			<vbox>
+				<link id="entry"/>
+				<image label="$cont[info_percent]" id="edit_percent[$cont[info_id]]" href="javascript:egw.open($cont[info_id],'infolog');" src="info_percent"/>
+				<progress label="$cont[info_percent]" id="info_percent2" href="javascript:egw.open($cont[info_id],'infolog');"/>
+			</vbox>
+		</hbox>
+		<grid class="tooltip" readonly="true" width="100%">
+			<columns>
+				<column width="70"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<link label="%s $cont[info_addr]" id="info_link" options="b" span="all"/>
+				</row>
+				<row>
+					<description id="info_des" no_lang="1" span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
