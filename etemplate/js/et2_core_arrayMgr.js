@@ -162,7 +162,7 @@ var et2_arrayMgr = Class.extend(
 
 		if (this.parentMgr != null)
 		{
-			this.parentMgr.getPath(_path);
+			_path = this.parentMgr.getPath(_path);
 		}
 
 		return _path;
