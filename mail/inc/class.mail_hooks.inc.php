@@ -493,19 +493,15 @@ class mail_hooks
 			'link'=>false,
 			'icon' => false
 		);
-		$showMainScreenStuff = false;
-		// import Message link - only when the required library is available
-		if ((@include_once 'Mail/mimeDecode.php') !== false)
-		{
-			$linkData = array(
-				'menuaction' => 'mail.mail_ui.importMessage',
-			);
+		
+		$linkData = array(
+			'menuaction' => 'mail.mail_ui.importMessage',
+		);
 
-			$file += array(
-				'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','importMessageDialog',600,100,'no','$appname');",
-			);
+		$file += array(
+			'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','importMessageDialog',600,100,'no','$appname');",
+		);
 
-		}
 
 		// create account wizard
 		if (self::access('createaccount'))
