@@ -2965,6 +2965,15 @@ class calendar_ical extends calendar_boupdate
 			// reset recure_enddate to 00:00:00 on the last day
 			$rriter = calendar_rrule::event2rrule($event, false);
 			$last = $rriter->normalize_enddate();
+			if(!is_object($last))
+			{
+				if($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+					" Unable to determine recurrence end date.  \n".array2string($event),3, $this->logfile);
+				}
+				return false;
+			}
 			$last->setTime(0, 0, 0);
 			//error_log(__METHOD__."() rrule=$recurence --> ".array2string($rriter)." --> enddate=".array2string($last).'='.egw_time::to($last, ''));
 			$event['recur_enddate'] = egw_time::to($last, 'server');
@@ -2974,6 +2983,15 @@ class calendar_ical extends calendar_boupdate
 		{
 			$rriter = calendar_rrule::event2rrule($event, false);
 			$last = $rriter->count2date($event['recur_count']);
+			if(!is_object($last))
+			{
+				if($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__,
+					" Unable to determine recurrence end date.  \n".array2string($event),3, $this->logfile);
+				}
+				return false;
+			}
 			$last->setTime(0, 0, 0);
 			$event['recur_enddate'] = egw_time::to($last, 'server');
 			unset($event['recur_count']);
