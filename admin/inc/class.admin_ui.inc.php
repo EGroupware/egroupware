@@ -350,6 +350,11 @@ class admin_ui
 			$hook_data = self::call_hook();
 			foreach($hook_data as $app => $app_data)
 			{
+				if(!is_array($app_data))
+				{
+					// Application has no data
+					continue;
+				}
 				foreach($app_data as $text => $data)
 				{
 					if (!is_array($data))
