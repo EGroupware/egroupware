@@ -1344,7 +1344,7 @@ class infolog_bo
 			'filter'=> "user$user".($do_events ? 'date' : 'opentoday').$date_wanted,
 			'start' => 0,
 		);
-		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show'])
+		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show'] || $GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show'] === '0')
 		{
 			$query['col_filter']['info_type'] = explode(',',$GLOBALS['egw_info']['user']['preferences']['infolog']['cal_show']);
 		}
