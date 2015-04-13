@@ -111,7 +111,7 @@
 					$content
 				);
 				if($result) {
-					egw_framework::refresh_opener('', 'importexport');
+					egw_framework::refresh_opener('', 'admin',$id,'update','admin');
 					egw_framework::window_close();
 				} else {
 					$data['message'] = lang('Unable to schedule');
