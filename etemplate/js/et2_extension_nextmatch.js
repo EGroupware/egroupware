@@ -1688,10 +1688,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	set_actions: function(actions) {
 		if(actions != this.options.actions && this.controller != null && this.controller._actionManager)
 		{
-			for(var i = this.controller._actionManager.children.length - 1; i >= 0; i--)
-			{
-				this.controller._actionManager.children[i].remove();
-			}
 			this.options.actions = actions;
 			this.options.settings.action_links = this.controller._actionLinks = this._get_action_links(actions);
 
