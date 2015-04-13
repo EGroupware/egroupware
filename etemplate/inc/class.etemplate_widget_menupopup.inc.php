@@ -303,6 +303,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 		$options = (isset(self::$request->sel_options[$form_name]) ? $form_name : $this->id);
 		if(is_array(self::$request->sel_options[$options]))
 		{
+			if(in_array($this->attrs['type'], self::$cached_types) && !isset($form_names_done[$options]))
+			{
+				// Fix any custom options from application
+				self::fix_encoded_options(self::$request->sel_options[$options],true);
+				$form_names_done[$options] = true;
+			}
 			// Turn on search, if there's a lot of rows (unless explicitly set)
 			if(!array_key_exists('search',$this->attrs) && count(self::$request->sel_options[$options]) >= self::SEARCH_ROW_LIMIT)
 			{

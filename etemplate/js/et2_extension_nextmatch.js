@@ -2399,7 +2399,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 
 		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' || typeof options[0] != 'undefined' && options[0].value != ''))
+		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))
 		{
 			widget_options.empty_label = this.egw().lang('All');
 		}
