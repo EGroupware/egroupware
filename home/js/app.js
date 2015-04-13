@@ -853,6 +853,25 @@ app.classes.home.home_list_portlet = app.classes.home.home_portlet.extend({
 		}
 	}
 });
+app.classes.home.home_weather_portlet = app.classes.home.home_portlet.extend({
+	init: function(portlet) {
+		// call parent
+		this._super.apply(this, arguments);
+
+		// Use location API
+		if(!this.portlet.options.settings && 'geolocation' in navigator)
+		{
+			navigator.geolocation.getCurrentPosition(function(position) {
+				if(portlet && portlet.options && portlet.options.settings &&
+					portlet.options.settings.position && portlet.options.settings.position == position.coords.latitude + ',' + position.coords.longitude)
+				{
+					return;
+				}
+				portlet._process_edit(et2_dialog.OK_BUTTON, {position: position.coords.latitude + ',' + position.coords.longitude});
+			});
+		}
+	}
+});
 app.classes.home.home_favorite_portlet = app.classes.home.home_portlet.extend({
 	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
 	{

@@ -58,16 +58,41 @@ class home_weather_portlet extends home_portlet
 		$etemplate->set_dom_id($id);
 		$content = $this->context;
 		$request = array(
-			'q'	=> $this->context['city'],
 			'units'	=> $this->context['units'] ? $this->context['units'] : 'metric',
 			'lang'	=> $GLOBALS['egw_info']['user']['preferences']['common']['lang'],
 			// Always get (& cache) 10 days, we'll cut down later
 			'cnt'	=> 10
 		);
-
-		if($this->context['city'])
+		if($this->context['city_id'])
 		{
+			$request['id'] = $this->context['city_id'];
 			$content += $this->get_weather($request);
+		}
+		elseif($this->context['city'])
+		{
+			$request['q'] = $this->context['city'];
+			$content += $this->get_weather($request);
+		}
+		elseif ($this->context['position'])
+		{
+			list($request['lat'],$request['lon']) = explode(',',$this->context['position']);
+			$content += $this->get_weather($request);
+		}
+
+		// Caching is best done by city ID, so store that
+		if($content['city_id'] && (!$this->context['city_id'] || $content['city_id'] != $this->context['city_id']))
+		{
+			
+			$portlets = $GLOBALS['egw']->preferences->read_repository();
+			$portlets = $portlets['home'];
+
+			// Save updated preferences
+			$portlets[$id]['city_id'] = $content['city_id'];
+			$this->context['city'] = $portlets[$id]['city'] = $content['settings']['city'] =
+				$content['settings']['title'] = $content['city'] = is_array($content['city']) ? $content['city']['name'] : $content['city'];
+			unset($portlets[$id]['position']);
+			$GLOBALS['egw']->preferences->add('home', $id, $portlets[$id]);
+			$GLOBALS['egw']->preferences->save_repository(True);
 		}
 
 		// Adjust data to match portlet size
