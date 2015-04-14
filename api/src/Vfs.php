@@ -2090,7 +2090,7 @@ class Vfs extends Vfs\StreamWrapper
 		}
 		if (is_resource($tmp_name))
 		{
-			$ret = ($dest = egw_vfs::fopen($target, 'w')) &&
+			$ret = ($dest = self::fopen($target, 'w')) &&
 				stream_copy_to_stream($tmp_name, $dest) !== false &&
 				fclose($dest) && self::stat($target);
 
