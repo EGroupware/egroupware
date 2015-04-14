@@ -332,7 +332,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			href: _value.download_url
 		}];
 		// check if download_url is not already an url (some stream-wrappers allow to specify that!)
-		if (_value.download_url[0] == '/' || _value.download_url.substr(0, 4) != 'http')
+		if (_value.download_url && (_value.download_url[0] == '/' || _value.download_url.substr(0, 4) != 'http'))
 		{
 			mediaContent[0].href = base_url + _value.download_url;
 
