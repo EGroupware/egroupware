@@ -2092,7 +2092,7 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			$ret = ($dest = self::fopen($target, 'w')) &&
 				stream_copy_to_stream($tmp_name, $dest) !== false &&
-				fclose($dest) && self::stat($target);
+				fclose($dest) ? self::stat($target) : false;
 
 			fclose($tmp_name);
 		}
