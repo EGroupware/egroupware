@@ -2033,7 +2033,7 @@ class Vfs extends Vfs\StreamWrapper
 	 *
 	 * Treat copying incl. properties as atomar operation in respect of notifications (one notification about an added file).
 	 *
-	 * @param array|string $src path to uploaded file or etemplate file array (value for key 'tmp_name')
+	 * @param array|string|resource $src path to uploaded file or etemplate file array (value for key 'tmp_name'), or resource with opened file
 	 * @param string $target path or directory to copy uploaded file
 	 * @param array|string $props =null array with properties (name => value pairs, eg. 'comment' => 'FooBar','#cfname' => 'something'),
 	 * 	array as for proppatch (array of array with values for keys 'name', 'val' and optional 'ns') or string with comment
@@ -2048,7 +2048,7 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			$target = self::concat($target, self::encodePathComponent(is_array($src) ? $src['name'] : basename($tmp_name)));
 		}
-		if ($check_is_uploaded_file && !is_uploaded_file($tmp_name))
+		if ($check_is_uploaded_file && !is_resource($tmp_name) && !is_uploaded_file($tmp_name))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !is_uploaded_file()");
 			return false;
@@ -2088,7 +2088,18 @@ class Vfs extends Vfs\StreamWrapper
 			}
 			self::proppatch($target, $props);
 		}
-		$ret = copy($tmp_name,self::PREFIX.$target) ? self::stat($target) : false;
+		if (is_resource($tmp_name))
+		{
+			$ret = ($dest = egw_vfs::fopen($target, 'w')) &&
+				stream_copy_to_stream($tmp_name, $dest) &&
+				fclose($dest) && self::stat($target);
+
+			fclose($tmp_name);
+		}
+		else
+		{
+			$ret = copy($tmp_name,self::PREFIX.$target) ? self::stat($target) : false;
+		}
 		if (self::LOG_LEVEL > 1 || !$ret && self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning ".array2string($ret));
 		return $ret;
 	}

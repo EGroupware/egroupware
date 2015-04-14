@@ -113,6 +113,11 @@ class egw_link extends solink
 	const VFS_APPNAME = 'file';		// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
 
 	/**
+	 * Appname used of files stored via egw_link::set_data()
+	 */
+	const DATA_APPNAME = 'egw-data';
+
+	/**
 	 * appname used for linking existing files to VFS
 	 */
 	const VFS_LINK = 'link';
@@ -308,13 +313,12 @@ class egw_link extends solink
 	 * 	of not created item or $file-array if $app1 == self::VFS_APPNAME (see below).
 	 * 	If $id==0 it will be set on return to an array with the links for the new item.
 	 * @param string|array $app2 app of 2.linkend or array with links ($id2 not used)
-	 * @param string $id2 ='' id of 2. item of $file-array if $app2 == self::VFS_APPNAME (see below)<br>
-	 * 	$file array with informations about the file in format of the etemplate file-type<br>
-	 * 	$file['name'] name of the file (no directory)<br>
-	 * 	$file['type'] mine-type of the file<br>
-	 * 	$file['tmp_name'] name of the uploaded file (incl. directory)<br>
-	 * 	$file['path'] path of the file on the client computer<br>
-	 * 	$file['ip'] of the client (path and ip in $file are only needed if u want a symlink (if possible))
+	 * @param string $id2 ='' id of 2. item of $file-array if $app2 == self::VFS_APPNAME or self::DATA_APPNAME
+	 * 	$file array with informations about the file in format of the etemplate file-type
+	 * 	$file['name'] name of the file (no directory)
+	 * 	$file['type'] mime-type of the file
+	 * 	$file['tmp_name'] name of the uploaded file (incl. directory) for self::VFS_APPNAME or
+	 *  $file['egw_data'] id of egw_link::set_data() call for self::DATA_APPNAME
 	 * @param string $remark ='' Remark to be saved with the link (defaults to '')
 	 * @param int $owner =0 Owner of the link (defaults to user)
 	 * @param int $lastmod =0 timestamp of last modification (defaults to now=time())
@@ -347,22 +351,30 @@ class egw_link extends solink
 					self::link($app1, $id1, $link['app'], $link['id'], $link['remark'],$link['owner'],$link['lastmod']);
 					continue;
 				}
-				if ($link['app'] == self::VFS_APPNAME)
+				switch ($link['app'])
 				{
-					$link_id = self::attach_file($app1,$id1,$link['id'],$link['remark']);
-				}
-				else if ($link['app'] == self::VFS_LINK)
-				{
-					$link_id = self::link_file($app1,$id1, $link['id'],$link['remark']);
-				}
-				else
-				{
-					$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
-						$link['remark'],$link['owner'],$link['lastmod']);
+					case self::DATA_APPNAME:
+						if (!($link['id']['tmp_name'] = self::get_data($link['id']['egw_data'], true)))
+						{
+							$link_id = false;
+							break;
+						}
+						// fall through
+					case self::VFS_APPNAME:
+						$link_id = self::attach_file($app1,$id1,$link['id'],$link['remark']);
+						break;
 
-					// notify both sides
-					if (!($no_notify&2)) self::notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
-					if (!($no_notify&1)) self::notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
+					case self::VFS_LINK:
+						$link_id = self::link_file($app1,$id1, $link['id'],$link['remark']);
+						break;
+
+					default:
+						$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
+							$link['remark'],$link['owner'],$link['lastmod']);
+						// notify both sides
+						if (!($no_notify&2)) self::notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
+						if (!($no_notify&1)) self::notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
+						break;
 				}
 			}
 			return $link_id;
@@ -1179,9 +1191,7 @@ class egw_link extends solink
 	 * @param array $file informations about the file in format of the etemplate file-type
 	 * 	$file['name'] name of the file (no directory)
 	 * 	$file['type'] mine-type of the file
-	 * 	$file['tmp_name'] name of the uploaded file (incl. directory)
-	 * 	$file['path'] path of the file on the client computer
-	 * 	$file['ip'] of the client (path and ip are only needed if u want a symlink (if possible))
+	 * 	$file['tmp_name'] name of the uploaded file (incl. directory) or resource of opened file
 	 * @param string $comment ='' comment to add to the link
 	 * @return int negative id of egw_sqlfs table as negative link-id's are for vfs attachments
 	 */
@@ -1553,11 +1563,12 @@ class egw_link extends solink
 	 * @param string $mime_type
 	 * @param string $method
 	 * @param array $params
+	 * @param boolean $ignore_mime =false true: return id, even if nothing registered for given mime-type
 	 * @return string|null md5 hash of stored data of server-side supported mime-type or null otherwise
 	 */
-	public static function set_data($mime_type, $method, array $params)
+	public static function set_data($mime_type, $method, array $params, $ignore_mime=false)
 	{
-		if (!($info = self::get_mime_info($mime_type)) || empty($info['mime_data']))
+		if (!$ignore_mime && (!($info = self::get_mime_info($mime_type)) || empty($info['mime_data'])))
 		{
 			return null;
 		}
