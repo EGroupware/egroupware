@@ -2395,7 +2395,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 
 		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && options != null && typeof options[''] == 'undefined' && typeof options[0] == 'undefined')
+		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))
 		{
 			widget_options.empty_label = this.egw().lang('All');
 			this.egw().debug('warn', 'Nextmatch category filter had no "All" option.  Added, but you should fix that.');
@@ -3227,12 +3227,14 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 		"widget_type": {
 			"name": "Actual type",
 			"type": "string",
-			"description": "The actual type of widget you should use"
+			"description": "The actual type of widget you should use",
+			"no_lang": 1
 		},
 		"widget_options": {
 			"name": "Actual options",
 			"type": "any",
 			"description": "The options for the actual widget",
+			"no_lang": 1,
 			"default": {}
 		}
 	},
@@ -3248,7 +3250,6 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 	 * @memberOf et2_nextmatch_customfilter
 	 */
 	init: function(_parent, _attrs) {
-		this._super.apply(this, arguments);
 
 		switch(_attrs.widget_type)
 		{
@@ -3256,11 +3257,26 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 				_attrs.type = 'nextmatch-entryheader';
 				break;
 			default:
-				_attrs.type = _attrs.widget_type;
+				if(_attrs.widget_type.indexOf('select') === 0)
+				{
+					_attrs.type = 'nextmatch-filterheader';
+				}
+				else
+				{
+					_attrs.type = _attrs.widget_type;
+				}
 		}
-		// Avoid warning about non-existant attribute
-		delete(_attrs.widget_type);
+		jQuery.extend(_attrs.widget_options,{id: this.id});
+
+		_attrs.id = '';
+		this._super.apply(this, arguments);
 		this.real_node = et2_createWidget(_attrs.type, _attrs.widget_options, this._parent);
+		var select_options = [];
+		var correct_type = _attrs.type;
+		this.real_node._type = _attrs.widget_type;
+		et2_selectbox.find_select_options(this.real_node, select_options, _attrs);
+		this.real_node._type = correct_type;
+		this.real_node.set_select_options(select_options);
 	},
 
 	// Just pass the real DOM node through, in case anybody asks
