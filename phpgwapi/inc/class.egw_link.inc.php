@@ -1596,6 +1596,8 @@ class egw_link extends solink
 		}
 		$ret = call_user_func_array('ExecMethod2', $data);
 
+		if (is_resource($ret)) fseek($ret, 0);
+
 		if ($return_resource != is_resource($ret))
 		{
 			if ($return_resource && ($fp = fopen('php://temp', 'w')))
@@ -1608,7 +1610,6 @@ class egw_link extends solink
 			{
 				$fp = $ret;
 				$ret = '';
-				fseek($fp, 0);
 				while(!feof($fp))
 				{
 					$ret .= fread($fp, 8192);
