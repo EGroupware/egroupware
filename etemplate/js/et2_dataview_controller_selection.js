@@ -98,6 +98,7 @@ var et2_dataview_selectionManager = Class.extend(
 		for (var key in this._registeredRows)
 		{
 			this.unregisterRow(key, this._registeredRows[key].tr);
+			delete this._registeredRows[key];
 		}
 		this._indexMap = {};
 		this._total = 0;
