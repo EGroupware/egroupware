@@ -1255,7 +1255,7 @@ class mail_ui
 					'caption' => 'Calendar',
 					'hint' => 'Save as Calendar',
 					'icon' => 'calendar/navbar',
-					'group' => ++$group,
+					'group' => $group,
 					'onExecute' => 'javaScript:app.mail.mail_integrate',
 					'popup' => egw_link::get_registry('calendar', 'add_popup'),
 					'allowOnMultiple' => false,
