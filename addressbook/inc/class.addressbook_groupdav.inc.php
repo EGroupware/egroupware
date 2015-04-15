@@ -185,12 +185,13 @@ class addressbook_groupdav extends groupdav_handler
 	 * Callback for profind interator
 	 *
 	 * @param string $path
-	 * @param array $filter
+	 * @param array& $filter
 	 * @param array|boolean $start=false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback($path,array $filter,$start=false,$report_not_found_multiget_ids=true)
+	function &propfind_callback($path,array &$filter,$start=false,$report_not_found_multiget_ids=true)
 	{
+		//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start)."; $report_not_found_multiget_ids)");
 		$starttime = microtime(true);
 		$filter_in = $filter;
 
@@ -213,11 +214,11 @@ class addressbook_groupdav extends groupdav_handler
 		$sync_collection_report = $filter['sync-collection'];
 		unset($filter['sync-collection']);
 
-		if (isset($filter_in[self::$path_attr]) && !is_array($filter_in[self::$path_attr]))
+		if (isset($filter[self::$path_attr]) && !is_array($filter[self::$path_attr]))
 		{
-			$filter_in[self::$path_attr] = (array)$filter_in[self::$path_attr];
+			$filter[self::$path_attr] = (array)$filter[self::$path_attr];
 		}
-		$requested_multiget_ids =& $filter_in[self::$path_attr];
+		$requested_multiget_ids =& $filter[self::$path_attr];
 
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
@@ -259,8 +260,10 @@ class addressbook_groupdav extends groupdav_handler
 				$this->sync_collection_token = $contact['modified'];
 			}
 		}
+		// last chunk or no chunking: add accounts from different repo and report missing multiget urls
 		if (!$start || count($contacts) < $start[1])
 		{
+			//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start)."; $report_not_found_multiget_ids) last chunk detected: count()=".count($contacts)." < $start[1]");
 			// add accounts after contacts, if enabled and stored in different repository
 			if ($this->bo->so_accounts && is_array($filter['owner']) && in_array('0', $filter['owner']))
 			{
@@ -332,13 +335,13 @@ class addressbook_groupdav extends groupdav_handler
 					}
 				}
 			}
-		}
-		// report not found multiget urls
-		if ($report_not_found_multiget_ids && $requested_multiget_ids)
-		{
-			foreach($requested_multiget_ids as $id)
+			// report not found multiget urls
+			if ($report_not_found_multiget_ids && $requested_multiget_ids)
 			{
-				$files[] = array('path' => $path.$id.self::$path_extension);
+				foreach($requested_multiget_ids as $id)
+				{
+					$files[] = array('path' => $path.$id.self::$path_extension);
+				}
 			}
 		}
 
