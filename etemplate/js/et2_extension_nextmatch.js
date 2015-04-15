@@ -2826,9 +2826,13 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 
 			if(field.type == 'select')
 			{
+				if(field.values && typeof field.values[''] !== 'undefined')
+				{
+					delete(field.values['']);
+				}
 				widget = et2_createWidget("nextmatch-filterheader", {
 					id: cf_id,
-					label: field.label,
+					empty_label: field.label,
 					select_options: field.values
 				}, this);
 			}

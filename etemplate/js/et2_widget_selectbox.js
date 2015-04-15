@@ -785,7 +785,12 @@ jQuery.extend(et2_selectbox,
 		{
 			var old_type = widget._type;
 			widget._type = type;
-			type_options = this[type_function].call(this, widget, attrs);
+			if(typeof attrs.other == 'string')
+			{
+				attrs.other = attrs.other.split(',');
+			}
+			// Copy, to avoid accidental modification
+			jQuery.extend(true, type_options, this[type_function].call(this, widget, attrs));
 			widget._type = old_type;
 		}
 
@@ -1040,7 +1045,7 @@ jQuery.extend(et2_selectbox,
 		return this.cached_server_side_options(widget, options, attrs);
 	},
 	country_options: function(widget, attrs) {
-		var options = ','+(attrs.other||[]).join(',');
+		var options = ',';
 		return this.cached_server_side_options(widget, options, attrs);
 	},
 	dow_options: function(widget,attrs) {
@@ -1068,6 +1073,9 @@ jQuery.extend(et2_selectbox,
 	 */
 	cached_server_side_options: function(widget, options_string, attrs)
 	{
+		// normalize options by removing trailing commas
+		options_string = options_string.replace(/,+$/, '');
+		
 		var cache_id = widget._type+'_'+options_string;
 		var cache = egw.window.et2_selectbox.type_cache[cache_id];
 		if (typeof cache == 'undefined')
