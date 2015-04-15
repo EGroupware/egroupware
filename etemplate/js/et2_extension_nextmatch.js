@@ -2178,7 +2178,12 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				{
 					event.preventDefault();
 					self.getInstanceManager().autocomplete_fixer();
-					self.nextmatch.applyFilters({search: self.search.getValue()});
+					// Use a timeout to make sure we get the autocomplete value,
+					// if one was chosen, instead of what was actually typed.
+					// Chrome doesn't need this, but FF does.
+					window.setTimeout(function() {
+						self.nextmatch.applyFilters({search: self.search.getValue()});
+					},0);
 				}
 			});
 		// Firefox treats search differently.  Add in the clear button.
