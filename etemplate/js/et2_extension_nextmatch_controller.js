@@ -285,6 +285,20 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 				| EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
 
 		this._init_links_dnd(this._actionManager);
+
+		if(this._selectionMgr)
+		{
+			// Need to update the action links for every registered row too
+			for (var uid in this._selectionMgr._registeredRows)
+			{
+				// Get the corresponding entry from the registered rows array
+				var entry = this._selectionMgr._getRegisteredRowsEntry(uid);
+				if(entry.ao)
+				{
+					entry.ao.updateActionLinks(this._actionLinks);
+				}
+			}
+		}
 	},
 
 	/**
