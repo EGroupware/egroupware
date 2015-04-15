@@ -2616,16 +2616,23 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Save message as InfoLog
+	 * Integrate mail message into another app's entry
 	 *
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_infolog: function(_action, _elems)
+	mail_integrate: function(_action, _elems)
 	{
-		//define/preset w_h in case something fails
-		var reg = '750x580';
-		var w_h =reg.split('x');
+		var app = _action.id;
+		
+		if (typeof _action.data != 'undefined' && typeof _action.data.popup != 'undefined')
+		{
+			w_h = _action.data.popup.split('x');
+		}
+		else // define a default wxh if there's no popup size registered
+		{
+			var w_h = ['750','580'];
+		}
 
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -2642,77 +2649,10 @@ app.classes.mail = AppJS.extend(
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
-			if (typeof _action.data.width == 'undefined' && typeof _action.data.height == 'undefined' && !(typeof _action.data.event == 'undefined' &&typeof _action.data.event.popup == 'undefined'))
-			{
-				if (_action.data.event.popup)
-				{
-					var app_registry = _action.data.event.popup;
-				}
-				else
-				{
-					var app_registry = egw.link_get_registry('infolog');//this.appname);
-				}
-				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
-				{
-					w_h =app_registry['edit_popup'].split('x');
-				}
-			}
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=infolog.infolog_ui.import_mail';	// todo compose for Draft folder
-		url += '&rowid='+_elems[0].id;
-		egw_openWindowCentered(url,'import_mail_'+_elems[0].id,(_action.data.width?_action.data.width:w_h[0]),(_action.data.height?_action.data.height:w_h[1]));
+		var url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
+		egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 	},
-
-	/**
-	 * Save message as ticket
-	 *
-	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
-	 * @param _elems
-	 */
-	mail_tracker: function(_action, _elems)
-	{
-		//define/preset w_h in case something fails
-		var reg = '780x535';
-		var w_h =reg.split('x');
-		if (typeof _elems == 'undefined' || _elems.length==0)
-		{
-			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
-			{
-				var _elems = [];
-				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
-			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
-			{
-				if (this.mail_currentlyFocussed)
-				{
-					var _elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
-				}
-			}
-			if (typeof _action.data.width == 'undefined' && typeof _action.data.height == 'undefined' && !(typeof _action.data.event == 'undefined' &&typeof _action.data.event.popup == 'undefined'))
-			{
-				if (_action.data.event.popup)
-				{
-					var app_registry = _action.data.event.popup;
-				}
-				else
-				{
-					var app_registry = egw.link_get_registry('tracker');//this.appname);
-				}
-				if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
-				{
-					w_h =app_registry['add_popup'].split('x');
-				}
-			}
-		}
-		//alert('mail_tracker('+_elems[0].id+')');
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=tracker.tracker_ui.import_mail';	// todo compose for Draft folder
-		url += '&rowid='+_elems[0].id;
-		egw_openWindowCentered(url,'import_tracker_'+_elems[0].id,(_action.data.width?_action.data.width:w_h[0]),(_action.data.height?_action.data.height:w_h[1]));
-	},
-
 
 	/**
 	 * mail_getFormData

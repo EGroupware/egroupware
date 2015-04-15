@@ -1237,8 +1237,7 @@ class mail_ui
 					'hint' => 'Save as InfoLog',
 					'icon' => 'infolog/navbar',
 					'group' => ++$group,
-					'onExecute' => 'javaScript:app.mail.mail_infolog',
-					'url' => 'menuaction=infolog.infolog_ui.import_mail',
+					'onExecute' => 'javaScript:app.mail.mail_integrate',
 					'popup' => egw_link::get_registry('infolog', 'add_popup'),
 					'allowOnMultiple' => false,
 					'toolbarDefault' => true
@@ -1248,10 +1247,19 @@ class mail_ui
 					'hint' => 'Save as ticket',
 					'group' => $group,
 					'icon' => 'tracker/navbar',
-					'onExecute' => 'javaScript:app.mail.mail_tracker',
-					'url' => 'menuaction=tracker.tracker_ui.import_mail',
+					'onExecute' => 'javaScript:app.mail.mail_integrate',
 					'popup' => egw_link::get_registry('tracker', 'add_popup'),
 					'allowOnMultiple' => false,
+				),
+				'calendar' => array(
+					'caption' => 'Calendar',
+					'hint' => 'Save as Calendar',
+					'icon' => 'calendar/navbar',
+					'group' => ++$group,
+					'onExecute' => 'javaScript:app.mail.mail_integrate',
+					'popup' => egw_link::get_registry('calendar', 'add_popup'),
+					'allowOnMultiple' => false,
+					'toolbarDefault' => true
 				),
 				'print' => array(
 					'caption' => 'Print',

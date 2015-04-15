@@ -2562,4 +2562,63 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 	}
+	
+	/**
+	 * imports a mail as Calendar
+	 *
+	 * @param array $mailContent mail content
+	 * @return  array
+	 */
+	function mail_import($mailContent)
+	{
+		if (is_array($mailContent))
+		{
+			
+			$participants[0] = array (
+				'uid' => $GLOBALS['egw_info']['user']['account_id'],
+				'delete_id' => $GLOBALS['egw_info']['user']['account_id'],
+				'status' => 'A',
+				'old_status' => 'A',
+				'app' => 'User',
+				'role' => 'REQ-PARTICIPANT'
+			);
+			foreach($mailContent['addresses'] as $address)
+			{
+				$participants []= array (
+					'app' => 'email',
+					'uid' => 'e'.$address['email'],
+					'status' => 'U',
+					'old_status' => 'U'
+				);
+			}
+			
+			// Prepare calendar event draft
+			$event = array(
+				'title' => $mailContent['subject'],
+				'description' => $mailContent['message'],
+				'participants' => $participants,
+				'link_to' => array(
+					'to_app' => 'calendar',
+					'to_id' => 0,
+				),
+			);
+			
+			if (is_array($mailContent['attachments']))
+			{
+				foreach ($mailContent['attachments'] as $attachment)
+				{
+					if($attachment['egw_data'])
+					{
+						egw_link::link('calendar',$event['link_to']['to_id'],egw_link::DATA_APPNAME,  $attachment);
+					}
+				}
+			}
+		}
+		else
+		{
+			egw_framework::window_close(lang('No content found to show up as calendar entry.'));
+		}
+		
+		return $this->process_edit($event);
+	}
 }

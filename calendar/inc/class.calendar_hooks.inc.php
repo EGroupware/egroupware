@@ -856,6 +856,16 @@ END:VALARM';
 		unset($data);	// not used, but in function signature for hooks
 		return true;
 	}
+	
+	/**
+	 * Mail integration hook to import mail message contents into a calendar entry
+	 *
+	 * @return string method to be executed for calendar mail integration
+	 */
+	public static function mail_import($args)
+	{
+		return 'calendar.calendar_uiforms.mail_import';
+	}
 }
 
 // Not part of the class, since config hooks are still using the old style

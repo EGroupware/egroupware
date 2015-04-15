@@ -1131,33 +1131,29 @@ class infolog_bo
 	 *
 	 * @author Cornelius Weiss <nelius@cwtech.de>
 	 * @todo search if infolog with from and subject allready exists ->appned body & inform user
-	 * @param string $_email_address rfc822 conform emailaddresses
+	 * @param array $_addresses array of addresses
+	 *	- array (email,name)
 	 * @param string $_subject
 	 * @param string $_message
 	 * @param array $_attachments
 	 * @param string $_date
 	 * @return array $content array for uiinfolog
 	 */
-	function import_mail($_email_address,$_subject,$_message,$_attachments,$_date)
+	function import_mail($_addresses,$_subject,$_message,$_attachments,$_date)
 	{
-		$address_array = imap_rfc822_parse_adrlist($_email_address,'');
-		foreach ((array)$address_array as $address)
+		foreach($_addresses as $address)
 		{
-			$email[] = $emailadr = sprintf('%s@%s',
-				trim($address->mailbox),
-				trim($address->host));
-				$name[] = !empty($address->personal) ? $address->personal : $emailadr;
+			$names[] = $address['name'];
+			$emails[] =$address['email'];
 		}
-		// shorten long (> $this->max_line_chars) lines of "line" chars (-_+=~) in mails
-		$_message = preg_replace_callback('/[-_+=~\.]{'.$this->max_line_chars.',}/m',
-			create_function('$matches',"return substr(\$matches[0],0,$this->max_line_chars);"),$_message);
+		
 		$type = isset($this->enums['type']['email']) ? 'email' : 'note';
 		$status = isset($this->status['defaults'][$type]) ? $this->status['defaults'][$type] : 'done';
 		$info = array(
 			'info_id' => 0,
 			'info_type' => $type,
-			'info_from' => implode(', ',$name),
-			'info_addr' => implode(', ',$email),
+			'info_from' => implode(', ',$names),
+			'info_addr' => implode(', ',$emails),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => egw_time::server2user($_date),
@@ -1174,7 +1170,7 @@ class infolog_bo
 		// find the addressbookentry to link with
 		$addressbook = new addressbook_bo();
 		$contacts = array();
-		foreach ($email as $mailadr)
+		foreach ($emails as $mailadr)
 		{
 			$contacts = array_merge($contacts,(array)$addressbook->search(
 				array(
@@ -1202,14 +1198,9 @@ class infolog_bo
 		{
 			foreach ($_attachments as $attachment)
 			{
-				$is_vfs = false;
-				if (parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs' && egw_vfs::is_readable($attachment['tmp_name']))
+				if($attachment['egw_data'])
 				{
-					$is_vfs = true;
-				}
-				if(is_readable($attachment['tmp_name']) || $is_vfs)
-				{
-					egw_link::link('infolog',$info['link_to']['to_id'],'file',$attachment);
+					egw_link::link('infolog',$info['link_to']['to_id'],egw_link::DATA_APPNAME,  $attachment);
 				}
 			}
 		}
