@@ -566,6 +566,9 @@ class infolog_hooks
 	 */
 	public static function mail_import($args)
 	{
-		return 'infolog.infolog_ui.mail_import';
+		return array (
+			'menuaction' => 'infolog.infolog_ui.mail_import',
+			'popup' => egw_link::get_registry('infolog', 'edit_popup')
+		);
 	}
 }

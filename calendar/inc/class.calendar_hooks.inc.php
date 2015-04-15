@@ -864,7 +864,10 @@ END:VALARM';
 	 */
 	public static function mail_import($args)
 	{
-		return 'calendar.calendar_uiforms.mail_import';
+		return array (
+			'menuaction' => 'calendar.calendar_uiforms.mail_import',
+			'popup' => egw_link::get_registry('calendar', 'edit_popup')
+		);
 	}
 }
 

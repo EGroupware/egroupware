@@ -32,6 +32,7 @@ class calendar_uiforms extends calendar_ui
 		'import' => true,
 		'cat_acl' => true,
 		'meeting' => true,
+		'mail_import' => true,
 	);
 
 	/**
@@ -2566,11 +2567,19 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * imports a mail as Calendar
 	 *
-	 * @param array $mailContent mail content
+	 * @param array $mailContent = null mail content
 	 * @return  array
 	 */
-	function mail_import($mailContent)
+	function mail_import(array $mailContent=null)
 	{
+		// It would get called from compose as a popup with egw_data
+		if (!is_array($mailContent) && ($_GET['egw_data']))
+		{
+			// get raw mail data
+			egw_link::get_data ($_GET['egw_data']);
+			return false;
+		}
+		
 		if (is_array($mailContent))
 		{
 			

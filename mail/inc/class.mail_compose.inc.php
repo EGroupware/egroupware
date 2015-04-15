@@ -163,6 +163,14 @@ class mail_compose
 				'hint' => 'check to save as trackerentry on send',
 				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
+			'to_calendar' => array(
+				'caption' => 'Calendar',
+				'icon' => 'to_calendar',
+				'group' => $group,
+				'checkbox' => true,
+				'hint' => 'check to save as calendar event on send',
+				'onExecute' => 'javaScript:app.mail.compose_setToggle'
+			),
 			'disposition' => array(
 				'caption' => 'Notification',
 				'icon' => 'high',
@@ -3047,41 +3055,35 @@ class mail_compose
 		if (is_array($this->sessionData['cc'])) $mailaddresses['cc'] = $this->sessionData['cc'];
 		if (is_array($this->sessionData['bcc'])) $mailaddresses['bcc'] = $this->sessionData['bcc'];
 		if (!empty($mailaddresses)) $mailaddresses['from'] = $GLOBALS['egw']->translation->decodeMailHeader($fromAddress);
-		// attention: we dont return from infolog/tracker. You cannot check both. cleanups will be done there.
-		if ($_formData['to_infolog'] == 'on') {
-			$uiinfolog = new infolog_ui();
-			$uiinfolog->import_mail(
-				$mailaddresses,
-				$this->sessionData['subject'],
-				$this->convertHTMLToText($this->sessionData['body']),
-				$this->sessionData['attachments'],
-				false, // date
-				$mail->getRaw()
-			);
-		}
-		if ($_formData['to_tracker'] == 'on') {
-			$uitracker = new tracker_ui();
-			$uitracker->import_mail(
-				$mailaddresses,
-				$this->sessionData['subject'],
-				$this->convertHTMLToText($this->sessionData['body']),
-				$this->sessionData['attachments'],
-				false, // date
-				$mail->getRaw()
-			);
-		}
-/*
-		if ($_formData['to_calendar'] == 'on') {
-			$uical =& CreateObject('calendar.calendar_uiforms');
-			$uical->import_mail(
-				$mailaddresses,
-				$this->sessionData['subject'],
-				$this->convertHTMLToText($this->sessionData['body']),
-				$this->sessionData['attachments']
-			);
-		}
-*/
 
+		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' )
+		{
+			foreach(array('to_infolog','to_tracker','to_calendar') as $app_key)
+			{
+				if ($_formData[$app_key] == 'on')
+				{
+					$app_name = substr($app_key,3);
+					// Get registered hook data of the app called for integration
+					$hook = $GLOBALS['egw']->hooks->single(array('location'=> 'mail_import'),$app_name);
+					
+					// Open the app called for integration in a popup
+					// and store the mail raw data as egw_data, in order to
+					// be stored from registered app method later
+					egw_framework::popup(egw::link('/index.php', array(
+						'menuaction' => $hook['menuaction'],
+						'egw_data' => egw_link::set_data(null,'mail_integration::integrate',array(
+							$app_name,
+							$mailaddresses,
+							$this->sessionData['subject'],
+							$this->convertHTMLToText($this->sessionData['body']),
+							$this->sessionData['attachments'],
+							false, // date
+							$mail->getRaw()),true)
+					)),'_blank',$hook['popup']);
+				}
+			}
+		}
+		
 
 		if(is_array($this->sessionData['attachments'])) {
 			foreach($this->sessionData['attachments'] as $value) {

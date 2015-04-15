@@ -23,6 +23,7 @@ class infolog_ui
 		'admin'       => True,
 		'hook_view'   => True,
 		'writeLangFile' => True,
+		'mail_import' => True
 	);
 	/**
 	 * reference to the infolog preferences of the user
@@ -2487,12 +2488,20 @@ class infolog_ui
 	/**
 	 * imports a mail as infolog
 	 *
-	 * @data string $_data registered hook data
+	 * @param array $mailContent = null content of mail
 	 * @return  array
 	 */
-	function mail_import($mailContent)
+	function mail_import(array $mailContent=null)
 	{
-		$this->edit($this->bo->import_mail($mailContent['addresses'],
+		// It would get called from compose as a popup with egw_data
+		if (!is_array($mailContent) && ($_GET['egw_data']))
+		{
+			// get the mail raw data
+			egw_link::get_data ($_GET['egw_data']);
+			return false;
+		}
+		
+		return $this->edit($this->bo->import_mail($mailContent['addresses'],
 				$mailContent['subject'],
 				$mailContent['message'],
 				$mailContent['attachments'],

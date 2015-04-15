@@ -25,6 +25,13 @@ class mail_integration {
 		'integrate' => true
 	);
 	
+	/**
+	 * Maximum number of line characters (-_+=~) allowed in a mail, to not stall the layout.
+	 * Longer lines / biger number of these chars are truncated to that max. number or chars.
+	 *
+	 * @var int
+	 */
+	const MAX_LINE_CHARS = 40;
 	
 	/**
 	 * Gets requested mail information and sets them as data link
@@ -52,13 +59,17 @@ class mail_integration {
 	 * @param string $_rawMail
 	 * @throws egw_exception_assertion_failed
 	 */
-	function integrate ($_app='',$_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
+	public static function integrate ($_app='',$_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
 	{
 		// App name which is called for integration
 		$app = !empty($_GET['app'])? $_GET['app']:$_app;
 		
 		// Set the date
-		if (!$_date) $_date = $this->bo->user_time_now;
+		if (!$_date)
+		{
+			$time = time();
+			$_date = egw_time::server2user($time->now,'ts');
+		}
 		
 		// Integrate not yet saved mail
 		if (empty($_GET['rowid']) && $_to_emailAddress && $app)
@@ -233,11 +244,11 @@ class mail_integration {
 			);
 		}
 		
-		// shorten long (> $this->max_line_chars) lines of "line" chars (-_+=~) in mails
+		// shorten long (> self::max_line_chars) lines of "line" chars (-_+=~) in mails
 		$data_message = preg_replace_callback(
-			'/[-_+=~\.]{'.$this->max_line_chars.',}/m',
+			'/[-_+=~\.]{'.self::MAX_LINE_CHARS.',}/m',
 			function($matches) {
-				return substr($matches[0],0,$this->max_line_chars);
+				return substr($matches[0],0,self::MAX_LINE_CHARS);
 			},
 			$mailcontent['message']
 		);
@@ -258,10 +269,10 @@ class mail_integration {
 		
 		
 		// Get the registered hook method of requested app for integration
-		$menuaction = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);
+		$hook = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);
 		
 		// Execute import mail with provided content
-		ExecMethod($menuaction,array (
+		ExecMethod($hook['menuaction'],array (
 			'addresses' => $data_addresses,
 			'attachments' => $data_attachments,
 			'message' => $data_message,
