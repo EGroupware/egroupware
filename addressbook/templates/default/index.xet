@@ -76,12 +76,12 @@
 					<nextmatch-header label="Birthday" id="bday"/>
 					<vbox>
 						<nextmatch-header label="Business address" id="business"/>
-						<nextmatch-customfilter id="adr_one_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
+						<nextmatch-customfilter id="adr_one_countrycode" options="select-country" empty_label="Country" class="countrySelect"/>
 						<nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
 					</vbox>
 					<vbox>
 						<nextmatch-header label="Home address" id="home"/>
-						<nextmatch-customfilter id="adr_two_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
+						<nextmatch-customfilter id="adr_two_countrycode" options="select-country" empty_label="Country" class="countrySelect"/>
 						<nextmatch-sortheader label="zip code" id="adr_two_postalcode"/>
 					</vbox>
 					<vbox>

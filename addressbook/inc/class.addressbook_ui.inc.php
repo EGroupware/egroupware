@@ -297,6 +297,7 @@ class addressbook_ui extends addressbook_bo
 			'cc'  => 'Cc',
 			'bcc' => 'Bcc',
 		);
+		$sel_options['adr_one_countrycode']['-custom-'] = lang('No country selected');
 
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
@@ -2157,6 +2158,7 @@ window.egw_LAB.wait(function() {
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $view;
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
+		$sel_options['adr_one_countrycode']['-custom-'] = lang('Custom');
 		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_ADD);
 		if ($content['owner']) unset($sel_options['owner'][0]);	// do not offer to switch to accounts, as we do not support moving contacts to accounts
 		if ((string) $content['owner'] !== '')
