@@ -62,7 +62,11 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 	set_value: function(_value) {
 		if (typeof _value !== 'object')
 		{
-			this.egw().debug("warn", "%s only has path, needs full array", this.id, _value);
+			// Only warn if it's an actual value, just blank for falsy values
+			if(_value)
+			{
+				this.egw().debug("warn", "%s only has path, needs full array", this.id, _value);
+			}
 			this.span.empty().text(_value);
 			return;
 		}
