@@ -9,14 +9,14 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id:$
  */
-	
+
 /**
  * Class cotains methods and functions
  * to be used to integrate mail's message into other applications
  *
- */	
+ */
 class mail_integration {
-	
+
 	/**
 	 * Public functions
 	 * @var type
@@ -24,7 +24,7 @@ class mail_integration {
 	var $public_functions = array(
 		'integrate' => true
 	);
-	
+
 	/**
 	 * Maximum number of line characters (-_+=~) allowed in a mail, to not stall the layout.
 	 * Longer lines / biger number of these chars are truncated to that max. number or chars.
@@ -32,7 +32,7 @@ class mail_integration {
 	 * @var int
 	 */
 	const MAX_LINE_CHARS = 40;
-	
+
 	/**
 	 * Gets requested mail information and sets them as data link
 	 * -Execute registered hook method from the requested app for integration
@@ -50,34 +50,33 @@ class mail_integration {
 	 *			'subject' => string
 	 *	)
 	 *
-	 * @param string $_app Integrated app name
 	 * @param string $_to_emailAddress
 	 * @param string $_subject mail subject
 	 * @param string $_body mail message
 	 * @param array $_attachments attachments
 	 * @param string $_date
-	 * @param string $_rawMail
+	 * @param string $_rawMail path to file with raw mail
 	 * @throws egw_exception_assertion_failed
 	 */
-	public static function integrate ($_app='',$_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
+	public static function integrate ($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
 	{
 		// App name which is called for integration
-		$app = !empty($_GET['app'])? $_GET['app']:$_app;
-		
+		$app = isset($GLOBALS['egw_info']['user']['apps'][$_GET['app']])? $_GET['app'] : null;
+
 		// Set the date
 		if (!$_date)
 		{
 			$time = time();
 			$_date = egw_time::server2user($time->now,'ts');
 		}
-		
+
 		// Integrate not yet saved mail
 		if (empty($_GET['rowid']) && $_to_emailAddress && $app)
 		{
 			$sessionLocation = 'mail';
 			$mailbox = base64_decode($_GET['mailbox']);
-			
-			$GLOBALS['egw_info']['flags']['currentapp'] = $_app;
+
+			$GLOBALS['egw_info']['flags']['currentapp'] = $app;
 
 			if (!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')&&is_array($_attachments))
 			{
@@ -85,7 +84,7 @@ class mail_integration {
 				if (!isset($_icServerID)) $_icServerID =& egw_cache::getSession($sessionLocation,'activeProfileID');
 				$mo = mail_bo::getInstance(true,$_icServerID);
 				$mo->openConnection();
-				
+
 				foreach ($_attachments as $attachment)
 				{
 					if (trim(strtoupper($attachment['type'])) == 'MESSAGE/RFC822' && !empty($attachment['uid']) && !empty($attachment['folder']))
@@ -141,21 +140,16 @@ class mail_integration {
 			}
 			// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
-			if (is_resource($_rawMail) && $GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
+			if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw' &&
+				$_rawMail && file_exists($_rawMail))
 			{
 				$subject = mail_bo::adaptSubjectForImport($_subject);
-				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-				$tmpfile = fopen($attachment_file,'w');
-				fseek($_rawMail, 0, SEEK_SET);
-				stream_copy_to_stream($_rawMail, $tmpfile);
-				fclose($tmpfile);
-				$size = filesize($attachment_file);
 				$attachments[] = array(
 						'name' => trim($subject).'.eml',
 						'mimeType' => 'message/rfc822',
 						'type' => 'message/rfc822',
-						'tmp_name' => $attachment_file,
-						'size' => $size,
+						'tmp_name' => $_rawMail,
+						'size' => filesize($_rawMail),
 					);
 			}
 
@@ -175,7 +169,7 @@ class mail_integration {
 				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
 				'SUBJECT'=>$_subject,
 				'DATE'=>mail_bo::_strtotime($_date))).$body_decoded;
-			
+
 			$mailcontent = array(
 				'mailaddress' => implode(',',$toaddr),
 				'subject' => $_subject,
@@ -196,14 +190,14 @@ class mail_integration {
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
 			$icServerID = $hA['profileID'];
-			
+
 			if ($uid && $mailbox)
 			{
 				if (!isset($icServerID)) $icServerID =& egw_cache::getSession($sessionLocation,'activeProfileID');
 				$mo	= mail_bo::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);
-
+// ToDo check $partid
 				$mailcontent = mail_bo::get_mailcontent($mo,$uid,$partid,$mailbox,false,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
 				// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 				// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
@@ -232,7 +226,7 @@ class mail_integration {
 		{
 			egw_framework::window_close(lang('No app for integration is registered!'));
 		}
-		
+
 		// Convert addresses to email and personal
 		$addresses = imap_rfc822_parse_adrlist($mailcontent['mailaddress'],'');
 		foreach ($addresses as $address)
@@ -243,7 +237,7 @@ class mail_integration {
 				'name' => !empty($address->personal) ? $address->personal : $email
 			);
 		}
-		
+
 		// shorten long (> self::max_line_chars) lines of "line" chars (-_+=~) in mails
 		$data_message = preg_replace_callback(
 			'/[-_+=~\.]{'.self::MAX_LINE_CHARS.',}/m',
@@ -252,7 +246,7 @@ class mail_integration {
 			},
 			$mailcontent['message']
 		);
-		
+
 		// Get attachments ready for integration as link
 		if (is_array($mailcontent['attachments']))
 		{
@@ -266,11 +260,11 @@ class mail_integration {
 				);
 			}
 		}
-		
-		
+
+
 		// Get the registered hook method of requested app for integration
 		$hook = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);
-		
+
 		// Execute import mail with provided content
 		ExecMethod($hook['menuaction'],array (
 			'addresses' => $data_addresses,

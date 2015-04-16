@@ -3065,25 +3065,31 @@ class mail_compose
 					$app_name = substr($app_key,3);
 					// Get registered hook data of the app called for integration
 					$hook = $GLOBALS['egw']->hooks->single(array('location'=> 'mail_import'),$app_name);
-					
+
+					// store mail / eml in temp. file to not have to download it from mail-server again
+					$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'mail_integrate');
+					$eml_fp = fopen($eml, 'w');
+					stream_copy_to_stream($mail->getRaw(), $eml_fp);
+					fclose($eml_fp);
+
 					// Open the app called for integration in a popup
 					// and store the mail raw data as egw_data, in order to
 					// be stored from registered app method later
 					egw_framework::popup(egw::link('/index.php', array(
 						'menuaction' => $hook['menuaction'],
 						'egw_data' => egw_link::set_data(null,'mail_integration::integrate',array(
-							$app_name,
 							$mailaddresses,
 							$this->sessionData['subject'],
 							$this->convertHTMLToText($this->sessionData['body']),
 							$this->sessionData['attachments'],
 							false, // date
-							$mail->getRaw()),true)
+							$eml),true),
+						'app' => $app_name,
 					)),'_blank',$hook['popup']);
 				}
 			}
 		}
-		
+
 
 		if(is_array($this->sessionData['attachments'])) {
 			foreach($this->sessionData['attachments'] as $value) {
