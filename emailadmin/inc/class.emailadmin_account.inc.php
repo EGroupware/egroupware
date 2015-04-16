@@ -55,8 +55,8 @@
  * @property-read string $acc_imap_logintype how to construct login-name standard, vmailmgr, admin, uidNumber
  * @property-read string $acc_domain domain name
  * @property-read boolean $acc_imap_administration enable administration
- * @property-read string $acc_admin_username
- * @property-read string $acc_admin_password
+ * @property-read string $acc_imap_admin_username
+ * @property-read string $acc_imap_admin_password
  * @property-read boolean $acc_further_identities are non-admin users allowed to create further identities
  * @property-read boolean $acc_user_editable are non-admin users allowed to edit this account, if it is for them
  * @property-read int $acc_modified timestamp of last modification

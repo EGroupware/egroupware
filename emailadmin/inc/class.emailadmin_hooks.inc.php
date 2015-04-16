@@ -115,8 +115,8 @@ class emailadmin_hooks
 				{
 					$smtp->$method($data);
 				}
-				if ($account->acc_imap_type != 'emailadmin_imap' && $account->acc_admin_username &&
-					$account->acc_admin_password && ($imap = $account->imapServer(true)) &&
+				if ($account->acc_imap_type != 'emailadmin_imap' && $account->acc_imap_admin_username &&
+					$account->acc_imap_admin_password && ($imap = $account->imapServer(true)) &&
 					is_a($imap, 'emailadmin_imap') && get_class($imap) != 'emailadmin_imap')
 				{
 					$imap->$method($data);
