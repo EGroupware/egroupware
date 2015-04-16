@@ -235,7 +235,7 @@ class historylog
 		{
 			$_query[] = array(
 				'table' => sqlfs_stream_wrapper::TABLE,
-				'cols' =>array('fs_id', 'fs_dir', '"filemanager"','COALESCE(fs_modifier,fs_creator)','"~file~"','fs_name','fs_modified', '""'),
+				'cols' =>array('fs_id', 'fs_dir', '"filemanager"','COALESCE(fs_modifier,fs_creator)','"~file~"','fs_name','fs_modified', 'fs_mime'),
 				'where' => array('fs_dir' => $file['ino'])
 			);
 		}
@@ -270,8 +270,10 @@ class historylog
 
 				$row['history_new_value'] = array(
 					'path' => $path,
-					'name' => basename($path)
+					'name' => basename($path),
+					'mime' => $row['history_old_value']
 				);
+				$row['history_old_value'] = '';
 				if($new_version !== null)
 				{
 					$rows[$new_version]['old_value'] = $row['history_new_value'];
