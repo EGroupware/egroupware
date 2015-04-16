@@ -434,7 +434,7 @@ class egw_link extends solink
 	 */
 	static function temp_link_id($app,$id)
 	{
-		return $app.':'.($app != self::VFS_APPNAME && $app != self::VFS_LINK ? $id : $id['name']);
+		return $app.':'.(!in_array($app, array(self::VFS_APPNAME,self::VFS_LINK, self::DATA_APPNAME)) ? $id : $id['name']);
 	}
 
 	/**
