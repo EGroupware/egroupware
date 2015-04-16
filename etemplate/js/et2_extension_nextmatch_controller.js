@@ -567,9 +567,13 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			}
 			for(var i = 0; i < this.self.kept_selection.ids.length || 0; i++)
 			{
-				this.self._selectionMgr.setSelected(this.self.kept_selection.ids[i],true);
+				// Only keep the selected if they came back in the fetch
+				if(_response.order.indexOf(this.self.kept_selection.ids[i]) >= 0)
+				{
+					this.self._selectionMgr.setSelected(this.self.kept_selection.ids[i],true);
+				}
 			}
-			if(this.self.kept_focus)
+			if(this.self.kept_focus && _response.order.indexOf(this.self.kept_focus) >= 0)
 			{
 				this.self._selectionMgr.setFocused(this.self.kept_focus,true);
 			}
