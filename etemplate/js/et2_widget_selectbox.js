@@ -495,9 +495,7 @@ var et2_selectbox = et2_inputWidget.extend(
 				}
 				else
 				{
-					var debug_value = _value;
-					if(debug_value === null) debug_value == 'NULL';
-					this.egw().debug("warn", "Tried to set value '%s' that isn't an option", debug_value, this);
+					this.egw().debug("warn", "Tried to set value '%s' that isn't an option", _value, this);
 				}
 				return;
 			}
@@ -529,9 +527,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			if(jQuery("input[value='"+_value+"']", this.multiOptions).prop("checked", true).length == 0)
 			{
-				var debug_value = _value;
-				if(debug_value === null) debug_value == 'NULL';
-				this.egw().debug("warn", "Tried to set value '%s' that isn't an option", debug_value, this);
+				this.egw().debug("warn", "Tried to set value that isn't an option", this, _value);
 			}
 		}
 
@@ -774,7 +770,6 @@ jQuery.extend(et2_selectbox,
 	{
 		var name_parts = widget.id.replace(/&#x5B;/g,'[').replace(/]|&#x5D;/g,'').split('[');
 
-		var type_options = [];
 		var content_options = {};
 
 		// First check type, there may be static options.  There's some special handling
@@ -790,12 +785,12 @@ jQuery.extend(et2_selectbox,
 				attrs.other = attrs.other.split(',');
 			}
 			// Copy, to avoid accidental modification
-			jQuery.extend(true, type_options, this[type_function].call(this, widget, attrs));
+			content_options = this[type_function].call(this, widget, attrs);
 			widget._type = old_type;
 		}
 
 		// Try to find the options inside the "sel-options"
-		if(widget.getArrayMgr("sel_options"))
+		if(jQuery.isEmptyObject(content_options) && widget.getArrayMgr("sel_options"))
 		{
 			// Try first according to ID
 			content_options = widget.getArrayMgr("sel_options").getEntry(widget.id);
@@ -884,32 +879,6 @@ jQuery.extend(et2_selectbox,
 		if (content_options == null)
 		{
 			content_options = {};
-		}
-		
-		// Include type options, preferring any content options
-		if(type_options.length || !jQuery.isEmptyObject(type_options))
-		{
-			for(var i in content_options)
-			{
-				var value = typeof content_options[i] == 'object' && typeof content_options[i].value !== 'undefined' ? content_options[i].value : i;
-				var added = false;
-
-				// Override any existing
-				for(var j in type_options)
-				{
-					if(type_options[j].value === value)
-					{
-						added = true;
-						type_options[j] = content_options[i];
-						break;
-					}
-				}
-				if(!added)
-				{
-					type_options.splice(i,0,content_options[i]);
-				}
-			}
-			content_options = type_options;
 		}
 		return content_options;
 	},
@@ -1099,10 +1068,10 @@ jQuery.extend(et2_selectbox,
 				attrs.select_options = egw.window.et2_selectbox.type_cache[this.cache_id];
 
 				egw.window.setTimeout(jQuery.proxy(function() {
-					this.widget.set_select_options(et2_selectbox.find_select_options(this.widget,{}, this.widget.options));
+					this.widget.set_select_options(egw.window.et2_selectbox.type_cache[this.cache_id]||{});
 				},this),1);
 			},{widget:widget,cache_id:cache_id}));
-			return [];
+			return {};
 		}
 		else
 		{
