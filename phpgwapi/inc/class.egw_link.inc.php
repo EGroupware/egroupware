@@ -1573,7 +1573,8 @@ class egw_link extends solink
 			return null;
 		}
 		array_unshift($params, $method);
-		$id = md5(json_encode($params));
+		$id = md5(serialize($params));
+		//error_log(__METHOD__."('$mime_type', '$method', ...) params=".array2string($params)." --> json=".array2string(serialize($params)).' --> id='.array2string($id));
 		egw_cache::setSession(__CLASS__, $id, $params);
 		return $id;
 	}
