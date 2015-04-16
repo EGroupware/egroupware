@@ -411,11 +411,7 @@ app.classes.admin = AppJS.extend(
 		var readonlys = {acl: {}};
 
 		// Select options are already here, just pull them and pass along
-		sel_options = jQuery.extend({}, et2.getArrayMgr('sel_options').data||{}, {
-			'apps': et2.getArrayMgr('sel_options').getEntry('filter2')
-		},sel_options);
-		// Remove 'All applications'
-		delete sel_options.apps[''];
+		sel_options = et2.getArrayMgr('sel_options').data||{};
 
 		// Some defaults
 		if(et2 && et2.getWidgetById('nm'))
@@ -528,8 +524,9 @@ app.classes.admin = AppJS.extend(
 						var removed = [];
 
 						// Loop through all apps, remove the ones with no permission
-						for(var app in sel_options.apps)
+						for(var app in sel_options.filter2)
 						{
+							if (!app) continue;
 							var run_id = app+":"+_value.acl_account+":run";
 							if(_value.apps.indexOf(app) < 0 && (content.apps.indexOf(app) >= 0 || content.apps.length == 0))
 							{
@@ -794,6 +791,8 @@ app.classes.admin = AppJS.extend(
 	/**
 	 * Change handler for when you change the type of a custom field.
 	 * It toggles options / attributes as appropriate.
+	 * @param {event object} e
+	 * @param {widget object} widget
 	 */
 	cf_type_change: function(e,widget) {
 		var root = widget.getRoot();
