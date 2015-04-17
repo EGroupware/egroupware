@@ -244,6 +244,7 @@ class emailadmin_script {
 
 		$activerules = 0;
 		$regexused = 0;
+		$regexsupported = true;
 		$rejectused = 0;
 		$vacation_active = false;
 
@@ -272,6 +273,7 @@ class emailadmin_script {
 		if (in_array('variables',$connection->_capability['extensions'])|| in_array('VARIABLES', $connection->_capability['extensions'])) $variables = true;
 		if (in_array('body', $connection->_capability['extensions']) || in_array('BODY', $connection->_capability['extensions'])) $supportsbody = true;
 		if (!(in_array('vacation',$connection->_capability['extensions'])|| in_array('VACATION', $connection->_capability['extensions']))) $this->vacation = false;
+		if (!(in_array('regex',$connection->_capability['extensions'])|| in_array('REGEX', $connection->_capability['extensions']))) $regexsupported = false;
 
 		$newscriptbody = "";
 		$continue = 1;
@@ -445,8 +447,18 @@ class emailadmin_script {
 					$newscriptbody .= "\tkeep;\n}\n";
 				}
 				$vacation_active = true;
-				//$newscriptbody .= "if header :contains ".'"X-Spam-Status" '.'"YES"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
-				$newscriptbody .= "if header :regex ".'"X-Spam-Status" '.'"\\\\bYES\\\\b"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
+				if ($regexsupported)
+				{
+					$newscriptbody .= "if header :regex ".'"X-Spam-Status" '.'"\\\\bYES\\\\b"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
+					$regexused = 1;
+				}
+				else
+				{
+					// if there are no regex'es supported use a different Anti-Spam Rule: if X-Spam-Status holds
+					// additional spamscore information (e.g. BAYES) this rule may prevent Vacation notification
+					// TODO: refine rule without using regex
+					$newscriptbody .= "if header :contains ".'"X-Spam-Status" '.'"YES"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
+				}
 				$newscriptbody .= "vacation :days " . $vacation['days'] . " :addresses [";
 				$first = 1;
 				foreach ($vacation['addresses'] as $vaddress) {
@@ -523,7 +535,7 @@ class emailadmin_script {
 
 		if ($activerules) {
 			$newscripthead .= "require [\"fileinto\"";
-			if ($regexused||($this->vacation&& $vacation_active)) $newscripthead .= ",\"regex\"";
+			if ($regexsupported && $regexused) $newscripthead .= ",\"regex\"";
 			if ($rejectused) $newscripthead .= ",\"reject\"";
 			if ($this->vacation && $vacation_active) {
 				$newscripthead .= ",\"vacation\"";
@@ -594,6 +606,7 @@ class emailadmin_script {
 		$ret = $connection->installScript($this->name, $newscript, true);
 		if (!$ret || self::isError($ret)) {
 			$this->errstr = 'updateScript: putscript failed: ' . (self::isError($ret)?$ret->message:$connection->errstr);
+			if ($regexused&&!$regexsupported) $this->errstr .= " REGEX is not an supported CAPABILITY";
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
 			error_log(__METHOD__.__LINE__.' # ScriptName:'.$this->name.' Script:'.$newscript);
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
