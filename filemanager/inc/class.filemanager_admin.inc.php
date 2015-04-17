@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org/
  * @package filemanager
  * @author Ralf Becker <rb-AT-stylite.de>
- * @copyright (c) 2010-14 by Ralf Becker <rb-AT-stylite.de>
+ * @copyright (c) 2010-15 by Ralf Becker <rb-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Stylite\Vfs\Versioning;
 
 /**
  * Filemanager: mounting GUI
@@ -33,7 +35,7 @@ class filemanager_admin extends filemanager_ui
 	static protected $is_setup = false;
 
 	/**
-	 * Do we have versioning (stylite_versioning_stream_wrapper class) available and with which schema
+	 * Do we have versioning (Versioning\StreamWrapper class) available and with which schema
 	 *
 	 * @var string
 	 */
@@ -60,9 +62,9 @@ class filemanager_admin extends filemanager_ui
 		parent::__construct();
 		self::$is_setup = egw_session::appsession('is_setup','filemanager');
 
-		if (class_exists('stylite_versioning_stream_wrapper'))
+		if (class_exists('EGroupware\Stylite\Vfs\Versioning\StreamWrapper'))
 		{
-			$this->versioning = stylite_versioning_stream_wrapper::SCHEME;
+			$this->versioning = Versioning\StreamWrapper::SCHEME;
 		}
 	}
 
@@ -125,7 +127,7 @@ class filemanager_admin extends filemanager_ui
 					($content['mounts']['enable'] || self::$is_setup && $content['mounts']['mount']))
 				{
 					$url = str_replace('$path',$path,$content['mounts']['url']);
-					if (empty($url) && $this->versioning) $url = stylite_versioning_stream_wrapper::PREFIX.$path;
+					if (empty($url) && $this->versioning) $url = Versioning\StreamWrapper::PREFIX.$path;
 
 					if ($content['mounts']['enable'] && !$this->versioning)
 					{
@@ -161,7 +163,7 @@ class filemanager_admin extends filemanager_ui
 		if ($this->versioning)
 		{
 			// statistical information
-			$content = stylite_versioning_stream_wrapper::summary();
+			$content = Versioning\StreamWrapper::summary();
 			if ($content['total_files']) $content['percent_files'] = number_format(100.0*$content['version_files']/$content['total_files'],1).'%';
 			if ($content['total_size']) $content['percent_size'] = number_format(100.0*$content['version_size']/$content['total_size'],1).'%';
 		}
