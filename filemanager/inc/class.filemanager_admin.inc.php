@@ -202,7 +202,7 @@ class filemanager_admin extends filemanager_ui
 			'everyone' => lang('Everyone'),
 		);
 		// show [Mount /etemplates] button for admin, if not already mounted and available
-		$readonlys['etemplates'] = !class_exists('stylite_merge_stream_wrapper') || egw_vfs::file_exists('/etemplates') ||
+		$readonlys['etemplates'] = !class_exists('\EGroupware\Stylite\Vfs\Merge\StreamWrapper') || egw_vfs::file_exists('/etemplates') ||
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		//_debug_array($content);
 
