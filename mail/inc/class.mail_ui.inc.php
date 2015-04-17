@@ -125,12 +125,12 @@ class mail_ui
 		if ($_GET["resetConnection"])
 		{
 			unset($_GET["resetConnection"]);
-			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
+			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Connection Reset triggered: for Profile with ID:'.self::$icServerID);
 			emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
 		}
 
 		try {
-			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID,$_validate=true, $_oldImapServerObject=false, $_reuseCache=true);
+			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID, true, false, true);
 			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 
@@ -3263,7 +3263,6 @@ class mail_ui
 				$file = $content['uploadForImport'];
 			}
 			$destination = $content['FOLDER'][0];
-			$rememberServerID = $icServerID = $this->mail_bo->profileID;
 
 			if (stripos($destination,self::$delimiter)!==false) list($icServerID,$destination) = explode(self::$delimiter,$destination,2);
 			if ($icServerID && $icServerID != $this->mail_bo->profileID)
@@ -3486,7 +3485,6 @@ class mail_ui
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
 		$icServerID = $uidA['profileID'];
-		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
@@ -4767,7 +4765,7 @@ class mail_ui
 						//error_log(__METHOD__.__LINE__.$uID);
 						if ($_copyOrMove=='move')
 						{
-							$messageListForRefresh[] = self::generateRowID($sourceProfileID, $folderName, $uID, $_prependApp=false);
+							$messageListForRefresh[] = self::generateRowID($sourceProfileID, $_folderName, $uID, $_prependApp=false);
 						}
 					}
 				}

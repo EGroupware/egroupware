@@ -44,10 +44,12 @@ class mail_integration {
 	 *			'attachments' => array (
 	 *					'name' => string,		// file name
 	 *					'type' => string,		// mime type
-	 *					'egw_data'=> string),	// hash md5 id of an stored attachment in session
-	 *			'message' => string
-	 *			'date' => string
-	 *			'subject' => string
+	 *					'egw_data'=> string,	// hash md5 id of an stored attachment in session (attachment which is in IMAP server)
+	 *											// NOTE: the attachmet either have egw_data OR tmp_name (e.g. raw mail eml file stores in tmp)
+	 *					'tmp_name' => string),	// tmp dir path
+	 *			'message' => string,
+	 *			'date' => string,
+	 *			'subject' => string,
 	 *	)
 	 *
 	 * @param string $_to_emailAddress
@@ -56,6 +58,7 @@ class mail_integration {
 	 * @param array $_attachments attachments
 	 * @param string $_date
 	 * @param string $_rawMail path to file with raw mail
+	 * @param int $_icServerID mail profile id
 	 * @throws egw_exception_assertion_failed
 	 */
 	public static function integrate ($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
@@ -150,6 +153,7 @@ class mail_integration {
 						'type' => 'message/rfc822',
 						'tmp_name' => $_rawMail,
 						'size' => filesize($_rawMail),
+						'add_raw' => true
 					);
 			}
 
@@ -180,7 +184,7 @@ class mail_integration {
 
 		}
 		// Integrate already saved mail with ID
-		else if ($app)
+		else
 		{
 			// Initializing mail connection requirements
 			$hA = mail_ui::splitRowID($_GET['rowid']);
@@ -197,16 +201,15 @@ class mail_integration {
 				$mo	= mail_bo::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);
-// ToDo check $partid
-				$mailcontent = mail_bo::get_mailcontent($mo,$uid,$partid,$mailbox,false,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
+				$mailcontent = mail_bo::get_mailcontent($mo,$uid,'',$mailbox,false,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
 				// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 				// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
 				if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
 				{
-					$message = $mo->getMessageRawBody($uid, $partid,$mailbox);
-					$headers = $mo->getMessageHeader($uid, $partid,true,false,$mailbox);
+					$message = $mo->getMessageRawBody($uid, '',$mailbox);
+					$headers = $mo->getMessageHeader($uid, '',true,false,$mailbox);
 					$subject = mail_bo::adaptSubjectForImport($headers['SUBJECT']);
-					$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+					$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."mail_integrate");
 					$tmpfile = fopen($attachment_file,'w');
 					fwrite($tmpfile,$message);
 					fclose($tmpfile);
@@ -217,16 +220,13 @@ class mail_integration {
 							'type' => 'message/rfc822',
 							'tmp_name' => $attachment_file,
 							'size' => $size,
+							'add_raw' => true
 					);
 				}
 				$mailcontent['date'] = strtotime($mailcontent['headers']['DATE']);
 			}
 		}
-		else
-		{
-			egw_framework::window_close(lang('No app for integration is registered!'));
-		}
-
+		
 		// Convert addresses to email and personal
 		$addresses = imap_rfc822_parse_adrlist($mailcontent['mailaddress'],'');
 		foreach ($addresses as $address)
@@ -253,14 +253,19 @@ class mail_integration {
 			foreach($mailcontent['attachments'] as $key => $attachment)
 			{
 				$data_attachments[$key] = array(
-					'name' => $mailcontent['attachments'][$key]['filename'],
+					'name' => $mailcontent['attachments'][$key]['name'],
 					'type' => $mailcontent['attachments'][$key]['type'],
-					'egw_data' => egw_link::set_data($mailcontent['attachments'][$key]['mimeType'],'emailadmin_imapbase::getAttachmentAccount',
-						array($icServerID, $mailbox, $uid, $attachment['partID'], $is_winmail, true), true)
+					'size' => $mailcontent['attachments'][$key]['size'],
+					'tmp_name' => $mailcontent['attachments'][$key]['tmp_name']
 				);
+				if ($uid && !$mailcontent['attachments'][$key]['add_raw'])
+				{
+					$data_attachments[$key]['egw_data'] = egw_link::set_data($mailcontent['attachments'][$key]['mimeType'],
+						'emailadmin_imapbase::getAttachmentAccount',array($icServerID, $mailbox, $uid, $attachment['partID'], $is_winmail, true),true);
+				}
+				unset($mailcontent['attachments'][$key]['add_raw']);
 			}
 		}
-
 
 		// Get the registered hook method of requested app for integration
 		$hook = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);

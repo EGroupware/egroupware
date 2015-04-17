@@ -2620,6 +2620,10 @@ class calendar_uiforms extends calendar_ui
 					{
 						egw_link::link('calendar',$event['link_to']['to_id'],egw_link::DATA_APPNAME,  $attachment);
 					}
+					else if(is_readable($attachment['tmp_name']))
+					{
+						egw_link::link('calendar',$event['link_to']['to_id'],'file',  $attachment);
+					}
 				}
 			}
 		}

@@ -3083,8 +3083,9 @@ class mail_compose
 							$this->convertHTMLToText($this->sessionData['body']),
 							$this->sessionData['attachments'],
 							false, // date
-							$eml),true),
-						'app' => $app_name,
+							$eml,
+							$_formData['serverID']),true),
+						'app' => $app_name
 					)),'_blank',$hook['popup']);
 				}
 			}
