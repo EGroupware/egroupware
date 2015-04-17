@@ -469,7 +469,7 @@ switch($cmd)
  */
 function load_wrapper($url)
 {
-	$scheme = egw_vfs::parse_url($url,PHP_URL_SCHEME);
+	$scheme = parse_url($url,PHP_URL_SCHEME);
 
 	if (!in_array($scheme,stream_get_wrappers()))
 	{
@@ -484,7 +484,7 @@ function load_wrapper($url)
 			default:
 				if (!isset($GLOBALS['egw']) && !in_array($scheme,array('smb','imap')))
 				{
-					load_egw(egw_vfs::parse_url($url,PHP_URL_USER),egw_vfs::parse_url($url,PHP_URL_PASS),egw_vfs::parse_url($url,PHP_URL_HOST));
+					load_egw(parse_url($url,PHP_URL_USER), parse_url($url,PHP_URL_PASS), parse_url($url,PHP_URL_HOST));
 				}
 				// get eGW's __autoload() function
 				include_once(EGW_API_INC.'/common_functions.inc.php');
