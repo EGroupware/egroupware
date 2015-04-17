@@ -367,7 +367,7 @@ class egw_mailer extends Horde_Mime_Mail
 	/**
 	 * Adds a string or binary attachment (non-filesystem) to the list.
 	 *
-	 * "text/calendar; method=..." get automatic detected and added as highes priority alternative,
+	 * "text/calendar; method=..." get automatic detected and added as highest priority alternative,
 	 * overwriting evtl. existing html body!
 	 *
 	 * @param string $content String attachment data.
@@ -392,10 +392,6 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 		$part->setCharset('utf-8');
 		$part->setContents($content);
-		// this should not be necessary, because binary data get detected by mime-type,
-		// but at least Cyrus complains about NUL characters
-		$part->setTransferEncoding('base64', array('send' => true));
-		$part->setName($filename);
 
 		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
 		if (stripos($type,"text/calendar; method=") !== false)
@@ -403,6 +399,10 @@ class egw_mailer extends Horde_Mime_Mail
 			$this->_htmlBody = $part;
 			return;
 		}
+		// this should not be necessary, because binary data get detected by mime-type,
+		// but at least Cyrus complains about NUL characters
+		$part->setTransferEncoding('base64', array('send' => true));
+		$part->setName($filename);
 		$part->setDisposition('attachment');
 
 		return $this->addMimePart($part);
