@@ -3090,9 +3090,9 @@ class mail_compose
 				}
 			}
 		}
-
-
-		if(is_array($this->sessionData['attachments'])) {
+		// only clean up temp-files, if we dont need them for mail_integration::integrate
+		elseif(is_array($this->sessionData['attachments']))
+		{
 			foreach($this->sessionData['attachments'] as $value) {
 				if (!empty($value['file']) && parse_url($value['file'],PHP_URL_SCHEME) != 'vfs') {	// happens when forwarding mails
 					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.$value['file']);
