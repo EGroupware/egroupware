@@ -7,7 +7,7 @@
  * @package addressbook
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -191,7 +191,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function &propfind_callback($path,array &$filter,$start=false,$report_not_found_multiget_ids=true)
 	{
-		//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start)."; $report_not_found_multiget_ids)");
+		//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start).", $report_not_found_multiget_ids)");
 		$starttime = microtime(true);
 		$filter_in = $filter;
 
@@ -214,11 +214,11 @@ class addressbook_groupdav extends groupdav_handler
 		$sync_collection_report = $filter['sync-collection'];
 		unset($filter['sync-collection']);
 
-		if (isset($filter[self::$path_attr]) && !is_array($filter[self::$path_attr]))
+		if (isset($filter[self::$path_attr]))
 		{
-			$filter[self::$path_attr] = (array)$filter[self::$path_attr];
+			if (!is_array($filter[self::$path_attr])) $filter[self::$path_attr] = (array)$filter[self::$path_attr];
+			$requested_multiget_ids =& $filter[self::$path_attr];
 		}
-		$requested_multiget_ids =& $filter[self::$path_attr];
 
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
