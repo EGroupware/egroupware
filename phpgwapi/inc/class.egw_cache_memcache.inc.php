@@ -7,7 +7,7 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -21,6 +21,8 @@
  * and optional also $GLOBALS['egw_info']['server']['cache_provider_tree'] (defaults to instance)
  *
  * You can set more then one server and specify a port, if it's not the default one 11211.
+ *
+ * If igbinary extension is available, it is prefered over PHP (un)serialize.
  */
 class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_provider_multiple
 {
@@ -36,6 +38,13 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 	 *
 	 */
 	const STORE_FLAGS = MEMCACHE_COMPRESSED;
+
+	/**
+	 * If igbinary extension is available we prefer it for seralization
+	 *
+	 * @var string
+	 */
+	private $igbinary_available = false;
 
 	/**
 	 * Constructor, eg. opens the connection to the backend
@@ -63,6 +72,7 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 		{
 			throw new Exception (__METHOD__.'('.array2string($params).") Can't open connection to any memcached server!");
 		}
+		$this->igbinary_available = function_exists('igbinary_serialize') && function_exists('igbinary_unserialize');
 	}
 
 	/**
@@ -70,12 +80,14 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
 	 * @param mixed $data
-	 * @param int $expiration=0
+	 * @param int $expiration =0
 	 * @return boolean true on success, false on error
 	 */
 	function set(array $keys,$data,$expiration=0)
 	{
-		return $this->memcache->set(self::key($keys),serialize($data),self::STORE_FLAGS,$expiration);
+		return $this->memcache->set(self::key($keys),
+			$this->igbinary_available ? igbinary_serialize($data) : serialize($data),
+			self::STORE_FLAGS, $expiration);
 	}
 
 	/**
@@ -92,7 +104,7 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 			return null;
 		}
 		//error_log(__METHOD__."(".array2string($keys).") key='$key' found ".bytes($data)." bytes).");
-		return unserialize($data);
+		return $this->igbinary_available ? igbinary_unserialize($data) : unserialize($data);
 	}
 
 	/**
@@ -119,7 +131,7 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 		{
 			$key = substr($location,$prefix_len);
 			//error_log(__METHOD__."(".array2string($locations).") key='$key' found ".bytes($data)." bytes).");
-			$ret[$key] = unserialize($data);
+			$ret[$key] = $this->igbinary_available ? igbinary_unserialize($data) : unserialize($data);
 		}
 		return $ret;
 	}
