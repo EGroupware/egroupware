@@ -50,6 +50,7 @@ class mail_integration {
 	 *			'message' => string,
 	 *			'date' => string,
 	 *			'subject' => string,
+	 *			'entry_id => string				// Id of the app entry which mail content will append to
 	 *	)
 	 *
 	 * @param string $_to_emailAddress
@@ -65,7 +66,10 @@ class mail_integration {
 	{
 		// App name which is called for integration
 		$app = isset($GLOBALS['egw_info']['user']['apps'][$_GET['app']])? $_GET['app'] : null;
-
+		
+		// preset app entry id, selected by user from app_entry_dialog
+		$app_entry_id = $_GET['entry_id'];
+		
 		// Set the date
 		if (!$_date)
 		{
@@ -276,7 +280,8 @@ class mail_integration {
 			'attachments' => $data_attachments,
 			'message' => $data_message,
 			'date' => $mailcontent['date'],
-			'subject' => $mailcontent['subject']
+			'subject' => $mailcontent['subject'],
+			'entry_id' => $app_entry_id
 		));
 	}
 }

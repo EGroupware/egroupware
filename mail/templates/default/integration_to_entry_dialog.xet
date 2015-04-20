@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.integration_to_entry_dialog" template="" lang="" group="0" version="1.9.001">
+		<vbox width="100%">
+			<description value="Select an existing entry in order to append mail content to it"/>
+			<description/>
+			<link-entry id="id" only_app="@appName" class="et2_fullWidth"/>
+		</vbox>
+	</template>
+</overlay>

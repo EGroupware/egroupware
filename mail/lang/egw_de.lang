@@ -370,6 +370,7 @@ saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speic
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
 select all	mail	de	Alle Auswählen
+select an existing entry in order to append mail content to it	mail	de	Bestehendes Ticket auswählen, zu dem die Mail als Kommentar hinzugefügt werden soll.
 select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an diese Nachricht anhängen möchten.
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen.

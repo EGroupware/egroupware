@@ -1249,6 +1249,7 @@ class mail_ui
 					'icon' => 'tracker/navbar',
 					'onExecute' => 'javaScript:app.mail.mail_integrate',
 					'popup' => egw_link::get_registry('tracker', 'add_popup'),
+					'mail_import' => $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),'tracker'),
 					'allowOnMultiple' => false,
 				),
 				'calendar' => array(

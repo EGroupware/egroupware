@@ -2624,14 +2624,14 @@ app.classes.mail = AppJS.extend(
 	mail_integrate: function(_action, _elems)
 	{
 		var app = _action.id;
+		var w_h = ['750','580']; // define a default wxh if there's no popup size registered
 		
-		if (typeof _action.data != 'undefined' && typeof _action.data.popup != 'undefined')
+		var add_as_new = true;
+		
+		if (typeof _action.data != 'undefined' )
 		{
-			w_h = _action.data.popup.split('x');
-		}
-		else // define a default wxh if there's no popup size registered
-		{
-			var w_h = ['750','580'];
+			if (typeof _action.data.popup != 'undefined') w_h = _action.data.popup.split('x');
+			if (typeof _action.data.mail_import != 'undefined') var mail_import_hook = _action.data.mail_import;
 		}
 
 		if (typeof _elems == 'undefined' || _elems.length==0)
@@ -2650,8 +2650,70 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
+		
 		var url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
-		egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+		
+		/**
+		 * Checks the application entry existance and offers user
+		 * to select desire app id to append mail content into it,
+		 * or add the mail content as a new app entry
+		 * 
+		 * @param {string} _title select app entry title
+		 * @param {string} _appName app to be integrated 
+		 * @param {string} _appCheckCallback registered mail_import hook method
+		 *	for check app entry existance
+		 */
+		check_app_entry = function (_title, _appName, _appCheckCallback)
+		{
+			var data = egw.dataGetUIDdata(_elems[0].id);
+			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
+			egw.json(_appCheckCallback, subject,function(_entryId){
+				
+				// if there's no entry saved already
+				// open dialog in order to select one
+				if (!_entryId)
+				{
+					var buttons = [
+						{text: 'Append', id: 'append', image: 'check', default:true},
+						{text: 'Add as new', id: 'new', image: 'check'},
+						{text: 'Cancel', id: 'cancel', image: 'check'}
+					];
+					et2_createWidget("dialog",
+					{
+						callback: function(_buttons, _value)
+						{
+							if (_buttons == 'cancel') return;
+							if (_buttons == 'append' && _value)
+							{
+								url += '&entry_id=' + _value.id;
+							}
+							egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+						},
+						title: egw.lang(_title),
+						buttons: buttons||et2_dialog.BUTTONS_OK_CANCEL,
+						value:{
+							content:{
+								appName:_appName // appName to search on its list later
+						}},
+						template: egw.webserverUrl+'/mail/templates/default/integration_to_entry_dialog.xet'
+					},et2_dialog._create_parent('mail'));
+				}
+				else // there is an entry saved related to this mail's subject
+				{
+					egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+				}
+			},this,true,this).sendRequest();
+		}
+		
+		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
+		{
+			check_app_entry('Select '+ app + ' entry', app,  mail_import_hook.app_entry_method);
+		}
+		else
+		{
+			egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+		}
+		
 	},
 
 	/**
