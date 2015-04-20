@@ -335,6 +335,11 @@ class customfields
 						}
 					}
 					egw_customfields::update($update_content);
+					if(!$cf_id)
+					{
+						$this->fields = egw_customfields::get($this->appname,true);
+						$cf_id = (int)$this->fields[$content['cf_name']]['id'];
+					}
 					egw_framework::refresh_opener('Saved', 'admin', $cf_id, 'edit');
 					if ($action != 'save')
 					{
@@ -380,8 +385,12 @@ class customfields
 			{
 				$readonlys['cf_name'] = true;
 			}
+			$content['cf_values'] = json_decode($content['cf_values'], true);
 		}
-		$content['cf_values'] = json_decode($content['cf_values'], true);
+		else
+		{
+			$readonlys['button[delete]'] = true;
+		}
 		if (is_array($content['cf_values']))
 		{
 			$values = '';
@@ -419,14 +428,6 @@ class customfields
 		$content['options'] = lang(self::$type_option_help);
 		$content['statustext'] = $content['options'][$content['cf_type']];
 		$content['attributes'] = self::$type_attribute_flags;
-
-		// Start disabled, but don't set read-only as that changes the widget to readonly
-		$this->tmpl->setElementAttribute('cf_len', 'disabled', true);
-		$this->tmpl->setElementAttribute('cf_rows', 'disabled', true);
-		foreach(array('cf_len','cf_rows','cf_values') as $field)
-		{
-			$this->tmpl->setElementAttribute($field, 'disabled', !self::$type_attribute_flags[$content['cf_type']][$field]);
-		}
 
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'cf_id' => $cf_id,
