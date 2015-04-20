@@ -300,11 +300,17 @@ class customfields
 			{
 				case 'delete':
 					$this->so->delete($cf_id);
-					egw_framework::refresh_opener('Saved', 'admin', $cf_id /* Conflicts with accounts 'delete'*/);
+					egw_framework::refresh_opener('Deleted', 'admin', $cf_id /* Conflicts with accounts 'delete'*/);
 					egw_framework::window_close();
 					break;
 				case 'save':
 				case 'apply':
+					if(!$cf_id && $this->fields[$content['cf_name']])
+					{
+						egw_framework::message(lang("Field '%1' already exists !!!",$content['cf_name']),'error');
+						$content['cf_name'] = '';
+						break;
+					}
 					if(empty($content['cf_label']))
 					{
 						$content['cf_label'] = $content['cf_name'];
@@ -370,6 +376,10 @@ class customfields
 			{
 				$content['cf_private'] = explode(',',$content['cf_private']);
 			}
+			if($content['cf_name'])
+			{
+				$readonlys['cf_name'] = true;
+			}
 		}
 		$content['cf_values'] = json_decode($content['cf_values'], true);
 		if (is_array($content['cf_values']))
@@ -421,6 +431,7 @@ class customfields
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'cf_id' => $cf_id,
 			'cf_app' => $this->appname,
+			'cf_name' => $content['cf_name'],
 			'use_private' => $this->use_private,
 		),2);
 	}

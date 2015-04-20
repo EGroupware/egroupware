@@ -797,7 +797,7 @@ app.classes.admin = AppJS.extend(
 	cf_type_change: function(e,widget) {
 		var root = widget.getRoot();
 		var attributes = widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+']')||{};
-		root.getWidgetById('cf_values').set_statustext(widget.egw().lang(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']'))||'');
+		root.getWidgetById('cf_values').set_statustext(widget.egw().lang(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']')||''));
 		root.getWidgetById('cf_len').set_disabled(!attributes.cf_len);
 		root.getWidgetById('cf_rows').set_disabled(!attributes.cf_rows);
 		root.getWidgetById('cf_values').set_disabled(!attributes.cf_values);
