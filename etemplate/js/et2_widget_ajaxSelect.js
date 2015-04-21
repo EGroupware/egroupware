@@ -36,7 +36,7 @@ var et2_ajaxSelect = et2_inputWidget.extend(
 			"name": "Data source",
 			"type": "any",
 			"default": "",
-			"description": "Function to get search results."
+			"description": "Function to get search results, either a javascript function or server-side."
 		},
 		'get_title': {
 			"name": "Title function",
@@ -47,7 +47,7 @@ var et2_ajaxSelect = et2_inputWidget.extend(
 		'id_field': {
 			"name": "Result ID field",
 			"type": "string",
-			"default": "",
+			"default": "value",
 			"description": "Which key in result sub-array to look for row ID.  If omitted, the key for the row will be used."
 		},
 		'template': {
@@ -74,12 +74,6 @@ var et2_ajaxSelect = et2_inputWidget.extend(
 			"default": "true",
 			"description": "If readonly, widget will be text.  If link is set, widget will be a link."
 		},
-		'icon': {
-			"name": "Icon",
-			"type": "string",
-			"default": "",
-			"description": "Prevent all from looking the same.  Use an icon."
-		},
 
 		// Pass by code only
 		'values': {
@@ -95,8 +89,16 @@ var et2_ajaxSelect = et2_inputWidget.extend(
 	 * 
 	 * @memberOf et2_ajaxSelect
 	 */
-	init: function() {
+	init: function(parent, attrs) {
 		this._super.apply(this, arguments);
+
+		if(typeof attrs.get_rows == 'string')
+		{
+			attrs.get_rows = this.egw().link('/index.php', {
+				menuaction: this.options.get_rows
+			})
+		}
+		this.createInputWidget();
 
 		this.input = null;
 
@@ -109,17 +111,73 @@ var et2_ajaxSelect = et2_inputWidget.extend(
 		this.input.addClass("et2_textbox");
 
 		this.setDOMNode(this.input[0]);
+
+		var widget = this;
+		this.input.autocomplete({
+			delay: 100,
+			source: this.options.get_rows ?
+				this.options.get_rows :
+				et2_selectbox.find_select_options(this,this.options.values),
+			select: function(event, ui) {
+				widget.value = ui.item[widget.options.id_field];
+				if(widget.options.get_title)
+				{
+					if(typeof widget.options.get_title == 'function')
+					{
+						widget.input.val(widget.options.get_title.call(widget.value));
+					}
+					else if (typeof widget.options.get_title == 'string')
+					{
+						// TODO: Server side callback
+					}
+				}
+				else
+				{
+					widget.input.val(ui.item.label);
+				}
+				// Prevent default action of setting field to the value
+				return false;
+			}
+		});
 	},
 
 	getValue: function()
 	{
 		if(this.options.blur && this.input.val() == this.options.blur) return "";
-		return this._super.apply(this, arguments);
+		return this.value;
+	},
+
+	set_value: function(_value)
+	{
+		this.value = _value;
+		if(this.input.autocomplete('instance'))
+		{
+			var source = this.input.autocomplete('option','source');
+			if(typeof source == 'object')
+			{
+				for(var i in source)
+				{
+					if(typeof source[i].value != 'undefined' && typeof source[i].label != 'undefined' &&  source[i].value === _value)
+					{
+						this.input.val(source[i].label)
+					}
+					else if (typeof source[i] == 'string')
+					{
+						this.input.val(source[_value]);
+						break;
+					}
+				}
+			}
+			else if(typeof source == 'function')
+			{
+				// TODO
+			}
+		}
 	},
 
 	set_blur: function(_value) {
 		if(_value) {
-			this.input.attr("placeholder", _value + "!");	// HTML5
+			this.input.attr("placeholder", _value + "");	// HTML5
 			if(!this.input[0].placeholder) {
 				// Not HTML5
 				if(this.input.val() == "") this.input.val(this.options.blur);
@@ -172,20 +230,20 @@ var et2_ajaxSelect_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.span.text(_value);
 	},
 	/**
-         * Code for implementing et2_IDetachedDOM
-         */
-        getDetachedAttributes: function(_attrs)
-        {
-                _attrs.push("value");
-        },
+	 * Code for implementing et2_IDetachedDOM
+	 */
+	getDetachedAttributes: function(_attrs)
+	{
+		_attrs.push("value");
+	},
 
-        getDetachedNodes: function()
-        {
-                return [this.span[0]];
-        },
+	getDetachedNodes: function()
+	{
+		return [this.span[0]];
+	},
 
-        setDetachedAttributes: function(_nodes, _values)
-        {
+	setDetachedAttributes: function(_nodes, _values)
+	{
 		this.span = jQuery(_nodes[0]);
 		if(typeof _values["value"] != 'undefined')
 		{

@@ -287,7 +287,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				break;
 
 			default:
-				if (substr($type, 0, 7) !== 'select-') break;
+				if (substr($type, 0, 7) !== 'select-' && $type != 'ajax_select') break;
 				// fall-through for all select-* widgets
 			case 'select':
 				$this->attrs['multiple'] = $field['rows'] > 1;

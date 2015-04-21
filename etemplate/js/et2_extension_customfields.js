@@ -427,6 +427,17 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 		return true;
 	},
+	_setup_ajax_select: function(field_name, field, attrs) {
+		var attributes = ['get_rows','get_title','id_field','template'];
+		for(var i = 0; i < attributes.length; i++)
+		{
+			if(typeof field.values[attributes[i]] !== 'undefined')
+			{
+				attrs[attributes[i]] = field.values[attributes[i]];
+			}
+		}
+		return true;
+	},
 	_setup_float: function(field_name, field, attrs) {
 		// No label on the widget itself
 		delete(attrs.label);
