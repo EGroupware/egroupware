@@ -1745,10 +1745,15 @@ var et2_link_list = et2_link_string.extend(
 
 		var self = this;
 		for(var i = 0; i < columns.length; i++) {
-			$j(document.createElement("td"))
+			var $td = $j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.click( function(){
+				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
+			
+			//Bind the click handler if there is download_url	
+			if (_link_data && typeof _link_data.download_url != 'undefined')
+			{
+				$td.click( function(){
 					// Check if the link entry is mime with media type, in order to open it in expose view
 					if (typeof _link_data.type != 'undefined' && _link_data.type.match(self.mime_regexp,'ig'))
 					{
@@ -1759,8 +1764,8 @@ var et2_link_list = et2_link_string.extend(
 					{
 						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);
 					}
-				})
-				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
+				});	
+			}
 		}
 
 		if (typeof _link_data.title == 'undefined')
