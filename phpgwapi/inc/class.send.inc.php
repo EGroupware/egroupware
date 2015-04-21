@@ -25,7 +25,7 @@ class send extends egw_mailer
 	 */
 	function send()
 	{
-		if ($this->Subject || $this->Body || count($this->to))
+		if ($this->getHeader('Subject') || $this->Body || count($this->getAddresses('to', true)))
 		{
 			return parent::send();
 		}
@@ -55,14 +55,13 @@ class send extends egw_mailer
 	* Emulating the old send::msg interface for compatibility with existing code
 	*
 	* You can either use that code or the PHPMailer variables and methods direct.
+	* @deprecated use egw_mailer::sendWithDefaultSmtpProfile
 	*/
 	function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
 	{
-		if ($this->debug) error_log(__METHOD__." to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender'");
+		//error_log(__METHOD__." to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender'");
 		unset($boundary);	// not used, but required by function signature
 		//echo "<p>send::msg(,to='$to',subject='$subject',,'$msgtype',cc='$cc',bcc='$bcc',from='$from',sender='$sender','$content_type','$boundary')<pre>$body</pre>\n";
-		$this->ClearAll();	// reset everything to its default, we might be called more then once !!!
-
 		if ($service != 'email')
 		{
 			return False;
@@ -72,17 +71,8 @@ class send extends egw_mailer
 			$matches = null;
 			if (preg_match('/"?(.+)"?<(.+)>/',$from,$matches))
 			{
-				list(,$this->FromName,$this->From) = $matches;
+				list(,$FromName,$from) = $matches;
 			}
-			else
-			{
-				$this->From = $from;
-				$this->FromName = '';
-			}
-		}
-		if ($sender)
-		{
-			$this->Sender = $sender;
 		}
 		foreach(array('to','cc','bcc') as $adr)
 		{
@@ -98,35 +88,21 @@ class send extends egw_mailer
 					$addresses = is_string($$adr) ? explode(',',trim($$adr)) : explode(',',trim(array_shift($$adr)));
 					$names = array();
 				}
-				$method = 'Add'.($adr == 'to' ? 'Address' : $adr);
 
 				foreach($addresses as $n => $address)
 				{
-					$this->$method($address,$names[$n]);
+					$method[$adr][] =$address;
 				}
 			}
 		}
-		if (!empty($msgtype))
-		{
-			$this->AddCustomHeader('X-eGW-Type: '.$msgtype);
-		}
-		if ($content_type)
-		{
-			$this->ContentType = $content_type;
-		}
-		$this->Subject = $subject;
-		$this->Body = $body;
 
-		//echo "PHPMailer = <pre>".print_r($this,True)."</pre>\n";
-		if (!$this->Send())
-		{
-			$this->err = array(
-				'code' => 1,	// we dont get a numerical code from PHPMailer
-				'msg'  => $this->ErrorInfo,
-				'desc' => $this->ErrorInfo,
-			);
-			return False;
+		try {
+			egw_mailer::sendWithDefaultSmtpProfile('email',$method['to'],$subject,$body,'',$method['cc'],$method['bcc'],$from,$sender);
+		} catch(Exception $e) {
+			// ignore exception, but log it, to block the account and give a correct error-message to user
+			return false;
 		}
+
 		return True;
 	}
 
