@@ -103,7 +103,15 @@ class egw_mailer extends Horde_Mime_Mail
 		{
 			$this->account = emailadmin_account::get_default(true);	// true = need an SMTP (not just IMAP) account
 		}
-		$identity = emailadmin_account::read_identity($this->account->ident_id, true, null, $this->account);
+
+		try
+		{
+			$identity = emailadmin_account::read_identity($this->account->ident_id, true, null, $this->account);
+		} catch(Exception $e) {
+			error_log(__METHOD__.__LINE__.' Could not read_identity for account:'.$account['acc_id'].' with IdentID:'.$account['ident_id']);
+			$identity['ident_email'] = $this->account->ident_email;
+			$identity['ident_realname'] = $this->account->ident_realname ? $this->account->ident_realname : $this->account->ident_email;
+		}
 
 		// use smpt-username as sender/return-path, if available, but only if it is a full email address
 		$sender = $this->account->acc_smtp_username && strpos($this->account->acc_smtp_username, '@') !== false ?
@@ -170,7 +178,7 @@ class egw_mailer extends Horde_Mime_Mail
 		if ($return_array)
 		{
 			$addresses = array();
-			foreach($this->$type as $addr)
+			foreach((array)$this->$type as $addr)
 			{
 				$addresses[] = (string)$addr;
 			}
@@ -406,6 +414,95 @@ class egw_mailer extends Horde_Mime_Mail
 		$part->setDisposition('attachment');
 
 		return $this->addMimePart($part);
+	}
+
+	/**
+	 * static method to send messages e.g. when login failed to configured admins.
+	 *
+	 * this method is to replace $GLOBALS['egw']->send->msg(...)
+	 *
+	 * @param string $service String must be email for compatibility with send->msg
+	 * @param mixed $to address to send to; array or string
+	 * @param string $subject subject to use
+	 * @param string $body body to use for message. plain text
+	 * @param string $msgtype text to use for X-eGW-Type
+	 * @param mixed $cc address to cc to; array or string
+	 * @param mixed $bcc address to bcc to; array or string
+	 * @param string $from from address to use
+	 * @param string $sender sender information to use
+	 * @param string $content_type ignored; compatibility; could cause issues regarding html content
+	 * @param string $boundary ignored; compatibility
+	 * @return boolean  or exeption
+	 */
+	public static function sendWithDefaultSmtpProfile($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
+	{
+		if ($service != 'email')
+		{
+			return False;
+		}
+		unset($boundary);	// not used, but required by function signature
+		try
+		{
+			$smtpAcc = emailadmin_account::get_default(true,false,false);
+			//error_log(__METHOD__.__LINE__.'#'.array2string($smtpAcc));
+			$mail = new egw_mailer($smtpAcc);
+			$method = array();
+			foreach(array('to','cc','bcc') as $adr)
+			{
+				if ($$adr && !is_array($$adr))
+				{
+					if (is_string($$adr) && preg_match_all('/"?(.+)"?<(.+)>,?/',$$adr,$matches))
+					{
+						$names = $matches[1];
+						$addresses = $matches[2];
+					}
+					else
+					{
+						$addresses = is_string($$adr) ? explode(',',trim($$adr)) : explode(',',trim(array_shift($$adr)));
+						$names = array();
+					}
+
+					foreach($addresses as $n => $address)
+					{
+						$method[$adr][] =$address;
+					}
+				}
+			}
+			if (is_array($method['to'])&& !empty($method['to'])) $to = $method['to'];
+			foreach ((array)$to as $x => $toElem)
+			{
+				if (!empty($toElem)) $mail->addAddress($toElem, $toElem);
+			}
+			if (is_array($method['cc'])&& !empty($method['cc'])) $cc = $method['cc'];
+			foreach ((array)$cc as $y => $ccElem)
+			{
+				if (!empty($ccElem)) $mail->addCc($ccElem);
+			}
+			if (is_array($method['bcc'])&& !empty($method['bcc'])) $bcc = $method['bcc'];
+			foreach ((array)$bcc as $z => $bccElem)
+			{
+				if (!empty($bccElem)) $mail->addBcc($bccElem);
+			}
+			//error_log(__METHOD__.__LINE__."preparing notification message via email.".array2string($mail));
+			if ($from)
+			{
+				$matches = null;
+				if (preg_match('/"?(.+)"?<(.+)>/',$from,$matches))
+				{
+					list(,$FromName,$from) = $matches;
+				}
+			}
+
+		    $mail->setFrom($from, $FromName);
+			$mail->addHeader('Subject', trim($subject)); // trim the subject to avoid strange wrong encoding problem
+			if ($sender) $mail->addHeader('Return-Path', '<'.$sender.'>', true);
+			if ($msgtype) $mail->addHeader('X-eGW-Type',$msgtype);
+			$mail->setBody($body);
+			$mail->send();
+		} catch(Exception $e) {
+			throw $e;
+		}
+		return True;
 	}
 
 	/**

@@ -758,9 +758,9 @@ class egw_session
 			foreach($admin_mails as $to)
 			{
 				try {
-						$GLOBALS['egw']->send->msg('email',$to,$subject,$body,'','','',$from,$from);
-				}
-				catch(Exception $e) {
+					//$GLOBALS['egw']->send->msg('email',$to,$subject,$body,'','','',$from,$from); // deprecated old method
+					egw_mailer::sendWithDefaultSmtpProfile('email',$to,$subject,$body,'','','',$from);
+				} catch(Exception $e) {
 					// ignore exception, but log it, to block the account and give a correct error-message to user
 					error_log(__METHOD__."('$login', '$ip') ".$e->getMessage());
 				}
