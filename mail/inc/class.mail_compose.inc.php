@@ -244,17 +244,6 @@ class mail_compose
 		{
 			list($_content['mailaccount'], $_content['mailidentity']) = explode(':', $_content['mailaccount']);
 		}
-		
-		// As CKEditor is not available for mobile devices
-		// we should always switch the compose mimeType to plainText and
-		// disable the html option
-		// TODO: After CKEditor complatibility with all devices, this part needs to be removed
-		if (html::$ua_mobile)
-		{
-			$_content['mimeType'] = 'plain';
-			$readonlys['mimeType'] = true;
-		}
-
 		//error_log(__METHOD__.__LINE__.array2string($sigPref));
 		//lang('compose'),lang('from') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST).function_backtrace());
@@ -1013,11 +1002,14 @@ class mail_compose
 				}
 			}
 		}
-
-		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false)
+		//Since the ckeditor is not stable enough on mobile devices, we always convert html messages to plain text
+		//TODO: needs to remove html:$ua_mobile condition after better mobile support from CKeditor
+		//mobile compatibility is disabled expilcitly in ckeditor.js plugin too, which needs to be removed
+		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false || html::$ua_mobile)
 		{
 			$_content['mimeType'] = $content['mimeType'] = 'plain';
 			$content['body'] = $this->convertHTMLToText($content['body']);
+			$readonlys['mimeType'] = true;
 		}
 		// is a certain signature requested?
 		// only the following values are supported (and make sense)
