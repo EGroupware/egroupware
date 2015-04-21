@@ -59,6 +59,10 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		 */
 		lang: function(_msg, _arg1)
 		{
+			if(_msg === null)
+			{
+				return '';
+			}
 			if(typeof _msg !== "string" && _msg)
 			{
 				egw().debug("warn", "Cannot translate an object", _msg);
