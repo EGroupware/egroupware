@@ -556,10 +556,13 @@ var et2_taglist_email = et2_taglist.extend(
 						var taglist = this.taglist;
 						window.setTimeout(function()
 						{
+							var items = [];
 							for(var i=0; i < parts.length; ++i)
 							{
-								taglist.addToSelection({id: parts[i], label: parts[i]});
+								items.push({id: parts[i], label: parts[i]});
+								
 							}
+							taglist.addToSelection(items);
 						}, 10);
 					}
 				}
