@@ -318,11 +318,18 @@ class customfields
 					if (!empty($content['cf_values']))
 					{
 						$values = array();
-						foreach(explode("\n",$content['cf_values']) as $line)
+						if($content['cf_values'][0] === '@')
 						{
-							list($var,$value) = explode('=',trim($line),2);
-							$var = trim($var);
-							$values[$var] = empty($value) ? $var : $value;
+							$values['@'] = substr($content['cf_values'], $content['cf_values'][1] === '=' ? 2:1);
+						}
+						else
+						{
+							foreach(explode("\n",$content['cf_values']) as $line)
+							{
+								list($var,$value) = explode('=',trim($line),2);
+								$var = trim($var);
+								$values[$var] = empty($value) ? $var : $value;
+							}
 						}
 						$content['cf_values'] = $values;
 					}
