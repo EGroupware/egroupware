@@ -6994,6 +6994,12 @@ a.textSidebox {
     background-size: 120px 120px;
     background-position: center;
   }
+  #mail-display {
+    min-height: initial !important;
+  }
+  #mail-display .mailDisplayContainer {
+    top: 140px;
+  }
 }
 @media only screen and (max-device-width : 1024px) {
   #egw_fw_print {
