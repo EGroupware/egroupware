@@ -47,7 +47,31 @@ var et2_date = et2_inputWidget.extend(
 			"ignore": true,
 			"description": "Date/Time format. Can be set as an options to date widget",
 			"default": ''
-		}
+		},
+		year_range: {
+			name: "Year range",
+			type: "string",
+			default: "c-10:c+10",
+			description: "The range of years displayed in the year drop-down: either relative to today's year (\"-nn:+nn\"), relative to the currently selected year (\"c-nn:c+nn\"), absolute (\"nnnn:nnnn\"), or combinations of these formats (\"nnnn:-nn\"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the min and/or max options."
+		},
+		min: {
+			"name": "Minimum",
+			"type": "any",
+			"default": et2_no_init,
+			"description": 'Minimum allowed date.  Multiple types supported:\
+Date: A date object containing the minimum date.\
+Number: A number of days from today. For example 2 represents two days from today and -1 represents yesterday.\
+String: A string in the user\'s date format, or a relative date. Relative dates must contain value and period pairs; valid periods are "y" for years, "m" for months, "w" for weeks, and "d" for days. For example, "+1m +7d" represents one month and seven days from today.'
+		},
+		max: {
+			"name": "Maximum",
+			"type": "any",
+			"default": et2_no_init,
+			"description": 'Maximum allowed date.   Multiple types supported:\
+Date: A date object containing the maximum date.\
+Number: A number of days from today. For example 2 represents two days from today and -1 represents yesterday.\
+String: A string in the user\'s date format, or a relative date. Relative dates must contain value and period pairs; valid periods are "y" for years, "m" for months, "w" for weeks, and "d" for days. For example, "+1m +7d" represents one month and seven days from today.'
+		},
 	},
 
 	legacyOptions: ["data_format"],
@@ -256,6 +280,70 @@ var et2_date = et2_inputWidget.extend(
 		return this.input_date.val() == "" ? null : this.date.getTime();
 	},
 
+	/**
+	 * The range of years displayed in the year drop-down: either relative
+	 * to today's year ("-nn:+nn"), relative to the currently selected year
+	 * ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats
+	 * ("nnnn:-nn"). Note that this option only affects what appears in the
+	 * drop-down, to restrict which dates may be selected use the min_date
+	 * and/or max_date options.
+	 * @param {string} _value
+	 */
+	set_year_range: function(_value)
+	{
+		if(this.input_date)
+		{
+			this.input_date.datepicker('option','yearRange',_value);
+		}
+		this.options.year_range = _value;
+	},
+
+	/**
+	 * Set the minimum allowed date
+	 *
+	 * The minimum selectable date. When set to null, there is no minimum.
+	 *	Multiple types supported:
+	 *	Date: A date object containing the minimum date.
+	 *	Number: A number of days from today. For example 2 represents two days
+	 *		from today and -1 represents yesterday.
+	 *	String: A string in the format defined by the dateFormat option, or a
+	 *		relative date. Relative dates must contain value and period pairs;
+	 *		valid periods are "y" for years, "m" for months, "w" for weeks, and
+	 *		"d" for days. For example, "+1m +7d" represents one month and seven
+	 *		days from today.
+	 * @param {Date|Number|String} _value
+	 */
+	set_min: function(_value) {
+		if(this.input_date)
+		{
+			this.input_date.datepicker('option','minDate',_value);
+		}
+		this.options.min = _value;
+	},
+
+	/**
+	 * Set the maximum allowed date
+	 *
+	 * The maximum selectable date. When set to null, there is no maximum.
+	 *	Multiple types supported:
+	 *	Date: A date object containing the maximum date.
+	 *	Number: A number of days from today. For example 2 represents two days
+	 *		from today and -1 represents yesterday.
+	 *	String: A string in the format defined by the dateFormat option, or a
+	 *		relative date. Relative dates must contain value and period pairs;
+	 *		valid periods are "y" for years, "m" for months, "w" for weeks, and
+	 *		"d" for days. For example, "+1m +7d" represents one month and seven
+	 *		days from today.
+	 * @param {Date|Number|String} _value
+	 */
+	set_max: function(_value) {
+		if(this.input_date)
+		{
+			this.input_date.datepicker('option','maxDate',_value);
+		}
+		this.options.max = _value;
+	},
+	
 	/**
 	 * Setting date
 	 *
@@ -792,7 +880,10 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		"data_format": {
 			"ignore": true,
 			"description": "Format data is in.  This is not used client-side because it's always a timestamp client side."
-		}
+		},
+		min: {ignore: true},
+		max: {ignore: true},
+		year_range: {ignore: true}
 	},
 
 	legacyOptions: ["data_format"],

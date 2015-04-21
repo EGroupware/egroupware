@@ -233,6 +233,16 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				}
 				this.rows[id] = cf[0];
 
+				// Set any additional attributes set in options, but not for widgets that pass actual options
+				if(['select','radio','radiogroup','checkbox','button'].indexOf(field.type) == -1 && !jQuery.isEmptyObject(field.values))
+				{
+					var w = et2_registry[attrs.type ? attrs.type : field.type];
+					for(var attr_name in field.values)
+					{
+						if (typeof w.prototype.attributes[attr_name] != "undefined")
+						attrs[attr_name] = field.values[attr_name];
+					}
+				}
 				// Create widget
 				var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
 			}

@@ -277,6 +277,8 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			case 'date':
 			case 'date-time':
 				$widget->attrs['dataformat'] = $type == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
+				if($field['values']['min']) $widget->attrs['min'] = $field['values']['min'];
+				if($field['values']['max']) $widget->attrs['min'] = $field['values']['max'];
 				break;
 
 			case 'link-to':

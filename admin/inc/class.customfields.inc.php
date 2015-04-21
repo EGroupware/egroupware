@@ -82,8 +82,8 @@ class customfields
 		'float'		=> array('cf_len' => true),
 		'label'		=> array('cf_values' => true),
 		'select'	=> array('cf_len' => false, 'cf_rows' => true, 'cf_values' => true),
-		'date'		=> array('cf_len' => true, 'cf_rows' => false),
-		'date-time'	=> array('cf_len' => true, 'cf_rows' => false),
+		'date'		=> array('cf_len' => true, 'cf_rows' => false, 'cf_values' => true),
+		'date-time'	=> array('cf_len' => true, 'cf_rows' => false, 'cf_values' => true),
 		'select-account'	=> array('cf_len' => false, 'cf_rows' => true),
 		'htmlarea'	=> array('cf_len' => true, 'cf_rows' => true),
 		'button'	=> array('cf_values' => true),
@@ -328,7 +328,7 @@ class customfields
 							{
 								list($var,$value) = explode('=',trim($line),2);
 								$var = trim($var);
-								$values[$var] = empty($value) ? $var : $value;
+								$values[$var] = trim($value)==='' ? $var : $value;
 							}
 						}
 						$content['cf_values'] = $values;
