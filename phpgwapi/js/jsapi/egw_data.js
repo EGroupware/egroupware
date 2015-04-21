@@ -186,7 +186,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 
 			// Tried to refresh a specific row and got nothing, so set it to null
 			// (triggers update for listeners), then remove it
-			if(_result.data.length == 0 && typeof _context == "object" && _context.refresh)
+			if(_result.order.length == 0 && typeof _context == "object" && _context.refresh)
 			{
 				for(var i = 0; i < _context.refresh.length; i++)
 				{
