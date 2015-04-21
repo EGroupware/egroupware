@@ -282,6 +282,7 @@ no signature	mail	de	keine Signatur
 no subject given!	mail	de	Kein Betreff angegeben!
 no subject supplied	mail	de	Kein Betreff angegeben!
 no text body supplied, check attachments for message text	mail	de	Keine Text vorhanden, bitte sehen Sie sich die Anlagen dieser E-Mail an.
+no vacation notice text provided. Please enter a message.	mail	de	Kein Nachrichtentext vorhanden. Sie müssen einen Nachrichtentext eingeben um Ihre Abwesendheitsnotiz speichern (ändern, aktivieren oder deaktivieren) zu können.
 no valid %1 folder configured!	mail	de	Kein gültiger %1 Ordner eingestellt!
 non	mail	de	Kein
 none, create all	mail	de	keine, erstellt alle

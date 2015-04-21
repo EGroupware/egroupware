@@ -46,7 +46,7 @@
 				<row>
 					<description value="With message:"/>
 					<vbox span="all">
-						<textbox multiline="true" id="text" width="99%" height="150px" needed="true" class="et2_required"/>
+						<textbox multiline="true" id="text" width="99%" height="150px" needed="1" class="et2_required"/>
 						<description id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."/>
 					</vbox>
 				</row>

@@ -538,7 +538,7 @@ class mail_sieve
 				{
 					$ByDate = array('by_date' => lang('By date'));
 				}
-				if (!is_array($content) || ($content['acc_id'] && !isset($content['button'])))
+				if (!is_array($content) || ($content['acc_id'] && !isset($content['button'])) || (strlen(trim($content['text']))==0 && in_array($content['status'],array('on','by_date'))))
 				{
 					$content = $vacation = $vacRules['vacation'];
 					if (!empty($profileID)) $content['acc_id'] = $profileID;
@@ -554,7 +554,12 @@ class mail_sieve
 					{
 						$content['forwards'] = '';
 					}
-					if (empty($vacation['text']) && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
+					if (strlen(trim($vacation['text']))==0 && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
+					if (strlen(trim($content['text']))==0)
+					{
+						$content['msg'] = $msg = lang('error').': '.lang('No vacation notice text provided. Please enter a message.');
+						egw_framework::refresh_opener($msg, 'mail');
+					}
 					//Set default value for days new entry
 					if (empty($content['days']))
 					{
@@ -575,7 +580,7 @@ class mail_sieve
 							if ($GLOBALS['egw_info']['user']['apps']['admin'])
 							{
 								// store text as default
-								if ($content['set_as_default'] == 1)
+								if ($content['set_as_default'] == 1 && $content['text'])
 								{
 									config::save_value('default_vacation_text', $content['text'], 'mail');
 								}
