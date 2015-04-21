@@ -444,6 +444,11 @@ class egw_mailer extends Horde_Mime_Mail
 		try
 		{
 			$smtpAcc = emailadmin_account::get_default(true,false,false);
+			if (!$smtpAcc)
+			{
+				error_log(__METHOD__.__LINE__.'#'." Error: no SMTP Account available for ".__METHOD__);
+				return false;
+			}
 			//error_log(__METHOD__.__LINE__.'#'.array2string($smtpAcc));
 			$mail = new egw_mailer($smtpAcc);
 			$method = array();
@@ -493,7 +498,7 @@ class egw_mailer extends Horde_Mime_Mail
 				}
 			}
 
-		    $mail->setFrom($from, $FromName);
+			$mail->setFrom($from, $FromName);
 			$mail->addHeader('Subject', trim($subject)); // trim the subject to avoid strange wrong encoding problem
 			if ($sender) $mail->addHeader('Return-Path', '<'.$sender.'>', true);
 			if ($msgtype) $mail->addHeader('X-eGW-Type',$msgtype);
