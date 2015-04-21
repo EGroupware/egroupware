@@ -1,3 +1,17 @@
+egroupware-epl (14.2.20150421-1) hardy; urgency=low
+
+  * All apps: fix unable to remove last value from multiselect
+  * LDAP/Filemanager: fix fatal error / white screen in sharing when opening a sharing url
+  * ActiveDirectory: primary group was not used when filtering accounts by a group, causing eg. no accounts to be found for "Domain Users" group in Admin or other apps
+  * CardDAV: fixed not working MULTIGET report, if more then 500 contacts requested
+  * Calendar: fix meeting invitations to allow accept or reject in Outlook (not set "Content-Disposition: attachment" for ical alternative)
+  * Mail/Sieve: require a vacation notice text on vacationnotice edit and save
+  * Admin: fixed not working notification for blocked users after too many tries with wrong password
+  * All apps: fixed various issues with select-boxes, also minimising content transmitted to server
+  * Filemanager/VFS: moved VFS code from "phpgwapi" directory to new "api" directory
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 21 Apr 2015 15:18:30 +0200
+
 egroupware-epl (14.2.20150402-1) hardy; urgency=low
 
   * LDAP,ActiveDirectory: setting default sorting of accounts to ascending, as in SQL backend
