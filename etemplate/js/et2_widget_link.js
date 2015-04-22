@@ -1751,7 +1751,7 @@ var et2_link_list = et2_link_string.extend(
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
 			
 			//Bind the click handler if there is download_url	
-			if (_link_data && typeof _link_data.download_url != 'undefined')
+			if (_link_data && (typeof _link_data.download_url != 'undefined' || _link_data.app !='egw-data'))
 			{
 				$td.click( function(){
 					// Check if the link entry is mime with media type, in order to open it in expose view
