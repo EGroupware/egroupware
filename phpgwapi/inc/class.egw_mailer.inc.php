@@ -178,7 +178,7 @@ class egw_mailer extends Horde_Mime_Mail
 		if ($return_array)
 		{
 			$addresses = array();
-			foreach((array)$this->$type as $addr)
+			foreach($this->$type as $addr)
 			{
 				$addresses[] = (string)$addr;
 			}
