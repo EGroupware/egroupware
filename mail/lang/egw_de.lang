@@ -241,6 +241,7 @@ kilobytes	mail	de	Kilobytes
 later	mail	de	später
 less than	mail	de	kleiner als
 mail	common	de	Mail
+mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter Regeln
 mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichtenquelltext anzeigen
@@ -282,7 +283,7 @@ no signature	mail	de	keine Signatur
 no subject given!	mail	de	Kein Betreff angegeben!
 no subject supplied	mail	de	Kein Betreff angegeben!
 no text body supplied, check attachments for message text	mail	de	Keine Text vorhanden, bitte sehen Sie sich die Anlagen dieser E-Mail an.
-no vacation notice text provided. Please enter a message.	mail	de	Kein Nachrichtentext vorhanden. Sie müssen einen Nachrichtentext eingeben um Ihre Abwesendheitsnotiz speichern (ändern, aktivieren oder deaktivieren) zu können.
+no vacation notice text provided. please enter a message.	mail	de	Kein Nachrichtentext vorhanden. Sie müssen einen Nachrichtentext eingeben um Ihre Abwesendheitsnotiz speichern (ändern, aktivieren oder deaktivieren) zu können.
 no valid %1 folder configured!	mail	de	Kein gültiger %1 Ordner eingestellt!
 non	mail	de	Kein
 none, create all	mail	de	keine, erstellt alle
@@ -345,6 +346,7 @@ required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR K
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
 respond to mail sent to:	mail	de	Benachrichtigung für
 restrict acl management	admin	de	ACL Verwaltung beschränken
+rights	mail	de	Zugriffsrechte
 row order style	mail	de	Spaltenanordnung
 rule priority position	mail	de	Priorität der Filterregel
 rule with priority	mail	de	Regel mit Priorität

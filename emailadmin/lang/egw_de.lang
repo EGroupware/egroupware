@@ -70,6 +70,7 @@ failed to delete account!	emailadmin	de	Fehler beim Löschen des Mailkontos!
 file rejected, no %2. is:%1	emailadmin	de	Datei wurde abgewiesen, kein %2. ist:%1
 filtered by account	emailadmin	de	Suche nach Benutzerprofilen
 filtered by group	emailadmin	de	Suche nach Gruppenprofilen
+folder acl	emailadmin	de	Zugriffsrechte
 forward also to	emailadmin	de	zusätzlich weiterleiten
 forward email's to	emailadmin	de	E-Mails weiterleiten an
 forward only	emailadmin	de	nur weiterleiten
@@ -200,6 +201,7 @@ users can define their own signatures	emailadmin	de	Anwender können ihre eigene
 users can utilize these stationery templates	emailadmin	de	Benutzer können diese Briefpapiervorlagen verwenden
 using data from mozilla ispdb for provider %1	emailadmin	de	Benutzer Mozilla ISPDB für Provider %1
 vacation messages with start- and end-date require an admin account to be set	emailadmin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
+vacation notice	emailadmin	de	Abwesenheitsnotiz
 virtual mail manager	emailadmin	de	Virtual MAIL ManaGeR
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	de	Ja, die Daten darunter nur für Alarme und Benachrichtigungen verwenden, ansonsten die Daten des aktiven Benutzers.
 yes, use credentials of current user or if given credentials below	emailadmin	de	Ja, benutze Daten des aktuellen Benutzers oder wenn angegeben die Daten darunter

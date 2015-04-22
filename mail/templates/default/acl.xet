@@ -13,11 +13,11 @@
 					<description value="Mail ACL"  />
 				</row>
 				<row>
-					<description value="Folder:"/>
+					<description value="Folder"/>
 					<taglist id="mailbox" width="100%" maxSelection="1" autocomplete_params='' allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
 				</row>
 				<row>
-					<description value="Rights:"/>
+					<description value="Rights"/>
 					<grid id="grid" width="100%">
 						<columns>
 							<column/>

@@ -70,6 +70,7 @@ failed to delete account!	emailadmin	en	Failed to delete account!
 file rejected, no %2. is:%1	emailadmin	en	File rejected, no %2. Is:%1
 filtered by account	emailadmin	en	Filtered by account
 filtered by group	emailadmin	en	Filtered by group
+folder acl	emailadmin	en	Folder ACL
 forward also to	emailadmin	en	Forward also to
 forward email's to	emailadmin	en	Forward email's to
 forward only	emailadmin	en	Forward only
@@ -200,6 +201,7 @@ users can define their own signatures	emailadmin	en	Users can define their own s
 users can utilize these stationery templates	emailadmin	en	Users can utilize these stationery templates
 using data from mozilla ispdb for provider %1	emailadmin	en	Using data from Mozilla ISPDB for provider %1
 vacation messages with start- and end-date require an admin account to be set	emailadmin	en	Vacation messages with start and end date require an admin account to be set!
+vacation notice	emailadmin	en	Vacation notice
 virtual mail manager	emailadmin	en	Virtual MAIL ManaGeR
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	en	Yes, use credentials below only for alarms and notifications, otherwise use credentials of current user
 yes, use credentials of current user or if given credentials below	emailadmin	en	Yes, use credentials of current user or if given credentials below
