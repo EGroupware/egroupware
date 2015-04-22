@@ -2562,7 +2562,7 @@ class mail_compose
 				if (!empty($addr)) $_emailAddressList[]=$addr;
 			}
 		}
-		return array_values($_emailAddressList);
+		return is_array($_emailAddressList) ? array_values($_emailAddressList) : (array)$_emailAddressList;
 	}
 
 	/**
