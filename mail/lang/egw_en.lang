@@ -242,6 +242,7 @@ kilobytes	mail	en	kilobytes
 later	mail	en	later
 less than	mail	en	less than
 mail	common	en	Mail
+mail acl	mail	en	Mail ACL
 mail filter	mail	en	Mail filter
 mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
@@ -283,7 +284,7 @@ no signature	mail	en	no signature
 no subject given!	mail	en	No subject given!
 no subject supplied	mail	en	no subject supplied
 no text body supplied, check attachments for message text	mail	en	no text body supplied, check attachments for message text
-no vacation notice text provided. Please enter a message.	mail	en	No vacation notice text provided. Please enter a message.
+no vacation notice text provided. please enter a message.	mail	en	No vacation notice text provided. Please enter a message.
 no valid %1 folder configured!	mail	en	No valid %1 folder configured!
 non	mail	en	Non
 none, create all	mail	en	none, create all
@@ -346,6 +347,7 @@ required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class M
 resend after how many days?	mail	en	Resend after how many days?
 respond to mail sent to:	mail	en	Respond to mail sent to:
 restrict acl management	admin	en	restrict acl management
+rights	mail	en	Rights
 row order style	mail	en	row order style
 rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
