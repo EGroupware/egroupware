@@ -8,16 +8,6 @@
  * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
-/**
- * EGroupware - CSS Styles used by sharing GUI
- *
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package etemplate
- * @link http://www.egroupware.org
- * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
- * @version $Id$
- */
 div#popupMainDiv {
   height: 100% !important;
   padding: 0 !important;
@@ -43,8 +33,8 @@ div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
 div.filemanager_navigation {
   margin: -5px 0 8px 10px !important;
 }
-div.filemanager_navigation label {
-  /*right: 265px !important;*/
+div.filemanager_navigation > label {
+  right: 427px !important;
 }
 div.search {
   position: absolute;
@@ -63,6 +53,16 @@ div.nextmatch_header {
   padding-bottom: 0 !important;
   padding-top: 10px !important;
 }
+/**
+ * EGroupware - CSS Styles used by sharing GUI
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
+ * @version $Id$
+ */
 div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
   right: 418px;
   top: 10px;
@@ -76,4 +76,7 @@ div.search {
 }
 div#filemanager-index_buttons div.et2_file {
   margin-top: 6px;
+}
+div.filemanager_navigation > label {
+  right: 485px !important;
 }
