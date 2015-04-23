@@ -1,24 +1,36 @@
 <?php
 /**
- * EGroupware API: Caching provider storing data in PHP's APC
+ * EGroupware API: Caching provider storing data in PHP's APC or APCu extension
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 /**
- * Caching provider storing data in PHP's APC
+ * Caching provider storing data in PHP's APC or APCu extension / shared memory.
  *
  * The provider concats all $keys with '::' to get a single string.
  *
- * To use this provider set in your header.inc.php:
+ * This provider is used by default, if it is available or explicit enabled in your header.inc.php:
  * $GLOBALS['egw_info']['server']['cache_provider_instance'] = array('egw_cache_apc');
  * and optional also $GLOBALS['egw_info']['server']['cache_provider_tree'] (defaults to instance)
+ *
+ * APC(u) and CLI:
+ * --------------
+ * APC(u) is not enabled by default for CLI (apc.enable_cli), nor would it access same shared memory!
+ * It makes no sense to fall back to files cache, as this is probably quite outdated,
+ * if PHP via Webserver uses APC. Better to use no cache at all.
+ * egw_cache::get*() will return NULL for not found and egw_cache::[un]set*()
+ * false for not being able to (un)set anything.
+ * It also does not make sense to report failure by throwing an Exception and filling
+ * up cron logs.
+ * --> if APC(u) is available for Webserver, we report availability for CLI too,
+ *     but use no cache at all!
  */
 class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provider
 {
@@ -34,10 +46,6 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 		{
 			throw new Exception (__METHOD__.'('.array2string($params).") No function apc_fetch()!");
 		}
-		if (PHP_SAPI == 'cli' && !ini_get('apc.enable_cli'))
-		{
-			throw new Exception (__METHOD__.'('.array2string($params).") APC NOT enabled for cli, check apc.enable_cli!");
-		}
 	}
 
 	/**
@@ -50,9 +58,7 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	 */
 	public static function available()
 	{
-		$available = (bool)ini_get('apc.enabled');
-
-		if ($available && function_exists('apc_fetch') && (PHP_SAPI != 'cli' || ini_get('apc.enable_cli')))
+		if (($available = (bool)ini_get('apc.enabled') && function_exists('apc_fetch')))
 		{
 			$size = ini_get('apc.shm_size');
 			// ancent APC (3.1.3) in Debian 6/Squezze has size in MB without a unit
@@ -81,7 +87,7 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
 	 * @param mixed $data
-	 * @param int $expiration=0
+	 * @param int $expiration =0
 	 * @return boolean true on success, false on error
 	 */
 	function set(array $keys,$data,$expiration=0)
@@ -97,6 +103,7 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	 */
 	function get(array $keys)
 	{
+		$success = null;
 		$data = apc_fetch($key=self::key($keys),$success);
 
 		if (!$success)
