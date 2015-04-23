@@ -2582,6 +2582,9 @@ class calendar_uiforms extends calendar_ui
 		
 		if (is_array($mailContent))
 		{
+			// Addressbook
+			$AB = new addressbook_bo();
+			$accounts = array(0 => $GLOBALS['egw_info']['user']['account_id']);
 			
 			$participants[0] = array (
 				'uid' => $GLOBALS['egw_info']['user']['account_id'],
@@ -2593,13 +2596,33 @@ class calendar_uiforms extends calendar_ui
 			);
 			foreach($mailContent['addresses'] as $address)
 			{
-				$participants []= array (
-					'app' => 'email',
-					'uid' => 'e'.$address['email'],
-					'status' => 'U',
-					'old_status' => 'U'
-				);
+				// Get available contacts from the email
+				$contact = $AB->search(array(
+						'email' => $address['email'],
+						'email_home' => $address['email']
+					),'contact_id,contact_email,contact_email_home,egw_addressbook.account_id as account_id','','','',false,'OR',false,array('owner' => 0),'',false);
+				if (is_array($contact))
+				{
+					foreach($contact as $account)
+					{
+						$accounts[] = $account['account_id'];
+					}
+				}
+				else
+				{
+					$participants []= array (
+						'app' => 'email',
+						'uid' => 'e'.$address['email'],
+						'status' => 'U',
+						'old_status' => 'U'
+					);
+				}
 			}
+			$participants = array_merge($participants , array(
+				"account" => $accounts,
+				"role" => "REQ-PARTICIPANT",
+				"add" => "pressed"
+			));
 			
 			// Prepare calendar event draft
 			$event = array(
