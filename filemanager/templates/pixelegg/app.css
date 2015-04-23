@@ -57,21 +57,26 @@ div.filemanager_navigation {
   position: relative;
   width: 100%;
   white-space: normal;
+  margin: 5px 0 0 5px;
 }
 div.filemanager_navigation > * {
   vertical-align: middle;
+}
+div.filemanager_navigation > img {
+  margin-top: 3px;
 }
 #filemanager-index_buttons {
   float: right;
 }
 #filemanager-index_buttons > * {
   vertical-align: middle;
+  padding-left: 5px;
   margin: 0;
 }
 div.filemanager_navigation > label {
   position: absolute;
   left: 50px;
-  right: 385px;
+  right: 422px;
   padding-top: 3px;
   font-size: 140%;
   white-space: nowrap;

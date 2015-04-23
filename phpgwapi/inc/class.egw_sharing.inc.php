@@ -345,7 +345,7 @@ class egw_sharing
 		$GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'] = 'tile';
 		$_GET['cd'] = 'no';
 		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
-		egw_framework::includeCSS('/filemanager/templates/default/sharing.css');
+		egw_framework::includeCSS('filemanager', 'sharing');
 		$ui = new egw_sharing_filemanager();
 		$ui->index();
 	}
