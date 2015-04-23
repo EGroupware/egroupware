@@ -197,9 +197,10 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
 	 * @param boolean $use_symlinkcache =true
 	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
+	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true)
+	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false)
 	{
 		$path = self::get_path($_path);
 
@@ -245,6 +246,13 @@ class StreamWrapper implements StreamWrapperIface
 					self::load_wrapper($scheme);
 				}
 				$url = Vfs::concat($url,substr($parts['path'],strlen($mounted)));
+
+				// if url contains url parameter, eg. from filesystem streamwrapper, we need to append relative path here too
+				$matches = null;
+				if ($fix_url_query && preg_match('|([?&]url=)([^&]+)|', $url, $matches))
+				{
+					$url = str_replace($matches[0], $matches[1].Vfs::concat($matches[2], substr($parts['path'],strlen($mounted))), $url);
+				}
 
 				if ($replace_user_pass_host)
 				{
@@ -865,7 +873,7 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
-		}		
+		}
 		$this->opened_dir_writable = Vfs::check_access($this->opened_dir_url,Vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = self::parse_url($path,PHP_URL_PATH);
@@ -880,7 +888,7 @@ class StreamWrapper implements StreamWrapperIface
 			}
 		}
 
-		
+
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $path,$options): opendir($this->opened_dir_url)=$this->opened_dir, extra_dirs=".array2string($this->extra_dirs).', '.function_backtrace());
 		return true;
 	}

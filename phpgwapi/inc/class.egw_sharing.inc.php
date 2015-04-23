@@ -204,7 +204,7 @@ class egw_sharing
 			$GLOBALS['egw_info']['server']['vfs_fstab'] = egw_vfs::mount();
 			egw_vfs::clearstatcache();
 		}
-		$share['resolve_url'] = egw_vfs::resolve_url($share['share_path']);
+		$share['resolve_url'] = egw_vfs::resolve_url($share['share_path'], true, true, true, true);	// true = fix evtl. contained url parameter
 		// if share not writable append ro=1 to mount url to make it readonly
 		if (!self::$db->from_bool($share['share_writable']))
 		{
