@@ -6306,10 +6306,21 @@ class emailadmin_imapbase
 	{
 		$rfc822 = new Horde_Mail_Rfc822();
 		$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
+		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count);
+		if ((empty($ret) || $ret->count()==0)&& is_string($addresses) && strlen($addresses)>0)
+		{
+			$matches = array();
+			preg_match_all("/[\w\.,-.,_.,0-9.]+@[\w\.,-.,_.,0-9.]+/",$addresses,$matches);
+			//error_log(__METHOD__.__LINE__.array2string($matches));
+			foreach ($matches[0] as &$match) $match = trim($match,', ');
+			$addresses = implode(',',$matches[0]);
+			//error_log(__METHOD__.__LINE__.array2string($addresses));
+			$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
+			//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count);
+		}
 		//foreach($ret as $i => $adr) error_log(__METHOD__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal --> ".$adr);
 		return $ret;
 	}
-
 
 	/**
 	 * Send a read notification
