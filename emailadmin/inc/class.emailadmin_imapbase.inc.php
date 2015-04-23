@@ -3969,6 +3969,25 @@ class emailadmin_imapbase
 							break;
 					}
 					break;
+				case 'application':
+					switch($part->getSubType())
+					{
+						case 'pgp-encrypted':
+							if (($part = $_structure->getPart($mime_id+1)) &&
+								$part->getType() == 'application/octet-stream')
+							{
+								$this->fetchPartContents($_uid, $part);
+								$bodyPart[] = array(
+									'body'		=> $part->getContents(array(
+										'stream' => false,
+									)),
+									'mimeType'  => 'text/plain',
+									'charSet'	=> $_structure->getCharset(),
+								);
+							}
+							break;
+					}
+					break;
 
 				case 'text':
 					switch($part->getSubType())
@@ -4282,6 +4301,7 @@ class emailadmin_imapbase
 					case 'mixed':
 					case 'report':
 					case 'signed':
+					case 'encrypted':
 						$bodyParts = $this->getMultipartMixed($_uid, $_structure, $this->htmlOptions, $_preserveSeen);
 						break;
 
