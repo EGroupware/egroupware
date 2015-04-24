@@ -749,21 +749,21 @@ class egw_session
 		if ($blocked && $GLOBALS['egw_info']['server']['admin_mails'] &&
 			$GLOBALS['egw_info']['server']['login_blocked_mail_time'] < time()-5*60)	// max. one mail every 5mins
 		{
-			// notify admin(s) via email
-			$from    = 'eGroupWare@'.$GLOBALS['egw_info']['server']['mail_suffix'];
-			$subject = lang("eGroupWare: login blocked for user '%1', IP %2",$login,$ip);
-			$body    = lang("Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4",$false_id,$login,$false_ip,$ip);
-
-			$admin_mails = explode(',',$GLOBALS['egw_info']['server']['admin_mails']);
-			foreach($admin_mails as $to)
-			{
-				try {
-					//$GLOBALS['egw']->send->msg('email',$to,$subject,$body,'','','',$from,$from); // deprecated old method
-					egw_mailer::sendWithDefaultSmtpProfile('email',$to,$subject,$body,'','','',$from);
-				} catch(Exception $e) {
-					// ignore exception, but log it, to block the account and give a correct error-message to user
-					error_log(__METHOD__."('$login', '$ip') ".$e->getMessage());
+			try {
+				$mailer = new egw_mailer();
+				// notify admin(s) via email
+				$mailer->setFrom('eGroupWare@'.$GLOBALS['egw_info']['server']['mail_suffix']);
+				$mailer->addHeader('Subject', lang("eGroupWare: login blocked for user '%1', IP %2",$login,$ip));
+				$mailer->setBody(lang("Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4",$false_id,$login,$false_ip,$ip));
+				foreach(preg_split('/,\s*/',$GLOBALS['egw_info']['server']['admin_mails']) as $mail)
+				{
+					$mailer->addAddress($mail);
 				}
+				$mailer->send();
+			}
+			catch(Exception $e) {
+				// ignore exception, but log it, to block the account and give a correct error-message to user
+				error_log(__METHOD__."('$login', '$ip') ".$e->getMessage());
 			}
 			// save time of mail, to not send to many mails
 			$config = new config('phpgwapi');

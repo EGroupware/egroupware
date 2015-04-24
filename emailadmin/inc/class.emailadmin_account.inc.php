@@ -1300,11 +1300,14 @@ class emailadmin_account implements ArrayAccess
 		if ($only_current_user)
 		{
 			$account_id = $only_current_user === true ? $GLOBALS['egw_info']['user']['account_id'] : $only_current_user;
-			if (!is_numeric($account_id))
+			// no account_id happens eg. for notifications during login
+			if ($account_id && !is_numeric($account_id))
 			{
 				throw new egw_exception_wrong_parameter(__METHOD__."(".array2string($only_current_user).") is NO valid account_id");
 			}
-			$where[] = self::$db->expression(self::VALID_TABLE, self::VALID_TABLE.'.', array('account_id' => self::memberships($account_id)));
+			$where[] = self::$db->expression(self::VALID_TABLE, self::VALID_TABLE.'.', array(
+				'account_id' => $account_id ? self::memberships($account_id) : 0
+			));
 		}
 		if (empty($order_by) || !preg_match('/^[a-z_]+ (ASC|DESC)$/i', $order_by))
 		{
@@ -1402,6 +1405,7 @@ class emailadmin_account implements ArrayAccess
 	 */
 	static function get_default($smtp=false, $return_id=false)
 	{
+		if ($smtp) return null;
 		try
 		{
 			foreach(emailadmin_account::search(true, 'params') as $acc_id => $params)
