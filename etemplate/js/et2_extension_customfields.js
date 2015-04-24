@@ -301,7 +301,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				_attrs["value"] = {};
 				if (val !== null)
 				{
-					if(this.id.indexOf(this.prefix) === 0 && data.fields[this.id.replace(this.prefix,'')] === true)
+					if(this.id.indexOf(this.prefix) === 0 && typeof data.fields != 'undefined' && data.fields[this.id.replace(this.prefix,'')] === true)
 					{
 						_attrs['value'][this.id] = val;
 					}
