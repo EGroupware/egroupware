@@ -101,13 +101,19 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 		else
 		{
-			$this->account = emailadmin_account::get_default(true);	// true = need an SMTP (not just IMAP) account
+			if (!($this->account = emailadmin_account::get_default(true)))	// true = need an SMTP (not just IMAP) account
+			{
+				throw new egw_exception_not_found('SMTP: '.lang('Account not found!'));
+			}
 		}
 
 		try
 		{
 			$identity = emailadmin_account::read_identity($this->account->ident_id, true, null, $this->account);
-		} catch(Exception $e) {
+		}
+		catch(Exception $e)
+		{
+			unset($e);
 			error_log(__METHOD__.__LINE__.' Could not read_identity for account:'.$account['acc_id'].' with IdentID:'.$account['ident_id']);
 			$identity['ident_email'] = $this->account->ident_email;
 			$identity['ident_realname'] = $this->account->ident_realname ? $this->account->ident_realname : $this->account->ident_email;
@@ -436,6 +442,7 @@ class egw_mailer extends Horde_Mime_Mail
 	 */
 	public static function sendWithDefaultSmtpProfile($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
 	{
+		unset($content_type);	// not used
 		if ($service != 'email')
 		{
 			return False;
@@ -456,6 +463,7 @@ class egw_mailer extends Horde_Mime_Mail
 			{
 				if ($$adr && !is_array($$adr))
 				{
+					$matches = null;
 					if (is_string($$adr) && preg_match_all('/"?(.+)"?<(.+)>,?/',$$adr,$matches))
 					{
 						$names = $matches[1];
@@ -467,24 +475,24 @@ class egw_mailer extends Horde_Mime_Mail
 						$names = array();
 					}
 
-					foreach($addresses as $n => $address)
+					foreach($addresses as $address)
 					{
 						$method[$adr][] =$address;
 					}
 				}
 			}
 			if (is_array($method['to'])&& !empty($method['to'])) $to = $method['to'];
-			foreach ((array)$to as $x => $toElem)
+			foreach ((array)$to as $toElem)
 			{
 				if (!empty($toElem)) $mail->addAddress($toElem, $toElem);
 			}
 			if (is_array($method['cc'])&& !empty($method['cc'])) $cc = $method['cc'];
-			foreach ((array)$cc as $y => $ccElem)
+			foreach ((array)$cc as $ccElem)
 			{
 				if (!empty($ccElem)) $mail->addCc($ccElem);
 			}
 			if (is_array($method['bcc'])&& !empty($method['bcc'])) $bcc = $method['bcc'];
-			foreach ((array)$bcc as $z => $bccElem)
+			foreach ((array)$bcc as $bccElem)
 			{
 				if (!empty($bccElem)) $mail->addBcc($bccElem);
 			}
