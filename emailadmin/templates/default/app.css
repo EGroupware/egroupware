@@ -43,6 +43,9 @@ span#emailadmin-account_acc_id {
 #emailadmin-account_button\[multiple\] {
   height: auto;
   padding-left: 5px;
+  margin:2px;
+  width: 16px;
+  vertical-align: top;
 }
 #emailadmin-account_button\[placeholders\] {
   height: 16px;
