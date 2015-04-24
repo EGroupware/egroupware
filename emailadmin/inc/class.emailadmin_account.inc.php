@@ -1414,7 +1414,8 @@ class emailadmin_account implements ArrayAccess
 				{
 					if (!$params['acc_smtp_host'] || !$params['acc_smtp_port']) continue;
 					// check requirement of session, which is not available in async service!
-					if (isset($GLOBALS['egw_info']['flags']['async-service']))
+					if (isset($GLOBALS['egw_info']['flags']['async-service']) ||
+						empty($GLOBALS['egw_info']['user']['account_id']))	// happens during login when notifying about blocked accounts
 					{
 						if ($params['acc_smtp_auth_session']) continue;
 						// may fail because of smtp only profile, or no session password, etc
