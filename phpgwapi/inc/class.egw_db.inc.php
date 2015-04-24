@@ -1576,6 +1576,7 @@ class egw_db
 				}
 				elseif (is_int($key) && $use_key===True)
 				{
+					if (empty($data)) continue;	// would give SQL error
 					$values[] = $data;
 				}
 				elseif ($glue != ',' && $use_key === True && !$not_null && is_null($data))
@@ -1789,7 +1790,9 @@ class egw_db
 			// the checked values need to be inserted too, value in data has precedence, also cant insert sql strings (numerical id)
 			foreach($where as $column => $value)
 			{
-				if (!is_numeric($column) && !isset($data[$column]))
+				if (!is_numeric($column) && !isset($data[$column]) &&
+					// skip auto-id of 0 or NULL, as PostgreSQL does NOT create an auto-id, if they are given
+					!(!$value && count($table_def['pk']) == 1 && $column == $table_def['pk'][0]))
 				{
 					$data[$column] = $value;
 				}
