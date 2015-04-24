@@ -1626,7 +1626,7 @@ window.egw_LAB.wait(function() {
 				}
 				if (!$row['owner'])
 				{
-					$row['class'] .= 'rowAccount rowNoDelete';
+					$row['class'] .= 'rowAccount rowNoDelete ';
 				}
 				elseif (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
 				{
