@@ -488,6 +488,7 @@ which method to use when forwarding a message	mail	en	Which method to use when f
 whole message	mail	en	whole message
 with message:	mail	en	With message:
 write	mail	en	write
+writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 wrote	mail	en	wrote
 yes, but mask all passwords	mail	en	yes, but mask all passwords
 yes, but mask all usernames and passwords	mail	en	yes, but mask all usernames and passwords
