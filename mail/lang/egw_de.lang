@@ -490,6 +490,7 @@ which method to use when forwarding a message	mail	de	Wählen Sie die Methode zu
 whole message	mail	de	gesamte Nachricht
 with message:	mail	de	mit folgender Nachricht:
 write	mail	de	schreiben
+writable sharing requires epl version!	mail	en	Beschreibbare Freigaben benötigen die EPL Version!
 wrote	mail	de	schrieb
 yes, but mask all passwords	mail	de	Ja, aber maskiere alle Passwörter
 yes, but mask all usernames and passwords	mail	de	Ja, aber maskiere Benutzernamen und Passwörter

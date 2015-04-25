@@ -223,7 +223,7 @@ app.classes.mail = AppJS.extend(
 
 				//Call drag_n_drop initialization for emails on compose
 				this.init_dndCompose();
-				
+
 				// Set focus on To/body field
 				// depending on To field value
 				var to = this.et2.getWidgetById('to');
@@ -4255,8 +4255,8 @@ app.classes.mail = AppJS.extend(
 
 		if (_widget.get_value() == 'share_rw' && !this.egw.app('stylite'))
 		{
-			this.egw.message(this.egw.lang('Writable sharing required EPL version!'), 'info');
-			_widget.setValue('share_ro');
+			this.egw.message(this.egw.lang('Writable sharing requires EPL version!'), 'info');
+			_widget.set_value('share_ro');
 		}
 	},
 
