@@ -102,7 +102,7 @@ class translation
 	/**
 	 * returns the charset to use (!$lang) or the charset of the lang-files or $lang
 	 *
-	 * @param string/boolean $lang=False return charset of the active user-lang, or $lang if specified
+	 * @param string/boolean $lang =False return charset of the active user-lang, or $lang if specified
 	 * @return string charset
 	 */
 	static function charset($lang=False)
@@ -149,7 +149,7 @@ class translation
 	/**
 	 * Initialises global lang-array and loads the 'common' and app-spec. translations
 	 *
-	 * @param boolean $load_translations=true should we also load translations for common and currentapp
+	 * @param boolean $load_translations =true should we also load translations for common and currentapp
 	 */
 	static function init($load_translations=true)
 	{
@@ -176,24 +176,13 @@ class translation
 
 		// try loading load_via from tree-wide cache and check if it contains more rules
 		if (($load_via = egw_cache::getTree(__CLASS__, 'load_via')) &&
-			$load_via > $GLOBALS['egw_info']['server']['translation_load_via'])	// > for array --> contains more elements
+			$load_via >= self::$load_via && 	// > for array --> contains more elements
+			// little sanity check: cached array contains all stock keys, otherwise ignore it
+			!array_diff_key(self::$load_via, $load_via))
 		{
 			self::$load_via = $load_via;
-			config::save_value('translation_load_via', self::$load_via, 'phpgwapi');
 			//error_log(__METHOD__."() load_via set from tree-wide cache to ".array2string(self::$load_via));
 		}
-		// if not check our config for load-via information
-		elseif (isset($GLOBALS['egw_info']['server']['translation_load_via']))
-		{
-			self::$load_via = $GLOBALS['egw_info']['server']['translation_load_via'];
-			// if different from tree-wide value, update that
-			if ($GLOBALS['egw_info']['server']['translation_load_via'] != $load_via)
-			{
-				egw_cache::setTree(__CLASS__, 'load_via', self::$load_via);
-			}
-			//error_log(__METHOD__."() load_via set from config to ".array2string(self::$load_via));
-		}
-
 		self::$lang_arr = self::$loaded_apps = array();
 
 		if ($load_translations)
@@ -204,7 +193,7 @@ class translation
 			}
 			$apps = array('common');
 			// for eTemplate apps, load etemplate before app itself (allowing app to overwrite etemplate translations)
-			if (class_exists('etemplate', false)) $apps[] = 'etemplate';
+			if (class_exists('etemplate_new', false) || class_exists('etemplate', false)) $apps[] = 'etemplate';
 			if ($GLOBALS['egw_info']['flags']['currentapp']) $apps[] = $GLOBALS['egw_info']['flags']['currentapp'];
 			// load instance specific translations last, so they can overwrite everything
 			$apps[] = 'custom';
@@ -222,8 +211,8 @@ class translation
 	 * translates a phrase and evtl. substitute some variables
 	 *
 	 * @param string $key phrase to translate, may contain placeholders %N (N=1,2,...) for vars
-	 * @param array $vars=null vars to replace the placeholders, or null for none
-	 * @param string $not_found='*' what to add to not found phrases, default '*'
+	 * @param array $vars =null vars to replace the placeholders, or null for none
+	 * @param string $not_found ='*' what to add to not found phrases, default '*'
 	 * @return string with translation
 	 */
 	static function translate($key, $vars=null, $not_found='' )
@@ -274,7 +263,7 @@ class translation
 	 *
 	 * @param string|array $apps name(s) of application(s) to add (or 'common' for the general translations)
 	 * 	if multiple names given, they are requested in one request from cache and loaded in given order
-	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
+	 * @param string $lang =false 2 or 5 char lang-code or false for the users language
 	 */
 	static function add_app($apps, $lang=null)
 	{
@@ -282,7 +271,7 @@ class translation
 		//$start = microtime(true);
 		if (!$lang) $lang = self::$userlang;
 		$tree_level = $instance_level = array();
-		$apps = (array)$apps;
+		if (!is_array($apps)) $apps = (array)$apps;
 		foreach($apps as $key => $app)
 		{
 			if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang && $app != 'common')
@@ -306,6 +295,7 @@ class translation
 		if ($instance_level) $instance_level = egw_cache::getInstance(__CLASS__, $instance_level);
 
 		// merging loaded translations together
+		$updated_load_via = false;
 		foreach((array)$apps as $app)
 		{
 			$l = $app == 'custom' ? 'en' : $lang;
@@ -325,7 +315,7 @@ class translation
 				}
 				else
 				{
-					$loaded =& self::load_app_files($app, $l);
+					$loaded =& self::load_app_files($app, $l, null, $updated_load_via);
 				}
 				//error_log(__METHOD__."('$app', '$lang') instance_specific=$instance_specific, load_app(_files)() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 				if ($loaded || $instance_specific)
@@ -350,6 +340,10 @@ class translation
 				self::$lang_arr = array_merge(self::$lang_arr, $custom);
 			}
 		}
+		if ($updated_load_via)
+		{
+			self::update_load_via();
+		}
 		//error_log(__METHOD__.'('.array2string($apps).", '$lang') took ".(1000*(microtime(true)-$start))." ms, loaded_apps=".array2string(self::$loaded_apps).", loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr));//.": ".function_backtrace());
 	}
 
@@ -359,7 +353,7 @@ class translation
 	 * Never use directly, use add_app(), which employes caching (it has to be public, to act as callback for the cache!).
 	 *
 	 * @param string $app name of the application to add (or 'common' for the general translations)
-	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
+	 * @param string $lang =false 2 or 5 char lang-code or false for the users language
 	 * @return array the loaded strings
 	 */
 	static function &load_app($app,$lang)
@@ -390,10 +384,10 @@ class translation
 		'common' => 'all-apps',
 		'preferences' => 'all-apps',
 		'admin' => 'all-apps',
-		'jscalendar' => 'phpgwapi',
-		'sitemgr-link' => 'sitemgr',
-		'groupdav' => 'phpgwapi',
-		'login' => 'phpgwapi',
+		'jscalendar' => array('phpgwapi'),
+		'sitemgr-link' => array('sitemgr'),
+		'groupdav' => array('phpgwapi'),
+		'login' => array('phpgwapi','registration'),
 	);
 
 	/**
@@ -404,8 +398,7 @@ class translation
 	static function check_invalidate_cache()
 	{
 		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-		$apps = array_keys($GLOBALS['egw_info']['user']['apps']);
-		$apps[] = 'phpgwapi';	// check the api too
+		$apps = array_keys($GLOBALS['egw_info']['apps']);
 		foreach($apps as $app)
 		{
 			$file = self::get_lang_file($app, $lang);
@@ -455,7 +448,7 @@ class translation
 	/**
 	 * Statistical values about how much a language and app is translated, number or valid phrases per $lang or $lang/$app
 	 *
-	 * @param string $_lang=null
+	 * @param string $_lang =null
 	 * @return array $lang or $app => number pairs
 	 */
 	static function statistics($_lang=null)
@@ -560,11 +553,12 @@ class translation
 	 * Never use directly, use add_app(), which employes caching (it has to be public, to act as callback for the cache!).
 	 *
 	 * @param string $app name of the application to add (or 'common' for the general translations)
-	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
-	 * @param string $just_app_file=null	if given only that app is loaded ignoring self::$load_via
+	 * @param string $lang =false 2 or 5 char lang-code or false for the users language
+	 * @param string $just_app_file =null if given only that app is loaded ignoring self::$load_via
+	 * @param boolean $updated_load_via =false on return true if self::$load_via was updated
 	 * @return array the loaded strings
 	 */
-	static function &load_app_files($app, $lang, $just_app_file=null)
+	static function &load_app_files($app, $lang, $just_app_file=null, &$updated_load_via=false)
 	{
 		//$start = microtime(true);
 		$load_app = isset($just_app_file) ? $just_app_file : (isset(self::$load_via[$app]) ? self::$load_via[$app] : $app);
@@ -599,7 +593,7 @@ class translation
 					if ($l_app != $app_dir && (!isset(self::$load_via[$l_app]) ||
 						!array_intersect((array)self::$load_via[$l_app], array('all-apps', $app_dir))))
 					{
-						if (!in_array($l_app,array('common','login')) && !file_exists(EGW_SERVER_ROOT.'/'.$l_app))
+						if (!isset(self::$load_via[$l_app]) && !file_exists(EGW_SERVER_ROOT.'/'.$l_app))
 						{
 							error_log(__METHOD__."() lang file $file contains invalid app '$l_app' on line $line_nr --> ignored");
 							continue;
@@ -609,8 +603,7 @@ class translation
 						if (!isset(self::$load_via[$l_app])) self::$load_via[$l_app] = array($l_app);
 						if (!is_array(self::$load_via[$l_app])) self::$load_via[$l_app] = array(self::$load_via[$l_app]);
 						self::$load_via[$l_app][] = $app_dir;
-						config::save_value('translation_load_via', self::$load_via, 'phpgwapi');
-						egw_cache::setTree(__CLASS__, 'load_via', self::$load_via);
+						$updated_load_via = true;
 					}
 					continue;
 				}
@@ -623,6 +616,29 @@ class translation
 	}
 
 	/**
+	 * Update tree-wide stored load_via with our changes
+	 *
+	 * Merging in meantime stored changes from other instances to minimize race-conditions
+	 */
+	protected static function update_load_via()
+	{
+		if (($load_via = egw_cache::getTree(__CLASS__, 'load_via')) &&
+			// little sanity check: cached array contains all stock keys, otherwise ignore it
+			!array_diff_key(self::$load_via, $load_via))
+		{
+			foreach($load_via as $app => $via)
+			{
+				if (self::$load_via[$app] != $via)
+				{
+					//error_log(__METHOD__."() setting load_via[$app]=".array2string($via));
+					self::$load_via[$app] = array_unique(array_merge((array)self::$load_via[$app], (array)$via));
+				}
+			}
+		}
+		egw_cache::setTree(__CLASS__, 'load_via', self::$load_via);
+	}
+
+	/**
 	 * Cached languages
 	 *
 	 * @var array
@@ -632,8 +648,8 @@ class translation
 	/**
 	 * Returns a list of available languages / translations
 	 *
-	 * @param boolean $translate=true translate language-names
-	 * @param boolean $force_read=false force a re-read of the languages
+	 * @param boolean $translate =true translate language-names
+	 * @param boolean $force_read =false force a re-read of the languages
 	 * @return array with lang-code => descriptiv lang-name pairs
 	 */
 	static function get_available_langs($translate=true, $force_read=false)
@@ -669,12 +685,12 @@ class translation
 	 *
 	 * Translations no longer need to be installed, therefore all available translations are returned here.
 	 *
-	 * @param boolean $force_read=false force a re-read of the languages
+	 * @param boolean $force_read =false force a re-read of the languages
 	 * @return array with lang-code => descriptiv lang-name pairs
 	 */
 	static function get_installed_langs($force_read=false)
 	{
-		return self::get_available_langs($force_read=false);
+		return self::get_available_langs($force_read);
 	}
 
 	/**
@@ -695,7 +711,7 @@ class translation
 	/**
 	 * List all languages, first available ones, then the rest
 	 *
-	 * @param boolean $force_read=false
+	 * @param boolean $force_read =false
 	 * @return array with lang_id => lang_name pairs
 	 */
 	static function list_langs($force_read=false)
@@ -760,21 +776,21 @@ class translation
 	/**
 	 * Transliterate utf-8 filename to ascii, eg. 'Äpfel' --> 'Aepfel'
 	 *
-	 * @param string $str
+	 * @param string $_str
 	 * @return string
 	 */
-	static function to_ascii($str)
+	static function to_ascii($_str)
 	{
 		static $extra = array(
 			'&szlig;' => 'ss',
 		);
-		$str = htmlentities($str,ENT_QUOTES,self::charset());
-		$str = str_replace(array_keys($extra),array_values($extra),$str);
-		$str = preg_replace('/&([aAuUoO])uml;/','\\1e',$str);	// replace german umlauts with the letter plus one 'e'
-		$str = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$str);	// remove all types of accents
-		$str = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$str);	// remove all other entities
+		$entities = htmlentities($_str,ENT_QUOTES,self::charset());
 
-		return $str;
+		$estr = str_replace(array_keys($extra),array_values($extra), $entities);
+		$ustr = preg_replace('/&([aAuUoO])uml;/','\\1e', $estr);	// replace german umlauts with the letter plus one 'e'
+		$astr = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1', $ustr);	// remove all types of accents
+
+		return preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','', $astr);	// remove all other entities
 	}
 
 	/**
@@ -783,7 +799,7 @@ class translation
 	 * @param string/array $data string(s) to convert
 	 * @param string/boolean $from charset $data is in or False if it should be detected
 	 * @param string/boolean $to charset to convert to or False for the system-charset the converted string
-	 * @param boolean $check_to_from=true internal to bypass all charset replacements
+	 * @param boolean $check_to_from =true internal to bypass all charset replacements
 	 * @return string/array converted string(s) from $data
 	 */
 	static function convert($data,$from=False,$to=False,$check_to_from=true)
@@ -968,8 +984,8 @@ class translation
 	 * Return the message_id of a given translation
 	 *
 	 * @param string $translation
-	 * @param string $app='' default check all apps
-	 * @param string $lang='' default check all langs
+	 * @param string $app ='' default check all apps
+	 * @param string $lang ='' default check all langs
 	 * @return string
 	 */
 	static function get_message_id($translation,$app=null,$lang=null)
@@ -986,7 +1002,7 @@ class translation
 	 *    only to be used if the string in question has no structure that determines his encoding
 	 *
 	 * @param string - to be evaluated
-	 * @param string $verify=null encoding to verify, get checked first and have a match for only ascii or no detection available
+	 * @param string $verify =null encoding to verify, get checked first and have a match for only ascii or no detection available
 	 * @return string - encoding
 	 */
 	static function detect_encoding($string, $verify=null)
@@ -1077,16 +1093,16 @@ class translation
 		}
 		elseif(function_exists(mb_decode_mimeheader))
 		{
-			$string = $_string;
-			if(preg_match_all('/=\?.*\?Q\?.*\?=/iU', $string, $matches))
+			$matches = null;
+			if(preg_match_all('/=\?.*\?Q\?.*\?=/iU', $string=$_string, $matches))
 			{
 				foreach($matches[0] as $match)
 				{
 					$fixedMatch = str_replace('_', ' ', $match);
 					$string = str_replace($match, $fixedMatch, $string);
 				}
-				$string = str_replace('=?ISO8859-','=?ISO-8859-',$string);
-				$string = str_replace('=?windows-1258','=?ISO-8859-1',$string);
+				$string = str_replace('=?ISO8859-','=?ISO-8859-',
+					str_replace('=?windows-1258','=?ISO-8859-1',$string));
 			}
 			$string = mb_decode_mimeheader($string);
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$string);
@@ -1130,7 +1146,7 @@ class translation
 	 * @param string $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
 	 *				without the enclosing brackets
 	 * @param string $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
-	 * @param bool $addbbracesforendtag if endtag is given, you may decide if the </ and > braces are to be added,
+	 * @param bool $addbracesforendtag if endtag is given, you may decide if the </ and > braces are to be added,
 	 *				or if you want the string to be matched as is
 	 * @return void the modified text is passed via reference
 	 */
@@ -1181,8 +1197,7 @@ class translation
 					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*?)'.$endtag.'~simU','',$_body);
 */
 					// remove left over tags, unfinished ones, and so on
-					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
-					$_body = preg_replace('~'.$endtag.'~','',$_body);
+					$_body = preg_replace(array('~<'.$tag.'[^>]*?>~si', '~'.$endtag.'~'), '', $_body);
 				}
 			}
 		}
