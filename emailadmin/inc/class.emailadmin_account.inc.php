@@ -1405,7 +1405,6 @@ class emailadmin_account implements ArrayAccess
 	 */
 	static function get_default($smtp=false, $return_id=false)
 	{
-		if ($smtp) return null;
 		try
 		{
 			foreach(emailadmin_account::search(true, 'params') as $acc_id => $params)
