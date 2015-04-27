@@ -1043,7 +1043,7 @@ class mail_compose
 			// User preferences for style
 			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 			$font_size = egw_ckeditor_config::font_size_from_prefs();
-			$font_part = '<span style="width:100%; display: inline-block; '.($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
+			$font_part = '<span style="width:100%; display: inline; '.($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
 			$font_span = $font_part.'&#8203;</span>';
 			if (empty($font) && empty($font_size)) $font_span = '';
 		}
