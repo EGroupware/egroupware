@@ -4402,7 +4402,7 @@ class mail_ui
 				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 				$this->changeProfile($icServerID);
 			}
-			if(!empty($folder)) {
+			if(!empty($_folderName)) {
 				$this->mail_bo->compressFolder($folderName);
 			}
 			if ($rememberServerID != $this->mail_bo->profileID)
