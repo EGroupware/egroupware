@@ -267,7 +267,26 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 		{
 			// apply the ratio
 			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
-			if (_height != 0) this.htmlNode.height(this.htmlNode.height() + _height);
+			if (_height != 0)
+			{
+				if (this.ckeditor) // CKEDITOR HTML
+				{
+					var h = 0;
+					if (this.ckeditor.container.$.clientHeight > 0)
+					{	h = (this.ckeditor.container.$.clientHeight + _height) > 0 ? 
+						this.ckeditor.container.$.clientHeight + _height: this.ckeditor.config.height;
+					}
+					else
+					{
+						h = parseInt(this.ckeditor.ui.space('contents').getStyle('height')) + _height;
+					}
+					this.ckeditor.resize(0,h);
+				}
+				else // No CKEDITOR
+				{	
+					this.htmlNode.height(this.htmlNode.height() + _height);
+				}
+			}
 		}
 	}
 });
