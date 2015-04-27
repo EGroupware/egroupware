@@ -7,7 +7,7 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -96,7 +96,7 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param mixed $data
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
 	static public function setCache($level,$app,$location,$data,$expiration=0)
@@ -131,9 +131,9 @@ class egw_cache
 	 * @param string $level use egw_cache::(TREE|INSTANCE|SESSION|REQUEST)
 	 * @param string $app application storing data
 	 * @param string|array $location location(s) name for data
-	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=array() array with parameters for the callback
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param callback $callback =null callback to get/create the value, if it's not cache
+	 * @param array $callback_params =array() array with parameters for the callback
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified) or
 	 * 	if $location is an array: location => data pairs for existing location-data, non-existing is not returned
 	 */
@@ -235,7 +235,7 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param mixed $data
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
 	static public function setTree($app,$location,$data,$expiration=0)
@@ -249,9 +249,9 @@ class egw_cache
 	 *
 	 * @param string $app application storing data
 	 * @param string $location location name for data
-	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=array() array with parameters for the callback
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param callback $callback =null callback to get/create the value, if it's not cache
+	 * @param array $callback_params =array() array with parameters for the callback
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
 	static public function getTree($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
@@ -277,7 +277,7 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param mixed $data
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
 	static public function setInstance($app,$location,$data,$expiration=0)
@@ -290,9 +290,9 @@ class egw_cache
 	 *
 	 * @param string $app application storing data
 	 * @param string $location location name for data
-	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=array() array with parameters for the callback
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param callback $callback =null callback to get/create the value, if it's not cache
+	 * @param array $callback_params =array() array with parameters for the callback
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
 	static public function getInstance($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
@@ -318,7 +318,7 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param mixed $data
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
 	static public function setSession($app,$location,$data,$expiration=0)
@@ -341,9 +341,9 @@ class egw_cache
 	 *
 	 * @param string $app application storing data
 	 * @param string $location location name for data
-	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=array() array with parameters for the callback
-	 * @param int $expiration=0 expiration time in seconds, default 0 = never
+	 * @param callback $callback =null callback to get/create the value, if it's not cache
+	 * @param array $callback_params =array() array with parameters for the callback
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
 	static public function &getSession($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
@@ -397,7 +397,7 @@ class egw_cache
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param mixed $data
-	 * @param int $expiration=0 expiration time is NOT used for REQUEST!
+	 * @param int $expiration =0 expiration time is NOT used for REQUEST!
 	 * @return boolean true if data could be stored, false otherwise
 	 */
 	static public function setRequest($app,$location,$data,$expiration=0)
@@ -413,9 +413,9 @@ class egw_cache
 	 *
 	 * @param string $app application storing data
 	 * @param string $location location name for data
-	 * @param callback $callback=null callback to get/create the value, if it's not cache
-	 * @param array $callback_params=array() array with parameters for the callback
-	 * @param int $expiration=0 expiration time is NOT used for REQUEST!
+	 * @param callback $callback =null callback to get/create the value, if it's not cache
+	 * @param array $callback_params =array() array with parameters for the callback
+	 * @param int $expiration =0 expiration time is NOT used for REQUEST!
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
 	static public function getRequest($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
@@ -452,7 +452,7 @@ class egw_cache
 	 * The returned provider already has an opened connection
 	 *
 	 * @param string $level egw_cache::(TREE|INSTANCE) or install_id
-	 * @param boolean $log_not_found=true false do not log if no provider found, used eg. to supress error via unsetCache during installation
+	 * @param boolean $log_not_found =true false do not log if no provider found, used eg. to supress error via unsetCache during installation
 	 * @return egw_cache_provider
 	 */
 	static protected function get_provider($level, $log_not_found=true)
@@ -518,7 +518,7 @@ class egw_cache
 	 * Get a system configuration, even if in setup and it's not read
 	 *
 	 * @param string $name
-	 * @param boolean $throw=true throw an exception, if we can't retriev the value
+	 * @param boolean $throw =true throw an exception, if we can't retriev the value
 	 * @return string|boolean string with config or false if not found and !$throw
 	 */
 	static public function get_system_config($name,$throw=true)
@@ -558,8 +558,8 @@ class egw_cache
 	/**
 	 * Flush (delete) whole (instance) cache or application/class specific part of it
 	 *
-	 * @param $string $level=self::INSTANCE
-	 * @param string $app=null
+	 * @param string $level =self::INSTANCE
+	 * @param string $app =null
 	 */
 	static public function flush($level=self::INSTANCE, $app=null)
 	{
@@ -605,7 +605,7 @@ class egw_cache
 	/**
 	 * Generate a new instance key and by doing so effectivly flushes whole instance cache
 	 *
-	 * @param string $install_id=null default use install_id of current instance
+	 * @param string $install_id =null default use install_id of current instance
 	 * @return string new key also stored in self::$instance_key
 	 */
 	static public function generate_instance_key($install_id=null)
@@ -626,8 +626,8 @@ class egw_cache
 	 * Get keys array from $level, $app and $location
 	 *
 	 * @param string $level egw_cache::(TREE|INSTANCE) or instance_id
-	 * @param string $app=null
-	 * @param string $location=null
+	 * @param string $app =null
+	 * @param string $location =null
 	 * @return array
 	 */
 	static public function keys($level, $app=null, $location=null)
@@ -707,7 +707,7 @@ interface egw_cache_provider
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
 	 * @param mixed $data
-	 * @param int $expiration=0
+	 * @param int $expiration =0
 	 * @return boolean true on success, false on error
 	 */
 	function set(array $keys,$data,$expiration=0);
@@ -762,7 +762,7 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 	/**
 	 * Run several checks on a caching provider
 	 *
-	 * @param boolean $verbose=false true: echo failed checks
+	 * @param boolean $verbose =false true: echo failed checks
 	 * @return int number of failed checks
 	 */
 	function check($verbose=false)

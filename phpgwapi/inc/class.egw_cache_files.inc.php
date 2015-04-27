@@ -7,7 +7,7 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -59,7 +59,7 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
 	 * @param mixed $data
-	 * @param int $expiration=0
+	 * @param int $expiration =0
 	 * @return boolean true on success, false on error
 	 */
 	function set(array $keys,$data,$expiration=0)
@@ -162,7 +162,7 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 	 * Create a path from $keys and $basepath
 	 *
 	 * @param array $keys
-	 * @param boolean $mkdir=false should we create the directory
+	 * @param boolean $mkdir =false should we create the directory
 	 * @return string
 	 */
 	function filename(array $keys,$mkdir=false)
