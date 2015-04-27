@@ -38,7 +38,7 @@ class etemplate_widget_htmlarea extends etemplate_widget
 		// User preferences
 		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 		$font_size = egw_ckeditor_config::font_size_from_prefs();
-		$font_span = '<span style="width: 100%; display: inline-block; '.
+		$font_span = '<span style="width: 100%; display: inline; '.
 			($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').
 			'">&#8203;</span>';
 		if (empty($font) && empty($font_size)) $font_span = '';
