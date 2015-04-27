@@ -165,9 +165,9 @@
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" overflow="auto">
 			<columns>
-				<column disabled="!@cat_tab=Tree"/>
-				<column disabled="@cat_tab=Tree"/>
-				<column/>
+				<column disabled="!@cat_tab=Tree" width="40%"/>
+				<column disabled="@cat_tab=Tree" width="40%"/>
+				<column width="60%"/>
 			</columns>
 			<rows>
 				<row valign="top">
