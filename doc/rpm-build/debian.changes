@@ -1,3 +1,13 @@
+egroupware-epl (14.2.20150428-1) hardy; urgency=low
+
+  * API: caching uses by default APC(u) if available AND apc.shm_size * apc.shm_segments >= 64M, it no longer complains in cron/cli if APC is not enabled (as it should and is by default)
+  * Notifications: skip email notification if we have no valid SMTP profile (eg. because there are only personal accounts and we run via cron)
+  * PostgreSQL/Addressbook: fixed not working creating of new distribution lists
+  * PostgreSQL: fix SQL error viewing history of an entry containing attachments
+  * IE/Addressbook: fixed width for notes field
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 28 Apr 2015 14:53:23 +0200
+
 egroupware-epl (14.2.20150421-1) hardy; urgency=low
 
   * All apps: fix unable to remove last value from multiselect
