@@ -694,7 +694,7 @@ function calendar_upgrade0_9_11_001()
 				$recur_type_num = RECUR_YEARLY;
 				break;
 		}
-		$recur_end_use = $GLOBALS['egw_setup']->oProc->f('cal_use_end');
+		$recur_use_end = $GLOBALS['egw_setup']->oProc->f('cal_use_end');
 		$recur_end = $GLOBALS['egw_setup']->oProc->f('cal_end');
 		$recur_interval = $GLOBALS['egw_setup']->oProc->f('cal_frequency');
 		$days = strtoupper($GLOBALS['egw_setup']->oProc->f('cal_days'));
@@ -1458,7 +1458,6 @@ function calendar_upgrade1_0_1_008()
 function calendar_upgrade1_0_1_009()
 {
 	$db2 = clone($GLOBALS['egw_setup']->db);
-	$add_groups = array();
 	$GLOBALS['egw_setup']->db->select('egw_cal','DISTINCT egw_cal.cal_id,cal_groups,cal_recur_date',"cal_groups != ''",__LINE__,__FILE__,
 		False,'','calendar',0,',egw_cal_user WHERE egw_cal.cal_id=egw_cal_user.cal_id');
 	while(($row = $GLOBALS['egw_setup']->db->row(true)))
@@ -1617,7 +1616,7 @@ function calendar_upgrade1_5_002()
 {
 	// update the alarm methods
 	$async = new asyncservice();
-	foreach((array)$async->read('cal:%') as $id => $job)
+	foreach((array)$async->read('cal:%') as $job)
 	{
 		if ($job['method'] == 'calendar.bocalupdate.send_alarm')
 		{
@@ -1655,6 +1654,7 @@ function calendar_upgrade1_6()
 
 	// Search series exception for nearest exception in series master and add that RECURRENCE-ID
 	// as cal_reference (for 1.6.003 and move it to new field cal_recurrence in 1.7.001)
+	$diff = null;
 	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id,cal_start,recur_exception FROM egw_cal
 		JOIN egw_cal_dates ON egw_cal.cal_id=egw_cal_dates.cal_id
 		JOIN egw_cal_repeats ON cal_reference=egw_cal_repeats.cal_id
@@ -2334,7 +2334,7 @@ ORDER BY master.cal_id DESC", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_AS
 /**
  * Modify range_end of recurring events to be end-time of last recurrence (and not just a date)
  *
- * This fixes not fund last recurrence in day-view.
+ * This fixes not found last recurrence in day-view.
  *
  * @return string
  */
@@ -2345,7 +2345,8 @@ function calendar_upgrade14_1_001()
 FROM egw_cal
 JOIN egw_cal_repeats ON egw_cal_repeats.cal_id=egw_cal.cal_id
 JOIN egw_cal_dates ON egw_cal_dates.cal_id=egw_cal.cal_id AND cal_start=range_start
-JOIN egw_cal_timezones ON egw_cal.tz_id=egw_cal_timezones.tz_id", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_ASSOC) as $event)
+JOIN egw_cal_timezones ON egw_cal.tz_id=egw_cal_timezones.tz_id
+WHERE range_end IS NOT NULL", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_ASSOC) as $event)
 	{
 		$event = egw_db::strip_array_keys($event, 'cal_');
 		$event['recur_enddate'] = $event['range_end'];
@@ -2371,5 +2372,39 @@ JOIN egw_cal_timezones ON egw_cal.tz_id=egw_cal_timezones.tz_id", __LINE__, __FI
 			//error_log(__FUNCTION__."() #$event[id], start=".date('Y-m-d H:i:s', $event['start']).', end='.date('Y-m-d H:i:s', $event['end']).', range_end='.date('Y-m-d H:i:s', $event['recur_enddate']).' --> '.date('Y-m-d H:i:s', $range_end));
 		}
 	}
-	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.001';
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.002';	// skip 14.2.001 update, as query is fixed now
+}
+
+/**
+ * Partially fix from previous 14.2.001 update "ended" daily recurring events (eg. birthdays)
+ *
+ * Idea is to find time where most yearly recuring events were modified from above update.
+ * Then we set all yearly recuring events modified 1s around that time to unlimited again.
+ *
+ * @return string
+ */
+function calendar_upgrade14_2_001()
+{
+	// get modification time (in seconds) with maximum count of modified yearly recuring events
+	$values = $GLOBALS['egw_setup']->db->query("SELECT cal_modified, COUNT(*)
+FROM egw_cal
+JOIN egw_cal_repeats ON egw_cal.cal_id=egw_cal_repeats.cal_id
+WHERE recur_type=5 AND range_end IS NOT NULL
+GROUP BY cal_modified
+ORDER BY count(*) DESC", __LINE__, __FILE__, 0, 1)->fetch();
+
+	// if maximum is bigger then 3
+	if ($values[1] > 3)
+	{
+		$GLOBALS['egw_setup']->db->query("UPDATE egw_cal
+JOIN egw_cal_repeats ON egw_cal.cal_id=egw_cal_repeats.cal_id
+SET range_end=NULL
+WHERE recur_type=5 AND range_end IS NOT NULL AND ABS(cal_modified-$values[0])<=1", __LINE__, __FILE__);
+
+		if (($num = $GLOBALS['egw_setup']->db->affected_rows()))
+		{
+			error_log(__METHOD__."() removed end-date from $num yearly recuring events again.");
+		}
+	}
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.002';
 }
