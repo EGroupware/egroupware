@@ -1,6 +1,7 @@
 %1 attachments	mail	en	%1 attachments
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 Mails selected
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	en	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
@@ -487,8 +488,8 @@ which folders - in general - should not be automatically created, if not existin
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whole message	mail	en	whole message
 with message:	mail	en	With message:
-write	mail	en	write
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
+write	mail	en	write
 wrote	mail	en	wrote
 yes, but mask all passwords	mail	en	yes, but mask all passwords
 yes, but mask all usernames and passwords	mail	en	yes, but mask all usernames and passwords

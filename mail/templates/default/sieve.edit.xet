@@ -108,7 +108,7 @@
 									<description/>
 								</row>
 								<row>
-									<description value="(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the limit, which in must mail servers the limit is 4 by default, please contact your mail server administrator for further info."/>
+									<description value="(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info."/>
 								</row>
 							</rows>
 						</grid>
