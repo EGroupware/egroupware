@@ -1,3 +1,10 @@
+egroupware-epl (14.2.20150429-1) hardy; urgency=low
+
+  * Calendar: update to remove with 14.2.001 updated set end-date for yearly recuring events (other recurrence-types can not be changed)
+  * eTemplate: stoping requesting more and more rows causing browser to stall, if browser does not give us height for rows (probably because it defered rendering)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 28 Apr 2015 19:37:17 +0200
+
 egroupware-epl (14.2.20150428-1) hardy; urgency=low
 
   * API: caching uses by default APC(u) if available AND apc.shm_size * apc.shm_segments >= 64M, it no longer complains in cron/cli if APC is not enabled (as it should and is by default)
