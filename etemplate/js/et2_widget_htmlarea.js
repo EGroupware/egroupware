@@ -272,7 +272,7 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 				if (this.ckeditor) // CKEDITOR HTML
 				{
 					var h = 0;
-					if (this.ckeditor.container.$.clientHeight > 0)
+					if (typeof this.ckeditor.container.$ != 'undefined' && this.ckeditor.container.$.clientHeight > 0)
 					{	h = (this.ckeditor.container.$.clientHeight + _height) > 0 ? 
 						this.ckeditor.container.$.clientHeight + _height: this.ckeditor.config.height;
 					}
