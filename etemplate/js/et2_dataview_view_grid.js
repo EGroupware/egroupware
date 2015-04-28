@@ -45,7 +45,7 @@ var ET2_GRID_HOLD_COUNT = 50;
 /**
  * @augments et2_dataview_container
  */
-var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, 
+var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 {
 	/**
 	 * Creates the grid.
@@ -253,7 +253,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 	/**
 	 * The updateTotalCount function can be used to update the total count of
 	 * rows that are displayed inside the grid. Changing the count always causes
-	 * the spacer at the bottom (if it exists) to be 
+	 * the spacer at the bottom (if it exists) to be
 	 *
 	 * @param _count specifies how many entries the grid can show.
 	 */
@@ -425,8 +425,8 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 				}
 			}
 
-			// Calculate the average height
-			if (avgCount > 0)
+			// Calculate the average height, but only if we have a height
+			if (avgCount > 0 && avgSum > 0)
 			{
 				this._avgHeight = avgSum / avgCount;
 				this._avgCount = avgCount;
@@ -442,7 +442,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 			};
 		}
 
-		// Otherwise return the parent average height 
+		// Otherwise return the parent average height
 		if (this._parent)
 		{
 			return this._parent.getAvgHeightData();
@@ -490,7 +490,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 		{
 			return;
 		}
-		
+
 		var self = this;
 		var _super = this._super;
 		this._invalidateTimeout = window.setTimeout(function() {
@@ -783,7 +783,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 					// container index.
 					var vtop = Math.max(0, vcr_top);
 					var idxStart = Math.floor(
-							Math.min(cidx + ccnt - 1, 
+							Math.min(cidx + ccnt - 1,
 								cidx + (vtop - elemRange.top) / avg,
 								this._total
 							));
@@ -794,7 +794,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 					// container index.
 					var vbot = Math.max(0, vcr_bot);
 					var idxEnd = Math.ceil(
-							Math.min(cidx + ccnt - 1, 
+							Math.min(cidx + ccnt - 1,
 								cidx + (vbot - elemRange.top) / avg,
 								this._total
 							));
@@ -835,7 +835,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 	 */
 	_doInvalidate: function(_super) {
 		if(!this.doInvalidate) return;
-		
+
 		// Update the pixel positions
 		this._recalculateElementPosition();
 
