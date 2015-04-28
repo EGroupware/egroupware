@@ -2493,10 +2493,7 @@ class mail_compose
 						{
 							$pMhA = mail_ui::splitRowID($content['processedmail_id']);
 							$pMuid = $pMhA['msgUID'];
-							$pMmailbox = $pMhA['folder'];
 						}
-						error_log(__METHOD__.__LINE__.' processedID#'.$content['processedmail_id']);
-						error_log(__METHOD__.__LINE__.' lastDrafted#'.$content['lastDrafted']);
 						//error_log(__METHOD__.__LINE__."#$pMuid#$pMuid!=$duid#".array2string($content['attachments']));
 						// do not delete the original message if attachments are present
 						if (empty($pMuid) || $pMuid!=$duid || empty($content['attachments']))
