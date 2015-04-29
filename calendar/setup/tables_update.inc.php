@@ -2396,14 +2396,30 @@ ORDER BY count(*) DESC", __LINE__, __FILE__, 0, 1)->fetch();
 	// if maximum is bigger then 3
 	if ($values[1] > 3)
 	{
-		$GLOBALS['egw_setup']->db->query("UPDATE egw_cal
+		switch($GLOBALS['egw_setup']->db->Type)
+		{
+			case 'mysql':
+				$sql = "UPDATE egw_cal
 JOIN egw_cal_repeats ON egw_cal.cal_id=egw_cal_repeats.cal_id
 SET range_end=NULL
-WHERE recur_type=5 AND range_end IS NOT NULL AND ABS(cal_modified-$values[0])<=1", __LINE__, __FILE__);
-
-		if (($num = $GLOBALS['egw_setup']->db->affected_rows()))
+WHERE recur_type=5 AND range_end IS NOT NULL AND ABS(cal_modified-$values[0])<=1";
+				break;
+			case 'pgsql':
+				$sql = "UPDATE egw_cal
+SET range_end=NULL
+FROM egw_cal AS cal
+JOIN egw_cal_repeats ON cal.cal_id=egw_cal_repeats.cal_id
+WHERE recur_type=5 AND cal.range_end IS NOT NULL AND ABS(cal.cal_modified-$values[0])<=1";
+				break;
+		}
+		if (isset($sql))
 		{
-			error_log(__METHOD__."() removed end-date from $num yearly recuring events again.");
+			$GLOBALS['egw_setup']->db->query($sql, __LINE__, __FILE__);
+
+			if (($num = $GLOBALS['egw_setup']->db->affected_rows()))
+			{
+				error_log(__METHOD__."() removed end-date from $num yearly recuring events again.");
+			}
 		}
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.002';
