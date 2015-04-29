@@ -134,6 +134,13 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	 */
 	function flush(array $keys)
 	{
+		// APC >= 3.1.1, but also seems to be missing if apc is disabled eg. for cli
+		if (!class_exists('APCIterator'))
+		{
+			if (function_exists('apc_clear_cache')) apc_clear_cache ('user');
+
+			return false;
+		}
 		//error_log(__METHOD__."(".array2string($keys).")");
 		foreach(new APCIterator('user', $preg='/^'.preg_quote(self::key($keys).'/')) as $item)
 		{
