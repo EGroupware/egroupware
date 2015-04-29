@@ -39,7 +39,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	 * 4 = -- " -- plus "log"
 	 * 5 = -- " -- plus a stacktrace
 	 */
-	var DEBUGLEVEL = 3;
+	var DEBUGLEVEL = 4;
 
 	/**
 	 * Log-level for local storage and error-display in GUI
