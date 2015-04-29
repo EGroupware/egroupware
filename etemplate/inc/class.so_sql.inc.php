@@ -941,11 +941,11 @@ class so_sql
 					}
 					elseif ($val === "!''")
 					{
-						$db_filter[] = $col." != ''";
+						$db_filter[] = $this->table_name . '.' .$col." != ''";
 					}
 					else
 					{
-						$db_filter[$col] = $val;
+						$db_filter[$this->table_name . '.' .$col] = $val;
 					}
 				}
 			}
