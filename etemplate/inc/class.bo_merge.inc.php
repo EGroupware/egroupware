@@ -682,6 +682,12 @@ abstract class bo_merge
 		// agressivly removing all xml-tags eg. Word adds within placeholders
 		$content = preg_replace_callback('/{{[^}]+}}/i',create_function('$p','return \'$$\'.strip_tags(substr($p[0],2,-2)).\'$$\';'),$content);
 
+		// Handle escaped placeholder markers in RTF, they won't match when escaped
+		if($mimetype == 'application/rtf')
+		{
+			$content = preg_replace('/\\\{\\\{([^\\}]+)\\\}\\\}/i','$$\1$$',$content);
+		}
+		
 		// make currently processed mimetype available to class methods;
 		$this->mimetype = $mimetype;
 
