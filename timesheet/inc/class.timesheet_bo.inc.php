@@ -795,7 +795,12 @@ class timesheet_bo extends so_sql_cf
 	{
 		if (!is_array($entry))
 		{
+			// need to preserve the $this->data
+			$backup =& $this->data;
+			unset($this->data);
 			$entry = $this->read( $entry,false,false);
+			// restore the data again
+			$this->data =& $backup;
 		}
 		if (!$entry)
 		{
