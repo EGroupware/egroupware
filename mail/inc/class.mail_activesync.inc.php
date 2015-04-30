@@ -503,7 +503,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$bodyObj = $mailObject->findBody(preg_match("/html/i", $ContentType) ? 'html' : 'plain');
 			$body = $bodyObj ?$bodyObj->getContents() : null;
 			$simpleBodyType = (preg_match("/html/i", $ContentType)?'text/html':'text/plain');
-			if ($this->debugLevel>0) debugLog("IMAP-Sendmail: fetched simple body as ".(preg_match("/html/i", $ContentType)?'html':'text'));
+			if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched simple body as ".(preg_match("/html/i", $ContentType)?'html':'text').'=>'.$body);
 		}
 		else
 		{
@@ -511,6 +511,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$AltBody = ($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null;
 			// prefer plain over html
 			$body = $Body ?$Body : $AltBody;
+			if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched body as ".(strlen(strip_tags($body)) == strlen($body)?'text':'html').'=>'.$body);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($mailObject));
 		// if this is a multipart message with a boundary, we must use the original body
@@ -561,7 +562,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if ($ClientSideMeetingRequest === true && $allowSendingInvitations===false) return true;
 		// as we use our mailer (horde mailer) it is detecting / setting the mimetype by itself while creating the mail
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body:'.$body);
-		$body = str_replace("\r",(preg_match("^text/html^i", $ContentType)?'<br>':""),$body); // what is this for?
+		$body = str_replace("\r",((preg_match("^text/html^i", $ContentType))?'<br>':""),$body); // what is this for?
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body (modified):'.$body);
 		// reply ---------------------------------------------------------------------------
 		if ($smartdata['task'] == 'reply' && isset($smartdata['itemid']) &&
@@ -733,12 +734,16 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
 		if (preg_match("^text/html^i", $ContentType) || preg_match("^multipart^i", $ContentType))
 		{
-			if ($html_body = $mailObject->findBody('html')) $html_body->setContents($body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body,false,true),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			if ($html_body = $mailObject->findBody('html'))
+			{
+				if (strlen(strip_tags($body)) == strlen($body)) $body = "<pre>".$body."</pre>";
+				$html_body->setContents($body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			}
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		else
 		{
-			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body,false,true),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		//advanced debugging
 		// Horde SMTP Class uses utf-8 by default.
