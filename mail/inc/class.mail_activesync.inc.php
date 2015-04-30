@@ -502,7 +502,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		{
 			$bodyObj = $mailObject->findBody(preg_match("/html/i", $ContentType) ? 'html' : 'plain');
 			$body = $bodyObj ?$bodyObj->getContents() : null;
-			translation::replaceEmailAdresses($body);
+			$body = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","[$2]", $body);
 			$simpleBodyType = (preg_match("/html/i", $ContentType)?'text/html':'text/plain');
 			if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched simple body as ".(preg_match("/html/i", $ContentType)?'html':'text').'=>'.$body);
 		}
@@ -512,7 +512,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$AltBody = ($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null;
 			// prefer plain over html
 			$body = $Body ?$Body : $AltBody;
-			translation::replaceEmailAdresses($body);
+			$body = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","[$2]", $body);
 			if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched body as ".(strlen(strip_tags($body)) == strlen($body)?'text':'html').'=>'.$body);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($mailObject));
