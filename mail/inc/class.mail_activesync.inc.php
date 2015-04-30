@@ -502,8 +502,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		{
 			$bodyObj = $mailObject->findBody(preg_match("/html/i", $ContentType) ? 'html' : 'plain');
 			$body = $bodyObj ?$bodyObj->getContents() : null;
+			$body = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","[$2]", $body);
 			$simpleBodyType = (preg_match("/html/i", $ContentType)?'text/html':'text/plain');
-			if ($this->debugLevel>0) debugLog("IMAP-Sendmail: fetched simple body as ".(preg_match("/html/i", $ContentType)?'html':'text'));
+			if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched simple body as ".(preg_match("/html/i", $ContentType)?'html':'text').'=>'.$body);
 		}
 		else
 		{
@@ -511,6 +512,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			$AltBody = ($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null;
 			// prefer plain over html
 			$body = $Body ?$Body : $AltBody;
+			$body = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","[$2]", $body);
+			if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched body as ".(strlen(strip_tags($body)) == strlen($body)?'text':'html').'=>'.$body);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($mailObject));
 		// if this is a multipart message with a boundary, we must use the original body
@@ -561,7 +564,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if ($ClientSideMeetingRequest === true && $allowSendingInvitations===false) return true;
 		// as we use our mailer (horde mailer) it is detecting / setting the mimetype by itself while creating the mail
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body:'.$body);
-		$body = str_replace("\r",(preg_match("^text/html^i", $ContentType)?'<br>':""),$body); // what is this for?
+		$body = str_replace("\r",((preg_match("^text/html^i", $ContentType))?'<br>':""),$body); // what is this for?
 		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body (modified):'.$body);
 		// reply ---------------------------------------------------------------------------
 		if ($smartdata['task'] == 'reply' && isset($smartdata['itemid']) &&
@@ -587,7 +590,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				// plain text Message
 				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
-				if (!preg_match("^text/html^i", $ContentType)) $mailObject->IsHTML(false);
+				if (!preg_match("^text/html^i", $ContentType) && !preg_match("^multipart^i", $ContentType)) $mailObject->IsHTML(false);
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 
@@ -628,14 +631,15 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
             // receive entire mail (header + body)
 			// get message headers for specified message
 			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true, $folder);
-
+			// do forwarding as inline, until we understand why asmail fails
+			$preferencesArray['message_forwarding']='inline';
 			// build a new mime message, forward entire old mail as file
 			if ($preferencesArray['message_forwarding'] == 'asmail')
 			{
 				$rawHeader='';
 				$rawHeader      = $this->mail->getMessageRawHeader($smartdata['itemid'], $_partID,$folder);
 				$rawBody        = $this->mail->getMessageRawBody($smartdata['itemid'], $_partID,$folder);
-				$mailObject->AddStringAttachment($rawHeader.$rawBody, $mailObject->EncodeHeader($headers['SUBJECT']), '7bit', 'message/rfc822');
+				$mailObject->AddStringAttachment($rawHeader.$rawBody, $headers['SUBJECT'].'.eml', 'message/rfc822');
 			}
 			else
 			{
@@ -689,7 +693,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					}
 				}
 			}
-			$ContentType =$mailObject->getHeader('Content-Type');
+			$ContentType = $mailObject->getHeader('Content-Type');
 			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && preg_match("^text/html^i", $ContentType)) $body=nl2br($body);
 			//$mailObject->Encoding = 'base64'; //handled by horde
 		} // end forward
@@ -729,14 +733,23 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
 		// remove carriage-returns from body, set the body of the mailObject
 		if (trim($body) =='' /*&& trim($mailObject->getMessageBody())=='' && $attachmentNames*/) $body .= ($attachmentNames?$attachmentNames:lang('no text body supplied, check attachments for message text'));// to avoid failure on empty messages with attachments
-		//debugLog(__METHOD__.__LINE__.' -> '.$body);
-		if (preg_match("^text/html^i", $ContentType))
+		if (preg_match("^text/html^i", $ContentType) || preg_match("^multipart^i", $ContentType))
 		{
-			if ($html_body = $mailObject->findBody('html')) $html_body->setContents($body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			if ($html_body = $mailObject->findBody('html'))
+			{
+				if (strlen(strip_tags($body)) == strlen($body)) $body = "<pre>".$body."</pre>";
+				if ($this->debugLevel>1) debugLog(__METHOD__.__LINE__.' -> '.$body);
+				$html_body->setContents($body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			}
+			if ($text_body = $mailObject->findBody('plain'))
+			{
+				if ($this->debugLevel>1) debugLog(__METHOD__.__LINE__.' -> '.translation::convertHTMLToText($body));
+				$text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			}
 		}
 		else
 		{
+			if ($this->debugLevel>1) debugLog(__METHOD__.__LINE__.' -> '.translation::convertHTMLToText($body));
 			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		//advanced debugging
@@ -946,7 +959,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
 					if($bodyStructplain[0]['error']==1)
 					{
-						$plainBody = translation::convertHTMLToText($body,true); // always display with preserved HTML
+						$plainBody = translation::convertHTMLToText($body); // always display with preserved HTML
 					}
 					else
 					{
