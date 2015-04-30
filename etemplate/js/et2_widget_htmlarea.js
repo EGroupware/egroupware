@@ -263,7 +263,7 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 	 */
 	resize: function (_height)
 	{
-		if (_height)
+		if (_height && this.options.resize_ratio !== '0')
 		{
 			// apply the ratio
 			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
@@ -272,14 +272,20 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 				if (this.ckeditor) // CKEDITOR HTML
 				{
 					var h = 0;
-					if (typeof this.ckeditor.container.$ != 'undefined' && this.ckeditor.container.$.clientHeight > 0)
-					{	h = (this.ckeditor.container.$.clientHeight + _height) > 0 ? 
+					if (typeof this.ckeditor.container !='undefined' && this.ckeditor.container.$.clientHeight > 0)
+					{
+						h = (this.ckeditor.container.$.clientHeight + _height) > 0 ? 
 						this.ckeditor.container.$.clientHeight + _height: this.ckeditor.config.height;
 					}
-					else
+					else if (this.ckeditor.ui.space('contents'))
 					{
 						h = parseInt(this.ckeditor.ui.space('contents').getStyle('height')) + _height;
 					}
+					else // fallback height size
+					{
+						h = this.ckeditor.config.height + _height;
+					}
+
 					this.ckeditor.resize(0,h);
 				}
 				else // No CKEDITOR
