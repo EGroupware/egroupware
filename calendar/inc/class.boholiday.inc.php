@@ -259,7 +259,7 @@
 				$total_year == $this->so->holiday_total($locale, '', 1901)))
 			{
 				//error_log(__METHOD__."('$locale', $year) attemption autoload ...");
-				egw_cache::setInstance(__CLASS__, $locale.'-'.$year, true, 86400);	// do NOT try again for 1 day
+				egw_cache::setInstance(__CLASS__, $locale.'-'.$year, true, 864000);	// do NOT try again for 10 days
 				@set_time_limit(0);
 
 				/* get the file that contains the calendar events for your locale */

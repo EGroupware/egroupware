@@ -45,7 +45,7 @@ class soholiday
 			{
 				if (!is_numeric($name))
 				{
-					$holiday['hol_'.$name] = $holiday[$name];
+					$holiday['hol_'.$name] = $val;
 				}
 				unset($holiday[$name]);
 			}
@@ -68,6 +68,12 @@ class soholiday
 			{
 				echo "Inserting LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
 			}
+			// delete evtl. existing rules with same name, year (occurence) and local
+			$this->db->delete($this->table, array(
+				'hol_name' => $holiday['hol_name'],
+				'hol_occurence' => $holiday['hol_occurence'],
+				'hol_locale' => $holiday['hol_locale'],
+			), __LINE__, __FILES__, 'calendar');
 			$this->db->insert($this->table,$holiday,False,__LINE__,__FILE__,'calendar');
 		}
 	}
@@ -136,7 +142,7 @@ class soholiday
 	{
 		$this->db->delete($this->table,array('hol_locale' => $locale),__LINE__,__FILE__,'calendar');
 	}
-	
+
 	/* Private functions */
 	function _build_where($locales,$query='',$order='',$year=0,$add_order_by=True)
 	{
@@ -171,18 +177,20 @@ class soholiday
 		{
 			$querymethod = 'hol_locale LIKE '.$this->db->quote('%'.$query.'%');
 		}
-	
+
 		if(!preg_match('/^[a-zA-Z0-9_,]+$/',$order))
 		{
-			$order = 'hol_local';
+			$order = 'hol_locale';
 		}
-		foreach($this->db->select($this->table,'DISTINCT hol_locale',$querymethod,__LINE__,__FILE__,false,$order,'calendar') as $row)
+		if (strtoupper($sort) != 'DESC') $sort = 'ASC';
+		if (strpos($order, ',') === false) $order .= ' '.$sort;
+		foreach($this->db->select($this->table,'DISTINCT hol_locale',$querymethod,__LINE__,__FILE__,false,'ORDER BY '.$order,'calendar') as $row)
 		{
 			$locale[] = $row['hol_locale'];
 		}
 		return $locale;
 	}
-	
+
 	function holiday_total($locale,$query='',$year=0)
 	{
 		$where = $this->_build_where($locale,$query,'',$year,False);
@@ -191,7 +199,7 @@ class soholiday
 		{
 			echo 'HOLIDAY_TOTAL : '.$where.'<br>'."\n";
 		}
-		
+
 		$retval = $this->db->select($this->table,'count(*)',$where,__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 
 		if($this->debug)
