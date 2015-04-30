@@ -587,7 +587,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				// plain text Message
 				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
-				if (!preg_match("^text/html^i", $ContentType)) $mailObject->IsHTML(false);
+				if (!preg_match("^text/html^i", $ContentType) && !preg_match("^multipart^i", $ContentType)) $mailObject->IsHTML(false);
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 
@@ -628,14 +628,15 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
             // receive entire mail (header + body)
 			// get message headers for specified message
 			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true, $folder);
-
+			// do forwarding as inline, until we understand why asmail fails
+			$preferencesArray['message_forwarding']='inline';
 			// build a new mime message, forward entire old mail as file
 			if ($preferencesArray['message_forwarding'] == 'asmail')
 			{
 				$rawHeader='';
 				$rawHeader      = $this->mail->getMessageRawHeader($smartdata['itemid'], $_partID,$folder);
 				$rawBody        = $this->mail->getMessageRawBody($smartdata['itemid'], $_partID,$folder);
-				$mailObject->AddStringAttachment($rawHeader.$rawBody, $mailObject->EncodeHeader($headers['SUBJECT']), '7bit', 'message/rfc822');
+				$mailObject->AddStringAttachment($rawHeader.$rawBody, $headers['SUBJECT'].'.eml', 'message/rfc822');
 			}
 			else
 			{
@@ -689,7 +690,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					}
 				}
 			}
-			$ContentType =$mailObject->getHeader('Content-Type');
+			$ContentType = $mailObject->getHeader('Content-Type');
 			if (isset($simpleBodyType) && $simpleBodyType == 'text/plain' && preg_match("^text/html^i", $ContentType)) $body=nl2br($body);
 			//$mailObject->Encoding = 'base64'; //handled by horde
 		} // end forward
@@ -730,14 +731,14 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		// remove carriage-returns from body, set the body of the mailObject
 		if (trim($body) =='' /*&& trim($mailObject->getMessageBody())=='' && $attachmentNames*/) $body .= ($attachmentNames?$attachmentNames:lang('no text body supplied, check attachments for message text'));// to avoid failure on empty messages with attachments
 		//debugLog(__METHOD__.__LINE__.' -> '.$body);
-		if (preg_match("^text/html^i", $ContentType))
+		if (preg_match("^text/html^i", $ContentType) || preg_match("^multipart^i", $ContentType))
 		{
 			if ($html_body = $mailObject->findBody('html')) $html_body->setContents($body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body,false,true),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		else
 		{
-			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+			if ($text_body = $mailObject->findBody('plain')) $text_body->setContents(translation::convertHTMLToText($body,false,true),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		//advanced debugging
 		// Horde SMTP Class uses utf-8 by default.
@@ -946,7 +947,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
 					if($bodyStructplain[0]['error']==1)
 					{
-						$plainBody = translation::convertHTMLToText($body,true); // always display with preserved HTML
+						$plainBody = translation::convertHTMLToText($body); // always display with preserved HTML
 					}
 					else
 					{
