@@ -134,7 +134,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		/**
 		 * Get handler (link-data) for given path and mime-type
 		 *
-		 * @param {string|object} _path vfs path, egw_link::set_data() id or object with attr path or id, app2 and id2 (path=/apps/app2/id2/id)
+		 * @param {string|object} _path vfs path, egw_link::set_data() id or
+		 *	object with attr path, optinal download_url or id, app2 and id2 (path=/apps/app2/id2/id)
 		 * @param {string} _type mime-type, if not given in _path object
 		 * @return {string|object} string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
 		 */
@@ -187,12 +188,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				// if mime_info did NOT define mime_url attribute, we use a WebDAV url drived from path
 				if (typeof mime_info.mime_url == 'undefined')
 				{
-					data.url = '/webdav.php' + path;
+					data.url = typeof _path == 'object' && _path.download_url ? _path.download_url : '/webdav.php' + path;
 				}
 			}
 			else
 			{
-				var data = '/webdav.php' + path;
+				var data = typeof _path == 'object' && _path.download_url ? _path.download_url : '/webdav.php' + path;
 			}
 			return data;
 		},
@@ -258,25 +259,32 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 *
 		 * Please note, the values of the query get url encoded!
 		 *
-		 * @param {string} _url a url relative to the egroupware install root, it can contain a query too
+		 * @param {string} _url a url relative to the egroupware install root, it can contain a query too or
+		 *	full url containing a schema and "://"
 		 * @param {object|string} _extravars query string arguements as string or array (prefered)
 		 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
 		 * @return {string} generated url
 		 */
 		link: function(_url, _extravars)
 		{
-			if (_url[0] != '/')
+			if (_url.substr(0,4) == 'http' && _url.indexOf('://') < 5)
 			{
-				alert("egw.link('"+_url+"') called with url starting NOT with a slash!");
-				var app = window.egw_appName;
-				if (app != 'login' && app != 'logout') _url = app+'/'+_url;
+				// already a full url (eg. download_url of vfs), nothing to do
 			}
-			// append the url to the webserver url, if not already contained or empty
-			if (this.webserverUrl && this.webserverUrl != '/' && _url.indexOf(this.webserverUrl+'/') != 0)
+			else
 			{
-				_url = this.webserverUrl + _url;
+				if (_url[0] != '/')
+				{
+					alert("egw.link('"+_url+"') called with url starting NOT with a slash!");
+					var app = window.egw_appName;
+					if (app != 'login' && app != 'logout') _url = app+'/'+_url;
+				}
+				// append the url to the webserver url, if not already contained or empty
+				if (this.webserverUrl && this.webserverUrl != '/' && _url.indexOf(this.webserverUrl+'/') != 0)
+				{
+					_url = this.webserverUrl + _url;
+				}
 			}
-
 			var vars = {};
 
 			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
