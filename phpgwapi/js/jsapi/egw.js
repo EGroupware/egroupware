@@ -124,7 +124,7 @@
 			if (debug) console.log('found framework object in top');
 		}
 		// if framework not found, but requested to check for it, redirect to cd=yes to create it
-		else if (egw_script.getAttribute('data-check-framework'))
+		else if (egw_script.getAttribute('data-check-framework') && !window.location.search.match(/[&?]cd=/))
 		{
 			window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
 		}
