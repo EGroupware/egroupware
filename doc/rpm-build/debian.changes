@@ -1,4 +1,14 @@
-egroupware-epl (14.2.20150429-1) hardy; urgency=low
+egroupware-epl (14.2.20150501) hardy; urgency=low
+
+  * Debian 8 and Ubuntu 15.04 packages
+  * Calendar: when trying to load new holidays overwrite existing ones to not accumulate old ones (slowing down calendar)
+  * Mail: fix not working compose on mobile devices / template
+  * Mail/Activesync: Handle problem when forward / reply on mails original message was not included
+  * ProjectManager: fix missing edit & delete buttons in roles
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 01 May 2015 09:35:40 +0200
+
+egroupware-epl (14.2.20150429) hardy; urgency=low
 
   * Calendar: update to remove with 14.2.001 updated set end-date for yearly recuring events (other recurrence-types can not be changed)
   * eTemplate: stoping requesting more and more rows causing browser to stall, if browser does not give us height for rows (probably because it defered rendering)
