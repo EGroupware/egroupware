@@ -1068,6 +1068,30 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 				}
 			}
 		}
+	},
+
+	/**
+	 * Function which allows iterating over the complete widget tree.
+	 *
+	 * @param _callback is the function which should be called for each widget
+	 * @param _context is the context in which the function should be executed
+	 * @param _type is an optional parameter which specifies a class/interface
+	 * 	the elements have to be instanceOf.
+	 */
+	iterateOver: function(_callback, _context, _type)
+	{
+		if (!this.cells) return;
+
+		for(var r=0; r < this.cells.length; ++r)
+		{
+			var row = this.cells[r];
+			for(var c=0; c < row.length; ++c)
+			{
+				if (!row[c].widget) continue;
+
+				row[c].widget.iterateOver(_callback, _context, _type);
+			}
+		}
 	}
 });
 et2_register_widget(et2_grid, ["grid"]);
