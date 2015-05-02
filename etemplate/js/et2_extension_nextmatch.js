@@ -1941,7 +1941,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 						var nm = this;
 						var dialog = et2_dialog.show_dialog(
 							// Abort the long task if they canceled the data load
-							function() {count = total; cancel=true;window.setTimeout(function() {defer.reject();},0)},
+							function() {count = total; cancel=true;window.setTimeout(function() {defer.reject();},0);},
 							egw.lang('Loading'), egw.lang('please wait...'),{},[
 								{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}
 							]
@@ -2025,7 +2025,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 					{"button_id": 1,"text": egw.lang('Ok'), id: 'dialog[ok]', image: 'check', "default":true},
 					// Nice for small lists, kills server for large lists
 					//{"button_id": 2,"text": egw.lang('All'), id: 'dialog[all]', image: ''},
-					{"button_id": 0,"text": egw.lang('Cancel'), id: 'dialog[cancel]', image: 'cancel'},
+					{"button_id": 0,"text": egw.lang('Cancel'), id: 'dialog[cancel]', image: 'cancel'}
 				]
 			);
 			return defer;

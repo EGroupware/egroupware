@@ -106,6 +106,16 @@ var et2_checkbox = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Disable checkbox on runtime
+	 *
+	 * @param {boolean} _ro
+	 */
+	set_readonly: function(_ro)
+	{
+		jQuery(this.getDOMNode()).attr('disabled', _ro);
+	},
+
+	/**
 	 * Override default to return unchecked value
 	 */
 	getValue: function() {
