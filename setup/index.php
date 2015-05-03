@@ -70,7 +70,11 @@ $GLOBALS['egw_setup']->html->show_header(
 	$GLOBALS['egw_info']['setup']['header_msg'],
 	False,
 	'config',
-	$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')'
+	$GLOBALS['egw_setup']->ConfigDomain . ' (' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'].'://'.
+		$GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_user'].'@'.
+		$GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_host'].':'.
+		$GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_port'].'/'.
+		$GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_name'] . ')'
 );
 /* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
 /* $GLOBALS['egw_setup']->clear_session_cache(); */

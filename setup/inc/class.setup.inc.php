@@ -416,7 +416,7 @@ class setup
 				return True;	// match
 			}
 		}
-		$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
+		$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address').' '.$remoteip;
 		error_log(__METHOD__.'-> checking IP failed:'.print_r($remoteip,true));
 		return False;
 	}
