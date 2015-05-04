@@ -187,7 +187,10 @@ class home_favorite_portlet extends home_portlet
 		$favorite_list = array();
 		foreach($favorites as $id => $favorite)
 		{
-			$favorite_list[$id] = $favorite['name'];
+			if($favorite)
+			{
+				$favorite_list[$id] = $favorite['name'];
+			}
 		}
 		$favorite = array(
 			'label'	=>	lang('Favorite'),

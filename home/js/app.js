@@ -873,6 +873,16 @@ app.classes.home.home_weather_portlet = app.classes.home.home_portlet.extend({
 	}
 });
 app.classes.home.home_favorite_portlet = app.classes.home.home_portlet.extend({
+	init: function(portlet) {
+		// call parent
+		this._super.apply(this, arguments);
+
+		// Somehow favorite got lost, or is not set
+		if(!portlet.options.settings.favorite)
+		{
+			portlet.edit_settings();
+		}
+	},
 	observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
 	{
 		if(this.portlet.class.indexOf(_app) == 0 || this.portlet.class == 'home_favorite_portlet')
