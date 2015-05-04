@@ -81,7 +81,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		}
 
 		$content = array('legacy' => '');
-		
+
 		switch($this->favorite['state']['view'])
 		{
 			case 'listview':
@@ -196,5 +196,24 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				unset($values['nm']['select_all']);
 			}
 		}
+	}
+	
+	/**
+	 * No filters default favorite causes problems with calendar's special state handling,
+	 * so just remove it.
+	 * @return type
+	 */
+	public function get_properties()
+	{
+		$properties = parent::get_properties();
+		foreach($properties as &$property)
+		{
+			if($property['name'] == 'favorite')
+			{
+				unset($property['select_options']['blank']);
+				break;
+			}
+		}
+		return $properties;
 	}
  }
