@@ -1318,13 +1318,12 @@ class calendar_uiforms extends calendar_ui
 			$event['whole_day'] = !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
 
 			$link_to_id = $event['id'];
-			if (!$add_link && !$event['id'] && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']))
+			if (!$event['id'] && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']))
 			{
 				$link_ids = is_array($_REQUEST['link_id']) ? $_REQUEST['link_id'] : array($_REQUEST['link_id']);
 				foreach(is_array($_REQUEST['link_app']) ? $_REQUEST['link_app'] : array($_REQUEST['link_app']) as $n => $link_app)
 				{
 					$link_id = $link_ids[$n];
-					$app_entry = array();
 					if(!preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// guard against XSS
 					{
 						continue;
@@ -1688,9 +1687,9 @@ class calendar_uiforms extends calendar_ui
 	 * Display for FMail an iCal meeting request and allow to accept, tentative or reject it or a reply and allow to apply it
 	 *
 	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
-	 * @param array $event=null; special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
+	 * @param array $event = null; special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
 	 * 		are called by new mail-app; and we intend to use the stuff passed on by session
-	 * @param string $msg=null
+	 * @param string $msg = null
 	 */
 	function meeting(array $event=null, $msg=null)
 	{
@@ -1867,7 +1866,7 @@ class calendar_uiforms extends calendar_ui
 		$event['ics_method_label'] = strtolower($ical_method) == 'request' ?
 			lang('Meeting request') : lang('Reply to meeting request');
 		$tpl = new etemplate_new('calendar.meeting');
-		$tpl->exec('calendar.calendar_uiforms.meeting', $event, $sel_options, $readonlys, $event, 2);
+		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event, 2);
 	}
 
 	/**
@@ -2059,7 +2058,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (!$content['duration']) $content['duration'] = $content['end'] - $content['start'];
 			$weekds = 0;
-			foreach ($content['weekdays'] as $keys =>$wdays)
+			foreach ($content['weekdays'] as &$wdays)
 			{
 				$weekds = $weekds + $wdays;
 			}
@@ -2289,8 +2288,6 @@ class calendar_uiforms extends calendar_ui
 		}
 		if (!is_array($content))
 		{
-			$view = $GLOBALS['egw']->session->appsession('view','calendar');
-
 			$content = array(
 				'start' => $this->bo->date2ts($_REQUEST['start'] ? $_REQUEST['start'] : $this->date),
 				'end'   => $this->bo->date2ts($_REQUEST['end'] ? $_REQUEST['end'] : $this->date),
@@ -2597,13 +2594,13 @@ class calendar_uiforms extends calendar_ui
 			foreach($mailContent['addresses'] as $address)
 			{
 				// Get available contacts from the email
-				$contact = $AB->search(array(
+				$contacts = $AB->search(array(
 						'email' => $address['email'],
 						'email_home' => $address['email']
 					),'contact_id,contact_email,contact_email_home,egw_addressbook.account_id as account_id','','','',false,'OR',false,array('owner' => 0),'',false);
-				if (is_array($contact))
+				if (is_array($contacts))
 				{
-					foreach($contact as $account)
+					foreach($contacts as $account)
 					{
 						$accounts[] = $account['account_id'];
 					}
@@ -2633,6 +2630,8 @@ class calendar_uiforms extends calendar_ui
 					'to_app' => 'calendar',
 					'to_id' => 0,
 				),
+				'start' => $mailContent['date'],
+				'duration' => 60 * $this->cal_prefs['interval']
 			);
 			
 			if (is_array($mailContent['attachments']))
