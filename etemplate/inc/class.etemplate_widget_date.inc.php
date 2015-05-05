@@ -210,7 +210,7 @@ class etemplate_widget_date extends etemplate_widget_transformer
 				$valid = $date->format('ts');
 			}
 			// string with formatting letters like for php's date() method
-			elseif (($valid = $date->format($this->attrs['dataformat'])))
+			elseif ($date && ($valid = $date->format($this->attrs['dataformat'])))
 			{
 				// Nothing to do here
 			}
