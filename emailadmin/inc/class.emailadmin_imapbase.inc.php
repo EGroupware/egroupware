@@ -1247,7 +1247,7 @@ class emailadmin_imapbase
 				// we filter for the combined status of unseen and undeleted, as this is what we show in list
 				try
 				{
-					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, array('status'=>array('UNSEEN','UNDELETED')),true,false);
+					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, array('status'=>array('UNSEEN','UNDELETED')),$byUid=true,false);
 					$retValue['unseen'] = $sortResult['count'];
 				}
 				catch (Exception $ee)
