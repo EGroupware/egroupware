@@ -166,13 +166,13 @@ class emailadmin_imapbase
 	/**
 	 * Singleton for emailadmin_imapbase
 	 *
-	 * @param boolean $_restoreSession=true
-	 * @param int $_profileID=0
-	 * @param boolean $_validate=true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
+	 * @param boolean $_restoreSession = true
+	 * @param int $_profileID = 0
+	 * @param boolean $_validate = true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
 	 * @param mixed boolean/object $_icServerObject - if object, return instance with object set as icServer
 	 *												  immediately, if boolean === true use oldImapServer in constructor
-	 * @param boolean $_reuseCache=null if null it is set to the value of $_restoreSession
+	 * @param boolean $_reuseCache = null if null it is set to the value of $_restoreSession
 	 * @return emailadmin_imapbase
 	 */
 	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true, $_oldImapServerObject=false, $_reuseCache=null)
@@ -272,8 +272,8 @@ class emailadmin_imapbase
 	/**
 	 * store given ProfileID to Session and pref
 	 *
-	 * @param int $_profileID=0
-	 * @param boolean $_testConnection=0
+	 * @param int $_profileID = 0
+	 * @param boolean $_testConnection = 0
 	 * @return mixed $_profileID or false on failed ConnectionTest
 	 */
 	public static function storeActiveProfileIDToPref($_icServerObject, $_profileID=0, $_testConnection=true)
@@ -290,7 +290,7 @@ class emailadmin_imapbase
 		{
 			try
 			{
-				$mailbox = $_icServerObject->getCurrentMailbox();
+				$_icServerObject->getCurrentMailbox();
 			}
 			catch (Exception $e)
 			{
@@ -318,7 +318,7 @@ class emailadmin_imapbase
 	 * - non-empty imap-host
 	 * - non-empty imap-username
 	 *
-	 * @param int $_acc_id=0
+	 * @param int $_acc_id = 0
 	 * @return int validated acc_id -> either acc_id given, or first valid one
 	 */
 	public static function validateProfileID($_acc_id=0)
@@ -356,11 +356,11 @@ class emailadmin_imapbase
 	/**
 	 * Private constructor, use emailadmin_imapbase::getInstance() instead
 	 *
-	 * @param string $_displayCharset='utf-8'
-	 * @param boolean $_restoreSession=true
-	 * @param int $_profileID=0 if not nummeric, we assume we only want an empty class object
-	 * @param boolean $_oldImapServerObject=false
-	 * @param boolean $_reuseCache=null if null it is set to the value of $_restoreSession
+	 * @param string $_displayCharset = 'utf-8'
+	 * @param boolean $_restoreSession = true
+	 * @param int $_profileID = 0 if not nummeric, we assume we only want an empty class object
+	 * @param boolean $_oldImapServerObject = false
+	 * @param boolean $_reuseCache = null if null it is set to the value of $_restoreSession
 	 */
 	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_oldImapServerObject=false, $_reuseCache=null)
 	{
@@ -445,7 +445,7 @@ class emailadmin_imapbase
 	function restoreSessionData()
 	{
 		$this->sessionData = array();//egw_cache::getCache(egw_cache::SESSION,'mail','session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
-		self::$activeFolderCache = egw_cache::getCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		self::$activeFolderCache = egw_cache::getCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*10);
 		if (!empty(self::$activeFolderCache[$this->profileID])) $this->sessionData['mailbox'] = self::$activeFolderCache[$this->profileID];
 	}
 
@@ -458,7 +458,7 @@ class emailadmin_imapbase
 		if (!empty($this->sessionData['mailbox'])) self::$activeFolderCache[$this->profileID]=$this->sessionData['mailbox'];
 		if (isset(self::$activeFolderCache) && is_array(self::$activeFolderCache))
 		{
-			egw_cache::setCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),self::$activeFolderCache, $expiration=60*60*10);
+			egw_cache::setCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),self::$activeFolderCache, 60*60*10);
 		}
 	}
 
@@ -471,7 +471,7 @@ class emailadmin_imapbase
 	 * 4) HierarchyDelimiter
 	 * 5) VacationNotice
 	 *
-	 * @param int $_profileID=null default profile of user as returned by getUserDefaultProfileID
+	 * @param int $_profileID = null default profile of user as returned by getUserDefaultProfileID
 	 * @return void
 	 */
 	static function unsetCachedObjects($_profileID=null)
@@ -522,10 +522,10 @@ class emailadmin_imapbase
 				$_profileID = null;
 				self::resetConnectionErrorCache($_profileID,$account_id);
 				self::resetFolderObjectCache($_profileID,$account_id);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($account_id),array(), $expiration=60*60*1);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($account_id),array(), $expiration=60*60*24*5);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($account_id),array(), $expiration=60*60*1);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','vacationNotice'.trim($account_id),array(), $expiration=60*60*24*1);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($account_id),array(), 60*60*1);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($account_id),array(), 60*60*24*5);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($account_id),array(), 60*60*1);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','vacationNotice'.trim($account_id),array(), 60*60*24*1);
 			}
 		}
 	}
@@ -549,7 +549,6 @@ class emailadmin_imapbase
 		}
 		if (is_null($_ImapServerId))
 		{
-			$buff = array();
 			$isConError = array();
 			$waitOnFailure = array();
 		}
@@ -560,14 +559,14 @@ class emailadmin_imapbase
 			{
 				unset($isConError[$_ImapServerId]);
 			}
-			$waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($account_id),$callback=null,$callback_params=array(),$expiration=60*60*2);
+			$waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($account_id),null,array(),60*60*2);
 			if (isset($waitOnFailure[$_ImapServerId]))
 			{
 				unset($waitOnFailure[$_ImapServerId]);
 			}
 		}
-		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($account_id),$isConError,$expiration=60*15);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($account_id),$waitOnFailure,$expiration=60*60*2);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($account_id),$isConError,60*15);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($account_id),$waitOnFailure,60*60*2);
 	}
 
 	/**
@@ -591,12 +590,12 @@ class emailadmin_imapbase
 		}
 		else
 		{
-			$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($account_id),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($account_id),null,array(),60*60*1);
 			if (!empty($folders2return) && isset($folders2return[$_ImapServerId]))
 			{
 				unset($folders2return[$_ImapServerId]);
 			}
-			$folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($account_id),null,array(),$expiration=60*60*5);
+			$folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($account_id),null,array(),60*60*5);
 			if (!empty($folderInfo) && isset($folderInfo[$_ImapServerId]))
 			{
 				unset($folderInfo[$_ImapServerId]);
@@ -608,23 +607,23 @@ class emailadmin_imapbase
 				unset($lastFolderUsedForMove[$_ImapServerId]);
 			}
 			*/
-			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($account_id),null,array(),$expiration=60*60*1);
+			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($account_id),null,array(),60*60*1);
 			if (!empty($folderBasicInfo) && isset($folderBasicInfo[$_ImapServerId]))
 			{
 				unset($folderBasicInfo[$_ImapServerId]);
 			}
-			$_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($account_id),null,array(),$expiration=60*60*12);
+			$_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($account_id),null,array(),60*60*12);
 			if (!empty($_specialUseFolders) && isset($_specialUseFolders[$_ImapServerId]))
 			{
 				unset($_specialUseFolders[$_ImapServerId]);
 				self::$specialUseFolders=null;
 			}
 		}
-		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($account_id),$folders2return, $expiration=60*60*1);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($account_id),$folderInfo,$expiration=60*60*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($account_id),$folders2return, 60*60*1);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($account_id),$folderInfo,60*60*5);
 		//egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($account_id),$lastFolderUsedForMove,$expiration=60*60*1);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($account_id),$folderBasicInfo,$expiration=60*60*1);
-		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($account_id),$_specialUseFolders,$expiration=60*60*12);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($account_id),$folderBasicInfo,60*60*1);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($account_id),$_specialUseFolders,60*60*12);
 	}
 
 	/**
@@ -663,7 +662,7 @@ class emailadmin_imapbase
 
 	/**
 	 * getAllIdentities - function to gather the identities connected to the current user
-	 * @param string/int $_accountToSearch; null; if set search accounts for user specified
+	 * @param string/int $_accountToSearch = null if set search accounts for user specified
 	 * @param boolean $resolve_placeholders wether or not resolve possible placeholders in identities
 	 * @return array - array(email=>realname)
 	 */
@@ -726,7 +725,7 @@ class emailadmin_imapbase
 	 */
 	function getDefaultIdentity() {
 		// retrieve the signature accociated with the identity
-		$id = $this->getIdentitiesWithAccounts($_accountData);
+		$id = $this->getIdentitiesWithAccounts($_accountData=array());
 		$acc = emailadmin_account::read($this->profileID);
 		$accountDataIT = ($_accountData[$this->profileID]?$acc->identities($this->profileID,false,'ident_id'):$acc->identities($_accountData[$id],false,'ident_id'));
 		foreach($accountDataIT as $it => $accountData)
@@ -745,7 +744,7 @@ class emailadmin_imapbase
 	{
 		// account select box
 		$selectedID = $this->profileID;
-		$allAccountData = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null);
+		$allAccountData = emailadmin_account::search($only_current_user=true, false, null);
 		if ($allAccountData) {
 			$rememberFirst=$selectedFound=null;
 			foreach ($allAccountData as $tmpkey => $icServers)
@@ -808,7 +807,7 @@ class emailadmin_imapbase
 	/**
 	 * reopens a connection for the active Server ($this->icServer), and selects the folder given
 	 *
-	 * @param string $_foldername, folder to open/select
+	 * @param string $_foldername folder to open/select
 	 * @return void
 	 */
 	function reopen($_foldername)
@@ -835,8 +834,8 @@ class emailadmin_imapbase
 	/**
 	 * openConnection
 	 *
-	 * @param int $_icServerID
-	 * @param boolean $_adminConnection
+	 * @param int $_icServerID = 0
+	 * @param boolean $_adminConnection = false
 	 * @throws Horde_Imap_Client_Exception on connection error or authentication failure
 	 * @throws InvalidArgumentException on missing credentials
 	 */
@@ -939,7 +938,6 @@ class emailadmin_imapbase
 			{
 				foreach ($singleNameSpaceArray as $k => $singleNameSpace)
 				{
-					$prefix_present = false;
 					$_foldersNameSpace = array();
 					if($type == 'personal' && $singleNameSpace['name'] == '#mh/' && ($this->folderExists('Mail')||$this->folderExists('INBOX')))
 					{
@@ -975,7 +973,7 @@ class emailadmin_imapbase
 	 */
 	function getFolderPrefixFromNamespace($nameSpace, $folderName)
 	{
-		foreach($nameSpace as $k => $singleNameSpace)
+		foreach($nameSpace as &$singleNameSpace)
 		{
 			//if (substr($singleNameSpace['prefix'],0,strlen($folderName))==$folderName) return $singleNameSpace['prefix'];
 			if (substr($folderName,0,strlen($singleNameSpace['prefix']))==$singleNameSpace['prefix']) return $singleNameSpace['prefix'];
@@ -991,7 +989,7 @@ class emailadmin_imapbase
 	function getHierarchyDelimiter($_useCache=true)
 	{
 		static $HierarchyDelimiter;
-		if (is_null($HierarchyDelimiter)) $HierarchyDelimiter = egw_cache::getCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
+		if (is_null($HierarchyDelimiter)) $HierarchyDelimiter = egw_cache::getCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*24*5);
 		if ($_useCache===false) unset($HierarchyDelimiter[$this->icServer->ImapServerId]);
 		if (isset($HierarchyDelimiter[$this->icServer->ImapServerId])&&!empty($HierarchyDelimiter[$this->icServer->ImapServerId]))
 		{
@@ -1007,7 +1005,7 @@ class emailadmin_imapbase
 		{
 			$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		}
-		egw_cache::setCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),$HierarchyDelimiter, $expiration=60*60*24*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),$HierarchyDelimiter, 60*60*24*5);
 		return $HierarchyDelimiter[$this->icServer->ImapServerId];
 	}
 
@@ -1020,7 +1018,7 @@ class emailadmin_imapbase
 	{
 		//error_log(__METHOD__.' ('.__LINE__.') '.':'.$this->icServer->ImapServerId.' Connected:'.$this->icServer->_connected);
 		static $_specialUseFolders;
-		if (is_null($_specialUseFolders)||empty($_specialUseFolders)) $_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
+		if (is_null($_specialUseFolders)||empty($_specialUseFolders)) $_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*24*5);
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_trash));
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_sent));
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_draft));
@@ -1040,7 +1038,7 @@ class emailadmin_imapbase
 		$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_junk]='Junk';
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders));//.'<->'.array2string($this->icServer));
 		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId];
-		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, 60*60*24*5);
 		return $_specialUseFolders[$this->icServer->ImapServerId];
 	}
 
@@ -1210,7 +1208,7 @@ class emailadmin_imapbase
 		if (!empty($nameSpace[$this->profileID]))
 		{
 			$nsNoPersonal=array();
-			foreach($nameSpace[$this->profileID] as $k => $ns)
+			foreach($nameSpace[$this->profileID] as &$ns)
 			{
 				if ($ns['type']!='personal') $nsNoPersonal[]=$ns;
 			}
@@ -1249,7 +1247,7 @@ class emailadmin_imapbase
 				// we filter for the combined status of unseen and undeleted, as this is what we show in list
 				try
 				{
-					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('UNSEEN','UNDELETED')),$byUid=true,false);
+					$sortResult = $this->getSortedList($_folderName, $_sort=0, 1, array('status'=>array('UNSEEN','UNDELETED')),true,false);
 					$retValue['unseen'] = $sortResult['count'];
 				}
 				catch (Exception $ee)
@@ -1277,8 +1275,8 @@ class emailadmin_imapbase
 	 * @param array $_sort sort by criteria
 	 * @param boolean $_reverse reverse sorting of the result array (may be switched, as it is passed to getSortedList by reference)
 	 * @param array $_filter filter to apply to getSortedList
-	 * @param mixed $_thisUIDOnly=null, if given fetch the headers of this uid only (either one, or array of uids)
-	 * @param boolean $_cacheResult=true try touse the cache of getSortedList
+	 * @param mixed $_thisUIDOnly = null, if given fetch the headers of this uid only (either one, or array of uids)
+	 * @param boolean $_cacheResult = true try touse the cache of getSortedList
 	 * @return array result as array(header=>array,total=>int,first=>int,last=>int)
 	 */
 	function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true)
@@ -1300,8 +1298,8 @@ class emailadmin_imapbase
 			{
 				// this will not work we must calculate the range we want to retieve as e.g.: 0:20 retirieves the first 20 mails and sorts them
 				// if sort capability is applied to the range fetched, not sort first and fetch the range afterwards
-				$start = $_startMessage-1;
-				$end = $_startMessage-1+$_numberOfMessages;
+				//$start = $_startMessage-1;
+				//$end = $_startMessage-1+$_numberOfMessages;
 				//$_filter['range'] ="$start:$end";
 				//$_filter['range'] ="$_startMessage:*";
 			}
@@ -1376,7 +1374,7 @@ class emailadmin_imapbase
 			$sortResult = (is_array($_thisUIDOnly) ? $_thisUIDOnly:(array)$_thisUIDOnly);
 		}
 
-		//$queryString = implode(',', $sortResult);
+		
 		// fetch the data for the selected messages
 		if (self::$debug||self::$debugTimes) $starttime = microtime(true);
 		try
@@ -1414,7 +1412,11 @@ class emailadmin_imapbase
 		if (self::$debug||self::$debugTimes)
 		{
 			self::logRunTimes($starttime,null,'HordeFetch: for Folder:'.$_folderName.' Filter:'.array2string($_filter),__METHOD__.' ('.__LINE__.') ');
-			if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.' Query:'.$queryString.' Result:'.array2string($headersNew));
+			if (self::$debug)
+			{
+				$queryString = implode(',', $sortResult);
+				error_log(__METHOD__.' ('.__LINE__.') '.' Query:'.$queryString.' Result:'.array2string($headersNew));
+			}
 		}
 
 		$count = 0;
@@ -1506,7 +1508,7 @@ class emailadmin_imapbase
 					if ($mime_type=='message/rfc822')
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.':'.array2string($part->contentTypeMap()));
-						foreach($part->contentTypeMap() as $sub_id => $sub_type) if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;
+						foreach($part->contentTypeMap() as $sub_id => $sub_type) { if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;}
 					}
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.' Disp:'.$partdisposition.' Type:'.$partPrimaryType.' Skip:'.array2string($skipParts));
 					if (array_key_exists($mime_id,$skipParts)) continue;
@@ -1543,7 +1545,7 @@ class emailadmin_imapbase
 									if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName();
 									$attachment['size'] = $part->getBytes();
 									if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
-									if (empty($attachment['name'])) $attachment['name'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.mime_magic::mime2ext($attachment['mimeType']);
+									if (empty($attachment['name'])) $attachment['name'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$attachment['uid'].'_Part'.$mime_id).'.'.mime_magic::mime2ext($attachment['mimeType']);
 									$headerObject['ATTACHMENTS'][$mime_id.'.'.$vmime_id] = $attachment;
 								}
 								if ($tnefResolved) unset($headerObject['ATTACHMENTS'][$mime_id]);
@@ -1568,7 +1570,7 @@ class emailadmin_imapbase
 				}
 				//error_log(__METHOD__.' ('.__LINE__.') '.' '.$headerObject['SUBJECT'].'->'.$headerObject['DATE']);
 				//error_log(__METHOD__.' ('.__LINE__.') '.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
-				if (isset($headerObject['ATTACHMENTS']) && count($headerObject['ATTACHMENTS'])) foreach ($headerObject['ATTACHMENTS'] as $pID =>$a) $retValue['header'][$sortOrder[$uid]]['attachments'][]=$a;
+				if (isset($headerObject['ATTACHMENTS']) && count($headerObject['ATTACHMENTS'])) foreach ($headerObject['ATTACHMENTS'] as &$a) { $retValue['header'][$sortOrder[$uid]]['attachments'][]=$a;}
 				$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 				$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
 				$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime(($headerObject['DATE']&&!($headerObject['DATE']=='NIL')?$headerObject['DATE']:$headerObject['INTERNALDATE']),'ts',true);
@@ -1703,23 +1705,23 @@ class emailadmin_imapbase
 		//error_log(__METHOD__.' ('.__LINE__.') '.' Filter:'.array2string($_filter));
 		$try2useCache = true;
 		static $eMailListContainsDeletedMessages;
-		if (is_null($eMailListContainsDeletedMessages)) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		if (is_null($eMailListContainsDeletedMessages)) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
 		// this indicates, that there is no Filter set, and the returned set/subset should not contain DELETED Messages, nor filtered for UNDELETED
 		if ($setSession==true && ((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
 		{
 			if (self::$debugTimes) $starttime = microtime(true);
-			if (is_null($eMailListContainsDeletedMessages) || empty($eMailListContainsDeletedMessages[$this->profileID]) || empty($eMailListContainsDeletedMessages[$this->profileID][$_folderName])) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (is_null($eMailListContainsDeletedMessages) || empty($eMailListContainsDeletedMessages[$this->profileID]) || empty($eMailListContainsDeletedMessages[$this->profileID][$_folderName])) $eMailListContainsDeletedMessages = egw_cache::getCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
 			$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
-			if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') Found DeletedMessages:'.array2string($sortResult['match']->ids));
+			if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') Found DeletedMessages:'.array2string($eMailListContainsDeletedMessages));
 			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] =$deletedMessages['count'];
-			egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
+			egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, 60*60*1);
 			if (self::$debugTimes) self::logRunTimes($starttime,null,'setting eMailListContainsDeletedMessages for Profile:'.$this->profileID.' Folder:'.$_folderName.' to '.$eMailListContainsDeletedMessages[$this->profileID][$_folderName],__METHOD__.' ('.__LINE__.') ');			//error_log(__METHOD__.' ('.__LINE__.') '.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['MESSAGES']).'/'.self::$folderStatusCache[$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.self::$folderStatusCache[$this->profileID][$_folderName]['deleted']);
 		}
 		$try2useCache = false;
 		//self::$supportsORinQuery[$this->profileID]=true;
 		if (is_null(self::$supportsORinQuery) || !isset(self::$supportsORinQuery[$this->profileID]))
 		{
-			self::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			self::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*10);
 			if (!isset(self::$supportsORinQuery[$this->profileID])) self::$supportsORinQuery[$this->profileID]=true;
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_filter).' SupportsOrInQuery:'.self::$supportsORinQuery[$this->profileID]);
@@ -1777,7 +1779,7 @@ class emailadmin_imapbase
 				//error_log(__METHOD__.'('.__LINE__.'):'.$e->getMessage());
 				// possible error OR Query. But Horde gives no detailed Info :-(
 				self::$supportsORinQuery[$this->profileID]=false;
-				egw_cache::setCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),self::$supportsORinQuery,$expiration=60*60*10);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),self::$supportsORinQuery,60*60*10);
 				if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver seems to have NO OR Capability for Search:".$sortResult->message);
 				$filter = $this->createIMAPFilter($_folderName, $_filter, self::$supportsORinQuery[$this->profileID]);
 				try
@@ -1889,7 +1891,7 @@ class emailadmin_imapbase
 		$imapFilter->charset('UTF-8');
 
 		//_debug_array($_criterias);
-		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
+		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.' Criterias:'.(!is_array($_criterias)?" none -> returning":array2string($_criterias)));
 		if((!is_array($_criterias) || $_criterias['status']=='any') && (!isset($_criterias['string']) || empty($_criterias['string']))) {
 			$imapFilter->flag('DELETED', $set=false);
 			return $imapFilter;
@@ -2222,7 +2224,7 @@ class emailadmin_imapbase
 			{
 				$opts['special_use'] = self::$specialUseFolders[$newFolderName];
 			}
-			$rv = $this->icServer->createMailbox($newFolderName, $opts);
+			$this->icServer->createMailbox($newFolderName, $opts);
 		}
 		catch (Exception $e)
 		{
@@ -2232,7 +2234,7 @@ class emailadmin_imapbase
 		}
 		try
 		{
-			$srv = $this->icServer->subscribeMailbox($newFolderName);
+			$this->icServer->subscribeMailbox($newFolderName);
 		}
 		catch (Exception $e)
 		{
@@ -2267,14 +2269,14 @@ class emailadmin_imapbase
 		if (self::$debug) error_log("create folder: $newFolderName");
 		try
 		{
-			$rv = $this->icServer->renameMailbox($oldFolderName, $newFolderName);
+			$this->icServer->renameMailbox($oldFolderName, $newFolderName);
 		}
 		catch (Exception $e)
 		{
 			throw new egw_exception(__METHOD__." failed for $oldFolderName (rename to: $newFolderName) with error:".$e->getMessage());;
 		}
 		// clear FolderExistsInfoCache
-		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*60*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,60*60*5);
 
 		return $newFolderName;
 
@@ -2297,10 +2299,10 @@ class emailadmin_imapbase
 		}
 		catch (Exception $e)
 		{
-			throw new egw_exception("Deleting Folder $_foldername failed! Error:".$e->getMessage());;
+			throw new egw_exception("Deleting Folder $_folderName failed! Error:".$e->getMessage());;
 		}
 		// clear FolderExistsInfoCache
-		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*60*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,60*60*5);
 
 		return true;
 	}
@@ -2352,7 +2354,7 @@ class emailadmin_imapbase
 
 		if ($_subscribedOnly && $_getCounters===false)
 		{
-			if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
 			if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.' ('.__LINE__.') '.' using Cached folderObjects'.array2string($folders2return[$this->icServer->ImapServerId]));
@@ -2362,9 +2364,8 @@ class emailadmin_imapbase
 		}
 		// use $folderBasicInfo for holding attributes and other basic folderinfo $folderBasicInfo[$this->icServer->ImapServerId]
 		static $folderBasicInfo;
-		if (is_null($folderBasicInfo)||!isset($folderBasicInfo[$this->icServer->ImapServerId])) $folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+		if (is_null($folderBasicInfo)||!isset($folderBasicInfo[$this->icServer->ImapServerId])) $folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string(array_keys($folderBasicInfo[$this->icServer->ImapServerId])));
-		$isUWIMAP = false;
 
 		$delimiter = $this->getHierarchyDelimiter();
 
@@ -2391,6 +2392,7 @@ class emailadmin_imapbase
 		//$nameSpace = $this->icServer->getNameSpaces();
 		$nameSpace = $this->_getNameSpaces();
 		$fetchedAllInOneGo = false;
+		$subscribedFoldersForCache = $foldersNameSpace = array();
 		//error_log(__METHOD__.__LINE__.array2string($nameSpace));
 		if (is_array($nameSpace))
 		{
@@ -2653,7 +2655,7 @@ class emailadmin_imapbase
 		$rv = false;
 		foreach ($haystack as $k => $v)
 		{
-			foreach($v as $sk => $sv) if (trim($sv)==trim($needle)) return $k;
+			foreach($v as &$sv) {if (trim($sv)==trim($needle)) return $k;}
 		}
 		return $rv;
 	}
@@ -2663,7 +2665,7 @@ class emailadmin_imapbase
 	 *
 	 * Helper function to sort folder-objects by displayname
 	 * @param object $a
-	 * @param object $b, array of folderobjects
+	 * @param object $b array of folderobjects
 	 * @return int expect values (0, 1 or -1)
 	 */
 	function sortByDisplayName($a,$b)
@@ -2677,7 +2679,7 @@ class emailadmin_imapbase
 	 *
 	 * Helper function to sort folder-objects by auto Folder Position
 	 * @param object $a
-	 * @param object $b, array of folderobjects
+	 * @param object $b array of folderobjects
 	 * @return int expect values (0, 1 or -1)
 	 */
 	function sortByAutoFolderPos($a,$b)
@@ -2754,7 +2756,7 @@ class emailadmin_imapbase
 		if (is_array($mbx[$mbxkeys[0]]["ATTRIBUTES"]) && (in_array('\HasChildren',$mbx[$mbxkeys[0]]["ATTRIBUTES"]) || in_array('\Haschildren',$mbx[$mbxkeys[0]]["ATTRIBUTES"]) || in_array('\haschildren',$mbx[$mbxkeys[0]]["ATTRIBUTES"]))) {
 			// if there are children fetch them
 			//echo $mbx[$mbxkeys[0]]['MAILBOX']."<br>";
-			unset($buff);
+			
 			$buff = $this->icServer->getMailboxes($mbx[$mbxkeys[0]]['MAILBOX'].($mbx[$mbxkeys[0]]['MAILBOX'] == $prefix ? '':$delimiter),2,false);
 			//$buff = $this->icServer->getMailboxes($mbx[$mbxkeys[0]]['MAILBOX'],2,false);
 			//_debug_array($buff);
@@ -2778,8 +2780,8 @@ class emailadmin_imapbase
 	/**
 	 * _getSpecialUseFolder
 	 * abstraction layer for getDraftFolder, getTemplateFolder, getTrashFolder and getSentFolder
-	 * @param string $type the type to fetch (Drafts|Template|Trash|Sent)
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param string $_type the type to fetch (Drafts|Template|Trash|Sent)
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @param boolean& $created =null on return true: if folder was just created, false if not
 	 * @return mixed string or false
 	 */
@@ -2870,7 +2872,7 @@ class emailadmin_imapbase
 
 	/**
 	 * getDraftFolder wrapper for _getSpecialUseFolder Type Drafts
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
 	 */
 	function getJunkFolder($_checkexistance=TRUE)
@@ -2880,7 +2882,7 @@ class emailadmin_imapbase
 
 	/**
 	 * getDraftFolder wrapper for _getSpecialUseFolder Type Drafts
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
 	 */
 	function getDraftFolder($_checkexistance=TRUE)
@@ -2890,7 +2892,7 @@ class emailadmin_imapbase
 
 	/**
 	 * getTemplateFolder wrapper for _getSpecialUseFolder Type Template
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
 	 */
 	function getTemplateFolder($_checkexistance=TRUE)
@@ -2900,7 +2902,7 @@ class emailadmin_imapbase
 
 	/**
 	 * getTrashFolder wrapper for _getSpecialUseFolder Type Trash
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
 	 */
 	function getTrashFolder($_checkexistance=TRUE)
@@ -2910,7 +2912,7 @@ class emailadmin_imapbase
 
 	/**
 	 * getSentFolder wrapper for _getSpecialUseFolder Type Sent
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
 	 */
 	function getSentFolder($_checkexistance=TRUE)
@@ -2920,7 +2922,7 @@ class emailadmin_imapbase
 
 	/**
 	 * getOutboxFolder wrapper for _getSpecialUseFolder Type Outbox
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
 	 */
 	function getOutboxFolder($_checkexistance=TRUE)
@@ -2930,8 +2932,8 @@ class emailadmin_imapbase
 
 	/**
 	 * isSentFolder is the given folder the sent folder or at least a subfolder of it
-	 * @param string $_foldername, folder to perform the check on
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param string $_folderName folder to perform the check on
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return boolean
 	 */
 	function isSentFolder($_folderName, $_checkexistance=TRUE)
@@ -2954,8 +2956,8 @@ class emailadmin_imapbase
 
 	/**
 	 * checks if the Outbox folder exists and is part of the foldername to be checked
-	 * @param string $_foldername, folder to perform the check on
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param string $_folderName folder to perform the check on
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return boolean
 	 */
 	function isOutbox($_folderName, $_checkexistance=TRUE)
@@ -2977,8 +2979,8 @@ class emailadmin_imapbase
 
 	/**
 	 * isDraftFolder is the given folder the sent folder or at least a subfolder of it
-	 * @param string $_foldername, folder to perform the check on
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param string $_folderName folder to perform the check on
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return boolean
 	 */
 	function isDraftFolder($_folderName, $_checkexistance=TRUE)
@@ -3001,8 +3003,8 @@ class emailadmin_imapbase
 
 	/**
 	 * isTrashFolder is the given folder the sent folder or at least a subfolder of it
-	 * @param string $_foldername, folder to perform the check on
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param string $_folderName folder to perform the check on
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return boolean
 	 */
 	function isTrashFolder($_folderName, $_checkexistance=TRUE)
@@ -3025,8 +3027,8 @@ class emailadmin_imapbase
 
 	/**
 	 * isTemplateFolder is the given folder the sent folder or at least a subfolder of it
-	 * @param string $_foldername, folder to perform the check on
-	 * @param boolean $_checkexistance, trigger check for existance
+	 * @param string $_folderName folder to perform the check on
+	 * @param boolean $_checkexistance trigger check for existance
 	 * @return boolean
 	 */
 	function isTemplateFolder($_folderName, $_checkexistance=TRUE)
@@ -3049,8 +3051,8 @@ class emailadmin_imapbase
 
 	/**
 	 * folderExists checks for existance of a given folder
-	 * @param string $_foldername, folder to perform the check on
-	 * @param boolean $_forceCheck, trigger check for existance on icServer
+	 * @param string $_folder folder to perform the check on
+	 * @param boolean $_forceCheck trigger check for existance on icServer
 	 * @return mixed string or false
 	 */
 	function folderExists($_folder, $_forceCheck=false)
@@ -3145,7 +3147,6 @@ class emailadmin_imapbase
 	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
 	{
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->'.array2string($_messageUID).','.array2string($_folder).', '.$_forceDeleteMethod);
-		$msglist = '';
 		$oldMailbox = '';
 		if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];
 		if (empty($_messageUID))
@@ -3183,13 +3184,13 @@ class emailadmin_imapbase
 			case "move_to_trash":
 				//error_log(__METHOD__.' ('.__LINE__.') ');
 				$updateCache = true;
-				if(!empty($trashFolder)); {
+				if(!empty($trashFolder)) {
 					if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.implode(' : ', $_messageUID));
 					if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."$trashFolder <= $_folder / ". $this->sessionData['mailbox']);
 					// copy messages
 					try
 					{
-						$retValue = $this->icServer->copy($_folder, $trashFolder, array('ids'=>$uidsToDelete,'move'=>true));
+						$this->icServer->copy($_folder, $trashFolder, array('ids'=>$uidsToDelete,'move'=>true));
 					}
 					catch (Exception $e)
 					{
@@ -3347,7 +3348,7 @@ class emailadmin_imapbase
 		}
 		try
 		{
-			foreach($messageUIDs as $k => $uids)
+			foreach($messageUIDs as &$uids)
 			{
 				if ($uids==='all')
 				{
@@ -3468,9 +3469,8 @@ class emailadmin_imapbase
 	 */
 	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
-		$msglist = '';
 		$source = emailadmin_account::read(($_sourceProfileID?$_sourceProfileID:$this->icServer->ImapServerId))->imapServer();
-		$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
+		//$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
 		if (empty($_messageUID))
 		{
 			if (self::$debug) error_log(__METHOD__." no Message(s): ".implode(',',$_messageUID));
@@ -3512,7 +3512,7 @@ class emailadmin_imapbase
 				$retUid = new Horde_Imap_Client_Ids();
 				// we copy chunks of 5 to avoid too much memory and/or server stress
 				// some servers seem not to allow/support the appendig of multiple messages. so we are down to one
-				foreach($headersNew as $id=>$_headerObject) {
+				foreach($headersNew as &$_headerObject) {
 					$c++;
 					$flags = $_headerObject->getFlags(); //unseen status seems to be lost when retrieving the full message
 					$date = $_headerObject->getImapDate();
@@ -3578,7 +3578,6 @@ class emailadmin_imapbase
 			{
 				error_log(__METHOD__.' ('.__LINE__.') '."Copying to Folder $_foldername failed! Error:".$e->getMessage());
 				throw new egw_exception("Copying to Folder $_foldername failed! Error:".$e->getMessage());
-				return false;
 			}
 		}
 
@@ -3763,11 +3762,11 @@ class emailadmin_imapbase
 			case 'BASE64':
 				// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
 				return base64_decode($_mimeMessage);
-				break;
+				
 			case 'QUOTED-PRINTABLE':
 				// use imap_qprint to decode
 				return quoted_printable_decode($_mimeMessage);
-				break;
+
 			case 'WEDONTKNOWTHEENCODING':
 				// try base64
 				$r = base64_decode($_mimeMessage);
@@ -3779,7 +3778,6 @@ class emailadmin_imapbase
 			default:
 				// it is either not encoded or we don't know about it
 				return $_mimeMessage;
-				break;
 		}
 	}
 
@@ -3789,7 +3787,7 @@ class emailadmin_imapbase
 	 * a wrapper for multipartmixed
 	 * @param string/int $_uid the messageuid,
 	 * @param Horde_Mime_Part $_structure structure for parsing
-	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @return array containing the desired part
 	 */
@@ -3919,8 +3917,8 @@ class emailadmin_imapbase
 	 * Get part of the message, if its stucture is indicating its of multipart mixed style
 	 *
 	 * @param int $_uid the messageuid,
-	 * @param Horde_Mime_Part $_structure='', if given use structure for parsing
-	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param Horde_Mime_Part $_structure = '' if given use structure for parsing
+	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @return array containing the desired part
 	 */
@@ -4014,7 +4012,7 @@ class emailadmin_imapbase
 					if($part->getSubType() == 'rfc822' || $part->getDisposition() == 'attachment')
 					{
 						$skipParts[$mime_id.'.0'] = $mime_type;
-						foreach($part->contentTypeMap() as $sub_id => $sub_type) $skipParts[$sub_id] = $sub_type;
+						foreach($part->contentTypeMap() as $sub_id => $sub_type){ $skipParts[$sub_id] = $sub_type;}
 						//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$_uid.' Part:'.$mime_id.':'.array2string($skipParts));
 						//break 2;
 					}
@@ -4033,8 +4031,8 @@ class emailadmin_imapbase
 	 * get part of the message, if its stucture is indicating its of multipart related style
 	 * a wrapper for multipartmixed
 	 * @param string/int $_uid the messageuid,
-	 * @param Horde_Mime_Part $_structure, if given use structure for parsing
-	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param Horde_Mime_Part $_structure if given use structure for parsing
+	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @return array containing the desired part
 	 */
@@ -4047,12 +4045,12 @@ class emailadmin_imapbase
 	 * Fetch a body part
 	 *
 	 * @param int $_uid
-	 * @param string $_partID=null
-	 * @param string $_folder=null
-	 * @param boolean $_preserveSeen=false
-	 * @param boolean $_stream=false true return a stream, false return string
-	 * @param string &$_encoding=null on return: transfer encoding of returned part
-	 * @param boolean $_tryDecodingServerside=true; wether to try to fetch Data with BINARY instead of BODY
+	 * @param string $_partID = null
+	 * @param string $_folder = null
+	 * @param boolean $_preserveSeen = false
+	 * @param boolean $_stream = false true return a stream, false return string
+	 * @param string &$_encoding = null on return: transfer encoding of returned part
+	 * @param boolean $_tryDecodingServerside = true; wether to try to fetch Data with BINARY instead of BODY
 	 * @return string|resource
 	 */
 	function getBodyPart($_uid, $_partID=null, $_folder=null, $_preserveSeen=false, $_stream=false, &$_encoding=null, $_tryDecodingServerside=true)
@@ -4105,10 +4103,10 @@ class emailadmin_imapbase
 	 * Get Body from message
 	 *
 	 * @param int $_uid the messageuid
-	 * @param Horde_Mime_Part $_structure=null, if given use structure for parsing
+	 * @param Horde_Mime_Part $_structure = null if given use structure for parsing
 	 * @param string $_htmlMode how to display a message: 'html_only', 'always_display', 'only_if_no_text' or ''
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
-	 * @param boolean $_stream=false true return a stream, false return string
+	 * @param boolean $_stream = false true return a stream, false return string
 	 * @return array containing the desired text part, mimeType and charset
 	 */
 	function getTextPart($_uid, Horde_Mime_Part $_structure, $_htmlMode='', $_preserveSeen=false, $_stream=false)
@@ -4203,7 +4201,7 @@ class emailadmin_imapbase
 			if ($method == 'REPLY') $event['title'] = $oldevent[$eventid[0]]['title'];
 		}
 		// we prepare the message
-		$details = $calboupdate->_get_event_details($event,$action,$event_arr);
+		$details = $calboupdate->_get_event_details($event,'',$event_arr=array());
 		$details['olddate']=$olddate;
 		//_debug_array($_structure);
 		list($subject,$info) = $calboupdate->get_update_message($event, $method !='REPLY');
@@ -4235,9 +4233,9 @@ class emailadmin_imapbase
 	 * Get Body of message
 	 *
 	 * @param int $_uid the messageuid,
-	 * @param string $_htmlOptions, how to display a message, html, plain text, ...
-	 * @param string $_partID=null , the partID, may be omitted
-	 * @param Horde_Mime_Part $_structure=null if given use structure for parsing
+	 * @param string $_htmlOptions how to display a message, html, plain text, ...
+	 * @param string $_partID = null the partID, may be omitted
+	 * @param Horde_Mime_Part $_structure = null if given use structure for parsing
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @param string $_folder folder to work on
 	 * @return array containing the message body, mimeType and charset
@@ -4377,7 +4375,7 @@ class emailadmin_imapbase
 			{
 				if (!isset($singleBodyPart['body'])) {
 					$buff = self::normalizeBodyParts($singleBodyPart);
-					foreach ((array)$buff as $val)	$body2return[] = $val;
+					foreach ((array)$buff as $val) { $body2return[] = $val;}
 					continue;
 				}
 				$body2return[] = $singleBodyPart;
@@ -4475,7 +4473,7 @@ class emailadmin_imapbase
 					if (!$preserveHTML)
 					{
 						// filter only the 'body', as we only want that part, if we throw away the html
-						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches);
+						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
 						if ($matches[2])
 						{
 							$hasOther = true;
@@ -4486,7 +4484,7 @@ class emailadmin_imapbase
 				else
 				{
 					// htmLawed filter only the 'body'
-					preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches);
+					preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
 					if ($matches[2])
 					{
 						$hasOther = true;
@@ -4500,7 +4498,7 @@ class emailadmin_imapbase
 					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
 				}
 				//error_log(__METHOD__.' ('.__LINE__.') '.' after purify:'.$newBody);
-				if ($preserveHTML==false) $newBody = translation::convertHTMLToText($newBody,self::$displayCharset,true,$stripalltags=true);
+				if ($preserveHTML==false) $newBody = translation::convertHTMLToText($newBody,self::$displayCharset,true,true);
 				//error_log(__METHOD__.' ('.__LINE__.') '.' after convertHTMLToText:'.$newBody);
 				if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
 				$mailClass->getCleanHTML($newBody,false,$preserveHTML); // remove stuff we regard as unwanted
@@ -4542,7 +4540,7 @@ class emailadmin_imapbase
 				$s=explode(" ", $line);
 				$line = "";
 				$linecnt = 0;
-				foreach ($s as $k=>$v) {
+				foreach ($s as &$v) {
 					$cnt = strlen($v);
 					// only break long words within the wordboundaries,
 					// but it may destroy links, so we check for href and dont do it if we find one
@@ -4571,7 +4569,7 @@ class emailadmin_imapbase
 	 * getMessageEnvelope
 	 * get parsed headers from message
 	 * @param string/int $_uid the messageuid,
-	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param string/int $_partID = '' , the partID, may be omitted
 	 * @param boolean $decode flag to do the decoding on the fly
 	 * @param string $_folder folder to work on
 	 * @param boolean $_useHeaderInsteadOfEnvelope - force getMessageHeader method to be used for fetching Envelope Information
@@ -4594,10 +4592,11 @@ class emailadmin_imapbase
 				'ids' => $uidsToFetch,
 			));
 			if (is_object($headersNew)) {
-				foreach($headersNew as $id=>$_headerObject) {
+				foreach($headersNew as &$_headerObject) {
 					$env = $_headerObject->getEnvelope();
 					//_debug_array($envFields->singleFields());
-					foreach ($envFields->singleFields() as $e => $v)
+					$singleFields = $envFields->singleFields();
+					foreach ($singleFields as &$v)
 					{
 						switch ($v)
 						{
@@ -4758,7 +4757,7 @@ class emailadmin_imapbase
 	 * getMessageRawHeader
 	 * get messages raw header data
 	 * @param string/int $_uid the messageuid,
-	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param string/int $_partID = '' , the partID, may be omitted
 	 * @param string $_folder folder to work on
 	 * @return string the message header
 	 */
@@ -4768,7 +4767,7 @@ class emailadmin_imapbase
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		//error_log(__METHOD__.' ('.__LINE__.') '." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
-		if (is_null($rawHeaders)||!is_array($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		if (is_null($rawHeaders)||!is_array($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
 		if (isset($rawHeaders[$this->icServer->ImapServerId][(string)$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.' ('.__LINE__.') '." Using Cache for raw Header $_uid, $_partID in Folder $_folder");
@@ -4793,7 +4792,7 @@ class emailadmin_imapbase
 			'ids' => $uidsToFetch,
 		));
 		if (is_object($headersNew)) {
-			foreach($headersNew as $id=>$_headerObject) {
+			foreach($headersNew as &$_headerObject) {
 				$retValue = $_headerObject->getHeaderText();
 				if ($_partID != '')
 				{
@@ -4809,13 +4808,13 @@ class emailadmin_imapbase
 			}
 		}
 		$rawHeaders[$this->icServer->ImapServerId][(string)$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]=$retValue;
-		egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,$expiration=60*60*1);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,60*60*1);
 		return $retValue;
 	}
 
 	/**
 	 * getStyles - extracts the styles from the given bodyparts
-	 * @param array $bodyParts  with the bodyparts
+	 * @param array $_bodyParts  with the bodyparts
 	 * @return string a preformatted string with the mails converted to text
 	 */
 	static function &getStyles($_bodyParts)
@@ -4836,7 +4835,7 @@ class emailadmin_imapbase
 			);
 			$ct = 0;
 
-			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
+			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle=array());
 			if ($ct>0)
 			{
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($newStyle[0]));
@@ -4881,7 +4880,7 @@ class emailadmin_imapbase
 	 * getMessageRawBody
 	 * get the message raw body
 	 * @param string/int $_uid the messageuid,
-	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param string/int $_partID = '' , the partID, may be omitted
 	 * @param string $_folder folder to work on
 	 * @return string the message body
 	 */
@@ -4913,7 +4912,7 @@ class emailadmin_imapbase
 			'ids' => $uidsToFetch,
 		));
 		if (is_object($headersNew)) {
-			foreach($headersNew as $id=>$_headerObject) {
+			foreach($headersNew as &$_headerObject) {
 				$body = $_headerObject->getFullMsg();
 				if ($_partID != '')
 				{
@@ -4938,9 +4937,9 @@ class emailadmin_imapbase
 	 * Get structure of a mail or part of a mail
 	 *
 	 * @param int $_uid
-	 * @param string $_partID=null
-	 * @param string $_folder=null
-	 * @param boolean $_preserveSeen=false flag to preserve the seenflag by using body.peek
+	 * @param string $_partID = null
+	 * @param string $_folder = null
+	 * @param boolean $_preserveSeen = false flag to preserve the seenflag by using body.peek
 	 * @param Horde_Imap_Client_Fetch_Query $fquery=null default query just structure
 	 * @return Horde_Mime_Part
 	 */
@@ -5019,7 +5018,7 @@ class emailadmin_imapbase
 			if ($mime_type=='message/rfc822' && $_partID!=$mime_id)
 			{
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.':'.array2string($part->contentTypeMap()));
-				foreach($part->contentTypeMap() as $sub_id => $sub_type) if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;
+				foreach($part->contentTypeMap() as $sub_id => $sub_type) {if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;}
 			}
 			if (empty($partDisposition) && $partPrimaryType != 'multipart' && $partPrimaryType != 'text')
 			{
@@ -5308,7 +5307,7 @@ class emailadmin_imapbase
 	 * @param string|int $_uid
 	 * @param string $_cid
 	 * @param string $_part
-	 * @param boolean $_stream=null null do NOT fetch content, use fetchPartContents later
+	 * @param boolean $_stream = null null do NOT fetch content, use fetchPartContents later
 	 *	true:
 	 * @return Horde_Mime_Part
 	 */
@@ -5373,7 +5372,7 @@ class emailadmin_imapbase
 	 *
 	 * @param int $_uid
 	 * @param Horde_Mime_Part $part
-	 * @param boolean $_stream=false true return a stream, false a string
+	 * @param boolean $_stream = false true return a stream, false a string
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @param string  $_mimetype to decide wether to try to fetch part as binary or not
 	 * @return Horde_Mime_Part
@@ -5444,7 +5443,7 @@ class emailadmin_imapbase
 		//$messageid = true; // for debug reasons only
 		if ($messageid === true || empty($messageid)) // try to figure out the message uid
 		{
-			$list = $this->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=1, $_sort='INTERNALDATE', $_reverse=true, $_filter=array(),$_thisUIDOnly=null, $_cacheResult=false);
+			$list = $this->getHeaders($_folderName, $_startMessage=1, 1, 'INTERNALDATE', true, array(),null, false);
 			if ($list)
 			{
 				if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.' MessageUid:'.$messageid.' but found:'.array2string($list));
@@ -5546,7 +5545,7 @@ class emailadmin_imapbase
 							fwrite($tmpfile,$headdata.$mailcontent['message']);
 							fclose($tmpfile);
 						}
-						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
+						foreach($mailcontent['attachments'] as &$tmpval)
 						{
 							$attachedMessages[] = $tmpval;
 						}
@@ -5657,7 +5656,7 @@ class emailadmin_imapbase
 	 * @param array $rfcAddressArray  an addressarray as provided by mail retieved via egw_pear....
 	 * @return string a comma separated string with the mailaddress(es) converted to text
 	 */
-	static function convertAddressArrayToString($rfcAddressArray, $createHTML = false)
+	static function convertAddressArrayToString($rfcAddressArray)
 	{
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($rfcAddressArray));
 		$returnAddr ='';
@@ -5714,11 +5713,10 @@ class emailadmin_imapbase
 	 */
 	function merge($content,$ids,$mimetype='')
 	{
-		$contacts = new addressbook_bo();
 		$mergeobj = new addressbook_merge();
 
 		if (empty($mimetype)) $mimetype = (strlen(strip_tags($content)) == strlen($content) ?'text/plain':'text/html');
-		$rv = $mergeobj->merge_string($content,$ids,$err,$mimetype, array(), self::$displayCharset);
+		$rv = $mergeobj->merge_string($content,$ids,$err='',$mimetype, array(), self::$displayCharset);
 		if (empty($rv) && !empty($content) && !empty($err)) $rv = $content;
 		if (!empty($err) && !empty($content) && !empty($ids)) error_log(__METHOD__.' ('.__LINE__.') '.' Merge failed for Ids:'.array2string($ids).' ContentType:'.$mimetype.' Content:'.$content.' Reason:'.array2string($err));
 		return $rv;
@@ -6312,7 +6310,7 @@ class emailadmin_imapbase
 			$matches = array();
 			preg_match_all("/[\w\.,-.,_.,0-9.]+@[\w\.,-.,_.,0-9.]+/",$addresses,$matches);
 			//error_log(__METHOD__.__LINE__.array2string($matches));
-			foreach ($matches[0] as &$match) $match = trim($match,', ');
+			foreach ($matches[0] as &$match) {$match = trim($match,', ');}
 			$addresses = implode(',',$matches[0]);
 			//error_log(__METHOD__.__LINE__.array2string($addresses));
 			$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
@@ -6359,22 +6357,8 @@ class emailadmin_imapbase
 	 */
 	function addAccount($_hookValues)
 	{
-		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE JET!');
-		//$_profile_id=????
-		//$icServer = emailadmin_account::read($_profile_id)->imapServer();
-		//$ogServer = emailadmin_account::read($_profile_id)->smtpServer();
-
-/*
-		if(($icServer instanceof defaultimap)) {
-			// if not connected, try opening an admin connection
-			if (!$icServer->_connected) $this->openConnection($this->profileID,true);
-			$icServer->addAccount($_hookValues);
-			if ($icServer->_connected) $this->closeConnection(); // close connection afterwards
-		}
-		if(($ogServer instanceof emailadmin_smtp)) {
-			$ogServer->addAccount($_hookValues);
-		}
-*/
+		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE YET!' . ' hookValue = '. $_hookValues);
+		
 	}
 
 	/**
@@ -6387,22 +6371,8 @@ class emailadmin_imapbase
 	 */
 	function deleteAccount($_hookValues)
 	{
-		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE JET!');
-		//$_profile_id=????
-		//$icServer = emailadmin_account::read($_profile_id)->imapServer();
-		//$ogServer = emailadmin_account::read($_profile_id)->smtpServer();
-/*
-		if(($icServer instanceof defaultimap)) {
-			//try to connect with admin rights, when not connected
-			if (!$icServer->_connected) $this->openConnection($this->profileID,true);
-			$icServer->deleteAccount($_hookValues);
-			if ($icServer->_connected) $this->closeConnection(); // close connection
-		}
-
-		if(($ogServer instanceof emailadmin_smtp)) {
-			$ogServer->deleteAccount($_hookValues);
-		}
-*/
+		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE YET!' . ' hookValue = '. $_hookValues);
+		
 	}
 
 	/**
@@ -6415,18 +6385,7 @@ class emailadmin_imapbase
 	 */
 	function updateAccount($_hookValues)
 	{
-		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE JET!');
-		//$_profile_id=????
-		//$icServer = emailadmin_account::read($_profile_id)->imapServer();
-		//$ogServer = emailadmin_account::read($_profile_id)->smtpServer();
-/*
-		if(($icServer instanceof defaultimap)) {
-			$icServer->updateAccount($_hookValues);
-		}
-
-		if(($ogServer instanceof emailadmin_smtp)) {
-			$ogServer->updateAccount($_hookValues);
-		}
-*/
+		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE YET!' . ' hookValue = '. $_hookValues);
+		
 	}
 }

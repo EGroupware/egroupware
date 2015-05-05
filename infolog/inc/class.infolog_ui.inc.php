@@ -23,7 +23,7 @@ class infolog_ui
 		'admin'       => True,
 		'hook_view'   => True,
 		'writeLangFile' => True,
-		'import_mail' => True,
+		'mail_import' => True
 	);
 	/**
 	 * reference to the infolog preferences of the user
@@ -2482,185 +2482,25 @@ class infolog_ui
 
 	/**
 	 * imports a mail as infolog
-	 * two possible calls:
-	 * 1. with function args set. (we come from send mail)
-	 * 2. with $_GET['uid] = someuid (we come from display mail)
 	 *
-	 * @author Cornelius Weiss <nelius@cwtech.de>
-	 * @param string $_to_emailAddress
-	 * @param string $_subject
-	 * @param string $_body
-	 * @param array $_attachments
-	 * @param string $_date
-	 * @param resource $_rawMail
+	 * @param array $mailContent = null content of mail
+	 * @return  array
 	 */
-	function import_mail($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null)
+	function mail_import(array $mailContent=null)
 	{
-		$uid = $_GET['uid'];
-		$partid = $_GET['part'];
-		$mailbox = base64_decode($_GET['mailbox']);
-		$mailClass = 'mail_bo';
-		$sessionLocation = 'mail';
-		// if rowid is set, we are called from new mail module.
-		if (method_exists('mail_ui','splitRowID') && isset($_GET['rowid']) && !empty($_GET['rowid']))
+		// It would get called from compose as a popup with egw_data
+		if (!is_array($mailContent) && ($_GET['egw_data']))
 		{
-			// rowid holds all needed information: server, folder, uid, etc.
-			$rowID = $_GET['rowid'];
-			$hA = mail_ui::splitRowID($rowID);
-			$sessionLocation = $hA['app']; // THIS is part of the row ID, we may use this for validation
-			if ($sessionLocation != 'mail') throw new egw_exception_assertion_failed(lang('Application mail expected but got: %1',$sessionLocation));
-			$uid = $hA['msgUID'];
-			$mailbox = $hA['folder'];
-			$icServerID = $hA['profileID'];
-			$mailClass = 'mail_bo';
+			// get the mail raw data
+			egw_link::get_data ($_GET['egw_data']);
+			return false;
 		}
-		if ($_date == false || empty($_date)) $_date = $this->bo->user_time_now;
-		if (!empty($_to_emailAddress))
-		{
-			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
-
-			if (!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')&&is_array($_attachments))
-			{
-				//echo __METHOD__.'<br>';
-				//_debug_array($_attachments);
-				if (!isset($icServerID)) $icServerID =& egw_cache::getSession($sessionLocation,'activeProfileID');
-				$mailobject = $mailClass::getInstance(true,$icServerID);
-				$mailobject->openConnection();
-				foreach ($_attachments as $attachment)
-				{
-					//error_log(__METHOD__.__LINE__.array2string($attachment));
-					if (trim(strtoupper($attachment['type'])) == 'MESSAGE/RFC822' && !empty($attachment['uid']) && !empty($attachment['folder']))
-					{
-						$mailobject->reopen(($attachment['folder']?$attachment['folder']:$mailbox));
-
-						// get the message itself, and attach it, as we are able to display it in egw
-						// instead of fetching only the attachments attached files (as we did previously)
-						$message = $mailobject->getMessageRawBody($attachment['uid'],$attachment['partID'],($attachment['folder']?$attachment['folder']:$mailbox));
-						$headers = $mailobject->getMessageHeader($attachment['uid'],$attachment['partID'],true,false,($attachment['folder']?$attachment['folder']:$mailbox));
-						$subject = $mailClass::adaptSubjectForImport($headers['SUBJECT']);
-						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-						$tmpfile = fopen($attachment_file,'w');
-						fwrite($tmpfile,$message);
-						fclose($tmpfile);
-						$size = filesize($attachment_file);
-						$attachments[] = array(
-								'name' => trim($subject).'.eml',
-								'mimeType' => 'message/rfc822',
-								'type' => 'message/rfc822',
-								'tmp_name' => $attachment_file,
-								'size' => $size,
-							);
-					}
-					else
-					{
-						if (!empty($attachment['folder']))
-						{
-							$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
-							$mailobject->reopen($attachment['folder']);
-							$attachmentData = $mailobject->getAttachment($attachment['uid'],$attachment['partID'],$is_winmail);
-							$attachment['file'] =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-							$tmpfile = fopen($attachment['file'],'w');
-							fwrite($tmpfile,$attachmentData['attachment']);
-							fclose($tmpfile);
-						}
-						//make sure we search for our attached file in our configured temp_dir
-						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) != 'vfs' &&
-							file_exists($GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file'])))
-						{
-							$attachment['file'] = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file']);
-						}
-						$attachments[] = array(
-							'name' => $attachment['name'],
-							'mimeType' => $attachment['type'],
-							'type' => $attachment['type'],
-							'tmp_name' => $attachment['file'],
-							'size' => $attachment['size'],
-						);
-					}
-				}
-				$mailobject->closeConnection();
-			}
-			// this one adds the mail itself (as message/rfc822 (.eml) file) to the infolog as additional attachment
-			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
-			if (is_resource($_rawMail) && $GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
-			{
-				$subject = $mailClass::adaptSubjectForImport($_subject);
-				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-				$tmpfile = fopen($attachment_file,'w');
-				fseek($_rawMail, 0, SEEK_SET);
-				stream_copy_to_stream($_rawMail, $tmpfile);
-				fclose($tmpfile);
-				$size = filesize($attachment_file);
-				$attachments[] = array(
-						'name' => trim($subject).'.eml',
-						'mimeType' => 'message/rfc822',
-						'type' => 'message/rfc822',
-						'tmp_name' => $attachment_file,
-						'size' => $size,
-					);
-			}
-
-			//_debug_array($_to_emailAddress);
-			$toaddr = array();
-			foreach(array('to','cc','bcc') as $x)
-			{
-				if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x]))
-				{
-					$toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
-				}
-			}
-			//_debug_array($attachments);
-			$body_striped = strip_tags($_body); //we need to fix broken tags (or just stuff like "<800 USD/p" )
-			$body_decoded = htmlspecialchars_decode($body_striped,ENT_QUOTES);
-			$body = $mailClass::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
-				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
-				'CC'=>(!empty($_to_emailAddress['cc'])?implode(',',$_to_emailAddress['cc']):null),
-				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
-				'SUBJECT'=>$_subject,
-				'DATE'=>$mailClass::_strtotime($_date))).$body_decoded;
-			$this->edit($this->bo->import_mail(
-				implode(',',$toaddr),$_subject,$body,$attachments,$_date
-			));
-			exit;
-		}
-		elseif ($uid && $mailbox)
-		{
-			if (!isset($icServerID)) $icServerID =& egw_cache::getSession($sessionLocation,'activeProfileID');
-			$mailobject	= $mailClass::getInstance(true,$icServerID);
-			$mailobject->openConnection();
-			$mailobject->reopen($mailbox);
-
-			$mailcontent = $mailClass::get_mailcontent($mailobject,$uid,$partid,$mailbox,false,true,(!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')));
-			// this one adds the mail itself (as message/rfc822 (.eml) file) to the infolog as additional attachment
-			// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
-			if ($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='add_raw')
-			{
-				$message = $mailobject->getMessageRawBody($uid, $partid,$mailbox);
-				$headers = $mailobject->getMessageHeader($uid, $partid,true,false,$mailbox);
-				$subject = $mailClass::adaptSubjectForImport($headers['SUBJECT']);
-				$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-				$tmpfile = fopen($attachment_file,'w');
-				fwrite($tmpfile,$message);
-				fclose($tmpfile);
-				$size = filesize($attachment_file);
-				$mailcontent['attachments'][] = array(
-						'name' => trim($subject).'.eml',
-						'mimeType' => 'message/rfc822',
-						'type' => 'message/rfc822',
-						'tmp_name' => $attachment_file,
-						'size' => $size,
-					);
-			}
-//_debug_array($mailcontent);
-			return $this->edit($this->bo->import_mail(
-				$mailcontent['mailaddress'],
-				$mailcontent['subject'],
-				$mailcontent['message'],
-				$mailcontent['attachments'],
-				strtotime($mailcontent['headers']['DATE'])
-			));
-		}
-		egw_framework::window_close(lang('Error: no mail (Mailbox / UID) given!'));
+		
+		return $this->edit($this->bo->import_mail($mailContent['addresses'],
+				$mailContent['subject'],
+				$mailContent['message'],
+				$mailContent['attachments'],
+				$mailContent['date']));
 	}
 
 	/**

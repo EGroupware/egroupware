@@ -163,6 +163,14 @@ class mail_compose
 				'hint' => 'check to save as trackerentry on send',
 				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
+			'to_calendar' => array(
+				'caption' => 'Calendar',
+				'icon' => 'to_calendar',
+				'group' => $group,
+				'checkbox' => true,
+				'hint' => 'check to save as calendar event on send',
+				'onExecute' => 'javaScript:app.mail.compose_setToggle'
+			),
 			'disposition' => array(
 				'caption' => 'Notification',
 				'icon' => 'high',
@@ -1002,14 +1010,11 @@ class mail_compose
 				}
 			}
 		}
-		//Since the ckeditor is not stable enough on mobile devices, we always convert html messages to plain text
-		//TODO: needs to remove html:$ua_mobile condition after better mobile support from CKeditor
-		//mobile compatibility is disabled expilcitly in ckeditor.js plugin too, which needs to be removed
-		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false || html::$ua_mobile)
+
+		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false)
 		{
 			$_content['mimeType'] = $content['mimeType'] = 'plain';
 			$content['body'] = $this->convertHTMLToText($content['body']);
-			$readonlys['mimeType'] = true;
 		}
 		// is a certain signature requested?
 		// only the following values are supported (and make sense)
@@ -1290,7 +1295,7 @@ class mail_compose
 
 		$content['to'] = self::resolveEmailAddressList($content['to']);
 		//error_log(__METHOD__.__LINE__.array2string($content));
-		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
+		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
 	}
 
 	/**
@@ -2448,7 +2453,7 @@ class mail_compose
 	 */
 	public function ajax_saveAsDraft ($content, $action='button[saveAsDraft]')
 	{
-		//error_log(__METHOD__."(, action=$action)");
+		//error_log(__METHOD__.__LINE__.array2string($content)."(, action=$action)");
 		$response = egw_json_response::get();
 		$success = true;
 
@@ -3047,43 +3052,44 @@ class mail_compose
 		if (is_array($this->sessionData['cc'])) $mailaddresses['cc'] = $this->sessionData['cc'];
 		if (is_array($this->sessionData['bcc'])) $mailaddresses['bcc'] = $this->sessionData['bcc'];
 		if (!empty($mailaddresses)) $mailaddresses['from'] = $GLOBALS['egw']->translation->decodeMailHeader($fromAddress);
-		// attention: we dont return from infolog/tracker. You cannot check both. cleanups will be done there.
-		if ($_formData['to_infolog'] == 'on') {
-			$uiinfolog = new infolog_ui();
-			$uiinfolog->import_mail(
-				$mailaddresses,
-				$this->sessionData['subject'],
-				$this->convertHTMLToText($this->sessionData['body']),
-				$this->sessionData['attachments'],
-				false, // date
-				$mail->getRaw()
-			);
-		}
-		if ($_formData['to_tracker'] == 'on') {
-			$uitracker = new tracker_ui();
-			$uitracker->import_mail(
-				$mailaddresses,
-				$this->sessionData['subject'],
-				$this->convertHTMLToText($this->sessionData['body']),
-				$this->sessionData['attachments'],
-				false, // date
-				$mail->getRaw()
-			);
-		}
-/*
-		if ($_formData['to_calendar'] == 'on') {
-			$uical =& CreateObject('calendar.calendar_uiforms');
-			$uical->import_mail(
-				$mailaddresses,
-				$this->sessionData['subject'],
-				$this->convertHTMLToText($this->sessionData['body']),
-				$this->sessionData['attachments']
-			);
-		}
-*/
 
+		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' )
+		{
+			foreach(array('to_infolog','to_tracker','to_calendar') as $app_key)
+			{
+				if ($_formData[$app_key] == 'on')
+				{
+					$app_name = substr($app_key,3);
+					// Get registered hook data of the app called for integration
+					$hook = $GLOBALS['egw']->hooks->single(array('location'=> 'mail_import'),$app_name);
 
-		if(is_array($this->sessionData['attachments'])) {
+					// store mail / eml in temp. file to not have to download it from mail-server again
+					$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'mail_integrate');
+					$eml_fp = fopen($eml, 'w');
+					stream_copy_to_stream($mail->getRaw(), $eml_fp);
+					fclose($eml_fp);
+
+					// Open the app called for integration in a popup
+					// and store the mail raw data as egw_data, in order to
+					// be stored from registered app method later
+					egw_framework::popup(egw::link('/index.php', array(
+						'menuaction' => $hook['menuaction'],
+						'egw_data' => egw_link::set_data(null,'mail_integration::integrate',array(
+							$mailaddresses,
+							$this->sessionData['subject'],
+							$this->convertHTMLToText($this->sessionData['body']),
+							$this->sessionData['attachments'],
+							false, // date
+							$eml,
+							$_formData['serverID']),true),
+						'app' => $app_name
+					)),'_blank',$hook['popup']);
+				}
+			}
+		}
+		// only clean up temp-files, if we dont need them for mail_integration::integrate
+		elseif(is_array($this->sessionData['attachments']))
+		{
 			foreach($this->sessionData['attachments'] as $value) {
 				if (!empty($value['file']) && parse_url($value['file'],PHP_URL_SCHEME) != 'vfs') {	// happens when forwarding mails
 					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.$value['file']);
@@ -3300,6 +3306,22 @@ class mail_compose
 					}
 				}
 			}
+		}
+
+		// Add groups
+		$group_options = array('account_type' => 'groups');
+		$groups = $GLOBALS['egw']->accounts->link_query($_searchString, $group_options);
+		foreach($groups as $g_id => $name)
+		{
+			$group = $GLOBALS['egw']->accounts->read($g_id);
+			if(!$group['account_email']) continue;
+			$completeMailString = trim($name) .' <'. trim($group['account_email']) .'>';
+			$results[] = array(
+				'id' => $completeMailString,
+				'label' => $completeMailString,
+				'name'	=> $name,
+				'title' => $group['account_email']
+			);
 		}
 
 		// Add up to 5 matching mailing lists

@@ -10,6 +10,7 @@
 				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='attachments' onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
 				<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
 				<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
+				<checkbox statustext="check to save as calendar event on send" id="to_calendar" options="on,off"/>
 				<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="on,off"/>
 				<menulist>
 					<menupopup id="priority"/>

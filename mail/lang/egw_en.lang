@@ -373,6 +373,7 @@ saving of message %1 failed. destination folder %2 does not exist.	mail	en	Savin
 saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 succeeded. Check Folder %2.
 saving the rule failed:	mail	en	Saving the rule failed:
 select all	mail	en	Select all
+select an existing entry in order to append mail content to it	mail	en	Select an existing entry in order to append mail content to it
 select file to attach to message	mail	en	Select file to attach to message
 select file to import into folder	mail	en	Select file to import into Folder
 select file(s) from vfs	mail	en	Select file(s) from VFS

@@ -297,7 +297,7 @@ class infolog_bo
 	 * checks if there are customfields for typ $typ
 	 *
 	 * @param string $type
-	 * @param boolean $links=false if true check only customfields containing links, default false = all custom fields
+	 * @param boolean $links = false if true check only customfields containing links, default false = all custom fields
 	 * @return boolean True if there are customfields for $typ, else False
 	 */
 	function has_customfields($type,$links=false)
@@ -321,7 +321,7 @@ class infolog_bo
 	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
 	 * @param int $other uid to check (if info==0) or 0 to check against $this->user
-	 * @param int $user=null user whos rights to check, default current user
+	 * @param int $user = null user whos rights to check, default current user
 	 * @return boolean
 	 */
 	function check_access($info,$required_rights,$other=0,$user=null)
@@ -413,8 +413,8 @@ class infolog_bo
 	 * convert a link_id value into an info_from text
 	 *
 	 * @param array &$info infolog entry, key info_from gets set by this function
-	 * @param string $not_app='' app to exclude
-	 * @param string $not_id='' id to exclude
+	 * @param string $not_app = '' app to exclude
+	 * @param string $not_id = '' id to exclude
 	 * @return boolean True if we have a linked item, False otherwise
 	 */
 	function link_id2from(&$info,$not_app='',$not_id='')
@@ -482,8 +482,8 @@ class infolog_bo
 	 * and $fromTZId is only used to qualify dates.
 	 *
 	 * @param array $values to modify
-	 * @param string $fromTZId=null
-	 * @param string $toTZId=false
+	 * @param string $fromTZId = null
+	 * @param string $toTZId = false
 	 * 		TZID timezone name e.g. 'UTC'
 	 * 			or NULL for timestamps in user-time
 	 * 			or false for timestamps in server-time
@@ -555,7 +555,7 @@ class infolog_bo
 	 * convert a date from server to user-time
 	 *
 	 * @param int $ts timestamp in server-time
-	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
+	 * @param string $date_format = 'ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
 	 * @return mixed depending of $date_format
 	 */
 	function date2usertime($ts,$date_format='ts')
@@ -569,11 +569,11 @@ class infolog_bo
 	 * Read an infolog entry specified by $info_id
 	 *
 	 * @param int|array $info_id integer id or array with id's or array with column=>value pairs of the entry to read
-	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
+	 * @param boolean $run_link_id2from = true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
-	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
+	 * @param string $date_format = 'ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
 	 * 	'array'=array or string with date-format
-	 * @param boolean $ignore_acl=false if true, do NOT check access, default false
+	 * @param boolean $ignore_acl = false if true, do NOT check access, default false
 	 *
 	 * @return array|boolean infolog entry, null if not found or false if no permission to read it
 	 */
@@ -705,12 +705,12 @@ class infolog_bo
 	* checks and asures ACL
 	*
 	* @param array &$values values to write
-	* @param boolean $check_defaults=true check and set certain defaults
-	* @param boolean|int $touch_modified=true touch the modification date and sets the modifier's user-id, 2: only modifier
-	* @param boolean $user2server=true conversion between user- and server-time necessary
-	* @param boolean $skip_notification=false true = do NOT send notification, false (default) = send notifications
-	* @param boolean $throw_exception=false Throw an exception (if required fields are not set)
-	* @param string $purge_cfs=null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
+	* @param boolean $check_defaults = true check and set certain defaults
+	* @param boolean|int $touch_modified = true touch the modification date and sets the modifier's user-id, 2: only modifier
+	* @param boolean $user2server = true conversion between user- and server-time necessary
+	* @param boolean $skip_notification = false true = do NOT send notification, false (default) = send notifications
+	* @param boolean $throw_exception = false Throw an exception (if required fields are not set)
+	* @param string $purge_cfs = null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
 	*
 	* @return int|boolean info_id on a successfull write or false
 	*/
@@ -1102,7 +1102,7 @@ class infolog_bo
 	/**
 	 * Query ctag for infolog
 	 *
-	 * @param array $filter=array('filter'=>'own','info_type'=>'task')
+	 * @param array $filter = array('filter'=>'own','info_type'=>'task')
 	 * @return string
 	 */
 	public function getctag(array $filter=array('filter'=>'own','info_type'=>'task'))
@@ -1131,33 +1131,29 @@ class infolog_bo
 	 *
 	 * @author Cornelius Weiss <nelius@cwtech.de>
 	 * @todo search if infolog with from and subject allready exists ->appned body & inform user
-	 * @param string $_email_address rfc822 conform emailaddresses
+	 * @param array $_addresses array of addresses
+	 *	- array (email,name)
 	 * @param string $_subject
 	 * @param string $_message
 	 * @param array $_attachments
 	 * @param string $_date
 	 * @return array $content array for uiinfolog
 	 */
-	function import_mail($_email_address,$_subject,$_message,$_attachments,$_date)
+	function import_mail($_addresses,$_subject,$_message,$_attachments,$_date)
 	{
-		$address_array = imap_rfc822_parse_adrlist($_email_address,'');
-		foreach ((array)$address_array as $address)
+		foreach($_addresses as $address)
 		{
-			$email[] = $emailadr = sprintf('%s@%s',
-				trim($address->mailbox),
-				trim($address->host));
-				$name[] = !empty($address->personal) ? $address->personal : $emailadr;
+			$names[] = $address['name'];
+			$emails[] =$address['email'];
 		}
-		// shorten long (> $this->max_line_chars) lines of "line" chars (-_+=~) in mails
-		$_message = preg_replace_callback('/[-_+=~\.]{'.$this->max_line_chars.',}/m',
-			create_function('$matches',"return substr(\$matches[0],0,$this->max_line_chars);"),$_message);
+		
 		$type = isset($this->enums['type']['email']) ? 'email' : 'note';
 		$status = isset($this->status['defaults'][$type]) ? $this->status['defaults'][$type] : 'done';
 		$info = array(
 			'info_id' => 0,
 			'info_type' => $type,
-			'info_from' => implode(', ',$name),
-			'info_addr' => implode(', ',$email),
+			'info_from' => implode(', ',$names),
+			'info_addr' => implode(', ',$emails),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => egw_time::server2user($_date),
@@ -1174,7 +1170,7 @@ class infolog_bo
 		// find the addressbookentry to link with
 		$addressbook = new addressbook_bo();
 		$contacts = array();
-		foreach ($email as $mailadr)
+		foreach ($emails as $mailadr)
 		{
 			$contacts = array_merge($contacts,(array)$addressbook->search(
 				array(
@@ -1202,14 +1198,13 @@ class infolog_bo
 		{
 			foreach ($_attachments as $attachment)
 			{
-				$is_vfs = false;
-				if (parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs' && egw_vfs::is_readable($attachment['tmp_name']))
+				if($attachment['egw_data'])
 				{
-					$is_vfs = true;
+					egw_link::link('infolog',$info['link_to']['to_id'],egw_link::DATA_APPNAME,  $attachment);
 				}
-				if(is_readable($attachment['tmp_name']) || $is_vfs)
+				else if(is_readable($attachment['tmp_name']))
 				{
-					egw_link::link('infolog',$info['link_to']['to_id'],'file',$attachment);
+					egw_link::link('infolog',$info['link_to']['to_id'],'file',  $attachment);
 				}
 			}
 		}
@@ -1294,8 +1289,8 @@ class infolog_bo
 	 *
 	 * @param int|array $id id of entry or entry array
 	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
-	 * @param string $rel_path=null currently not used in InfoLog
-	 * @param int $user=null for which user to check, default current user
+	 * @param string $rel_path = null currently not used in InfoLog
+	 * @param int $user = null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
 	 */
 	function file_access($id,$check,$rel_path=null,$user=null)
@@ -1439,7 +1434,7 @@ class infolog_bo
 	 * currently used for ical/sif import
 	 *
 	 * @param array $catname_list names of the categories which should be found or added
-	 * @param int $info_id=-1 match against existing infolog and expand the returned category ids
+	 * @param int $info_id = -1 match against existing infolog and expand the returned category ids
 	 *  by the ones the user normally does not see due to category permissions - used to preserve categories
 	 * @return array category ids (found, added and preserved categories)
 	 */
@@ -1692,8 +1687,8 @@ class infolog_bo
 	 *
 	 * As status value can have different translations depending on type, we list all translations
 	 *
-	 * @param string $type=null
-	 * @param array &$icons=null on return name of icons
+	 * @param string $type = null
+	 * @param array &$icons = null on return name of icons
 	 * @return array value => (commaseparated) translations
 	 */
 	function get_status($type=null, array &$icons=null)
@@ -1763,8 +1758,8 @@ class infolog_bo
 	 * This expects timestamps to be in server-time.
 	 *
 	 * @param array $infoData   the infolog data we try to find
-	 * @param boolean $relax=false if asked to relax, we only match against some key fields
-	 * @param string $tzid=null timezone, null => user time
+	 * @param boolean $relax = false if asked to relax, we only match against some key fields
+	 * @param string $tzid = null timezone, null => user time
 	 *
 	 * @return array of infolog_ids of matching entries
 	 */

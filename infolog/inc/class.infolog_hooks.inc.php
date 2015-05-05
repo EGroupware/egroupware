@@ -558,4 +558,17 @@ class infolog_hooks
 		unset($location);	// not used, but part of hook signature
 		return true;
 	}
+	
+	/**
+	 * Mail integration hook to import mail message contents into an infolog entry
+	 *
+	 * @return array
+	 */
+	public static function mail_import($args)
+	{
+		return array (
+			'menuaction' => 'infolog.infolog_ui.mail_import',
+			'popup' => egw_link::get_registry('infolog', 'edit_popup')
+		);
+	}
 }

@@ -856,6 +856,19 @@ END:VALARM';
 		unset($data);	// not used, but in function signature for hooks
 		return true;
 	}
+	
+	/**
+	 * Mail integration hook to import mail message contents into a calendar entry
+	 *
+	 * @return string method to be executed for calendar mail integration
+	 */
+	public static function mail_import($args)
+	{
+		return array (
+			'menuaction' => 'calendar.calendar_uiforms.mail_import',
+			'popup' => egw_link::get_registry('calendar', 'edit_popup')
+		);
+	}
 }
 
 // Not part of the class, since config hooks are still using the old style

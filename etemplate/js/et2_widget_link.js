@@ -1672,7 +1672,7 @@ var et2_link_list = et2_link_string.extend(
 							link.dom_id = 'temp_'+egw.uid();
 						}
 						// Icon should be in registry
-						if(typeof link.icon == 'undefined')
+						if(!link.icon)
 						{
 							link.icon = egw.link_get_registry(link.app,'icon');
 							// No icon, try by mime type - different place for un-saved entries
@@ -1684,7 +1684,7 @@ var et2_link_list = et2_link_string.extend(
 							}
 						}
 						// Special handling for file - if not existing, we can't ask for title
-						if(link.app == 'file' && typeof link.title == 'undefined')
+						if(typeof link.id =='object' && !link.title)
 						{
 							link.title = link.id.name || '';
 						}
