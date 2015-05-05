@@ -66,7 +66,7 @@ class acl
 	 * Some functions are specific to this account, and others are generic.
 	 *
 	 * @example acl->acl(5); // 5 is the user id
-	 * @param int $account_id=null user id or default null to use current user from $GLOBALS['egw_info']['user']['account_id']
+	 * @param int $account_id = null user id or default null to use current user from $GLOBALS['egw_info']['user']['account_id']
 	 */
 	function __construct($account_id = null)
 	{
@@ -88,7 +88,7 @@ class acl
 	 * PHP4 constructor
 	 *
 	 * @deprecated use __construct
-	 * @param int $account_id=null
+	 * @param int $account_id = null
 	 */
 	function acl($account_id = null)
 	{
@@ -146,7 +146,7 @@ class acl
 	/**
 	 * Read acl records for $acl->account_id from reposity
 	 *
-	 * @param boolean|array $no_groups=false if true, do not use memberships, if array do not use given groups
+	 * @param boolean|array $no_groups = false if true, do not use memberships, if array do not use given groups
 	 * @return array along with storing it in $acl->data.  <br>
 	 */
 	function read_repository($no_groups=false)
@@ -336,8 +336,8 @@ class acl
 	 * get specific rights for this->account_id for an app location
 	 *
 	 * @param string $location app location
-	 * @param string $appname='' optional defaults to currentapp
-	 * @param array $memberships=array() additional account_id, eg. memberships to match beside $this->account_id, default none
+	 * @param string $appname = '' optional defaults to currentapp
+	 * @param array $memberships = array() additional account_id, eg. memberships to match beside $this->account_id, default none
 	 * @return int $rights
 	 */
 	function get_specific_rights($location, $appname = '', $memberships=array())
@@ -418,7 +418,7 @@ class acl
 	 *
 	 * @param string $app appname
 	 * @param string $location location
-	 * @param int/boolean $account_id account id, default 0=$this->account_id, or false to delete all entries for $app/$location
+	 * @param int/boolean $accountid = '' account id, default 0=$this->account_id, or false to delete all entries for $app/$location
 	 * @return int number of rows deleted
 	 */
 	function delete_repository($app, $location, $accountid='')
@@ -456,7 +456,7 @@ class acl
 	 *
 	 * @param int $account_id
 	 * @param string $location
-	 * @param string $appname='' defaults to current app
+	 * @param string $appname = '' defaults to current app
 	 * @return int/boolean rights or false if none exist
 	 */
 	function get_specific_rights_for_account($account_id,$location,$appname='')
@@ -474,7 +474,7 @@ class acl
 	 * Get all rights for a given location and application
 	 *
 	 * @param string $location
-	 * @param string $appname='' defaults to current app
+	 * @param string $appname = '' defaults to current app
 	 * @return array with account => rights pairs
 	 */
 	function get_all_rights($location,$appname='')
@@ -496,8 +496,8 @@ class acl
 	 * Get the rights for all locations
 	 *
 	 * @param int $account_id
-	 * @param string $appname='' defaults to current app
-	 * @param boolean $use_memberships=true
+	 * @param string $appname = '' defaults to current app
+	 * @param boolean $use_memberships = true
 	 * @return array with location => rights pairs
 	 */
 	function get_all_location_rights($account_id,$appname='',$use_memberships=true)
@@ -526,7 +526,7 @@ class acl
 	 *
 	 * @param string $location location
 	 * @param int $required required rights
-	 * @param int $account_id account id defaults to $GLOBALS['egw_info']['user']['account_id'];
+	 * @param int $accountid account id defaults to $GLOBALS['egw_info']['user']['account_id'];
 	 * @return array/boolean false if there are no matching row in the db, else array with app-names
 	 */
 	function get_app_list_for_id($location, $required, $accountid = '')
@@ -648,9 +648,9 @@ class acl
 	/**
 	 * get a list of applications a user has rights to
 	 *
-	 * @param int $account_id optional defaults to $GLOBALS['egw_info']['user']['account_id'];
-	 * @param boolean $use_memberships=true true: use memberships too, false: only use given account
-	 * @param boolean $add_implicit_apps=true true: add apps every user has implicit rights
+	 * @param int $accountid = '' optional defaults to $GLOBALS['egw_info']['user']['account_id'];
+	 * @param boolean $use_memberships = true true: use memberships too, false: only use given account
+	 * @param boolean $add_implicit_apps = true true: add apps every user has implicit rights
 	 * @return array containing list of apps
 	 */
 	function get_user_applications($accountid = '', $use_memberships=true, $add_implicit_apps=true)
@@ -693,9 +693,9 @@ class acl
 	 * Read the grants other users gave $this->account_id for $app, group ACL is taken into account
 	 *
 	 * @param string $app optional defaults to $GLOBALS['egw_info']['flags']['currentapp']
-	 * @param boolean/array $enum_group_acls=true should group acls be returned for all members of that group, default yes
+	 * @param boolean/array $enum_group_acls = true should group acls be returned for all members of that group, default yes
 	 * 	if an array of group-id's is given, that id's will NOT be enumerated!
-	 * @param int $user=null user whos grants to return, default current user
+	 * @param int $user = null user whos grants to return, default current user
 	 * @return array with account-ids (of owners) and granted rights as values
 	 */
 	function get_grants($app='',$enum_group_acls=true,$user=null)
