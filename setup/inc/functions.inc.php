@@ -13,7 +13,7 @@
  * @version $Id$
  */
 
-error_reporting(error_reporting() & ~E_NOTICE & ~E_STRICT);
+error_reporting(error_reporting() & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
 // for an old header, we need to setup the reference before including it
 $GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
