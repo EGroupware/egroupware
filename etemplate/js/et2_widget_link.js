@@ -89,7 +89,7 @@ var et2_link_to = et2_inputWidget.extend(
 		this.link_entry = null;
 		this.file_upload = null;
 
-		this.createInputWidget();
+		if (!this.options.readonly) this.createInputWidget();
 	},
 
 	destroy: function() {
@@ -1490,6 +1490,12 @@ var et2_link_list = et2_link_string.extend(
 			"default": et2_no_init,
 			"description": "JS code which is executed when the links change."
 		},
+		readonly: {
+			name: "readonly",
+			type: "boolean",
+			"default": false,
+			description: "Does NOT allow user to enter data, just displays existing data"
+		}
 	},
 
 	/**
@@ -1789,37 +1795,42 @@ var et2_link_list = et2_link_string.extend(
 		*/
 
 		// Delete
-		var delete_button = $j(document.createElement("td"))
-			.appendTo(row);
-		$j("<div />")
-			.appendTo(delete_button)
-			// We don't use ui-icon because it assigns a bg image
-			.addClass("delete icon")
-			.bind( 'click', function() {
-				et2_dialog.show_dialog(
-					function(button) {
-						if(button == et2_dialog.YES_BUTTON)
-						{
-							self._delete_link(
-								self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id:_link_data,
-								row
-							);
-						}
-					},
-					egw.lang('Delete link?')
-				);
-			});
-
+		// build delete button if the link is not readonly
+		if (!this.options.readonly)
+		{
+			var delete_button = $j(document.createElement("td"))
+				.appendTo(row);
+			$j("<div />")
+				.appendTo(delete_button)
+				// We don't use ui-icon because it assigns a bg image
+				.addClass("delete icon")
+				.bind( 'click', function() {
+					et2_dialog.show_dialog(
+						function(button) {
+							if(button == et2_dialog.YES_BUTTON)
+							{
+								self._delete_link(
+									self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id:_link_data,
+									row
+								);
+							}
+						},
+						egw.lang('Delete link?')
+					);
+				});
+		}
 		// Context menu
 		row.bind("contextmenu", function(e) {
-			// Comment ony available if link_id is there
-			self.context.getItem("comment").set_enabled(typeof _link_data.link_id != 'undefined');
+			// Comment only available if link_id is there and not readonly
+			self.context.getItem("comment").set_enabled(typeof _link_data.link_id != 'undefined' && !self.options.readonly);
 			// File info only available for existing files
 			self.context.getItem("file_info").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 			self.context.getItem("save").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 			// Zip download only offered if there are at least 2 files
 			self.context.getItem("zip").set_enabled($j('[id^="link_-"]',this.list).length >= 2);
-
+			// Show delete item only if the widget is not readonly
+			self.context.getItem("delete").set_enabled(!self.options.readonly);
+			
 			self.context.data = _link_data;
 			self.context.showAt(e.pageX, e.pageY, true);
 			e.preventDefault();
