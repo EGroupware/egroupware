@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Egroupware
+@license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+@package 
+@subpackage 
+@link http://www.egroupware.org
+@author Nathan Gray
+@version $Id$
+-->
+
+<!DOCTYPE overlay PUBLIC '-//Stylite AG//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+
+<overlay>
+    <template id="calendar.view">
+		<grid id="view" width="100%" height="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<calendar-timegrid id="${row}"></calendar-timegrid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -10,7 +10,8 @@
  */
 
 /*egw:uses
-	/etemplate/js/etemplate2.js
+	/etemplate/js/etemplate2.js;
+	/calendar/js/et2_widget_timegrid.js;
 */
 
 /**

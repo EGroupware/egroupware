@@ -892,9 +892,9 @@ class calendar_uiviews extends calendar_ui
 				if (count($users) > $headerCounter)
 				{
 					$content .= $navHeader;
-				}
-				$content .= '</div>';
 			}
+				$content .= '</div>';
+		}
 			$content = '<div class="cal_is_sortable">'.$content.'</div>';
 		}
 
@@ -906,9 +906,30 @@ class calendar_uiviews extends calendar_ui
 
 			echo $content;
 		}
+		
+		$content = array('view' => array());
 
-
-		return $content;
+		// Always do 7 days for a week so scrolling works properly
+		$this->last = $search_params['end'] = strtotime("+7 days",$this->first) - 1;
+		if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)	// for more then X users, show all in one row
+		{
+			$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params)) +
+				array('owner' => $users);
+		}
+		else
+		{
+			foreach($this->_get_planner_users(false) as $uid => $label)
+			{
+				$search_params['users'] = $uid;
+				$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params))
+					 + array('owner' => $uid);
+			}
+		}
+		$tmpl = new etemplate_new('calendar.view');
+$tmpl->setElementAttribute('view','show_weekend', $days == 7);
+$ui = new calendar_uilist();
+$tmpl->setElementAttribute('view','actions',$ui->get_actions());
+		$tmpl->exec(__METHOD__, $content);
 	}
 
 	/**
