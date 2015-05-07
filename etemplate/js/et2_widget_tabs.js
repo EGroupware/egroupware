@@ -111,17 +111,24 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			{
 				var index_name = et2_readAttrWithDefault(node, "id");
 				var hide = false;
+				var widget_options = {};
 				if(index_name) {
 					if(selected == index_name) this.selected_index = i;
 					if(hidden[index_name]) {
 						hide = true;
+					}
+					// Get the class attribute and add it as widget_options
+					var classAttr = et2_readAttrWithDefault(node,"class");
+					if (classAttr)
+					{
+						widget_options = {'class':classAttr};
 					}
 				}
 				tabData.push({
 					"id": index_name,
 					"label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
-					"widget_options": {},
+					"widget_options": widget_options,
 					"contentDiv": null,
 					"flagDiv": null,
 					"hidden": hide,
@@ -314,6 +321,11 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			entry.flagDiv = $j(document.createElement("span"))
 				.addClass("et2_tabflag")
 				.appendTo(this.flagContainer);
+			// Class to tab's div container
+			if (entry.widget_options && typeof entry.widget_options.class != 'undefined')
+			{
+				entry.flagDiv.addClass(entry.widget_options.class);
+			}	
 			entry.flagDiv.text(entry.label || "Tab");
 			if(entry.hidden)
 			{
