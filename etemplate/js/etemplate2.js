@@ -155,7 +155,7 @@ etemplate2.prototype.resize = function(e)
 				// "IResizeable" interface
 				self.widgetContainer.iterateOver(function(_widget) {
 
-					if (excess_height != 0) _widget.resize(excess_height);
+					if (excess_height != 0 || excess_height === false) _widget.resize(excess_height);
 				}, self, et2_IResizeable);
 			}
 		},100);
