@@ -270,7 +270,17 @@ class mail_integration {
 				unset($mailcontent['attachments'][$key]['add_raw']);
 			}
 		}
-
+		
+		// Check if the hook is registered
+		if ($GLOBALS['egw']->hooks->hook_exists('mail_import',$app) == 0)
+		{
+			// Try to register hook
+			if(!$GLOBALS['egw']->hooks->register_single_app_hook($app,'mail_import'))
+			{
+				throw new egw_exception_assertion_failed('Hook import_mail registration faild for '.$app.' app! Please, contact your system admin in order to clear cache and register hooks.');
+			}
+		}
+		
 		// Get the registered hook method of requested app for integration
 		$hook = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);
 
