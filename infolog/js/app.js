@@ -213,7 +213,12 @@ app.classes.infolog = AppJS.extend(
 		{
 			// Show / hide descriptions
 			this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
+		}
 
+		// Only change columns for a real user event, to avoid interfering with
+		// favorites
+		if (nm && filter2 && !nm.update_in_progress)
+		{
 			// Store selection as implicit preference
 			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details','')+'-details-pref', filter2.value);
 
@@ -223,6 +228,8 @@ app.classes.infolog = AppJS.extend(
 			// Load new preferences
 			var colData = nm.columns.slice();
 			for(var i = 0; i < nm.columns.length; i++) colData[i].disabled=false;
+
+			nm.set_columns(egw.preference(nm.options.settings.columnselection_pref,'infolog').split(','));
 			nm._applyUserPreferences(nm.columns, colData);
 
 			// Now apply them to columns
@@ -231,7 +238,7 @@ app.classes.infolog = AppJS.extend(
 				nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
 				nm.dataview.getColumnMgr().columns[i].set_visibility(!colData[i].disabled);
 			}
-			nm.dataview.getColumnMgr().updated = true;
+			nm.dataview.getColumnMgr().updated = true;			
 			// Update page
 			nm.dataview.updateColumns();
 		}

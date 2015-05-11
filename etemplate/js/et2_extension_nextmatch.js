@@ -1437,6 +1437,68 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	},
 
 	/**
+	 * Set the currently displayed columns, without updating user's preference
+	 * 
+	 * @param {string[]} column_list List of column names
+	 * @param {boolean} trigger_update=false - explicitly trigger an update
+	 */
+	set_columns: function(column_list, trigger_update)
+	{
+		var columnMgr = this.dataview.getColumnMgr();
+		var visibility = {};
+
+		// Initialize to false
+		for (var i = 0; i < columnMgr.columns.length; i++)
+		{
+			var col = columnMgr.columns[i];
+			if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT )
+			{
+				visibility[col.id] = {visible: false};
+			}
+		}
+		for(var i = 0; i < this.columns.length; i++)
+		{
+
+			var widget = this.columns[i].widget;
+			var colName = this._getColumnName(widget);
+			if(column_list.indexOf(colName) !== -1)
+			{
+				visibility[columnMgr.columns[i].id].visible = true;
+			}
+			// Custom fields are listed seperately in column list, but are only 1 column
+			if(widget && widget.instanceOf(et2_nextmatch_customfields)) {
+
+				// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
+				colName = widget.id;
+				if(column_list.indexOf(colName) !== -1)
+				{
+					visibility[columnMgr.columns[i].id].visible = true;
+				}
+
+				var cf = this.columns[i].widget.options.customfields;
+				var visible = this.columns[i].widget.options.fields;
+				
+				// Turn off all custom fields
+				for(var field_name in cf)
+				{
+					visible[field_name] = false;
+				}
+				// Turn on selected custom fields - start from 0 in case they're not in order
+				for(var j = 0; j < column_list.length; j++)
+				{
+					if(column_list[j].indexOf(et2_customfields_list.prototype.prefix) != 0) continue;
+					visible[column_list[j].substring(1)] = true;
+				}
+				widget.set_visible(visible);
+			}
+		}
+		columnMgr.setColumnVisibilitySet(visibility);
+
+		// We don't want to update user's preference, so directly update
+		this.dataview._updateColumns();
+	},
+
+	/**
 	 * Set the letter search preference, and update the UI
 	 *
 	 * @param {boolean} letters_on
