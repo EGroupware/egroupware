@@ -489,6 +489,27 @@ app.classes.infolog = AppJS.extend(
 	},
 
 	/**
+	 * Wrapper so add -> New actions in the context menu can pass current 
+	 * filter values into new edit dialog
+	 * 
+	 * @see add_with_extras
+	 * 
+	 * @param {egwAction} action
+	 * @param {egwActionObject[]} selected
+	 */
+	add_action_handler: function(action, selected)
+	{
+		var nm = action.getManager().data.nextmatch || false;
+		if(nm)
+		{
+			this.add_with_extras(nm,action.id,
+				nm.getArrayMgr('content').getEntry('action'),
+				nm.getArrayMgr('content').getEntry('action_id')
+			);
+		}
+	},
+
+	/**
 	 * Opens a new edit dialog with some extra url parameters pulled from
 	 * standard locations.  Done with a function instead of hardcoding so
 	 * the values can be updated if user changes them in UI.
@@ -513,6 +534,17 @@ app.classes.infolog = AppJS.extend(
 		{
 			// Need a real array here
 			action_id = jQuery.map(action_id,function(val) {return val;});
+		}
+
+		// No action?  Try the linked filter, in case it's set
+		if(!_action && !_action_id)
+		{
+			if(nm_value.col_filter && nm_value.col_filter.linked)
+			{
+				var split = nm_value.col_filter.linked.split(':') || '';
+				_action = split[0] || '';
+				action_id = split[1] || '';
+			}
 		}
 		var extras = {
 			type: _type || nm_value.filter || "",
