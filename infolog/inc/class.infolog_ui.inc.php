@@ -1045,8 +1045,7 @@ class infolog_ui
 				'icon' => $type,
 			);
 			$types_add[$type] = $data + array(
-				'url' => 'menuaction=infolog.infolog_ui.edit&type='.$type,
-				'popup' => egw_link::get_registry('infolog', 'add_popup'),
+				'onExecute' => "javaScript:app.infolog.add_action_handler"
 			);
 		}
 
