@@ -452,9 +452,9 @@ var et2_file = et2_inputWidget.extend(
 		var file_count = this.resumable.files.length;
 
 		// Remove files from list
-		for(var i = 0; i < this.resumable.files.length; i++)
+		while(this.resumable.files.length > 0)
 		{
-			this.resumable.removeFile(this.resumable.files[i]);
+			this.resumable.removeFile(this.resumable.files[this.resumable.files.length -1]);
 		}
 
 		var event = jQuery.Event('upload');
