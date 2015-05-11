@@ -121,13 +121,29 @@
 
 		// Bind the "mousemove" event in the "resize" namespace
 		_elem.bind("mousemove.resize", function(e) {
-			_elem.css("cursor", inResizeRegion(e.pageX, _elem) ? "ew-resize" : "auto");
+			var stopResize = false;
+			// Stop switch to resize cursor if the mouse position
+			// is more intended for scrollbar not the resize edge
+			// 8pixel is an arbitary number for scrolbar area
+			if (e.target.clientHeight < e.target.scrollHeight && e.target.offsetWidth - e.offsetX <= 8)
+			{
+				stopResize = true;
+			}
+			_elem.css("cursor", inResizeRegion(e.pageX, _elem) && !stopResize? "ew-resize" : "auto");
 		});
 
 		// Bind the "mousedown" event in the "resize" namespace
 		_elem.bind("mousedown.resize", function(e) {
+			var stopResize = false;
+			// Stop resize if the mouse position is more intended
+			// for scrollbar not the resize edge
+			// 8pixel is an arbitary number for scrolbar area
+			if (e.target.clientHeight < e.target.scrollHeight && e.target.offsetWidth - e.offsetX <= 8)
+			{
+				stopResize = true;
+			}
 			// Do not triger startResize if clicked element is select-tag, as it may causes conflict in some browsers
-			if (inResizeRegion(e.pageX, _elem) && e.target.tagName != 'SELECT')
+			if (inResizeRegion(e.pageX, _elem) && e.target.tagName != 'SELECT' && !stopResize)
 			{
 				// Start the resizing
 				startResize(outerTable, _elem, function(_w) {
