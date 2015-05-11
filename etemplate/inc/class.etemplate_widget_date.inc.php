@@ -162,6 +162,44 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			{
 				$date = new egw_time($value);
 			}
+			if (!empty($this->attrs['min']))
+			{
+				if(is_numeric($this->attrs['min']))
+				{
+					$min = new egw_time(strtotime( $this->attrs['min'] . 'days'));
+				}
+				else
+				{
+					$min = new egw_time(strtotime($this->attrs['min']));
+				}
+				if($value < $min)
+				{
+					self::set_validation_error($form_name,lang(
+						"Value has to be at least '%1' !!!",
+						$min->format($this->type != 'date')
+					),'');
+					$value = $min;
+				}
+			}
+			if (!empty($this->attrs['max']))
+			{
+				if(is_numeric($this->attrs['max']))
+				{
+					$max = new egw_time(strtotime( $this->attrs['max'] . 'days'));
+				}
+				else
+				{
+					$max = new egw_time(strtotime($this->attrs['max']));
+				}
+				if($value < $max)
+				{
+					self::set_validation_error($form_name,lang(
+						"Value has to be at maximum '%1' !!!",
+						$max->format($this->type != 'date')
+					),'');
+					$value = $max;
+				}
+			}
 			if(!$value)
 			{
 				// Not null, blank

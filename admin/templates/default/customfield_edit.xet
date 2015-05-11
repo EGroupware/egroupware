@@ -61,7 +61,7 @@
 						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 					</hbox>
-					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" image="delete" background_image="1" span="all"/>
+					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" image="delete" onclick="et2_dialog.confirm(widget,'Delete this entry?','Delete')" background_image="1" span="all"/>
 				</row>
 			</rows>
 		</grid>

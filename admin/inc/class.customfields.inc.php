@@ -82,8 +82,8 @@ class customfields
 		'float'		=> array('cf_len' => true),
 		'label'		=> array('cf_values' => true),
 		'select'	=> array('cf_len' => false, 'cf_rows' => true, 'cf_values' => true),
-		'date'		=> array('cf_len' => true, 'cf_rows' => false),
-		'date-time'	=> array('cf_len' => true, 'cf_rows' => false),
+		'date'		=> array('cf_len' => true, 'cf_rows' => false, 'cf_values' => true),
+		'date-time'	=> array('cf_len' => true, 'cf_rows' => false, 'cf_values' => true),
 		'select-account'	=> array('cf_len' => false, 'cf_rows' => true),
 		'htmlarea'	=> array('cf_len' => true, 'cf_rows' => true),
 		'button'	=> array('cf_values' => true),
@@ -300,11 +300,17 @@ class customfields
 			{
 				case 'delete':
 					$this->so->delete($cf_id);
-					egw_framework::refresh_opener('Saved', 'admin', $cf_id /* Conflicts with accounts 'delete'*/);
+					egw_framework::refresh_opener('Deleted', 'admin', $cf_id /* Conflicts with accounts 'delete'*/);
 					egw_framework::window_close();
 					break;
 				case 'save':
 				case 'apply':
+					if(!$cf_id && $this->fields[$content['cf_name']])
+					{
+						egw_framework::message(lang("Field '%1' already exists !!!",$content['cf_name']),'error');
+						$content['cf_name'] = '';
+						break;
+					}
 					if(empty($content['cf_label']))
 					{
 						$content['cf_label'] = $content['cf_name'];
@@ -312,11 +318,18 @@ class customfields
 					if (!empty($content['cf_values']))
 					{
 						$values = array();
-						foreach(explode("\n",$content['cf_values']) as $line)
+						if($content['cf_values'][0] === '@')
 						{
-							list($var,$value) = explode('=',trim($line),2);
-							$var = trim($var);
-							$values[$var] = empty($value) ? $var : $value;
+							$values['@'] = substr($content['cf_values'], $content['cf_values'][1] === '=' ? 2:1);
+						}
+						else
+						{
+							foreach(explode("\n",$content['cf_values']) as $line)
+							{
+								list($var,$value) = explode('=',trim($line),2);
+								$var = trim($var);
+								$values[$var] = trim($value)==='' ? $var : $value;
+							}
 						}
 						$content['cf_values'] = $values;
 					}
@@ -329,6 +342,11 @@ class customfields
 						}
 					}
 					egw_customfields::update($update_content);
+					if(!$cf_id)
+					{
+						$this->fields = egw_customfields::get($this->appname,true);
+						$cf_id = (int)$this->fields[$content['cf_name']]['id'];
+					}
 					egw_framework::refresh_opener('Saved', 'admin', $cf_id, 'edit');
 					if ($action != 'save')
 					{
@@ -370,8 +388,16 @@ class customfields
 			{
 				$content['cf_private'] = explode(',',$content['cf_private']);
 			}
+			if($content['cf_name'])
+			{
+				$readonlys['cf_name'] = true;
+			}
+			$content['cf_values'] = json_decode($content['cf_values'], true);
 		}
-		$content['cf_values'] = json_decode($content['cf_values'], true);
+		else
+		{
+			$readonlys['button[delete]'] = true;
+		}
 		if (is_array($content['cf_values']))
 		{
 			$values = '';
@@ -410,17 +436,10 @@ class customfields
 		$content['statustext'] = $content['options'][$content['cf_type']];
 		$content['attributes'] = self::$type_attribute_flags;
 
-		// Start disabled, but don't set read-only as that changes the widget to readonly
-		$this->tmpl->setElementAttribute('cf_len', 'disabled', true);
-		$this->tmpl->setElementAttribute('cf_rows', 'disabled', true);
-		foreach(array('cf_len','cf_rows','cf_values') as $field)
-		{
-			$this->tmpl->setElementAttribute($field, 'disabled', !self::$type_attribute_flags[$content['cf_type']][$field]);
-		}
-
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'cf_id' => $cf_id,
 			'cf_app' => $this->appname,
+			'cf_name' => $content['cf_name'],
 			'use_private' => $this->use_private,
 		),2);
 	}
