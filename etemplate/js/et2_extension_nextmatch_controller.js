@@ -573,6 +573,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 					this.self._selectionMgr.setSelected(this.self.kept_selection.ids[i],true);
 					this.self.kept_selection.ids.splice(i,1);
 				}
+				else
+				{
+					this.self.kept_selection.ids.splice(i,1);
+				}
 			}
 			if(this.self.kept_focus && _response.order.indexOf(this.self.kept_focus) >= 0)
 			{
@@ -580,7 +584,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			}
 			// Re-expanding rows handled in et2_extension_nextmatch_rowProvider
 			// Expansions might still be valid, so we don't clear them
-			if(this.self.kept_selection != null && this.self.kept_selection.length == 0)
+			if(this.self.kept_selection != null && typeof this.self.kept_selection.ids != 'undefined' && this.self.kept_selection.ids.length == 0)
 			{
 				this.self.kept_selection = null;
 			}
