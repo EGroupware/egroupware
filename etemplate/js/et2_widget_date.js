@@ -291,7 +291,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 */
 	set_year_range: function(_value)
 	{
-		if(this.input_date)
+		if(this.input_date && this._type == 'date')
 		{
 			this.input_date.datepicker('option','yearRange',_value);
 		}
