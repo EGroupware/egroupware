@@ -579,6 +579,60 @@ class egw_mailer extends Horde_Mime_Mail
 	}
 
 	/**
+	 * Parse base-part into _body, _htmlBody and _parts to eg. add further attachments
+	 */
+	function parseBasePart()
+	{
+		try {
+			$base = $this->getBasePart();
+			$plain_id = $base->findBody('plain');
+			$html_id = $base->findBody('html');
+
+			$this->_body = $this->_htmlBody = null;
+			$this->clearParts();
+
+			foreach($base->partIterator() as $part)
+			{
+				$id = $part->getMimeId();
+				//error_log(__METHOD__."() plain=$plain_id, html=$html_id: $id: ".$part->getType());
+				switch($id)
+				{
+					case '0':	// base-part itself
+						continue 2;
+					case $plain_id:
+						$this->_body = $part;
+						break;
+					case $html_id:
+						$this->_htmlBody = $part;
+						break;
+					default:
+						$this->_parts[] = $part;
+				}
+			}
+			$this->setBasePart(null);
+		}
+		catch (Exception $e) {
+			// ignore that there is no base-part yet, so nothing to do
+			unset($e);
+		}
+	}
+
+	/**
+	 * Adds a MIME message part.
+	 *
+	 * Reimplemented to add parts / attachments if message was parsed / already has a base-part
+	 *
+	 * @param Horde_Mime_Part $part  A Horde_Mime_Part object.
+	 * @return integer  The part number.
+	 */
+	public function addMimePart($part)
+	{
+		if ($this->_base) $this->parseBasePart();
+
+		return parent::addMimePart($part);
+	}
+
+	/**
 	 * Clear all non-standard headers
 	 *
 	 * Used in merge-print to remove headers before sending "new" mail
