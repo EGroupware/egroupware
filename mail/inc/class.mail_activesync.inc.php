@@ -732,21 +732,10 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					{
 						if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
-						switch(strtoupper($attachment['mimeType']))
-						{
-							case 'MESSAGE/RFC822':
-								$rawHeader = $rawBody = '';
-								$rawHeader = $this->mail->getMessageRawHeader($uid, $attachment['partID'],$folder);
-								$rawBody = $this->mail->getMessageRawBody($uid, $attachment['partID'],$folder);
-								$mailObject->AddStringAttachment($rawHeader.$rawBody, $mailObject->EncodeHeader($attachment['name']), 'message/rfc822');
-								break;
-							default:
-								$attachmentData = '';
-								$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
-								/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
-								//debugLog(__METHOD__.__LINE__.' added part with number:'.$x);
-								break;
-						}
+						$attachmentData = '';
+						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
+						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
+						//debugLog(__METHOD__.__LINE__.' added part with number:'.$x);
 					}
 				}
 			}
@@ -1080,23 +1069,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 						foreach((array)$attachments as $key => $attachment)
 						{
 							if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
-							switch($attachment['type'])
-							{
-								case 'MESSAGE/RFC822':
-									$rawHeader = $rawBody = '';
-									if (isset($attachment['partID']))
-									{
-										$rawHeader = $this->mail->getMessageRawHeader($id, $attachment['partID'],$_folderName);
-									}
-									$rawBody = $this->mail->getMessageRawBody($id, $attachment['partID'],$_folderName);
-									$mailObject->AddStringAttachment($rawHeader.$rawBody, $mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
-									break;
-								default:
-									$attachmentData = '';
-									$attachmentData	= $this->mail->getAttachment($id, $attachment['partID'],0,false,false,$_folderName);
-									$mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), 'base64', $attachment['mimeType']);
-									break;
-							}
+							$attachmentData = '';
+							$attachmentData	= $this->mail->getAttachment($id, $attachment['partID'],0,false,false,$_folderName);
+							$mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
 						}
 					}
 
