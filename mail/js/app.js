@@ -2579,7 +2579,7 @@ app.classes.mail = AppJS.extend(
 		
 		if (typeof _action.data != 'undefined' )
 		{
-			if (typeof _action.data.popup != 'undefined') w_h = _action.data.popup.split('x');
+			if (typeof _action.data.popup != 'undefined' && _action.data.popup) w_h = _action.data.popup.split('x');
 			if (typeof _action.data.mail_import != 'undefined') var mail_import_hook = _action.data.mail_import;
 		}
 
