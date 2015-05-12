@@ -273,7 +273,7 @@ abstract class setup_cmd extends admin_cmd
 		$domains = $GLOBALS['egw_domain'];
 		if ($domain)	// domain to check given
 		{
-			if (!isset($GLOBALS['egw_domain'][$domain])) throw new egw_exception_wrong_userinput(lang("Domain '%1' does NOT exist !!!",$domain));
+			if (!isset($GLOBALS['egw_domain'][$domain])) throw new egw_exception_wrong_userinput(lang("Domain '%1' does NOT exist !!!",$domain), 92);
 
 			$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
 		}
