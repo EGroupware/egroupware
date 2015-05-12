@@ -373,6 +373,7 @@ save:	mail	en	Save:
 saving of message %1 failed. destination folder %2 does not exist.	mail	en	Saving of message %1 failed. Destination Folder %2 does not exist.
 saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 succeeded. Check Folder %2.
 saving the rule failed:	mail	en	Saving the rule failed:
+see attachments for content of the orignial mail	mail	en	See Attachments for Content of the Orignial Mail
 select all	mail	en	Select all
 select an existing entry in order to append mail content to it	mail	en	Select an existing entry in order to append mail content to it
 select file to attach to message	mail	en	Select file to attach to message

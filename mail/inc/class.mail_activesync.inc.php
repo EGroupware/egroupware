@@ -676,8 +676,6 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
             // receive entire mail (header + body)
 			// get message headers for specified message
 			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true, $folder);
-			// do forwarding as inline, until we understand why asmail fails
-			$preferencesArray['message_forwarding']='inline';
 			// build a new mime message, forward entire old mail as file
 			if ($preferencesArray['message_forwarding'] == 'asmail')
 			{
@@ -685,6 +683,9 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				$rawHeader      = $this->mail->getMessageRawHeader($smartdata['itemid'], $_partID,$folder);
 				$rawBody        = $this->mail->getMessageRawBody($smartdata['itemid'], $_partID,$folder);
 				$mailObject->AddStringAttachment($rawHeader.$rawBody, $headers['SUBJECT'].'.eml', 'message/rfc822');
+				$AltBody = $AltBody."</br>".lang("See Attachments for Content of the Orignial Mail").$sigTextHtml;
+				$Body = $Body."\r\n".lang("See Attachments for Content of the Orignial Mail").$sigTextPlain;
+				$isforward = true;
 			}
 			else
 			{
@@ -1092,7 +1093,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 									break;
 								default:
 									$attachmentData = '';
-									$attachmentData	= $this->mail->getAttachment($id, $attachment['partID'],0,false);
+									$attachmentData	= $this->mail->getAttachment($id, $attachment['partID'],0,false,false,$_folderName);
 									$mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), 'base64', $attachment['mimeType']);
 									break;
 							}
@@ -1215,7 +1216,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					// pass meeting requests to calendar plugin
 					if (strtolower($attach['mimeType']) == 'text/calendar' && strtolower($attach['method']) == 'request' &&
 						isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
-						($attachment = $this->mail->getAttachment($id, $attach['partID'],0,false)) &&
+						($attachment = $this->mail->getAttachment($id, $attach['partID'],0,false,false,$_folderName)) &&
 						($output->meetingrequest = calendar_activesync::meetingRequest($attachment['attachment'])))
 					{
 						$output->messageclass = "IPM.Schedule.Meeting.Request";
@@ -1316,7 +1317,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	 */
 	function GetAttachmentData($fid,$attname) {
 		debugLog("getAttachmentData: $fid (attname: '$attname')");
-		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
+		error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
 		list($folderid, $id, $part) = explode(":", $attname);
 
 		$this->splitID($folderid, $account, $folder);
@@ -1324,7 +1325,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
-		$attachment = $this->mail->getAttachment($id,$part,0,false);
+		$attachment = $this->mail->getAttachment($id,$part,0,false,false,$folder);
 		print $attachment['attachment'];
 		unset($attachment);
 		return true;
@@ -1350,7 +1351,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false, self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
-		$att = $this->mail->getAttachment($id,$part,0,false);
+		$att = $this->mail->getAttachment($id,$part,0,false,false,$folder);
 		$attachment = new SyncAirSyncBaseFileAttachment();
 		/*
 		debugLog(__METHOD__.__LINE__.array2string($att));
