@@ -96,6 +96,15 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 					// Bind the action to when the tab is selected
 					var handler = function(e) {
 						e.data.div.unbind("click.history");
+						// Bind on click tap, because we need to update history size
+						// after a rezise happend and history log was not the active tab
+						e.data.div.bind("click.history",{"history": e.data.history, div: tabs.tabData[i].flagDiv}, function(e){
+							e.data.history.dynheight.update(function(_w, _h)
+							{
+								e.data.history.dataview.resize(_w, _h);
+							});
+						});
+						
 						e.data.history.finishInit();
 						e.data.history.dynheight.update(function(_w, _h) {
 							e.data.history.dataview.resize(_w, _h);
@@ -556,7 +565,15 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
 			if (_height != 0)
 			{
+				// 250px is the default value for history widget
+				// if it's not loaded yet and window is resized
+				// then add the default height with excess_height
+				if (this.div.height() == 0) _height += 250;
 				this.div.height(this.div.height() + _height);
+				
+				// trigger the history registered resize
+				// in order to update the height with new value
+				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
 			}
 		}
 	}
