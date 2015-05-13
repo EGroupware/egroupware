@@ -1268,9 +1268,6 @@ div.calendar {
   background-color: rgba(255, 221, 115, 0.1);
   margin-bottom: 1em;
 }
-#calendar-edit #calendar-edit_calendar-edit-history {
-  max-width: 800px;
-}
 #calendar-edit #calendar-edit_calendar-edit-history tbody {
   display: table-row-group;
   width: 100%;

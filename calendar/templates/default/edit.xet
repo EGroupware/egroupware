@@ -241,7 +241,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.history" template="" lang="" group="0" version="1.7.002">
-		<historylog id="history" options="history_status" width="100%" overflow="hidden"/>
+		<historylog id="history" options="history_status" width="100%" />
 	</template>
 	<template id="calendar.delete_series" template="" lang="" group="0" version="1.7.003">
 		<vbox>

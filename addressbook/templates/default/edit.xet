@@ -341,7 +341,7 @@
 		</box>
 	</template>
 	<template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
-		<historylog id="history" width="100%" overflow="hidden"/>
+		<historylog id="history" width="100%"/>
 	</template>
 	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
 		<template id="addressbook.editname"/>
@@ -395,7 +395,7 @@
 					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" width="100%" tab_height="200">
+					<tabbox id="tabs" span="all" width="100%" tab_height="250">
 						<tabs>
 							<tab id="general" label="Organisation"/>
 							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
