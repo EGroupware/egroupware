@@ -357,6 +357,11 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			},
 			create: function (event, ui) {
 				$j('html').unbind('click.outsideOfMenu');
+			},
+			beforeActivate: function ()
+			{
+				// Nothing to show in menulist
+				if (menulist.children().length == 0)	return false;
 			}
 		});
 	},
