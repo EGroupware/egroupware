@@ -606,7 +606,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$beforePlain = $beforeHtml = "";
 		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
 		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
-		$sigText = $this->mail->merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+		$sigText = emailadmin_imapbase::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Signature to use:'.$sigText);
 		$sigTextHtml = $beforeHtml.$sigText;
 		$sigTextPlain = $beforePlain.translation::convertHTMLToText($sigText);
