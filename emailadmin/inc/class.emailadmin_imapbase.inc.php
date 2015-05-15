@@ -112,7 +112,7 @@ class emailadmin_imapbase
 		'tidy'=>0,
 		'elements' => "* -script",
 		'deny_attribute' => 'on*',
-		'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
+		'schemes'=>'href: file, ftp, http, https, mailto, phone; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
 		'hook_tag' =>"hl_email_tag_transform",
 	);
 
@@ -4834,11 +4834,11 @@ class emailadmin_imapbase
 				strtolower($singleBodyPart['charSet'])
 			);
 			$ct = 0;
-
-			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle=array());
+			$newStyle=array();
+			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
 			if ($ct>0)
 			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($newStyle[0]));
+				//error_log(__METHOD__.' ('.__LINE__.') '.'#'.$ct.'#'.array2string($newStyle));
 				$style2buffer = implode('',$newStyle[0]);
 			}
 			if ($style2buffer && strtoupper(self::$displayCharset) == 'UTF-8')
@@ -5711,7 +5711,7 @@ class emailadmin_imapbase
 	 * @param string &$err error-message on error
 	 * @return string/boolean merged content or false on error
 	 */
-	function merge($content,$ids,$mimetype='')
+	static function merge($content,$ids,$mimetype='')
 	{
 		$mergeobj = new addressbook_merge();
 
