@@ -3013,7 +3013,7 @@ class mail_ui
 				// create links for inline images
 				if ($modifyURI)
 				{
-					$newBody = preg_replace_callback("/\[cid:(.*)\]/iU",array($this,'image_callback_plain'),$newBody);
+					$newBody = self::resolve_inline_images($newBody, $this->mailbox, $this->uid, $this->partID, 'plain');
 				}
 
 				//TODO:$newBody	= $this->highlightQuotes($newBody);
@@ -3064,9 +3064,7 @@ class mail_ui
 				// create links for inline images
 				if ($modifyURI)
 				{
-					$newBody = preg_replace_callback("/src=(\"|\')cid:(.*)(\"|\')/iU",array($this,'image_callback'),$newBody);
-					$newBody = preg_replace_callback("/url\(cid:(.*)\);/iU",array($this,'image_callback_url'),$newBody);
-					$newBody = preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",array($this,'image_callback_background'),$newBody);
+					$newBody = self::resolve_inline_images ($newBody, $this->mailbox, $this->uid, $this->partID);
 				}
 				// email addresses / mailto links get now activated on client-side
 			}
@@ -3082,161 +3080,146 @@ class mail_ui
 
 		return $body;
 	}
-
+	
 	/**
-	 * preg_replace callback to replace image cid url's
+	 * Resolve inline images from CID to proper url
 	 *
-	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
-	 * @return string src attribute to replace
+	 * @param string $_body message content
+	 * @param string $_mailbox mail folder
+	 * @param string $_uid uid
+	 * @param string $_partID part id
+	 * @param string $_messageType = 'html', message type is either html or plain
+	 * @return string message body including all CID images replaced
 	 */
-	function image_callback($matches)
+	public static function resolve_inline_images ($_body,$_mailbox, $_uid, $_partID, $_messageType = 'html')
 	{
-		static $cache = array();	// some caching, if mails containing the same image multiple times
-
-		$linkData = array (
-			'menuaction'    => 'mail.mail_ui.displayImage',
-			'uid'		=> $this->uid,
-			'mailbox'	=> base64_encode($this->mailbox),
-			'cid'		=> base64_encode($matches[2]),
-			'partID'	=> $this->partID,
-		);
-		$imageURL = egw::link('/index.php', $linkData);
-
-		// to test without data uris, comment the if close incl. it's body
-		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
+		if ($_messageType === 'plain')
 		{
-			if (!isset($cache[$imageURL]))
-			{
-				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[2], $this->partID);
-
-				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if (($attachment instanceof Horde_Mime_Part) && $attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
-				{
-					$this->mail_bo->fetchPartContents($this->uid, $attachment);
-					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
-				}
-				else
-				{
-					$cache[$imageURL] = $imageURL;
-				}
-			}
-			$imageURL = $cache[$imageURL];
+			return self::resolve_inline_image_byType($_body, $_mailbox, $_uid, $_partID, 'plain');
 		}
-		return 'src="'.$imageURL.'"';
+		else
+		{
+			foreach(array('src','url','background') as $type)
+			{
+				$_body = self::resolve_inline_image_byType($_body, $_mailbox, $_uid, $_partID, $type);
+			}
+			return $_body;
+		}
 	}
-
+	
 	/**
-	 * preg_replace callback to replace image cid url's
+	 * Replace CID with proper type of content understandable by browser
 	 *
-	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
-	 * @return string src attribute to replace
+	 * @param type $_body content of message
+	 * @param type $_mailbox mail box
+	 * @param type $_uid uid
+	 * @param type $_partID part id
+	 * @param type $_type = 'src' type of inline image that needs to be resolved and replaced
+	 *	- types: {plain|src|url|background}
+	 * @return string returns body content including all CID replacements
 	 */
-	function image_callback_plain($matches)
+	public static function resolve_inline_image_byType ($_body,$_mailbox, $_uid, $_partID, $_type ='src')
 	{
-		static $cache = array();	// some caching, if mails containing the same image multiple times
-		//error_log(__METHOD__.__LINE__.array2string($matches));
-		$linkData = array (
-			'menuaction'    => 'mail.mail_ui.displayImage',
-			'uid'		=> $this->uid,
-			'mailbox'	=> base64_encode($this->mailbox),
-			'cid'		=> base64_encode($matches[1]),
-			'partID'	=> $this->partID,
-		);
-		$imageURL = egw::link('/index.php', $linkData);
-
-		// to test without data uris, comment the if close incl. it's body
-		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
+		/**
+		 * Callback for preg_replace_callback function
+		 * returns matched CID replacement string based on given type
+		 * @param array $matches
+		 * @param string $_mailbox
+		 * @param string $_uid
+		 * @param string $_partID
+		 * @param string $_type
+		 * @return string|boolean returns the replace
+		*/
+		$replace_callback = function ($matches) use ($_mailbox,$_uid, $_partID,  $_type)
 		{
-			if (!isset($cache[$imageURL]))
+			if (!$_type)	return false;
+			$CID = '';
+			// Build up matches according to selected type
+			switch ($_type)
 			{
-				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
+				case "plain":
+					$CID = $matches[1];
+					break;
+				case "src":
+					$CID = $matches[2];
+					break;
+				case "url":
+					$CID = $matches[1];
+					break;
+				case "background":
+					$CID = $matches[2];
+					break;
+			}
 
-				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if (($attachment instanceof Horde_Mime_Part) && bytes($attachment->getBytes()) < 8192)	// msie=8 allows max 32k data uris
+			static $cache = array();	// some caching, if mails containing the same image multiple times
+
+			if (is_array($matches) && $CID)
+			{
+				$linkData = array (
+					'menuaction'    => 'mail.mail_ui.displayImage',
+					'uid'		=> $_uid,
+					'mailbox'	=> base64_encode($_mailbox),
+					'cid'		=> base64_encode($CID),
+					'partID'	=> $_partID,
+				);
+				$imageURL = egw::link('/index.php', $linkData);
+				// to test without data uris, comment the if close incl. it's body
+				if (html::$user_agent != 'msie' || html::$ua_version >= 8)
 				{
-					$this->mail_bo->fetchPartContents($this->uid, $attachment);
-					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
+					if (!isset($cache[$imageURL]))
+					{
+						if ($_type !="background")
+						{
+							$bo = emailadmin_imapbase::getInstance(false, self::$icServerID);
+							$attachment = $bo->getAttachmentByCID($_uid, $CID, $_partID);
+
+							// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
+							if (($attachment instanceof Horde_Mime_Part) && $attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
+							{
+								$bo->fetchPartContents($_uid, $attachment);
+								$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
+							}
+							else
+							{
+								$cache[$imageURL] = $imageURL;
+							}
+						}
+						else
+						{
+							$cache[$imageURL] = $imageURL;
+						}
+					}
+					$imageURL = $cache[$imageURL];
 				}
-				else
+
+				// Decides the final result of replacement according to the type
+				switch ($_type)
 				{
-					$cache[$imageURL] = $imageURL;
+					case "plain":
+						return '<img src="'.$imageURL.'" />';
+					case "src":
+						return 'src="'.$imageURL.'"';
+					case "url":
+						return 'url('.$imageURL.');';
+					case "background":
+						return 'background="'.$imageURL.'"';
 				}
 			}
-			$imageURL = $cache[$imageURL];
-		}
-		return '<img src="'.$imageURL.'" />';
-	}
-
-	/**
-	 * preg_replace callback to replace image cid url's
-	 *
-	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
-	 * @return string src attribute to replace
-	 */
-	function image_callback_url($matches)
-	{
-		static $cache = array();	// some caching, if mails containing the same image multiple times
-		//error_log(__METHOD__.__LINE__.array2string($matches));
-		$linkData = array (
-			'menuaction'    => 'mail.mail_ui.displayImage',
-			'uid'		=> $this->uid,
-			'mailbox'	=> base64_encode($this->mailbox),
-			'cid'		=> base64_encode($matches[1]),
-			'partID'	=> $this->partID,
-		);
-		$imageURL = egw::link('/index.php', $linkData);
-
-		// to test without data uris, comment the if close incl. it's body
-		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
+			return false;
+		};
+		
+		// return new body content base on chosen type
+		switch($_type)
 		{
-			if (!isset($cache[$imageURL]))
-			{
-				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
-
-				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if (($attachment instanceof Horde_Mime_Part) && $attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
-				{
-					$this->mail_bo->fetchPartContents($this->uid, $attachment);
-					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
-				}
-				else
-				{
-					$cache[$imageURL] = $imageURL;
-				}
-			}
-			$imageURL = $cache[$imageURL];
+			case"plain":
+				return preg_replace_callback("/\[cid:(.*)\]/iU",$replace_callback,$_body);
+			case "src":
+				return preg_replace_callback("/src=(\"|\')cid:(.*)(\"|\')/iU",$replace_callback,$_body);
+			case "url":
+				return preg_replace_callback("/url\(cid:(.*)\);/iU",$replace_callback,$_body);
+			case "background":
+				return preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",$replace_callback,$_body);
 		}
-		return 'url('.$imageURL.');';
-	}
-
-	/**
-	 * preg_replace callback to replace image cid url's
-	 *
-	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
-	 * @return string src attribute to replace
-	 */
-	function image_callback_background($matches)
-	{
-		static $cache = array();	// some caching, if mails containing the same image multiple times
-		$linkData = array (
-			'menuaction'    => 'mail.mail_ui.displayImage',
-			'uid'		=> $this->uid,
-			'mailbox'	=> base64_encode($this->mailbox),
-			'cid'		=> base64_encode($matches[2]),
-			'partID'	=> $this->partID,
-		);
-		$imageURL = egw::link('/index.php', $linkData);
-
-		// to test without data uris, comment the if close incl. it's body
-		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
-		{
-			if (!isset($cache[$imageURL]))
-			{
-				$cache[$imageURL] = $imageURL;
-			}
-			$imageURL = $cache[$imageURL];
-		}
-		return 'background="'.$imageURL.'"';
 	}
 
 	/**

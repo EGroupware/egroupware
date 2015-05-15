@@ -2081,6 +2081,7 @@ class mail_compose
 			}
 
 			$this->sessionData['body']	.= '</blockquote><br>';
+			$this->sessionData['body'] =  mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID, 'html');
 		} else {
 			//$this->sessionData['body']	= @htmlspecialchars(lang("on")." ".$headers['DATE']." ".$mail_bo->decode_header($fromAddress), ENT_QUOTES) . " ".lang("wrote").":\r\n";
 			// take care the way the ReplyHeader is created here, is used later on in uicompose::compose, in case you force replys to be HTML (prefs)
@@ -2100,7 +2101,7 @@ class mail_compose
 				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
 				$newBody	= translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-
+				$newBody = mail_ui::resolve_inline_images($newBody, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
 				// create body new, with good line breaks and indention
 				foreach(explode("\n",$newBody) as $value) {
