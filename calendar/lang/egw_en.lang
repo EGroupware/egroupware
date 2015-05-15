@@ -560,6 +560,7 @@ unable to save	calendar	en	Unable to save
 update timezones	common	en	Update time zones
 updated	calendar	en	Updated
 use end date	calendar	en	Use end date
+use range-views to optimise calendar queries?	calendar	en	Use range-views to optimise calendar queries?
 use the selected time and close the popup	calendar	en	Use the selected time and close the popup
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	en	Use this tag for address labels. Place the content you want to repeat between two tags.
 use this timezone to export calendar data.	calendar	en	Use this time zone to export calendar data.
