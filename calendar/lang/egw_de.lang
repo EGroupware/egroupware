@@ -560,6 +560,7 @@ unable to save	calendar	de	Speichern nicht möglich
 update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
+use range-views to optimise calendar queries?	calendar	de	Sollen spezielle Bereichs-Ansichten verwendet werden, um Kalenderabfragen zu optimieren?
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Pop-up
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	de	Verwenden Sie diesen Platzhalter für Aufkleber. Fügen die den Inhalt, der wiederholt werden soll, zwischen zwei dieser Platzhalter ein.
 use this timezone to export calendar data.	calendar	de	Diese Zeitzone zum exportieren von Kalenderdaten verwenden
