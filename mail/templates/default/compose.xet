@@ -16,7 +16,7 @@
 					<menupopup id="priority"/>
 				</menulist>
 			</hbox>
-			
+
 			<grid  width="100%" resize_ratio="0">
 				<columns>
 					<column widtd="10%"/>
@@ -85,10 +85,10 @@
 			</grid>
 		</vbox>
 		<vbox class="mailComposeBodySection" width="99%">
-			<hbox disabled="@is_plain" class="mailComposeBody">
+			<hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
 				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" imageDataUrl="true" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
 			</hbox>
-			<hbox disabled="@is_html" class="mailComposeBody">
+			<hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
 				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
 			</hbox>
 			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">

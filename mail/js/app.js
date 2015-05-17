@@ -153,6 +153,20 @@ app.classes.mail = AppJS.extend(
 				break;
 			case 'mail.mobile_index':
 			case 'mail.index':
+				var self = this;
+				jQuery('iframe#mail-index_messageIFRAME').on('load', function()
+				{
+					// decrypt preview body if mailvelope is available
+					if (typeof mailvelope !== 'undefined') {
+						self.mailvelopeDisplay.call(self);
+					} else {
+						jQuery(window).on('mailvelope', function()
+						{
+							self.mailvelopeDisplay.call(self);
+						});
+					}
+					self.mail_prepare_print();
+				});
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 				this.mail_disablePreviewArea(true);
@@ -177,7 +191,19 @@ app.classes.mail = AppJS.extend(
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
-				jQuery('#mail-display_mailDisplayBodySrc').on('load', function(){self.mail_prepare_print();});
+				jQuery('iframe#mail-display_mailDisplayBodySrc').on('load', function()
+				{
+					// encrypt body if mailvelope is available
+					if (typeof mailvelope !== 'undefined') {
+						self.mailvelopeDisplay.call(self);
+					} else {
+						jQuery(window).on('mailvelope', function()
+						{
+							self.mailvelopeDisplay.call(self);
+						});
+					}
+					self.mail_prepare_print();
+				});
 
 				this.mail_isMainWindow = false;
 				this.mail_display();
@@ -189,7 +215,12 @@ app.classes.mail = AppJS.extend(
 				);
 				break;
 			case 'mail.compose':
-				// use a wrapper on a different url to be able to use a different fpm pool
+				if (typeof mailvelope !== 'undefined') {
+					this.mailvelopeCompose();
+				} else {
+					jQuery(window).on('mailvelope', jQuery.proxy(this.mailvelopeCompose, this));
+				}
+ 				// use a wrapper on a different url to be able to use a different fpm pool
 				et2.menuaction = 'mail_compose::ajax_send';
 				var that = this;
 				this.mail_isMainWindow = false;
@@ -861,6 +892,10 @@ app.classes.mail = AppJS.extend(
 		// Blank first, so we don't show previous email while loading
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		IframeHandle.set_src('about:blank');
+
+		// show iframe, in case we hide it from mailvelopes one and remove that
+		jQuery(IframeHandle.getDOMNode()).show()
+			.next('iframe[src^=chrome-extension]').remove();
 
 		// Set up additional content that can be expanded.
 		// We add a new URL widget for each address, so they get all the UI
@@ -2625,9 +2660,9 @@ app.classes.mail = AppJS.extend(
 	{
 		var app = _action.id;
 		var w_h = ['750','580']; // define a default wxh if there's no popup size registered
-		
+
 		var add_as_new = true;
-		
+
 		if (typeof _action.data != 'undefined' )
 		{
 			if (typeof _action.data.popup != 'undefined' && _action.data.popup) w_h = _action.data.popup.split('x');
@@ -2650,16 +2685,16 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		
+
 		var url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
-		
+
 		/**
 		 * Checks the application entry existance and offers user
 		 * to select desire app id to append mail content into it,
 		 * or add the mail content as a new app entry
-		 * 
+		 *
 		 * @param {string} _title select app entry title
-		 * @param {string} _appName app to be integrated 
+		 * @param {string} _appName app to be integrated
 		 * @param {string} _appCheckCallback registered mail_import hook method
 		 *	for check app entry existance
 		 */
@@ -2668,7 +2703,7 @@ app.classes.mail = AppJS.extend(
 			var data = egw.dataGetUIDdata(_elems[0].id);
 			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
 			egw.json(_appCheckCallback, subject,function(_entryId){
-				
+
 				// if there's no entry saved already
 				// open dialog in order to select one
 				if (!_entryId)
@@ -2703,8 +2738,8 @@ app.classes.mail = AppJS.extend(
 					egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 				}
 			},this,true,this).sendRequest();
-		}
-		
+		};
+
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
 			check_app_entry('Select '+ app + ' entry', app,  mail_import_hook.app_entry_method);
@@ -2713,7 +2748,7 @@ app.classes.mail = AppJS.extend(
 		{
 			egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 		}
-		
+
 	},
 
 	/**
@@ -3583,7 +3618,7 @@ app.classes.mail = AppJS.extend(
 				if (egwIsMobile())
 				{
 					var nm = this.et2.getWidgetById(this.nm_index);
-					nm.set_disabled(!!_url)
+					nm.set_disabled(!!_url);
 					iframe.set_disabled(!_url);
 				}
 				// Set extra_iframe a class with height and width
@@ -4310,11 +4345,102 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Called on load of preview or display iframe, if mailvelope is available
+	 *
+	 * @ToDo signatures
+	 */
+	mailvelopeDisplay: function()
+	{
+		var self = this;
+		var mailvelope = window.mailvelope;
+		var iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
+		var armored = iframe.contents().find('td.td_display > pre').text().trim();
+
+		if (armored == "" || armored.indexOf('-----BEGIN PGP MESSAGE-----') === -1) return;
+
+		mailvelope.getKeyring('mailvelope').then(function(_keyring)
+		{
+			var container = iframe.parent()[0];
+			var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
+			mailvelope.createDisplayContainer(container_selector, armored, _keyring).then(function()
+			{
+				// hide our iframe to give space for mailvelope iframe with encrypted content
+				iframe.hide();
+			},
+			function(_err)
+			{
+				self.egw.message(_err.message, 'error');
+			});
+		},
+		function(_err)
+		{
+			self.egw.message(_err.message, 'error');
+		});
+	},
+
+	/**
+	 * Editor object of active compose
+	 *
+	 * @var {Editor}
+	 */
+	mailvelope_editor: undefined,
+
+	/**
+	 * Called on compose, if mailvelope is available
+	 */
+	mailvelopeCompose: function()
+	{
+		var self = this;
+		var mailvelope = window.mailvelope;
+
+		delete this.mailvelope_editor;
+		mailvelope.getKeyring('mailvelope').then(function(_keyring)
+		{
+			var is_html = self.et2.getWidgetById('mimeType').get_value();
+			var container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
+			var editor = self.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
+			mailvelope.createEditorContainer(container, _keyring, {
+				predefinedText: editor.get_value()
+			}).then(function(_editor)
+			{
+				self.mailvelope_editor = _editor;
+				editor.set_disabled(true);
+			},
+			function(_err)
+			{
+				self.egw.message(_err.message, 'error');
+			});
+		},
+		function(_err)
+		{
+			self.egw.message(keyringId+': '+_err.message, 'error');
+		});
+	},
+
+	/**
 	 * Set the relevant widget to toolbar actions and submit
 	 * @param {type} _action toolbar action
 	 */
 	compose_submitAction: function (_action)
 	{
+		if (this.mailvelope_editor)
+		{
+			var self = this;
+			var recipients = this.et2.getWidgetById('to').get_value();
+			recipients.concat(this.et2.getWidgetById('cc').get_value());
+			// todo: bcc, do we disclosure them by adding them here?
+			this.mailvelope_editor.encrypt(recipients).then(function(_armored)
+			{
+				self.et2.getWidgetById('mimeType').set_value(false);
+				self.et2.getWidgetById('mail_plaintext').set_disabled(false);
+				self.et2.getWidgetById('mail_plaintext').set_value(_armored);
+				self.et2._inst.submit(null,null,true);
+			}, function(_err)
+			{
+				self.egw.message(_err.message, 'error');
+			});
+			return false;
+		}
 		this.et2._inst.submit(null,null,true);
 	},
 
