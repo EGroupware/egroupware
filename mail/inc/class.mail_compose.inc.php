@@ -2285,7 +2285,7 @@ class mail_compose
 				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
 			}
 			// convert URL Images to inline images - if possible
-			if (!$_autosaving) mail_bo::processURL2InlineImages($_mailObject, $body);
+			if (!$_autosaving) mail_bo::processURL2InlineImages($_mailObject, $body, $mail_bo);
 			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
 			{
 				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
