@@ -2159,6 +2159,10 @@ class mail_compose
 	 */
 	function createMessage(egw_mailer $_mailObject, array $_formData, array $_identity, $_autosaving=false)
 	{
+		if (substr($_formData['body'], 0, 27) == '-----BEGIN PGP MESSAGE-----')
+		{
+			$_formData['mimeType'] = 'openpgp';
+		}
 		//error_log(__METHOD__."(, formDate[filemode]=$_formData[filemode], _autosaving=".array2string($_autosaving).') '.function_backtrace());
 		$mail_bo	= $this->mail_bo;
 		$activeMailProfile = emailadmin_account::read($this->mail_bo->profileID);
@@ -2291,6 +2295,10 @@ class mail_compose
 				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
 			}
 			$_mailObject->setHtmlBody($body, null, false);	// false = no automatic alternative, we called setBody()
+		}
+		elseif ($_formData['mimeType'] == 'openpgp')
+		{
+			$_mailObject->setOpenPgpBody($_formData['body']);
 		}
 		else
 		{

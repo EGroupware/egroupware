@@ -453,7 +453,8 @@ class egw_mailer extends Horde_Mime_Mail
 		), array(), true);	// true = call all apps
 
 		try {
-			parent::send($this->account->smtpTransport(), true);	// true: keep Message-ID
+			parent::send($this->account->smtpTransport(), true,		// true: keep Message-ID
+				$this->_body->getType() != 'multipart/encrypted');	// no flowed for encrypted messages
 		}
 		catch (Exception $e) {
 			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
@@ -630,6 +631,32 @@ class egw_mailer extends Horde_Mime_Mail
 		if ($this->_base) $this->parseBasePart();
 
 		return parent::addMimePart($part);
+	}
+
+	/**
+	 * Sets OpenPGP encrypted body according to rfc3156, section 4
+	 *
+	 * @param string $body             The message content.
+	 * @link https://tools.ietf.org/html/rfc3156#section-4
+	 */
+	public function setOpenPgpBody($body)
+	{
+		$this->_body = new Horde_Mime_Part();
+		$this->_body->setType('multipart/encrypted');
+		$this->_body->setContentTypeParameter('protocol', 'application/pgp-encrypted');
+		$this->_body->setContents('');
+
+		$part1 = new Horde_Mime_Part();
+		$part1->setType('application/pgp-encrypted');
+		$part1->setContents("Version: 1\r\n", array('encoding' => '7bit'));
+		$this->_body->addPart($part1);
+
+		$part2 = new Horde_Mime_Part();
+		$part2->setType('application/octet-stream');
+		$part2->setContents($body, array('encoding' => '7bit'));
+		$this->_body->addPart($part2);
+
+		$this->_base = null;
 	}
 
 	/**
