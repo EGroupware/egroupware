@@ -324,7 +324,7 @@ class customfields
 						}
 						else
 						{
-							foreach(explode("\n",$content['cf_values']) as $line)
+							foreach(explode("\n",trim($content['cf_values'])) as $line)
 							{
 								list($var,$value) = explode('=',trim($line),2);
 								$var = trim($var);
