@@ -1883,7 +1883,7 @@ abstract class bo_merge
 		$action['nm_action'] = 'long_task';
 		$action['popup'] = egw_link::get_registry('mail', 'edit_popup');
 		$action['message'] = lang('insert in %1',egw_vfs::decodePath($file['name']));
-		$action['menuaction'] = 'mail.mail_compose.ajax_merge&document='.$file['path'];
+		$action['menuaction'] = 'mail.mail_compose.ajax_merge&document='.$file['path'].'&merge='. get_called_class();
 	}
 
 	/**

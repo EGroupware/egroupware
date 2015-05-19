@@ -120,7 +120,10 @@ class etemplate_widget_taglist extends etemplate_widget
 						self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($lists))),'');
 					}
 				}
-				else if($this->type == 'taglist-email' && !preg_match(etemplate_widget_url::EMAIL_PREG, $val))
+				else if($this->type == 'taglist-email' && !preg_match(etemplate_widget_url::EMAIL_PREG, $val) &&
+					// Allow merge placeholders.  Might be a better way to do this though.
+					!preg_match('/{{.+}}|\$\$.+\$\$/',$val)
+				)
 				{
 					self::set_validation_error($form_name,lang("'%1' has an invalid format",$val),'');
 				}
