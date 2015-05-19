@@ -2053,6 +2053,8 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.array2string($envelope));
 		$this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
 		$fetchEmbeddedImages = false;
+		// if we are in HTML so its likely that we should show the embedded images; as a result
+		// we do NOT want to see those, that are embedded in the list of attachments
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
@@ -2841,8 +2843,9 @@ class mail_ui
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox);
 
 		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
+		// attachments here are only fetched to determine if there is a meeting request
+		// and if. use the appropriate action. so we do not need embedded images
 		$fetchEmbeddedImages = false;
-		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments = (array)$this->mail_bo->getMessageAttachments($uid, $partID, $structure, $fetchEmbeddedImages, true,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		foreach ($attachments as &$attach)
@@ -3141,7 +3144,8 @@ class mail_ui
 					$CID = $matches[1];
 					break;
 				case "src":
-					$CID = $matches[2];
+					// as src:cid contains some kind of url, it is likely to be urlencoded
+					$CID = urldecode($matches[2]);
 					break;
 				case "url":
 					$CID = $matches[1];
