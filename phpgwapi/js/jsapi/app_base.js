@@ -858,13 +858,37 @@ var AppJS = Class.extend(
 		var callback = _callback;
 		var self = this;
 
-		mailvelope.getKeyring('mailvelope').then(function(_keyring)
+		mailvelope.getKeyring('egroupware').then(function(_keyring)
 		{
 			callback.call(self, _keyring);
 		},
 		function(_err)
 		{
-			self.egw.message(_err.message, 'error');
+			mailvelope.createKeyring('egroupware').then(function(_keyring)
+			{
+				self.egw.message(self.egw.lang('Keyring "%1" created.', self._mailvelopeDomain()+' (egroupware)')+"\n\n"+
+					self.egw.lang('Please click on lock icon in lower right corner to create or import a key:')+"\n"+
+					self.egw.lang("Go to Key Management and create a new key-pair or import your existing one.")+"\n\n"+
+					self.egw.lang("You will NOT be able to send or receive encrypted mails before completing that step!"), 'info');
+
+				callback.call(self, _keyring);
+			},
+			function(_err)
+			{
+				self.egw.message(_err.message, 'error');
+			});
 		});
+	},
+
+	/**
+	 * Mailvelope uses Domain without first part: eg. "stylite.de" for "egw.stylite.de"
+	 *
+	 * @returns {string}
+	 */
+	_mailvelopeDomain: function()
+	{
+		var parts = document.location.hostname.split('.');
+		if (parts.length > 1) parts.shift();
+		return parts.join('.');
 	}
 });

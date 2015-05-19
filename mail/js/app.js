@@ -4407,8 +4407,9 @@ app.classes.mail = AppJS.extend(
 		{
 			if (typeof mailvelope == 'undefined')
 			{
-				this.egw.message(this.egw.lang('You need to install Mailvelope plugin available for Chrome and Firefox and enable it for your domain.')+
-					"\n"+this.egw.lang('Download from %1','<a href="https://www.mailvelope.com/">mailvelope.com</a>'), 'info');
+				this.egw.message(this.egw.lang('You need to install Mailvelope plugin available for Chrome and Firefox from %1.','<a href="https://www.mailvelope.com/">mailvelope.com</a>')+"\n"+
+					this.egw.lang('Add your domain as "%1" in options to list of email providers and enable API.',
+					'*.'+this._mailvelopeDomain()), 'info');
 				return;
 			}
 			var mimeType = this.et2.getWidgetById('mimeType');
