@@ -4051,6 +4051,7 @@ app.classes.mail = AppJS.extend(
 				cursorAt:{left:2},
 				//cancel dragging on close button to avoid conflict with close action
 				cancel:'.ms-close-btn',
+				delay: '300',
 				/**
 				 * function to act on draggable item on revert's event
 				 * @returns {Boolean} return true
