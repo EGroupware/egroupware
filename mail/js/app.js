@@ -3834,6 +3834,7 @@ app.classes.mail = AppJS.extend(
 
 			if (textArea.id != "mail_htmltext")
 			{
+				textArea.getParent().set_height(bodySize);
 				textArea.set_height(bodySize);
 			}
 			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
