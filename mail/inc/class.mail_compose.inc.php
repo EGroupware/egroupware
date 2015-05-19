@@ -1441,7 +1441,7 @@ class mail_compose
 	static function replaceEmailAdresses(&$text)
 	{
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-		mail_bo::replaceEmailAdresses($text);
+		translation::replaceEmailAdresses($text);
 		return 1;
 	}
 
@@ -2748,7 +2748,7 @@ class mail_compose
 		// create the messages
 		$this->createMessage($mail, $_formData, $identity);
 		// remember the identity
-		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') $fromAddress = $mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
+		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') $fromAddress = $mail->From;//$mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
 		#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 		#exit;
