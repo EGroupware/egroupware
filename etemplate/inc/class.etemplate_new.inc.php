@@ -258,6 +258,7 @@ class etemplate_new extends etemplate_widget_template
 	{
 		foreach($sel_options as &$options)
 		{
+			if (!is_array($options)||empty($options)) continue;
 			foreach($options as $key => $value)
 			{
 				if (is_numeric($key) && (!is_array($value) || !isset($value['value'])))
