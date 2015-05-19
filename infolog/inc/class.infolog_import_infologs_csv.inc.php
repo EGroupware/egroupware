@@ -509,7 +509,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 
 		if (!is_object($boprojects))
 		{
-			$boprojects =& CreateObject('projectmanager.boprojectmanager');
+			$boprojects = new projectmanager_bo();
 		}
 		if (($projects = $boprojects->search(array('pm_number' => $num_or_title))) ||
 			($projects = $boprojects->search(array('pm_title'  => $num_or_title))))
