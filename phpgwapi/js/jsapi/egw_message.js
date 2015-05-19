@@ -109,9 +109,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				if (matches)
 				{
 					var parts = _msg.split(matches[0]);
+					var href = html_entity_decode(matches[1]);
 					msg_div.text(parts[0]);
 					msg_div.append(jQuery(_wnd.document.createElement('a'))
-						.attr('href', html_entity_decode(matches[1]))
+						.attr({href: href, target: href.indexOf(egw.webserverUrl) != 0 ? '_blank' : '_self'})
 						.text(matches[2]));
 					msg_div.append(jQuery(_wnd.document.createElement('span')).text(parts[1]));
 				}

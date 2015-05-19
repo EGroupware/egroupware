@@ -157,14 +157,7 @@ app.classes.mail = AppJS.extend(
 				jQuery('iframe#mail-index_messageIFRAME').on('load', function()
 				{
 					// decrypt preview body if mailvelope is available
-					if (typeof mailvelope !== 'undefined') {
-						self.mailvelopeDisplay.call(self);
-					} else {
-						jQuery(window).on('mailvelope', function()
-						{
-							self.mailvelopeDisplay.call(self);
-						});
-					}
+					self.mailvelopeAvailable(self.mailvelopeDisplay);
 					self.mail_prepare_print();
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
@@ -194,14 +187,7 @@ app.classes.mail = AppJS.extend(
 				jQuery('iframe#mail-display_mailDisplayBodySrc').on('load', function()
 				{
 					// encrypt body if mailvelope is available
-					if (typeof mailvelope !== 'undefined') {
-						self.mailvelopeDisplay.call(self);
-					} else {
-						jQuery(window).on('mailvelope', function()
-						{
-							self.mailvelopeDisplay.call(self);
-						});
-					}
+					self.mailvelopeAvailable(self.mailvelopeDisplay);
 					self.mail_prepare_print();
 				});
 
@@ -215,10 +201,9 @@ app.classes.mail = AppJS.extend(
 				);
 				break;
 			case 'mail.compose':
-				if (typeof mailvelope !== 'undefined') {
-					this.mailvelopeCompose();
-				} else {
-					jQuery(window).on('mailvelope', jQuery.proxy(this.mailvelopeCompose, this));
+				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked)
+				{
+					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
  				// use a wrapper on a different url to be able to use a different fpm pool
 				et2.menuaction = 'mail_compose::ajax_send';
@@ -4349,9 +4334,10 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Called on load of preview or display iframe, if mailvelope is available
 	 *
+	 * @param {Keyring} _keyring Mailvelope keyring to use
 	 * @ToDo signatures
 	 */
-	mailvelopeDisplay: function()
+	mailvelopeDisplay: function(_keyring)
 	{
 		var self = this;
 		var mailvelope = window.mailvelope;
@@ -4360,19 +4346,12 @@ app.classes.mail = AppJS.extend(
 
 		if (armored == "" || armored.indexOf('-----BEGIN PGP MESSAGE-----') === -1) return;
 
-		mailvelope.getKeyring('mailvelope').then(function(_keyring)
+		var container = iframe.parent()[0];
+		var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
+		mailvelope.createDisplayContainer(container_selector, armored, _keyring).then(function()
 		{
-			var container = iframe.parent()[0];
-			var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
-			mailvelope.createDisplayContainer(container_selector, armored, _keyring).then(function()
-			{
-				// hide our iframe to give space for mailvelope iframe with encrypted content
-				iframe.hide();
-			},
-			function(_err)
-			{
-				self.egw.message(_err.message, 'error');
-			});
+			// hide our iframe to give space for mailvelope iframe with encrypted content
+			iframe.hide();
 		},
 		function(_err)
 		{
@@ -4389,34 +4368,65 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Called on compose, if mailvelope is available
+	 *
+	 * @param {Keyring} _keyring Mailvelope keyring to use
 	 */
-	mailvelopeCompose: function()
+	mailvelopeCompose: function(_keyring)
 	{
-		var self = this;
-		var mailvelope = window.mailvelope;
-
 		delete this.mailvelope_editor;
-		mailvelope.getKeyring('mailvelope').then(function(_keyring)
+
+		// currently Mailvelope only supports plain-text, to this is unnecessary
+		var mimeType = this.et2.getWidgetById('mimeType');
+		var is_html = mimeType.get_value();
+		var container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
+		var editor = this.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
+
+		var self = this;
+		mailvelope.createEditorContainer(container, _keyring, {
+			predefinedText: editor.get_value()
+		}).then(function(_editor)
 		{
-			var is_html = self.et2.getWidgetById('mimeType').get_value();
-			var container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
-			var editor = self.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
-			mailvelope.createEditorContainer(container, _keyring, {
-				predefinedText: editor.get_value()
-			}).then(function(_editor)
-			{
-				self.mailvelope_editor = _editor;
-				editor.set_disabled(true);
-			},
-			function(_err)
-			{
-				self.egw.message(_err.message, 'error');
-			});
+			self.mailvelope_editor = _editor;
+			editor.set_disabled(true);
+			mimeType.set_readonly(true);
 		},
 		function(_err)
 		{
-			self.egw.message(keyringId+': '+_err.message, 'error');
+			self.egw.message(_err.message, 'error');
 		});
+	},
+
+	/**
+	 * Switch sending PGP encrypted mail on and off
+	 *
+	 * @param {object} _action toolbar action
+	 */
+	togglePgpEncrypt: function (_action)
+	{
+		if (_action.checked)
+		{
+			if (typeof mailvelope == 'undefined')
+			{
+				this.egw.message(this.egw.lang('You need to install Mailvelope plugin available for Chrome and Firefox and enable it for your domain.')+
+					"\n"+this.egw.lang('Download from %1','<a href="https://www.mailvelope.com/">mailvelope.com</a>'), 'info');
+				return;
+			}
+			var mimeType = this.et2.getWidgetById('mimeType');
+			// currently Mailvelope only supports plain-text, switch to it if necessary
+			if (mimeType.get_value())
+			{
+				mimeType.set_value(false);
+				this.et2._inst.submit();
+				return;	// ToDo: do that without reload
+			}
+			this.mailvelopeAvailable(this.mailvelopeCompose);
+			// ToDo: check recipients
+		}
+		else
+		{
+			// switch Mailvelop off again
+			this.et2._inst.submit();	// ToDo: do that without reload
+		}
 	},
 
 	/**

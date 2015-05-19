@@ -825,5 +825,46 @@ var AppJS = Class.extend(
 				egw.refresh(data.msg||'',ids[0],ids[1],'update');
 			}).sendRequest(true);
 		}
+	},
+
+	/**
+	 * Check if Mailvelope is available, open (or create) "egroupware" keyring and call callback with it
+	 *
+	 * @param {function} _callback called if and only if mailvelope is available (context is this!)
+	 */
+	mailvelopeAvailable: function(_callback)
+	{
+		var self = this;
+		if (typeof mailvelope !== 'undefined')
+		{
+			self._mailvelopeOpenKeyring.call(self, _callback);
+		}
+		else
+		{
+			jQuery(window).on('mailvelope', function()
+			{
+				self._mailvelopeOpenKeyring.call(self, _callback);
+			});
+		}
+	},
+
+	/**
+	 * Open (or create) "egroupware" keyring and call callback with it
+	 *
+	 * @param {function} _callback called if and only if mailvelope is available (context is this!)
+	 */
+	_mailvelopeOpenKeyring: function(_callback)
+	{
+		var callback = _callback;
+		var self = this;
+
+		mailvelope.getKeyring('mailvelope').then(function(_keyring)
+		{
+			callback.call(self, _keyring);
+		},
+		function(_err)
+		{
+			self.egw.message(_err.message, 'error');
+		});
 	}
 });

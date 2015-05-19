@@ -115,6 +115,15 @@ class mail_compose
 				'hint' => 'Send',
 				'toolbarDefault' => true
 			),
+			'pgp' => array(
+				'caption' => 'Encrypt',
+				'icon' => 'lock',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.togglePgpEncrypt',
+				'hint' => 'Send message PGP encrypted: requires keys from all recipients!',
+				'checkbox' => true,
+				'toolbarDefault' => true
+			),
 			'button[saveAsDraft]' => array(
 				'caption' => 'Save',
 				'icon' => 'save',
