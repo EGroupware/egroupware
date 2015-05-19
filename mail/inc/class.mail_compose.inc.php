@@ -1606,7 +1606,7 @@ class mail_compose
 		// remove a printview tag if composing
 		$searchfor = '/^\['.lang('printview').':\]/';
 		$this->sessionData['subject'] = preg_replace($searchfor,'',$this->sessionData['subject']);
-		$bodyParts = $mail_bo->getMessageBody($_uid, $this->mailPreferences['always_display'], $_partID);
+		$bodyParts = $mail_bo->getMessageBody($_uid,'always_display', $_partID);
 		//_debug_array($bodyParts);
 		#$fromAddress = ($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL'];
 		if($bodyParts['0']['mimeType'] == 'text/html') {
