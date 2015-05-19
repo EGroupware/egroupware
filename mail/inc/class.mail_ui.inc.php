@@ -2040,6 +2040,8 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.array2string($envelope));
 		$this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
 		$fetchEmbeddedImages = false;
+		// if we are in HTML so its likely that we should show the embedded images; as a result
+		// we do NOT want to see those, that are embedded in the list of attachments
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
@@ -2825,8 +2827,9 @@ class mail_ui
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox);
 
 		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
-		$fetchEmbeddedImages = false;
-		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
+		// attachments here are only fetched to determine if there is a meeting request
+		// and if. use the appropriate action. so we do not need embedded images
+ 		$fetchEmbeddedImages = false;
 		$attachments = (array)$this->mail_bo->getMessageAttachments($uid, $partID, $structure, $fetchEmbeddedImages, true,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		foreach ($attachments as &$attach)
@@ -3081,7 +3084,8 @@ class mail_ui
 			'menuaction'    => 'mail.mail_ui.displayImage',
 			'uid'		=> $this->uid,
 			'mailbox'	=> base64_encode($this->mailbox),
-			'cid'		=> base64_encode($matches[2]),
+			// as src:cid contains some kind of url, it is likely to be urlencoded
+			'cid'		=> base64_encode(trim(urldecode($matches[2]))),
 			'partID'	=> $this->partID,
 		);
 		$imageURL = egw::link('/index.php', $linkData);
@@ -3091,7 +3095,7 @@ class mail_ui
 		{
 			if (!isset($cache[$imageURL]))
 			{
-				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[2], $this->partID);
+				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, trim(urldecode($matches[2])), $this->partID);
 
 				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
 				if (($attachment instanceof Horde_Mime_Part) && $attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
