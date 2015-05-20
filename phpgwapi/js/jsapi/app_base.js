@@ -363,9 +363,17 @@ var AppJS = Class.extend(
 			sidebox
 				.off()
 				// removed .on("mouse(enter|leave)" (wrapping trash icon), as it stalls delete in IE11
-				.on("click","div.ui-icon-trash", this, this.delete_favorite)
+				.on("click.sidebox","div.ui-icon-trash", this, this.delete_favorite)
 				// need to install a favorite handler, as we switch original one off with .off()
-				.on('click','li[data-id]', this, function(event) {
+				.on('click.sidebox','li[data-id]', this, function(event) {
+					var li = $j(this);
+					li.siblings().removeClass('ui-state-highlight');
+
+					// Wait an arbitrary 50ms to avoid having the class removed again
+					// by the change handler.
+					window.setTimeout(function() {
+						li.addClass('ui-state-highlight');
+					},50);
 					var href = jQuery('a[href^="javascript:"]', this).prop('href');
 					var matches = href ? href.match(/^javascript:([^\(]+)\((.*)?\);?$/) : null;
 					if (matches && matches.length > 1 && matches[2] !== undefined)
@@ -401,6 +409,18 @@ var AppJS = Class.extend(
 						self._refresh_fav_nm();
 					}
 				});
+				
+			// Bind favorite de-select
+			var egw_fw = egw_getFramework();
+			if(egw_fw && egw_fw.applications[this.appname] && egw_fw.applications[this.appname].browser
+				&& egw_fw.applications[this.appname].browser.baseDiv)
+			{
+				$j(egw_fw.applications[this.appname].browser.baseDiv)
+					.off('.sidebox')
+					.on('change.sidebox', function() {
+						$j('li',self.sidebox).removeClass('ui-state-highlight');
+					});
+			}
 			return true;
 		}
 		return false;
