@@ -422,8 +422,7 @@ class infolog_ui
 
 		$columselection = $this->prefs[$columnselection_pref];
 
-		//_debug_array($columselection);
-		if ($columselection)
+		if (!$query['selectcols'] && $columselection)
 		{
 			$columselection = is_array($columselection) ? $columselection : explode(',',$columselection);
 		}
