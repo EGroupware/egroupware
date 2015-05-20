@@ -4430,11 +4430,10 @@ app.classes.mail = AppJS.extend(
 					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,'')
 				};
 				// set encrypted checkbox, if not already set
-				var pgp_action = this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp');
-				if (pgp_action && !pgp_action.checked)
+				var composeToolbar = this.et2.getWidgetById('composeToolbar');
+				if (composeToolbar.checkbox('pgp'))
 				{
-					pgp_action.set_checked(true);
-					jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+					composeToolbar.checkbox('pgp',true);
 				}
 			}
 		}
@@ -4491,8 +4490,7 @@ app.classes.mail = AppJS.extend(
 				}
 				else
 				{
-					self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(true);
-					jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+					self.et2.getWidgetById('composeToolbar').checkbox('pgp',true);
 				}
 			},
 			this.egw.lang('You will loose current message body, unless you save it to your clipboard!'),

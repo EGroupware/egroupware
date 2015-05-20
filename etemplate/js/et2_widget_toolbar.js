@@ -405,8 +405,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		
 		if (action && action.checkbox)
 		{
-			var action_event = typeof this._actionManager != 'undefined'?this._actionManager.getActionById(action.id):null; 
-			if (action_event && action_event.checked) button.addClass('toolbar_toggled');	
+			if (this.checkbox(action.id)) button.addClass('toolbar_toggled');
 		}	
 		if ( action.iconUrl)
 		{
@@ -429,6 +428,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		{
 			button.button(button_options);
 		}
+		var self = this;
 		// Set up the click action
 		var click = function(e)
 		{
@@ -437,8 +437,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			{
 				if (action.checkbox)
 				{
-					action.set_checked(!action.checked);
-					jQuery(button).toggleClass('toolbar_toggled');
+					self.checkbox(action.id, !action.checked);
 				}
 				this.value = action.id;
 				action.data.event = e;
@@ -458,7 +457,41 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	{
 		this._build_menu(actions);
 	},
-
+	
+	/**
+	 * Set/Get the checkbox toolbar action
+	 * 
+	 * @param {string} _action action name of the selected toolbar
+	 * @param {boolean} _value value that needs to be set for the action true|false
+	 *	- if no value means checkbox value returns the current value
+	 *	
+	 * @returns {boolean} returns boolean result of get checkbox value
+	 * or returns undefined as Set result or failure
+	 */
+	checkbox: function (_action, _value)
+	{
+		if (!_action || typeof this._actionManager == 'undefined') return undefined;
+		var action_event = this._actionManager.getActionById(_action);
+		
+		if (action_event && typeof _value !='undefined')
+		{
+			var btn = jQuery('#'+this.id+'-'+_action);
+			if (btn.length > 0)
+			{
+				action_event.set_checked(_value);
+				btn.toggleClass('toolbar_toggled');
+			}
+		}
+		else if (action_event)
+		{
+			return action_event.checked;
+		}
+		else
+		{
+			return undefined;
+		}
+	},
+	
 	getDOMNode: function(asker)
 	{
 		return this.div[0];
