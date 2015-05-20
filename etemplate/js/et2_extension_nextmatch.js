@@ -1496,6 +1496,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 		// We don't want to update user's preference, so directly update
 		this.dataview._updateColumns();
+
+		// Allow column widgets a chance to resize
+		this.iterateOver(function(widget) {widget.resize();}, this, et2_IResizeable);
 	},
 
 	/**
