@@ -201,7 +201,9 @@ app.classes.mail = AppJS.extend(
 				);
 				break;
 			case 'mail.compose':
-				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked)
+				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked ||
+					this.et2.getArrayMgr('content').data.mail_plaintext &&
+						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
 				{
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
@@ -3268,6 +3270,22 @@ app.classes.mail = AppJS.extend(
 		var self = this;
 		if (content)
 		{
+			// if we compose an encrypted message, we have to get the encrypted content
+			if (this.mailvelope_editor)
+			{
+				this.mailvelope_editor.encrypt([]).then(function(_armored)
+				{
+					content['mail_plaintext'] = _armored;
+					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+						self.savingDraft_response(_data,action);
+					}).sendRequest(true);
+				}, function(_err)
+				{
+					self.egw.message(_err.message, 'error');
+				});
+				return false;
+			}
+
 			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
 				self.savingDraft_response(_data,action);
 			}).sendRequest(true);
@@ -4332,6 +4350,21 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Mailvelope (clientside PGP) integration:
+	 * - detect Mailvelope plugin and open "egroupware" keyring (app_base.mailvelopeAvailable and _mailvelopeOpenKeyring)
+	 * - display and preview of encrypted messages (mailvelopeDisplay)
+	 * - button to toggle between regular and encrypted mail (togglePgpEncrypt)
+	 * - compose encrypted messages (mailvelopeCompose, compose_submitAction)
+	 * - fix autosave and save as draft to store encrypted content (saveAsDraft)
+	 * - fix inline reply to encrypted message to clientside decrypt message and add signature (mailvelopeCompose)
+	 * @todo check recipients for key available and warn user if not
+	 * @todo lookup missing keys in addressbook, DANE DNS recored, maybe keyserver
+	 * @todo offer user to store his public key in accounts addressbook (ask admin to make it user-editable) and DANE
+	 */
+	begin_pgp_message: '-----BEGIN PGP MESSAGE-----',
+	end_pgp_message: '-----END PGP MESSAGE-----',
+
+	/**
 	 * Called on load of preview or display iframe, if mailvelope is available
 	 *
 	 * @param {Keyring} _keyring Mailvelope keyring to use
@@ -4344,7 +4377,7 @@ app.classes.mail = AppJS.extend(
 		var iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
 		var armored = iframe.contents().find('td.td_display > pre').text().trim();
 
-		if (armored == "" || armored.indexOf('-----BEGIN PGP MESSAGE-----') === -1) return;
+		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
 		var container = iframe.parent()[0];
 		var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
@@ -4380,11 +4413,34 @@ app.classes.mail = AppJS.extend(
 		var is_html = mimeType.get_value();
 		var container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
 		var editor = this.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
+		var options = { predefinedText: editor.get_value() };
+
+		// check if we have some sort of reply to an encrypted message
+		// --> parse header, encrypted mail to quote and signature so Mailvelope understands it
+		var start_pgp = options.predefinedText.indexOf(this.begin_pgp_message);
+		if (start_pgp != -1)
+		{
+			var end_pgp = options.predefinedText.indexOf(this.end_pgp_message);
+			if (end_pgp != -1)
+			{
+				options = {
+					quotedMailHeader: options.predefinedText.slice(0, start_pgp).replace(/> /mg, '').trim()+"\n",
+					quotedMail: options.predefinedText.slice(start_pgp, end_pgp+this.end_pgp_message.length+1).replace(/> /mg, ''),
+					quotedMailIndent: start_pgp != 0,
+					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,'')
+				};
+				// set encrypted checkbox, if not already set
+				var pgp_action = this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp');
+				if (pgp_action && !pgp_action.checked)
+				{
+					pgp_action.set_checked(true);
+					jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+				}
+			}
+		}
 
 		var self = this;
-		mailvelope.createEditorContainer(container, _keyring, {
-			predefinedText: editor.get_value()
-		}).then(function(_editor)
+		mailvelope.createEditorContainer(container, _keyring, options).then(function(_editor)
 		{
 			self.mailvelope_editor = _editor;
 			editor.set_disabled(true);
@@ -4425,13 +4481,29 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			// switch Mailvelop off again
-			this.et2._inst.submit();	// ToDo: do that without reload
+			// switch Mailvelop off again, but warn user he will loose his content
+			var self = this;
+			et2_dialog.show_dialog(function (_button_id)
+			{
+				if (_button_id == et2_dialog.YES_BUTTON )
+				{
+					self.et2._inst.submit();
+				}
+				else
+				{
+					self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(true);
+					jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+				}
+			},
+			this.egw.lang('You will loose current message body, unless you save it to your clipboard!'),
+			this.egw.lang('Switch off encryption?'),
+			{}, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, this.egw);
 		}
 	},
 
 	/**
 	 * Set the relevant widget to toolbar actions and submit
+	 *
 	 * @param {type} _action toolbar action
 	 */
 	compose_submitAction: function (_action)
