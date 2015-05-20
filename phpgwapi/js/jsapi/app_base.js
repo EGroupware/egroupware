@@ -835,47 +835,65 @@ var AppJS = Class.extend(
 	mailvelopeAvailable: function(_callback)
 	{
 		var self = this;
+		var callback = jQuery.proxy(_callback, this);
+
 		if (typeof mailvelope !== 'undefined')
 		{
-			self._mailvelopeOpenKeyring.call(self, _callback);
+			this.mailvelopeOpenKeyring().then(callback);
 		}
 		else
 		{
 			jQuery(window).on('mailvelope', function()
 			{
-				self._mailvelopeOpenKeyring.call(self, _callback);
+				self.mailvelopeOpenKeyring.then(callback);
 			});
 		}
 	},
 
 	/**
+	 * Mailvelope "egroupware" Keyring
+	 */
+	mailvelope_keyring: undefined,
+
+	/**
 	 * Open (or create) "egroupware" keyring and call callback with it
 	 *
-	 * @param {function} _callback called if and only if mailvelope is available (context is this!)
+	 * @returns {Promise.<Keyring, Error>} Keyring or Error with message
 	 */
-	_mailvelopeOpenKeyring: function(_callback)
+	mailvelopeOpenKeyring: function()
 	{
-		var callback = _callback;
 		var self = this;
 
-		mailvelope.getKeyring('egroupware').then(function(_keyring)
+		return new Promise(function(_resolve, _reject)
 		{
-			callback.call(self, _keyring);
-		},
-		function(_err)
-		{
-			mailvelope.createKeyring('egroupware').then(function(_keyring)
-			{
-				self.egw.message(self.egw.lang('Keyring "%1" created.', self._mailvelopeDomain()+' (egroupware)')+"\n\n"+
-					self.egw.lang('Please click on lock icon in lower right corner to create or import a key:')+"\n"+
-					self.egw.lang("Go to Key Management and create a new key-pair or import your existing one.")+"\n\n"+
-					self.egw.lang("You will NOT be able to send or receive encrypted mails before completing that step!"), 'info');
+			if (self.mailvelope_keyring) _resolve(self.mailvelope_keyring);
 
-				callback.call(self, _keyring);
+			var resolve = _resolve;
+			var reject = _reject;
+
+			mailvelope.getKeyring('egroupware').then(function(_keyring)
+			{
+				self.mailvelope_keyring = _keyring;
+
+				resolve(_keyring);
 			},
 			function(_err)
 			{
-				self.egw.message(_err.message, 'error');
+				mailvelope.createKeyring('egroupware').then(function(_keyring)
+				{
+					self.egw.message(self.egw.lang('Keyring "%1" created.', self._mailvelopeDomain()+' (egroupware)')+"\n\n"+
+						self.egw.lang('Please click on lock icon in lower right corner to create or import a key:')+"\n"+
+						self.egw.lang("Go to Key Management and create a new key-pair or import your existing one.")+"\n\n"+
+						self.egw.lang("You will NOT be able to send or receive encrypted mails before completing that step!"), 'info');
+
+					self.mailvelope_keyring = _keyring;
+
+					resolve(_keyring);
+				},
+				function(_err)
+				{
+					reject(_err);
+				});
 			});
 		});
 	},
@@ -890,5 +908,53 @@ var AppJS = Class.extend(
 		var parts = document.location.hostname.split('.');
 		if (parts.length > 1) parts.shift();
 		return parts.join('.');
+	},
+
+	/**
+	 * Check if we have a key for all recipients
+	 *
+	 * @param {Array} _recipients
+	 * @returns {Promise.<Array, Error>} Array of recipients or Error with recipients without key
+	 */
+	mailvelopeGetCheckRecipients: function(_recipients)
+	{
+		// replace rfc822 addresses with raw email, as Mailvelop does not like them
+		var rfc822_preg = /<([^'" <>]+)>$/;
+		var recipients = _recipients.map(function(_recipient)
+		{
+			var matches = _recipient.match(rfc822_preg);
+			return matches ? matches[1] : _recipient;
+		});
+
+		// check if we have keys for all recipients
+		var self = this;
+		return new Promise(function(_resolve, _reject)
+		{
+			var resolve = _resolve;
+			var reject = _reject;
+			self.mailvelopeOpenKeyring().then(function(_keyring)
+			{
+				_keyring.validKeyForAddress(recipients).then(function(_status)
+				{
+					var no_key = [];
+					for(var email in _status)
+					{
+						if (!_status[email]) no_key.push(email);
+					}
+					if (no_key.length)
+					{
+						reject(new Error(self.egw.lang('No key for recipient: '+no_key.join(', '))));
+					}
+					else
+					{
+						resolve(recipients);
+					}
+				});
+			},
+			function(_err)
+			{
+				reject(_err);
+			});
+		});
 	}
 });

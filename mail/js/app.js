@@ -4124,10 +4124,21 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Set email items draggable
+	 * OnChange callback for recipients:
+	 * - make them draggable
+	 * - check if we have keys for recipients, if we compose an encrypted mail
 	 **/
 	set_dragging_dndCompose: function ()
 	{
+		// if we compose an encrypted mail, check if we have keys for new recipient
+		if (this.mailvelope_editor)
+		{
+			var self = this;
+			this.mailvelopeGetCheckRecipients().catch(function(_err)
+			{
+				self.egw.message(_err.message, 'error');
+			});
+		}
 		var zIndex = 100;
 		var dragItem = jQuery('div.ms-sel-item:not(div.ui-draggable)');
 		if (dragItem.length > 0)
@@ -4458,6 +4469,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	togglePgpEncrypt: function (_action)
 	{
+		var self = this;
 		if (_action.checked)
 		{
 			if (typeof mailvelope == 'undefined')
@@ -4465,23 +4477,35 @@ app.classes.mail = AppJS.extend(
 				this.egw.message(this.egw.lang('You need to install Mailvelope plugin available for Chrome and Firefox from %1.','<a href="https://www.mailvelope.com/">mailvelope.com</a>')+"\n"+
 					this.egw.lang('Add your domain as "%1" in options to list of email providers and enable API.',
 					'*.'+this._mailvelopeDomain()), 'info');
+				// switch encrypt button off again
+				this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(false);
+				jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
 				return;
 			}
-			var mimeType = this.et2.getWidgetById('mimeType');
-			// currently Mailvelope only supports plain-text, switch to it if necessary
-			if (mimeType.get_value())
+			// check if we have keys for all recipents, before switching
+			this.mailvelopeGetCheckRecipients().then(function(_recipients)
 			{
-				mimeType.set_value(false);
-				this.et2._inst.submit();
-				return;	// ToDo: do that without reload
-			}
-			this.mailvelopeAvailable(this.mailvelopeCompose);
-			// ToDo: check recipients
+				var mimeType = self.et2.getWidgetById('mimeType');
+				// currently Mailvelope only supports plain-text, switch to it if necessary
+				if (mimeType.get_value())
+				{
+					mimeType.set_value(false);
+					self.et2._inst.submit();
+					return;	// ToDo: do that without reload
+				}
+				self.mailvelopeCompose();
+			})
+			.catch(function(_err)
+			{
+				self.egw.message(_err.message, 'error');
+				self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(false);
+				jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+				return;
+			});
 		}
 		else
 		{
 			// switch Mailvelop off again, but warn user he will loose his content
-			var self = this;
 			et2_dialog.show_dialog(function (_button_id)
 			{
 				if (_button_id == et2_dialog.YES_BUTTON )
@@ -4500,6 +4524,21 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Check if we have a key for all recipients
+	 *
+	 * @returns {Promise.<Array, Error>} Array of recipients or Error with recipients without key
+	 */
+	mailvelopeGetCheckRecipients: function()
+	{
+		// collect all recipients
+		var recipients = this.et2.getWidgetById('to').get_value();
+		recipients.concat(this.et2.getWidgetById('cc').get_value());
+		recipients.concat(this.et2.getWidgetById('bcc').get_value());
+
+		return this._super.call(this, recipients);
+	},
+
+	/**
 	 * Set the relevant widget to toolbar actions and submit
 	 *
 	 * @param {type} _action toolbar action
@@ -4509,16 +4548,16 @@ app.classes.mail = AppJS.extend(
 		if (this.mailvelope_editor)
 		{
 			var self = this;
-			var recipients = this.et2.getWidgetById('to').get_value();
-			recipients.concat(this.et2.getWidgetById('cc').get_value());
-			// todo: bcc, do we disclosure them by adding them here?
-			this.mailvelope_editor.encrypt(recipients).then(function(_armored)
+			this.mailvelopeGetCheckRecipients().then(function(_recipients)
+			{
+				return self.mailvelope_editor.encrypt(_recipients);
+			}).then(function(_armored)
 			{
 				self.et2.getWidgetById('mimeType').set_value(false);
 				self.et2.getWidgetById('mail_plaintext').set_disabled(false);
 				self.et2.getWidgetById('mail_plaintext').set_value(_armored);
 				self.et2._inst.submit(null,null,true);
-			}, function(_err)
+			}).catch(function(_err)
 			{
 				self.egw.message(_err.message, 'error');
 			});
