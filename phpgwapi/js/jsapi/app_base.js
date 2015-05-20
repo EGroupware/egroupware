@@ -409,7 +409,7 @@ var AppJS = Class.extend(
 						self._refresh_fav_nm();
 					}
 				});
-				
+
 			// Bind favorite de-select
 			var egw_fw = egw_getFramework();
 			if(egw_fw && egw_fw.applications[this.appname] && egw_fw.applications[this.appname].browser
@@ -938,12 +938,12 @@ var AppJS = Class.extend(
 	 */
 	mailvelopeGetCheckRecipients: function(_recipients)
 	{
-		// replace rfc822 addresses with raw email, as Mailvelop does not like them
+		// replace rfc822 addresses with raw email, as Mailvelop does not like them and lowercase all email
 		var rfc822_preg = /<([^'" <>]+)>$/;
 		var recipients = _recipients.map(function(_recipient)
 		{
 			var matches = _recipient.match(rfc822_preg);
-			return matches ? matches[1] : _recipient;
+			return matches ? matches[1].toLowerCase() : _recipient.toLowerCase();
 		});
 
 		// check if we have keys for all recipients
@@ -954,6 +954,7 @@ var AppJS = Class.extend(
 			var reject = _reject;
 			self.mailvelopeOpenKeyring().then(function(_keyring)
 			{
+				var keyring = _keyring;
 				_keyring.validKeyForAddress(recipients).then(function(_status)
 				{
 					var no_key = [];
@@ -963,7 +964,33 @@ var AppJS = Class.extend(
 					}
 					if (no_key.length)
 					{
-						reject(new Error(self.egw.lang('No key for recipient: '+no_key.join(', '))));
+						// server addressbook on server for missing public keys
+						self.egw.json('addressbook.addressbook_bo.ajax_get_pgp_keys', [no_key]).sendRequest().then(function(_data)
+						{
+							var data = _data.response['0'].data;
+							var promises = [];
+							for(var email in data)
+							{
+								promises.push(keyring.importPublicKey(data[email]).then(function(_result)
+								{
+									if (_result == 'IMPORTED')
+									{
+										no_key.splice(no_key.indexOf(email),1);
+									}
+								}));
+							}
+							Promise.all(promises).then(function()
+							{
+								if (no_key.length)
+								{
+									reject(new Error(self.egw.lang('No key for recipient: '+no_key.join(', '))));
+								}
+								else
+								{
+									resolve(recipients);
+								}
+							});
+						});
 					}
 					else
 					{

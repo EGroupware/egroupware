@@ -284,7 +284,7 @@ class addressbook_bo extends addressbook_so
 		);
 		//_debug_array($this->contact_fields);
 		$this->own_account_acl = $GLOBALS['egw_info']['server']['own_account_acl'];
-		if (!is_array($this->own_account_acl)) $this->own_account_acl = unserialize($this->own_account_acl);
+		if (!is_array($this->own_account_acl)) $this->own_account_acl = json_php_unserialize($this->own_account_acl, true);
 		// we have only one acl (n_fn) for the whole name, as not all backends store every part in an own field
 		if ($this->own_account_acl && in_array('n_fn',$this->own_account_acl))
 		{
@@ -2367,5 +2367,124 @@ class addressbook_bo extends addressbook_so
 		}
 		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($ctag));
 		return $ctag;
+	}
+
+	static public $pgp_key_regexp = '/-----BEGIN PGP PUBLIC KEY BLOCK-----.*-----END PGP PUBLIC KEY BLOCK-----\r?\n/s';
+
+	/**
+	 * Search addressbook for PGP public keys of given recipients
+	 *
+	 * EMail addresses are lowercased to make search case-insensitive
+	 *
+	 * @param string|int|array $recipients (array of) email addresses or numeric account-ids
+	 * @return array email|account_id => key pairs
+	 */
+	public function ajax_get_pgp_keys($recipients)
+	{
+		if (!$recipients) return array();
+
+		if (!is_array($recipients)) $recipients = array($recipients);
+
+		$criteria = $result = array();
+		foreach($recipients as &$recipient)
+		{
+			if (is_numeric($recipient))
+			{
+				$criteria['account_id'][] = (int)$recipient;
+			}
+			else
+			{
+				$criteria['contact_email'][] = $recipient = strtolower($recipient);
+			}
+		}
+		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_pubkey'), '', '', '', false, 'OR', false,
+			"contact_pubkey LIKE '%-----BEGIN PGP PUBLIC KEY BLOCK-----%'") as $contact)
+		{
+			$matches = null;
+			if (preg_match(self::$pgp_key_regexp, $contact['pubkey'], $matches))
+			{
+				$contact['email'] = strtolower($contact['email']);
+				if (empty($criteria['account_id']) || in_array($contact['email'], $recipients))
+				{
+					$result[$contact['email']] = $matches[0];
+				}
+				else
+				{
+					$result[$contact['account_id']] = $matches[0];
+				}
+			}
+		}
+		//error_log(__METHOD__."(".array2string($recipients).") returning ".array2string($result));
+		egw_json_response::get()->data($result);
+	}
+
+	/**
+	 * Set PGP keys for given email or account_id, if user has necessary rights
+	 *
+	 * @param array $keys email|account_id => public key pairs to store
+	 * @param boolean $allow_user_updates =null for admins, set config to allow regular users to store their pgp key
+	 * @return int number of pgp keys stored
+	 */
+	public function ajax_set_pgp_keys($keys, $allow_user_updates=null)
+	{
+		if (isset($allow_user_updates) && isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			$update = false;
+			if ($allow_user_updates && !in_array('contact_pubkey', $this->own_account_acl))
+			{
+				$this->own_account_acl[] = 'contact_pubkey';
+				$update = true;
+			}
+			elseif (!$allow_user_updates && ($key = array_search('contact_pubkey', $this->own_account_acl)) !== false)
+			{
+				unset($this->own_account_acl[$key]);
+				$update = true;
+			}
+			if ($update)
+			{
+				config::save_value('own_account_acl', $this->own_account_acl, 'phpgwapi');
+			}
+		}
+		$criteria = array();
+		foreach($keys as $recipient => $key)
+		{
+			if (!preg_match(self::$pgp_key_regexp, $key)) continue;
+
+			if (is_numeric($recipient))
+			{
+				$criteria['contact_email'][] = $recipient;
+			}
+			else
+			{
+				$criteria['account_id'][] = (int)$recipient;
+			}
+		}
+		if (!$criteria) return 0;
+
+		$updated = 0;
+		foreach($this->search($criteria, false, '', '', '', false, 'OR') as $contact)
+		{
+			if ($contact['account_id'] && isset($keys[$contact['account_id']]))
+			{
+				$key = $keys[$contact['account_id']];
+			}
+			elseif (isset($keys[$contact['email']]))
+			{
+				$key = $keys[$contact['email']];
+			}
+			if (empty($contact['pubkey']) || !preg_match(self::$pgp_key_regexp, $contact['pubkey']))
+			{
+				$contact['pubkey'] .= $key;
+			}
+			else
+			{
+				$contact['pubkey'] = preg_replace(self::$pgp_key_regexp, $key, $contact['pubkey']);
+			}
+			if ($this->check_perms(EGW_ACL_EDIT, $contact) && $this->save($contact))
+			{
+				++$updated;
+			}
+		}
+		return $updated;
 	}
 }
