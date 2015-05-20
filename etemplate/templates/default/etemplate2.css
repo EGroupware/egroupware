@@ -236,6 +236,7 @@ button.et2_button_with_image {
          background-repeat: no-repeat;
          background-position:  4px center;
          background-size: 16px;
+		 height: 24px;
  }
 /* et2_box_widget ###*/
 button[id="cancel"],
