@@ -1458,6 +1458,9 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 div.ms-sel-ctn {
 	padding-right: 0px;
 }
+div.ms-sel-ctn .ms-sel-item {
+	word-break: break-all;
+}
 /**
 * et2_toolbar
 */
