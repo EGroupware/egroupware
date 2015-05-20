@@ -828,7 +828,8 @@ class infolog_so
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
 			$wildcard = $op = null;
-			$search = so_sql::search2criteria($query['search'], $wildcard, $op, null, $columns);
+			$so_sql = new so_sql('infolog', $this->info_table, $this->db);
+			$search = $so_sql->search2criteria($query['search'], $wildcard, $op, null, $columns);
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode($op, $search) .')';
 
