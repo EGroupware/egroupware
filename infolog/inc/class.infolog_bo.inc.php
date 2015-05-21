@@ -729,7 +729,8 @@ class infolog_bo
 		{
 			$old = $this->read($values['info_id'], false, 'server');
 		}
-		if (($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT)))
+
+		if (($status_only = $values['info_id'] && !$this->check_access($values,EGW_ACL_EDIT)))
 		{
 			if (!isset($values['info_responsible']))
 			{
