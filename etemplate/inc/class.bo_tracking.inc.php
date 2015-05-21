@@ -181,7 +181,7 @@ abstract class bo_tracking
 	/**
 	 * Constructor
 	 *
-	 * @param string $cf_app=null if set, custom field names get added to $field2history
+	 * @param string $cf_app = null if set, custom field names get added to $field2history
 	 * @return bo_tracking
 	 */
 	function __construct($cf_app = null)
@@ -224,7 +224,7 @@ abstract class bo_tracking
 	 * Get custom fields of an entry of an entry
 	 *
 	 * @param array|object $data
-	 * @param string $only_type2=null if given only return fields of type2 == $only_type2
+	 * @param string $only_type2 = null if given only return fields of type2 == $only_type2
 	 * @return array of details as array with values for keys 'label','value','type'
 	 */
 	function get_customfields($data, $only_type2=null)
@@ -262,7 +262,7 @@ abstract class bo_tracking
 	 *
 	 * Need to be implemented in your extended tracking class!
 	 *
-	 * @param string $what possible values are:
+	 * @param string $name possible values are:
 	 *  - 'assigned' array of users to use instead of a field in the data
 	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
 	 *  - 'lang' string lang code for copy mail
@@ -272,7 +272,7 @@ abstract class bo_tracking
 	 *  - 'skip_notify' array of email addresses that should _not_ be notified
 	 *  - CUSTOM_NOTIFICATION string notification body message.  Merge print placeholders are allowed.
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param array $old = null old/last state of the entry or null for a new entry
 	 * @return mixed
 	 */
 	protected function get_config($name,$data,$old=null)
@@ -284,11 +284,11 @@ abstract class bo_tracking
 	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
 	 *
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param int $user=null user who made the changes, default to current user
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undeleted
-	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
-	 * @param boolean $skip_notification=false do NOT send any notification
+	 * @param array $old = null old/last state of the entry or null for a new entry
+	 * @param int $user = null user who made the changes, default to current user
+	 * @param boolean $deleted = null can be set to true to let the tracking know the item got deleted or undeleted
+	 * @param array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param boolean $skip_notification = false do NOT send any notification
 	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
 	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
@@ -376,9 +376,9 @@ abstract class bo_tracking
 	 *
 	 * @internal use only track($data,$old)
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
-	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param array $old = null old/last state of the entry or null for a new entry
+	 * @param boolean $deleted = null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @return int number of log-entries made
 	 */
 	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
@@ -437,7 +437,7 @@ abstract class bo_tracking
 	 * Can be used to check if saving the data is really necessary or user just pressed save
 	 *
 	 * @param array $data
-	 * @param array $old=null
+	 * @param array $old = null
 	 * @return array of keys with different values in $data and $old
 	 */
 	public function changed_fields(array $data,array $old=null)
@@ -515,8 +515,8 @@ abstract class bo_tracking
 	 *
 	 * @internal use only track($data,$old,$user)
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $old = null old/last state of the entry or null for a new entry
+	 * @param boolean $deleted = null can be set to true to let the tracking know the item got deleted or undelted
 	 * @param array $email_notified=null if present will return the emails notified, if given emails in that list will not be notified
 	 * @return boolean true on success, false on error (error messages are in $this->errors)
 	 */
@@ -657,12 +657,12 @@ abstract class bo_tracking
 	 * must NOT store something from user enviroment! By the end of the method, everything get changed back.
 	 *
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param array $old = null old/last state of the entry or null for a new entry
 	 * @param string $email address to send the notification to
-	 * @param string $user_or_lang='en' user-id or 2 char lang-code for a non-system user
-	 * @param string $check=null pref. to check if a notification is wanted
-	 * @param boolean $assignment_changed=true the assignment of the user $user_or_lang changed
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param string $user_or_lang = 'en' user-id or 2 char lang-code for a non-system user
+	 * @param string $check = null pref. to check if a notification is wanted
+	 * @param boolean $assignment_changed = true the assignment of the user $user_or_lang changed
+	 * @param boolean $deleted = null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return boolean true on success or false if notification not requested or error (error-message is in $this->errors)
 	 */
 	public function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true,$deleted=null)
@@ -893,7 +893,7 @@ abstract class bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
-	 * @param string $allow_popup=false if true return array(link,popup-size) incl. session info an evtl. partial url (no host-part)
+	 * @param string $allow_popup = false if true return array(link,popup-size) incl. session info an evtl. partial url (no host-part)
 	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string|array string with link (!$allow_popup) or array(link,popup-size), popup size is something like '640x480'
 	 */
@@ -970,7 +970,7 @@ abstract class bo_tracking
 		if($this->get_config(self::CUSTOM_NOTIFICATION, $data, $old))
 		{
 			$body = $this->get_custom_message($data,$old);
-			if($sig = $this->get_signature($data,$old,$receiver))
+			if(($sig = $this->get_signature($data,$old,$receiver)))
 			{
 				$body .= ($html_email ? '<br />':'') . "\n$sig";
 			}
@@ -1007,7 +1007,7 @@ abstract class bo_tracking
 		{
 			$body .= "</table>\n";
 		}
-		if($sig = $this->get_signature($data,$old,$receiver))
+		if(($sig = $this->get_signature($data,$old,$receiver)))
 		{
 			$body .= ($html_email ? '<br />':'') . "\n$sig";
 		}
@@ -1022,7 +1022,7 @@ abstract class bo_tracking
 	 * @param string $type 'link', 'message', 'summary', 'multiline', 'reply' and ''=regular content
 	 * @param boolean $modified mark field as modified
 	 * @param string $line whole line or just label
-	 * @param string $data=null data or null to display just $line over 2 columns
+	 * @param string $data = null data or null to display just $line over 2 columns
 	 * @return string
 	 */
 	protected function format_line($html_mail,$type,$modified,$line,$data=null)
@@ -1120,6 +1120,9 @@ abstract class bo_tracking
 
 	/**
 	 * Get a (global) signature to append to the change notificaiton
+	 * @param array $data
+	 * @param type $old
+	 * @param type $receiver
 	 */
 	protected function get_signature($data, $old, $receiver)
 	{
