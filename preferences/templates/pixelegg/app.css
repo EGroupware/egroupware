@@ -18,7 +18,7 @@
  * @package preferences
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 52121 2015-03-12 16:58:01Z hnategh $
+ * @version $Id: app.css 52139 2015-03-16 10:28:46Z hnategh $
  */
 table.prefTable {
   width: 100%;
@@ -68,6 +68,10 @@ textarea.prefValue {
 }
 #preferences-password .dialogHeader td {
   text-align: center;
+}
+/* arrange readonly selectbox background icon*/
+.et2_selectbox.readonly.prefType {
+  padding-right: 50px;
 }
 /* #############################################################################
 // iframe
