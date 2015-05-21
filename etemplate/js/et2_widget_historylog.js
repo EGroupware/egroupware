@@ -105,7 +105,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 							});
 						});
 						
-						e.data.history.finishInit();
+						if (typeof e.data.history.dataview == "undefined") e.data.history.finishInit();
 						e.data.history.dynheight.update(function(_w, _h) {
 							e.data.history.dataview.resize(_w, _h);
 						});
@@ -113,7 +113,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 					tabs.tabData[i].flagDiv.bind("click.history",{"history": this, div: tabs.tabData[i].flagDiv}, handler);
 
 					// Display if history tab is selected
-					if(i == tabs.get_active_tab())
+					if(i == tabs.get_active_tab() && typeof this.dataview == 'undefined')
 					{
 						tabs.tabData[i].flagDiv.trigger("click.history");
 					}
@@ -179,7 +179,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 		// Register a resize callback
 		var self = this;
 		$j(window).on('resize.' +this.options.value.app + this.options.value.id, function() {
-			self.dynheight.update(function(_w, _h) {
+			if (self && typeof self.dynheight != 'undefined') self.dynheight.update(function(_w, _h) {
 				self.dataview.resize(_w, _h);
 			});
 		});
@@ -573,7 +573,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 				
 				// trigger the history registered resize
 				// in order to update the height with new value
-				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
+			//	this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
 			}
 		}
 	}
