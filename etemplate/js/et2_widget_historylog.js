@@ -573,7 +573,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 				
 				// trigger the history registered resize
 				// in order to update the height with new value
-			//	this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
+				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
 			}
 		}
 	}
