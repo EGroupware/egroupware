@@ -4039,10 +4039,17 @@ app.classes.mail = AppJS.extend(
 	set_dragging_dndCompose: function ()
 	{
 		var zIndex = 100;
-		var dragItem = jQuery('div.ms-sel-item:not(div.ui-draggable)');
-		if (dragItem.length > 0)
+		var dragItems = jQuery('div.ms-sel-item:not(div.ui-draggable)');
+		dragItems.each(function(i,item){
+				var $isErr = jQuery(item).find('.ui-state-error');
+				if ($isErr.length > 0)
+				{
+					delete dragItems.splice(i,1);
+				}
+			});
+		if (dragItems.length > 0)
 		{
-			dragItem.draggable({
+			dragItems.draggable({
 				appendTo:'body',
 				//Performance wise better to not add ui-draggable class to items since we are not using that class
 				containment:'document',
@@ -4089,7 +4096,7 @@ app.classes.mail = AppJS.extend(
 			}).draggable('disable');
 			window.setTimeout(function(){
 
-				if(dragItem && dragItem.data() && typeof dragItem.data()['uiDraggable'] !== 'undefined') dragItem.draggable('enable');
+				if(dragItems && dragItems.data() && typeof dragItems.data()['uiDraggable'] !== 'undefined') dragItems.draggable('enable');
 			},100);
 		}
 
@@ -4155,9 +4162,17 @@ app.classes.mail = AppJS.extend(
 								.removeClass('mailCompose_copyEmail')
 								.css('cursor','move');
 					}
-
+					
+					var dragItems = jQuery('div.ms-sel-item');
+					dragItems.each(function(i,item){
+						var $isErr = jQuery(item).find('.ui-state-error');
+						if ($isErr.length > 0)
+						{
+							delete dragItems.splice(i,1);
+						}
+					});
 					//Destroy draggables after dropping, we need to enable them again
-					jQuery('div.ms-sel-item').draggable('destroy');
+					dragItems.draggable('destroy');
 				}
 			}
 		});
