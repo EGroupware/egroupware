@@ -2390,7 +2390,7 @@ class addressbook_bo extends addressbook_so
 		{
 			if (is_numeric($recipient))
 			{
-				$criteria['account_id'][] = (int)$recipient;
+				$criteria['egw_addressbook.account_id'][] = (int)$recipient;
 			}
 			else
 			{
@@ -2452,11 +2452,11 @@ class addressbook_bo extends addressbook_so
 
 			if (is_numeric($recipient))
 			{
-				$criteria['contact_email'][] = $recipient;
+				$criteria['egw_addressbook.account_id'][] = (int)$recipient;
 			}
 			else
 			{
-				$criteria['account_id'][] = (int)$recipient;
+				$criteria['contact_email'][] = $recipient;
 			}
 		}
 		if (!$criteria) return 0;
@@ -2485,6 +2485,15 @@ class addressbook_bo extends addressbook_so
 				++$updated;
 			}
 		}
-		return $updated;
+		if ($criteria == array('egw.addressbook.account_id' => array((int)$GLOBALS['egw_info']['user']['account_id'])))
+		{
+			$message = !$updated ? lang('Permissiong denied! Ask your administrator to allow regular uses to update their public keys.') :
+				lang('Your new public key has been stored in accounts addressbook.');
+		}
+		else
+		{
+			$message = lang('%1 public keys added.', $updated);
+		}
+		egw_json_response::get()->data($message);
 	}
 }

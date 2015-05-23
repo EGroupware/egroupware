@@ -901,13 +901,64 @@ var AppJS = Class.extend(
 			{
 				mailvelope.createKeyring('egroupware').then(function(_keyring)
 				{
-					self.egw.message(self.egw.lang('Keyring "%1" created.', self._mailvelopeDomain()+' (egroupware)')+"\n\n"+
-						self.egw.lang('Please click on lock icon in lower right corner to create or import a key:')+"\n"+
-						self.egw.lang("Go to Key Management and create a new key-pair or import your existing one.")+"\n\n"+
-						self.egw.lang("You will NOT be able to send or receive encrypted mails before completing that step!"), 'info');
-
 					self.mailvelope_keyring = _keyring;
 
+					mailvelope.createSettingsContainer('body', _keyring, {
+						email: self.egw.user('account_email'),
+						fullName: self.egw.user('account_fullname')
+					}).then(function()
+					{
+						// make only Mailvelope settings dialog visible
+						jQuery('body > iframe[src^=chrome]').css({position: 'absolute', top: 0});
+						// add a close button, so we know when to offer storing public key to AB
+						jQuery('<button class="et2_button et2_button_text" id="mailvelope_close_settings">'+self.egw.lang('Close')+'</button>')
+							.css({position: 'absolute', top: 8, right: 8})
+							.click(function()
+							{
+								// try fetching public key, to check user created onw
+								self.mailvelope_keyring.exportOwnPublicKey(self.egw.user('account_email')).then(function(_pubKey)
+								{
+									// if yes, hide settings dialog
+									jQuery('body > iframe[src^=chrome]').remove();
+									jQuery('button#mailvelope_close_settings').remove();
+									// offer user to store his public key to AB for other users to find
+									var buttons = [
+										{button_id: 2, text: 'Yes', id: 'dialog[yes]', image: 'check', default: true},
+										{button_id: 3, text : 'No', id: 'dialog[no]', image: 'cancelled'}
+									];
+									if (egw.user('apps').admin)
+									{
+										buttons.unshift({
+											button_id: 5, text: 'Yes and allow non-admin users to do that too (recommended)',
+											id: 'dialog[yes_allow]', image: 'check', default: true
+										});
+										delete buttons[1].default;
+									}
+									et2_dialog.show_dialog(function (_button_id)
+									{
+										if (_button_id != et2_dialog.NO_BUTTON )
+										{
+											var keys = {};
+											keys[self.egw.user('account_id')] = _pubKey;
+											self.egw.json('addressbook.addressbook_bo.ajax_set_pgp_keys',
+												[keys, _button_id != et2_dialog.YES_BUTTON ? true : undefined]).sendRequest()
+											.then(function(_data)
+											{
+												self.egw.message(_data.response['0'].data);
+											});
+										}
+									},
+									self.egw.lang('It is recommended to store your public key in addressbook, so other users can write you encrypted mails.'),
+									self.egw.lang('Store your public key in Addressbook?'),
+									{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+								},
+								function(_err){
+									self.egw.message(_err.message+"\n\n"+
+									self.egw.lang("You will NOT be able to send or receive encrypted mails before completing that step!"), 'error');
+								});
+							})
+							.appendTo('body');
+					});
 					resolve(_keyring);
 				},
 				function(_err)
