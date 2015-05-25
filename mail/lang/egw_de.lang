@@ -19,6 +19,7 @@ add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
 add folder	mail	de	Neuer Ordner
 add to addressbook	mail	de	zum Adressbuch hinzufügen
+add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
 after reply, visible during compose	mail	de	Nach dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase+Weiterleitungen
 all	mail	de	alle
@@ -140,6 +141,7 @@ empty junk	mail	de	Junk-/Spam- Ordner leeren
 empty trash	mail	de	Papierkorb leeren
 enable	mail	de	Aktivieren
 enabled!	mail	de	aktiviert!
+encrypt	mail	de	Verschlüsseln
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
 error while setting acl for folder %1!	mail	de	Fehler beim Speichern von Zugriffsrechten für den Ordner %1!
@@ -429,6 +431,7 @@ subscribe folder ...	mail	de	Ordner abonnieren ...
 subscription folders	mail	de	Ordner Abonnieren
 subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.
 successfully connected	mail	de	erfolgreich verbunden
+switch off encryption?	mail	de	Verschlüsselung ausschalten?
 template folder	mail	de	Vorlagen Ordner
 templates	mail	de	Vorlagen
 templates folder	mail	de	Ordner für Vorlage Nachrichten
@@ -502,5 +505,7 @@ yes, show all debug information available for the user	mail	de	Ja, zeige alle de
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	de	Sie müssen das Mailvelope Plugin für Chrome oder Firefox von %1 installieren.
 you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail in das VFS speichern können.
+you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails

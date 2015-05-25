@@ -429,6 +429,7 @@ ireland	common	de	IRLAND
 israel	common	de	ISRAEL
 it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert.
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	de	Es wird empfohlen Ihren öffentlichen Schlüssel im Adressbuch zu speichern, damit andere Benutzer Ihnen verschlüsselte EMails schreiben können.
 italic	common	de	Kursiv
 italy	common	de	ITALIEN
 jamaica	common	de	JAMAICA
@@ -562,6 +563,7 @@ no - cancel	common	de	Nicht Löschen - Abbruch
 no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
 no filters	common	de	Filter aufheben
 no history for this record	common	de	Keine Historie für diesen Datensatz
+no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
 no savant2 template directories were found in:	common	de	Kein Savant2 Vorlagen Verzeichnis gefunden in:
 no subject	common	de	Kein Betreff
 none	common	de	Keine
@@ -798,6 +800,7 @@ start time	common	de	Startzeit
 start with	common	de	beginnt mit
 starting up...	common	de	Starte...
 status	common	de	Status
+store your public key in addressbook?	common	de	Öffentlichen Schlüssel im Adressbuch speichern?
 stretched	common	de	ausgedehnt
 subject	common	de	Betreff
 submit	common	de	Absenden
@@ -920,6 +923,7 @@ yemen	common	de	JEMEN
 yes	common	de	Ja
 yes - delete	common	de	Einträge löschen
 yes - delete including sub-entries	common	de	Einträge inklusive Untereinträge
+yes and allow non-admin users to do that too (recommended)	common	de	Ja und erlaube nicht administrativen Benutzern das auch (empfohlen)
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wie viele Icons und Toolbars der Editor anzeigt.
 you have been successfully logged out	login	de	Abmelden erfolgreich
@@ -935,6 +939,7 @@ you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
 you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
 you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie müssen logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
+you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail sender oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet

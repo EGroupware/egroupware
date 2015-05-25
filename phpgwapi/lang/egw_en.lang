@@ -429,6 +429,7 @@ ireland	common	en	IRELAND
 israel	common	en	ISRAEL
 it has been more then %1 days since you changed your password	common	en	It has been more than %1 days since you have changed your password.
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	en	It is recommended to store your public key in Addressbook, so other users can write you encrypted mails.
 italic	common	en	Italic
 italy	common	en	ITALY
 jamaica	common	en	JAMAICA
@@ -562,6 +563,7 @@ no - cancel	common	en	No - Cancel
 no entries found, try again ...	common	en	No entries found, try again ...
 no filters	common	en	No filters
 no history for this record	common	en	No history for this record
+no key for recipient:	common	en	No key for recipient:
 no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
 no subject	common	en	No subject
 none	common	en	None
@@ -713,6 +715,7 @@ saturday	common	en	Saturday
 saudi arabia	common	en	SAUDI ARABIA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	en	Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %2
 save	common	en	Save
+save as	common	en	Save as
 scheduling inbox	common	en	Scheduling inbox
 scheduling outbox	common	en	Scheduling outbox
 search	common	en	Search
@@ -797,6 +800,7 @@ start time	common	en	Start time
 start with	common	en	Start with
 starting up...	common	en	Starting up...
 status	common	en	Status
+store your public key in addressbook?	common	en	Store your public key in Addressbook?
 stretched	common	en	Stretched
 subject	common	en	Subject
 submit	common	en	Submit
@@ -919,6 +923,7 @@ yemen	common	en	YEMEN
 yes	common	en	Yes
 yes - delete	common	en	Yes - Delete
 yes - delete including sub-entries	common	en	Yes - Delete including sub-entries
+yes and allow non-admin users to do that too (recommended)	common	en	Yes and allow non-admin users to do that too (recommended)
 you are required to change your password during your first login	common	en	You are required to change your password during your first log in
 you can customize how many icons and toolbars the editor shows.	common	en	How many icons and tool bars the editor shows.
 you have been successfully logged out	login	en	You have been successfully logged out.
@@ -934,6 +939,7 @@ you need to add the webserver user '%1' to the group '%2'.	common	en	You need to
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an EGroupware administrator to access this functionality!
 you need to select some entries first!	common	en	You need to select some entries first!
 you need to set enable logging to "%1" to create/update a log.	groupdav	en	You need to set enable logging to "%1" to create/update a log.
+you will not be able to send or receive encrypted mails before completing that step!	common	en	You will NOT be able to send or receive encrypted mails before completing that step!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application  %1 !
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent.
@@ -949,4 +955,3 @@ your settings have been updated	common	en	Your settings have been updated.
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
 zoom	common	en	Zoom
-save as	common	en	Save as

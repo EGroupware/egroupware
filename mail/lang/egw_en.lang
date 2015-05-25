@@ -19,6 +19,7 @@ add a new folder to %1:	mail	en	Add a new Folder to %1:
 add all my aliases	mail	en	Add all my aliases
 add folder	mail	en	Add Folder
 add to addressbook	mail	en	add to addressbook
+add your domain as "%1" in options to list of email providers and enable api.	mail	en	Add your domain as "%1" in options to list of email providers and enable API.
 after reply, visible during compose	mail	en	After reply, visible during compose
 aliases+forwards	mail	en	Aliases+Forwards
 all	mail	en	all
@@ -140,6 +141,7 @@ empty junk	mail	en	empty junk/spam folder
 empty trash	mail	en	empty trash
 enable	mail	en	Enable
 enabled!	mail	en	enabled!
+encrypt	mail	en	Encrypt
 enter the name for the new folder:	mail	en	Enter the name for the new Folder:
 error saving %1!	mail	en	Error saving %1!
 error while setting acl for folder %1!	mail	en	Error while setting ACL for folder %1!
@@ -429,6 +431,7 @@ subscribe folder ...	mail	en	Subscribe folder ...
 subscription folders	mail	en	Subscription folders
 subscription successfully saved.	mail	en	Subscription successfully saved.
 successfully connected	mail	en	Successfully connected
+switch off encryption?	mail	en	Switch off encryption?
 template folder	mail	en	template folder
 templates	mail	en	Templates
 templates folder	mail	en	Templates folder
@@ -502,5 +505,7 @@ yes, show all debug information available for the user	mail	en	yes, show all deb
 yes, show basic info only	mail	en	yes, show basic info only
 you can either choose to save as infolog or tracker, not both.	mail	en	You can either choose to save as infolog OR tracker, not both.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	en	You need to install Mailvelope plugin available for Chrome and Firefox from %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	en	You need to save the message as draft first before to be able to save it into VFS
+you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!
 you've got new mail	mail	en	You've got new mail

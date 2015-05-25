@@ -1034,7 +1034,7 @@ var AppJS = Class.extend(
 							{
 								if (no_key.length)
 								{
-									reject(new Error(self.egw.lang('No key for recipient: '+no_key.join(', '))));
+									reject(new Error(self.egw.lang('No key for recipient:')+' '+no_key.join(', ')));
 								}
 								else
 								{
