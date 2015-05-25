@@ -108,7 +108,9 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				$content = array('legacy' => $ui->weekN(true));
 				break;
 			case 'week':
-				$content = array('legacy' => $ui->week(0,true));
+				//$content = array('legacy' => $ui->week(0,true));
+				$ui->week(array(), $etemplate);
+				return; //parent::exec($id, $etemplate);
 				break;
 			case 'day':
 				$content = array('legacy' => $ui->day(true));
