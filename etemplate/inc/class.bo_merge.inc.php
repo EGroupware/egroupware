@@ -933,7 +933,8 @@ abstract class bo_merge
 			{
 				if($value = $replacements['$$'.$field.'$$'])
 				{
-					$replacements['$$'.$field.'/date$$'] = egw_time::to($value,true);
+					$time = egw_time::createFromFormat('+'.egw_time::$user_dateformat.' '.egw_time::$user_timeformat.'*', $value);
+					$replacements['$$'.$field.'/date$$'] = $time ? $time->format(egw_time::$user_dateformat)  : '';
 				}
 			}
 		}
