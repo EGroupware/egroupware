@@ -3,7 +3,9 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights!
 %1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organization member(s) changed.
+%1 key(s) added to public keyserver "%2".	addressbook	en	%1 key(s) added to public keyserver "%2".
 %1 not implemented for %2!	addressbook	en	%1 not implemented for %2!
+%1 public keys added.	addressbook	en	%1 public keys added.
 %1 records imported	addressbook	en	%1 records imported.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read. Not yet imported, you may go %2back%3 and un-check Test import.
 %1 starts with '%2'	addressbook	en	%1 starts with '%2'
@@ -367,6 +369,7 @@ pager	common	en	Pager
 parcel	addressbook	en	Parcel
 participants	addressbook	en	Participants
 permission denied !!!	addressbook	en	Permission denied!
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	en	Permissiong denied! Ask your administrator to allow regular uses to update their public keys.
 phone number	common	en	Phone number
 phone numbers	common	en	Phone numbers
 photo	addressbook	en	Photo
@@ -522,6 +525,7 @@ you must select at least 1 column to display	addressbook	en	Select at least 1 co
 you need to select a distribution list	addressbook	en	Select a distribution list
 you need to select some contacts first	addressbook	en	Select some contacts first
 you need to select some entries first	addressbook	en	You need to select some entries first
+your new public key has been stored in accounts addressbook.	addressbook	en	Your new public key has been stored in accounts addressbook.
 zip code	common	en	ZIP code
 zip code (private)	addressbook	en	ZIP code (private)
 zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files. Do not mix file types per import.

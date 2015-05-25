@@ -3,7 +3,9 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht wegen fehlender Rechte !!!
 %1 contacts updated (%2 errors).	addressbook	de	%1 Kontakte aktualisiert (%2 Fehler).
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
+%1 key(s) added to public keyserver "%2".	addressbook	de	%1 Schlüssel wurden dem öffentlichen Schlüsselserver "%2" eingetragen.
 %1 not implemented for %2!	addressbook	de	%1 nicht implementiert für %2!
+%1 public keys added.	addressbook	de	%1 öffentliche Schlüssel gespeichert.
 %1 records imported	addressbook	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import ausschalten)
 %1 starts with '%2'	addressbook	de	%1 beginnt mit '%2'
@@ -367,6 +369,7 @@ pager	common	de	Pager
 parcel	addressbook	de	Lieferadresse
 participants	addressbook	de	Teilnehmer
 permission denied !!!	addressbook	de	Zugriff verweigert !!!
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	de	Zugriff verweigert! Bitten Sie Ihren Administrator normalen Benutzern zu erlauben Ihren öffentlichen Key zu aktualisieren.
 phone number	common	de	Telefonnummer
 phone numbers	common	de	Telefonnummern
 photo	addressbook	de	Foto
@@ -521,6 +524,7 @@ you must select at least 1 column to display	addressbook	de	Sie müssen mindeste
 you need to select a distribution list	addressbook	de	Sie müssen eine Verteilerliste auswählen
 you need to select some contacts first	addressbook	de	Sie müssen zuerst Kontakte auswählen
 you need to select some entries first	addressbook	de	Sie müssen zuerst Daten auswählen
+your new public key has been stored in accounts addressbook.	addressbook	de	Ihr neuer öffentlicher Schlüssen wurde im Benutzerkonten Adressbuch gespeichert.
 zip code	common	de	PLZ
 zip code (private)	addressbook	de	PLZ (Privat)
 zip_note	addressbook	de	<p><b>Notiz:</b>Die Datei kann ein zip Archiv sein, bestehend aus .csv, .vcf oder .ldif Dateien. Sie dürfen die Dateitypen pro Import nicht mischen!

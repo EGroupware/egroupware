@@ -2379,7 +2379,7 @@ class addressbook_bo extends addressbook_so
 	 * @param string|int|array $recipients (array of) email addresses or numeric account-ids
 	 * @return array email|account_id => key pairs
 	 */
-	public function ajax_get_pgp_keys($recipients)
+	public function get_pgp_keys($recipients)
 	{
 		if (!$recipients) return array();
 
@@ -2413,6 +2413,64 @@ class addressbook_bo extends addressbook_so
 					$result[$contact['account_id']] = $matches[0];
 				}
 			}
+		}
+		return $result;
+	}
+
+	/**
+	 * Keyserver URL and CA to verify ssl connection
+	 */
+	const KEYSERVER = 'https://hkps.pool.sks-keyservers.net/pks/lookup?op=get&exact=on&search=';
+	const KEYSERVER_CA = '/addressbook/doc/sks-keyservers.netCA.pem';
+
+	/**
+	 * Search keyserver for PGP public keys
+	 *
+	 * @param int|string|array $recipients (array of) email addresses or numeric account-ids
+	 * @param array $result =array()
+	 */
+	public static function get_pgp_keyserver($recipients, array $result=array())
+	{
+		foreach($recipients as $recipient)
+		{
+			$id = $recipient;
+			if (is_numeric($recipient))
+			{
+				$recipient = $GLOBALS['egw']->accounts->id2name($recipient, 'account_email');
+			}
+			$matches = null;
+			if (($response = file_get_contents(self::KEYSERVER.urlencode($recipient), false, stream_context_create(array(
+					'ssl' => array(
+						'verify_peer' => true,
+						'cafile' => EGW_SERVER_ROOT.self::KEYSERVER_CA,
+					)
+				)))) && preg_match(self::$pgp_key_regexp, $response, $matches))
+			{
+				$result[$id] = $matches[0];
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * Search addressbook for PGP public keys of given recipients
+	 *
+	 * EMail addresses are lowercased to make search case-insensitive
+	 *
+	 * @param string|int|array $recipients (array of) email addresses or numeric account-ids
+	 * @return array email|account_id => key pairs
+	 */
+	public function ajax_get_pgp_keys($recipients)
+	{
+		if (!$recipients) return array();
+
+		if (!is_array($recipients)) $recipients = array($recipients);
+
+		$result = $this->get_pgp_keys($recipients);
+
+		if (($missing = array_diff($recipients, array_keys($result))))
+		{
+			$result = self::get_pgp_keyserver($missing, $result);
 		}
 		//error_log(__METHOD__."(".array2string($recipients).") returning ".array2string($result));
 		egw_json_response::get()->data($result);
@@ -2494,6 +2552,50 @@ class addressbook_bo extends addressbook_so
 		{
 			$message = lang('%1 public keys added.', $updated);
 		}
+		// add all keys to public keyserver too
+		$message .= "\n".lang('%1 key(s) added to public keyserver "%2".',
+			self::set_pgp_keyserver($keys), PARSE_URL(self::KEYSERVER_ADD, PHP_URL_HOST));
+
 		egw_json_response::get()->data($message);
+	}
+
+	/**
+	 * Keyserver add URL
+	 */
+	const KEYSERVER_ADD = 'https://hkps.pool.sks-keyservers.net/pks/add';
+
+	/**
+	 * Upload PGP keys to public keyserver
+	 *
+	 * @param array $keys email|account_id => public key pairs to store
+	 * @return int number of pgp keys stored
+	 */
+	public static function set_pgp_keyserver($keys)
+	{
+		$added = 0;
+		foreach($keys as $email => $cert)
+		{
+			if (is_numeric($email))
+			{
+				$email = $GLOBALS['egw']->accounts->id2name($email, 'account_email');
+			}
+			if (($response = file_get_contents(self::KEYSERVER_ADD, false, stream_context_create(array(
+					'ssl' => array(
+						'verify_peer' => true,
+						'cafile' => EGW_SERVER_ROOT.self::KEYSERVER_CA,
+					),
+					'http' => array(
+						'header'  => "Content-type: text/plain",
+						'method'  => 'POST',
+						'content' => http_build_query(array(
+							'keytext' => $cert,
+						)),
+					),
+				)))))
+			{
+				$added++;
+			}
+		}
+		return $added;
 	}
 }
