@@ -232,7 +232,7 @@ app.classes.addressbook = AppJS.extend(
 				ids += "c" + id[1] + ((i < _senders.length - 1) ? "," : "");
 			}
 			var extra = {};
-			extra[_action.data.url.indexOf('owner') > 0 ? 'owner' : 'participants'] = ids;
+			extra[_action.data && _action.data.url && _action.data.url.indexOf('owner') > 0 ? 'owner' : 'participants'] = ids;
 
 			// Use framework to add calendar entry
 			egw.open('','calendar','add',extra);
