@@ -1461,6 +1461,9 @@ div.ms-sel-ctn {
 div.ms-sel-ctn .ms-sel-item {
 	word-break: break-all;
 }
+.ms-ctn input:focus {
+	min-width: 10em;
+}
 /**
 * et2_toolbar
 */
