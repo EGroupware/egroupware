@@ -587,6 +587,7 @@ weeks offset (for multi-column display)	calendar	en	Weeks offset for multi colum
 weekview	calendar	en	Weekview
 weekview with weekend	calendar	en	Weekview with weekend
 weekview without weekend	calendar	en	Weekview without weekend
+what should links to the calendar events display in other applications.	calendar	en	What should links to the calendar events display in other applications.
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	en	When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appearance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.
 which view to show on home page	calendar	en	Which view to show on home page
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	en	Minimum number of users for showing day and week views as consolidated. Default = 5
