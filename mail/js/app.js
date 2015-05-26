@@ -4128,7 +4128,7 @@ app.classes.mail = AppJS.extend(
 	 * - make them draggable
 	 * - check if we have keys for recipients, if we compose an encrypted mail
 	 **/
-	set_dragging_dndCompose: function ()
+	recipients_onchange: function()
 	{
 		// if we compose an encrypted mail, check if we have keys for new recipient
 		if (this.mailvelope_editor)
@@ -4139,6 +4139,14 @@ app.classes.mail = AppJS.extend(
 				self.egw.message(_err.message, 'error');
 			});
 		}
+		this.set_dragging_dndCompose();
+	},
+
+	/**
+	 * Make recipients draggable
+	 */
+	set_dragging_dndCompose: function ()
+	{
 		var zIndex = 100;
 		var dragItems = jQuery('div.ms-sel-item:not(div.ui-draggable)');
 		dragItems.each(function(i,item){

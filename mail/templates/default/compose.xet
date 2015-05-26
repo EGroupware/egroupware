@@ -54,7 +54,7 @@
 					</row>
 					<row class="mailComposeHeaders" >
 						<description value="To"/>
-						<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.set_dragging_dndCompose"/>
+						<taglist-email id="to" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.recipients_onchange"/>
 						<vbox>
 							<description id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
 							<description id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
@@ -62,12 +62,12 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<description value="Cc"/>
-						<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.set_dragging_dndCompose"/>
+						<taglist-email id="cc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.recipients_onchange"/>
 						<description/>
 					</row>
 					<row  class="mailComposeHeaders mailComposeJQueryBcc">
 						<description value="Bcc"/>
-						<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.set_dragging_dndCompose"/>
+						<taglist-email id="bcc" width="100%" onclick="app.mail.address_click" include_lists="true" onchange="app.mail.recipients_onchange"/>
 						<description/>
 					</row>
 					<row class="mailComposeHeaders">
