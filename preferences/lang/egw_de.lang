@@ -10,6 +10,7 @@ acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde upg
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass sie diese Kategorie löschen wollen ?
 audio effect	preferences	de	Audio Effect
+audio effect enables|disables sound effects used in the theme	preferences	de	Audio Effekte (Sound) für das Thema aktivieren|deaktivieren.
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
 bootstrap theme for ckeditor	preferences	de	Bootstrap Schema für den CKEditor

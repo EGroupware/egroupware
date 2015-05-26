@@ -57,7 +57,7 @@ appointment settings	calendar	sk	Nastavenia udalostí
 are you sure you want to delete this country ?	calendar	sk	Naozaj odstrániť túto krajinu?
 are you sure you want to delete this holiday ?	calendar	sk	Naozaj odstrániť tento sviatok?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	sk	Iná možnosť - môžete %1stiahnuť MYSQL dump%2 a naimportovať ho ručne do tabuľky egw_cal_timezones.
-automatically purge old events after	admin	sk	Automaticky vymazať staré udalosti po
+automatically purge old events after	admin	sk	Automaticky vymazať udalosti staršie než
 back half a month	calendar	sk	Späť o pol mesiaca
 back one month	calendar	sk	Späť o mesiac
 back one year	calendar	sk	Späť o rok
