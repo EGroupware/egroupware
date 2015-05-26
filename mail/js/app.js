@@ -4263,7 +4263,7 @@ app.classes.mail = AppJS.extend(
 								.removeClass('mailCompose_copyEmail')
 								.css('cursor','move');
 					}
-					
+
 					var dragItems = jQuery('div.ms-sel-item');
 					dragItems.each(function(i,item){
 						var $isErr = jQuery(item).find('.ui-state-error');
@@ -4457,7 +4457,7 @@ app.classes.mail = AppJS.extend(
 				};
 				// set encrypted checkbox, if not already set
 				var composeToolbar = this.et2.getWidgetById('composeToolbar');
-				if (composeToolbar.checkbox('pgp'))
+				if (!composeToolbar.checkbox('pgp'))
 				{
 					composeToolbar.checkbox('pgp',true);
 				}

@@ -865,7 +865,7 @@ var AppJS = Class.extend(
 		{
 			jQuery(window).on('mailvelope', function()
 			{
-				self.mailvelopeOpenKeyring.then(callback);
+				self.mailvelopeOpenKeyring().then(callback);
 			});
 		}
 	},
