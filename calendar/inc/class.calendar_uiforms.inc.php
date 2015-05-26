@@ -2430,6 +2430,8 @@ class calendar_uiforms extends calendar_ui
 
 				'start'		   => 'date-time',
 				'end'		   => 'date-time',
+				'deleted'      => 'date-time',
+
 				'tz_id'        => 'select-timezone',
 
 				// Participants
@@ -2560,7 +2562,7 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 	}
-	
+
 	/**
 	 * imports a mail as Calendar
 	 *
@@ -2576,13 +2578,13 @@ class calendar_uiforms extends calendar_ui
 			egw_link::get_data ($_GET['egw_data']);
 			return false;
 		}
-		
+
 		if (is_array($mailContent))
 		{
 			// Addressbook
 			$AB = new addressbook_bo();
 			$accounts = array(0 => $GLOBALS['egw_info']['user']['account_id']);
-			
+
 			$participants[0] = array (
 				'uid' => $GLOBALS['egw_info']['user']['account_id'],
 				'delete_id' => $GLOBALS['egw_info']['user']['account_id'],
@@ -2620,7 +2622,7 @@ class calendar_uiforms extends calendar_ui
 				"role" => "REQ-PARTICIPANT",
 				"add" => "pressed"
 			));
-			
+
 			// Prepare calendar event draft
 			$event = array(
 				'title' => $mailContent['subject'],
@@ -2633,7 +2635,7 @@ class calendar_uiforms extends calendar_ui
 				'start' => $mailContent['date'],
 				'duration' => 60 * $this->cal_prefs['interval']
 			);
-			
+
 			if (is_array($mailContent['attachments']))
 			{
 				foreach ($mailContent['attachments'] as $attachment)
@@ -2653,7 +2655,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			egw_framework::window_close(lang('No content found to show up as calendar entry.'));
 		}
-		
+
 		return $this->process_edit($event);
 	}
 }

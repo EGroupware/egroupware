@@ -59,6 +59,7 @@ class calendar_tracking extends bo_tracking
 
 		'start'		=>	'start',
 		'end'		=>	'end',
+		'deleted'   =>  'deleted',
 
 		'participants'	=>	array('user_id', 'status', 'role', 'recur'),
 		'participants-c'	=>	array('user_id', 'status', 'quantity', 'role', 'recur'),
@@ -86,6 +87,7 @@ class calendar_tracking extends bo_tracking
 
 		'start'		=>	'start',
 		'end'		=>	'end',
+		'deleted'   =>  'deleted',
 
 		'participants'	=>	'Participants: User, Status, Role',
 		'participants-c'=>	'Participants: User, Status, Quantity, Role',
