@@ -469,6 +469,10 @@ abstract class bo_tracking
 						if ($data[$name] == $old[$name]) continue;
 					}
 				}
+				elseif (str_replace("\r", '', $old[$name]) == str_replace("\r", '', $data[$name]))
+				{
+					continue;	// change only in CR (eg. different OS) --> ignore
+				}
 				$changed_fields[] = $name;
 				//echo "<p>$name: ".array2string($data[$name]).' != '.array2string($old[$name])."</p>\n";
 			}
