@@ -4508,7 +4508,10 @@ app.classes.mail = AppJS.extend(
 					self.et2._inst.submit();
 					return;	// ToDo: do that without reload
 				}
-				self.mailvelopeCompose();
+				self.mailvelopeOpenKeyring().then(function(_keyring)
+				{
+					self.mailvelopeCompose(_keyring);
+				});
 			})
 			.catch(function(_err)
 			{
@@ -4525,7 +4528,9 @@ app.classes.mail = AppJS.extend(
 			{
 				if (_button_id == et2_dialog.YES_BUTTON )
 				{
-					self.et2._inst.submit();
+					self.et2.getWidgetById('mimeType').set_readonly(false);
+					self.et2.getWidgetById('mail_plaintext').set_disabled(false);
+					jQuery('iframe[src^=chrome-extension]').remove();
 				}
 				else
 				{
