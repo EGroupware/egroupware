@@ -957,7 +957,8 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 		//self::app_from_url might return an application the user has no rights
 		//for or may return an application that simply does not exist. So check first
 		//whether the $active_tab really exists in the $apps array.
-		if ($active_tab && array_key_exists($active_tab, $apps))
+		// Do not remove cd=yes if it's an ajax=true app
+		if ($active_tab && array_key_exists($active_tab, $apps) && strpos( $apps[$active_tab]['url'],'ajax=true') === False)
 		{
 			$apps[$active_tab]['openOnce'] = preg_replace('/[&?]cd=yes/','',$url);
 			$store_prefs = true;
