@@ -1949,13 +1949,13 @@ window.egw_LAB.wait(function() {
 					}
 					break;
 			}
-			// type change
+			$view = !$this->check_perms(EGW_ACL_EDIT, $content);
 		}
 		else
 		{
 			$content = array();
 			$contact_id = $_GET['contact_id'] ? $_GET['contact_id'] : ((int)$_GET['account_id'] ? 'account:'.(int)$_GET['account_id'] : 0);
-			$view = $_GET['view'];
+			$view = (boolean)$_GET['view'];
 			// new contact --> set some defaults
 			if ($contact_id && is_array($content = $this->read($contact_id)))
 			{
@@ -2156,6 +2156,11 @@ window.egw_LAB.wait(function() {
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[copy]'] = $readonlys['button[edit]'] = $readonlys['button[vcard]'] = true;
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $view;
+		if ($view)
+		{
+			$readonlys['__ALL__'] = true;
+			$readonlys['button[cancel]'] = false;
+		}
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
 		$sel_options['adr_one_countrycode']['-custom-'] = lang('Custom');
@@ -2176,7 +2181,18 @@ window.egw_LAB.wait(function() {
 		{
 			$readonlys[$field] = true;
 		}
-		if ($readonlys['n_fileas']) $readonlys['fileas_type'] = true;
+		// for editing own account, make all fields not allowed by own_account_acl readonly
+		if (!$this->is_admin() && !$content['owner'] && $content['account_id'] == $this->user && $this->own_account_acl && !$view)
+		{
+			$readonlys['__ALL__'] = true;
+			$readonlys['button[cancel]'] = false;
+
+			foreach($this->own_account_acl as $field)
+			{
+				$readonlys[$field] = false;
+			}
+		}
+		if (isset($readonlys['n_fileas'])) $readonlys['fileas_type'] = $readonlys['n_fileas'];
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys['tabs']['custom'] = !$this->customfields || $this->get_backend($content['id'],$content['owner']) == $this->so_accounts;
