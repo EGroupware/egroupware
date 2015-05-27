@@ -124,8 +124,7 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 		}
 		//error_log(__LINE__.': '.__METHOD__."('$_username') quota=".array2string($quota).' returning '.array2string($userData));
 
-		// $this->disconnect() does nothing anymore, need to use $this->adminConnection(false) instead!
-		if ($_username !== $GLOBALS['egw_info']['user']['account_lid']) $this->adminConnection(false);
+		if ($_username !== $GLOBALS['egw_info']['user']['account_lid']) $this->disconnect();
 
 		return $userData;
 	}
