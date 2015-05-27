@@ -193,7 +193,7 @@ class etemplate_widget_template extends etemplate_widget
 				if ($url[0] == '/') $url = egw::link($url);
 
 				// mtime postfix has to use '?download=', as our WebDAV treats everything else literal and not ignore them like Apache for static files!
-				$url .= '?download='.filemtime(egw_vfs::PREFIX.$path);
+				$url .= '?download='.filemtime($path);
 			}
 		}
 		//error_log(__METHOD__."('$path') returning $url");
