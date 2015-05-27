@@ -693,26 +693,7 @@ class egw_minimal
 		switch($name)
 		{
 			case 'framework':
-				// default to idots, if no template_set set, to eg. not stall installations if settings use egw::link
-				if (empty($GLOBALS['egw_info']['server']['template_set'])) $GLOBALS['egw_info']['server']['template_set'] = 'idots';
-				// setup the new eGW framework (template sets)
-				$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
-				if (!class_exists($class))	// first try to autoload the class
-				{
-					require_once($file=EGW_INCLUDE_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.$class.'.inc.php');
-					if (!in_array($file,(array)$_SESSION['egw_required_files']))
-					{
-						$_SESSION['egw_required_files'][] = $file;	// automatic load the used framework class, when the object get's restored
-					}
-				}
-				// fall back to idots if a template does NOT support current user-agent
-				if ($class != 'idots_framework' && method_exists($class,'is_supported_user_agent') &&
-					!call_user_func(array($class,'is_supported_user_agent')))
-				{
-					$GLOBALS['egw_info']['server']['template_set'] = 'idots';
-					return $this->__get('framework');
-				}
-				break;
+				return $this->framework = egw_framework::factory();
 			case 'template':	// need to be instancated for the current app
 				if (!($tpl_dir = common::get_tpl_dir($this->currentapp)))
 				{
