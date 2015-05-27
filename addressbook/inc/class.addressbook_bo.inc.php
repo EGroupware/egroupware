@@ -2488,12 +2488,12 @@ class addressbook_bo extends addressbook_so
 		if (isset($allow_user_updates) && isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$update = false;
-			if ($allow_user_updates && !in_array('contact_pubkey', $this->own_account_acl))
+			if ($allow_user_updates && !in_array('pubkey', $this->own_account_acl))
 			{
-				$this->own_account_acl[] = 'contact_pubkey';
+				$this->own_account_acl[] = 'pubkey';
 				$update = true;
 			}
-			elseif (!$allow_user_updates && ($key = array_search('contact_pubkey', $this->own_account_acl)) !== false)
+			elseif (!$allow_user_updates && ($key = array_search('pubkey', $this->own_account_acl)) !== false)
 			{
 				unset($this->own_account_acl[$key]);
 				$update = true;
