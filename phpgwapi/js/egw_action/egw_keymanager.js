@@ -272,7 +272,11 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 		var appMgr = egw_getAppObjectManager(false);
 		if (appMgr)
 		{
-			var focusedObject = appMgr.getFocusedObject();
+			var focusedObject = appMgr.getSelectedObjects();
+			if(focusedObject.length)
+			{
+				focusedObject = focusedObject[0] || false;
+			}
 
 			if (!focusedObject)
 			{
