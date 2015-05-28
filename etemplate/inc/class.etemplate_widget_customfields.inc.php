@@ -149,7 +149,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				$field_filters []= $f;
 			}
 		}
-		
+
 		$fields = $customfields;
 
 		$use_private = self::expand_name($this->attrs['use-private'],0,0,'','',self::$cont);
@@ -309,6 +309,13 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					self::$request->sel_options[self::$prefix.$fname] = $field['values'];
 				}
 				//error_log(__METHOD__."('$fname', ".array2string($field).") request->sel_options['".self::$prefix.$fname."']=".array2string(self::$request->sel_options[$this->id]));
+				// to keep order of numeric values, we have to explicit run fix_encoded_options, as sel_options are already encoded
+				$options = self::$request->sel_options[self::$prefix.$fname];
+				if (is_array($options))
+				{
+					etemplate_widget_menupopup::fix_encoded_options($options);
+					self::$request->sel_options[self::$prefix.$fname] = $options;
+				}
 				break;
 		}
 		return $widget;
