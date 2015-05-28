@@ -184,7 +184,8 @@ app.classes.mail = AppJS.extend(
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
-				jQuery('iframe#mail-display_mailDisplayBodySrc').on('load', function()
+				
+				jQuery('iframe#mail-display_mailDisplayBodySrc').one('load', function(e)
 				{
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
@@ -193,7 +194,7 @@ app.classes.mail = AppJS.extend(
 
 				this.mail_isMainWindow = false;
 				this.mail_display();
-
+				
 				// Register attachments for drag
 				this.register_for_drag(
 					this.et2.getArrayMgr("content").getEntry('mail_id'),
@@ -798,7 +799,7 @@ app.classes.mail = AppJS.extend(
 		if (window.location.search.search('&print=') >= 0)
 		{
 			var that = this;
-			jQuery('#mail-display_mailDisplayBodySrc').bind('load',function(){that.mail_print();});
+			jQuery('iFrame#mail-display_mailDisplayBodySrc').one('load',function(){that.mail_print();});
 		}
 
 	},
