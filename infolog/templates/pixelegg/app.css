@@ -137,6 +137,14 @@ tr.dialogOperators td,
 #infolog-index .egwGridView_grid .et2_hbox.et2_box_widget.infolog_CompletedClmn {
   white-space: normal;
 }
+td.infologEncrypt {
+  position: relative;
+}
+button#infolog-edit_encrypt {
+  position: absolute;
+  right: -2px;
+  top: 3px;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
@@ -394,4 +402,7 @@ input#infolog-edit_info_subject {
   width: 96%;
 }
 /*Historie*/
+button#infolog-edit_encrypt {
+  top: 13px;
+}
 /**/
