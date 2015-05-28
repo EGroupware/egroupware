@@ -1398,7 +1398,7 @@ class emailadmin_imapbase
 			$fquery->size();
 			$fquery->structure();
 			$fquery->flags();
-			//$fquery->imapDate();
+			$fquery->imapDate();// needed to ensure getImapDate fetches the internaldate, not the current time
 			$headersNew = $this->icServer->fetch($_folderName, $fquery, array(
 				'ids' => $uidsToFetch,
 			));
@@ -1440,7 +1440,7 @@ class emailadmin_imapbase
 				// Get already cached headers, 'fetchHeaders' is a label matchimg above
 				$headerForPrio = array_change_key_case($_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
 				if (self::$debug) {
-					error_log(__METHOD__.__LINE__.array2string($_headerObject).'UID:'.$_headerObject->getUid().' Size:'.$_headerObject->getSize().' Date:'.$_headerObject->getImapDate());
+					error_log(__METHOD__.' ('.__LINE__.') '.array2string($_headerObject).'UID:'.$_headerObject->getUid().' Size:'.$_headerObject->getSize().' Date:'.$_headerObject->getImapDate().'/'.egw_time::to($_headerObject->getImapDate(),'Y-m-d H:i:s'));
 					error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerForPrio));
 				}
 
@@ -1568,7 +1568,7 @@ class emailadmin_imapbase
 				if(substr($headerObject['INTERNALDATE'],-2) === 'UT') {
 					$headerObject['INTERNALDATE'] .= 'C';
 				}
-				//error_log(__METHOD__.' ('.__LINE__.') '.' '.$headerObject['SUBJECT'].'->'.$headerObject['DATE']);
+				//error_log(__METHOD__.' ('.__LINE__.') '.' '.$headerObject['SUBJECT'].'->'.$headerObject['DATE'].'<->'.$headerObject['INTERNALDATE'] .'#');
 				//error_log(__METHOD__.' ('.__LINE__.') '.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
 				if (isset($headerObject['ATTACHMENTS']) && count($headerObject['ATTACHMENTS'])) foreach ($headerObject['ATTACHMENTS'] as &$a) { $retValue['header'][$sortOrder[$uid]]['attachments'][]=$a;}
 				$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
@@ -1579,11 +1579,12 @@ class emailadmin_imapbase
 				$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 				$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
 				$retValue['header'][$sortOrder[$uid]]['priority']		= ($headerObject['PRIORITY']?$headerObject['PRIORITY']:3);
+				//error_log(__METHOD__.' ('.__LINE__.') '.' '.array2string($retValue['header'][$sortOrder[$uid]]));
 				if (isset($headerObject['DISPOSITION-NOTIFICATION-TO'])) $retValue['header'][$sortOrder[$uid]]['disposition-notification-to'] = $headerObject['DISPOSITION-NOTIFICATION-TO'];
 				if (is_array($headerObject['FLAGS'])) {
 					$retValue['header'][$sortOrder[$uid]] = array_merge($retValue['header'][$sortOrder[$uid]],self::prepareFlagsArray($headerObject));
 				}
-//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
+				//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
 				if(is_array($headerObject['FROM']) && $headerObject['FROM'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]);
 				}
@@ -1732,7 +1733,7 @@ class emailadmin_imapbase
 			error_log(__METHOD__.' ('.__LINE__.') '.' '.$query_str['query']);
 		}
 		//_debug_array($filter);
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($filter));
+		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($filter).'#'.array2string($this->icServer->capability()));
 		if($this->icServer->hasCapability('SORT')) {
 			// when using an orQuery and we sort by date. sort seems to fail on certain servers => ZIMBRA with Horde_Imap_Client
 			// thus we translate the search request from date to Horde_Imap_Client::SORT_SEQUENCE (which should be the same, if
@@ -1750,6 +1751,7 @@ class emailadmin_imapbase
 			}
 			catch(Exception $e)
 			{
+				//error_log(__METHOD__.'('.__LINE__.'):'.$e->getMessage());
 				$resultByUid = false;
 				$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
 				if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
