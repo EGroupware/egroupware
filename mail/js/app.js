@@ -177,7 +177,7 @@ app.classes.mail = AppJS.extend(
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
-				jQuery('#mail-display_mailDisplayBodySrc').on('load', function(){self.mail_prepare_print();});
+				jQuery('#mail-display_mailDisplayBodySrc').one('load', function(){self.mail_prepare_print();});
 
 				this.mail_isMainWindow = false;
 				this.mail_display();
@@ -780,7 +780,7 @@ app.classes.mail = AppJS.extend(
 		if (window.location.search.search('&print=') >= 0)
 		{
 			var that = this;
-			jQuery('#mail-display_mailDisplayBodySrc').bind('load',function(){that.mail_print();});
+			jQuery('#mail-display_mailDisplayBodySrc').one('load',function(){that.mail_print();});
 		}
 
 	},
