@@ -871,6 +871,12 @@ var AppJS = Class.extend(
 	},
 
 	/**
+	 * PGP begin and end tags
+	 */
+	begin_pgp_message: '-----BEGIN PGP MESSAGE-----',
+	end_pgp_message: '-----END PGP MESSAGE-----',
+
+	/**
 	 * Mailvelope "egroupware" Keyring
 	 */
 	mailvelope_keyring: undefined,

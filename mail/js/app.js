@@ -4392,12 +4392,7 @@ app.classes.mail = AppJS.extend(
 	 * - compose encrypted messages (mailvelopeCompose, compose_submitAction)
 	 * - fix autosave and save as draft to store encrypted content (saveAsDraft)
 	 * - fix inline reply to encrypted message to clientside decrypt message and add signature (mailvelopeCompose)
-	 * @todo check recipients for key available and warn user if not
-	 * @todo lookup missing keys in addressbook, DANE DNS recored, maybe keyserver
-	 * @todo offer user to store his public key in accounts addressbook (ask admin to make it user-editable) and DANE
 	 */
-	begin_pgp_message: '-----BEGIN PGP MESSAGE-----',
-	end_pgp_message: '-----END PGP MESSAGE-----',
 
 	/**
 	 * Called on load of preview or display iframe, if mailvelope is available
@@ -4561,8 +4556,8 @@ app.classes.mail = AppJS.extend(
 	{
 		// collect all recipients
 		var recipients = this.et2.getWidgetById('to').get_value();
-		recipients.concat(this.et2.getWidgetById('cc').get_value());
-		recipients.concat(this.et2.getWidgetById('bcc').get_value());
+		recipients = recipients.concat(this.et2.getWidgetById('cc').get_value());
+		recipients = recipients.concat(this.et2.getWidgetById('bcc').get_value());
 
 		return this._super.call(this, recipients);
 	},

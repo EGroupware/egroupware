@@ -63,6 +63,13 @@ app.classes.infolog = AppJS.extend(
 			case 'infolog.edit.print':
 				// Trigger print command if the infolog oppend for printing porpuse
 				this.infolog_print_preview_onload();
+				break;
+			case 'infolog.edit':
+				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
+				{
+					this.mailvelopeAvailable(this.toggleEncrypt);
+				}
+				break;
 		}
 	},
 
@@ -238,7 +245,7 @@ app.classes.infolog = AppJS.extend(
 				nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
 				nm.dataview.getColumnMgr().columns[i].set_visibility(!colData[i].disabled);
 			}
-			nm.dataview.getColumnMgr().updated = true;			
+			nm.dataview.getColumnMgr().updated = true;
 			// Update page
 			nm.dataview.updateColumns();
 		}
@@ -489,11 +496,11 @@ app.classes.infolog = AppJS.extend(
 	},
 
 	/**
-	 * Wrapper so add -> New actions in the context menu can pass current 
+	 * Wrapper so add -> New actions in the context menu can pass current
 	 * filter values into new edit dialog
-	 * 
+	 *
 	 * @see add_with_extras
-	 * 
+	 *
 	 * @param {egwAction} action
 	 * @param {egwActionObject[]} selected
 	 */
@@ -610,5 +617,36 @@ app.classes.infolog = AppJS.extend(
 	submit_if_not_empty: function(_node, _widget)
 	{
 		if (_widget.get_value()) this.et2._inst.submit();
+	},
+
+	/**
+	 * Toggle encryption
+	 *
+	 * @param {jQuery.Event} _event
+	 * @param {et2_button} _widget
+	 * @param {DOMNode} _node
+	 */
+	toggleEncrypt: function(_event, _widget, _node)
+	{
+		if (!this.egw.user('apps').stylite)
+		{
+			this.egw.message(this.egw.lang('InfoLog encryption requires EPL Subscription')+': <a href="http://www.egroupware.org/EPL">www.egroupware.org/EPL</a>');
+			return;
+		}
+		if (!app.stylite)
+		{
+			var self = this;
+			egw_LAB.script('stylite/js/infolog-encryption.js').wait(function()
+			{
+				app.stylite = new app.classes.stylite;
+				app.stylite.et2 = self.et2;
+				app.stylite.toggleEncrypt.call(app.stylite, _event, _widget, _node);
+			});
+		}
+		else
+		{
+			app.stylite.et2 = this.et2;
+			app.stylite.toggleEncrypt.call(app.stylite, _event, _widget, _node);
+		}
 	}
 });

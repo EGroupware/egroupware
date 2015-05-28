@@ -213,6 +213,9 @@
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="4"/>
 					<description/>
 				</row>
+				<row class="et2_toolbar">
+					<buttononly label="Encrypt" id="encrypt" span="all" class="infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
+				</row>
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
 						<tabs>

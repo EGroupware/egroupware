@@ -2363,6 +2363,30 @@ abstract class egw_framework
 		egw_json_response::get()->data($list);
 		return $list;
 	}
+
+	/**
+	 * Get certain account-data of given account-id(s)
+	 *
+	 * @param string|array $_account_ids
+	 * @param string $_field ='account_email'
+	 * @param boolean $_resolve_groups =false true: return attribute for all members, false return attribute for group itself
+	 * @return array account_id => data pairs
+	 */
+	public static function ajax_account_data($_account_ids, $_field, $_resolve_groups=false)
+	{
+		$list = array();
+		foreach((array)$_account_ids as $account_id)
+		{
+			foreach($account_id < 0 && $_resolve_groups ?
+				$GLOBALS['egw']->accounts->members($account_id, true) : array($account_id) as $account_id)
+			{
+				$list[$account_id] = $GLOBALS['egw']->accounts->id2name($account_id, $_field);
+			}
+		}
+
+		egw_json_response::get()->data($list);
+		return $list;
+	}
 }
 
 // Init all static variables

@@ -260,7 +260,12 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 		{
 			// apply the ratio
 			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
-			if (_height != 0) this.input.height(this.input.height() + _height);
+			if (_height != 0)
+			{
+				this.input.height(this.input.height() + _height);
+				// resize parent too, so mailvelope injected into parent inherits its height
+				this.input.parent().height(this.input.parent().height()+_height);
+			}
 		}
 	}
 });

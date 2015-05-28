@@ -36,6 +36,13 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		//owngroups: {}
 	};
 
+	/**
+	 * Clientside cache for accountData calls
+	 */
+	var accountData = {
+
+	};
+
 	return {
 		/**
 		 * Set data of current user
@@ -111,6 +118,62 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		},
 
 		/**
+		 * Get account-infos for given numerical _account_ids
+		 *
+		 * @param {int|array} _account_ids
+		 * @param {string} _field default 'account_email'
+		 * @param {boolean} _resolve_groups true: return attribute for all members, false: return attribute of group
+		 * @param {function} _callback
+		 * @param {object} _context
+		 */
+		accountData: function(_account_ids, _field, _resolve_groups, _callback, _context)
+		{
+			if (!_field) _field = 'account_email';
+			if (!jQuery.isArray(_account_ids)) _account_ids = [_account_ids];
+
+			// check our cache or current user first
+			var data = {};
+			for(var i=0; i < _account_ids.length; ++i)
+			{
+				var account_id = _account_ids[i];
+
+				if (account_id == userData.account_id)
+				{
+					data[account_id] = userData[_field];
+				}
+				else if (typeof accountData[account_id] != 'undefined' && typeof accountData[account_id][_field] != 'undefined' &&
+					(!_resolve_groups || account_id > 0))	// groups are only resolved on server for now
+				{
+					data[account_id] = accountData[account_id][_field];
+				}
+				else
+				{
+					continue;
+				}
+				_account_ids.splice(i--, 1);
+			}
+
+			// something not found in cache --> ask server
+			if (_account_ids.length)
+			{
+				egw.json('home.egw_framework.ajax_account_data.template',[_account_ids, _field, _resolve_groups],
+					function(_data) {
+						for(var account_id in _data)
+						{
+							if (typeof accountData[account_id] == 'undefined') accountData[account_id] = {};
+							data[account_id] = accountData[account_id][_field] = _data[account_id];
+						}
+						_callback.call(_context, data);
+					}
+				).sendRequest();
+			}
+			else
+			{
+				_callback.call(_context, data);
+			}
+		},
+
+		/**
 		 * Invalidate client-side account cache
 		 *
 		 * For _type == "add" we invalidate the whole cache currently.
@@ -120,6 +183,14 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 */
 		invalidate_account: function(_id, _type)
 		{
+			if (_id)
+			{
+				delete accountData[_id];
+			}
+			else
+			{
+				accountData = {};
+			}
 			if (jQuery.isEmptyObject(accountStore)) return;
 
 			switch(_type)
