@@ -2181,7 +2181,10 @@ class infolog_ui
 		{
 			$sel_options['action']['schedule'] = array('label' => 'Schedule', 'title' => 'Schedule appointment');
 		}
-		egw_framework::validate_file('.','edit','infolog');
+		if ($GLOBALS['egw_info']['user']['apps']['stylite'])
+		{
+			$content['encryption_ts'] = filemtime(EGW_SERVER_ROOT.'/stylite/js/infolog-encryption.js');
+		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 			($content['status_only'] ? lang('Edit Status') : lang('Edit'));
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
@@ -2498,7 +2501,7 @@ class infolog_ui
 			egw_link::get_data ($_GET['egw_data']);
 			return false;
 		}
-		
+
 		return $this->edit($this->bo->import_mail($mailContent['addresses'],
 				$mailContent['subject'],
 				$mailContent['message'],

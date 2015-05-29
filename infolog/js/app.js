@@ -636,7 +636,7 @@ app.classes.infolog = AppJS.extend(
 		if (!app.stylite)
 		{
 			var self = this;
-			egw_LAB.script('stylite/js/infolog-encryption.js').wait(function()
+			egw_LAB.script('stylite/js/infolog-encryption.js?'+this.et2.getArrayMgr('content').data.encryption_ts).wait(function()
 			{
 				app.stylite = new app.classes.stylite;
 				app.stylite.et2 = self.et2;
@@ -647,6 +647,20 @@ app.classes.infolog = AppJS.extend(
 		{
 			app.stylite.et2 = this.et2;
 			app.stylite.toggleEncrypt.call(app.stylite, _event, _widget, _node);
+		}
+	},
+
+	/**
+	 * OnChange callback for responsible
+	 *
+	 * @param {jQuery.Event} _event
+	 * @param {et2_widget} _widget
+	 */
+	onchangeResponsible: function(_event, _widget)
+	{
+		if (app.stylite && app.stylite.onchangeResponsible)
+		{
+			app.stylite.onchangeResponsible.call(app.stylite, _event, _widget);
 		}
 	}
 });
