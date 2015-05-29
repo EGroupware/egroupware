@@ -10,6 +10,7 @@
 				<column width="20"/>
 				<column width="40%"/>
 				<column width="95"/>
+				<column width="95"/>
 				<column width="30%"/>
 				<column width="30%"/>
 				<column width="30%"/>
@@ -22,6 +23,7 @@
 					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
 					<nextmatch-sortheader label="subject" id="subject"/>
 					<nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
+					<nextmatch-sortheader align="center" label="arrival" id="arrival"/>
 					<nextmatch-sortheader label="mail-address" id="address"/>
 					<nextmatch-sortheader label="to" id="toaddress"/>
 					<nextmatch-sortheader label="from" id="fromaddress"/>
@@ -33,6 +35,7 @@
 					<html id="${row}[attachments]"/>
 					<description id="${row}[subject]" no_lang="1"/>
 					<date-time_today align="center" id="${row}[date]" readonly="true"/>
+					<date-time_today align="center" id="${row}[modified]" readonly="true"/>
 					<url-email id="${row}[address]" contact_plus = "true" readonly="true"/>
 					<url-email id="${row}[toaddress]" contact_plus = "true" readonly="true"/>
 					<url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>

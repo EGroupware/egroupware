@@ -41,6 +41,7 @@ any of	mail	en	any of
 any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
+arrival	mail	en	Recieved
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
 attachment	mail	en	Attachment
