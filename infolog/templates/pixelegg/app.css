@@ -145,6 +145,9 @@ button#infolog-edit_encrypt {
   right: -2px;
   top: 3px;
 }
+div#infolog-edit_infolog-edit-description {
+  height: 250px;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
