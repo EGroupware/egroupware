@@ -882,6 +882,11 @@ var AppJS = Class.extend(
 	mailvelope_keyring: undefined,
 
 	/**
+	 * jQuery selector for Mailvelope iframes in all browsers
+	 */
+	mailvelope_iframe_selector: 'iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]',
+
+	/**
 	 * Open (or create) "egroupware" keyring and call callback with it
 	 *
 	 * @returns {Promise.<Keyring, Error>} Keyring or Error with message
@@ -908,6 +913,8 @@ var AppJS = Class.extend(
 				mailvelope.createKeyring('egroupware').then(function(_keyring)
 				{
 					self.mailvelope_keyring = _keyring;
+					var mvelo_settings_selector = self.mailvelope_iframe_selector
+						.split(',').map(function(_val){return 'body>'+_val;}).join(',');
 
 					mailvelope.createSettingsContainer('body', _keyring, {
 						email: self.egw.user('account_email'),
@@ -915,7 +922,7 @@ var AppJS = Class.extend(
 					}).then(function()
 					{
 						// make only Mailvelope settings dialog visible
-						jQuery('body > iframe[src^=chrome]').css({position: 'absolute', top: 0});
+						jQuery(mvelo_settings_selector).css({position: 'absolute', top: 0});
 						// add a close button, so we know when to offer storing public key to AB
 						jQuery('<button class="et2_button et2_button_text" id="mailvelope_close_settings">'+self.egw.lang('Close')+'</button>')
 							.css({position: 'absolute', top: 8, right: 8})
@@ -925,7 +932,7 @@ var AppJS = Class.extend(
 								self.mailvelope_keyring.exportOwnPublicKey(self.egw.user('account_email')).then(function(_pubKey)
 								{
 									// if yes, hide settings dialog
-									jQuery('body > iframe[src^=chrome]').remove();
+									jQuery(mvelo_settings_selector).remove();
 									jQuery('button#mailvelope_close_settings').remove();
 									// offer user to store his public key to AB for other users to find
 									var buttons = [

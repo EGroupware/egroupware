@@ -184,7 +184,7 @@ app.classes.mail = AppJS.extend(
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
-				
+
 				jQuery('iframe#mail-display_mailDisplayBodySrc').one('load', function(e)
 				{
 					// encrypt body if mailvelope is available
@@ -194,7 +194,7 @@ app.classes.mail = AppJS.extend(
 
 				this.mail_isMainWindow = false;
 				this.mail_display();
-				
+
 				// Register attachments for drag
 				this.register_for_drag(
 					this.et2.getArrayMgr("content").getEntry('mail_id'),
@@ -883,7 +883,7 @@ app.classes.mail = AppJS.extend(
 
 		// show iframe, in case we hide it from mailvelopes one and remove that
 		jQuery(IframeHandle.getDOMNode()).show()
-			.next('iframe[src^=chrome-extension]').remove();
+			.next(this.mailvelope_iframe_selector).remove();
 
 		// Set up additional content that can be expanded.
 		// We add a new URL widget for each address, so they get all the UI
@@ -4534,7 +4534,7 @@ app.classes.mail = AppJS.extend(
 				{
 					self.et2.getWidgetById('mimeType').set_readonly(false);
 					self.et2.getWidgetById('mail_plaintext').set_disabled(false);
-					jQuery('iframe[src^=chrome-extension]').remove();
+					jQuery(self.mailvelope_iframe_selector).remove();
 				}
 				else
 				{
