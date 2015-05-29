@@ -55,19 +55,36 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			cc: match['cc']	|| [],
 			bcc: match['bcc'] || []
 		};
-
+		var popup; 
 		// Get open compose windows
 		var compose = egw.getOpenWindows("mail", /(^compose_)||(^mail.compose)/);
 		if(compose.length == 0)
 		{
 			// No compose windows, might be no mail app.js
 			// We really want to use mail_compose() here
-			egw.open('','mail','add',{'preset[mailto]': uri},'compose__','mail');
+			
+			// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
+			// therefore we need to send request to compose window with POST method
+			// instead of GET. We create a temporary <Form> and will post emails.
+			if (uri.length > 2083)
+			{
+				popup = egw.open('','mail','add','','compose__','mail');
+				popup.onload = function(){
+					var emails = uri.replace('mailto:','');
+					// Build a temp Form and submit right away
+					jQuery('<form  method="post" target="'+popup.name+'" action="'+popup.location.href+'">\n\
+							<input name="preset[mailto]" value="'+emails+'"></input></form>').submit();
+				};
+			}
+			else // simple GET request
+			{
+				egw.open('','mail','add',{'preset[mailto]': uri},'compose__','mail');
+			}
 		}
 		if(compose.length == 1)
 		{
 			try {
-				var popup = egw.open_link('',compose[0],'100x100','mail');
+				popup = egw.open_link('',compose[0],'100x100','mail');
 				popup.app.mail.setCompose(compose[0], content);
 			} catch(e) {
 				// Looks like a leftover window that wasn't removed from the list
