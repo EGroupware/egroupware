@@ -379,7 +379,6 @@ class mail_ui
 					if (!is_array($content[self::$nm_index]))
 					{
 						$content[self::$nm_index] = array(
-							'get_rows'       =>	'mail_ui::get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 							'filter'         => 'any',	// filter is used to choose the mailbox
 							'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
 							'no_cat'         => true,	// I  disable the cat-selectbox
@@ -400,6 +399,7 @@ class mail_ui
 					}
 				}
 
+				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
 				$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
 				$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 				$content[self::$nm_index]['csv_fields'] = false;
