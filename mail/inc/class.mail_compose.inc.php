@@ -1634,6 +1634,7 @@ class mail_compose
 				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
 			}
+			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID);
 
 		} else {
 			$this->sessionData['mimeType']	= 'plain';
@@ -1647,6 +1648,7 @@ class mail_compose
 				#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
 			}
+			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID,'plain');
 		}
 
 		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
