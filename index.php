@@ -109,7 +109,7 @@ if($app == 'home' && !$class && !$api_requested && !($windowed && $_GET['cd'] ==
 	}
 	else
 	{
-		egw::redirect_link('/home/index.php');
+		egw::redirect_link('/home/index.php?cd=yes');
 	}
 }
 
