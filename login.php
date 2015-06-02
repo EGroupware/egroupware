@@ -110,29 +110,10 @@ else
 	{
 		$GLOBALS['egw_info']['server']['template_set'] =
 			$GLOBALS['egw_info']['login_template_set'] = $prefs->data['common']['template_set'];
-		$GLOBALS['egw_info']['server']['template_dir'] =
-			EGW_SERVER_ROOT . '/' . $GLOBALS['egw_info']['login_template_set'].'/templates/'.$GLOBALS['egw_info']['login_template_set'];
 	}
-	else
-	{
-		$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
-	}
-	unset($prefs);
+	unset($prefs); unset($class);
 
-	// read the images from the login-template-set, not the (maybe not even set) users template-set
-	$GLOBALS['egw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
-
-	$class = $GLOBALS['egw_info']['login_template_set'].'_framework';
-	if (!class_exists($class))
-	{
-		if(!file_exists($framework = $GLOBALS['egw_info']['server']['template_dir'].'/class.'.$class.'.inc.php'))
-		{
-			$framework = EGW_SERVER_ROOT . '/phpgwapi/templates/idots/class.'.($class='idots_framework').'.inc.php';
-		}
-		require_once($framework);
-	}
-	$GLOBALS['egw']->framework = new $class($GLOBALS['egw_info']['login_template_set']);
-	unset($framework); unset($class);
+	$GLOBALS['egw']->framework = egw_framework::factory();
 
 	// This is used for system downtime, to prevent new logins.
 	if($GLOBALS['egw_info']['server']['deny_all_logins'])
@@ -266,9 +247,8 @@ else
 
 		//conference - for strings like vinicius@thyamad.com@default , allows
 		//that user have a login that is his e-mail. (viniciuscb)
-		$login_parts = explode('@',$login);
 		// remove blanks
-		$login_parts = array_map('trim',$login_parts);
+		$login_parts = array_map('trim',explode('@',$login));
 		$login = implode('@',$login_parts);
 
 		$got_login = false;

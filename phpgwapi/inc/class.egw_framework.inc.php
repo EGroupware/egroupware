@@ -84,6 +84,40 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Factory method to instanciate framework object
+	 *
+	 * @return egw_framwork
+	 */
+	public static function factory()
+	{
+		if ((html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile') &&
+			file_exists(EGW_SERVER_ROOT.'/pixelegg'))
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = 'pixelegg';
+		}
+		// default to idots, if no template_set set, to eg. not stall installations if settings use egw::link
+		if (empty($GLOBALS['egw_info']['server']['template_set'])) $GLOBALS['egw_info']['server']['template_set'] = 'idots';
+		// setup the new eGW framework (template sets)
+		$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
+		if (!class_exists($class))	// first try to autoload the class
+		{
+			require_once($file=EGW_INCLUDE_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.$class.'.inc.php');
+			if (!in_array($file,(array)$_SESSION['egw_required_files']))
+			{
+				$_SESSION['egw_required_files'][] = $file;	// automatic load the used framework class, when the object get's restored
+			}
+		}
+		// fall back to idots if a template does NOT support current user-agent
+		if ($class != 'idots_framework' && method_exists($class,'is_supported_user_agent') &&
+			!call_user_func(array($class,'is_supported_user_agent')))
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = 'idots';
+			return self::factory();
+		}
+		return new $class($GLOBALS['egw_info']['server']['template_set']);
+	}
+
+	/**
 	 * Additional attributes or urls for CSP script-src 'self'
 	 *
 	 * 'unsafe-eval' is currently allways added, as it is used in a couple of places.
@@ -546,8 +580,8 @@ abstract class egw_framework
 	{
 		self::csp_frame_src_attrs(array());	// array() no external frame-sources
 
-		//error_log(__METHOD__."() server[template_dir]=".array2string($GLOBALS['egw_info']['server']['template_dir']).", this->template=$this->template, this->template_dir=$this->template_dir, get_class(this)=".get_class($this));
-		$tmpl = new Template($GLOBALS['egw_info']['server']['template_dir']);
+		//error_log(__METHOD__."() this->template=$this->template, this->template_dir=$this->template_dir, get_class(this)=".get_class($this));
+		$tmpl = new Template(EGW_SERVER_ROOT.$this->template_dir);
 
 		$tmpl->set_file(array('login_form' => 'login.tpl'));
 
@@ -700,7 +734,7 @@ abstract class egw_framework
 	*/
 	function denylogin_screen()
 	{
-		$tmpl = new Template($GLOBALS['egw_info']['server']['template_dir']);
+		$tmpl = new Template(EGW_SERVER_ROOT.$this->template_dir);
 
 		$tmpl->set_file(array(
 			'login_form' => 'login_denylogin.tpl'

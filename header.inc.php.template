@@ -58,9 +58,6 @@ $GLOBALS['egw_info']['server']['db_persistent'] = {DB_PERSISTENT};
 */
 $GLOBALS['egw_info']['server']['session_handler'] = '{SESSION_HANDLER}';
 
-/* Select which login template set you want, most people will use idots */
-$GLOBALS['egw_info']['login_template_set'] = 'idots';
-
 /* This is used to control mcrypt's use */
 $GLOBALS['egw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
 

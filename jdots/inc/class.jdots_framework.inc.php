@@ -263,16 +263,9 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 		// the instanciation of the template has to be here and not in the constructor,
 		// as the old Template class has problems if restored from the session (php-restore)
 		// todo: check if this is still true
-		$this->tpl = new Template(common::get_tpl_dir(static::APP));
+		$this->tpl = new Template(EGW_SERVER_ROOT.$this->template_dir);
 		if (html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
 		{
-			// if we are not on pixelegg template, switch to it for this session
-			// otherwise we get an error: template head_mobile.tpl not found!
-			if (static::APP != 'pixelegg')
-			{
-				$GLOBALS['egw']->preferences->add('common', 'template_set', 'pixelegg', 'session');
-				egw::redirect_link('/index.php');
-			}
 			$this->tpl->set_file(array('_head' => 'head_mobile.tpl'));
 		}
 		else
@@ -375,7 +368,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			//Print button title
 			$this->tpl->set_var('title_print', lang("Print current view"));
 		}
-		
+
 		// add framework div's
 		$this->tpl->set_var($this->_get_footer());
 		$content .= $this->tpl->fp('out','framework');
@@ -447,7 +440,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			case 'logout':
 				if (html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
 				{
-					
+
 				}
 				else
 				{
