@@ -4393,12 +4393,17 @@ app.classes.mail = AppJS.extend(
 	{
 		var tempPrint = jQuery('div#tempPrintDiv');
 		var mailvelopeTopContainer = jQuery('div.mailDisplayContainer');
+		var originFrame = jQuery('#mail-display_mailDisplayBodySrc');
 		var iframe = jQuery(this.mailvelope_iframe_selector);
 		
 		if (tempPrint.length >0)
 		{
+			// Mailvelope iframe height is approximately equal to the height of encrypted origin message
+			// we add an arbitary plus pixels to make sure it's covering the full content in print view and
+			// it is not getting acrollbar in normal view
+			// @TODO: after Mailvelope plugin provides a hieght value, we can replace the height with an accurate value
+			iframe.addClass('mailvelopeIframe').height(originFrame[0].contentWindow.document.body.scrollHeight + 400);
 			tempPrint.hide();
-			iframe.addClass('mailvelopeIframe');
 			mailvelopeTopContainer.addClass('mailvelopeTopContainer');
 		}
 	},

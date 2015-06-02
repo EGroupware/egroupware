@@ -803,12 +803,11 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		padding-top: 10px;
 	}
 	div.mailDisplayContainer.mailvelopeTopContainer {
-		position:fixed !important;
 		top:190px;
 	}
 	div.mailDisplayContainer.mailvelopeTopContainer > iframe {
-	  position: inherit;
-	  min-width: 860px;
+		position: static;
+		min-width: 860px;
 	}
 }
 
