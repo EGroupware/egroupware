@@ -3364,7 +3364,14 @@ class mail_compose
 	public function ajax_merge($contact_id)
 	{
 		$response = egw_json_response::get();
-		$document_merge = new addressbook_merge();
+		if(class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'],'bo_merge'))
+		{
+			$document_merge = new $_REQUEST['merge']();
+		}
+		else
+		{
+			$document_merge = new addressbook_merge();
+		}
 		$this->mail_bo->openConnection();
 
 		if(($error = $document_merge->check_document($_REQUEST['document'],'')))
@@ -3372,9 +3379,6 @@ class mail_compose
 			$response->error($error);
 			return;
 		}
-
-		// Merge does not work correctly (missing to) if current app is not addressbook
-		//$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
 		// Actually do the merge
 		$folder = $merged_mail_id = null;

@@ -6066,6 +6066,7 @@ class emailadmin_imapbase
 				$AltBody = ($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null;
 				//error_log(__METHOD__.' ('.__LINE__.') '.' AltBody:'.$AltBody);
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject->GetReplyTo()));
+				
 				// Fetch ReplyTo - Address if existing to check if we are to replace it
 				$replyTo = $mailObject->getReplyTo();
 				if (isset($replyTo['replace@import.action']))
@@ -6078,18 +6079,40 @@ class emailadmin_imapbase
 				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
-					$errorInfo = '';
+					$errorInfo = $email = '';
 					$sendOK = $openComposeWindow = $openAsDraft = null;
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Id To Merge:'.$val);
 					if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
-						count($SendAndMergeTocontacts) > 1 &&
-						is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
+						count($SendAndMergeTocontacts) > 1 && $val &&
+						(is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val))) // do the merge
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
-						$contact = $bo_merge->contacts->read($val);
-						//error_log(__METHOD__.' ('.__LINE__.') '.' ID:'.$val.' Data:'.array2string($contact));
-						$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
-						$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
+
+						// Parse destinations for placeholders
+						foreach(egw_mailer::$type2header as $type => $h)
+						{
+							//error_log('ID ' . $val . ' ' .$type . ': ' . $mailObject->getHeader(egw_mailer::$type2header[$type]) . ' -> ' .$bo_merge->merge_string($mailObject->getHeader(egw_mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset));
+							$merged = $bo_merge->merge_string($mailObject->getHeader(egw_mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset);
+							$mailObject->addAddress($merged,'',$type);
+							if($type == 'to')
+							{
+								$email = $merged;
+							}
+						}
+
+						// No addresses from placeholders?  Treat it as just a contact ID
+						if (!$email)
+						{
+							$contact = $bo_merge->contacts->read($val);
+							//error_log(__METHOD__.' ('.__LINE__.') '.' ID:'.$val.' Data:'.array2string($contact));
+							$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
+							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
+							if($email)
+							{
+								$mailObject->addAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
+							}
+						}
+
 						$activeMailProfiles = $this->getAccountIdentities($this->profileID);
 						$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($activeMailProfile));
@@ -6098,14 +6121,12 @@ class emailadmin_imapbase
 
 						$mailObject->removeHeader('Message-ID');
 						$mailObject->removeHeader('Date');
-						$mailObject->clearAllRecipients();
 						$mailObject->clearCustomHeaders();
-						$mailObject->addAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
 						$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
 						//error_log(__METHOD__.' ('.__LINE__.') '.' ContentType:'.$mailObject->BodyContentType);
-						if (!empty($Body)) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+						if($text_body) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 						//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
-						if (!empty($AltBody)) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+						if($html_body) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
 						// set a higher timeout for big messages
@@ -6125,9 +6146,17 @@ class emailadmin_imapbase
 						$openAsDraft = true;
 						$mailObject->removeHeader('Message-ID');
 						$mailObject->removeHeader('Date');
-						$mailObject->clearAllRecipients();
 						$mailObject->clearCustomHeaders();
-						if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
+
+						// Parse destinations for placeholders
+						foreach(egw_mailer::$type2header as $type => $h)
+						{
+							//error_log($type . ': ' . $mailObject->getHeader(egw_mailer::$type2header[$type]) . ' -> ' .$bo_merge->merge_string($mailObject->getHeader(egw_mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset));
+							$mailObject->addAddress($bo_merge->merge_string($mailObject->getHeader(egw_mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset),'',$type);
+						}
+
+						// No addresses from placeholders?  Treat it as just a contact ID
+						if (count($mailObject->getAddresses('to',true)) == 0 &&
 							is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
 						{
 							$contact = $bo_merge->contacts->read($val);
