@@ -114,7 +114,7 @@ var fw_base =  Class.extend({
 			}
 
 			//If this entry is the default entry, show it using the click callback
-			if (app.isDefault && (app.isDefault === true) && (restore.length == 0))
+			if (app.isDefault && (app.isDefault === true) && (restore_count === 0))
 			{
 				defaultApp = this.appData;
 			}
@@ -137,7 +137,7 @@ var fw_base =  Class.extend({
 		}
 
 		// else display the default application
-		if (defaultApp && restore_count == 0)
+		if (defaultApp && restore_count === 0)
 		{
 			restore[defaultApp.appName] = mkRestoreEntry(defaultApp, 0, null, 1);
 		}
