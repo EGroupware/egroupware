@@ -4383,7 +4383,26 @@ app.classes.mail = AppJS.extend(
 				break;
 		}
 	},
-
+	
+	/**
+	 * 
+	 * @param {type} _keyring
+	 * @returns {undefined}
+	 */
+	prepareMailvelopePrint: function()
+	{
+		var tempPrint = jQuery('div#tempPrintDiv');
+		var mailvelopeTopContainer = jQuery('div.mailDisplayContainer');
+		var iframe = jQuery(this.mailvelope_iframe_selector);
+		
+		if (tempPrint.length >0)
+		{
+			tempPrint.hide();
+			iframe.addClass('mailvelopeIframe');
+			mailvelopeTopContainer.addClass('mailvelopeTopContainer');
+		}
+	},
+	
 	/**
 	 * Mailvelope (clientside PGP) integration:
 	 * - detect Mailvelope plugin and open "egroupware" keyring (app_base.mailvelopeAvailable and _mailvelopeOpenKeyring)
@@ -4415,6 +4434,7 @@ app.classes.mail = AppJS.extend(
 		{
 			// hide our iframe to give space for mailvelope iframe with encrypted content
 			iframe.hide();
+			self.prepareMailvelopePrint();
 		},
 		function(_err)
 		{
