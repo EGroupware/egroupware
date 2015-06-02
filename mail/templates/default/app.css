@@ -802,6 +802,14 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	div.mailDisplayHeaders {
 		padding-top: 10px;
 	}
+	div.mailDisplayContainer.mailvelopeTopContainer {
+		position:fixed !important;
+		top:190px;
+	}
+	div.mailDisplayContainer.mailvelopeTopContainer > iframe {
+	  position: inherit;
+	  min-width: 860px;
+	}
 }
 
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
