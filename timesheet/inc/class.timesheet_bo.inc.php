@@ -1042,7 +1042,7 @@ class timesheet_bo extends so_sql_cf
 			$data =& $this->data;
 		}
 		// allways store ts_project to be able to search for it, even if no custom project is set
-		if (empty($data['ts_project']))
+		if (empty($data['ts_project']) && !is_null($data['ts_project']))
 		{
 			$data['ts_project'] = $data['pm_id'] ? egw_link::title('projectmanager', $data['pm_id']) : '';
 		}
