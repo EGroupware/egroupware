@@ -76,14 +76,13 @@ class mail_integration {
 			$time = time();
 			$_date = egw_time::server2user($time->now,'ts');
 		}
-
+		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
+		
 		// Integrate not yet saved mail
 		if (empty($_GET['rowid']) && $_to_emailAddress && $app)
 		{
 			$sessionLocation = 'mail';
 			$mailbox = base64_decode($_GET['mailbox']);
-
-			$GLOBALS['egw_info']['flags']['currentapp'] = $app;
 
 			if (!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')&&is_array($_attachments))
 			{
@@ -283,7 +282,11 @@ class mail_integration {
 		
 		// Get the registered hook method of requested app for integration
 		$hook = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);
-
+		
+		// Load translation for the app since the original URL
+		// is from mail integration and only loads mail translation
+		translation::add_app($app);
+		
 		// Execute import mail with provided content
 		ExecMethod($hook['menuaction'],array (
 			'addresses' => $data_addresses,
