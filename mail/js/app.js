@@ -177,7 +177,16 @@ app.classes.mail = AppJS.extend(
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
-				jQuery('#mail-display_mailDisplayBodySrc').one('load', function(){self.mail_prepare_print();});
+				jQuery('#mail-display_mailDisplayBodySrc').on('load', function(){
+					self.mail_prepare_print();
+					// Trigger print command if the mail oppend for printing porpuse
+					// load event fires twice in IE and the first time the content is not ready
+					// Check if the iframe content is loaded then trigger the print command
+					if (window.location.search.search('&print=') >= 0 && jQuery(this.contentWindow.document.body).children().length >0 )
+					{
+						self.mail_print();
+					}
+				});
 
 				this.mail_isMainWindow = false;
 				this.mail_display();
@@ -775,14 +784,6 @@ app.classes.mail = AppJS.extend(
 			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
 			if (toolbaractions) this.et2.getWidgetById('displayToolbar').set_actions(toolbaractions);
 		}
-
-		// Trigger print command if the mail oppend for printing porpuse
-		if (window.location.search.search('&print=') >= 0)
-		{
-			var that = this;
-			jQuery('#mail-display_mailDisplayBodySrc').one('load',function(){that.mail_print();});
-		}
-
 	},
 
 	/**
