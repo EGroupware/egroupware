@@ -246,7 +246,7 @@ class mail_integration {
 		$data_message = preg_replace_callback(
 			'/[-_+=~\.]{'.self::MAX_LINE_CHARS.',}/m',
 			function($matches) {
-				return substr($matches[0],0,self::MAX_LINE_CHARS);
+				return substr($matches[0],0,  mail_integration::MAX_LINE_CHARS);
 			},
 			$mailcontent['message']
 		);
