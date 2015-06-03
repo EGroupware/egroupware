@@ -1449,6 +1449,10 @@ class mail_ui
 		{
 			unset($actions['tracker']);
 		}
+		if (!isset($GLOBALS['egw_info']['user']['apps']['calendar']))
+		{
+			unset($actions['calendar']);
+		}
 		return $actions;
 	}
 
@@ -1701,7 +1705,7 @@ class mail_ui
 	function get_toolbar_actions()
 	{
 		$actions = $this->get_actions();
-		$arrActions = array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','save','view');
+		$arrActions = array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','calendar','save','view');
 		foreach( $arrActions as &$act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
