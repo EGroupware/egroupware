@@ -154,7 +154,23 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 			});
 		}
 	},
-
+	
+	/**
+	 * Override the parent set_id method to manuipulate the input DOM node
+	 * 
+	 * @param {type} _value
+	 * @returns {undefined}
+	 */
+	set_id: function(_value)
+	{
+		this._super.apply(this,arguments);
+		// Remove the name attribute inorder to affect autocomplete="off"
+		// for no password save. ATM seems all browsers ignore autocomplete for 
+		// input field inside the form
+		if (this.options.type === "passwd"
+				&& this.options.autocomplete === "off") this.input.removeAttr('name');
+	},
+	
 	destroy: function() {
 		var node = this.getInputNode();
 		if (node) $j(node).unbind("keypress");
