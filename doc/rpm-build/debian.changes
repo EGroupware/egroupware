@@ -1,3 +1,19 @@
+egroupware-epl (14.2.20150603) hardy; urgency=low
+
+  * All apps: if column information is stored in a favorite, restore it along with the filters
+  * All apps: keep order of select-options custom-fields (was not working for nummeric values)
+  * All apss: resize history log when edit popup get resized
+  * Calendar/Mail: converting mails to calendar entries
+  * Tracker: mailhandling always showed content as comment (no description for first ticket), subject did not trigger correct detection of existing tickets
+  * Tracker: fix slow rendering of edit popup for hugh number of tracker-user
+  * Calendar: added deleted timestamp to history, to be able to see who deleted an event and when
+  * Addressbook: visualize own account ACL for non-admin users by making all other fields readonly
+  * EMailAdmin: fixed not shown quote for Cyrus backend (Cyrus returns no used space, if no quota set!)
+  * EMail: make sure internaldate is used and displayed, when header date is not set or available
+  * Mobile: fix redirect loop, if template_set was forced to something else then "pixelegg"
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 03 Jun 2015 10:47:44 +0200
+
 egroupware-epl (14.2.20150501) hardy; urgency=low
 
   * Debian 8 and Ubuntu 15.04 packages
