@@ -295,7 +295,7 @@
 								</row>
 								<row>
 									<description for="sudo[passwd]" value="Password"/>
-									<passwd id="sudo[passwd]"/>
+									<passwd id="sudo[passwd]" autocomplete="on"/>
 								</row>
 								<row>
 									<description/>

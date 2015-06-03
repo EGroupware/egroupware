@@ -73,7 +73,7 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 			"name": "Autocomplete",
 			"type": "string",
 			"default": "",
-			"description": "Weither or not browser should autocomplete that field: 'on', 'off', 'default' (use attribute from form)"
+			"description": "Weither or not browser should autocomplete that field: 'on', 'off', 'default' (use attribute from form). Default value for type password is set to off."
 		},
 		onkeypress: {
 			name: "onKeypress",
@@ -120,6 +120,8 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 			{
 				case "passwd":
 					this.input.attr("type", "password");
+					// Make autocomplete default value off for password field
+					if (this.options.autocomplete === "") this.options.autocomplete = "off";
 					break;
 				case "hidden":
 					this.input.attr("type", "hidden");

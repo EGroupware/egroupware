@@ -80,7 +80,7 @@
 					</row>
 					<row disabled="@is_root">
 						<description value="Password"/>
-						<passwd id="password"/>
+						<passwd id="password" autocomplete="on"/>
 					</row>
 					<row disabled="@is_root">
 						<description/>
