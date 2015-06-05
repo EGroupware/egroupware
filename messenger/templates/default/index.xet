@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="messenger.index.rows" template="" lang="" group="0" version="1.9.005">
+		<grid width="100%">
+			<columns>
+				<column width="50%"/>
+				<column width="50%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header label="Contacts" id="account_id"/>
+					<nextmatch-header label="Status" id="status"/>
+				</row>
+				<row class="$row_cont[class]" valign="top">
+					<hbox>
+						<menulist>
+							<menupopup type="select-account" label="" id="${row}[account_id]" readonly="true"/>
+						</menulist>
+						<description id="${row}[alt_loginid]"/>
+					</hbox>
+					<description id="${row}[sessionstatus]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="messenger.index" template="" lang="" group="0" version="1.9.002">
+		<split id="split" orientation="v" class="dialogSplitter">
+			<nextmatch id="nm" width="200px" template="messenger.index.rows" span="all" onselect="app.messenger.userOnSelect"/>
+			<grid id="dialog" height="100%" class="messageBox">
+				<columns>
+					<column/>
+				</columns>
+				<rows>
+					<row height="70%">
+						<description value = "${row}[account_id]"/>
+						<description value = "msg_message"/>
+					</row>
+					<row height="30%" class="writeMessageBox">
+						<vbox>
+							<toolbar id="indexToolbar" />
+							<description/>
+							<textbox multiline="true" align="right" id= "msg_message" height="150px" width="97%"/>
+						</vbox>
+					</row>
+				</rows>
+			</grid>
+		</split>
+	</template>
+</overlay>

@@ -1,0 +1,41 @@
+.messenger_remote_media {
+	position:relative;
+}
+.messenger_local_media {
+	
+}
+#messenger-dialog_chatbox {
+	overflow-x: hidden;
+}
+.messenger_textboxes {
+	border:1px solid gray;
+	margin-left: 1px;
+	overflow-y: auto;
+	resize: none;
+}
+div.dialogSplitter {
+	background: white;
+	border: 2px solid;
+	border-radius: 20px 20px 20px 20px;
+	border-color: rgba(90, 90, 90, 0.68);
+	/* border-style: outset; */
+	margin-left: -6px;
+	box-shadow: 2px 9px 15px 6px gray;
+	margin-top: 0px;
+	border-style: solid;
+}
+table.messageBox {
+	border-left: 1px solid rgba(141, 141, 141, 1);
+}
+.writeMessageBox {
+	border-top: 3px solid rgba(141, 141, 141, 1);
+}
+.writeMessageBox #messenger-index_msg_message {
+	max-height: 70%;
+	background: rgb(231, 241, 251);
+	margin-right: 10px;
+	resize: vertical;
+}
+.phoneRingingTune {
+	URI:
+}
