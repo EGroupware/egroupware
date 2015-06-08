@@ -198,7 +198,7 @@
 						if (framework.getUserAgent() === 'iOS' && !framework.isNotFullScreen()) $appHeader.addClass('egw_fw_mobile_iOS_popup_appHeader');
 					}
 					// If the popup is not an et2_popup
-					else if ($et2_container.length == 0)
+					if ($et2_container.length == 0)
 					{
 						self.$container.removeClass('egw_fw_mobile_popup_loader');
 						self.$iFrame.css({visibility:'visible'});
