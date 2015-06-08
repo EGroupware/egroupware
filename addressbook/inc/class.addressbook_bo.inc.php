@@ -1461,7 +1461,7 @@ class addressbook_bo extends addressbook_so
 	 */
 	function link_query($pattern, Array &$options = array())
 	{
-		$filter = $result = $criteria = array();
+		$result = $criteria = array();
 		$limit = false;
 		if ($pattern)
 		{
@@ -1483,8 +1483,12 @@ class addressbook_bo extends addressbook_so
 			$cfs = $this->read_customfields($ids);
 			foreach($contacts as $contact)
 			{
-				$result[$contact['id']] = $this->link_title($contact+(array)$cfs[$contact['id']]).
-					($options['type'] === 'email' ? ' <'.$contact['email'].'>' : '');
+				$result[$contact['id']] = $this->link_title($contact+(array)$cfs[$contact['id']]);
+				// make sure to return a correctly quoted rfc822 address, if requested
+				if ($options['type'] === 'email')
+				{
+					$result[$contact['id']] = imap_rfc822_write_address($contact['email'], '', $result[$contact['id']]);
+				}
 				// show category color
 				if ($contact['cat_id'] && ($color = etemplate::cats2color($contact['cat_id'])))
 				{
