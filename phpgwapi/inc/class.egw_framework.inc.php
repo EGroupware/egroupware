@@ -2009,6 +2009,7 @@ abstract class egw_framework
 			{
 				if (($bundle = $file2bundle[$file]))
 				{
+					//error_log(__METHOD__."() requiring boundle $bundle for $file");
 					if (!in_array($bundle, $included_bundles))
 					{
 						$max_modified = 0;
@@ -2132,6 +2133,11 @@ abstract class egw_framework
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_dragdrop_dhtmlx_tree.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu_dhtmlx.js');
+		// include choosen in api, as old eTemplate uses it and fail if it pulls in half of et2
+		$inc_mgr->include_js_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
+		// include CKEditor in api, as old eTemplate uses it too
+		$inc_mgr->include_js_file('/phpgwapi/js/ckeditor/ckeditor.js');
+		$inc_mgr->include_js_file('/phpgwapi/js/ckeditor/config.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
 		self::bundle_urls($bundles['api'], $api_max_mod);
 
