@@ -3314,7 +3314,7 @@ class mail_compose
 					{
 						$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
 					}
-					$completeMailString = trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>';
+					$completeMailString = imap_rfc822_write_address(trim($email), '', trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']));
 					if(!empty($email) && in_array($completeMailString ,$results) === false) {
 						$results[] = array(
 							'id'=>$completeMailString,
@@ -3335,7 +3335,7 @@ class mail_compose
 		{
 			$group = $GLOBALS['egw']->accounts->read($g_id);
 			if(!$group['account_email']) continue;
-			$completeMailString = trim($name) .' <'. trim($group['account_email']) .'>';
+			$completeMailString = imap_rfc822_write_address(trim($group['account_email']), '', $name);
 			$results[] = array(
 				'id' => $completeMailString,
 				'label' => $completeMailString,
