@@ -59,6 +59,12 @@ app.classes.infolog = AppJS.extend(
 				var nm = this.et2.getWidgetById('nm');
 				var filter2 = nm.getWidgetById('filter2');
 				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
+
+				// Enable decrypt on hover
+				if(this.egw.user('apps').stylite)
+				{
+					this._get_stylite(function() {this.mailvelopeAvailable(app.stylite.decrypt_hover(nm));});
+				}
 				break;
 			case 'infolog.edit.print':
 				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
@@ -640,6 +646,14 @@ app.classes.infolog = AppJS.extend(
 			this.egw.message(this.egw.lang('InfoLog encryption requires EPL Subscription')+': <a href="http://www.egroupware.org/EPL">www.egroupware.org/EPL</a>');
 			return;
 		}
+		this._get_stylite(function() {app.stylite.toggleEncrypt.call(app.stylite,_event,_widget,_node);});
+	},
+
+	/**
+	 * Make sure stylite javascript is loaded, and call the given callback when it is
+	 */
+	_get_stylite: function(callback,attrs)
+	{
 		if (!app.stylite)
 		{
 			var self = this;
@@ -647,13 +661,16 @@ app.classes.infolog = AppJS.extend(
 			{
 				app.stylite = new app.classes.stylite;
 				app.stylite.et2 = self.et2;
-				app.stylite.toggleEncrypt.call(app.stylite, _event, _widget, _node);
+				if(callback)
+				{
+					callback.apply(app.stylite,attrs);
+				}
 			});
 		}
 		else
 		{
 			app.stylite.et2 = this.et2;
-			app.stylite.toggleEncrypt.call(app.stylite, _event, _widget, _node);
+			callback.apply(app.stylite,attrs);
 		}
 	},
 
