@@ -61,8 +61,15 @@ app.classes.infolog = AppJS.extend(
 				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
 				break;
 			case 'infolog.edit.print':
-				// Trigger print command if the infolog oppend for printing porpuse
-				this.infolog_print_preview_onload();
+				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
+				{
+					this.mailvelopeAvailable(this.printEncrypt);
+				}
+				else
+				{
+					// Trigger print command if the infolog oppend for printing porpuse
+					this.infolog_print_preview_onload();
+				}
 				break;
 			case 'infolog.edit':
 				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
@@ -662,5 +669,51 @@ app.classes.infolog = AppJS.extend(
 		{
 			app.stylite.onchangeResponsible.call(app.stylite, _event, _widget);
 		}
+	},
+	
+	/**
+	 * Handle encrypted info_desc for print purpose
+	 * and triggers print action after decryption
+	 * 
+	 * @param {Keyring} _keyring Mailvelope keyring to use
+	 */
+	printEncrypt: function (_keyring)
+	{
+		//this.mailvelopeAvailable(this.toggleEncrypt);
+		var info_desc = this.et2.getWidgetById('info_des');
+
+		var options = { predefinedText: info_desc.value};
+		var self = this;
+		// check if we have some sort of reply to an encrypted message
+		// --> parse header, encrypted mail to quote and signature so Mailvelope understands it
+		var start_pgp = options.predefinedText.indexOf(this.begin_pgp_message);
+		if (start_pgp != -1)
+		{
+			var end_pgp = options.predefinedText.indexOf(this.end_pgp_message);
+			if (end_pgp != -1)
+			{
+				options = {
+					quotedMailHeader: start_pgp ? options.predefinedText.slice(0, start_pgp).replace(/> /mg, '').trim()+"\n" : "",
+					quotedMail: options.predefinedText.slice(start_pgp, end_pgp+this.end_pgp_message.length+1).replace(/> /mg, ''),
+					quotedMailIndent: start_pgp != 0,
+					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,'')
+				};
+			}
+		}
+		
+		mailvelope.createEditorContainer('#infolog-edit-print_info_des', _keyring, options).then(function(_editor)
+		{
+			var $info_des_dom = jQuery(self.et2.getWidgetById('info_des').getDOMNode());
+			$info_des_dom.children('iframe').height($info_des_dom.height());
+			$info_des_dom.children('span').hide();
+			
+			//Trigger print action
+			self.infolog_print_preview();
+		},
+		function(_err)
+		{
+			self.egw.message(_err, 'error');
+		});
 	}
+	
 });
