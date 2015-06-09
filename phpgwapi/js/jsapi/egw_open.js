@@ -66,15 +66,21 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
 			// therefore we need to send request to compose window with POST method
 			// instead of GET. We create a temporary <Form> and will post emails.
-			if (uri.length > 2083 && navigator.userAgent.match(/Trident|MSIE|Edge/,"g"))
+			// ** WebServers and other browsers also have url length limit: 
+			// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
+			if (uri.length > 2083)
 			{
 				popup = egw.open('','mail','add','','compose__','mail');
-				popup.onload = new function(){
-					// Build a temp Form and submit right away
-					var $tmpForm = jQuery('<form  method="post" target="'+popup.name+'" action="'+popup.location.href+'">\n\
-							<input name="preset[mailto]" type="text" value="'+uri+'"></input><input type="submit"></input></form>').appendTo('body').submit();
-					$tmpForm.remove();
-				};
+				var $tmpForm = jQuery(document.createElement('form')).appendTo('body');
+				var $tmpInput = jQuery(document.createElement('input')).attr({name:"preset[mailto]", type:"text", value: uri});
+				var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});
+				// Set the temporary form's attributes
+				$tmpForm.attr({target:popup.name, action:"index.php?menuaction=mail.mail_compose.compose", method:"post"})
+						.append($tmpInput)
+						.append($tmpSubmitInput);
+				$tmpForm.submit();
+				// Remove the form after submit
+				$tmpForm.remove();
 			}
 			else // simple GET request
 			{
