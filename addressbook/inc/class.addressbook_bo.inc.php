@@ -1487,7 +1487,9 @@ class addressbook_bo extends addressbook_so
 				// make sure to return a correctly quoted rfc822 address, if requested
 				if ($options['type'] === 'email')
 				{
-					$result[$contact['id']] = imap_rfc822_write_address($contact['email'], '', $result[$contact['id']]);
+					$args = explode('@', $contact['email']);
+					$args[] = $result[$contact['id']];
+					$result[$contact['id']] = call_user_func_array('imap_rfc822_write_address', $args);
 				}
 				// show category color
 				if ($contact['cat_id'] && ($color = etemplate::cats2color($contact['cat_id'])))
