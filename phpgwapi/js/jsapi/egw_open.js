@@ -71,9 +71,15 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			if (uri.length > 2083)
 			{
 				popup = egw.open('','mail','add','','compose__','mail');
-				// Build a temp Form and submit right away
-				var $tmpForm = jQuery('<form  method="post" target="'+popup.name+'" action="index.php?menuaction=mail.mail_compose.compose">\n\
-							<input name="preset[mailto]" type="text" value="'+uri+'"></input><input type="submit"></input></form>').appendTo('body').submit();
+				var $tmpForm = jQuery(document.createElement('form')).appendTo('body');
+				var $tmpInput = jQuery(document.createElement('input')).attr({name:"preset[mailto]", type:"text", value: uri});
+				var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});
+				// Set the temporary form's attributes
+				$tmpForm.attr({target:popup.name, action:"index.php?menuaction=mail.mail_compose.compose", method:"post"})
+						.append($tmpInput)
+						.append($tmpSubmitInput);
+				$tmpForm.submit();
+				// Remove the form after submit
 				$tmpForm.remove();
 			}
 			else // simple GET request

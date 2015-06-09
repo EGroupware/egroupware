@@ -141,7 +141,7 @@ var AppJS = Class.extend(
 		}
 		this.et2 = et2.widgetContainer;
 		this._fix_iFrameScrolling();
-		if (this.egw.is_popup()) this._set_Window_title();
+		if (this.egw && this.egw.is_popup()) this._set_Window_title();
 	},
 
 	/**
