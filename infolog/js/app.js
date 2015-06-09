@@ -80,7 +80,19 @@ app.classes.infolog = AppJS.extend(
 			case 'infolog.edit':
 				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
 				{
-					this.mailvelopeAvailable(this.toggleEncrypt);
+					this._get_stylite(jQuery.proxy(function() {this.mailvelopeAvailable(jQuery.proxy(function() {
+						this.toggleEncrypt();
+
+						// Decrypt history on hover
+						var history = this.et2.getWidgetById('history');
+						app.stylite.decrypt_hover(history,'span');
+						$j(history.getDOMNode(history))
+							.tooltip('option','position',{my:'top left', at: 'top left', of: history.getDOMNode(history)});
+
+					},this))},this));
+					// This disables the diff in history
+					var history = this.et2.getArrayMgr('content').getEntry('history');
+					history['status-widgets'].De = 'description';
 				}
 				break;
 		}
