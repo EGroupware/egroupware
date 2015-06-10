@@ -33,6 +33,10 @@ function auth_type($settings)
 	switch($settings['auth_type'])
 	{
 		case 'mail':
+			if (class_exists('Horde_Imap_Client_Socket') && !in_array($settings['mail_server_type'], array('pop', 'pops')))
+			{
+				return;	// we use Horde code instead of imap extension
+			}
 			try {
 				check_load_extension('imap', true);
 			}

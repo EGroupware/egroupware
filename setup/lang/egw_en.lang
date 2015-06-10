@@ -337,6 +337,7 @@ if using ads (active directory)	setup	en	If using ADS (Active Directory) authent
 if using cas (central authentication service):	setup	en	if using cas (Central Authentication Service):
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage home directory and login shell attributes?
+if using mail authentication	setup	en	If using Mail authentication
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	en	If you can only access the docroot choose <b>Database</b> for where to store the file content AND use same path as for temporary files.
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
