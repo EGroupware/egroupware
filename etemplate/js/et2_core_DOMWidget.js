@@ -772,6 +772,10 @@ function et2_action_object_impl(widget, node)
 	var aoi = new egwActionObjectInterface();
 	var objectNode = node;
 
+	aoi.getWidget = function() {
+		return widget;
+	};
+	
 	aoi.doGetDOMNode = function() {
 		return objectNode?objectNode:widget.getDOMNode();
 	};
