@@ -337,6 +337,7 @@ if using ads (active directory)	setup	de	Wenn Sie ADS (Active Directory) benutze
 if using cas (central authentication service):	setup	de	Wenn Sie CAS (Central Authentication Service) benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Kommandointerpreter verwalten ?
+if using mail authentication	setup	de	Wenn Sie Mail Authentifizierung verwenden
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	de	Wenn Sie nur die Documentroot erreichen können, wählen Sie bei Inhalt von Dateien speichern <b>Datenbank</b> UND benutzen Sie hier den Pfad für temporäre Dateien.
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen

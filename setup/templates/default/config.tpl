@@ -444,7 +444,7 @@
    </tr>
 
    <tr class="th">
-    <td colspan="2"><b>{lang_If_using_Mail_authentication_(requires_PHP_IMAP_extension!}:</b></td>
+    <td colspan="2"><b>{lang_If_using_Mail_authentication}:</b></td>
    </tr>
    <tr class="row_on">
     <td>{lang_POP/IMAP_mail_server_hostname_or_IP_address}[:{lang_port}]:</td>
