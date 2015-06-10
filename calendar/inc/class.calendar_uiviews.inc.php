@@ -216,14 +216,44 @@ class calendar_uiviews extends calendar_ui
 		if (!$this->view) $this->view = 'week';
 
 		// handle views in other files
-		if (!isset($this->public_functions[$this->view]))
+		if (!isset($this->public_functions[$this->view]) && $this->view !== 'listview')
 		{
 			$GLOBALS['egw']->redirect_link('/index.php',array('menuaction'=>$this->view_menuaction,'ajax'=>'true'),'calendar');
 		}
 		// get manual to load the right page
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualCalendar'.ucfirst($this->view));
 
-		$this->{$this->view}();
+		// Sidebox & iframe for old views
+		if(in_array($this->view,array('year','planner')))
+		{
+			$old_calendar = $this->{$this->view}();
+		}
+		$this->sidebox_etemplate(array('old_calendar' => $old_calendar));
+
+		// Load the different views once, we'll switch between them on the client side
+		$tmpl = new etemplate_new('calendar.todo');
+		$label = '';
+		$tmpl->exec('calendar_uiviews::index',array('todos'=>$this->get_todos($label), 'label' => $label));
+
+		// Actually, this takes care of most of it...
+		$this->week();
+
+		// List view in a separate file
+		$list_ui = new calendar_uilist();
+		$list_ui->listview();
+
+		// Set the current state
+		if (egw_json_request::isJSONRequest())// && strpos($_GET['menuaction'], 'calendar_uiforms') === false)
+		{
+			$states = array();
+			foreach(array('date','cat_id','filter','owner','view') as $state)
+			{
+				if($this->$state) $states[$state] = $this->$state;
+			}
+			$states['date'] = egw_time::to($states['date'],'Y-m-d\TH:i:s').'Z';
+			$response = egw_json_response::get();
+			$response->apply('app.calendar.set_state', array($states));
+		}
 	}
 
 	/**
@@ -801,9 +831,6 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function week($days=0,$home=false)
 	{
-		$this->use_time_grid = $days != 4 && !in_array($this->use_time_grid_pref,array('day','day4')) ||
-			$days == 4 && $this->use_time_grid_pref != 'day';
-
 		if (!$days)
 		{
 			$days = isset($_GET['days']) ? $_GET['days'] : $this->cal_prefs['days_in_weekview'];
@@ -822,7 +849,6 @@ class calendar_uiviews extends calendar_ui
 			$wd_start = $this->first = $this->bo->date2ts($this->date);
 			$this->last = strtotime("+$days days",$this->first) - 1;
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
-			$navHeader =lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
 		}
 		else
 		{
@@ -841,27 +867,6 @@ class calendar_uiviews extends calendar_ui
 			}
 			$this->last = strtotime("+$days days",$this->first) - 1;
 			$GLOBALS['egw_info']['flags']['app_header'] .=': ' .lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
-			$navHeader = lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
-		}
-
-		$navHeader = '<div class="calendar_calWeek calendar_calWeekNavHeader">'
-				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd', strtotime("-$days days",$this->first)),
-				)). '<span>'.$navHeader;
-
-		$navHeader = $navHeader.'</span>'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd', strtotime("+$days days",$this->last)),
-				)).'</div>';
-
-		$merge = $this->merge();
-		if($merge)
-		{
-			egw::redirect_link('/index.php',array(
-				'menuaction' => 'calendar.calendar_uiviews.index',
-				'msg'        => $merge,
-			));
 		}
 
 		$search_params = array(
@@ -872,45 +877,10 @@ class calendar_uiviews extends calendar_ui
 		$users = $this->search_params['users'];
 		if (!is_array($users)) $users = array($users);
 
-		if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)	// for more then X users, show all in one row
-		{
-			$content = $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),$this->cal_prefs['interval']);
-		}
-		else
-		{
-			$content = '';
-			$headerCounter = 0;
-			foreach($this->_get_planner_users(false) as $uid => $label)
-			{
-				$content .= '<div data-sortable-id="'.$uid.'">';
-				$search_params['users'] = $uid;
-				$content .= '<b>'.$label."</b>\n";
-				$content .= $this->close_button($uid);
-				$content .= $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),
-					count($users) * $this->cal_prefs['interval'],400 / count($users),'','',$uid);
-				++$headerCounter;
-				if (count($users) > $headerCounter)
-				{
-					$content .= $navHeader;
-			}
-				$content .= '</div>';
-		}
-			$content = '<div class="cal_is_sortable">'.$content.'</div>';
-		}
-
-		$content = $navHeader.$content;
-
-		if (!$home)
-		{
-			$this->do_header();
-
-			echo $content;
-		}
-		
 		$content = array('view' => array());
 
 		// Always do 7 days for a week so scrolling works properly
-		$this->last = $search_params['end'] = strtotime("+7 days",$this->first) - 1;
+		$this->last = ($days == 4 ? $this->last : $search_params['end'] = strtotime("+7 days",$this->first) - 1);
 		if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)	// for more then X users, show all in one row
 		{
 			$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params)) +
@@ -925,10 +895,12 @@ class calendar_uiviews extends calendar_ui
 					 + array('owner' => $uid);
 			}
 		}
-		$tmpl = new etemplate_new('calendar.view');
-$tmpl->setElementAttribute('view','show_weekend', $days == 7);
-$ui = new calendar_uilist();
-$tmpl->setElementAttribute('view','actions',$ui->get_actions());
+		$tmpl = $home ? $home :new etemplate_new('calendar.view');
+		$tmpl->setElementAttribute('view','show_weekend', $days == 7);
+
+		// Get the actions
+		$tmpl->setElementAttribute('view','actions',$this->get_actions());
+		
 		$tmpl->exec(__METHOD__, $content);
 	}
 
@@ -1052,6 +1024,26 @@ $tmpl->setElementAttribute('view','actions',$ui->get_actions());
 
 			return $content;
 		}
+	}
+
+	/**
+	 * Get todos via AJAX
+	 */
+	public static function ajax_get_todos($date, $owner)
+	{
+		$date = egw_time::to($date, 'array');
+		$ui = new calendar_uiviews();
+		$ui->year = $date['year'];
+		$ui->month = $date['month'];
+		$ui->day = $date['day'];
+		$ui->owner = (int)$owner;
+
+		$label = '';
+		$todos = $ui->get_todos($label);
+		egw_json_response::get()->data(array(
+			'label' => $label,
+			'todos' => $todos
+		));
 	}
 
 	/**
@@ -2854,6 +2846,54 @@ $tmpl->setElementAttribute('view','actions',$ui->get_actions());
 		return $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').'" style="left: '.$left.
 			'%; width: '.$width.'%; background-color: '.$color.';"'.'data-tooltip="'. $tooltip.'" '.
 			'" data-date ="'.$this->bo->date2string($event['start']).'|'.$data['popup'].'">'."\n".$data['html'].$indent."</div>\n";
+	}
+
+	protected static function get_actions()
+	{
+		// Just copy from the list, but change to match our needs
+		$ui = new calendar_uilist();
+		$actions = $ui->get_actions();
+
+		unset($actions['no_notifications']);
+		unset($actions['select_all']);
+
+		// This disables the event actions for the grid rows (calendar weeks/owners)
+		foreach($actions as $id => &$action)
+		{
+			if($id=='add') continue;
+			if(!$action['enabled'])
+			{
+				$action['enabled'] = 'javaScript:app.calendar.is_event';
+			}
+			//$action['disableClass'] = 'view_row';
+			//$action['hideOnDisabled'] = true;
+		}
+
+		foreach($actions['status']['children'] as $id => &$status)
+		{
+			$status = array(
+				'id' => $id,
+				'caption' => $status,
+				'onExecute' => 'javaScript:app.calendar.status'
+			);
+		}
+		/*
+		$actions['drag_calendar'] = array(
+			'dragType' => array('calendar'),
+			'type' => 'drag',
+			'enabled' => 'javaScript:app.calendar.is_event'
+		);
+		/*
+		Calendar DnD is handled internally
+		$actions['drop_calendar'] = array(
+			'acceptedTypes' => array('calendar'),
+			'type' => 'drop',
+			'onExecute' => 'javaScript:app.calendar.move'
+		);
+		 *
+		 */
+		
+		return $actions;
 	}
 
 	/**

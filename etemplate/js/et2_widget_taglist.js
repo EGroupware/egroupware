@@ -52,14 +52,14 @@ var et2_taglist = et2_selectbox.extend(
 		"autocomplete_url": {
 			"name": "Autocomplete source",
 			"type": "string",
-			"default": "etemplate_widget_taglist.ajax_search.etemplate",
+			"default": "home.etemplate_widget_taglist.ajax_search.etemplate",
 			"description": "Menuaction (app.class.function) for autocomplete data source.  Must return actual JSON, and nothing more."
 		},
 		"autocomplete_params": {
 			"name": "Autocomplete parameters",
 			"type": "any",
 			"default": {app:"addressbook"},
-			"description": "Extra parameters passed to autocomplete URL"
+			"description": "Extra parameters passed to autocomplete URL.  It should be a stringified JSON object."
 		},
 
 		allowFreeEntries: {
@@ -134,6 +134,23 @@ var et2_taglist = et2_selectbox.extend(
 		}
 		this._super.apply(this, arguments);
 
+	},
+
+	transformAttributes: function(_attrs) {
+		this._super.apply(this, arguments);
+
+		// Handle url parameters - they should be an object
+		if(typeof _attrs.autocomplete_params == 'string')
+		{
+			try
+			{
+				_attrs.autocomplete_params = JSON.parse(_attrs.autocomplete_params)
+			}
+			catch (e)
+			{
+				this.egw().debug('warn', 'Invalid autocomplete_params: '+_attrs.autocomplete_params );
+			}
+		}
 	},
 
 	doLoadingFinished: function() {

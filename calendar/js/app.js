@@ -27,6 +27,123 @@ app.classes.calendar = AppJS.extend(
 	appname: 'calendar',
 
 	/**
+	 * etemplate for the sidebox filters
+	 */
+	sidebox_et2: null,
+
+	/**
+	 * etemplates and settings for the different views some (day view)
+	 * use more than one template, some use the same template as others,
+	 * most need different handling for their various attributes.
+	 * 
+	 * Attributes are setter: function to calculate value
+	 */
+	views: {
+		day: {
+			etemplates: ['calendar.view','calendar.todo'],
+			set_start_date: function(state) {
+				return state.date ? new Date(state.date) : new Date();
+			},
+			set_end_date: function(state) {
+				var d =  state.date ? new Date(state.date) : new Date();
+				d.setUTCHours(23);
+				return d;
+			},
+			set_owner: function(state) {
+				return state.owner || 0;
+			},
+			set_show_weekend: function(state)
+			{
+				state.days = '1';
+				return parseInt(egw.preference('days_in_weekview','calendar')) == 7;
+			}
+		},
+		day4: {
+			etemplates: ['calendar.view'],
+			set_start_date: function(state) {
+				return state.date ? new Date(state.date) : new Date();
+			},
+			set_end_date: function(state) {
+				var d = state.date ? new Date(state.date) : new Date();
+				d.setUTCHours(24*4-1);
+				return d;
+			},
+			set_owner: function(state) {
+				return state.owner || 0;
+			},
+			set_show_weekend: function(state)
+			{
+				state.days = '4';
+				return parseInt(egw.preference('days_in_weekview','calendar')) == 7;
+			}
+		},
+		week: {
+			etemplates: ['calendar.view'],
+			set_start_date: function(state) {
+				return app.calendar.date.start_of_week(state.date || new Date());
+			},
+			set_end_date: function(state) {
+				var d = app.calendar.date.start_of_week(state.date || new Date());
+				// Always 7 days, we just turn weekends on or off
+				d.setUTCHours(24*7-1);
+				return d;
+			},
+			set_owner: function(state) {
+				return state.owner || 0;
+			},
+			set_show_weekend: function(state)
+			{
+				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
+				return parseInt(state.days) == 7;
+			}
+		},
+		weekN: {
+			etemplates: ['calendar.view'],
+			set_start_date: function(state) {
+				return app.calendar.date.start_of_week(state.date || new Date());
+			},
+			set_end_date: function(state) {
+				var d = app.calendar.date.start_of_week(state.date || new Date());
+				// Always 7 days, we just turn weekends on or off
+				d.setUTCHours(24*7-1);
+				return d;
+			},
+			set_show_weekend: function(state)
+			{
+				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
+				return parseInt(state.days) == 7;
+			}
+		},
+		month: {
+			etemplates: ['calendar.view'],
+			set_start_date: function(state) {
+				var d = state.date ? new Date(state.date) : new Date();
+				d.setUTCDate(1);
+				return app.calendar.date.start_of_week(d);
+			},
+			set_end_date: function(state) {
+				var d = state.date ? new Date(state.date) : new Date();
+				d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
+				var week_start = app.calendar.date.start_of_week(d);
+				if(week_start < d) week_start.setUTCHours(24*7);
+				week_start.setUTCHours(week_start.getUTCHours()-1);
+				return week_start;
+			},
+		},
+		listview: {etemplates: ['calendar.list']}
+	},
+
+	/**
+	 * Current internal state
+	 */
+	state: {
+		date: new Date(),
+		view: egw.preference('defaultcalendar','calendar') || 'day',
+		owner: egw.user('account_id'),
+		days: egw.preference('days_in_weekview','calendar')
+	},
+
+	/**
 	 * Constructor
 	 *
 	 * @memberOf app.calendar
@@ -89,10 +206,12 @@ app.classes.calendar = AppJS.extend(
 
 		switch (_name)
 		{
-			case 'calendar.list':
-				this.filter_change();
+			case 'calendar.sidebox':
+				this.sidebox_et2 = _et2.widgetContainer;
+				$j(_et2.DOMContainer).hide();
+				this._setup_sidebox_filters();
 				break;
-
+			
 			case 'calendar.edit':
 				if (typeof content.data['conflicts'] == 'undefined')
 				{
@@ -122,6 +241,44 @@ app.classes.calendar = AppJS.extend(
 			case 'calendar.freetimesearch':
 				this.set_enddate_visibility();
 				break;
+			case 'home.legacy':
+				break;
+			case 'calendar.list':
+				this.filter_change();
+				// Fall through
+			default:
+				var hidden = typeof this.state.view !== 'undefined';
+				var all_loaded = true;
+				// Record the templates for the views so we can switch between them
+				for(var view in this.views)
+				{
+					var index = this.views[view].etemplates.indexOf(_name)
+					if(index > -1)
+					{
+						this.views[view].etemplates[index] = _et2;
+						// If a template disappears, we want to release it
+						$j(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
+							this.view[index] = _name;
+						},{view: this.views[view], index: index, name: _name}));
+					
+						if(this.state.view === view)
+						{
+							hidden = false;
+						}
+					}
+					this.views[view].etemplates.forEach(function(et) {all_loaded = all_loaded && typeof et !== 'string';});
+				}
+				
+				// Start hidden, except for current view
+				if(hidden)
+				{
+					$j(_et2.DOMContainer).hide();
+				}
+				if(all_loaded)
+				{
+					this.setState({state:this.state});
+				}
+
 		}
 	},
 
@@ -224,209 +381,7 @@ app.classes.calendar = AppJS.extend(
 	drag_n_drop: function()
 	{
 		var that = this;
-
-		//Draggable & Resizable selector
-		var $drag = jQuery("div[id^='drag_']")
-					//draggable event handler
-					.draggable
-					({
-						stack: jQuery("div[id^='drag_']"),
-						revert: "invalid",
-						delay: 50,
-
-						cursorAt:{top:0,left:0},
-						containment: ".egw_fw_content_browser_iframe",
-						scroll: true,
-						opacity: .6,
-						cursor: "move",
-
-						/**
-						 * Triggered when the dragging of calEvent stoped.
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 */
-						stop: function(event, ui)
-							{
-							ui.helper.width(oldWidth);
-							ui.helper[0].innerHTML = oldInnerHTML;
-						},
-
-						/**
-						 * Triggered while dragging a calEvent.
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 *
-						 */
-						drag:function(event, ui)
-						{
-							//that.dragEvent();
-						},
-
-						/**
-						 * Triggered when the dragging of calEvent started.
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 *
-						 */
-						start: function(event, ui)
-						{
-							oldInnerHTML = ui.helper[0].innerHTML;
-							oldWidth = ui.helper.width();
-							ui.helper.width(jQuery("#calColumn").width());
-						}
-					})
-
-					//Resizable event handler
-					.resizable
-					({
-						distance: 10,
-
-
-						/**
-						 *  Triggered when the resizable is created.
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 */
-						create:function(event, ui)
-						{
-							var resizeHelper = event.target.getAttribute('data-resize').split("|")[3];
-							if (resizeHelper == 'WD' || resizeHelper == 'WDS')
-							{
-								jQuery(this).resizable('destroy');
-							}
-						},
-
-						/**
-						 * Triggered at start of resizing a calEvent
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 */
-						start:function(event, ui)
-						{
-							var resizeHelper = event.target.getAttribute('data-resize');
-							var dataResize = resizeHelper.split("|");
-							var time = dataResize[1].split(":");
-
-							this.dropStart = that.resizeHelper(ui.element[0].getBoundingClientRect().left,ui.element[0].getBoundingClientRect().top);
-							this.dropDate = dataResize[0]+"T"+time[0]+time[1];
-							//$j(this).resizable("option","containment",".calendar_calDayCol");
-						},
-
-						/**
-						 * Triggered at the end of resizing the calEvent.
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 */
-						stop:function(event, ui)
-						{
-							var eventFlag = event.target.getAttribute('data-resize').split("|")[3];
-							var dropdate = that.cal_dnd_tZone_converter(this.dropDate);
-							var sT = parseInt((dropdate.split("T")[1].substr(0,2)* 60)) + parseInt(dropdate.split("T")[1].substr(2,2));
-							if (this.dropEnd != 'undefined' && this.dropEnd)
-							{
-								var eT = parseInt(this.dropEnd.getAttribute('data-date').split("|")[1] * 60) + parseInt(this.dropEnd.getAttribute('data-date').split("|")[2]);
-								var newDuration = ((eT - sT)/60) * 3600;
-								that.dropEvent(this.getAttribute('id'),dropdate,newDuration,eventFlag);
-							}
-						},
-
-						/**
-						 * Triggered during the resize, on the drag of the resize handler
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 */
-						resize:function(event, ui)
-						{
-							this.dropEnd = that.resizeHelper(ui.element[0].getBoundingClientRect().left,
-															ui.element[0].getBoundingClientRect().top+ui.size.height);
-
-							if (typeof this.dropEnd != 'undefined' && this.dropEnd)
-							{
-								if (this.dropEnd.getAttribute('id').match(/drop_/g))
-								{
-									var dH = this.dropEnd.getAttribute('data-date').split("|")[1];
-									var dM = this.dropEnd.getAttribute('data-date').split("|")[2];
-								}
-								var dataResize = event.target.getAttribute('data-resize').split("|");
-								this.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span class="calendar_timeDemo" >'+dH+':'+dM+'</span></div>';
-							}
-							else
-							{
-								this.innerHTML = '<div class="calendar_d-n-d_forbiden"></div>';
-							}
-						}
-					});
-
-		//Droppable selector
-		var $drop = jQuery("div[id^='drop_']")
-					//Droppable event handler
-					.droppable
-					({
-						/**
-						 * Make all draggable calEvents acceptable
-						 *
-						 */
-						accept:function()
-						{
-							return true;
-						},
-						tolerance:'pointer',
-
-						/**
-						 * Triggered when the calEvent dropped.
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 */
-						drop:function(event, ui)
-						{
-							var dgId = ui.draggable[0].getAttribute('id');
-							var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
-							var dpOwner = event.target.getAttribute('data-owner');
-							var eventFlag = ui.draggable[0].getAttribute('data-resize').split("|")[3];
-							if (dpOwner == null) dpOwner = dgOwner;
-							if (dpOwner == dgOwner )
-							{
-								that.dropEvent(ui.draggable[0].id, event.target.getAttribute('id').substring(event.target.getAttribute('id').lastIndexOf("drop_")+5, event.target.getAttribute('id').lastIndexOf("_O")),null,eventFlag);
-							}
-							else
-							{
-								jQuery(ui.draggable).draggable("option","revert",true);
-							}
-
-						},
-
-						/**
-						 * Triggered when draggable calEvent is over a droppable calCell.
-						 *
-						 * @param {event} event
-						 * @param {Object} ui
-						 */
-						over:function(event, ui)
-						{
-							var timeDemo = event.target.id.substring(event.target.id.lastIndexOf("T")+1,event.target.id.lastIndexOf("_O"));
-							var dgId = ui.draggable[0].getAttribute('id');
-							var dgOwner = dgId.substring(dgId.lastIndexOf("_C")+2,dgId.lastIndexOf(""));
-							var dpOwner = event.target.getAttribute('data-owner');
-							if (dpOwner == null) dpOwner = dgOwner;
-							if (dpOwner === dgOwner )
-							{
-								ui.helper[0].innerHTML = '<div class="calendar_d-n-d_timeCounter"><span>'+timeDemo+'</span></div>';
-							}
-							else
-							{
-								ui.helper[0].innerHTML = '<div class="calendar_d-n-d_forbiden"></div>';
-							}
-						}
-					});
-
+		
 		//jQuery Calendar Event selector
 		var $iframeBody = jQuery("body")
 			//mouseover event handler for calendar tooltip
@@ -485,23 +440,6 @@ app.classes.calendar = AppJS.extend(
 				}
 			})
 
-			//onClick event handler for calendar Events
-			.on("click", "div.calendar_calEvent", function(ev){
-				var Id = ev.currentTarget.id.replace(/drag_/g,'').split("_")[0];
-				var eventId = Id.match(/-?\d+\.?\d*/g)[0];
-				var appName = Id.replace(/-?\d+\.?\d*/g,'');
-				var startDate = ev.currentTarget.getAttribute('data-resize').split("|")[0];
-				var eventFlag = ev.currentTarget.getAttribute('data-resize').split("|")[3];
-				if (eventFlag != 'S' && eventFlag != 'WDS')
-				{
-					that.egw.open(eventId,appName !=""?appName:'calendar','edit');
-				}
-				else
-				{
-					that.edit_series(eventId,startDate);
-				}
-			})
-
 			//Click event handler for integrated apps
 			.on("click","div.calendar_plannerEvent",function(ev){
 				var eventId = ev.currentTarget.getAttribute('data-date').split("|")[1];
@@ -516,63 +454,26 @@ app.classes.calendar = AppJS.extend(
 					that.edit_series(eventId,startDate);
 				}
 			})
+	},
 
-			//Click event handler for calendar cells
-			.on("click","div.calendar_calAddEvent, div.calendar_calTimeRowTime",function(ev){
-				var timestamp = ev.target.getAttribute('data-date').split("|");
-				if (typeof ev.target.getAttribute('id') != 'undefined' && ev.target.getAttribute('id'))
-				{
-					var owner = ev.target.getAttribute('id').split("_");
-
-					var ownerId = owner[2].match( /Ogroup/g)?owner[2].replace( /Ogroup/g, '-'):owner[2].replace( /^\D+/g, '');
-					if (owner[2].match( /Or/g))
-					{
-						ownerId = 'r' + ownerId;
-					}
-				}
-
-				var eventInfo = {
-					date: timestamp[0],
-					hour: timestamp[1],
-					minute: timestamp[2]
-				};
-
-				if (typeof ownerId !='undefined' && ownerId != 0)
-				{
-					jQuery(eventInfo).extend(eventInfo,{owner: ownerId});
-				}
-
-				that.egw.open(null, 'calendar', 'add', eventInfo , '_blank');
-			})
-
-			//Click event handler for calendar todos
-			.on("click", "a[data-todo]",function(ev){
-					var windowSize = ev.currentTarget.getAttribute('data-todo').split("|")[1];
-					var link = ev.currentTarget.getAttribute('href');
-					that.egw.open_link(link,'_blank',windowSize);
-					return false;
-			});
-
-		//******************************** Calendar Sortable ************************
+	/**
+	 * Setup and handle sortable calendars.
+	 *
+	 * You can only sort calendars if there is more than one owner, and the calendars
+	 * are not combined (many owners, multi-week or month views)
+	 * @returns {undefined}
+	 */
+	_sortable: function() {
 		// Calender current state
 		var state = this.getState();
 
-		if (state && state.view === "day"
-				&& typeof state.owner != 'undefined'
-				&& typeof state.owner == 'string' && state.owner.split(',').length > 1)
+		var sortable = jQuery('#calendar-view_view tbody');
+		if(!sortable.sortable('instance'));
 		{
-			$iframeBody.find('#calendar_calDayCols')
-					.addClass('cal_is_sortable')
-					.css({"white-space":"nowrap"})
-					.children().each(function(){
-						// Change day view columns position in order to get sortable placeholder working
-						jQuery(this).css({position:"relative",display:"inline-block", left:"none"});
-			});
-		}
-
-		$iframeBody.find('.cal_is_sortable').sortable ({
+			jQuery('#calendar-view_view tbody').sortable({
 				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_plannerHeader",
-				placeholder: "srotable_cal_wk_ph",
+				handle: '.calendar_calGridHeader',
+				//placeholder: "srotable_cal_wk_ph",
 				axis:"y",
 				revert: true,
 				helper:"clone",
@@ -596,30 +497,40 @@ app.classes.calendar = AppJS.extend(
 							};
 							$sortItem.sortable('option', options);
 							break;
-						default:
-							$sortItem.sortable('destroy');
 					}
 				},
 				start: function ()
 				{
-					$drag.draggable('disable');
-					$drop.droppable('disable');
+					// Put owners into row IDs
+					app.calendar.views[state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
+						widget.div.parents('tr').attr('data-owner',widget.options.owner);
+					},this,et2_calendar_timegrid)
 				},
 				stop: function ()
 				{
-					$drag.draggable('enable');
-					$drop.droppable('enable');
 				},
 				update: function ()
 				{
 					if (state && typeof state.owner !== 'undefined')
 					{
-						var sortedArr = jQuery(this).sortable('toArray', {attribute:"data-sortable-id"});
-						state.owner = sortedArr.join(',');
-						that.setState({state:state});
+						var sortedArr = sortable.sortable('toArray', {attribute:"data-owner"});
+						// Directly update, since there is no other changes needed,
+						// and we don't want the current sort order applied
+						app.calendar.state.owner = sortedArr;
 					}
 				}
 			});
+		}
+
+		// Enable or disable
+		if(state.view == 'weekN' || state.view === 'month' || state.owner.length == 1 || state.owner.length > egw.config('calview_no_consolidate','phpgwapi'))
+		{
+			sortable.sortable('disable');
+		}
+		else
+		{
+			sortable.sortable('enable');
+		}
 	},
 
 	/**
@@ -679,6 +590,24 @@ app.classes.calendar = AppJS.extend(
 
 		}
 		return date;
+	},
+
+	/**
+	 * Handler for changes generated by internal user interactions, like 
+	 * drag & drop inside calendar and resize.
+	 * 
+	 * @param {Event} event
+	 * @param {et2_calendar_event} widget Widget for the event
+	 * @param {string} dialog_button - 'single', 'series', or 'exception', based on the user's answer
+	 *	in the popup
+	 * @returns {undefined}
+	 */
+	event_change: function(event, widget, dialog_button)
+	{
+		egw().json(
+			'calendar.calendar_uiforms.ajax_moveEvent',
+			[widget.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration]
+		).sendRequest();
 	},
 
 	/**
@@ -1035,6 +964,40 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Change status (via AJAX)
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject} _events
+	 */
+	status: function(_action, _events)
+	{
+		// Should be a single event, but we'll do it for all
+		for(var i = 0; i < _events.length; i++)
+		{
+			var event_widget = _events[i].iface.getWidget() || false;
+			if(!event_widget) continue;
+
+			event_widget.recur_prompt(jQuery.proxy(function(button_id,event_data) {
+				console.log(event_data.title, '  ', event_data.start, ' Status change ', _action.data.id, ' Button: ', button_id );
+				switch(button_id)
+				{
+					case 'exception':
+
+						break;
+					case 'series':
+					case 'single':
+						this.egw.open(event_data.id, event_data.app||'calendar', 'edit', {date:event_data.start});
+						break;
+					case 'cancel':
+					default:
+						break;
+				}
+			},this));
+		}
+
+	},
+
+	/**
 	 * this function try to fix ids which are from integrated apps
 	 *
 	 * @param {egw_action} _action
@@ -1242,13 +1205,6 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
-	 * Current state, get updated via set_state method
-	 *
-	 * @type object
-	 */
-	state: undefined,
-
-	/**
 	 * Method to set state for JSON requests (jdots ajax_exec or et2 submits can NOT use egw.js script tag)
 	 *
 	 * @param {object} _state
@@ -1257,7 +1213,49 @@ app.classes.calendar = AppJS.extend(
 	{
 		if (typeof _state == 'object')
 		{
-			this.state = _state;
+			// If everything is loaded, handle the changes
+			if(this.sidebox_et2 !== null)
+			{
+				this.update_state(_state);
+			}
+			else
+			{
+				// Things aren't loaded yet, just set it
+				this.state = _state;
+			}
+		}
+	},
+
+	/**
+	 * Change only part of the current state.
+	 * 
+	 * The passed state options (filters) are merged with the current state, so
+	 * this is the one that should be used for most calls, as setState() requires
+	 * the complete state.
+	 * 
+	 * @param {Object} _set New settings
+	 */
+	update_state: function(_set)
+	{
+		var changed = [];
+		var new_state = jQuery.extend({}, this.state);
+		if (typeof _set == 'object')
+		{
+			for(var s in _set)
+			{
+				if (new_state[s] !== _set[s])
+				{
+					changed.push(s + ': ' + new_state[s] + ' -> ' + _set[s]);
+					new_state[s] = _set[s];
+				}
+			}
+		}
+		if(changed.length && !this.state_update_in_progress)
+		{
+			console.log('Calendar state changed',changed.join("\n"));
+			// Log
+			this.egw.debug('navigation','Calendar state changed', changed.join("\n"));
+			this.setState({state: new_state});
 		}
 	},
 
@@ -1312,7 +1310,231 @@ app.classes.calendar = AppJS.extend(
 				state = JSON.parse(state);
 			}
 		}
+		if(typeof state.state != 'object' || !state.state.view)
+		{
+			state.state = {view: 'week'};
+		}
+		if(!state.state.date)
+		{
+			state.state.date = new Date();
+		}
+		
+		// Check for a supported client-side view
+		if(this.views[state.state.view])
+		{
+			// Doing an update - this includes the selected view, and the sidebox
+			// We set a flag to ignore changes from the sidebox which would
+			// cause infinite loops.
+			this.state_update_in_progress = true;
+			
+			var view = this.views[state.state.view];
 
+			// Sanitize owner
+			switch(typeof state.state.owner)
+			{
+				case 'undefined':
+					state.state.owner = this.egw.user('account_id');
+					break;
+				case 'string':
+					state.state.owner = state.state.owner.split(',');
+					break;
+				case 'number':
+					state.state.owner = [state.state.owner];
+					break;
+			}
+			// Keep sort order
+			if(typeof this.state.owner === 'object')
+			{
+				var owner = [];
+				this.state.owner.forEach(function(key) {
+					var found = false;
+					state.state.owner = state.state.owner.filter(function(item) {
+						if(!found && item == key) {
+							owner.push(item);
+							found = true;
+							return false;
+						} else
+							return true;
+					});
+				});
+				// Add in any new owners
+				state.state.owner = owner.concat(state.state.owner);
+			}
+
+
+			// Show the correct number of grids
+			var grid_count = state.state.view == 'weekN' ? parseInt(this.egw.preference('multiple_weeks','calendar')) || 3 :
+				state.state.view == 'month' ? 0 : // Calculate based on weeks in the month
+				state.state.owner.length > (this.egw.config('calview_no_consolidate','phpgwapi') || 5) ? 1 : state.state.owner.length;
+
+			var grid = this.views[this.state.view] ? this.views[this.state.view].etemplates[0].widgetContainer.getWidgetById('view') : false;
+
+			/*
+			If the count is different, we need to have the correct number (just remove all & re-create)
+			If the count is > 1, it's either because there are multiple date spans (weekN, month) and we need the correct span
+			per row, or there are multiple owners and we need the correct owner per row.
+			*/
+			if(state.state.view !== 'listview' && (!grid || grid_count != grid._children.length || grid_count > 1))
+			{
+				// Need to redo the number of grids
+				var value = [];
+				var date = view.set_start_date(state.state);
+
+				// Determine the different end date
+				switch(state.state.view)
+				{
+					case 'month':
+						var end = view.set_end_date(state.state);
+						grid_count = Math.ceil((end - date) / (1000 * 60 * 60 * 24) / 7);
+						// fall through
+					case 'weekN':
+						for(var week = 0; week < grid_count; week++)
+						{
+							var val = {
+								id: ""+date.getUTCFullYear() + sprintf("%02d",date.getUTCMonth()) + sprintf("%02d",date.getUTCDate()),
+								start_date: new Date(date),
+								end_date: new Date(date),
+								owner: state.state.owner
+							};
+							val.end_date.setUTCHours(24*7-1);
+							value.push(val);
+							date.setUTCHours(24*7);
+						}
+						break;
+					default:
+						var end = view.set_end_date(state.state);
+						for(var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++)
+						{
+							value.push({
+								id: ""+date.getUTCFullYear() + sprintf("%02d",date.getUTCMonth()) + sprintf("%02d",date.getUTCDate()),
+								start_date: date,
+								end_date: end,
+								owner: state.state.owner[owner] || 0
+							});
+						}
+						break;
+				}
+				if(view.etemplates[0].widgetContainer.getWidgetById('view'))
+				{
+					view.etemplates[0].widgetContainer.getWidgetById('view').set_value(
+						{content: value}
+					);
+				}
+			}
+			else
+			{
+				// Simple, easy case - just one timegrid.
+				// Update existing view's special attribute filters, defined in the view list
+				for(var updater in view)
+				{
+					if(typeof view[updater] === 'function')
+					{
+						var value = view[updater].call(this,state.state);
+
+						// Set value
+						for(var i = 0; i < view.etemplates.length; i++)
+						{
+							view.etemplates[i].widgetContainer.iterateOver(function(widget) {
+								if(typeof widget[updater] === 'function')
+								{
+									widget[updater](value);
+								}
+							}, this, et2_valueWidget);
+						}
+					}
+				}
+			}
+			
+
+			// Hide other views
+			for(var _view in this.views)
+			{
+				if(state.state.view != _view && this.views[_view])
+				{
+					for(var i = 0; i < this.views[_view].etemplates.length; i++)
+					{
+						$j(this.views[_view].etemplates[i].DOMContainer).hide();
+					}
+				}
+			}
+
+			// Show the templates for the current view
+			for(var i = 0; i < view.etemplates.length; i++)
+			{
+				$j(view.etemplates[i].DOMContainer).show();
+			}
+			// Toggle todos
+			if(state.state.view == 'day')
+			{
+				if(state.state.owner.length !== 1)
+				{
+					$j(view.etemplates[1].DOMContainer).hide();
+					view.etemplates[0].widgetContainer.set_width("");
+				}
+				else
+				{
+					view.etemplates[0].widgetContainer.set_width("70%");
+					// TODO: Maybe some caching here
+					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
+						this.getWidgetById('label').set_value(data.label||'');
+						this.getWidgetById('todos').set_value(data.todos||'');
+					},view.etemplates[1].widgetContainer)
+				}
+			}
+			else
+			{
+				view.etemplates[0].widgetContainer.set_width("");
+			}
+			this.state = jQuery.extend({},state.state);
+
+			if(state.state.view === 'listview')
+			{
+				state.state.startdate = state.state.date;
+				state.state.col_filter = {participant: state.state.owner};
+				var nm = this.views[_view].etemplates[0].widgetContainer.getWidgetById('nm');
+				nm.applyFilters(state.state);
+			}
+
+			/* Update re-orderable calendars */
+			this._sortable();
+			
+			/* Update sidebox widgets to show current value*/
+			this.sidebox_et2.iterateOver(function(widget) {
+				if(widget.id == 'view')
+				{
+					// View widget has a list of state settings, which require special handling
+					for(var i = 0; i < widget.options.select_options.length; i++)
+					{
+						var option_state = JSON.parse(widget.options.select_options[i].value) || [];
+						var match = true;
+						for(var os_key in option_state)
+						{
+							match = match && option_state[os_key] == this.state[os_key];
+						}
+						if(match)
+						{
+							widget.set_value(widget.options.select_options[i].value);
+							return;
+						}
+					}
+				}
+				else if(typeof state.state[widget.id] !== 'undefined' && state.state[widget.id] != widget.getValue())
+				{
+					// Update widget.  This may trigger an infinite loop of
+					// updates, so we do it after changing this.state and set a flag
+					widget.set_value(state.state[widget.id]);
+				}
+			},this,et2_valueWidget);
+
+			// Sidebox is updated, we can clear the flag
+			this.state_update_in_progress = false;
+
+			// Show / Hide weekends in sidebox calendar based on if weekends should be shown
+			egw.css('#'+this.sidebox_et2.getWidgetById('date').input_date.attr('id') + ' .ui-datepicker-week-end',
+				(parseInt(this.state.days && this.state.days > 1 ? this.state.days: egw.preference('days_in_weekview','calendar'))) === 5 ? 'display: none;' : 'display: table-cell;');
+
+			return;
+		}
 		// old calendar state handling on server-side (incl. switching to and from listview)
 		var menuaction = 'calendar.calendar_uiviews.index';
 		if (typeof state.state != 'undefined' && (typeof state.state.view == 'undefined' || state.state.view == 'listview'))
@@ -1400,6 +1622,28 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Check to see if any of the selected is an event widget
+	 * Used to separate grid actions from event actions
+	 * 
+	 * @param {egwAction} _egw
+	 * @param {egwActioObject[]} _widget
+	 * @returns {boolean} Is any of the selected an event widget
+	 */
+	is_event: function(_action, _selected)
+	{
+		var is_widget = false;
+		for(var i = 0; i < _selected.length; i++)
+		{
+			if(_selected[i].iface.getWidget() && _selected[i].iface.getWidget().instanceOf(et2_calendar_event))
+			{
+				is_widget = true;
+				break;
+			}
+		}
+		return is_widget;
+	},
+
+	/**
 	 * Enable/Disable custom Date-time for set Alarm
 	 *
 	 * @param {egw object} _egw
@@ -1484,5 +1728,77 @@ app.classes.calendar = AppJS.extend(
 				event.set_value(_secs_to_label(60 * def_alarm));
 			}
 		}
+	},
+
+	/**
+	 * Some handy date calculations
+	 * All take either a Date object or full date with timestamp (Z)
+	 */
+	date: {
+		start_of_week: function(date)
+		{
+			var d = new Date(date);
+			var day = d.getUTCDay();
+			var diff = 0;
+			switch(egw.preference('weekdaystarts','calendar'))
+			{
+				case 'Saturday':
+					diff = day === 6 ? 0 : day === 0 ? -1 : day + 1;
+					break;
+				case 'Monday':
+					diff = day === 0 ? 1 : 1-day;
+					break;
+				case 'Sunday':
+				default:
+					diff = -day;
+			}
+			d.setUTCHours(24*diff);
+			return d;
+		},
+		end_of_week: function(date)
+		{
+			var d = app.calendar.date.start_of_week(date);
+			d.setUTCHours(24*7);
+			return d;
+		}
+	},
+
+	/**
+	 * The sidebox filters use some non-standard and not-exposed options.  They
+	 * are set up here.
+	 *
+	 */
+	_setup_sidebox_filters: function()
+	{
+		// Further date customizations
+		var date = this.sidebox_et2.getWidgetById('date');
+		if(date)
+		{
+			date.input_date.datepicker("option", {
+				showButtonPanel:	false,
+				// TODO: We could include tooltips for holidays
+			})
+		}
+		// Show / Hide weekends based on preference of weekends should be shown
+		egw.css('#'+date.input_date.attr('id') + ' .ui-datepicker-week-end', 
+			egw.preference('days_in_weekview', 'calendar') === "5" ? 'display: none;' : 'display: table-cell;'
+		);
+
+
+		// Clickable week numbers
+		date.input_date.on('mouseenter','.ui-datepicker-week-col', function() {
+				$j(this).siblings().find('a').addClass('ui-state-hover');
+			})
+			.on('mouseleave','.ui-datepicker-week-col', function() {
+				$j(this).siblings().find('a').removeClass('ui-state-hover');
+			})
+			.on('click', '.ui-datepicker-week-col', function() {
+				// Fake a click event on the first day to get the updated date
+				$j(this).next().click();
+
+				// Set to week view
+				app.calendar.update_state({view: 'week', date: date.getValue()});
+			});
+		
 	}
 });

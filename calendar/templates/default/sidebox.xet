@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Egroupware
+@license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+@package 
+@subpackage 
+@link http://www.egroupware.org
+@author Nathan Gray
+@version $Id$
+-->
+
+<!DOCTYPE overlay PUBLIC '-//Stylite AG//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+
+<overlay>
+    <template id="calendar.sidebox">
+		<vbox parent_node="calendar-et2_target">
+			<description label="eTemplate"/>
+			<grid id="buttons" width="100%">
+				<columns>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+				</columns>
+				<rows><row width="100%">
+				<buttononly align="center" class="sideboxstar" id="add" onclick="egw.open(null,'calendar','add');" image="new" label="Add"/>
+				<buttononly align="center" class="sideboxstar" id="day" image="today" label="Today" onclick="app.calendar.update_state({view:'day',date:new Date()});"/>
+				<buttononly align="center" class="sideboxstar" id="week" image="week" label="Weekview" onclick="app.calendar.update_state({view:'week'});"/>
+				<buttononly align="center" class="sideboxstar" id="weekN" image="multiweek" label="Multiple week view" onclick="app.calendar.update_state({view:'weekN'});"/>
+				<buttononly align="center" class="sideboxstar" id="month" image="month" label="Multiple week view" onclick="app.calendar.update_state({view:'month'});"/>
+				<buttononly align="center" class="sideboxstar" id="planner" image="planner" label="Group planner"/>
+				<buttononly align="center" class="sideboxstar" id="listview" image="list" label="Listview" onclick="app.calendar.update_state({view:'listview'});"/>
+				</row>
+				</rows>
+			</grid>
+			<select id="view" class="et2_fullWidth" onchange="app.calendar.update_state(JSON.parse(widget.getValue()));"/>
+			<textbox id="keywords" class="et2_fullWidth" onchange="app.calendar.update_state({keywords: widget.getValue()});"/>
+			<date id="date" class="et2_fullWidth" inline="true" onchange="app.calendar.update_state({date:widget.getValue(),view:'day'});"/>
+			<hbox width="100%">
+				<select-cat id="cat_id" empty_label="All categories" width="86%" onchange="app.calendar.update_state({cat_id: widget.getValue()});"/>
+				<button align="right" id="cat_id_multiple" image="category"/>
+			</hbox>
+			
+			<select-account id="owner" class="et2_fullWidth" onchange="app.calendar.update_state({owner: widget.getValue()});" expand_multiple_rows="4"/>
+
+			<!--
+			<taglist id="owner" class="et2_fullWidth" onchange="app.calendar.update_state({owner: widget.getValue()});" autocomplete_params=''/>
+			-->
+			<select id="filter" no_lang="true" class="et2_fullWidth" onchange="app.calendar.update_state({filter: widget.getValue()});"/>
+			<select id="merge" empty_label="Insert in document" onchange="widget.getInstanceManager().postSubmit();widget.set_value('');" class="et2_fullWidth"/>/>
+		</vbox>
+		<html id="old_calendar"/>
+	</template>
+</overlay>

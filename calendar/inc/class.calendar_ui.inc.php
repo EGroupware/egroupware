@@ -267,7 +267,9 @@ class calendar_ui
 		// retrieve saved states from prefs
 		if(!$states)
 		{
+			error_log('HERE');
 			$states = unserialize($this->bo->cal_prefs['saved_states']);
+			error_log(array2string($states));
 		}
 		// only look at _REQUEST, if we are in the calendar (prefs and admin show our sidebox menu too!)
 		if (is_null($set_states))
@@ -443,7 +445,7 @@ class calendar_ui
 				elseif (egw_json_request::isJSONRequest())// && strpos($_GET['menuaction'], 'calendar_uiforms') === false)
 				{
 					$response = egw_json_response::get();
-					$response->apply('app.calendar.set_state', array($states, $_GET['menuaction']));
+					//$response->apply('app.calendar.set_state', array($states, $_GET['menuaction']));
 				}
 				else
 				{
@@ -581,281 +583,24 @@ class calendar_ui
 	function sidebox_menu()
 	{
 		$link_vars = array();
-		// Magic etemplate2 favorites menu (from nextmatch widget)
+		// Magic etemplate2 favorites menu (from framework)
 		display_sidebox('calendar', lang('Favorites'), egw_framework::favorite_list('calendar'));
 
 		$file = array('menuOpened' => true);	// menu open by default
-		$n = 0;	// index for file-array
 
-		$planner_days_for_view = false;
-		switch($this->view)
-		{
-			case 'month': $planner_days_for_view = 0; break;
-			case 'week':  $planner_days_for_view = $this->cal_prefs['days_in_weekview'] == 5 ? 5 : 7; break;
-			case 'day':   $planner_days_for_view = 1; break;
-		}
-		// Toolbar with the views
-		$views = '<table style="width: 100%;"><tr>'."\n";
-		foreach(array(
-			'add' => array('icon'=>'new','text'=>'add'),
-			'day' => array('icon'=>'today','text'=>'Today','menuaction' => 'calendar.calendar_uiviews.day','date' => $this->bo->date2string($this->bo->now_su)),
-			'week' => array('icon'=>'week','text'=>'Weekview','menuaction' => 'calendar.calendar_uiviews.week','ajax'=>'true'),
-			'weekN' => array('icon'=>'multiweek','text'=>'Multiple week view','menuaction' => 'calendar.calendar_uiviews.weekN'),
-			'month' => array('icon'=>'month','text'=>'Monthview','menuaction' => 'calendar.calendar_uiviews.month'),
-			//'year' => array('icon'=>'year','text'=>'yearview','menuaction' => 'calendar.calendar_uiviews.year'),
-			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.calendar_uiviews.planner','sortby' => $this->sortby),
-			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.calendar_uilist.listview','ajax'=>'true'),
-		) as $view => $data)
-		{
-			$icon_name = array_shift($data);
-			$title = array_shift($data);
-			$vars = array_merge($link_vars,$data);
-
-			$icon = html::image('calendar',$icon_name,lang($title),"class=sideboxstar");  //to avoid jscadender from not displaying with pngfix
-			if ($view == 'add')
-			{
-				$link = html::a_href($icon,'javascript:'.$this->popup(egw::link('/index.php',array(
-					'menuaction' => 'calendar.calendar_uiforms.edit',
-				),false)));
-			}
-			else
-			{
-				$link = html::a_href($icon,'/index.php',$vars);
-			}
-			$views .= '<td align="center">'.$link."</td>\n";
-		}
-		$views .= "</tr></table>\n";
-
-		// hack to disable invite ACL column, if not enabled in config
-		if ($_GET['menuaction'] == 'preferences.uiaclprefs.index' &&
-			(!$this->bo->require_acl_invite || $this->bo->require_acl_invite == 'groups' && !($_REQUEST['owner'] < 0)))
-		{
-			$views .= "<style type='text/css'>\n\t.aclInviteColumn { display: none; }\n</style>\n";
-		}
-
-		$file[++$n] = array('text' => $views,'no_lang' => True,'link' => False,'icon' => False);
-
-		// special views and view-options menu
-		$options = '';
-		foreach(array(
-			array(
-				'text' => lang('dayview'),
-				'value' => 'menuaction=calendar.calendar_uiviews.day',
-				'selected' => $this->view == 'day',
-			),
-			array(
-				'text' => lang('four days view'),
-				'value' => 'menuaction=calendar.calendar_uiviews.day4',
-				'selected' => $this->view == 'day4',
-			),
-			array(
-				'text' => lang('weekview with weekend'),
-				'value' => 'menuaction=calendar.calendar_uiviews.week&days=7',
-				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] != 5,
-			),
-			array(
-				'text' => lang('weekview without weekend'),
-				'value' => 'menuaction=calendar.calendar_uiviews.week&days=5',
-				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] == 5,
-			),
-			array(
-				'text' => lang('Multiple week view'),
-				'value' => 'menuaction=calendar.calendar_uiviews.weekN',
-				'selected' => $this->view == 'weekN',
-			),
-			array(
-				'text' => lang('monthview'),
-				'value' => 'menuaction=calendar.calendar_uiviews.month',
-				'selected' => $this->view == 'month',
-			),
-			array(
-				'text' => lang('yearview'),
-				'value' => 'menuaction=calendar.calendar_uiviews.year',
-				'selected' => $this->view == 'year',
-			),
-			array(
-				'text' => lang('planner by category'),
-				'value' => 'menuaction=calendar.calendar_uiviews.planner&sortby=category'.
-					($planner_days_for_view !== false ? '&planner_days='.$planner_days_for_view : ''),
-				'selected' => $this->view == 'planner' && $this->sortby != 'user',
-			),
-			array(
-				'text' => lang('planner by user'),
-				'value' => 'menuaction=calendar.calendar_uiviews.planner&sortby=user'.
-					($planner_days_for_view !== false ? '&planner_days='.$planner_days_for_view : ''),
-				'selected' => $this->view == 'planner' && $this->sortby == 'user',
-			),
-			array(
-				'text' => lang('yearly planner'),
-				'value' => 'menuaction=calendar.calendar_uiviews.planner&sortby=month',
-				'selected' => $this->view == 'planner' && $this->sortby == 'month',
-			),
-			array(
-				'text' => lang('listview'),
-				'value' => 'menuaction=calendar.calendar_uilist.listview&ajax=true',
-				'selected' => $this->view == 'listview',
-			),
-		) as $data)
-		{
-			$options .= '<option value="'.$data['value'].'"'.($data['selected'] ? ' selected="1"' : '').'>'.html::htmlspecialchars($data['text'])."</option>\n";
-		}
-		$file[++$n] = $this->_select_box('displayed view','view',$options);
-
-		// Search
-		$file[++$n] = array(
-			'text' => html::input('keywords', '', 'text',
-					'id="calendar_keywords" style="width: 96.5%;" placeholder="'.html::htmlspecialchars(lang('Search').'...').'"'),
-			'no_lang' => True,
-			'link' => False,
-			'icon' => false,
-		);
-		// Minicalendar
-		$link = array();
-		foreach(array(
-			'day'   => 'calendar.calendar_uiviews.day',
-			'week'  => 'calendar.calendar_uiviews.week',
-			'month' => 'calendar.calendar_uiviews.month') as $view => $menuaction)
-		{
-			if ($this->view == 'planner' || $this->view == 'listview')
-			{
-				$link_vars['menuaction'] = $this->view_menuaction;	// must be first one
-				switch($view)
-				{
-					case 'day':   $link_vars[$this->view.'_days'] = $this->view == 'planner' ? 1 : ''; break;
-					case 'week':  $link_vars[$this->view.'_days'] = $this->cal_prefs['days_in_weekview'] == 5 ? 5 : 7; break;
-					case 'month': $link_vars[$this->view.'_days'] = 0; break;
-				}
-				if ($this->view == 'listview') $link_vars['ajax'] = 'true';
-			}
-			elseif(substr($this->view,0,4) == 'week' && $view == 'week')
-			{
-				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the N-week-view
-			}
-			elseif ($view == 'day' && $this->view == 'day4')
-			{
-				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the day-view
-			}
-			else
-			{
-				$link_vars['menuaction'] = $menuaction;
-			}
-			unset($link_vars['date']);	// gets set in jscal
-			$link[$view] = $l = egw::link('/index.php',$link_vars,false);
-		}
-
-		if (($flatdate = $this->date))	// string if format YYYYmmdd or timestamp
-		{
-			$flatdate = is_int($flatdate) ? adodb_date('m/d/Y',$flatdate) :
-			substr($flatdate,4,2).'/'.substr($flatdate,6,2).'/'.substr($flatdate,0,4);
-		}
-		$jscalendar = '<div id="calendar-container"></div>';
-
-		$file[++$n] = array('text' => $jscalendar,'no_lang' => True,'link' => False,'icon' => False);
-
-		// Category Selection
-		$cat_id = explode(',',$this->cat_id);
-
-		$current_view_url = egw::link('/index.php',array(
-			'menuaction' => $this->view_menuaction,
-			'date' => $this->date,
-		)+($this->view == 'listview' ? array('ajax' => 'true') : array()),false);
-
-		$select = ' <select style="width: 86%;" id="calendar_cat_id" name="cat_id" title="'.
-			lang('Select a %1',lang('Category')). '"'.($cat_id && count($cat_id) > 1 ? ' multiple=true size=4':''). '>'.
-			'<option value="0">'.lang('All categories').'</option>'.
-				$this->categories->formatted_list('select','all',$cat_id,'True').
-			"</select>\n" . html::image('phpgwapi','category','','id="calendar_cat_id_multiple"')."
-			<script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\"".
-			" data-link-day-url =\"".htmlspecialchars($link['day']).
-			"\" data-link-week-url=\"".htmlspecialchars($link['week']).
-			"\" data-link-month-url=\"".htmlspecialchars($link['month']).
-			"\" data-date=\"".htmlspecialchars($flatdate).
-			"\" data-current-date=\"".htmlspecialchars(egw_time::to('now', 'Ymd')).
-			"\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n";
-
-		$file[++$n] =  array(
-			'text' => $select,
-			'no_lang' => True,
-			'link' => False,
-			'icon' => false,
+		// Target for etemplate
+		$file[] = array(
+			'no_lang' => true,
+			'text'=>'<span id="calendar-et2_target" />',
+			'link'=>false,
+			'icon' => false
 		);
 
-		// Calendarselection: User or Group
-		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')
-		{
-			$grants = array();
-			foreach($this->bo->list_cals() as $grant)
-			{
-				$grants[] = $grant['grantor'];
-			}
-			// we no longer exclude non-accounts from the account-selection: it shows all types of participants
-			$accounts = explode(',',$this->owner);
-			$file[] = array(
-				'text' =>
-				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
-					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '86%' : '86%').';"'.
-					' title="'.lang('select a %1',lang('user')).'"','',$grants,false,array($this->bo,'participant_name')),
-				'no_lang' => True,
-				'link' => False,
-				'icon' => false,
-			);
-		}
-
-		// Filter all or hideprivate
-		$filter_options = '';
-		foreach(array(
-			'default'     => array(lang('Not rejected'), lang('Show all status, but rejected')),
-			'accepted'    => array(lang('Accepted'), lang('Show only accepted events')),
-			'unknown'     => array(lang('Invitations'), lang('Show only invitations, not yet accepted or rejected')),
-			'tentative'   => array(lang('Tentative'), lang('Show only tentative accepted events')),
-			'delegated'   => array(lang('Delegated'), lang('Show only delegated events')),
-			'rejected'    => array(lang('Rejected'),lang('Show only rejected events')),
-			'owner'       => array(lang('Owner too'),lang('Show also events just owned by selected user')),
-			'all'         => array(lang('All incl. rejected'),lang('Show all status incl. rejected events')),
-			'hideprivate' => array(lang('Hide private infos'),lang('Show all events, as if they were private')),
-			'showonlypublic' =>  array(lang('Hide private events'),lang('Show only events flagged as public, (not checked as private)')),
-			'no-enum-groups' => array(lang('only group-events'),lang('Do not include events of group members')),
-			'not-unknown' => array(lang('No meeting requests'),lang('Show all status, but unknown')),
-		) as $value => $label)
-		{
-			list($label,$title) = $label;
-			$filter_options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').' title="'.$title.'">'.$label.'</options>'."\n";
-		}
-		// add deleted filter, if history logging is activated
-		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
-		{
-			$filter_options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
-		}
-		$file[] = $this->_select_box('Filter','filter',$filter_options,'86%');
-		// enable this to get checkbox setting $this->test eg. usable to trigger different code in calendar_so
-		//$file[count($file)-1]['text'] .= html::checkbox('test', $this->test==='true', 'true', 'id="calendar_test"');
-
-		// Merge print
+		// Merge print placeholders (selectbox in etemplate)
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
-		{
-			$options = '';
-
-			$documents = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null,'calendar');
-			foreach($documents as $key => $value)
-			{
-				$options .= '<option value="'.html::htmlspecialchars($key).'">'.html::htmlspecialchars($value)."</option>\n";
-			}
-			if($options != '') {
-				$options = '<option value="">'.lang('Insert in document')."</option>\n" . $options;
-				$select = ' <select style="width: 86%;" name="merge" id="calendar_merge" title="'.
-					html::htmlspecialchars(lang('Select a %1',lang('merge document...'))).'">'.
-					$options."</select>\n";
-
-				$file[] = array(
-					'text' => $select,
-					'no_lang' => True,
-					'link' => False,
-					'icon' => false,
-				);
-			}
+		{			
 			$file['Placeholders'] = egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
 		}
-
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
@@ -884,6 +629,213 @@ class calendar_ui
 		}
 	}
 
+	/**
+	 * Makes the sidebox content with etemplate, after hook is processed
+	 */
+	function sidebox_etemplate($content = array())
+	{
+		if($content['merge'])
+		{
+			$_GET['merge'] = $content['merge'];
+			$this->merge();
+			return;
+		}
+		$sidebox = new etemplate_new('calendar.sidebox');
+
+
+		$content['view'] = $this->view ? $this->view : 'week';
+		$content['date'] = $this->date ? $this->date : egw_time();
+		$owners = $this->owner ? is_array($this->owner) ? array($this->owner) : explode(',',$this->owner) : array($GLOBALS['egw_info']['user']['account_id']);
+/*
+		foreach($owners as $owner)
+		{
+			$app = 'home-accounts';
+			switch(substr($owner, 0,1))
+			{
+				case 'r':
+					$app = 'resources';
+					break;
+			}
+			$content['owner'][] = array('app' => $app, 'id' => (int)$owner ? $owner : substr($owner,1));
+		}
+*/
+		$sel_options = array();
+		$readonlys = array();
+		foreach(array(
+			array(
+				'text' => lang('dayview'),
+				'value' => '{"view":"day"}',
+				'selected' => $this->view == 'day',
+			),
+			array(
+				'text' => lang('four days view'),
+				'value' => '{"view":"day4","days":4}',
+				'selected' => $this->view == 'day4',
+			),
+			array(
+				'text' => lang('weekview with weekend'),
+				'value' => '{"view":"week","days":7}',
+				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] != 5,
+			),
+			array(
+				'text' => lang('weekview without weekend'),
+				'value' => '{"view":"week","days":5}',
+				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] == 5,
+			),
+			array(
+				'text' => lang('Multiple week view'),
+				'value' => '{"view":"weekN"}',
+				'selected' => $this->view == 'weekN',
+			),
+			array(
+				'text' => lang('monthview'),
+				'value' => '{"view":"month"}',
+				'selected' => $this->view == 'month',
+			),
+			array(
+				'text' => lang('yearview'),
+				'value' => '{"view":"year", "menuaction":"calendar.calendar_uiviews.year"}',
+				'selected' => $this->view == 'year',
+			),
+			array(
+				'text' => lang('planner by category'),
+				'value' => '{"view":"planner", "menuaction":"calendar.calendar_uiviews.planner","sortby":"category"}',
+				'selected' => $this->view == 'planner' && $this->sortby != 'user',
+			),
+			array(
+				'text' => lang('planner by user'),
+				'value' => '{"view":"planner", "menuaction":"calendar.calendar_uiviews.planner","sortby":"user"}',
+				'selected' => $this->view == 'planner' && $this->sortby == 'user',
+			),
+			array(
+				'text' => lang('yearly planner'),
+				'value' => '{"view":"planner", "menuaction":"calendar.calendar_uiviews.planner","sortby":"month"}',
+				'selected' => $this->view == 'planner' && $this->sortby == 'month',
+			),
+			array(
+				'text' => lang('listview'),
+				'value' => '{"view":"listview"}',
+				'selected' => $this->view == 'listview',
+			),
+		)as $data)
+		{
+			if($data['selected'])
+			{
+				$content['view'] = $data['value'];
+			}
+			$sel_options['view'][] = array(
+				'label' => $data['text'],
+				'value' => $data['value']
+			);
+		}
+		$sel_options['filter'] = array(
+			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),
+			array('value' => 'accepted',    'label' => lang('Accepted'), 'title' => lang('Show only accepted events')),
+			array('value' => 'unknown',     'label' => lang('Invitations'), 'title' => lang('Show only invitations, not yet accepted or rejected')),
+			array('value' => 'tentative',   'label' => lang('Tentative'), 'title' => lang('Show only tentative accepted events')),
+			array('value' => 'delegated',   'label' => lang('Delegated'), 'title' => lang('Show only delegated events')),
+			array('value' => 'rejected',    'label' => lang('Rejected'),'title' => lang('Show only rejected events')),
+			array('value' => 'owner',       'label' => lang('Owner too'),'title' => lang('Show also events just owned by selected user')),
+			array('value' => 'all',         'label' => lang('All incl. rejected'),'title' => lang('Show all status incl. rejected events')),
+			array('value' => 'hideprivate', 'label' => lang('Hide private infos'),'title' => lang('Show all events, as if they were private')),
+			array('value' => 'showonlypublic',  'label' => lang('Hide private events'),'title' => lang('Show only events flagged as public, (not checked as private)')),
+			array('value' => 'no-enum-groups', 'label' => lang('only group-events'),'title' => lang('Do not include events of group members')),
+			array('value' => 'not-unknown', 'label' => lang('No meeting requests'),'title' => lang('Show all status, but unknown')),
+		);
+
+		// Merge print
+		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
+		{
+			$sel_options['merge'] = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null,'calendar');
+		}
+		else
+		{
+			$readonlys['merge'] = true;
+		}
+
+		// Sidebox?
+		$sidebox->exec('calendar.calendar_ui.sidebox_etemplate', $content, $sel_options, $readonlys);
+	}
+
+	/**
+	 * Prepare an array of event information for sending to the client
+	 *
+	 * This involves changing timestamps into strings with timezone
+	 *
+	 * @param type $event
+	 */
+	protected function to_client(&$event)
+	{
+		if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
+		{
+			$event['class'] .= 'rowNoEdit ';
+		}
+
+		// Delete disabled for other applications
+		if (!$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']))
+		{
+			$event['class'] .= 'rowNoDelete ';
+		}
+
+		// mark deleted events
+		if ($event['deleted'])
+		{
+			$event['class'] .= 'rowDeleted ';
+		}
+
+		$event['recure'] = $this->bo->recure2string($event);
+
+		if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
+		if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
+
+		// respect category permissions
+		if(!empty($event['category']))
+		{
+			$event['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
+		}
+
+		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
+		{
+			$app = $matches[1];
+			$app_id = $matches[2];
+			$icons = array();
+			if (($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
+			{
+				$icons[] = html::image('calendar','private');
+			}
+			else
+			{
+				$icons = calendar_uiviews::integration_get_icons($app,$app_id,$event);
+			}
+		}
+		else
+		{
+			$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
+		}
+		if ($is_private)
+		{
+			$event['is_private'] = true;
+			$event['class'] .= 'rowNoView ';
+		}
+
+		$event['app'] = 'calendar';
+		$event['app_id'] = $event['id'];
+
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		{
+			$event['app_id'] .= ':'.$event['recur_date'];
+		}
+
+		// Change dates
+		foreach(calendar_egw_record::$types['date-time'] as $field)
+		{
+			if(is_int($event[$field]))
+			{
+				$event[$field] = egw_time::to($event[$field],'Y-m-d\TH:i:s').'Z';
+			}
+		}
+	}
+	
 	public function merge($timespan = array())
 	{
 		// Merge print

@@ -69,6 +69,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		this.setDOMNode(this.div[0]);
 
+		// Used for its date calculations - note this is a datetime, parent
+		// uses just a date
+		this.date_helper = et2_createWidget('date-time',{},null);
+		this.date_helper.loadingFinished();
 
 		// Init to defaults, just in case
 		this.display_settings = {
@@ -137,10 +141,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				.attr('data-hour',linkData.hour)
 				.attr('data-minute',linkData.minute)
 				.appendTo(this.div);
-			if(this.options.owner)
-			{
-				hour.attr('data-owner', this.options.owner);
-			}
 		}
 	},
 
@@ -150,12 +150,18 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {string|Date} _date New date
 	 * @param {Object[]} events=false List of events to be displayed, or false to
 	 *	automatically fetch data from content array
+	 * @param {boolean} force_redraw=false Redraw even if the date is the same.
+	 *	Used for when new data is available.
 	 */
-	set_date: function(_date, events)
+	set_date: function(_date, events, force_redraw)
 	{
 		if(typeof events === 'undefined' || !events)
 		{
 			events = false;
+		}
+		if(typeof force_redraw === 'undefined' || !force_redraw)
+		{
+			force_redraw = false;
 		}
 		if(!this._parent || !this._parent.date_helper)
 		{
@@ -173,21 +179,23 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			this._parent.date_helper.set_date(_date.substring(6,8));
 		}
 
-
-		// Add timezone offset back in, or formatDate will lose those hours
-		this.date = new Date(this._parent.date_helper.date.valueOf() + this._parent.date_helper.date.getTimezoneOffset() * 60 * 1000);
+		this.date = new Date(this._parent.date_helper.getValue());
 
 		// Keep internal option in Ymd format, it gets passed around in this format
-		var new_date = date('Ymd',this.date);
+		var new_date = ""+this._parent.date_helper.get_year()+
+			sprintf("%02d",this._parent.date_helper.get_month())+
+			sprintf("%02d",this._parent.date_helper.get_date());
 		
 		// Set label
+		// Add timezone offset back in, or formatDate will lose those hours
+		var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 		var date_string = this._parent._children.length === 1 ?
-			this.long_date(this.date,false, false, true) :
-			jQuery.datepicker.formatDate('DD dd',this.date);
+			this.long_date(formatDate,false, false, true) :
+			jQuery.datepicker.formatDate('DD dd',formatDate);
 		this.title.text(date_string);
 
 		// Avoid redrawing if date is the same
-		if(new_date === this.options.date)
+		if(new_date === this.options.date && !force_redraw)
 		{
 			return;
 		}
@@ -320,12 +328,13 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				}
 
 				// Create event
-				var event = et2_createWidget('calendar-event',{},this);
+				var event = et2_createWidget('calendar-event',{id:columns[c][i].app_id||columns[c][i].id},this);
 				if(this.isInTree())
 				{
 					event.doLoadingFinished();
 				}
 				event.set_value(columns[c][i]);
+				event._link_actions(this._parent._parent.options.actions||{});
 				
 				// Position the event
 				event.div.css('top', top+'%');
@@ -347,7 +356,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	{
 		var day_start = this.date.valueOf() / 1000;
 		var dst_check = new Date(this.date);
-		dst_check.setHours(12);
+		dst_check.setUTCHours(12);
 
 		// if daylight saving is switched on or off, correct $day_start
 		// gives correct times after 2am, times between 0am and 2am are wrong
@@ -363,17 +372,31 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			var event = events[i];
 			var c = 0;
 			event['multiday'] = false;
-			event['start_m'] = (event['start'] - day_start) / 60;
+			if(typeof event.start !== 'object')
+			{
+				this.date_helper.set_value(event.start);
+				event.start = new Date(this.date_helper.getValue());
+			}
+			if(typeof event.end !== 'object')
+			{
+				this.date_helper.set_value(event.end);
+				event.end = new Date(this.date_helper.getValue());
+			}
+			event['start_m'] = parseInt((event.start.valueOf()/1000 - day_start) / 60);
 			if (event['start_m'] < 0)
 			{
 				event['start_m'] = 0;
 				event['multiday'] = true;
 			}
-			event['end_m'] = (event['end'] - day_start) / 60;
+			event['end_m'] = parseInt((event.end.valueOf()/1000 - day_start) / 60);
 			if (event['end_m'] >= 24*60)
 			{
 				event['end_m'] = 24*60-1;
 				event['multiday'] = true;
+			}
+			if(!event.start.getUTCHours() && !event.start.getUTCMinutes() && event.end.getUTCHours() == 23 && event.end.getUTCMinutes() == 59)
+			{
+				event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
 			}
 			if (!event['whole_day_on_top'])
 			{
@@ -419,7 +442,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		// time during the workday => 2. row on (= + granularity)
 		else
 		{
-			pos = ((this.title.height()/this.div.height())*100) + this.display_settings.rowHeight * (1+this.display_settings.extraRows+(time-this.display_settings.wd_start)/this.display_settings.granularity);
+			pos = this.display_settings.rowHeight * (1+this.display_settings.extraRows+(time-this.display_settings.wd_start)/this.display_settings.granularity);
 		}
 		pos = pos.toFixed(1)
 

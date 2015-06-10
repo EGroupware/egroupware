@@ -308,8 +308,8 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		$search_params = array(
-			'cat_id'  => $this->cat_id ? explode(',',$this->cat_id) : 0,
-			'filter'  => $this->filter,
+			'cat_id'  => $params['cat_id'] ? explode(',',$params['cat_id']) : 0,
+			'filter'  => isset($params['filter']) ? $params['filter'] : $this->filter,
 			'query'   => $params['search'],
 			'offset'  => (int) $params['start'],
 			'num_rows'=> $params['num_rows'],
@@ -325,7 +325,7 @@ class calendar_uilist extends calendar_ui
 				$label = lang('Before %1',$this->bo->long_date($this->date));
 				break;
 			case 'custom':
-				$this->first = $search_params['start'] = $params['startdate'];
+				$this->first = $search_params['start'] = egw_time::to($params['startdate'],'ts');
 				$this->last  = $search_params['end'] = strtotime('+1 day', $this->bo->date2ts($params['enddate']))-1;
 				$label = $this->bo->long_date($this->first,$this->last);
 				break;
@@ -361,46 +361,25 @@ class calendar_uilist extends calendar_ui
 				// fall through to after given date
 			case 'after':
 			default:
+				$this->date = $params['startdate'] ? egw_time::to($params['startdate'],'ts') : $this->date;
 				$label = lang('After %1',$this->bo->long_date($this->date));
 				$search_params['start'] = $this->date;
 				break;
 		}
-		if ((int) $params['col_filter']['participant'])
+		if ($params['col_filter']['participant'])
 		{
-			$search_params['users'] = (int) $params['col_filter']['participant'];
+			$search_params['users'] = is_array($params['col_filter']['participant']) ? $params['col_filter']['participant'] : (int) $params['col_filter']['participant'];
 		}
 		elseif(empty($params['search']))	// active search displays entries from all users
 		{
 			$search_params['users'] = explode(',',$this->owner);
 		}
 		$rows = $js_integration_data = array();
-		if ($label)
-		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$label;
-			// Add it in as specific option, or it will be cleared
-			$rows['sel_options']['filter'] = $this->date_filters;
-			$rows['sel_options']['filter'][$params['filter']] = $label;
-		}
+		
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
-			if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
-			{
-				$event['class'] .= 'rowNoEdit ';
-			}
-
-			// Delete disabled for other applications
-			if (!$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']))
-			{
-				$event['class'] .= 'rowNoDelete ';
-			}
-
-			// mark deleted events
-			if ($event['deleted'])
-			{
-				$event['class'] .= 'rowDeleted ';
-			}
+			$this->to_client($event);
 			
-			$event['recure'] = $this->bo->recure2string($event);
 			if ($params['csv_export'])
 			{
 				$event['participants'] = implode(",\n",$this->bo->participants($event,true));
@@ -410,14 +389,7 @@ class calendar_uilist extends calendar_ui
 				$event['parts'] = implode(",\n",$this->bo->participants($event,true));
 				$event['date'] = $this->bo->date2string($event['start']);
 			}
-			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
-			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
 
-			// respect category permissions
-			if(!empty($event['category']))
-			{
-				$event['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
-			}
 
 			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
 			{

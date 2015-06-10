@@ -651,13 +651,13 @@ function egwDropActionImplementation()
 						// Set cursor back to auto. Seems FF can't handle cursor reversion
 						$j('body').css({cursor:'auto'});
 						
-						_aoi.triggerEvent(EGW_AI_DRAG_OUT);
+						_aoi.triggerEvent(EGW_AI_DRAG_OUT,{event: event,ui:ui});
 					},
-					"over": function() {
-						_aoi.triggerEvent(EGW_AI_DRAG_OVER);
+					"over": function(event, ui) {
+						_aoi.triggerEvent(EGW_AI_DRAG_OVER,{event: event,ui:ui});
 					},
-					"out": function() {
-						_aoi.triggerEvent(EGW_AI_DRAG_OUT);
+					"out": function(event,ui) {
+						_aoi.triggerEvent(EGW_AI_DRAG_OUT,{event: event,ui:ui});
 					},
 					"tolerance": "pointer",
 					hoverClass: "drop-hover",

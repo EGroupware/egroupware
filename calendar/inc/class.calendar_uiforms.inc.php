@@ -1033,7 +1033,7 @@ class calendar_uiforms extends calendar_ui
 	function _create_exception(&$event,&$preserv)
 	{
 		// In some cases where the user makes the first day an exception, actual_date may be missing
-		$preserv['actual_date'] = $preserv['acutal_date'] ? $preserv['actual_date'] : $event['start'];
+		$preserv['actual_date'] = $preserv['actual_date'] ? $preserv['actual_date'] : $event['start'];
 
 		$event['end'] += $preserv['actual_date'] - $event['start'];
 		$event['reference'] = $preserv['reference'] = $event['id'];
@@ -2492,7 +2492,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			return false;
 		}
-
+		list($eventId, $date) = explode(':',$eventId);
 		$old_event=$event=$this->bo->read($eventId);
 		if (!$durationT)
 		{
@@ -2501,6 +2501,25 @@ class calendar_uiforms extends calendar_ui
 		else
 		{
 			$duration = $durationT;
+		}
+
+		// If we have a recuring event for a particular day, make an exception
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
+		{
+			$date = new egw_time($date, egw_time::$user_timezone);
+			if (!empty($event['whole_day']))
+			{
+				$date =& $this->bo->so->startOfDay($date);
+				$date->setUser();
+			}
+			error_log("Loading event for " . $date);
+			$event = $this->bo->read($eventId, $date, true);
+			$preserv['actual_date'] = $date;		// remember the date clicked
+
+			// For DnD, always create an exception
+			$this->_create_exception($event,$preserv);
+			unset($event['id']);
+			$date = $date->format('ts');
 		}
 
 		$event['start'] = $this->bo->date2ts($targetDateTime);
@@ -2533,9 +2552,10 @@ class calendar_uiforms extends calendar_ui
 		$response = egw_json_response::get();
 		if(!is_array($conflicts))
 		{
-			$response->redirect(egw::link('/index.php',array(
-				'menuaction' => $this->view_menuaction,
-			)));
+			// Directly update stored data.  If event is still visible, it will
+			// be notified & update itself.
+			$this->to_client($event);
+			$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
 		}
 		else
 		{

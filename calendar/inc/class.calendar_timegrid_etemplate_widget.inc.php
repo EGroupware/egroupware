@@ -18,6 +18,36 @@
   */
  class calendar_timegrid_etemplate_widget extends etemplate_widget
  {
+
+	 /**
+	 * Set up what we know on the server side.
+	 *
+	 * Sending a first chunk of rows
+	 *
+	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public function beforeSendToClient($cname, array $expand=null)
+	{
+		$form_name = self::form_name($cname, $this->id, $expand);
+		$value =& self::get_array(self::$request->content, $form_name, true);
+
+		error_log(__METHOD__ . "($cname,".array2string($expand));
+		error_log(array2string($value));
+
+		foreach($value as $day => &$events)
+		{
+			foreach($events as &$event)
+			{
+				if(!is_array($event)) continue;
+				foreach(array('start','end') as $date)
+				{
+					$event[$date] = egw_time::to($event[$date],'Y-m-d\TH:i:s\Z');
+				}
+			}
+		}
+	}
+
 	/**
 	 * Ajax callback to fetch the holidays for a given year.
 	 * @param type $year

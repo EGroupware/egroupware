@@ -72,6 +72,12 @@ Date: A date object containing the maximum date.\
 Number: A number of days from today. For example 2 represents two days from today and -1 represents yesterday.\
 String: A string in the user\'s date format, or a relative date. Relative dates must contain value and period pairs; valid periods are "y" for years, "m" for months, "w" for weeks, and "d" for days. For example, "+1m +7d" represents one month and seven days from today.'
 		},
+		inline: {
+			"name": "Inline",
+			"type": "boolean",
+			"default": false,
+			"description": "Instead of an input field with a popup calendar, the calendar is displayed inline, with no input field"
+		}
 	},
 
 	legacyOptions: ["data_format"],
@@ -95,9 +101,9 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 
 	createInputWidget: function() {
 
-		this.span = $j(document.createElement("span")).addClass("et2_date");
+		this.span = $j(document.createElement(this.options.inline ? 'div' : "span")).addClass("et2_date");
 
-		this.input_date = $j(document.createElement("input"));
+		this.input_date = $j(document.createElement(this.options.inline ? "div" : "input"));
 		if (this.options.blur) this.input_date.attr('placeholder', this.egw().lang(this.options.blur));
 		this.input_date.addClass("et2_date").attr("type", "text")
 			.attr("size", 7)	// strlen("10:00pm")=7
@@ -495,7 +501,14 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 				timezone: 0
 			});
 		}
-		this.input_date.val(_value);
+		if(this.options.inline )
+		{
+			this.input_date.datepicker("setDate",formatDate);
+		}
+		else
+		{
+			this.input_date.val(_value);
+		}
 		if(this._oldValue !== et2_no_init && old_value != this.getValue())
 		{
 			this.change(this.input_date);

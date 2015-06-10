@@ -928,7 +928,7 @@ table.et2_grid {
 /**
  * Sortable grid
  */
-table.et2_grid tbody.ui-sortable > tr:not(.th) {
+table.et2_grid tbody.ui-sortable:not(.ui-sortable-disabled) > tr:not(.th) {
   cursor: ns-resize;
 }
 

@@ -12,20 +12,21 @@ Egroupware
 <!DOCTYPE overlay PUBLIC '-//Stylite AG//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
 
 <overlay>
-    <template id="calendar.view">
-		<grid id="view" width="100%" height="100%">
+	<template id="calendar.todo" width="30%">
+		<box class="calendar_calDayTodos">
+			<label id="label" class="calendar_calDayTodosHeader" width="100%" />
+			<html id="todos"/>
+		</box>
+	<!--
+		<grid id="todos">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
-				<row class="view_row">
-					<calendar-timegrid id="${row}" 
-						onchange="var state = {date:widget.options.start_date}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);"
-						onevent_change="app.calendar.event_change"
-					>
-					</calendar-timegrid>
+				<row class="todo_row">
 				</row>
 			</rows>
 		</grid>
+	-->
 	</template>
 </overlay>
