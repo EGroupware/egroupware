@@ -883,6 +883,7 @@ class db_backup
 	 * Backup all data in the form of a (compressed) csv file
 	 *
 	 * @param f resource file opened with fopen for writing
+	 * @todo use https://github.com/maennchen/ZipStream-PHP to not assamble all files in memmory
 	 */
 	function backup($f)
 	{

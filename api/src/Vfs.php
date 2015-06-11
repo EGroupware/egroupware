@@ -1418,7 +1418,7 @@ class Vfs extends Vfs\StreamWrapper
 	 * @param array $_files List of files to include in the zip
 	 * @param string $name optional Zip file name.  If not provided, it will be determined automatically from the files
 	 *
-	 * @return undefined
+	 * @todo use https://github.com/maennchen/ZipStream-PHP to not assamble all files in memmory
 	 */
 	public static function download_zip(Array $_files, $name = false)
 	{
