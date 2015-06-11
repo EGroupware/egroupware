@@ -286,7 +286,7 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 						h = this.ckeditor.config.height + _height;
 					}
 
-					this.ckeditor.resize(0,h);
+					this.ckeditor.resize('',h);
 				}
 				else // No CKEDITOR
 				{	
