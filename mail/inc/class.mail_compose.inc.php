@@ -1650,14 +1650,19 @@ class mail_compose
 			}
 			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID,'plain');
 		}
-
+		
 		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 			foreach($attachments as $attachment) {
-				$this->addMessageAttachment($_uid, $attachment['partID'],
-					$_folder,
-					$attachment['name'],
-					$attachment['mimeType'],
-					$attachment['size']);
+				$cid = $attachment['cid'];
+				preg_match("/[cid:{$cid}]/", $bodyParts['0']['body'], $match);
+				if (!$match || !$attachment['cid'])
+				{
+					$this->addMessageAttachment($_uid, $attachment['partID'],
+						$_folder,
+						$attachment['name'],
+						$attachment['mimeType'],
+						$attachment['size']);
+				}
 			}
 		}
 		$mail_bo->closeConnection();
