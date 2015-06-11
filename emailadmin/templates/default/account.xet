@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="emailadmin.account.identity" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="300">
+		<grid width="100%">
 			<columns>
 				<column width="113"/>
 				<column width="300"/>
@@ -37,13 +37,13 @@
 					<url-email id="ident_email" options="80,128" span="all"/>
 				</row>
 				<row>
-					<htmlarea expand_toolbar="false" height="125px" id="ident_signature" span="all"/>
+					<htmlarea expand_toolbar="false" height="125px" id="ident_signature" span="all" width="100%"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="emailadmin.account.imap" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="300">
+		<grid width="100%">
 			<columns>
 				<column width="115"/>
 				<column width="200"/>
@@ -119,7 +119,7 @@
 		</grid>
 	</template>
 	<template id="emailadmin.account.folder" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="300">
+		<grid width="100%">
 			<columns>
 				<column width="115"/>
 				<column/>
@@ -157,7 +157,7 @@
 		</grid>
 	</template>
 	<template id="emailadmin.account.sieve" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="300">
+		<grid width="100%">
 			<columns>
 				<column width="120"/>
 				<column/>
@@ -191,7 +191,7 @@
 		</grid>
 	</template>
 	<template id="emailadmin.account.smtp" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="300">
+		<grid width="100%">
 			<columns>
 				<column width="115"/>
 				<column/>
@@ -239,7 +239,7 @@
 		</grid>
 	</template>
 	<template id="emailadmin.account.aliases" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="300">
+		<grid width="100%">
 			<columns>
 				<column width="113"/>
 				<column width="400"/>
@@ -308,7 +308,7 @@
 					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all">
+					<tabbox id="tabs" span="all" tab_height="320">
 						<tabs>
 							<tab id="emailadmin.account.identity" label="Identity+Signature" statustext="Identity&amp;Signature"/>
 							<tab id="emailadmin.account.imap" label="IMAP" statustext="incoming mail"/>
