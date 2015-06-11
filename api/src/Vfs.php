@@ -1502,8 +1502,8 @@ class Vfs extends Vfs\StreamWrapper
 		// We need to remove them _after_ we're done
 		$tempfiles = array();
 
-		// Give 1 second per file
-		set_time_limit(count($files));
+		// Give 1 second per file, but try to allow more time for big files when amount of files is low
+		set_time_limit((count($files)<=9?10:count($files)));
 
 		// Add files to archive
 		foreach($files as &$addfile)
