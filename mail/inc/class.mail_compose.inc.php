@@ -1722,11 +1722,14 @@ class mail_compose
 			if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 				//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
 				foreach($attachments as $attachment) {
-					$this->addMessageAttachment($_uid, $attachment['partID'],
-						$_folder,
-						$attachment['name'],
-						$attachment['mimeType'],
-						$attachment['size']);
+					if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])))
+					{
+						$this->addMessageAttachment($_uid, $attachment['partID'],
+							$_folder,
+							$attachment['name'],
+							$attachment['mimeType'],
+							$attachment['size']);
+					}
 				}
 			}
 		}
