@@ -357,6 +357,7 @@ rule priority position	mail	de	Priorität der Filterregel
 rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Filter Regeln
 save all	mail	de	Alle speichern
+save as calendar	mail	de	Als Termin speichern
 save as default	mail	de	Als Vorgabe speichern
 save as draft	mail	de	Als Entwurf speichern
 save as draft and print	mail	de	Als Entwurf speichern und drucken
