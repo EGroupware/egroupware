@@ -2424,3 +2424,22 @@ WHERE recur_type=5 AND cal.range_end IS NOT NULL AND ABS(cal.cal_modified-$value
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.002';
 }
+
+/**
+ * Fix wrong date for 2016 DE holiday Fronleichnam
+ *
+ * @return string
+ */
+function calendar_upgrade14_2_002()
+{
+	$GLOBALS['egw_setup']->db->update('egw_cal_holidays', array(
+		'hol_mday' => 26,
+		'hol_month_num' => 5
+	), array(
+		'hol_locale' => 'DE',
+		'hol_name' => 'Fronleichnam',
+		'hol_occurence' => 2016,
+	), __LINE__, __FILE__, 'calendar');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.003';
+}
