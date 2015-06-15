@@ -267,7 +267,6 @@ class calendar_ui
 		// retrieve saved states from prefs
 		if(!$states)
 		{
-			error_log('HERE');
 			$states = unserialize($this->bo->cal_prefs['saved_states']);
 			error_log(array2string($states));
 		}
@@ -605,6 +604,8 @@ class calendar_ui
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
 
+		$this->sidebox_etemplate();
+
 		// resources menu hooks
  		foreach ($this->bo->resources as $resource)
 		{
@@ -636,6 +637,16 @@ class calendar_ui
 	{
 		if($content['merge'])
 		{
+			// View from sidebox is JSON encoded
+			$this->manage_states(array_merge($content,json_decode($content['view'],true)));
+			if($content['first'])
+			{
+				$this->first = egw_time::to($content['first'],'ts');
+			}
+			if($content['last'])
+			{
+				$this->last = egw_time::to($content['last'],'ts');
+			}
 			$_GET['merge'] = $content['merge'];
 			$this->merge();
 			return;

@@ -31,7 +31,7 @@ Egroupware
 				<buttononly align="center" class="sideboxstar" id="week" image="week" label="Weekview" onclick="app.calendar.update_state({view:'week'});"/>
 				<buttononly align="center" class="sideboxstar" id="weekN" image="multiweek" label="Multiple week view" onclick="app.calendar.update_state({view:'weekN'});"/>
 				<buttononly align="center" class="sideboxstar" id="month" image="month" label="Multiple week view" onclick="app.calendar.update_state({view:'month'});"/>
-				<buttononly align="center" class="sideboxstar" id="planner" image="planner" label="Group planner"/>
+				<buttononly align="center" class="sideboxstar" id="planner" image="planner" label="Group planner" onclick="app.calendar.update_state({view:'planner'});"/>
 				<buttononly align="center" class="sideboxstar" id="listview" image="list" label="Listview" onclick="app.calendar.update_state({view:'listview'});"/>
 				</row>
 				</rows>
@@ -39,6 +39,8 @@ Egroupware
 			<select id="view" class="et2_fullWidth" onchange="app.calendar.update_state(JSON.parse(widget.getValue()));"/>
 			<textbox id="keywords" class="et2_fullWidth" onchange="app.calendar.update_state({keywords: widget.getValue()});"/>
 			<date id="date" class="et2_fullWidth" inline="true" onchange="app.calendar.update_state({date:widget.getValue(),view:'day'});"/>
+			<textbox type="hidden" id="first"/>
+			<textbox type="hidden" id="last"/>
 			<hbox width="100%">
 				<select-cat id="cat_id" empty_label="All categories" width="86%" onchange="app.calendar.update_state({cat_id: widget.getValue()});"/>
 				<button align="right" id="cat_id_multiple" image="category"/>
@@ -50,8 +52,8 @@ Egroupware
 			<taglist id="owner" class="et2_fullWidth" onchange="app.calendar.update_state({owner: widget.getValue()});" autocomplete_params=''/>
 			-->
 			<select id="filter" no_lang="true" class="et2_fullWidth" onchange="app.calendar.update_state({filter: widget.getValue()});"/>
-			<select id="merge" empty_label="Insert in document" onchange="widget.getInstanceManager().postSubmit();widget.set_value('');" class="et2_fullWidth"/>/>
+			<select id="merge" empty_label="Insert in document" onchange="if(widget.getValue()) {widget.getInstanceManager().postSubmit();}window.setTimeout(function() {widget.set_value('');},100);return false;" class="et2_fullWidth"/>/>
 		</vbox>
-		<html id="old_calendar"/>
+		<iframe id="iframe" width="100%" height="100%"/>
 	</template>
 </overlay>

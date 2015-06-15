@@ -218,17 +218,20 @@ class calendar_uiviews extends calendar_ui
 		// handle views in other files
 		if (!isset($this->public_functions[$this->view]) && $this->view !== 'listview')
 		{
-			$GLOBALS['egw']->redirect_link('/index.php',array('menuaction'=>$this->view_menuaction,'ajax'=>'true'),'calendar');
+			$this->view = 'week';
 		}
 		// get manual to load the right page
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualCalendar'.ucfirst($this->view));
 
 		// Sidebox & iframe for old views
-		if(in_array($this->view,array('year','planner')))
+		if(in_array($this->view,array('year','planner')) && $_GET['view'])
 		{
+			$GLOBALS['egw_info']['flags']['nonavbar'] = true;
+			$this->manage_states($_GET);
 			$old_calendar = $this->{$this->view}();
+			echo $old_calendar;
+			return;
 		}
-		$this->sidebox_etemplate(array('old_calendar' => $old_calendar));
 
 		// Load the different views once, we'll switch between them on the client side
 		$tmpl = new etemplate_new('calendar.todo');

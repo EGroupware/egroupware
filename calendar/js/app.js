@@ -151,11 +151,10 @@ app.classes.calendar = AppJS.extend(
 	init: function()
 	{
 		// make calendar object available, even if not running in top window, as sidebox does
-		if (window.top !== window && !egw(window).is_popup())
+		if (window.top !== window && !egw(window).is_popup() && window.top.app.calendar)
 		{
-			// we have to explicitly delete old object or IE11 complains about accessing an already freed script
-			delete window.top.app.calendar;
-			window.top.app.calendar = this;
+			window.app.calendar = window.top.app.calendar;
+			return;
 		}
 
 		// call parent
@@ -368,6 +367,17 @@ app.classes.calendar = AppJS.extend(
 			{
 				return _url.replace(/menuaction=[^&]+/, 'menuaction=calendar.calendar_uilist.listview&ajax=true');
 			}
+			else if (this.sidebox_et2 && typeof this.views[state.view] == 'undefined')
+			{
+				this.sidebox_et2.getWidgetById('iframe').set_src(_url);
+				this.sidebox
+				return true;
+			}
+		}
+		else if (_url.indexOf('menuaction=calendar.calendar_uiviews') >= 0)
+		{
+			this.sidebox_et2.getWidgetById('iframe').set_src(_url);
+			return true;
 		}
 		// can not load our own index page, has to be done by framework
 		return false;
@@ -1237,6 +1247,11 @@ app.classes.calendar = AppJS.extend(
 	 */
 	update_state: function(_set)
 	{
+		// Make sure we're running in top window
+		if(window !== window.top)
+		{
+			return window.top.app.calendar.update_state(_set);
+		}
 		var changed = [];
 		var new_state = jQuery.extend({}, this.state);
 		if (typeof _set == 'object')
@@ -1276,11 +1291,6 @@ app.classes.calendar = AppJS.extend(
 			state = egw_script_tag.getAttribute('data-calendar-state');
 			state = state ? JSON.parse(state) : {};
 		}
-		// we are currently in list-view
-		if (this.et2 && this.et2.getWidgetById('nm'))
-		{
-			jQuery.extend(state, this._super.apply(this, arguments));	// call default implementation
-		}
 
 		// Don't store current user in state to allow admins to create favourites for all
 		// Should make no difference for normal users.
@@ -1318,9 +1328,26 @@ app.classes.calendar = AppJS.extend(
 		{
 			state.state.date = new Date();
 		}
+
+
+		// Hide other views
+		for(var _view in this.views)
+		{
+			if(state.state.view != _view && this.views[_view])
+			{
+				for(var i = 0; i < this.views[_view].etemplates.length; i++)
+				{
+					$j(this.views[_view].etemplates[i].DOMContainer).hide();
+				}
+			}
+		}
+		$j(this.sidebox_et2.getInstanceManager().DOMContainer).hide();
 		
 		// Check for a supported client-side view
-		if(this.views[state.state.view])
+		if(this.views[state.state.view] &&
+			// Check that the view is instanciated
+			typeof this.views[state.state.view].etemplates[0] !== 'string' && this.views[state.state.view].etemplates[0].widgetContainer
+		)
 		{
 			// Doing an update - this includes the selected view, and the sidebox
 			// We set a flag to ignore changes from the sidebox which would
@@ -1378,13 +1405,13 @@ app.classes.calendar = AppJS.extend(
 			{
 				// Need to redo the number of grids
 				var value = [];
-				var date = view.set_start_date(state.state);
+				var date = state.state.first = view.set_start_date(state.state);
 
 				// Determine the different end date
 				switch(state.state.view)
 				{
 					case 'month':
-						var end = view.set_end_date(state.state);
+						var end = state.state.last = view.set_end_date(state.state);
 						grid_count = Math.ceil((end - date) / (1000 * 60 * 60 * 24) / 7);
 						// fall through
 					case 'weekN':
@@ -1400,9 +1427,10 @@ app.classes.calendar = AppJS.extend(
 							value.push(val);
 							date.setUTCHours(24*7);
 						}
+						state.state.last=val.end_date;
 						break;
 					default:
-						var end = view.set_end_date(state.state);
+						var end = state.state.last = view.set_end_date(state.state);
 						for(var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++)
 						{
 							value.push({
@@ -1430,6 +1458,8 @@ app.classes.calendar = AppJS.extend(
 					if(typeof view[updater] === 'function')
 					{
 						var value = view[updater].call(this,state.state);
+						if(updater === 'set_start_date') state.state.first = value.toJSON();
+						if(updater === 'set_end_date') state.state.last = value.toJSON();
 
 						// Set value
 						for(var i = 0; i < view.etemplates.length; i++)
@@ -1444,19 +1474,9 @@ app.classes.calendar = AppJS.extend(
 					}
 				}
 			}
-			
-
-			// Hide other views
-			for(var _view in this.views)
-			{
-				if(state.state.view != _view && this.views[_view])
-				{
-					for(var i = 0; i < this.views[_view].etemplates.length; i++)
-					{
-						$j(this.views[_view].etemplates[i].DOMContainer).hide();
-					}
-				}
-			}
+			// Include first & last dates in state, mostly for server side processing
+			if(state.state.first && state.state.first.toJSON) state.state.first = state.state.first.toJSON()
+			if(state.state.last && state.state.last.toJSON) state.state.last = state.state.last.toJSON()
 
 			// Show the templates for the current view
 			for(var i = 0; i < view.etemplates.length; i++)
@@ -1605,7 +1625,8 @@ app.classes.calendar = AppJS.extend(
 			}
 		}
 		// setting internal state now, that linkHandler does not intercept switching from listview to any old view
-		this.state = state;
+		this.state = jQuery.extend({},state.state);
+		$j(this.sidebox_et2.getInstanceManager().DOMContainer).show();
 
 		var query = jQuery.extend({menuaction: menuaction},state.state||{});
 
