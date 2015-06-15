@@ -1625,6 +1625,7 @@ class mail_compose
 				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
 			}
+			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID);
 
 		} else {
 			$this->sessionData['mimeType']	= 'plain';
@@ -1638,15 +1639,21 @@ class mail_compose
 				#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
 			}
+			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID,'plain');
 		}
-
+		
 		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 			foreach($attachments as $attachment) {
-				$this->addMessageAttachment($_uid, $attachment['partID'],
-					$_folder,
-					$attachment['name'],
-					$attachment['mimeType'],
-					$attachment['size']);
+				$cid = $attachment['cid'];
+				preg_match("/[cid:{$cid}]/", $bodyParts['0']['body'], $match);
+				if (!$match || !$attachment['cid'])
+				{
+					$this->addMessageAttachment($_uid, $attachment['partID'],
+						$_folder,
+						$attachment['name'],
+						$attachment['mimeType'],
+						$attachment['size']);
+				}
 			}
 		}
 		$mail_bo->closeConnection();
@@ -1706,11 +1713,14 @@ class mail_compose
 			if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 				//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
 				foreach($attachments as $attachment) {
-					$this->addMessageAttachment($_uid, $attachment['partID'],
-						$_folder,
-						$attachment['name'],
-						$attachment['mimeType'],
-						$attachment['size']);
+					if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])))
+					{
+						$this->addMessageAttachment($_uid, $attachment['partID'],
+							$_folder,
+							$attachment['name'],
+							$attachment['mimeType'],
+							$attachment['size']);
+					}
 				}
 			}
 		}
@@ -2081,6 +2091,7 @@ class mail_compose
 			}
 
 			$this->sessionData['body']	.= '</blockquote><br>';
+			$this->sessionData['body'] =  mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID, 'html');
 		} else {
 			//$this->sessionData['body']	= @htmlspecialchars(lang("on")." ".$headers['DATE']." ".$mail_bo->decode_header($fromAddress), ENT_QUOTES) . " ".lang("wrote").":\r\n";
 			// take care the way the ReplyHeader is created here, is used later on in uicompose::compose, in case you force replys to be HTML (prefs)
@@ -2100,7 +2111,7 @@ class mail_compose
 				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
 				$newBody	= translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-
+				$newBody = mail_ui::resolve_inline_images($newBody, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
 				// create body new, with good line breaks and indention
 				foreach(explode("\n",$newBody) as $value) {
@@ -2284,7 +2295,7 @@ class mail_compose
 				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
 			}
 			// convert URL Images to inline images - if possible
-			if (!$_autosaving) mail_bo::processURL2InlineImages($_mailObject, $body);
+			if (!$_autosaving) mail_bo::processURL2InlineImages($_mailObject, $body, $mail_bo);
 			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
 			{
 				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);

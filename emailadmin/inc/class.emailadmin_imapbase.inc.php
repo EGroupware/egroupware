@@ -5919,9 +5919,10 @@ class emailadmin_imapbase
 	 *
 	 * @param egw_mailer $_mailObject instance of the egw_mailer/phpmailer Object to be used
 	 * @param string $_html2parse the html to parse and to be altered, if conditions meet
+	 * @param $mail_bo mail bo object
 	 * @return void
 	 */
-	static function processURL2InlineImages($_mailObject, &$_html2parse)
+	static function processURL2InlineImages($_mailObject, &$_html2parse, $mail_bo)
 	{
 		//error_log(__METHOD__."()");
 		$imageC = 0;
@@ -5957,8 +5958,32 @@ class emailadmin_imapbase
 						$basedir = 'vfs://default';
 						$needTempFile = false;
 					}
+					
+					// If it is an inline image url, we need to fetch the actuall attachment
+					// content and later on to be able to store its content as temp file
+					if (strpos($myUrl, '/index.php?menuaction=mail.mail_ui.displayImage') !== false)
+					{
+						$URI_params = array();
+						// Strips the url and store it into a temp for further procss
+						$tmp_url = html_entity_decode($myUrl);
+						
+						parse_str(parse_url($tmp_url, PHP_URL_QUERY),$URI_params);
+						if ($URI_params['mailbox'] && $URI_params['uid'] && $URI_params['cid'])
+						{
+							$mail_bo->reopen(base64_decode($URI_params['mailbox']));
+							$attachment = $mail_bo->getAttachmentByCID($URI_params['uid'], base64_decode($URI_params['cid']),base64_decode($URI_params['partID']),true);
+							$mail_bo->closeConnection();
+							if ($attachment)
+							{
+								$data = $attachment->getContents();
+								$mimeType = $attachment->getType();
+								$filename = $attachment->getDispositionParameter('filename');
+							}
+						}
+					}
+					
 					if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
-					if ($needTempFile) $data = file_get_contents($basedir.urldecode($myUrl));
+					if ($needTempFile && !$attachment) $data = file_get_contents($basedir.urldecode($myUrl));
 				}
 				if (substr($url,0,strlen('data:'))=='data:')
 				{
