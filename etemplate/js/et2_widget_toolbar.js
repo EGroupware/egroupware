@@ -405,7 +405,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		
 		if (action && action.checkbox)
 		{
-			if (this.checkbox(action.id)) button.addClass('toolbar_toggled');
+			if (this.checkbox(action.id)) button.addClass('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
 		}	
 		if ( action.iconUrl)
 		{
@@ -479,7 +479,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			if (btn.length > 0)
 			{
 				action_event.set_checked(_value);
-				btn.toggleClass('toolbar_toggled');
+				btn.toggleClass('toolbar_toggled'+ (typeof action_event.data.toggledClass != 'undefined'?" "+action_event.data.toggledClass:''));
 			}
 		}
 		else if (action_event)
