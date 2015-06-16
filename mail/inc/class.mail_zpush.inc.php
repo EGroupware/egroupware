@@ -937,14 +937,14 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 			else // style with bodypreferences
 			{
-				if (isset($bodypreference[1]) && !isset($bodypreference[1]["TruncationSize"]))
-					$bodypreference[1]["TruncationSize"] = 1024*1024;
-				if (isset($bodypreference[2]) && !isset($bodypreference[2]["TruncationSize"]))
-					$bodypreference[2]["TruncationSize"] = 1024*1024;
-				if (isset($bodypreference[3]) && !isset($bodypreference[3]["TruncationSize"]))
-					$bodypreference[3]["TruncationSize"] = 1024*1024;
-				if (isset($bodypreference[4]) && !isset($bodypreference[4]["TruncationSize"]))
-					$bodypreference[4]["TruncationSize"] = 1024*1024;
+				if (isset($bodypreference[1]) && !isset($truncsize))
+					$truncsize = 1024*1024;
+				if (isset($bodypreference[2]) && !isset($truncsize))
+					$truncsize = 1024*1024;
+				if (isset($bodypreference[3]) && !isset($truncsize))
+					$truncsize = 1024*1024;
+				if (isset($bodypreference[4]) && !isset($truncsize))
+					$truncsize = 1024*1024;
 				// set the protocoll class
 				$output->asbody = new SyncBaseBody();
 				// fetch the body (try to gather data only once)
@@ -1119,9 +1119,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					$htmlbody .= '</body>'.
 							'</html>';
 
-					if(isset($bodypreference[2]["TruncationSize"]) && strlen($html) > $bodypreference[2]["TruncationSize"])
+					if(isset($truncsize) && strlen($html) > $truncsize)
 					{
-						$htmlbody = utf8_truncate($htmlbody,$bodypreference[2]["TruncationSize"]);
+						$htmlbody = utf8_truncate($htmlbody,$truncsize);
 						$output->asbody->truncated = 1;
 					}
 					$output->asbody->data = $htmlbody;
@@ -1138,10 +1138,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					//$plain = str_replace("\n","\r\n",str_replace("\r","",$plain));
 					*/
 					$output->asbody->type = 1;
-					if(isset($bodypreference[1]["TruncationSize"]) &&
-			    		strlen($plainBody) > $bodypreference[1]["TruncationSize"])
+					if(isset($truncsize) &&
+			    		strlen($plainBody) > $truncsize)
 					{
-						$plainBody = utf8_truncate($plainBody, $bodypreference[1]["TruncationSize"]);
+						$plainBody = utf8_truncate($plainBody, $truncsize);
 						$output->asbody->truncated = 1;
 					}
 					$output->asbody->data = $plainBody;
@@ -1178,13 +1178,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$output->messageclass = "IPM.Note.SMIME.MultipartSigned";
 			}
 			// start AS12 Stuff
-			//$output->poommailflag = new SyncPoommailFlag();
+			//$output->poommailflag = new SyncMailFlags();
 
 			if ($this->messages[$id]['flagged'] == 1)
 			{
-				$output->poommailflag = new SyncPoommailFlag();
-				$output->poommailflag->flagstatus = 2;
-				$output->poommailflag->flagtype = "Flag for Follow up";
+				$output->flag = new SyncMailFlags();
+				$output->flag->flagstatus = 2;
+				$output->flag->flagtype = "Flag for Follow up";
 			}
 
 			$output->internetcpid = 65001;
@@ -1210,33 +1210,46 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$output->messageclass = "IPM.Schedule.Meeting.Request";
 						continue;	// do NOT add attachment as attachment
 					}
-					if(isset($output->_mapping[SYNC_POOMMAIL_ATTACHMENTS])) {
-						$attachment = new SyncAttachment();
-					} else if(isset($output->_mapping[SYNC_AIRSYNCBASE_ATTACHMENTS])) {
+					if (Request::GetProtocolVersion() >= 12.0) {
 						$attachment = new SyncBaseAttachment();
+						if (!isset($output->asattachments) || !is_array($output->asattachments))
+							$output->asattachments = array();
+						$attachment->estimatedDataSize = $attach['size'];
+						$attachment->method = 1;
+						$attachment->filereference = $folderid . ":" . $id . ":" . $attach['partID'];
+					} else {
+						$attachment = new SyncAttachment();
+						if (!isset($output->attachments) || !is_array($output->attachments))
+							$output->attachments = array();
+						$attachment->attsize = $attach['size'];
+						$attachment->attmethod = 1;
+						$attachment->attname = $folderid . ":" . $id . ":" . $attach['partID'];//$key;
 					}
-					$attachment->attsize = $attach['size'];
+					
 					$attachment->displayname = $attach['name'];
-					$attachment->attname = $folderid . ":" . $id . ":" . $attach['partID'];//$key;
 					//error_log(__METHOD__.__LINE__.'->'.$folderid . ":" . $id . ":" . $attach['partID']);
-					$attachment->attmethod = 1;
+					
 					$attachment->attoid = "";//isset($part->headers['content-id']) ? trim($part->headers['content-id']) : "";
 					if (!empty($attach['cid']) && $attach['cid'] <> 'NIL' )
 					{
 						$attachment->isinline=true;
-						$attachment->attmethod=6;
-						$attachment->contentid= $attach['cid'];
+						if (Request::GetProtocolVersion() >= 12.0) {
+							$attachment->attmethod=1;
+							$attachment->contentid= str_replace(array("<",">"), "",$attach['cid']);
+						} else {
+							$attachment->attmethod=6;
+							$attachment->attoid = str_replace(array("<",">"), "",$attach['cid']);
+						}
 						//	debugLog("'".$part->headers['content-id']."'  ".$attachment->contentid);
 						$attachment->contenttype = trim($attach['mimeType']);
 						//	debugLog("'".$part->headers['content-type']."'  ".$attachment->contentid);
 					} else {
 						$attachment->attmethod=1;
 					}
-
-					if (isset($output->_mapping[SYNC_POOMMAIL_ATTACHMENTS])) {
-						array_push($output->attachments, $attachment);
-					} else if(isset($output->_mapping[SYNC_AIRSYNCBASE_ATTACHMENTS])) {
+					if (Request::GetProtocolVersion() >= 12.0) {
 						array_push($output->asattachments, $attachment);
+					} else {
+						array_push($output->attachments, $attachment);
 					}
 				}
 			}
@@ -1305,7 +1318,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	function GetAttachmentData($fid,$attname) {
 		debugLog("getAttachmentData: $fid (attname: '$attname')");
-		error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
+		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
 		list($folderid, $id, $part) = explode(":", $attname);
 
 		$this->splitID($folderid, $account, $folder);
@@ -1314,9 +1327,14 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,false,$folder);
-		print $attachment['attachment'];
+        $SIOattachment = new SyncItemOperationsAttachment();
+        $SIOattachment->data = StringStreamWrapper::Open($attachment['attachment']);
+        if (isset($attachment['type']) )
+            $SIOattachment->contenttype = $attachment['type'];
+
 		unset($attachment);
-		return true;
+
+        return $SIOattachment;
 	}
 
 	/**
@@ -1327,33 +1345,27 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 *
      * @param string $fid - id
      * @param string $attname - should contain (folder)id
-	 * @return SyncAirSyncBaseFileAttachment-object
+	 * @return SyncItemOperationsAttachment-object
 	 */
 	function ItemOperationsGetAttachmentData($fid,$attname) {
-		debugLog("ItemOperationsGetAttachmentData: (attname: '$attname')");
-
+		debugLog(__METHOD__.": $fid (attname: '$attname')");
+		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
 		list($folderid, $id, $part) = explode(":", $attname);
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false, self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
-		$att = $this->mail->getAttachment($id,$part,0,false,false,$folder);
-		$attachment = new SyncAirSyncBaseFileAttachment();
-		/*
-		debugLog(__METHOD__.__LINE__.array2string($att));
-		if ($arr['filename']=='error.txt' && stripos($arr['attachment'], 'mail_bo::getAttachment failed') !== false)
-		{
-			return $attachment;
-		}
-		*/
-		if (is_array($att)) {
-			$attachment->_data = $att['attachment'];
-			$attachment->contenttype = trim($att['type']);
-		}
-		unset($att);
-		return $attachment;
+		$attachment = $this->mail->getAttachment($id,$part,0,false,false,$folder);
+        $SIOattachment = new SyncItemOperationsAttachment();
+        $SIOattachment->data = StringStreamWrapper::Open($attachment['attachment']);
+        if (isset($attachment['type']) )
+            $SIOattachment->contenttype = $attachment['type'];
+
+		unset($attachment);
+
+        return $SIOattachment;
 	}
 
 	/**
