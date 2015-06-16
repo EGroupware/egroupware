@@ -261,7 +261,7 @@ var et2_taglist = et2_selectbox.extend(
 	{
 		var label = jQuery('<span>').text(item.label);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
-
+		
 		return label;
 	},
 
@@ -572,6 +572,7 @@ var et2_taglist_email = et2_taglist.extend(
 		var label = jQuery('<span>').text(item.label);
 		if (item.class) label.addClass(item.class);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
+		if (typeof item.data != 'undefined') label.attr('data', item.data);
 		if (!valid) label.addClass('ui-state-error');
 
 		return label;
