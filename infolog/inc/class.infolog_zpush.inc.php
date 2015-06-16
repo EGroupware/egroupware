@@ -218,14 +218,18 @@ class infolog_zpush implements activesync_plugin_write
 	 *
 	 * @param string $folderid
 	 * @param string $id
-	 * @param int $truncsize
-	 * @param int $bodypreference
-	 * @param bool $mimesupport
+	 * @param ContentParameters $contentparameters  parameters of the requested message (truncation, mimesupport etc)
+	 *  object with attributes foldertype, truncation, rtftruncation, conflict, filtertype, bodypref, deletesasmoves, filtertype, contentclass, mimesupport, conversationmode
+	 *  bodypref object with attributes: ]truncationsize, allornone, preview
 	 * @return $messageobject|boolean false on error
 	 */
-	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
+	public function GetMessage($folderid, $id, $contentparameters)
 	{
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
+
+		$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
+		$mimesupport = $contentparameters->GetMimeSupport();
+		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
 		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
 		$this->backend->splitID($folderid, $type, $account);
@@ -251,9 +255,9 @@ class infolog_zpush implements activesync_plugin_write
 						if (strlen ($infolog[$attr]) > 0)
 						{
 							debugLog("airsyncbasebody!");
-							$message->airsyncbasebody = new SyncAirSyncBaseBody();
-							$message->airsyncbasenativebodytype=1;
-							$this->backend->note2messagenote($infolog[$attr], $bodypreference, $message->airsyncbasebody);
+							$message->asbody = new SyncBaseBody();
+							$message->nativebodytype=1;
+							$this->backend->note2messagenote($infolog[$attr], $bodypreference, $message->asbody);
 						}
 					}
 					$message->md5body = md5($infolog[$attr]);
@@ -358,6 +362,7 @@ class infolog_zpush implements activesync_plugin_write
 	 * @param string $folderid
 	 * @param int $id for change | empty for create new
 	 * @param SyncContact $message object to SyncObject to create
+	 * @param ContentParameters   $contentParameters
 	 *
 	 * @return array $stat whatever would be returned from StatMessage
 	 *
@@ -368,10 +373,10 @@ class infolog_zpush implements activesync_plugin_write
 	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
 	 * can only set them as 'read'.
 	 */
-	public function ChangeMessage($folderid, $id, $message)
+	public function ChangeMessage($folderid, $id, $message, $contentParameters)
 	{
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
-
+		unset($contentParameters); // not used but required
 		$this->backend->splitID($folderid, $type, $account);
 		//debugLog(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
 		if ($type != 'infolog') // || !($infolog = $this->addressbook->read($id)))
@@ -434,6 +439,7 @@ class infolog_zpush implements activesync_plugin_write
 	 * @param $folderid of the current folder
 	 * @param $id of the message
 	 * @param $newfolderid
+	 * @param ContentParameters   $contentParameters
 	 *
 	 * @return $newid as a string | boolean false on error
 	 *
@@ -443,9 +449,9 @@ class infolog_zpush implements activesync_plugin_write
 	 *
 	 * @ToDo: If this gets implemented, we have to take into account the 'addressbook-all-in-one' pref!
 	 */
-	public function MoveMessage($folderid, $id, $newfolderid)
+	public function MoveMessage($folderid, $id, $newfolderid, $contentParameters)
 	{
-		debugLog(__METHOD__."('$folderid', $id, $newfolderid) NOT implemented --> returning false");
+		debugLog(__METHOD__."('$folderid', $id, $newfolderid, ".array2string($contentParameters).") NOT implemented --> returning false");
 		return false;
 	}
 
@@ -455,6 +461,7 @@ class infolog_zpush implements activesync_plugin_write
 	 *
 	 * @param $folderid
 	 * @param $id
+     * @param ContentParameters   $contentParameters
 	 *
 	 * @return boolean true on success, false on error, diffbackend does NOT use the returnvalue
 	 *
@@ -463,7 +470,7 @@ class infolog_zpush implements activesync_plugin_write
 	 * as it will be seen as a 'new' item. This means that if you don't implement this function, you will
 	 * be able to delete messages on the PDA, but as soon as you sync, you'll get the item back
 	 */
-	public function DeleteMessage($folderid, $id)
+	public function DeleteMessage($folderid, $id, $contentParameters)
 	{
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
@@ -479,8 +486,17 @@ class infolog_zpush implements activesync_plugin_write
 	 * new 'flags' but should not modify the 'mod' parameter. If you do
 	 * change 'mod', simply setting the message to 'read' on the PDA will trigger
 	 * a full resync of the item from the server
+	 *
+	 * @param string              $folderid            id of the folder
+	 * @param string              $id                  id of the message
+	 * @param int                 $flags               read flag of the message
+	 * @param ContentParameters   $contentParameters
+	 *
+	 * @access public
+	 * @return boolean                      status of the operation
+	 * @throws StatusException              could throw specific SYNC_STATUS_* exceptions
 	 */
-	function SetReadFlag($folderid, $id, $flags)
+	public function SetReadFlag($folderid, $id, $flags, $contentParameters)
 	{
 		return false;
 	}
