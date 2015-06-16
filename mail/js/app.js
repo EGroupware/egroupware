@@ -4239,28 +4239,57 @@ app.classes.mail = AppJS.extend(
 			drop:function (event, ui)
 			{
 				var widget = self.et2.getWidgetById(this.getAttribute('name'));
-				var emails = [];
+				var emails, distLists = [];
 				var fromWidget = {};
+				
+				var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
+				if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
+				{
+					fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
+				}
+				
 				var draggedValue = ui.draggable.text();
-
+				
+				// index of draggable item in selection list
+				var dValueKey = draggedValue;
+				
+				var distItem = ui.draggable.find('.mailinglist');
+				if (distItem.length>0)
+				{
+					var distItemId = parseInt(distItem.attr('data'));
+					if (distItemId)
+					{
+						var fromDistLists = resolveDistList(fromWidget);
+						for (var i=0;i<fromDistLists.length;i++)
+						{
+							if (distItemId == fromDistLists[i]['id'])
+							{
+								draggedValue = fromDistLists[i];
+								// dist list item index
+								dValueKey = fromDistLists[i]['id'];
+							}
+						}
+					}
+				}
+				
 				if (typeof widget != 'undefined')
 				{
 					emails = widget.get_value();
-
 					if (emails) emails = emails.concat([draggedValue]);
-
-					widget.set_value(emails);
-
-					var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
-					if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
-					{
-						fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
-					}
+					
+					// Resolve the dist list and normal emails
+					distLists = resolveDistList(widget, emails);
+					
+					// Add normal emails
+					if (emails) widget.set_value(emails);
+					
+					// check if there's any dist list to be added
+					if (distLists.length>0) widget.taglist.addToSelection(distLists);
 
 					if (!jQuery.isEmptyObject(fromWidget)
 							&& !(ui.draggable.attr('class').search('mailCompose_copyEmail') > -1))
 					{
-						if (!_removeDragged(fromWidget, draggedValue))
+						if (!_removeDragged(fromWidget, dValueKey))
 						{
 							//Not successful remove, returns the item to its origin
 							jQuery(ui.draggable).draggable('option','revert',true);
@@ -4300,10 +4329,25 @@ app.classes.mail = AppJS.extend(
 			{
 				var emails = _widget.get_value();
 				var itemIndex = emails.indexOf(_value);
+				var dist = [];
 				if (itemIndex > -1)
 				{
 					emails.splice(itemIndex,1);
+					// Resolve the dist list and normal emails
+					var dist = resolveDistList(_widget, emails)
+					
+					// Add normal emails
 					_widget.set_value(emails);
+					
+					//check if there's any dist list to be added
+					if (dist)
+					{
+						for(var i=0;i<dist.length;i++)
+						{
+							if (dist[i]['id'] == _value) dist.splice(i,1);
+						}
+						_widget.taglist.addToSelection(dist);
+					}
 				}
 				else
 				{
@@ -4311,6 +4355,38 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 			return true;
+		};
+		
+		/**
+		 * Resolve taglist widget which has distribution list
+		 * 
+		 * @param {type} _widget
+		 * @param {type} _emails
+		 * @returns {Array} returns an array of distribution lists in selected widget
+		 */
+		var resolveDistList = function (_widget, _emails)
+		{
+			var list = [];
+			var selectedList = _widget.taglist.getSelection();
+			// Make a list of distribution list from the selection
+			for (var i=0;i<selectedList.length;i++)
+			{
+				if (!isNaN(selectedList[i]['id']) && selectedList[i]['class'] === 'mailinglist')
+				{
+					list.push(selectedList[i]);
+				}
+			}
+			
+			// Remove dist list from emails list
+			for(var key in _emails)
+			{
+				if (!isNaN(_emails[key]))
+				{
+					_emails.splice(key,1);
+				}
+			}
+			// returns distlist
+			return list;
 		};
 	},
 

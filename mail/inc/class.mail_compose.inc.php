@@ -3374,6 +3374,7 @@ class mail_compose
 					'label'	=> $list_name,
 					'class' => 'mailinglist',
 					'title' => lang('Mailinglist'),
+					'data'	=> $key
 				);
 				if($list_count++ > 5) break;
 			}
