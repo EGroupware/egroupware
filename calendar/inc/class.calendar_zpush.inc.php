@@ -501,6 +501,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 * @param string $folderid
 	 * @param int $id for change | empty for create new
 	 * @param SyncAppointment $message object to SyncObject to create
+	 * @param ContentParameters   $contentParameters
 	 *
 	 * @return array $stat whatever would be returned from StatMessage
 	 *
@@ -511,7 +512,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
 	 * can only set them as 'read'.
 	 */
-	public function ChangeMessage($folderid, $id, $message)
+	public function ChangeMessage($folderid, $id, $message, $contentParameters)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
@@ -884,6 +885,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 * @param $folderid of the current folder
 	 * @param $id of the message
 	 * @param $newfolderid
+	 * @param ContentParameters   $contentParameters
 	 *
 	 * @return $newid as a string | boolean false on error
 	 *
@@ -891,9 +893,9 @@ return array();	// temporary disabling meeting requests from calendar
 	 * to have a new parent. This means that it will disappear from GetMessageList() will not return the item
 	 * at all on the source folder, and the destination folder will show the new message
 	 */
-	public function MoveMessage($folderid, $id, $newfolderid)
+	public function MoveMessage($folderid, $id, $newfolderid, $contentParameters)
 	{
-		debugLog(__METHOD__."('$folderid', $id, '$newfolderid') NOT supported!");
+		debugLog(__METHOD__."('$folderid', $id, '$newfolderid',".array2string($contentParameters).") NOT supported!");
 		return false;
 	}
 
@@ -902,6 +904,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 *
 	 * @param $folderid
 	 * @param $id
+	 * @param ContentParameters   $contentParameters
 	 *
 	 * @return boolean true on success, false on error, diffbackend does NOT use the returnvalue
 	 *
@@ -910,7 +913,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 * as it will be seen as a 'new' item. This means that if you don't implement this function, you will
 	 * be able to delete messages on the PDA, but as soon as you sync, you'll get the item back
 	 */
-	public function DeleteMessage($folderid, $id)
+	public function DeleteMessage($folderid, $id, $contentParameters)
 	{
 		if (!isset($this->caledar)) $this->calendar = new calendar_boupdate();
 
@@ -926,8 +929,17 @@ return array();	// temporary disabling meeting requests from calendar
 	 * new 'flags' but should not modify the 'mod' parameter. If you do
 	 * change 'mod', simply setting the message to 'read' on the PDA will trigger
 	 * a full resync of the item from the server
+	 *
+	 * @param string              $folderid            id of the folder
+	 * @param string              $id                  id of the message
+	 * @param int                 $flags               read flag of the message
+	 * @param ContentParameters   $contentParameters
+	 *
+	 * @access public
+	 * @return boolean                      status of the operation
+	 * @throws StatusException              could throw specific SYNC_STATUS_* exceptions
 	 */
-	function SetReadFlag($folderid, $id, $flags)
+	function SetReadFlag($folderid, $id, $flags, $contentParameters)
 	{
 		debugLog(__METHOD__."('$folderid', $id, ".array2string($flags)." NOT supported!");
 		return false;
@@ -957,17 +969,18 @@ return array();	// temporary disabling meeting requests from calendar
 	 *
 	 * @param string $folderid
 	 * @param string|array $id cal_id or event array (used internally)
-	 * @param int $truncsize
-	 * @param int|bool $bodypreference=false
-	 * @param $optionbodypreference=false
-	 * @param int $mimesupport=0
+	 * @param ContentParameters   $contentparameters
 	 * @return SyncAppointment|boolean false on error
 	 */
-	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
+	public function GetMessage($folderid, $id, $contentparameters)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+		//error_log(__METHOD__.__LINE__.array2string($contentparameters).function_backtrace());
+		$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
+		$mimesupport = $contentparameters->GetMimeSupport();
+		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
-		debugLog (__METHOD__."('$folderid', ".array2string($id).", truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
+		debugLog (__METHOD__."('$folderid', ".array2string($id).", truncsize=$truncsize, bodyprefence=".array2string($bodypreference).", mimesupport=$mimesupport)");
 		$this->backend->splitID($folderid, $type, $account);
 		if (is_array($id))
 		{
@@ -1032,9 +1045,9 @@ return array();	// temporary disabling meeting requests from calendar
 			if (strlen($event['description']) > 0)
 			{
 				debugLog("airsyncbasebody!");
-				$message->airsyncbasebody = new SyncAirSyncBaseBody();
-				$message->airsyncbasenativebodytype=1;
-				$this->backend->note2messagenote($event['description'], $bodypreference, $message->airsyncbasebody);
+				$message->asbody = new SyncBaseBody();
+				$message->nativebodytype=1;
+				$this->backend->note2messagenote($event['description'], $bodypreference, $message->asbody);
 			}
 		}
 		$message->md5body = md5($event['description']);
@@ -1151,7 +1164,7 @@ return array();	// temporary disabling meeting requests from calendar
 				foreach($ex_events as $ex_event)
 				{
 					if ($ex_event['id'] == $event['id']) continue;	// ignore series master
-					$exception = $this->GetMessage($folderid, $ex_event, $truncsize, $bodypreference, $mimesupport);
+					$exception = $this->GetMessage($folderid, $ex_event, $contentparameters);
 					$exception->exceptionstarttime = $exception_time = $ex_event['recurrence'];
 					foreach(array('attendees','recurrence','uid','timezone','organizername','organizeremail') as $not_supported)
 					{
@@ -1185,7 +1198,7 @@ return array();	// temporary disabling meeting requests from calendar
 				egw_time::$server_timezone->getName(), $cutoffdate, 0, 'all') as $exception_time)
 			{
 				// exceptions seems to be full SyncAppointments, with only exceptionstarttime required
-				$exception = $this->GetMessage($folderid, $event['id'].':'.$exception_time, $truncsize, $bodypreference, $mimesupport);
+				$exception = $this->GetMessage($folderid, $event['id'].':'.$exception_time, $contentparameters);
 				$exception->deleted = 0;
 				$exception->exceptionstarttime = $exception_time;
 				debugLog(__METHOD__."() added virtual exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
