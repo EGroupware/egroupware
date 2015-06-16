@@ -42,7 +42,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
  * How to deal with multiple alarms allowed in EGroupware: report earliest one to the device
  * (and hope it resyncs before next one is due, thought we do NOT report that as change currently!).
  */
-class calendar_activesync implements activesync_plugin_write, activesync_plugin_meeting_requests
+class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeting_requests
 {
 	/**
 	 * var BackendEGW

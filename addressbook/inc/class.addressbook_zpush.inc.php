@@ -15,7 +15,7 @@
 /**
  * Addressbook activesync plugin
  */
-class addressbook_activesync implements activesync_plugin_write, activesync_plugin_search_gal
+class addressbook_zpush implements activesync_plugin_write, activesync_plugin_search_gal
 {
 	/**
 	 * @var BackendEGW

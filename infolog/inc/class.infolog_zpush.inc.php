@@ -13,7 +13,7 @@
 /**
  * InfoLog activesync plugin
  */
-class infolog_activesync implements activesync_plugin_write
+class infolog_zpush implements activesync_plugin_write
 {
 	/**
 	 * @var BackendEGW

@@ -17,7 +17,7 @@
  *
  * Plugin creates a device specific file to map alphanumeric folder names to nummeric id's.
  */
-class mail_activesync implements activesync_plugin_write, activesync_plugin_sendmail, activesync_plugin_meeting_response, activesync_plugin_search_mailbox
+class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail, activesync_plugin_meeting_response, activesync_plugin_search_mailbox
 {
 	/**
 	 * var BackendEGW
