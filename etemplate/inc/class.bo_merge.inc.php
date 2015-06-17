@@ -174,6 +174,8 @@ abstract class bo_merge
 				return true;	// alias for text/xml, eg. ms office 2003 word format
 			case 'message/rfc822':
 				return true; // ToDo: check if you are theoretical able to send mail
+			case 'application/x-yaml':
+				return true;	// yaml file, plain text with marginal syntax support for multiline replacements
 			default:
 				if (substr($mimetype,0,5) == 'text/')
 				{
@@ -687,7 +689,7 @@ abstract class bo_merge
 		{
 			$content = preg_replace('/\\\{\\\{([^\\}]+)\\\}\\\}/i','$$\1$$',$content);
 		}
-		
+
 		// make currently processed mimetype available to class methods;
 		$this->mimetype = $mimetype;
 
@@ -1084,6 +1086,19 @@ abstract class bo_merge
 			// now decode &, < and >, which need to be encoded as entities in xml
 			// Check for encoded >< getting double-encoded
 			$replacements = str_replace(array('&',"\r","\n",'&amp;lt;','&amp;gt;'),array('&amp;','',$break,'&lt;','&gt;'),$replacements);
+		}
+		if ($mimetype == 'application/x-yaml')
+		{
+			$content = preg_replace_callback('/^( +)(\$\$[^$]+\$\$)/m', function($matches) use ($replacements)
+			{
+				$replacement = $replacements[$matches[2]];
+				// replacement with multiple lines --> add same number of space as before placeholder
+				if (isset($replacement) && strpos($replacement, "\n") !== false)
+				{
+					return $matches[1].implode("\n".$matches[1], preg_split("/\r?\n/", $replacement));
+				}
+				return $matches[0];	// regular replacement below
+			}, $content);
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
 	}
