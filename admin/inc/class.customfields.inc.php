@@ -432,7 +432,10 @@ class customfields
 		}
 
 		// Include type-specific value help
-		$content['options'] = lang(self::$type_option_help);
+		foreach(self::$type_option_help as $key => $value)
+		{
+			$content['options'][$key] = lang($value);
+		}
 		$content['statustext'] = $content['options'][$content['cf_type']];
 		$content['attributes'] = self::$type_attribute_flags;
 

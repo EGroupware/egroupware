@@ -365,6 +365,37 @@ class egw_customfields implements IteratorAggregate
 	{
 		$op = $cf['id'] ? 'update' : 'insert';
 
+		// Check to see if field order needs to be re-done
+		$update = array();
+		if($cf['id'])
+		{
+			$cfs = egw_customfields::get($cf['app'], true);
+			$old = $cfs[$cf['id']];
+			if($old['order'] != $cf['order'])
+			{
+				uasort($cfs, function($a1, $a2){
+					return $a1['order'] - $a2['order'];
+				});
+				$n = 0;
+				foreach($cfs as $old_cf)
+				{
+					$n += 10;
+					if($old_cf['order'] != $n)
+					{
+						$old_cf['order'] = $n;
+						if($old_cf['name'] != $cf['name'])
+						{
+							$update[] = $old_cf;
+						}
+						else
+						{
+							$cf['order'] = $n;
+						}
+					}
+				}
+			}
+		}
+
 		self::$db->$op(self::TABLE, array(
 			'cf_label' => $cf['label'],
 			'cf_type' => $cf['type'],
@@ -382,6 +413,16 @@ class egw_customfields implements IteratorAggregate
 			'cf_name' => $cf['name'],
 			'cf_app' => $cf['app'],
 		), __LINE__, __FILE__);
+
+		foreach($update as $old_cf)
+		{
+			self::$db->$op(self::TABLE, array(
+				'cf_order' => $old_cf['order'],
+			), array(
+				'cf_name' => $old_cf['name'],
+				'cf_app' => $old_cf['app'],
+			), __LINE__, __FILE__);
+		}
 
 		self::invalidate_cache($cf['app']);
 	}
