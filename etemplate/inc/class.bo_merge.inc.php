@@ -263,7 +263,10 @@ abstract class bo_merge
 		foreach($this->contacts->customfields as $name => $field)
 		{
 			$name = '#'.$name;
-			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = egw_customfields::format($field, (string)$contact[$name]);
+			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] =
+				// use raw data for yaml, no user-preference specific formatting
+				$this->mimetype == 'application/x-yaml' ? (string)$contact[$name] :
+				egw_customfields::format($field, (string)$contact[$name]);
 		}
 
 		// Add in extra cat field
@@ -1089,13 +1092,25 @@ abstract class bo_merge
 		}
 		if ($mimetype == 'application/x-yaml')
 		{
-			$content = preg_replace_callback('/^( +)(\$\$[^$]+\$\$)/m', function($matches) use ($replacements)
+			$content = preg_replace_callback('/^( +)([^$\n]*)(\$\$.+?\$\$)/m', function($matches) use ($replacements)
 			{
-				$replacement = $replacements[$matches[2]];
-				// replacement with multiple lines --> add same number of space as before placeholder
-				if (isset($replacement) && strpos($replacement, "\n") !== false)
+				// allow with {{name/replace/with}} syntax to replace eg. commas with linebreaks: "{{name/, */\n}}"
+				$parts = null;
+				if (preg_match('|^\$\$([^/]+)/([^/]+)/([^$]*)\$\$$|', $matches[3], $parts) && isset($replacements['$$'.$parts[1].'$$']))
 				{
-					return $matches[1].implode("\n".$matches[1], preg_split("/\r?\n/", $replacement));
+					$replacement =& $replacements['$$'.$parts[1].'$$'];
+					$replacement = preg_replace('/'.$parts[2].'/', strtr($parts[3], array(
+						'\\n' => "\n", '\\r' => "\r", '\\t' => "\t", '\\v' => "\v", '\\\\' => '\\', '\\f' => "\f",
+					)), $replacement);
+				}
+				else
+				{
+					$replacement =& $replacements[$matches[3]];
+				}
+				// replacement with multiple lines --> add same number of space as before placeholder
+				if (isset($replacement))
+				{
+					return $matches[1].$matches[2].implode("\n".$matches[1], preg_split("/\r?\n/", $replacement));
 				}
 				return $matches[0];	// regular replacement below
 			}, $content);
