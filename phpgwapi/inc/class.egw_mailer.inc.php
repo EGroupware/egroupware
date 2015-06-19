@@ -452,6 +452,28 @@ class egw_mailer extends Horde_Mime_Mail
 			'message_id' => (string)$message_id,
 		), array(), true);	// true = call all apps
 
+		// check if we are sending an html mail with inline images
+		if (!empty($this->_htmlBody) && count($this->_parts))
+		{
+			$related = null;
+			foreach($this->_parts as $n => $part)
+			{
+				if ($part->getDisposition() == 'inline' && $part->getContentId())
+				{
+					// we need to send a multipart/related with html-body as first part and inline images as further parts
+					if (!isset($related))
+					{
+						$related = new Horde_Mime_Part();
+						$related->setType('multipart/related');
+						$related[] = $this->_htmlBody;
+						$this->_htmlBody = $related;
+					}
+					$related[] = $part;
+					unset($this->_parts[$n]);
+				}
+			}
+		}
+
 		try {
 			parent::send($this->account->smtpTransport(), true,		// true: keep Message-ID
 				$this->_body->getType() != 'multipart/encrypted');	// no flowed for encrypted messages
