@@ -379,7 +379,7 @@ class calendar_uilist extends calendar_ui
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
 			$this->to_client($event);
-			
+
 			if ($params['csv_export'])
 			{
 				$event['participants'] = implode(",\n",$this->bo->participants($event,true));
@@ -453,7 +453,7 @@ class calendar_uilist extends calendar_ui
 
 			// set id for grid
 			$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.$event['recur_date'] : '');
-			
+
 			// Format start and end with timezone
 			foreach(array('start','end') as $time)
 			{
@@ -508,7 +508,7 @@ class calendar_uilist extends calendar_ui
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg,$skip_notification=false)
 	{
-		//echo '<p>' . __METHOD__ . "('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
+		//error_log(__METHOD__."('$action', ".array2string($checked).', all='.(int)$use_all.", ...)");
 		$success = $failed = 0;
 		$msg = null;
 
@@ -542,7 +542,7 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		// for calendar integration we have to fetch all rows and unset the not selected ones, as we can not filter by id
-		elseif(in_array($action,array('ical','document')))
+		elseif($action == 'document')
 		{
 			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
 			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
@@ -558,12 +558,23 @@ class calendar_uilist extends calendar_ui
 		switch($action)
 		{
 			case 'ical':
+				// compile list of unique cal_id's, as iCal should contain whole series, not recurrences
+				// calendar_ical->exportVCal needs to read events again, to get them in server-time
+				$ids = array();
+				foreach($checked as $id)
+				{
+					if (is_array($id)) $id = $id['id'];
+					// get rid of recurrences, doublicate series and calendar-integration events
+					if (($id = (int)$id))
+					{
+						$ids[$id] = $id;
+					}
+				}
 				$boical = new calendar_ical();
-				$ical =& $boical->exportVCal($checked,'2.0','PUBLISH',false);
-				html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+				$ical =& $boical->exportVCal($ids, '2.0', 'PUBLISH');
+				html::content_header('event.ics', 'text/calendar', bytes($ical));
 				echo $ical;
 				common::egw_exit();
-				break;
 
 			case 'document':
 				if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
