@@ -12,9 +12,6 @@
  * @version $Id$
  */
 
-require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
-require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/SyncML/State.php');
-
 /**
  * Addressbook - vCard parser
  *
@@ -75,7 +72,7 @@ class addressbook_vcal extends addressbook_bo
 			'REV'				=> array('modified'),
 			//set for Apple: 'X-ABSHOWAS'	=> array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
 		);
-		
+
 	var $supportedFields;
 
 	/**
@@ -130,8 +127,8 @@ class addressbook_vcal extends addressbook_bo
 	* import a vard into addressbook
 	*
 	* @param string	$_vcard		the vcard
-	* @param int/string	$_abID=null		the internal addressbook id or !$_abID for a new enty
-	* @param boolean $merge=false	merge data with existing entry
+	* @param int/string	$_abID =null		the internal addressbook id or !$_abID for a new enty
+	* @param boolean $merge =false	merge data with existing entry
 	* @param string $charset  The encoding charset for $text. Defaults to
     *                         utf-8 for new format, iso-8859-1 for old format.
 	* @return int contact id
@@ -146,7 +143,7 @@ class addressbook_vcal extends addressbook_bo
 			{
 				if ($merge)
 				{
-					foreach ($contact as $key => $value)
+					foreach (array_keys($contact) as $key)
 					{
 						if (!empty($old_contact[$key]))
 						{
@@ -197,17 +194,13 @@ class addressbook_vcal extends addressbook_bo
 	* return a vcard
 	*
 	* @param int/string	$_id the id of the contact
-	* @param string $_charset='UTF-8' encoding of the vcard, default UTF-8
-	* @param boolean $extra_charset_attribute=true GroupDAV/CalDAV dont need the charset attribute and some clients have problems with it
+	* @param string $_charset ='UTF-8' encoding of the vcard, default UTF-8
+	* @param boolean $extra_charset_attribute =true GroupDAV/CalDAV dont need the charset attribute and some clients have problems with it
 	* @return string containing the vcard
 	*/
 	function getVCard($_id,$_charset='UTF-8',$extra_charset_attribute=true)
 	{
-		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
-
-		#Horde::logMessage("vCalAddressbook clientProperties:\n" . print_r($this->clientProperties, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-		$vCard = new Horde_iCalendar_vcard($this->version);
+		$vCard = new Horde_Icalendar_Vcard($this->version);
 		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
@@ -525,7 +518,7 @@ class addressbook_vcal extends addressbook_bo
 
 		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
 	}
-	
+
 	function setDatabaseFields($_databaseFields)
 	{
 		if (is_array($_databaseFields)) $this->databaseFields = $_databaseFields;
@@ -551,7 +544,7 @@ class addressbook_vcal extends addressbook_bo
 				array2string($_vcard)."\n",3,$this->logfile);
 		}
 
-		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
+//		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
 		if(!($_vcard instanceof Horde_iCalendar))
 		{
@@ -1053,14 +1046,12 @@ class addressbook_vcal extends addressbook_bo
 	 * return a groupVCard
 	 *
 	 * @param array $list values for 'list_uid', 'list_name', 'list_modified', 'members'
-	 * @param string $version='3.0' vcard version
+	 * @param string $version ='3.0' vcard version
 	 * @return string containing the vcard
 	 */
 	function getGroupVCard(array $list,$version='3.0')
 	{
-		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
-
-		$vCard = new Horde_iCalendar_vcard($version);
+		$vCard = new Horde_Icalendar_Vcard($version);
 		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 

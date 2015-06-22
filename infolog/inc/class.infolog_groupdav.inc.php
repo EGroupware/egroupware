@@ -7,11 +7,9 @@
  * @package infolog
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
-
-require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
  * EGroupware: GroupDAV access: infolog handler
@@ -66,7 +64,7 @@ class infolog_groupdav extends groupdav_handler
 		parent::__construct($app, $groupdav);
 
 		$this->bo = new infolog_bo();
-		$this->vCalendar = new Horde_iCalendar;
+		$this->vCalendar = new Horde_Icalendar;
 
 		// since 1.9.002 we allow clients to specify the URL when creating a new event, as specified by CalDAV
 		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.002', '>='))
