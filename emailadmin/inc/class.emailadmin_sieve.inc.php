@@ -569,13 +569,14 @@ class emailadmin_sieve extends Net_Sieve
 	 *
 	 * @param array $_rules
 	 * @param string $_scriptName
+	 * @param boolean $utf7imap_fileinto =false true: encode foldernames with utf7imap, default utf8
 	 */
-	function setRules(array $_rules, $_scriptName=null)
+	function setRules(array $_rules, $_scriptName=null, $utf7imap_fileinto=false)
 	{
 		$script = $this->retrieveRules($_scriptName);
 		$script->debug = $this->debug;
 		$script->rules = $_rules;
-		$ret = $script->updateScript($this);
+		$ret = $script->updateScript($this, $utf7imap_fileinto);
 		$this->error = $script->errstr;
 		return $ret;
 	}

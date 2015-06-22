@@ -205,4 +205,22 @@ class emailadmin_imap_cyrus extends emailadmin_imap
 		}
 		$this->disconnect();
 	}
+
+	/**
+	 * Proxy former bosieve methods to internal emailadmin_sieve instance
+	 *
+	 * @param string $name
+	 * @param array $params
+	 * @throws Exception
+	 */
+	public function __call($name,array $params=null)
+	{
+		switch($name)
+		{
+			case 'setRules':	// call setRules with 3. param of true, to enable utf7imap fileinto for Cyrus
+				$params += array(null, null, true);
+				break;
+		}
+		return parent::__call($name, $params);
+	}
 }

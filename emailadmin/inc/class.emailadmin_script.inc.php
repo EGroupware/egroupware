@@ -234,8 +234,13 @@ class emailadmin_script {
 	}
 
 
-	// update and save sieve script
-	function updateScript ($connection)
+	/**
+	 * update and save sieve script
+	 *
+	 * @param emailadmin_imap $connection
+	 * @param boolean $utf7imap_fileinto =false true: encode foldernames with utf7imap, default utf8
+	 */
+	function updateScript ($connection, $utf7imap_fileinto=false)
 	{
 		#global $_SESSION,$default,$sieve;
 		global $default,$sieve;
@@ -383,7 +388,8 @@ class emailadmin_script {
 				if (!$rule['unconditional']) $newruletext .= ") {\n\t";
 
 				if (preg_match("/folder/i",$rule['action'])) {
-						$newruletext .= "fileinto \"" . $rule['action_arg'] . "\";";
+						$newruletext .= "fileinto \"" . ($utf7imap_fileinto ?
+							translation::convert($rule['action_arg'],'utf-8', 'utf7-imap') : $rule['action_arg']) . "\";";
 				}
 				if (preg_match("/reject/i",$rule['action'])) {
 						$newruletext .= "reject text: \n" . $rule['action_arg'] . "\n.\n;";
