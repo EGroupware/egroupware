@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware: iCal export plugin of calendar
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -12,7 +12,7 @@
  */
 
 /**
- * export iCal plugin of calendar
+ * iCal export plugin of calendar
  */
 class calendar_export_ical extends calendar_export_csv {
 
@@ -63,6 +63,7 @@ class calendar_export_ical extends calendar_export_csv {
 					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 				}
 				$ui = new calendar_uilist();
+				$unused = null;
 				$ui->get_rows($query, $events, $unused);
 			}
 			else
@@ -75,7 +76,6 @@ class calendar_export_ical extends calendar_export_csv {
 					$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
 				}
 
-				$events = array();
 				switch($states['view'])
 				{
 					case 'month':
@@ -109,8 +109,16 @@ class calendar_export_ical extends calendar_export_csv {
 				));
 			}
 		}
+		// compile list of unique cal_id's, as iCal should contain whole series, not recurrences
+		// calendar_ical->exportVCal needs to read events again, to get them in server-time
+		$ids = array();
+		foreach($events as $event)
+		{
+			$id = is_array($event) ? $event['id'] : $event;
+			if (($id = (int)$id)) $ids[$id] = $id;
+		}
 
-		$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
+		$ical =& $boical->exportVCal($ids,'2.0','PUBLISH',false);
 		fwrite($_stream, $ical);
 	}
 
