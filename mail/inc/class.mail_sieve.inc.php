@@ -236,7 +236,7 @@ class mail_sieve
 				switch ($rules['action'])
 				{
 					case 'folder':
-						$content['action_folder_text'][] = translation::convert($rules['action_arg'],'utf-8','utf7-imap');
+						$content['action_folder_text'][] = $rules['action_arg'];
 
 						break;
 					case 'address':
@@ -285,7 +285,7 @@ class mail_sieve
 						switch ($content['action'])
 						{
 							case 'folder':
-								$newRule['action_arg'] = translation::convert(implode($content['action_folder_text']), 'utf7-imap', 'utf-8');
+								$newRule['action_arg'] = implode($content['action_folder_text']);
 								break;
 							case 'address':
 								$newRule['action_arg'] = implode(',',$content['action_address_text']);
