@@ -529,7 +529,10 @@ class calendar_ical extends calendar_boupdate
 					case 'CLASS':
 						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
 						// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
-						if (!$event['public']) $vcal->setAttribute('X-CALENDARSERVER-ACCESS', 'CONFIDENTIAL');
+						if (!$event['public'] && $this->productManufacturer == 'GroupDAV')
+						{
+							$vcal->setAttribute('X-CALENDARSERVER-ACCESS', 'CONFIDENTIAL');
+						}
 						break;
 
     				case 'ORGANIZER':
@@ -2998,7 +3001,8 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
-		if (($x_calendarserver_access = $component->_container->getAttribute('X-CALENDARSERVER-ACCESS')) &&
+		if ($this->productManufacturer == 'GroupDAV' &&
+			($x_calendarserver_access = $component->_container->getAttribute('X-CALENDARSERVER-ACCESS')) &&
 			!is_a($x_calendarserver_access, 'PEAR_Error'))
 		{
 			$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
