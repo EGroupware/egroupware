@@ -396,23 +396,39 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
      * want it in 'sent items', then the next sync on the 'sent items' folder should return
      * the new message as any other new message in a folder.
      *
-     * @param string $rfc822 mail
-     * @param array $smartdata =array() values for keys:
-     * 	'task': 'forward', 'new', 'reply'
-     *  'itemid': id of message if it's an reply or forward
-     *  'folderid': folder
-     *  'replacemime': false = send as is, false = decode and recode for whatever reason ???
-	 *	'saveinsentitems': 1 or absent?
-     * @param boolean|double $protocolversion =false
+     * @param array $smartdata = IMAP-SendMail: SyncSendMail (
+     *        (S) clientid => SendMail-30722448149304
+     *        (S) saveinsent => empty
+     *        (S) replacemime => null
+     *        (S) accountid => null
+     *        (S) source => SyncSendMailSource (
+     *                                (S) folderid => 101000000000
+     *                                (S) itemid => 33776
+     *                                (S) longid => null
+     *                                (S) instanceid => null
+     *                                unsetVars(Array) size: 0
+     *                                flags => false
+     *                                content => null
+     *                        )
+     *        (S) mime => Date: Tue, 23 Jun 2015 14:13:23 +0200
+     *Subject: AW: Blauer himmel
+     *....
+     *        (S) replyflag => true
+     *        (S) forwardflag => null
+     *        unsetVars(Array) size: 0
+     *        flags => false
+     *        content => null
+     *)
+	 *
      * @return boolean true on success, false on error
      *
      * @see eg. BackendIMAP::SendMail()
      * @todo implement either here or in mail backend
      * 	(maybe sending here and storing to sent folder in plugin, as sending is supposed to always work in EGroupware)
      */
-	public function SendMail($rfc822, $smartdata=array(), $protocolversion = false)
+	public function SendMail($smartdata)
 	{
-		//$this->debugLevel=3;
+		$this->debugLevel=3;
 		$ClientSideMeetingRequest = false;
 		$allowSendingInvitations = 'sendifnocalnotif';
 		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-allowSendingInvitations']) &&
@@ -425,10 +441,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		{
 			$allowSendingInvitations = $GLOBALS['egw_info']['user']['preferences']['activesync']['mail-allowSendingInvitations'];
 		}
+		$smartdata_task = ($smartdata->replyflag?'reply':($smartdata->forwardflag?'forward':'new'));
 
-		if ($protocolversion < 14.0)
-    		debugLog("IMAP-SendMail: " . (isset($rfc822) ? $rfc822 : ""). "task: ".(isset($smartdata['task']) ? $smartdata['task'] : "")." itemid: ".(isset($smartdata['itemid']) ? $smartdata['itemid'] : "")." folder: ".(isset($smartdata['folderid']) ? $smartdata['folderid'] : ""));
-		if ($this->debugLevel>0) debugLog("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
+   		debugLog(__METHOD__.__LINE__ . (isset($smartdata->mime) ? $smartdata->mime : ""). "task: ".(isset($smartdata_task) ? $smartdata_task : "")." itemid: ".(isset($smartdata->source->itemid) ? $smartdata->source->itemid : "")." folder: ".(isset($smartdata->source->folderid) ? $smartdata->source->folderid : ""));
+		if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__."): Smartdata = ".array2string($smartdata));
 		//error_log("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
 
 		// initialize our mail_bo
@@ -437,11 +453,11 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// use the standardIdentity
 		$activeMailProfile = mail_bo::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
 
-		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
+		if ($this->debugLevel>2) debugLog(__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
 		// initialize the new egw_mailer object for sending
 		$mailObject = new egw_mailer();
-		$this->mail->parseRawMessageIntoMailObject($mailObject,$rfc822);
+		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->From 	= $activeMailProfile['ident_email'];
@@ -454,21 +470,21 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("To")) as $addressObject) {
 			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog("Header Sentmail To: ".array2string($addressObject) );
+			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") Header Sentmail To: ".array2string($addressObject) );
 			//$mailObject->AddAddress($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$toMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// CC
 		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Cc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog("Header Sentmail CC: ".array2string($addressObject) );
+			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") Header Sentmail CC: ".array2string($addressObject) );
 			//$mailObject->AddCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
 		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Bcc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog("Header Sentmail BCC: ".array2string($addressObject) );
+			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") Header Sentmail BCC: ".array2string($addressObject) );
 			//$mailObject->AddBCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$bccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
@@ -485,15 +501,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 
 		// save the original content-type header for the body part when forwarding
-		if ($smartdata['task'] == 'forward' && $smartdata['itemid'] && !$use_orgbody) {
+		if ($smartdata_task == 'forward' && $smartdata->source->itemid && !$use_orgbody) {
 			//continue; // ignore
 		}
 		// horde/egw_ mailer does everything as utf-8, the following should not be needed
 		//$org_charset = $ContentType;
 		//$ContentType = preg_replace("/charset=([A-Za-z0-9-\"']+)/", "charset=\"utf-8\"", $ContentType);
 		// if the message is a multipart message, then we should use the sent body
-		if (($smartdata['task'] == 'new' || $smartdata['task'] == 'reply' || $smartdata['task'] == 'forward') &&
-			((isset($smartdata['replacemime']) && $smartdata['replacemime'] == true) ||
+		if (($smartdata_task == 'new' || $smartdata_task == 'reply' || $smartdata_task == 'forward') &&
+			((isset($smartdata->replacemime) && $smartdata->replacemime == true) ||
 			$k == "Content-Type" && preg_match("/multipart/i", $ContentType))) {
 			$use_orgbody = true;
 		}
@@ -509,13 +525,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			{
 				$Body = $body;
 				$AltBody = "<pre>".nl2br($body)."</pre>";
-				if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched Body as :". $simpleBodyType.'=> Created AltBody');
+				if ($this->debugLevel>1) debugLog(__METHOD__."(".__LINE__.") fetched Body as :". $simpleBodyType.'=> Created AltBody');
 			}
 			else
 			{
 				$AltBody = $body;
 				$Body =  trim(translation::convertHTMLToText($body));
-				if ($this->debugLevel>1) debugLog("IMAP-Sendmail: fetched Body as :". $simpleBodyType.'=> Created Body');
+				if ($this->debugLevel>1) debugLog(__METHOD__."(".__LINE__.") fetched Body as :". $simpleBodyType.'=> Created Body');
 			}
 		}
 		else
@@ -527,20 +543,20 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$AltBody = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","[$2]",
 				($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null);
 		}
-		if ($this->debugLevel>1 && $Body) debugLog("IMAP-Sendmail: fetched Body as with MessageContentType:". $ContentType.'=>'.$Body);
-		if ($this->debugLevel>1 && $AltBody) debugLog("IMAP-Sendmail: fetched AltBody as with MessageContentType:". $ContentType.'=>'.$AltBody);
+		if ($this->debugLevel>1 && $Body) debugLog(__METHOD__."(".__LINE__.") fetched Body as with MessageContentType:". $ContentType.'=>'.$Body);
+		if ($this->debugLevel>1 && $AltBody) debugLog(__METHOD__."(".__LINE__.") fetched AltBody as with MessageContentType:". $ContentType.'=>'.$AltBody);
 		//error_log(__METHOD__.__LINE__.array2string($mailObject));
 		// if this is a multipart message with a boundary, we must use the original body
 		//if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' mailObject after Inital Parse:'.array2string($mailObject));
         if ($use_orgbody) {
-    	    if ($this->debugLevel>0) debugLog("IMAP-Sendmail: use_orgbody = true ContentType:".$ContentType);
+    	    if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") use_orgbody = true ContentType:".$ContentType);
  			// if it is a ClientSideMeetingRequest, we report it as send at all times
 			if (stripos($ContentType,'text/calendar') !== false )
 			{
 				$body = ($text_body = $mailObject->findBody('calendar')) ? $text_body->getContents() : null;
 				$Body = $body;
 				$AltBody = "<pre>".nl2br($body)."</pre>";
-				if ($this->debugLevel>0) debugLog("IMAP-Sendmail: we have a Client Side Meeting Request");
+				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") we have a Client Side Meeting Request");
 				// try figuring out the METHOD -> [ContentType] => text/calendar; name=meeting.ics; method=REQUEST
 				$tA = explode(' ',$ContentType);
 				foreach ((array)$tA as $k => $p)
@@ -615,15 +631,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$sigTextPlain = $beforePlain.translation::convertHTMLToText($sigText);
 		$isreply = $isforward = false;
 		// reply ---------------------------------------------------------------------------
-		if ($smartdata['task'] == 'reply' && isset($smartdata['itemid']) &&
-			isset($smartdata['folderid']) && $smartdata['itemid'] && $smartdata['folderid'] &&
-			(!isset($smartdata['replacemime']) ||
-			(isset($smartdata['replacemime']) && $smartdata['replacemime'] == false)))
+		if ($smartdata_task == 'reply' && isset($smartdata->source->itemid) &&
+			isset($smartdata->source->folderid) && $smartdata->source->itemid && $smartdata->source->folderid &&
+			(!isset($smartdata->replacemime) ||
+			(isset($smartdata->replacemime) && $smartdata->replacemime == false)))
 		{
 			// now get on, and fetch the original mail
-			$uid = $smartdata['itemid'];
-			if ($this->debugLevel>0) debugLog("IMAP Smartreply is called with FolderID:".$smartdata['folderid'].' and ItemID:'.$smartdata['itemid']);
-			$this->splitID($smartdata['folderid'], $account, $folder);
+			$uid = $smartdata->source->itemid;
+			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") IMAP Smartreply is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+			$this->splitID($smartdata->source->folderid, $account, $folder);
 
 			$this->mail->reopen($folder);
 			$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
@@ -631,17 +647,17 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 		    if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 				// may be html
-				if ($this->debugLevel>0) debugLog("MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
+				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
 				$AltBody = $AltBody."</br>".$bodyBUFFHtml.$sigTextHtml;
 				$isreply = true;
 			}
 			// plain text Message part
-			if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
+			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
 			// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 			$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 			if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
-				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
+				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 				$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
 				$isreply = true;
 			}
@@ -657,10 +673,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$preferencesArray =& $GLOBALS['egw_info']['user']['preferences']['mail'];
 
 		// forward -------------------------------------------------------------------------
-		if ($smartdata['task'] == 'forward' && isset($smartdata['itemid']) &&
-			isset($smartdata['folderid']) && $smartdata['itemid'] && $smartdata['folderid'] &&
-			(!isset($smartdata['replacemime']) ||
-			(isset($smartdata['replacemime']) && $smartdata['replacemime'] == false)))
+		if ($smartdata_task == 'forward' && isset($smartdata->source->itemid) &&
+			isset($smartdata->source->folderid) && $smartdata->source->itemid && $smartdata->source->folderid &&
+			(!isset($smartdata->replacemime) ||
+			(isset($smartdata->replacemime) && $smartdata->replacemime == false)))
 		{
 			//force the default for the forwarding -> asmail
 			if (is_array($preferencesArray)) {
@@ -671,9 +687,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$preferencesArray['message_forwarding'] = 'asmail';
 			}
 			// construct the uid of the message out of the itemid - seems to be the uid, no construction needed
-			$uid = $smartdata['itemid'];
-			if ($this->debugLevel>0) debugLog("IMAP Smartfordward is called with FolderID:".$smartdata['folderid'].' and ItemID:'.$smartdata['itemid']);
-			$this->splitID($smartdata['folderid'], $account, $folder);
+			$uid = $smartdata->source->itemid;
+			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.")IMAP Smartfordward is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+			$this->splitID($smartdata->source->folderid, $account, $folder);
 
 			$this->mail->reopen($folder);
             // receive entire mail (header + body)
@@ -683,8 +699,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if ($preferencesArray['message_forwarding'] == 'asmail')
 			{
 				$rawHeader='';
-				$rawHeader      = $this->mail->getMessageRawHeader($smartdata['itemid'], $_partID,$folder);
-				$rawBody        = $this->mail->getMessageRawBody($smartdata['itemid'], $_partID,$folder);
+				$rawHeader      = $this->mail->getMessageRawHeader($smartdata->source->itemid, $_partID,$folder);
+				$rawBody        = $this->mail->getMessageRawBody($smartdata->source->itemid, $_partID,$folder);
 				$mailObject->AddStringAttachment($rawHeader.$rawBody, $headers['SUBJECT'].'.eml', 'message/rfc822');
 				$AltBody = $AltBody."</br>".lang("See Attachments for Content of the Orignial Mail").$sigTextHtml;
 				$Body = $Body."\r\n".lang("See Attachments for Content of the Orignial Mail").$sigTextPlain;
@@ -693,9 +709,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			else
 			{
 				// now get on, and fetch the original mail
-				$uid = $smartdata['itemid'];
-				if ($this->debugLevel>0) debugLog("IMAP Smartreply is called with FolderID:".$smartdata['folderid'].' and ItemID:'.$smartdata['itemid']);
-				$this->splitID($smartdata['folderid'], $account, $folder);
+				$uid = $smartdata->source->itemid;
+				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") IMAP Smartreply is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+				$this->splitID($smartdata->source->folderid, $account, $folder);
 
 				$this->mail->reopen($folder);
 				$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
@@ -703,17 +719,17 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 				if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
-					if ($this->debugLevel>0) debugLog("MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
+					if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
 					$AltBody = $AltBody."</br>".$bodyBUFFHtml.$sigTextHtml;
 					$isforward = true;
 				}
 				// plain text Message part
-				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
+				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 				if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
-					if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
+					if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 					$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
 					$isforward = true;
 				}
@@ -763,7 +779,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		//advanced debugging
 		// Horde SMTP Class uses utf-8 by default.
         //debugLog("IMAP-SendMail: parsed message: ". print_r($message,1));
-		if ($this->debugLevel>2) debugLog("IMAP-SendMail: MailObject:".array2string($mailObject));
+		if ($this->debugLevel>2) debugLog(__METHOD__."(".__LINE__."): MailObject:".array2string($mailObject));
 
 		// set a higher timeout for big messages
 		@set_time_limit(120);
@@ -774,15 +790,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$mailObject->Send();
 		}
 		catch(phpmailerException $e) {
-			debugLog("The email could not be sent. Last-SMTP-error: ". $e->getMessage());
+			debugLog(__METHOD__."(".__LINE__.") The email could not be sent. Last-SMTP-error: ". $e->getMessage());
 			$send = false;
 		}
 
-		if (( $smartdata['task'] == 'reply' || $smartdata['task'] == 'forward') && $send == true)
+		if (( $smartdata_task == 'reply' || $smartdata_task == 'forward') && $send == true)
 		{
-			$uid = $smartdata['itemid'];
-			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' tASK:'.$smartdata['task']." FolderID:".$smartdata['folderid'].' and ItemID:'.$smartdata['itemid']);
-			$this->splitID($smartdata['folderid'], $account, $folder);
+			$uid = $smartdata->source->itemid;
+			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' tASK:'.$smartdata_task." FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+			$this->splitID($smartdata->source->folderid, $account, $folder);
 			//error_log(__METHOD__.__LINE__.' Folder:'.$folder.' Uid:'.$uid);
 			$this->mail->reopen($folder);
 			// if the draft folder is a starting part of the messages folder, the draft message will be deleted after the send
@@ -792,7 +808,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$this->mail->deleteMessages(array($uid),$folder);
 			} else {
 				$this->mail->flagMessages("answered", array($uid),$folder);
-				if ($smartdata['task']== "forward")
+				if ($smartdata_task== "forward")
 				{
 					$this->mail->flagMessages("forwarded", array($uid),$folder);
 				}
@@ -800,7 +816,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 
 		$asf = ($send ? true:false); // initalize accordingly
-		if (($smartdata['saveinsentitems']==1 || !isset($smartdata['saveinsentitems'])) && $send==true && $this->mail->mailPreferences['sendOptions'] != 'send_only')
+		if (($smartdata->saveinsent==1 || !isset($smartdata->saveinsent)) && $send==true && $this->mail->mailPreferences['sendOptions'] != 'send_only')
 		{
 			$asf = false;
 			$sentFolder = $this->mail->getSentFolder();
@@ -814,7 +830,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			// No Sent folder set, try defaults
 			else
 			{
-				debugLog("IMAP-SendMail: No Sent mailbox set");
+				debugLog(__METHOD__."(".__LINE__.") IMAP-SendMail: No Sent mailbox set");
 				// we dont try guessing
 				$asf = true;
 			}
@@ -855,13 +871,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						//$asf = false;
 						debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$mailObject->getHeader('Subject'),$folderName));
 					}
-			        debugLog("IMAP-SendMail: Outgoing mail saved in configured 'Sent' folder '".$folderName."': ". (($asf)?"success":"failed"));
+			        debugLog(__METHOD__."(".__LINE__."): Outgoing mail saved in configured 'Sent' folder '".$folderName."': ". (($asf)?"success":"failed"));
 				}
 				//$this->mail->closeConnection();
 			}
 		}
 
-		//$this->debugLevel=0;
+		$this->debugLevel=0;
 
 		if ($send && $asf)
 		{
@@ -888,6 +904,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	public function GetMessage($folderid, $id, $contentparameters)
 	{
+$this->debugLevel=4;
 		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id);
 		$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
 		$mimesupport = $contentparameters->GetMimeSupport();
@@ -1225,16 +1242,16 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$attachment->attmethod = 1;
 						$attachment->attname = $folderid . ":" . $id . ":" . $attach['partID'];//$key;
 					}
-					
+
 					$attachment->displayname = $attach['name'];
 					//error_log(__METHOD__.__LINE__.'->'.$folderid . ":" . $id . ":" . $attach['partID']);
-					
+
 					$attachment->attoid = "";//isset($part->headers['content-id']) ? trim($part->headers['content-id']) : "";
 					if (!empty($attach['cid']) && $attach['cid'] <> 'NIL' )
 					{
 						$attachment->isinline=true;
 						if (Request::GetProtocolVersion() >= 12.0) {
-							$attachment->attmethod=1;
+							$attachment->method=1;
 							$attachment->contentid= str_replace(array("<",">"), "",$attach['cid']);
 						} else {
 							$attachment->attmethod=6;
@@ -1243,8 +1260,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						//	debugLog("'".$part->headers['content-id']."'  ".$attachment->contentid);
 						$attachment->contenttype = trim($attach['mimeType']);
 						//	debugLog("'".$part->headers['content-type']."'  ".$attachment->contentid);
-					} else {
-						$attachment->attmethod=1;
 					}
 					if (Request::GetProtocolVersion() >= 12.0) {
 						array_push($output->asattachments, $attachment);
@@ -1256,8 +1271,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			//$this->debugLevel=0;
 			// end handle Attachments
 			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($output));
+$this->debugLevel=0;
 			return $output;
 		}
+$this->debugLevel=0;
 		return false;
 	}
 
@@ -1389,22 +1406,34 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	}
 
 	/**
-	 * This function is called when a message has been changed on the PDA. You should parse the new
-	 * message here and save the changes to disk. The return value must be whatever would be returned
-	 * from StatMessage() after the message has been saved. This means that both the 'flags' and the 'mod'
-	 * properties of the StatMessage() item may change via ChangeMessage().
-	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
-	 * can only set them as 'read'.
+	 * Called when a message has been changed on the mobile.
+	 * Added support for FollowUp flag
 	 *
-	 * @param string $folderid
-	 * @param int $id for change | empty for create new
-	 * @param SyncMail $message object to SyncObject to create
+	 * @param string              $folderid            id of the folder
+	 * @param string              $id                  id of the message
+	 * @param SyncXXX             $message             the SyncObject containing a message
 	 * @param ContentParameters   $contentParameters
+	 *
+	 * @access public
+	 * @return array                        same return value as StatMessage()
+	 * @throws StatusException              could throw specific SYNC_STATUS_* exceptions
 	 */
 	function ChangeMessage($folderid, $id, $message, $contentParameters)
 	{
-		unset($folderid, $id, $message, $contentParameters);
-		return false;
+		debugLog(__METHOD__.__LINE__." $folderid, $id,".array2string($message).",".array2string($contentParameters));
+		//unset($folderid, $id, $message, $contentParameters);
+		$account = $folder = null;
+		$this->splitID($folderid, $account, $folder);
+		if (isset($message->flag)) {
+			if (isset($message->flag->flagstatus) && $message->flag->flagstatus == 2) {
+				$rv = $this->mail->flagMessages((($message->flag->flagstatus == 2) ? "flagged" : "unflagged"), $id,$folder);
+				debugLog(__METHOD__." -> set ".array2string($id).' in Folder '.$folder." as " . (($message->flag->flagstatus == 2) ? "flagged" : "unflagged") . "-->". $rv);
+			} else {
+				$rv = $this->mail->flagMessages("unflagged", $id,$folder);
+				debugLog(__METHOD__." -> set ".array2string($id).' in Folder '.$folder." as " . "unflagged" . "-->". $rv);
+			}
+		}		
+		return $this->StatMessage($folderid, $id);
 	}
 
 	/**

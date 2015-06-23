@@ -476,7 +476,7 @@ class egw_mailer extends Horde_Mime_Mail
 
 		try {
 			parent::send($this->account->smtpTransport(), true,		// true: keep Message-ID
-				$this->_body->getType() != 'multipart/encrypted');	// no flowed for encrypted messages
+				$this->_body && $this->_body->getType() != 'multipart/encrypted');	// no flowed for encrypted messages
 		}
 		catch (Exception $e) {
 			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
