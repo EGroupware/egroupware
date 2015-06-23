@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 52916 2015-06-10 21:51:28Z nathangray $ */
+/* $Id: app.css 52977 2015-06-23 12:32:55Z hnategh $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -733,7 +733,7 @@ img.calendar_print_appicon {
   width: 133px;
 }
 #calendar-edit_category {
-  max-width: 250px;
+  max-width: 230px;
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
