@@ -680,3 +680,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 #calendar-edit select#calendar-edit_duration {
 	width: 133px;
 }
+
+#calendar-edit_category {
+  max-width: 250px;
+}

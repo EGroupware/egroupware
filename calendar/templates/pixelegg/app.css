@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 49793 2014-12-09 17:55:00Z nathangray $ */
+/* $Id: app.css 52435 2015-04-07 13:16:07Z hnategh $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -683,6 +683,12 @@ img.calendar_print_appicon {
 .calendar_favorite_portlet .calendar_calDayColHeader a img,
 .calendar_favorite_portlet .calendar_plannerScale a img {
   display: none;
+}
+#calendar-edit select#calendar-edit_duration {
+  width: 133px;
+}
+#calendar-edit_category {
+  max-width: 250px;
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
