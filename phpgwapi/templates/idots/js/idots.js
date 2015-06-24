@@ -70,19 +70,22 @@ egw_LAB.wait(function() {
 	 */
 	$j(function()
 	{
-		// Installing resize handler for divAppbox and et2_container, as et2 otherwise can not correctly size nextmatch
-		$j(window).resize(function(){
-			var appbox_height = $j(window).height()-$j('#topmenu').height()-$j('#divAppIconBar').height()-
-				$j('#divStatusBar').height()-$j('#divAppboxHeader').height()-$j('#divPoweredBy').height()-20;
-			//console.log('setting height of '+appbox_height);
-			$j('#divAppbox').css('min-height', appbox_height+'px');
-			$j('.et2_container').height(appbox_height-7);
-		});
-		$j(window).resize();
-		$j(window).load(function(){	// fixes sometimes not called resize, probably due to timing issues
+		if (!egw(window).is_popup())
+		{
+			// Installing resize handler for divAppbox and et2_container, as et2 otherwise can not correctly size nextmatch
+			$j(window).resize(function(){
+				var appbox_height = $j(window).height()-$j('#topmenu').height()-$j('#divAppIconBar').height()-
+					$j('#divStatusBar').height()-$j('#divAppboxHeader').height()-$j('#divPoweredBy').height()-20;
+				//console.log('setting height of '+appbox_height);
+				$j('#divAppbox').css('min-height', appbox_height+'px');
+				$j('.et2_container').height(appbox_height-7);
+			});
 			$j(window).resize();
-		});
-
+			$j(window).load(function(){	// fixes sometimes not called resize, probably due to timing issues
+				$j(window).resize();
+			});
+		}
+		
 		// allowing javascript urls in topmenu and sidebox only under CSP by binding click handlers to them
 		var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
 		jQuery('#topmenu_items,#thesideboxcolumn,#menu2Content').on('click','a[href^="javascript:"]',function(ev){
