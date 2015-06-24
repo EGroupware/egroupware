@@ -1787,7 +1787,7 @@ class calendar_ical extends calendar_boupdate
 	static function valarm2egw(&$alarms, &$valarm)
 	{
 		$count = 0;
-		foreach ($valarm->_attributes as $vattr)
+		foreach ($valarm->getAllAttributes() as $vattr)
 		{
 			switch ($vattr['name'])
 			{
@@ -2399,7 +2399,7 @@ class calendar_ical extends calendar_boupdate
 			return false; // not a valid entry
 		}
 		// lets see what we can get from the vcard
-		foreach ($component->_attributes as $attributes)
+		foreach ($component->getAllAttributes() as $attributes)
 		{
 			switch ($attributes['name'])
 			{

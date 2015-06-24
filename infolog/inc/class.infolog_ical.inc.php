@@ -1092,7 +1092,7 @@ class infolog_ical extends infolog_bo
 						$note = array();
 						$note['info_type'] = 'note';
 
-						foreach ($component->_attributes as $attribute)
+						foreach ($component->getAllAttributes() as $attribute)
 						{
 							switch ($attribute['name'])
 							{
