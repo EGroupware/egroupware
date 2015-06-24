@@ -1190,10 +1190,9 @@ class infolog_ical extends infolog_bo
 				")\n" , 3, $this->logfile);
 		}
 
-		Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
-			. $this->productName .', ' .
-			($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
-			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
+		//	. $this->productName .', ' .
+		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 }
