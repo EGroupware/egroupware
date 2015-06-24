@@ -2223,7 +2223,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if (!is_a($component, 'Horde_Icalendar_Vevent') ||
-			!($event = $this->vevent2egw($component, $container ? $container->getAttribute('VERSION') : '2.0',
+			!($event = $this->vevent2egw($component, $container ? $container->getAttributeDefault('VERSION', '2.0') : '2.0',
 				$this->supportedFields, $principalURL, $container)))
 		{
 			return false;
@@ -2283,8 +2283,8 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		/*
-		$mozillaACK = $component->getAttribute('X-MOZ-LASTACK');
-		if ($this->productName == 'lightning' && !is_a($mozillaACK, 'PEAR_Error'))
+		$mozillaACK = $component->getAttributeDefault('X-MOZ-LASTACK', null);
+		if ($this->productName == 'lightning' && !isset($mozillaACK))
 		{
 			if ($this->log)
 			{
@@ -2861,9 +2861,11 @@ class calendar_ical extends calendar_boupdate
 								$vcardData['participants'][$uid] =
 									calendar_so::combine_status($status, $quantity, $role);
 
-								if (!$this->calendarOwner && is_numeric($uid) &&
-										$role == 'CHAIR' &&
-										is_a($component->getAttribute('ORGANIZER'), 'PEAR_Error'))
+								try {
+									if (!$this->calendarOwner && is_numeric($uid) && $role == 'CHAIR')
+										$component->getAttribute('ORGANIZER');
+								}
+								catch(Horde_Icalendar_Exception $e)
 								{
 									// we can store the ORGANIZER as event owner
 									$event['owner'] = $uid;
@@ -2910,9 +2912,8 @@ class calendar_ical extends calendar_boupdate
 		}
 		// check if the entry is a birthday
 		// this field is only set from NOKIA clients
-		$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
-		if (!is_a($agendaEntryType, 'PEAR_Error'))
-		{
+		try {
+			$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
 			if (strtolower($agendaEntryType) == 'anniversary')
 			{
 				$event['special'] = '1';
@@ -2925,6 +2926,7 @@ class calendar_ical extends calendar_boupdate
 				$event['special'] = '2';
 			}
 		}
+		catch (Horde_Icalendar_Exception $e) {}
 
 		$event['priority'] = 2; // default
 		$event['alarm'] = $alarms;
@@ -3005,13 +3007,15 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
-		if ($this->productManufacturer == 'GroupDAV' && $container &&
-			($x_calendarserver_access = $container->getAttribute('X-CALENDARSERVER-ACCESS')) &&
-			!is_a($x_calendarserver_access, 'PEAR_Error'))
-		{
-			$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
+		try {
+			if ($this->productManufacturer == 'GroupDAV' && $container &&
+				($x_calendarserver_access = $container->getAttribute('X-CALENDARSERVER-ACCESS')))
+			{
+				$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
+			}
+			//error_log(__METHOD__."() X-CALENDARSERVER-ACCESS=".array2string($x_calendarserver_access).' --> public='.array2string($event['public']));
 		}
-		//error_log(__METHOD__."() X-CALENDARSERVER-ACCESS=".array2string($x_calendarserver_access).' --> public='.array2string($event['public']));
+		catch (Horde_Icalendar_Exception $e) {}
 
 		// if no end is given in iCal we use the default lenght from user prefs
 		// whole day events get one day in calendar_boupdate::save()
@@ -3023,8 +3027,7 @@ class calendar_ical extends calendar_boupdate
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 
 		// parsing ATTACH attributes for managed attachments
-		$attr = $component->getAttribute('X-EGROUPWARE-ATTACH-INCLUDED');
-		$event['attach-delete-by-put'] = !is_a($attr, PEAR_Error) && $attr === 'TRUE';
+		$event['attach-delete-by-put'] = $component->getAttributeDefault('X-EGROUPWARE-ATTACH-INCLUDED', null) === 'TRUE';
 		$event['attach'] = $component->getAllAttributes('ATTACH');
 
 		if ($this->log)

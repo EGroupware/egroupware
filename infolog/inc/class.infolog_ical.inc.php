@@ -685,15 +685,19 @@ class infolog_ical extends infolog_bo
 			// iOS reminder app only sets COMPLETED, but never STATUS nor PERCENT-COMPLETED
 			// if we have no STATUS, set STATUS by existence of COMPLETED and/or PERCENT-COMPLETE and X-INFOLOG-STATUS
 			// if we have no PERCENT-COMPLETE set it from STATUS: 0=NEEDS-ACTION, 10=IN-PROCESS, 100=COMPLETED
-			if (!($status = $component->getAttribute('STATUS')) || !is_scalar($status))
+			try {
+				$status = $component->getAttribute('STATUS');
+			}
+			catch (Horde_Icalendar_Exception $e)
 			{
-				$completed = $component->getAttribute('COMPLETED');
-				$x_infolog_status = $component->getAttribute('X-INFOLOG-STATUS');
+				unset($e);
+				$completed = $component->getAttributeDefault('COMPLETED', null);
+				$x_infolog_status = $component->getAttributeDefault('X-INFOLOG-STATUS', null);
 				// check if we have a X-INFOLOG-STATUS and it's completed state is different from given COMPLETED attr
 				if (is_scalar($x_infolog_status) &&
 					($this->_status2vtodo[$x_infolog_status] === 'COMPLETED') != is_scalar($completed))
 				{
-					$percent_completed = $component->getAttribute('PERCENT-COMPLETE');
+					$percent_completed = $component->getAttributeDefault('PERCENT-COMPLETE', null);
 					$status = $completed && is_scalar($completed) ? 'COMPLETED' :
 						($percent_completed && is_scalar($percent_completed) && $percent_completed > 0 ? 'IN-PROCESS' : 'NEEDS-ACTION');
 					$component->setAttribute('STATUS', $status);
@@ -756,7 +760,7 @@ class infolog_ical extends infolog_bo
 					case 'DURATION':
 						if (!isset($taskData['info_startdate']))
 						{
-							$taskData['info_startdate']	= $component->getAttribute('DTSTART');
+							$taskData['info_startdate']	= $component->getAttributeDefault('DTSTART', null);
 						}
 						$attribute['value'] += $taskData['info_startdate'];
 						$taskData['##DURATION'] = $attribute['value'];
@@ -800,7 +804,7 @@ class infolog_ical extends infolog_bo
 					case 'STATUS':
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
-							($attr=$component->getAttribute('X-INFOLOG-STATUS')) && is_scalar($attr) ? $attr : null);
+							$component->getAttributeDefault('X-INFOLOG-STATUS', null));
 						break;
 
 					case 'SUMMARY':
