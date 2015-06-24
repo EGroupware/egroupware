@@ -7,12 +7,9 @@
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @package infolog
- * @subpackage syncml
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
  * InfoLog: Create and parse iCal's
@@ -112,14 +109,14 @@ class infolog_ical extends infolog_bo
 	 * Exports multiple InfoLogs
 	 *
 	 * @param array $tasks array of info_ids or task arrays
-	 * @param string $_version='2.0'
-	 * @param string $_method=null only set for iTip messages
-	 * @param string $charset='UTF-8'
+	 * @param string $_version ='2.0'
+	 * @param string $_method =null only set for iTip messages
+	 * @param string $charset ='UTF-8'
 	 * @return string|boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
 	function exportVCalendar(array $tasks, $_version='2.0', $_method=null, $charset='UTF-8')
 	{
-		$vcal = new Horde_iCalendar;
+		$vcal = new Horde_Icalendar;
 
 		foreach($tasks as $task)
 		{
@@ -135,14 +132,14 @@ class infolog_ical extends infolog_bo
 	 * Exports one InfoLog tast to an iCalendar VTODO
 	 *
 	 * @param int|array $task infolog_id or infolog-tasks data
-	 * @param string $_version='2.0' could be '1.0' too
-	 * @param string $_method='PUBLISH'
-	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
-	 * @param Horde_iCalendar $vcal=null optional iCalendar object to add vtodo to
+	 * @param string $_version ='2.0' could be '1.0' too
+	 * @param string $_method ='PUBLISH'
+	 * @param string $charset ='UTF-8' encoding of the vcalendar, default UTF-8
+	 * @param Horde_Icalendar $vcal =null optional iCalendar object to add vtodo to
 	 *
 	 * @return string|boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function exportVTODO($task, $_version='2.0',$_method='PUBLISH', $charset='UTF-8',Horde_iCalendar $vcal=null)
+	function exportVTODO($task, $_version='2.0',$_method='PUBLISH', $charset='UTF-8',Horde_Icalendar $vcal=null)
 	{
 		if (is_array($task))
 		{
@@ -190,7 +187,7 @@ class infolog_ical extends infolog_bo
 				array2string($taskData)."\n",3,$this->logfile);
 		}
 
-		if (!isset($vcal)) $vcal = new Horde_iCalendar;
+		if (!isset($vcal)) $vcal = new Horde_Icalendar;
 		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']),array(),false);
 		$vcal->setAttribute('VERSION',$_version,array(),false);
@@ -203,7 +200,7 @@ class infolog_ical extends infolog_bo
 			if (!calendar_timezones::add_vtimezone($vcal, $tzid))
 			{
 				error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
-				calendar_timezones::add_vtimezone($vcal, $tzid=egw_time::$user_timezone->getName());
+				calendar_timezones::add_vtimezone($vcal, egw_time::$user_timezone->getName());
 				$tzid = null;
 			}
 			if (!isset(self::$tz_cache[$tzid]))
@@ -212,7 +209,7 @@ class infolog_ical extends infolog_bo
 			}
 		}
 
-		$vevent = Horde_iCalendar::newComponent('VTODO',$vcal);
+		$vevent = Horde_Icalendar::newComponent('VTODO',$vcal);
 
 		if (!isset($this->clientProperties['SUMMARY']['Size']))
 		{
@@ -407,7 +404,7 @@ class infolog_ical extends infolog_bo
 						if ($value[1] == ':' && ($v = unserialize($value)) !== false) $value = $v;
 						foreach((array)$value as $compvData)
 						{
-							$comp = Horde_iCalendar::newComponent(substr($name,3), $vevent);
+							$comp = Horde_Icalendar::newComponent(substr($name,3), $vevent);
 							$comp->parsevCalendar($compvData,substr($name,3),'utf-8');
 							$vevent->addComponent($comp);
 						}
@@ -440,7 +437,7 @@ class infolog_ical extends infolog_bo
 	 * set date-time attribute to DATE or DATE-TIME depending on value
 	 * 	00:00 uses DATE else DATE-TIME
 	 *
-	 * @param Horde_iCalendar_* $vevent
+	 * @param Horde_Icalendar_* $vevent
 	 * @param string $attr attribute name
 	 * @param int $time timestamp in server-time
 	 * @param string $tzid	timezone to use for client, null for user-time, false for server-time
@@ -448,7 +445,7 @@ class infolog_ical extends infolog_bo
 	static function setDateOrTime(&$vevent, $attr, $time, $tzid)
 	{
 		$params = array();
-		$time_in = $time;
+		//$time_in = $time;
 
 		if ($tzid)
 		{
@@ -507,19 +504,20 @@ class infolog_ical extends infolog_bo
 	 * Import a VTODO component of an iCal
 	 *
 	 * @param string $_vcalData
-	 * @param int $_taskID=-1 info_id, default -1 = new entry
-	 * @param boolean $merge=false	merge data with existing entry
-	 * @param int $user=null delegate new task to this account_id, default null
-	 * @param string $charset=null The encoding charset for $text. Defaults to
+	 * @param int $_taskID =-1 info_id, default -1 = new entry
+	 * @param boolean $merge =false	merge data with existing entry (no longer used)
+	 * @param int $user =null delegate new task to this account_id, default null
+	 * @param string $charset =null The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
-     * @param string $caldav_name=null CalDAV URL name-part for new entries
-     * @param array $callback_data=null array with callback and further parameters, first param is task to save
+     * @param string $caldav_name =null CalDAV URL name-part for new entries
+     * @param array $callback_data =null array with callback and further parameters, first param is task to save
      * 	signature array callback($task, $param1, ...)
 	 * @return int|boolean integer info_id or false on error
 	 */
 	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null, $charset=null, $caldav_name=null,
 		array $callback_data=null)
 	{
+		unset($merge);	// no longer used, but required by function signature
 
 		if ($this->tzid)
 		{
@@ -575,7 +573,7 @@ class infolog_ical extends infolog_bo
 				'info_access','info_status','info_percent','info_datecompleted',
 			)));
 			// remove all iCal fields not supported by EGroupware (stored like custom fields)
-			foreach($old as $name => $value)
+			foreach(array_keys($old) as $name)
 			{
 				if (substr($name,0,2) == '##') unset($old[$name]);
 			}
@@ -595,8 +593,8 @@ class infolog_ical extends infolog_bo
 	 * Search a matching infolog entry for the VTODO data
 	 *
 	 * @param string $_vcalData		VTODO
-	 * @param int $contentID=null 	infolog_id (or null, if unkown)
-	 * @param boolean $relax=false 	if true, a weaker match algorithm is used
+	 * @param int $contentID =null 	infolog_id (or null, if unkown)
+	 * @param boolean $relax =false 	if true, a weaker match algorithm is used
 	 * @param string $charset  The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
 	 *
@@ -630,7 +628,7 @@ class infolog_ical extends infolog_bo
 	 * Convert VTODO into a eGW infolog entry
 	 *
 	 * @param string $_vcalData 	VTODO data
-	 * @param int $_taskID=-1		infolog_id of the entry
+	 * @param int $_taskID =-1		infolog_id of the entry
 	 * @param string $charset  The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
      *
@@ -644,7 +642,7 @@ class infolog_ical extends infolog_bo
 				array2string($_vcalData)."\n",3,$this->logfile);
 		}
 
-		$vcal = new Horde_iCalendar;
+		$vcal = new Horde_Icalendar;
 		if (!($vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset)))
 		{
 			if ($this->log)
@@ -654,8 +652,6 @@ class infolog_ical extends infolog_bo
 			}
 			return false;
 		}
-
-		$version = $vcal->getAttribute('VERSION');
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -670,7 +666,7 @@ class infolog_ical extends infolog_bo
 
 		foreach ($vcal->getComponents() as $component)
 		{
-			if (!is_a($component, 'Horde_iCalendar_vtodo'))
+			if (!is_a($component, 'Horde_Icalendar_Vtodo'))
 			{
 				if ($this->log)
 				{
@@ -689,15 +685,19 @@ class infolog_ical extends infolog_bo
 			// iOS reminder app only sets COMPLETED, but never STATUS nor PERCENT-COMPLETED
 			// if we have no STATUS, set STATUS by existence of COMPLETED and/or PERCENT-COMPLETE and X-INFOLOG-STATUS
 			// if we have no PERCENT-COMPLETE set it from STATUS: 0=NEEDS-ACTION, 10=IN-PROCESS, 100=COMPLETED
-			if (!($status = $component->getAttribute('STATUS')) || !is_scalar($status))
+			try {
+				$status = $component->getAttribute('STATUS');
+			}
+			catch (Horde_Icalendar_Exception $e)
 			{
-				$completed = $component->getAttribute('COMPLETED');
-				$x_infolog_status = $component->getAttribute('X-INFOLOG-STATUS');
+				unset($e);
+				$completed = $component->getAttributeDefault('COMPLETED', null);
+				$x_infolog_status = $component->getAttributeDefault('X-INFOLOG-STATUS', null);
 				// check if we have a X-INFOLOG-STATUS and it's completed state is different from given COMPLETED attr
 				if (is_scalar($x_infolog_status) &&
 					($this->_status2vtodo[$x_infolog_status] === 'COMPLETED') != is_scalar($completed))
 				{
-					$percent_completed = $component->getAttribute('PERCENT-COMPLETE');
+					$percent_completed = $component->getAttributeDefault('PERCENT-COMPLETE', null);
 					$status = $completed && is_scalar($completed) ? 'COMPLETED' :
 						($percent_completed && is_scalar($percent_completed) && $percent_completed > 0 ? 'IN-PROCESS' : 'NEEDS-ACTION');
 					$component->setAttribute('STATUS', $status);
@@ -731,6 +731,7 @@ class infolog_ical extends infolog_bo
 
 					case 'DESCRIPTION':
 						$value = str_replace("\r\n", "\n", $attribute['value']);
+						$matches = null;
 						if (preg_match('/\s*\[UID:(.+)?\]/Usm', $value, $matches))
 						{
 							if (!isset($taskData['info_uid'])
@@ -759,7 +760,7 @@ class infolog_ical extends infolog_bo
 					case 'DURATION':
 						if (!isset($taskData['info_startdate']))
 						{
-							$taskData['info_startdate']	= $component->getAttribute('DTSTART');
+							$taskData['info_startdate']	= $component->getAttributeDefault('DTSTART', null);
 						}
 						$attribute['value'] += $taskData['info_startdate'];
 						$taskData['##DURATION'] = $attribute['value'];
@@ -803,7 +804,7 @@ class infolog_ical extends infolog_bo
 					case 'STATUS':
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
-							($attr=$component->getAttribute('X-INFOLOG-STATUS')) && is_scalar($attr) ? $attr : null);
+							$component->getAttributeDefault('X-INFOLOG-STATUS', null));
 						break;
 
 					case 'SUMMARY':
@@ -899,7 +900,7 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param int $_noteID		the infolog_id of the entry
 	 * @param string $_type		content type (e.g. text/plain)
-	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
+	 * @param string $charset ='UTF-8' encoding of the vcalendar, default UTF-8
 	 *
 	 * @return string|boolean VNOTE representation of the infolog entry or false on error
 	 */
@@ -923,7 +924,7 @@ class infolog_ical extends infolog_bo
 					$note['info_cat'] = translation::convert($cats[0],
 						translation::charset(), $charset);
 				}
-				$vnote = new Horde_iCalendar_vnote();
+				$vnote = new Horde_Icalendar_Vnote();
 				$vnote->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
 					strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 				$vnote->setAttribute('VERSION', '1.1');
@@ -961,15 +962,15 @@ class infolog_ical extends infolog_bo
 								$options['ENCODING'] = 'FUNAMBOL-QP';
 						}
 					}
-					$vevent->setAttribute($field, $value, $options);
+					$vnote->setAttribute($field, $value, $options);
 				}
 				if ($note['info_startdate'])
 				{
-					$vnote->setAttribute('DCREATED',$note['info_startdate']);
+					$vnote->setAttribute('CREATED',$note['info_startdate']);
 				}
 				else
 				{
-					$vnote->setAttribute('DCREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'add'));
+					$vnote->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'add'));
 				}
 				$vnote->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'modify'));
 
@@ -991,8 +992,8 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param string $_vcalData
 	 * @param string $_type		content type (eg.g text/plain)
-	 * @param int $_noteID=-1 info_id, default -1 = new entry
-	 * @param boolean $merge=false	merge data with existing entry
+	 * @param int $_noteID =-1 info_id, default -1 = new entry
+	 * @param boolean $merge =false	merge data with existing entry (no longer used)
 	 * @param string $charset  The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
      *
@@ -1000,6 +1001,7 @@ class infolog_ical extends infolog_bo
 	 */
 	function importVNOTE(&$_vcalData, $_type, $_noteID=-1, $merge=false, $charset=null)
 	{
+		unset($merge);	// no longer used, but required by function signature
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -1048,7 +1050,7 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param string $_data 	VNOTE data
 	 * @param string $_type		content type (eg.g text/plain)
-	 * @param int $_noteID=-1	infolog_id of the entry
+	 * @param int $_noteID =-1	infolog_id of the entry
 	 * @param string $charset  The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
      *
@@ -1068,9 +1070,9 @@ class infolog_ical extends infolog_bo
 			case 'text/plain':
 				$note = array();
 				$note['info_type'] = 'note';
-				$txt = translation::convert($_data, $charset);
-				$txt = str_replace("\r\n", "\n", $txt);
+				$txt = str_replace("\r\n", "\n", translation::convert($_data, $charset));
 
+				$match = null;
 				if (preg_match('/([^\n]+)\n\n(.*)/ms', $txt, $match))
 				{
 					$note['info_subject'] = $match[1];
@@ -1083,19 +1085,18 @@ class infolog_ical extends infolog_bo
 				break;
 
 			case 'text/x-vnote':
-				$vnote = new Horde_iCalendar;
-				if (!$vcal->parsevCalendar($_data, 'VCALENDAR', $charset))	return false;
-				$version = $vcal->getAttribute('VERSION');
+				$vnote = new Horde_Icalendar;
+				if (!$vnote->parsevCalendar($_data, 'VCALENDAR', $charset))	return false;
 
 				$components = $vnote->getComponent();
 				foreach ($components as $component)
 				{
-					if (is_a($component, 'Horde_iCalendar_vnote'))
+					if (is_a($component, 'Horde_Icalendar_Vnote'))
 					{
 						$note = array();
 						$note['info_type'] = 'note';
 
-						foreach ($component->_attributes as $attribute)
+						foreach ($component->getAllAttributes() as $attribute)
 						{
 							switch ($attribute['name'])
 							{
@@ -1193,10 +1194,9 @@ class infolog_ical extends infolog_bo
 				")\n" , 3, $this->logfile);
 		}
 
-		Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
-			. $this->productName .', ' .
-			($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
-			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
+		//	. $this->productName .', ' .
+		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 }

@@ -12,8 +12,6 @@
  * @version $Id$
  */
 
-require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
-
 /**
  * iCal import and export via Horde iCalendar classes
  *
@@ -178,7 +176,7 @@ class calendar_ical extends calendar_boupdate
 		parent::__construct();
 		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
-		$this->vCalendar = new Horde_iCalendar;
+		$this->vCalendar = new Horde_Icalendar;
 		$this->addressbook = new addressbook_bo;
 	}
 
@@ -187,12 +185,12 @@ class calendar_ical extends calendar_boupdate
 	 * Exports one calendar event to an iCalendar item
 	 *
 	 * @param int|array $events (array of) cal_id or array of the events with timestamps in server time
-	 * @param string $version='1.0' could be '2.0' too
-	 * @param string $method='PUBLISH'
-	 * @param int $recur_date=0	if set export the next recurrence at or after the timestamp,
+	 * @param string $version ='1.0' could be '2.0' too
+	 * @param string $method ='PUBLISH'
+	 * @param int $recur_date =0	if set export the next recurrence at or after the timestamp,
 	 *                          default 0 => export whole series (or events, if not recurring)
-	 * @param string $principalURL='' Used for CalDAV exports
-	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
+	 * @param string $principalURL ='' Used for CalDAV exports
+	 * @param string $charset ='UTF-8' encoding of the vcalendar, default UTF-8
 	 * @return string|boolean string with iCal or false on error (e.g. no permission to read the event)
 	 */
 	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='', $charset='UTF-8')
@@ -231,7 +229,7 @@ class calendar_ical extends calendar_boupdate
 			$version = '2.0';
 		}
 
-		$vcal = new Horde_iCalendar;
+		$vcal = new Horde_Icalendar;
 		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION', $version);
@@ -330,7 +328,7 @@ class calendar_ical extends calendar_boupdate
 						if ($this->log)
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-								"($_id, $recurrence) Gratuitous pseudo exception, skipped ...\n",
+								"(, $recurrence) Gratuitous pseudo exception, skipped ...\n",
 								3,$this->logfile);
 						}
 						continue; // unsupported status only exception
@@ -377,7 +375,7 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			$vevent = Horde_iCalendar::newComponent('VEVENT', $vcal);
+			$vevent = Horde_Icalendar::newComponent('VEVENT', $vcal);
 			$parameters = $attributes = $values = array();
 
 			if ($this->productManufacturer == 'sonyericsson')
@@ -429,6 +427,7 @@ class calendar_ical extends calendar_boupdate
 					case 'ATTENDEE':
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
+							$quantity = $role = null;
 							calendar_so::split_status($status, $quantity, $role);
 							// do not include event owner/ORGANIZER as participant in his own calendar, if he is only participant
 							if (count($event['participants']) == 1 && $event['owner'] == $uid) continue;
@@ -442,10 +441,9 @@ class calendar_ical extends calendar_boupdate
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
 									'()attendee:' . array2string($info) ."\n",3,$this->logfile);
 							}
-							$participantCN = trim(empty($info['cn']) ? $info['name'] : $info['cn']);
 							$participantCN = str_replace(array('\\', ',', ';', ':'),
 												array('\\\\', '\\,', '\\;', '\\:'),
-												$participantCN);
+												trim(empty($info['cn']) ? $info['name'] : $info['cn']));
 							if ($version == '1.0')
 							{
 								$participantURL = trim('"' . $participantCN . '"' . (empty($info['email']) ? '' : ' <' . $info['email'] .'>'));
@@ -861,7 +859,7 @@ class calendar_ical extends calendar_boupdate
 				$attributes['LAST-MODIFIED'] = $event['modified'];
 			}
 			$attributes['DTSTAMP'] = time();
-			foreach ((array)$event['alarm'] as $alarmID => $alarmData)
+			foreach ((array)$event['alarm'] as $alarmData)
 			{
 				// skip over alarms that don't have the minimum required info
 				if (!$alarmData['offset'] && !$alarmData['time']) continue;
@@ -928,7 +926,7 @@ class calendar_ical extends calendar_boupdate
 						$alarmData['offset'] = false;
 					}
 
-					$valarm = Horde_iCalendar::newComponent('VALARM',$vevent);
+					$valarm = Horde_Icalendar::newComponent('VALARM',$vevent);
 					if ($alarmData['offset'] !== false)
 					{
 						$valarm->setAttribute('TRIGGER', -$alarmData['offset'],
@@ -1122,6 +1120,7 @@ class calendar_ical extends calendar_boupdate
 
 		date_default_timezone_set($tzid);
 
+		$msg = null;
 		foreach ($events as $event)
 		{
 			if (!is_array($event)) continue; // the iterator may return false
@@ -1390,8 +1389,7 @@ class calendar_ical extends calendar_boupdate
 					// They can now only remove themselfs, if that is desired, after storing the event first.
 					|| !isset($event['participants'][$event['owner']]))
 				{
-					$status = $event['owner'] == $this->user ? 'A' : 'U';
-					$status = calendar_so::combine_status($status, 1, 'CHAIR');
+					$status = calendar_so::combine_status($event['owner'] == $this->user ? 'A' : 'U', 1, 'CHAIR');
 					if (!is_array($event['participants'])) $event['participants'] = array();
 					$event['participants'][$event['owner']] = $status;
 				}
@@ -1769,9 +1767,9 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * get the value of an attribute by its name
 	 *
-	 * @param array $attributes
+	 * @param array $components
 	 * @param string $name eg. 'DTSTART'
-	 * @param string $what='value'
+	 * @param string $what ='value'
 	 * @return mixed
 	 */
 	static function _get_attribute($components,$name,$what='value')
@@ -1789,7 +1787,7 @@ class calendar_ical extends calendar_boupdate
 	static function valarm2egw(&$alarms, &$valarm)
 	{
 		$count = 0;
-		foreach ($valarm->_attributes as $vattr)
+		foreach ($valarm->getAllAttributes() as $vattr)
 		{
 			switch ($vattr['name'])
 			{
@@ -2150,7 +2148,7 @@ class calendar_ical extends calendar_boupdate
 	 * Convert vCalendar data in EGw events
 	 *
 	 * @param string|resource $_vcalData
-	 * @param string $principalURL='' Used for CalDAV imports
+	 * @param string $principalURL ='' Used for CalDAV imports
 	 * @param string $charset  The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
 	 * @return Iterator|array|boolean Iterator if resource given or array of events on success, false on failure
@@ -2183,7 +2181,7 @@ class calendar_ical extends calendar_boupdate
 		date_default_timezone_set($tzid);
 
 		$events = array();
-		$vcal = new Horde_iCalendar;
+		$vcal = new Horde_Icalendar;
 		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset))
 		{
 			if ($this->log)
@@ -2194,9 +2192,7 @@ class calendar_ical extends calendar_boupdate
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 			return false;
 		}
-		$version = $vcal->getAttribute('VERSION');
-
-		foreach ($vcal->getComponents() as $n => $component)
+		foreach ($vcal->getComponents() as $component)
 		{
 			if (($event = $this->_ical2egw_callback($component,$this->tzid,$principalURL)))
 			{
@@ -2209,14 +2205,15 @@ class calendar_ical extends calendar_boupdate
 	}
 
 	/**
-	 * Callback for egw_ical_iterator to convert Horde_iCalendar_vevent to EGw event array
+	 * Callback for egw_ical_iterator to convert Horde_iCalendar_Vevent to EGw event array
 	 *
 	 * @param Horde_iCalendar $component
 	 * @param string $tzid timezone
-	 * @param string $principalURL='' Used for CalDAV imports
-	 * @return array|boolean event array or false if $component is no Horde_iCalendar_vevent
+	 * @param string $principalURL ='' Used for CalDAV imports
+	 * @param Horde_Icalendar $container =null container to access attributes on container
+	 * @return array|boolean event array or false if $component is no Horde_Icalendar_Vevent
 	 */
-	function _ical2egw_callback(Horde_iCalendar $component, $tzid, $principalURL='')
+	function _ical2egw_callback(Horde_Icalendar $component, $tzid, $principalURL='', Horde_Icalendar $container=null)
 	{
 		//unset($component->_container); _debug_array($component);
 
@@ -2225,8 +2222,9 @@ class calendar_ical extends calendar_boupdate
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
 		}
 
-		if (!is_a($component, 'Horde_iCalendar_vevent') ||
-			!($event = $this->vevent2egw($component, $component->_container->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
+		if (!is_a($component, 'Horde_Icalendar_Vevent') ||
+			!($event = $this->vevent2egw($component, $container ? $container->getAttributeDefault('VERSION', '2.0') : '2.0',
+				$this->supportedFields, $principalURL, $container)))
 		{
 			return false;
 		}
@@ -2246,7 +2244,7 @@ class calendar_ical extends calendar_boupdate
 		$alarms = $event['alarm'];
 		foreach ($component->getComponents() as $valarm)
 		{
-			if (is_a($valarm, 'Horde_iCalendar_valarm'))
+			if (is_a($valarm, 'Horde_Icalendar_Valarm'))
 			{
 				$this->valarm2egw($alarms, $valarm);
 			}
@@ -2265,13 +2263,15 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
-	 * @param string $principalURL=''	Used for CalDAV imports, no longer used in favor of groupdav_principals::url2uid()
-	 * @param string $check_component='Horde_iCalendar_vevent'
-	 *
+	 * @param string $principalURL =''	Used for CalDAV imports, no longer used in favor of groupdav_principals::url2uid()
+	 * @param string $check_component ='Horde_Icalendar_Vevent'
+	 * @param Horde_Icalendar $container =null container to access attributes on container
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw(&$component, $version, $supportedFields, $principalURL='', $check_component='Horde_iCalendar_vevent')
+	function vevent2egw($component, $version, $supportedFields, $principalURL='', $check_component='Horde_Icalendar_Vevent', Horde_Icalendar $container=null)
 	{
+		unset($principalURL);	// not longer used, but required in function signature
+
 		if ($check_component && !is_a($component, $check_component))
 		{
 			if ($this->log)
@@ -2283,8 +2283,8 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		/*
-		$mozillaACK = $component->getAttribute('X-MOZ-LASTACK');
-		if ($this->productName == 'lightning' && !is_a($mozillaACK, 'PEAR_Error'))
+		$mozillaACK = $component->getAttributeDefault('X-MOZ-LASTACK', null);
+		if ($this->productName == 'lightning' && !isset($mozillaACK))
 		{
 			if ($this->log)
 			{
@@ -2399,7 +2399,7 @@ class calendar_ical extends calendar_boupdate
 			return false; // not a valid entry
 		}
 		// lets see what we can get from the vcard
-		foreach ($component->_attributes as $attributes)
+		foreach ($component->getAllAttributes() as $attributes)
 		{
 			switch ($attributes['name'])
 			{
@@ -2421,9 +2421,10 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'DESCRIPTION':
 					$vcardData['description'] = str_replace("\r\n", "\n", $attributes['value']);
+					$matches = null;
 					if (preg_match('/\s*\[UID:(.+)?\]/Usm', $attributes['value'], $matches))
 					{
-						if (!isset($vCardData['uid'])
+						if (!isset($vcardData['uid'])
 								&& strlen($matches[1]) >= $minimum_uid_length)
 						{
 							$vcardData['uid'] = $matches[1];
@@ -2463,6 +2464,7 @@ class calendar_ical extends calendar_boupdate
 					switch($type)
 					{
 						case 'D':	// 1.0
+							$recurenceMatches = null;
 							if (preg_match('/D(\d+) #(\d+)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
@@ -2495,6 +2497,7 @@ class calendar_ical extends calendar_boupdate
 									$days = explode(' ',trim($recurenceMatches[2]));
 								}
 
+								$repeatMatches = null;
 								if (preg_match('/#(\d+)/',$recurenceMatches[4],$repeatMatches))
 								{
 									if ($repeatMatches[1]) $vcardData['recur_count'] = $repeatMatches[1];
@@ -2847,6 +2850,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								// keep role 'CHAIR' from an external organizer, even if he is a regular participant with a different role
 								// as this is currently the only way to store an external organizer and send him iMip responses
+								$q = $r = null;
 								if (isset($vcardData['participants'][$uid]) && ($s=$vcardData['participants'][$uid]) &&
 									calendar_so::split_status($s, $q, $r) && $r == 'CHAIR')
 								{
@@ -2857,9 +2861,11 @@ class calendar_ical extends calendar_boupdate
 								$vcardData['participants'][$uid] =
 									calendar_so::combine_status($status, $quantity, $role);
 
-								if (!$this->calendarOwner && is_numeric($uid) &&
-										$role == 'CHAIR' &&
-										is_a($component->getAttribute('ORGANIZER'), 'PEAR_Error'))
+								try {
+									if (!$this->calendarOwner && is_numeric($uid) && $role == 'CHAIR')
+										$component->getAttribute('ORGANIZER');
+								}
+								catch(Horde_Icalendar_Exception $e)
 								{
 									// we can store the ORGANIZER as event owner
 									$event['owner'] = $uid;
@@ -2906,9 +2912,8 @@ class calendar_ical extends calendar_boupdate
 		}
 		// check if the entry is a birthday
 		// this field is only set from NOKIA clients
-		$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
-		if (!is_a($agendaEntryType, 'PEAR_Error'))
-		{
+		try {
+			$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
 			if (strtolower($agendaEntryType) == 'anniversary')
 			{
 				$event['special'] = '1';
@@ -2921,6 +2926,7 @@ class calendar_ical extends calendar_boupdate
 				$event['special'] = '2';
 			}
 		}
+		catch (Horde_Icalendar_Exception $e) {}
 
 		$event['priority'] = 2; // default
 		$event['alarm'] = $alarms;
@@ -3001,13 +3007,15 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
-		if ($this->productManufacturer == 'GroupDAV' &&
-			($x_calendarserver_access = $component->_container->getAttribute('X-CALENDARSERVER-ACCESS')) &&
-			!is_a($x_calendarserver_access, 'PEAR_Error'))
-		{
-			$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
+		try {
+			if ($this->productManufacturer == 'GroupDAV' && $container &&
+				($x_calendarserver_access = $container->getAttribute('X-CALENDARSERVER-ACCESS')))
+			{
+				$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
+			}
+			//error_log(__METHOD__."() X-CALENDARSERVER-ACCESS=".array2string($x_calendarserver_access).' --> public='.array2string($event['public']));
 		}
-		//error_log(__METHOD__."() X-CALENDARSERVER-ACCESS=".array2string($x_calendarserver_access).' --> public='.array2string($event['public']));
+		catch (Horde_Icalendar_Exception $e) {}
 
 		// if no end is given in iCal we use the default lenght from user prefs
 		// whole day events get one day in calendar_boupdate::save()
@@ -3019,8 +3027,7 @@ class calendar_ical extends calendar_boupdate
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 
 		// parsing ATTACH attributes for managed attachments
-		$attr = $component->getAttribute('X-EGROUPWARE-ATTACH-INCLUDED');
-		$event['attach-delete-by-put'] = !is_a($attr, PEAR_Error) && $attr === 'TRUE';
+		$event['attach-delete-by-put'] = $component->getAttributeDefault('X-EGROUPWARE-ATTACH-INCLUDED', null) === 'TRUE';
 		$event['attach'] = $component->getAllAttributes('ATTACH');
 
 		if ($this->log)
@@ -3065,12 +3072,12 @@ class calendar_ical extends calendar_boupdate
 	 * Create a freebusy vCal for the given user(s)
 	 *
 	 * @param int $user account_id
-	 * @param mixed $end=null end-date, default now+1 month
-	 * @param boolean $utc=true if false, use severtime for dates
-	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
-	 * @param mixed $start=null default now
-	 * @param string $method='PUBLISH' or eg. 'REPLY'
-	 * @param array $extra=null extra attributes to add
+	 * @param mixed $end =null end-date, default now+1 month
+	 * @param boolean $utc =true if false, use severtime for dates
+	 * @param string $charset ='UTF-8' encoding of the vcalendar, default UTF-8
+	 * @param mixed $start =null default now
+	 * @param string $method ='PUBLISH' or eg. 'REPLY'
+	 * @param array $extra =null extra attributes to add
 	 * 	X-CALENDARSERVER-MASK-UID can be used to not include an event specified by this uid as busy
 	 */
 	function freebusy($user,$end=null,$utc=true, $charset='UTF-8', $start=null, $method='PUBLISH', array $extra=null)
@@ -3078,14 +3085,13 @@ class calendar_ical extends calendar_boupdate
 		if (!$start) $start = time();	// default now
 		if (!$end) $end = time() + 100*DAY_s;	// default next 100 days
 
-		$vcal = new Horde_iCalendar;
+		$vcal = new Horde_Icalendar;
 		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION','2.0');
 		$vcal->setAttribute('METHOD',$method);
 
-		$vfreebusy = Horde_iCalendar::newComponent('VFREEBUSY',$vcal);
-		if ($uid) $vfreebusy->setAttribute('UID', $uid);
+		$vfreebusy = Horde_Icalendar::newComponent('VFREEBUSY',$vcal);
 
 		$attributes = array(
 			'DTSTAMP' => time(),

@@ -11,8 +11,6 @@
  * @version $Id$
  */
 
-require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
-
 /**
  * EGroupware: CalDAV / GroupDAV access: calendar handler
  *
@@ -35,7 +33,7 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * vCalendar Instance for parsing
 	 *
-	 * @var Horde_iCalendar
+	 * @var Horde_Icalendar
 	 */
 	var $vCalendar;
 
@@ -95,7 +93,7 @@ class calendar_groupdav extends groupdav_handler
 		parent::__construct($app, $groupdav);
 
 		$this->bo = new calendar_boupdate();
-		$this->vCalendar = new Horde_iCalendar;
+		$this->vCalendar = new Horde_Icalendar;
 
 		// since 1.9.003 we allow clients to specify the URL when creating a new event, as specified by CalDAV
 		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
@@ -1084,8 +1082,7 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	protected function outbox_freebusy_request($ical, $charset, $user, array &$options)
 	{
-		include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
-		$vcal = new Horde_iCalendar();
+		$vcal = new Horde_Icalendar();
 		if (!$vcal->parsevCalendar($ical, 'VCALENDAR', $charset))
 		{
 			return '400 Bad request';
@@ -1098,7 +1095,7 @@ class calendar_groupdav extends groupdav_handler
 		$handler->setSupportedFields('groupdav');
 		$handler->calendarOwner = $handler->user = 0;	// to NOT default owner/organizer to something
 		if (!($component = $vcal->getComponent(0)) ||
-			!($event = $handler->vevent2egw($component, $version, $handler->supportedFields, $this->groupdav->current_user_principal, 'Horde_iCalendar_vfreebusy')))
+			!($event = $handler->vevent2egw($component, $version, $handler->supportedFields, $this->groupdav->current_user_principal, 'Horde_Icalendar_Vfreebusy')))
 		{
 			return '400 Bad request';
 		}

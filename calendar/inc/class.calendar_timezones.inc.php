@@ -380,30 +380,24 @@ class calendar_timezones
 	/**
 	 * Add VTIMEZONE component to VCALENDAR
 	 *
-	 * @param Horde_iCalendar $vcal
+	 * @param Horde_Icalendar $vcal
 	 * @param string $tzid
 	 * @return boolean false if no vtimezone component available, true on success
 	 */
-	public static function add_vtimezone($vcal, $tzid)
+	public static function add_vtimezone(Horde_Icalendar $vcal, $tzid)
 	{
-		include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
-		// checking type of $val, now we included the object definition (no need to always include it!)
-		if (!$vcal instanceof Horde_iCalendar)
-		{
-			throw new egw_exception_wrong_parameter(__METHOD__.'('.array2string($vcal).", '$tzid') no Horde_iCalendar!");
-		}
 		// check if we have vtimezone component data for $tzid
 		if (!($vtimezone = calendar_timezones::tz2id($tzid, 'component')))
 		{
 			return false;
 		}
-		// $vtimezone is a string with a single VTIMEZONE component, afaik Horde_iCalendar can not add it directly
-		// --> we have to parse it and let Horde_iCalendar add it again
-		$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
+		// $vtimezone is a string with a single VTIMEZONE component, afaik Horde_Icalendar can not add it directly
+		// --> we have to parse it and let Horde_Icalendar add it again
+		$horde_vtimezone = Horde_Icalendar::newComponent('VTIMEZONE',$container=false);
 		$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
-		// DTSTART is in UTC time, Horde_iCalendar parses it in server timezone, which we need to set again for printing
+		// DTSTART is in UTC time, Horde_Icalendar parses it in server timezone, which we need to set again for printing
 		$standard = $horde_vtimezone->findComponent('STANDARD');
-		if (is_a($standard, 'Horde_iCalendar'))
+		if (is_a($standard, 'Horde_Icalendar'))
 		{
 			$time = $standard->getAttribute('DTSTART');
 			$dtstart = new egw_time($time, egw_time::$server_timezone);
@@ -411,7 +405,7 @@ class calendar_timezones
 			$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 		}
 		$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
-		if (is_a($daylight, 'Horde_iCalendar'))
+		if (is_a($daylight, 'Horde_Icalendar'))
 		{
 			$time = $daylight->getAttribute('DTSTART');
 			$dtstart = new egw_time($time, egw_time::$server_timezone);
@@ -448,9 +442,8 @@ class calendar_timezones
 		switch ($type)
 		{
 			case 'vcalendar':
-				include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 				// checking type of $val, now we included the object definition (no need to always include it!)
-				$vcal = new Horde_iCalendar;
+				$vcal = new Horde_Icalendar;
 				$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 					strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 				self::add_vtimezone($vcal, $tzid);
