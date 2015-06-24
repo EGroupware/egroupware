@@ -2210,9 +2210,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param Horde_iCalendar $component
 	 * @param string $tzid timezone
 	 * @param string $principalURL ='' Used for CalDAV imports
+	 * @param Horde_Icalendar $container =null container to access attributes on container
 	 * @return array|boolean event array or false if $component is no Horde_Icalendar_Vevent
 	 */
-	function _ical2egw_callback(Horde_Icalendar $component, $tzid, $principalURL='')
+	function _ical2egw_callback(Horde_Icalendar $component, $tzid, $principalURL='', Horde_Icalendar $container=null)
 	{
 		//unset($component->_container); _debug_array($component);
 
@@ -2222,7 +2223,8 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if (!is_a($component, 'Horde_Icalendar_Vevent') ||
-			!($event = $this->vevent2egw($component, $component->_container->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
+			!($event = $this->vevent2egw($component, $container ? $container->getAttribute('VERSION') : '2.0',
+				$this->supportedFields, $principalURL, $container)))
 		{
 			return false;
 		}
@@ -2263,10 +2265,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $supportedFields	supported fields of the device
 	 * @param string $principalURL =''	Used for CalDAV imports, no longer used in favor of groupdav_principals::url2uid()
 	 * @param string $check_component ='Horde_Icalendar_Vevent'
-	 *
+	 * @param Horde_Icalendar $container =null container to access attributes on container
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw(&$component, $version, $supportedFields, $principalURL='', $check_component='Horde_Icalendar_Vevent')
+	function vevent2egw($component, $version, $supportedFields, $principalURL='', $check_component='Horde_Icalendar_Vevent', Horde_Icalendar $container=null)
 	{
 		unset($principalURL);	// not longer used, but required in function signature
 
@@ -3003,8 +3005,8 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
-		if ($this->productManufacturer == 'GroupDAV' &&
-			($x_calendarserver_access = $component->_container->getAttribute('X-CALENDARSERVER-ACCESS')) &&
+		if ($this->productManufacturer == 'GroupDAV' && $container &&
+			($x_calendarserver_access = $container->getAttribute('X-CALENDARSERVER-ACCESS')) &&
 			!is_a($x_calendarserver_access, 'PEAR_Error'))
 		{
 			$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
