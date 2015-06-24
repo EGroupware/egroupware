@@ -442,7 +442,6 @@ class calendar_timezones
 		switch ($type)
 		{
 			case 'vcalendar':
-				include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 				// checking type of $val, now we included the object definition (no need to always include it!)
 				$vcal = new Horde_Icalendar;
 				$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
