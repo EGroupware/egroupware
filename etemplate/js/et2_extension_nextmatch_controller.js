@@ -280,6 +280,28 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		{
 			this._objectManager = gom.addObject(
 				new egwActionObjectManager(uid, this._actionManager));
+
+			this._objectManager.handleKeyPress = function(_keyCode, _shift, _ctrl, _alt) {
+				for(var i = 0; i < self._actionManager.children.length; i++)
+				{
+					if(typeof self._actionManager.children[i].shortcut === 'object' &&
+						self._actionManager.children[i].shortcut &&
+						_keyCode == self._actionManager.children[i].shortcut.keyCode)
+					{
+						return this.executeActionImplementation(
+							{
+								"keyEvent": {
+									"keyCode": _keyCode,
+									"shift": _shift,
+									"ctrl": _ctrl,
+									"alt": _alt
+								}
+							}, "popup", EGW_AO_EXEC_SELECTED);
+					}
+				}
+				return egwActionObject.prototype.handleKeyPress.call(this, _keyCode,_shift,_ctrl,_alt);
+			}
+			
 		}
 		this._objectManager.flags = this._objectManager.flags
 				| EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;

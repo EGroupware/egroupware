@@ -1508,7 +1508,7 @@ var et2_link_list = et2_link_string.extend(
 
 		this.list = $j(document.createElement("table"))
 			.addClass("et2_link_list");
-		if(this.options['class']) this.node.addClass(this.options['class']);
+		if(this.options['class']) this.list.addClass(this.options['class']);
 		this.setDOMNode(this.list[0]);
 
 		// Set up context menu
