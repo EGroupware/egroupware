@@ -251,9 +251,9 @@ class calendar_ical extends calendar_boupdate
 			{
 				if ($this->read($event, $recurrence, true, 'server'))
 				{
-					if ($this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))
+					if ($this->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))
 					{
-						$this->bo->clear_private_infos($event, array($this->user, $event['owner']));
+						$this->clear_private_infos($event, array($this->user, $event['owner']));
 					}
 					else
 					{
@@ -631,7 +631,10 @@ class calendar_ical extends calendar_boupdate
 						else // $version == '2.0'
 						{
 							$attributes['RRULE'] = '';
-							$parameters['RRULE'] = $rrule;
+							foreach($rrule as $n => $v)
+							{
+								$attributes['RRULE'] .= ($attributes['RRULE']?';':'').$n.'='.$v;
+							}
 						}
 						break;
 
@@ -833,6 +836,25 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
+			// for CalDAV add all X-Properties previously parsed
+			if ($this->productManufacturer == 'groupdav' || $this->productManufacturer == 'file')
+			{
+				foreach($event as $name => $value)
+				{
+					if (substr($name, 0, 2) == '##')
+					{
+						if (($attr = json_decode($value, true)) && is_array($attr))
+						{
+							$vevent->setAttribute(substr($name, 2), $attr['value'], $attr['params'], true, $attr['values']);
+						}
+						else
+						{
+							$vevent->setAttribute(substr($name, 2), $value);
+						}
+					}
+				}
+			}
+
 			if ($this->productManufacturer == 'nokia')
 			{
 				if ($event['special'] == '1')
@@ -862,7 +884,7 @@ class calendar_ical extends calendar_boupdate
 			foreach ((array)$event['alarm'] as $alarmData)
 			{
 				// skip over alarms that don't have the minimum required info
-				if (!$alarmData['offset'] && !$alarmData['time']) continue;
+				if (!isset($alarmData['offset']) && !isset($alarmData['time'])) continue;
 
 				// skip alarms not being set for all users and alarms owned by other users
 				if ($alarmData['all'] != true && $alarmData['owner'] != $this->user)
@@ -899,8 +921,9 @@ class calendar_ical extends calendar_boupdate
 					// VCalendar 2.0 / RFC 2445
 
 					// RFC requires DESCRIPTION for DISPLAY
-					if (!$event['title'] && !$description) continue;
+					if (!$event['title'] && !$description) $description = 'Alarm';
 
+					/* Disabling for now
 					// Lightning infinitly pops up alarms for recuring events, if the only use an offset
 					if ($this->productName == 'lightning' && $event['recur_type'] != MCAL_RECUR_NONE)
 					{
@@ -914,7 +937,7 @@ class calendar_ical extends calendar_boupdate
 						{
 							continue;
 						}
-					}
+					}*/
 
 					// for SyncML non-whole-day events always use absolute times
 					// (probably because some devices have no clue about timezones)
@@ -930,7 +953,7 @@ class calendar_ical extends calendar_boupdate
 					if ($alarmData['offset'] !== false)
 					{
 						$valarm->setAttribute('TRIGGER', -$alarmData['offset'],
-								array('VALUE' => 'DURATION', 'RELATED' => 'START'));
+							array('VALUE' => 'DURATION', 'RELATED' => 'START'));
 					}
 					else
 					{
@@ -938,9 +961,28 @@ class calendar_ical extends calendar_boupdate
 						$value = self::getDateTime($alarmData['time'],$tzid,$params);
 						$valarm->setAttribute('TRIGGER', $value, $params);
 					}
-
-					$valarm->setAttribute('ACTION','DISPLAY');
-					$valarm->setAttribute('DESCRIPTION',$event['title'] ? $event['title'] : $description);
+					if (!empty($alarmData['uid']))
+					{
+						$valarm->setAttribute('UID', $alarmData['uid']);
+						$valarm->setAttribute('X-WR-ALARMUID', $alarmData['uid']);
+					}
+					// set evtl. existing attributes set by iCal clients not used by EGroupware
+					if (isset($alarmData['attrs']))
+					{
+						foreach($alarmData['attrs'] as $attr => $data)
+						{
+							$valarm->setAttribute($attr, $data['value'], $data['params']);
+						}
+					}
+					// set default ACTION and DESCRIPTION, if not set by a client
+					if (!isset($alarmData['attrs']) || !isset($alarmData['attrs']['ACTION']))
+					{
+						$valarm->setAttribute('ACTION','DISPLAY');
+					}
+					if (!isset($alarmData['attrs']) || !isset($alarmData['attrs']['DESCRIPTION']))
+					{
+						$valarm->setAttribute('DESCRIPTION',$event['title'] ? $event['title'] : $description);
+					}
 					$vevent->addComponent($valarm);
 				}
 			}
@@ -968,6 +1010,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
+								/* disable automatic QP encoding eg. for new-lines as it also encodes non-ascii/utf-8 which TB does NOT decode
 								else
 								{
 									$paramData['CHARSET'] = '';
@@ -979,7 +1022,7 @@ class calendar_ical extends calendar_boupdate
 									{
 										$paramData['ENCODING'] = '';
 									}
-								}
+								}*/
 								break;
 							case 'funambol':
 								$paramData['ENCODING'] = 'FUNAMBOL-QP';
@@ -1216,6 +1259,14 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 				}
+				// unset old X-* attributes stored in custom-fields
+				foreach ($event_info['stored_event'] as $key => $value)
+				{
+					if ($key[0] == '#' && $key[1] == '#' && !isset($event[$key]))
+					{
+						$event[$key] = '';
+					}
+				}
 				if ($merge)
 				{
 					if ($this->log)
@@ -1422,64 +1473,15 @@ class calendar_ical extends calendar_boupdate
 					case 'SERIES-MASTER':
 					case 'SERIES-EXCEPTION':
 					case 'SERIES-EXCEPTION-PROPAGATE':
-						if (count($event['alarm']) > 0)
+						if (isset($event['alarm']))
 						{
-							foreach ($event['alarm'] as $newid => &$alarm)
-							{
-								if (!isset($alarm['offset']) && isset($alarm['time']))
-								{
-									$alarm['offset'] = $event['start'] - $alarm['time'];
-								}
-								elseif (!isset($alarm['time']) && isset($alarm['offset']))
-								{
-									$alarm['time'] = $event['start'] - $alarm['offset'];
-								}
-								$alarm['owner'] = $this->user;
-								$alarm['all'] = false;
-
-								// if no edit rights, allow participants to set alarms directly (like status)
-								if ($event_info['stored_event'] && !$event_info['acl_edit'])
-								{
-									if ($alarm['time'] < time() && !calendar_so::shift_alarm($event, $alarm))
-									{
-										continue;	//pgoerzen: don't add an alarm in the past
-									}
-									$this->save_alarm($event_info['stored_event']['id'], $alarm);
-								}
-
-								if (is_array($event_info['stored_event'])
-										&& count($event_info['stored_event']['alarm']) > 0)
-								{
-									foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
-									{
-										if ($alarm['offset'] == $alarm_data['offset'] &&
-											($alarm_data['all'] || $alarm_data['owner'] == $this->user))
-										{
-											unset($event['alarm'][$newid]);
-											unset($event_info['stored_event']['alarm'][$alarm_id]);
-											continue 2;
-										}
-									}
-								}
-							}
+							$this->sync_alarms($event, (array)$event_info['stored_event']['alarm'], $this->user);
 						}
 						break;
 
 					case 'SERIES-PSEUDO-EXCEPTION':
 						// nothing to do here
 						break;
-				}
-				if (is_array($event_info['stored_event'])
-						&& count($event_info['stored_event']['alarm']) > 0)
-				{
-					foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
-					{
-						// only touch own alarms
-						if ($alarm_data['all'] == false && $alarm_data['owner'] == $this->user)
-						{
-							$this->delete_alarm($alarm_id);
-						}
-					}
 				}
 			}
 
@@ -1765,6 +1767,73 @@ class calendar_ical extends calendar_boupdate
 	}
 
 	/**
+	 * Sync alarms of current user: add alarms added on client and remove the ones removed
+	 *
+	 * @param array& $event
+	 * @param array $old_alarms
+	 * @param int $user account_id of user to create alarm for
+	 * @return int number of modified alarms
+	 */
+	public function sync_alarms(array &$event, array $old_alarms, $user)
+	{
+		if ($this->debug) error_log(__METHOD__."(".array2string($event).', old_alarms='.array2string($old_alarms).", $user,)");
+		$modified = 0;
+		foreach($event['alarm'] as &$alarm)
+		{
+			// check if alarm is already stored or from other users
+			foreach($old_alarms as $id => $old_alarm)
+			{
+				// not current users alarm --> ignore
+				if (!$old_alarm['all'] && $old_alarm['owner'] != $user)
+				{
+					unset($old_alarm[$id]);
+					continue;
+				}
+				// alarm found --> stop
+				if (empty($alarm['uid']) && $alarm['offset'] == $old_alarm['offset'] || $alarm['uid'] && $alarm['uid'] == $old_alarm['uid'])
+				{
+					unset($old_alarms[$id]);
+					break;
+				}
+			}
+			// alarm not found --> add it
+			if ($alarm['offset'] != $old_alarm['offset'] || $old_alarm['owner'] != $user && !$alarm['all'])
+			{
+				$alarm['owner'] = $user;
+				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
+				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
+				if ($this->debug) error_log(__METHOD__."() adding new alarm from client ".array2string($alarm));
+				if ($event['id']) $alarm['id'] = $this->save_alarm($event['id'], $alarm);
+				++$modified;
+			}
+			// existing alarm --> update it
+			elseif ($alarm['offset'] == $old_alarm['offset'] && ($old_alarm['owner'] == $user || $old_alarm['all']))
+			{
+				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
+				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
+				$alarm = array_merge($old_alarm, $alarm);
+				if ($this->debug) error_log(__METHOD__."() updating existing alarm from client ".array2string($alarm));
+				$alarm['id'] = $this->save_alarm($event['id'], $alarm);
+				++$modified;
+			}
+		}
+		// remove all old alarms left from current user
+		foreach($old_alarms as $id => $old_alarm)
+		{
+			// not current users alarm --> ignore
+			if (!$old_alarm['all'] && $old_alarm['owner'] != $user)
+			{
+				unset($old_alarm[$id]);
+				continue;
+			}
+			if ($this->debug) error_log(__METHOD__."() deleting alarm '$id' deleted on client ".array2string($old_alarm));
+			$this->delete_alarm($id);
+			++$modified;
+		}
+		return $modified;
+	}
+
+	/**
 	 * get the value of an attribute by its name
 	 *
 	 * @param array $components
@@ -1784,9 +1853,17 @@ class calendar_ical extends calendar_boupdate
 		return false;
 	}
 
-	static function valarm2egw(&$alarms, &$valarm)
+	/**
+	 * Parsing a valarm component preserving all attributes unknown to EGw
+	 *
+	 * @param array &$alarms on return alarms parsed
+	 * @param Horde_Icalendar_Valarm $valarm valarm component
+	 * @param int $duration in seconds to be able to convert RELATED=END
+	 * @return int number of parsed alarms
+	 */
+	static function valarm2egw(&$alarms, Horde_Icalendar_Valarm $valarm, $duration)
 	{
-		$count = 0;
+		$alarm = array();
 		foreach ($valarm->getAllAttributes() as $vattr)
 		{
 			switch ($vattr['name'])
@@ -1797,40 +1874,47 @@ class calendar_ical extends calendar_boupdate
 					switch ($vtype)
 					{
 						case 'DURATION':
-							if (isset($vattr['params']['RELATED'])
-								&& $vattr['params']['RELATED'] != 'START')
+							if (isset($vattr['params']['RELATED']) && $vattr['params']['RELATED'] == 'END')
+							{
+								$alarm['offset'] = $duration -$vattr['value'];
+							}
+							elseif (isset($vattr['params']['RELATED']) && $vattr['params']['RELATED'] != 'START')
 							{
 								error_log("Unsupported VALARM offset anchor ".$vattr['params']['RELATED']);
+								return;
 							}
 							else
 							{
-								$alarms[] = array('offset' => -$vattr['value']);
-								$count++;
+								$alarm['offset'] = -$vattr['value'];
 							}
 							break;
 						case 'DATE-TIME':
-							$alarms[] = array('time' => $vattr['value']);
-							$count++;
+							$alarm['time'] = $vattr['value'];
 							break;
 						default:
-							// we should also do ;RELATED=START|END
 							error_log('VALARM/TRIGGER: unsupported value type:' . $vtype);
 					}
 					break;
-				case 'ACTION':
-				case 'DISPLAY':
-				case 'DESCRIPTION':
-				case 'SUMMARY':
-				case 'ATTACH':
-				case 'ATTENDEE':
-					// we ignore these fields silently
-				 	break;
 
-				default:
-					error_log('VALARM field ' .$vattr['name'] . ': ' . $vattr['value'] . ' HAS NO CONVERSION YET');
+				case 'UID':
+				case 'X-WR-ALARMUID':
+					$alarm['uid'] = $vattr['value'];
+					break;
+
+				default:	// store all other attributes, so we dont loose them
+					$alarm['attrs'][$vattr['name']] = array(
+						'params' => $vattr['params'],
+						'value'  => $vattr['value'],
+					);
 			}
 		}
-		return $count;
+		if (isset($alarm['offset']) || isset($alarm['time']))
+		{
+			//error_log(__METHOD__."(..., ".$valarm->exportvCalendar().", $duration) alarm=".array2string($alarm));
+			$alarms[] = $alarm;
+			return 1;
+		}
+		return 0;
 	}
 
 	function setSupportedFields($_productManufacturer='', $_productName='')
@@ -2246,7 +2330,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($valarm, 'Horde_Icalendar_Valarm'))
 			{
-				$this->valarm2egw($alarms, $valarm);
+				self::valarm2egw($alarms, $valarm, $event['end'] - $event['start']);
 			}
 		}
 		$event['alarm'] = $alarms;
@@ -2281,19 +2365,6 @@ class calendar_ical extends calendar_boupdate
 			}
 			return false;
 		}
-
-		/*
-		$mozillaACK = $component->getAttributeDefault('X-MOZ-LASTACK', null);
-		if ($this->productName == 'lightning' && !isset($mozillaACK))
-		{
-			if ($this->log)
-			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
-					"X-MOZ-LASTACK found\n",3,$this->logfile);
-			}
-			return false;
-		}
-		*/
 
 		if (!empty($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -2907,6 +2978,31 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'STATUS':	// currently no EGroupware event column, but needed as Android uses it to delete single recurrences
 					$event['status'] = $attributes['value'];
+					break;
+
+				// ignore all PROPS, we dont want to store like X-properties or unsupported props
+				case 'DTSTAMP':
+				case 'SEQUENCE':
+				case 'CREATED':
+				case 'LAST-MODIFIED':
+				case 'DTSTART':
+				case 'DTEND':
+				case 'DURATION':
+				case 'X-LIC-ERROR':	// parse errors from libical, makes no sense to store them
+					break;
+
+				default:	// X- attribute or other by EGroupware unsupported property
+					//error_log(__METHOD__."() $attributes[name] = ".array2string($attributes));
+					// for attributes with multiple values in multiple lines, merge the values
+					if (isset($event['##'.$attributes['name']]))
+					{
+						//error_log(__METHOD__."() taskData['##$attribute[name]'] = ".array2string($taskData['##'.$attribute['name']]));
+						$attributes['values'] = array_merge(
+							is_array($event['##'.$attributes['name']]) ? $event['##'.$attributes['name']]['values'] : (array)$event['##'.$attributes['name']],
+							$attributes['values']);
+					}
+					$event['##'.$attributes['name']] = $attributes['params'] || count($attributes['values']) > 1 ?
+						json_encode($attributes) : $attributes['value'];
 					break;
 			}
 		}

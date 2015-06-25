@@ -1628,8 +1628,10 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			foreach ($event['alarm'] as $id => $alarm)
 			{
-				if (is_numeric($id)) unset($alarm['id']);	// unset the temporary id to add the alarm
-
+				if ($alarm['id'] && strpos($alarm['id'], 'cal:'.$cal_id.':') !== 0)
+				{
+					unset($alarm['id']);	// unset the temporary id to add the alarm
+				}
 				if(!isset($alarm['offset']))
 				{
 					$alarm['offset'] = $event['cal_start'] - $alarm['time'];
@@ -1784,7 +1786,7 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * Combine status, quantity and role into one value
 	 *
-	 * @param string $status
+	 * @param string $status status letter: U, T, A, R
 	 * @param int $quantity =1
 	 * @param string $role ='REQ-PARTICIPANT'
 	 * @return string
@@ -2298,6 +2300,8 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->async->cancel_timer($id);
 		}
 		$alarm['cal_id'] = $cal_id;		// we need the back-reference
+		// add an alarm uid, if none is given
+		if (empty($alarm['uid']) && class_exists('Horde_Support_Uuid')) $alarm['uid'] = (string)new Horde_Support_Uuid;
 		//error_log(__METHOD__.__LINE__.' Save Alarm for CalID:'.$cal_id.'->'.array2string($alarm).'-->'.$id.'#'.function_backtrace());
 		// allways store job with the alarm owner as job-owner to get eg. the correct from address
 		if (!$this->async->set_timer($alarm['time'],$id,'calendar.calendar_boupdate.send_alarm',$alarm,$alarm['owner']))
@@ -2855,7 +2859,7 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * Moves a datetime to the beginning of the day within timezone
 	 *
-	 * @param egw_time	&time	the datetime entry
+	 * @param egw_time	$time	the datetime entry
 	 * @param string tz_id		timezone
 	 *
 	 * @return DateTime

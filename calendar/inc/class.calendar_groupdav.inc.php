@@ -7,7 +7,7 @@
  * @package calendar
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -135,7 +135,7 @@ class calendar_groupdav extends groupdav_handler
 	 * @param array &$options
 	 * @param array &$files
 	 * @param int $user account_id
-	 * @param string $id=''
+	 * @param string $id =''
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function propfind($path,&$options,&$files,$user,$id='')
@@ -157,6 +157,7 @@ class calendar_groupdav extends groupdav_handler
 			'daywise' => false,
 			'date_format' => 'server',
 			'no_total' => true,	// we need no total number of rows (saves extra query)
+			'cfs' => array(),	// return custom-fields, as we use them to store X- attributes
 		);
 		foreach(array(
 			'start' => $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-past-limit'],
@@ -252,7 +253,7 @@ class calendar_groupdav extends groupdav_handler
 	 *
 	 * @param string $path
 	 * @param array $filter
-	 * @param array|boolean $start=false false=return all or array(start,num)
+	 * @param array|boolean $start =false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
 	function propfind_callback($path,array $filter,$start=false)
@@ -289,6 +290,7 @@ class calendar_groupdav extends groupdav_handler
 					$files[] = array('path' => $path.urldecode($this->get_path($event)));
 					continue;
 				}
+				$schedule_tag = null;
 				$etag = $this->get_etag($event, $schedule_tag);
 
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
@@ -555,7 +557,7 @@ class calendar_groupdav extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id
+	 * @param int $user =null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function get(&$options,$id,$user=null)
@@ -568,6 +570,7 @@ class calendar_groupdav extends groupdav_handler
 		$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
+		$schedule_tag = null;
 		header('ETag: "'.$this->get_etag($event, $schedule_tag).'"');
 		if ($this->use_schedule_tag)
 		{
@@ -582,9 +585,9 @@ class calendar_groupdav extends groupdav_handler
 	 * Taking into account virtual an real exceptions for recuring events
 	 *
 	 * @param array $event
-	 * @param int $user=null account_id of calendar to display
-	 * @param string $method=null eg. 'PUBLISH' for inbox, nothing anywhere else
-	 * @param boolean|array $expand=false true or array with values for 'start', 'end' to expand recurrences
+	 * @param int $user =null account_id of calendar to display
+	 * @param string $method =null eg. 'PUBLISH' for inbox, nothing anywhere else
+	 * @param boolean|array $expand =false true or array with values for 'start', 'end' to expand recurrences
 	 * @return string
 	 */
 	private function iCal(array $event,$user=null, $method=null, $expand=false)
@@ -626,9 +629,9 @@ class calendar_groupdav extends groupdav_handler
 	 * Maybe that should be part of calendar_bo
 	 *
 	 * @param string $uid UID
-	 * @param calendar_bo $bo=null calendar_bo object to reuse for search call
-	 * @param boolean|array $expand=false true or array with values for 'start', 'end' to expand recurrences
-	 * @param int $user=null account_id of calendar to display, to remove master, if current user does not participate in
+	 * @param calendar_bo $bo =null calendar_bo object to reuse for search call
+	 * @param boolean|array $expand =false true or array with values for 'start', 'end' to expand recurrences
+	 * @param int $user =null account_id of calendar to display, to remove master, if current user does not participate in
 	 * @return array
 	 */
 	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null)
@@ -640,6 +643,7 @@ class calendar_groupdav extends groupdav_handler
 			'filter' => 'owner',  // return all possible entries
 			'daywise' => false,
 			'date_format' => 'server',
+			'cfs' => array(),	// read cfs as we use them to store X- attributes
 		);
 		if (is_array($expand)) $params += $expand;
 
@@ -690,6 +694,13 @@ class calendar_groupdav extends groupdav_handler
 				}
 				continue;	// nothing to change
 			}
+			// alarms are reported on recurrences --> move them to master
+			foreach($recurrence['alarm'] as $alarm)
+			{
+				$master['alarm'][] = $alarm;
+			}
+			$recurrence['alarm'] = array();
+
 			// now we need to check if this recurrence is an exception
 			if (!$expand && $master['participants'] == $recurrence['participants'])
 			{
@@ -731,8 +742,8 @@ class calendar_groupdav extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id of owner, default null
-	 * @param string $prefix=null user prefix from path (eg. /ralf from /ralf/addressbook)
+	 * @param int $user =null account_id of owner, default null
+	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function put(&$options,$id,$user=null,$prefix=null)
@@ -811,6 +822,7 @@ class calendar_groupdav extends groupdav_handler
 			{
 				$schedule_tag_match = $_SERVER['HTTP_IF_SCHEDULE_TAG_MATCH'];
 				if ($schedule_tag_match[0] == '"') $schedule_tag_match = substr($schedule_tag_match, 1, -1);
+				$schedule_tag = null;
 				$this->get_etag($oldEvent, $schedule_tag);
 
 				if ($schedule_tag_match !== $schedule_tag)
@@ -835,6 +847,7 @@ class calendar_groupdav extends groupdav_handler
 				if (($events = $handler->icaltoegw($vCalendar)))
 				{
 					$modified = 0;
+					$series = null;
 					foreach($events as $n => $event)
 					{
 						// for recurrances of event series, we need to read correct recurrence (or if series master is no first event)
@@ -883,7 +896,8 @@ class calendar_groupdav extends groupdav_handler
 						// import alarms, if given and changed
 						if ((array)$event['alarm'] !== (array)$oldEvent['alarm'])
 						{
-							$modified += $this->sync_alarms($oldEvent['id'], (array)$event['alarm'], (array)$oldEvent['alarm'], $user, $event['start']);
+							$event['id'] = $oldEvent['id'];
+							$modified += $handler->sync_alarms($event, (array)$oldEvent['alarm'], $user);
 						}
 					}
 					if (!$modified)	// NO modififictions, or none we understood --> log it and return Ok: "204 No Content"
@@ -952,58 +966,11 @@ class calendar_groupdav extends groupdav_handler
 	}
 
 	/**
-	 * Sync alarms of current user: add alarms added on client and remove the ones removed
-	 *
-	 * @param int $cal_id of event to set alarms
-	 * @param array $alarms
-	 * @param array $old_alarms
-	 * @param int $user account_id of user to create alarm for
-	 * @param int $start start-time of event
-	 * @ToDo store other alarm properties like: ACTION, DESCRIPTION, X-WR-ALARMUID
-	 * @return int number of modified alarms
-	 */
-	private function sync_alarms($cal_id, array $alarms, array $old_alarms, $user, $start)
-	{
-		if ($this->debug) error_log(__METHOD__."($cal_id, ".array2string($alarms).', '.array2string($old_alarms).", $user, $start)");
-		$modified = 0;
-		foreach($alarms as $alarm)
-		{
-			if ($alarm['owner'] != $this->user) continue;	// only import alarms of current user
-
-			// check if alarm is already stored or from other users
-			foreach($old_alarms as $id => $old_alarm)
-			{
-				if ($old_alarm['owner'] != $user || $alarm['offset'] == $old_alarm['offset'])
-				{
-					unset($old_alarms[$id]);	// remove alarms of other user, or already existing alarms
-				}
-			}
-			// alarm not found --> add it
-			if ($alarm['offset'] != $old_alarm['offset'] || $old_alarm['owner'] != $user)
-			{
-				$alarm['owner'] = $user;
-				$alarm['time'] = $start - $alarm['offset'];
-				if ($this->debug) error_log(__METHOD__."() adding new alarm from client ".array2string($alarm));
-				$this->bo->save_alarm($cal_id, $alarm);
-				++$modified;
-			}
-		}
-		// remove all old alarms left from current user
-		foreach($old_alarms as $id => $old_alarm)
-		{
-			if ($this->debug) error_log(__METHOD__."() deleting alarm '$id' deleted on client ".array2string($old_alarm));
-			$this->bo->delete_alarm($id);
-			++$modified;
-		}
-		return $modified;
-	}
-
-	/**
 	 * Handle post request for a schedule entry
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id of owner, default null
+	 * @param int $user =null account_id of owner, default null
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function post(&$options,$id,$user=null)
@@ -1057,8 +1024,8 @@ class calendar_groupdav extends groupdav_handler
 			$handler = $this->_get_handler();
 			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
 			{
-				$eventId = array_shift($foundEvents);
-				list($eventId) = explode(':', $eventId);
+				$id = array_shift($foundEvents);
+				list($eventId) = explode(':', $id);
 
 				if (!($cal_id = $handler->importVCal($vCalendar, $eventId, null,
 					false, 0, $this->groupdav->current_user_principal, $user, $charset)))
@@ -1082,6 +1049,8 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	protected function outbox_freebusy_request($ical, $charset, $user, array &$options)
 	{
+		unset($options);	// not used, but required by function signature
+
 		$vcal = new Horde_Icalendar();
 		if (!$vcal->parsevCalendar($ical, 'VCALENDAR', $charset))
 		{
@@ -1108,7 +1077,7 @@ class calendar_groupdav extends groupdav_handler
 		$organizer = $component->getAttribute('ORGANIZER');
 		$attendees = (array)$component->getAttribute('ATTENDEE');
 		// X-CALENDARSERVER-MASK-UID specifies to exclude given event from busy-time
-		$mask_uid = $component->getAttribute('X-CALENDARSERVER-MASK-UID');
+		$mask_uid = $component->getAttributeDefault('X-CALENDARSERVER-MASK-UID', null);
 
 		header('Content-type: text/xml; charset=UTF-8');
 
@@ -1118,7 +1087,7 @@ class calendar_groupdav extends groupdav_handler
 		$xml->startDocument('1.0', 'UTF-8');
 		$xml->startElementNs('C', 'schedule-response', groupdav::CALDAV);
 
-		foreach($event['participants'] as $uid => $status)
+		foreach(array_keys($event['participants']) as $uid)
 		{
 			$xml->startElementNs('C', 'response', null);
 
@@ -1155,6 +1124,7 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function free_busy_report($path,$options,$user)
 	{
+		unset($path);	// unused, but required by function signature
 		if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
 		{
 			return '403 Forbidden';
@@ -1180,7 +1150,7 @@ class calendar_groupdav extends groupdav_handler
 	 * Reimplemented to add read-free-busy and schedule-deliver privilege
 	 *
 	 * @param string $path path of collection
-	 * @param int $user=null owner of the collection, default current user
+	 * @param int $user =null owner of the collection, default current user
 	 * @return array with privileges
 	 */
 	public function current_user_privileges($path, $user=null)
@@ -1306,7 +1276,7 @@ class calendar_groupdav extends groupdav_handler
 				// check if user is a participant or one of the groups he is a member of --> reject the meeting request
 				$ret = '403 Forbidden';
 				$memberships = $GLOBALS['egw']->accounts->memberships($this->bo->user, true);
-				foreach($event['participants'] as $uid => $status)
+				foreach(array_keys($event['participants']) as $uid)
 				{
 					if ($this->bo->user == $uid || in_array($uid, $memberships))
 					{
@@ -1391,7 +1361,8 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * Get the etag for an entry
 	 *
-	 * @param array|int $event array with event or cal_id
+	 * @param array|int $entry array with event or cal_id
+	 * @param string $schedule_tag =null on return schedule-tag
 	 * @return string|boolean string with etag or false
 	 */
 	function get_etag($entry, &$schedule_tag=null)
@@ -1410,10 +1381,11 @@ class calendar_groupdav extends groupdav_handler
 	 * @param int|array $entry id or array of new created entry
 	 * @param string $path
 	 * @param int|string $retval
-	 * @param boolean $path_attr_is_name=true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
+	 * @param boolean $path_attr_is_name =true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
 	 */
 	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true)
 	{
+		$schedule_tag = null;
 		$etag = $this->get_etag($entry, $schedule_tag);
 
 		if ($this->use_schedule_tag)
@@ -1443,15 +1415,16 @@ class calendar_groupdav extends groupdav_handler
 	/**
 	 * Add extra properties for calendar collections
 	 *
-	 * @param array $props=array() regular props by the groupdav handler
+	 * @param array $props regular props by the groupdav handler
 	 * @param string $displayname
-	 * @param string $base_uri=null base url of handler
-	 * @param int $user=null account_id of owner of current collection
-	 * @param string $path=null path of the collection
+	 * @param string $base_uri =null base url of handler
+	 * @param int $user =null account_id of owner of current collection
+	 * @param string $path =null path of the collection
 	 * @return array
 	 */
-	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null, $path=null)
+	public function extra_properties(array $props, $displayname, $base_uri=null, $user=null, $path=null)
 	{
+		unset($base_uri);	// unused, but required by function signature
 		if (!isset($props['calendar-description']))
 		{
 			// default calendar description: can be overwritten via PROPPATCH, in which case it's already set
@@ -1523,8 +1496,8 @@ class calendar_groupdav extends groupdav_handler
 	function get_shared()
 	{
 		$shared = array();
-		$calendar_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set'];
-		$calendar_home_set = $calendar_home_set ? explode(',',$calendar_home_set) : array();
+		$pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set'];
+		$calendar_home_set = $pref ? explode(',', $pref) : array();
 		// replace symbolic id's with real nummeric id's
 		foreach(array(
 			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
