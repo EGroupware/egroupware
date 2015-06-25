@@ -401,7 +401,7 @@ class infolog_ical extends infolog_bo
 				{
 					if ($name[2] == ':')
 					{
-						if ($value[1] == ':' && ($v = unserialize($value)) !== false) $value = $v;
+						if (($v = json_php_unserialize($value)) && is_array($v)) $value = $v;
 						foreach((array)$value as $compvData)
 						{
 							$comp = Horde_Icalendar::newComponent(substr($name,3), $vevent);
@@ -409,7 +409,7 @@ class infolog_ical extends infolog_bo
 							$vevent->addComponent($comp);
 						}
 					}
-					elseif ($value[1] == ':' && ($attr = unserialize($value)) !== false)
+					elseif (($attr = json_php_unserialize($value)) && is_array($attr))
 					{
 						$vevent->setAttribute(substr($name, 2), $attr['value'], $attr['params'], true, $attr['values']);
 					}
@@ -866,7 +866,7 @@ class infolog_ical extends infolog_bo
 								$attribute['values']);
 						}
 						$taskData['##'.$attribute['name']] = $attribute['params'] || count($attribute['values']) > 1 ?
-							serialize($attribute) : $attribute['value'];
+							json_encode($attribute) : $attribute['value'];
 						break;
 				}
 			}
