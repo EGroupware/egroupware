@@ -207,7 +207,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.div.attr("data-date", this.options.date);
 
 		// Set holiday and today classes
-		this._day_class_holiday();
+		this.day_class_holiday();
 
 		// Update all the little boxes
 		this._draw();
@@ -228,7 +228,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Applies class for today, and any holidays for current day
 	 */
-	_day_class_holiday: function() {
+	day_class_holiday: function() {
 		// Remove all classes
 		this.title.removeClass()
 			// Except this one...
@@ -243,7 +243,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		);
 
 		// Holidays and birthdays
-		var holidays = et2_calendar_daycol.get_holidays(this);
+		var holidays = et2_calendar_daycol.get_holidays(this,this.options.date.substring(0,4));
 		var holiday_list = [];
 		if(holidays && holidays[this.options.date])
 		{
@@ -295,7 +295,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		var events = _events || this.getArrayMgr('content').getEntry(this.options.date) || [];
 
 		// Sort events into minimally-overlapping columns
-		var columns = this._event_columns(events);
+		var columns = this._spread_events(events);
 
 		for(var c = 0; c < columns.length; c++)
 		{
@@ -352,7 +352,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {Object[]} events
 	 * @returns {Array[]} Events sorted into columns
 	 */
-	_event_columns: function(events)
+	_spread_events: function(events)
 	{
 		var day_start = this.date.valueOf() / 1000;
 		var dst_check = new Date(this.date);
@@ -633,36 +633,36 @@ jQuery.extend(et2_calendar_daycol,
 	 * Fetch and cache a list of the year's holidays
 	 *
 	 * @param {et2_calendar_timegrid} widget
+	 * @param {string|numeric} year
 	 * @returns {Array}
 	 */
-	get_holidays: function(widget)
+	get_holidays: function(widget,year)
 	{
 		// Loaded in an iframe or something
 		if(!egw.window.et2_calendar_daycol) return {};
 
-		var cache_id = widget.options.date.substring(0,4);
-		var cache = egw.window.et2_calendar_daycol.holiday_cache[cache_id];
+		var cache = egw.window.et2_calendar_daycol.holiday_cache[year];
 		if (typeof cache == 'undefined')
 		{
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			egw.window.et2_calendar_daycol.holiday_cache[cache_id] = egw.json(
+			egw.window.et2_calendar_daycol.holiday_cache[year] = egw.json(
 				'calendar_timegrid_etemplate_widget::ajax_get_holidays',
-				[cache_id]
+				[year]
 			).sendRequest();
 		}
-		cache = egw.window.et2_calendar_daycol.holiday_cache[cache_id];
+		cache = egw.window.et2_calendar_daycol.holiday_cache[year];
 		if(typeof cache.done == 'function')
 		{
 			// pending, wait for it
 			cache.done(jQuery.proxy(function(response) {
-				egw.window.et2_calendar_daycol.holiday_cache[this.cache_id] = response.response[0].data||undefined;
+				egw.window.et2_calendar_daycol.holiday_cache[this.year] = response.response[0].data||undefined;
 
 				egw.window.setTimeout(jQuery.proxy(function() {
-					this.widget._day_class_holiday();
+					this.widget.day_class_holiday();
 				},this),1);
-			},{widget:widget,cache_id:cache_id}));
+			},{widget:widget,year:year}));
 			return {};
 		}
 		else

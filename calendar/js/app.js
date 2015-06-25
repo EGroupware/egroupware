@@ -12,6 +12,7 @@
 /*egw:uses
 	/etemplate/js/etemplate2.js;
 	/calendar/js/et2_widget_timegrid.js;
+	/calendar/js/et2_widget_planner.js;
 */
 
 /**
@@ -119,6 +120,10 @@ app.classes.calendar = AppJS.extend(
 			set_start_date: function(state) {
 				var d = state.date ? new Date(state.date) : new Date();
 				d.setUTCDate(1);
+				d.setUTCHours(0);
+				d.setUTCMinutes(0);
+				d.setUTCSeconds(0);
+				state.date = d.toJSON();
 				return app.calendar.date.start_of_week(d);
 			},
 			set_end_date: function(state) {
@@ -130,7 +135,76 @@ app.classes.calendar = AppJS.extend(
 				return week_start;
 			},
 		},
-		listview: {etemplates: ['calendar.list']}
+		
+		planner: {
+			etemplates: ['calendar.planner'],
+			set_group_by: function(state) {
+				return state.cat_id? state.cat_id : (state.sortby ? state.sortby : 0);
+			},
+			set_start_date: function(state) {
+				var d = state.date ? new Date(state.date) : new Date();
+				if(state.sortby && state.sortby === 'month')
+				{
+					d.setUTCDate(1);
+				}
+				else if (!state.planner_days)
+				{
+					if(d.getUTCDate() < 15)
+					{
+						d.setUTCDate(1);
+						return app.calendar.date.start_of_week(d);
+					}
+					else
+					{
+						return app.calendar.date.start_of_week(d);
+					}
+				}
+				return d;
+			},
+			set_end_date: function(state) {
+				var d = state.date ? new Date(state.date) : new Date();
+				if(state.sortby && state.sortby === 'month')
+				{
+					d.setUTCDate(0);
+					d.setUTCFullYear(d.getUTCFullYear() + 1);
+				}
+				else if (state.planner_days)
+				{
+					d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
+				}
+				else if (app.calendar.state.last)
+				{
+					d = new Date(app.calendar.state.last);
+				}
+				else if (!state.planner_days)
+				{
+					if (d.getUTCDate() < 15)
+					{
+						d.setUTCDate(0);
+						d.setUTCMonth(d.getUTCMonth()+1);
+						d = app.calendar.date.end_of_week(d);
+					}
+					else
+					{
+						d.setUTCMonth(d.getUTCMonth()+1);
+						d = app.calendar.date.end_of_week(d);
+					}
+				}
+				return d;
+			},
+			set_owner: function(state) {
+				return state.owner || 0;
+			}
+		},
+		
+		listview: {
+			etemplates: ['calendar.list'],
+			set_start_date: function(state)
+			{
+				var d = state.date ? new Date(state.date) : new Date();
+				return d;
+			}
+		}
 	},
 
 	/**
@@ -162,6 +236,9 @@ app.classes.calendar = AppJS.extend(
 
 		//Drag_n_Drop (need to wait for DOM ready to init dnd)
 		jQuery(jQuery.proxy(this.drag_n_drop,this));
+
+		// Scroll
+		jQuery(jQuery.proxy(this._scroll,this));
 	},
 
 	/**
@@ -177,6 +254,7 @@ app.classes.calendar = AppJS.extend(
 		{
 			delete window.top.app.calendar;
 		}
+		jQuery(egw_getFramework().applications.calendar.tab.contentDiv).off();
 	},
 
 	/**
@@ -541,6 +619,55 @@ app.classes.calendar = AppJS.extend(
 		{
 			sortable.sortable('enable');
 		}
+	},
+
+	/**
+	 * Bind scroll event
+	 * When the user scrolls, we'll move enddate - startdate days
+	 */
+	_scroll: function() {
+		// Bind only once, to the whole tab
+		jQuery(egw_getFramework().applications.calendar.tab.contentDiv)
+			.on('wheel','.et2_container:not(#calendar-list)',
+				function(e)
+				{
+					e.preventDefault();
+					var direction = e.originalEvent.deltaY > 0 ? 1 : -1;
+					var delta = 1;
+					var start = new Date(app.calendar.state.date);
+					var end = null;
+
+					// Get the view to calculate
+					if (app.calendar.views && app.calendar.state.view && app.calendar.views[app.calendar.state.view].set_end_date)
+					{
+						if(direction > 0)
+						{
+							start = app.calendar.views[app.calendar.state.view].set_end_date({date:start});
+						}
+						else
+						{
+							start = app.calendar.views[app.calendar.state.view].set_start_date({date:start});
+						}
+						start.setUTCDate(start.getUTCDate()+direction);
+						end = app.calendar.views[app.calendar.state.view].set_end_date({date:start});
+					}
+					// Calculate the current difference, and move
+					else if(app.calendar.state.first && app.calendar.state.last)
+					{
+						start = new Date(app.calendar.state.first);
+						end = new Date(app.calendar.state.last);
+						// Get the number of days
+						delta = (Math.round(Math.max(1,end - start)/(24*3600*1000)))*24*3600*1000
+						// Adjust
+						start = new Date(start.valueOf() + (delta * direction ));
+						end = new Date(end.valueOf() + (delta * direction));
+					}
+					
+					app.calendar.update_state({date: start});
+
+					return false;
+				}
+			);
 	},
 
 	/**
@@ -1390,8 +1517,8 @@ app.classes.calendar = AppJS.extend(
 
 
 			// Show the correct number of grids
-			var grid_count = state.state.view == 'weekN' ? parseInt(this.egw.preference('multiple_weeks','calendar')) || 3 :
-				state.state.view == 'month' ? 0 : // Calculate based on weeks in the month
+			var grid_count = state.state.view === 'weekN' ? parseInt(this.egw.preference('multiple_weeks','calendar')) || 3 :
+				state.state.view === 'month' ? 0 : // Calculate based on weeks in the month
 				state.state.owner.length > (this.egw.config('calview_no_consolidate','phpgwapi') || 5) ? 1 : state.state.owner.length;
 
 			var grid = this.views[this.state.view] ? this.views[this.state.view].etemplates[0].widgetContainer.getWidgetById('view') : false;
@@ -1401,11 +1528,13 @@ app.classes.calendar = AppJS.extend(
 			If the count is > 1, it's either because there are multiple date spans (weekN, month) and we need the correct span
 			per row, or there are multiple owners and we need the correct owner per row.
 			*/
-			if(state.state.view !== 'listview' && (!grid || grid_count != grid._children.length || grid_count > 1))
+			if(grid && (grid_count !== grid._children.length || grid_count > 1))
 			{
 				// Need to redo the number of grids
 				var value = [];
-				var date = state.state.first = view.set_start_date(state.state);
+				state.state.first = view.set_start_date(state.state).toJSON();
+				// We'll modify this one, so it needs to be a new object
+				var date = new Date(state.state.first);
 
 				// Determine the different end date
 				switch(state.state.view)
@@ -1427,7 +1556,7 @@ app.classes.calendar = AppJS.extend(
 							value.push(val);
 							date.setUTCHours(24*7);
 						}
-						state.state.last=val.end_date;
+						state.state.last=val.end_date.toJSON();
 						break;
 					default:
 						var end = state.state.last = view.set_end_date(state.state);
@@ -1442,16 +1571,16 @@ app.classes.calendar = AppJS.extend(
 						}
 						break;
 				}
-				if(view.etemplates[0].widgetContainer.getWidgetById('view'))
+				if(grid)
 				{
-					view.etemplates[0].widgetContainer.getWidgetById('view').set_value(
+					grid.set_value(
 						{content: value}
 					);
 				}
 			}
 			else
 			{
-				// Simple, easy case - just one timegrid.
+				// Simple, easy case - just one widget for the selected time span.
 				// Update existing view's special attribute filters, defined in the view list
 				for(var updater in view)
 				{
@@ -1658,8 +1787,18 @@ app.classes.calendar = AppJS.extend(
 			if(_selected[i].iface.getWidget() && _selected[i].iface.getWidget().instanceOf(et2_calendar_event))
 			{
 				is_widget = true;
-				break;
 			}
+
+			// Also check classes, usually indicating permission
+			if(_action.data && _action.data.enableClass)
+			{
+				is_widget = is_widget && ($j( _selected[i].iface.getDOMNode()).hasClass(_action.data.enableClass))
+			}
+			if(_action.data && _action.data.disableClass)
+			{
+				is_widget = is_widget && !($j( _selected[i].iface.getDOMNode()).hasClass(_action.data.disableClass))
+			}
+
 		}
 		return is_widget;
 	},

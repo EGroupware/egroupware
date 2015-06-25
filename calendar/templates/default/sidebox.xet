@@ -31,7 +31,7 @@ Egroupware
 				<buttononly align="center" class="sideboxstar" id="week" image="week" label="Weekview" onclick="app.calendar.update_state({view:'week'});"/>
 				<buttononly align="center" class="sideboxstar" id="weekN" image="multiweek" label="Multiple week view" onclick="app.calendar.update_state({view:'weekN'});"/>
 				<buttononly align="center" class="sideboxstar" id="month" image="month" label="Multiple week view" onclick="app.calendar.update_state({view:'month'});"/>
-				<buttononly align="center" class="sideboxstar" id="planner" image="planner" label="Group planner" onclick="app.calendar.update_state({view:'planner'});"/>
+				<buttononly align="center" class="sideboxstar" id="planner" image="planner" label="Group planner" onclick="app.calendar.update_state({view:'planner',planner_days:0});"/>
 				<buttononly align="center" class="sideboxstar" id="listview" image="list" label="Listview" onclick="app.calendar.update_state({view:'listview'});"/>
 				</row>
 				</rows>

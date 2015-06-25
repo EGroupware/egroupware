@@ -211,8 +211,24 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Show the last view or the default one, if no last
 	 */
-	function index()
+	function index($content)
 	{
+		if($content['merge'])
+		{
+			// View from sidebox is JSON encoded
+			$this->manage_states(array_merge($content,json_decode($content['view'],true)));
+			if($content['first'])
+			{
+				$this->first = egw_time::to($content['first'],'ts');
+			}
+			if($content['last'])
+			{
+				$this->last = egw_time::to($content['last'],'ts');
+			}
+			$_GET['merge'] = $content['merge'];
+			$this->merge();
+			return;
+		}
 		if (!$this->view) $this->view = 'week';
 
 		// handle views in other files
@@ -240,6 +256,11 @@ class calendar_uiviews extends calendar_ui
 
 		// Actually, this takes care of most of it...
 		$this->week();
+		
+		$tmpl = new etemplate_new('calendar.planner');
+		// Get the actions
+		$tmpl->setElementAttribute('planner','actions',$this->get_actions());
+		$tmpl->exec('calendar_uiviews::index',array());
 
 		// List view in a separate file
 		$list_ui = new calendar_uilist();

@@ -43,6 +43,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Main container
 		this.div = $j(document.createElement("div"))
 			.addClass("calendar_calEvent")
+			.addClass(this.options.class)
 			.css('width',this.options.width);
 		this.title = $j(document.createElement('div'))
 			.addClass("calendar_calEventHeader")
@@ -95,7 +96,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			event = jQuery.extend({},event);
 			var list = [event];
 			// Let parent format any missing data
-			this._parent._event_columns(list);
+			this._parent._spread_events(list);
 
 			// Calculate vertical positioning
 			// TODO: Maybe move this somewhere common between here & parent?
@@ -176,8 +177,12 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		
 		// Header
 		var title = !event.is_private ? event['title'] : egw.lang('private');
-		var small_height = event['end_m']-event['start_m'] < 2*this._parent.display_settings.granularity ||
-			event['end_m'] <= this._parent.display_settings.wd_start || event['start_m'] >= this._parent.display_settings.wd_end;
+		var small_height = true;
+		if(this._parent.display_settings)
+		{
+			small_height = event['end_m']-event['start_m'] < 2*this._parent.display_settings.granularity ||
+				event['end_m'] <= this._parent.display_settings.wd_start || event['start_m'] >= this._parent.display_settings.wd_end;
+		}
 
 		this.div.attr('data-title', title);
 		this.title.text(small_height ? title : this._get_timespan(event))

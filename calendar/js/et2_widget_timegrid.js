@@ -331,28 +331,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				this.dropEnd = drag_helper.call($j('.calendar_calEventHeader',ui.helper)[0],event,ui.helper[0],0);
 				$j('.calendar_timeDemo',ui.helper).css('bottom','auto');
 			});
-
-		// Bind scroll event
-		// When the user scrolls, we'll move enddate - startdate days
-		this.div.on('wheel',jQuery.proxy(function(e) {
-			var direction = e.originalEvent.deltaY > 0 ? 1 : -1;
-
-			this.date_helper.set_value(this.options.end_date || this.options.start_date);
-			var end = this.date_helper.get_time();
-
-			this.date_helper.set_value(this.options.start_date);
-			var start = this.date_helper.get_time();
-			
-			var delta = 1000 * 60 * 60 * 24 + Math.max(0,end - start);
-			
-			// TODO - actually fetch new data
-			this.set_start_date(new Date(start + (delta * direction )));
-			this.set_end_date(new Date(end + (delta * direction)));
-			
-			e.preventDefault();
-			return false;
-		},this));
-
 		return true;
 	},
 

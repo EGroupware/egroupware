@@ -710,17 +710,17 @@ class calendar_ui
 			),
 			array(
 				'text' => lang('planner by category'),
-				'value' => '{"view":"planner", "menuaction":"calendar.calendar_uiviews.planner","sortby":"category"}',
+				'value' => '{"view":"planner", "sortby":"category"}',
 				'selected' => $this->view == 'planner' && $this->sortby != 'user',
 			),
 			array(
 				'text' => lang('planner by user'),
-				'value' => '{"view":"planner", "menuaction":"calendar.calendar_uiviews.planner","sortby":"user"}',
+				'value' => '{"view":"planner","sortby":"user"}',
 				'selected' => $this->view == 'planner' && $this->sortby == 'user',
 			),
 			array(
 				'text' => lang('yearly planner'),
-				'value' => '{"view":"planner", "menuaction":"calendar.calendar_uiviews.planner","sortby":"month"}',
+				'value' => '{"view":"planner","sortby":"month"}',
 				'selected' => $this->view == 'planner' && $this->sortby == 'month',
 			),
 			array(
