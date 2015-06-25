@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-12 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-15 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -456,6 +456,7 @@ class calendar_uiforms extends calendar_ui
 								if ($data['old_status'] != $status && !(!$data['old_status'] && $status == 'G'))
 								{
 									//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
+									$quantity = $role = null;
 									$new_status = calendar_so::combine_status($status, $quantity, $role);
 									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
 									{
@@ -579,7 +580,7 @@ class calendar_uiforms extends calendar_ui
 			// Get links to be copied
 			// With no ID, $content['link_to']['to_id'] is used
 			$content['link_to']['to_id'] = array('to_app' => 'calendar', 'to_id' => 0);
-			foreach(egw_link::get_links('calendar', $content['id']) as $link_id => $link)
+			foreach(egw_link::get_links('calendar', $content['id']) as $link)
 			{
 				if ($link['app'] != egw_link::VFS_APPNAME)
 				{
@@ -638,7 +639,7 @@ class calendar_uiforms extends calendar_ui
 			// if private event with ressource reservation is forbidden
 			if (!$event['public'] && $GLOBALS['egw_info']['server']['no_ressources_private'])
 			{
-				foreach ($event['participants'] as $uid => $value)
+				foreach (array_keys($event['participants']) as $uid)
 				{
 					if ($uid[0] == 'r') //ressource detection
 					{
@@ -653,18 +654,29 @@ class calendar_uiforms extends calendar_ui
 				$event['reference'] = $event['id'];
 				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
-				// modifiy alarms for the exception, unsetting alarm-id to create new alarms
-				if (!is_array($event['alarm'])) $event['alarm'] = array();
-				foreach($event['alarm'] as $n => &$alarm)
-				{
-					unset($alarm['id']);
-				}
 				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']);
 				if (!is_array($conflicts) && $conflicts)
 				{
 					// now we need to add the original start as recur-execption to the series
 					$recur_event = $this->bo->read($event['reference']);
 					$recur_event['recur_exception'][] = $content['edit_single'];
+					// check if we need to move the alarms, because they are next on that exception
+					foreach($recur_event['alarm'] as $id => $alarm)
+					{
+						if ($alarm['time'] == $content['edit_single'] - $alarm['offset'])
+						{
+							$rrule = calendar_rrule::event2rrule($recur_event, true);
+							foreach ($rrule as $time)
+							{
+								if ($content['edit_single'] < $time->format('ts'))
+								{
+									$alarm['time'] = $time->format('ts') - $alarm['offset'];
+									$this->bo->save_alarm($event['reference'], $alarm);
+									break;
+								}
+							}
+						}
+					}
 					unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
 					unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 					$this->bo->update($recur_event,true);	// no conflict check here
@@ -760,7 +772,6 @@ class calendar_uiforms extends calendar_ui
 											htmlspecialchars(egw::link('/index.php',array(
 												'menuaction' => 'calendar.calendar_uiforms.edit',
 												'cal_id'    => $content['id'],
-												'referer'    => $referer,
 											))).'">','</a>');
 									$noerror = false;
 									$event = $orig_event;
@@ -779,6 +790,7 @@ class calendar_uiforms extends calendar_ui
 							$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
 							foreach((array)$event['participants'] as $uid => $status)
 							{
+								$q = $r = null;
 								calendar_so::split_status($status,$q,$r);
 								if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
 								{
@@ -919,6 +931,7 @@ class calendar_uiforms extends calendar_ui
 		case 'delete':					// delete of regular event
 		case 'delete_keep_exceptions':	// series and user selected to keep the exceptions
 		case 'delete_exceptions':		// series and user selected to delete the exceptions too
+			$exceptions_kept = null;
 			if ($this->bo->delete($event['id'], (int)$content['edit_single'], false, false,
 				$button == 'delete_exceptions', $exceptions_kept))
 			{
@@ -978,7 +991,7 @@ class calendar_uiforms extends calendar_ui
 				}
 				else
 				{
-					for($alarm['id']=1; isset($event['alarm'][$alarm['id']]); $alarm['id']++);	// get a temporary non-conflicting, numeric id
+					for($alarm['id']=1; isset($event['alarm'][$alarm['id']]); $alarm['id']++) {}	// get a temporary non-conflicting, numeric id
 					$event['alarm'][$alarm['id']] = $alarm;
 				}
 			}
@@ -1006,13 +1019,13 @@ class calendar_uiforms extends calendar_ui
 					'msg'        => $msg,
 				));
 			}
-			if (in_array($button,array('delete_exceptions','delete_keep_exceptions')) || ($content['recur_type'] && $button['delete']))
+			if (in_array($button,array('delete_exceptions','delete_keep_exceptions')) || $content['recur_type'] && $button == 'delete')
 			{
 				egw_framework::refresh_opener($msg,'calendar');
 			}
 			else
 			{
-				egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button == 'save'?'update': 'delete');
+				egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button == 'save' ? 'update' : 'delete');
 			}
 			egw_framework::window_close();
 			common::egw_exit();
@@ -1044,6 +1057,12 @@ class calendar_uiforms extends calendar_ui
 		{
 			unset($event[$name]);
 		}
+		// add all alarms as new alarms to execption
+		$event['alarm'] = array_values($event['alarm']);
+		foreach($event['alarm'] as &$alarm)
+		{
+			unset($alarm['uid'], $alarm['id'], $alarm['time']);
+		}
 		if($this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
 			return lang('Save event as exception - Delete single occurrence - Edit status or alarms for this particular day');
@@ -1073,6 +1092,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				if (!($email = $GLOBALS['egw']->accounts->id2name($status['uid'],'account_email'))) continue;
 
+				$lid = $firstname = $lastname = null;
 				$GLOBALS['egw']->accounts->get_account_name($status['uid'],$lid,$firstname,$lastname);
 
 				$toadd = $firstname.' '.$lastname.' <'.$email.'>';
@@ -1189,7 +1209,6 @@ class calendar_uiforms extends calendar_ui
 			'duration'   => $this->durations,
 			'role'       => $this->bo->roles,
 			'new_alarm[options]' => $this->bo->alarms + array(0 => lang('Custom')),
-			'before_after'=>array(0 => lang('Before'), 1 => lang('After')),
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
@@ -1258,6 +1277,7 @@ class calendar_uiforms extends calendar_ui
 						$event['participant_types'] = array();
 						foreach($event['participants'] as $uid => $status)
 						{
+							$user_type = $user_id = null;
 							calendar_so::split_user($uid, $user_type, $user_id);
 							$event['participant_types'][$user_type][$user_id] = $status;
 						}
@@ -1293,8 +1313,7 @@ class calendar_uiforms extends calendar_ui
 					}
 					else
 					{
-						$date = new egw_time($_GET['date'], egw_time::$user_timezone);
-						$date =& $this->bo->so->startOfDay($date);
+						$date = $this->bo->so->startOfDay(new egw_time($_GET['date'], egw_time::$user_timezone));
 						$date->setUser();
 					}
 					$event = $this->bo->read($cal_id, $date, true);
@@ -1336,7 +1355,7 @@ class calendar_uiforms extends calendar_ui
 						{
 							foreach((array)$set['link_app'] as $i => $l_app)
 							{
-								if (($l_id=$set['link_id'][$i])) egw_link::link('calendar',$content['link_to']['to_id'],$l_app,$l_id);
+								if (($l_id=$set['link_id'][$i])) egw_link::link('calendar',$event['link_to']['to_id'],$l_app,$l_id);
 							}
 							unset($set['link_app']);
 							unset($set['link_id']);
@@ -1362,7 +1381,7 @@ class calendar_uiforms extends calendar_ui
 			$lock_path = egw_vfs::app_entry_lock_path('calendar',$event['id']);
 			$lock_owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
 
-			if (($preserv['lock_token'] = $content['lock_token']))		// already locked --> refresh the lock
+			if (($preserv['lock_token'] = $event['lock_token']))		// already locked --> refresh the lock
 			{
 				egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',true,false);
 			}
@@ -1419,6 +1438,7 @@ class calendar_uiforms extends calendar_ui
 			foreach($participants as $id => $status)
 			{
 				$uid = $type == 'u' ? $id : $type.$id;
+				$quantity = $role = null;
 				calendar_so::split_status($status,$quantity,$role);
 				$preserv['participants'][$row] = $content['participants'][$row] = array(
 					'app'      => $name == 'accounts' ? ($GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'Group' : 'User') : $name,
@@ -1498,46 +1518,36 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
-		$preserv = array_merge($preserv,$content);
+		$preserved = array_merge($preserv,$content);
 		$event['new_alarm']['options'] = $content['new_alarm']['options'];
 		if ($event['alarm'])
 		{
 			// makes keys of the alarm-array starting with 1
 			$content['alarm'] = array(false);
-			if (!$content['edit_single'])
+			foreach(array_values($event['alarm']) as $id => $alarm)
 			{
-				foreach(array_values($event['alarm']) as $id => $alarm)
+				if (!$alarm['all'] && !$this->bo->check_perms(EGW_ACL_READ,0,$alarm['owner']))
 				{
-					if (!$alarm['all'] && !$this->bo->check_perms(EGW_ACL_READ,0,$alarm['owner']))
-					{
-						continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
-					}
-					$alarm['all'] = (int) $alarm['all'];
-					$after = false;
-					if($alarm['offset'] < 0)
-					{
-						$after = true;
-						$alarm['offset'] = -1 * $alarm['offset'];
-					}
-					$days = (int) ($alarm['offset'] / DAY_s);
-					$hours = (int) (($alarm['offset'] % DAY_s) / HOUR_s);
-					$minutes = (int) (($alarm['offset'] % HOUR_s) / 60);
-					$label = array();
-					if ($days) $label[] = $days.' '.lang('days');
-					if ($hours) $label[] = $hours.' '.lang('hours');
-					if ($minutes) $label[] = $minutes.' '.lang('Minutes');
-					$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
-					$content['alarm'][] = $alarm;
-
-					$readonlys['alarm[delete_alarm]['.$alarm['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
+					continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
 				}
-			}
-			else
-			{
-				// disable the alarm tab functionality
-				$readonlys['button[add_alarm]'] = true;
-				$readonlys['new_alarm[options]'] = true;
-				$readonlys['new_alarm[owner]'] = true;
+				$alarm['all'] = (int) $alarm['all'];
+				$after = false;
+				if($alarm['offset'] < 0)
+				{
+					$after = true;
+					$alarm['offset'] = -1 * $alarm['offset'];
+				}
+				$days = (int) ($alarm['offset'] / DAY_s);
+				$hours = (int) (($alarm['offset'] % DAY_s) / HOUR_s);
+				$minutes = (int) (($alarm['offset'] % HOUR_s) / 60);
+				$label = array();
+				if ($days) $label[] = $days.' '.lang('days');
+				if ($hours) $label[] = $hours.' '.lang('hours');
+				if ($minutes) $label[] = $minutes.' '.lang('Minutes');
+				$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
+				$content['alarm'][] = $alarm;
+
+				$readonlys['alarm[delete_alarm]['.$alarm['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 			}
 			if (count($content['alarm']) == 1)
 			{
@@ -1598,9 +1608,9 @@ class calendar_uiforms extends calendar_ui
 		}
 		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE || ($event['recur_enddate'] &&$event['start'] > $event['recur_enddate'])))
 		{
-			$content['exception_label'] = $this->bo->long_date(max($preserv['actual_date'], $event['start']));
+			$content['exception_label'] = $this->bo->long_date(max($preserved['actual_date'], $event['start']));
 		}
-		$readonlys['button[delete]'] = !$event['id'] || $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
+		$readonlys['button[delete]'] = !$event['id'] || $preserved['hide_delete'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
 		if (!$event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{
@@ -1622,7 +1632,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$etpl->set_cell_attribute('button[new_alarm]','type','checkbox');
 		}
-		if ($preserv['no_popup'])
+		if ($preserved['no_popup'])
 		{
 			$etpl->set_cell_attribute('button[cancel]','onclick','');
 		}
@@ -1630,7 +1640,7 @@ class calendar_uiforms extends calendar_ui
 		// Allow admins to restore deleted events
 		if($GLOBALS['egw_info']['server']['calendar_delete_history'] && $event['deleted'] )
 		{
-			$content['deleted'] = $preserv['deleted'] = null;
+			$content['deleted'] = $preserved['deleted'] = null;
 			$etpl->set_cell_attribute('button[save]', 'label', 'Recover');
 			$etpl->set_cell_attribute('button[apply]', 'disabled', true);
 		}
@@ -1641,7 +1651,7 @@ class calendar_uiforms extends calendar_ui
 		$this->setup_history($content, $sel_options);
 
 		//echo "content="; _debug_array($content);
-		//echo "preserv="; _debug_array($preserv);
+		//echo "preserv="; _debug_array($preserved);
  		//echo "readonlys="; _debug_array($readonlys);
  		//echo "sel_options="; _debug_array($sel_options);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - '
@@ -1651,18 +1661,18 @@ class calendar_uiforms extends calendar_ui
 
 		$content['cancel_needs_refresh'] = (bool)$_GET['cancel_needs_refresh'];
 
-		if (!empty($preserv['lock_token'])) $content['lock_token'] = $preserv['lock_token'];
+		if (!empty($preserved['lock_token'])) $content['lock_token'] = $preserved['lock_token'];
 
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
 		{
 			unset($_GET['non_interactive']);	// prevent process_exec <--> edit loops
 			$content['button']['save'] = true;
-			$this->process_edit(array_merge($content,$preserv));
+			$this->process_edit(array_merge($content,$preserved));
 		}
 		else
 		{
-			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
+			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserved,$preserved['no_popup'] ? 0 : 2);
 		}
 	}
 
@@ -1739,6 +1749,7 @@ class calendar_uiforms extends calendar_ui
 							$this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
 						{
 							$event['ical_sender_status'] = $event['participants'][$event['ical_sender_uid']];
+							$quantity = $role = null;
 							calendar_so::split_status($event['ical_sender_status'], $quantity, $role);
 							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
 							calendar_so::split_status($existing_status, $quantity, $role);
@@ -1772,6 +1783,7 @@ class calendar_uiforms extends calendar_ui
 			$event['participant_types'] = array();
 			foreach($event['participants'] as $uid => $status)
 			{
+				$user_type = $user_id = null;
 				calendar_so::split_user($uid, $user_type, $user_id);
 				$event['participants'][$uid] = $event['participant_types'][$user_type][$user_id] =
 					$status && $status !== 'X' ? $status : 'U';	// X --> no status given --> U = unknown
@@ -1962,9 +1974,9 @@ class calendar_uiforms extends calendar_ui
 			$arr = $this->bo->date2array($edit_content['start']);
 			$arr['hour'] = $arr['minute'] = $arr['second'] = 0; unset($arr['raw']);
 			$edit_content['start'] = $this->bo->date2ts($arr);
-			$arr = $this->bo->date2array($edit_content['end']);
-			$arr['hour'] = 23; $arr['minute'] = $arr['second'] = 59; unset($arr['raw']);
-			$edit_content['end'] = $this->bo->date2ts($arr);
+			$earr = $this->bo->date2array($edit_content['end']);
+			$earr['hour'] = 23; $earr['minute'] = $earr['second'] = 59; unset($earr['raw']);
+			$edit_content['end'] = $this->bo->date2ts($earr);
 		}
 		$content = array(
 			'start'    => $edit_content['start'],
@@ -2045,7 +2057,7 @@ class calendar_uiforms extends calendar_ui
 			$content['end_time'] = strtotime(((strlen($content['end_time'])<2)?("0".$content['end_time']):$content['end_time']).":00");
 
 			// pick a searchwindow fitting the duration (search for a 10 day slot in a one week window never succeeds)
-			foreach($sel_options['search_window'] as $window => $label)
+			foreach(array_keys($sel_options['search_window']) as $window)
 			{
 				if ($window > $content['duration'])
 				{
@@ -2166,21 +2178,21 @@ class calendar_uiforms extends calendar_ui
 	 * @param array $freetime free time-slots: array with start and end values
 	 * @param int $duration min. duration in sec
 	 * @param int $weekdays allowed weekdays, bitfield of MCAL_M_...
-	 * @param int $start_time minimum start-hour 0-23
-	 * @param int $end_time maximum end-hour 0-23, or 0 for none
+	 * @param int $_start_time minimum start-hour 0-23
+	 * @param int $_end_time maximum end-hour 0-23, or 0 for none
 	 * @param array $sel_options on return options for start-time selectbox
 	 * @return array of free time-slots: array with start and end values
 	 */
-	function split_freetime_daywise($freetime,$duration,$weekdays,$start_time,$end_time,&$sel_options)
+	function split_freetime_daywise($freetime, $duration, $weekdays, $_start_time, $_end_time, &$sel_options)
 	{
-		if ($this->debug > 1) $this->bo->debug_message('uiforms::split_freetime_daywise(freetime=%1, duration=%2, start_time=%3, end_time=%4)',true,$freetime,$duration,$start_time,$end_time);
+		if ($this->debug > 1) $this->bo->debug_message('uiforms::split_freetime_daywise(freetime=%1, duration=%2, start_time=%3, end_time=%4)',true,$freetime,$duration,$_start_time,$_end_time);
 
 		$freetime_daywise = array();
 		if (!is_array($sel_options)) $sel_options = array();
 		$time_format = $this->common_prefs['timeformat'] == 12 ? 'h:i a' : 'H:i';
 
-		$start_time = (int) $start_time;	// ignore leading zeros
-		$end_time   = (int) $end_time;
+		$start_time = (int) $_start_time;	// ignore leading zeros
+		$end_time   = (int) $_end_time;
 
 		// ignore the end_time, if duration would never fit
 		if (($end_time - $start_time)*HOUR_s < $duration)
@@ -2191,10 +2203,10 @@ class calendar_uiforms extends calendar_ui
 		$n = 0;
 		foreach($freetime as $ft)
 		{
-			$daybegin = $this->bo->date2array($ft['start']);
-			$daybegin['hour'] = $daybegin['minute'] = $daybegin['second'] = 0;
-			unset($daybegin['raw']);
-			$daybegin = $this->bo->date2ts($daybegin);
+			$adaybegin = $this->bo->date2array($ft['start']);
+			$adaybegin['hour'] = $adaybegin['minute'] = $adaybegin['second'] = 0;
+			unset($adaybegin['raw']);
+			$daybegin = $this->bo->date2ts($adaybegin);
 
 			for($t = $daybegin; $t < $ft['end']; $t += DAY_s,$daybegin += DAY_s)
 			{
@@ -2334,33 +2346,32 @@ class calendar_uiforms extends calendar_ui
 				$msg = lang('You need to select an iCal file first');
 			}
 		}
-		$content = array(
-			'msg' => $msg,
-		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Import');
 		$etpl = new etemplate_new('calendar.import');
 
-		$etpl->exec('calendar.calendar_uiforms.import',$content);
+		$etpl->exec('calendar.calendar_uiforms.import', array(
+			'msg' => $msg,
+		));
 	}
 
 	/**
 	 * Edit category ACL (admin only)
 	 *
-	 * @param array $content
+	 * @param array $_content
 	 */
-	function cat_acl(array $content=null)
+	function cat_acl(array $_content=null)
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			throw new egw_exception_no_permission_admin();
 		}
-		if ($content)
+		if ($_content)
 		{
-			list($button) = each($content['button']);
-			unset($content['button']);
+			list($button) = each($_content['button']);
+			unset($_content['button']);
 			if ($button != 'cancel')	// store changed acl
 			{
-				foreach($content as $data)
+				foreach($_content as $data)
 				{
 					if (!($cat_id = $data['cat_id'])) continue;
 					foreach(array_merge((array)$data['add'],(array)$data['status'],array_keys((array)$data['old'])) as $account_id)
@@ -2528,6 +2539,7 @@ class calendar_uiforms extends calendar_ui
 		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
 		foreach((array)$event['participants'] as $uid => $status)
 		{
+			$q = $r = null;
 			calendar_so::split_status($status,$q,$r);
 			if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
 			{
