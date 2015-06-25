@@ -6,7 +6,7 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2009 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2009-15 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -182,14 +182,14 @@ class calendar_rrule implements Iterator
 	/**
 	 * Starttime of series
 	 *
-	 * @var DateTime
+	 * @var egw_time
 	 */
 	public $time;
 
 	/**
 	 * Current "position" / time
 	 *
-	 * @var DateTime
+	 * @var egw_time
 	 */
 	public $current;
 
@@ -234,7 +234,7 @@ class calendar_rrule implements Iterator
 				$this->lastdayofweek = self::SUNDAY;
 		}
 
-		$this->time = $time;
+		$this->time = $time instanceof egw_time ? $time : new egw_time($time);
 
 		if (!in_array($type,array(self::NONE, self::DAILY, self::WEEKLY, self::MONTHLY_MDAY, self::MONTHLY_WDAY, self::YEARLY)))
 		{
@@ -697,7 +697,16 @@ class calendar_rrule implements Iterator
 
 		if ($this->enddate)
 		{
-			$rrule['UNTIL'] = $this->enddate;
+			// our enddate is the end-time, not start-time of last event!
+			$this->rewind();
+			$enddate = $this->current();
+			do
+			{
+				$this->next_no_exception();
+				$occurrence = $this->current();
+			}
+			while ($this->valid() && ($enddate = $occurrence));
+			$rrule['UNTIL'] = $enddate;
 		}
 
 		return $rrule;
