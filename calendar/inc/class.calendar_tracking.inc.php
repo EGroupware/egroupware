@@ -132,13 +132,13 @@ class calendar_tracking extends bo_tracking
 		* If this is one of a recurring event, append the recur_date to the participant field so we can
 		* filter by it later.
 		*/
-		$recur_prefix = $data['recur_date'] ? $data['recur_date'] : '';
 		if(is_array($data['participants']))
 		{
 			$participants = $data['participants'];
 			$data['participants'] = array();
 			foreach($participants as $uid => $status)
 			{
+				$quantity = $role = $user_type = $user_id = null;
 				calendar_so::split_status($status, $quantity, $role);
 				calendar_so::split_user($uid, $user_type, $user_id);
 				$field = is_numeric($uid) ? 'participants' : 'participants-'.$user_type;
@@ -150,6 +150,12 @@ class calendar_tracking extends bo_tracking
 					'recur'		=>	$data['recur_date'] ? $data['recur_date'] : 0,
 				);
 			}
+		}
+		// if clients eg. CalDAV do NOT set participants, they are left untouched
+		// therefore we should not track them, as all updates then show up as all participants removed
+		elseif(!isset($data['participants']))
+		{
+			unset($old['participants']);
 		}
 		if(is_array($old['participants']))
 		{
@@ -177,6 +183,7 @@ class calendar_tracking extends bo_tracking
 	 */
 	public function do_notifications($data,$old,$deleted=null)
 	{
+		unset($data, $old, $deleted);	// unused, but required by function signature
 		return true;
 	}
 }
