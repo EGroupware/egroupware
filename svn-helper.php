@@ -38,9 +38,16 @@ switch ($args[0])
 	case 'up':
 		if (count($args) == 1)	// run an svn up over all modules
 		{
-			$cmd = 'svn up '.implode(' ', get_app_dirs());
-			echo $cmd."\n";
-			system($cmd);
+			foreach(array(
+				'svn' => 'svn_up',
+				'git' => 'git_pull',
+			) as $type => $cmd)
+			{
+				if (($modules = get_app_dirs($type)))
+				{
+					$cmd($modules);
+				}
+			}
 			break;
 		}
 		// fall through
@@ -56,19 +63,37 @@ switch ($args[0])
 		break;
 }
 
+function git_pull(array $modules)
+{
+	foreach($modules as $module)
+	{
+		$cmd = "(cd $module; git pull)";
+		echo $cmd."\n";
+		system($cmd);
+	}
+}
+
+function svn_up(array $modules)
+{
+	$cmd = 'svn up '.implode(' ', $modules);
+	echo $cmd."\n";
+	system($cmd);
+}
+
 /**
  * Get all EGroupware application directories including "."
  *
  * @return array module => relativ path pairs, "egroupware" => ".", "addressbook" => "addressbook", ...
  */
-function get_app_dirs()
+function get_app_dirs($type='svn')
 {
 	$app_dirs = array();
 	foreach(scandir(__DIR__) as $dir)
 	{
 		$path = __DIR__ . '/'. $dir;
 		if (!is_dir($path) || in_array($dir, array('debian','home','doc','..','.svn')) ||
-			!is_dir($path.'/setup') && $dir != 'setup'|| $dir =='felamimail' || $dir =='messenger') continue;
+			!is_dir($path.'/setup') && $dir != 'setup') continue;
+		if (file_exists($path.'/.git') != ($type == 'git')) continue;
 		$app_dirs[$dir == '.' ? 'egroupware' : $dir] = $dir;
 	}
 	//error_log(__METHOD__."() returning ".print_r($app_dirs, true));
