@@ -122,6 +122,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$send_value = $value;
 
 		list($app) = explode('.',$value['get_rows']);
+		if(!$GLOBALS['egw_info']['apps'][$app])
+		{
+			list($app) = explode('.',$this->attrs['template']);
+		}
 
 		// Check for a favorite in URL
 		if($_GET['favorite'] && $value['favorites'])
