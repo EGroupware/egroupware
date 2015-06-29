@@ -544,10 +544,10 @@ class addressbook_vcal extends addressbook_bo
 				array2string($_vcard)."\n",3,$this->logfile);
 		}
 
-		if(!($_vcard instanceof Horde_iCalendar))
+		if(!($_vcard instanceof Horde_Icalendar))
 		{
 			$container = false;
-			$vCard = Horde_iCalendar::newComponent('vcard', $container);
+			$vCard = Horde_Icalendar::newComponent('vcard', $container);
 
 			if (!$vCard->parsevCalendar($_vcard, 'VCARD', $charset))
 			{
