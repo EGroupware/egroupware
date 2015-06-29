@@ -1419,6 +1419,12 @@ app.classes.calendar = AppJS.extend(
 			state = state ? JSON.parse(state) : {};
 		}
 
+		// Make sure date is consitantly a string, in case it needs to be passed to server
+		if(state.date.toJSON)
+		{
+			state.state = state.date.toJSON();
+		}
+
 		// Don't store current user in state to allow admins to create favourites for all
 		// Should make no difference for normal users.
 		if(state.owner == egw.user('account_id'))
@@ -1427,6 +1433,10 @@ app.classes.calendar = AppJS.extend(
 			// it will work for other users too.
 			state.owner = 0;
 		}
+		// Don't store first and last
+		delete state.first;
+		delete state.last;
+		
 		return state;
 	},
 
@@ -1468,7 +1478,10 @@ app.classes.calendar = AppJS.extend(
 				}
 			}
 		}
-		$j(this.sidebox_et2.getInstanceManager().DOMContainer).hide();
+		if(this.sidebox_et2)
+		{
+			$j(this.sidebox_et2.getInstanceManager().DOMContainer).hide();
+		}
 		
 		// Check for a supported client-side view
 		if(this.views[state.state.view] &&
@@ -1674,6 +1687,9 @@ app.classes.calendar = AppJS.extend(
 					widget.set_value(state.state[widget.id]);
 				}
 			},this,et2_valueWidget);
+
+			// If current state matches a favorite, hightlight it
+			this.highlight_favorite();
 
 			// Sidebox is updated, we can clear the flag
 			this.state_update_in_progress = false;
