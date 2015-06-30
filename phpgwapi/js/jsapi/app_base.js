@@ -793,7 +793,6 @@ var AppJS = Class.extend(
 							continue;
 						}
 						// One has a value and the other doesn't, no match
-						debugger;
 						return;
 					}
 					// Consider sub-objects (column filters) individually
@@ -814,7 +813,6 @@ var AppJS = Class.extend(
 						else if(state[state_key][sub_key] && state[state_key][sub_key] != favorite.state[state_key][sub_key])
 						{
 							// Different values, do not match
-							debugger;
 							return;
 						}
 
@@ -827,7 +825,6 @@ var AppJS = Class.extend(
 				else if (typeof state[state_key] !== 'undefined' && state[state_key] != favorite.state[state_key])
 				{
 					// Different values, do not match
-					debugger;
 					return;
 				}
 			}
