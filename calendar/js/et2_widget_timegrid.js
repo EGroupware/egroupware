@@ -188,97 +188,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			return this.dropEnd;
 		};
 		
-		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function() {
-			// Load the event
-			timegrid._get_event_info(this);
-			var that = this;
-			
-			//Resizable event handler
-			$j(this).resizable
-			({
-				distance: 10,
-				grid: [10000,timegrid.rowHeight],
-				autoHide: true,
-				handles: 's,se',
-				containment:'parent',
-
-				/**
-				 *  Triggered when the resizable is created.
-				 *
-				 * @param {event} event
-				 * @param {Object} ui
-				 */
-				create:function(event, ui)
-				{
-					var resizeHelper = event.target.getAttribute('data-resize');
-					if (resizeHelper == 'WD' || resizeHelper == 'WDS')
-					{
-						jQuery(this).resizable('destroy');
-					}
-				},
-
-				/**
-				 * Triggered at start of resizing a calEvent
-				 *
-				 * @param {event} event
-				 * @param {Object} ui
-				 */
-				start:function(event, ui)
-				{
-					this.dropStart = timegrid._get_time_from_position(ui.element[0].getBoundingClientRect().left,ui.element[0].getBoundingClientRect().top).last();
-					this.dropDate = timegrid._get_event_info(this).start;
-				},
-
-				/**
-				 * Triggered at the end of resizing the calEvent.
-				 *
-				 * @param {event} event
-				 * @param {Object} ui
-				 */
-				stop:function(event, ui)
-				{
-					var e = new jQuery.Event('change');
-					e.originalEvent = event;
-					e.data = {duration: 0};
-					var event_data = timegrid._get_event_info(this);
-					var event_widget = timegrid.getWidgetById(event_data.id);
-					
-					var sT = parseInt(this.dropStart.attr('data-hour'))* 60 + parseInt(this.dropStart.attr('data-minute'));
-					if (typeof this.dropEnd != 'undefined' && this.dropEnd.length == 1)
-					{
-						var eT = parseInt(this.dropEnd.attr('data-hour') * 60) + parseInt(this.dropEnd.attr('data-minute'));
-						e.data.duration = ((eT - sT)/60) * 3600;
-
-
-
-						if(event_widget)
-						{
-							event_widget.options.value.duration = e.data.duration;
-						}
-						$j(this).trigger(e);
-
-
-						// That cleared the resize handles, so remove for re-creation...
-						$j(this).resizable('destroy');
-					}
-					// Clear the helper, re-draw
-					event_widget.set_value(event_widget.options.value);
-				},
-
-				/**
-				 * Triggered during the resize, on the drag of the resize handler
-				 *
-				 * @param {event} event
-				 * @param {Object} ui
-				 */
-				resize:function(event, ui)
-				{
-					// Add 5px to make sure it doesn't land right on the edge of a div
-					drag_helper.call(this,event,ui.element[0],ui.helper.outerHeight()+5);
-				}
-			});
-		});
-
 		// Customize and override some draggable settings
 		this.div.on('dragcreate','.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
 				$j(this).draggable('option','cursorAt',false);
@@ -1192,7 +1101,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	 * Set which user owns this.  Owner is passed along to the individual
 	 * days.
 	 *
-	 * @param {number} _owner Account ID
+	 * @param {number|number[]} _owner Account ID
 	 * @returns {undefined}
 	 */
 	set_owner: function(_owner)
@@ -1203,7 +1112,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
 
 		this.options.owner = _owner;//this.owner.getValue();
-		if(old !== this.options.owner && this.isAttached())
+		if(this.isAttached() && (
+			typeof old == "number" && typeof _owner == "number" && old !== this.options.owner ||
+			// Array of ids will not compare as equal
+			((typeof old === 'object' || typeof _owner === 'object') && old.toString() !== _owner.toString())
+		))
 		{
 			this.invalidate(true);
 		}

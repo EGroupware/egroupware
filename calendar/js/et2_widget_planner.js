@@ -604,57 +604,27 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				title += ' '+t.getUTCFullYear();
 			
 				// previous links
-				/*
-				$prev = $t_arr;
-				$prev['day'] = 1;
-				if ($prev['month']-- <= 1)
-				{
-					$prev['month'] = 12;
-					$prev['year']--;
-				}
-				if ($this->bo->date2ts($prev) < $start-20*DAY_s)
-				{
-					$prev['day'] = $this->day;
-					$full = $this->bo->date2string($prev);
-					if ($this->day >= 15) $prev = $t_arr;		// we stay in the same month
-					$prev['day'] = $this->day < 15 ? 15 : 1;
-					$half = $this->bo->date2string($prev);
-					$title = html::a_href(html::image('phpgwapi','first',lang('back one month'),$options=' alt="<<"'),array(
-						'menuaction' => $this->view_menuaction,
-						'date'       => $full,
-					)) . ' &nbsp; '.
-					html::a_href(html::image('phpgwapi','left',lang('back half a month'),$options=' alt="<"'),array(
-						'menuaction' => $this->view_menuaction,
-						'date'       => $half,
-					)) . ' &nbsp; '.$title;
-				}
+				var prev = new Date(t);
+				prev.setUTCDate(1);
+				prev.setUTCMonth(prev.getUTCMonth()-1);
+				
+				var full = prev.toJSON();
+				prev.setUTCDate(start.getUTCDate());
+				if (prev.getUTCDate() >= 15) prev = new Date(t);		// we stay in the same month
+				prev.setUTCDate(start.getUTCDate() < 15 ? 15 : 1);
+				var half = prev.toJSON();
+				title = this._scroll_button('first',full) + this._scroll_button('left',half) + title;
+
+				
 				// next links
-				$next = $t_arr;
-				if ($next['month']++ >= 12)
-				{
-					$next['month'] = 1;
-					$next['year']++;
-				}
-				// dont show next scales, if there are more then 10 days in the next month or there is no next month
-				$days_in_next_month = (int) date('d',$end = $start+$days*DAY_s);
-				if ($days_in_next_month <= 10 || date('m',$end) == date('m',$t))
-				{
-					if ($this->day >= 15) $next = $t_arr;		// we stay in the same month
-					$next['day'] = $this->day;
-					$full = $this->bo->date2string($next);
-					if ($this->day < 15) $next = $t_arr;		// we stay in the same month
-					$next['day'] = $this->day < 15 ? 15 : 1;
-					$half = $this->bo->date2string($next);
-					$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',lang('forward half a month'),$options=' alt=">>"'),array(
-						'menuaction' => $this->view_menuaction,
-						'date'       => $half,
-					)). ' &nbsp; '.
-					html::a_href(html::image('phpgwapi','last',lang('forward one month'),$options=' alt=">>"'),array(
-						'menuaction' => $this->view_menuaction,
-						'date'       => $full,
-					));
-				}
-				*/
+				var next = new Date(t);
+				next.setUTCMonth(next.getUTCMonth()+1);
+				next.setUTCDate(start.getUTCDate() < 15 ? 15 : 1);
+				half = next.toJSON();
+				next.setUTCMonth(next.getUTCMonth()+1);
+				full = next.toJSON();
+
+				title += this._scroll_button('right',half) + this._scroll_button('last',full);
 			}
 			else
 			{
@@ -840,9 +810,9 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	 * Create a pagination button, and inserts it
 	 * 
 	 */
-	_scroll_button: function()
+	_scroll_button: function(image, date)
 	{
-
+		return '<img class="et2_clickable" src="' + egw.image(image)+ '" data-date="' + (date.toJSON ? date.toJSON():date) + '"/>';
 	},
 
 	/**
@@ -1339,7 +1309,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		else if (!jQuery.isEmptyObject(_ev.target.dataset))
 		{
 			// Click on a header, we can go there
-			debugger
 			_ev.data = jQuery.extend({},_ev.target.parentNode.dataset, _ev.target.dataset);
 			this.change(_ev);
 		}

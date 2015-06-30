@@ -2523,7 +2523,6 @@ class calendar_uiforms extends calendar_ui
 				$date =& $this->bo->so->startOfDay($date);
 				$date->setUser();
 			}
-			error_log("Loading event for " . $date);
 			$event = $this->bo->read($eventId, $date, true);
 			$preserv['actual_date'] = $date;		// remember the date clicked
 
@@ -2595,6 +2594,65 @@ class calendar_uiforms extends calendar_ui
 		}
 	}
 
+	/**
+	 * Change the status via ajax
+	 * @param string $eventId
+	 * @param integer $user
+	 * @param string $status
+	 */
+	function ajax_status($eventId, $uid, $status)
+	{
+		list($eventId, $date) = explode(':',$eventId);
+		$old_event=$event=$this->bo->read($eventId);
+
+		// If we have a recuring event for a particular day, make an exception
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
+		{
+			$date = new egw_time($date, egw_time::$user_timezone);
+			if (!empty($event['whole_day']))
+			{
+				$date =& $this->bo->so->startOfDay($date);
+				$date->setUser();
+			}
+			$event = $this->bo->read($eventId, $date, true);
+			$preserv['actual_date'] = $date;		// remember the date clicked
+
+			// For DnD, always create an exception
+			$this->_create_exception($event,$preserv);
+			unset($event['id']);
+			$date = $date->format('ts');
+		}
+		if($event['participants'][$uid])
+		{
+			$q = $r = null;
+			calendar_so::split_status($event['participants'][$uid],$q,$r);
+			$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
+			$this->bo->set_status($event['id'],$uid,$status,0,true);
+		}
+		$conflicts=$this->bo->update($event);
+
+		$response = egw_json_response::get();
+		if(!is_array($conflicts))
+		{
+			// Directly update stored data.  If event is still visible, it will
+			// be notified & update itself.
+			$this->to_client($event);
+			$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
+		}
+		else
+		{
+			$response->call(
+				'egw_openWindowCentered2',
+				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
+					&cal_id='.$event['id']
+					.'&start='.$event['start']
+					.'&end='.$event['end']
+					.'&non_interactive=true'
+					.'&cancel_needs_refresh=true',
+				'',750,410);
+		}
+	}
+	
 	/**
 	 * imports a mail as Calendar
 	 *

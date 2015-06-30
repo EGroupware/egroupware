@@ -285,7 +285,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		if(this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U')
 		{
-			icons.push('<img src="'+this.egw().image('cnr-pending','calendar')+'" title="'+lang('Needs action')+'"/>');
+			icons.push('<img src="'+this.egw().image('cnr-pending','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
 		}
 		return icons;
 	},

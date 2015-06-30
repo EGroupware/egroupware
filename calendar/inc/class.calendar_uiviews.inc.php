@@ -211,7 +211,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Show the last view or the default one, if no last
 	 */
-	function index($content)
+	function index($content=array())
 	{
 		if($content['merge'])
 		{
@@ -245,7 +245,6 @@ class calendar_uiviews extends calendar_ui
 			$GLOBALS['egw_info']['flags']['nonavbar'] = true;
 			$this->manage_states($_GET);
 			$old_calendar = $this->{$this->view}();
-			echo $old_calendar;
 			return;
 		}
 
@@ -493,6 +492,7 @@ class calendar_uiviews extends calendar_ui
 				$content .= html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',strtotime('-1 year',strtotime($this->date))),
+					'view'       => 'year'
 				));
 				$content .= '</span>'."\n";
 			}
@@ -506,6 +506,7 @@ class calendar_uiviews extends calendar_ui
 				$content .= html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',strtotime('+1 year',strtotime($this->date))),
+					'view'       => 'year'
 				));
 				$content .= '</span>'."\n";
 			}
@@ -2872,6 +2873,14 @@ class calendar_uiviews extends calendar_ui
 			'" data-date ="'.$this->bo->date2string($event['start']).'|'.$data['popup'].'">'."\n".$data['html'].$indent."</div>\n";
 	}
 
+	/**
+	 * Get the actions for the non-list views
+	 *
+	 * We use the actions from the list as a base, and only change what we have to
+	 * to get it to work outside of a nextmatch.
+	 *
+	 * @return Array
+	 */
 	protected static function get_actions()
 	{
 		// Just copy from the list, but change to match our needs
@@ -2889,9 +2898,10 @@ class calendar_uiviews extends calendar_ui
 			{
 				$action['enabled'] = 'javaScript:app.calendar.is_event';
 			}
-			//$action['disableClass'] = 'view_row';
-			//$action['hideOnDisabled'] = true;
 		}
+
+		$actions['copy']['open'] = '{"app": "calendar", "type": "add", "extra": "cal_id=$id&action=copy"}';
+		$actions['copy']['onExecute'] = 'javaScript:app.calendar.action_open';
 
 		foreach($actions['status']['children'] as $id => &$status)
 		{
@@ -2901,21 +2911,22 @@ class calendar_uiviews extends calendar_ui
 				'onExecute' => 'javaScript:app.calendar.status'
 			);
 		}
-		/*
-		$actions['drag_calendar'] = array(
-			'dragType' => array('calendar'),
-			'type' => 'drag',
-			'enabled' => 'javaScript:app.calendar.is_event'
-		);
-		/*
-		Calendar DnD is handled internally
-		$actions['drop_calendar'] = array(
-			'acceptedTypes' => array('calendar'),
-			'type' => 'drop',
-			'onExecute' => 'javaScript:app.calendar.move'
-		);
-		 *
-		 */
+
+		if ($actions['filemanager'])
+		{
+			$actions['filemanager']['url'] = '/index.php?'. $actions['filemanager']['url'];
+			$actions['filemanager']['onExecute'] = 'javaScript:app.calendar.action_open';
+		}
+		if ($actions['infolog_app'])
+		{
+			$actions['infolog_app']['open'] = '{"app": "infolog", "type": "add", "extra": "type=task&action=$app&action_id=$id"}';
+			$actions['infolog_app']['onExecute'] = 'javaScript:app.calendar.action_open';
+		}
+		if ($actions['timesheet'])
+		{
+			$actions['timesheet']['open'] = '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$id"}';
+			$actions['timesheet']['onExecute'] = 'javaScript:app.calendar.action_open';
+		}
 		
 		return $actions;
 	}

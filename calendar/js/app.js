@@ -18,6 +18,13 @@
 /**
  * UI for calendar
  *
+ * Calendar has multiple different views of the same data.  All the templates
+ * for the different view are loaded at the start, then the view objects
+ * in app.classes.calendar.views are used to manage the different views.  
+ * update_state() is used to change the state between the different views.
+ *
+ * The event widgets and the nextmatch get the data from egw.data.
+ *
  * @augments AppJS
  */
 app.classes.calendar = AppJS.extend(
@@ -31,181 +38,6 @@ app.classes.calendar = AppJS.extend(
 	 * etemplate for the sidebox filters
 	 */
 	sidebox_et2: null,
-
-	/**
-	 * etemplates and settings for the different views some (day view)
-	 * use more than one template, some use the same template as others,
-	 * most need different handling for their various attributes.
-	 * 
-	 * Attributes are setter: function to calculate value
-	 */
-	views: {
-		day: {
-			etemplates: ['calendar.view','calendar.todo'],
-			set_start_date: function(state) {
-				return state.date ? new Date(state.date) : new Date();
-			},
-			set_end_date: function(state) {
-				var d =  state.date ? new Date(state.date) : new Date();
-				d.setUTCHours(23);
-				return d;
-			},
-			set_owner: function(state) {
-				return state.owner || 0;
-			},
-			set_show_weekend: function(state)
-			{
-				state.days = '1';
-				return parseInt(egw.preference('days_in_weekview','calendar')) == 7;
-			}
-		},
-		day4: {
-			etemplates: ['calendar.view'],
-			set_start_date: function(state) {
-				return state.date ? new Date(state.date) : new Date();
-			},
-			set_end_date: function(state) {
-				var d = state.date ? new Date(state.date) : new Date();
-				d.setUTCHours(24*4-1);
-				return d;
-			},
-			set_owner: function(state) {
-				return state.owner || 0;
-			},
-			set_show_weekend: function(state)
-			{
-				state.days = '4';
-				return parseInt(egw.preference('days_in_weekview','calendar')) == 7;
-			}
-		},
-		week: {
-			etemplates: ['calendar.view'],
-			set_start_date: function(state) {
-				return app.calendar.date.start_of_week(state.date || new Date());
-			},
-			set_end_date: function(state) {
-				var d = app.calendar.date.start_of_week(state.date || new Date());
-				// Always 7 days, we just turn weekends on or off
-				d.setUTCHours(24*7-1);
-				return d;
-			},
-			set_owner: function(state) {
-				return state.owner || 0;
-			},
-			set_show_weekend: function(state)
-			{
-				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
-				return parseInt(state.days) == 7;
-			}
-		},
-		weekN: {
-			etemplates: ['calendar.view'],
-			set_start_date: function(state) {
-				return app.calendar.date.start_of_week(state.date || new Date());
-			},
-			set_end_date: function(state) {
-				var d = app.calendar.date.start_of_week(state.date || new Date());
-				// Always 7 days, we just turn weekends on or off
-				d.setUTCHours(24*7-1);
-				return d;
-			},
-			set_show_weekend: function(state)
-			{
-				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
-				return parseInt(state.days) == 7;
-			}
-		},
-		month: {
-			etemplates: ['calendar.view'],
-			set_start_date: function(state) {
-				var d = state.date ? new Date(state.date) : new Date();
-				d.setUTCDate(1);
-				d.setUTCHours(0);
-				d.setUTCMinutes(0);
-				d.setUTCSeconds(0);
-				state.date = d.toJSON();
-				return app.calendar.date.start_of_week(d);
-			},
-			set_end_date: function(state) {
-				var d = state.date ? new Date(state.date) : new Date();
-				d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
-				var week_start = app.calendar.date.start_of_week(d);
-				if(week_start < d) week_start.setUTCHours(24*7);
-				week_start.setUTCHours(week_start.getUTCHours()-1);
-				return week_start;
-			},
-		},
-		
-		planner: {
-			etemplates: ['calendar.planner'],
-			set_group_by: function(state) {
-				return state.cat_id? state.cat_id : (state.sortby ? state.sortby : 0);
-			},
-			set_start_date: function(state) {
-				var d = state.date ? new Date(state.date) : new Date();
-				if(state.sortby && state.sortby === 'month')
-				{
-					d.setUTCDate(1);
-				}
-				else if (!state.planner_days)
-				{
-					if(d.getUTCDate() < 15)
-					{
-						d.setUTCDate(1);
-						return app.calendar.date.start_of_week(d);
-					}
-					else
-					{
-						return app.calendar.date.start_of_week(d);
-					}
-				}
-				return d;
-			},
-			set_end_date: function(state) {
-				var d = state.date ? new Date(state.date) : new Date();
-				if(state.sortby && state.sortby === 'month')
-				{
-					d.setUTCDate(0);
-					d.setUTCFullYear(d.getUTCFullYear() + 1);
-				}
-				else if (state.planner_days)
-				{
-					d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
-				}
-				else if (app.calendar.state.last)
-				{
-					d = new Date(app.calendar.state.last);
-				}
-				else if (!state.planner_days)
-				{
-					if (d.getUTCDate() < 15)
-					{
-						d.setUTCDate(0);
-						d.setUTCMonth(d.getUTCMonth()+1);
-						d = app.calendar.date.end_of_week(d);
-					}
-					else
-					{
-						d.setUTCMonth(d.getUTCMonth()+1);
-						d = app.calendar.date.end_of_week(d);
-					}
-				}
-				return d;
-			},
-			set_owner: function(state) {
-				return state.owner || 0;
-			}
-		},
-		
-		listview: {
-			etemplates: ['calendar.list'],
-			set_start_date: function(state)
-			{
-				var d = state.date ? new Date(state.date) : new Date();
-				return d;
-			}
-		}
-	},
 
 	/**
 	 * Current internal state
@@ -327,23 +159,23 @@ app.classes.calendar = AppJS.extend(
 				var hidden = typeof this.state.view !== 'undefined';
 				var all_loaded = true;
 				// Record the templates for the views so we can switch between them
-				for(var view in this.views)
+				for(var view in app.classes.calendar.views)
 				{
-					var index = this.views[view].etemplates.indexOf(_name)
+					var index = app.classes.calendar.views[view].etemplates.indexOf(_name)
 					if(index > -1)
 					{
-						this.views[view].etemplates[index] = _et2;
+						app.classes.calendar.views[view].etemplates[index] = _et2;
 						// If a template disappears, we want to release it
 						$j(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
 							this.view[index] = _name;
-						},{view: this.views[view], index: index, name: _name}));
+						},{view: app.classes.calendar.views[view], index: index, name: _name}));
 					
 						if(this.state.view === view)
 						{
 							hidden = false;
 						}
 					}
-					this.views[view].etemplates.forEach(function(et) {all_loaded = all_loaded && typeof et !== 'string';});
+					app.classes.calendar.views[view].etemplates.forEach(function(et) {all_loaded = all_loaded && typeof et !== 'string';});
 				}
 				
 				// Start hidden, except for current view
@@ -445,10 +277,9 @@ app.classes.calendar = AppJS.extend(
 			{
 				return _url.replace(/menuaction=[^&]+/, 'menuaction=calendar.calendar_uilist.listview&ajax=true');
 			}
-			else if (this.sidebox_et2 && typeof this.views[state.view] == 'undefined')
+			else if (this.sidebox_et2 && typeof app.classes.calendar.views[state.view] == 'undefined')
 			{
 				this.sidebox_et2.getWidgetById('iframe').set_src(_url);
-				this.sidebox
 				return true;
 			}
 		}
@@ -459,89 +290,6 @@ app.classes.calendar = AppJS.extend(
 		}
 		// can not load our own index page, has to be done by framework
 		return false;
-	},
-
-	/**
-	 * Drag and Drop
-	 *
-	 *
-	 */
-	drag_n_drop: function()
-	{
-		var that = this;
-		
-		//jQuery Calendar Event selector
-		var $iframeBody = jQuery("body")
-			//mouseover event handler for calendar tooltip
-			.on("mouseover", "div[data-tooltip]",function(){
-				var $ttp = jQuery(this);
-				//Check if the tooltip is already initialized
-				if (!$ttp.data('uiTooltip'))
-				{
-					$ttp.tooltip({
-						items: "[data-tooltip]",
-						show: false,
-						content: function()
-						{
-							var elem = $ttp;
-							if (elem.is("[data-tooltip]"))
-								return this.getAttribute('data-tooltip') ;
-						},
-						track:true,
-
-						open: function(event,ui){
-							ui.tooltip.removeClass("ui-tooltip");
-							ui.tooltip.addClass("calendar_uitooltip");
-							if (this.scrollHeight > this.clientHeight)
-							{
-								// bind on tooltip close event
-								$ttp.on("tooltipclose", function (event, ui){
-									// bind hover handler on tooltip helper in order to be able to freeze the tooltip and scrolling
-									ui.tooltip.hover(
-										function () {
-											var $ttp_helper = jQuery(this);
-											if (this.scrollHeight > this.clientHeight)	$ttp_helper.stop(true).fadeTo(100, 1);
-										},
-										function () {
-											var $ttp_helper = jQuery(this);
-											$ttp_helper.fadeOut("100", function(){$ttp_helper.remove();});
-										}
-									);
-								});
-							}
-						}
-					});
-				}
-				else
-				{
-					$ttp.tooltip('enable');
-				}
-			})
-
-			// mousedown event handler for calendar tooltip to remove disable tooltip
-			.on("mousedown", "div[data-tooltip]", function(){
-				var $ttp = jQuery(this);
-				// Make sure the tooltip initialized before calling it
-				if ($ttp.data('uiTooltip'))
-				{
-					$ttp.tooltip("disable");
-				}
-			})
-
-			//Click event handler for integrated apps
-			.on("click","div.calendar_plannerEvent",function(ev){
-				var eventId = ev.currentTarget.getAttribute('data-date').split("|")[1];
-				var startDate = ev.currentTarget.getAttribute('data-date').split("|")[0];
-				var recurrFlag = ev.currentTarget.getAttribute('data-date').split("|")[2];
-				if (recurrFlag == "n")
-				{
-					egw.open(eventId,'calendar','edit');
-				}
-				else
-				{
-					that.edit_series(eventId,startDate);
-				}
-			})
 	},
 
 	/**
@@ -590,7 +338,7 @@ app.classes.calendar = AppJS.extend(
 				start: function ()
 				{
 					// Put owners into row IDs
-					app.calendar.views[state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
+					app.classes.calendar.views[state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
 						widget.div.parents('tr').attr('data-owner',widget.options.owner);
 					},this,et2_calendar_timegrid)
 				},
@@ -638,18 +386,18 @@ app.classes.calendar = AppJS.extend(
 					var end = null;
 
 					// Get the view to calculate
-					if (app.calendar.views && app.calendar.state.view && app.calendar.views[app.calendar.state.view].set_end_date)
+					var view = app.classes.calendar.views[app.calendar.state.view] || false;
+					if (view)
 					{
 						if(direction > 0)
 						{
-							start = app.calendar.views[app.calendar.state.view].set_end_date({date:start});
+							start = view.end_date({date:start});
 						}
 						else
 						{
-							start = app.calendar.views[app.calendar.state.view].set_start_date({date:start});
+							start = view.start_date({date:start});
 						}
 						start.setUTCDate(start.getUTCDate()+direction);
-						end = app.calendar.views[app.calendar.state.view].set_end_date({date:start});
 					}
 					// Calculate the current difference, and move
 					else if(app.calendar.state.first && app.calendar.state.last)
@@ -663,7 +411,7 @@ app.classes.calendar = AppJS.extend(
 						end = new Date(end.valueOf() + (delta * direction));
 					}
 					
-					app.calendar.update_state({date: start});
+					app.calendar.update_state({date:app.calendar.date.toString(start)});
 
 					return false;
 				}
@@ -1101,6 +849,31 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Application links from non-list events
+	 * 
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _events
+	 */
+	action_open: function(_action, _events)
+	{
+		var id = _events[0].id.split('::');
+		if(_action.data.open)
+		{
+			var open = JSON.parse(_action.data.open) || {};
+			var extra = open.extra || '';
+
+			extra = extra.replace(/(\$|%24)app/,id[0]).replace(/(\$|%24)id/,id[1]);
+			this.egw.open(open.id_data||'',open.app,open.type,extra);
+		}
+		else if (_action.data.url)
+		{
+			var url = _action.data.url;
+			url = url.replace(/(\$|%24)app/,id[0]).replace(/(\$|%24)id/,id[1]);
+			this.egw.open_link(url);
+		}
+	},
+
+	/**
 	 * Change status (via AJAX)
 	 *
 	 * @param {egwAction} _action
@@ -1119,11 +892,17 @@ app.classes.calendar = AppJS.extend(
 				switch(button_id)
 				{
 					case 'exception':
-
+						egw().json(
+							'calendar.calendar_uiforms.ajax_status',
+							[event_data.app_id, egw.user('account_id'), _action.data.id]
+						).sendRequest(true);
 						break;
 					case 'series':
 					case 'single':
-						this.egw.open(event_data.id, event_data.app||'calendar', 'edit', {date:event_data.start});
+						egw().json(
+							'calendar.calendar_uiforms.ajax_status',
+							[event_data.id, egw.user('account_id'), _action.data.id]
+						).sendRequest(true);
 						break;
 					case 'cancel':
 					default:
@@ -1163,7 +942,7 @@ app.classes.calendar = AppJS.extend(
 		_action.data.url = _action.data.url.replace(/(\$|%24)id/,id);
 		_action.data.url = _action.data.url.replace(/(\$|%24)app/,app);
 
-		nm_action(_action, _senders);
+		nm_action(_action, _senders,false,{ids:[id]});
 
 		_action.data.url = backup_url;	// restore url
 	},
@@ -1179,7 +958,7 @@ app.classes.calendar = AppJS.extend(
 	 */
 	cal_open: function(_action, _senders)
 	{
-		
+
 		var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
 		var id = _senders[0].id;
 		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
@@ -1381,7 +1160,7 @@ app.classes.calendar = AppJS.extend(
 		}
 		var changed = [];
 		var new_state = jQuery.extend({}, this.state);
-		if (typeof _set == 'object')
+		if (typeof _set === 'object')
 		{
 			for(var s in _set)
 			{
@@ -1457,7 +1236,7 @@ app.classes.calendar = AppJS.extend(
 				state = JSON.parse(state);
 			}
 		}
-		if(typeof state.state != 'object' || !state.state.view)
+		if(typeof state.state !== 'object' || !state.state.view)
 		{
 			state.state = {view: 'week'};
 		}
@@ -1466,15 +1245,14 @@ app.classes.calendar = AppJS.extend(
 			state.state.date = new Date();
 		}
 
-
 		// Hide other views
-		for(var _view in this.views)
+		for(var _view in app.classes.calendar.views)
 		{
-			if(state.state.view != _view && this.views[_view])
+			if(state.state.view != _view && app.classes.calendar.views[_view])
 			{
-				for(var i = 0; i < this.views[_view].etemplates.length; i++)
+				for(var i = 0; i < app.classes.calendar.views[_view].etemplates.length; i++)
 				{
-					$j(this.views[_view].etemplates[i].DOMContainer).hide();
+					$j(app.classes.calendar.views[_view].etemplates[i].DOMContainer).hide();
 				}
 			}
 		}
@@ -1484,9 +1262,9 @@ app.classes.calendar = AppJS.extend(
 		}
 		
 		// Check for a supported client-side view
-		if(this.views[state.state.view] &&
+		if(app.classes.calendar.views[state.state.view] &&
 			// Check that the view is instanciated
-			typeof this.views[state.state.view].etemplates[0] !== 'string' && this.views[state.state.view].etemplates[0].widgetContainer
+			typeof app.classes.calendar.views[state.state.view].etemplates[0] !== 'string' && app.classes.calendar.views[state.state.view].etemplates[0].widgetContainer
 		)
 		{
 			// Doing an update - this includes the selected view, and the sidebox
@@ -1494,7 +1272,7 @@ app.classes.calendar = AppJS.extend(
 			// cause infinite loops.
 			this.state_update_in_progress = true;
 			
-			var view = this.views[state.state.view];
+			var view = app.classes.calendar.views[state.state.view];
 
 			// Sanitize owner
 			switch(typeof state.state.owner)
@@ -1534,7 +1312,7 @@ app.classes.calendar = AppJS.extend(
 				state.state.view === 'month' ? 0 : // Calculate based on weeks in the month
 				state.state.owner.length > (this.egw.config('calview_no_consolidate','phpgwapi') || 5) ? 1 : state.state.owner.length;
 
-			var grid = this.views[this.state.view] ? this.views[this.state.view].etemplates[0].widgetContainer.getWidgetById('view') : false;
+			var grid = view.etemplates[0].widgetContainer.getWidgetById('view');
 
 			/*
 			If the count is different, we need to have the correct number (just remove all & re-create)
@@ -1545,7 +1323,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				// Need to redo the number of grids
 				var value = [];
-				state.state.first = view.set_start_date(state.state).toJSON();
+				state.state.first = view.start_date(state.state).toJSON();
 				// We'll modify this one, so it needs to be a new object
 				var date = new Date(state.state.first);
 
@@ -1553,7 +1331,7 @@ app.classes.calendar = AppJS.extend(
 				switch(state.state.view)
 				{
 					case 'month':
-						var end = state.state.last = view.set_end_date(state.state);
+						var end = state.state.last = view.end_date(state.state);
 						grid_count = Math.ceil((end - date) / (1000 * 60 * 60 * 24) / 7);
 						// fall through
 					case 'weekN':
@@ -1572,7 +1350,7 @@ app.classes.calendar = AppJS.extend(
 						state.state.last=val.end_date.toJSON();
 						break;
 					default:
-						var end = state.state.last = view.set_end_date(state.state);
+						var end = state.state.last = view.end_date(state.state);
 						for(var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++)
 						{
 							value.push({
@@ -1600,16 +1378,16 @@ app.classes.calendar = AppJS.extend(
 					if(typeof view[updater] === 'function')
 					{
 						var value = view[updater].call(this,state.state);
-						if(updater === 'set_start_date') state.state.first = value.toJSON();
-						if(updater === 'set_end_date') state.state.last = value.toJSON();
+						if(updater === 'start_date') state.state.first = this.date.toString(value);
+						if(updater === 'end_date') state.state.last = this.date.toString(value);
 
 						// Set value
 						for(var i = 0; i < view.etemplates.length; i++)
 						{
 							view.etemplates[i].widgetContainer.iterateOver(function(widget) {
-								if(typeof widget[updater] === 'function')
+								if(typeof widget['set_'+updater] === 'function')
 								{
-									widget[updater](value);
+									widget['set_'+updater](value);
 								}
 							}, this, et2_valueWidget);
 						}
@@ -1649,11 +1427,15 @@ app.classes.calendar = AppJS.extend(
 			}
 			this.state = jQuery.extend({},state.state);
 
+			var formatDate = new Date(this.state.date);
+			formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
+			egw_app_header(view.header(state.state),'calendar');
+			
 			if(state.state.view === 'listview')
 			{
 				state.state.startdate = state.state.date;
 				state.state.col_filter = {participant: state.state.owner};
-				var nm = this.views[_view].etemplates[0].widgetContainer.getWidgetById('nm');
+				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
 				nm.applyFilters(state.state);
 			}
 
@@ -1771,7 +1553,10 @@ app.classes.calendar = AppJS.extend(
 		}
 		// setting internal state now, that linkHandler does not intercept switching from listview to any old view
 		this.state = jQuery.extend({},state.state);
-		$j(this.sidebox_et2.getInstanceManager().DOMContainer).show();
+		if(this.sidebox_et2)
+		{
+			$j(this.sidebox_et2.getInstanceManager().DOMContainer).show();
+		}
 
 		var query = jQuery.extend({menuaction: menuaction},state.state||{});
 
@@ -1911,6 +1696,18 @@ app.classes.calendar = AppJS.extend(
 	 * All take either a Date object or full date with timestamp (Z)
 	 */
 	date: {
+		toString: function(date)
+		{
+			// Ensure consistent formatting using UTC, avoids problems with comparison
+			// and timezones
+			if(typeof date === 'string') date = new Date(date);
+			return date.getUTCFullYear() +'-'+
+				sprintf("%02d",date.getUTCMonth()+1) + '-'+
+				sprintf("%02d",date.getUTCDate()) + 'T'+
+				sprintf("%02d",date.getUTCHours()) + ':'+
+				sprintf("%02d",date.getUTCMinutes()) + ':'+
+				sprintf("%02d",date.getUTCSeconds()) + 'Z';
+		},
 		start_of_week: function(date)
 		{
 			var d = new Date(date);
@@ -1976,5 +1773,235 @@ app.classes.calendar = AppJS.extend(
 				app.calendar.update_state({view: 'week', date: date.getValue()});
 			});
 		
+	},
+	View: {
+		// List of etemplates to show for this view
+		etemplates: ['calendar.view'],
+
+		/**
+		 * Translated label for header
+		 * @param {Object} state
+		 * @returns {string}
+		 */
+		header: function(state) {
+			var formatDate = new Date(state.date);
+			formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
+			return date(egw.preference('dateformat'),formatDate);
+		},
+
+		/**
+		 * Get the start date for this view
+		 * @param {Object} state
+		 * @returns {Date}
+		 */
+		start_date: function(state) {
+			var d = state.date ? new Date(state.date) : new Date();
+			d.setUTCHours(0);
+			d.setUTCMinutes(0);
+			d.setUTCSeconds(0);
+			d.setUTCMilliseconds(0);
+			return d;
+		},
+		/**
+		 * Get the end date for this view
+		 * @param {Object} state
+		 * @returns {Date}
+		 */
+		end_date: function(state) {
+			var d = state.date ? new Date(state.date) : new Date();
+			d.setUTCHours(23);
+			d.setUTCMinutes(59);
+			d.setUTCSeconds(59);
+			d.setUTCMilliseconds(0);
+			return d;
+		},
+		owner: function(state) {
+			return state.owner || 0;
+		},
+		show_weekend: function(state)
+		{
+			return parseInt(egw.preference('days_in_weekview','calendar')) == 7;
+		},
+		extend: function(sub)
+		{
+			return jQuery.extend({},this,{_super:this},sub);
+		}
 	}
 });
+
+/**
+* etemplates and settings for the different views some (day view)
+* use more than one template, some use the same template as others,
+* most need different handling for their various attributes.
+*
+* Not using the standard Class.extend here because it hides the members,
+* and we want to be able to look inside them.  This is done seperately instead
+* of inside the normal object to allow access to the View object.
+*/
+
+jQuery.extend(app.classes.calendar,{
+	views: {
+		day: app.classes.calendar.prototype.View.extend({
+			header: function(state) {
+				return egw.lang('Day view') + ': ' + app.calendar.View.header.call(this, state);
+			},
+			etemplates: ['calendar.view','calendar.todo'],
+			start_date: function(state) {
+				var d = app.calendar.View.start_date.call(this, state);
+				state.date = app.calendar.date.toString(d);
+				return d;
+			},
+			show_weekend: function(state) {
+				state.days = '1';
+
+				return app.calendar.View.show_weekend.call(this,state);
+			}
+		}),
+		day4: app.classes.calendar.prototype.View.extend({
+			header: function(state) {
+				return egw.lang('Four days view') + ': ' + app.calendar.View.header.call(this, state);
+			},
+			end_date: function(state) {
+				var d = app.calendar.View.end_date.call(this,state);
+				state.days = '4';
+				d.setUTCHours(24*4-1);
+				d.setUTCMinutes(59);
+				d.setUTCSeconds(59);
+				d.setUTCMilliseconds(0);
+				return d;
+			}
+		}),
+		week: app.classes.calendar.prototype.View.extend({
+			header: function(state) {
+				return egw.lang('Week view') + ': ' + app.calendar.View.header.call(this, state);
+			},
+			start_date: function(state) {
+				return app.calendar.date.start_of_week(state.date || new Date());
+			},
+			end_date: function(state) {
+				var d = app.calendar.date.start_of_week(state.date || new Date());
+				// Always 7 days, we just turn weekends on or off
+				d.setUTCHours(24*7-1);
+				d.setUTCMinutes(59);
+				d.setUTCSeconds(59);
+				d.setUTCMilliseconds(0);
+				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
+				return d;
+			},
+			show_weekend: function(state)
+			{
+				return parseInt(state.days) === 7;
+			}
+		}),
+		weekN: app.classes.calendar.prototype.View.extend({
+			header: function(state) {
+				return egw.lang('Multiple week view') + ': ' + app.calendar.View.header.call(this, state);
+			},
+			start_date: function(state) {
+				return app.calendar.date.start_of_week(state.date || new Date());
+			},
+			end_date: function(state) {
+				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
+
+				var d = app.calendar.date.start_of_week(state.date || new Date());
+				// Always 7 days, we just turn weekends on or off
+				d.setUTCHours(24*7-1);
+				return d;
+			},
+		}),
+		month: app.classes.calendar.prototype.View.extend({
+			header: function(state)
+			{
+				var formatDate = new Date(state.date);
+				formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
+				return egw.lang('Month view') + ':' + egw.lang(date('F',formatDate)) + ' ' + date('Y',formatDate);
+			},
+			start_date: function(state) {
+				var d = app.calendar.View.start_date.call(this,state)
+				d.setUTCDate(1);
+				state.date = app.calendar.date.toString(d);
+				return app.calendar.date.start_of_week(d);
+			},
+			end_date: function(state) {
+				var d = app.calendar.View.end_date.call(this,state)
+				d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
+				var week_start = app.calendar.date.start_of_week(d);
+				if(week_start < d) week_start.setUTCHours(24*7);
+				week_start.setUTCHours(week_start.getUTCHours()-1);
+				return week_start;
+			},
+		}),
+
+		planner: app.classes.calendar.prototype.View.extend({
+			header: function(state) {
+				var startDate = new Date(state.first);
+				startDate = new Date(startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000);
+
+				var endDate = new Date(state.last);
+				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
+				return egw.lang('Planner view') + ': ' + date(egw.preference('dateformat'),startDate) +
+					' - ' + date(egw.preference('dateformat'),endDate);
+			},
+			etemplates: ['calendar.planner'],
+			group_by: function(state) {
+				return state.cat_id? state.cat_id : (state.sortby ? state.sortby : 0);
+			},
+			start_date: function(state) {
+				var d = app.calendar.View.start_date.call(this, state);
+				if(state.sortby && state.sortby === 'month')
+				{
+					d.setUTCDate(1);
+				}
+				else if (!state.planner_days)
+				{
+					if(d.getUTCDate() < 15)
+					{
+						d.setUTCDate(1);
+						return app.calendar.date.start_of_week(d);
+					}
+					else
+					{
+						return app.calendar.date.start_of_week(d);
+					}
+				}
+				return d;
+			},
+			end_date: function(state) {
+				var d = app.calendar.View.end_date.call(this, state);
+				if(state.sortby && state.sortby === 'month')
+				{
+					d.setUTCDate(0);
+					d.setUTCFullYear(d.getUTCFullYear() + 1);
+				}
+				else if (state.planner_days)
+				{
+					d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
+				}
+				else if (app.calendar.state.last)
+				{
+					d = new Date(app.calendar.state.last);
+				}
+				else if (!state.planner_days)
+				{
+					if (d.getUTCDate() < 15)
+					{
+						d.setUTCDate(0);
+						d.setUTCMonth(d.getUTCMonth()+1);
+						d = app.calendar.date.end_of_week(d);
+					}
+					else
+					{
+						d.setUTCMonth(d.getUTCMonth()+1);
+						d = app.calendar.date.end_of_week(d);
+					}
+				}
+				return d;
+			}
+		}),
+
+		listview: app.classes.calendar.prototype.View.extend({
+			header: function() {return egw.lang('List view');},
+			etemplates: ['calendar.list']
+		})
+	}}
+);

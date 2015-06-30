@@ -417,7 +417,7 @@ class calendar_ui
 			}
 			$this->view = $states['view'] = $func;
 		}
-		$this->view_menuaction = $this->view == 'listview' ? 'calendar.calendar_uilist.listview' : 'calendar.calendar_uiviews.'.$this->view;
+		$this->view_menuaction = $this->view == 'listview' ? 'calendar.calendar_uilist.listview' : 'calendar.calendar_uiviews.index';
 
 		if ($this->debug > 0 || $this->debug == 'manage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
 		// save the states in the session only when we are in calendar
@@ -705,7 +705,7 @@ class calendar_ui
 			),
 			array(
 				'text' => lang('yearview'),
-				'value' => '{"view":"year", "menuaction":"calendar.calendar_uiviews.year"}',
+				'value' => '{"view":"year", "menuaction":"calendar.calendar_uiviews.index"}',
 				'selected' => $this->view == 'year',
 			),
 			array(
@@ -836,6 +836,7 @@ class calendar_ui
 		{
 			$event['app_id'] .= ':'.$event['recur_date'];
 		}
+		$event['parts'] = implode(",\n",$this->bo->participants($event,true));
 
 		// Change dates
 		foreach(calendar_egw_record::$types['date-time'] as $field)
