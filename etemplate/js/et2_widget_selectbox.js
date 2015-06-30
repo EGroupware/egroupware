@@ -1086,7 +1086,7 @@ jQuery.extend(et2_selectbox,
 			egw.window.et2_selectbox.type_cache[cache_id] = egw.json(
 				widget.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
 				[widget._type,options_string]
-			).sendRequest();
+			).sendRequest(true);
 		}
 		cache = egw.window.et2_selectbox.type_cache[cache_id];
 		if(typeof cache.done == 'function')
