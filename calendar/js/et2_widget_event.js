@@ -488,7 +488,7 @@ et2_calendar_event.recur_prompt = function(event_data, callback)
 			}
 		};
 	}
-	if(event_data.recur_type)
+	if(parseInt(event_data.recur_type))
 	{
 		var buttons = [
 			{text: egw.lang("Edit exception"), id: "exception", class: "ui-priority-primary", "default": true},

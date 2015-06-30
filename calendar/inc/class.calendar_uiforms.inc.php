@@ -907,6 +907,15 @@ class calendar_uiforms extends calendar_ui
 					$message .= lang(', stati of participants reset');
 				}
 
+				$response = egw_json_response::get();
+				if($response)
+				{
+					// Directly update stored data.  If event is still visible, it will
+					// be notified & update itself.
+					$this->to_client($event);
+					$response->call('egw.dataStoreUID','calendar::'.$event['id'],$event);
+				}
+
 				$msg = $message . ($msg ? ', ' . $msg : '');
 				egw_framework::refresh_opener($msg, 'calendar', $event['id']);
 				// writing links for new entry, existing ones are handled by the widget itself
