@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -16,12 +16,12 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 {
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
-			'currentapp' => 'calendar',
+			'currentapp' => 'login',
+			'nonavbar'   => 'true',
 		),
 	);
 	include('../../header.inc.php');
 }
-require_once EGW_API_INC.'/horde/lib/core.php';
 
 /**
  * Iterator for iCal files
@@ -40,7 +40,7 @@ require_once EGW_API_INC.'/horde/lib/core.php';
  * }
  * fclose($ical_file)
  */
-class egw_ical_iterator extends Horde_iCalendar implements Iterator
+class egw_ical_iterator extends Horde_Icalendar implements Iterator
 {
 	/**
 	 * File we work on
@@ -73,7 +73,7 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 	/**
 	 * Current component, as it get's returned by current() method
 	 *
-	 * @var Horde_iCalendar
+	 * @var Horde_Icalendar
 	 */
 	protected $component;
 
@@ -95,15 +95,15 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 	 * Constructor
 	 *
 	 * @param string|resource $ical_file file opened for reading or string
-	 * @param string $base='VCALENDAR' container
-	 * @param string $charset=null
-	 * @param callback $callback=null callback to call with component in current() method, if returning false, item get's ignored
-	 * @param array $callback_params=array() further parameters for the callback, 1. parameter is component
+	 * @param string $base ='VCALENDAR' container
+	 * @param string $charset =null
+	 * @param callback $callback =null callback to call with component in current() method, if returning false, item get's ignored
+	 * @param array $callback_params =array() further parameters for the callback, 1. parameter is component
 	 */
 	public function __construct($ical_file,$base='VCALENDAR',$charset=null,$callback=null,array $callback_params=array())
 	{
 		// call parent constructor
-		parent::Horde_iCalendar();
+		parent::__construct();
 
 		$this->base = $base;
 		$this->charset = $charset;
@@ -114,14 +114,9 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 		}
 		if (is_string($ical_file))
 		{
-			$GLOBALS[$name = md5(microtime(true))] =& $ical_file;
-			require_once(EGW_API_INC.'/class.global_stream_wrapper.inc.php');
-			$this->ical_file = fopen('global://'.$name,'r');
-			unset($GLOBALS[$name]);
-			// alternative: $this->unread_lines = explode("\n",$ical_file); return;
-			// uses less memory, but it can NOT rewind
-
-			//error_log(__METHOD__."(,'$base','$charset') using global stream wrapper fopen('global://$name')=".array2string($this->ical_file));
+			$this->ical_file = fopen('php://temp', 'w+');
+			fwrite($this->ical_file, $ical_file);
+			fseek($this->ical_file, 0, SEEK_SET);
 		}
 		else
 		{
@@ -143,7 +138,7 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 	/**
 	 * Read and return one line from file (or line-buffer)
 	 *
-	 * We do NOT handle folding, that's done by Horde_iCalendar and not necessary for us as BEGIN: or END: component is never folded
+	 * We do NOT handle folding, that's done by Horde_Icalendar and not necessary for us as BEGIN: or END: component is never folded
 	 *
 	 * @return string|boolean string with line or false if end-of-file or end-of-container reached
 	 */
@@ -186,17 +181,17 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 	/**
 	 * Return the current element
 	 *
-	 * @return Horde_iCalendar or whatever a given callback returns
+	 * @return Horde_Icalendar or whatever a given callback returns
 	 */
 	public function current()
 	{
 		//error_log(__METHOD__."() returning a ".gettype($this->component));
 		if ($this->callback)
 		{
-			$ret = is_a($this->component,'Horde_iCalendar');
+			$ret = is_a($this->component,'Horde_Icalendar');
 			do {
 				if ($ret === false) $this->next();
-				if (!is_a($this->component,'Horde_iCalendar')) return false;
+				if (!is_a($this->component,'Horde_Icalendar')) return false;
 				$params = $this->callback_params;
 				array_unshift($params,$this->component);
 			}
@@ -245,11 +240,11 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 		}
 		$data .= $line;
 
-		$this->component = &Horde_iCalendar::newComponent($type, $this);
-		//error_log(__METHOD__."() this->component = Horde_iCalendar::newComponent('$type', \$this) = ".array2string($this->component));
+		$this->component = Horde_Icalendar::newComponent($type, $this);
+		//error_log(__METHOD__."() this->component = Horde_Icalendar::newComponent('$type', \$this) = ".array2string($this->component));
         if ($this->component === false)
         {
-        	error_log(__METHOD__."() Horde_iCalendar::newComponent('$type', \$this) returned FALSE");
+        	error_log(__METHOD__."() Horde_Icalendar::newComponent('$type', \$this) returned FALSE");
         	return;
             //return PEAR::raiseError("Unable to create object for type $type");
         }
@@ -288,6 +283,7 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 		// advance to first component
 		while (($line = $this->read_line()) && substr($line,0,6) !== 'BEGIN:')
 		{
+			$matches = null;
 			if (preg_match('/^VERSION:(\d\.\d)\s*$/ism', $line, $matches))
 			{
 				// define the version asap
@@ -315,8 +311,8 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 	 */
 	public function valid ()
 	{
-		//error_log(__METHOD__."() returning ".(is_a($this->component,'Horde_iCalendar') ? 'TRUE' : 'FALSE').' get_class($this->component)='.get_class($this->component));
-		return is_a($this->component,'Horde_iCalendar');
+		//error_log(__METHOD__."() returning ".(is_a($this->component,'Horde_Icalendar') ? 'TRUE' : 'FALSE').' get_class($this->component)='.get_class($this->component));
+		return is_a($this->component,'Horde_Icalendar');
 	}
 }
 
@@ -332,7 +328,7 @@ X-WR-RELCALID:{0000002E-1BB2-8F0F-1203-47B98FEEF211}
 X-WR-CALNAME:Fxlxcxtxsxxxxxxxxxxxxx
 X-PRIMARY-CALENDAR:TRUE
 X-OWNER;CN="Fxlxcxtxsxxxxxxx":mailto:xexixixax.xuxaxa@xxxxxxxxxxxxxxx-berli
-        n.de
+ n.de
 X-MS-OLK-WKHRSTART;TZID="Westeuropäische Normalzeit":080000
 X-MS-OLK-WKHREND;TZID="Westeuropäische Normalzeit":170000
 X-MS-OLK-WKHRDAYS:MO,TU,WE,TH,FR
@@ -355,11 +351,11 @@ BEGIN:VEVENT
 ATTENDEE;CN=Vorstand;RSVP=TRUE:mailto:xoxsxaxd@xxxxxxxxxxxxxxx-berlin.de
 ATTENDEE;CN=\'voxrxtx@xxxxxxxx.de\';RSVP=TRUE:mailto:voxrxtx@xxxxxxxx.de
 ATTENDEE;CN=Pressestelle;RSVP=TRUE:mailto:xrxsxexxexlx@xxxxxxxxxxxxxxx-berl
-        in.de
+ in.de
 ATTENDEE;CN="Dxuxe Nxcxxlxxx";ROLE=OPT-PARTICIPANT;RSVP=TRUE:mailto:xjxkx.x
-        ixkxxsxn@xxxxxxxxxxxxxxx-berlin.de
+ ixkxxsxn@xxxxxxxxxxxxxxx-berlin.de
 ATTENDEE;CN="Mxxxaxx Sxxäxxr";ROLE=OPT-PARTICIPANT;RSVP=TRUE:mailto:xixhxe
-        x.xcxaxfxr@xxxxxxxxxxxxxxx-berlin.de
+ x.xcxaxfxr@xxxxxxxxxxxxxxx-berlin.de
 CLASS:PUBLIC
 CREATED:20100408T232652Z
 DESCRIPTION:\n
@@ -369,18 +365,18 @@ DTSTART;TZID="Westeuropäische Normalzeit":20100414T190000
 LAST-MODIFIED:20100408T232653Z
 LOCATION:Axtx Fxuxrxaxhx\, Axex-Sxrxnxxxxxxxxxxxxxx
 ORGANIZER;CN="Exixaxexhxxxxxxxxxxxräxx":mailto:xxx.xxxxxxxxxxx@xxxxxxxxxxx
-        xxxx-berlin.de
+ xxxx-berlin.de
 PRIORITY:5
 RECURRENCE-ID;TZID="Westeuropäische Normalzeit":20100414T190000
 SEQUENCE:0
 SUMMARY;LANGUAGE=de:Aktualisiert: LA  - mit Ramona
 TRANSP:OPAQUE
 UID:040000008200E00074C5B7101A82E00800000000D0AFE96CB462CA01000000000000000
-        01000000019F8AF4D13C91844AA9CE63190D3408D
+ 01000000019F8AF4D13C91844AA9CE63190D3408D
 X-ALT-DESC;FMTTYPE=text/html:<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//E
-        N">\n<HTML>\n<HEAD>\n<META NAME="Generator" CONTENT="MS Exchange Server ve
-        rsion 08.00.0681.000">\n<TITLE></TITLE>\n</HEAD>\n<BODY>\n<!-- Converted f
-        rom text/rtf format -->\n<BR>\n\n</BODY>\n</HTML>
+ N">\n<HTML>\n<HEAD>\n<META NAME="Generator" CONTENT="MS Exchange Server ve
+ rsion 08.00.0681.000">\n<TITLE></TITLE>\n</HEAD>\n<BODY>\n<!-- Converted f
+ rom text/rtf format -->\n<BR>\n\n</BODY>\n</HTML>
 X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
 X-MICROSOFT-CDO-IMPORTANCE:1
 X-MICROSOFT-DISALLOW-COUNTER:FALSE
@@ -401,7 +397,7 @@ SEQUENCE:0
 SUMMARY;LANGUAGE=de:Marissa
 TRANSP:OPAQUE
 UID:AAAAAEyulq85HfZCtWDOITo5tZQHABE65KS0gg5Fu6X1g2z9eWUAAAAA3BAAABE65KS0gg5
-        Fu6X1g2z9eWUAAAIQ6D0AAA==
+ Fu6X1g2z9eWUAAAIQ6D0AAA==
 X-MICROSOFT-CDO-BUSYSTATUS:BUSY
 X-MICROSOFT-CDO-IMPORTANCE:1
 X-MS-OLK-ALLOWEXTERNCHECK:TRUE
@@ -420,7 +416,7 @@ SEQUENCE:0
 SUMMARY;LANGUAGE=de:MELANIE wieder da
 TRANSP:TRANSPARENT
 UID:AAAAAEyulq85HfZCtWDOITo5tZQHABE65KS0gg5Fu6X1g2z9eWUAAAAA3BAAABE65KS0gg5
-        Fu6X1g2z9eWUAAAIQ6DsAAA==
+ Fu6X1g2z9eWUAAAIQ6DsAAA==
 X-MICROSOFT-CDO-BUSYSTATUS:FREE
 X-MICROSOFT-CDO-IMPORTANCE:1
 X-MS-OLK-ALLOWEXTERNCHECK:TRUE
@@ -429,6 +425,7 @@ X-MS-OLK-CONFTYPE:0
 END:VEVENT
 END:VCALENDAR
 ';
+	common::egw_header();
 	//$ical_file = fopen('/tmp/KalenderFelicitasKubala.ics');
 	if (!is_resource($ical_file)) echo "<pre>$ical_file</pre>\n";
 	//$calendar_ical = new calendar_ical();
@@ -436,7 +433,7 @@ END:VCALENDAR
 	$ical_it = new egw_ical_iterator($ical_file);//,'VCALENDAR','iso-8859-1',array($calendar_ical,'_ical2egw_callback'),array('Europe/Berlin'));
 	foreach($ical_it as $uid => $vevent)
 	{
-		echo "$uid<pre>".print_r($vevent,true)."</pre>\n";
+		echo "$uid<pre>".print_r($vevent->toHash(), true)."</pre>\n";
 	}
 	if (is_resource($ical_file)) fclose($ical_file);
 }
