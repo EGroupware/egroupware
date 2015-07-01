@@ -94,23 +94,16 @@
 
         // Message
         #loginCdMessage{
-                 margin: 1em;
-                 .border_radius_button_lefttop;
-                 color: red;
-                 text-align: center;
-                 padding-top: 1em;
-
-
-            // Text der Meldung
-            span {
-                padding: 0.5em;
-                font-size: 1.2em;
-                //											.background-color-hint;
-                color: @color_hint;
-                text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
-                width: 100%;
-            }
+			margin: 1em;
+			.border_radius_button_lefttop;
+			color: red;
+			text-align: center;
+			padding: 1em;
+			white-space: pre-wrap;
         }
+		#loginCdMessage.error {
+			font-weight: bold;
+		}
 
 
 

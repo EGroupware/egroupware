@@ -167,6 +167,24 @@ class egw_session
 	var $required_files;
 
 	/**
+	 * Nummeric code why session creation failed
+	 *
+	 * @var int
+	 */
+	var $cd_reason;
+	const CD_BAD_LOGIN_OR_PASSWORD = 5;
+	const CD_FORCE_PASSWORD_CHANGE = 97;
+	const CD_ACCOUNT_EXPIRED = 98;
+	const CD_BLOCKED = 99;	// to many failed attempts to loing
+
+	/**
+	 * Verbose reason why session creation failed
+	 *
+	 * @var string
+	 */
+	var $reason;
+
+	/**
 	 * Constructor just loads up some defaults from cookies
 	 *
 	 * @param array $domain_names =null domain-names used in this install
@@ -422,9 +440,10 @@ class egw_session
 	 * @param string $passwd_type type of password being used, ie plaintext, md5, sha1
 	 * @param boolean $no_session =false dont create a real session, eg. for GroupDAV clients using only basic auth, no cookie support
 	 * @param boolean $auth_check =true if false, the user is loged in without checking his password (eg. for single sign on), default = true
+	 * @param boolean $fail_on_forced_password_change =false true: do NOT create session, if password change requested
 	 * @return string session id
 	 */
-	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true)
+	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true,$fail_on_forced_password_change=false)
 	{
 		if (is_array($login))
 		{
@@ -492,7 +511,7 @@ class egw_session
 			$this->account_id && $GLOBALS['egw']->accounts->get_type($this->account_id) == 'g')
 		{
 			$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
-			$this->cd_reason = $blocked ? 99 : 5;
+			$this->cd_reason = $blocked ? self::CD_BLOCKED : self::CD_BAD_LOGIN_OR_PASSWORD;
 
 			// we dont log anon users as it would block the website
 			if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($this->account_id,'anonymous','phpgwapi'))
@@ -500,6 +519,11 @@ class egw_session
 				$this->log_access($this->reason,$login,$user_ip,0);	// log unsuccessfull login
 			}
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
+			return false;
+		}
+		if ($fail_on_forced_password_change && !auth::check_password_age('', '', '', true, $this->reason))
+		{
+			$this->cd_reason = self::CD_FORCE_PASSWORD_CHANGE;
 			return false;
 		}
 		if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
@@ -543,7 +567,7 @@ class egw_session
 		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
 		{
 			$this->reason = 'account is expired';
-			$this->cd_reason = 98;
+			$this->cd_reason = self::CD_ACCOUNT_EXPIRED;
 
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 			return false;

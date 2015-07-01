@@ -8,7 +8,7 @@
     </div>
     <div id="centerBox">
         <div id="loginScreenMessage">{lang_message}</div>
-        <div id="loginCdMessage">{cd}</div>
+        <div id="loginCdMessage" class="{cd_class}">{cd}</div>
         <form name="login_form" method="post" action="{login_url}">
             <table class="divLoginbox divSideboxEntry" cellspacing="0" cellpadding="2" border="0" align="center">
                 <tr class="divLoginboxHeader">
@@ -43,16 +43,26 @@
                 <!-- END remember_me_selection -->
                 <tr>
                     <td align="right">{lang_username}:&nbsp;</td>
-                    <td><input name="login" tabindex="4" value="{cookie}" size="30" autofocus/></td>
+                    <td><input name="login" tabindex="4" value="{login}" size="30" {autofocus_login}/></td>
                 </tr>
                 <tr>
                     <td align="right">{lang_password}:&nbsp;</td>
-                    <td><input name="passwd" tabindex="5" type="password" size="30" /></td>
+                    <td><input name="passwd" tabindex="5" value="{passwd}" type="password" size="30" /></td>
                 </tr>
+               <!-- BEGIN change_password -->
+                 <tr>
+                    <td align="right">{lang_new_password}:&nbsp;</td>
+                    <td><input name="new_passwd" tabindex="6" type="password" size="30" {autofocus_new_passwd}/></td>
+                </tr>
+                <tr>
+                    <td align="right">{lang_repeat_password}:&nbsp;</td>
+                    <td><input name="new_passwd2" tabindex="7" type="password" size="30" /></td>
+                </tr>
+               <!-- END change_password -->
                 <tr>
                     <td>&nbsp;</td>
                     <td>
-                        <input tabindex="6" type="submit" value="  {lang_login}  " name="submitit" />
+                        <input tabindex="8" type="submit" value="  {lang_login}  " name="submitit" />
                     </td>
                 </tr>
                 <!-- BEGIN registration -->

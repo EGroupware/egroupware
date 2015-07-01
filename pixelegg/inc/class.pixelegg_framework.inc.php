@@ -61,7 +61,7 @@ class pixelegg_framework extends jdots_framework
 		}
 		return parent::header($extra);
 	}
-	
+
 	/**
 	 * Make given color lighter or darker by percentage
 	 *
@@ -78,7 +78,7 @@ class pixelegg_framework extends jdots_framework
 		$R = round($R * (100 + $percent) / 100);
 		$G = round($G * (100 + $percent) / 100);
 		$B = round($B * (100 + $percent) / 100);
-		
+
 		$R = ($R<255)?$R:255;
 		$G = ($G<255)?$G:255;
 		$B = ($B<255)?$B:255;
@@ -89,7 +89,7 @@ class pixelegg_framework extends jdots_framework
 
 		return '#'.$RR.$GG.$BB;
 	}
-	
+
 	/**
 	 * Overwrite to NOT add customizable colors from jDots
 	 *
@@ -104,12 +104,12 @@ class pixelegg_framework extends jdots_framework
 			$GLOBALS['egw_info']['user']['preferences']['common']['template_color']);
 		//The hex value of the color
 		$color_hex = ltrim($color, '#');
-		
+
 		// Create a drak variant of the color
 		$color_hex_dark = $this->_color_shader($color_hex, 15);
 		// Create a draker variant of the color
 		$color_hex_darker = $this->_color_shader($color_hex, -30);
-		
+
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color))	// a little xss check
 		{
 			$ret['app_css'] = "
@@ -163,8 +163,9 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 	 * Reimplemented to remove site_title from login box and display it as loginscreenmessage, if none set.
 	 *
 	 * @param string $extra_vars for login url
+	 * @param string $change_passwd =null string with message to render input fields for password change
 	 */
-	function login_screen($extra_vars)
+	function login_screen($extra_vars, $change_passwd=null)
 	{
 		if (empty($GLOBALS['loginscreenmessage']))
 		{
@@ -172,6 +173,6 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 		}
 		unset($GLOBALS['egw_info']['server']['site_title']);
 
-		return parent::login_screen($extra_vars);
+		return parent::login_screen($extra_vars, $change_passwd);
 	}
 }

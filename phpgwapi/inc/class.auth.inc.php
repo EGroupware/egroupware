@@ -62,9 +62,11 @@ class auth
 	 * @param string $app to know where you are/ or where you want to go
 	 * @param string $class to know where you are/ or where you want to go
 	 * @param string $method to know where you are/ or where you want to go
+	 * @param boolean $no_redirect =false true: do NOT redirect, but return false for forced change
+	 * @param string &$message =null on return false: message why password needs to be changed
 	 * @return boolean true if check determined, that you passed the test, otherwise void, as we get redirected
 	 */
-	static function check_password_age($app='', $class='', $method='')
+	static function check_password_age($app='', $class='', $method='', $no_redirect=false, &$message=null)
 	{
 		// dont check anything for anonymous sessions/ users that are flagged as anonymous
 		if (is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->session_flags == 'A') return true;
@@ -87,7 +89,7 @@ class auth
 				// on the other side, if your auth system does not require an forcedPasswordChange, you will not be asked.
 				if (method_exists($backend,'getLastPwdChange'))
 				{
-					$alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw_info']['user']['account_lid']);
+					$alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw']->session->account_lid);
 					$pwdTsChecked = true;
 				}
 				// if your authsystem does not provide that information, its likely, that you cannot change your password there,
@@ -141,7 +143,6 @@ class auth
 			 )
 			)
 		{
-			if ($GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences')) return true; // user has no rights to change password
 			if ($UserKnowsAboutPwdChange === true && !($passwordAgeBorder > $alpwchange_val || $alpwchange_val==0)) return true; // user has already been informed about the upcomming password expiration
 			if (!is_null($alpwchange_val))
 			{
@@ -159,6 +160,9 @@ class auth
 				{
 					$UserKnowsAboutPwdChange = true;
 					$message = lang('your password is about to expire in %1 days, you may change your password now',round($daysLeftUntilChangeReq));
+					// user has no rights to change password --> do NOT warn, as only forced check ignores rights
+					if ($GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences')) return true;
+					if ($no_redirect) return true;
 				}
 				elseif ($passwordAgeBorder > $alpwchange_val && $alpwchange_val > 0)
 				{
@@ -167,6 +171,7 @@ class auth
 						'date'=>egw_time::to($alpwchange_val))));
 					$message = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
 				}
+				if ($no_redirect) return false;
 				egw::redirect_link('/index.php',array(
 					'menuaction' => 'preferences.preferences_password.change',
 					'message'    => $message,
@@ -234,7 +239,7 @@ class auth
 		}
 		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)))
 		{
-			if ($account_id == $GLOBALS['egw_info']['user']['account_id'])
+			if ($account_id == $GLOBALS['egw']->session->account_id)
 			{
 				// need to change current users password in session
 				egw_cache::setSession('phpgwapi', 'password', base64_encode($new_passwd));

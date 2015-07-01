@@ -200,7 +200,7 @@ class auth_sql implements auth_backend
 	{
 		$admin = True;
 		// Don't allow password changes for other accounts when using XML-RPC
-		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+		if(!$account_id)
 		{
 			$admin = False;
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];

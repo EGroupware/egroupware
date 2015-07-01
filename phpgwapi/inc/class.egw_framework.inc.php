@@ -572,11 +572,12 @@ abstract class egw_framework
 	abstract function footer();
 
 	/**
-	* displays a login screen
-	*
-	* @param string $extra_vars for login url
+	 * Displays the login screen
+	 *
+	 * @param string $extra_vars for login url
+	 * @param string $change_passwd =null string with message to render input fields for password change
 	*/
-	function login_screen($extra_vars)
+	function login_screen($extra_vars, $change_passwd=null)
 	{
 		self::csp_frame_src_attrs(array());	// array() no external frame-sources
 
@@ -587,8 +588,32 @@ abstract class egw_framework
 
 		$tmpl->set_var('lang_message',$GLOBALS['loginscreenmessage']);
 
-		$last_loginid = $_COOKIE['last_loginid'];
-
+		// hide change-password fields, if not requested
+		if (!$change_passwd)
+		{
+			$tmpl->set_block('login_form','change_password');
+			$tmpl->set_var('change_password', '');
+			$tmpl->set_var('lang_password',lang('password'));
+			$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
+			$tmpl->set_var('cd_class', isset($_GET['cd']) && $_GET['cd'] != 1 ? 'error' : '');
+			$last_loginid = $_COOKIE['last_loginid'];
+			$last_domain  = $_COOKIE['last_domain'];
+			$tmpl->set_var('passwd', '');
+			$tmpl->set_var('autofocus_login', 'autofocus');
+		}
+		else
+		{
+			$tmpl->set_var('lang_password',lang('Old password'));
+			$tmpl->set_var('lang_new_password',lang('New password'));
+			$tmpl->set_var('lang_repeat_password',lang('Repeat password'));
+			$tmpl->set_var('cd', $change_passwd);
+			$tmpl->set_var('cd_class', 'error');
+			$last_loginid = $_POST['login'];
+			$last_domain  = $_POST['domain'];
+			$tmpl->set_var('passwd', $_POST['passwd']);
+			$tmpl->set_var('autofocus_login', '');
+			$tmpl->set_var('autofocus_new_passwd', 'autofocus');
+		}
 		if($GLOBALS['egw_info']['server']['show_domain_selectbox'])
 		{
 			foreach(array_keys($GLOBALS['egw_domain']) as $domain)
@@ -597,7 +622,7 @@ abstract class egw_framework
 			}
 			$tmpl->set_var(array(
 				'lang_domain'   => lang('domain'),
-				'select_domain' => html::select('logindomain',$_COOKIE['last_domain'],$domains,true,'tabindex="2"',0,false),
+				'select_domain' => html::select('logindomain',$last_domain,$domains,true,'tabindex="2"',0,false),
 			));
 		}
 		else
@@ -612,9 +637,9 @@ abstract class egw_framework
 				reset($GLOBALS['egw_domain']);
 				list($default_domain) = each($GLOBALS['egw_domain']);
 
-				if($_COOKIE['last_domain'] != $default_domain && !empty($_COOKIE['last_domain']))
+				if(!empty ($last_domain) && $last_domain != $default_domain)
 				{
-					$last_loginid .= '@' . $_COOKIE['last_domain'];
+					$last_loginid .= '@' . $last_domain;
 				}
 			}
 		}
@@ -654,12 +679,10 @@ abstract class egw_framework
 		}
 
 		$tmpl->set_var('login_url', $GLOBALS['egw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
-		$tmpl->set_var('version',$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
-		$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
-		$tmpl->set_var('cookie',$last_loginid);
+		$tmpl->set_var('version', $GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+		$tmpl->set_var('login', $last_loginid);
 
 		$tmpl->set_var('lang_username',lang('username'));
-		$tmpl->set_var('lang_password',lang('password'));
 		$tmpl->set_var('lang_login',lang('login'));
 
 		$tmpl->set_var('website_title', $GLOBALS['egw_info']['server']['site_title']);

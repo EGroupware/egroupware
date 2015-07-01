@@ -132,11 +132,13 @@ else
 				return lang('Sorry, your login has expired');
 			case 4:
 				return lang('Cookies are required to login to this site');
-			case 5:
+			case egw_session::CD_BAD_LOGIN_OR_PASSWORD:
 				return lang('Bad login or password');
-			case 98:
+			case egw_session::CD_FORCE_PASSWORD_CHANGE:
+				return lang('You must change your password!');
+			case egw_session::CD_ACCOUNT_EXPIRED:
 				return lang('Account is expired');
-			case 99:
+			case egw_session::CD_BLOCKED:
 				return lang('Blocked, too many attempts');
 			case 10:
 				$GLOBALS['egw']->session->egw_setcookie('sessionid');
@@ -272,9 +274,32 @@ else
 				$login .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
 			}
 		}
-		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$passwd,$passwd_type);
+		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login, $passwd,
+			$passwd_type, false, true, true);	// true = let session fail on forced password change
 
-		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
+		if (!$GLOBALS['sessionid'] && $GLOBALS['egw']->session->cd_reason == egw_session::CD_FORCE_PASSWORD_CHANGE)
+		{
+			if (isset($_POST['new_passwd']))
+			{
+				if (($errors = preferences_password::do_change($passwd, $_POST['new_passwd'], $_POST['new_passwd2'])))
+				{
+					$force_password_change = implode("\n", $errors);
+				}
+				else
+				{
+					$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$_POST['new_passwd'],$passwd_type);
+				}
+			}
+			else
+			{
+				$force_password_change = $GLOBALS['egw']->session->reason;
+			}
+		}
+		if (isset($force_password_change))
+		{
+			// will show new login-screen incl. new password field below
+		}
+		elseif (!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
 			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 			egw::redirect_link('/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
@@ -363,52 +388,49 @@ else
 			}
 		}
 	}
-	else
+	// show login screen
+	if(isset($_COOKIE['last_loginid']))
 	{
-		if(isset($_COOKIE['last_loginid']))
-		{
-			$accounts =& CreateObject('phpgwapi.accounts');
-			$prefs =& CreateObject('phpgwapi.preferences', $accounts->name2id($_COOKIE['last_loginid']));
+		$prefs = new preferences($GLOBALS['egw']->accounts->name2id($_COOKIE['last_loginid']));
 
-			if($prefs->account_id)
-			{
-				$GLOBALS['egw_info']['user']['preferences'] = $prefs->read_repository();
-			}
-		}
-		if ($_GET['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_GET['lang']))
+		if($prefs->account_id)
 		{
-			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $_GET['lang'];
+			$GLOBALS['egw_info']['user']['preferences'] = $prefs->read_repository();
 		}
-		elseif(!isset($_COOKIE['last_loginid']) || !$prefs->account_id)
+	}
+	if ($_GET['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_GET['lang']))
+	{
+		$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $_GET['lang'];
+	}
+	elseif(!isset($_COOKIE['last_loginid']) || !$prefs->account_id)
+	{
+		// If the lastloginid cookies isn't set, we will default to the first language,
+		// the users browser accepts.
+		list($lang) = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+		if(strlen($lang) > 2)
 		{
-			// If the lastloginid cookies isn't set, we will default to the first language,
-			// the users browser accepts.
-			list($lang) = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
-			if(strlen($lang) > 2)
-			{
-				$lang = substr($lang,0,2);
-			}
-			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $lang;
+			$lang = substr($lang,0,2);
 		}
-		if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
-		{
-			egw_session::egw_setcookie('eGW_cookie_test','enabled',0);
-		}
-		#print 'LANG:' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'] . '<br>';
-		translation::init();	// this will set the language according to the (new) set prefs
-		translation::add_app('login');
-		translation::add_app('loginscreen');
+		$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $lang;
+	}
+	if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
+	{
+		egw_session::egw_setcookie('eGW_cookie_test','enabled',0);
+	}
+	#print 'LANG:' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'] . '<br>';
+	translation::init();	// this will set the language according to the (new) set prefs
+	translation::add_app('login');
+	translation::add_app('loginscreen');
+	$GLOBALS['loginscreenmessage'] = translation::translate('loginscreen_message',false,'');
+	if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
+	{
+		translation::add_app('loginscreen','en');	// trying the en one
 		$GLOBALS['loginscreenmessage'] = translation::translate('loginscreen_message',false,'');
-		if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
-		{
-			translation::add_app('loginscreen','en');	// trying the en one
-			$GLOBALS['loginscreenmessage'] = translation::translate('loginscreen_message',false,'');
-		}
-		if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
-		{
-		   // remove the global var since the lang loginscreen message and its fallback (en) is empty or not set
-		   unset($GLOBALS['loginscreenmessage']);
-		}
+	}
+	if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
+	{
+	   // remove the global var since the lang loginscreen message and its fallback (en) is empty or not set
+	   unset($GLOBALS['loginscreenmessage']);
 	}
 
 	foreach($_GET as $name => $value)
@@ -424,5 +446,5 @@ else
 		$extra_vars = '?' . substr($extra_vars,1);
 	}
 
-	$GLOBALS['egw']->framework->login_screen($extra_vars);
+	$GLOBALS['egw']->framework->login_screen($extra_vars, $force_password_change);
 }

@@ -201,7 +201,7 @@ input[type=image]
 .divLoginbox
 {
 	position:relative;
-	width: 370px;
+	width: 400px;
 	border: #9c9c9c 1px solid;
 }
 
@@ -483,6 +483,7 @@ body {
 	padding-bottom: 10px;
 	color: red;
 	font-style: italic;
+	margin: 7px 7px 0 0;
 }
 .divLoginboxHeader {
 	text-align: center;
