@@ -156,21 +156,26 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.attr('data-owner', event.owner)
 			.attr('data-recur_type', event.recur_type)
 			.attr('data-resize', event.whole_day ? 'WD' : '' + (event.recur_type ? 'S':''))
-			.addClass(event.class)
-			.toggleClass('calendar_calEventPrivate', event.private)
 			// Remove any category classes
 			.removeClass(function(index, css) {
 				return (css.match (/(^|\s)cat_\S+/g) || []).join(' ');
 			})
+			// Remove any status classes
+			.removeClass(function(index, css) {
+				return (css.match(/calendar_calEvent\S+/g) || []).join(' ');
+			})
 			// Remove any resize classes, the handles are gone due to empty()
-			.removeClass('ui-resizable');
+			.removeClass('ui-resizable')
+			.addClass(event.class)
+			.toggleClass('calendar_calEventPrivate', event.private)
 		if(event.category)
 		{
 			this.div.addClass('cat_' + event.category);
 		}
-		this.div.css('border-color', this.div.css('background-color'));
+		this.div.css('border-color', this.title.css('background-color'));
 
-		this.div.toggleClass('calendar_calEventUnknown', event.participants[egw.user('account_id')] ? event.participants[egw.user('account_id')][0] == 'U' : false);
+		this.div.toggleClass('calendar_calEventUnknown', event.participants[egw.user('account_id')] ? event.participants[egw.user('account_id')][0] === 'U' : false);
+		this.div.addClass(this._status_class());
 
 		this.title.toggle(!event.whole_day_on_top);
 		this.body.toggleClass('calendar_calEventBodySmall', event.whole_day_on_top || false);
@@ -203,14 +208,18 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		this.body
 			// Set background color to a lighter version of the header color
-			.css('background-color',jQuery.Color(this.div.css('background-color')).lightness("+=0.3"));
+			.css('background-color',jQuery.Color(this.title.css('background-color')).lightness("+=0.3"));
 
 		this.set_statustext(this._tooltip());
 	},
 
-	_tooltip: function() {
+	/**
+	 * Examines the participants & returns CSS classname for status
+	 * 
+	 * @returns {String}
+	 */
+	_status_class: function() {
 		var status_class = 'calendar_calEventAllAccepted';
-		status:
 		for(var id in this.options.value.participants)
 		{
 			var status = this.options.value.participants[id];
@@ -226,12 +235,17 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 					break;
 				case 'U':
 					status_class = 'calendar_calEventSomeUnknown';
-					break status;	// break for
+					return status_class;	// break for
 				default:
 					status_class = 'calendar_calEventAllAnswered';
 					break;
 			}
 		}
+		return status_class;
+	},
+
+	_tooltip: function() {
+		
 		var border = this.div.css('border-color');
 		var bg_color = this.div.css('background-color');
 		var header_color = this.title.css('color');
@@ -250,7 +264,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var cat_label = cat.node.innerText;
 		cat.destroy();
 		
-		return '<div class="calendar_calEventTooltip ' + status_class+ '" style="border-color: '+border+'; background: '+bg_color+';">'+
+		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background: '+bg_color+';">'+
 			'<div class="calendar_calEventHeaderSmall" style="background-color: {bordercolor};">'+
 				'<font style="color:'+header_color+'">'+this._get_timespan(this.options.value)+'</font>'+
 				this.icons[0].outerHTML+
@@ -279,13 +293,52 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			icons.push('<img src="'+this.egw().image('private','calendar')+'"/>');
 		}
-		if(this.options.value.alarm && !jQuery.isEmptyObject(this.options.value.alarm) && !this.options.value.is_private)
+		else
 		{
-			icons.push('<img src="'+this.egw().image('alarm','calendar')+'" title="'+this.egw().lang('alarm')+'"/>');
-		}
-		if(this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U')
-		{
-			icons.push('<img src="'+this.egw().image('cnr-pending','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
+			if(this.options.value.priority == 3)
+			{
+				icons.push('<img src="'+this.egw().image('high','calendar')+'" title="'+this.egw().lang('high priority')+'"/>');
+			}
+			if(this.options.value['recur_type'])
+			{
+				icons.push('<img src="'+this.egw().image('recur','calendar')+'" title="'+this.egw().lang('recurring event')+'"/>');
+			}
+			// icons for single user, multiple users or group(s) and resources
+			for(var uid in this.options.value['participants'])
+			{
+				if(Object.keys(this.options.value.participants).length == 1 && !isNaN(uid))
+				{
+					icons.push('<img src="'+this.egw().image('single','calendar')+'" title="'+'"/>');
+					break;
+				}
+				if(!isNaN(uid))
+				{
+					icons.push('<img src="'+this.egw().image('users','calendar')+'" title="'+'"/>');
+				}
+				/*
+				 * TODO: resource icons
+				elseif(!isset($icons[$uid[0]]) && isset($this->bo->resources[$uid[0]]) && isset($this->bo->resources[$uid[0]]['icon']))
+				{
+				 	$icons[$uid[0]] = html::image($this->bo->resources[$uid[0]]['app'],
+				 		($this->bo->resources[$uid[0]]['icon'] ? $this->bo->resources[$uid[0]]['icon'] : 'navbar'),
+				 		lang($this->bo->resources[$uid[0]]['app']),
+				 		'width="16px" height="16px"');
+				}
+				*/
+			}
+
+			if(this.options.value.non_blocking)
+			{
+				icons.push('<img src="'+this.egw().image('nonblocking','calendar')+'" title="'+this.egw().lang('non blocking')+'"/>');
+			}
+			if(this.options.value.alarm && !jQuery.isEmptyObject(this.options.value.alarm) && !this.options.value.is_private)
+			{
+				icons.push('<img src="'+this.egw().image('alarm','calendar')+'" title="'+this.egw().lang('alarm')+'"/>');
+			}
+			if(this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U')
+			{
+				icons.push('<img src="'+this.egw().image('cnr-pending','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
+			}
 		}
 		return icons;
 	},

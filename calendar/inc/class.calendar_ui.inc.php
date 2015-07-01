@@ -810,11 +810,7 @@ class calendar_ui
 			$app = $matches[1];
 			$app_id = $matches[2];
 			$icons = array();
-			if (($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
-			{
-				$icons[] = html::image('calendar','private');
-			}
-			else
+			if(!($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
 			{
 				$icons = calendar_uiviews::integration_get_icons($app,$app_id,$event);
 			}
