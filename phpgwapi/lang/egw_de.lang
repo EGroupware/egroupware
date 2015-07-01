@@ -70,7 +70,7 @@ alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
 alt	common	de	Alt
 alternate style-sheet:	common	de	Alternatives Style-sheet
 american samoa	common	de	AMERICANISCH SAMOA
-an admin required that you must change your password upon login.	common	de	Sie werden hiermit aufgefordert Ihr Passwort zu ändern. (Dies wurde von einem Administrator veranlasst.)
+an admin required that you must change your password upon login.	common	de	Sie werden hiermit aufgefordert Ihr Passwort zu ändern. Dies wurde von einem Administrator veranlasst.
 an error happened	common	de	Ein Fehler ist aufgetreten.
 an existing and by the webserver readable directory enables the image browser and upload.	common	de	Ein existierendes, und vom Webserver lesbares Verzeichnis, schaltet den Bild Browser und Upload ein.
 and	common	de	und
@@ -946,7 +946,7 @@ your message has been sent	common	de	Ihre Nachricht wurde versendet
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	de	Ihr Passwort hat nicht die benötigte Qualität von %1 Zeichenklassen und Mindestanzahl von %2 Zeichen.
 your password does not have required strength:	common	de	Ihr Passwort hat nicht die erforderliche Stärke:
 your password failed the following criteria:	common	de	Ihr Passwort entspricht nicht den folgenden Kriterien:
-your password is about to expire in %1 days, you may change your password now	common	de	Ihr Passwort läuft in %1 Tagen ab. Sie können nun hier Ihr Passwort ändern, oder warten bis Sie es ändern müssen.
+your password is about to expire in %1 days, you may change your password now	common	de	Ihr Passwort läuft in %1 Tagen ab. Sie können jetzt Ihr Passwort ändern, oder warten bis Sie es ändern müssen.
 your password might not match the password policy.	common	de	Ihr Passwort könnte den Richtlinien nicht entsprechen.
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer

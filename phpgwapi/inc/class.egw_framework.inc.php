@@ -848,6 +848,14 @@ abstract class egw_framework
 	 */
 	protected function _get_header(array $extra=array())
 	{
+		// display password expires in N days message once per session
+		$message = null;
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' &&
+			auth::check_password_change($message) !== true)
+		{
+			self::message($message, 'info');
+		}
+
 		// get used language code (with a little xss check, if someone tries to sneak something in)
 		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$GLOBALS['egw_info']['user']['preferences']['common']['lang']))
 		{

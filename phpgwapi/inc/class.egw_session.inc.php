@@ -521,7 +521,7 @@ class egw_session
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 			return false;
 		}
-		if ($fail_on_forced_password_change && !auth::check_password_age('', '', '', true, $this->reason))
+		if ($fail_on_forced_password_change && auth::check_password_change($this->reason) === false)
 		{
 			$this->cd_reason = self::CD_FORCE_PASSWORD_CHANGE;
 			return false;
