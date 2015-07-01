@@ -113,7 +113,7 @@ else
 		// remove accounts from addressbook
 		$GLOBALS['egw_setup']->db->delete('egw_addressbook','account_id IS NOT NULL',__LINE__,__FILE__);
 	}
-	/* Create the demo groups */
+	// create our stock groups: Default (all users) and Admins (administrators)
 	$defaultgroupid = (int)$GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
 	$admingroupid   = (int)$GLOBALS['egw_setup']->add_account('Admins','Admin','Group',False,False);
 
@@ -130,7 +130,8 @@ else
 	}
 
 	// Group perms for the default group
-	$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','mail','filemanager','preferences','manual','groupdav','notifications','timesheet','importexport','activesync'),'run',$defaultgroupid);
+	$default_group_apps = karray('addressbook','calendar','infolog','mail','filemanager','preferences','manual','groupdav','notifications','timesheet','importexport','activesync');
+	$GLOBALS['egw_setup']->add_acl($default_group_apps,'run',$defaultgroupid);
 
 	$apps = array();
 	foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled < 3',__LINE__,__FILE__) as $row)
@@ -141,7 +142,10 @@ else
 	// not yet set for the default group or development only apps like (etemplate, jinn, tt's)
 	if (!$_POST['admin_all_apps'])
 	{
-		$apps = array_intersect(array('admin','bookmarks','emailadmin','news_admin','phpbrain','phpsysinfo','phpfreechat','projectmanager','resources','sitemgr','timesheet','tracker','wiki'),$apps);
+		$apps = array_intersect(
+			// also give Admins apps of all users group Defaults, in case one forgot to add admins to it
+			array_unique(array_merge($default_group_apps,
+				array('admin','bookmarks','emailadmin','news_admin','phpbrain','phpsysinfo','phpfreechat','projectmanager','resources','sitemgr','timesheet','tracker','wiki'))),$apps);
 	}
 	$GLOBALS['egw_setup']->add_acl($apps,'run',$admingroupid);
 
