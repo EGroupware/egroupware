@@ -88,3 +88,10 @@ td.admin_userAgent span {
 #admin-customfield_edit .attributes .et2_label,#admin-customfield_edit .attributes input {
 	margin-right: 1em;
 }
+
+/**
+ * Bulk password reset
+ */
+#admin-passwordreset_actions >:nth-child(2) {
+	display: block;
+}

@@ -68,7 +68,7 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
-				$file['Bulk password reset']        = egw::link('/index.php','menuaction=admin.admin_passwordreset.index');
+				$file['Bulk password reset']        = egw::link('/index.php','menuaction=admin.admin_passwordreset.index&ajax=true');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
@@ -86,7 +86,7 @@ class admin_hooks
 			}
 			if (! $GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
 			{
-				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw');
+				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
 			}
 
 			if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_message_access',2,'admin'))
@@ -96,12 +96,12 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))
 			{
-				$file['View Sessions'] = egw::link('/index.php','menuaction=admin.admin_accesslog.sessions');
+				$file['View Sessions'] = egw::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
 			{
-				$file['View Access Log'] = egw::link('/index.php','menuaction=admin.admin_accesslog.index');
+				$file['View Access Log'] = egw::link('/index.php','menuaction=admin.admin_accesslog.index&ajax=true');
 			}
 
 			/* disable old EGroupware error_log, as it is not used anymore

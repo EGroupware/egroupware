@@ -73,10 +73,10 @@ class admin_passwordreset
 			if ($content['download_csv'] && $content['changed'])
 			{
 				html::content_header('changed.csv','text/csv');
-				//echo "account_lid;account_passwd;account_email;account_firstname;account_lastname\n";
+				//echo "account_lid;account_password;account_email;account_firstname;account_lastname\n";
 				foreach($content['changed'] as $account)
 				{
-					echo "$account[account_lid];$account[account_passwd];$account[account_email];$account[account_firstname];$account[account_lastname]\n";
+					echo "$account[account_lid];$account[account_password];$account[account_email];$account[account_firstname];$account[account_lastname]\n";
 				}
 				common::egw_exit();
 			}
@@ -150,7 +150,7 @@ class admin_passwordreset
 								$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$account_id);
 							}
 						}
-						$account['account_passwd'] = $password;
+						$account['account_password'] = $password;
 
 						if ((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '' ||
 							strpos($content['mail']['domain'], '.') !== false)
