@@ -2275,14 +2275,11 @@ body {
   border-top-left-radius: 10px;
   color: red;
   text-align: center;
-  padding-top: 1em;
+  padding: 1em;
+  white-space: pre-wrap;
 }
-#loginMainDiv div#centerBox #loginCdMessage span {
-  padding: 0.5em;
-  font-size: 1.2em;
-  color: #189800;
-  text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
-  width: 100%;
+#loginMainDiv div#centerBox #loginCdMessage.error {
+  font-weight: bold;
 }
 #loginMainDiv div#centerBox form {
   margin: 1em;

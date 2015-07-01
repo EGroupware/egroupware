@@ -901,7 +901,7 @@ td.et2_required {
   border: 1px solid #E1E16D;
   color: #000000;
   font-size: 11px;
-  height: 15px;
+  min-height: 15px;
   padding: 4px 10px;
 }
 .error p {
