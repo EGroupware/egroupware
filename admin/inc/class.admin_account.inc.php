@@ -86,6 +86,12 @@ class admin_account
 
 			$readonlys = array();
 
+			// at least ADS does not allow to unset it and SQL backend does not implement it either
+			if ($account['mustchangepassword'])
+			{
+				$readonlys['mustchangepassword'] = true;
+			}
+
 			if ($deny_edit)
 			{
 				foreach(array_keys($account) as $key)
