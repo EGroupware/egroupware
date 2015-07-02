@@ -1311,6 +1311,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			$output->read = $stat["flags"];
 			$output->subject = $this->messages[$id]['subject'];
 			$output->importance = ($this->messages[$id]['priority'] ?  $this->messages[$id]['priority']:1) ;
+			$output->importance = $this->messages[$id]['priority'] > 3 ? 0 :
+				($this->messages[$id]['priority'] < 3 ? 2 : 1) ;
 			$output->datereceived = $this->mail->_strtotime($headers['DATE'],'ts',true);
 			$output->displayto = ($headers['TO'] ? $headers['TO']:null); //$stat['FETCHED_HEADER']['to_name']
 			// $output->to = $this->messages[$id]['to_address']; //$stat['FETCHED_HEADER']['to_name']
