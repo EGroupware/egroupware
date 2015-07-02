@@ -1466,8 +1466,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		// move message
 		$rv = $this->mail->moveMessages($destFolder,(array)$id,true,$srcFolder,true);
-		debugLog(__METHOD__.__LINE__.array2string($rv)); // this may be true, so try using the nextUID value by examine
-		// return the new id "as string""
+		debugLog(__METHOD__.__LINE__.": New Status of $destFolder :".array2string($status).", ReturnValOf moveMessage".array2string($rv)); // this may be true, so try using the nextUID value by examine
+		// return the new id "as string"
 		return ($rv===true ? $uidNext : $rv[$id]) . "";
 	}
 
@@ -1842,7 +1842,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	{
 		debugLog(__METHOD__.__LINE__.' called.');
 		$this->_connect($this->account);
-		return $this->_wasteID;
+		$rv = $this->createID($this->account,$this->_wasteID);
+		debugLog(__METHOD__.__LINE__.': Account:'.$this->account.", WasteID:".$this->_wasteID.'->'.$rv);
+		return $rv;
 	}
 
     /**
