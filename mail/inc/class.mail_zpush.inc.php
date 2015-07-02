@@ -428,7 +428,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
      */
 	public function SendMail($smartdata)
 	{
-		$this->debugLevel=3;
+		//$this->debugLevel=3;
 		$ClientSideMeetingRequest = false;
 		$allowSendingInvitations = 'sendifnocalnotif';
 		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-allowSendingInvitations']) &&
@@ -816,7 +816,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 
 		$asf = ($send ? true:false); // initalize accordingly
-		if (($smartdata->saveinsent==1 || !isset($smartdata->saveinsent)) && $send==true && $this->mail->mailPreferences['sendOptions'] != 'send_only')
+		if (/*($smartdata->saveinsent==1 || !isset($smartdata->saveinsent)) && */  $send==true && $this->mail->mailPreferences['sendOptions'] != 'send_only')
 		{
 			$asf = false;
 			$sentFolder = $this->mail->getSentFolder();
@@ -904,7 +904,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	public function GetMessage($folderid, $id, $contentparameters)
 	{
-$this->debugLevel=4;
+		//$this->debugLevel=4;
 		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id);
 		$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
 		$mimesupport = $contentparameters->GetMimeSupport();
@@ -1271,10 +1271,10 @@ $this->debugLevel=4;
 			//$this->debugLevel=0;
 			// end handle Attachments
 			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($output));
-$this->debugLevel=0;
+//$this->debugLevel=0;
 			return $output;
 		}
-$this->debugLevel=0;
+//$this->debugLevel=0;
 		return false;
 	}
 
