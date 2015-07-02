@@ -257,6 +257,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				header("HTTP/1.1 503 Service Unavailable");
 				$hL = $waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']-$hereandnow;
 				header("Retry-After: ".$hL);
+				$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
+				_egw_log_exception($ethrown);
 				exit;
 			}
 		}
@@ -905,9 +907,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	public function GetMessage($folderid, $id, $contentparameters)
 	{
 		//$this->debugLevel=4;
-		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id);
+		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' ContentParams='.array2string($contentparameters));
 		$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
 		$mimesupport = $contentparameters->GetMimeSupport();
+		debugLog(__METHOD__."() truncsize=$truncsize, mimeSupport=".array2string($mimesupport));
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
 		//$this->debugLevel=4;
@@ -954,14 +957,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 			else // style with bodypreferences
 			{
-				if (isset($bodypreference[1]) && !isset($truncsize))
-					$truncsize = 1024*1024;
-				if (isset($bodypreference[2]) && !isset($truncsize))
-					$truncsize = 1024*1024;
-				if (isset($bodypreference[3]) && !isset($truncsize))
-					$truncsize = 1024*1024;
-				if (isset($bodypreference[4]) && !isset($truncsize))
-					$truncsize = 1024*1024;
 				// set the protocoll class
 				$output->asbody = new SyncBaseBody();
 				// fetch the body (try to gather data only once)
@@ -1007,7 +1002,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$plainBody = strip_tags($plainBody);
 				if ($this->debugLevel>3 && $output->nativebodytype==1) debugLog(__METHOD__.__LINE__.' Plain Text:'.$plainBody);
 				//$body = str_replace("\n","\r\n", str_replace("\r","",$body)); // do we need that?
-				if (isset($bodypreference[4]) && ($mimesupport==2 || ($mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)))
+				if ($mimesupport==2 || $mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)
 				{
 					debugLog(__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->asbody->type = 4;
@@ -1098,7 +1093,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						foreach((array)$attachments as $key => $attachment)
 						{
 							if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
-							$attachmentData = '';
 							$attachmentData	= $this->mail->getAttachment($id, $attachment['partID'],0,false,false,$_folderName);
 							$mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
 						}
@@ -1432,7 +1426,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$rv = $this->mail->flagMessages("unflagged", $id,$folder);
 				debugLog(__METHOD__." -> set ".array2string($id).' in Folder '.$folder." as " . "unflagged" . "-->". $rv);
 			}
-		}		
+		}
 		return $this->StatMessage($folderid, $id);
 	}
 
@@ -1801,7 +1795,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	function AlterPingChanges($folderid, &$syncstate)
 	{
-		debugLog(__METHOD__.' called with '.$folderid);
 		$account = $folder = null;
 		$this->splitID($folderid, $account, $folder);
 		if (is_numeric($account)) $type = 'mail';
@@ -1818,17 +1811,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
             debugLog("AlterPingChanges: could not stat folder $folder ");
             return false;
         } else {
-            $newstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
-
-            // message number is different - change occured
-            if ($syncstate != $newstate) {
-                $syncstate = $newstate;
-                debugLog("AlterPingChanges: Change FOUND!");
-                // build a dummy change
-                $changes = array(array("type" => "fakeChange"));
-            }
+            $syncstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
         }
-		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
+		debugLog(__METHOD__.' called with ('.$folderid.', ....) returning '.array2string($syncstate));
 		return $changes;
 	}
 
@@ -1840,11 +1825,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	function GetWasteBasket()
 	{
-		debugLog(__METHOD__.__LINE__.' called.');
 		$this->_connect($this->account);
-		$rv = $this->createID($this->account,$this->_wasteID);
-		debugLog(__METHOD__.__LINE__.': Account:'.$this->account.", WasteID:".$this->_wasteID.'->'.$rv);
-		return $rv;
+		$id = $this->createID($account=0, $this->_wasteID);
+		debugLog(__METHOD__.__LINE__."() account=$this->account returned $id for folder $this->_wasteID");
+		return $id;
 	}
 
     /**
