@@ -22,6 +22,7 @@
 		"pear-pear.horde.org/Horde_Mapi": ">=1.0.0",
 		"pear-pear.php.net/XML_Feed_Parser": "*",
 		"pear-pear.php.net/Log": "*",
-		"pear-pear.php.net/Text_Diff": "*"
+		"pear-pear.php.net/Text_Diff": "*",
+		"sabre/dav": "~2.1.2"
 	}
 }
