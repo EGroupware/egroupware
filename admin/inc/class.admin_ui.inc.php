@@ -396,7 +396,8 @@ class admin_ui
 						$path .= ($path == '/' ? '' : '/').$part;
 						if (!isset($parent[$path]))
 						{
-							$icon = etemplate_widget_tree::imagePath($part == 'apps' ? common::image('phpgwapi', 'home') : common::image($part, 'navbar'));
+							$icon = etemplate_widget_tree::imagePath($part == 'apps' ? common::image('phpgwapi', 'home') :
+								(($i=common::image($part, 'navbar')) ? $i : common::image('phpgwapi', 'nonav')));
 							$parent[$path] = array(
 								'id' => $path,
 								'text' => $part == 'apps' ? lang('Applications') : lang($part),
