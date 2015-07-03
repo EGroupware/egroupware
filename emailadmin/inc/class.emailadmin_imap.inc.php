@@ -505,9 +505,10 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	 * getStatus
 	 *
 	 * @param string $mailbox
+	 * @param ignoreStatusCache bool ignore the cache used for counters
 	 * @return array with counters
 	 */
-	function getStatus($mailbox)
+	function getStatus($mailbox, $ignoreStatusCache=false)
 	{
 		$mailboxes = $this->listMailboxes($mailbox,Horde_Imap_Client::MBOX_ALL,array(
 				'attributes'=>true,
@@ -515,6 +516,9 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 				'delimiter'=>true,
 				'special_use'=>true,
 			));
+
+		$flags = Horde_Imap_Client::STATUS_ALL;
+		if ($ignoreStatusCache) $flags |= Horde_Imap_Client::STATUS_FORCE_REFRESH;
 
 		$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);
 		//error_log(__METHOD__.__LINE__.array2string($mboxes->count()));
@@ -524,7 +528,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 			{
 				if (stripos(array2string($box['attributes']),'\noselect')=== false)
 				{
-					$status = $this->status($k);
+					$status = $this->status($k, $flags);
 					foreach ($status as $key => $v)
 					{
 						$_status[strtoupper($key)]=$v;

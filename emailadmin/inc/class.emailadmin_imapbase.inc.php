@@ -1083,7 +1083,7 @@ class emailadmin_imapbase
 		}
 		try
 		{
-			$folderStatus[$this->icServer->ImapServerId][$folderName] = $this->icServer->getStatus($folderName);
+			$folderStatus[$this->icServer->ImapServerId][$folderName] = $this->icServer->getStatus($folderName,$ignoreStatusCache);
 		}
 		catch (Exception $e)
 		{
@@ -1151,7 +1151,7 @@ class emailadmin_imapbase
 		if(!$folderInfo|| !is_array($folderInfo)) {
 			try
 			{
-				$folderInfo = $this->_getStatus($_folderName);
+				$folderInfo = $this->_getStatus($_folderName,$ignoreStatusCache);
 			}
 			catch (Exception $e)
 			{
