@@ -255,7 +255,7 @@ class calendar_uiviews extends calendar_ui
 
 		// Actually, this takes care of most of it...
 		$this->week();
-		
+
 		$tmpl = new etemplate_new('calendar.planner');
 		// Get the actions
 		$tmpl->setElementAttribute('planner','actions',$this->get_actions());
@@ -925,7 +925,7 @@ class calendar_uiviews extends calendar_ui
 
 		// Get the actions
 		$tmpl->setElementAttribute('view','actions',$this->get_actions());
-		
+
 		$tmpl->exec(__METHOD__, $content);
 	}
 
@@ -1970,7 +1970,7 @@ class calendar_uiviews extends calendar_ui
 	 * @param int|string $id
 	 * @return string
 	 */
-	function integration_get_popup($app,$id)
+	public static function integration_get_popup($app,$id)
 	{
 		$app_data = calendar_bo::integration_get_data($app,'edit_link');
 
@@ -2927,7 +2927,7 @@ class calendar_uiviews extends calendar_ui
 			$actions['timesheet']['open'] = '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$id"}';
 			$actions['timesheet']['onExecute'] = 'javaScript:app.calendar.action_open';
 		}
-		
+
 		return $actions;
 	}
 
