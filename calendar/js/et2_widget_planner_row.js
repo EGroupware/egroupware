@@ -171,9 +171,9 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 	 *
 	 * If event information is not provided, it will be pulled from the content array.
 	 *
-	 * @param {Object[]} [_events] Array of event information, one per event.
+	 * @param {Object[]} [events] Array of event information, one per event.
 	 */
-	_update_events: function(_events)
+	_update_events: function(events)
 	{
 		// Remove all events
 		while(this._children.length)
@@ -181,8 +181,39 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			this._children[this._children.length-1].free();
 			this.removeChild(this._children[this._children.length-1]);
 		}
-		
-		var rows = this._spread_events(_events);
+
+		for(var c = 0; c < events.length; c++)
+		{
+			// Create event
+			var event = et2_createWidget('calendar-event',{
+				id:events[c].app_id||events[c].id,
+				value: events[c]
+			},this);
+			if(this.isInTree())
+			{
+				event.doLoadingFinished();
+			}
+
+			// Copy actions set in parent
+			event._link_actions(this._parent._parent.options.actions||{});
+		}
+
+		// Seperate loop so column sorting finds all children in the right place
+		for(var c = 0; c < events.length; c++)
+		{
+			this._children[c].set_value(events[c]);
+		}
+	},
+
+	/**
+	 * Position the event according to it's time and how this widget is laid
+	 * out.
+	 *
+	 * @param {undefined|Object|et2_calendar_event} event
+	 */
+	position_event: function(event)
+	{
+		var rows = this._spread_events();
 		var row = $j('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
 		var height = rows.length * (parseInt(window.getComputedStyle(row[0]).getPropertyValue("height")) || 20);
 		row.remove();
@@ -192,31 +223,17 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			// Calculate vertical positioning
 			var top = c * (100.0 / rows.length);
 
-			for(var i = 0; i < rows[c].length; i++)
+			for(var i = 0; (rows[c].indexOf(event) >=0 || !event) && i < rows[c].length; i++)
 			{
 				// Calculate horizontal positioning
-				var left = this._time_to_position(rows[c][i].start);
-				var width = this._time_to_position(rows[c][i].end)-left;
-
-				// Create event
-				var event = et2_createWidget('calendar-event',{
-					id:rows[c][i].app_id||rows[c][i].id,
-					class: 'calendar_plannerEvent'
-				},this);
-				if(this.isInTree())
-				{
-					event.doLoadingFinished();
-				}
-				event.set_value(rows[c][i]);
-
-				// TODO
-				event._link_actions(this._parent.options.actions||{});
+				var left = this._time_to_position(rows[c][i].options.value.start);
+				var width = this._time_to_position(rows[c][i].options.value.end)-left;
 
 				// Position the event
-				event.div.css('top', top+'%');
-				event.div.css('height', (100/rows.length)+'%');
-				event.div.css('left', left.toFixed(1)+'%');
-				event.div.css('width', width.toFixed(1)+'%');
+				rows[c][i].div.css('top', top+'%');
+				rows[c][i].div.css('height', (100/rows.length)+'%');
+				rows[c][i].div.css('left', left.toFixed(1)+'%');
+				rows[c][i].div.css('width', width.toFixed(1)+'%');
 			}
 		}
 		if(height)
@@ -228,10 +245,9 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Sort a day's events into non-overlapping rows
 	 *
-	 * @param {Object[]} events
 	 * @returns {Array[]} Events sorted into rows
 	 */
-	_spread_events: function(events)
+	_spread_events: function()
 	{
 		// sorting the events in non-overlapping rows
 		var rows = [];
@@ -240,9 +256,9 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		var start = this.options.start_date;
 		var end = this.options.end_date;
 
-		for(var n = 0; n < events.length; n++)
+		for(var n = 0; n < this._children.length; n++)
 		{
-			var event = events[n];
+			var event = this._children[n].options.value || false;
 			if(typeof event.start !== 'object')
 			{
 				this.date_helper.set_value(event.start);
@@ -282,11 +298,11 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 				}
 			}
 
-			var event_start = new Date(events[n].start).valueOf();
+			var event_start = new Date(event.start).valueOf();
 			for(var row = 0; row_end[row] > event_start; ++row);	// find a "free" row (no other event)
 			if(typeof rows[row] === 'undefined') rows[row] = [];
-			rows[row].push(events[n]);
-			row_end[row] = new Date(events[n]['end']).valueOf();
+			rows[row].push(this._children[n]);
+			row_end[row] = new Date(event['end']).valueOf();
 		}
 		return rows;
 	},

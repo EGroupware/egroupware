@@ -245,7 +245,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 						if(event_widget)
 						{
-							event_widget.options.value.end_m = event_widget.options.value.duration = e.data.duration;
+							event_widget.options.value.end_m = eT;
+							event_widget.options.value.duration = e.data.duration;
 						}
 						$j(this).trigger(e);
 
@@ -253,7 +254,10 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						$j(this).resizable('destroy');
 					}
 					// Clear the helper, re-draw
-					event_widget.set_value(event_widget.options.value);
+					if(event_widget)
+					{
+						event_widget._parent.position_event(event_widget);
+					}
 				},
 
 				/**
@@ -517,6 +521,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		// Create / update day widgets with dates and data, if available
 		// TODO: need data doesn't take category & other filters into account
+		// Currently always loading new data, which causes multiple unneeded redraws
 		var need_data = true;
 		for(var i = 0; i < this.day_list.length; i++)
 		{

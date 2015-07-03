@@ -492,7 +492,7 @@ app.classes.calendar = AppJS.extend(
 		egw().json(
 			'calendar.calendar_uiforms.ajax_moveEvent',
 			[widget.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration]
-		).sendRequest();
+		).sendRequest(true);
 	},
 
 	/**

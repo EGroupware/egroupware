@@ -25,6 +25,10 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 
 	attributes: {
+		"value": {
+			type: "any",
+			default: et2_no_init
+		},
 		"onclick": {
 			"description": "JS code which is executed when the element is clicked. " +
 				"If no handler is provided, or the handler returns true and the event is not read-only, the " +
@@ -76,8 +80,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this._super.apply(this, arguments);
 			
 		// Unregister, or we'll continue to be notified...
-		var old_app_id = this.options.value.app_id ? this.options.value.app_id : this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
-		egw.dataUnregisterUID('calendar::'+old_app_id,false,this);
+		if(this.options.value)
+		{
+			var old_app_id = this.options.value.app_id ? this.options.value.app_id : this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
+			egw.dataUnregisterUID('calendar::'+old_app_id,false,this);
+		}
 	},
 
 	set_value: function(_value) {
@@ -93,30 +100,13 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var app_id = this.options.value.app_id ? this.options.value.app_id : this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
 		egw.dataRegisterUID('calendar::'+app_id, function(event) {
 			// Copy to avoid changes, which may cause nm problems
-			event = jQuery.extend({},event);
-			var list = [event];
-			// Let parent format any missing data
-			this._parent._spread_events(list);
+			this.options.value = jQuery.extend({},event);
 
-			// Calculate vertical positioning
-			// TODO: Maybe move this somewhere common between here & parent?
-			var top = 0;
-			var height = 0;
-			if(event.whole_day_on_top)
-			{
-				top =  ((this._parent.title.height()/this._parent.div.height())*100) + this._parent.display_settings.rowHeight;
-				height = this._parent.display_settings.rowHeight;
-			}
-			else
-			{
-				top = this._parent._time_to_position(event.start_m,0);
-				height = this._parent._time_to_position(event.end_m,0)-top;
-			}
+			// Let parent position
+			this._parent.position_event(this);
+			
+			this._update(this.options.value);
 
-			// Position the event - horizontal is controlled by parent
-			this.div.css('top', top+'%');
-			this.div.css('height', height+'%');
-			this._update(event);
 		},this,this.getInstanceManager().execId,this.id);
 
 
@@ -304,16 +294,18 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				icons.push('<img src="'+this.egw().image('recur','calendar')+'" title="'+this.egw().lang('recurring event')+'"/>');
 			}
 			// icons for single user, multiple users or group(s) and resources
+			var single = '<img src="'+this.egw().image('single','calendar')+'" title="'+'"/>';
+			var multiple = '<img src="'+this.egw().image('users','calendar')+'" title="'+'"/>';
 			for(var uid in this.options.value['participants'])
 			{
 				if(Object.keys(this.options.value.participants).length == 1 && !isNaN(uid))
 				{
-					icons.push('<img src="'+this.egw().image('single','calendar')+'" title="'+'"/>');
+					icons.push(single);
 					break;
 				}
-				if(!isNaN(uid))
+				if(!isNaN(uid) && icons.indexOf(multiple) === -1)
 				{
-					icons.push('<img src="'+this.egw().image('users','calendar')+'" title="'+'"/>');
+					icons.push(multiple);
 				}
 				/*
 				 * TODO: resource icons

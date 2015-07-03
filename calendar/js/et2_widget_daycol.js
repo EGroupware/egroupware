@@ -290,69 +290,41 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Remove all events
 		while(this._children.length)
 		{
-			this._children[this._children.length-1].free();
+			var node = this._children[this._children.length-1];
+			this.removeChild(node);
+			node.free();
 		}
 		var events = _events || this.getArrayMgr('content').getEntry(this.options.date) || [];
 
-		// Sort events into minimally-overlapping columns
-		var columns = this._spread_events(events);
-
-		for(var c = 0; c < columns.length; c++)
+		for(var c = 0; c < events.length; c++)
 		{
-			// Calculate horizontal positioning
-			var left = Math.ceil(5 + (1.5 * 100 / (this.options.width || 100)));
-			var width = 98 - left;
-			if (columns.length !== 1)
+			// Create event
+			var event = et2_createWidget('calendar-event',{
+				id:events[c].app_id||events[c].id,
+				value: events[c]
+			},this);
+			if(this.isInTree())
 			{
-				width = !c ? 70 : 50;
-				left += c * (100.0-left) / columns.length;
+				event.doLoadingFinished();
 			}
-			if (left + width > 100.0) width = 98.0 - left;
 
-			var whole_day_counter = 0;
-
-			for(var i = 0; i < columns[c].length; i++)
-			{
-				// Calculate vertical positioning
-				var top = 0;
-				var height = 0;
-				if(columns[c][i].whole_day_on_top)
-				{
-					top =  ((this.title.height()/this.div.height())*100) + this.display_settings.rowHeight*whole_day_counter++;
-					height = this.display_settings.rowHeight;
-				}
-				else
-				{
-					top = this._time_to_position(columns[c][i].start_m,whole_day_counter);
-					height = this._time_to_position(columns[c][i].end_m,whole_day_counter)-top;
-				}
-
-				// Create event
-				var event = et2_createWidget('calendar-event',{id:columns[c][i].app_id||columns[c][i].id},this);
-				if(this.isInTree())
-				{
-					event.doLoadingFinished();
-				}
-				event.set_value(columns[c][i]);
-				event._link_actions(this._parent._parent.options.actions||{});
-				
-				// Position the event
-				event.div.css('top', top+'%');
-				event.div.css('height', height+'%');
-				event.div.css('left', left.toFixed(1)+'%');
-				event.div.css('width', width.toFixed(1)+'%');
-			}
+			// Copy actions set in parent
+			event._link_actions(this._parent._parent.options.actions||{});
 		}
-		
+
+		// Seperate loop so column sorting finds all children in the right place
+		for(var c = 0; c < events.length; c++)
+		{
+			this._children[c].set_value(events[c]);
+		}
 	},
 
 	/**
 	 * Sort a day's events into minimally overlapping columns
 	 * 
-	 * @param {Object[]} events
 	 * @returns {Array[]} Events sorted into columns
 	 */
-	_spread_events: function(events)
+	_spread_events: function()
 	{
 		var day_start = this.date.valueOf() / 1000;
 		var dst_check = new Date(this.date);
@@ -367,9 +339,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 		var eventCols = [], col_ends = [];
-		for(var i = 0; i < events.length; i++)
+		for(var i = 0; i < this._children.length; i++)
 		{
-			var event = events[i];
+			var event = this._children[i].options.value || false;
+			if(!event) continue;
+			
 			var c = 0;
 			event['multiday'] = false;
 			if(typeof event.start !== 'object')
@@ -407,9 +381,68 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			{
 				eventCols[c] = [];
 			}
-			eventCols[c].push(event);
+			eventCols[c].push(this._children[i]);
 		}
 		return eventCols;
+	},
+
+	/**
+	 * Position the event according to it's time and how this widget is laid
+	 * out.
+	 *
+	 * @param {undefined|Object|et2_calendar_event} event
+	 */
+	position_event: function(event)
+	{
+		// Sort events into minimally-overlapping columns
+		var columns = this._spread_events();
+
+		for(var c = 0; c < columns.length; c++)
+		{
+			// Calculate horizontal positioning
+			var left = Math.ceil(5 + (1.5 * 100 / (this.options.width || 100)));
+			var width = 98 - left;
+			if (columns.length !== 1)
+			{
+				width = !c ? 70 : 50;
+				left += c * (100.0-left) / columns.length;
+			}
+			if (left + width > 100.0) width = 98.0 - left;
+
+			var whole_day_counter = 0;
+
+			for(var i = 0; (columns[c].indexOf(event) >= 0 || !event) && i < columns[c].length; i++)
+			{
+				// Calculate vertical positioning
+				var top = 0;
+				var height = 0;
+				if(columns[c][i].options.value.whole_day_on_top)
+				{
+					top =  ((this.title.height()/this.div.height())*100) + this.display_settings.rowHeight*whole_day_counter++;
+					height = this.display_settings.rowHeight;
+				}
+				else
+				{
+					top = this._time_to_position(columns[c][i].options.value.start_m,whole_day_counter);
+					height = this._time_to_position(columns[c][i].options.value.end_m,whole_day_counter)-top;
+				}
+
+				// Position the event
+				if(event && columns[c].indexOf(event) >= 0 || !event)
+				{
+					columns[c][i].div.css('top', top+'%');
+					columns[c][i].div.css('height', height+'%');
+					columns[c][i].div.css('left', left.toFixed(1)+'%');
+					columns[c][i].div.css('width', width.toFixed(1)+'%');
+
+				}
+			}
+			// Only wanted to position this event, leave the other columns alone
+			if(event && columns[c].indexOf(event) >= 0)
+			{
+				return;
+			}
+		}
 	},
 	
 	/**
