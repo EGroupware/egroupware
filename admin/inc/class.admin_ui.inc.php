@@ -372,10 +372,6 @@ class admin_ui
 						{
 							$data['id'] .= $matches[2][(int)array_search('load', $matches[1])];
 						}
-						else
-						{
-							$data['id'] .= md5($data['link']);
-						}
 					}
 					if (!empty($data['icon']))
 					{
@@ -416,7 +412,8 @@ class admin_ui
 					}
 					$data['text'] = lang($data['text']);
 					if (!empty($data['tooltip'])) $data['tooltip'] = lang($data['tooltip']);
-
+					// make sure keys are unique, as we overwrite tree entries otherwise
+					if (isset($parent[$data['id']])) $data['id'] .= md5($data['link']);
 					$parent[$data['id']] = self::fix_userdata($data);
 				}
 			}
