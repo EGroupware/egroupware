@@ -331,12 +331,7 @@ class egw extends egw_minimal
 				if (egw_session::get_sessionid()) $redirect .= 'cd=10&';
 			}
 			if ($relpath) $redirect .= 'phpgw_forward='.urlencode($relpath.(!empty($query) ? '?'.$query : ''));
-			//Header('Location: '.$GLOBALS['egw_info']['server']['webserver_url'].$redirect);
-			// do NOT redirect, but set top.location, as this works in framed template too
-			$redirect = $GLOBALS['egw_info']['server']['webserver_url'].$redirect;
-
-			echo "<html>\n<head>\n<script type='text/javascript'>top.location='$redirect';</script>\n</head>\n";
-			exit;
+			self::redirect_link($redirect);
 		}
 	}
 

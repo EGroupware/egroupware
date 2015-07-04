@@ -8,6 +8,9 @@
  * @version $Id$
  */
 
+/* if login page is not in top window, set top windows location to it */
+if (top !== window) top.location = window.location;
+
 egw_LAB.wait(function()
 {
 	$j(document).ready(function()
