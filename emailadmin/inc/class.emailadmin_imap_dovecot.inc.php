@@ -57,9 +57,9 @@ class emailadmin_imap_dovecot extends emailadmin_imap
 	 *
 	 * Prefixes adminUsername with real username (separated by an asterisk)
 	 *
-	 * @param string $_username =null create an admin connection for given user or $this->acc_imap_username
+	 * @param string $_username =true create an admin connection for given user or $this->acc_imap_username
 	 */
-	function adminConnection($_username=null)
+	function adminConnection($_username=true)
 	{
 		// generate admin user name of $username
 		if (($pos = strpos($this->acc_imap_admin_username, '*')) !== false)	// remove evtl. set username
@@ -231,8 +231,8 @@ class emailadmin_imap_dovecot extends emailadmin_imap
 		// we are authenticated with master but for current user
 		if(($quota = $this->getStorageQuotaRoot('INBOX')))
 		{
-			$userData['quotaLimit'] = (int) ($quota['limit'] / 1024);
-			$userData['quotaUsed'] = (int) ($quota['usage'] / 1024);
+			$userData['quotaLimit'] = (int) ($quota['QMAX'] / 1024);
+			$userData['quotaUsed'] = (int) ($quota['USED'] / 1024);
 		}
 		$this->username = $bufferUsername;
 		$this->loginName = $bufferLoginName;

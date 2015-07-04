@@ -197,7 +197,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 	 *
 	 * Plugins can overwrite it to eg. construct a special admin user name
 	 *
-	 * @param string $_username =null create an admin connection for given user or $this->acc_imap_username
+	 * @param string $_username =true create an admin connection for given user or $this->acc_imap_username
 	 */
 	function adminConnection($_username=true)
 	{
