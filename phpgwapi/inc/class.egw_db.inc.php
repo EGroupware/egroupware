@@ -298,16 +298,17 @@ class egw_db
 	}
 
 	/**
-	* Open a connection to a database
-	*
-	* @param string $Database name of database to use (optional)
-	* @param string $Host database host to connect to (optional)
-	* @param string $Port database port to connect to (optional)
-	* @param string $User name of database user (optional)
-	* @param string $Password password for database user (optional)
-	* @param string $Type type of database (optional)
-	* @return ADONewConnection
-	*/
+	 * Open a connection to a database
+	 *
+	 * @param string $Database name of database to use (optional)
+	 * @param string $Host database host to connect to (optional)
+	 * @param string $Port database port to connect to (optional)
+	 * @param string $User name of database user (optional)
+	 * @param string $Password password for database user (optional)
+	 * @param string $Type type of database (optional)
+	 * @throws egw_exception_db_connection
+	 * @return ADOConnection
+	 */
 	function connect($Database = NULL, $Host = NULL, $Port = NULL, $User = NULL, $Password = NULL,$Type = NULL)
 	{
 		/* Handle defaults */
@@ -339,9 +340,59 @@ class egw_db
 		{
 			$this->Type = $GLOBALS['egw_info']['server']['db_type'];
 		}
+		// on connection failure re-try with an other host
+		// remembering in session which host we used last time
+		$use_host_from_session = true;
+		while(($host = $this->get_host(!$use_host_from_session)))
+		{
+			try {
+				//error_log(__METHOD__."() this->Host(s)=$this->Host, n=$n --> host=$host");
+				return $this->_connect($host);
+			}
+			catch(egw_exception_db_connection $e) {
+				_egw_log_exception($e);
+				$this->disconnect();	// force a new connect
+				$this->Type = $this->setupType;	// get set to "mysql" for "mysqli"
+				$use_host_from_session = false;	// re-try with next host from list
+			}
+		}
+		throw $e;
+	}
+
+	/**
+	 * Get one of multiple (semicolon-separated) DB-hosts to use
+	 *
+	 * Which host to use is cached in session, default is first one.
+	 *
+	 * @param boolean $next =false	true: move to next host
+	 * @return boolean|string hostname or false, if already number-of-hosts plus 2 times called with $next == true
+	 */
+	public function get_host($next = false)
+	{
+		$hosts = explode(';', $this->Host);
+		$num_hosts = count($hosts);
+		$n =& egw_cache::getSession(__CLASS__, $this->Host);
+		if (!isset($n)) $n = 0;
+
+		if ($next && ++$n >= $num_hosts+2)
+		{
+			return false;
+		}
+		return $hosts[$n % $num_hosts];
+	}
+
+	/**
+	 * Connect to given host
+	 *
+	 * @param string $Host host to connect to
+	 * @return ADOConnection
+	 * @throws egw_exception_db_connection
+	 */
+	protected function _connect($Host)
+	{
 		if (!$this->Link_ID)
 		{
-			foreach(array('Host','Database','User','Password') as $name)
+			foreach(array('Database','User','Password') as $name)
 			{
 				$$name = $this->$name;
 			}
