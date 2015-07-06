@@ -1611,12 +1611,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				self::$pdo_type = $egw_db->Type;
 				break;
 		}
-		switch($type)
-		{
-			default:
-				$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($egw_db->Host ? ';host='.$egw_db->Host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
-				break;
-		}
+		// get host used be egw_db
+		$host = $egw_db->get_host();
+
+		$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($host ? ';host='.$host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
 		// check once if pdo extension and DB specific driver is loaded or can be loaded
 		static $pdo_available;
 		if (is_null($pdo_available))
