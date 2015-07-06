@@ -148,8 +148,8 @@ $phpgw_baseline = array(
 		),
 		'pk' => array(),
 		'fk' => array(),
-		'ix' => array(array('acc_id','account_id'),array('account_id','acc_id')),
-		'uc' => array()
+		'ix' => array(array('account_id','acc_id')),
+		'uc' => array(array('acc_id','account_id'))
 	),
 	'egw_ea_notifications' => array(
 		'fd' => array(
