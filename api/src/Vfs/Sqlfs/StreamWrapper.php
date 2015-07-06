@@ -1636,7 +1636,10 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 				self::$pdo_type = $egw_db->Type;
 				break;
 		}
-		$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($egw_db->Host ? ';host='.$egw_db->Host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
+		// get host used be egw_db
+		$host = $egw_db->get_host();
+
+		$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($host ? ';host='.$host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
 		// check once if pdo extension and DB specific driver is loaded or can be loaded
 		static $pdo_available=null;
 		if (is_null($pdo_available))
