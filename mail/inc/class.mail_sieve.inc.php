@@ -288,8 +288,23 @@ class mail_sieve
 								$newRule['action_arg'] = implode($content['action_folder_text']);
 								break;
 							case 'address':
-								$newRule['action_arg'] = implode(',',$content['action_address_text']);
 								//error_log(__METHOD__. '() newRules_address '. array2string($newRule['action_arg']));
+								//error_log(__METHOD__.__LINE__.array2string($content['action_address_text']));
+								$forwards = array();
+								foreach($content['action_address_text'] as $email) {
+									// avoid wrong addresses, if an rfc822 encoded address is in addressbook
+									//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
+									$rfcAddr = emailadmin_imapbase::parseAddressList($email);
+									$_rfcAddr=$rfcAddr->first();
+									//error_log(__METHOD__.__LINE__.$_rfcAddr->mailbox.'@'.$_rfcAddr->host);
+									if (!$_rfcAddr->valid)
+									{
+										break; // skip address if we encounter an error here
+									}
+									$forwards[] = $_rfcAddr->mailbox.'@'.$_rfcAddr->host;
+								}
+								//$newRule['action_arg'] = implode(',',$content['action_address_text']);
+								$newRule['action_arg'] = implode(',',$forwards);
 								break;
 							case 'reject':
 								$newRule['action_arg'] = $content['action_reject_text'];
@@ -595,8 +610,22 @@ class mail_sieve
 								{
 									if (is_array($content['forwards']) && !empty($content['forwards']))
 									{
-
-										$newVacation['forwards'] = implode(",",$content['forwards']);
+										//error_log(__METHOD__.__LINE__.array2string($content['forwards']));
+										$forwards = array();
+										foreach($content['forwards'] as $email) {
+											// avoid wrong addresses, if an rfc822 encoded address is in addressbook
+											//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
+											$rfcAddr = emailadmin_imapbase::parseAddressList($email);
+											$_rfcAddr=$rfcAddr->first();
+											//error_log(__METHOD__.__LINE__.$_rfcAddr->mailbox.'@'.$_rfcAddr->host);
+											if (!$_rfcAddr->valid)
+											{
+												break; // skip address if we encounter an error here
+											}
+											$forwards[] = $_rfcAddr->mailbox.'@'.$_rfcAddr->host;
+										}
+										//$newVacation['forwards'] = implode(",",$content['forwards']);
+										$newVacation['forwards'] = implode(",",$forwards);
 									}
 									else
 									{
