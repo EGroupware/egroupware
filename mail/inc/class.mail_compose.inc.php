@@ -1650,7 +1650,7 @@ class mail_compose
 			}
 			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID,'plain');
 		}
-		
+
 		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 			foreach($attachments as $attachment) {
 				$cid = $attachment['cid'];
@@ -3308,7 +3308,15 @@ class mail_compose
 			foreach($contacts as $contact) {
 				foreach(array($contact['email'],$contact['email_home']) as $email) {
 					// avoid wrong addresses, if an rfc822 encoded address is in addressbook
-					$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
+					//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
+					$rfcAddr = emailadmin_imapbase::parseAddressList($email);
+					$_rfcAddr=$rfcAddr->first();
+					if (!$_rfcAddr->valid)
+					{
+						break; // skip address if we encounter an error here
+					}
+					$email = $_rfcAddr->mailbox.'@'.$_rfcAddr->host;
+
 					if (method_exists($GLOBALS['egw']->contacts,'search'))
 					{
 						$contact['n_fn']='';
