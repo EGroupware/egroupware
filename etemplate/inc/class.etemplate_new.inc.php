@@ -365,7 +365,7 @@ class etemplate_new extends etemplate_widget_template
 			error_log("Old etemplate submitted");
 			return ExecMethod('etemplate.etemplate.process_exec');
 		}
-		error_log(__METHOD__."(".array2string($content).")");
+		//error_log(__METHOD__."(".array2string($content).")");
 
 		self::$request = etemplate_request::read($_POST['etemplate_exec_id']);
 
@@ -384,8 +384,8 @@ class etemplate_new extends etemplate_widget_template
 			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));
 			exit;
 		}
-		error_log(__METHOD__."(,".array2string($content).')');
-		error_log(' validated='.array2string($validated));
+		//error_log(__METHOD__."(,".array2string($content).')');
+		//error_log(' validated='.array2string($validated));
 
 		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 	}
