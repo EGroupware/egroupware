@@ -1,3 +1,27 @@
+egroupware-epl (14.2.20150707) hardy; urgency=low
+
+  * Login/Password: handle forced password change on login page
+  * Mail/CalDAV/CardDAV: update to new Horde and PEAR versions, specially Horde_Icalendar 2.1.1
+  * Mail: correctly quote name / personal part containing German umlauts or special chars when searching for email addresses in compose
+  * Mail: fix inline image handling for reply/forward mail
+  * Mail: inline images were not shown in Thunderbird
+  * Mail: fix mail compose d-n-d for emails and distribution lists
+  * Mail: fix sieve rules for moving mails into folder containing non-ascii chars (Dovecot requires sieve rules in utf8, while Cyrus needs utf7-imap)
+  * Mail/ActiveSync: fix priority issue on retrieval of messages
+  * Addressbook: fix sending many mails from AB to mail compose causes url length limitation error in IE and some webservers
+  * Calendar: iCal export of list-view contains event series and not recurrences, also fixes wrong timezone, if different between user and server
+  * Calendar/iCal/CalDAV: recuring events were exported to long
+  * Calendar: fixed handling of alarms when creating exceptions to have them on exception and next regular recurrence
+  * CalDAV/Calendar: storing now all properties send by client and not known to EGroupware and fixed acknowledging and snoozing of alarms
+  * Admin: bulk password reset: fixed missing password from email and csv, csv download is working again
+  * EMailAdmin: fixed not shown (used) quota for arbitrary user in admin
+  * EMailAdmin: create a unique index for egw_ea_valid table
+  * Android/EPL: SmoothSync app works now on non-standards ports eg. https://domain.com:4433/egroupware
+  * API/VFS: download as zip; increase the time limit on a small amount of files, as they may hold a big amount of data
+  * Setup: support mail authentication without PHP imap extension
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 07 Jul 2015 07:31:40 +0200
+
 egroupware-epl (14.2.20150603) hardy; urgency=low
 
   * All apps: if column information is stored in a favorite, restore it along with the filters
