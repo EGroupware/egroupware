@@ -130,7 +130,7 @@ else
 	}
 
 	// Group perms for the default group
-	$default_group_apps = karray('addressbook','calendar','infolog','mail','filemanager','preferences','manual','groupdav','notifications','timesheet','importexport','activesync');
+	$default_group_apps = array('addressbook','calendar','infolog','mail','filemanager','preferences','manual','groupdav','notifications','timesheet','importexport','activesync');
 	$GLOBALS['egw_setup']->add_acl($default_group_apps,'run',$defaultgroupid);
 
 	$apps = array();
