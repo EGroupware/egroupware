@@ -600,13 +600,11 @@ class egw extends egw_minimal
 					_egw_log_exception($ex);
 				}
 			}
-/* not needed as rpm uses /etc/cron.d/egroupware
 			// call the asyncservice check_run function if it is not explicitly set to cron-only
 			if (!$GLOBALS['egw_info']['server']['asyncservice'])	// is default
 			{
 				ExecMethod('phpgwapi.asyncservice.check_run','fallback');
 			}
- */
 			$this->db->disconnect();
 		}
 	}
