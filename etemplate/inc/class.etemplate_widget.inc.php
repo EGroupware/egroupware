@@ -910,7 +910,8 @@ class etemplate_widget_box extends etemplate_widget
 	/**
 	 * Run a given method on all children
 	 *
-	 * Reimplemented because grids and boxes can have an own namespace
+	 * Reimplemented because grids and boxes can have an own namespace.
+	 * GroupBox has no namespace!
 	 *
 	 * @param string $method_name
 	 * @param array $params =array('') parameter(s) first parameter has to be cname!
@@ -923,7 +924,7 @@ class etemplate_widget_box extends etemplate_widget
 		$old_cname = $params[0];
 		$old_expand = $params[1];
 
-		if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
+		if ($this->id && $this->type != 'groupbox') $cname = self::form_name($cname, $this->id, $params[1]);
 		if ($expand['cname'] !== $cname && $cname)
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
