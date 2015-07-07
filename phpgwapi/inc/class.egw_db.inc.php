@@ -584,6 +584,8 @@ class egw_db
 		}
 		unset($this->Link_ID);
 		$this->Link_ID = 0;
+
+		if (!empty($this->setupType)) $this->type = $this->setupType;
 	}
 
 	/**
@@ -1177,14 +1179,23 @@ class egw_db
 		$currentPassword = $this->Password;
 		$currentDatabase = $this->Database;
 
+		if ($adminname != '')
+		{
+			$this->User = $adminname;
+			$this->Password = $adminpasswd;
+			$this->Database = $this->Type == 'pgsql' ? 'template1' : 'mysql';
+		}
+		$this->disconnect();
+
 		$sqls = array();
 		switch ($this->Type)
 		{
 			case 'pgsql':
-				$meta_db = 'template1';
 				$sqls[] = "CREATE DATABASE $currentDatabase";
 				break;
 			case 'mysql':
+			case 'mysqli':
+			case 'mysqlt':
 				$create = "CREATE DATABASE `$currentDatabase`";
 				if ($charset && isset($this->Link_ID->charset2mysql[$charset]) && (float) $this->ServerInfo['version'] >= 4.1)
 				{
@@ -1192,19 +1203,11 @@ class egw_db
 				}
 				$sqls[] = $create;
 				$sqls[] = "GRANT ALL ON `$currentDatabase`.* TO $currentUser@'$grant_host' IDENTIFIED BY ".$this->quote($currentPassword);
-				$meta_db = 'mysql';
 				break;
 			default:
 				echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->Type'</p>\n";
 				break;
 		}
-		if ($adminname != '')
-		{
-			$this->User = $adminname;
-			$this->Password = $adminpasswd;
-			$this->Database = $meta_db;
-		}
-		$this->disconnect();
 		foreach($sqls as $sql)
 		{
 			$this->query($sql,__LINE__,__FILE__);
