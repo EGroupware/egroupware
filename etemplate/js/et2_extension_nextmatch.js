@@ -3386,7 +3386,10 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 		this.real_node._type = _attrs.widget_type;
 		et2_selectbox.find_select_options(this.real_node, select_options, _attrs);
 		this.real_node._type = correct_type;
-		this.real_node.set_select_options(select_options);
+		if(typeof this.real_node.set_select_options === 'function')
+		{
+			this.real_node.set_select_options(select_options);
+		}
 	},
 
 	// Just pass the real DOM node through, in case anybody asks
@@ -3396,7 +3399,7 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 
 	// Also need to pass through real children
 	getChildren: function() {
-		return this.real_node.getChildren();
+		return this.real_node.getChildren() || [];
 	},
 	setNextmatch: function(_nextmatch)
 	{
