@@ -802,10 +802,11 @@ var AppJS = Class.extend(
 						{
 							match_count++;
 						}
-						else if (typeof state[state_key][sub_key] === 'object' && typeof state[state_key][sub_key] === 'object')
+						else if (state[state_key][sub_key] && favorite.state[state_key][sub_key] &&
+							typeof state[state_key][sub_key] === 'object' && typeof favorite.state[state_key][sub_key] === 'object')
 						{
 							// Too deep to keep going, just string compare for perfect match
-							if(state[state_key][sub_key].toJSON() === state[state_key][sub_key])
+							if(state[state_key][sub_key].toJSON() === favorite.state[state_key][sub_key])
 							{
 								match_count++;
 							}
