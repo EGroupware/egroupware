@@ -370,9 +370,10 @@ class egw_customfields implements IteratorAggregate
 		if($cf['id'])
 		{
 			$cfs = egw_customfields::get($cf['app'], true);
-			$old = $cfs[$cf['id']];
-			if($old['order'] != $cf['order'])
+			$old = $cfs[$cf['name']];
+			if($old['order'] != $cf['order'] || $cf['order'] % 10 !== 0)
 			{
+				$cfs[$cf['name']]['order'] = $cf['order'];
 				uasort($cfs, function($a1, $a2){
 					return $a1['order'] - $a2['order'];
 				});
