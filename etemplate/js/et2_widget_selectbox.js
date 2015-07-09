@@ -553,7 +553,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		this.options.expand_multiple_rows = _rows;
 
 		var surroundings = this.getSurroundings();
-		if(_rows <= 1 )
+		if(_rows <= 1 && this.expand_button )
 		{
 			// Remove
 			surroundings.removeDOMNode(this.expand_button.get(0));
@@ -1099,7 +1099,11 @@ jQuery.extend(et2_selectbox,
 				attrs.select_options = egw.window.et2_selectbox.type_cache[this.cache_id];
 
 				egw.window.setTimeout(jQuery.proxy(function() {
-					this.widget.set_select_options(et2_selectbox.find_select_options(this.widget,{}, this.widget.options));
+					// Avoid errors if widget is destroyed before the timeout
+					if(this.widget && typeof this.widget.id !== 'undefined')
+					{
+						this.widget.set_select_options(et2_selectbox.find_select_options(this.widget,{}, this.widget.options));
+					}
 				},this),1);
 			},{widget:widget,cache_id:cache_id}));
 			return [];
