@@ -185,6 +185,28 @@ class calendar_merge extends bo_merge
 			if (substr($name,-4) == 'date') $name = substr($name,0,-4);
 			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_'.$name . '$$'] = is_array($data['data']) ? implode(', ',$data['data']) : $data['data'];
 		}
+		// Add seperate lists of participants by type
+		if(strpos($content, 'calendar_participants/')!== false)
+		{
+			$types = array();
+			foreach($this->bo->resources as $resource)
+			{
+				$types[$resource['app']] = array();
+			}
+			foreach($event['participants'] as $uid => $status)
+			{
+				$type = $this->bo->resources[$uid[0]]['app'];
+				if($type == 'home-accounts')
+				{
+					$type = ($GLOBALS['egw']->accounts->get_type($uid) == 'g' ? 'group' : 'account');
+				}
+				$types[$type][] = $this->bo->participant_name($uid);
+			}
+			foreach($types as $t_id => $type)
+			{
+				$replacements['$$'.($prefix ? $prefix . '/' : '') . "calendar_participants/{$t_id}$$"] = implode(', ',$type);
+			}
+		}
 		if(!$replacements['$$'.($prefix ? $prefix . '/' : '') . 'calendar_recur_type$$'])
 		{
 			// Need to set it to '' if not set or previous record may be used
@@ -565,6 +587,18 @@ class calendar_merge extends bo_merge
 		foreach($custom as $name => $field)
 		{
 			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
+		}
+
+
+		echo '<tr><td colspan="4"><h3>'.lang('Participants').":</h3></td></tr>";
+		echo '<tr><td>{{calendar_participants/account}}</td><td colspan="3">'.lang('Accounts')."</td></tr>\n";
+		echo '<tr><td>{{calendar_participants/group}}</td><td colspan="3">'.lang('Groups')."</td></tr>\n";
+		foreach($this->bo->resources as $resource)
+		{
+			if($resource['type'])
+			{
+				echo '<tr><td>{{calendar_participants/'.$resource['app'].'}}</td><td colspan="3">'.lang($resource['app'])."</td></tr>\n";
+			}
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('Participant table').":</h3></td></tr>";
