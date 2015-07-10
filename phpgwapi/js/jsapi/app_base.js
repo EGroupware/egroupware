@@ -142,6 +142,9 @@ var AppJS = Class.extend(
 		this.et2 = et2.widgetContainer;
 		this._fix_iFrameScrolling();
 		if (this.egw.is_popup()) this._set_Window_title();
+
+		// Highlights the favorite based on initial list state
+		this.highlight_favorite();
 	},
 
 	/**
@@ -363,9 +366,21 @@ var AppJS = Class.extend(
 			sidebox
 				.off()
 				// removed .on("mouse(enter|leave)" (wrapping trash icon), as it stalls delete in IE11
-				.on("click","div.ui-icon-trash", this, this.delete_favorite)
+				.on("click.sidebox","div.ui-icon-trash", this, this.delete_favorite)
 				// need to install a favorite handler, as we switch original one off with .off()
-				.on('click','li[data-id]', this, function(event) {
+				.on('click.sidebox','li[data-id]', this, function(event) {
+					var li = $j(this);
+					li.siblings().removeClass('ui-state-highlight');
+
+					// Wait an arbitrary 50ms to avoid having the class removed again
+						// by the change handler.
+					if(li.attr('data-id') !== 'blank')
+					{
+						window.setTimeout(function() {
+							li.addClass('ui-state-highlight');
+						},50);
+					}
+					
 					var href = jQuery('a[href^="javascript:"]', this).prop('href');
 					var matches = href ? href.match(/^javascript:([^\(]+)\((.*)?\);?$/) : null;
 					if (matches && matches.length > 1 && matches[2] !== undefined)
@@ -401,6 +416,18 @@ var AppJS = Class.extend(
 						self._refresh_fav_nm();
 					}
 				});
+				
+			// Bind favorite de-select
+			var egw_fw = egw_getFramework();
+			if(egw_fw && egw_fw.applications[this.appname] && egw_fw.applications[this.appname].browser
+				&& egw_fw.applications[this.appname].browser.baseDiv)
+			{
+				$j(egw_fw.applications[this.appname].browser.baseDiv)
+					.off('.sidebox')
+					.on('change.sidebox', function() {
+						self.highlight_favorite();
+					});
+			}
 			return true;
 		}
 		return false;
@@ -719,6 +746,102 @@ var AppJS = Class.extend(
 			"Delete", et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
 
 		return false;
+	},
+
+	/**
+	 * Mark the favorite closest matching the current state
+	 *
+	 * Closest matching takes into account not set values, so we pick the favorite
+	 * with the most matching values without a value that differs.
+	 */
+	highlight_favorite: function() {
+		if(!this.sidebox) return;
+
+		var state = this.getState();
+		var best_match = false;
+		var best_count = 0;
+
+		$j('li[data-id]',this.sidebox).removeClass('ui-state-highlight');
+
+		$j('li[data-id] a[href^="javascript:"]',this.sidebox).each(function(i,href) {
+
+			var matches = href.href ? href.href.match(/^javascript:([^\(]+)\((.*)?\);?$/) : null;
+			var favorite = {}
+			if (matches && matches.length > 1 && matches[2] !== undefined)
+			{
+				favorite = JSON.parse(decodeURI(matches[2]));
+			}
+			if(!favorite || jQuery.isEmptyObject(favorite)) return;
+			
+			var match_count = 0;
+			for(var state_key in state)
+			{
+				if(state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key])
+				{
+					match_count++;
+				}
+				else if (state[state_key] && typeof state[state_key] === 'object' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
+				{
+					if((typeof state[state_key].length !== 'undefined' || typeof state[state_key].length !== 'undefined')
+							&& (state[state_key].length || Object.keys(state[state_key]).length) != (favorite.state[state_key].length || Object.keys(favorite.state[state_key]).length ))
+					{
+						// State or favorite has a length, but the other does not
+						if((state[state_key].length === 0 || Object.keys(state[state_key]).length === 0) &&
+							(favorite.state[state_key].length == 0 || Object.keys(favorite.state[state_key]).length === 0))
+						{
+							// Just missing, or one is an array and the other is an object
+							continue;
+						}
+						// One has a value and the other doesn't, no match
+						debugger;
+						return;
+					}
+					// Consider sub-objects (column filters) individually
+					for(var sub_key in state[state_key])
+					{
+						if(state[state_key][sub_key] == favorite.state[state_key][sub_key] || !state[state_key][sub_key] && !favorite.state[state_key][sub_key])
+						{
+							match_count++;
+						}
+						else if (state[state_key][sub_key] && favorite.state[state_key][sub_key] &&
+							typeof state[state_key][sub_key] === 'object' && typeof favorite.state[state_key][sub_key] === 'object')
+						{
+							// Too deep to keep going, just string compare for perfect match
+							if(JSON.stringify(state[state_key][sub_key]) === JSON.stringify(favorite.state[state_key][sub_key]))
+							{
+								match_count++;
+							}
+						}
+						else if(state[state_key][sub_key] && state[state_key][sub_key] != favorite.state[state_key][sub_key])
+						{
+							// Different values, do not match
+							debugger;
+							return;
+						}
+
+					}
+				}
+				else if (state_key == 'selectcols')
+				{
+					// Skip, might be set, might not
+				}
+				else if (typeof state[state_key] !== 'undefined' && state[state_key] != favorite.state[state_key])
+				{
+					// Different values, do not match
+					debugger;
+					return;
+				}
+			}
+			if(match_count > best_count)
+			{
+				best_match = href.parentNode.dataset.id;
+				best_count = match_count;
+			}
+		});
+		if(best_match)
+		{
+			$j('li[data-id="'+best_match+'"]',this.sidebox).addClass('ui-state-highlight');
+		}
 	},
 
 	/**

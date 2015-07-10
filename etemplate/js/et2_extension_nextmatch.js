@@ -412,6 +412,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	 */
 	applyFilters: function(_set) {
 		var changed = false;
+		var keep_selection = false;
 
 		// Avoid loops cause by change events
 		if(this.update_in_progress) return;
@@ -464,6 +465,17 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 						}
 					}
 				}
+				else if (s === 'selected')
+				{
+					changed = true;
+					keep_selection = true;
+					this.controller._selectionMgr.resetSelection();
+					for(var i in _set.selected)
+					{
+						this.controller._selectionMgr.setSelected(_set.selected[i].indexOf('::') > 0 ? _set.selected[i] : this.controller.dataStorePrefix + '::'+_set.selected[i],true);
+					}
+					delete _set.selected;
+				}
 				else if (this.activeFilters[s] !== _set[s])
 				{
 					this.activeFilters[s] = _set[s];
@@ -475,7 +487,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
 
 		// Keep the selection after applying filters, but only if unchanged
-		if(!changed)
+		if(!changed || keep_selection)
 		{
 			this.controller.keepSelection();
 		}
@@ -509,6 +521,19 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		// Trigger an update
 		this.controller.update(true);
 
+		if(changed)
+		{
+			// Highlight matching favorite in sidebox
+			if(this.getInstanceManager().app)
+			{
+				var app = this.getInstanceManager().app;
+				if(window.app[app] && window.app[app].highlight_favorite)
+				{
+					window.app[app].highlight_favorite();
+				}
+			}
+		}
+		
 		this.update_in_progress = false;
 	},
 
