@@ -806,7 +806,7 @@ var AppJS = Class.extend(
 							typeof state[state_key][sub_key] === 'object' && typeof favorite.state[state_key][sub_key] === 'object')
 						{
 							// Too deep to keep going, just string compare for perfect match
-							if(state[state_key][sub_key].toJSON() === favorite.state[state_key][sub_key])
+							if(JSON.stringify(state[state_key][sub_key]) === JSON.stringify(favorite.state[state_key][sub_key]))
 							{
 								match_count++;
 							}
