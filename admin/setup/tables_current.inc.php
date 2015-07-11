@@ -16,11 +16,11 @@ $phpgw_baseline = array(
 	'egw_admin_queue' => array(
 		'fd' => array(
 			'cmd_id' => array('type' => 'auto','nullable' => False),
-			'cmd_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
+			'cmd_uid' => array('type' => 'ascii','precision' => '64','nullable' => False),
 			'cmd_creator' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
 			'cmd_creator_email' => array('type' => 'varchar','precision' => '128','nullable' => False),
 			'cmd_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False),
-			'cmd_type' => array('type' => 'varchar','precision' => '32','nullable' => False,'default' => 'admin_cmd'),
+			'cmd_type' => array('type' => 'ascii','precision' => '32','nullable' => False,'default' => 'admin_cmd'),
 			'cmd_status' => array('type' => 'int','precision' => '1'),
 			'cmd_scheduled' => array('type' => 'int','meta' => 'timestamp','precision' => '8'),
 			'cmd_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8'),
@@ -31,7 +31,7 @@ $phpgw_baseline = array(
 			'cmd_requested' => array('type' => 'int','precision' => '4'),
 			'cmd_requested_email' => array('type' => 'varchar','precision' => '128'),
 			'cmd_comment' => array('type' => 'varchar','precision' => '255'),
-			'cmd_data' => array('type' => 'blob'),
+			'cmd_data' => array('type' => 'ascii','precision' => '16384'),
 			'remote_id' => array('type' => 'int','precision' => '4')
 		),
 		'pk' => array('cmd_id'),
@@ -43,9 +43,9 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'remote_id' => array('type' => 'auto','nullable' => False),
 			'remote_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
-			'remote_hash' => array('type' => 'varchar','precision' => '32','nullable' => False),
-			'remote_url' => array('type' => 'varchar','precision' => '128','nullable' => False),
-			'remote_domain' => array('type' => 'varchar','precision' => '64','nullable' => False)
+			'remote_hash' => array('type' => 'ascii','precision' => '32','nullable' => False),
+			'remote_url' => array('type' => 'ascii','precision' => '128','nullable' => False),
+			'remote_domain' => array('type' => 'ascii','precision' => '64','nullable' => False)
 		),
 		'pk' => array('remote_id'),
 		'fk' => array(),

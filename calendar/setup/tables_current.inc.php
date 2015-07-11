@@ -13,9 +13,9 @@ $phpgw_baseline = array(
 	'egw_cal' => array(
 		'fd' => array(
 			'cal_id' => array('type' => 'auto','nullable' => False,'comment' => 'calendar id'),
-			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
+			'cal_uid' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'unique id of event(-series)'),
 			'cal_owner' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'event owner / calendar'),
-			'cal_category' => array('type' => 'varchar','meta' => 'category','precision' => '64','comment' => 'category id(s)'),
+			'cal_category' => array('type' => 'ascii','meta' => 'category','precision' => '64','comment' => 'category id(s)'),
 			'cal_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'ts of last modification'),
 			'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2','comment' => 'priority: 1=Low, 2=Normal, 3=High'),
 			'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1','comment' => '1=public, 0=private event'),
@@ -32,7 +32,7 @@ $phpgw_baseline = array(
 			'cal_recurrence' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
 			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones'),
 			'cal_deleted' => array('type' => 'int','precision' => '8','comment' => 'ts when event was deleted'),
-			'caldav_name' => array('type' => 'varchar','precision' => '200','comment' => 'name part of CalDAV URL, if specified by client'),
+			'caldav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CalDAV URL, if specified by client'),
 			'range_start' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'startdate (of range)'),
 			'range_end' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'enddate (of range, UNTIL of RRULE)')
 		),
@@ -72,18 +72,19 @@ $phpgw_baseline = array(
 	'egw_cal_user' => array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
-			'cal_recur_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','default' => '0'),
-			'cal_user_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u','comment' => 'u=user, g=group, c=contact, r=resource, e=email'),
-			'cal_user_id' => array('type' => 'varchar','meta' => array("cal_user_type='u'" => 'account'),'precision' => '128','nullable' => False,'comment' => 'id or email-address for type=e'),
-			'cal_status' => array('type' => 'char','precision' => '1','default' => 'A','comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'),
+			'cal_recur_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0'),
+			'cal_user_type' => array('type' => 'ascii','precision' => '1','nullable' => False,'default' => 'u','comment' => 'u=user, g=group, c=contact, r=resource, e=email'),
+			'cal_user_id' => array('type' => 'ascii','meta' => array("cal_user_type='u'" => 'account'),'precision' => '128','nullable' => False,'comment' => 'id or email-address for type=e'),
+			'cal_status' => array('type' => 'ascii','precision' => '1','default' => 'A','comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'),
 			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1','comment' => 'only for certain types (eg. resources)'),
-			'cal_role' => array('type' => 'varchar','precision' => '64','default' => 'REQ-PARTICIPANT','comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'),
-			'cal_user_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'automatic timestamp of last update')
+			'cal_role' => array('type' => 'ascii','precision' => '64','default' => 'REQ-PARTICIPANT','comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'),
+			'cal_user_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'automatic timestamp of last update'),
+			'cal_user_auto' => array('type' => 'auto','nullable' => False)
 		),
-		'pk' => array('cal_id','cal_recur_date','cal_user_type','cal_user_id'),
+		'pk' => array('cal_user_auto'),
 		'fk' => array(),
 		'ix' => array('cal_user_modified',array('cal_user_type','cal_user_id')),
-		'uc' => array()
+		'uc' => array(array('cal_id','cal_recur_date','cal_user_type','cal_user_id'))
 	),
 	'egw_cal_extra' => array(
 		'fd' => array(
@@ -111,11 +112,11 @@ $phpgw_baseline = array(
 	'egw_cal_timezones' => array(
 		'fd' => array(
 			'tz_id' => array('type' => 'auto','nullable' => False),
-			'tz_tzid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+			'tz_tzid' => array('type' => 'ascii','precision' => '128','nullable' => False),
 			'tz_alias' => array('type' => 'int','precision' => '4','comment' => 'tz_id for data'),
 			'tz_latitude' => array('type' => 'int','precision' => '4'),
 			'tz_longitude' => array('type' => 'int','precision' => '4'),
-			'tz_component' => array('type' => 'text','comment' => 'iCal VTIMEZONE component')
+			'tz_component' => array('type' => 'ascii','precision' => '8192','comment' => 'iCal VTIMEZONE component')
 		),
 		'pk' => array('tz_id'),
 		'fk' => array(),

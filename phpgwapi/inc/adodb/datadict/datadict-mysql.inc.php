@@ -110,6 +110,10 @@ class ADODB2_mysql extends ADODB_DataDict {
 	function _CreateSuffix($fname,$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
 	{
 		$suffix = '';
+		if (stripos($fconstraint, 'CHARACTER SET') === 0) {
+			$suffix .= ' '.$fconstraint;
+			unset($fconstraint);
+		}
 		if ($funsigned) $suffix .= ' UNSIGNED';
 		if ($fnotnull) $suffix .= ' NOT NULL';
 		if (strlen($fdefault)) $suffix .= " DEFAULT $fdefault";

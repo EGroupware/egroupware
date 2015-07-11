@@ -750,3 +750,50 @@ function infolog_upgrade14_1()
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '14.2';
 }
+function infolog_upgrade14_2()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','info_responsible',array(
+		'type' => 'ascii',
+		'meta' => 'account-commasep',
+		'precision' => '255',
+		'nullable' => False,
+		'default' => '0',
+		'comment' => 'responsible users or groups (multiple)'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','info_access',array(
+		'type' => 'ascii',
+		'precision' => '10',
+		'default' => 'public',
+		'comment' => 'public or privat'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','info_confirm',array(
+		'type' => 'ascii',
+		'precision' => '10',
+		'default' => 'not'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','info_uid',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'comment' => 'unique id of the infolog-entry'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','caldav_name',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '14.2.001';
+}
+
+
+function infolog_upgrade14_2_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog_extra','info_extra_value',array(
+		'type' => 'varchar',
+		'meta' => 'cfvalue',
+		'precision' => '16384',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '14.3';
+}
