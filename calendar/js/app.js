@@ -1284,7 +1284,7 @@ app.classes.calendar = AppJS.extend(
 		}
 
 		// Make sure date is consitantly a string, in case it needs to be passed to server
-		if(state.date.toJSON)
+		if(state.date)
 		{
 			state.state = state.date.toJSON();
 		}
