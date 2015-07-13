@@ -3071,7 +3071,7 @@ class mail_ui
 
 		return $body;
 	}
-	
+
 	/**
 	 * Resolve inline images from CID to proper url
 	 *
@@ -3097,7 +3097,7 @@ class mail_ui
 			return $_body;
 		}
 	}
-	
+
 	/**
 	 * Replace CID with proper type of content understandable by browser
 	 *
@@ -3162,7 +3162,7 @@ class mail_ui
 					{
 						if ($_type !="background")
 						{
-							$bo = emailadmin_imapbase::getInstance(false, self::$icServerID);
+							$bo = emailadmin_imapbase::getInstance(false, mail_ui::$icServerID);
 							$attachment = $bo->getAttachmentByCID($_uid, $CID, $_partID);
 
 							// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
@@ -3199,7 +3199,7 @@ class mail_ui
 			}
 			return false;
 		};
-		
+
 		// return new body content base on chosen type
 		switch($_type)
 		{
