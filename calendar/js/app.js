@@ -1283,12 +1283,6 @@ app.classes.calendar = AppJS.extend(
 			jQuery.extend(state, this._super.apply(this, arguments));	// call default implementation
 		}
 
-		// Make sure date is consitantly a string, in case it needs to be passed to server
-		if(state.date)
-		{
-			state.state = state.date.toJSON();
-		}
-
 		// Don't store current user in state to allow admins to create favourites for all
 		// Should make no difference for normal users.
 		if(state.owner == egw.user('account_id'))
