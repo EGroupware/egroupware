@@ -347,7 +347,18 @@ class egw_db
 		{
 			try {
 				//error_log(__METHOD__."() this->Host(s)=$this->Host, n=$n --> host=$host");
-				return $this->_connect($host);
+				$new_connection = !$this->Link_ID || !$this->Link_ID->IsConnected();
+				$this->_connect($host);
+				// check Galera wsrep_local_state for node is not in state Synced, eg. Donor
+				// check is only done for Type=mysql and will succed if no Galera
+				if ($new_connection && $this->Type == 'mysql' && strpos($this->Host, ';') !== false &&
+					($state = $this->query("SHOW STATUS LIKE 'wsrep_local_state'")->fetchColumn() !== false) &&
+					$state != 4)	// 4 = Synced
+				{
+					throw new egw_exception_db_connection('wsrep-local-state='.array2string($state).' != 4');
+				}
+				//error_log(__METHOD__."() host=$host, new_connection=$new_connection, this->Type=$this->Type, this->Host=$this->Host, wsrep_local_state=".array2string($state));
+				return $this->Link_ID;
 			}
 			catch(egw_exception_db_connection $e) {
 				_egw_log_exception($e);
