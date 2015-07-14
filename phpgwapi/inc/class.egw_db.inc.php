@@ -352,7 +352,7 @@ class egw_db
 				// check Galera wsrep_local_state for node is not in state Synced, eg. Donor
 				// check is only done for Type=mysql and will succed if no Galera
 				if ($new_connection && $this->Type == 'mysql' && strpos($this->Host, ';') !== false &&
-					($state = $this->query("SHOW STATUS LIKE 'wsrep_local_state'")->fetchColumn(1) !== false) &&
+					($state = $this->query("SHOW STATUS LIKE 'wsrep_local_state'")->fetchColumn(1)) !== false &&
 					$state != 4)	// 4 = Synced
 				{
 					throw new egw_exception_db_connection('wsrep-local-state='.array2string($state).' != 4');
