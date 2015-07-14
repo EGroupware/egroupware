@@ -3441,6 +3441,8 @@
 		while ($column_number-- >= 0)
 		{
 			$ret = array_shift($row);
+
+			if ($this->fetchMode == ADODB_FETCH_BOTH) array_shift($row);
 		}
 		return $ret;
 	}
