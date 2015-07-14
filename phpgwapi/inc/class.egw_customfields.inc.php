@@ -367,36 +367,41 @@ class egw_customfields implements IteratorAggregate
 
 		// Check to see if field order needs to be re-done
 		$update = array();
-		if($cf['id'])
+
+		$cfs = egw_customfields::get($cf['app'], true);
+		$old = $cfs[$cf['name']];
+
+		// Add new one in for numbering
+		if(!$cf['id'])
 		{
-			$cfs = egw_customfields::get($cf['app'], true);
-			$old = $cfs[$cf['name']];
-			if($old['order'] != $cf['order'] || $cf['order'] % 10 !== 0)
+			$cfs[$cf['name']] = $cf;
+		}
+
+		if($old['order'] != $cf['order'] || $cf['order'] % 10 !== 0)
+		{
+			$cfs[$cf['name']]['order'] = $cf['order'];
+			uasort($cfs, function($a1, $a2){
+				return $a1['order'] - $a2['order'];
+			});
+			$n = 0;
+			foreach($cfs as $old_cf)
 			{
-				$cfs[$cf['name']]['order'] = $cf['order'];
-				uasort($cfs, function($a1, $a2){
-					return $a1['order'] - $a2['order'];
-				});
-				$n = 0;
-				foreach($cfs as $old_cf)
+				$n += 10;
+				if($old_cf['order'] != $n)
 				{
-					$n += 10;
-					if($old_cf['order'] != $n)
+					$old_cf['order'] = $n;
+					if($old_cf['name'] != $cf['name'])
 					{
-						$old_cf['order'] = $n;
-						if($old_cf['name'] != $cf['name'])
-						{
-							$update[] = $old_cf;
-						}
-						else
-						{
-							$cf['order'] = $n;
-						}
+						$update[] = $old_cf;
+					}
+					else
+					{
+						$cf['order'] = $n;
 					}
 				}
 			}
 		}
-
+		
 		self::$db->$op(self::TABLE, array(
 			'cf_label' => $cf['label'],
 			'cf_type' => $cf['type'],
