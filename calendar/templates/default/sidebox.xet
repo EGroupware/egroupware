@@ -37,7 +37,7 @@ Egroupware
 				</rows>
 			</grid>
 			<select id="view" class="et2_fullWidth" onchange="app.calendar.update_state(JSON.parse(widget.getValue()));"/>
-			<textbox id="keywords" class="et2_fullWidth" onchange="app.calendar.update_state({keywords: widget.getValue()});"/>
+			<textbox id="keywords" class="et2_fullWidth" blur="Search" onchange="app.calendar.update_state({keywords: widget.getValue()});"/>
 			<date id="date" class="et2_fullWidth" inline="true" onchange="app.calendar.update_state({date:widget.getValue(),view:'day'});"/>
 			<textbox type="hidden" id="first"/>
 			<textbox type="hidden" id="last"/>
@@ -46,7 +46,7 @@ Egroupware
 				<button align="right" id="cat_id_multiple" image="category"/>
 			</hbox>
 			
-			<select-account id="owner" class="et2_fullWidth" onchange="app.calendar.update_state({owner: widget.getValue()});" expand_multiple_rows="4"/>
+			<select-account id="owner" class="et2_fullWidth" onchange="app.calendar.update_state({owner: widget.getValue()});" expand_multiple_rows="4" account_type="both"/>
 
 			<!--
 			<taglist id="owner" class="et2_fullWidth" onchange="app.calendar.update_state({owner: widget.getValue()});" autocomplete_params=''/>

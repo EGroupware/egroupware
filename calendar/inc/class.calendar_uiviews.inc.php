@@ -1114,7 +1114,7 @@ class calendar_uiviews extends calendar_ui
 				{
 					$todo_label = !empty($label) ? $label : lang("open ToDo's:");
 
-					foreach($todos as $todo)
+					foreach($todos as &$todo)
 					{
 						if(!$showall && ($i++ > $maxshow))
 						{
@@ -1125,12 +1125,14 @@ class calendar_uiviews extends calendar_ui
 						{
 							$icons .= ($icons?' ':'').$GLOBALS['egw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"');
 						}
+						$todo['icons'] = $icons;
 						$class = $class == 'row_on' ? 'row_off' : 'row_on';
 						if($todo['edit']) {
-							list($width, $height) = explode('x', $todo['edit']['size']);
+							$todo['edit_size'] = $todo['edit']['size'];
 							unset($todo['edit']['size']);
 							$edit_icon_href = html::a_href( $icons, $todo['edit'],'',' data-todo="app|'.$width.'x'.$height.'" ');
 							$edit_href = html::a_href( $todo['title'], $todo['edit'],'',' data-todo="app|750x590" ');
+							$todo['edit'] = egw_framework::link('/index.php',$todo['edit'],true);
 						}
 						$icon_href = html::a_href($icons,$todo['view']);
 						$href = html::a_href($todo['title'], $todo['view']);
@@ -1145,11 +1147,7 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 		}
-		if (!empty($content))
-		{
-			return "<table border=\"0\" width=\"100%\">\n$content</table>\n";
-		}
-		return $todo_label ? '' : false;
+		return $todos;
 	}
 
 	/**
@@ -2927,6 +2925,8 @@ class calendar_uiviews extends calendar_ui
 			$actions['timesheet']['open'] = '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$id"}';
 			$actions['timesheet']['onExecute'] = 'javaScript:app.calendar.action_open';
 		}
+
+		$actions['delete']['onExecute'] = 'javaScript:app.calendar.delete';
 
 		return $actions;
 	}

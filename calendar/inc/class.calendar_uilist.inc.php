@@ -366,6 +366,10 @@ class calendar_uilist extends calendar_ui
 				$search_params['start'] = $this->date;
 				break;
 		}
+		if($params['status_filter'])
+		{
+			$search_params['filter'] = $params['status_filter'];
+		}
 		if ($params['col_filter']['participant'])
 		{
 			$search_params['users'] = is_array($params['col_filter']['participant']) ? $params['col_filter']['participant'] : (int) $params['col_filter']['participant'];

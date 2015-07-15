@@ -304,22 +304,31 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						event_widget._parent.date_helper.set_hours(this.dropEnd.attr('data-hour'));
 						event_widget._parent.date_helper.set_minutes(this.dropEnd.attr('data-minute'));
 						event_widget.options.value.start = event_widget._parent.date_helper.getValue();
-					
+
+						// Leave the helper there until the update is done
+						var loading = ui.helper.clone().appendTo(ui.helper.parent());
+						loading.addClass('loading');
+						
 						event_widget.recur_prompt(function(button_id) {
 							//Get infologID if in case if it's an integrated infolog event
 							if (event_data.app === 'infolog')
 							{
 								// If it is an integrated infolog event we need to edit infolog entry
-								egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent', [event_data.id, event_widget.options.value.start||false]).sendRequest(true);
+								egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent', 
+									[event_data.id, event_widget.options.value.start||false],
+									function() {loading.remove();}
+								).sendRequest(true);
 							}
 							else
 							{
 								//Edit calendar event
 								egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
-									button_id=='series' ? event_data.id : event_data.app_id,event_data.owner,
-									event_widget.options.value.start,
-									timegrid.options.owner||egw.user('account_id')
-								]).sendRequest(true);
+										button_id=='series' ? event_data.id : event_data.app_id,event_data.owner,
+										event_widget.options.value.start,
+										timegrid.options.owner||egw.user('account_id')
+									],
+									function() { loading.remove();}
+								).sendRequest(true);
 							}
 						});
 					}
@@ -519,16 +528,23 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			this.day_widgets.splice(delete_index--,1);
 		}
 
-		// Create / update day widgets with dates and data, if available
-		// TODO: need data doesn't take category & other filters into account
-		// Currently always loading new data, which causes multiple unneeded redraws
-		var need_data = true;
+		// Create / update day widgets with dates and data
 		for(var i = 0; i < this.day_list.length; i++)
 		{
 			day = this.day_widgets[i];
 			// Set the date, and pass any data we have
-			if(typeof this.value[this.day_list[i]] === 'undefined') need_data = true;
-			if(day.options.owner != this.options.owner) need_data = true;
+			if(typeof this.value[this.day_list[i]] === 'undefined')
+			{
+				var ids = (egw.dataGetUIDdata(app.calendar._daywise_cache_id(this.day_list[i],this.options.owner))||{data:[]});
+				for(var j = 0; j < ids.length; j++)
+				{
+					this.value[this.day_list[i]] = [];
+					if(egw.dataHasUID('calendar::'+ids[j]))
+					{
+						this.value[this.day_list[i]].push(egw.dataGetUIDdata('calendar::'+ids[j]).data);
+					}
+				}
+			}
 
 			day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
 			day.set_owner(this.options.owner);
@@ -539,12 +555,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			$j(day.getDOMNode()).css('left', ((100/this.day_list.length).toFixed(2) * i) + '%');
 		}
 		
-		// Fetch any needed data
-		if(need_data)
-		{
-			this._fetch_data();
-		}
-
 		// TODO: Figure out how to do this with detached nodes
 		/*
 		var nodes = this.day_col.getDetachedNodes();
@@ -813,7 +823,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		}
 		if(actionLinks.indexOf(drag_action.id) < 0)
 		{
-			actionLinks.push(drag_action.id);
+			//actionLinks.push(drag_action.id);
 		}
 		drag_action.set_dragType('link');
 	},
@@ -839,84 +849,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			}
 		}
 		return action_links;
-	},
-
-	/**
-	 * Use the egw.data system to get data from the calendar list for the
-	 * selected time span.
-	 * 
-	 */
-	_fetch_data: function()
-	{
-		this.egw().dataFetch(
-			this.getInstanceManager().etemplate_exec_id,
-			{start: 0, num_rows:0},
-			jQuery.extend({}, app.calendar.state,
-			{
-				get_rows: 'calendar.calendar_uilist.get_rows',
-				row_id:'row_id',
-				startdate:this.options.start_date,
-				enddate:this.options.end_date,
-				col_filter: {participant: this.options.owner},
-				filter:'custom'
-			}),
-			this.id,
-			function(data) {
-				console.log(data);
-				var updated_days = {};
-				for(var i = 0; i < data.order.length && data.total; i++)
-				{
-					var record = this.egw().dataGetUIDdata(data.order[i]);
-					if(record && record.data)
-					{
-						if(typeof updated_days[record.data.date] === 'undefined')
-						{
-							updated_days[record.data.date] = [];
-						}
-						// Copy, to avoid unwanted changes by reference
-						updated_days[record.data.date].push(jQuery.extend({},record.data));
-
-						// Check for multi-day events listed once
-						// Date must stay a string or we might cause problems with nextmatch
-						var dates = {
-							start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
-							end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON(),
-						};
-						if(dates.start.substr(0,10) != dates.end.substr(0,10))
-						{
-							this.date_helper.set_value(record.data.end);
-							var end = this.date_helper.date.getTime();
-							this.date_helper.set_value(record.data.start);
-
-							do
-							{
-								var expanded_date = ''+this.date_helper.get_year() + sprintf('%02d',this.date_helper.get_month()) + sprintf('%02d',this.date_helper.get_date());
-								if(typeof(updated_days[expanded_date]) == 'undefined')
-								{
-									updated_days[expanded_date] = [];
-								}
-								if(record.data.date !== expanded_date)
-								{
-									// Copy, to avoid unwanted changes by reference
-									updated_days[expanded_date].push(jQuery.extend({},record.data));
-								}
-								this.date_helper.set_date(this.date_helper.get_date()+1);
-							}
-							// Limit it to 14 days to avoid infinite loops in case something is mis-set,
-							// though the limit is more based on how wide the screen is
-							while(end >= this.date_helper.date.getTime() && i <= 14)
-						}
-					}
-				}
-				for(var i = 0; i < this.day_list.length; i++)
-				{
-					var day = this.day_widgets[i];
-					day.set_date(this.day_list[i], updated_days[this.day_list[i]]||[], true);
-
-					this.value[this.day_list[i]] = updated_days[this.day_list[i]];
-				}
-			}, this,null
-		);
 	},
 
 	/**
@@ -1039,6 +971,48 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	},
 
 	/**
+	 * Set which user owns this.  Owner is passed along to the individual
+	 * days.
+	 *
+	 * @param {number|number[]} _owner Account ID
+	 * @returns {undefined}
+	 */
+	set_owner: function(_owner)
+	{
+		var old = this.options.owner || 0;
+		
+		// Let select-account widget handle value validation
+		this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
+
+		this.options.owner = _owner;//this.owner.getValue();
+		if(this.isAttached() && (
+			typeof old == "number" && typeof _owner == "number" && old !== this.options.owner ||
+			// Array of ids will not compare as equal
+			((typeof old === 'object' || typeof _owner === 'object') && old.toString() !== _owner.toString())
+		))
+		{
+			this.invalidate(true);
+		}
+	},
+	
+	/**
+	 * Turn on or off the visibility of weekends
+	 *
+	 * @param {boolean} weekends
+	 */
+	set_show_weekend: function(weekends)
+	{
+		if(this.options.show_weekend !== weekends)
+		{
+			this.options.show_weekend = weekends ? true : false;
+			if(this.isAttached())
+			{
+				this.invalidate();
+			}
+		}
+	},
+
+	/**
 	 * Call change handler, if set
 	 */
 	change: function() {
@@ -1086,23 +1060,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			},this));
 		}
 		return false;
-	},
-
-	/**
-	 * Turn on or off the visibility of weekends
-	 *
-	 * @param {boolean} weekends
-	 */
-	set_show_weekend: function(weekends)
-	{
-		if(this.options.show_weekend !== weekends)
-		{
-			this.options.show_weekend = weekends ? true : false;
-			if(this.isAttached())
-			{
-				this.invalidate();
-			}
-		}
 	},
 
 	get_granularity: function()
@@ -1198,31 +1155,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		}).addClass("drop-hover");
 		
 		return nodes;
-	},
-	
-	/**
-	 * Set which user owns this.  Owner is passed along to the individual
-	 * days.
-	 *
-	 * @param {number|number[]} _owner Account ID
-	 * @returns {undefined}
-	 */
-	set_owner: function(_owner)
-	{
-		var old = this.options.owner || 0;
-
-		// Let select-account widget handle value validation
-		this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
-
-		this.options.owner = _owner;//this.owner.getValue();
-		if(this.isAttached() && (
-			typeof old == "number" && typeof _owner == "number" && old !== this.options.owner ||
-			// Array of ids will not compare as equal
-			((typeof old === 'object' || typeof _owner === 'object') && old.toString() !== _owner.toString())
-		))
-		{
-			this.invalidate(true);
-		}
 	},
 	
 	/**

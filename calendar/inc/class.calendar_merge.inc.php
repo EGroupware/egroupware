@@ -535,7 +535,7 @@ class calendar_merge extends bo_merge
 	{
 		$GLOBALS['egw']->translation->add_app('calendar');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar').' - '.lang('Replacements for inserting events into documents');
-		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
+		$GLOBALS['egw_info']['flags']['nonavbar'] = true;
 		common::egw_header();
 
 		echo "<table width='90%' align='center'>\n";

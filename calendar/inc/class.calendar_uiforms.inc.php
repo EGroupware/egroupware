@@ -2663,6 +2663,33 @@ class calendar_uiforms extends calendar_ui
 	}
 	
 	/**
+	 * Deletes an event
+	 */
+	public function ajax_delete($eventId)
+	{
+		list($eventId, $date) = explode(':',$eventId);
+		$event=$this->bo->read($eventId);
+		$response = egw_json_response::get();
+
+		if ($this->bo->delete($event['id'], (int)$date))
+		{
+			if ($event['recur_type'] != MCAL_RECUR_NONE && !$date)
+			{
+				$msg = lang('Series deleted');
+			}
+			else
+			{
+				$msg = lang('Event deleted');
+			}
+			$response->apply('egw.refresh', Array($msg,'calendar',$eventId,'delete'));
+		}
+		else
+		{
+			$response->apply('egw.message', lang('Error'),'error');
+		}
+	}
+	
+	/**
 	 * imports a mail as Calendar
 	 *
 	 * @param array $mailContent = null mail content

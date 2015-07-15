@@ -56,7 +56,6 @@ class calendar_favorite_portlet extends home_favorite_portlet
 
 		// Always load app's css
 		egw_framework::includeCSS('calendar','app');
-		
 		if($this->favorite['state']['view'] == 'listview' || is_array($this->favorite) && !$this->favorite['state']['view'])
 		{
 			$ui = new calendar_uilist();
@@ -108,9 +107,10 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				$content = array('legacy' => $ui->weekN(true));
 				break;
 			case 'week':
-				//$content = array('legacy' => $ui->week(0,true));
+				$etemplate->read('calendar.view');
+				$etemplate->set_dom_id($id);
 				$ui->week(array(), $etemplate);
-				return; //parent::exec($id, $etemplate);
+				return;
 				break;
 			case 'day':
 				$content = array('legacy' => $ui->day(true));

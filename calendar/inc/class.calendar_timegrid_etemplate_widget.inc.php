@@ -32,9 +32,6 @@
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
-		error_log(__METHOD__ . "($cname,".array2string($expand));
-		error_log(array2string($value));
-
 		foreach($value as $day => &$events)
 		{
 			foreach($events as &$event)

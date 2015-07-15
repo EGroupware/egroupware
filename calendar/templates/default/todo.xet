@@ -14,19 +14,24 @@ Egroupware
 <overlay>
 	<template id="calendar.todo" width="30%">
 		<box class="calendar_calDayTodos">
-			<label id="label" class="calendar_calDayTodosHeader" width="100%" />
-			<html id="todos"/>
+			<box class="calendar_calDayTodosHeader" width="100%">
+				<label id="label" class="calendar_calDayTodosHeader" width="100%" />
+			</box>
+			<box class="calendar_calDayTodosTable">
+				<grid id="todos" width="100%">
+					<columns>
+						<column/>
+						<column width="80%"/>
+					</columns>
+					<rows>
+						<row class="todo_row">
+							<html id="{$row}[icons]" />
+
+							<description value="$row_cont[title]" href="$row_cont[edit]" extra_link_popup="$row_cont[edit_size]"/>
+						</row>
+					</rows>
+				</grid>
+			</box>
 		</box>
-	<!--
-		<grid id="todos">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row class="todo_row">
-				</row>
-			</rows>
-		</grid>
-	-->
 	</template>
 </overlay>

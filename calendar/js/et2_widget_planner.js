@@ -375,8 +375,9 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			this.update_timer = window.setTimeout(jQuery.proxy(function() {
 				this.widget.update_timer = null;
 
-				this.widget._fetch_data();
-				//this.widget._drawGrid();
+				this.widget.value = this.widget._fetch_data();
+
+				this.widget._drawGrid();
 
 				// Update actions
 				if(this._actionManager)
@@ -589,7 +590,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var day_width = 100 / days;
 		for(var t = new Date(start),left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + days_in_month),left += days_in_month*day_width,i += days_in_month)
 		{
-			days_in_month = new Date(t.getUTCFullYear(),t.getUTCMonth()+1,0).getUTCDate();
+			days_in_month = new Date(t.getUTCFullYear(),t.getUTCMonth()+1,0).getUTCDate() - (t.getUTCDate()-1);
 
 			if (i + days_in_month > days)
 			{
@@ -605,32 +606,38 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			
 				// previous links
 				var prev = new Date(t);
-				prev.setUTCDate(1);
 				prev.setUTCMonth(prev.getUTCMonth()-1);
-				
-				var full = prev.toJSON();
-				prev.setUTCDate(start.getUTCDate());
-				if (prev.getUTCDate() >= 15) prev = new Date(t);		// we stay in the same month
-				prev.setUTCDate(start.getUTCDate() < 15 ? 15 : 1);
-				var half = prev.toJSON();
-				title = this._scroll_button('first',full) + this._scroll_button('left',half) + title;
+				if(prev.valueOf() < start.valueOf() - (20 * 1000*3600*24))
+				{
+					var full = prev.toJSON();
+					prev.setUTCDate(prev.getUTCDate() + 15);
+					prev.setUTCDate(start.getUTCDate() < 15 ? 1 : 15);
+					var half = prev.toJSON();
+					title = this._scroll_button('first',full) + this._scroll_button('left',half) + title;
+				}
+			
+				// show next scales, if there are more then 10 days in the next month or there is no next month
+				var end = new Date(start);
+				end.setUTCDate(end.getUTCDate()+days);
+				var days_in_next_month = end.getUTCDate();
+				if (days_in_next_month <= 10 || end.getUTCMonth() == t.getUTCMonth())
+				{
+					// next links
+					var next = new Date(t);
+					next.setUTCMonth(next.getUTCMonth()+1);
+					full = next.toJSON();
+					next.setUTCDate(next.getUTCDate() - 15);
+					next.setUTCDate(next.getUTCDate() < 15 ? 1 : 15);
+					half = next.toJSON();
 
-				
-				// next links
-				var next = new Date(t);
-				next.setUTCMonth(next.getUTCMonth()+1);
-				next.setUTCDate(start.getUTCDate() < 15 ? 15 : 1);
-				half = next.toJSON();
-				next.setUTCMonth(next.getUTCMonth()+1);
-				full = next.toJSON();
-
-				title += this._scroll_button('right',half) + this._scroll_button('last',full);
+					title += this._scroll_button('right',half) + this._scroll_button('last',full);
+				}
 			}
 			else
 			{
 				title = '&nbsp;';
 			}
-			content += '<div class="calendar_plannerMonthScale et2_clickable" data-date="'+t.toJSON()+'" data-planner_days='+days_in_month+
+			content += '<div class="calendar_plannerMonthScale et2_clickable" data-date="'+t.toJSON()+ '"'+// data-planner_days='+days_in_month+
 				' style="left: '+left+'%; width: '+(day_width*days_in_month)+'%;">'+
 				title+"</div>";
 		}
@@ -660,29 +667,19 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			var title = egw.lang('Week')+' '+date('W',t);
 
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
-			/*
-			if (days > 7)
-			{
-				$title = html::a_href($title,array(
-					'menuaction' => 'calendar.calendar_uiviews.planner',
-					'planner_days' => 7,
-					'date'       => date('Ymd',$t),
-				),false,' title="'.html::htmlspecialchars(lang('Weekview')).'"');
-			}
-			else
+			if (days  <= 7)
 			{
 				// prev. week
-				$title = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
-					'menuaction' => $this->view_menuaction,
-					'date'       => date('Ymd',$t-7*DAY_s),
-				)) . ' &nbsp; <b>'.$title;
+				var left = new Date(t);
+				left.setUTCDate(left.getUTCDate() - 7);
+
 				// next week
-				$title .= '</b> &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
-					'menuaction' => $this->view_menuaction,
-					'date'       => date('Ymd',$t+7*DAY_s),
-				));
+				var right = new Date(t);
+				right.setUTCDate(right.getUTCDate() + 7);
+
+				title = this._scroll_button('left',left.toJSON()) + title + this._scroll_button('right',right.toJSON());
 			}
-			*/
+			
 			content += '<div class="calendar_plannerWeekScale et2_clickable" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
 		}
 		content += "</div>";		// end of plannerScale
@@ -724,34 +721,20 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				title = egw.lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
 			}
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
-			if (days > 1)
-			{
-				/*
-				title = html::a_href($title,array(
-					'menuaction'   => 'calendar.calendar_uiviews.planner',
-					'planner_days' => 1,
-					'date'         => date('Ymd',$t),
-				),false,strpos($class,'calendar_calHoliday') !== false || strpos($class,'calendar_calBirthday') !== false ? '' : ' title="'.html::htmlspecialchars(lang('Dayview')).'"');
-				*/
-			}
 			if (days < 5)
 			{
-				/*
 				if (!i)	// prev. day only for the first day
 				{
-					title = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
-						'menuaction' => $this->view_menuaction,
-						'date'       => date('Ymd',$start-DAY_s),
-					)) . ' &nbsp; '.$title;
+					var prev = new Date(t);
+					prev.setUTCDate(prev.getUTCDate() - 1);
+					title = this._scroll_button('left',prev.toJSON()) + title;
 				}
 				if (i == days-1)	// next day only for the last day
 				{
-					title += ' &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
-						'menuaction' => $this->view_menuaction,
-						'date'       => date('Ymd',$start+DAY_s),
-					));
+					var next = new Date(t);
+					next.setUTCDate(next.getUTCDate() + 1);
+					title += this._scroll_button('right',next.toJSON());
 				}
-				*/
 			}
 			content += '<div class="calendar_plannerDayScale et2_clickable '+ day_class+
 				'" data-date=\'' + state +'\' style="left: '+left+'%; width: '+day_width+'%;"'+
@@ -786,7 +769,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			s.setUTCHours(23);
 			s.setUTCMinutes(59);
 			s.setUTCSeconds(59);
-			hours = (s.getTime() - t.getTime()) / 3600000;
+			hours = Math.ceil((s.getTime() - t.getTime()) / 3600000);
 		}
 		var cell_width = 100 / hours * decr;
 
@@ -1033,34 +1016,38 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	 */
 	_fetch_data: function()
 	{
-		this.egw().dataFetch(
-			this.getInstanceManager().etemplate_exec_id,
-			{start: 0, num_rows:0},
-			jQuery.extend({}, app.calendar.state,
+		var value = [];
+		// Remember previous day to avoid multi-days duplicating
+		var last_data = [];
+
+		var t = new Date(this.options.start_date);
+		var end = new Date(this.options.end_date);
+		do
+		{
+			// Cache is by date (and owner, if seperate)
+			var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
+			var cache_id = app.calendar._daywise_cache_id(date, this.options.owner);
+
+			if(egw.dataHasUID(cache_id))
 			{
-				get_rows: 'calendar.calendar_uilist.get_rows',
-				row_id:'row_id',
-				startdate:this.options.start_date,
-				enddate:this.options.end_date,
-				col_filter: {participant: this.options.owner},
-				filter:'custom'
-			}),
-			this.id,
-			function(data) {
-				console.log(data);
-				var events = [];
-				for(var i = 0; i < data.order.length && data.total; i++)
+				var c = egw.dataGetUIDdata(cache_id);
+				if(c.data && c.data !== null)
 				{
-					var record = this.egw().dataGetUIDdata(data.order[i]);
-					if(record && record.data)
+					// There is data, pass it along now
+					for(var j = 0; j < c.data.length; j++)
 					{
-						events.push(record.data);
+						if(last_data.indexOf(c.data[j]) === -1 && egw.dataHasUID('calendar::'+c.data[j]))
+						{
+							value.push(egw.dataGetUIDdata('calendar::'+c.data[j]).data);
+						}
 					}
 				}
-				this.value = events;
-				this._drawGrid();
-			}, this,null
-		);
+				last_data = c.data;
+			}
+			t.setUTCDate(t.getUTCDate() + 1);
+		}
+		while(t < end);
+		return value;
 	},
 
 	/**

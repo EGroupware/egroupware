@@ -23,7 +23,7 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
 {
 
 	attributes: {
@@ -81,7 +81,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			granularity:	30,
 			extraRows:	2,
 			rowsToDisplay:	10,
-			rowHeight:	20
+			rowHeight:	20,
+			// Percentage; not yet available
+			titleHeight: 2.0
 		}
 	},
 
@@ -101,6 +103,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	destroy: function() {
 		this._super.apply(this, arguments);
+
+		// In some cases, app.calendar code is unloaded before all the etemplates are destroyed
+		//egw.dataUnregisterUID(app.calendar.DAYWISE_CACHE_ID+'::'+this.options.date);
+		egw.dataUnregisterUID('calendar_daywise::'+this.options.date);
 	},
 
 	/**
@@ -121,6 +127,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity)+2+2*this.display_settings.extraRows;
 		this.display_settings.rowHeight= (100/this.display_settings.rowsToDisplay).toFixed(1);
+		this.display_settings.titleHeight = (this.title.height()/this.div.height())*100;
 
 		// adding divs to click on for each row / time-span
 		for(var t =this.display_settings.wd_start,i = 1+this.display_settings.extraRows; t <= this.display_settings.wd_end; t += this.display_settings.granularity,++i)
@@ -185,7 +192,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		var new_date = ""+this._parent.date_helper.get_year()+
 			sprintf("%02d",this._parent.date_helper.get_month())+
 			sprintf("%02d",this._parent.date_helper.get_date());
-		
+
 		// Set label
 		// Add timezone offset back in, or formatDate will lose those hours
 		var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
@@ -199,10 +206,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			return;
 		}
-		else
-		{
-			this.options.date = new_date;
-		}
+
+		egw.dataUnregisterUID(app.calendar._daywise_cache_id+(this.options.date,this.options.owner),false,this);
+
+		this.options.date = new_date;
 
 		this.div.attr("data-date", this.options.date);
 
@@ -212,7 +219,20 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Update all the little boxes
 		this._draw();
 
-		this._update_events(events);
+
+		// Register for updates on events for this day
+		egw.dataRegisterUID(app.calendar._daywise_cache_id(new_date,this.options.owner), function(event_ids) {
+			var events = [];
+			for(var i = 0; i < event_ids.length; i++)
+			{
+				events.push(egw.dataGetUIDdata('calendar::'+event_ids[i]).data);
+			}
+			this._update_events(events);
+		},this,this.getInstanceManager().execId,this.id);
+
+		if(events) {
+			this._update_events(events);
+		}
 	},
 
 	/**
@@ -221,8 +241,23 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {number} _owner Account ID
 	 */
 	set_owner: function(_owner) {
-		this.options.owner = parseInt(_owner);
-		this.div.attr('data-sortable-id', this.options.owner);
+		if(_owner !== this.options.owner)
+		{
+			egw.dataUnregisterUID(app.calendar._daywise_cache_id+(this.options.date,this.options.owner),false,this);
+
+			this.options.owner = parseInt(_owner);
+			this.div.attr('data-sortable-id', this.options.owner);
+
+			// Register for updates on events for this day
+			egw.dataRegisterUID(app.calendar._daywise_cache_id(this.options.date,this.options.owner), function(event_ids) {
+				var events = [];
+				for(var i = 0; i < event_ids.length; i++)
+				{
+					events.push(egw.dataGetUIDdata('calendar::'+event_ids[i]).data);
+				}
+				this._update_events(events);
+			},this,this.getInstanceManager().execId,this.id);
+		}
 	},
 
 	/**
@@ -339,6 +374,14 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 		var eventCols = [], col_ends = [];
+
+		// Make sure children are in cronological order, or columns are backwards
+		this._children.sort(function(a,b) {
+			var start = new Date(a.options.value.start) - new Date(b.options.value.start);
+			var end = new Date(a.options.value.end) - new Date(b.options.value.end);
+			return a.options.value.whole_day ? -1 : (start ? start : end);
+		});
+		
 		for(var i = 0; i < this._children.length; i++)
 		{
 			var event = this._children[i].options.value || false;
@@ -377,7 +420,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				for(c = 0; event['start_m'] < col_ends[c]; ++c);
 				col_ends[c] = event['end_m'];
 			}
-			if(typeof eventCols[c] == 'undefined')
+			if(typeof eventCols[c] === 'undefined')
 			{
 				eventCols[c] = [];
 			}
@@ -418,7 +461,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				var height = 0;
 				if(columns[c][i].options.value.whole_day_on_top)
 				{
-					top =  ((this.title.height()/this.div.height())*100) + this.display_settings.rowHeight*whole_day_counter++;
+					top = this.display_settings.titleHeight + this.display_settings.rowHeight*whole_day_counter++;
 					height = this.display_settings.rowHeight;
 				}
 				else
@@ -465,7 +508,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		// time before workday => condensed in the first $this->extraRows rows
 		if (this.display_settings.wd_start > 0 && time < this.display_settings.wd_start)
 		{
-			pos = ((this.title.height()/this.div.height())*100) + (row_offset + (time / this.display_settings.wd_start )) * this.display_settings.rowHeight;
+			pos = this.display_settings.titleHeight + (row_offset + (time / this.display_settings.wd_start )) * this.display_settings.rowHeight;
 		}
 		// time after workday => condensed in the last row
 		else if (this.display_settings.wd_end < 24*60 && time > this.display_settings.wd_end+1*this.display_settings.granularity)
@@ -635,6 +678,12 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			} , '_blank');
 			return false;
 		}
+	},
+
+	// Resizable interface
+	resize: function (_height)
+	{
+		this.display_settings.titleHeight = (this.title.height()/_height)*100;
 	},
 
 	/**

@@ -109,10 +109,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		},this,this.getInstanceManager().execId,this.id);
 
-
-		if(!egw.dataHasUID('calendar::'+app_id))
+		if(_value && !egw.dataHasUID('calendar::'+app_id))
 		{
-			this._update(this.options.value);
+			egw.dataStoreUID('calendar::'+app_id, _value);
 		}
 	},
 
@@ -162,7 +161,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			this.div.addClass('cat_' + event.category);
 		}
-		this.div.css('border-color', this.title.css('background-color'));
+		this.div.css('border-color', this.div.css('background-color'));
 
 		this.div.toggleClass('calendar_calEventUnknown', event.participants[egw.user('account_id')] ? event.participants[egw.user('account_id')][0] === 'U' : false);
 		this.div.addClass(this._status_class());
@@ -182,6 +181,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.div.attr('data-title', title);
 		this.title.text(small_height ? title : this._get_timespan(event))
 			// Set title color based on background brightness
+			.css('background-color', this.div.css('background-color'))
 			.css('color', jQuery.Color(this.div.css('background-color')).lightness() > 0.5 ? 'black':'white');
 
 		this.icons.appendTo(this.title)
@@ -255,11 +255,12 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		cat.destroy();
 		
 		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background: '+bg_color+';">'+
-			'<div class="calendar_calEventHeaderSmall" style="background-color: {bordercolor};">'+
+			'<div class="calendar_calEventHeaderSmall" style="background-color: '+border+';">'+
 				'<font style="color:'+header_color+'">'+this._get_timespan(this.options.value)+'</font>'+
 				this.icons[0].outerHTML+
 			'</div>'+
-			'<div class="calendar_calEventBodySmall">'+
+			'<div class="calendar_calEventBodySmall" style="background-color: '+
+				jQuery.Color(this.title.css('background-color')).lightness("+=0.3") + '">'+
 				'<p style="margin: 0px;">'+
 				'<span class="calendar_calEventTitle">'+this.div.attr('data-title')+'</span><br>'+
 				this.options.value.description+'</p>'+
