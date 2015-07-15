@@ -69,6 +69,7 @@ class db_tools
 		'text'		=> 'text',
 		'timestamp'	=> 'timestamp',
 		'bool'      => 'boolean',
+		'ascii'     => 'ascii',
 //		'abstime'   => 'abstime (mysql:timestamp)',
 	);
 	/**
