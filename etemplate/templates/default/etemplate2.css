@@ -192,6 +192,7 @@ a.et2_url.url {
   text-align: center;
   font-size: 9pt;
   text-shadow: 1px 1px #E0E0E0;
+  white-space: nowrap;
 }
 .et2_button_text,
 input[type=button] {
