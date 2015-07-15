@@ -1637,6 +1637,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 				break;
 		}
 		// get host used be egw_db
+		$egw_db->connect();
 		$host = $egw_db->get_host();
 
 		$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($host ? ';host='.$host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
