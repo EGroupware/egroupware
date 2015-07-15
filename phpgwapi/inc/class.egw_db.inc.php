@@ -171,6 +171,13 @@ class egw_db
 	static $tablealiases = array();
 
 	/**
+	 * Callback to check if selected node is healty / should be used
+	 *
+	 * @var callback throwing egw_exception_db_connection, if connected node should NOT be used
+	 */
+	static $health_check;
+
+	/**
 	 * db allows sub-queries, true for everything but mysql < 4.1
 	 *
 	 * use like: if ($db->capabilities[egw_db::CAPABILITY_SUB_QUERIES]) ...
@@ -349,13 +356,10 @@ class egw_db
 				//error_log(__METHOD__."() this->Host(s)=$this->Host, n=$n --> host=$host");
 				$new_connection = !$this->Link_ID || !$this->Link_ID->IsConnected();
 				$this->_connect($host);
-				// check Galera wsrep_local_state for node is not in state Synced, eg. Donor
-				// check is only done for Type=mysql and will succed if no Galera
-				if ($new_connection && $this->Type == 'mysql' && strpos($this->Host, ';') !== false &&
-					($state = $this->query("SHOW STATUS LIKE 'wsrep_local_state'")->fetchColumn(1)) !== false &&
-					$state != 4)	// 4 = Synced
+				// check if connected node is healty
+				if ($new_connection && self::$health_check)
 				{
-					throw new egw_exception_db_connection('wsrep-local-state='.array2string($state).' != 4');
+					call_user_func(self::$health_check, $this);
 				}
 				//error_log(__METHOD__."() host=$host, new_connection=$new_connection, this->Type=$this->Type, this->Host=$this->Host, wsrep_local_state=".array2string($state));
 				return $this->Link_ID;
@@ -368,6 +372,32 @@ class egw_db
 			}
 		}
 		throw $e;
+	}
+
+	/**
+	 * Check if just connected Galera cluster node is healthy / fully operational
+	 *
+	 * A node in state "Donor/Desynced" will block updates at the end of a SST.
+	 * Therefore we try to avoid that node, if we have an alternative.
+	 *
+	 * To enable this check add the following to your header.inc.php:
+	 *
+	 * egw_db::$health_check = array('egw_db', 'galera_cluster_health');
+	 *
+	 * @param egw_db $db already connected egw_db instance to check
+	 * @throws egw_exception_db_connection if node should NOT be used
+	 */
+	static function galera_cluster_health(egw_db $db)
+	{
+		if (($state = $db->query("SHOW STATUS WHERE Variable_name in ('wsrep_cluster_size','wsrep_local_state','wsrep_local_state_comment')")->GetAssoc()))
+		{
+			if ($state['wsrep_local_state_comment'] == 'Synced' ||
+				// if we have only 2 nodes (2. one starting), we can only use the donor
+				$state['wsrep_local_state_comment'] == 'Donor/Desynced' &&
+					$state['wsrep_cluster_size'] == 2) return;
+
+			throw new egw_exception_db_connection('Node is NOT Synced! '.array2string($state));
+		}
 	}
 
 	/**
