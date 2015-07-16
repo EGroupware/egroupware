@@ -1780,6 +1780,10 @@ class calendar_uiforms extends calendar_ui
 				}
 				$event['id'] = $existing_event['id'];
 			}
+			else	// event not in calendar
+			{
+				$readonlys['button[cancel]'] = true;	// no way to remove a canceled event not in calendar
+			}
 			$event['participant_types'] = array();
 			foreach($event['participants'] as $uid => $status)
 			{
@@ -1799,7 +1803,8 @@ class calendar_uiforms extends calendar_ui
 				$msg .= ($msg ? "\n" : '').lang('You are not invited to that event!');
 				if ($event['id'])
 				{
-					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
+					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
+						$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 				}
 			}
 			// ignore events in the past (for recurring events check enddate!)
@@ -1807,7 +1812,8 @@ class calendar_uiforms extends calendar_ui
 				(!$event['recur_type'] || $event['recur_enddate'] && $event['recur_enddate'] < $this->bo->now_su))
 			{
 				$msg = lang('Requested meeting is in the past!');
-				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
+				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
+					$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 			}
 		}
 		else
@@ -1868,6 +1874,12 @@ class calendar_uiforms extends calendar_ui
 					}
 					break;
 
+				case 'cancel':
+					if ($event['id'] && $this->bo->set_status($event['id'], $user, 'R'))
+					{
+						$msg = lang('Status changed');
+					}
+					break;
 			}
 			// add notification-errors, if we have some
 			$msg = array_merge((array)$msg, notifications::errors(true));
@@ -1875,8 +1887,19 @@ class calendar_uiforms extends calendar_ui
 		$event['msg'] = implode("\n",(array)$msg);
 		$readonlys['button[edit]'] = !$event['id'];
 		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
-		$event['ics_method_label'] = strtolower($ical_method) == 'request' ?
-			lang('Meeting request') : lang('Reply to meeting request');
+		switch(strtolower($ical_method))
+		{
+			case 'reply':
+				$event['ics_method_label'] = lang('Reply to meeting request');
+				break;
+			case 'cancel':
+				$event['ics_method_label'] = lang('Meeting canceled');
+				break;
+			case 'request':
+			default:
+				$event['ics_method_label'] = lang('Meeting request');
+				break;
+		}
 		$tpl = new etemplate_new('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event, 2);
 	}

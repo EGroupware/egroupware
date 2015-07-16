@@ -4148,87 +4148,8 @@ class emailadmin_imapbase
 				'mimeType'  => $_structure->getType() == 'text/html' ? 'text/html' : 'text/plain',
 				'charSet'	=> $_structure->getCharset(),
 			);
-/* RB: not sure this is still necessary
-			if ($_structure->type == 'TEXT' && $_structure->subType == 'PLAIN' &&
-				is_array($_structure->parameters) && isset($_structure->parameters['FORMAT']) &&
-				trim(strtolower($_structure->parameters['FORMAT']))=='flowed'
-			)
-			{
-				if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
-				$bodyPart['body'] = str_replace("\r\n ","\r\n", $bodyPart['body']);
-			}
-*/
-			if ($_structure->getSubType() == 'calendar')
-			{
-				$bodyPart['body'] = $this->getEvent($_structure->getContents(), $_structure->getContentTypeParameter('METHOD'));
-			}
 		}
 		return $bodyPart;
-	}
-
-	/**
-	 * Return inline ical as html
-	 *
-	 * @param string $ical iCal data
-	 * @param string $method iTip method eg. 'REPLY'
-	 * @return string text to display instead
-	 */
-	function getEvent($ical, $method=null)
-	{
-		// we get an inline CALENDAR ical/ics, we display it using the calendar notification style
-		$calobj = new calendar_ical;
-		$calboupdate = new calendar_boupdate;
-		// timezone stuff
-		$tz_diff = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] - $this->common_prefs['tz_offset'];
-		// form an event out of ical
-		$events = $calobj->icaltoegw($ical);
-		$event =& $events[0];
-		// preset the olddate
-		$olddate = $calboupdate->format_date($event['start']+$tz_diff);
-		// search egw, if we can find it
-		$eventid = $calobj->find_event(array('uid'=>$event['uid']));
-		if ((int)$eventid[0]>0)
-		{
-			// we found an event, we use the first one
-			$oldevent = $calobj->read($eventid);
-			// we set the olddate, to comply with the possible merge params for the notification message
-			if($oldevent != False && $oldevent[$eventid[0]]['start']!=$event[$eventid[0]]['start']) {
-				$olddate = $calboupdate->format_date($oldevent[$eventid[0]]['start']+$tz_diff);
-			}
-			// we merge the changes and the original event
-			$event = array_merge($oldevent[$eventid[0]],$event);
-			// for some strange reason, the title of the old event is not replaced with the new title
-			// if you klick on the ics and import it into egw, so we dont show the title here.
-			// so if it is a mere reply, we dont use the new title (more detailed info/work needed here)
-			if ($method == 'REPLY') $event['title'] = $oldevent[$eventid[0]]['title'];
-		}
-		// we prepare the message
-		$details = $calboupdate->_get_event_details($event,'',$event_arr=array());
-		$details['olddate']=$olddate;
-		//_debug_array($_structure);
-		list($subject,$info) = $calboupdate->get_update_message($event, $method !='REPLY');
-		$info = $GLOBALS['egw']->preferences->parse_notify($info,$details);
-
-		// we set the bodyPart, we only show the event, we dont actually do anything, as we expect the user to
-		// click on the attached ics to update his own eventstore
-		$text = $subject;
-		$text .= "\n".$info;
-		$text .= "\n\n".lang('Event Details follow').":\n";
-		foreach($event_arr as $key => $val)
-		{
-			if(strlen($details[$key])) {
-				switch($key){
-					case 'access':
-					case 'priority':
-					case 'link':
-						break;
-					default:
-						$text .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
-						break;
-				}
-			}
-		}
-		return $text;
 	}
 
 	/**

@@ -2839,7 +2839,6 @@ class mail_ui
 		foreach ($attachments as &$attach)
 		{
 			if (strtolower($attach['mimeType']) == 'text/calendar' &&
-				(strtolower($attach['method']) == 'request' || strtolower($attach['method']) == 'reply') &&
 				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
 				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],0,(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
 			{
