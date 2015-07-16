@@ -1069,7 +1069,7 @@ class calendar_uiforms extends calendar_ui
 			unset($event[$name]);
 		}
 		// add all alarms as new alarms to execption
-		$event['alarm'] = array_values($event['alarm']);
+		$event['alarm'] = array_values((array)$event['alarm']);
 		foreach($event['alarm'] as &$alarm)
 		{
 			unset($alarm['uid'], $alarm['id'], $alarm['time']);
