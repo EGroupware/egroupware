@@ -672,19 +672,7 @@ class calendar_ical extends calendar_boupdate
 								$event['recur_exception'] = $days;
 								if ($version != '1.0') $parameters['EXDATE']['VALUE'] = 'DATE';
 							}
-							if ($this->productManufacturer == 'groupdav' &&
-								($this->productName == 'iphone' || $this->productName == 'davkit'))
-							{
-								foreach ($event['recur_exception'] as $exdate)
-								{
-									$vevent->setAttribute('EXDATE', $exdate, $parameters['EXDATE']);
-								}
-							}
-							else
-							{
-								$attributes['EXDATE'] = '';
-								$values['EXDATE'] = $event['recur_exception'];
-							}
+							$vevent->setAttribute('EXDATE', $event['recur_exception'], $parameters['EXDATE']);
 						}
 						break;
 
