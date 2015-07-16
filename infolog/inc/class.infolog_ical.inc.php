@@ -625,6 +625,17 @@ class infolog_ical extends infolog_bo
 	}
 
 	/**
+	 * Convert date(-array) to timestamp used in InfoLog
+	 *
+	 * @param int|array $date
+	 * @return int
+	 */
+	protected static function date2ts($date)
+	{
+		return is_scalar($date) ? $date : egw_time::to($date, 'ts');
+	}
+
+	/**
 	 * Convert VTODO into a eGW infolog entry
 	 *
 	 * @param string $_vcalData 	VTODO data
@@ -720,8 +731,7 @@ class infolog_ical extends infolog_bo
 			}
 			foreach ($component->getAllAttributes() as $attribute)
 			{
-				//$attribute['value'] = trim($attribute['value']);
-				if (!strlen($attribute['value'])) continue;
+				if (!$attribute['value'] && $attribute['value'] !== '0') continue;
 
 				switch ($attribute['name'])
 				{
@@ -768,15 +778,15 @@ class infolog_ical extends infolog_bo
 					case 'DUE':
 						// even as EGroupware only displays the date, we can still store the full value
 						// unless infolog get's stored, it does NOT truncate the time
-						$taskData['info_enddate'] = $attribute['value'];
+						$taskData['info_enddate'] = self::date2ts($attribute['value']);
 						break;
 
 					case 'COMPLETED':
-						$taskData['info_datecompleted']	= $attribute['value'];
+						$taskData['info_datecompleted']	= self::date2ts($attribute['value']);
 						break;
 
 					case 'DTSTART':
-						$taskData['info_startdate']	= $attribute['value'];
+						$taskData['info_startdate']	= self::date2ts($attribute['value']);
 						break;
 
 					case 'PRIORITY':
