@@ -3222,6 +3222,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				if ($event['non_blocking']) continue;
 				if ($event['uid'] === $extra['X-CALENDARSERVER-MASK-UID']) continue;
+				if ($event['participants'][$user] == 'R') continue;
 
 				$fbtype = $event['participants'][$user] == 'T' ? 'BUSY-TENTATIVE' : 'BUSY';
 

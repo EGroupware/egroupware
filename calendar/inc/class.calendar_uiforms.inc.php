@@ -2145,7 +2145,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function freetime($participants,$start,$end,$duration=1,$cal_id=0)
 	{
-		if ($this->debug > 2) $this->bo->debug_message('uiforms::freetime(participants=%1, start=%2, end=%3, duration=%4, cal_id=%5)',true,$participants,$start,$end,$duration,$cal_id);
+		if ($this->debug > 2) $this->bo->debug_message(__METHOD__.'(participants=%1, start=%2, end=%3, duration=%4, cal_id=%5)',true,$participants,$start,$end,$duration,$cal_id);
 
 		$busy = $this->bo->search(array(
 			'start' => $start,
@@ -2165,6 +2165,22 @@ class calendar_uiforms extends calendar_ui
 			if ((int)$cal_id && $event['id'] == (int)$cal_id) continue;	// ignore our own event
 
  			if ($event['non_blocking']) continue; // ignore non_blocking events
+
+			// check if from all wanted participants at least one has a not rejected status in found event
+			$non_rejected_found = false;
+			foreach($participants as $uid)
+			{
+				if ($event['participants'][$uid] == 'R') continue;
+
+				if (isset($event['participants'][$uid]) ||
+					$uid > 0 && array_intersect(array_keys((array)$event['participants']),
+						$GLOBALS['egw']->accounts->memberships($uid, true)))
+				{
+					$non_rejected_found = true;
+					break;
+				}
+			}
+			if (!$non_rejected_found) continue;
 
 			if ($this->debug)
 			{
