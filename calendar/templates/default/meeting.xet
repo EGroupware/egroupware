@@ -27,6 +27,13 @@
 					<description/>
 					<description/>
 				</row>
+				<row disabled="!@ics_method=cancel">
+					<description value="This mail cancels a meeting" class="meetingRequestMessage"/>
+					<button label="Apply" id="button[cancel]" class="leftPad5"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
 			</rows>
 		</grid>
 		<description/>

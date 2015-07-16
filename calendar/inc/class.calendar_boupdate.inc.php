@@ -691,7 +691,6 @@ class calendar_boupdate extends calendar_bo
 			case MSG_ALARM:
 				$action = 'Alarm';
 				$pref = 'Alarm';
-				$method = 'PUBLISH';	// duno if thats right
 				break;
 			default:
 				$method = 'PUBLISH';
@@ -902,7 +901,8 @@ class calendar_boupdate extends calendar_bo
 				//error_log(__METHOD__."() userid=$userid, timezone=".$timezone->getName().", startdate=$details[startdate], enddate=$details[enddate], updated=$details[updated], olddate=$details[olddate]");
 
 				list($subject,$notify_body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
-				switch($part_prefs['calendar']['update_format'])
+				// alarm is NOT an iCal method, therefore we have to use extened (no iCal)
+				switch($msg_type == MSG_ALARM ? 'extended' : $part_prefs['calendar']['update_format'])
 				{
 					case 'ical':
 						if (is_null($ics) || $m_type != $msg_type)	// need different ical for organizer notification
@@ -955,7 +955,7 @@ class calendar_boupdate extends calendar_bo
 						$notification->set_receivers(array($userid));
 						$notification->set_sender($senderid);
 						$notification->set_subject($subject);
-						// as we want ical body to be just describtion, we can NOT set links, as they get appended to body
+						// as we want ical body to be just description, we can NOT set links, as they get appended to body
 						if ($part_prefs['calendar']['update_format'] != 'ical')
 						{
 							$notification->set_message($notify_body."\n\n".$details['description']."\n\n".$details_body);

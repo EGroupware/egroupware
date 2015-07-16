@@ -1789,6 +1789,10 @@ class calendar_uiforms extends calendar_ui
 				}
 				$event['id'] = $existing_event['id'];
 			}
+			else	// event not in calendar
+			{
+				$readonlys['button[cancel]'] = true;	// no way to remove a canceled event not in calendar
+			}
 			$event['participant_types'] = array();
 			foreach($event['participants'] as $uid => $status)
 			{
@@ -1808,7 +1812,8 @@ class calendar_uiforms extends calendar_ui
 				$msg .= ($msg ? "\n" : '').lang('You are not invited to that event!');
 				if ($event['id'])
 				{
-					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
+					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
+						$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 				}
 			}
 			// ignore events in the past (for recurring events check enddate!)
@@ -1816,7 +1821,8 @@ class calendar_uiforms extends calendar_ui
 				(!$event['recur_type'] || $event['recur_enddate'] && $event['recur_enddate'] < $this->bo->now_su))
 			{
 				$msg = lang('Requested meeting is in the past!');
-				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[reject]'] = true;
+				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
+					$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 			}
 		}
 		else
@@ -1877,6 +1883,12 @@ class calendar_uiforms extends calendar_ui
 					}
 					break;
 
+				case 'cancel':
+					if ($event['id'] && $this->bo->set_status($event['id'], $user, 'R'))
+					{
+						$msg = lang('Status changed');
+					}
+					break;
 			}
 			// add notification-errors, if we have some
 			$msg = array_merge((array)$msg, notifications::errors(true));
@@ -1884,8 +1896,19 @@ class calendar_uiforms extends calendar_ui
 		$event['msg'] = implode("\n",(array)$msg);
 		$readonlys['button[edit]'] = !$event['id'];
 		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
-		$event['ics_method_label'] = strtolower($ical_method) == 'request' ?
-			lang('Meeting request') : lang('Reply to meeting request');
+		switch(strtolower($ical_method))
+		{
+			case 'reply':
+				$event['ics_method_label'] = lang('Reply to meeting request');
+				break;
+			case 'cancel':
+				$event['ics_method_label'] = lang('Meeting canceled');
+				break;
+			case 'request':
+			default:
+				$event['ics_method_label'] = lang('Meeting request');
+				break;
+		}
 		$tpl = new etemplate_new('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event, 2);
 	}
@@ -2498,21 +2521,21 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * moves an event to another date/time
 	 *
-	 * @param string $eventId id of the event which has to be moved
+	 * @param string $_eventId id of the event which has to be moved
 	 * @param string $calendarOwner the owner of the calendar the event is in
 	 * @param string $targetDateTime the datetime where the event should be moved to, format: YYYYMMDD
 	 * @param string $targetOwner the owner of the target calendar
 	 * @param string $durationT the duration to support resizable calendar event
 	 * @return string XML response if no error occurs
 	 */
-	function ajax_moveEvent($eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
+	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
 	{
 		// we do not allow dragging into another users calendar ATM
 		if(!$calendarOwner == $targetOwner)
 		{
 			return false;
 		}
-		list($eventId, $date) = explode(':',$eventId);
+		list($eventId, $date) = explode(':', $_eventId);
 		$old_event=$event=$this->bo->read($eventId);
 		if (!$durationT)
 		{
@@ -2526,19 +2549,19 @@ class calendar_uiforms extends calendar_ui
 		// If we have a recuring event for a particular day, make an exception
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
 		{
-			$date = new egw_time($date, egw_time::$user_timezone);
+			$d = new egw_time($date, egw_time::$user_timezone);
 			if (!empty($event['whole_day']))
 			{
-				$date =& $this->bo->so->startOfDay($date);
-				$date->setUser();
+				$d =& $this->bo->so->startOfDay($d);
+				$d->setUser();
 			}
-			$event = $this->bo->read($eventId, $date, true);
-			$preserv['actual_date'] = $date;		// remember the date clicked
+			$event = $this->bo->read($eventId, $d, true);
+			$preserv['actual_date'] = $d;		// remember the date clicked
 
 			// For DnD, always create an exception
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
-			$date = $date->format('ts');
+			$date = $d->format('ts');
 		}
 
 		$event['start'] = $this->bo->date2ts($targetDateTime);
@@ -2605,31 +2628,31 @@ class calendar_uiforms extends calendar_ui
 
 	/**
 	 * Change the status via ajax
-	 * @param string $eventId
-	 * @param integer $user
+	 * @param string $_eventId
+	 * @param integer $uid
 	 * @param string $status
 	 */
-	function ajax_status($eventId, $uid, $status)
+	function ajax_status($_eventId, $uid, $status)
 	{
-		list($eventId, $date) = explode(':',$eventId);
-		$old_event=$event=$this->bo->read($eventId);
+		list($eventId, $date) = explode(':', $_eventId);
+		$event = $this->bo->read($eventId);
 
 		// If we have a recuring event for a particular day, make an exception
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
 		{
-			$date = new egw_time($date, egw_time::$user_timezone);
+			$d = new egw_time($date, egw_time::$user_timezone);
 			if (!empty($event['whole_day']))
 			{
-				$date =& $this->bo->so->startOfDay($date);
-				$date->setUser();
+				$d =& $this->bo->so->startOfDay($date);
+				$d->setUser();
 			}
-			$event = $this->bo->read($eventId, $date, true);
-			$preserv['actual_date'] = $date;		// remember the date clicked
+			$event = $this->bo->read($eventId, $d, true);
+			$preserv['actual_date'] = $d;		// remember the date clicked
 
 			// For DnD, always create an exception
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
-			$date = $date->format('ts');
+			$date = $d->format('ts');
 		}
 		if($event['participants'][$uid])
 		{
@@ -2661,7 +2684,7 @@ class calendar_uiforms extends calendar_ui
 				'',750,410);
 		}
 	}
-	
+
 	/**
 	 * Deletes an event
 	 */

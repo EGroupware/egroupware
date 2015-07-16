@@ -173,6 +173,7 @@ download	calendar	de	Herunterladen
 download this event as ical	calendar	de	Termin als iCal herunterladen
 duration	calendar	de	Dauer
 duration of the meeting	calendar	de	Dauer des Termins
+edit event in calendar	calendar	de	Termin im Kalender bearbeiten
 edit exception	calendar	de	Ausnahme bearbeiten
 edit series	calendar	de	Serie bearbeiten
 edit status or alarms for this particular day	calendar	de	Bearbeite Status oder Alarme für diesen speziellen Tag
@@ -323,6 +324,7 @@ make freebusy information available to not loged in persons?	calendar	de	Die fre
 manage mapping	calendar	de	Feldzuordnungen verwalten
 max. number of entries to show (leave empty for no restriction)	calendar	de	Max. Anzahl von Einträgen die angezeigt werden sollen (Kein Eintrag = Keine Beschränkung)
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
+meeting canceled	calendar	de	Termin abgesagt
 meeting request	calendar	de	Terminanfrage
 meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
 merge document...	calendar	de	Dokument einfügen...
@@ -521,6 +523,7 @@ this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen B
 this event is part of a series	calendar	de	Dieser Termin ist Teil einer Serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	de	Das ist ein wiederholender Termin. Wollen Sie nur diese Wiederholung oder die ganze Serie löschen?
+this mail cancels a meeting	calendar	de	Diese Nachricht sagt einen Termin ab
 this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine Terminanfrage
 this mail contains a reply to a meeting request	calendar	de	Diese Nachricht enthält eine Antwort auf eine Terminanfrage
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versendet.

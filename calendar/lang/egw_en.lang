@@ -173,6 +173,7 @@ download	calendar	en	Download
 download this event as ical	calendar	en	Download this event as iCal
 duration	calendar	en	Duration
 duration of the meeting	calendar	en	Duration of the meeting
+edit event in calendar	calendar	en	Edit event in calendar
 edit exception	calendar	en	Edit exception
 edit series	calendar	en	Edit series
 edit status or alarms for this particular day	calendar	en	Edit status or alarms for this particular day
@@ -323,6 +324,7 @@ make freebusy information available to not loged in persons?	calendar	en	Make Fr
 manage mapping	calendar	en	Manage mapping
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
+meeting canceled	calendar	en	Meeting canceled
 meeting request	calendar	en	Meeting request
 meetingrequest to all participants	calendar	en	Meetingrequest to all participants
 merge document...	calendar	en	Merge document...
@@ -521,6 +523,7 @@ this entry is opened by user:	calendar	en	This entry was opened within the confi
 this event is part of a series	calendar	en	This event is part of a series
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner at any time.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	en	This is a recurring event. Do you want to delete just this recurrence or the whole series?
+this mail cancels a meeting	calendar	en	This mail cancels a meeting
 this mail contains a meeting request	calendar	en	This mail contains a meeting request
 this mail contains a reply to a meeting request	calendar	en	This mail contains a reply to a meeting request
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
