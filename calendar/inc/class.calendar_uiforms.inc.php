@@ -941,7 +941,7 @@ class calendar_uiforms extends calendar_ui
 		case 'delete_keep_exceptions':	// series and user selected to keep the exceptions
 		case 'delete_exceptions':		// series and user selected to delete the exceptions too
 			$exceptions_kept = null;
-			if ($this->bo->delete($event['id'], (int)$content['edit_single'], false, false,
+			if ($this->bo->delete($event['id'], (int)$content['edit_single'], false, $event['no_notifications'],
 				$button == 'delete_exceptions', $exceptions_kept))
 			{
 				if ($event['recur_type'] != MCAL_RECUR_NONE && $content['reference'] == 0 && !$content['edit_single'])
@@ -2711,7 +2711,7 @@ class calendar_uiforms extends calendar_ui
 			$response->apply('egw.message', lang('Error'),'error');
 		}
 	}
-	
+
 	/**
 	 * imports a mail as Calendar
 	 *
