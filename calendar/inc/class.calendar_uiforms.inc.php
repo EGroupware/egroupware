@@ -546,7 +546,9 @@ class calendar_uiforms extends calendar_ui
 			unset($event['id']);
 			unset($event['uid']);
 			unset($event['reference']);
+			unset($preserv['reference']);
 			unset($event['recurrence']);
+			unset($preserv['recurrence']);
 			unset($event['recur_exception']);
 			unset($event['edit_single']);	// in case it has been set
 			unset($event['modified']);
