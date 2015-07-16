@@ -129,7 +129,7 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'lang' => array('type' => 'varchar','precision' => '5','nullable' => False,'default' => ''),
 			'app_name' => array('type' => 'ascii','precision' => '16','nullable' => False,'default' => 'common'),
-			'message_id' => array('type' => 'varchar','precision' => '128','nullable' => False,'default' => ''),
+			'message_id' => array('type' => 'ascii','precision' => '128','nullable' => False,'default' => ''),
 			'content' => array('type' => 'varchar','precision' => '8192'),
 			'lang_id' => array('type' => 'auto','nullable' => False)
 		),
@@ -159,7 +159,7 @@ $phpgw_baseline = array(
 			'cat_appname' => array('type' => 'ascii','precision' => '16','nullable' => False),
 			'cat_name' => array('type' => 'varchar','precision' => '150','nullable' => False),
 			'cat_description' => array('type' => 'varchar','precision' => '255','nullable' => False),
-			'cat_data' => array('type' => 'ascii','precision' => '8192'),
+			'cat_data' => array('type' => 'varchar','precision' => '8192'),
 			'last_mod' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False)
 		),
 		'pk' => array('cat_id'),
@@ -282,7 +282,7 @@ $phpgw_baseline = array(
 			'contact_url_home' => array('type' => 'varchar','precision' => '128','comment' => 'website (private)'),
 			'contact_freebusy_uri' => array('type' => 'ascii','precision' => '128','comment' => 'freebusy-url for calendar of the contact'),
 			'contact_calendar_uri' => array('type' => 'ascii','precision' => '128','comment' => 'url for users calendar - currently not used'),
-			'contact_note' => array('type' => 'ascii','precision' => '8192','comment' => 'notes field'),
+			'contact_note' => array('type' => 'varchar','precision' => '8192','comment' => 'notes field'),
 			'contact_tz' => array('type' => 'varchar','precision' => '8','comment' => 'timezone difference'),
 			'contact_geo' => array('type' => 'ascii','precision' => '32','comment' => 'currently not used'),
 			'contact_pubkey' => array('type' => 'ascii','precision' => '8192','comment' => 'public key'),

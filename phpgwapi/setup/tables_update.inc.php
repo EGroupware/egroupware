@@ -78,6 +78,8 @@ function phpgwapi_upgrade15_0_001()
 
 function phpgwapi_upgrade14_2_001()
 {
+	$GLOBALS['run-from-upgrade14_2_001'] = true;	// flag no need to run 14.2.025 update
+
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_config','config_app',array(
 		'type' => 'ascii',
 		'precision' => '16',
@@ -298,6 +300,12 @@ function phpgwapi_upgrade14_2_010()
 		'nullable' => False,
 		'default' => 'common'
 	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_lang','message_id',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'nullable' => False,
+		'default' => ''
+	));
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_lang','content',array(
 		'type' => 'varchar',
 		'precision' => '8192'
@@ -306,7 +314,7 @@ function phpgwapi_upgrade14_2_010()
 		'fd' => array(
 			'lang' => array('type' => 'ascii','precision' => '5','nullable' => False,'default' => ''),
 			'app_name' => array('type' => 'ascii','precision' => '16','nullable' => False,'default' => 'common'),
-			'message_id' => array('type' => 'varchar','precision' => '128','nullable' => False,'default' => ''),
+			'message_id' => array('type' => 'ascii','precision' => '128','nullable' => False,'default' => ''),
 			'content' => array('type' => 'varchar','precision' => '8192'),
 			'lang_id' => array('type' => 'auto','nullable' => False)
 		),
@@ -351,7 +359,7 @@ function phpgwapi_upgrade14_2_012()
 		'nullable' => False
 	));
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_categories','cat_data',array(
-		'type' => 'ascii',
+		'type' => 'varchar',
 		'precision' => '8192'
 	));
 
@@ -501,7 +509,7 @@ function phpgwapi_upgrade14_2_017()
 		'comment' => 'url for users calendar - currently not used'
 	));
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_note',array(
-		'type' => 'ascii',
+		'type' => 'varchar',
 		'precision' => '8192',
 		'comment' => 'notes field'
 	));
@@ -713,6 +721,36 @@ function phpgwapi_upgrade14_2_024()
 		'comment' => 'secure token'
 	));
 
-	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3';
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] =
+		empty($GLOBALS['run-from-upgrade14_2_001']) ? '14.3' : '14.2.025';
 }
 
+
+/**
+ * Fix wrongly converted columns back to utf-8 and change message_id to ascii
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_2_025()
+{
+	// cat_data contains arbitrary user input eg. in tracker canned responses
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_categories','cat_data',array(
+		'type' => 'varchar',
+		'precision' => '8192'
+	));
+	// note is utf-8
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_note',array(
+		'type' => 'varchar',
+		'precision' => '8192',
+		'comment' => 'notes field'
+	));
+	// message_id is in english and in an index --> ascii
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_lang','message_id',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'nullable' => False,
+		'default' => ''
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3';
+}
