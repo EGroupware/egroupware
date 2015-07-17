@@ -26,9 +26,13 @@ $GLOBALS['kp3']       = egw_session::get_request('kp3');
 
 $verified = $GLOBALS['egw']->session->verify();
 
-if(!$redirectTarget = $GLOBALS['egw']->session->appsession('referer', 'login'))
+if(!($redirectTarget = $GLOBALS['egw']->session->appsession('referer', 'login')))
 {
 	$redirectTarget = $GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain'];
+}
+elseif(strpos($redirectTarget, '[?&]cd=') !== false)
+{
+	$redirectTarget = preg_replace('/([?&])cd=[^&]+/', '$1cd=1', $redirectTarget);
 }
 
 if($verified)
