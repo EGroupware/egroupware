@@ -369,7 +369,7 @@ class addressbook_vcal extends addressbook_bo
 								}
 								elseif (!$extra_charset_attribute)
 								{
-									$options['ENCODING'] = '';
+									unset($options['ENCODING']);
 								}
 							}
 							$hasdata++;
@@ -448,7 +448,7 @@ class addressbook_vcal extends addressbook_bo
 								}
 								elseif (!$extra_charset_attribute)
 								{
-									$options['ENCODING'] = '';
+									unset($options['ENCODING']);
 								}
 							}
 							if ($vcardField == 'TEL' && $entry['tel_prefer'] &&
