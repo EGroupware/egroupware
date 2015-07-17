@@ -818,6 +818,8 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 				$items[] = $item;
 			}
 		}
+		$items['searchtotal']=count($items);
+		$items['range']=$searchquery['range'];
 		return $items;
 	}
 

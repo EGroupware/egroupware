@@ -937,6 +937,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			// simple style
 			// start AS12 Stuff (bodypreference === false) case = old behaviour
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__. ' for message with ID:'.$id.' with headers:'.array2string($headers));
+
 			if ($bodypreference === false) {
 				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', null, true,$_folderName);
 				$raw_body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
@@ -957,6 +958,12 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 			else // style with bodypreferences
 			{
+				//Select body type preference
+				$bpReturnType = 1;//SYNC_BODYPREFERENCE_PLAIN;
+				if ($bodypreference !== false) {
+					$bpReturnType = Utils::GetBodyPreferenceBestMatch($bodypreference); // changed by mku ZP-330
+				}
+				debugLog(__METHOD__.__LINE__." getBodyPreferenceBestMatch: ".array2string($bpReturnType));
 				// set the protocoll class
 				$output->asbody = new SyncBaseBody();
 				// fetch the body (try to gather data only once)
@@ -1558,33 +1565,35 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	/**
 	 * Search mailbox for a given pattern
 	 *
-	 * @param string $searchquery
-	 * @return array with just rows (no values for keys rows, status or global_search_status!)
+	 * @param object $_searchquery holds information specifying the query with GetDataArray it holds
+	 * 		[searchname] => MAILBOX
+	 * 		[searchfolderid] => 101000000000
+	 * 		[searchfreetext] => somesearchtexgt
+	 * 		[searchdatereceivedgreater] => 1
+	 * 		[searchvaluegreater] => 2015-07-06T22:00:00.000Z
+	 * 		[searchdatereceivedless] => 1
+	 * 		[searchvalueless] => 2015-07-14T15:11:00.000Z
+	 * 		[searchrebuildresults] => 1
+	 * 		[searchrange] => 0-99
+	 * 		[bodypref] => Array([1] => BodyPreference Object([unsetdata:protected] => Array([truncationsize] => [allornone] => [preview] => )[SO_internalid:StateObject:private] => [data:protected] =>
+	 * 			 Array([truncationsize] => 2147483647)[changed:protected] => 1))
+	 * 				[mimesupport] => 2)		
+	 * @return array(["range"] = $_searchquery->GetSearchRange(), ['searchtotal'] = count of results,
+	 *			array("class" => "Email",
+	 *					"longid" => folderid.':'.uid',
+	 *					"folderid"	=> folderid,
+	 *					), ....
+	 *		)
 	 */
-	public function getSearchResultsMailbox($searchquery)
+	public function getSearchResultsMailbox($_searchquery)
 	{
+		//$this->debugLevel=1;
+		$searchquery=$_searchquery->GetDataArray();
 		if (!is_array($searchquery)) return array();
 		if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.array2string($searchquery));
-		// 19.10.2011 16:28:59 [24502] mail_activesync::getSearchResultsMailbox1408
-		//Array(
-		//	[query] => Array(
-		//		[0] => Array([op] => Search:And
-		//			[value] => Array(
-		//				[FolderType] => Email
-		//				[FolderId] => 101000000000
-		//				[Search:FreeText] => ttt
-		//				[subquery] => Array(
-		//					[0] => Array([op] => Search:GreaterThan
-		//						[value] => Array(
-		//							[POOMMAIL:DateReceived] => 1318975200))
-		//					[1] => Array([op] => Search:LessThan
-		//						[value] => Array(
-		//							[POOMMAIL:DateReceived] => 1319034600))))))
-		//	[rebuildresults] => 1
-		//	[deeptraversal] =>
-		//	[range] => 0-999)
-		if (isset($searchquery['rebuildresults'])) {
-			$rebuildresults = $searchquery['rebuildresults'];
+
+		if (isset($searchquery['searchrebuildresults'])) {
+			$rebuildresults = $searchquery['searchrebuildresults'];
 		} else {
 			$rebuildresults = false;
 		}
@@ -1597,8 +1606,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		if ($this->debugLevel>0) debugLog( 'DeepTraversal ['.$deeptraversal.']' );
 
-		if (isset($searchquery['range'])) {
-			$range = explode("-",$searchquery['range']);
+		if (isset($searchquery['searchrange'])) {
+			$range = explode("-",$_searchquery->GetSearchRange());
+			$start =$range[0] + 1;
 			$limit = $range[1] - $range[0] + 1;
 		} else {
 			$range = false;
@@ -1608,9 +1618,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		//foreach($searchquery['query'] as $k => $value) {
 		//	$query = $value;
 		//}
-		if (isset($searchquery['query'][0]['value']['FolderId']))
+		if (isset($searchquery['searchfolderid']))
 		{
-			$folderid = $searchquery['query'][0]['value']['FolderId'];
+			$folderid = $searchquery['searchfolderid'];
 		}
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
 		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]))
@@ -1619,20 +1629,16 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]=true;
 		}
 
-		if (isset($searchquery['query'][0]['value']['Search:FreeText']))
+		if (isset($searchquery['searchfreetext']))
 		{
 			$type = (emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]?'quick':'subject');
-			$searchText = $searchquery['query'][0]['value']['Search:FreeText'];
+			$searchText = $searchquery['searchfreetext'];
 		}
 		if (!$folderid)
 		{
 			$_folderName = ($this->mail->sessionData['mailbox']?$this->mail->sessionData['mailbox']:'INBOX');
 			$folderid = $this->createID($account=0,$_folderName);
 		}
-//if ($searchquery['query'][0]['value'][subquery][0][op]=='Search:GreaterThan');
-//if (isset($searchquery['query'][0]['value'][subquery][0][value][POOMMAIL:DateReceived]));
-//if ($searchquery['query'][0]['value'][subquery][1][op]=='Search:LessThan');
-//if (isset($searchquery['query'][0]['value'][subquery][1][value][POOMMAIL:DateReceived]));
 //$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
 		$this->_connect($account);
@@ -1643,21 +1649,24 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		//$_filter[] = array('type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		if ($this->debugLevel>1) debugLog (__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter));
-		$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=($limit?$limit:9999999), $_sort=0, $_reverse=false, $_filter, $_id=NULL);
+		$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=($range?$start:1), $_numberOfMessages=($limit?$limit:9999999), $_sort=0, $_reverse=false, $_filter, $_id=NULL);
 		//debugLog(__METHOD__.__LINE__.array2string($rv_messages));
 		$list=array();
+
 		foreach((array)$rv_messages['header'] as $i => $vars)
 		{
 			$list[] = array(
-				"uniqueid" => $folderid.':'.$vars['uid'],
-				"item"	=> $vars['uid'],
-				//"parent" => ???,
-				"searchfolderid" => $folderid,
+				"class" => "Email",
+				"longid" => $folderid.':'.$vars['uid'],
+				"folderid"	=> $folderid,
 			);
 		}
+		$cnt = count($list);
+		$list["range"] = $_searchquery->GetSearchRange();
+		$list['searchtotal'] = $cnt;
 		//error_log(__METHOD__.__LINE__.array2string($list));
 		//debugLog(__METHOD__.__LINE__.array2string($list));
-		return $list;//array('rows'=>$list,'status'=>1,'global_search_status'=>1);//array();
+		return $list;
 	}
 
 	/**
@@ -1805,8 +1814,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$changes = array();
         debugLog("AlterPingChanges on $folderid ($folder) stat: ". $syncstate);
         $this->mail->reopen($folder);
-
+//        $oldStat = $this->mail->getFolderStatus($folder);
+//error_log(__METHOD__.__LINE__.' withCache:'.array2string($oldStat));
         $status = $this->mail->getFolderStatus($folder,$ignoreStatusCache=true);
+//error_log(__METHOD__.__LINE__.' noCache:'.array2string($status));
         if (!$status) {
             debugLog("AlterPingChanges: could not stat folder $folder ");
             return false;
