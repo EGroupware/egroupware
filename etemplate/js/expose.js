@@ -405,7 +405,7 @@ function expose (widget)
 				var mediaContent = [];
 				var nm = find_nextmatch(this);
 				var current_index = 0;
-				if(nm)
+				if(nm && !this._is_target_indepth(nm,event.target))
 				{
 					// Get the row that was clicked, find its index in the list
 					var current_entry = nm.controller.getRowByNode(event.target);
@@ -437,6 +437,31 @@ function expose (widget)
 				}
 				this.expose_options.index = current_index;
 				gallery = blueimp.Gallery(mediaContent, this.expose_options);
+			},
+			
+			/**
+			 * Check if clicked target from nm is in depth
+			 * 
+			 *  @param nm nextmatch widget
+			 *  @param target selected target dom node
+			 *  
+			 *  @return {boolean} returns false if target is not in depth otherwise True 
+			 */
+			_is_target_indepth: function (nm, target){
+				var res = false;
+				if (nm)
+				{
+					if (!target)
+					{
+						var target = this.getDOMNode();
+					}
+					var entry = nm.controller.getRowByNode(target);
+					if (entry && entry.controller.getDepth()>0)
+					{
+						res = true;
+					}
+				}
+				return res;
 			},
 			expose_onopen: function (event){},
 			expose_onopened: function (event){
@@ -558,7 +583,7 @@ function expose (widget)
 			expose_onclose: function(event){
 				// Check to see if we're in a nextmatch, remove magic
 				var nm = find_nextmatch(this);
-				if(nm)
+				if(nm && !this._is_target_indepth(nm))
 				{
 					// Remove scrolling from thumbnails
 					gallery.container.find('.indicator')
