@@ -1,3 +1,17 @@
+egroupware-epl (14.2.20150717) hardy; urgency=low
+
+  * All apps: highlighting selected favorite
+  * All apps: fixed not working notification links (not opening given entry) or changing app via url
+  * Mail: fix PHP Fatal error in HTML mails, when using PHP 5.3
+  * Mail/Calendar: remove iCal from alarms and correctly display canceled events in mail
+  * Calendar: deleting an event did not honor "Do not notify" checkbox (if enabled)
+  * Calendar: fixed copied execption of an event series still contained reference to original series
+  * Calendar/CalDAV: rejected meeting-requests were not returned when searching for free time
+  * Calendar/CalDAV: recurence exceptions were not exported since last package (Horde_Icalendar update)
+  * InfoLog/CalDAV: fixed since last package (Horde_Icalendar update) not imported start, due and completed dates
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 17 Jul 2015 10:05:09 +0200
+
 egroupware-epl (14.2.20150707) hardy; urgency=low
 
   * Login/Password: handle forced password change on login page
