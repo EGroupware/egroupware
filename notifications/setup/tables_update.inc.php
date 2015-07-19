@@ -106,3 +106,20 @@ function notifications_upgrade1_9_004()
 {
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '14.1';
 }
+
+function notifications_upgrade14_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_notificationpopup','notify_message',array(
+		'type' => 'varchar',
+		'precision' => '16384',
+		'comment' => 'notification message'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_notificationpopup','notify_type',array(
+		'type' => 'ascii',
+		'precision' => '32',
+		'comment' => 'notification type'
+	));
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '14.3';
+}
+

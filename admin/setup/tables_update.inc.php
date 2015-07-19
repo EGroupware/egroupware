@@ -107,3 +107,47 @@ function admin_upgrade1_9_001()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '14.1';
 }
+
+function admin_upgrade14_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_admin_queue','cmd_uid',array(
+		'type' => 'ascii',
+		'precision' => '64',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_admin_queue','cmd_type',array(
+		'type' => 'ascii',
+		'precision' => '32',
+		'nullable' => False,
+		'default' => 'admin_cmd'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_admin_queue','cmd_data',array(
+		'type' => 'ascii',
+		'precision' => '16384'
+	));
+
+	return $GLOBALS['setup_info']['admin']['currentver'] = '14.2.001';
+}
+
+
+function admin_upgrade14_2_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_admin_remote','remote_hash',array(
+		'type' => 'ascii',
+		'precision' => '32',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_admin_remote','remote_url',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_admin_remote','remote_domain',array(
+		'type' => 'ascii',
+		'precision' => '64',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['admin']['currentver'] = '14.3';
+}
+

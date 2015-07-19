@@ -2443,3 +2443,113 @@ function calendar_upgrade14_2_002()
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.003';
 }
+
+function calendar_upgrade14_2_003()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_uid',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'nullable' => False,
+		'comment' => 'unique id of event(-series)'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_category',array(
+		'type' => 'ascii',
+		'meta' => 'category',
+		'precision' => '64',
+		'comment' => 'category id(s)'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','caldav_name',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.004';
+}
+
+
+function calendar_upgrade14_2_004()
+{
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_recur_date',array(
+		'type' => 'int',
+		'meta' => 'timestamp',
+		'precision' => '8',
+		'nullable' => False,
+		'default' => '0'
+	));*/
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_user_type',array(
+		'type' => 'ascii',
+		'precision' => '1',
+		'nullable' => False,
+		'default' => 'u',
+		'comment' => 'u=user, g=group, c=contact, r=resource, e=email'
+	));*/
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_user_id',array(
+		'type' => 'ascii',
+		'meta' => array(
+			"cal_user_type='u'" => 'account'
+		),
+		'precision' => '128',
+		'nullable' => False,
+		'comment' => 'id or email-address for type=e'
+	));*/
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_status',array(
+		'type' => 'ascii',
+		'precision' => '1',
+		'default' => 'A',
+		'comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'
+	));*/
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_role',array(
+		'type' => 'ascii',
+		'precision' => '64',
+		'default' => 'REQ-PARTICIPANT',
+		'comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'
+	));*/
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal_user','cal_user_auto',array(
+		'type' => 'auto',
+		'nullable' => False
+	));*/
+	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_cal_user',array(
+		'fd' => array(
+			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'cal_recur_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0'),
+			'cal_user_type' => array('type' => 'ascii','precision' => '1','nullable' => False,'default' => 'u','comment' => 'u=user, g=group, c=contact, r=resource, e=email'),
+			'cal_user_id' => array('type' => 'ascii','meta' => array("cal_user_type='u'" => 'account'),'precision' => '128','nullable' => False,'comment' => 'id or email-address for type=e'),
+			'cal_status' => array('type' => 'ascii','precision' => '1','default' => 'A','comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'),
+			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1','comment' => 'only for certain types (eg. resources)'),
+			'cal_role' => array('type' => 'ascii','precision' => '64','default' => 'REQ-PARTICIPANT','comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'),
+			'cal_user_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'automatic timestamp of last update'),
+			'cal_user_auto' => array('type' => 'auto','nullable' => False)
+		),
+		'pk' => array('cal_user_auto'),
+		'fk' => array(),
+		'ix' => array('cal_user_modified',array('cal_user_type','cal_user_id')),
+		'uc' => array(array('cal_id','cal_recur_date','cal_user_type','cal_user_id'))
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.005';
+}
+
+
+function calendar_upgrade14_2_005()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_timezones','tz_tzid',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_timezones','tz_component',array(
+		'type' => 'ascii',
+		'precision' => '8192',
+		'comment' => 'iCal VTIMEZONE component'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3';
+}
+

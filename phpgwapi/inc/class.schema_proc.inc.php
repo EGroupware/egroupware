@@ -1057,6 +1057,7 @@ class schema_proc
 					break;
 				case 'char':
 					// ADOdb does not differ between char and varchar
+				case 'ascii':
 				case 'varchar':
 					$ado_col = "C";
 					if(0 < $col_data['precision'] && $col_data['precision'] <= $this->max_varchar_length)
@@ -1066,6 +1067,10 @@ class schema_proc
 					if($col_data['precision'] > $this->max_varchar_length)
 					{
 						$ado_col = 'X';
+					}
+					if ($col_data['type'] == 'ascii' && $this->sType == 'mysql')
+					{
+						$ado_col .= ' CONSTRAINT "CHARACTER SET ascii"';
 					}
 					break;
 				case 'date':

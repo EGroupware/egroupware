@@ -13,7 +13,7 @@
 
 $setup_info['emailadmin']['name']      = 'emailadmin';
 $setup_info['emailadmin']['title']     = 'EMailAdmin';
-$setup_info['emailadmin']['version']   = '14.2';
+$setup_info['emailadmin']['version']   = '14.3';
 $setup_info['emailadmin']['app_order'] = 10;
 $setup_info['emailadmin']['enable']    = 2;
 
@@ -106,4 +106,6 @@ $setup_info['emailadmin']['check_install'] = array(
 		'from' => 'EMailAdmin',
 	),
 );
+
+
 

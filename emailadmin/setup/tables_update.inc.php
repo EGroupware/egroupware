@@ -1,4 +1,4 @@
-<?php
+k<?php
 /**
  * EGroupware EMailAdmin - DB schema
  *
@@ -890,4 +890,51 @@ function emailadmin_upgrade14_1()
 	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_ea_valid', array('acc_id', 'account_id'), true);
 
 	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '14.2';
+}
+
+function emailadmin_upgrade14_2()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_mailaccounts','mail_value',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'nullable' => False,
+		'comment' => 'the value (that should be) corresponding to the mail_type'
+	));
+
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '14.2.001';
+}
+
+
+function emailadmin_upgrade14_2_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_accounts','acc_imap_host',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'nullable' => False,
+		'comment' => 'imap hostname'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_accounts','acc_sieve_host',array(
+		'type' => 'ascii',
+		'precision' => '128',
+		'comment' => 'sieve host, default imap_host'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_accounts','acc_smtp_type',array(
+		'type' => 'ascii',
+		'precision' => '32',
+		'default' => 'emailadmin_smtp',
+		'comment' => 'smtp class to use'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_accounts','acc_imap_type',array(
+		'type' => 'ascii',
+		'precision' => '32',
+		'default' => 'emailadmin_imap',
+		'comment' => 'imap class to use'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_accounts','acc_imap_logintype',array(
+		'type' => 'ascii',
+		'precision' => '20',
+		'comment' => 'standard, vmailmgr, admin, uidNumber'
+	));
+
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '14.3';
 }

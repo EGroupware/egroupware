@@ -64,9 +64,9 @@ $phpgw_baseline = array(
 	'egw_mailaccounts' => array(
 		'fd' => array(
 			'mail_id' => array('type' => 'auto','nullable' => False,'comment' => 'the id'),
-			'account_id' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'account id of the owner, can be user AND group','meta' => 'account'),
+			'account_id' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'account id of the owner, can be user AND group'),
 			'mail_type' => array('type' => 'int','precision' => '1','nullable' => False,'comment' => '0=active, 1=alias, 2=forward, 3=forwardOnly, 4=quota'),
-			'mail_value' => array('type' => 'varchar','precision' => '128','nullable' => False,'comment' => 'the value (that should be) corresponding to the mail_type')
+			'mail_value' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'the value (that should be) corresponding to the mail_type')
 		),
 		'pk' => array('mail_id'),
 		'fk' => array(),
@@ -78,11 +78,11 @@ $phpgw_baseline = array(
 			'acc_id' => array('type' => 'auto','nullable' => False),
 			'acc_name' => array('type' => 'varchar','precision' => '80','comment' => 'description'),
 			'ident_id' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'standard identity'),
-			'acc_imap_host' => array('type' => 'varchar','precision' => '128','nullable' => False,'comment' => 'imap hostname'),
+			'acc_imap_host' => array('type' => 'ascii','precision' => '128','nullable' => False,'comment' => 'imap hostname'),
 			'acc_imap_ssl' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '0','comment' => '0=none, 1=starttls, 2=tls, 3=ssl, &8=validate certificate'),
 			'acc_imap_port' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '143','comment' => 'imap port'),
 			'acc_sieve_enabled' => array('type' => 'bool','default' => '0','comment' => 'sieve enabled'),
-			'acc_sieve_host' => array('type' => 'varchar','precision' => '128','comment' => 'sieve host, default imap_host'),
+			'acc_sieve_host' => array('type' => 'ascii','precision' => '128','comment' => 'sieve host, default imap_host'),
 			'acc_sieve_port' => array('type' => 'int','precision' => '4','default' => '4190'),
 			'acc_folder_sent' => array('type' => 'varchar','precision' => '128','comment' => 'sent folder'),
 			'acc_folder_trash' => array('type' => 'varchar','precision' => '128','comment' => 'trash folder'),
@@ -91,9 +91,9 @@ $phpgw_baseline = array(
 			'acc_smtp_host' => array('type' => 'varchar','precision' => '128','comment' => 'smtp hostname'),
 			'acc_smtp_ssl' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '0','comment' => '0=none, 1=starttls, 2=tls, 3=ssl, &8=validate certificate'),
 			'acc_smtp_port' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '25','comment' => 'smtp port'),
-			'acc_smtp_type' => array('type' => 'varchar','precision' => '32','default' => 'emailadmin_smtp','comment' => 'smtp class to use'),
-			'acc_imap_type' => array('type' => 'varchar','precision' => '32','default' => 'emailadmin_imap','comment' => 'imap class to use'),
-			'acc_imap_logintype' => array('type' => 'varchar','precision' => '20','comment' => 'standard, vmailmgr, admin, uidNumber'),
+			'acc_smtp_type' => array('type' => 'ascii','precision' => '32','default' => 'emailadmin_smtp','comment' => 'smtp class to use'),
+			'acc_imap_type' => array('type' => 'ascii','precision' => '32','default' => 'emailadmin_imap','comment' => 'imap class to use'),
+			'acc_imap_logintype' => array('type' => 'ascii','precision' => '20','comment' => 'standard, vmailmgr, admin, uidNumber'),
 			'acc_domain' => array('type' => 'varchar','precision' => '100','comment' => 'domain name'),
 			'acc_further_identities' => array('type' => 'bool','nullable' => False,'default' => '1','comment' => '0=no, 1=yes'),
 			'acc_user_editable' => array('type' => 'bool','nullable' => False,'default' => '1','comment' => '0=no, 1=yes'),
