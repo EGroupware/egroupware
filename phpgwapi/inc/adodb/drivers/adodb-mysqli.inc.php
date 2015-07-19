@@ -43,11 +43,11 @@ class ADODB_mysqli extends ADOConnection {
 	var $poorAffectedRows = true;
 	var $clientFlags = 0;
 	var $substr = "substring";
-	var $port = false;
-	var $socket = false;
+	var $port = 3306;
+	var $socket = '';
 	var $_bindInputArray = false;
 	var $nameQuote = '`';		/// string to use to quote identifiers and names
-	var $optionFlags = array(array(MYSQLI_READ_DEFAULT_GROUP,0));
+	var $optionFlags = array(array(MYSQLI_READ_DEFAULT_GROUP,0),array(MYSQLI_OPT_CONNECT_TIMEOUT,1));
 
 	function ADODB_mysqli()
 	{
@@ -86,6 +86,10 @@ class ADODB_mysqli extends ADOConnection {
 		}
 
 		if (strstr($argHostname,':')) list($argHostname,$this->port) = explode(':',$argHostname);
+
+		//http ://php.net/manual/en/mysqli.persistconns.php
+		if ($persist && PHP_VERSION > 5.2 && strncmp($argHostname,'p:',2) != 0) $argHostname = 'p:'.$argHostname;
+
 		$ok = @mysqli_real_connect($this->_connectionID,
  				    $argHostname,
  				    $argUsername,
