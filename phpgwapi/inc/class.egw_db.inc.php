@@ -382,6 +382,7 @@ class egw_db
 	 *
 	 * To enable this check add the following to your header.inc.php:
 	 *
+	 * require_once(EGW_API_INC.'/class.egw_db.inc.php');
 	 * egw_db::$health_check = array('egw_db', 'galera_cluster_health');
 	 *
 	 * @param egw_db $db already connected egw_db instance to check
@@ -417,9 +418,15 @@ class egw_db
 
 		if ($next && ++$n >= $num_hosts+2)
 		{
-			return false;
+			$n = 0;	// start search again with default on next request
+			$ret = false;
 		}
-		return $hosts[$n % $num_hosts];
+		else
+		{
+			$ret = $hosts[$n % $num_hosts];
+		}
+		//error_log(__METHOD__."(next=".array2string($next).") n=$n returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
