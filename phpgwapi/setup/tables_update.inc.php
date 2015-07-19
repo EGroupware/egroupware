@@ -508,11 +508,17 @@ function phpgwapi_upgrade14_2_017()
 		'precision' => '128',
 		'comment' => 'url for users calendar - currently not used'
 	));
-	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_note',array(
-		'type' => 'varchar',
-		'precision' => '8192',
-		'comment' => 'notes field'
-	));
+	// only shorten note to varchar(8194), if it does NOT contain longer input and it can be stored as varchar
+	$max_note_length = $GLOBALS['egw']->db->query('SELECT MAX(CHAR_LENGTH(contact_note)) FROM egw_addressbook')->fetchColumn();
+	// returns NULL, if there are no rows!
+	if ((int)$max_note_length <= 8192 && $GLOBALS['egw_setup']->oProc->max_varchar_length >= 8192)
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_note',array(
+			'type' => 'varchar',
+			'precision' => '8192',
+			'comment' => 'notes field'
+		));
+	}
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_geo',array(
 		'type' => 'ascii',
 		'precision' => '32',
@@ -570,12 +576,20 @@ function phpgwapi_upgrade14_2_018()
 		'type' => 'auto',
 		'nullable' => False
 	));*/
+	// only shorten cf value to varchar(8194), if it does NOT contain longer input and it can be stored as varchar
+	$max_value_length = $GLOBALS['egw']->db->query('SELECT MAX(CHAR_LENGTH(contact_value)) FROM egw_addressbook_extra')->fetchColumn();
+	// returns NULL, if there are no rows!
+	$new_value_length = 16384;
+	if ((int)$max_value_length > $new_value_length && $GLOBALS['egw_setup']->oProc->max_varchar_length >= $new_value_length)
+	{
+		$new_value_length = $max_value_length;
+	}
 	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_addressbook_extra',array(
 		'fd' => array(
 			'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'contact_owner' => array('type' => 'int','meta' => 'account','precision' => '8'),
 			'contact_name' => array('type' => 'varchar','meta' => 'cfname','precision' => '64','nullable' => False,'comment' => 'custom-field name'),
-			'contact_value' => array('type' => 'varchar','meta' => 'cfvalue','precision' => '16384','comment' => 'custom-field value'),
+			'contact_value' => array('type' => 'varchar','meta' => 'cfvalue','precision' => $new_value_length,'comment' => 'custom-field value'),
 			'contact_extra_id' => array('type' => 'auto','nullable' => False)
 		),
 		'pk' => array('contact_extra_id'),
