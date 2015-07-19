@@ -722,7 +722,7 @@ function phpgwapi_upgrade14_2_024()
 	));
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] =
-		empty($GLOBALS['run-from-upgrade14_2_001']) ? '14.3' : '14.2.025';
+		empty($GLOBALS['run-from-upgrade14_2_001']) ? '14.2.026' : '14.2.025';
 }
 
 
@@ -751,6 +751,19 @@ function phpgwapi_upgrade14_2_025()
 		'nullable' => False,
 		'default' => ''
 	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.2.026';
+}
+
+/**
+ * Shorten index on egw_sqlfs.fs_name to improve performance
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_2_026()
+{
+	$GLOBALS['egw_setup']->oProc->DropIndex('egw_sqlfs', array('fs_dir','fs_active','fs_name'));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_sqlfs', array('fs_dir','fs_active','fs_name(16)'));
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3';
 }

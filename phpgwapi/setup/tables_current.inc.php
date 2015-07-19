@@ -366,7 +366,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('fs_id'),
 		'fk' => array(),
-		'ix' => array(array('fs_dir','fs_active','fs_name')),
+		'ix' => array(array('fs_dir','fs_active','fs_name(16)')),
 		'uc' => array()
 	),
 	'egw_index_keywords' => array(
