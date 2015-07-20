@@ -319,6 +319,8 @@ class addressbook_vcal extends addressbook_bo
 								$options['ENCODING'] = 'BASE64';
 							}
 							$hasdata++;
+							// need to encode binary image, not done in Horde Icalendar
+							$value = base64_encode($value);
 						}
 						else
 						{
@@ -480,7 +482,11 @@ class addressbook_vcal extends addressbook_bo
 			$vCard->setAttribute($vcardField, $value, $options, true, $values);
 		}
 
-		$result = $vCard->exportvCalendar($_charset);
+		// current iOS 8.4 shows TEL;TYPE="WORK,VOICE":+49 123 4567890 as '"WORK'
+		// old (patched) Horde iCalendar, did not enclosed parameter in quotes
+		$result = preg_replace('/^TEL;TYPE="([^"]+)":/m', 'TEL;TYPE=$1:',
+			$vCard->exportvCalendar($_charset));
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
