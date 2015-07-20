@@ -288,23 +288,8 @@ class mail_sieve
 								$newRule['action_arg'] = implode($content['action_folder_text']);
 								break;
 							case 'address':
-								//error_log(__METHOD__. '() newRules_address '. array2string($newRule['action_arg']));
-								//error_log(__METHOD__.__LINE__.array2string($content['action_address_text']));
-								$forwards = array();
-								foreach($content['action_address_text'] as $email) {
-									// avoid wrong addresses, if an rfc822 encoded address is in addressbook
-									//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
-									$rfcAddr = emailadmin_imapbase::parseAddressList($email);
-									$_rfcAddr=$rfcAddr->first();
-									//error_log(__METHOD__.__LINE__.$_rfcAddr->mailbox.'@'.$_rfcAddr->host);
-									if (!$_rfcAddr->valid)
-									{
-										break; // skip address if we encounter an error here
-									}
-									$forwards[] = $_rfcAddr->mailbox.'@'.$_rfcAddr->host;
-								}
-								//$newRule['action_arg'] = implode(',',$content['action_address_text']);
-								$newRule['action_arg'] = implode(',',$forwards);
+								$content['action_address_text'] = self::strip_rfc882_addresses($content['action_address_text']);
+								$newRule['action_arg'] = implode(',', $content['action_address_text']);
 								break;
 							case 'reject':
 								$newRule['action_arg'] = $content['action_reject_text'];
@@ -608,29 +593,8 @@ class mail_sieve
 								if (empty($this->mailConfig['prefpreventforwarding']) ||
 									$this->mailConfig['prefpreventforwarding'] == 0 )
 								{
-									if (is_array($content['forwards']) && !empty($content['forwards']))
-									{
-										//error_log(__METHOD__.__LINE__.array2string($content['forwards']));
-										$forwards = array();
-										foreach($content['forwards'] as $email) {
-											// avoid wrong addresses, if an rfc822 encoded address is in addressbook
-											//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
-											$rfcAddr = emailadmin_imapbase::parseAddressList($email);
-											$_rfcAddr=$rfcAddr->first();
-											//error_log(__METHOD__.__LINE__.$_rfcAddr->mailbox.'@'.$_rfcAddr->host);
-											if (!$_rfcAddr->valid)
-											{
-												break; // skip address if we encounter an error here
-											}
-											$forwards[] = $_rfcAddr->mailbox.'@'.$_rfcAddr->host;
-										}
-										//$newVacation['forwards'] = implode(",",$content['forwards']);
-										$newVacation['forwards'] = implode(",",$forwards);
-									}
-									else
-									{
-										$newVacation ['forwards'] = '';
-									}
+									$content['forwards'] = self::strip_rfc882_addresses($content['forwards']);
+									$newVacation['forwards'] = implode(',', $content['forwards']);
 								}
 								else
 								{
@@ -645,7 +609,8 @@ class mail_sieve
 								$checkAddresses = isset($content['check_mail_sent_to']) && $content['check_mail_sent_to'] != 0;
 								if ($content['addresses'])
 								{
-									$newVacation ['addresses'] = $content['addresses'];
+									$newVacation ['addresses'] = $content['addresses'] =
+										self::strip_rfc882_addresses($content['addresses']);
 								}
 
 								if($this->checkRule($newVacation,$checkAddresses))
@@ -673,8 +638,7 @@ class mail_sieve
 											self::setAsyncJob($newVacation);
 										}
 										//Reset vacationNotice cache which is used in mail_ui get_rows
-										$cachedVacations = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
-										$cachedVacations = array($icServer->acc_id => $newVacation) + (array)$cachedVacations;
+										$cachedVacations = array($icServer->acc_id => $newVacation) + (array)egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
 										egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
 
 										$msg = lang('Vacation notice sucessfully updated.');
@@ -732,6 +696,27 @@ class mail_sieve
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
 		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$readonlys,$preserv,2);
+	}
+
+	/**
+	 * Strip personal part from rfc822 addresses: "Ralf Becker <rb@stylite.de>" --> rb@stylite.de
+	 *
+	 * Sieve only allows email-addresses, without angle brakets and personal parts.
+	 *
+	 * @param array|string $_addresses
+	 * @return array of email-addresses without personal part
+	 */
+	static function strip_rfc882_addresses($_addresses)
+	{
+		$addresses = array();
+		foreach(emailadmin_imapbase::parseAddressList($_addresses) as $addr)
+		{
+			if ($addr->valid)
+			{
+				$addresses[] = $addr->mailbox.'@'.$addr->host;
+			}
+		}
+		return $addresses;
 	}
 
 	/**
@@ -1286,8 +1271,8 @@ class mail_sieve
 	function ajax_getFolders ($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null, $_noPrefixId=false)
 	{
 		$mailCompose = new mail_compose();
-		if ($_REQUEST['noPrefixId']) $_noPrefixID = $_REQUEST['noPrefixId'];
-		$mailCompose->ajax_searchFolder($_searchStringLength,$_returnList,$_mailaccountToSearch,$_noPrefixID);
+		if ($_REQUEST['noPrefixId']) $_noPrefixId = $_REQUEST['noPrefixId'];
+		$mailCompose->ajax_searchFolder($_searchStringLength, $_returnList, $_mailaccountToSearch, $_noPrefixId);
 	}
 }
 
