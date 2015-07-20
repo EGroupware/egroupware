@@ -23,7 +23,7 @@
  * If no profile change is needed they just call:
  *		$mail_ui = new mail_ui();
  * Afterwards they use $mail_ui instead of $this.
- */
+ */	
 class mail_ui
 {
 	/**
@@ -142,6 +142,7 @@ class mail_ui
 				//openConnection gathers SpecialUseFolderInformation and Delimiter Info
 				$this->mail_bo->openConnection(self::$icServerID);
 			}
+			$this->mail_tree = new mail_tree($this);
 		}
 		catch (Exception $e)
 		{
@@ -233,7 +234,16 @@ class mail_ui
 
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
-
+	
+	/**
+	 * Ajax function to request next branch of a tree branch
+	 */
+	static function ajax_tree_autoloading ()
+	{
+		$mail_ui = new mail_ui();
+		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_GET['id']));
+	}
+	
 	/**
 	 * Subscription popup window
 	 *
@@ -746,7 +756,7 @@ class mail_ui
 	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true, $_useCacheIfPossible=true, $_popWizard=true)
 	{
 		if (mail_bo::$debugTimes) $starttime = microtime (true);
-		if (!is_null($_nodeID) && $_nodeID !=0)
+		if (!is_null($_nodeID) && $_nodeID != 0)
 		{
 			list($_profileID,$_folderName) = explode(self::$delimiter,$_nodeID,2);
 			unset($_folderName);
@@ -761,18 +771,7 @@ class mail_ui
 					}
 					catch (Exception $e)
 					{
-						$out = array('id' => $_profileID);
-						$oA = array('id' => $_profileID.self::$delimiter.'INBOX',
-							'text' => $e->getMessage(),
-							'tooltip' => $e->getMessage(),
-							'im0' => "folderNoSelectClosed.gif",
-							'im1' => "folderNoSelectOpen.gif",
-							'im2' => "folderNoSelectClosed.gif",
-							'path'=> array($_profileID),
-							'parent' => ''
-						);
-						$this->setOutStructure($oA, $out, self::$delimiter);
-						return ($out?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
+						return self::treeLeafNoConnectionArray($_profileID, $e->getMessage(), array($_profileID), '');
 					}
 				}
 			}
@@ -833,22 +832,12 @@ class mail_ui
 				// mark on account if Sieve is enabled
 				'data' => array('sieve' => $accountObj->imapServer()->acc_sieve_enabled,'spamfolder'=>($accountObj->imapServer()->acc_folder_junk?true:false)),
 			);
-			$this->setOutStructure($oA, $out, self::$delimiter);
+			mail_tree::setOutStructure($oA, $out, self::$delimiter);
 
 			// create a fake INBOX folder showing connection error (necessary that client UI unlocks tree!)
 			if ($e && $acc_id == $_profileID && !$folderObjects)
 			{
-				$oA = array(
-					'id' => $acc_id.self::$delimiter.'INBOX',
-					'text' => lang($e->getMessage()),
-					'tooltip' => '('.$acc_id.') '.$e->getMessage(),
-					'im0' => "folderNoSelectClosed.gif",
-					'im1' => "folderNoSelectOpen.gif",
-					'im2' => "folderNoSelectClosed.gif",
-					'path'=> array($acc_id, 'INBOX'),
-					'parent' => $acc_id,
-				);
-				$this->setOutStructure($oA, $out, self::$delimiter);
+				$out = self::treeLeafNoConnectionArray($acc_id, lang($e->getMessage()), array($acc_id, 'INBOX'), $acc_id);
 			}
 		}
 		//$endtime = microtime(true) - $starttime;
@@ -865,6 +854,7 @@ class mail_ui
 		$nameSpace = $this->mail_bo->_getNameSpaces();
 		foreach($folderObjects as $key => $obj)
 		{
+			$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
 			//error_log(__METHOD__.__LINE__.array2string($key));
 			$levels = explode($delimiter,$key);
 			$levelCt = count($levels);
@@ -926,7 +916,7 @@ class mail_ui
 			}
 			$oA['parent'] = $parentName;
 
-			$this->setOutStructure($oA,$out,$obj->delimiter,true,$nameSpace);
+			mail_tree::setOutStructure($oA,$out,$obj->delimiter,true,$nameSpace);
 			$c++;
 		}
 		if (!is_null($_nodeID) && $_nodeID !=0 && $_returnNodeOnly==true)
@@ -965,92 +955,7 @@ class mail_ui
 		}
 	}
 
-	/**
-	 * setOutStructure - helper function to transform the folderObjectList to dhtmlXTreeObject requirements
-	 *
-	 * @param array $data data to be processed
-	 * @param array &$out, out array
-	 * @param string $del needed as glue for parent/child operation / comparsion
-	 * @param boolean $createMissingParents a missing parent, instead of throwing an exception
-	 * @param array $nameSpace used to check on creation of nodes in namespaces other than personal
-	 *					as clearance for access may be limited to a single branch-node of a tree
-	 * @return void
-	 */
-	function setOutStructure($data, &$out, $del='.', $createMissingParents=true, $nameSpace=array())
-	{
-		//error_log(__METHOD__."(".array2string($data).', '.array2string($out).", '$del')");
-		$components = $data['path'];
-		array_pop($components);	// remove own name
-
-		$insert = &$out;
-		$parents = array();
-		foreach($components as $component)
-		{
-			if (count($parents)>1)
-			{
-				$helper = array_slice($parents,1,null,true);
-				$parent = $parents[0].self::$delimiter.implode($del, $helper);
-				if ($parent) $parent .= $del;
-			}
-			else
-			{
-				$parent = implode(self::$delimiter, $parents);
-				if ($parent) $parent .= self::$delimiter;
-			}
-
-			if (!is_array($insert) || !isset($insert['item']))
-			{
-				// throwing an exeption here seems to be unrecoverable,
-				// even if the cause is a something that can be handeled by the mailserver
-				if (mail_bo::$debug) error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
-				// should we hit the break? if in personal: sure, something is wrong with the folderstructure
-				// if in shared or others we may proceed as access to folders may very well be limited to
-				// a single folder within the tree
-				$break = true;
-				foreach ($nameSpace as $nsp)
-				{
-					// if (appropriately padded) namespace prefix of (others or shared) is the leading part of parent
-					// we want to create the node in question as we meet the above considerations
-					if ($nsp['type']!='personal' && $nsp['prefix_present'] && stripos($parent,$data['path'][0].self::$delimiter.$nsp['prefix'])===0)
-					{
-						if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' about to create:'.$parent.' in '.$data['path'][0].self::$delimiter.$nsp['prefix']);
-						$break=false;
-					}
-				}
-				if ($break) break;
-			}
-			if ($insert['item'])
-			{
-				foreach($insert['item'] as &$item)
-				{
-					if ($item['id'] == $parent.$component)
-					{
-						$insert =& $item;
-						break;
-					}
-				}
-			}
-			if ($item['id'] != $parent.$component)
-			{
-				if ($createMissingParents)
-				{
-					unset($item);
-					$item = array('id' => $parent.$component, 'text' => $component, 'im0' => "folderNoSelectClosed.gif",'im1' => "folderNoSelectOpen.gif",'im2' => "folderNoSelectClosed.gif",'tooltip' => lang('no access'));
-					$insert['item'][] =& $item;
-					$insert =& $item;
-				}
-				else
-				{
-					throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__.": id=$data[id]: Parent '$parent' '$component' not found!");
-				}
-			}
-			$parents[] = $component;
-		}
-		unset($data['path']);
-		$insert['item'][] = $data;
-		//error_log(__METHOD__."() leaving with out=".array2string($out));
-	}
-
+	
 	/**
 	 * Get actions / context menu for index
 	 *
@@ -2299,7 +2204,7 @@ class mail_ui
 
 				//error_log(__METHOD__.__LINE__.$linkView);
 				$attachmentHTML[$key]['link_view'] = '<a href="#" ." title="'.$attachmentHTML[$key]['filename'].'" onclick="'.$linkView.' return false;"><b>'.
-					($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)')).
+					($value['name'] ? $value['name'] : lang('(no subject)')).
 					'</b></a>';
 
 				$linkData = array
