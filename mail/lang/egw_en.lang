@@ -41,6 +41,7 @@ any of	mail	en	any of
 any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
+application mail expected but got: %1	mail	en	Application mail expected but got: %1
 arrival	mail	en	Recieved
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
@@ -52,6 +53,7 @@ before reply, visible during compose	mail	en	Before reply, visible during compos
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 can not open imap connection	mail	en	Can not open IMAP connection
+canceled deletion due to userinteraction	mail	en	canceled deletion due to userinteraction
 changed profile	mail	en	changed profile
 check message against next rule also	mail	en	Check message against next rule also
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	en	check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)
@@ -64,6 +66,7 @@ compose as new	mail	en	Compose as new
 compress folder	mail	en	compress folder
 condition	mail	en	Condition
 configuration settings	mail	en	Configuration settings
+confirm	mail	en	Confirm
 confirm attach message	mail	en	Confirm attach message
 confirm move to folder	mail	en	Confirm move to folder
 connect to profile %1	mail	en	Connect to Profile %1
@@ -78,6 +81,7 @@ copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not save the acl! because some names are empty!	mail	en	Could not save the ACL! Because some names are empty!
 create new account	mail	en	create new account
+current folder	mail	en	current Folder
 currently:	mail	en	Currently:
 date(newest first)	mail	en	date(newest first)
 date(oldest first)	mail	en	date(oldest first)
@@ -106,9 +110,11 @@ do not auto create folders	mail	en	do not auto create folders
 do not forward	mail	en	do not forward
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
+do you really want to delete this rule	mail	en	Do you really want to DELETE this Rule
 do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
 do you really want to remove all rights from this account	mail	en	Do you really want to remove all rights from this account
 do you really want to toggle flag %1 for all messages in current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in current view?
+do you really want to toggle flag %1 for all messages in the current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in the current view?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of filter rules (, even if SIEVE is enabled)?
@@ -201,6 +207,7 @@ get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP 
 greater than	mail	en	greater than
 header	mail	en	Header
 header lines	mail	en	Header lines
+hold %1 to drag files to your computer	mail	en	Hold %1 to drag files to your computer
 home page folders	mail	en	home page folders
 hostname or ip	mail	en	Hostname or IP
 how often to check with the server for new mail	mail	en	How often to check with the server for new mail
@@ -254,6 +261,7 @@ mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mailaccount
 mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (click ok)?\nIf not, please try to empty your trashfolder before continuing. (click cancel)
 mark all as read	mail	en	mark all as read
 mark as deleted	mail	en	mark as deleted
 match:	mail	en	Match:
@@ -336,11 +344,14 @@ refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder INBOX
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders
 reject with	mail	en	reject with
+reloaded folder %1	mail	en	Reloaded Folder %1
 remove all	mail	en	Remove All
 remove immediately	mail	en	remove immediately
+removed folder %1	mail	en	Removed Folder %1
 rename folder	mail	en	Rename Folder
 rename folder %1 ?	mail	en	Rename Folder %1 ?
 rename folder %1 to:	mail	en	Rename Folder %1 to:
+renamed folder %1 to %2	mail	en	Renamed Folder %1 to %2
 replied	mail	en	replied
 reply	mail	en	Reply
 reply all	mail	en	Reply All
@@ -430,6 +441,7 @@ subject(a->z)	mail	en	subject(A->Z)
 subject(z->a)	mail	en	subject(Z->A)
 subscribe folder	mail	en	Subscribe folder
 subscribe folder ...	mail	en	Subscribe folder ...
+subscribe to folder %1	mail	en	Subscribe to Folder %1
 subscription folders	mail	en	Subscription folders
 subscription successfully saved.	mail	en	Subscription successfully saved.
 successfully connected	mail	en	Successfully connected
@@ -465,6 +477,7 @@ undelete	mail	en	Undelete
 unflagged	mail	en	Unflagged
 unread	mail	en	unread
 unsubscribe folder	mail	en	Unsubscribe folder
+unsubscribe from folder %1	mail	en	Unsubscribe from Folder %1
 upload files...	mail	en	Upload files...
 use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see wikipedia for information on POSIX regular expressions)

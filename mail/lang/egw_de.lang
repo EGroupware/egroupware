@@ -52,6 +52,7 @@ before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar w�
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
+canceled deletion due to userinteraction	mail	de	Löschen abgebrochen durch Benutzer
 changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
@@ -64,6 +65,7 @@ compose as new	mail	de	Als neu bearbeiten
 compress folder	mail	de	Ordner komprimieren
 condition	mail	de	Bedingung
 configuration settings	mail	de	Einstellungen der Konfiguration
+confirm	mail	de	Bestätigen
 confirm attach message	mail	de	Bestätigung beim Anhängen von Mails
 confirm move to folder	mail	de	Bestätigung vor dem Verschieben
 connect to profile %1	mail	de	Verbunden zu dem Profil :%1
@@ -78,6 +80,7 @@ copy to	mail	de	Kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl! because some names are empty!	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
+current folder	mail	de	Akuteller Ordner
 currently:	mail	de	Aktuell:
 date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
@@ -106,9 +109,11 @@ do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
 do not forward	mail	de	nicht weiterleiten
 do you really want to apply %1 to all messages in the current view?	mail	de	Wollen Sie wirklich %1 auf alle Nachrichten in der aktuellen Ansicht anwenden?
 do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirklich löschen?
+do you really want to delete this rule	mail	de	Wollen Sie diese Regel wirklich löschen?
 do you really want to mark all messages as read in the current folder?	mail	de	Wollen Sie wirklich alle eMails im aktuellen Ordner als gelesen markieren?
 do you really want to remove all rights from this account	mail	de	Wollen Sie wirklich alle Rechte von diesem Benutzer löschen
 do you really want to toggle flag %1 for all messages in current view?	mail	de	Wollen Sie wirklich den Wert für %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
+do you really want to toggle flag %1 for all messages in the current view?	mail	de	Wollen Sie wirklich den Wert für %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	de	Möchten Sie vor dem Anhängen von einer oder mehreren (ausgewählten) E-Mails an eine neue E-Mail gefragt werden?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	de	Möchten Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden?
@@ -201,6 +206,7 @@ get acl rights failed from imap server!	mail	de	Die Zugriffskontrollrechte konnt
 greater than	mail	de	größer als
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
+hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
 hostname or ip	mail	de	Hostname oder IP
 how often to check with the server for new mail	mail	de	Aktualisierungsintervall zum prüfen nach neuen E-Mails.
@@ -254,6 +260,7 @@ mail-address	mail	de	Mail-Adresse
 mailaccount	mail	de	Mailkonto
 mailinglist	mail	de	Mailingliste
 mails	common	de	Mails
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	de	Der Mailserver meldete:\n%1 \nWollen Sie fortfahren und die ausgewählen Mails direkt löschen (Ok klicken)?\nWenn nicht, bitten den Mülleimer löschen und es nochmal versuchen. (Abbruch klicken)
 mark all as read	mail	de	alle als Gelesen markieren
 mark as deleted	mail	de	als gelöscht markieren
 match:	mail	de	Übereinstimmung:
@@ -336,11 +343,14 @@ refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
 refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert
 refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit Unterordnern wird verweigert
 reject with	mail	de	zurückweisen mit
+reloaded folder %1	mail	de	Ordner %1 neu geladen
 remove all	mail	de	Alle Entfernen
 remove immediately	mail	de	sofort löschen
+removed folder %1	mail	de	Ordner %1 gelöscht
 rename folder	mail	de	Umbenennen
 rename folder %1 ?	mail	de	Ordner umbenennen zu %1 ?
 rename folder %1 to:	mail	de	Ordner %1 umbenennen zu:
+renamed folder %1 to %2	mail	de	Ordner %1 umbenennen zu %2
 replied	mail	de	beantwortet
 reply	mail	de	Antworten
 reply all	mail	de	Allen Antworten
@@ -430,6 +440,7 @@ subject(a->z)	mail	de	Betreff (A->Z)
 subject(z->a)	mail	de	Betreff (Z->A)
 subscribe folder	mail	de	Abonnieren
 subscribe folder ...	mail	de	Ordner abonnieren ...
+subscribe to folder %1	mail	de	Ordner %1 abonieren
 subscription folders	mail	de	Ordner Abonnieren
 subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.
 successfully connected	mail	de	erfolgreich verbunden
@@ -464,7 +475,8 @@ unable to fetch vacation!	mail	de	Abwesenheitsnotiz konnte nicht gelesen werden!
 undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
-unsubscribe folder	mail	de	Ordner Abbestellen
+unsubscribe folder	mail	de	Ordner abbestellen
+unsubscribe from folder %1	mail	de	Ordner %1 abbestellen
 upload files...	mail	de	Dateien anhängen
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
