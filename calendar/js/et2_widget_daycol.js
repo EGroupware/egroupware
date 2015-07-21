@@ -181,9 +181,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		}
 		else if(typeof _date === "string")
 		{
-			this._parent.date_helper.set_year(_date.substring(0,4));
-			this._parent.date_helper.set_month(_date.substring(4,6));
-			this._parent.date_helper.set_date(_date.substring(6,8));
+			// Need a new date to avoid invalid month/date combinations when setting
+			// month then day
+			this._parent.date_helper.set_value(new Date(_date.substring(0,4),_date.substring(4,6)-1,_date.substring(6,8)));
 		}
 
 		this.date = new Date(this._parent.date_helper.getValue());
@@ -225,7 +225,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			var events = [];
 			for(var i = 0; i < event_ids.length; i++)
 			{
-				events.push(egw.dataGetUIDdata('calendar::'+event_ids[i]).data);
+				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
+				if(event && event.date && event.date === this.options.date)
+				{
+					events.push(event);
+				}
 			}
 			this._update_events(events);
 		},this,this.getInstanceManager().execId,this.id);
@@ -253,7 +257,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				var events = [];
 				for(var i = 0; i < event_ids.length; i++)
 				{
-					events.push(egw.dataGetUIDdata('calendar::'+event_ids[i]).data);
+					var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
+					if(event && event.date && event.date === this.options.date)
+					{
+						events.push(event);
+					}
 				}
 				this._update_events(events);
 			},this,this.getInstanceManager().execId,this.id);
@@ -322,16 +330,24 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 */
 	_update_events: function(_events)
 	{
-		// Remove all events
-		while(this._children.length)
+		var events = _events || this.getArrayMgr('content').getEntry(this.options.date) || [];
+
+		// Remove extra events
+		while(this._children.length > events.length)
 		{
 			var node = this._children[this._children.length-1];
 			this.removeChild(node);
 			node.free();
 		}
-		var events = _events || this.getArrayMgr('content').getEntry(this.options.date) || [];
-
-		for(var c = 0; c < events.length; c++)
+		
+		// Make sure children are in cronological order, or columns are backwards
+		events.sort(function(a,b) {
+			var start = new Date(a.start) - new Date(b.start);
+			var end = new Date(a.end) - new Date(b.end);
+			return a.whole_day ? -1 : (start ? start : end);
+		});
+		
+		for(var c = this._children.length; c < events.length; c++)
 		{
 			// Create event
 			var event = et2_createWidget('calendar-event',{
@@ -348,7 +364,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		}
 
 		// Seperate loop so column sorting finds all children in the right place
-		for(var c = 0; c < events.length; c++)
+		for(var c = 0; c < events.length && c < this._children.length; c++)
 		{
 			this._children[c].set_value(events[c]);
 		}
@@ -386,7 +402,14 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			var event = this._children[i].options.value || false;
 			if(!event) continue;
-			
+			if(event.date && event.date != this.options.date)
+			{
+				// Still have a child event that has changed date (DnD)
+				this._children[i].destroy();
+				this.removeChild(this._children[i]);
+				continue;
+			}
+
 			var c = 0;
 			event['multiday'] = false;
 			if(typeof event.start !== 'object')

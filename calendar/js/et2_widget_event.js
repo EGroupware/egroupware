@@ -99,13 +99,33 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Register for updates
 		var app_id = this.options.value.app_id ? this.options.value.app_id : this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
 		egw.dataRegisterUID('calendar::'+app_id, function(event) {
+			if(this._parent && this.options.value.date && event.date != this.options.value.date)
+			{
+				// Date changed, reparent
+				var new_parent = this._parent._parent.getWidgetById(event.date);
+				if(new_parent)
+				{
+					new_parent.addChild(this);
+				}
+				else
+				{
+					// Could not find the right date
+					this._parent.removeChild(this);
+					this.destroy();
+				}
+				return;
+			}
 			// Copy to avoid changes, which may cause nm problems
 			this.options.value = jQuery.extend({},event);
 
 			// Let parent position
 			this._parent.position_event(this);
-			
-			this._update(this.options.value);
+
+			// Parent may remove this if the date isn't the same
+			if(this._parent)
+			{
+				this._update(this.options.value);
+			}
 
 		},this,this.getInstanceManager().execId,this.id);
 
@@ -123,10 +143,10 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var eventId = event.id.match(/-?\d+\.?\d*/g)[0];
 		var appName = event.id.replace(/-?\d+\.?\d*/g,'');
 		var app_id = event.app_id ? event.app_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
-		this._parent.date_helper.set_value(event.start);
+		this._parent.date_helper.set_value(event.start.valueOf ? new Date(event.start) : event.start);
 		var formatted_start = this._parent.date_helper.getValue();
 
-		this.set_id(eventId || event.id);
+		this.set_id('event_' + (eventId || event.id));
 		
 		this.div
 			// Empty & re-append to make sure dnd helpers are gone
@@ -156,7 +176,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			// Remove any resize classes, the handles are gone due to empty()
 			.removeClass('ui-resizable')
 			.addClass(event.class)
-			.toggleClass('calendar_calEventPrivate', event.private)
+			.toggleClass('calendar_calEventPrivate', event.private);
+		this.options.class = event.class;
 		if(event.category)
 		{
 			this.div.addClass('cat_' + event.category);
@@ -240,9 +261,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var bg_color = this.div.css('background-color');
 		var header_color = this.title.css('color');
 
-		this._parent.date_helper.set_value(this.options.value.start);
+		this._parent.date_helper.set_value(this.options.value.start.valueOf ? new Date(this.options.value.start) : this.options.value.start);
 		var start = this._parent.date_helper.input_date.val();
-		this._parent.date_helper.set_value(this.options.value.end);
+		this._parent.date_helper.set_value(this.options.value.end.valueOf ? new Date(this.options.value.end) : this.options.value.end);
 		var end = this._parent.date_helper.input_date.val();
 
 		var times = !this.options.value.multiday ?

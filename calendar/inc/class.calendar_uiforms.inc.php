@@ -914,6 +914,11 @@ class calendar_uiforms extends calendar_ui
 				{
 					// Directly update stored data.  If event is still visible, it will
 					// be notified & update itself.
+					if(!$old_event)
+					{
+						// For new events, make sure we have the whole event, not just form data
+						$event = $this->bo->read($event['id']);
+					}
 					$this->to_client($event);
 					$response->call('egw.dataStoreUID','calendar::'.$event['id'],$event);
 				}
@@ -1036,7 +1041,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button == 'save' ? 'update' : 'delete');
+				egw_framework::refresh_opener($msg, 'calendar', $event['id'], $button == 'save' ? ($content['id'] ? 'update' : 'add') : 'delete');
 			}
 			egw_framework::window_close();
 			common::egw_exit();
@@ -2549,9 +2554,28 @@ class calendar_uiforms extends calendar_ui
 	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
 	{
 		// we do not allow dragging into another users calendar ATM
-		if(!$calendarOwner == $targetOwner)
+		if($targetOwner < 0)
+		{
+			$targetOwner = [$targetOwner];
+		}
+		if($calendarOwner !== $targetOwner && !is_array($targetOwner))
 		{
 			return false;
+		}
+		// But you may be viewing multiple users, or a group calendar and
+		// dragging your event
+		if(is_array($targetOwner) && !in_array($calendarOwner, $targetOwner))
+		{
+			$return = true;
+			foreach($targetOwner as $owner)
+			{
+				if($owner < 0 && in_array($calendarOwner, $GLOBALS['egw']->accounts->members($owner,true)))
+				{
+					$return = false;
+					break;
+				}
+			}
+			if($return) return;
 		}
 		list($eventId, $date) = explode(':', $_eventId);
 		$old_event=$event=$this->bo->read($eventId);
@@ -2608,17 +2632,23 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
-		$conflicts=$this->bo->update($event);
+		$message = false;
+		$conflicts=$this->bo->update($event,false, true, false, true, $message);
 
 		$response = egw_json_response::get();
-		if(!is_array($conflicts))
+		if(!is_array($conflicts) && $conflicts)
 		{
 			// Directly update stored data.  If event is still visible, it will
 			// be notified & update itself.
 			$this->to_client($event);
 			$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
+
+			if(!$sameday )
+			{
+				$response->call('egw.refresh', '','calendar',$event['id'],'update');
+			}
 		}
-		else
+		else if ($conflicts)
 		{
 			$response->call(
 				'egw_openWindowCentered2',
@@ -2629,6 +2659,10 @@ class calendar_uiforms extends calendar_ui
 					.'&non_interactive=true'
 					.'&cancel_needs_refresh=true',
 				'',750,410);
+		}
+		else if ($message)
+		{
+			$response->call('egw.message',  implode('<br />', $message));
 		}
 		if ($status_reset_to_unknown)
 		{

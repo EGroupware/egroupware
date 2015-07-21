@@ -833,6 +833,7 @@ class calendar_ui
 			$event['app_id'] .= ':'.$event['recur_date'];
 		}
 		$event['parts'] = implode(",\n",$this->bo->participants($event,true));
+		$event['date'] = $this->bo->date2string($event['start']);
 
 		// Change dates
 		foreach(calendar_egw_record::$types['date-time'] as $field)

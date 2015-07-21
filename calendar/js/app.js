@@ -247,19 +247,19 @@ app.classes.calendar = AppJS.extend(
 				}
 				break;
 			case 'calendar':
-				debugger;
 				var event = egw.dataGetUIDdata('calendar::'+_id);
 				if(event && event.data && event.data.date)
 				{
 					var new_cache_id = this._daywise_cache_id(event.data.date)
-					var daywise = egw.dataGetUIDdata(new_cache_id).data || [];
+					var daywise = egw.dataGetUIDdata(new_cache_id);
+					daywise = daywise ? daywise.data : [];
 					if(_type === 'delete')
 					{
 						daywise.splice(daywise.indexOf(_id),1);
 					}
-					else
+					else if (daywise.indexOf(_id) < 0)
 					{
-						daywise.push(event.date);
+						daywise.push(_id);
 					}
 					egw.dataStoreUID(new_cache_id,daywise);
 				}
@@ -338,8 +338,9 @@ app.classes.calendar = AppJS.extend(
 					var $sortItem = jQuery(this);
 					
 				},
-				start: function ()
+				start: function (event, ui)
 				{
+					$j('.calendar_calTimeGrid',ui.helper).css('position', 'absolute');
 					// Put owners into row IDs
 					app.classes.calendar.views[state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
 						widget.div.parents('tr').attr('data-owner',widget.options.owner);
@@ -363,7 +364,7 @@ app.classes.calendar = AppJS.extend(
 
 		// Enable or disable
 		if((state.view == 'day' || state.view == 'week') &&
-			state.owner.length > 1 && state.owner.length > egw.config('calview_no_consolidate','phpgwapi'))
+			state.owner.length > 1 && state.owner.length < egw.config('calview_no_consolidate','phpgwapi'))
 		{
 			sortable.sortable('enable')
 				.sortable("refresh")
@@ -414,26 +415,7 @@ app.classes.calendar = AppJS.extend(
 					var view = app.classes.calendar.views[app.calendar.state.view] || false;
 					if (view)
 					{
-						if(direction > 0)
-						{
-							start = view.end_date({date:start});
-						}
-						else
-						{
-							start = view.start_date({date:start});
-						}
-						start.setUTCDate(start.getUTCDate()+direction);
-					}
-					// Calculate the current difference, and move
-					else if(app.calendar.state.first && app.calendar.state.last)
-					{
-						start = new Date(app.calendar.state.first);
-						end = new Date(app.calendar.state.last);
-						// Get the number of days
-						delta = (Math.round(Math.max(1,end - start)/(24*3600*1000)))*24*3600*1000;
-						// Adjust
-						start = new Date(start.valueOf() + (delta * direction ));
-						end = new Date(end.valueOf() + (delta * direction));
+						start = view.scroll(direction * delta);
 					}
 
 					app.calendar.update_state({date:app.calendar.date.toString(start)});
@@ -516,7 +498,7 @@ app.classes.calendar = AppJS.extend(
 	{
 		egw().json(
 			'calendar.calendar_uiforms.ajax_moveEvent',
-			[widget.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration]
+			[widget.options.value.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration]
 		).sendRequest(true);
 	},
 
@@ -2137,9 +2119,23 @@ app.classes.calendar = AppJS.extend(
 			d.setUTCMilliseconds(0);
 			return d;
 		},
+		/**
+		 * Get the owner for this view
+		 *
+		 * This is always the owner from the given state, we use a function
+		 * to trigger setting the widget value.
+		 *
+		 * @param {number[]|String} state.owner List of owner IDs, or a comma seperated list
+		 * @returns {number[]|String}
+		 */
 		owner: function(state) {
 			return state.owner || 0;
 		},
+		/**
+		 * Should the view show the weekends
+		 *
+		 * @returns {boolean} Current preference to show 5 or 7 days in weekview
+		 */
 		show_weekend: function(state)
 		{
 			return parseInt(egw.preference('days_in_weekview','calendar')) == 7;
@@ -2147,6 +2143,19 @@ app.classes.calendar = AppJS.extend(
 		extend: function(sub)
 		{
 			return jQuery.extend({},this,{_super:this},sub);
+		},
+		/**
+		 * Determines the new date after scrolling.  The default is 1 week.
+		 *
+		 * @param {number} delta Integer for how many 'ticks' to move, positive for
+		 *	forward, negative for backward
+		 * @returns {Date}
+		 */
+		scroll: function(delta)
+		{
+			var d = new Date(app.calendar.state.date);
+			d.setUTCDate(d.getUTCDate() + (7 * delta));
+			return d;
 		}
 	}
 });
@@ -2177,6 +2186,12 @@ jQuery.extend(app.classes.calendar,{
 				state.days = '1';
 
 				return app.calendar.View.show_weekend.call(this,state);
+			},
+			scroll: function(delta)
+			{
+				var d = new Date(app.calendar.state.date);
+				d.setUTCDate(d.getUTCDate() + (delta));
+				return d;
 			}
 		}),
 		day4: app.classes.calendar.prototype.View.extend({
@@ -2251,6 +2266,12 @@ jQuery.extend(app.classes.calendar,{
 				if(week_start < d) week_start.setUTCHours(24*7);
 				week_start.setUTCHours(week_start.getUTCHours()-1);
 				return week_start;
+			},
+			scroll: function(delta)
+			{
+				var d = new Date(app.calendar.state.date);
+				d.setUTCMonth(d.getUTCMonth() + delta);
+				return d;
 			}
 		}),
 

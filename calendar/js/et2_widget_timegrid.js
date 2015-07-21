@@ -160,35 +160,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		// - no action system -
 		var timegrid = this;
 
-		// Show the current time while dragging
-		// Used for resizing as well as drag & drop
-		var drag_helper = function(event, element,height)
-		{
-			this.dropEnd = timegrid._get_time_from_position(element.getBoundingClientRect().left,
-				element.getBoundingClientRect().top+parseInt(height));
-
-			if (typeof this.dropEnd != 'undefined' && this.dropEnd.length)
-			{
-				this.dropEnd.addClass("drop-hover");
-				var time = jQuery.datepicker.formatTime(
-					egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
-					{
-						hour: this.dropEnd.attr('data-hour'),
-						minute: this.dropEnd.attr('data-minute'),
-						seconds: 0,
-						timezone: 0
-					},
-					{"ampm": (egw.preference("timeformat") == "12")}
-				);
-				this.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span class="calendar_timeDemo" >'+time+'</span></div>';
-			}
-			else
-			{
-				this.innerHTML = '<div class="calendar_d-n-d_forbiden"></div>';
-			}
-			return this.dropEnd;
-		};
-
 		/**
 		 * If user puts the mouse over an event, then we'll set up resizing so
 		 * they can adjust the length.  Should be a little better on resources
@@ -236,7 +207,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					e.originalEvent = event;
 					e.data = {duration: 0};
 					var event_data = timegrid._get_event_info(this);
-					var event_widget = timegrid.getWidgetById(event_data.id);
+					var event_widget = timegrid.getWidgetById('event_'+event_data.id);
 					var sT = event_widget.options.value.start_m;
 					if (typeof this.dropEnd != 'undefined' && this.dropEnd.length == 1)
 					{
@@ -269,7 +240,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				resize:function(event, ui)
 				{
 					// Add 5px to make sure it doesn't land right on the edge of a div
-					drag_helper.call(this,event,ui.element[0],ui.helper.outerHeight()+5);
+					timegrid._drag_helper(this,ui.element[0],ui.helper.outerHeight()+5);
 				}	 
 			});
 		});
@@ -278,68 +249,104 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.div.on('dragcreate','.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
 				$j(this).draggable('option','cursorAt',false);
 			})
-			.on('dragstart', '.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
+			.on('dragstart', '.calendar_calEvent', function(event,ui) {
 				$j('.calendar_calEvent',ui.helper).width($j(this).width())
 					.height($j(this).outerHeight())
+					.css('top', '').css('left','')
 					.appendTo(ui.helper);
-			})
-			.on('dragstop','.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
-				var e = new jQuery.Event('change');
-				e.originalEvent = event;
-				e.data = {start: 0};
-				if (typeof this.dropEnd != 'undefined' && this.dropEnd.length >= 1)
-				{
-					var drop_date = this.dropEnd.attr('data-date')||false;
-
-					var eT = parseInt(this.dropEnd.attr('data-hour') * 60) + parseInt(this.dropEnd.attr('data-minute'));
-					
-					var event_data = timegrid._get_event_info(this);
-					var event_widget = timegrid.getWidgetById(event_data.id);
-
-					if(event_widget)
-					{
-						event_widget._parent.date_helper.set_year(drop_date.substring(0,4));
-						event_widget._parent.date_helper.set_month(drop_date.substring(4,6));
-						event_widget._parent.date_helper.set_date(drop_date.substring(6,8));
-						event_widget._parent.date_helper.set_hours(this.dropEnd.attr('data-hour'));
-						event_widget._parent.date_helper.set_minutes(this.dropEnd.attr('data-minute'));
-						event_widget.options.value.start = event_widget._parent.date_helper.getValue();
-
-						// Leave the helper there until the update is done
-						var loading = ui.helper.clone().appendTo(ui.helper.parent());
-						loading.addClass('loading');
-						
-						event_widget.recur_prompt(function(button_id) {
-							//Get infologID if in case if it's an integrated infolog event
-							if (event_data.app === 'infolog')
-							{
-								// If it is an integrated infolog event we need to edit infolog entry
-								egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent', 
-									[event_data.id, event_widget.options.value.start||false],
-									function() {loading.remove();}
-								).sendRequest(true);
-							}
-							else
-							{
-								//Edit calendar event
-								egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
-										button_id=='series' ? event_data.id : event_data.app_id,event_data.owner,
-										event_widget.options.value.start,
-										timegrid.options.owner||egw.user('account_id')
-									],
-									function() { loading.remove();}
-								).sendRequest(true);
-							}
-						});
-					}
-				}
-			})
-			// As event is dragged, update the time
-			.on('drag', '.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
-				this.dropEnd = drag_helper.call($j('.calendar_calEventHeader',ui.helper)[0],event,ui.helper[0],0);
-				$j('.calendar_timeDemo',ui.helper).css('bottom','auto');
+				ui.helper.width($j(this).width());
 			});
 		return true;
+	},
+
+	/**
+	 * Show the current time while dragging
+	 * Used for resizing as well as drag & drop
+	 */
+	_drag_helper: function(element, helper,height)
+	{
+		element.dropEnd = this._get_time_from_position(helper.getBoundingClientRect().left,
+			helper.getBoundingClientRect().top+parseInt(height));
+
+		if (typeof element.dropEnd != 'undefined' && element.dropEnd.length)
+		{
+			element.dropEnd.addClass("drop-hover");
+			var time = jQuery.datepicker.formatTime(
+				egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
+				{
+					hour: element.dropEnd.attr('data-hour'),
+					minute: element.dropEnd.attr('data-minute'),
+					seconds: 0,
+					timezone: 0
+				},
+				{"ampm": (egw.preference("timeformat") == "12")}
+			);
+			element.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span class="calendar_timeDemo" >'+time+'</span></div>';
+		}
+		else
+		{
+			element.innerHTML = '<div class="calendar_d-n-d_forbiden" style="height:100%"></div>';
+		}
+		$j(element).width($j(helper).width());
+		return element.dropEnd;
+	},
+
+	/**
+	 * Handler for dropping an event on the timegrid
+	 */
+	_event_drop: function(timegrid, event,ui) {
+		var e = new jQuery.Event('change');
+		e.originalEvent = event;
+		e.data = {start: 0};
+		if (typeof this.dropEnd != 'undefined' && this.dropEnd.length >= 1)
+		{
+			var drop_date = this.dropEnd.attr('data-date')||false;
+
+			var event_data = timegrid._get_event_info(ui.draggable);
+			var event_widget = timegrid.getWidgetById('event_'+event_data.id);
+			if(!event_widget)
+			{
+				// Widget was moved across weeks / owners
+				event_widget = timegrid.getParent().getWidgetById('event_'+event_data.id);
+			}
+			if(event_widget)
+			{
+				event_widget._parent.date_helper.set_year(drop_date.substring(0,4));
+				event_widget._parent.date_helper.set_month(drop_date.substring(4,6));
+				event_widget._parent.date_helper.set_date(drop_date.substring(6,8));
+				event_widget._parent.date_helper.set_hours(this.dropEnd.attr('data-hour'));
+				event_widget._parent.date_helper.set_minutes(this.dropEnd.attr('data-minute'));
+				event_widget.options.value.start = new Date(event_widget._parent.date_helper.getValue());
+
+				// Leave the helper there until the update is done
+				var loading = ui.helper.clone().appendTo(ui.helper.parent());
+				loading.addClass('loading');
+
+				event_widget.recur_prompt(function(button_id) {
+					if(button_id === 'cancel' || !button_id) return;
+					//Get infologID if in case if it's an integrated infolog event
+					if (event_data.app === 'infolog')
+					{
+						// If it is an integrated infolog event we need to edit infolog entry
+						egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent',
+							[event_data.id, event_widget.options.value.start||false],
+							function() {loading.remove();}
+						).sendRequest(true);
+					}
+					else
+					{
+						//Edit calendar event
+						egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
+								button_id==='series' ? event_data.id : event_data.app_id,event_data.owner,
+								event_widget.options.value.start,
+								timegrid.options.owner||egw.user('account_id')
+							],
+							function() { loading.remove();}
+						).sendRequest(true);
+					}
+				});
+			}
+		}
 	},
 
 	/**
@@ -381,7 +388,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 	detachFromDOM: function() {
 		// Remove the binding to the change handler
-		$j(this.div).off("change.et2_calendar_timegrid");
+		$j(this.div).off(".et2_calendar_timegrid");
 
 		this._super.apply(this, arguments);
 	},
@@ -636,42 +643,55 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			// Determine target node
 			var event = _data.event || false;
 			if(!event) return;
-
+			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
+			
+			/*
+			We have to handle the drop in the normal event stream instead of waiting
+			for the egwAction system so we can get the helper, and destination
+			*/
+			if(event.type === 'drop')
+			{
+				this.getWidget()._event_drop.call($j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui);
+			}
+			var drag_listener = function(event, ui) {
+				aoi.getWidget()._drag_helper($j('.calendar_d-n-d_timeCounter',ui.helper)[0],ui.helper[0],0);
+			};
+			var time = $j('.calendar_d-n-d_timeCounter',_data.ui.helper);
 			switch(_event)
 			{
 				// Triggered once, when something is dragged into the timegrid's div
 				case EGW_AI_DRAG_OVER:
-					_data.ui.draggable.off('.et2_timegrid')
-						// Listen to the drag and update the helper with the time
-						.on('drag.et2_timegrid',function(event,ui) {
-							var nodes = aoi.getWidget()._get_time_from_position(event.clientX,event.clientY);
+					// Listen to the drag and update the helper with the time
+					// This part lets us drag between different timegrids
+					_data.ui.draggable.on('drag.et2_timegrid'+widget_object.id, drag_listener);
+					_data.ui.draggable.on('dragend.et2_timegrid'+widget_object.id, function() {
+						_data.ui.draggable.off('drag.et2_timegrid' + widget_object.id);
+					});
+					if(time.length)
+					{
+						// The out will trigger after the over, so we count
+						time.data('count',time.data('count')+1);
+					}
+					else
+					{
+						_data.ui.helper.prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
+					}
 
-							// Highlight the destination time
-							$j('[data-date]',aoi.doGetDOMNode()).removeClass("ui-state-active");
-							nodes.addClass('ui-state-active');
-
-							// Update the helper with the actual time
-							var time = jQuery.datepicker.formatTime(
-								egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
-								{
-									hour: nodes.attr('data-hour'),
-									minute: nodes.attr('data-minute'),
-									seconds: 0,
-									timezone: 0
-								},
-								{"ampm": (egw.preference("timeformat") == "12")}
-								);
-							$j('.calendar_d-n-d_timeCounter span',ui.helper).empty().html(time);
-						})
-					_data.ui.helper.prepend('<div class="calendar_d-n-d_timeCounter"><span></span></div>');
 					break;
 
 				// Triggered once, when something is dragged out of the timegrid
 				case EGW_AI_DRAG_OUT:
-					// Reset
+					// Stop listening
+					_data.ui.draggable.off('drag.et2_timegrid'+widget_object.id);
+					// Remove any highlighted time squares
 					$j('[data-date]',this.doGetDOMNode()).removeClass("ui-state-active");
-					_data.ui.draggable.off('.et2_timegrid');
-					$j('.calendar_d-n-d_timeCounter',_data.ui.helper[0]).remove();
+
+					// Out triggers after the over, count to not accidentally remove
+					time.data('count',time.data('count')-1);
+					if(time.length && time.data('count') <= 0)
+					{
+						time.remove();
+					}
 					break;
 			}
 		};
@@ -804,17 +824,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			// Create drag action that allows linking
 			drag_action = mgr.addAction('drag', 'egw_link_drag', egw.lang('link'), 'link', function(action, selected) {
-				// Drag helper - list titles.  Arbitrarily limited to 10.
-				var helper = $j(document.createElement("div"));
-				for(var i = 0; i < selected.length && i < 10; i++)
-				{
-					var id = selected[i].id.split('::');
-					var span = $j(document.createElement('span')).appendTo(helper);
-					egw.link_title(id[0],id[1], function(title) {
-						this.append(title);
-						this.append('<br />');
-					}, span);
-				}
+				// Drag helper - list titles.
 				// As we wanted to have a general defaul helper interface, we return null here and not using customize helper for links
 				// TODO: Need to decide if we need to create a customized helper interface for links anyway
 				//return helper;
@@ -823,7 +833,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		}
 		if(actionLinks.indexOf(drag_action.id) < 0)
 		{
-			//actionLinks.push(drag_action.id);
+			actionLinks.push(drag_action.id);
 		}
 		drag_action.set_dragType('link');
 	},
@@ -1038,7 +1048,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		if (this.onevent_change)
 		{
 			var event_data = this._get_event_info(dom_node);
-			var event_widget = this.getWidgetById(event_data.id);
+			var event_widget = this.getWidgetById('event_'+event_data.id);
 			et2_calendar_event.recur_prompt(event_data, jQuery.proxy(function(button_id, event_data) {
 				// No need to continue
 				if(button_id === 'cancel') return false;
