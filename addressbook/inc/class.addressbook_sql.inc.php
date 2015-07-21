@@ -740,7 +740,15 @@ class addressbook_sql extends so_sql_cf
 		{
 			$keys = array('uid' => $keys);
 		}
-		$contact = parent::read($keys,$extra_cols,$join);
+		try {
+			$contact = parent::read($keys,$extra_cols,$join);
+		}
+		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
+		// caused by non-ascii chars compared with ascii field uid
+		catch(egw_exception_db $e) {
+			_egw_log_exception($e);
+			return false;
+		}
 
 		// enforce a minium uid strength
 		if (is_array($contact) && (!isset($contact['uid'])
