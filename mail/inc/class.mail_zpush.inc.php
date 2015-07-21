@@ -458,7 +458,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if ($this->debugLevel>2) debugLog(__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
 		// initialize the new egw_mailer object for sending
-		$mailObject = new egw_mailer();
+		$mailObject = new egw_mailer(self::$profileID);
 		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
@@ -1623,15 +1623,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$folderid = $searchquery['searchfolderid'];
 		}
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
-		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]))
+		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[self::$profileID]))
 		{
 			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
-			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]=true;
+			if (!isset(emailadmin_imapbase::$supportsORinQuery[self::$profileID])) emailadmin_imapbase::$supportsORinQuery[self::$profileID]=true;
 		}
-
 		if (isset($searchquery['searchfreetext']))
 		{
-			$type = (emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]?'quick':'subject');
 			$searchText = $searchquery['searchfreetext'];
 		}
 		if (!$folderid)
@@ -1641,8 +1639,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 //$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
+		debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' FolderID:'.$folderid.' Foldername:'.$_folderName);
 		$this->_connect($account);
-		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[$this->mail->profileID]?'quick':'subject'),
+		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[self::$profileID]?'quick':'subject'),
 						 'string'=> $searchText,
 						 'status'=>'any',
 						);
