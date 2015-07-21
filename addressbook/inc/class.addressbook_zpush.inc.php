@@ -795,25 +795,30 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		}
 		//error_log(__METHOD__.'('.array2string($searchquery).') range='.array2string($range));
 
-		$items = array();
-		if (($contacts =& $this->addressbook->search($searchquery['query'], false, false, '', '%', false, 'OR', $range)))
+		$items = $filter = array();
+		$filter['cols_to_search'] = array('n_fn', 'n_family', 'n_given',
+						'room','org_name', 'title', 'role', 'tel_work', 'tel_home', 'tel_cell',
+						'email', 'email_home');
+		if (($contacts =& $this->addressbook->search($searchquery['query'], false, false, '', '%', false, 'OR', $range, $filter)))
 		{
 			foreach($contacts as $contact)
 			{
-			  	$item['username'] = $contact['n_family'];
-				$item['fullname'] = $contact['n_fn'];
-				if (!trim($item['fullname'])) $item['fullname'] = $item['username'];
-				$item['emailaddress'] = $contact['email'] ? $contact['email'] : (string)$contact['email_private'] ;
-				$item['nameid'] = $searchquery;
-				$item['phone'] = (string)$contact['tel_work'];
-				$item['homephone'] = (string)$contact['tel_home'];
-				$item['mobilephone'] = (string)$contact['tel_cell'];
-				$item['company'] = (string)$contact['org_name'];
-				$item['office'] = $contact['room'];
-				$item['title'] = $contact['title'];
+				$item[SYNC_GAL_ALIAS] = $contact['contact_id'];
+			  	$item[SYNC_GAL_LASTNAME] = $contact['n_family'];
+			  	$item[SYNC_GAL_FIRSTNAME] = $contact['n_given'];
+				$item[SYNC_GAL_DISPLAYNAME] = $contact['n_fn'];
+				if (!trim($item[SYNC_GAL_DISPLAYNAME])) $item[SYNC_GAL_DISPLAYNAME] = $contact['n_family']?$contact['n_family']:$contact['org_name'];
+				$item[SYNC_GAL_EMAILADDRESS] = $contact['email'] ? $contact['email'] : (string)$contact['email_private'] ;
+				//$item['nameid'] = $searchquery;
+				$item[SYNC_GAL_PHONE] = (string)$contact['tel_work'];
+				$item[SYNC_GAL_HOMEPHONE] = (string)$contact['tel_home'];
+				$item[SYNC_GAL_MOBILEPHONE] = (string)$contact['tel_cell'];
+				$item[SYNC_GAL_COMPANY] = (string)$contact['org_name'];
+				$item[SYNC_GAL_OFFICE] = $contact['room'];
+				$item[SYNC_GAL_TITLE ] = $contact['title'];
 
 			  	//do not return users without email
-				if (!trim($item['emailaddress'])) continue;
+				if (!trim($item[SYNC_GAL_EMAILADDRESS])) continue;
 
 				$items[] = $item;
 			}
