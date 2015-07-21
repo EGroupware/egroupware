@@ -352,13 +352,15 @@ widget_browser.prototype._dtd_widgets = function (_type, _widget)
 					<!ATTLIST column\n\
 						disabled CDATA #IMPLIED\n\
 						class CDATA #IMPLIED\n\
-						width CDATA #IMPLIED><!ELEMENT rows (row)*>\n\
+						width CDATA #IMPLIED>\n\
+					<!ELEMENT rows (row)*>\n\
 					<!ELEMENT row (%Widgets;)>\n\
 					<!ATTLIST row\n\
 						class CDATA #IMPLIED\n\
 						height CDATA #IMPLIED\n\
 						valign CDATA #IMPLIED\n\
 						disabled CDATA #IMPLIED\n\
+						part CDATA #IMPLIED\n\
 					>\r\n';
 			break;
 
