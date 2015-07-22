@@ -159,7 +159,7 @@ class mail_tree
 			{
 				$nodeId = $_profileID.self::$delimiter.$node['MAILBOX'];
 				$nodeData = self::getFolderData($nodeId, $node['delimiter']);
-				$childrenNode[tree::CHILDREN][] = array(
+				$childrenNode[] = array(
 					tree::ID=> $nodeId,
 					tree::AUTOLOAD_CHILDREN => $fn_nodeHasChildren($node),
 					tree::CHILDREN =>array(),
@@ -168,10 +168,11 @@ class mail_tree
 					tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
 					tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
 					tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClose'],
-					tree::CHECKED => $node['SUBSCRIBED']
+					tree::CHECKED => $node['SUBSCRIBED'],
+					'parent' => $_parent
 				);
 			}
-			$tree[tree::CHILDREN][0] = $childrenNode;
+			$tree[tree::CHILDREN] = $childrenNode;
 		}
 		else //Top Level Nodes loader
 		{
