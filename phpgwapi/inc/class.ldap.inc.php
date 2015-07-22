@@ -192,6 +192,8 @@ class ldap
 		{
 			return False;
 		}
+		// set network timeout to not block for minutes
+		ldap_set_option($this->ds, LDAP_OPT_NETWORK_TIMEOUT, 5);
 
 		if(ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3))
 		{
