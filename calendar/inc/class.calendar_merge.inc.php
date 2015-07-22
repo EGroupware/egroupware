@@ -220,7 +220,7 @@ class calendar_merge extends bo_merge
 				'time' => (date('Ymd',$event['start']) != date('Ymd',$event['end']) ? $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' ' : '') . ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i'),
 			) as $name => $format)
 			{
-				$value = date($format,$event[$what]);
+				$value = egw_time::to($event[$what],$format);
 				if ($format == 'l') $value = lang($value);
 				$replacements['$$' .($prefix ? $prefix.'/':'').'calendar_'.$what.$name.'$$'] = $value;
 			}
