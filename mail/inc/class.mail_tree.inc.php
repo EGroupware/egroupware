@@ -132,7 +132,7 @@ class mail_tree
 			return $hasChildren;
 		};
 		
-		if ($_parent) $_profileID = $this->ui->mail_bo->icServerID;
+		if ($_parent) $_profileID = $this->ui->mail_bo->profileID;
 		
 		if (is_numeric($_profileID) && $_profileID != $this->ui->mail_bo->profileID)
 		{
@@ -167,7 +167,8 @@ class mail_tree
 					tree::TOOLTIP => $nodeData['tooltip'],
 					tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
 					tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
-					tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClose']
+					tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClose'],
+					tree::CHECKED => $node['SUBSCRIBED']
 				);
 			}
 			$tree[tree::CHILDREN][0] = $childrenNode;
@@ -213,7 +214,8 @@ class mail_tree
 					tree::CHILDREN =>array(),
 					tree::LABEL =>lang($foldersList[$index]['MAILBOX']),
 					tree::OPEN => 1,
-					tree::TOOLTIP => lang($foldersList[$index]['MAILBOX'])
+					tree::TOOLTIP => lang($foldersList[$index]['MAILBOX']),
+					tree::CHECKED => $node['SUBSCRIBED']
 				);
 				if ($index === "INBOX")
 				{
@@ -255,7 +257,8 @@ class mail_tree
 						tree::AUTOLOAD_CHILDREN => $fn_nodeHasChildren($node),
 						tree::CHILDREN => array(),
 						tree::LABEL => lang($folderName),
-						'parent' => $parentPath
+						'parent' => $parentPath,
+						tree::CHECKED => $node['SUBSCRIBED']
 					);
 					
 					if (array_search($node['MAILBOX'], $definedFolders) !== false)
