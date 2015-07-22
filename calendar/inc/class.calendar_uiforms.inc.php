@@ -1585,6 +1585,11 @@ class calendar_uiforms extends calendar_ui
 
 			$content['participants']['no_add'] = true;
 
+			if(!$event['whole_day'])
+			{
+				$etpl->setElementAttribute('whole_day', 'disabled', true);
+			}
+
 			// respect category permissions
 			if(!empty($event['category']))
 			{
