@@ -160,7 +160,10 @@ egw_LAB.wait(function() {
 		},
 		mouseout: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
-			if (ev.target && ev.target.id != 'quick_add_selectbox' && ev.relatedTarget.id != 'quick_add' && ev.relatedTarget.id !='quick_add_selectbox')
+			if (ev.target && ev.relatedTarget && ev.target.id != 'quick_add_selectbox' 
+					&& ev.relatedTarget.id != 'quick_add' 
+					&& ev.relatedTarget.id !='quick_add_selectbox'
+					&& ev.relatedTarget.tagName != "OPTION")
 			{
 				$j(this).css({
 					transition: "0.6s ease-out 0s",
