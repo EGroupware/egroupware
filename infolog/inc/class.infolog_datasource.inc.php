@@ -116,8 +116,9 @@ class infolog_datasource extends datasource
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
+		$old_link = $info['info_link_id'] ? egw_link::get_link($info['info_link']) : $info['info_link'];
 		$info['info_link_id'] = egw_link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
-		if (!$info['info_from'])
+		if (!$info['info_from'] || $old_link && $info['info_from'] == $old_link['title'])
 		{
 			$info['info_from'] = egw_link::title('projectmanager',$target);
 		}
