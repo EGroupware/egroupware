@@ -1461,5 +1461,62 @@ class html
 		}
 		return $html2ret;
 	}
+
+	/**
+	 * get all style tag definitions, <style> stuff </style> of the html passed in
+	 * and remove it from input
+	 * @author Leithoff, Klaus
+	 * @param string html
+	 * @return string the style css
+	 */
+	static function getStyles(&$html)
+	{
+		$ct=0;
+		$newStyle = null;
+		if (stripos($html,'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $html, $newStyle);
+		if ($ct>0)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
+			$style2buffer = implode('',$newStyle[0]);
+			// only replace what we have found, we use it here, as we use the same routine in translation::replaceTagsCompletley
+			// no need to do the extra routine
+			$html = str_ireplace($newStyle[0],'',$html);
+		}
+		if ($style2buffer)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($style2buffer));
+			$test = json_encode($style2buffer);
+			//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
+			//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
+			if ($test=="null" && strlen($style2buffer)>0)
+			{
+				// this should not be needed, unless something fails with charset detection/ wrong charset passed
+				error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Carset Detected:'.translation::detect_encoding($style2buffer));
+				$style2buffer = utf8_encode($style2buffer);
+			}
+		}
+		$style .= $style2buffer;
+		// clean out comments and stuff
+		$search = array(
+			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
+//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
+		);
+		$style = preg_replace($search,"",$style);
+
+		// CSS Security
+		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
+		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
+		if (stripos($css,'script')!==false) translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
+		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
+		$css_no_comment = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
+		//error_log(__METHOD__.__LINE__.$css);
+		// we already removed what we have found, above, as we used pretty much the same routine as in translation::replaceTagsCompletley
+		// no need to do the extra routine
+		// TODO: we may have to strip urls and maybe comments and ifs
+		//if (stripos($html,'style')!==false) translation::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
+		return $css_no_comment;
+	}
 }
 html::_init_static();
