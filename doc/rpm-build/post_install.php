@@ -649,15 +649,27 @@ function set_univention_defaults()
 			$config['smtpserver'] = "$mailserver,465,,,yes,tls,no,yes";
 			$config['smtp'] = ',emailadmin_smtp_univention';
 			$config['mailserver'] = "$mailserver,993,$domain,email,tls";
-			$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
+			if (_ucr_get('mail/dovecot') == 'yes')
+			{
+				$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_dovecot';
+				// default with sieve port to 4190, as config is only available on host mailserver app is installed
+				if (!($sieve_port = _ucr_get('mail/dovecot/sieve/port'))) $sieve_port = 4190;
+			}
+			else
+			{
+				$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
+				// default with sieve port to 4190, as config is only available on host mailserver app is installed
+				if (!($sieve_port = _ucr_get('mail/cyrus/sieve/port'))) $sieve_port = 4190;
+			}
 			// set folders so mail creates them on first login, UCS does not automatic
 			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,INBOX/Spam';
-			// default with sieve port to 4190, as config is only available on host mailserver app is installed
-			if (!($sieve_port = _ucr_get('mail/cyrus/sieve/port'))) $sieve_port = 4190;
 			$config['sieve'] = "$mailserver,$sieve_port,starttls";
 			// set an email address for sysop user so mail works right away
 			$config['admin_email'] = '$admin_user@'.$domain;
 		}
+		# add directory of univention-directory-manager and it's sysmlink target to open_basedir
+		system("/bin/sed -i 's|/usr/bin|/usr/bin:/usr/sbin:/usr/share/univention-directory-manager-tools|' /etc/egroupware/apache.conf");
+
 	}
 }
 
