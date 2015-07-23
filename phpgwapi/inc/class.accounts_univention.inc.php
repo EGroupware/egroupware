@@ -27,6 +27,9 @@ class accounts_univention extends accounts_ldap
 
 	/**
 	 * Name of binary to call
+	 *
+	 * It is a symlink to /usr/share/univention-directory-manager-tools/directory-manager-cli.
+	 * Both directories must be included in open_basedir!
 	 */
 	const DIRECTORY_MANAGER_BIN = '/usr/sbin/univention-directory-manager';
 
@@ -60,6 +63,21 @@ class accounts_univention extends accounts_ldap
 			if (!empty($data['account_passwd']))
 			{
 				$params[] = '--set'; $params[] = 'password='.$data['account_passwd'];
+				// we need to set mailHomeServer, so mailbox gets created for Dovecot
+				// get_default() does not work for Adminstrator, try acc_id=1 instead
+				// if everything fails try hostname ...
+				try {
+					if (!($account = emailadmin_account::get_default()))
+					{
+						$account = emailadmin_account::read(1);
+					}
+					$hostname = $account->acc_imap_host;
+				}
+				catch(Exception $e) {
+					unset($e);
+				}
+				if (empty($hostname)) $hostname = trunc(system('hostname -f'));
+				$params[] = '--set'; $params[] = 'mailHomeServer='.$hostname;
 			}
 			$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
 			$output_arr = $ret = $matches = null;
