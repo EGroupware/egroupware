@@ -8,7 +8,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright 2001-2014 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2015 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
@@ -50,9 +50,9 @@ class solink
 	 * @param string $id1 id in $app1
 	 * @param string $app2 appname of 2. endpoint of the link
 	 * @param string $id2 id in $app2
-	 * @param string $remark='' Remark to be saved with the link (defaults to '')
-	 * @param int $owner=0 Owner of the link (defaults to user)
-	 * @param int $lastmod=0 timestamp of last modification (defaults to now=time())
+	 * @param string $remark ='' Remark to be saved with the link (defaults to '')
+	 * @param int $owner =0 Owner of the link (defaults to user)
+	 * @param int $lastmod =0 timestamp of last modification (defaults to now=time())
 	 * @return int/boolean False (for db or param-error) or on success link_id (Please not the return-value of $id1)
 	 */
 	static function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
@@ -111,10 +111,10 @@ class solink
 	 *
 	 * @param string $app appname
 	 * @param string|array $id id(s) in $app
-	 * @param string $only_app='' if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
-	 * @param string $order='link_lastmod DESC' defaults to newest links first
-	 * @param boolean $deleted=false Include links that have been flagged as deleted, waiting for purge of linked record.
-	 * @param int|array $limit=null number of entries to return, default null = all or array(offset, num_rows) to return num_rows starting from offset
+	 * @param string $only_app ='' if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+	 * @param string $order ='link_lastmod DESC' defaults to newest links first
+	 * @param boolean $deleted =false Include links that have been flagged as deleted, waiting for purge of linked record.
+	 * @param int|array $limit =null number of entries to return, default null = all or array(offset, num_rows) to return num_rows starting from offset
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
 	static function get_links($app, $id, $only_app='', $order='link_lastmod DESC', $deleted=false, $limit=null)
@@ -139,30 +139,36 @@ class solink
 		}
 
 		$links = array();
-		foreach(self::$db->select(self::TABLE, '*', self::$db->expression(self::TABLE, '((', array(
-					'link_app1'	=> $app,
-					'link_id1'	=> $id,
-				),') OR (',array(
-					'link_app2'	=> $app,
-					'link_id2'	=> $id,
-				),'))',
-				$deleted ? '' : ' AND deleted IS NULL'
-			), __LINE__, __FILE__, $offset, $order ? " ORDER BY $order" : '', 'phpgwapi', $limit) as $row)
-		{
-			// check if left side (1) is one of our targets --> add it
-			if ($row['link_app1'] == $app && in_array($row['link_id1'],(array)$id))
+		try {
+			foreach(self::$db->select(self::TABLE, '*', self::$db->expression(self::TABLE, '((', array(
+						'link_app1'	=> $app,
+						'link_id1'	=> $id,
+					),') OR (',array(
+						'link_app2'	=> $app,
+						'link_id2'	=> $id,
+					),'))',
+					$deleted ? '' : ' AND deleted IS NULL'
+				), __LINE__, __FILE__, $offset, $order ? " ORDER BY $order" : '', 'phpgwapi', $limit) as $row)
 			{
-				self::_add2links($row,true,$only_app,$not_only,$links);
+				// check if left side (1) is one of our targets --> add it
+				if ($row['link_app1'] == $app && in_array($row['link_id1'],(array)$id))
+				{
+					self::_add2links($row,true,$only_app,$not_only,$links);
+				}
+				// check if right side (2) is one of our targets --> add it (both can be true for multiple targets!)
+				if ($row['link_app2'] == $app && in_array($row['link_id2'],(array)$id))
+				{
+					self::_add2links($row,false,$only_app,$not_only,$links);
+				}
 			}
-			// check if right side (2) is one of our targets --> add it (both can be true for multiple targets!)
-			if ($row['link_app2'] == $app && in_array($row['link_id2'],(array)$id))
-			{
-				self::_add2links($row,false,$only_app,$not_only,$links);
-			}
+			// if query returns exactly limit rows, we assume there are more and therefore set self::$limit_exceeded
+			self::$limit_exceeded = $offset !== false && count(is_array($id) ? $links : $links[$id]) == $limit;
 		}
-		// if query returns exactly limit rows, we assume there are more and therefore set self::$limit_exceeded
-		self::$limit_exceeded = $offset !== false && count(is_array($id) ? $links : $links[$id]) == $limit;
-
+		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
+		// caused by non-ascii chars compared with ascii field uid
+		catch(egw_exception_db $e) {
+			_egw_log_exception($e);
+		}
 		return is_array($id) ? $links : ($links[$id] ? $links[$id] : array());
 	}
 
@@ -193,9 +199,9 @@ class solink
 	 * returns data of a link
 	 *
 	 * @param ing/string $app_link_id > 0 link_id of link or app-name of link
-	 * @param string $id='' id in $app, if no integer link_id given in $app_link_id
-	 * @param string $app2='' appname of 2. endpoint of the link, if no integer link_id given in $app_link_id
-	 * @param string $id2='' id in $app2, if no integer link_id given in $app_link_id
+	 * @param string $id ='' id in $app, if no integer link_id given in $app_link_id
+	 * @param string $app2 ='' appname of 2. endpoint of the link, if no integer link_id given in $app_link_id
+	 * @param string $id2 ='' id in $app2, if no integer link_id given in $app_link_id
 	 * @return array with link-data or False
 	 */
 	static function get_link($app_link_id,$id='',$app2='',$id2='')
@@ -226,26 +232,26 @@ class solink
 					'link_id1'	=> $id2,
 				),')');
 		}
-		foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
-		{
-			if (self::DEBUG)
-			{
-				_debug_array($row);
-			}
-			return $row;
+		try {
+			return self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__)->fetch(ADODB_FETCH_ASSOC);
 		}
-		return False;
+		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
+		// caused by non-ascii chars compared with ascii field uid
+		catch(egw_exception_db $e) {
+			_egw_log_exception($e);
+		}
+		return false;
 	}
 
 	/**
 	 * Remove link with $link_id or all links matching given params
 	 *
 	 * @param $link_id link-id to remove if > 0
-	 * @param string $app='' app-name of links to remove
-	 * @param string $id='' id in $app or '' remove all links from $app
-	 * @param int $owner=0 account_id to delete all links of a given owner, or 0
-	 * @param string $app2='' appname of 2. endpoint of the link
-	 * @param string $id2='' id in $app2
+	 * @param string $app ='' app-name of links to remove
+	 * @param string $id ='' id in $app or '' remove all links from $app
+	 * @param int $owner =0 account_id to delete all links of a given owner, or 0
+	 * @param string $app2 ='' appname of 2. endpoint of the link
+	 * @param string $id2 ='' id in $app2
 	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete of linked entry
 	 * @return array with deleted links
 	 */
@@ -319,8 +325,8 @@ class solink
 	/**
 	 * Restore links being held as deleted waiting for purge of linked record (un-delete)
 	 *
-	 * @param string $app='' app-name of links to remove
-	 * @param string $id='' id in $app or '' remove all links from $app
+	 * @param string $app ='' app-name of links to remove
+	 * @param string $id ='' id in $app or '' remove all links from $app
 	 */
 	static function restore($app, $id)
 	{
@@ -381,10 +387,10 @@ class solink
 	 *
 	 * @param string $app app the returned links are linked on one side (atm. this must be link_app1!)
 	 * @param string $target_app app the returned links other side link also to
-	 * @param string|array $target_id=null id(s) the returned links other side link also to
-	 * @param boolean $just_app_ids=false return array with link_id => app_id pairs, not the full link record
-	 * @param string $order='link_lastmod DESC' defaults to newest links first
-	 * @param int|array $limit=null number of entries to return, default null = all or array(offset, num_rows) to return num_rows starting from offset
+	 * @param string|array $target_id =null id(s) the returned links other side link also to
+	 * @param boolean $just_app_ids =false return array with link_id => app_id pairs, not the full link record
+	 * @param string $order ='link_lastmod DESC' defaults to newest links first
+	 * @param int|array $limit =null number of entries to return, default null = all or array(offset, num_rows) to return num_rows starting from offset
 	 * @return array with links from entries from $app to $target_app/$target_id plus the other (b) link_id/app/id in the keys 'link3'/'app3'/'id3'
 	 */
 	static function get_3links($app, $target_app, $target_id=null, $just_app_ids=false, $order='link_lastmod DESC', $limit=null)
