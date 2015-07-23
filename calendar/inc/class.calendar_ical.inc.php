@@ -987,8 +987,8 @@ class calendar_ical extends calendar_boupdate
                     		translation::charset(),$charset);
                     $content = $valueData . implode(';', $valuesData);
 
-					if (preg_match('/[^\x20-\x7F]/', $content) ||
-						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN'])))
+					if ($version == '1.0' && (preg_match('/[^\x20-\x7F]/', $content) ||
+						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN']))))
 					{
 						$paramData['CHARSET'] = $charset;
 						switch ($this->productManufacturer)
@@ -998,7 +998,6 @@ class calendar_ical extends calendar_boupdate
 								{
 									$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
-								/* disable automatic QP encoding eg. for new-lines as it also encodes non-ascii/utf-8 which TB does NOT decode
 								else
 								{
 									$paramData['CHARSET'] = '';
@@ -1010,7 +1009,7 @@ class calendar_ical extends calendar_boupdate
 									{
 										$paramData['ENCODING'] = '';
 									}
-								}*/
+								}
 								break;
 							case 'funambol':
 								$paramData['ENCODING'] = 'FUNAMBOL-QP';
