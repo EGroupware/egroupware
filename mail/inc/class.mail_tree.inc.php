@@ -135,8 +135,8 @@ class mail_tree
 			return $hasChildren;
 		};
 		
-		if ($_parent) $_profileID = $this->ui->mail_bo->profileID;
-		
+		if ($_parent) list($_profileID) = explode(self::$delimiter, $_parent);
+				
 		if (is_numeric($_profileID) && $_profileID != $this->ui->mail_bo->profileID)
 		{
 			try
