@@ -281,7 +281,7 @@ class infolog_ical extends infolog_bo
 				$options = array();
 			}
 
-			if (preg_match('/[^\x20-\x7F]/', $value))
+			if ($_version == '1.0' && preg_match('/[^\x20-\x7F]/', $value))
 			{
 				$options['CHARSET']	= $charset;
 				switch ($this->productManufacturer)
