@@ -303,20 +303,27 @@ class solink
 			}
 		}
 		$deleted = array();
-		foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
-		{
-			$deleted[] = $row;
+		try {
+			foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
+			{
+				$deleted[] = $row;
+			}
+			if($hold_for_purge)
+			{
+				self::$db->update(self::TABLE,array(
+					'deleted' => time(),
+					'link_lastmod' => time(),
+				), $where, __LINE__,__FILE__);
+			}
+			else
+			{
+				self::$db->delete(self::TABLE,$where,__LINE__,__FILE__);
+			}
 		}
-		if($hold_for_purge)
-		{
-			self::$db->update(self::TABLE,array(
-				'deleted' => time(),
-				'link_lastmod' => time(),
-			), $where, __LINE__,__FILE__);
-		}
-		else
-		{
-			self::$db->delete(self::TABLE,$where,__LINE__,__FILE__);
+		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
+		// caused by non-ascii chars compared with ascii field uid
+		catch(egw_exception_db $e) {
+			_egw_log_exception($e);
 		}
 
 		return $deleted;
