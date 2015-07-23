@@ -776,11 +776,12 @@ var AppJS = Class.extend(
 			var match_count = 0;
 			for(var state_key in state)
 			{
-				if(state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key])
+				if(typeof favorite.state != 'undefined' && typeof state[state_key] != 'undefined'&&typeof favorite.state[state_key] != 'undefined' && ( state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key]))
 				{
 					match_count++;
 				}
-				else if (state[state_key] && typeof state[state_key] === 'object' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
+				else if (typeof state[state_key] != 'undefined' && state[state_key] && typeof state[state_key] === 'object' 
+							&& typeof favorite.state != 'undefined' && typeof favorite.state[state_key] != 'undefined' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
 				{
 					if((typeof state[state_key].length !== 'undefined' || typeof state[state_key].length !== 'undefined')
 							&& (state[state_key].length || Object.keys(state[state_key]).length) != (favorite.state[state_key].length || Object.keys(favorite.state[state_key]).length ))
@@ -823,7 +824,9 @@ var AppJS = Class.extend(
 				{
 					// Skip, might be set, might not
 				}
-				else if (typeof state[state_key] !== 'undefined' && state[state_key] != favorite.state[state_key])
+				else if (typeof state[state_key] !== 'undefined' 
+						 && typeof favorite.state != 'undefined'&&typeof favorite.state[state_key] !== 'undefined'
+						 && state[state_key] != favorite.state[state_key])
 				{
 					// Different values, do not match
 					return;
