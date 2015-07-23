@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package addressbook
- * @copyright (c) 2005-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -367,7 +367,8 @@ class addressbook_bo extends addressbook_so
 			asort($to_sort);
 			$addressbooks += $to_sort;
 		}
-		if (!$preferences['addressbook']['hide_accounts'] && (
+		if ($required != EGW_ACL_ADD &&	// do NOT allow to set accounts as default addressbook (AB can add accounts)
+			!$preferences['addressbook']['hide_accounts'] && (
 				($grants[0] & $required) == $required ||
 				$preferences['common']['account_selection'] == 'groupmembers' &&
 				$this->account_repository != 'ldap' && ($required & EGW_ACL_READ)))
@@ -862,6 +863,11 @@ class addressbook_bo extends addressbook_so
 			// if no owner/addressbook set use the setting of the add_default prefs (if set, otherwise the users personal addressbook)
 			if (!isset($contact['owner'])) $contact['owner'] = $this->default_addressbook;
 			if (!isset($contact['private'])) $contact['private'] = (int)$this->default_private;
+			// do NOT allow to create new accounts via addressbook, they are broken without an account_id
+			if (!$contact['owner'] && empty($contact['account_id']))
+			{
+				$contact['owner'] = $this->default_addressbook ? $this->default_addressbook : $this->user;
+			}
 			// allow admins to import contacts with creator / created date set
 			if (!$contact['creator'] || !$this->is_admin($contact)) $contact['creator'] = $this->user;
 			if (!$contact['created'] || !$this->is_admin($contact)) $contact['created'] = $this->now_su;

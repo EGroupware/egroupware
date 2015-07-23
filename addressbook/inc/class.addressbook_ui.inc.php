@@ -1123,10 +1123,11 @@ window.egw_LAB.wait(function() {
 					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
 					{
 						if ($contact['owner'] ||	// regular contact or
+							empty($contact['account_id']) ||	// accounts without account_id
 							// already deleted account (should no longer happen, but needed to allow for cleanup)
 							$contact['tid'] == addressbook_so::DELETED_TYPE)
 						{
-							$Ok = $this->delete($id, $contact['tid'] != addressbook_so::DELETED_TYPE);
+							$Ok = $this->delete($id, $contact['tid'] != addressbook_so::DELETED_TYPE && $contact['account_id']);
 						}
 						// delete single account --> redirect to admin
 						elseif (count($checked) == 1 && $contact['account_id'])
@@ -1624,7 +1625,7 @@ window.egw_LAB.wait(function() {
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].$prefer_marker;
 				}
-				if (!$row['owner'])
+				if (!$row['owner'] && $row['account_id'] > 0)
 				{
 					$row['class'] .= 'rowAccount rowNoDelete ';
 				}
