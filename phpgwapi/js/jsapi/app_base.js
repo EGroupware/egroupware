@@ -141,7 +141,7 @@ var AppJS = Class.extend(
 		}
 		this.et2 = et2.widgetContainer;
 		this._fix_iFrameScrolling();
-		if (this.egw.is_popup()) this._set_Window_title();
+		if (this.egw && this.egw.is_popup()) this._set_Window_title();
 
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
@@ -416,7 +416,7 @@ var AppJS = Class.extend(
 						self._refresh_fav_nm();
 					}
 				});
-				
+
 			// Bind favorite de-select
 			var egw_fw = egw_getFramework();
 			if(egw_fw && egw_fw.applications[this.appname] && egw_fw.applications[this.appname].browser
@@ -776,11 +776,12 @@ var AppJS = Class.extend(
 			var match_count = 0;
 			for(var state_key in state)
 			{
-				if(state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key])
+				if(typeof favorite.state != 'undefined' && typeof state[state_key] != 'undefined'&&typeof favorite.state[state_key] != 'undefined' && ( state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key]))
 				{
 					match_count++;
 				}
-				else if (state[state_key] && typeof state[state_key] === 'object' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
+				else if (typeof state[state_key] != 'undefined' && state[state_key] && typeof state[state_key] === 'object' 
+							&& typeof favorite.state != 'undefined' && typeof favorite.state[state_key] != 'undefined' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
 				{
 					if((typeof state[state_key].length !== 'undefined' || typeof state[state_key].length !== 'undefined')
 							&& (state[state_key].length || Object.keys(state[state_key]).length) != (favorite.state[state_key].length || Object.keys(favorite.state[state_key]).length ))
@@ -793,7 +794,6 @@ var AppJS = Class.extend(
 							continue;
 						}
 						// One has a value and the other doesn't, no match
-						debugger;
 						return;
 					}
 					// Consider sub-objects (column filters) individually
@@ -815,7 +815,6 @@ var AppJS = Class.extend(
 						else if(state[state_key][sub_key] && state[state_key][sub_key] != favorite.state[state_key][sub_key])
 						{
 							// Different values, do not match
-							debugger;
 							return;
 						}
 
@@ -825,10 +824,11 @@ var AppJS = Class.extend(
 				{
 					// Skip, might be set, might not
 				}
-				else if (typeof state[state_key] !== 'undefined' && state[state_key] != favorite.state[state_key])
+				else if (typeof state[state_key] !== 'undefined' 
+						 && typeof favorite.state != 'undefined'&&typeof favorite.state[state_key] !== 'undefined'
+						 && state[state_key] != favorite.state[state_key])
 				{
 					// Different values, do not match
-					debugger;
 					return;
 				}
 			}
@@ -901,5 +901,5 @@ var AppJS = Class.extend(
 		{
 			return this.et2._inst.uniqueId;
 		}
-	}
+	},
 });
