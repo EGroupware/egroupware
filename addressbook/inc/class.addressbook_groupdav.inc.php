@@ -643,12 +643,12 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['carddav_name'] = $id;
 
 			// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/) or sync-all-in-one!)
-			if ($prefix && !in_array('O',$this->home_set_pref))
+			if ($prefix && !in_array('O',$this->home_set_pref) && $user)
 			{
 				$contact['owner'] = $user;
 			}
-			// check if default addressbook is synced, if not use (always synced) personal addressbook
-			elseif($this->bo->default_addressbook && !in_array($this->bo->default_addressbook,$this->home_set_pref))
+			// check if default addressbook is synced and not accounts, if not use (always synced) personal addressbook
+			elseif(!$this->bo->default_addressbook || !in_array($this->bo->default_addressbook,$this->home_set_pref))
 			{
 				$contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			}
@@ -1027,7 +1027,14 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	public function get_grants()
 	{
-		return $this->bo->get_grants($this->bo->user);
+		$grants = $this->bo->get_grants($this->bo->user);
+
+		// remove add and delete grants for accounts (for admins too)
+		// as accounts can not be created as contacts, they eg. need further data
+		// and admins might not recognice they delete an account incl. its data
+		if (isset($grants[0])) $grants[0] &= ~(EGW_ACL_ADD|EGW_ACL_DELETE);
+
+		return $grants;
 	}
 
 	/**
