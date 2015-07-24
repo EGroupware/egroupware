@@ -375,7 +375,7 @@ function phpgwapi_upgrade14_2_013()
 		'nullable' => False
 	));
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_history_log','history_status',array(
-		'type' => 'ascii',
+		'type' => 'varchar',
 		'precision' => '32',
 		'nullable' => False
 	));
@@ -781,3 +781,20 @@ function phpgwapi_upgrade14_2_026()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3';
 }
+
+/**
+ * Change history_status back to varchar, as it contains custom-field names, which can be non-ascii
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_history_log','history_status',array(
+		'type' => 'varchar',
+		'precision' => '32',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.001';
+}
+

@@ -173,7 +173,7 @@ $phpgw_baseline = array(
 			'history_record_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'history_appname' => array('type' => 'ascii','precision' => '16','nullable' => False),
 			'history_owner' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
-			'history_status' => array('type' => 'ascii','precision' => '32','nullable' => False),
+			'history_status' => array('type' => 'varchar','precision' => '32','nullable' => False),
 			'history_new_value' => array('type' => 'text','nullable' => False),
 			'history_timestamp' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
 			'history_old_value' => array('type' => 'text','nullable' => False),
