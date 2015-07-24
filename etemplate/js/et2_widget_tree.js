@@ -442,7 +442,30 @@ var et2_tree = et2_inputWidget.extend(
 	 */
 	getValue: function() {
 		if(this.input == null) return null;
-		return this.options.multiple ? this.input.getAllChecked().split(this.input.dlmtr) : this.input.getSelectedItemId();
+		if (this.options.multiple)
+		{
+			var allChecked = this.input.getAllChecked().split(this.input.dlmtr);
+			var allUnchecked = this.input.getAllUnchecked().split(this.input.dlmtr);
+			if (this.options.autoloading)
+			{
+				
+				var res = {};
+				for (var i=0;i<allChecked.length;i++)
+				{
+					res[allChecked[i]]= {value:true};
+				}
+				for (var i=0;i<allUnchecked.length;i++)
+				{
+					res[allUnchecked[i]]= {value:false};
+				}
+				return res;
+			}
+			else
+			{
+				return allChecked;
+			}
+		}
+		return this.input.getSelectedItemId();
 	},
 
 	/**
