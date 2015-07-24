@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -41,8 +41,14 @@ class admin_cmd_change_account_id extends admin_cmd
 	 */
 	private function get_changes()
 	{
-		$changes = array();
-		foreach($GLOBALS['egw_info']['apps'] as $app => $app_data)
+		// happens if one used "root_admin" and config-password
+		if (empty($GLOBALS['egw_info']['apps']))
+		{
+			$apps = new applications();
+			$apps->read_installed_apps();
+		}
+		$changes = $setup_info = array();
+		foreach(array_keys($GLOBALS['egw_info']['apps']) as $app)
 		{
 			if (!file_exists($path=EGW_SERVER_ROOT.'/'.$app.'/setup/setup.inc.php') || !include($path)) continue;
 
@@ -57,8 +63,7 @@ class admin_cmd_change_account_id extends admin_cmd
 					{
 						foreach((array)$data['meta'] as $key => $val)
 						{
-							unset($subtype);
-							list($type, $subtype) = explode('-', $val);
+							list($type, $subtype) = explode('-', $val.'-');
 							if (in_array($type, array('account', 'user', 'group')))
 							{
 								if (!is_numeric($key) || !empty($subtype))
@@ -101,7 +106,7 @@ class admin_cmd_change_account_id extends admin_cmd
 	/**
 	 * give or remove run rights from a given account and application
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws egw_exception_no_admin
 	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
@@ -200,8 +205,6 @@ class admin_cmd_change_account_id extends admin_cmd
 			$update_sql .= "WHEN ".$db->quote($from,$db->column_definitions[$column]['type'])." THEN ".$db->quote($to,$db->column_definitions[$column]['type'])." ";
 		}
 		$update_sql .= 'END';
-		$update_sql_prefs .= 'END';
-		if ($update_sql_abs) $update_sql_abs .= 'END';
 
 		switch($type)
 		{
@@ -214,15 +217,15 @@ class admin_cmd_change_account_id extends admin_cmd
 				$change = array();
 				foreach($db->select($table,'DISTINCT '.$column,$select,__LINE__,__FILE__) as $row)
 				{
-					$ids = $type != 'serialized' ? explode(',',$old_ids=$row[$column]) : unserialize($old_ids=$row[$column]);
+					$ids = $type != 'serialized' ? explode(',',$old_ids=$row[$column]) : json_php_unserialize($old_ids=$row[$column]);
 					foreach($ids as $key => $id)
 					{
 						if (isset($ids2change[$id])) $ids[$key] = $ids2change[$id];
 					}
-					$ids = $type != 'serialized' ? implode(',',$ids) : serialize($ids);
-					if ($ids != $old_ids)
+					$ids2 = $type != 'serialized' ? implode(',',$ids) : serialize($ids);
+					if ($ids2 != $old_ids)
 					{
-						$change[$old_ids] = $ids;
+						$change[$old_ids] = $ids2;
 					}
 				}
 				$changed = 0;
@@ -277,8 +280,10 @@ class admin_cmd_change_account_id extends admin_cmd
 	function __tostring()
 	{
 		$change = array();
-		foreach($this->change as $from => $to) $change[] = $from.'->'.$to;
-
+		foreach($this->change as $from => $to)
+		{
+			$change[] = $from.'->'.$to;
+		}
 		return lang('Change account_id').': '.implode(', ',$change);
 	}
 }
