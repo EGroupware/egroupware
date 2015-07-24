@@ -803,8 +803,8 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		{
 			foreach($contacts as $contact)
 			{
-				$item[SYNC_GAL_ALIAS] = $contact['contact_id'];
-			  	$item[SYNC_GAL_LASTNAME] = $contact['n_family'];
+				//$item[SYNC_GAL_ALIAS] = $contact['contact_id'];
+			  	$item[SYNC_GAL_LASTNAME] = $contact['n_family']?$contact['n_family']:$contact['org_name'];
 			  	$item[SYNC_GAL_FIRSTNAME] = $contact['n_given'];
 				$item[SYNC_GAL_DISPLAYNAME] = $contact['n_fn'];
 				if (!trim($item[SYNC_GAL_DISPLAYNAME])) $item[SYNC_GAL_DISPLAYNAME] = $contact['n_family']?$contact['n_family']:$contact['org_name'];
