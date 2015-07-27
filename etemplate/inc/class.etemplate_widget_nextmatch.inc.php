@@ -1049,7 +1049,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 
 		// Save current column settings as default, clear, or force (admins only)
-		if($GLOBALS['egw_info']['user']['apps']['admin'] && $app)
+		if($GLOBALS['egw_info']['user']['apps']['admin'] && $app && $value['selectcols'])
 		{
 			$pref_name = 'nextmatch-' . (isset($content_value['columnselection_pref']) ? $content_value['columnselection_pref'] : $this->attrs['template']);
 			$refresh_pref_name = $pref_name.'-autorefresh';
