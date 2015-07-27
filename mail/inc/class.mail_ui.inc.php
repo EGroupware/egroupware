@@ -238,10 +238,11 @@ class mail_ui
 	/**
 	 * Ajax function to request next branch of a tree branch
 	 */
-	static function ajax_tree_autoloading ()
+	static function ajax_tree_autoloading ($_id = null)
 	{
 		$mail_ui = new mail_ui();
-		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_GET['id']));
+		$_id = $_id? $_id:$_GET['id'];
+		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_id,'',1,false));
 	}
 	
 	/**
@@ -262,19 +263,28 @@ class mail_ui
 		{
 			egw_framework::window_close('Missing acc_id!');
 		}
-		$sel_options['foldertree'] =  $this->getFolderTree(false, $profileId, false, false);
-
+		// Initial tree's options, the rest would be loaded dynamicaly by autoloading,
+		// triggered from client-side. Also, we keep this here as
+		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true);
+		
+		//Get all subscribed folder
+		// as getting all subscribed folder is very fast operation
+		// we can use it to get a comparison base for folders which
+		// got subscribed or unsubscribed by the user
+		try {
+			$subscribed = $this->mail_bo->icServer->listSubscribedMailboxes('',0,true);
+		} catch (Exception $ex) {
+			egw_framework::message($ex->getMessage());
+		}
+		
 		if (!is_array($content))
 		{
 			$content['foldertree'] = array();
-			$allFolders = $this->mail_bo->getFolderObjects(false,false,false,false);
-			foreach ($allFolders as $folder)
+			
+			foreach ($subscribed as $folder)
 			{
-				$folderName = $profileId . self::$delimiter . $folder->folderName;
-				if ($folder->subscribed)
-				{
-					array_push($content['foldertree'], $folderName);
-				}
+				$folderName = $profileId . self::$delimiter . $folder['MAILBOX'];
+				array_push($content['foldertree'], $folderName);
 			}
 		}
 		else
@@ -291,13 +301,30 @@ class mail_ui
 					{
 						$namespace_roots[] = $profileId . self::$delimiter . str_replace($namespace['delimiter'], '', $namespace['prefix']);
 					}
-					error_log(__METHOD__."() namespace_roots=".array2string($namespace_roots));
-					$to_subscribe = array_diff($content['foldertree'], $content['current_subscribed'], $namespace_roots);
-					$to_unsubscribe = array_diff($content['current_subscribed'], $content['foldertree'], $namespace_roots);
+					$to_unsubscribe = $to_subscribe = array();
+					//$allFoldersData = $this->mail_bo->getFolderArray(null,false,0);
+					foreach ($content['foldertree'] as $path => $value)
+					{
+						list(,$node) = explode($profileId.self::$delimiter, $path);
+						if ($node)
+						{
+							if (is_array($subscribed) && $subscribed[$node] && !$value['value']) $to_unsubscribe []= $node;
+							if (is_array($subscribed) && !$subscribed[$node] && $value['value']) $to_subscribe [] = $node;
+							if ($value['value']) $cont[] = $path;
+						}
+						
+					}
+					$content['foldertree'] = $cont;
+					// set foldertree options to basic node in order to avoid initial autoloading
+					// from client side, as no options would trigger that.
+					$sel_options['foldertree'] = array('id' => '0', 'item'=> array());
 					foreach(array_merge($to_subscribe, $to_unsubscribe) as $mailbox)
 					{
+						if (in_array($profileId.self::$delimiter.$mailbox, $namespace_roots, true))
+						{
+							continue;
+						}
 						$subscribe = in_array($mailbox, $to_subscribe);
-						list(,$mailbox) = explode(self::$delimiter, $mailbox);	// remove profileId and delimiter
 						try {
 							$this->mail_bo->icServer->subscribeMailbox($mailbox, $subscribe);
 						}
@@ -329,7 +356,9 @@ class mail_ui
 					// update foldertree in main window
 					$parentFolder='INBOX';
 					$refreshData = array(
-						$profileId => lang($parentFolder)
+						$profileId => lang($parentFolder),
+						'subscribed' => $to_subscribe,
+						'unsubscribed' => $to_unsubscribe
 					);
 					$response = egw_json_response::get();
 					foreach($refreshData as $folder => &$name)
@@ -337,7 +366,9 @@ class mail_ui
 						$name = $this->getFolderTree(true, $folder, true, true, false);
 					}
 					// give success/error message to opener and popup itself
+					//$response->call('opener.app.mail.subscription_refresh',$refreshData);
 					$response->call('opener.app.mail.mail_reloadNode',$refreshData);
+
 					egw_framework::refresh_opener($msg, 'mail', null, null, null, null, null, $msg_type);
 					if ($button == 'apply')
 					{
@@ -353,7 +384,7 @@ class mail_ui
 		}
 
 		$preserv['profileId'] = $profileId;
-		$preserv['current_subscribed'] = $content['foldertree'];
+		
 		$readonlys = array();
 
 		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,$preserv,2);

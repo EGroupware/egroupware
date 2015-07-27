@@ -13,14 +13,14 @@
 				</row>
 				<row>
 					<box scrolling="auto">
-						<tree id="foldertree" onclick="app.mail.subscribe_onclick"  multiple="true"/>
+						<tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading"/>
 					</box>
 				</row>
 			</rows>
 		</grid>
 		<hbox  class="dialogFooterToolbar">
 			<button statustext="Saves subscription changes" label="Save" id="button[save]"/>
-			<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+			<button statustext="Applies the changes made" label="Apply" id="button[apply]" onclick="app.mail.subscription_apply"/>
 			<button label="Cancel" id="button[cancel]" onclick="window.close()"/>
 		</hbox>
 	</template>

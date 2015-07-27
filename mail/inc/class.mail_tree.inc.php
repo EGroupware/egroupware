@@ -97,20 +97,36 @@ class mail_tree
 	 * @param string $path a node path
 	 * @return array returns an array of data extracted from given node path
 	 */
-	static function getFolderData ($_path, $_hDelimiter)
+	static function pathToFolderData ($_path, $_hDelimiter)
 	{
 		list(,$path) = explode(self::$delimiter, $_path);
-		$parts = explode($_hDelimiter, $path);
+		$path_chain = $parts = explode($_hDelimiter, $path);
 		$name = array_pop($parts);
 		return array (
 			'name' => $name,
 			'mailbox' => $path,
 			'parent' => implode($_hDelimiter, $parts),
 			'text' => $name,
-			'tooltip' => $name
+			'tooltip' => $name,
+			'path' => $path_chain
 		);
 	}
 	
+	/**
+	 * Check if a given node has children attribute set
+	 *
+	 * @param array $_node array of a node
+	 * @return int returns 1 if it has children flag set otherwise 0
+	 */
+	private static function nodeHasChildren ($_node)
+	{
+		$hasChildren = 0;
+		if (in_array('\haschildren', $_node['ATTRIBUTES']) ||
+				in_array('\Haschildren', $_node['ATTRIBUTES']) ||
+				in_array('\HasChildren', $_node['ATTRIBUTES'])) $hasChildren = 1;
+		return $hasChildren;
+	}
+
 	/**
 	 * getTree provides tree structure regarding to selected node
 	 *
@@ -118,22 +134,15 @@ class mail_tree
 	 * @param string $_profileID = '' icServer id
 	 * @param int|boolean $_openTopLevel = 1 Open top level folders on load if it's set to 1|true,
 	 *  false|0 leaves them in closed state
+	 * @param $_noCheckboxNS = false no checkbox for namesapaces makes sure to not put checkbox for namespaces node
 	 *
 	 * @return array returns an array of mail tree structure according to provided node
 	 */
-	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1)
+	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false)
 	{
 		//Init mail folders
 		$tree = array(tree::ID=> $_parent?$_parent:0,tree::CHILDREN => array());
 		$hDelimiter = $this->ui->mail_bo->getHierarchyDelimiter();
-		$fn_nodeHasChildren = function ($_node)
-		{
-			$hasChildren = 0;
-			if (in_array('\haschildren', $_node['ATTRIBUTES']) ||
-					in_array('\Haschildren', $_node['ATTRIBUTES']) ||
-					in_array('\HasChildren', $_node['ATTRIBUTES'])) $hasChildren = 1;
-			return $hasChildren;
-		};
 		
 		if ($_parent) list($_profileID) = explode(self::$delimiter, $_parent);
 				
@@ -151,20 +160,20 @@ class mail_tree
 		{
 			try
 			{
-				$nodeInfo = self::getFolderData($_parent, $hDelimiter);
-				$folders = $this->ui->mail_bo->getFolderArray($nodeInfo['mailbox']);
+				$nodeInfo = self::pathToFolderData($_parent, $hDelimiter);	
+				$folders = $this->ui->mail_bo->getFolderArray($nodeInfo['mailbox'],false,2);
 			} catch (Exception $ex) {
 				return self::treeLeafNoConnectionArray($_profileID, $ex->getMessage(),array($_profileID), '');
 			}
-			
+		
 			$childrenNode = array();
 			foreach ($folders as &$node)
 			{
 				$nodeId = $_profileID.self::$delimiter.$node['MAILBOX'];
-				$nodeData = self::getFolderData($nodeId, $node['delimiter']);
+				$nodeData = self::pathToFolderData($nodeId, $node['delimiter']);
 				$childrenNode[] = array(
 					tree::ID=> $nodeId,
-					tree::AUTOLOAD_CHILDREN => $fn_nodeHasChildren($node),
+					tree::AUTOLOAD_CHILDREN => self::nodeHasChildren($node),
 					tree::CHILDREN =>array(),
 					tree::LABEL => $nodeData['text'],
 					tree::TOOLTIP => $nodeData['tooltip'],
@@ -201,6 +210,7 @@ class mail_tree
 											'sieve' => $accObj->imapServer()->acc_sieve_enabled,
 											'spamfolder'=> $accObj->imapServer()->acc_folder_junk?true:false
 										),
+								tree::NOCHECKBOX  => $_noCheckboxNS		
 				);
 				self::setOutStructure($baseNode, $tree,self::$delimiter);
 			}
@@ -212,14 +222,21 @@ class mail_tree
 			
 			foreach ($foldersList as $index => $topFolder)
 			{
+				$nameSpaces = $this->ui->mail_bo->_getNameSpaces();
+				$noCheckbox = false;
+				foreach ($nameSpaces as &$ns)
+				{
+					if($_noCheckboxNS && $ns['prefix'] === $index.$hDelimiter) $noCheckbox = true;
+				}
 				$parentNode = array(
 					tree::ID=>$_profileID.self::$delimiter.$topFolder[$index]['MAILBOX'],
-					tree::AUTOLOAD_CHILDREN => $fn_nodeHasChildren($topFolder[$index]),
+					tree::AUTOLOAD_CHILDREN => self::nodeHasChildren($topFolder[$index]),
 					tree::CHILDREN =>array(),
 					tree::LABEL =>lang($topFolder[$index]['MAILBOX']),
 					tree::OPEN => $_openTopLevel,
 					tree::TOOLTIP => lang($topFolder[$index]['MAILBOX']),
-					tree::CHECKED => $topFolder[$index]['SUBSCRIBED']
+					tree::CHECKED => $topFolder[$index]['SUBSCRIBED'],
+					tree::NOCHECKBOX => $noCheckbox
 				);
 				if ($index === "INBOX")
 				{
@@ -267,7 +284,7 @@ class mail_tree
 			
 					$childNode = array(
 						tree::ID => $nodeId,
-						tree::AUTOLOAD_CHILDREN => $fn_nodeHasChildren($node),
+						tree::AUTOLOAD_CHILDREN => self::nodeHasChildren($node),
 						tree::CHILDREN => array(),
 						tree::LABEL => lang($folderName),
 						'parent' => $parentPath,
@@ -387,5 +404,5 @@ class mail_tree
 		$insert['item'][] = $data;
 		//error_log(__METHOD__."() leaving with out=".array2string($out));
 	}
-
+	
 }

@@ -44,7 +44,11 @@ app.classes.mail = AppJS.extend(
 		timeout: null,
 		request: null
 	},
-
+	/**
+	 * 
+	 */
+	subscription_treeLastState : "",
+	
 	/**
 	 * abbrevations for common access rights
 	 * @array
@@ -277,6 +281,15 @@ app.classes.mail = AppJS.extend(
 					jQuery('input',to.node).focus();
 				}
 				break;
+			case 'mail.subscribe':
+				if (this.subscription_treeLastState != "")
+				{	
+					var tree = this.et2.getWidgetById('foldertree');
+					//Saved state of tree
+					var state = jQuery.parseJSON(this.subscription_treeLastState);
+					
+					tree.input.loadJSONObject(tree._htmlencode_node(state));
+				}
 		}
 	},
 
@@ -3654,7 +3667,29 @@ app.classes.mail = AppJS.extend(
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_sieve.editVacation&acc_id='+acc_id,'_blank','700x480');
 	},
-
+	
+	subscription_refresh: function(_data)
+	{
+		console.log(_data);
+	},
+	
+	/**
+	 * Submit on apply button and save current tree state
+	 * 
+	 * @param {type} _egw
+	 * @param {type} _widget
+	 * @returns {undefined}
+	 */
+	subscription_apply: function (_egw, _widget)
+	{
+		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('foldertree');
+		if (tree)
+		{
+			tree.input._xfullXML = true;
+			this.subscription_treeLastState = tree.input.serializeTreeToJSON();
+		}
+		this.et2._inst.submit(_widget);
+	},
 	/**
 	 * Popup the subscription dialog
 	 *
