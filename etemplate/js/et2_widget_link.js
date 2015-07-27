@@ -96,10 +96,16 @@ var et2_link_to = et2_inputWidget.extend(
 		this.link_button = null;
 		this.status_span = null;
 
-		this.link_entry.destroy();
-		this.link_entry = null;
-		this.file_upload.destroy();
-		this.file_upload = null;
+		if(this.link_entry)
+		{
+			this.link_entry.destroy();
+			this.link_entry = null;
+		}
+		if(this.file_upload)
+		{
+			this.file_upload.destroy();
+			this.file_upload = null;
+		}
 		this.div = null;
 
 		this._super.apply(this, arguments);
