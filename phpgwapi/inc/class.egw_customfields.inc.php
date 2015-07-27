@@ -55,9 +55,10 @@ class egw_customfields implements IteratorAggregate
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
 	 * @param int $start =0
 	 * @param int $num_rows =null
+	 * @param egw_db $db =null reference to database instance to use
 	 * @return array with customfields
 	 */
-	function __construct($app, $all_private_too=false, $only_type2=null, $start=0, $num_rows=null)
+	function __construct($app, $all_private_too=false, $only_type2=null, $start=0, $num_rows=null, egw_db $db=null)
 	{
 		$this->app = $app;
 		$this->all_private_too = $all_private_too;
@@ -75,7 +76,8 @@ class egw_customfields implements IteratorAggregate
 		{
 			$query[] = $this->commasep_match('cf_type2', $only_type2);
 		}
-		$this->iterator = self::$db->select(self::TABLE, '*', $query, __LINE__, __FILE__,
+		if (!$db) $db = self::$db;
+		$this->iterator = $db->select(self::TABLE, '*', $query, __LINE__, __FILE__,
 			!isset($num_rows) ? false : $start, 'ORDER BY cf_order ASC', 'phpgwapi', $num_rows);
 	}
 
@@ -123,16 +125,17 @@ class egw_customfields implements IteratorAggregate
 	 * @param string $app
 	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
+	 * @param egw_db $db =null reference to database to use
 	 * @return array with customfields
 	 */
-	public static function get($app, $all_private_too=false, $only_type2=null)
+	public static function get($app, $all_private_too=false, $only_type2=null, egw_db $db=null)
 	{
 		$cache_key = $app.':'.($all_private_too?'all':$GLOBALS['egw_info']['user']['account_id']).':'.$only_type2;
 		$cfs = egw_cache::getInstance(__CLASS__, $cache_key);
 
 		if (!isset($cfs))
 		{
-			$cfs = iterator_to_array(new egw_customfields($app, $all_private_too, $only_type2));
+			$cfs = iterator_to_array(new egw_customfields($app, $all_private_too, $only_type2, 0, null, $db));
 
 			egw_cache::setInstance(__CLASS__, $cache_key, $cfs);
 			$cached = egw_cache::getInstance(__CLASS__, $app);
@@ -401,7 +404,7 @@ class egw_customfields implements IteratorAggregate
 				}
 			}
 		}
-		
+
 		self::$db->$op(self::TABLE, array(
 			'cf_label' => $cf['label'],
 			'cf_type' => $cf['type'],
