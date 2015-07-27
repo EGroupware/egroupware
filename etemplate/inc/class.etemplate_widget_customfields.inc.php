@@ -347,56 +347,56 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			$form_name = self::GLOBAL_ID;
 		}
 
-		if (!$this->is_readonly($cname, $form_name))
+		$all_readonly = $this->is_readonly($cname, $form_name);
+		$value_in = self::get_array($content, $form_name);
+		// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
+		if (!$this->id) $content = array_merge($content, $value_in);
+		//error_log(__METHOD__."($cname, ...) form_name=$form_name, use-private={$this->attrs['use-private']}, value_in=".array2string($value_in));
+		$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
+		if(is_array($value_in))
 		{
-			$value_in = self::get_array($content, $form_name);
-			// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
-			if (!$this->id) $content = array_merge($content, $value_in);
-			//error_log(__METHOD__."($cname, ...) form_name=$form_name, use-private={$this->attrs['use-private']}, value_in=".array2string($value_in));
-			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
-			if(is_array($value_in))
+			foreach($value_in as $field => $value)
 			{
-				foreach($value_in as $field => $value)
+				$field_settings = $customfields[$fname=substr($field,1)];
+
+				if ((string)$this->attrs['use-private'] !== '' &&	// are only (non-)private fields requested
+					(boolean)$field_settings['private'] != ($this->attrs['use-private'] != '0'))
 				{
-					$field_settings = $customfields[$fname=substr($field,1)];
-
-					if ((string)$this->attrs['use-private'] !== '' &&	// are only (non-)private fields requested
-						(boolean)$field_settings['private'] != ($this->attrs['use-private'] != '0'))
-					{
-						continue;
-					}
-
-					// check if single field is set readonly, used in apps as it was only way to make cfs readonly in old eT
-					if ($this->is_readonly($form_name != self::GLOBAL_ID ? $form_name : $cname, $field))
-					{
-						continue;
-					}
-					// run validation method of widget implementing this custom field
-					$widget = $this->_widget($fname, $field_settings);
-					// widget has no validate method, eg. is only displaying stuff --> nothing to validate
-					if (!method_exists($widget, 'validate')) continue;
-					$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
-					if ($field_settings['needed'] && (is_array($value) ? !$value : (string)$value === ''))
-					{
-						self::set_validation_error($field,lang('Field must not be empty !!!'),'');
-					}
-					$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,1)] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
-					$valid =& self::get_array($validated, $field_name, true);
-
-					if (is_array($valid)) $valid = implode(',', $valid);
-					// NULL is valid for most fields, but not custom fields due to backend handling
-					// See so_sql_cf->save()
-					if (is_null($valid)) $valid = false;
-					//error_log(__METHOD__."() $field_name: ".array2string($value).' --> '.array2string($valid));
+					continue;
 				}
+
+				// check if single field is set readonly, used in apps as it was only way to make cfs readonly in old eT
+				// single fields set to false in $readonly overwrite a global __ALL__
+				$cf_readonly = $this->is_readonly($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+				if ($cf_readonly || $all_readonly && $cf_readonly !== false)
+				{
+					continue;
+				}
+				// run validation method of widget implementing this custom field
+				$widget = $this->_widget($fname, $field_settings);
+				// widget has no validate method, eg. is only displaying stuff --> nothing to validate
+				if (!method_exists($widget, 'validate')) continue;
+				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
+				if ($field_settings['needed'] && (is_array($value) ? !$value : (string)$value === ''))
+				{
+					self::set_validation_error($field,lang('Field must not be empty !!!'),'');
+				}
+				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,1)] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+				$valid =& self::get_array($validated, $field_name, true);
+
+				if (is_array($valid)) $valid = implode(',', $valid);
+				// NULL is valid for most fields, but not custom fields due to backend handling
+				// See so_sql_cf->save()
+				if (is_null($valid)) $valid = false;
+				//error_log(__METHOD__."() $field_name: ".array2string($value).' --> '.array2string($valid));
 			}
-			elseif ($this->type == 'customfields-types')
-			{
-				// Transformation doesn't handle validation
-				$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
-				if (true) $valid = $value_in;
-				//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
-			}
+		}
+		elseif ($this->type == 'customfields-types')
+		{
+			// Transformation doesn't handle validation
+			$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
+			if (true) $valid = $value_in;
+			//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 		}
 	}
 }

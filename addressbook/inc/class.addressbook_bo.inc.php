@@ -925,6 +925,11 @@ class addressbook_bo extends addressbook_so
 		}
 		if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact, null, false);
 
+		// Get old record for tracking changes
+		if (!isset($old) && $isUpdate)
+		{
+			$old = $this->read($contact['id']);
+		}
 		$to_write = $contact;
 		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
 		if (!$ignore_acl && !$contact['owner'] && !$this->is_admin($contact))
@@ -933,16 +938,19 @@ class addressbook_bo extends addressbook_so
 			{
 				if (!in_array($field,$this->own_account_acl) && !in_array($field,array('id','owner','account_id','modified','modifier')))
 				{
-					unset($to_write[$field]);	// user is now allowed to change that
+					// user is not allowed to change that
+					if ($old)
+					{
+						$to_write[$field] = $old[$field];
+					}
+					else
+					{
+						unset($to_write[$field]);
+					}
 				}
 			}
 		}
 
-		// Get old record for tracking changes
-		if (!isset($old) && $isUpdate)
-		{
-			$old = $this->read($contact['id']);
-		}
 		// IF THE OLD ENTRY IS A ACCOUNT, dont allow to change the owner/location
 		// maybe we need that for id and account_id as well.
 		if (is_array($old) && (!isset($old['owner']) || empty($old['owner'])))
