@@ -1404,7 +1404,7 @@ class infolog_ui
 					$action_msg = lang('changed completion to %1%', $settings);
 					$entry['info_percent'] = $settings;
 					// Done entries will get changed right back if we don't change the status too
-					if($entry['info_status'] == 'done')
+					if(in_array($entry['info_status'],array('done','billed','cancelled','archive')))
 					{
 						$entry['info_status'] = 'ongoing';
 					}
@@ -1427,10 +1427,10 @@ class infolog_ui
 					if(isset($this->bo->status[$entry['info_type']][$settings]))
 					{
 						$action_msg = lang('changed status to %1', lang($this->bo->status[$entry['info_type']][$settings]));
-						if($settings != 'done' && $entry['info_status'] == 'done' && $entry['info_percent'] == 100)
+						if(!in_array($settings,array('done','billed','cancelled','archive')) && $entry['info_percent'] == 100)
 						{
 							// Done entries will get changed right back if we don't change the completion too
-							$entry['info_percent'] = 99;
+							$entry['info_percent'] = 90;
 						}
 						$entry['info_status'] = $settings;
 						if($this->bo->write($entry, true,true,true,$skip_notifications))
