@@ -150,9 +150,9 @@ class addressbook_tracking extends bo_tracking
 		foreach(array('adr_one_countryname' => 'adr_one_countrycode', 'adr_two_countryname' => 'adr_two_countrycode') as $name => $code)
 		{
 			// Only codes involved, but old text name is automatically added when loaded
-			if($old[$code] && $data[$code])
+			if($old[$code] && $data[$code] && ($key = array_search($name, $changed_fields)) !== false)
 			{
-				unset($changed_fields[array_search($name, $changed_fields)]);
+				unset($changed_fields[$key]);
 				continue;
 			}
 
