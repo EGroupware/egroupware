@@ -164,7 +164,7 @@ class so_sql_cf extends so_sql
 		$this->extra_join_order = " LEFT JOIN $extra_table extra_order ON $table.$this->autoinc_id=extra_order.$this->extra_id";
 		$this->extra_join_filter = " JOIN $extra_table extra_filter ON $table.$this->autoinc_id=extra_filter.$this->extra_id";
 
-		$this->customfields = egw_customfields::get($app);
+		$this->customfields = egw_customfields::get($app, false, null, $db);
 	}
 
 	/**
