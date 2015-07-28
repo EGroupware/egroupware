@@ -3690,6 +3690,34 @@ app.classes.mail = AppJS.extend(
 		}
 		this.et2._inst.submit(_widget);
 	},
+	
+	/**
+	 * Show ajax-loader when the autoloading get started
+	 * 
+	 * @param {type} _id item id
+	 * @param {type} _widget tree widget
+	 * @returns {Boolean}
+	 */
+	subscription_autoloadingStart: function (_id, _widget)
+	{
+		var node = _widget.input._globalIdStorageFind(_id);
+		if (node && typeof node.htmlNode != 'undefined')
+		{
+			var img = jQuery('img',node.htmlNode)[0];
+			img.src = egw.image('ajax-loader', 'admin');
+		}
+		return true;
+	},
+	
+	/**
+	 * Revert back the icon after autoloading is finished
+	 * @returns {Boolean}
+	 */
+	subscription_autoloadingEnd: function ()
+	{
+		return true;
+	},
+	
 	/**
 	 * Popup the subscription dialog
 	 *
