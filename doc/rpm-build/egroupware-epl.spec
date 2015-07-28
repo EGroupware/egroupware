@@ -238,6 +238,10 @@ Obsoletes: %{egw_packagename}-archive
 %description archive
 Shows (not included) Benno Mail Archive inside EGroupware and logs you in automatic.
 
+%post archive
+# update/install archive
+%{post_install} --install-update-app archive 2>&1 | tee -a %{install_log}
+
 %package bookmarks
 Version: %{version}
 Summary: The EGroupware bookmarks application
