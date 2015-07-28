@@ -267,8 +267,8 @@ class mail_ui
 		// triggered from client-side. Also, we keep this here as
 		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true);
 		
-		//Get all subscribed folder
-		// as getting all subscribed folder is very fast operation
+		//Get all subscribed folders
+		// as getting all subscribed folders is very fast operation
 		// we can use it to get a comparison base for folders which
 		// got subscribed or unsubscribed by the user
 		try {
@@ -302,7 +302,6 @@ class mail_ui
 						$namespace_roots[] = $profileId . self::$delimiter . str_replace($namespace['delimiter'], '', $namespace['prefix']);
 					}
 					$to_unsubscribe = $to_subscribe = array();
-					//$allFoldersData = $this->mail_bo->getFolderArray(null,false,0);
 					foreach ($content['foldertree'] as $path => $value)
 					{
 						list(,$node) = explode($profileId.self::$delimiter, $path);
@@ -357,8 +356,6 @@ class mail_ui
 					$parentFolder='INBOX';
 					$refreshData = array(
 						$profileId => lang($parentFolder),
-						'subscribed' => $to_subscribe,
-						'unsubscribed' => $to_unsubscribe
 					);
 					$response = egw_json_response::get();
 					foreach($refreshData as $folder => &$name)
