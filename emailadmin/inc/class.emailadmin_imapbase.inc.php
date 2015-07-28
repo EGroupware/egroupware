@@ -835,11 +835,10 @@ class emailadmin_imapbase
 	 * openConnection
 	 *
 	 * @param int $_icServerID = 0
-	 * @param boolean $_adminConnection = false
 	 * @throws Horde_Imap_Client_Exception on connection error or authentication failure
 	 * @throws InvalidArgumentException on missing credentials
 	 */
-	function openConnection($_icServerID=0, $_adminConnection=false)
+	function openConnection($_icServerID=0)
 	{
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.' ('.__LINE__.') '.' ->'.array2string($this->icServer));
@@ -2622,7 +2621,69 @@ class emailadmin_imapbase
 		if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.' ('.__LINE__.') ');
 		return $folders2return[$this->icServer->ImapServerId];
 	}
-
+	
+	/**
+	 * Get IMAP folder for a mailbox
+	 *
+	 * @param $_nodePath = null folder name to fetch from IMAP,
+	 *			null means all folders
+	 * @param $_onlyTopLevel if set to true only top level objects
+	 *			will be return and nodePath would be ignored
+	 * @param int $_search = 2 search restriction in given mailbox
+	 *	0:All folders recursively from the $_nodePath
+	 *  1:Only folder of specified $_nodePath
+	 *	2:All folders of $_nodePath in the same heirachy level
+	 * @return array an array of folder
+	 */
+	function getFolderArray ($_nodePath = null, $_onlyTopLevel = false, $_search= 2)
+	{
+		// delimiter
+		$delimiter = $this->getHierarchyDelimiter();
+		
+		$folders = array();
+		
+		if ($_onlyTopLevel) // top level leaves
+		{
+			// Get top mailboxes of icServer
+			$topFolders = $this->icServer->getMailboxes("", 2, true);
+			
+			foreach ($topFolders as &$node)
+			{
+				$pattern = "/\\".$delimiter."/";
+				$reference = preg_replace($pattern, '', $node['MAILBOX']);
+				$mainFolder = $this->icServer->getMailboxes($reference, 1, true);
+				$subFolders = $this->icServer->getMailboxes($node['MAILBOX'].$node['delimiter'], 2, true);
+				$folders[$node['MAILBOX']] = array_merge((array)$mainFolder, (array)$subFolders);
+				ksort($folders[$node['MAILBOX']]);
+			}
+		}
+		elseif ($_nodePath) // single node
+		{
+			switch ($_search)
+			{
+				// Including children
+				case 0:
+				case 2:
+					$path = $_nodePath.''.$delimiter;
+					break;
+				// Node itself
+				// shouldn't contain next level delimiter
+				case 1:
+					$path = $_nodePath;
+					break;
+			}
+			$folders = $this->icServer->getMailboxes($path, $_search, true);
+			ksort($folders);
+			return $folders;
+		}
+		elseif(!$_nodePath)
+		{
+			$folders = $this->icServer->getMailboxes('', 0, true);
+		}
+		return $folders;
+	}
+	
+	
 	/**
 	 * Check if all automatic folders exist and create them if not
 	 *
