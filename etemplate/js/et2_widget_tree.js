@@ -374,7 +374,10 @@ var et2_tree = et2_inputWidget.extend(
 			for(var i = 0; i < this.value.length; i++)
 			{
 				this.input.setCheck(this.value[i], true);
-				this.input.openItem(this.value[i]);
+				// autoloading openning needs to be absolutely based on user interaction
+				// or open flag in folder structure, therefore, We should 
+				// not force it to open the node
+				if (!this.options.autoloading) this.input.openItem(this.value[i]);
 			}
 		}
 		else
