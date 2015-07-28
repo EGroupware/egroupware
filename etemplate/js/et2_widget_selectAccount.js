@@ -26,7 +26,6 @@
  * - 'groupmembers'  => Non admins can only select groupmembers  (Server side - normal selectbox)
  * - 'selectbox'     => Selectbox with all accounts and groups (Server side - normal selectbox)
  * - 'primary_group' => Selectbox with primary group and search
- * - 'popup'         => No selectbox, just search.  No popup, the search replaces the selectbox
  *
  * Only primary_group and popup need anything different from a normal selectbox
  *
@@ -76,14 +75,6 @@ var et2_selectAccount = et2_selectbox.extend(
 
 		// Reference to object with dialog
 		this.dialog = null;
-
-		// Popup does not work with tags
-		var type = this.egw().preference('account_selection', 'common');
-		if(type == 'popup' && _attrs.multiple)
-		{
-			_attrs.tags = false;
-			_attrs.rows = Math.max(2,_attrs.rows);
-		}
 
 		this._super.call(this, _parent, _attrs);
 
@@ -144,33 +135,6 @@ var et2_selectAccount = et2_selectbox.extend(
 				.append('<span class="ui-icon ui-icon-search" style="display:inline-block"/>');
 
 			this.getSurroundings().insertDOMNode(button[0]);
-		}
-		else if (type == 'popup')
-		{
-			// Allow search 'inside' this widget
-			this.supportedWidgetClasses = [et2_link_entry];
-
-			this._create_search();
-			// Use empty label as blur
-			if(this.options.empty_label) this.search_widget.set_blur(this.options.empty_label);
-
-			// Rework to go around / through the selectbox
-			if(this.input)
-			{
-				this.getValue = function() {return this.value;};
-				this.set_value = function(_value) {
-					this.value = _value;
-					this.search_widget.set_value(_value);
-				};
-				this.search_widget.search.change(this, function(event) {
-					var value = event.data.search_widget.getValue();
-					event.data.value = typeof value == 'object' && value ? value.id : value;
-					event.data.input.trigger("change");
-					return false;
-				});
-			}
-			var div = jQuery(document.createElement("div")).append(this.search_widget.getDOMNode());
-			this.setDOMNode(div[0]);
 		}
 	},
 
@@ -237,58 +201,6 @@ var et2_selectAccount = et2_selectbox.extend(
 			// Put it last so check/uncheck doesn't move around
 			this.multiOptions.prev().find('ul')
 				.append(button);
-		}
-		else if (type == 'popup')
-		{
-			// Allow search 'inside' this widget
-			this.supportedWidgetClasses = [et2_link_entry];
-
-			/**
-			 * Popup takes the dialog and embeds it in place of the selectbox
-			 */
-			var dialog = this._open_multi_search();
-			dialog.dialog("close");
-			var div = jQuery(document.createElement("div")).append(this.dialog);
-			this.setDOMNode(div[0]);
-
-			var select_col = jQuery('#selection_col',dialog).children();
-			var selected = jQuery('#'+this.getInstanceManager().uniqueId + "_selected", select_col);
-
-			// Re-do to get it to work around/through the select box
-			this.set_value = function(_value) {
-				selected.empty();
-				if(typeof _value == 'string')
-				{
-					_value = _value.split(',');
-				}
-				if(typeof _value == 'object')
-				{
-					for(var key in _value)
-					{
-						this._add_selected(selected, _value[key]);
-					}
-				}
-			};
-			var widget = this;
-			this.getValue = function() {
-				// Update widget with selected
-				var ids = [];
-				var data = {};
-				jQuery('#'+this.getInstanceManager().uniqueId + '_selected li',select_col).each(function() {
-					var id = $j(this).attr("data-id");
-					// Add to list
-					ids.push(id);
-
-					// Make sure option is there
-					if(jQuery('input[data-id="'+id+'"]',widget.multiOptions).length == 0)
-					{
-						widget._appendMultiOption(id,jQuery('label',this).text());
-					}
-				});
-
-				this.set_multi_value(ids);
-				return ids;
-			};
 		}
 	},
 

@@ -72,7 +72,6 @@ class preferences_hooks
 		$account_sels = array(
 			'selectbox'     => lang('Selectbox'),
 			'primary_group' => lang('Selectbox with primary group and search'),
-			'popup'         => lang('Popup with search'),
 			'groupmembers'  => lang('Selectbox with groupmembers'),
 			'none'          => lang('No user-selection at all'),
 		);

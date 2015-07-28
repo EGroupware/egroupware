@@ -60,7 +60,6 @@ class uiaccountsel
 	 * The function respects the 'account_selection' general preference:
 	 * 	- 'selectbox'     => Selectbox with all accounts and groups
 	 *  - 'primary_group' => Selectbox with primary group and search
-	 *  - 'popup'         => Popup with search
 	 *  - 'groupmembers'  => Non admins can only select groupmembers
 	 *  - 'none'          => Non admins can NOT select any other user
 	 *
@@ -142,10 +141,6 @@ class uiaccountsel
 		}
 		switch($account_sel)
 		{
-			case 'popup':
-				$select = $selected;
-				break;
-
 			case 'primary_group':
 			case 'groupmembers':
 				if ($account_sel == 'primary_group')
@@ -250,7 +245,7 @@ class uiaccountsel
 			'multiple' => $lines,	// single selection (multiple=0), closes after the first selection
 		),false);
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
-		if (!$only_groups && ($lines <= 1 && $this->account_selection == 'popup' || !$lines && $this->account_selection == 'primary_group'))
+		if (!$only_groups && ($lines <= 1 && !$lines && $this->account_selection == 'primary_group'))
 		{
 			if (!$lines)
 			{
@@ -279,7 +274,7 @@ class uiaccountsel
 		$html = html::select($name,$selected,$select,True,$options.' id="'.$element_id.
 			'" data-popup-link="'.htmlspecialchars($link).'"',$lines > 1 ? $lines : 0,false);
 
-		if (!$only_groups && ($lines > 0 && $this->account_selection == 'popup' || $lines > 1 && $this->account_selection == 'primary_group'))
+		if (!$only_groups && $lines > 1 && $this->account_selection == 'primary_group')
 		{
 			$html .= html::submit_button('search','Search accounts',$js,false,
 				' title="'.html::htmlspecialchars(lang('Search accounts')).
