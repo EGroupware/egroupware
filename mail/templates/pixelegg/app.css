@@ -800,11 +800,11 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     padding-top: 10px;
   }
   div.mailDisplayContainer.mailvelopeTopContainer {
-	top:190px;
+    top: 190px;
   }
   div.mailDisplayContainer.mailvelopeTopContainer > iframe {
-	position: static;
-	min-width: 860px;
+    position: static;
+    min-width: 860px;
   }
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
@@ -879,6 +879,10 @@ div.mailComposeHeaderSection > table {
   z-index: 999;
   width: 100%;
   height: 100%;
+}
+/*Avoid getting scrollbar on form area, let scrolling be handled by tree*/
+#mail-subscribe {
+  overflow: hidden;
 }
 #popupMainDiv {
   padding: 5px;
