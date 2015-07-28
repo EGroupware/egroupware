@@ -101,7 +101,7 @@ class etemplate_widget_tree extends etemplate_widget
 	/**
 	 * check checkbox if exists (in case of three-state checkboxes values can be:0 unchecked- 1 - checked or -1 - unsure)
 	 */
-	const CHECKED = 0;
+	const CHECKED = 'checked';
 	
 	/**
 	 * Parse and set extra attributes from xml in template object
