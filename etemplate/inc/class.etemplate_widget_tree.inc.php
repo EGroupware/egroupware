@@ -20,25 +20,35 @@ egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
  *
  * Example initialisation of tree via $sel_options array:
  *
+ *  use \etemplate_widget_tree as tree;
+ *
  * 	$sel_options['tree'] = array(
- * 		'id' => 0, 'item' => array(
- * 			array('id' => '/INBOX', 'text' => 'INBOX', 'tooltip' => 'Your inbox', 'open' => 1, 'im1' => 'kfm_home.png', 'im2' => 'kfm_home.png', 'child' => '1', 'item' => array(
- * 				array('id' => '/INBOX/sub', 'text' => 'sub', 'im0' => 'folderClosed.gif'),
- * 				array('id' => '/INBOX/sub2', 'text' => 'sub2', 'im0' => 'folderClosed.gif'),
- * 			)),
- * 			array('id' => '/user', 'text' => 'user', 'child' => '1', 'item' => array(
- * 				array('id' => '/user/birgit', 'text' => 'birgit', 'im0' => 'folderClosed.gif'),
- * 			)),
+ * 		tree::ID => 0, tree::CHILDREN => array(	// ID of root has to be 0!
+ * 			array(
+ *				tree::ID => '/INBOX',
+ *				tree::LABEL => 'INBOX', tree::TOOLTIP => 'Your inbox',
+ *				tree::OPEN => 1, tree::IMAGE_FOLDER_OPEN => 'kfm_home.png', tree::IMAGE_FOLDER_CLOSED => 'kfm_home.png',
+ *				tree::CHILDREN => array(
+ *					array(tree::ID => '/INBOX/sub', tree::LABEL => 'sub', tree::IMAGE_LEAF => 'folderClosed.gif'),
+ *					array(tree::ID => '/INBOX/sub2', tree::LABEL => 'sub2', tree::IMAGE_LEAF => 'folderClosed.gif'),
+ *				),
+ * 			),
+ * 			array(
+ *				tree::ID => '/user',
+ *				tree::LABEL => 'user',
+ *				tree::CHILDREN => array(
+ *	 				array(tree::ID => '/user/birgit', tree::LABEL => 'birgit', tree::IMAGE_LEAF => 'folderClosed.gif'),
+ *					array(tree::ID => '/user/ralf', tree::LABEL => 'ralf', tree::AUTOLOAD_CHILDREN => 1),
+ *				)
+ * 			),
  * 	));
  *
  * Please note:
- * - id of root-item has to be 0, ids of sub-items can be strings or numbers
- * - item has to be an array (not json object: numerical keys 0, 1, ...)
- * - im0: leaf image (default: leaf.gif), im1: open folder image (default: folderOpen.gif),
- *   im2: closed folder (default: folderClosed.gif)
- * - for arbitrary image eg. $icon = common::image($app, 'navbar') use following code:
- * 		list(,$icon) = explode($GLOBALS['egw_info']['server']['webserver_url'], $icon);
- *		$icon = '../../../../..'.$icon;
+ * - for more info see class constants below
+ * - all images have to be under url specified in attribute "image_path", default $websererUrl/phpgwapi/templates/default/image/dhtmlxtree
+ * - you can use attribute "std_images" to supply different standard images from default
+ *	[ "leaf.gif", "folderOpen.gif", "folderClosed.gif" ]
+ * - images can also be specified as standard "app/image" string, client-side will convert them to url relativ to image_path
  * - json autoloading uses identical data-structur and should use etemplate_widget_tree::send_quote_json($data)
  *   to send data to client, as it takes care of html-encoding of node text
  * - if autoloading is enabled, you have to validate returned results yourself, as widget does not know (all) valid id's
@@ -46,12 +56,53 @@ egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
 class etemplate_widget_tree extends etemplate_widget
 {
 	/**
+	 * key for id of node, has to be unique, eg. a path, nummerical id is allowed too
+	 * if of root has to be 0!
+	 */
+	const ID = 'id';
+	/**
+	 * key for label of node
+	 */
+	const LABEL = 'text';
+	/**
+	 * key for tooltip / title of node
+	 */
+	const TOOLTIP = 'tooltip';
+	/**
+	 * key for array of children (not json object: numerical keys 0, 1, ...)
+	 */
+	const CHILDREN = 'item';
+	/**
+	 * key if children exist and should be autoloaded, set value to 1
+	 */
+	const AUTOLOAD_CHILDREN = 'child';
+	/**
+	 * key of relative url of leaf image or standard "app/image" string
+	 * used if node has not [AUTOLOAD_]CHILDREN set
+	 */
+	const IMAGE_LEAF = 'im0';
+	/**
+	 * key of relative url of open folder image or standard "app/image" string
+	 * used if node has [AUTOLOAD_]CHILDREN set AND is open
+	 */
+	const IMAGE_FOLDER_OPEN = 'im1';
+	/**
+	 * key of relative url of closed folder image or standard "app/image" string
+	 * used if node has [AUTOLOAD_]CHILDREN set AND is closed
+	 */
+	const IMAGE_FOLDER_CLOSED = 'im2';
+	/**
+	 * key of flag if folder is open, default folder is closed
+	 */
+	const OPEN = 'open';
+
+	/**
 	 * Parse and set extra attributes from xml in template object
 	 *
 	 * Reimplemented to parse our differnt attributes
 	 *
 	 * @param string|XMLReader $xml
-	 * @param boolean $cloned=true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
+	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 * @return etemplate_widget_template current object or clone, if any attribute was set
 	 */
 	public function set_attrs($xml, $cloned=true)
@@ -236,7 +287,7 @@ class etemplate_widget_tree extends etemplate_widget
 	/**
 	 * Get template specific image path
 	 *
-	 * @param string $image_path=null default path to use, or empty to use default of /phpgwapi/templates/default/images/dhtmlxtree
+	 * @param string $image_path =null default path to use, or empty to use default of /phpgwapi/templates/default/images/dhtmlxtree
 	 * @return string templated url if available, otherwise default path
 	 */
 	public static function templateImagePath($image_path=null)
@@ -334,8 +385,8 @@ class etemplate_widget_tree extends etemplate_widget
 	 * @param string $widget_type
 	 * @param string $legacy_options options string of widget
 	 * @param boolean $no_lang=false initial value of no_lang attribute (some types set it to true)
-	 * @param boolean $readonly=false
-	 * @param mixed $value=null value for readonly
+	 * @param boolean $readonly =false
+	 * @param mixed $value =null value for readonly
 	 * @return array with value => label pairs
 	 */
 	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, $value=null)
