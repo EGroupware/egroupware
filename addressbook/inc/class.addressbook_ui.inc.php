@@ -1928,7 +1928,7 @@ window.egw_LAB.wait(function() {
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
-					egw_framework::refresh_opener($content['msg'], 'addressbook', $content['id'],  $content['id'] ? 'update' : 'add',
+					egw_framework::refresh_opener($content['msg'], 'addressbook', $content['id'],  $content['id'] ? 'edit' : 'add',
 						null, null, null, $this->error ? 'error' : 'success');
 
 					// re-throw redirect exception, if there's no error
