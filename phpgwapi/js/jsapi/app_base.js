@@ -386,7 +386,7 @@ var AppJS = Class.extend(
 					if (matches && matches.length > 1 && matches[2] !== undefined)
 					{
 						event.stopImmediatePropagation();
-						self.setState.call(self, JSON.parse(decodeURI(matches[2])));
+						self.setState.call(self, JSON.parse(matches[2]));
 						return false;
 					}
 				})
