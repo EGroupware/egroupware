@@ -203,6 +203,12 @@ var et2_tree = et2_inputWidget.extend(
 		if (widget.options.autoloading)
 		{
 			var url = widget.options.autoloading;
+			
+			//Set escaping mode to utf8, as url in 
+			//autoloading needs to be utf8 encoded.
+			//For instance item id with umlaut.
+			widget.input.setEscapingMode('utf8');
+			
 			if (url.charAt(0) != '/' && url.substr(0,4) != 'http')
 			{
 				url = '/json.php?menuaction='+url;
