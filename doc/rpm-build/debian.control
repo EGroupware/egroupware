@@ -13,7 +13,6 @@ Depends:
  egroupware-epl-vendor (= ${binary:Version}),
  egroupware-epl-jdots (= ${binary:Version}),
  egroupware-epl-pixelegg (= ${binary:Version}),
- egroupware-epl-stylite (= ${binary:Version}),
  egroupware-epl-esync (= ${binary:Version}),
  egroupware-epl-bookmarks (= ${binary:Version}),
  egroupware-epl-calendar (= ${binary:Version}),
@@ -58,7 +57,7 @@ Depends: apache2,
  php5-mcrypt,
  php5-xsl,
  ${misc:Depends}
-Recommends: mysql-server, php-apc, php5-pecl-smb, php5-tidy, mysql-client | postgresql-client
+Recommends: mariadb-server | mysql-server, php-apc, php5-pecl-smb, php5-tidy, mariadb-client | mysql-client | postgresql-client
 Suggests: egroupware-epl,
  php5-ldap,
  php5-mhash,
