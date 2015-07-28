@@ -19,7 +19,7 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-epl',
-	'version' => '14.2',                            // '1.6'
+	'version' => '14.3',                            // '1.6'
 	'packaging' => date('Ymd'),                     // '001'
 	'egwdir' => 'egroupware',
 	'svndir' => '/tmp/build_root/epl_14.2_buildroot-svn',
@@ -30,7 +30,7 @@ $config = array(
 	'svnbranch' => 'branches/14.2',	//'trunk', // 'branches/1.6' or 'tags/1.6.001'
 	'svnalias' => 'aliases/default-ssh',    // default alias
 	'aliasdir' => 'egroupware',             // directory created by the alias
-	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
+	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),

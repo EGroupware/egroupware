@@ -1,4 +1,4 @@
-egroupware-epl (14.2.20150717) hardy; urgency=low
+egroupware-epl (14.3.20150728) hardy; urgency=low
 
   * Update API version to 14.3, NO new features, just database optimization targeting InnoDB engine in MySQL
   * CardDAV/Addresbook: contacts containing photos were broken and iOS showed phone number labels like "WORK instead of work
