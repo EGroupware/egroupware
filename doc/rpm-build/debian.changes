@@ -1,3 +1,16 @@
+egroupware-epl (14.3.20150728) hardy; urgency=low
+
+  * Update API version to 14.3, NO new features, just database optimization targeting InnoDB engine in MySQL
+  * CardDAV/Addresbook: contacts containing photos were broken and iOS showed phone number labels like "WORK instead of work
+  * Univention: support Dovecot as IMAP available and default from 4.0-2 on
+  * CalDAV/Calendar/InfoLog: do NOT use ENCODING=QUOTED-PRINTABLE for iCal 2.0, cuts eg. description off in TB, if containing non-ascii chars
+  * CardDAV/Addressbook: fix iOS 8.4 problem allways creating new contacts for admins in accounts addressbook, using now default or personal addressbook
+  * Addressbook: custom fields of accounts enabled via own-account-acl were not editable
+  * Chat: using phpFreeChat 1.7 from Github now
+  * Filemanager/Versioning: rewrite SQL query to show attic-directory (deleted files) to improve performance
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 28 Jul 2015 10:24:30 +0200
+
 egroupware-epl (14.2.20150717) hardy; urgency=low
 
   * All apps: highlighting selected favorite
