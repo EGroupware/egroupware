@@ -32,6 +32,7 @@ egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
  *					array(tree::ID => '/INBOX/sub', tree::LABEL => 'sub', tree::IMAGE_LEAF => 'folderClosed.gif'),
  *					array(tree::ID => '/INBOX/sub2', tree::LABEL => 'sub2', tree::IMAGE_LEAF => 'folderClosed.gif'),
  *				),
+ *				tree::CHECKED => true
  * 			),
  * 			array(
  *				tree::ID => '/user',
@@ -39,7 +40,8 @@ egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
  *				tree::CHILDREN => array(
  *	 				array(tree::ID => '/user/birgit', tree::LABEL => 'birgit', tree::IMAGE_LEAF => 'folderClosed.gif'),
  *					array(tree::ID => '/user/ralf', tree::LABEL => 'ralf', tree::AUTOLOAD_CHILDREN => 1),
- *				)
+ *				),
+ *				tree::CHECKED => false
  * 			),
  * 	));
  *
@@ -95,7 +97,12 @@ class etemplate_widget_tree extends etemplate_widget
 	 * key of flag if folder is open, default folder is closed
 	 */
 	const OPEN = 'open';
-
+	
+	/**
+	 * check checkbox if exists (in case of three-state checkboxes values can be:0 unchecked- 1 - checked or -1 - unsure)
+	 */
+	const CHECKED = 0;
+	
 	/**
 	 * Parse and set extra attributes from xml in template object
 	 *
