@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 14.2.20141211
+Version: 14.3.20150728
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -81,7 +81,7 @@ Distribution: %{distribution}
 
 Source0: %{name}-%{version}.tar.gz
 Source2: %{name}-stylite-%{version}.tar.bz2
-#Source3: %{name}-pixelegg-%{version}.tar.bz2
+Source3: %{name}-archive-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
 #Source5: %{name}-jdots-%{version}.tar.bz2
 Source6: phpfreechat_data_public.tar.gz
@@ -227,6 +227,16 @@ Requires: egw-core >= %{version}
 Obsoletes: %{egw_packagename}-esync
 %description esync
 Z-Push based ActiveSync protocol implementation.
+
+%package archive
+Version: %{version}
+Summary: Benno Mail Archive integration
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}
+Obsoletes: %{egw_packagename}-archive
+%description archive
+Shows (not included) Benno Mail Archive inside EGroupware and logs you in automatic.
 
 %package bookmarks
 Version: %{version}
@@ -515,7 +525,7 @@ echo "post_install: %{post_install}"
 %setup0 -c -n %{egwdirname}
 #%setup1 -T -D -a 1 -n %{egwdirname}
 %setup2 -T -D -a 2 -n %{egwdirname}
-#%setup3 -T -D -a 3 -n %{egwdirname}
+%setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
 #%setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
@@ -573,6 +583,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/webdav.php
 %{egwdir}/addressbook
 %{egwdir}/admin
+%{egwdir}/api
 %{egwdir}/doc
 %{egwdir}/etemplate
 %{egwdir}/files
@@ -591,6 +602,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/files
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/backup
 %config(noreplace) %attr(0640,%{apache_user},%{apache_group}) %{egwdatadir}/header.inc.php
+
+%files archive
+%defattr(-,root,root)
+%{egwdir}/archive
 
 %files bookmarks
 %defattr(-,root,root)
