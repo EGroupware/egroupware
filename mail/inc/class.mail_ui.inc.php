@@ -203,6 +203,8 @@ class mail_ui
 	 *
 	 * @param int $_icServerID
 	 * @param boolean $unsetCache
+	 *
+	 * @throws egw_exception
 	 */
 	function changeProfile($_icServerID,$unsetCache=false)
 	{
