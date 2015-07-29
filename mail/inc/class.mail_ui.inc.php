@@ -799,7 +799,7 @@ class mail_ui
 					}
 					catch (Exception $e)
 					{
-						return self::treeLeafNoConnectionArray($_profileID, $e->getMessage(), array($_profileID), '');
+						return mail_tree::treeLeafNoConnectionArray($_profileID, $e->getMessage(), array($_profileID), '');
 					}
 				}
 			}
@@ -865,7 +865,7 @@ class mail_ui
 			// create a fake INBOX folder showing connection error (necessary that client UI unlocks tree!)
 			if ($e && $acc_id == $_profileID && !$folderObjects)
 			{
-				$out = self::treeLeafNoConnectionArray($acc_id, lang($e->getMessage()), array($acc_id, 'INBOX'), $acc_id);
+				$out = mail_tree::treeLeafNoConnectionArray($acc_id, lang($e->getMessage()), array($acc_id, 'INBOX'), $acc_id);
 			}
 		}
 		//$endtime = microtime(true) - $starttime;
