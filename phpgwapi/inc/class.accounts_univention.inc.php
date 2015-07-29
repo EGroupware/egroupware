@@ -67,7 +67,7 @@ class accounts_univention extends accounts_ldap
 				// get_default() does not work for Adminstrator, try acc_id=1 instead
 				// if everything fails try hostname ...
 				try {
-					if (!($account = emailadmin_account::get_default()))
+					if (!($account = emailadmin_account::get_default(false, false, false)))
 					{
 						$account = emailadmin_account::read(1);
 					}
@@ -76,7 +76,7 @@ class accounts_univention extends accounts_ldap
 				catch(Exception $e) {
 					unset($e);
 				}
-				if (empty($hostname)) $hostname = trunc(system('hostname -f'));
+				if (empty($hostname)) $hostname = trim(system('hostname -f'));
 				$params[] = '--set'; $params[] = 'mailHomeServer='.$hostname;
 			}
 			$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
