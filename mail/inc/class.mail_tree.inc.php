@@ -161,7 +161,7 @@ class mail_tree
 			try
 			{
 				$nodeInfo = self::pathToFolderData($_parent, $hDelimiter);	
-				$folders = $this->ui->mail_bo->getFolderArray($nodeInfo['mailbox'],false,2);
+				$folders = $this->ui->mail_bo->getFolderArrays($nodeInfo['mailbox'],false,2);
 			} catch (Exception $ex) {
 				return self::treeLeafNoConnectionArray($_profileID, $ex->getMessage(),array($_profileID), '');
 			}
@@ -215,8 +215,7 @@ class mail_tree
 				self::setOutStructure($baseNode, $tree,self::$delimiter);
 			}
 			//List of folders
-			$foldersList = $this->ui->mail_bo->getFolderArray(null, true);
-			
+			$foldersList = $this->ui->mail_bo->getFolderArrays(null, true);
 			// Parent node arrays
 			$parentNode = $parentNodes = array();
 			
