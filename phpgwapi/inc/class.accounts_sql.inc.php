@@ -424,7 +424,10 @@ class accounts_sql
 		if (!isset($GLOBALS['egw_setup']) || in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
 		{
 			$email_cols = array('coalesce('.$this->contacts_table.'.contact_email,'.emailadmin_smtp_sql::TABLE.'.mail_value) as email');
-			$search_cols[] = emailadmin_smtp_sql::TABLE.'.mail_value';
+			if ($this->db->Type == 'mysql' && !preg_match('/[\x80-\xFF]/', $param['query']))
+			{
+				$search_cols[] = emailadmin_smtp_sql::TABLE.'.mail_value';
+			}
 			$join .= ' LEFT JOIN '.emailadmin_smtp_sql::TABLE.' ON '.$this->table.'.account_id=-'.emailadmin_smtp_sql::TABLE.'.account_id AND mail_type='.emailadmin_smtp_sql::TYPE_ALIAS;
 		}
 
