@@ -369,7 +369,9 @@ class Utils extends StreamWrapper
 	}
 
 	/**
-	 * Check and optionally fix multiple active files and directories with identical path
+	 * Check and optionally fix multiple active files and multiple active or inactive directories with identical path
+	 *
+	 * There are never multiple directories with same name, unlike versioned files!
 	 *
 	 * @param boolean $check_only =true
 	 * @return array with messages / found problems
@@ -379,7 +381,7 @@ class Utils extends StreamWrapper
 		$stmt = $inactivate_msg_added = null;
 		$msgs = array();
 		foreach(self::$pdo->query('SELECT fs_dir,fs_name,COUNT(*) FROM '.self::TABLE.
-			' WHERE fs_active='.self::_pdo_boolean(true).
+			' WHERE fs_active='.self::_pdo_boolean(true)." OR fs_mime='httpd/unix-directory'".
 			' GROUP BY fs_dir,'.(self::$pdo_type == 'mysql' ? 'BINARY ' : '').'fs_name'.	// fs_name is casesensitive!
 			' HAVING COUNT(*) > 1') as $row)
 		{
@@ -387,8 +389,9 @@ class Utils extends StreamWrapper
 			{
 				$stmt = self::$pdo->prepare('SELECT *,(SELECT COUNT(*) FROM '.self::TABLE.' sub WHERE sub.fs_dir=fs.fs_id) AS children'.
 					' FROM '.self::TABLE.' fs'.
-					' WHERE fs.fs_dir=:fs_dir AND fs.fs_active='.self::_pdo_boolean(true).' AND fs.fs_name'.self::$case_sensitive_equal.':fs_name'.
-					" ORDER BY fs.fs_mime='httpd/unix-directory' DESC,children DESC,fs.fs_modified DESC");
+					' WHERE fs.fs_dir=:fs_dir AND (fs.fs_active='.self::_pdo_boolean(true)." OR fs_mime='httpd/unix-directory')" .
+					' AND fs.fs_name'.self::$case_sensitive_equal.':fs_name'.
+					" ORDER BY fs.fs_mime='httpd/unix-directory' DESC,fs.fs_active DESC,children DESC,fs.fs_modified DESC");
 				$inactivate_stmt = self::$pdo->prepare('UPDATE '.self::TABLE.
 					' SET fs_active='.self::_pdo_boolean(false).
 					' WHERE fs_dir=:fs_dir AND fs_active='.self::_pdo_boolean(true).
@@ -404,6 +407,7 @@ class Utils extends StreamWrapper
 			{
 				if ($entry['fs_mime'] == 'httpd/unix-directory')
 				{
+					// by sorting active directores first (fs.fs_active DESC), we make sure active one is kept
 					if (!$n)
 					{
 						$dir = $entry;	// directory to keep
