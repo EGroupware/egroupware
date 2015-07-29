@@ -882,7 +882,11 @@ class mail_ui
 		$nameSpace = $this->mail_bo->_getNameSpaces();
 		foreach($folderObjects as $key => $obj)
 		{
-			$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
+			// A1. Comment this part out for the moment to not get performance issue and wierd error
+			// until we re-implement get folder status and mail_tree completely as getFolderTree
+			// method would go anyway.
+			//$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
+
 			//error_log(__METHOD__.__LINE__.array2string($key));
 			$levels = explode($delimiter,$key);
 			$levelCt = count($levels);
@@ -932,6 +936,9 @@ class mail_ui
 			}
 			$path = $this->mail_bo->profileID.self::$delimiter.$key;
 			$oA['id'] = $path; // ID holds the PATH
+			
+			// A2. This part needs to be commented out because of part A1 (see A1). as they are relative
+			/*
 			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\noselect')!== false)
 			{
 				$oA['im0'] = "folderNoSelectClosed.gif"; // one Level
@@ -941,7 +948,8 @@ class mail_ui
 			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\hasnochildren')=== false)
 			{
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
-			}
+			}*/
+			
 			$oA['parent'] = $parentName;
 
 			mail_tree::setOutStructure($oA,$out,$obj->delimiter,true,$nameSpace);
