@@ -1,3 +1,14 @@
+egroupware-epl (14.3.20150729) hardy; urgency=low
+
+  * Univention: fix PHP Fatal error while installing
+  * Mail/subscription: Performance improvement
+  * Filemanager/Versioning: filesystem checks now fixes directories existing multiple times, causing them to appear empty
+  * Admin: fix SQL error when search contains a non-ascii character
+  * Nginx/FastCGI: run shutdown callbacks (eg. link notification processing) after sending response to user
+  * CalDAV/Calendar: fix not working private flag from Apple clients
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 29 Jul 2015 18:15:11 +0200
+
 egroupware-epl (14.3.20150728) hardy; urgency=low
 
   * Update API version to 14.3, NO new features, just database optimization targeting InnoDB engine in MySQL
