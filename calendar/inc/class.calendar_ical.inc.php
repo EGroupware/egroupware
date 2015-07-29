@@ -527,7 +527,7 @@ class calendar_ical extends calendar_boupdate
 					case 'CLASS':
 						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
 						// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
-						if (!$event['public'] && $this->productManufacturer == 'GroupDAV')
+						if (!$event['public'] && $this->productManufacturer == 'groupdav')
 						{
 							$vcal->setAttribute('X-CALENDARSERVER-ACCESS', 'CONFIDENTIAL');
 						}
@@ -931,7 +931,7 @@ class calendar_ical extends calendar_boupdate
 					// (probably because some devices have no clue about timezones)
 					// GroupDAV uses offsets, as web UI assumes alarms are relative too
 					// (with absolute times GroupDAV clients do NOT move alarms, if events move!)
-					if ($this->productManufacturer != 'GroupDAV' &&
+					if ($this->productManufacturer != 'groupdav' &&
 						!empty($event['whole_day']) && $alarmData['offset'])
 					{
 						$alarmData['offset'] = false;
@@ -2265,7 +2265,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		foreach ($vcal->getComponents() as $component)
 		{
-			if (($event = $this->_ical2egw_callback($component,$this->tzid,$principalURL)))
+			if (($event = $this->_ical2egw_callback($component,$this->tzid,$principalURL,$vcal)))
 			{
 				$events[] = $event;
 			}
@@ -2295,7 +2295,7 @@ class calendar_ical extends calendar_boupdate
 
 		if (!is_a($component, 'Horde_Icalendar_Vevent') ||
 			!($event = $this->vevent2egw($component, $container ? $container->getAttributeDefault('VERSION', '2.0') : '2.0',
-				$this->supportedFields, $principalURL, $container)))
+				$this->supportedFields, $principalURL, null, $container)))
 		{
 			return false;
 		}
@@ -3091,7 +3091,7 @@ class calendar_ical extends calendar_boupdate
 
 		// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
 		try {
-			if ($this->productManufacturer == 'GroupDAV' && $container &&
+			if ($this->productManufacturer == 'groupdav' && $container &&
 				($x_calendarserver_access = $container->getAttribute('X-CALENDARSERVER-ACCESS')))
 			{
 				$event['public'] =  (int)(strtoupper($x_calendarserver_access) == 'PUBLIC');
