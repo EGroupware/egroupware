@@ -1401,9 +1401,10 @@ class emailadmin_account implements ArrayAccess
 	 *
 	 * @param boolean $smtp =false false: usable for IMAP, true: usable for SMTP
 	 * @param boolean $return_id =false true: return acc_id, false return account object
+	 * @param boolean $log_no_default =true true: error_log if no default found, false be silent
 	 * @return emailadmin_account|null
 	 */
-	static function get_default($smtp=false, $return_id=false)
+	static function get_default($smtp=false, $return_id=false, $log_no_default=true)
 	{
 		try
 		{
@@ -1443,7 +1444,7 @@ class emailadmin_account implements ArrayAccess
 		}
 		catch (Exception $e)
 		{
-			error_log(__METHOD__.__LINE__.' Error no Default available.'.$e->getMessage());
+			if ($log_no_default) error_log(__METHOD__.__LINE__.' Error no Default available.'.$e->getMessage());
 		}
 		return null;
 	}
