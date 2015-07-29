@@ -1,6 +1,6 @@
 Index: egroupware/admin/inc/class.uiasyncservice.inc.php
 ===================================================================
---- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 53044)
+--- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 53223)
 +++ egroupware/admin/inc/class.uiasyncservice.inc.php	(Arbeitskopie)
 @@ -95,16 +95,20 @@
  		{
@@ -29,7 +29,7 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  		{
 -			echo '<p>'.lang('Installed crontab').": \n";
 +			echo '<p>'.lang('Installed crontab').": /etc/cron.d/egroupware\n";
- 
+
 +/*
  			if (is_array($installed) && isset($installed['cronline']))
  			{
@@ -40,13 +40,13 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  				lang("for the times below (empty values count as '*', all empty = every minute)")."</p>\n";
 +*/
  		}
- 
+
  		echo "<hr><table border=0><tr>\n";
 Index: egroupware/phpgwapi/inc/class.egw.inc.php
 ===================================================================
---- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 53055)
+--- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 53264)
 +++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
-@@ -600,11 +600,13 @@
+@@ -618,11 +618,13 @@
  					_egw_log_exception($ex);
  				}
  			}
