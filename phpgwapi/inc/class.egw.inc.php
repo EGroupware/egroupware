@@ -575,6 +575,24 @@ class egw extends egw_minimal
 				egw_json_response::sendResult();
 			}
 
+			// run all on_shutdown callbacks with session in their name (eg. egw_link::save_session_cache), do NOT stop on exceptions
+			foreach(self::$shutdown_callbacks as $n => $data)
+			{
+				try {
+					//error_log(__METHOD__."() running ".array2string($data));
+					$callback = array_shift($data);
+					if (!is_array($callback) || strpos($callback[1], 'session') === false) continue;
+					call_user_func_array($callback, $data);
+				}
+				catch (Exception $ex) {
+					_egw_log_exception($ex);
+				}
+				unset(self::$shutdown_callbacks[$n]);
+			}
+			// now we can close the session
+			// without closing the session fastcgi_finish_request() will NOT send output to user
+			$GLOBALS['egw']->session->commit_session();
+
 			// flush all output to user
 			/* does NOT work on Apache :-(
 			for($i = 0; ob_get_level() && $i < 10; ++$i)
