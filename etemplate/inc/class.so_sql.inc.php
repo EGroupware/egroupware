@@ -1249,6 +1249,10 @@ class so_sql
 				$numeric_columns[] = $col;
 				continue;
 			}
+			if ($this->db->Type == 'mysql' && $table_def['fd'][$col_name]['type'] === 'ascii' && !preg_match('/[\x80-\xFF]/', $_pattern))
+			{
+				continue;	// will only give sql error
+			}
 			$columns[] = sprintf($this->db->capabilities[egw_db::CAPABILITY_CAST_AS_VARCHAR],"COALESCE($col,'')");
 		}
 		if($columns)
