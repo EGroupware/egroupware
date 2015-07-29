@@ -722,6 +722,11 @@ class schema_proc
 		}
 		else
 		{
+			// drop evtl. existing temp. table eg. from a previous failed upgrade
+			if (($tables = $this->db->table_names(true)) && in_array($tmp_name, $tables))
+			{
+				$this->DropTable($tmp_name);
+			}
 			$Ok = $this->RenameTable($sTableName,$tmp_name);
 		}
 		$Ok = $Ok && $this->CreateTable($sTableName,$aTableDef) &&
