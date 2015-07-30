@@ -591,7 +591,7 @@ class egw extends egw_minimal
 			}
 			// now we can close the session
 			// without closing the session fastcgi_finish_request() will NOT send output to user
-			$GLOBALS['egw']->session->commit_session();
+			if (isset($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
 
 			// flush all output to user
 			/* does NOT work on Apache :-(
@@ -601,7 +601,7 @@ class egw extends egw_minimal
 			}
 			flush();*/
 			// working for fastCGI :-)
-			if (function_exists('fastcgi_finish_request'))
+			if (function_exists('fastcgi_finish_request') && substr($_SERVER['PHP_SELF'], -32) != '/phpgwapi/cron/asyncservices.php')
 			{
 				fastcgi_finish_request();
 			}
