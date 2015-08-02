@@ -591,7 +591,7 @@ class egw extends egw_minimal
 			}
 			// now we can close the session
 			// without closing the session fastcgi_finish_request() will NOT send output to user
-			if (isset($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
+			if (isset($GLOBALS['egw']->session) && is_object($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
 
 			// flush all output to user
 			/* does NOT work on Apache :-(
