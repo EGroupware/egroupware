@@ -112,6 +112,7 @@ class mail_ui
 	 */
 	function __construct($run_constructor=true)
 	{
+		$this->mail_tree = new mail_tree($this);
 		if (!$run_constructor) return;
 
 		if (mail_bo::$debugTimes) $starttime = microtime (true);
@@ -142,7 +143,6 @@ class mail_ui
 				//openConnection gathers SpecialUseFolderInformation and Delimiter Info
 				$this->mail_bo->openConnection(self::$icServerID);
 			}
-			$this->mail_tree = new mail_tree($this);
 		}
 		catch (Exception $e)
 		{
@@ -362,7 +362,7 @@ class mail_ui
 					$response = egw_json_response::get();
 					foreach($refreshData as $folder => &$name)
 					{
-						$name = $this->getFolderTree(true, $folder, true, true, false);
+						$name = $this->mail_tree->getTree($folder, $profileId,1,true,true,true);
 					}
 					// give success/error message to opener and popup itself
 					//$response->call('opener.app.mail.subscription_refresh',$refreshData);
@@ -482,7 +482,7 @@ class mail_ui
 					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
 				}
 				//$zstarttime = microtime (true);
-				$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree('initial',null,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getTree(null, null, null, false, true,true );
 				//$zendtime = microtime(true) - $zstarttime;
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
@@ -750,222 +750,17 @@ class mail_ui
 	 */
 	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=null)
 	{
-		//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$_subscribedOnly);
 		$nodeID = $_GET['id'];
 		if (!is_null($_nodeID)) $nodeID = $_nodeID;
 		$subscribedOnly = (bool)(!is_null($_subscribedOnly)?$_subscribedOnly:!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		$fetchCounters = !is_null($_nodeID);
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
-		unset($_profileID);
+
 		if (!empty($_folderName)) $fetchCounters = true;
-		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($fetchCounters));
-		$data = $this->getFolderTree($fetchCounters, $nodeID, $subscribedOnly,true,true,false);
-		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
+		
+		$data = $this->mail_tree->getTree($nodeID,$_profileID,0, false,$subscribedOnly,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		if (!is_null($_nodeID)) return $data;
 		etemplate_widget_tree::send_quote_json($data);
-	}
-
-	/**
-	 * getFolderTree, get folders from server and prepare the folder tree
-	 * @param mixed bool/string $_fetchCounters, wether to fetch extended information on folders
-	 *			if set to initial, only for initial level of seen (unfolded) folders
-	 * @param string $_nodeID nodeID to fetch and return
-	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
-	 * @param boolean $_returnNodeOnly only effective if $_nodeID is set, and $_nodeID is_nummeric
-	 * @param boolean _useCacheIfPossible  - if set to false cache will be ignored and reinitialized
-	 * @param boolean $_popWizard Check if getFoldertree is called via open account (TRUE) or via tree interaction (FALSE), to control wizard popup
-	 * @return array something like that: array('id'=>0,
-	 * 		'item'=>array(
-	 *			'text'=>'INBOX',
-	 *			'tooltip'=>'INBOX'.' '.lang('(not connected)'),
-	 *			'im0'=>'kfm_home.png'
-	 *			'item'=>array($MORE_ITEMS)
-	 *		)
-	 *	);
-	 */
-	function getFolderTree($_fetchCounters=false, $_nodeID=null, $_subscribedOnly=true, $_returnNodeOnly=true, $_useCacheIfPossible=true, $_popWizard=true)
-	{
-		if (mail_bo::$debugTimes) $starttime = microtime (true);
-		if (!is_null($_nodeID) && $_nodeID != 0)
-		{
-			list($_profileID,$_folderName) = explode(self::$delimiter,$_nodeID,2);
-			unset($_folderName);
-			if (is_numeric($_profileID))
-			{
-				if ($_profileID && $_profileID != $this->mail_bo->profileID)
-				{
-					//error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
-					try
-					{
-						$this->changeProfile($_profileID);
-					}
-					catch (Exception $e)
-					{
-						return mail_tree::treeLeafNoConnectionArray($_profileID, $e->getMessage(), array($_profileID), '');
-					}
-				}
-			}
-		}
-		//$starttime = microtime(true);
-		$c = 0;
-		try
-		{
-			$folderObjects = $this->mail_bo->getFolderObjects($_subscribedOnly,false,false,$_useCacheIfPossible);
-			//$endtime = microtime(true) - $starttime;
-			//error_log(__METHOD__.__LINE__.' Fetching folderObjects took: '.$endtime);
-			$userDefinedFunctionFolders = array(
-				'Trash'     => $this->mail_bo->getTrashFolder(false),
-				'Templates' => $this->mail_bo->getTemplateFolder(false),
-				'Drafts'    => $this->mail_bo->getDraftFolder(false),
-				'Sent'      => $this->mail_bo->getSentFolder(false),
-				'Junk'      => $this->mail_bo->getJunkFolder(false),
-				'Outbox'    => $this->mail_bo->getOutboxFolder(false),
-			);
-		}
-		catch (Exception $e)
-		{
-			error_log(__LINE__.': '.__METHOD__."() ".$e->getMessage());
-			$folderObjects=array();
-			if ($_popWizard)
-			{
-				self::callWizard($e->getMessage(), false, 'error');
-			}
-			$c = 1;
-		}
-
-		$out = array('id' => 0);
-
-		//$starttime = microtime(true);
-		foreach(emailadmin_account::search($only_current_user=true, false) as $acc_id => $accountObj)
-		{
-			if ($_profileID && $acc_id != $_profileID)
-			{
-				//error_log(__METHOD__.__LINE__.' Fetching accounts '."  $acc_id != $_profileID ".'->'.$identity_name);
-				continue;
-			}
-			//error_log(__METHOD__.__LINE__.array2string($accountObj));
-			if (!$accountObj->is_imap())
-			{
-				// not to be used for IMAP Foldertree, as there is no Imap host
-				continue;
-			}
-			$identity_name = emailadmin_account::identity_name($accountObj,true,$GLOBALS['egw_info']['user']['acount_id']);
-			$oA = array('id' => $acc_id,
-				'text' => str_replace(array('<','>'),array('[',']'),$identity_name),// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
-				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
-				'im0' => 'thunderbird.png',
-				'im1' => 'thunderbird.png',
-				'im2' => 'thunderbird.png',
-				'path'=> array($acc_id),
-				'child'=> (int)($acc_id != $_profileID || $folderObjects), // dynamic loading on unfold
-				'parent' => '',
-				// mark on account if Sieve is enabled
-				'data' => array('sieve' => $accountObj->imapServer()->acc_sieve_enabled,'spamfolder'=>($accountObj->imapServer()->acc_folder_junk?true:false)),
-			);
-			mail_tree::setOutStructure($oA, $out, self::$delimiter);
-
-			// create a fake INBOX folder showing connection error (necessary that client UI unlocks tree!)
-			if ($e && $acc_id == $_profileID && !$folderObjects)
-			{
-				$out = mail_tree::treeLeafNoConnectionArray($acc_id, lang($e->getMessage()), array($acc_id, 'INBOX'), $acc_id);
-			}
-		}
-		//$endtime = microtime(true) - $starttime;
-
-		if (!empty($folderObjects))
-		{
-			$delimiter = $this->mail_bo->getHierarchyDelimiter();
-			$cmb = $this->mail_bo->icServer->getCurrentMailbox();
-			$cmblevels = explode($delimiter,$cmb);
-			$cmblevelsCt = count($cmblevels);
-		}
-		//error_log(__METHOD__.__LINE__.function_backtrace());
-		// needed in setOutStructure for namespace consistency in folderstructure of others and/or shared
-		$nameSpace = $this->mail_bo->_getNameSpaces();
-		foreach($folderObjects as $key => $obj)
-		{
-			// A1. Comment this part out for the moment to not get performance issue and wierd error
-			// until we re-implement get folder status and mail_tree completely as getFolderTree
-			// method would go anyway.
-			//$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
-
-			//error_log(__METHOD__.__LINE__.array2string($key));
-			$levels = explode($delimiter,$key);
-			$levelCt = count($levels);
-			$fetchCounters = (bool)$_fetchCounters;
-			if ($_fetchCounters==='initial')
-			{
-				if ($levelCt>$cmblevelsCt+1) $fetchCounters=false;
-			}
-			$fFP = $folderParts = explode($obj->delimiter, $key);
-			if (in_array($key,$userDefinedFunctionFolders)) $obj->shortDisplayName = lang($obj->shortDisplayName);
-			//get rightmost folderpart
-			array_pop($folderParts);
-
-			// the rest of the array is the name of the parent
-			$parentName = implode((array)$folderParts,$obj->delimiter);
-			$parentName = $this->mail_bo->profileID.self::$delimiter.$parentName;
-			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->folderName);
-			array_unshift($fFP,$this->mail_bo->profileID);
-			$oA['path'] = $fFP;
-			$path = $key;
-			if ($path=='INBOX')
-			{
-				$oA['im0'] = $oA['im1']= $oA['im2'] = "kfm_home.png";
-				// mark on inbox if ACL is supported
-				$oA['data'] = array('acl' => $this->mail_bo->icServer->queryCapability('ACL'));
-			}
-			elseif (($_key = array_search($obj->folderName, $userDefinedFunctionFolders)) !== false)
-			{
-				$oA['text'] = lang($_key);
-
-				$oA['im0'] = $oA['im1']= $oA['im2'] = "MailFolder".$_key.".png";
-			}
-			else
-			{
-				$oA['im0'] = "MailFolderPlain.png"; // one Level
-				$oA['im1'] = "folderOpen.gif";
-				$oA['im2'] = "MailFolderClosed.png"; // has Children
-			}
-			if ($fetchCounters)
-			{
-				$count = $this->mail_bo->getMailBoxCounters($key,true);
-				if($count->unseen)
-				{
-					$oA['text'] = $oA['text'].' ('.$count->unseen.')';
-					$oA['style'] = 'font-weight: bold';
-				}
-			}
-			$path = $this->mail_bo->profileID.self::$delimiter.$key;
-			$oA['id'] = $path; // ID holds the PATH
-			
-			// A2. This part needs to be commented out because of part A1 (see A1). as they are relative
-			/*
-			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\noselect')!== false)
-			{
-				$oA['im0'] = "folderNoSelectClosed.gif"; // one Level
-				$oA['im1'] = "folderNoSelectOpen.gif";
-				$oA['im2'] = "folderNoSelectClosed.gif"; // has Children
-			}
-			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\hasnochildren')=== false)
-			{
-				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
-			}*/
-			
-			$oA['parent'] = $parentName;
-
-			mail_tree::setOutStructure($oA,$out,$obj->delimiter,true,$nameSpace);
-			$c++;
-		}
-		if (!is_null($_nodeID) && $_nodeID !=0 && $_returnNodeOnly==true)
-		{
-			$node = self::findNode($out,$_nodeID);
-			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
-			if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'return subtree for:'.$_nodeID,__METHOD__.__LINE__);
-			return $node;
-		}
-		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,function_backtrace(),__METHOD__.__LINE__);
-		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
 	}
 
 	/**
@@ -3776,7 +3571,7 @@ class mail_ui
 		$response = egw_json_response::get();
 		foreach($refreshData as $folder => &$name)
 		{
-			$name = $this->getFolderTree(true, $folder, $_subscribedOnly);
+			$name = $this->mail_tree->getTree($folder,$profileID,1,false, $_subscribedOnly,true);
 		}
 		$response->call('app.mail.mail_reloadNode',$refreshData);
 
@@ -3906,7 +3701,7 @@ class mail_ui
 				// Send full info back in the response
 				foreach($refreshData as $folder => &$name)
 				{
-					$name = $this->getFolderTree(true, $folder, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+					$name = $this->mail_tree->getTree($folder,$profileID,1,false,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],true);
 				}
 				$response->call('app.mail.mail_reloadNode',$refreshData);
 
@@ -4074,7 +3869,7 @@ class mail_ui
 			translation::add_app('mail');
 
 			$refreshData = array(
-				$icServerID => $mail_ui->getFolderTree(true, $icServerID, !$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'],true)
+				$icServerID => $mail_ui->mail_tree->getTree(null,$icServerID,1,false,!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
 			);
 			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}
