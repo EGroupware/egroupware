@@ -482,7 +482,7 @@ class mail_ui
 					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
 				}
 				//$zstarttime = microtime (true);
-				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getTree(null, null, null, false, true,true );
+				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, null, null, true,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 				//$zendtime = microtime(true) - $zstarttime;
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');

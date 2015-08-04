@@ -383,11 +383,12 @@ class mail_tree
 				$data[tree::IMAGE_LEAF] = self::$leafImages['folderHome'];
 				$data[tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderHome'];
 				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderHome'];
+				$data[tree::LABEL] = lang($folderName);
+				$data[tree::TOOLTIP] = lang($folderName);
 			}
-
 			// User defined folders may get different icons
 			// plus they need to be translated too
-			if (array_search($data['folderarray']['MAILBOX'], $definedFolders, true) !== false)
+			elseif (array_search($data['folderarray']['MAILBOX'], $definedFolders, true) !== false)
 			{
 				$data[tree::LABEL] = lang($folderName);
 				$data[tree::TOOLTIP] = lang($folderName);
@@ -460,5 +461,34 @@ class mail_tree
 			self::setOutStructure($baseNode, $roots,self::$delimiter);
 		}
 		return $roots;
+	}
+	
+	/**
+	 * Initialization tree for index sidebox menu
+	 *
+	 * This function gets all accounts root nodes and then
+	 * fill the active accounts with its children.
+	 *
+	 * @param string $_parent = null no parent node means root with the first level of folders
+	 * @param string $_profileID = '' icServer id
+	 * @param int|boolean $_openTopLevel = 1 Open top level folders on load if it's set to 1|true,
+	 *  false|0 leaves them in closed state
+	 * @param boolean $_subscribedOnly = false get only subscribed folders
+	 * @param boolean $_allInOneGo = false, true will get all folders (dependes on subscribedOnly option) of the account in one go
+	 * @return type an array of tree
+	 */
+	function getInitialIndexTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_subscribedOnly= false, $_allInOneGo = false)
+	{
+		$tree = $this->getTree($_parent, $_profileID, $_openTopLevel, false, $_subscribedOnly, $_allInOneGo);
+		$activeAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		$branches = $this->getTree($activeAccount, $activeAccount,1,false,$_subscribedOnly,$_allInOneGo);
+		foreach ($tree[tree::CHILDREN] as &$account)
+		{
+			if ($account[tree::ID] == $activeAccount)
+			{
+				$account = $branches;
+			}
+		}
+		return $tree;
 	}
 }
