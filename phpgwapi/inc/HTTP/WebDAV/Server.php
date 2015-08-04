@@ -2701,10 +2701,13 @@ class HTTP_WebDAV_Server
      */
     public static function _urlencode($url)
     {
-    	// cadaver (and probably all neon using agents) need a more complete url encoding
-    	// otherwise special chars like "$,()'" in filenames do NOT work
-    	// netdrive does NOT use a User-Agent, but requires full urlencoding for non-ascii chars (eg. German Umlauts)
-		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false || !isset($_SERVER['HTTP_USER_AGENT']))
+		// cadaver (and probably all neon using agents) need a more complete url encoding
+		// otherwise special chars like "$,()'" in filenames do NOT work
+		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false ||
+			// old netdrive does NOT use a User-Agent, but requires full urlencoding for non-ascii chars (eg. German Umlauts)
+			!isset($_SERVER['HTTP_USER_AGENT']) ||
+			// current netdrive uses "NetDrive 2.5.8" as user-agent
+			stripos($_SERVER['HTTP_USER_AGENT'],'NetDrive') !== false)
 		{
 			return strtr(rawurlencode($url),array(
 				'%2F' => '/',
