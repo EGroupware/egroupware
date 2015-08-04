@@ -388,14 +388,14 @@ class mail_tree
 			}
 			// User defined folders may get different icons
 			// plus they need to be translated too
-			elseif (array_search($data['folderarray']['MAILBOX'], $definedFolders, true) !== false)
+			elseif (($key = array_search($data['folderarray']['MAILBOX'], $definedFolders, true)) !== false)
 			{
-				$data[tree::LABEL] = lang($folderName);
-				$data[tree::TOOLTIP] = lang($folderName);
+				$data[tree::LABEL] = lang($key);
+				$data[tree::TOOLTIP] = lang($key);
 				//User defined folders icons
 				$data[tree::IMAGE_LEAF] =
 					$data[tree::IMAGE_FOLDER_OPEN] =
-					$data [tree::IMAGE_FOLDER_CLOSED] = "MailFolder".$folderName.".png";
+					$data [tree::IMAGE_FOLDER_CLOSED] = "MailFolder".$key.".png";
 			}
 			elseif(stripos(array2string($data['folderarray']['attributes']),'\noselect')!== false)
 			{
