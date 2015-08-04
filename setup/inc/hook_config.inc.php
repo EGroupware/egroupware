@@ -179,7 +179,7 @@ function mail_login_type($config)
  * @param array $config
  * @return string
  */
-function auth_type_std($config)
+function auth_types($config)
 {
 	return _options_from(setup_cmd_config::auth_types(),$config['auth_type']);
 }
