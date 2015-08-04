@@ -2561,7 +2561,7 @@ class calendar_uiforms extends calendar_ui
 		// we do not allow dragging into another users calendar ATM
 		if($targetOwner < 0)
 		{
-			$targetOwner = [$targetOwner];
+			$targetOwner = array($targetOwner);
 		}
 		if($calendarOwner !== $targetOwner && !is_array($targetOwner))
 		{
