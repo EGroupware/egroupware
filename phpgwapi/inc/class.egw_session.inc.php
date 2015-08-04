@@ -825,7 +825,8 @@ class egw_session
 			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
 				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
 				// for ActiveSync we add the DeviceID
-				(isset($_GET['DeviceId']) && $_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync' ? ':'.$_GET['DeviceId'] : ''));
+				(isset($_GET['DeviceId']) && $_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync' ? ':'.$_GET['DeviceId'] : '').
+				':'.$_SERVER['HTTP_USER_AGENT']);
 			//error_log(__METHOD__."($only_basic_auth) HTTP_HOST=$_SERVER[HTTP_HOST], PHP_AUTH_USER=$_SERVER[PHP_AUTH_USER], DeviceId=$_GET[DeviceId]: sessionid=$sessionid");
 		}
 		// same for digest auth
@@ -836,7 +837,8 @@ class egw_session
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
 			$data = egw_digest_auth::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
 			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].
-				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'));
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
+				':'.$_SERVER['HTTP_USER_AGENT']);
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
 		{
