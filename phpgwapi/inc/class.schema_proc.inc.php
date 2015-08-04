@@ -723,7 +723,7 @@ class schema_proc
 		else
 		{
 			// drop evtl. existing temp. table eg. from a previous failed upgrade
-			if (($tables = $this->db->table_names(true)) && in_array($tmp_name, $tables))
+			if (($tables = $this->m_odb->table_names(true)) && in_array($tmp_name, $tables))
 			{
 				$this->DropTable($tmp_name);
 			}
