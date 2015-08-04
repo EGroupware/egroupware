@@ -376,6 +376,12 @@ function phpgwapi_upgrade14_2_012()
 
 function phpgwapi_upgrade14_2_013()
 {
+	// shorten all history_appname/history_status entries to 16/32 chars, to not stall update for PostgreSQL
+	$GLOBALS['egw_setup']->db->update('egw_history_log', array(
+		'history_appname=SUBSTRING(history_appname FROM 1 FOR 16)',
+		'history_status=SUBSTRING(history_status FROM 1 FOR 32)',
+	), 'LENGTH(history_appname) > 16 OR LENGTH(history_status) > 32', __LINE__, __FILE__);
+
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_history_log','history_appname',array(
 		'type' => 'ascii',
 		'precision' => '16',
