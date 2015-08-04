@@ -57,7 +57,7 @@ class admin_categories
 		{
 			throw new egw_exception_no_permission_admin();
 		}
-		if ($GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
+		if ($GLOBALS['egw']->acl->check('global_categorie',1,'admin'))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
@@ -71,12 +71,12 @@ class admin_categories
 	{
 		if (is_null(self::$acl_search))
 		{
-			self::$acl_search = !$GLOBALS['egw']->acl->check('global_categories_access',2,'admin');
-			self::$acl_add    = !$GLOBALS['egw']->acl->check('global_categories_access',4,'admin');
-			self::$acl_view   = !$GLOBALS['egw']->acl->check('global_categories_access',8,'admin');
-			self::$acl_edit   = !$GLOBALS['egw']->acl->check('global_categories_access',16,'admin');
-			self::$acl_delete = !$GLOBALS['egw']->acl->check('global_categories_access',32,'admin');
-			self::$acl_add_sub= !$GLOBALS['egw']->acl->check('global_categories_access',64,'admin');
+			self::$acl_search = !$GLOBALS['egw']->acl->check('global_categorie',2,'admin');
+			self::$acl_add    = !$GLOBALS['egw']->acl->check('global_categorie',4,'admin');
+			self::$acl_view   = !$GLOBALS['egw']->acl->check('global_categorie',8,'admin');
+			self::$acl_edit   = !$GLOBALS['egw']->acl->check('global_categorie',16,'admin');
+			self::$acl_delete = !$GLOBALS['egw']->acl->check('global_categorie',32,'admin');
+			self::$acl_add_sub= !$GLOBALS['egw']->acl->check('global_categorie',64,'admin');
 		}
 	}
 

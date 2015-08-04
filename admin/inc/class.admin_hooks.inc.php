@@ -53,7 +53,7 @@ class admin_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 
-			if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
+			if (! $GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
 			{
 				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
 			}
@@ -80,26 +80,26 @@ class admin_hooks
 				);
 			}
 
-			if (! $GLOBALS['egw']->acl->check('applications_access',1,'admin'))
+			if (! $GLOBALS['egw']->acl->check('applications_acc',1,'admin'))
 			{
 				$file['Applications']               = egw::link('/index.php','menuaction=admin.admin_applications.index');
 			}
-			if (! $GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
+			if (! $GLOBALS['egw']->acl->check('global_categorie',1,'admin'))
 			{
 				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_message_access',2,'admin'))
+			if (!$GLOBALS['egw']->acl->check('mainscreen_messa',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_messa',2,'admin'))
 			{
 				$file['Change Main Screen Message'] = egw::link('/index.php','menuaction=admin.uimainscreen.index');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))
+			if (! $GLOBALS['egw']->acl->check('current_sessions',1,'admin'))
 			{
 				$file['View Sessions'] = egw::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
+			if (! $GLOBALS['egw']->acl->check('access_log_acces',1,'admin'))
 			{
 				$file['View Access Log'] = egw::link('/index.php','menuaction=admin.admin_accesslog.index&ajax=true');
 			}
@@ -110,12 +110,12 @@ class admin_hooks
 				$file['View Error Log']  = egw::link('/index.php','menuaction=admin.uilog.list_log');
 			}*/
 
-			if (! $GLOBALS['egw']->acl->check('applications_access',16,'admin'))
+			if (! $GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 			{
 				$file['Clear cache and register hooks'] = egw::link('/index.php','menuaction=admin.admin_hooks.register_all_hooks');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
+			if (! $GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
 			{
 				$file['Asynchronous timed services'] = egw::link('/index.php','menuaction=admin.uiasyncservice.index');
 			}
@@ -156,7 +156,7 @@ class admin_hooks
 	 */
 	function register_all_hooks()
 	{
-		if ($GLOBALS['egw']->acl->check('applications_access',16,'admin'))
+		if ($GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
@@ -193,7 +193,7 @@ class admin_hooks
 			'icon' => 'lock',
 		);
 
-		if (!$GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))	// no rights to view
+		if (!$GLOBALS['egw']->acl->check('current_sessions',1,'admin'))	// no rights to view
 		{
 			$actions[] = array(
 				'description' => 'Login History',

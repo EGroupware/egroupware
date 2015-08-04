@@ -20,7 +20,7 @@ class uiasyncservice
 
 	function index()
 	{
-		if ($GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
+		if ($GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
 		{
 			egw::redirect_link('/index.php');
 		}

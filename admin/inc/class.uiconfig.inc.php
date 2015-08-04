@@ -36,7 +36,7 @@ class uiconfig
 			//_debug_array($params);
 			$_appname = $_GET['appname'];
 		}
-		if ($GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
+		if ($GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
 		{
 			egw::redirect_link('/index.php');
 		}
@@ -105,7 +105,7 @@ class uiconfig
 
 		$c = new config($config_appname);
 		$c->read_repository();
-		if ($_POST['cancel'] || ($_POST['submit'] || $_POST['save'] || $_POST['apply']) && $GLOBALS['egw']->acl->check('site_config_access',2,'admin'))
+		if ($_POST['cancel'] || ($_POST['submit'] || $_POST['save'] || $_POST['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
 			egw::redirect_link('/admin/index.php?ajax=true');
 		}
@@ -261,7 +261,7 @@ class uiconfig
 			}
 		}
 		$t->set_var('submit', '<div class="dialogFooterToolbar" style="text-align: left">'.
-			($GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? '' :
+			($GLOBALS['egw']->acl->check('site_config_acce',2,'admin') ? '' :
 				html::submit_button('save', 'Save')."\n".
 				html::submit_button('apply', 'Apply')));
 		$t->set_var('cancel', html::submit_button('cancel', 'Cancel').'</div>');
