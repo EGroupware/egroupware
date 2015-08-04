@@ -228,7 +228,7 @@
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
-{hook_auth_type}
+{hook_auth_type_std}
      </select>
     </td>
    </tr>
@@ -510,7 +510,7 @@
 			<option value="">{lang_No}</option>
 			<option value="tls"{selected_ads_connection_tls}>TLS</option>
 			<option value="ssl"{selected_ads_connection_ssl}>SSL</option>
-     	</select>	
+     	</select>
      </td>
    </tr>
    <tr class="row_on">
