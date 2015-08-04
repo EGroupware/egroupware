@@ -162,6 +162,13 @@ function phpgwapi_upgrade14_2_004()
 		'type' => 'auto',
 		'nullable' => False
 	));*/
+
+	// shorten all acl_location entries to 16 chars, to not stall update for PostgreSQL
+	$GLOBALS['egw_setup']->db->update('egw_acl', array(
+		'acl_location=SUBSTRING(acl_location FROM 1 FOR 16)',
+		'acl_appname=SUBSTRING(acl_appname FROM 1 FOR 16)',
+	), 'LENGTH(acl_location) > 16 OR LENGTH(acl_appname) > 16', __LINE__, __FILE__);
+
 	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_acl',array(
 		'fd' => array(
 			'acl_appname' => array('type' => 'ascii','precision' => '16','nullable' => False),

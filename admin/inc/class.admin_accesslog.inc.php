@@ -142,7 +142,7 @@ class admin_accesslog
 		if (is_array($content)) $sessions_list = $content['nm']['session_list'];
 
 		// check if user has access to requested functionality
-		if ($GLOBALS['egw']->acl->check($sessions_list ? 'current_sessions_access' : 'access_log_access',1,'admin'))
+		if ($GLOBALS['egw']->acl->check($sessions_list ? 'current_sessions' : 'access_log_acces',1,'admin'))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
@@ -283,7 +283,7 @@ class admin_accesslog
 				{
 						unset($sessionid[$key]);	// dont allow to kill own sessions
 				}
-				if ($GLOBALS['egw']->acl->check('current_sessions_access',8,'admin'))
+				if ($GLOBALS['egw']->acl->check('current_sessions',8,'admin'))
 				{
 					$failed ++;
 				}

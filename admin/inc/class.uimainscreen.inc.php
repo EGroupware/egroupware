@@ -18,11 +18,11 @@ class uimainscreen
 		$select_lang = $_POST['select_lang'];
 		$message     = get_magic_quotes_gpc() ? stripslashes($_POST['message']) : $_POST['message'];
 		$acl_ok = array();
-		if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin'))
+		if (!$GLOBALS['egw']->acl->check('mainscreen_messa',1,'admin'))
 		{
 			$acl_ok['mainscreen'] = True;
 		}
-		if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',2,'admin'))
+		if (!$GLOBALS['egw']->acl->check('mainscreen_messa',2,'admin'))
 		{
 			$acl_ok['loginscreen'] = True;
 		}
@@ -80,7 +80,7 @@ class uimainscreen
 			$GLOBALS['egw']->template->fp('rows','row',True);
 
 			$select_section = '<select name="section">'."\n";
-			foreach($acl_ok as $key => $val)
+			foreach(array_keys($acl_ok) as $key)
 			{
 				$select_section .= ' <option value="'.$key.'"'.
 					($key == $_POST['section'] ? ' selected' : '') . '>' .
