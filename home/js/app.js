@@ -824,7 +824,7 @@ app.classes.home.home_link_portlet = app.classes.home.home_portlet.extend({
 	},
 	observer: function(_msg, _app, _id, _type)
 	{
-		if(this.portlet)
+		if(this.portlet && this.portlet.settings)
 		{
 			var value = this.portlet.settings.entry || {};
 			if(value.app && value.app == _app && value.id && value.id == _id)
