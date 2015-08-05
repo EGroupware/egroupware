@@ -774,6 +774,16 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		overflow: visible;
 		height: auto;
 	}
+	.tmpPrintDiv td, textarea {
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+	}
+	.tmpPrintDiv .td_display {
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 120%;
+		color: black;
+		background-color: #FFFFFF;
+	}
 	pre {
 		width:99% !important;
 	}
