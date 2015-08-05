@@ -687,7 +687,7 @@ class schema_proc
 						in_array($data['type'], array('varchar', 'ascii')) &&
 						$old_table_def['fd'][$name]['precision'] > $data['precision'])
 					{
-						$value = "SUBSTRING($value FROM 1 FOR ".(int)$data['size'].')';
+						$value = "SUBSTRING($value FROM 1 FOR ".(int)$data['precision'].')';
 					}
 					// cast everything which is a different type
 					elseif($old_table_def['fd'][$name]['type'] != $data['type'] && ($type_translated = $this->TranslateType($data['type'])))
