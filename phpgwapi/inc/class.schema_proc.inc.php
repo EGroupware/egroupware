@@ -441,6 +441,21 @@ class schema_proc
 	function AlterColumn($sTableName, $sColumnName, $aColumnDef, $bCopyData=True)
 	{
 		$table_def = $this->GetTableDefinition($sTableName);
+
+		// PostgreSQL: varchar or ascii column shortened, use substring to avoid error if current content is to long
+		if($this->sType == 'pgsql' && in_array($table_def['fd'][$sColumnName]['type'], array('varchar', 'ascii')) &&
+			in_array($aColumnDef['type'], array('varchar', 'ascii')) &&
+			$table_def['fd'][$sColumnName]['precision'] > $aColumnDef['precision'])
+		{
+			$this->m_odb->update($sTableName, array(
+				"$sColumnName=SUBSTRING($sColumnName FROM 1 FOR ".(int)$aColumnDef['precision'].')',
+			), "LENGTH($sColumnName) > ".(int)$aColumnDef['precision'], __LINE__, __FILE__);
+
+			if (($shortend = $this->m_odb->affected_rows()))
+			{
+				error_log(__METHOD__."('$sTableName', '$sColumnName', ".array2string($aColumnDef).") $shortend values shortened");
+			}
+		}
 		$table_def['fd'][$sColumnName] = $aColumnDef;
 
 		$aSql = $this->dict->AlterColumnSQL($sTableName,$ado_col = $this->_egw2adodb_columndef(array(
@@ -666,6 +681,13 @@ class schema_proc
 					elseif($old_table_def['fd'][$name]['type'] == 'blob' && $data['type'] == 'text')
 					{
 						$value = "ENCODE($value,'escape')";
+					}
+					// varchar or ascii column shortened, use substring to avoid error if current content is to long
+					elseif(in_array($old_table_def['fd'][$name]['type'], array('varchar', 'ascii')) &&
+						in_array($data['type'], array('varchar', 'ascii')) &&
+						$old_table_def['fd'][$name]['precision'] > $data['precision'])
+					{
+						$value = "SUBSTRING($value FROM 1 FOR ".(int)$data['size'].')';
 					}
 					// cast everything which is a different type
 					elseif($old_table_def['fd'][$name]['type'] != $data['type'] && ($type_translated = $this->TranslateType($data['type'])))
