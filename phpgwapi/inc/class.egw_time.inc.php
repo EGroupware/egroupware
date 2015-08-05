@@ -45,6 +45,11 @@ class egw_time extends DateTime
 	 * Database timestamp format: Y-m-d H:i:s
 	 */
 	const DATABASE = 'Y-m-d H:i:s';
+
+	/**
+	 * etemplate2 format for ignoring timezones in the browser
+	 */
+	const ET2 = 'Y-m-d\TH:i:s\Z';
 	/**
 	 * DateTimeZone of server, read from $GLOBALS['egw_info']['server']['server_timezone'], set by self::init()
 	 *
