@@ -271,7 +271,7 @@ class mail_tree
 				if (self::isAccountNode($_parent))
 				{
 					$tree = array(
-						tree::ID => $_parent,
+						tree::ID => (string)$_parent,
 						tree::CHILDREN => $tree[tree::CHILDREN][0][tree::CHILDREN],
 						tree::LABEL => $tree[tree::CHILDREN][0][tree::LABEL],
 						tree::IMAGE_LEAF => $tree[tree::CHILDREN][0][tree::IMAGE_LEAF],
@@ -279,6 +279,7 @@ class mail_tree
 						tree::IMAGE_FOLDER_CLOSED => $tree[tree::CHILDREN][0][tree::IMAGE_FOLDER_CLOSED],
 						tree::OPEN => 1,
 						tree::TOOLTIP => $tree[tree::CHILDREN][0][tree::TOOLTIP],
+						tree::AUTOLOAD_CHILDREN => 1,
 						'data' => $tree[tree::CHILDREN][0]['data']
 					);
 				}
@@ -441,7 +442,7 @@ class mail_tree
 			$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
 			
 			$baseNode = array(
-							tree::ID=> $acc_id,
+							tree::ID=> (string)$acc_id,
 							tree::LABEL => str_replace(array('<','>'),array('[',']'),$identity),
 							tree::TOOLTIP => '('.$acc_id.') '.htmlspecialchars_decode($identity),
 							tree::IMAGE_LEAF => self::$leafImages['folderAccount'],
