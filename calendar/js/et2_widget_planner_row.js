@@ -93,7 +93,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	_draw: function() {
 		// Remove any existing
-		this.rows.empty().nextAll().remove();
+		this.rows.remove('.calendar_eventRowsMarkedDay,.calendar_eventRowsFiller').nextAll().remove();
 
 		var days = 31;
 		var width = 85;
@@ -195,7 +195,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 
 			// Copy actions set in parent
-			event._link_actions(this._parent._parent.options.actions||{});
+			event._link_actions(this._parent._parent.options.actions||this._parent.options.actions||{});
 		}
 
 		// Seperate loop so column sorting finds all children in the right place

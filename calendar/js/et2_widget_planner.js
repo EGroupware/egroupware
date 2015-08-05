@@ -343,7 +343,13 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				rows[event.category].push(event);
 				if(typeof labels[event.category] === 'undefined')
 				{
-					var categories = et2_selectbox.cat_options({_type:'select-cat'}, {application: 'calendar'});
+					labels[event.category] = '';
+					var im = this.getInstanceManager();
+					// Fake it to use the cache / call
+					var categories = et2_selectbox.cat_options({
+						_type:'select-cat',
+						getInstanceManager: function() {return im;}
+					}, {application: 'calendar'});
 					for(var i in categories )
 					{
 						if(parseInt(categories[i].value) === parseInt(event.category))
@@ -727,6 +733,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				{
 					var prev = new Date(t);
 					prev.setUTCDate(prev.getUTCDate() - 1);
+					prev.setUTCHours(0);
+					prev.setUTCMinutes(0);
 					title = this._scroll_button('left',prev.toJSON()) + title;
 				}
 				if (i == days-1)	// next day only for the last day
@@ -864,18 +872,37 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		// Get the parent?  Might be a grid row, might not.  Either way, it is
 		// just a container with no valid actions
 		var objectManager = egw_getAppObjectManager(true);
-		var parent = objectManager.getObjectById(this._parent.id);
-		if(!parent) return;
-		
-		for(var i = 0; i < parent.children.length; i++)
+		var parent = this;
+		var om = false;
+		while(parent && om !== objectManager)
 		{
-			var parent_finder = jQuery(this.div, parent.children[i].iface.doGetDOMNode());
-			if(parent_finder.length > 0)
+			if(parent.id && objectManager.getObjectById(parent.id))
 			{
-				parent = parent.children[i];
+				om = objectManager.getObjectById(parent.id);
 				break;
 			}
+			parent = parent.getParent();
 		}
+		if(!om)
+		{
+			om = objectManager.getObjectById(this.getInstanceManager().uniqueId);
+		}
+
+		if(!om) return;
+
+		var widget_object = om.getObjectById(this.id);
+		if(widget_object == null)
+		{
+			widget_object = om.addObject(this.id, null, EGW_AO_FLAG_IS_CONTAINER);
+		}
+		// Go over the widget & add links - this is where we decide which actions are
+		// 'allowed' for this widget at this time
+		var action_links = this._get_action_links(actions);
+
+		this._init_links_dnd(widget_object.manager, action_links);
+
+		widget_object.updateActionLinks(action_links);
+		this._actionObject = widget_object;
 	},
 
 	/**
@@ -888,8 +915,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var drag_action = mgr.getActionById('egw_link_drag');
 
 		// Check if this app supports linking
-		if(!egw.link_get_registry(this.dataStorePrefix || this.egw().appName, 'query') ||
-			egw.link_get_registry(this.dataStorePrefix || this.egw().appName, 'title'))
+		if(!egw.link_get_registry(this.dataStorePrefix || 'calendar', 'query') ||
+			egw.link_get_registry(this.dataStorePrefix || 'calendar', 'title'))
 		{
 			if(drop_action)
 			{
@@ -962,17 +989,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		{
 			// Create drag action that allows linking
 			drag_action = mgr.addAction('drag', 'egw_link_drag', egw.lang('link'), 'link', function(action, selected) {
-				// Drag helper - list titles.  Arbitrarily limited to 10.
-				var helper = $j(document.createElement("div"));
-				for(var i = 0; i < selected.length && i < 10; i++)
-				{
-					var id = selected[i].id.split('::');
-					var span = $j(document.createElement('span')).appendTo(helper);
-					egw.link_title(id[0],id[1], function(title) {
-						this.append(title);
-						this.append('<br />');
-					}, span);
-				}
 				// As we wanted to have a general defaul helper interface, we return null here and not using customize helper for links
 				// TODO: Need to decide if we need to create a customized helper interface for links anyway
 				//return helper;
@@ -1026,7 +1042,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		{
 			// Cache is by date (and owner, if seperate)
 			var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
-			var cache_id = app.calendar._daywise_cache_id(date, this.options.owner);
+			var cache_id = app.classes.calendar._daywise_cache_id(date, this.options.owner);
 
 			if(egw.dataHasUID(cache_id))
 			{
@@ -1082,7 +1098,20 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			delete events.end_date;
 		}
 
-		this.value = events || [];
+		if(typeof events.length === "undefined" && events)
+		{
+			for(var key in events)
+			{
+				if(typeof events[key] === 'object' && events[key] !== null)
+				{
+					this.value.push(events[key]);
+				}
+			}
+		}
+		else
+		{
+			this.value = events || [];
+		}
 	},
 
 	/**
@@ -1297,6 +1326,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		{
 			// Click on a header, we can go there
 			_ev.data = jQuery.extend({},_ev.target.parentNode.dataset, _ev.target.dataset);
+			debugger;
 			this.change(_ev);
 		}
 		else

@@ -14,7 +14,7 @@ Egroupware
 <overlay>
     <template id="calendar.planner">
 		<calendar-planner id="planner"
-			onchange="app.calendar.update_state(ev.data);"
+			onchange="app.calendar.update_state(jQuery.extend(ev.data,{view:'planner'}));"
 			onevent_change="app.calendar.event_change"
 		>
 		</calendar-planner>

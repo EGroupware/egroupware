@@ -24,6 +24,8 @@ class calendar_favorite_portlet extends home_favorite_portlet
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		$context['appname'] = 'calendar';
+		// Reload is NULL when changing properties via AJAX
+		$reload = !is_null($need_reload);
 
 		// Let parent handle the basic stuff
 		parent::__construct($context,$need_reload);
@@ -48,7 +50,9 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				'default_cols'	=> 'cal_start_cal_end,cal_title'
 			);
 		}
-		$need_reload = true;
+
+		// Checking against NULL allows us to skip the reload for resizing
+		$need_reload = $reload && $need_reload;
 	}
 
 	public function exec($id = null, etemplate_new &$etemplate = null)
@@ -95,8 +99,14 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			case 'planner_user':
 			case 'planner_cat':
 			case 'planner':
-				$content = array('legacy' => $ui->planner(true));
-				break;
+				$content = array();
+				$etemplate->read('calendar.planner');
+				$etemplate->set_dom_id($id);
+				$this->actions =& $etemplate->getElementAttribute('planner', 'actions');
+				// Don't notify the calendar app of date changes
+				$etemplate->setElementAttribute('planner','onchange',false);
+				$ui->planner(array(), $etemplate);
+				return;
 			case 'year':
 				$content = array('legacy' => $ui->year(true));
 				break;
@@ -109,15 +119,21 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			case 'week':
 				$etemplate->read('calendar.view');
 				$etemplate->set_dom_id($id);
+				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
+				// Don't notify the calendar app of date changes
+				$etemplate->setElementAttribute('view[0]','onchange',false);
 				$ui->week(array(), $etemplate);
 				return;
-				break;
 			case 'day':
-				$content = array('legacy' => $ui->day(true));
-				break;
 			case 'day4':
-				$content = array('legacy' => $ui->week(4,true));
-				break;
+				$etemplate->read('calendar.view');
+				$etemplate->set_dom_id($id);
+				$days = $this->favorite['state']['days'] ? $this->favorite['state']['days'] : (
+					$this->favorite['state']['view'] == 'day' ? 1 : 4
+				);
+				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
+				$ui->week($days, $etemplate);
+				return;
 		}
 
 		unset($GLOBALS['egw_info']['flags']['app_header']);
@@ -218,4 +234,15 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		}
 		return $properties;
 	}
- }
+
+	public function get_actions() {
+		if($this->favorite['state']['view'] == 'listview' || !$this->actions)
+		{
+			return array();
+		}
+		else
+		{
+			return $this->actions;
+		}
+	}
+}

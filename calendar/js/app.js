@@ -63,13 +63,6 @@ app.classes.calendar = AppJS.extend(
 		owner: egw.user('account_id'),
 		days: egw.preference('days_in_weekview','calendar')
 	},
-
-	/**
-	 * This is the data cache prefix for the daywise event index cache
-	 * Daywise cache IDs look like: calendar_daywise::20150101 and
-	 * contain a list of event IDs for that day (or empty array)
-	 */
-	DAYWISE_CACHE_ID: 'calendar_daywise',
 	
 	/**
 	 * Constructor
@@ -250,7 +243,7 @@ app.classes.calendar = AppJS.extend(
 				var event = egw.dataGetUIDdata('calendar::'+_id);
 				if(event && event.data && event.data.date)
 				{
-					var new_cache_id = this._daywise_cache_id(event.data.date)
+					var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date)
 					var daywise = egw.dataGetUIDdata(new_cache_id);
 					daywise = daywise ? daywise.data : [];
 					if(_type === 'delete')
@@ -411,14 +404,51 @@ app.classes.calendar = AppJS.extend(
 					var start = new Date(app.calendar.state.date);
 					var end = null;
 
+					// Find the template
+					var id = $j(this).closest('.et2_container').attr('id');
+					if(!id) return;
+					var template = etemplate2.getById(id);
+					if(!template) return;
+
+
 					// Get the view to calculate
 					var view = app.classes.calendar.views[app.calendar.state.view] || false;
-					if (view)
+					if (view && view.etemplates.indexOf(template) !== -1)
 					{
 						start = view.scroll(direction * delta);
+						app.calendar.update_state({date:app.calendar.date.toString(start)});
 					}
+					else
+					{
+						// Home - always 1 week
+						// TODO
+						return false;
+						var widget = [];
+						var value = [];
+						template.widgetContainer.iterateOver(function(w) {
+							if(typeof w.set_start_date === 'function' && typeof w.set_value === 'function')
+							{
+								widget.push(w);
+							}
+						},this,et2_valueWidget);
+						for(var i = 0; i < widget.length; i++)
+						{
+							var state = template.widgetContainer.getParent().settings.favorite.state || {};
+							debugger;
+							var start = new Date(widget[i].options.start_date || state.start);
+							start.setUTCDate(start.getUTCDate() + (7 * direction * delta));
+							var end = new Date(widget[i].options.end_date || state.end);
+							end.setUTCDate(end.getUTCDate() + (7 * direction * delta));
 
-					app.calendar.update_state({date:app.calendar.date.toString(start)});
+							// Get data
+							value[i] = {
+								start_date: start,
+								end_date: end
+							};
+							app.calendar._need_data([value[i]], state);
+							widget[i].set_value(value[i]);
+						}
+					}
 
 					return false;
 				}
@@ -1774,22 +1804,6 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
-	 * Create a cache ID for the daywise cache
-	 *
-	 * @param {String|Date} date
-	 * @param {String|integer|String[]} owner
-	 * @returns {String} Cache ID
-	 */
-	_daywise_cache_id: function(date, owner)
-	{
-		if(typeof date === 'object')
-		{
-			date =  date.getUTCFullYear() + sprintf('%02d',date.getUTCMonth()+1) + sprintf('%02d',date.getUTCDate());
-		}
-		return this.DAYWISE_CACHE_ID+'::'+date+(owner && owner.toString() !== (this.state.owner.toString()||'') ? '-' + owner : '');
-	},
-
-	/**
 	 * Take the date range(s) in the value and decide if we need to fetch data
 	 * for the date ranges, or if they're already cached fill them in.
 	 *
@@ -1815,7 +1829,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				// Cache is by date (and owner, if seperate)
 				var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
-				var cache_id = this._daywise_cache_id(date, seperate_owners ? value[i].owner : false);
+				var cache_id = app.classes.calendar._daywise_cache_id(date, seperate_owners ? value[i].owner : false);
 
 				if(egw.dataHasUID(cache_id))
 				{
@@ -1940,7 +1954,7 @@ app.classes.calendar = AppJS.extend(
 				}
 				for(var day in updated_days)
 				{
-					this.egw.dataStoreUID(this._daywise_cache_id(day, state.owner), updated_days[day]);
+					this.egw.dataStoreUID(app.classes.calendar._daywise_cache_id(day, state.owner), updated_days[day]);
 				}
 			}, this,null
 		);
@@ -2041,6 +2055,9 @@ app.classes.calendar = AppJS.extend(
 		var hidden = typeof this.state.view !== 'undefined';
 		var all_loaded = true;
 
+		// Avoid home portlets using our templates, and get them right
+		if(_et2.uniqueId.indexOf('portlet') === 0) return;
+		
 		// Flag to make sure we don't hide non-view templates
 		var view_et2 = false;
 		
@@ -2054,7 +2071,7 @@ app.classes.calendar = AppJS.extend(
 				// If a template disappears, we want to release it
 				$j(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
 					this.view[index] = _name;
-				},{view: app.classes.calendar.views[view], index: index, name: _name}));
+				},jQuery.extend({},{view: app.classes.calendar.views[view], index: ""+index, name: _name})));
 
 				if(this.state.view === view)
 				{
@@ -2160,17 +2177,49 @@ app.classes.calendar = AppJS.extend(
 	}
 });
 
-/**
-* Etemplates and settings for the different views.  Some (day view)
-* use more than one template, some use the same template as others,
-* most need different handling for their various attributes.
-*
-* Not using the standard Class.extend here because it hides the members,
-* and we want to be able to look inside them.  This is done seperately instead
-* of inside the normal object to allow access to the View object.
-*/
 
 jQuery.extend(app.classes.calendar,{
+
+	/**
+	 * This is the data cache prefix for the daywise event index cache
+	 * Daywise cache IDs look like: calendar_daywise::20150101 and
+	 * contain a list of event IDs for that day (or empty array)
+	 */
+	DAYWISE_CACHE_ID: 'calendar_daywise',
+
+
+	/**
+	 * Create a cache ID for the daywise cache
+	 *
+	 * @param {String|Date} date
+	 * @param {String|integer|String[]} owner
+	 * @returns {String} Cache ID
+	 */
+	_daywise_cache_id: function(date, owner)
+	{
+		if(typeof date === 'object')
+		{
+			date =  date.getUTCFullYear() + sprintf('%02d',date.getUTCMonth()+1) + sprintf('%02d',date.getUTCDate());
+		}
+
+		// If the owner is not set, 0, or the current user, don't bother adding it
+		var _owner = (owner && owner.toString() != '0' && owner !== (app.calendar.state.owner.toString()||'')) ? owner.toString() : '';
+		if(_owner == egw.user('account_id'))
+		{
+			_owner = '';
+		}
+		return app.classes.calendar.DAYWISE_CACHE_ID+'::'+date+(_owner ? '-' + _owner : '');
+	},
+
+	/**
+	* Etemplates and settings for the different views.  Some (day view)
+	* use more than one template, some use the same template as others,
+	* most need different handling for their various attributes.
+	*
+	* Not using the standard Class.extend here because it hides the members,
+	* and we want to be able to look inside them.  This is done seperately instead
+	* of inside the normal object to allow access to the View object.
+	*/
 	views: {
 		day: app.classes.calendar.prototype.View.extend({
 			header: function(state) {

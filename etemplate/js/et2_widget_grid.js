@@ -927,6 +927,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 	{
 		 // Get the top level element for the tree
 		var objectManager = egw_getAppObjectManager(true);
+		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
 		var widget_object = objectManager.getObjectById(this.id);
 		if (widget_object == null) {
 			// Add a new container to the object manager which will hold the widget

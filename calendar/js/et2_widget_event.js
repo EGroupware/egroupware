@@ -470,7 +470,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	_link_actions: function(actions)
 	{
 		 // Get the top level element - timegrid or so
-		var objectManager = egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
+		var objectManager = this.getParent().getParent()._actionObject ||
+			egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
 		var widget_object = objectManager.getObjectById('calendar::'+this.id);
 		if (widget_object == null) {
 			// Add a new container to the object manager which will hold the widget
@@ -576,7 +577,6 @@ et2_calendar_event.recur_prompt = function(event_data, callback)
 };
 
 et2_calendar_event.drag_helper = function(event,ui) {
-	debugger;
 	ui.helper.width(ui.width());
 };
 /**

@@ -7,6 +7,9 @@
  * @author Nathan Gray
  * @version $Id$
  */
+/*egw:uses
+	/calendar/js/app.js;
+*/
 
 /**
  * Custom code for calendar favorite home page portlets.
@@ -26,12 +29,31 @@ observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
 	}
 	else
 	{
-		// No intelligence since we don't have access to the state 
-		// (app.calendar.getState() is for the calendar tab, not home)
-		// just refresh on every calendar or infolog change
-		if(_app == 'calendar' || _app == 'infolog')
+		var event = egw.dataGetUIDdata('calendar::'+_id);
+		if(event && event.data && event.data.date)
 		{
-			app.home.refresh(this.portlet.id);
+			var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date);
+			var daywise = egw.dataGetUIDdata(new_cache_id);
+			daywise = daywise ? daywise.data : [];
+			if(_type === 'delete')
+			{
+				daywise.splice(daywise.indexOf(_id),1);
+			}
+			else if (daywise.indexOf(_id) < 0)
+			{
+				daywise.push(_id);
+			}
+			egw.dataStoreUID(new_cache_id,daywise);
+		}
+		else
+		{
+			// No intelligence since we don't have access to the state
+			// (app.calendar.getState() is for the calendar tab, not home)
+			// just refresh on every calendar or infolog change
+			if(_app == 'calendar' || _app == 'infolog')
+			{
+				app.home.refresh(this.portlet.id);
+			}
 		}
 	}
 }

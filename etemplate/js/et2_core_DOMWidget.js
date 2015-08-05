@@ -463,9 +463,13 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		var gam = egw_getActionManager(this.egw().appName,true,1);
 		if(typeof this._actionManager != "object")
 		{
-			if(gam.getActionById(this.id) != null)
+			if(gam.getActionById(this.getInstanceManager().uniqueId,1) !== null)
 			{
-				this._actionManager = gam.getActionById(this.id);
+				gam = gam.getActionById(this.getInstanceManager().uniqueId,1);
+			}
+			if(gam.getActionById(this.id,1) != null)
+			{
+				this._actionManager = gam.getActionById(this.id,1);
 			}
 			else
 			{

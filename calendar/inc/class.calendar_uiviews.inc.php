@@ -336,9 +336,9 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays the planner view
 	 *
-	 * @param boolean $home = false if true return content suitable for home-page
+	 * @param boolean|etemplate_new $home = false if etemplate return content suitable for home-page
 	 */
-	function &planner($home=false)
+	function &planner($content = array(), $home=false)
 	{
 		if ($this->sortby == 'month')	// yearly planner with month rows
 		{
@@ -401,20 +401,23 @@ class calendar_uiviews extends calendar_ui
 		$search_params['start'] = $this->first;
 		$search_params['end'] = $this->last;
 		$search_params['enum_groups'] = $this->sortby == 'user';
-		$events =& $this->bo->search($search_params);
+		$content['planner'] = $this->bo->search($search_params);
+		foreach($content['planner'] as &$event)
+		{
+			$this->to_client($event);
+		}
 
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::planner() date=%1: first=%2, last=%3',False,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
-		$content =& $this->plannerWidget($events,$this->first,$this->last,$this->sortby != 'category' ? $this->sortby : (int) $this->cat_id);
+		$tmpl = $home ? $home :new etemplate_new('calendar.planner');
 
+		$tmpl->setElementAttribute('planner','start_date', egw_time::to($this->first, egw_time::ET2));
+		$tmpl->setElementAttribute('planner','end_date', egw_time::to($this->last, egw_time::ET2));
+		$tmpl->setElementAttribute('planner','group_by', $this->sortby);
+		// Get the actions
+		$tmpl->setElementAttribute('planner','actions',$this->get_actions());
 
-		if (!$home)
-		{
-			$this->do_header();
-
-			echo $content;
-		}
-		return $content;
+		$tmpl->exec(__METHOD__, $content);
 	}
 
 	/**
@@ -878,7 +881,7 @@ class calendar_uiviews extends calendar_ui
 		else
 		{
 			$wd_start = $this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
-			if ($days == 5)		// no weekend-days
+			if ($days <= 5)		// no weekend-days
 			{
 				switch($this->cal_prefs['weekdaystarts'])
 				{
@@ -905,7 +908,7 @@ class calendar_uiviews extends calendar_ui
 		$content = array('view' => array());
 
 		// Always do 7 days for a week so scrolling works properly
-		$this->last = ($days == 4 ? $this->last : $search_params['end'] = strtotime("+7 days",$this->first) - 1);
+		$this->last = ($days == 4 ? $this->last : $search_params['end'] = strtotime("+$days days",$this->first) - 1);
 		if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)	// for more then X users, show all in one row
 		{
 			$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params)) +
@@ -2924,6 +2927,11 @@ class calendar_uiviews extends calendar_ui
 		{
 			$actions['timesheet']['open'] = '{"app": "timesheet", "type": "add", "extra": "link_app[]=$app&link_id[]=$id"}';
 			$actions['timesheet']['onExecute'] = 'javaScript:app.calendar.action_open';
+		}
+		if ($actions['documents'])
+		{
+			// TODO: See if we can get this working sensibly
+			$actions['documents']['enabled'] = false;
 		}
 
 		$actions['delete']['onExecute'] = 'javaScript:app.calendar.delete';

@@ -2552,7 +2552,7 @@ class calendar_uiforms extends calendar_ui
 	 * @param string $_eventId id of the event which has to be moved
 	 * @param string $calendarOwner the owner of the calendar the event is in
 	 * @param string $targetDateTime the datetime where the event should be moved to, format: YYYYMMDD
-	 * @param string $targetOwner the owner of the target calendar
+	 * @param string|string[] $targetOwner the owner of the target calendar
 	 * @param string $durationT the duration to support resizable calendar event
 	 * @return string XML response if no error occurs
 	 */
@@ -2562,6 +2562,10 @@ class calendar_uiforms extends calendar_ui
 		if($targetOwner < 0)
 		{
 			$targetOwner = array($targetOwner);
+		}
+		if($targetOwner == 0 || is_array($targetOwner) && $targetOwner[0] == 0)
+		{
+			$targetOwner = $calendarOwner;
 		}
 		if($calendarOwner !== $targetOwner && !is_array($targetOwner))
 		{

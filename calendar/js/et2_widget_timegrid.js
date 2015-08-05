@@ -372,9 +372,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				this.widget.update_timer = null;
 
 				// Update actions
-				if(this._actionManager)
+				if(this.widget._actionManager)
 				{
-					this._link_actions(this._actionManager.children);
+					this.widget._link_actions(this.widget._actionManager.children);
 				}
 				
 				this.widget._drawDays();
@@ -542,7 +542,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			// Set the date, and pass any data we have
 			if(typeof this.value[this.day_list[i]] === 'undefined')
 			{
-				var ids = (egw.dataGetUIDdata(app.calendar._daywise_cache_id(this.day_list[i],this.options.owner))||{data:[]});
+				var ids = (egw.dataGetUIDdata(app.classes.calendar._daywise_cache_id(this.day_list[i],this.options.owner))||{data:[]});
 				for(var j = 0; j < ids.length; j++)
 				{
 					this.value[this.day_list[i]] = [];
@@ -620,9 +620,15 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	{
 		// Get the parent?  Might be a grid row, might not.  Either way, it is
 		// just a container with no valid actions
-		var objectManager = egw_getAppObjectManager(true);
-		var parent = objectManager.getObjectById(this._parent.id);
-		if(!parent) return;
+		var objectManager = egw_getObjectManager(this.getInstanceManager().app,true,1);
+		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
+		var parent = objectManager.getObjectById(this.id,3) || objectManager.getObjectById(this._parent.id,3) || objectManager;
+		if(!parent)
+		{
+			debugger;
+			egw.debug('error','No parent objectManager found')
+			return;
+		}
 		
 		for(var i = 0; i < parent.children.length; i++)
 		{
@@ -720,6 +726,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this._init_links_dnd(widget_object.manager, action_links);
 		
 		widget_object.updateActionLinks(action_links);
+		this._actionObject = widget_object;
 	},
 
 	/**
@@ -732,8 +739,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var drag_action = mgr.getActionById('egw_link_drag');
 
 		// Check if this app supports linking
-		if(!egw.link_get_registry(this.dataStorePrefix || this.egw().appName, 'query') ||
-			egw.link_get_registry(this.dataStorePrefix || this.egw().appName, 'title'))
+		if(!egw.link_get_registry(this.dataStorePrefix || 'calendar', 'query') ||
+			egw.link_get_registry(this.dataStorePrefix || 'calendar', 'title'))
 		{
 			if(drop_action)
 			{
