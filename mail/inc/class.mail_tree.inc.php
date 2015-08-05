@@ -239,7 +239,7 @@ class mail_tree
 				}
 
 				//List of folders
-				$foldersList = $this->ui->mail_bo->getFolderArrays(null, true, $_allInOneGo?0:2,$_subscribedOnly);
+				$foldersList = $this->ui->mail_bo->getFolderArrays(null, true, $_allInOneGo?0:2,$_subscribedOnly, true);
 				foreach ($foldersList as &$folder)
 				{
 					$path = $parent = $parts = explode($folder['delimiter'], $folder['MAILBOX']);
@@ -379,7 +379,7 @@ class mail_tree
 		{
 			$path = explode($data['folderarray']['delimiter'], $data['folderarray']['MAILBOX']);
 			$folderName = array_pop($path);
-		
+			
 			if ($data['folderarray']['MAILBOX'] === "INBOX")
 			{
 				$data[tree::IMAGE_LEAF] = self::$leafImages['folderHome'];
@@ -412,6 +412,17 @@ class mail_tree
 				$data[tree::IMAGE_LEAF] = self::$leafImages['folderLeaf'];
 				$data[tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderOpen'];
 				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderClose'];
+			}
+			
+			// Contains unseen mails for the folder
+			$unseen = $data['folderarray']['counter']['UNSEEN'];
+			
+			// if there's unseen mails then change the label and style
+			// accordingly to indicate useen mails
+			if ($unseen > 0)
+			{
+				$data[tree::LABEL] = $data[tree::LABEL].'('.$unseen.')';
+				$data['style'] = 'font-weight: bold';
 			}
 		}
 		//Remove extra data from tree structure
