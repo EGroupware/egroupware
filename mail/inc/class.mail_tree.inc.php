@@ -278,7 +278,8 @@ class mail_tree
 						tree::IMAGE_FOLDER_OPEN => $tree[tree::CHILDREN][0][tree::IMAGE_FOLDER_OPEN],
 						tree::IMAGE_FOLDER_CLOSED => $tree[tree::CHILDREN][0][tree::IMAGE_FOLDER_CLOSED],
 						tree::OPEN => 1,
-						tree::TOOLTIP => $tree[tree::CHILDREN][0][tree::TOOLTIP]
+						tree::TOOLTIP => $tree[tree::CHILDREN][0][tree::TOOLTIP],
+						'data' => $tree[tree::CHILDREN][0]['data']
 					);
 				}
 			}
