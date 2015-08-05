@@ -329,6 +329,7 @@ class defaultimap extends Net_IMAP
 				 return array(
 					'tls' => array(
 						'verify_peer' => false,
+						'verify_peer_name' => false,
 						'allow_self_signed' => true,
 					)
 				);
@@ -336,6 +337,7 @@ class defaultimap extends Net_IMAP
 				return array(
 					'ssl' => array(
 						'verify_peer' => false,
+						'verify_peer_name' => false,
 						'allow_self_signed' => true,
 					)
 				);
@@ -345,6 +347,7 @@ class defaultimap extends Net_IMAP
 				return array(
 					'tls' => array(
 						'verify_peer' => true,
+						'verify_peer_name' => true,
 						'allow_self_signed' => false,
 					)
 				);
@@ -352,6 +355,7 @@ class defaultimap extends Net_IMAP
 				return array(
 					'ssl' => array(
 						'verify_peer' => true,
+						'verify_peer_name' => true,
 						'allow_self_signed' => false,
 					)
 				);
@@ -559,7 +563,7 @@ class defaultimap extends Net_IMAP
 		// the buffering of capabilities triggers connections that STARTTLS to use these capabilities at the wrong time
 		// $this->encryption == 1 -> STARTTLS
 		if ($this->encryption == 1) unset($this->_serverSupportedCapabilities);
-		$this->setStreamContextOptions($this->_getTransportOptions());
+		$this->setStreamContextOptions($this->_getTransportOptions($this->encryption == 1 ? 3 : $this->encryption));
 		$this->_timeout = $_timeout;
 		if( PEAR::isError($status = parent::connect($this->_getTransportString(), $this->port, $this->encryption == 1)) ) {
 			if ($this->debug) error_log(__METHOD__.__LINE__."Could not connect with ".$this->_getTransportString()." on Port ".$this->port." Encryption==1?".$this->encryption);
