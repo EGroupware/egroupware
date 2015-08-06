@@ -243,7 +243,7 @@ app.classes.calendar = AppJS.extend(
 				var event = egw.dataGetUIDdata('calendar::'+_id);
 				if(event && event.data && event.data.date)
 				{
-					var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date)
+					var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date,this.state.owner)
 					var daywise = egw.dataGetUIDdata(new_cache_id);
 					daywise = daywise ? daywise.data : [];
 					if(_type === 'delete')
@@ -1468,6 +1468,14 @@ app.classes.calendar = AppJS.extend(
 					grid.set_value(
 						{content: value}
 					);
+
+					// Weekend needs to be done seperately
+					grid.iterateOver(function(widget) {
+						if(widget.set_show_weekend)
+						{
+							widget.set_show_weekend(view.show_weekend(state));
+						}
+					},this, et2_valueWidget);
 				}
 			}
 			else
@@ -1564,7 +1572,8 @@ app.classes.calendar = AppJS.extend(
 							var match = true;
 							for(var os_key in option_state)
 							{
-								match = match && option_state[os_key] == this.state[os_key];
+								// Sometimes an optional state variable is not yet defined (sortby, days, etc)
+								match = match && (option_state[os_key] == this.state[os_key] || typeof this.state[os_key] == 'undefined');
 							}
 							if(match)
 							{
@@ -1829,7 +1838,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				// Cache is by date (and owner, if seperate)
 				var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
-				var cache_id = app.classes.calendar._daywise_cache_id(date, seperate_owners ? value[i].owner : false);
+				var cache_id = app.classes.calendar._daywise_cache_id(date, seperate_owners ? value[i].owner : state.owner||false);
 
 				if(egw.dataHasUID(cache_id))
 				{
@@ -1887,13 +1896,18 @@ app.classes.calendar = AppJS.extend(
 	 *
 	 * As long as the other filters are the same (category, owner, status) we
 	 * cache the data.
+	 *
+	 * @param {Object} state
+	 * @param {etemplate2} [instance] If the full calendar app isn't loaded
+	 *	(home app), pass a different instance to use it to get the data
 	 */
-	_fetch_data: function(state)
+	_fetch_data: function(state, instance)
 	{
-		if(!this.sidebox_et2) return;
+		if(!this.sidebox_et2 && !instance) return;
 
 		this.egw.dataFetch(
-			this.sidebox_et2.getInstanceManager().etemplate_exec_id,
+			instance ? instance.etemplate_exec_id :
+				this.sidebox_et2.getInstanceManager().etemplate_exec_id,
 			{start: 0, num_rows:0},
 			jQuery.extend({}, app.calendar.state,
 			{
@@ -2155,7 +2169,7 @@ app.classes.calendar = AppJS.extend(
 		 */
 		show_weekend: function(state)
 		{
-			return parseInt(egw.preference('days_in_weekview','calendar')) == 7;
+			return state.days ? parseInt(state.days) === 7 : parseInt(egw.preference('days_in_weekview','calendar')) == 7;
 		},
 		extend: function(sub)
 		{
@@ -2369,9 +2383,9 @@ jQuery.extend(app.classes.calendar,{
 				{
 					d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
 				}
-				else if (app.calendar.state.last)
+				else if (state.last)
 				{
-					d = new Date(app.calendar.state.last);
+					d = new Date(state.last);
 				}
 				else if (!state.planner_days)
 				{
@@ -2386,6 +2400,23 @@ jQuery.extend(app.classes.calendar,{
 						d.setUTCMonth(d.getUTCMonth()+1);
 						d = app.calendar.date.end_of_week(d);
 					}
+				}
+				return d;
+			},
+			scroll: function(delta)
+			{
+				// Need to set the day count, or auto date ranging takes over and
+				// makes things buggy
+				if(app.calendar.state.first && app.calendar.state.last)
+				{
+					var diff = new Date(app.calendar.state.last)  - new Date(app.calendar.state.first);
+					app.calendar.state.planner_days = Math.round(diff / (1000*3600*24));
+				}
+				var d = new Date(app.calendar.state.date);
+				d.setUTCDate(d.getUTCDate() + (app.calendar.state.planner_days*delta));
+				if(app.calendar.state.planner_days > 8)
+				{
+					d = app.calendar.date.start_of_week(d);
 				}
 				return d;
 			}
