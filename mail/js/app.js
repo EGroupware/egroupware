@@ -3524,13 +3524,25 @@ app.classes.mail = AppJS.extend(
 	acl_common_rights_selector: function(event,widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
-		var rights = (widget.get_value() == "custom"?[]:widget.get_value() == "aeiklprstwx")?
-						widget.get_value().replace(/[k,x,t,e]/g,"cd").split(""):widget.get_value().split("");
-
-		for (var i=0;i<this.aclRights.length;i++)
+		var rights = [];
+		
+		switch (widget.get_value())
 		{
-			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
-			rightsWidget.set_value((jQuery.inArray(this.aclRights[i],rights) != -1 )?true:false);
+			case 'custom':
+				break;
+			case 'aeiklprstwx':
+				rights = widget.get_value().replace(/[k,x,t,e]/g,"cd").split("");
+				break;
+			default:
+				rights = widget.get_value().split("");
+		}
+		if (rights.length > 0)
+		{
+			for (var i=0;i<this.aclRights.length;i++)
+			{
+				var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+				rightsWidget.set_value((jQuery.inArray(this.aclRights[i],rights) != -1 )?true:false);
+			}
 		}
 	},
 
