@@ -1499,7 +1499,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var res = _rowID.split('::');
 		// as a rowID is perceeded by app::, should be mail!
-		if (res.length==4 && parseInt(res[0])!=NaN )
+		if (res.length==4 && !isNaN(parseInt(res[0])))
 		{
 			// we have an own created rowID; prepend app=mail
 			res.unshift('mail');
@@ -2588,9 +2588,9 @@ app.classes.mail = AppJS.extend(
 	{
 		var app = _action.id;
 		var w_h = ['750','580']; // define a default wxh if there's no popup size registered
-		
+
 		var add_as_new = true;
-		
+
 		if (typeof _action.data != 'undefined' )
 		{
 			if (typeof _action.data.popup != 'undefined' && _action.data.popup) w_h = _action.data.popup.split('x');
@@ -2613,16 +2613,16 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		
+
 		var url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
-		
+
 		/**
 		 * Checks the application entry existance and offers user
 		 * to select desire app id to append mail content into it,
 		 * or add the mail content as a new app entry
-		 * 
+		 *
 		 * @param {string} _title select app entry title
-		 * @param {string} _appName app to be integrated 
+		 * @param {string} _appName app to be integrated
 		 * @param {string} _appCheckCallback registered mail_import hook method
 		 *	for check app entry existance
 		 */
@@ -2631,7 +2631,7 @@ app.classes.mail = AppJS.extend(
 			var data = egw.dataGetUIDdata(_elems[0].id);
 			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
 			egw.json(_appCheckCallback, subject,function(_entryId){
-				
+
 				// if there's no entry saved already
 				// open dialog in order to select one
 				if (!_entryId)
@@ -2666,8 +2666,8 @@ app.classes.mail = AppJS.extend(
 					egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 				}
 			},this,true,this).sendRequest();
-		}
-		
+		};
+
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
 			check_app_entry('Select '+ app + ' entry', app,  mail_import_hook.app_entry_method);
@@ -2676,7 +2676,7 @@ app.classes.mail = AppJS.extend(
 		{
 			egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 		}
-		
+
 	},
 
 	/**
@@ -3371,7 +3371,7 @@ app.classes.mail = AppJS.extend(
 							that._do_action(typeId, actionData['data'],ruleID);
 						}
 					};
-					var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.WARNING_MESSAGE);
+					et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.WARNING_MESSAGE);
 
 					break;
 				case 'add'	:
@@ -3558,7 +3558,7 @@ app.classes.mail = AppJS.extend(
 				if (egwIsMobile())
 				{
 					var nm = this.et2.getWidgetById(this.nm_index);
-					nm.set_disabled(!!_url)
+					nm.set_disabled(!!_url);
 					iframe.set_disabled(!_url);
 				}
 				// Set extra_iframe a class with height and width
@@ -4267,7 +4267,7 @@ app.classes.mail = AppJS.extend(
 								.removeClass('mailCompose_copyEmail')
 								.css('cursor','move');
 					}
-					
+
 					var dragItems = jQuery('div.ms-sel-item');
 					dragItems.each(function(i,item){
 						var $isErr = jQuery(item).find('.ui-state-error');
@@ -4300,7 +4300,7 @@ app.classes.mail = AppJS.extend(
 				{
 					emails.splice(itemIndex,1);
 					// Resolve the dist list and normal emails
-					var dist = resolveDistList(_widget, emails)
+					var dist = resolveDistList(_widget, emails);
 					
 					// Add normal emails
 					_widget.set_value(emails);
