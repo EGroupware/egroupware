@@ -99,7 +99,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Register for updates
 		var app_id = this.options.value.app_id ? this.options.value.app_id : this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
 		egw.dataRegisterUID('calendar::'+app_id, function(event) {
-			if(this._parent && this.options.value.date && event.date != this.options.value.date)
+			// Check for changing days in the grid view
+			if(this._parent && this._parent.instanceOf(et2_calendar_daycol) &&
+				this.options.value.date && event.date != this.options.value.date)
 			{
 				// Date changed, reparent
 				var new_parent = this._parent._parent.getWidgetById(event.date);
@@ -112,8 +114,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 					// Could not find the right date
 					this._parent.removeChild(this);
 					this.destroy();
+					return;
 				}
-				return;
 			}
 			// Copy to avoid changes, which may cause nm problems
 			this.options.value = jQuery.extend({},event);

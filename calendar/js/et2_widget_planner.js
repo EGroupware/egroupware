@@ -591,7 +591,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	 */
 	_header_months: function(start, days)
 	{
-		var content = '<div class="calendar_plannerScale">';
+		var content = '<div class="calendar_plannerScale" data-planner_days="0" data-last="">';
 		var days_in_month = 0;
 		var day_width = 100 / days;
 		for(var t = new Date(start),left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + days_in_month),left += days_in_month*day_width,i += days_in_month)
@@ -741,6 +741,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				{
 					var next = new Date(t);
 					next.setUTCDate(next.getUTCDate() + 1);
+					next.setUTCHours(0);
+					next.setUTCMinutes(0);
 					title += this._scroll_button('right',next.toJSON());
 				}
 			}
@@ -772,7 +774,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var hours = days * 24;
 		if (days === 1)			// for a single day we calculate the hours of a days, to take into account daylight saving changes (23 or 25 hours)
 		{
-			var t = new Date(start.getUTCFullYear(),start.getUTCMonth(),start.getUTCDate());
+			var t = new Date(start.getUTCFullYear(),start.getUTCMonth(),start.getUTCDate(),-start.getTimezoneOffset()/60);
 			var s = new Date(start);
 			s.setUTCHours(23);
 			s.setUTCMinutes(59);
@@ -789,7 +791,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		{
 			var title = date(egw.preference('timeformat','calendar') == 12 ? 'ha' : 'H',t);
 
-			content += '<div class="calendar_plannerHourScale" style="left: '+left+'%; width: '+(cell_width)+'%;">'+title+"</div>";
+			content += '<div class="calendar_plannerHourScale" data-date="' + t.toJSON() +'" style="left: '+left+'%; width: '+(cell_width)+'%;">'+title+"</div>";
 			t.setHours(t.getHours()+decr);
 		}
 		content += "</div>";		// end of plannerScale
@@ -1033,6 +1035,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	_fetch_data: function()
 	{
 		var value = [];
+		var fetch = false;
 		// Remember previous day to avoid multi-days duplicating
 		var last_data = [];
 
@@ -1060,9 +1063,23 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				}
 				last_data = c.data;
 			}
+			else
+			{
+				fetch = true;
+			}
 			t.setUTCDate(t.getUTCDate() + 1);
 		}
 		while(t < end);
+		// Need to get some more from the server
+		if(fetch && app.calendar)
+		{
+			app.calendar._fetch_data({
+				first: this.options.start_date,
+				last: this.options.end_date,
+				owner: this.options.owner,
+				filter: this.options.filter
+			}, this.getInstanceManager());
+		}
 		return value;
 	},
 
@@ -1327,6 +1344,31 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			// Click on a header, we can go there
 			_ev.data = jQuery.extend({},_ev.target.parentNode.dataset, _ev.target.dataset);
 			debugger;
+			// Handle it locally
+			var old_start = this.options.start_date;
+			if(_ev.data.date)
+			{
+				this.set_start_date(_ev.data.date);
+			}
+			if(_ev.data.planner_days)
+			{
+				_ev.data.planner_days = parseInt(_ev.data.planner_days);
+				if(_ev.data.planner_days)
+				{
+					var d = new Date(this.options.start_date);
+					d.setUTCDate(d.getUTCDate() +_ev.data.planner_days-1);
+					this.set_end_date(d);
+				}
+			}
+			else
+			{
+				var diff = Math.round((new Date(this.options.start_date) - new Date(old_start)) / (1000 * 3600 * 24));
+				var end = new Date(this.options.end_date);
+				end.setUTCDate(end.getUTCDate() + diff)
+				this.set_end_date(end);
+			}
+
+			// Notify anyone who's interested
 			this.change(_ev);
 		}
 		else

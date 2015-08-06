@@ -246,14 +246,14 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	/**
 	 * Set the owner of this day
 	 *
-	 * @param {number} _owner Account ID
+	 * @param {number|number[]} _owner Account ID
 	 */
 	set_owner: function(_owner) {
 		if(_owner !== this.options.owner)
 		{
 			egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id+(this.options.date,this.options.owner),false,this);
 
-			this.options.owner = parseInt(_owner);
+			this.options.owner = _owner;
 			this.div.attr('data-sortable-id', this.options.owner);
 
 			// Register for updates on events for this day

@@ -354,6 +354,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(this._parent.options.group_by !== 'month')
 		{
 			// Daywise scaling
+			/* Needs hourly scales that consider working hours
 			var start_date = new Date(start.getUTCFullYear(), start.getUTCMonth(),start.getUTCDate());
 			var end_date = new Date(end.getUTCFullYear(), end.getUTCMonth(),end.getUTCDate());
 			var t_date = new Date(t.getUTCFullYear(), t.getUTCMonth(),t.getUTCDate());
@@ -378,7 +379,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 				}
 				pos += day_percentage / days;
 			}
-			
+			*/
 		}
 		pos = 100 * pos;
 

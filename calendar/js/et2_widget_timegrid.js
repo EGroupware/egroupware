@@ -320,8 +320,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 				// Leave the helper there until the update is done
 				var loading = ui.helper.clone().appendTo(ui.helper.parent());
-				loading.addClass('loading');
-
+				// and add a loading icon so user knows something is happening
+				$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+				
 				event_widget.recur_prompt(function(button_id) {
 					if(button_id === 'cancel' || !button_id) return;
 					//Get infologID if in case if it's an integrated infolog event
@@ -543,12 +544,12 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			if(typeof this.value[this.day_list[i]] === 'undefined')
 			{
 				var ids = (egw.dataGetUIDdata(app.classes.calendar._daywise_cache_id(this.day_list[i],this.options.owner))||{data:[]});
-				for(var j = 0; j < ids.length; j++)
+				for(var j = 0; j < ids.data.length; j++)
 				{
 					this.value[this.day_list[i]] = [];
-					if(egw.dataHasUID('calendar::'+ids[j]))
+					if(egw.dataHasUID('calendar::'+ids.data[j]))
 					{
-						this.value[this.day_list[i]].push(egw.dataGetUIDdata('calendar::'+ids[j]).data);
+						this.value[this.day_list[i]].push(egw.dataGetUIDdata('calendar::'+ids.data[j]).data);
 					}
 				}
 			}
@@ -561,6 +562,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			// Position
 			$j(day.getDOMNode()).css('left', ((100/this.day_list.length).toFixed(2) * i) + '%');
 		}
+
+		// Don't hold on to value any longer, use the data cache for best info
+		this.value = {};
 		
 		// TODO: Figure out how to do this with detached nodes
 		/*
