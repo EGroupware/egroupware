@@ -657,7 +657,8 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		unset(self::$stat_cache[$path_from]);
 		unset(self::$stat_cache[$path_to]);
 
-		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_dir=:old_dir AND fs_name=:old_name');
+		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name'.
+			' WHERE fs_dir=:old_dir AND fs_name'.self::$case_sensitive_equal.':old_name');
 		$ok = $stmt->execute(array(
 			'fs_dir'   => $to_dir_stat['ino'],
 			'fs_name'  => Vfs::basename($path_to),
