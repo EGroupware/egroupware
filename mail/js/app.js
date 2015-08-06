@@ -1,3 +1,5 @@
+/* global msg */
+
 /**
  * mail - static javaScript functions
  *
@@ -1540,7 +1542,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var res = _rowID.split('::');
 		// as a rowID is perceeded by app::, should be mail!
-		if (res.length==4 && parseInt(res[0])!=NaN )
+		if (res.length==4 && !isNaN(parseInt(res[0])))
 		{
 			// we have an own created rowID; prepend app=mail
 			res.unshift('mail');
@@ -3463,7 +3465,7 @@ app.classes.mail = AppJS.extend(
 							that._do_action(typeId, actionData['data'],ruleID);
 						}
 					};
-					var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.WARNING_MESSAGE);
+					et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.WARNING_MESSAGE);
 
 					break;
 				case 'add'	:
@@ -4412,7 +4414,7 @@ app.classes.mail = AppJS.extend(
 				{
 					emails.splice(itemIndex,1);
 					// Resolve the dist list and normal emails
-					var dist = resolveDistList(_widget, emails)
+					var dist = resolveDistList(_widget, emails);
 					
 					// Add normal emails
 					_widget.set_value(emails);
@@ -4540,7 +4542,6 @@ app.classes.mail = AppJS.extend(
 	
 	/**
 	 * 
-	 * @param {type} _keyring
 	 * @returns {undefined}
 	 */
 	prepareMailvelopePrint: function()
