@@ -193,9 +193,12 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 						editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
 					},200);
 				}
-
+				
+				// Supported file types for dropping on CKEditor imageUpload plugin
+				var supportedTypesByCKEditor = /image\/(jpeg|png|gif)/;
+				
 				// Try to pass the image into the first et2_file that will accept it
-				if(e.data.$.dataTransfer)
+				if(e.data.$.dataTransfer && !CKEDITOR.fileTools.isTypeSupported(e.data.$.dataTransfer.files[0],supportedTypesByCKEditor))
 				{
 					self.getRoot().iterateOver(function(widget) {
 						if(widget.options.drop_target)
