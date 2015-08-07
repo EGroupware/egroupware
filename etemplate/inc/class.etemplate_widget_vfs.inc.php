@@ -78,6 +78,54 @@ class etemplate_widget_vfs extends etemplate_widget_file
 	}
 
 	/**
+	 * Upload via dragging images into ckeditor
+	 */
+	public static function ajax_htmlarea_upload()
+	{
+		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
+		$widget_id = $_REQUEST['widget_id'];
+		if(!self::$request = etemplate_request::read($request_id))
+		{
+			$error = lang("Could not read session");
+		}
+		elseif (!($template = etemplate_widget_template::instance(self::$request->template['name'], self::$request->template['template_set'],
+			self::$request->template['version'], self::$request->template['load_via'])))
+		{
+			// Can't use callback
+			$error = lang("Could not get template for file upload, callback skipped");
+		}
+		/*elseif (!($widget = $template->getElementById($widget_id)))
+		{
+			$error = "Widget '$widget_id' not found!";
+		}*/
+		elseif (!isset($_FILES['upload']))
+		{
+			$error = lang('No _FILES[upload] found!');
+		}
+		else
+		{
+			$data = self::$request->content[$widget_id];
+			$path = self::store_file($path = self::get_vfs_path($data['to_app'].':'.$data['to_id']).'/', $_FILES['upload']);
+		}
+		// switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
+
+		$file = array(
+			"uploaded" => (int)empty($error),
+			"fileName" => html::htmlspecialchars($_FILES['upload']['name']),
+			"url" => egw::link(egw_vfs::download_url($path)),
+			"error" => array(
+				"message" => $error,
+			)
+		);
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($file);
+
+		common::egw_exit();
+	}
+
+	/**
 	* Ajax callback to receive an incoming file
 	*
 	* The incoming file is automatically placed into the appropriate VFS location.
@@ -91,7 +139,7 @@ class etemplate_widget_vfs extends etemplate_widget_file
 		// Find real path
 		if($path[0] != '/')
 		{
-			$path = self::get_vfs_path($path, $file['name']);
+			$path = self::get_vfs_path($path);
 		}
 		$filename = $file['name'];
 		if (substr($path,-1) != '/')
@@ -120,6 +168,8 @@ class etemplate_widget_vfs extends etemplate_widget_file
 
 		// Try to remove temp file
 		unlink($file['tmp_name']);
+
+		return $path;
 	}
 
 	/**

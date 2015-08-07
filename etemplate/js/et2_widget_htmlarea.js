@@ -71,11 +71,11 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 			type: "html",	// "string" would remove html tags by running html_entity_decode
 			default: et2_no_init
 		},
-		imageDataUrl: {
-			name: "imageDataUrl",
-			description: "Allow images dragged in as data-url, default false = handle them as fileupload",
-			type: "boolean",
-			default: false
+		imageUpload: {
+			name: "imageUpload",
+			description: "Url to upload images dragged in or id of link_to widget to it's vfs upload",
+			type: "string",
+			default: null
 		}
 	},
 
@@ -123,6 +123,20 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 		if(this.mode == 'ascii' || this.ckeditor != null) return;
 
 		var self = this;
+		if (!this.options.imageUpload)
+		{
+			delete self.options.config.imageUploadUrl;
+		}
+		else if (this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
+		{
+			self.options.config.imageUploadUrl = egw.ajaxUrl(self.egw().getAppName()+".etemplate_widget_vfs.ajax_htmlarea_upload.etemplate")+
+						'&request_id='+self.getInstanceManager().etemplate_exec_id+'&widget_id='+this.options.imageUpload;
+			self.options.config.imageUploadUrl = self.options.config.imageUploadUrl.substr(egw.webserverUrl.length+1);
+		}
+		else
+		{
+			self.options.config.imageUploadUrl = this.options.imageUpload.substr(egw.webserverUrl.length+1);
+		}
 		try
 		{
 			this.ckeditor = CKEDITOR.replace(this.dom_id,jQuery.extend({},this.options.config,this.options));
@@ -172,14 +186,13 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 					return;
 
 				// allow data-URL, returning false to stop regular upload
-				if (self.options.imageDataUrl)
+				if (!self.options.imageUpload)
 				{
-					return false;
+					// Remove the image from the text
+					setTimeout( function() {
+						editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
+					},200);
 				}
-				// Remove the image from the text
-				setTimeout( function() {
-					editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
-				},200);
 
 				// Try to pass the image into the first et2_file that will accept it
 				if(e.data.$.dataTransfer)
@@ -274,7 +287,7 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 					var h = 0;
 					if (typeof this.ckeditor.container !='undefined' && this.ckeditor.container.$.clientHeight > 0)
 					{
-						h = (this.ckeditor.container.$.clientHeight + _height) > 0 ? 
+						h = (this.ckeditor.container.$.clientHeight + _height) > 0 ?
 						this.ckeditor.container.$.clientHeight + _height: this.ckeditor.config.height;
 					}
 					else if (this.ckeditor.ui.space('contents'))
@@ -289,7 +302,7 @@ var et2_htmlarea = et2_inputWidget.extend([et2_IResizeable],
 					this.ckeditor.resize('',h);
 				}
 				else // No CKEDITOR
-				{	
+				{
 					this.htmlNode.height(this.htmlNode.height() + _height);
 				}
 			}

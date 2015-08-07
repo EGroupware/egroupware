@@ -19,9 +19,9 @@
 
 /**
  * Class which implements file upload
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_file = et2_inputWidget.extend(
 {
 	attributes: {
@@ -90,14 +90,14 @@ var et2_file = et2_inputWidget.extend(
 			"type": "any",
 			"default": et2_no_init,
 			"description": "A (js) function called when a file to be uploaded is finished."
-		},
+		}
 	},
 
 	asyncOptions: {},
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_file
 	 */
 	init: function() {
@@ -121,19 +121,19 @@ var et2_file = et2_inputWidget.extend(
 
 		// Set up the URL to have the request ID & the widget ID
 		var instance = this.getInstanceManager();
-	
+
 		var self = this;
 
 		this.asyncOptions = jQuery.extend({
 			// Callbacks
-			onStart: function(event, file_count) { 
-				return self.onStart(event, file_count); 
+			onStart: function(event, file_count) {
+				return self.onStart(event, file_count);
 			},
-			onFinish: function(event, file_count) { 
+			onFinish: function(event, file_count) {
 				self.onFinish.apply(self, [event, file_count])
 			},
-			onStartOne: function(event, file_name, index, file_count) { 
-				
+			onStartOne: function(event, file_name, index, file_count) {
+
 			},
 			onFinishOne: function(event, response, name, number, total) { return self.finishUpload(event,response,name,number,total);},
 			onProgress: function(event, progress, name, number, total) { return self.onProgress(event,progress,name,number,total);},
@@ -158,7 +158,7 @@ var et2_file = et2_inputWidget.extend(
 		this.span = null;
 		this.progress = null;
 	},
-	
+
 	createInputWidget: function() {
 		this.node = $j(document.createElement("div")).addClass("et2_file");
 		this.span = $j(document.createElement("span"))
@@ -172,7 +172,7 @@ var et2_file = et2_inputWidget.extend(
 			.hover(function(e){
 				$j(span)
 					.toggleClass('et2_file_spanHover');
-			})	
+			})
 			.on({
 				mousedown:function (e){
 					$j(span).addClass('et2_file_spanActive');
@@ -218,14 +218,14 @@ var et2_file = et2_inputWidget.extend(
 
 		this.setDOMNode(this.node[0]);
 	},
-		
+
 	/**
 	 * Set a widget or DOM node as a HTML5 file drop target
-	 * 
+	 *
 	 * @param String new_target widget ID or DOM node ID to be used as a new target
 	 */
 	set_drop_target: function(new_target)
-	{		
+	{
 		// Cancel old drop target
 		if(this.options.drop_target)
 		{
@@ -236,11 +236,11 @@ var et2_file = et2_inputWidget.extend(
 				this.resumable.unAssignDrop(drop_target);
 			}
 		}
-		
+
 		this.options.drop_target = new_target;
-		
+
 		if(!this.options.drop_target) return;
-		
+
 		// Set up new drop target
 		var widget = this.getRoot().getWidgetById(this.options.drop_target);
 		var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
@@ -265,10 +265,10 @@ var et2_file = et2_inputWidget.extend(
 	},
 
 	/**
-	 * Set the value of the file widget.  
-	 * 
+	 * Set the value of the file widget.
+	 *
 	 * If you pass a FileList or list of files, it will trigger the async upload
-	 * 
+	 *
 	 * @param {FileList|File[]|false} value List of files to be uploaded, or false to reset.
 	 * @param {Event} event Most browsers require the user to initiate file transfers in some way.
 	 *	Pass the event in, if you have it.
@@ -289,7 +289,7 @@ var et2_file = et2_inputWidget.extend(
 
 			return;
 		}
-		
+
 		if(typeof value == 'object' && value.length && typeof value[0] == 'object' && value[0].name)
 		{
 			try
@@ -304,11 +304,11 @@ var et2_file = et2_inputWidget.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Set the value for label
 	 * The label is used as caption for span tag which customize the HTML file upload styling
-	 *  
+	 *
 	 * @param {string} value text value of label
 	 */
 	set_label: function (value)
@@ -402,13 +402,13 @@ var et2_file = et2_inputWidget.extend(
 		}
 
 	},
-	
+
 	/**
 	 * Add in the request id
 	 */
 	beforeSend: function(form) {
 		var instance = this.getInstanceManager();
-		
+
 		return {
 			request_id: instance.etemplate_exec_id,
 			widget_id: this.id
@@ -431,13 +431,13 @@ var et2_file = et2_inputWidget.extend(
 				.css('cursor', 'default');
 
 		event.data = this;
-		
+
 		//Add dropdown_progress
 		if (this.options.progress_dropdownlist)
 		{
 			this._build_progressDropDownList();
 		}
-		
+
 		// Callback
 		if(this.options.onStart) return et2_call(this.options.onStart, event, file_count);
 		return true;
@@ -448,7 +448,7 @@ var et2_file = et2_inputWidget.extend(
 	 */
 	onFinish: function() {
 		this.disabled_buttons.attr("disabled", false).css('cursor','pointer');
-		
+
 		var file_count = this.resumable.files.length;
 
 		// Remove files from list
@@ -458,19 +458,19 @@ var et2_file = et2_inputWidget.extend(
 		}
 
 		var event = jQuery.Event('upload');
-		
+
 		event.data = this;
 
 		var result = false;
-		
+
 		//Remove progress_dropDown_fileList class and unbind the click handler from body
 		if (this.options.progress_dropdownlist)
 		{
 			this.progress.removeClass("progress_dropDown_fileList");
 			jQuery(this.node).find('span').removeClass('totalProgress_loader');
 			jQuery('body').off('click');
-		}	
-		
+		}
+
 		if(this.options.onFinish && !jQuery.isEmptyObject(this.getValue()))
 		{
 			result =  et2_call(this.options.onFinish, event, file_count);
@@ -485,19 +485,19 @@ var et2_file = et2_inputWidget.extend(
 			this.change(this.input);
 		}
 	},
-	
+
 	/**
 	 * Build up dropdown progress with total count indicator
-	 * 
+	 *
 	 * @todo Implement totalProgress bar instead of ajax-loader, in order to show how much percent of uploading is completed
 	 */
 	_build_progressDropDownList: function ()
 	{
 		this.progress.addClass("progress_dropDown_fileList");
-		
+
 		//Add uploading indicator and bind hover handler on it
 		jQuery(this.node).find('span').addClass('totalProgress_loader');
-				
+
 		jQuery(this.node).find('input').hover(function(){
 					jQuery('.progress_dropDown_fileList').show();
 		});
@@ -506,11 +506,11 @@ var et2_file = et2_inputWidget.extend(
 			if (event.target.className != 'remove')
 			{
 				jQuery('.progress_dropDown_fileList').hide();
-			}	
+			}
 		});
-		
+
 	},
-	
+
 	/**
 	 * Creates the elements used for displaying the file, and it's upload status, and
 	 * attaches them to the DOM
@@ -523,7 +523,7 @@ var et2_file = et2_inputWidget.extend(
 		if(this.options.max_file_size && file.size > this.options.max_file_size) {
 			error = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.options.max_file_size));
 		}
-		
+
 		if(this.options.progress)
 		{
 			var widget = this.getRoot().getWidgetById(this.options.progress);
@@ -599,9 +599,9 @@ var et2_file = et2_inputWidget.extend(
 				.text(this.egw().lang("Server error"));
 		}
 		var event = jQuery.Event('upload');
-		
+
 		event.data = this;
-		
+
 		// Callback
 		if(this.options.onFinishOne)
 		{
@@ -642,7 +642,7 @@ var et2_file = et2_inputWidget.extend(
 		e.preventDefault();
 		// Look for file name in list
 		var target = $j(e.target).parents("li");
-		
+
 		this.remove_file(e.data);
 
 		// In case it didn't make it to the list (error)
