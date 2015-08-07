@@ -265,6 +265,11 @@ class mail_tree
 					{
 						$data['data'] = array('acl' => $this->ui->mail_bo->icServer->queryCapability('ACL'));
 					}
+					else
+					{
+						//Do not open Initially other folders but INBOX
+						$data[tree::OPEN] = 0;
+					}
 					self::setOutStructure($data, $tree, $folder['delimiter'], true, $this->ui->mail_bo->_getNameSpaces(), $definedFolders);
 				}
 				// Structs children of account root node. Used for mail index tree when we do autoloading on account id
