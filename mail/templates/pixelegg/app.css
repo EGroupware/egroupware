@@ -701,15 +701,18 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   background-position: left top;
   background-repeat: no-repeat;
 }
-.mail_subscription_header {
+.mail_subscription_header,
+.mail_folder_management_header {
   font-weight: bold;
   font-size: 150%;
   padding-bottom: 20px;
 }
-#mail-subscribe table.et2_grid tr td {
+#mail-subscribe table.et2_grid tr td,
+#mail-folder_management table.et2_grid tr td {
   padding: 0px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box {
+#mail-subscribe table.et2_grid tr td div.et2_box,
+#mail-folder_management table.et2_grid tr td .mail_subscription_header {
   height: 500px;
   overflow: auto;
 }
@@ -1672,11 +1675,13 @@ div#displayToolbar-menulist img {
  *
  * ##################################################################################
  */
-#mail-subscribe table.et2_grid tr td {
+#mail-subscribe table.et2_grid tr td,
+#mail-folder_management table.et2_grid tr td {
   padding: 0px;
   /*Label*/
 }
-#mail-subscribe table.et2_grid tr td .mail_subscription_header {
+#mail-subscribe table.et2_grid tr td .mail_subscription_header,
+#mail-folder_management table.et2_grid tr td .mail_subscription_header {
   /*line-height: 270%;*/
   margin: 0.6em 0 0;
   font-weight: lighter;
@@ -1685,12 +1690,14 @@ div#displayToolbar-menulist img {
   font-size: 150%;
   padding-bottom: 20px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box {
+#mail-subscribe table.et2_grid tr td div.et2_box,
+#mail-folder_management table.et2_grid tr td div.et2_box {
   margin-top: 16px;
   height: 484px;
   overflow: auto;
 }
-.mail_subscription_header {
+.mail_subscription_header,
+.mail_folder_management_header {
   font-weight: bold;
   font-size: 150%;
   padding-bottom: 20px;

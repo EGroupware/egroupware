@@ -4838,5 +4838,131 @@ app.classes.mail = AppJS.extend(
 		{
 			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save into VFS','info');
 		}
+	},
+	
+	/**
+	 * Folder Management, opens the folder magnt. dialog
+	 * with the selected acc_id from index tree
+	 * 
+	 * @param {egw action object} _action actions
+	 * @param {object} _senders selected node
+	 */
+	folderManagement: function (_action,_senders)
+	{
+		var acc_id = parseInt(_senders[0].id);
+		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x500');
+	},
+	
+	/**
+	 * Show ajax-loader when the autoloading get started
+	 * 
+	 * @param {type} _id item id
+	 * @param {type} _widget tree widget
+	 * @returns {Boolean}
+	 */
+	folderMgmt_autoloadingStart: function(_id, _widget)
+	{
+		return this.subscription_autoloadingStart (_id, _widget);
+	},
+	
+	/**
+	 * Revert back the icon after autoloading is finished
+	 * @returns {Boolean}
+	 */
+	folderMgmt_autoloadingEnd: function(_id, _widget)
+	{
+		return true;
+	},
+	
+	/**
+	 * 
+	 * @param {type} _ids
+	 * @param {type} _widget
+	 * @returns {undefined}
+	 */
+	folderMgmt_onSelect: function(_ids, _widget)
+	{
+		// et2 content
+		var content = this.et2.getArrayMgr('content').data;
+		
+		// Flag to reset selected items
+		var resetSelection = false;
+		
+		var self = this;
+		
+		/**
+		 * helper function to multiselect range of nodes in same level
+		 * 
+		 * @param {string} _a start node id
+		 * @param {string} _b end node id
+		 * @param {string} _branch totall node ids in the level
+		 */
+		var rangeSelector = function(_a,_b, _branch)
+		{
+			var branchItems = _branch.split(_widget.input.dlmtr);
+			var _aIndex = _widget.input.getIndexById(_a);
+			var _bIndex = _widget.input.getIndexById(_b);
+			if (_bIndex<_aIndex)
+			{
+				var tmpIndex = _aIndex;
+				_aIndex = _bIndex;
+				_bIndex = tmpIndex;
+			}
+			for(var i =_aIndex;i<=_bIndex;i++)
+			{
+				self.folderMgmt_setCheckbox(_widget, branchItems[i], !_widget.input.isItemChecked(branchItems[i]));
+			}
+		};
+		
+		if (content)
+		{
+			var itemIds = _ids.split(_widget.input.dlmtr);
+			
+			if(itemIds.length == 2) // there's a range selected
+			{
+				var branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
+				// Set range of selected/unselected
+				rangeSelector(itemIds[0], itemIds[1], branch);
+			}
+			else if(itemIds.length != 1)
+			{
+				resetSelection = true;
+			}
+		}
+		
+		if (resetSelection)
+		{
+			_widget.input._unselectItems();
+		}
+	},
+	
+	/**
+	 * Set enable/disable checkbox
+	 * 
+	 * @param {object} _widget tree widget
+	 * @param {string} _itemId item tree id
+	 * @param {boolean} _stat - status to be set on checkbox true/false
+	 */
+	folderMgmt_setCheckbox: function (_widget, _itemId, _stat)
+	{
+		if (_widget)
+		{
+			_widget.input.setCheck(_itemId, _stat);
+			_widget.input.setSubChecked(_itemId,_stat);
+		}
+		
+	},
+	
+	/**
+	 * 
+	 * @param {type} _id
+	 * @param {type} _widget
+	 * @TODO: Implement onCheck handler in order to select or deselect subItems
+	 *	of a checked parent node
+	 */
+	folderMgmt_onCheck: function (_id, _widget)
+	{
+		console.log();
 	}
+	
 });

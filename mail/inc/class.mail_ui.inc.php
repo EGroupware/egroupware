@@ -46,6 +46,7 @@ class mail_ui
 		'importMessage'	=> True,
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
+		'folderManagement' => true,
 	);
 
 	/**
@@ -591,6 +592,12 @@ class mail_ui
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 						'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
 						'group'		=> $group,
+					),
+					'foldermanagement' => array(
+						'caption' => 'Folder Management...',
+						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+						'onExecute' => 'javaScript:app.mail.folderManagement',
+						'group'		=> ++$group,
 					),
 					'sieve' => array(
 						'caption' => 'Mail filter',
@@ -4583,5 +4590,46 @@ class mail_ui
 		{
 			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
+	}
+	
+	/**
+	 * Autoloading function to load branches of tree node
+	 * of management folder tree
+	 *
+	 * @param type $_id
+	 */
+	function ajax_folderMgmtTree_autoloading ($_id = null)
+	{
+		$mail_ui = new mail_ui();
+		$_id = $_id? $_id:$_GET['id'];
+		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_id,'',1,true,false,false,false));
+	}
+	
+	/**
+	 * Main function to handle folder management dialog
+	 *
+	 * @param array $content content of dialog
+	 */
+	function folderManagement (array $content = null)
+	{
+		$dtmpl = new etemplate_new('mail.folder_management');
+		$profileID = $_GET['acc_id']? $_GET['acc_id']: $content['acc_id'];
+		$sel_options['tree'] = $this->mail_tree->getTree(null,$profileID, 1, true, false, false);
+		
+		if (!is_array($content))
+		{
+			$content = array ('acc_id' => $profileID);
+		}
+		else
+		{
+			
+		}
+		
+		$readonlys = array();
+		// Preserv
+		$preserv = array(
+			'acc_id' => $content['acc_id'] // preserve acc id to be used in client-side
+		);
+		$dtmpl->exec('mail.mail_ui.folderManagement', $content,$sel_options,$readonlys,$preserv,2);
 	}
 }
