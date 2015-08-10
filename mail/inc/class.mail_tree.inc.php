@@ -168,10 +168,11 @@ class mail_tree
 	 * @param $_noCheckboxNS = false no checkbox for namesapaces makes sure to not put checkbox for namespaces node
 	 * @param boolean $_subscribedOnly = false get only subscribed folders
 	 * @param boolean $_allInOneGo = false, true will get all folders (dependes on subscribedOnly option) of the account in one go
+	 * @param boolean $_checkSubscribed = true, pre-check checkboxes of subscribed folders
 	 *
 	 * @return array returns an array of mail tree structure according to provided node
 	 */
-	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false, $_subscribedOnly= false, $_allInOneGo = false)
+	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false, $_subscribedOnly= false, $_allInOneGo = false, $_checkSubscribed = true)
 	{
 		//Init mail folders
 		$tree = array(tree::ID=> $_parent?$_parent:0,tree::CHILDREN => array());
@@ -219,7 +220,7 @@ class mail_tree
 						tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
 						tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
 						tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClose'],
-						tree::CHECKED => $node['SUBSCRIBED'],
+						tree::CHECKED => $_checkSubscribed?$node['SUBSCRIBED']:false,
 						'parent' => $_parent
 					);
 				}
@@ -254,7 +255,7 @@ class mail_tree
 						tree::LABEL =>lang($folder['MAILBOX']),
 						tree::OPEN => self::getNodeLevel($folder['MAILBOX'], $folder['delimiter']) <= $_openTopLevel?1:0,
 						tree::TOOLTIP => lang($folder['MAILBOX']),
-						tree::CHECKED => $folder['SUBSCRIBED'],
+						tree::CHECKED => $_checkSubscribed?$folder['SUBSCRIBED']:false,
 						tree::NOCHECKBOX => 0,
 						'parent' => $parent?$_profileID.self::$delimiter.implode($folder['delimiter'], $parent):$_profileID,
 						'path' => $path,
@@ -264,6 +265,7 @@ class mail_tree
 					if ($folder['MAILBOX'] === "INBOX")
 					{
 						$data['data'] = array('acl' => $this->ui->mail_bo->icServer->queryCapability('ACL'));
+						$data[tree::NOCHECKBOX] = $_noCheckboxNS;
 					}
 					else
 					{
