@@ -213,7 +213,7 @@ var et2_portlet = et2_valueWidget.extend(
 			// objects
 			widget_object = objectManager.insertObject(false, new egwActionObject(
 				this.id, objectManager, new et2_action_object_impl(this), 
-				objectManager.manager.getActionById(this.id) || objectManager.manager
+				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
 			));
 		}
 
