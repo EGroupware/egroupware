@@ -799,3 +799,17 @@ function phpgwapi_upgrade14_3()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.001';
 }
 
+/**
+ * Change egw_sqlfs_props.prop_value back to varchar, as it contains user-data eg. comment, which can be non-ascii
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sqlfs_props','prop_value',array(
+		'type' => 'varchar',
+		'precision' => '16384'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.002';
+}
