@@ -1239,10 +1239,32 @@ SELECTION
    dhtmlXTreeObject.prototype._selectItem=function(node,e,mode){
 	    if (typeof mode == 'undefined') mode=false;
    		if (!mode && this.checkEvent("onSelect")) this._onSSCFold=this.getSelectedItemId();
-
-            this._unselectItems();
-
-					this._markItem(node);
+		
+		if ((!this._amsel) || (!e) || ((!e.ctrlKey) && (!e.metaKey) && (!e.shiftKey))) {
+				this._unselectItems()
+			}
+			if ((node.i_sel) && (this._amsel) && (e) && (e.ctrlKey || e.metaKey)) {
+				this._unselectItem(node)
+			} else {
+				if ((!node.i_sel) && ((!this._amselS) || (this._selected.length == 0) || (this._selected[0].parentObject == node.parentObject))) {
+					if ((this._amsel) && (e) && (e.shiftKey) && (this._selected.length != 0) && (this._selected[this._selected.length - 1].parentObject == node.parentObject)) {
+						var f = this._getIndex(this._selected[this._selected.length - 1]);
+						var d = this._getIndex(node);
+						if (d < f) {
+							var l = f;
+							f = d;
+							d = l
+						}
+						for (var g = f; g <= d; g++) {
+							if (!node.parentObject.childNodes[g].i_sel) {
+								this._markItem(node.parentObject.childNodes[g])
+							}
+						}
+					} else {
+						this._markItem(node)
+					}
+				}
+			}
 		if (!mode && this.checkEvent("onSelect")) {
 		   	var z=this.getSelectedItemId();
 			if (z!=this._onSSCFold)
@@ -2263,6 +2285,16 @@ dhtmlXTreeObject.prototype._recreateBranch=function(itemObject,targetObject,befo
 */
    dhtmlXTreeObject.prototype.enableCheckBoxes=function(mode, hidden){ this.checkBoxOff=convertStringToBoolean(mode); this.cBROf=(!(this.checkBoxOff||convertStringToBoolean(hidden))); 
    	};
+	
+	/**
+	* @desc: enable/disable multiple selection
+	* @param: mode - true/false
+	* @param: strict - true/false
+	*/
+	dhtmlXTreeObject.prototype.enableMultiselection = function(mode, strict) {
+		this._amsel = convertStringToBoolean(mode);
+		this._amselS = convertStringToBoolean(strict);
+	};
 /**
 *     @desc: set default images for nodes (must be called before XML loading)
 *     @type: public
