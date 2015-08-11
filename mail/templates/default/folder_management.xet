@@ -19,7 +19,7 @@
 			</rows>
 		</grid>
 		<hbox  class="dialogFooterToolbar">
-			<button statustext="Delete" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Are yuo sure you want to delete selected folders?', 'Delete Folders')"/>
+			<button statustext="Delete" label="Delete" id="button[delete]" onclick="app.mail.folderMgmt_deleteBtn"/>
 			<button label="Cancel" id="button[cancel]" onclick="window.close()"/>
 		</hbox>
 	</template>

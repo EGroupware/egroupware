@@ -4882,9 +4882,6 @@ app.classes.mail = AppJS.extend(
 	 */
 	folderMgmt_onSelect: function(_ids, _widget)
 	{
-		// et2 content
-		var content = this.et2.getArrayMgr('content').data;
-		
 		// Flag to reset selected items
 		var resetSelection = false;
 		
@@ -4914,20 +4911,18 @@ app.classes.mail = AppJS.extend(
 			}
 		};
 		
-		if (content)
+		// extract items ids
+		var itemIds = _ids.split(_widget.input.dlmtr);
+
+		if(itemIds.length == 2) // there's a range selected
 		{
-			var itemIds = _ids.split(_widget.input.dlmtr);
-			
-			if(itemIds.length == 2) // there's a range selected
-			{
-				var branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
-				// Set range of selected/unselected
-				rangeSelector(itemIds[0], itemIds[1], branch);
-			}
-			else if(itemIds.length != 1)
-			{
-				resetSelection = true;
-			}
+			var branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
+			// Set range of selected/unselected
+			rangeSelector(itemIds[0], itemIds[1], branch);
+		}
+		else if(itemIds.length != 1)
+		{
+			resetSelection = true;
 		}
 		
 		if (resetSelection)
@@ -4950,7 +4945,6 @@ app.classes.mail = AppJS.extend(
 			_widget.input.setCheck(_itemId, _stat);
 			_widget.input.setSubChecked(_itemId,_stat);
 		}
-		
 	},
 	
 	/**
@@ -4963,6 +4957,46 @@ app.classes.mail = AppJS.extend(
 	folderMgmt_onCheck: function (_id, _widget)
 	{
 		console.log();
+	},
+	
+	/**
+	 * Detele button handler
+	 * triggers longTask dialog and send delete operation url
+	 * 
+	 * @param {egw object} _egw egw object
+	 * @param {widget object} _widget button widget
+	 */
+	folderMgmt_deleteBtn: function (_egw, _widget)
+	{
+		var tree = this.et2.getWidgetById('tree');
+		var menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
+		
+		if (tree)
+		{
+			var selFolders = tree.input.getAllChecked();
+			if (selFolders)
+			{
+				var selFldArr = selFolders.split(tree.input.dlmtr);
+				var msg = egw.lang('Folders deleting in progress ...');
+				et2_dialog.long_task(function(_val, _resp){
+					console.log(_val, _resp);
+					if (_val && _resp.type !== 'error')
+					{
+						var stat = [];
+						var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
+						
+						// delete the item in folderMgmt dialog
+						if (tree) tree.deleteItem(_resp, false);
+						
+						stat[_resp] = _resp;
+						// delete the item from index folderTree
+						egw.window.app.mail.mail_removeLeaf(stat);
+					}
+				}, msg, 'Deleting folders', menuaction, selFldArr, 'mail');
+				return true;
+			}
+		}
 	}
+	
 	
 });

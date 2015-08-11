@@ -704,6 +704,7 @@ class mail_ui
 					unset($tree_actions['add']);
 					unset($tree_actions['move']);
 					unset($tree_actions['delete']);
+					unset($tree_actions['foldermanagement']);
 					// manage folders should not affect the ability to subscribe or unsubscribe
 					// to existing folders, it should only affect add/rename/move/delete
 				}
@@ -3723,9 +3724,10 @@ class mail_ui
 	/**
 	 * ajax_deleteFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * @param string $_folderName folder to delete
+	 * @param boolean $_return = false wheter return the success value (true) or send response to client (false)
 	 * @return nothing
 	 */
-	function ajax_deleteFolder($_folderName)
+	function ajax_deleteFolder($_folderName, $_return = false)
 	{
 		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName));
 		$success = false;
@@ -3803,22 +3805,10 @@ class mail_ui
 					$msg = lang("refused to delete folder INBOX");
 				}
 			}
+			if ($_return) return $success;
 			$response = egw_json_response::get();
 			if ($success)
 			{
-				$folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
-				if (isset($folders2return[$this->mail_bo->profileID]))
-				{
-					//error_log(__METHOD__.__LINE__.array2string($folders2return[$this->mail_bo->profileID]));
-					if (empty($subFolders)) $subFolders = array($folderName);
-					//error_log(__METHOD__.__LINE__.array2string($subFolders));
-					foreach($subFolders as $i => $f)
-					{
-						//error_log(__METHOD__.__LINE__.$f.'->'.array2string($folders2return[$this->mail_bo->profileID][$f]));
-						if (isset($folders2return[$this->mail_bo->profileID][$f])) unset($folders2return[$this->mail_bo->profileID][$f]);
-					}
-				}
-				egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
 				//error_log(__METHOD__.__LINE__.array2string($oA));
 				$response->call('app.mail.mail_removeLeaf',$oA);
 			}
@@ -4620,10 +4610,6 @@ class mail_ui
 		{
 			$content = array ('acc_id' => $profileID);
 		}
-		else
-		{
-			
-		}
 		
 		$readonlys = array();
 		// Preserv
@@ -4631,5 +4617,30 @@ class mail_ui
 			'acc_id' => $content['acc_id'] // preserve acc id to be used in client-side
 		);
 		$dtmpl->exec('mail.mail_ui.folderManagement', $content,$sel_options,$readonlys,$preserv,2);
+	}
+	
+	/**
+	 * Function to delete folder for management longTask dialog
+	 * it sends successfully deleted folder as response to be
+	 * used in long task response handler.
+	 *
+	 * @param type $_folderName
+	 */
+	function ajax_folderMgmt_delete ($_folderName)
+	{
+		if ($_folderName)
+		{
+			$success = $this->ajax_deleteFolder($_folderName,true);
+			$response = egw_json_response::get();
+			if ($success)
+			{
+				$res = $_folderName;
+			}
+			else
+			{
+				$res = lang("Failed to delete %1",$_folderName);
+			}
+			$response->data($res);
+		}
 	}
 }
