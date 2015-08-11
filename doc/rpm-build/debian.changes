@@ -1,3 +1,15 @@
+egroupware-epl (14.3.20150811) hardy; urgency=low
+
+  * Filemanager: fix comments show non-ascii chars as ? (requires DB schema update again!)
+  * PostgreSQL: automatic shorten all content requiring it, before schema update, to not stall 14.3 update
+  * Admin/PostgreSQL: shorten ACL labels used to limit admin rights to 16 char and fixed stalled 14.3 update for PostgreSQL
+  * Filemanager/WebDAV: enable old workarounds for NetDrives current user-agent string, create 0 byte files when storing without
+  * Filemanager/WebDAV: use full urlencoding for OS X Finder, fixes problems with non-ascii chars in file- or folder-names
+  * Filemanager/WebDAV: rename of a file or directory removed other files with names only differing in case eg. "test" and "Test"
+  * Univention/Admin: renaming of accounts or groups works now (failed with removed old account)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 11 Aug 2015 10:50:17 +0200
+
 egroupware-epl (14.3.20150729) hardy; urgency=low
 
   * Univention: fix PHP Fatal error while installing
