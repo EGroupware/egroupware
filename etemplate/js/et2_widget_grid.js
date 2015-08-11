@@ -934,7 +934,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 			// objects
 			widget_object = objectManager.insertObject(false, new egwActionObject(
 				this.id, objectManager, new et2_action_object_impl(this),
-				objectManager.manager.getActionById(this.id) || objectManager.manager
+				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
 			));
 		}
 
