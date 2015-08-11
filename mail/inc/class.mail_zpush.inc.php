@@ -1009,7 +1009,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$plainBody = strip_tags($plainBody);
 				if ($this->debugLevel>3 && $output->nativebodytype==1) debugLog(__METHOD__.__LINE__.' Plain Text:'.$plainBody);
 				//$body = str_replace("\n","\r\n", str_replace("\r","",$body)); // do we need that?
-				if ($mimesupport==2 || $mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)
+				if ($bpReturnType==4)//$mimesupport==2 || $mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)
 				{
 					debugLog(__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->asbody->type = 4;
@@ -1112,7 +1112,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Header.self::$LE.self::$LE.$Body);
 					$output->asbody->data = $Header.self::$LE.self::$LE.$Body;
 				}
-				else if (isset($bodypreference[2]))
+				else if ($bpReturnType==2)
 				{
 					if ($this->debugLevel>0) debugLog("HTML Body with requested pref 2");
 					// Send HTML if requested and native type was html
@@ -1171,7 +1171,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					$output->asbody->data = " ";
 				}
 				// determine estimated datasize for all the above cases ...
-				$output->asbody->estimateddatasize = strlen($output->asbody->data);
+				$output->asbody->estimatedDataSize = strlen($output->asbody->data);
 			}
 			// end AS12 Stuff
 			debugLog(__METHOD__.__LINE__.' gather Header info:'.$headers['SUBJECT'].' from:'.$headers['DATE']);
@@ -1622,12 +1622,14 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		{
 			$folderid = $searchquery['searchfolderid'];
 		}
+/*
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
 		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[self::$profileID]))
 		{
 			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
 			if (!isset(emailadmin_imapbase::$supportsORinQuery[self::$profileID])) emailadmin_imapbase::$supportsORinQuery[self::$profileID]=true;
 		}
+*/
 		if (isset($searchquery['searchfreetext']))
 		{
 			$searchText = $searchquery['searchfreetext'];
@@ -1641,6 +1643,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
 		debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' FolderID:'.$folderid.' Foldername:'.$_folderName);
 		$this->_connect($account);
+		// this should not be needed ???
+		emailadmin_imapbase::$supportsORinQuery[self::$profileID]=true; // trigger quicksearch (if possible)
 		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[self::$profileID]?'quick':'subject'),
 						 'string'=> $searchText,
 						 'status'=>'any',
@@ -1652,6 +1656,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		//debugLog(__METHOD__.__LINE__.array2string($rv_messages));
 		$list=array();
 
+		$cnt = count($rv_messages['header']);
+		//$list['status'] = 1;
+		$list['searchtotal'] = $cnt;
+		$list["range"] = $_searchquery->GetSearchRange();
 		foreach((array)$rv_messages['header'] as $i => $vars)
 		{
 			$list[] = array(
@@ -1660,9 +1668,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				"folderid"	=> $folderid,
 			);
 		}
-		$cnt = count($list);
-		$list["range"] = $_searchquery->GetSearchRange();
-		$list['searchtotal'] = $cnt;
 		//error_log(__METHOD__.__LINE__.array2string($list));
 		//debugLog(__METHOD__.__LINE__.array2string($list));
 		return $list;
