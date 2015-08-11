@@ -2698,6 +2698,7 @@ class HTTP_WebDAV_Server
      *
      * @param  string  URL to encode
      * @return string  encoded URL
+     * @todo check if other not explicitly named user-agents are happy with full url-encoding too and we can make it the default
      */
     public static function _urlencode($url)
     {
@@ -2707,7 +2708,9 @@ class HTTP_WebDAV_Server
 			// old netdrive does NOT use a User-Agent, but requires full urlencoding for non-ascii chars (eg. German Umlauts)
 			!isset($_SERVER['HTTP_USER_AGENT']) ||
 			// current netdrive uses "NetDrive 2.5.8" as user-agent
-			stripos($_SERVER['HTTP_USER_AGENT'],'NetDrive') !== false)
+			stripos($_SERVER['HTTP_USER_AGENT'],'NetDrive') !== false ||
+			// OS X Finder (WebDAVFS/3.0.0 (03008000) Darwin/14.3.0 (x86_64))
+			stripos($_SERVER['HTTP_USER_AGENT'],'WebDAVFS') !== false && stripos($_SERVER['HTTP_USER_AGENT'],'Darwin'))
 		{
 			return strtr(rawurlencode($url),array(
 				'%2F' => '/',
