@@ -995,7 +995,10 @@ app.classes.calendar = AppJS.extend(
 	cal_open: function(_action, _senders)
 	{
 
-		var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
+		if(_action.parent.data && _action.parent.data.nextmatch)
+		{
+			var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
+		}
 		var id = _senders[0].id;
 		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
 		var backup = _action.data;
@@ -1005,7 +1008,7 @@ app.classes.calendar = AppJS.extend(
 			return;
 		}
 		matches = id.match(/^([a-z_-]+)([0-9]+)/i);
-		if (matches)
+		if (matches && js_integration_data)
 		{
 			var app = matches[1];
 			_action.data.url = window.egw_webserverUrl+'/index.php?';
@@ -2346,7 +2349,7 @@ jQuery.extend(app.classes.calendar,{
 				var endDate = new Date(state.last);
 				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
 				return egw.lang('Planner view') + ': ' + date(egw.preference('dateformat'),startDate) +
-					' - ' + date(egw.preference('dateformat'),endDate);
+					(startDate == endDate ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
 			},
 			etemplates: ['calendar.planner'],
 			group_by: function(state) {

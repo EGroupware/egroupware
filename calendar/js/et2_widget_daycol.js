@@ -104,9 +104,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	destroy: function() {
 		this._super.apply(this, arguments);
 
-		// In some cases, app.calendar code is unloaded before all the etemplates are destroyed
-		//egw.dataUnregisterUID(app.calendar.DAYWISE_CACHE_ID+'::'+this.options.date);
-		egw.dataUnregisterUID('calendar_daywise::'+this.options.date);
+		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
 	},
 
 	/**
@@ -759,7 +757,7 @@ jQuery.extend(et2_calendar_daycol,
 			egw.window.et2_calendar_daycol.holiday_cache[year] = egw.json(
 				'calendar_timegrid_etemplate_widget::ajax_get_holidays',
 				[year]
-			).sendRequest();
+			).sendRequest(true);
 		}
 		cache = egw.window.et2_calendar_daycol.holiday_cache[year];
 		if(typeof cache.done == 'function')
@@ -769,7 +767,11 @@ jQuery.extend(et2_calendar_daycol,
 				egw.window.et2_calendar_daycol.holiday_cache[this.year] = response.response[0].data||undefined;
 
 				egw.window.setTimeout(jQuery.proxy(function() {
-					this.widget.day_class_holiday();
+					// Make sure widget hasn't been destroyed while we wait
+					if(typeof this.widget.free == 'undefined')
+					{
+						this.widget.day_class_holiday();
+					}
 				},this),1);
 			},{widget:widget,year:year}));
 			return {};

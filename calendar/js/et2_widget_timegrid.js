@@ -651,6 +651,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		
 		aoi.doTriggerEvent = function(_event, _data) {
 			// Determine target node
+			debugger;
 			var event = _data.event || false;
 			if(!event) return;
 			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
@@ -711,7 +712,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			// objects
 			widget_object = parent.insertObject(false, new egwActionObject(
 				this.id, parent, aoi,
-				parent.manager.getActionById(this.id) || parent.manager
+				this._actionManager|| parent.manager.getActionById(this.id) || parent.manager
 			));
 		}
 		else

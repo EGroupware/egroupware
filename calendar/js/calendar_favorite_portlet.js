@@ -32,7 +32,11 @@ observer: function(_msg, _app, _id, _type, _msg_type, _targetapp)
 		var event = egw.dataGetUIDdata('calendar::'+_id);
 		if(event && event.data && event.data.date)
 		{
-			var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date);
+			var new_cache_id = app.classes.calendar._daywise_cache_id(
+				event.data.date,
+				// Make sure to use the right owner, not current calendar state
+				this.portlet.settings.favorite.state.owner || ''
+			);
 			var daywise = egw.dataGetUIDdata(new_cache_id);
 			daywise = daywise ? daywise.data : [];
 			if(_type === 'delete')

@@ -480,7 +480,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			// objects
 			widget_object = objectManager.insertObject(false, new egwActionObject(
 				'calendar::'+this.id, objectManager, new et2_event_action_object_impl(this,this.getDOMNode()),
-				objectManager.manager.getActionById(this.id) || objectManager.manager
+				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
 			));
 		}
 		else
