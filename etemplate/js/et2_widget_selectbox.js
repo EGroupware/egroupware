@@ -436,7 +436,7 @@ var et2_selectbox = et2_inputWidget.extend(
 	set_value: function(_value)
 	{
 		if (typeof _value == "number") _value = ""+_value;	// convert to string for consitent matching
-		if(typeof _value == "string" && this.options.multiple && _value.match(this._is_multiple_regexp) !== null)
+		if(typeof _value == "string" && (this.options.multiple || this.options.expand_multiple_rows) && _value.match(this._is_multiple_regexp) !== null)
 		{
 			_value = _value.split(',');
 		}
@@ -465,6 +465,12 @@ var et2_selectbox = et2_inputWidget.extend(
 			// Unchanged
 			if(_value == this.value) return;
 		}
+		// Auto-expand multiple if not yet turned on, and value has multiple
+		if(this.options.expand_multiple_rows && !this.options.multiple && jQuery.isArray(_value) && _value.length > 1)
+		{
+			this.set_multiple(true, this.options.expand_multiple_rows);
+		}
+
 		jQuery("option",this.input).prop("selected", false);
 		if(typeof _value == "array")
 		{
