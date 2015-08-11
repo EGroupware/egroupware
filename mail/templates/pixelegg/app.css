@@ -1086,8 +1086,13 @@ body {
 .egw_fw_ui_category_content .dtree {
   font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
 }
-.egw_fw_ui_category_content .selectedTreeRow {
+.egw_fw_ui_category_content .selectedTreeRow,
+.egw_fw_ui_category_content .selectedTreeRow_lor {
   background-color: #ffc200;
+  color: #1e1e1e;
+}
+.egw_fw_ui_category_content .standartTreeRow_lor {
+  background-color: #f2f2f2;
   color: #1e1e1e;
 }
 /* ##################################################################################
@@ -1695,6 +1700,18 @@ div#displayToolbar-menulist img {
   margin-top: 16px;
   height: 484px;
   overflow: auto;
+}
+#mail-subscribe .selectedTreeRow,
+#mail-folder_management .selectedTreeRow,
+#mail-subscribe .selectedTreeRow_lor,
+#mail-folder_management .selectedTreeRow_lor {
+  background-color: #ffc200;
+  color: #1e1e1e;
+}
+#mail-subscribe .standartTreeRow_lor,
+#mail-folder_management .standartTreeRow_lor {
+  background-color: #f2f2f2;
+  color: #1e1e1e;
 }
 .mail_subscription_header,
 .mail_folder_management_header {
