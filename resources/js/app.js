@@ -83,7 +83,7 @@ app.classes.resources = AppJS.extend(
 		}
 		egw_message(this.egw.lang('%1 resource(s) View calendar',res_ids.length));
 
-		this.egw.open_link('calendar.calendar_uiviews.planner&sortby=user&owner=0,r'+res_ids.join(',r'));
+		this.egw.open_link('calendar.calendar_uiviews.index&view=planner&sortby=user&owner=0,r'+res_ids.join(',r')+'&ajax=true');
 	},
 
 	/**
