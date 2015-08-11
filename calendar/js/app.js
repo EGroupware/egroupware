@@ -124,7 +124,6 @@ app.classes.calendar = AppJS.extend(
 			var egw_fw = egw_getFramework();
 			sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
 		}
-		this._init_sidebox(sidebox);
 
 		var content = this.et2.getArrayMgr('content');
 
@@ -268,22 +267,36 @@ app.classes.calendar = AppJS.extend(
 	 */
 	linkHandler: function(_url)
 	{
-		if (_url.match('menuaction=calendar.calendar_uiviews.index'))
+		if (_url.match('menuaction=calendar\.calendar_uiviews\.'))
 		{
-			var state = this.getState();
-			if (state.view == 'listview')
-			{
-				return _url.replace(/menuaction=[^&]+/, 'menuaction=calendar.calendar_uilist.listview&ajax=true');
-			}
-			else if (this.sidebox_et2 && typeof app.classes.calendar.views[state.view] == 'undefined')
+			var view = _url.match(/calendar_uiviews\.([^&?]+)/);
+			view = view && view.length > 1 ? view[1] : null;
+
+			// Get query
+			var q = {};
+			_url.split('?')[1].split('&').forEach(function(i){
+				q[i.split('=')[0]]=i.split('=')[1];
+			});
+			delete q.ajax;
+			delete q.menuaction;
+			if((!view || view == 'index') && q.view) view = q.view;
+
+			if (this.sidebox_et2 && typeof app.classes.calendar.views[view] == 'undefined')
 			{
 				this.sidebox_et2.getWidgetById('iframe').set_src(_url);
 				return true;
 			}
-			// Known AJAX view, but not loaded
-			else if(app.classes.calendar.views[state.view])
+			// Known AJAX view
+			else if(app.classes.calendar.views[view])
 			{
-				return _url + '&ajax=true';
+				if(typeof app.classes.calendar.views[view].etemplates[0] == 'string')
+				{
+					return _url + '&ajax=true';
+				}
+				// Already loaded, we'll just apply any variables to our current state
+				var set = jQuery.extend({view: view},q);
+				this.update_state(set);
+				return true;
 			}
 		}
 		else if (_url.indexOf('menuaction=calendar.calendar_') >= 0)
@@ -329,13 +342,12 @@ app.classes.calendar = AppJS.extend(
 				create: function ()
 				{
 					var $sortItem = jQuery(this);
-					
 				},
 				start: function (event, ui)
 				{
 					$j('.calendar_calTimeGrid',ui.helper).css('position', 'absolute');
 					// Put owners into row IDs
-					app.classes.calendar.views[state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
+					app.classes.calendar.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
 						widget.div.parents('tr').attr('data-owner',widget.options.owner);
 					},this,et2_calendar_timegrid);
 				},
@@ -344,6 +356,7 @@ app.classes.calendar = AppJS.extend(
 				},
 				update: function ()
 				{
+					var state = app.calendar.getState();
 					if (state && typeof state.owner !== 'undefined')
 					{
 						var sortedArr = sortable.sortable('toArray', {attribute:"data-owner"});
@@ -1370,10 +1383,14 @@ app.classes.calendar = AppJS.extend(
 			var view = app.classes.calendar.views[state.state.view];
 
 			// Sanitize owner so it's always an array
+			if(state.state.owner === null)
+			{
+				state.state.owner = undefined;
+			}
 			switch(typeof state.state.owner)
 			{
 				case 'undefined':
-					state.state.owner = this.egw.user('account_id');
+					state.state.owner = [this.egw.user('account_id')];
 					break;
 				case 'string':
 					state.state.owner = state.state.owner.split(',');
@@ -2023,6 +2040,45 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Initializes actions and handlers on sidebox (delete)
+	 * Extended from parent to automatically add change handlers for resource
+	 * menu items.
+	 *
+	 * @param {jQuery} sidebox jQuery of DOM node
+	 */
+	_init_sidebox: function(sidebox)
+	{
+		if( this._super.apply(this, arguments) )
+		{
+			sidebox.parentsUntil('#calendar_sidebox_content')
+				.find('.egw_fw_ui_category_content').not(sidebox.parent())
+				.on('change.sidebox', 'select:not(.et2_selectbox),input', this, function(event) {
+					var state = {};
+
+					// Here we look for things like owner: ['r1,r2'] and change them
+					// to owner: ['r1','r2']
+					state[this.name.replace('[]','')] = $j(this).val();
+					for(var key in state)
+					{
+						if(state[key] && typeof state[key].length !== 'undefined')
+						{
+							for(var sub_key in state[key])
+							{
+								if(typeof state[key][sub_key] == 'string' && state[key][sub_key].indexOf(',') !== -1)
+								{
+									var explode_me = state[key][sub_key];
+									delete state[key][sub_key];
+									jQuery.extend(state[key], explode_me.split(','));
+								}
+							}
+						}
+					}
+					app.calendar.update_state(state);
+				});
+		}
+	},
+
+	/**
 	 * The sidebox filters use some non-standard and not-exposed options.  They
 	 * are set up here.
 	 *
@@ -2220,7 +2276,8 @@ jQuery.extend(app.classes.calendar,{
 		}
 
 		// If the owner is not set, 0, or the current user, don't bother adding it
-		var _owner = (owner && owner.toString() != '0' && owner !== (app.calendar.state.owner.toString()||'')) ? owner.toString() : '';
+		var state_owner = app.calendar ? app.calendar.state.owner.toString() || '' : '';
+		var _owner = (owner && owner.toString() != '0' && owner !== state_owner) ? owner.toString() : '';
 		if(_owner == egw.user('account_id'))
 		{
 			_owner = '';

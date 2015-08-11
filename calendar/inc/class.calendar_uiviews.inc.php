@@ -240,7 +240,7 @@ class calendar_uiviews extends calendar_ui
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualCalendar'.ucfirst($this->view));
 
 		// Sidebox & iframe for old views
-		if(in_array($this->view,array('year','planner')) && $_GET['view'])
+		if(in_array($this->view,array('year')) && $_GET['view'])
 		{
 			$GLOBALS['egw_info']['flags']['nonavbar'] = true;
 			$this->manage_states($_GET);
@@ -269,11 +269,11 @@ class calendar_uiviews extends calendar_ui
 		if (egw_json_request::isJSONRequest())// && strpos($_GET['menuaction'], 'calendar_uiforms') === false)
 		{
 			$states = array();
-			foreach(array('date','cat_id','filter','owner','view') as $state)
+			foreach(array('date','cat_id','filter','owner','view','sortby') as $state)
 			{
 				if($this->$state) $states[$state] = $this->$state;
 			}
-			$states['date'] = egw_time::to($states['date'],'Y-m-d\TH:i:s').'Z';
+			$states['date'] = egw_time::to($states['date'],egw_time::ET2);
 			$response = egw_json_response::get();
 			$response->apply('app.calendar.set_state', array($states));
 		}

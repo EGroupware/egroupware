@@ -840,7 +840,7 @@ class calendar_ui
 		{
 			if(is_int($event[$field]))
 			{
-				$event[$field] = egw_time::to($event[$field],'Y-m-d\TH:i:s').'Z';
+				$event[$field] = egw_time::to($event[$field], egw_time::ET2);
 			}
 		}
 	}

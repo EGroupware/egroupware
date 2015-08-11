@@ -295,7 +295,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			},
 			// Labels for the rows
 			row_labels: function() {
-				var labels = {};
+				var labels = [];
 				var accounts = egw.accounts();
 				for(var i = 0; i < this.options.owner.length; i++)
 				{
@@ -307,25 +307,41 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					}
 					if (isNaN(user))		// resources
 					{
-						labels[user] = egw.link_title('resources',user.match(/\d+/)[0],function(name) {this[user] = name;},labels);
+						var planner = this;
+						var label = egw.link_title('resources',user.match(/\d+/)[0],function(name) {
+							for(var j = 0; j < labels.length; j++)
+							{
+								if(labels[j].id == this)
+								{
+									labels[j].label = name;
+									break;
+								}
+							}
+							var row = planner.getWidgetById(this);
+							if(row && row.set_label)
+							{
+								row.set_label(name);
+							}
+						},user);
+						labels.push({id: user, label: label});
 					}
 					else if (user < 0)	// groups
 					{
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
 							{
-								this[id] = result[id];
+								this.push({id: id, label: result[id]});
 							}
 						},labels);
 					}
 					else	// users
 					{
 						user = parseInt(user)
-						for(var i = 0; i < accounts.length; i++)
+						for(var j = 0; j < accounts.length; j++)
 						{
-							if(accounts[i].value === user)
+							if(accounts[j].value === user)
 							{
-								labels[user] = accounts[i].label;
+								labels.push({id: user, label: accounts[j].label});
 								break;
 							}
 						}
@@ -358,14 +374,23 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				for(var user in event.participants)
 				{
 					var participant = event.participants[user];
-					if(participant && typeof labels[user] !== 'undefined' && status_to_show.indexOf(participant.substr(0,1)) >= 0 ||
+					var label_index = false;
+					for(var i = 0; i < labels.length; i++)
+					{
+						if(labels[i].id == user)
+						{
+							label_index = i;
+							break;
+						}
+					}
+					if(participant && label_index !== false && status_to_show.indexOf(participant.substr(0,1)) >= 0 ||
 						this.options.filter === 'owner' && event.owner === user)
 					{
-						if(typeof rows[user] === 'undefined')
+						if(typeof rows[label_index] === 'undefined')
 						{
-							rows[user] = [];
+							rows[label_index] = [];
 						}
-						rows[user].push(event);
+						rows[label_index].push(event);
 					}
 				}
 			},
@@ -383,12 +408,12 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				this.headers.append(this._header_day_of_month());
 			},
 			row_labels: function() {
-				var labels = {};
+				var labels = [];
 				var d = new Date(this.options.start_date);
 				d = new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000);
 				for(var i = 0; i < 12; i++)
 				{
-					labels[d.getUTCFullYear() +'-'+d.getUTCMonth()] = egw.lang(date('F',d))+' '+d.getUTCFullYear();
+					labels.push({id: d.getUTCFullYear() +'-'+d.getUTCMonth(), label:egw.lang(date('F',d))+' '+d.getUTCFullYear()});
 					d.setUTCMonth(d.getUTCMonth()+1);
 				}
 				return labels;
@@ -396,11 +421,20 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			group: function(labels, rows,event) {
 				var start = new Date(event.start);
 				var key = start.getUTCFullYear() +'-'+start.getUTCMonth();
-				if(typeof rows[key] === 'undefined')
+				var label_index = false;
+				for(var i = 0; i < labels.length; i++)
 				{
-					rows[key] = [];
+					if(labels[i].id == key)
+					{
+						label_index = i;
+						break;
+					}
 				}
-				rows[key].push(event);
+				if(typeof rows[label_index] === 'undefined')
+				{
+					rows[label_index] = [];
+				}
+				rows[label_index].push(event);
 
 				// end in a different month?
 				var end = new Date(event.end);
@@ -415,7 +449,15 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 						month = 1;
 					}
 					key = sprintf('%04d-%02d',year,month);
-					rows[key].push(event);
+					for(var i = 0; i < labels.length; i++)
+					{
+						if(labels[i].id == key)
+						{
+							label_index = i;
+							break;
+						}
+					}
+					rows[label_index].push(event);
 				}
 			},
 			// Draw a single row, but split up the dates
@@ -452,17 +494,22 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				}
 			},
 			row_labels: function() {
-				return {'': egw.lang('none')};
+				return [{id:'',label: egw.lang('none')}];
 			},
 			group: function(labels, rows, event) {
-				if(typeof rows[event.category] === 'undefined')
+				var label_index = false;
+				for(var i = 0; i < labels.length; i++)
 				{
-					rows[event.category] = [];
+					if(labels[i].id == event.category)
+					{
+						label_index = i;
+						break;
+					}
 				}
-				rows[event.category].push(event);
-				if(typeof labels[event.category] === 'undefined')
+				if(label_index === false)
 				{
-					labels[event.category] = '';
+					label_index = labels.length;
+					labels.push({id: event.category, label: ''});
 					var im = this.getInstanceManager();
 					// Fake it to use the cache / call
 					var categories = et2_selectbox.cat_options({
@@ -473,10 +520,15 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					{
 						if(parseInt(categories[i].value) === parseInt(event.category))
 						{
-							labels[event.category] = categories[i].label;
+							labels[labels.length-1].label = categories[i].label;
 						}
 					}
 				}
+				if(typeof rows[label_index] === 'undefined')
+				{
+					rows[label_index] = [];
+				}
+				rows[label_index].push(event);
 			},
 			draw_row: function(sort_key, label, events) {
 				return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
@@ -603,7 +655,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		// Draw the rows
 		for(var key in labels)
 		{
-			grouper.draw_row.call(this,key, labels[key], events[key] || []);
+			grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
 		}
 
 	},
@@ -1198,7 +1250,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				return null;
 			},true);
 		}
-		if(actionLinks.indexOf(drag_action.id) < 0)
+		// The planner itself is not draggable, the action is there for the children
+		if(false && actionLinks.indexOf(drag_action.id) < 0)
 		{
 			actionLinks.push(drag_action.id);
 		}

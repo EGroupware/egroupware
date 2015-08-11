@@ -495,7 +495,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
 		var action_links = this._get_action_links(actions);
-		this._parent._parent._init_links_dnd(widget_object.manager,action_links);
+		action_links.push('egw_link_drag');
+		action_links.push('egw_link_drop');
 		widget_object.updateActionLinks(action_links);
 	},
 	

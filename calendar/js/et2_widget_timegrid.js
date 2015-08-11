@@ -646,12 +646,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		// This binds into the egw action system.  Most user interactions (drag to move, resize)
 		// are handled internally using jQuery directly.
-		var widget_object = parent.getObjectById(this.id);
+		var widget_object = this._actionObject || parent.getObjectById(this.id);
 		var aoi = new et2_action_object_impl(this,this.getDOMNode());
 		
 		aoi.doTriggerEvent = function(_event, _data) {
 			// Determine target node
-			debugger;
 			var event = _data.event || false;
 			if(!event) return;
 			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
@@ -719,6 +718,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			widget_object.setAOI(aoi);
 		}
+		this._actionObject = widget_object;
 		
 		// Delete all old objects
 		widget_object.clear();
@@ -731,7 +731,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this._init_links_dnd(widget_object.manager, action_links);
 		
 		widget_object.updateActionLinks(action_links);
-		this._actionObject = widget_object;
 	},
 
 	/**
@@ -843,7 +842,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				return null;
 			},true);
 		}
-		if(actionLinks.indexOf(drag_action.id) < 0)
+		// The timegrid itself is not draggable, so don't add a link.
+		// The action is there for the children (events) to use
+		if(false && actionLinks.indexOf(drag_action.id) < 0)
 		{
 			actionLinks.push(drag_action.id);
 		}
