@@ -108,6 +108,12 @@ var et2_tree = et2_inputWidget.extend(
 			"default": false,
 			"description": "Allow marking multiple nodes, default is false which means disabled multiselection, true or 'strict' activates it and 'strict' makes it strick to only same level marking"
 		},
+		highlighting:{
+			"name": "highlighting",
+			"type": "boolean",
+			"default": false,
+			"description": "Add highlighting class on hovered over item, highlighting is disabled by default"
+		}
 	},
 
 	/**
@@ -224,11 +230,13 @@ var et2_tree = et2_inputWidget.extend(
 			widget.input.setXMLAutoLoading(egw.link(url));
 			widget.input.setDataMode('JSON');
 		}
-		
+
 		if (widget.options.multimarking)
 		{
 			widget.input.enableMultiselection(!!widget.options.multimarking, widget.options.multimarking === 'strict');
 		}
+		// Enable/Disable highlighting
+		widget.input.enableHighlighting(widget.options.highlighting?true:false);
 	},
 
 	/**
