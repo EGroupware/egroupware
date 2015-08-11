@@ -310,10 +310,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		}
 		// stop invalidation in no visible tabs
 		$j(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
-			this.controller._grid.doInvalidate = false;
+			if(this.controller && this.controller._grid)
+			{
+				this.controller._grid.doInvalidate = false;
+			}
 		},this));
 		$j(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function(e) {
-			this.controller._grid.doInvalidate = true;
+			if(this.controller && this.controller._grid)
+			{
+				this.controller._grid.doInvalidate = true;
+			}
 		},this));
 
 		return true;
