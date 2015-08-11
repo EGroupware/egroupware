@@ -736,7 +736,7 @@ jQuery.extend(et2_dialog,
 				$j("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("enable");
 				if (!cancel && typeof _callback == "function")
 				{
-					_callback.call(dialog, true);
+					_callback.call(dialog, true, response);
 				}
 			}
 		};
