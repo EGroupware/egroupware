@@ -1004,8 +1004,21 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	{
 		var old = this.options.owner || 0;
 		
-		// Let select-account widget handle value validation
-		this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
+		if(typeof _owner == 'string' && isNaN(_owner))
+		{
+			switch(_owner[0])
+			{
+				case 'r':
+					this.owner.options.application = 'resources';
+					this.owner.set_value(_owner.substr(1));
+					break;
+			}
+		}
+		else
+		{
+			this.owner.options.application = 'home-accounts'
+			this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
+		}
 
 		this.options.owner = _owner;//this.owner.getValue();
 		if(this.isAttached() && (

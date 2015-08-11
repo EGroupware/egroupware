@@ -1263,10 +1263,10 @@ app.classes.calendar = AppJS.extend(
 				if(cachable_changes.indexOf(s) === -1)
 				{
 					// Expire daywise cache
-					var daywise = egw.dataKnownUIDs(this.DAYWISE_CACHE_ID);
+					var daywise = egw.dataKnownUIDs(app.classes.calendar.DAYWISE_CACHE_ID);
 					for(var i = 0; i < daywise.length; i++)
 					{
-						egw.dataDeleteUID(this.DAYWISE_CACHE_ID + '::' + daywise[i]);
+						egw.dataDeleteUID(app.classes.calendar.DAYWISE_CACHE_ID + '::' + daywise[i]);
 					}
 				}
 				if (new_state[s] !== _set[s])
@@ -1929,13 +1929,13 @@ app.classes.calendar = AppJS.extend(
 			instance ? instance.etemplate_exec_id :
 				this.sidebox_et2.getInstanceManager().etemplate_exec_id,
 			{start: 0, num_rows:0},
-			jQuery.extend({}, app.calendar.state,
-			{
+			jQuery.extend({}, {
 				get_rows: 'calendar.calendar_uilist.get_rows',
 				row_id:'row_id',
 				startdate:state.first ||  state.date,
 				enddate:state.last,
-				col_filter: {participant: state.owner},
+				// Participant must be an array or it won't work
+				col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
 				filter:'custom', // Must be custom to get start & end dates
 				status_filter: state.filter,
 				cat_id: state.cat_id,
