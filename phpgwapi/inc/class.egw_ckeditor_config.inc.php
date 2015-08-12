@@ -76,6 +76,8 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 			'bootstrapck'	=> lang('bootstrap theme for ckeditor'),
 			'icy_orange'	=> lang('icy-orange theme for ckeditor'),
 			'office2013'	=> lang('office-2013 theme for ckeditor'),
+			'minimalist'	=> lang('Minimalist theme'),
+			'flat'			=> lang('Flat theme')
 		);
 	}
 
@@ -216,6 +218,12 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 				case 'office2003':
 				case 'moonocolor':
 					$skin = "moonocolor";
+					break;
+				case 'minimalist':
+					$skin = "minimalist";
+					break;
+				case 'flat':
+					$skin = "flat";
 					break;
 				case 'moono':
 				case 'default':
