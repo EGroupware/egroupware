@@ -101,6 +101,18 @@ var et2_tree = et2_inputWidget.extend(
 			"type": "string",
 			"default": "",
 			"description": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.gif,folderClosed.gif,folderOpen.gif), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
+		},
+		"multimarking": {
+			"name": "multimarking",
+			"type": "any",
+			"default": false,
+			"description": "Allow marking multiple nodes, default is false which means disabled multiselection, true or 'strict' activates it and 'strict' makes it strick to only same level marking"
+		},
+		highlighting:{
+			"name": "highlighting",
+			"type": "boolean",
+			"default": false,
+			"description": "Add highlighting class on hovered over item, highlighting is disabled by default"
 		}
 	},
 
@@ -218,6 +230,13 @@ var et2_tree = et2_inputWidget.extend(
 			widget.input.setXMLAutoLoading(egw.link(url));
 			widget.input.setDataMode('JSON');
 		}
+
+		if (widget.options.multimarking)
+		{
+			widget.input.enableMultiselection(!!widget.options.multimarking, widget.options.multimarking === 'strict');
+		}
+		// Enable/Disable highlighting
+		widget.input.enableHighlighting(widget.options.highlighting?true:false);
 	},
 
 	/**
