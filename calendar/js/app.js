@@ -272,7 +272,7 @@ app.classes.calendar = AppJS.extend(
 						egw.dataDeleteUID(_app + '::' + events[i]);
 					}
 					// Force redraw to default state
-					this.setState();
+					this.setState({});
 				}
 				break;
 		}
