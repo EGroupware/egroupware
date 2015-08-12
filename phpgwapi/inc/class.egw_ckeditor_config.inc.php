@@ -76,6 +76,8 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 			'bootstrapck'	=> lang('bootstrap theme for ckeditor'),
 			'icy_orange'	=> lang('icy-orange theme for ckeditor'),
 			'office2013'	=> lang('office-2013 theme for ckeditor'),
+			'minimalist'	=> lang('Minimalist theme'),
+			'flat'			=> lang('Flat theme')
 		);
 	}
 
@@ -217,6 +219,12 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 				case 'moonocolor':
 					$skin = "moonocolor";
 					break;
+				case 'minimalist':
+					$skin = "minimalist";
+					break;
+				case 'flat':
+					$skin = "flat";
+					break;
 				case 'moono':
 				case 'default':
 				default:
@@ -309,7 +317,7 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 			)
 			{
 				$spellchecker_button = 'SpellCheck';
-				$config['extraPlugins'] = "aspell";
+				self::append_extraPlugins_config_array($config, array("aspell"));
 			}
 			if ($GLOBALS['egw_info']['server']['enabled_spellcheck']!='YesNoSCAYT' &&
 				$GLOBALS['egw_info']['server']['enabled_spellcheck']!='YesBrowserBased'
@@ -423,9 +431,34 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 		self::add_spellchecker_options($config, $spellchecker_button, $scayt_button);
 		self::add_toolbar_options($config, $mode, $spellchecker_button, $scayt_button);
 		//error_log(__METHOD__."('$mode', $height, ".array2string($expanded_toolbar).") returning ".array2string($config));
+		// Add extra plugins
+		self::append_extraPlugins_config_array($config, array('uploadimage','uploadwidget','widget','notification','notificationaggregator','lineutils'));
 		return $config;
 	}
-
+	
+	/**
+	 * Adds extra
+	 * @param array $config
+	 * @param array $plugins plugins name which needs to be appended into extraPlugins
+	 */
+	public static function append_extraPlugins_config_array (&$config, $plugins)
+	{
+		if (is_array($plugins))
+		{
+			foreach ($plugins as &$plugin)
+			{
+				if (!empty($config['extraPlugins']) && $config['extraPlugins'] !== '')
+				{
+					$config['extraPlugins'] .= ',' . $plugin;
+				}
+				else
+				{
+					$config['extraPlugins'] = $plugin;
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Returns a json encoded string containing the configuration for the ckeditor.
 	 * @param string $mode specifies the count of toolbar buttons available to the user. Possible

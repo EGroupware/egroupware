@@ -79,7 +79,7 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<htmlarea statustext="Web-Site for this resource" id="long_description" height="200" toolbar="true"/>
+					<htmlarea statustext="Web-Site for this resource" id="long_description" height="200" toolbar="true" imageUpload="link_to"/>
 				</row>
 			</rows>
 		</grid>
@@ -105,7 +105,7 @@
 				</row>
 			</rows>
 		</grid>
-	</template> 
+	</template>
 	<template id="resources.edit_tabs.custom" template="" lang="" group="0" version="">
 		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>

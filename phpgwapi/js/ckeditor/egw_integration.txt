@@ -1,3 +1,8 @@
+---------------- image Upload dependencies plugins -----------
+-filetools - lineutils - uploadimage - widget - pasteforward
+- notification - notificationaggregator -fakeobjects
+
+
 --------------- step 1 --------------------------------------
 removed _samples directory
 

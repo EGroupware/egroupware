@@ -511,11 +511,6 @@ class html
 	 */
 	static function htmlarea_availible()
 	{
-		//error_log(__METHOD__.__LINE__.' userAgent:'.$_SERVER[HTTP_USER_AGENT]);
-		// we check for the useragent to be able to recognize andoid machines that do not support ckeditor yet.
-		// ckeditors fallback is rather unpleaseant.
-		if (stripos($_SERVER[HTTP_USER_AGENT],'android') !== false) return false;
-
 		// this one is for testing how it will turn out, if you do not have the device or agent ready at your fingertips
 		// if (stripos($_SERVER[HTTP_USER_AGENT],'mozilla') !== false) return false;
 
