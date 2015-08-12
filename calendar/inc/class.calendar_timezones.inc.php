@@ -374,7 +374,7 @@ class calendar_timezones
 		}
 		$output .= '<h3>'.self::import_tz_aliases()."</h3>\n";
 
-		$GLOBALS['egw']->framework->render($output, lang('Update timezones'), true);
+		$GLOBALS['egw']->framework->render($output, lang('Update timezones'), false);
 	}
 
 	/**

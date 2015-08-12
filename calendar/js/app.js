@@ -1493,7 +1493,7 @@ app.classes.calendar = AppJS.extend(
 					grid.iterateOver(function(widget) {
 						if(widget.set_show_weekend)
 						{
-							widget.set_show_weekend(view.show_weekend(state));
+							widget.set_show_weekend(view.show_weekend(state.state));
 						}
 					},this, et2_valueWidget);
 				}
@@ -1537,12 +1537,7 @@ app.classes.calendar = AppJS.extend(
 			// Toggle todos
 			if(state.state.view == 'day')
 			{
-				if(state.state.owner.length !== 1)
-				{
-					$j(view.etemplates[1].DOMContainer).hide();
-					view.etemplates[0].widgetContainer.set_width("");
-				}
-				else
+				if(state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] > 0)
 				{
 					view.etemplates[0].widgetContainer.set_width("70%");
 					// TODO: Maybe some caching here
@@ -1550,6 +1545,11 @@ app.classes.calendar = AppJS.extend(
 						this.getWidgetById('label').set_value(data.label||'');
 						this.getWidgetById('todos').set_value({content:data.todos||''});
 					},view.etemplates[1].widgetContainer);
+				}
+				else
+				{
+					$j(view.etemplates[1].DOMContainer).hide();
+					view.etemplates[0].widgetContainer.set_width("");
 				}
 			}
 			else
@@ -2058,6 +2058,7 @@ app.classes.calendar = AppJS.extend(
 					// Here we look for things like owner: ['r1,r2'] and change them
 					// to owner: ['r1','r2']
 					state[this.name.replace('[]','')] = $j(this).val();
+					$j('option', this).removeAttr('selected');
 					for(var key in state)
 					{
 						if(state[key] && typeof state[key].length !== 'undefined')

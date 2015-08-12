@@ -70,7 +70,6 @@
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			$GLOBALS['egw_info']['flags']['noappfooter'] = True;
-			common::egw_header();
 
 			$p = &$GLOBALS['egw']->template;
 			$p->set_file(Array('locales'=>'locales.tpl'));

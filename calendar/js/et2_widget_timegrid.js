@@ -544,9 +544,12 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			if(typeof this.value[this.day_list[i]] === 'undefined')
 			{
 				var ids = (egw.dataGetUIDdata(app.classes.calendar._daywise_cache_id(this.day_list[i],this.options.owner))||{data:[]});
-				for(var j = 0; j < ids.data.length; j++)
+				if(ids.data.length > 0)
 				{
 					this.value[this.day_list[i]] = [];
+				}
+				for(var j = 0; j < ids.data.length; j++)
+				{
 					if(egw.dataHasUID('calendar::'+ids.data[j]))
 					{
 						this.value[this.day_list[i]].push(egw.dataGetUIDdata('calendar::'+ids.data[j]).data);
@@ -1013,6 +1016,19 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					this.owner.set_value(_owner.substr(1));
 					break;
 			}
+		}
+		else if (typeof _owner == 'object' && _owner.length)
+		{
+			this.owner.options.application = false;
+			var owner_objected = [];
+			for(var i = 0; i < _owner.length; i++)
+			{
+				owner_objected[i] = {
+					app: _owner[i][0] == 'r' ? 'resources' : 'home-accounts',
+					id: isNaN(_owner[i]) ? _owner[i].substr(1) : _owner[i]
+				};
+			}
+			this.owner.set_value(owner_objected);
 		}
 		else
 		{

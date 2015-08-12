@@ -2479,6 +2479,7 @@ class calendar_uiforms extends calendar_ui
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Calendar').' - '.lang('Category ACL');
 		$tmp = new etemplate_new('calendar.cat_acl');
+		$GLOBALS['egw_info']['flags']['nonavbar'] = 1;
 		$tmp->exec('calendar.calendar_uiforms.cat_acl',$content,null,$readonlys,$preserv);
 	}
 
