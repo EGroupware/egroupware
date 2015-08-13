@@ -1230,10 +1230,6 @@ class so_sql
 		{
 			$search_cols = $this->get_default_search_columns();
 		}
-		if(!$search_cols)
-		{
-			return array();
-		}
 		// Concat all fields to be searched together, so the conditions operate across the whole record
 		foreach($search_cols as $col)
 		{
@@ -1249,15 +1245,15 @@ class so_sql
 				$numeric_columns[] = $col;
 				continue;
 			}
-			if ($this->db->Type == 'mysql' && $table_def['fd'][$col_name]['type'] === 'ascii' && !preg_match('/[\x80-\xFF]/', $_pattern))
+			if ($this->db->Type == 'mysql' && $table_def['fd'][$col_name]['type'] === 'ascii' && preg_match('/[\x80-\xFF]/', $_pattern))
 			{
 				continue;	// will only give sql error
 			}
 			$columns[] = sprintf($this->db->capabilities[egw_db::CAPABILITY_CAST_AS_VARCHAR],"COALESCE($col,'')");
 		}
-		if($columns)
+		if(!$search_cols)
 		{
-			$columns = call_user_func_array(array($GLOBALS['egw']->db,'concat'),$columns);
+			return array();
 		}
 
 		// Break the search string into tokens
@@ -1317,7 +1313,8 @@ class so_sql
 					$op = 'OR';
 					break;
 			}
-			$token_filter = " $columns " . $this->db->capabilities['case_insensitive_like'] . ' ' .
+			$token_filter = ' '.call_user_func_array(array($GLOBALS['egw']->db,'concat'),$columns).' '.
+				$this->db->capabilities['case_insensitive_like'] . ' ' .
 				$GLOBALS['egw']->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard);
 
 			// Compare numeric token as equality for numeric columns
