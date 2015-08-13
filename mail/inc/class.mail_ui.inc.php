@@ -766,7 +766,16 @@ class mail_ui
 
 		if (!empty($_folderName)) $fetchCounters = true;
 		
-		$data = $this->mail_tree->getTree($nodeID,$_profileID,0, false,$subscribedOnly,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+		// Check if it is called for refresh root
+		// then we need to reinitialized the index tree
+		if(!$nodeID && !$_profileID)
+		{
+			$data = $this->mail_tree->getInitialIndexTree(null,null,null,null,true,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+		}
+		else
+		{
+			$data = $this->mail_tree->getTree($nodeID,$_profileID,0, false,$subscribedOnly,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+		}	
 		if (!is_null($_nodeID)) return $data;
 		etemplate_widget_tree::send_quote_json($data);
 	}
