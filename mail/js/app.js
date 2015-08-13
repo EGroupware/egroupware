@@ -4969,33 +4969,41 @@ app.classes.mail = AppJS.extend(
 		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
 		var menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
 		
-		if (tree)
+		var callbackDialog = function(_btn)
 		{
-			var selFolders = tree.input.getAllChecked();
-			if (selFolders)
+			if (_btn === et2_dialog.YES_BUTTON)
 			{
-				var selFldArr = selFolders.split(tree.input.dlmtr);
-				var msg = egw.lang('Folders deleting in progress ...');
-				et2_dialog.long_task(function(_val, _resp){
-					console.log(_val, _resp);
-					if (_val && _resp.type !== 'error')
+				if (tree)
+				{
+					var selFolders = tree.input.getAllChecked();
+					if (selFolders)
 					{
-						var stat = [];
-						var folderName = '';
-						for(var i=0;i<selFldArr.length;i++)
-						{
-							folderName = selFldArr[i].split('::');
-							stat[selFldArr[i]] = folderName[1];
-						}
-						// delete the item from index folderTree
-						egw.window.app.mail.mail_removeLeaf(stat);
-						// submit
-						etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
+						var selFldArr = selFolders.split(tree.input.dlmtr);
+						var msg = egw.lang('Folders deleting in progress ...');
+						et2_dialog.long_task(function(_val, _resp){
+							console.log(_val, _resp);
+							if (_val && _resp.type !== 'error')
+							{
+								var stat = [];
+								var folderName = '';
+								for(var i=0;i<selFldArr.length;i++)
+								{
+									folderName = selFldArr[i].split('::');
+									stat[selFldArr[i]] = folderName[1];
+								}
+								// delete the item from index folderTree
+								egw.window.app.mail.mail_removeLeaf(stat);
+								// submit
+								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
+							}
+						}, msg, 'Deleting folders', menuaction, selFldArr, 'mail');
+						return true;
 					}
-				}, msg, 'Deleting folders', menuaction, selFldArr, 'mail');
-				return true;
+				}
 			}
-		}
+		};
+		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to delete all selected folders?'), egw.lang('Delete folders'), {},
+			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
 	
 	
