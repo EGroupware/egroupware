@@ -787,6 +787,7 @@ class egw_db
 				"\n$this->Error ($this->Errno)".
 				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
 		}
+		elseif(empty($this->Query_ID->sql)) $this->Query_ID->sql = $Query_String;
 		return $this->Query_ID;
 	}
 
@@ -1650,7 +1651,7 @@ class egw_db
 
 				if ($truncate_varchar)
 				{
-					$maxlength = $column_definitions[$col]['type'] == 'varchar' ? $column_definitions[$col]['precision'] : null;
+					$maxlength = in_array($column_definitions[$col]['type'], array('varchar','ascii')) ? $column_definitions[$col]['precision'] : null;
 				}
 				// dont use IN ( ), if there's only one value, it's slower for MySQL
 				if (is_array($data) && count($data) == 1)
