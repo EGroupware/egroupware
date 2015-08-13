@@ -4963,12 +4963,10 @@ app.classes.mail = AppJS.extend(
 	 * Detele button handler
 	 * triggers longTask dialog and send delete operation url
 	 * 
-	 * @param {egw object} _egw egw object
-	 * @param {widget object} _widget button widget
 	 */
-	folderMgmt_deleteBtn: function (_egw, _widget)
+	folderMgmt_deleteBtn: function ()
 	{
-		var tree = this.et2.getWidgetById('tree');
+		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
 		var menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
 		
 		if (tree)
@@ -4983,14 +4981,16 @@ app.classes.mail = AppJS.extend(
 					if (_val && _resp.type !== 'error')
 					{
 						var stat = [];
-						var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
-						
-						// delete the item in folderMgmt dialog
-						if (tree) tree.deleteItem(_resp, false);
-						
-						stat[_resp] = _resp;
+						var folderName = '';
+						for(var i=0;i<selFldArr.length;i++)
+						{
+							folderName = selFldArr[i].split('::');
+							stat[selFldArr[i]] = folderName[1];
+						}
 						// delete the item from index folderTree
 						egw.window.app.mail.mail_removeLeaf(stat);
+						// submit
+						etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
 					}
 				}, msg, 'Deleting folders', menuaction, selFldArr, 'mail');
 				return true;

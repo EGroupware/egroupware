@@ -4641,13 +4641,14 @@ class mail_ui
 		{
 			$success = $this->ajax_deleteFolder($_folderName,true);
 			$response = egw_json_response::get();
+			list(,$folderName) = explode(self::$delimiter, $_folderName);
 			if ($success)
 			{
-				$res = $_folderName;
+				$res = $folderName;
 			}
 			else
 			{
-				$res = lang("Failed to delete %1",$_folderName);
+				$res = lang("Failed to delete %1",$folderName);
 			}
 			$response->data($res);
 		}
