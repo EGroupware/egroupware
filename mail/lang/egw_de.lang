@@ -41,6 +41,8 @@ any of	mail	de	mit einem
 any status	mail	de	Alle Status
 append	mail	de	hinzufügen
 appended after reply before sending	mail	de	Einfügen nach dem zitierten Text im Zuge des Versendens
+application mail expected but got: %1	mail	de	Anwendung Mail erwarted, aber %1 erhalten!
+are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
 arrival	mail	de	Empfangsdatum
 attach users vcard at compose to every new mail	mail	de	Füge die VCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
@@ -92,6 +94,7 @@ delete folder %1 ?	mail	de	Ordner %1 löschen?
 deleted	mail	de	gelöscht
 deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht
 deleted!	mail	de	gelöscht!
+deleting %1 folders in progress ...	mail	de	de	%1 Ordner in Bearbeitung zum Löschen
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
@@ -164,6 +167,7 @@ event details follow	mail	de	Details zum Termin folgen
 everyone	mail	de	Alle Anwender
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet Ordner
+failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
 failed to delete %1 ! reason: %2	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
 failed to delete %1. server responded:	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
 failed to move %1 ! reason: %2	mail	de	Verschieben von %1 fehlgeschlagen! Grund: %2

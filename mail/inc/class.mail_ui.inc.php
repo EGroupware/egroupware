@@ -594,10 +594,10 @@ class mail_ui
 						'group'		=> $group,
 					),
 					'foldermanagement' => array(
-						'caption' => 'Folder Management...',
+						'caption' => 'Folder Management ...',
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 						'onExecute' => 'javaScript:app.mail.folderManagement',
-						'group'		=> ++$group,
+						'group'		=> $group,
 					),
 					'sieve' => array(
 						'caption' => 'Mail filter',

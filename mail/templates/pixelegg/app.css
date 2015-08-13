@@ -1090,10 +1090,12 @@ body {
 .egw_fw_ui_category_content .selectedTreeRow_lor {
   background-color: #ffc200;
   color: #1e1e1e;
+  text-decoration: none;
 }
 .egw_fw_ui_category_content .standartTreeRow_lor {
-  background-color: #f2f2f2;
+  background-color: rgba(103, 159, 210, 0.2);
   color: #1e1e1e;
+  text-decoration: none;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
@@ -1707,11 +1709,13 @@ div#displayToolbar-menulist img {
 #mail-folder_management .selectedTreeRow_lor {
   background-color: #ffc200;
   color: #1e1e1e;
+  text-decoration: none;
 }
 #mail-subscribe .standartTreeRow_lor,
 #mail-folder_management .standartTreeRow_lor {
-  background-color: #f2f2f2;
+  background-color: rgba(103, 159, 210, 0.2);
   color: #1e1e1e;
+  text-decoration: none;
 }
 .mail_subscription_header,
 .mail_folder_management_header {

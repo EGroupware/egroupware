@@ -292,6 +292,9 @@ app.classes.mail = AppJS.extend(
 					
 					tree.input.loadJSONObject(tree._htmlencode_node(state));
 				}
+				break;
+			case 'mail.folder_management':
+				this.egw.message('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.','info',true);
 		}
 	},
 
@@ -4956,7 +4959,14 @@ app.classes.mail = AppJS.extend(
 	 */
 	folderMgmt_onCheck: function (_id, _widget)
 	{
-		console.log();
+		var selected = _widget.input.getAllChecked();
+		if (selected && selected.split(_widget.input.dlmtr).length > 5)
+		{
+			egw.message('If you would like to select multiple folders in one action,\n\
+						 you can hold ctrl key then select a folder as start range and another\n\
+						 folder within a same level as end range, all folders in between will be \n\
+						selected or unselected based on their current status.');
+		}
 	},
 	
 	/**
@@ -4979,7 +4989,7 @@ app.classes.mail = AppJS.extend(
 					if (selFolders)
 					{
 						var selFldArr = selFolders.split(tree.input.dlmtr);
-						var msg = egw.lang('Folders deleting in progress ...');
+						var msg = egw.lang('Deleting %1 folders in progress ...', selFldArr.length);
 						et2_dialog.long_task(function(_val, _resp){
 							console.log(_val, _resp);
 							if (_val && _resp.type !== 'error')
@@ -4993,6 +5003,9 @@ app.classes.mail = AppJS.extend(
 								}
 								// delete the item from index folderTree
 								egw.window.app.mail.mail_removeLeaf(stat);
+							}
+							else
+							{
 								// submit
 								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
 							}
@@ -5002,7 +5015,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		};
-		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to delete all selected folders?'), egw.lang('Delete folders'), {},
+		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to delete all selected folders?'), egw.lang('Delete folder'), {},
 			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
 	

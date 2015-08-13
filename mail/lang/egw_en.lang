@@ -42,6 +42,7 @@ any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application mail expected but got: %1
+are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 arrival	mail	en	Recieved
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
@@ -93,6 +94,7 @@ delete folder %1 ?	mail	en	DELETE Folder %1 ?
 deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
+deleting %1 folders in progress ...	mail	en	Deleting %1 folders in progress ...
 deny certain groups access to following features	mail	en	Deny certain groups access to following features
 directories have to be shared.	mail	en	Directories have to be shared.
 disable	mail	en	Disable
@@ -165,6 +167,7 @@ event details follow	mail	en	Event Details follow
 everyone	mail	en	Everyone
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra sent folders
+failed to delete %1	mail	en	Failed to delete %1
 failed to delete %1 ! reason: %2	mail	en	failed to delete %1 ! Reason: %2
 failed to delete %1. server responded:	mail	en	Failed to delete %1. Server responded:
 failed to move %1 ! reason: %2	mail	en	failed to move %1 ! Reason: %2
@@ -185,6 +188,7 @@ flagged %1 messages as unflagged in %2	mail	en	flagged %1 messages as unflagged 
 flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
+folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
 for eg.: mpeg	mail	en	for eg.: mpeg
