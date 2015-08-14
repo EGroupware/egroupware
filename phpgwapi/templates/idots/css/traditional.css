@@ -961,6 +961,10 @@ td.lettersearch {
 .help_message {
 	background-image: url(../../default/images/dialog_help.png);
 }
+.info_message .discard  {
+	float:right;
+	margin-top: 4px;
+}
 /**
  * Message in popup
  */
