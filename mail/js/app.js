@@ -4962,10 +4962,7 @@ app.classes.mail = AppJS.extend(
 		var selected = _widget.input.getAllChecked();
 		if (selected && selected.split(_widget.input.dlmtr).length > 5)
 		{
-			egw.message('If you would like to select multiple folders in one action,\n\
-						 you can hold ctrl key then select a folder as start range and another\n\
-						 folder within a same level as end range, all folders in between will be \n\
-						selected or unselected based on their current status.');
+			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'));
 		}
 	},
 	

@@ -233,6 +233,7 @@ if shown, which folders should appear on the home page	mail	en	if shown, which f
 if subject contains:(*)	mail	en	If subject contains:(*)
 if to contains:(*)	mail	en	If to contains:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	en	If you want to see a preview of a mail by single clicking onto the subject, enable this.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	en	If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.
 imap	mail	en	IMAP
 imap - incoming mail	mail	en	IMAP - incoming mail
 imap administration	mail	en	IMAP administration

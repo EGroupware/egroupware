@@ -94,7 +94,7 @@ delete folder %1 ?	mail	de	Ordner %1 löschen?
 deleted	mail	de	gelöscht
 deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht
 deleted!	mail	de	gelöscht!
-deleting %1 folders in progress ...	mail	de	de	%1 Ordner in Bearbeitung zum Löschen
+deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
@@ -188,6 +188,7 @@ flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Ma
 flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
+folder management ...	mail	de	Ordner Verwaltung ...
 folder settings	mail	de	Ordner Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
 for eg.: mpeg	mail	de	z.B. für mpeg
@@ -232,6 +233,7 @@ if shown, which folders should appear on the home page	mail	de	Welche E-Mail Ord
 if subject contains:(*)	mail	de	wenn Betreff enthält:(*)
 if to contains:(*)	mail	de	wenn An enthält:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	de	Wenn Sie die Vorschau einer E-Mail durch einfaches Anklicken sehen wollen, wählen Sie diese Option aus.
+if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	de	Wenn Sie mehrere Ordner einer Ebene selektieren wollen in einer Aktion, können sie mit der STR-Taste gedrückt den ersten und letzten Ordner auswählen. Dann werden alle Ordner dazwischen selektiert oder de-selektiert.
 imap	mail	de	Posteingang-Server
 imap - incoming mail	mail	de	IMAP - Posteingang-Server
 imap administration	mail	de	Administrator IMAP-Server
