@@ -612,6 +612,14 @@ function set_univention_defaults()
 	set_distro_defaults('debian');
 	$config['distro'] = 'univention';
 
+	// set lang from ucr locale, as cloud-config at least never has anything but EN set in enviroment
+	@list($lang,$nat) = preg_split('/[_.]/', _ucr_get('locale/default'));
+	if (in_array($lang.'-'.strtolower($nat),array('es-es','pt-br','zh-tw')))
+	{
+		$lang .= '-'.strtolower($nat);
+	}
+	$config['lang'] = $lang;
+
 	// mysql settings
 	$config['db_root_pw'] = _ucr_secret('mysql');
 
