@@ -701,15 +701,18 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   background-position: left top;
   background-repeat: no-repeat;
 }
-.mail_subscription_header {
+.mail_subscription_header,
+.mail_folder_management_header {
   font-weight: bold;
   font-size: 150%;
   padding-bottom: 20px;
 }
-#mail-subscribe table.et2_grid tr td {
+#mail-subscribe table.et2_grid tr td,
+#mail-folder_management table.et2_grid tr td {
   padding: 0px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box {
+#mail-subscribe table.et2_grid tr td div.et2_box,
+#mail-folder_management table.et2_grid tr td .mail_subscription_header {
   height: 500px;
   overflow: auto;
 }
@@ -1080,10 +1083,12 @@ body {
 .egw_fw_ui_category_content .selectedTreeRow_lor {
   background-color: #ffc200;
   color: #1e1e1e;
+  text-decoration: none;
 }
 .egw_fw_ui_category_content .standartTreeRow_lor {
-  background-color: #f2f2f2;
+  background-color: rgba(103, 159, 210, 0.2);
   color: #1e1e1e;
+  text-decoration: none;
 }
 /* ##################################################################################
  *       E-Mail Dialog "Compose"
@@ -1670,11 +1675,13 @@ div#displayToolbar-menulist img {
  *
  * ##################################################################################
  */
-#mail-subscribe table.et2_grid tr td {
+#mail-subscribe table.et2_grid tr td,
+#mail-folder_management table.et2_grid tr td {
   padding: 0px;
   /*Label*/
 }
-#mail-subscribe table.et2_grid tr td .mail_subscription_header {
+#mail-subscribe table.et2_grid tr td .mail_subscription_header,
+#mail-folder_management table.et2_grid tr td .mail_subscription_header {
   /*line-height: 270%;*/
   margin: 0.6em 0 0;
   font-weight: lighter;
@@ -1683,12 +1690,28 @@ div#displayToolbar-menulist img {
   font-size: 150%;
   padding-bottom: 20px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box {
+#mail-subscribe table.et2_grid tr td div.et2_box,
+#mail-folder_management table.et2_grid tr td div.et2_box {
   margin-top: 16px;
   height: 484px;
   overflow: auto;
 }
-.mail_subscription_header {
+#mail-subscribe .selectedTreeRow,
+#mail-folder_management .selectedTreeRow,
+#mail-subscribe .selectedTreeRow_lor,
+#mail-folder_management .selectedTreeRow_lor {
+  background-color: #ffc200;
+  color: #1e1e1e;
+  text-decoration: none;
+}
+#mail-subscribe .standartTreeRow_lor,
+#mail-folder_management .standartTreeRow_lor {
+  background-color: rgba(103, 159, 210, 0.2);
+  color: #1e1e1e;
+  text-decoration: none;
+}
+.mail_subscription_header,
+.mail_folder_management_header {
   font-weight: bold;
   font-size: 150%;
   padding-bottom: 20px;

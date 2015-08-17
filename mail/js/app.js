@@ -272,6 +272,9 @@ app.classes.mail = AppJS.extend(
 					
 					tree.input.loadJSONObject(tree._htmlencode_node(state));
 				}
+				break;
+			case 'mail.folder_management':
+				this.egw.message('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.','info',true);
 		}
 	},
 
@@ -1616,6 +1619,38 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_undeleteMessages: function(_messageList) {
 	// setting class of row, the old style
+	},
+
+	/**
+	 * mail_emptySpam
+	 *
+	 * @param {object} action
+	 * @param {object} _senders
+	 */
+	mail_emptySpam: function(action,_senders) {
+		var server = _senders[0].iface.id.split('::');
+		var activeFilters = this.mail_getActiveFilters();
+		var self = this;
+
+		this.egw.message(this.egw.lang('empty junk'));
+		egw.json('mail.mail_ui.ajax_emptySpam',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
+			.sendRequest(true);
+
+		// Directly delete any trash cache for selected server
+		if(window.localStorage)
+		{
+			for(var i = 0; i < window.localStorage.length; i++)
+			{
+				var key = window.localStorage.key(i);
+
+				// Find directly by what the key would look like
+				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+server[0]+'::') == 0 &&
+					key.toLowerCase().indexOf(egw.lang('junk').toLowerCase()) > 0)
+				{
+					window.localStorage.removeItem(key);
+				}
+			}
+		}
 	},
 
 	/**
@@ -4525,5 +4560,180 @@ app.classes.mail = AppJS.extend(
 		{
 			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save into VFS','info');
 		}
+	},
+	
+	/**
+	 * Folder Management, opens the folder magnt. dialog
+	 * with the selected acc_id from index tree
+	 * 
+	 * @param {egw action object} _action actions
+	 * @param {object} _senders selected node
+	 */
+	folderManagement: function (_action,_senders)
+	{
+		var acc_id = parseInt(_senders[0].id);
+		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x500');
+	},
+	
+	/**
+	 * Show ajax-loader when the autoloading get started
+	 * 
+	 * @param {type} _id item id
+	 * @param {type} _widget tree widget
+	 * @returns {Boolean}
+	 */
+	folderMgmt_autoloadingStart: function(_id, _widget)
+	{
+		return this.subscription_autoloadingStart (_id, _widget);
+	},
+	
+	/**
+	 * Revert back the icon after autoloading is finished
+	 * @returns {Boolean}
+	 */
+	folderMgmt_autoloadingEnd: function(_id, _widget)
+	{
+		return true;
+	},
+	
+	/**
+	 * 
+	 * @param {type} _ids
+	 * @param {type} _widget
+	 * @returns {undefined}
+	 */
+	folderMgmt_onSelect: function(_ids, _widget)
+	{
+		// Flag to reset selected items
+		var resetSelection = false;
+		
+		var self = this;
+		
+		/**
+		 * helper function to multiselect range of nodes in same level
+		 * 
+		 * @param {string} _a start node id
+		 * @param {string} _b end node id
+		 * @param {string} _branch totall node ids in the level
+		 */
+		var rangeSelector = function(_a,_b, _branch)
+		{
+			var branchItems = _branch.split(_widget.input.dlmtr);
+			var _aIndex = _widget.input.getIndexById(_a);
+			var _bIndex = _widget.input.getIndexById(_b);
+			if (_bIndex<_aIndex)
+			{
+				var tmpIndex = _aIndex;
+				_aIndex = _bIndex;
+				_bIndex = tmpIndex;
+			}
+			for(var i =_aIndex;i<=_bIndex;i++)
+			{
+				self.folderMgmt_setCheckbox(_widget, branchItems[i], !_widget.input.isItemChecked(branchItems[i]));
+			}
+		};
+		
+		// extract items ids
+		var itemIds = _ids.split(_widget.input.dlmtr);
+
+		if(itemIds.length == 2) // there's a range selected
+		{
+			var branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
+			// Set range of selected/unselected
+			rangeSelector(itemIds[0], itemIds[1], branch);
+		}
+		else if(itemIds.length != 1)
+		{
+			resetSelection = true;
+		}
+		
+		if (resetSelection)
+		{
+			_widget.input._unselectItems();
+		}
+	},
+	
+	/**
+	 * Set enable/disable checkbox
+	 * 
+	 * @param {object} _widget tree widget
+	 * @param {string} _itemId item tree id
+	 * @param {boolean} _stat - status to be set on checkbox true/false
+	 */
+	folderMgmt_setCheckbox: function (_widget, _itemId, _stat)
+	{
+		if (_widget)
+		{
+			_widget.input.setCheck(_itemId, _stat);
+			_widget.input.setSubChecked(_itemId,_stat);
+		}
+	},
+	
+	/**
+	 * 
+	 * @param {type} _id
+	 * @param {type} _widget
+	 * @TODO: Implement onCheck handler in order to select or deselect subItems
+	 *	of a checked parent node
+	 */
+	folderMgmt_onCheck: function (_id, _widget)
+	{
+		var selected = _widget.input.getAllChecked();
+		if (selected && selected.split(_widget.input.dlmtr).length > 5)
+		{
+			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'));
+		}
+	},
+	
+	/**
+	 * Detele button handler
+	 * triggers longTask dialog and send delete operation url
+	 * 
+	 */
+	folderMgmt_deleteBtn: function ()
+	{
+		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
+		var menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
+		
+		var callbackDialog = function(_btn)
+		{
+			if (_btn === et2_dialog.YES_BUTTON)
+			{
+				if (tree)
+				{
+					var selFolders = tree.input.getAllChecked();
+					if (selFolders)
+					{
+						var selFldArr = selFolders.split(tree.input.dlmtr);
+						var msg = egw.lang('Deleting %1 folders in progress ...', selFldArr.length);
+						et2_dialog.long_task(function(_val, _resp){
+							console.log(_val, _resp);
+							if (_val && _resp.type !== 'error')
+							{
+								var stat = [];
+								var folderName = '';
+								for(var i=0;i<selFldArr.length;i++)
+								{
+									folderName = selFldArr[i].split('::');
+									stat[selFldArr[i]] = folderName[1];
+								}
+								// delete the item from index folderTree
+								egw.window.app.mail.mail_removeLeaf(stat);
+							}
+							else
+							{
+								// submit
+								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
+							}
+						}, msg, 'Deleting folders', menuaction, selFldArr, 'mail');
+						return true;
+					}
+				}
+			}
+		};
+		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to delete all selected folders?'), egw.lang('Delete folder'), {},
+			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
+	
+	
 });
