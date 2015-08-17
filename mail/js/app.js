@@ -1236,6 +1236,25 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Check if SpamFolder is enabled on that account
+	 *
+	 * SpamFolder enabled is stored as data { spamfolder: true/false } on account node.
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
+	 */
+	spamfolder_enabled: function(_action,_senders,_currentNode)
+	{
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var acc_id = _senders[0].id.split('::')[0];
+		var node = ftree ? ftree.getNode(acc_id) : null;
+
+		return node && node.data && node.data.spamfolder;
+	},
+
+
+	/**
 	 * Check if Sieve is enabled on that account
 	 *
 	 * Sieve enabled is stored as data { acl: true/false } on account node.
