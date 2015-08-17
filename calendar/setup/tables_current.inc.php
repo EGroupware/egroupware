@@ -74,12 +74,13 @@ $phpgw_baseline = array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'cal_recur_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0'),
 			'cal_user_type' => array('type' => 'ascii','precision' => '1','nullable' => False,'default' => 'u','comment' => 'u=user, g=group, c=contact, r=resource, e=email'),
-			'cal_user_id' => array('type' => 'ascii','meta' => array("cal_user_type='u'" => 'account'),'precision' => '128','nullable' => False,'comment' => 'id or email-address for type=e'),
+			'cal_user_id' => array('type' => 'ascii','meta' => array("cal_user_type='u'" => 'account'),'precision' => '32','nullable' => False,'comment' => 'id or md5(email-address) for type=e'),
 			'cal_status' => array('type' => 'ascii','precision' => '1','default' => 'A','comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'),
 			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1','comment' => 'only for certain types (eg. resources)'),
 			'cal_role' => array('type' => 'ascii','precision' => '64','default' => 'REQ-PARTICIPANT','comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'),
 			'cal_user_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'automatic timestamp of last update'),
-			'cal_user_auto' => array('type' => 'auto','nullable' => False)
+			'cal_user_auto' => array('type' => 'auto','nullable' => False),
+			'cal_user_attendee' => array('type' => 'varchar','precision' => '255','comment' => 'email or json object with attr. cn, url, ...')
 		),
 		'pk' => array('cal_user_auto'),
 		'fk' => array(),

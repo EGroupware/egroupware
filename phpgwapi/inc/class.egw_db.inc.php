@@ -1324,6 +1324,27 @@ class egw_db
 	}
 
 	/**
+	 * SQL returning character (not byte!) positions for $substr in $str
+	 *
+	 * @param string $str
+	 * @param string $substr
+	 * @return string SQL returning character (not byte!) positions for $substr in $str
+	 */
+	function strpos($str, $substr)
+	{
+		switch($this->Type)
+		{
+			case 'mysql':
+				return "LOCATE($substr,$str)";
+			case 'pgsql':
+				return "STRPOS($str,$substr)";
+			case 'mssql':
+				return "CHARINDEX($substr,$str)";
+		}
+		die(__METHOD__." not implemented for DB type '$this->Type'!");
+	}
+
+	/**
 	 * Convert a DB specific timestamp in a unix timestamp stored as integer, like MySQL: UNIX_TIMESTAMP(ts)
 	 *
 	 * @param string $expr name of an integer column or integer expression

@@ -71,7 +71,7 @@ define('WEEK_s',7*DAY_s);
  * DB-model uses egw_cal_user.cal_status='E' for participants only participating in exceptions of recurring
  * events, so whole recurring event get found for these participants too!
  *
- * All update methods not take care to update modification time of (evtl. existing) series master too,
+ * All update methods now take care to update modification time of (evtl. existing) series master too,
  * to force an etag, ctag and sync-token change! Methods not doing that are private to this class.
  *
  * range_start/_end in main-table contains start and end of whole event series (range_end is NULL for unlimited recuring events),
@@ -79,6 +79,14 @@ define('WEEK_s',7*DAY_s);
  * This effectivly stores MIN(cal_start) and MAX(cal_end) permanently as column in main-table and improves speed tremendiously
  * (few milisecs instead of more then 2 minutes on huge installations)!
  * It's set in calendar_so::save from start and end or recur_enddate, so nothing changes for higher level classes.
+ *
+ * egw_cal_user.cal_user_id contains since 14.3.001 only an md5-hash of a lowercased raw email address (not rfc822 address!).
+ * Real email address and other possible attendee information for iCal or CalDAV are stored in cal_user_attendee.
+ * This allows a short 32byte ascii cal_user_id and also storing attendee information for accounts and contacts.
+ * Outside of this class uid for email address is still "e$cn <$email>" or "e$email".
+ * We use calendar_so::split_user($uid, &$user_type, &$user_id, $md5_email=false) with last param true to generate
+ * egw_cal_user.cal_user_id for DB and calendar_so::combine_user($user_type, $user_id, $user_attendee) to generate
+ * uid used outside of this class. Both methods are unchanged when using with their default parameters.
  *
  * @ToDo drop egw_cal_repeats table in favor of a rrule colum in main table (saves always used left join and allows to store all sorts of rrules)
  */
@@ -255,7 +263,9 @@ class calendar_so
 			if (!is_array($users)) $users = $users ? (array)$users : array();
 			foreach($users as &$uid)
 			{
-				if (is_numeric($uid)) $uid = 'u'.$uid;
+				$user_type = $user_id = null;
+				self::split_user($uid, $user_type, $user_id, true);
+				$uid = $user_type.$user_id;
 			}
 			$sql .= " AND\n	CONCAT(cal_user_type,cal_user_id) IN (".implode(',', array_map(array($this->db, 'quote'), $users)).")";
 		}
@@ -453,11 +463,13 @@ class calendar_so
 		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,cal_recur_date ASC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// combine all participant data in uid and status values
-			$uid    = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+			$uid    = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 			$status = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
 
 			$events[$row['cal_id']]['participants'][$uid] = $status;
-			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][$row['cal_user_id']] = $status;
+			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][is_numeric($uid) ? $uid : substr($uid, 1)] = $status;
+			// make extra attendee information available eg. for iCal export (attendee used eg. in response to organizer for an account)
+			$events[$row['cal_id']]['attendee'][$uid] = $row['cal_user_attendee'];
 		}
 
 		// custom fields
@@ -514,7 +526,7 @@ class calendar_so
 		foreach((array)$users as $uid)
 		{
 			$type = $id = null;
-			self::split_user($uid, $type, $id);
+			self::split_user($uid, $type, $id, true);
 			$types[$type][] = $id;
 		}
 		foreach($types as $type => $ids)
@@ -749,7 +761,9 @@ class calendar_so
 				}
 				else
 				{
-					$users_by_type[$user[0]][] = substr($user,1);
+					$user_type = $user_id = null;
+					self::split_user($user, $user_type, $user_id, true);
+					$users_by_type[$user_type][] = $user_id;
 				}
 			}
 			$to_or = $user_or = array();
@@ -1028,7 +1042,7 @@ class calendar_so
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
 
 				// combine all participant data in uid and status values
-				$uid = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+				$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 				$status = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
 
 				// set accept/reject/tentative of series for all recurrences
@@ -1442,20 +1456,21 @@ ORDER BY cal_user_type, cal_usre_id
 			if ($event['cal_reference'])
 			{
 				$master_participants = array();
-				foreach($this->db->select($this->user_table, 'cal_user_type,cal_user_id', array(
+				foreach($this->db->select($this->user_table, 'cal_user_type,cal_user_id,cal_user_attendee', array(
 					'cal_id' => $event['cal_reference'],
 					'cal_recur_date' => 0,
 					"cal_status != 'X'",	// deleted need to be replaced with exception marker too
 				), __LINE__, __FILE__, 'calendar') as $row)
 				{
-					$master_participants[] = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+					$master_participants[] = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 				}
 				foreach(array_diff(array_keys((array)$event['cal_participants']), $master_participants) as $uid)
 				{
 					$user_type = $user_id = null;
-					self::split_user($uid, $user_type, $user_id);
+					self::split_user($uid, $user_type, $user_id, true);
 					$this->db->insert($this->user_table, array(
 						'cal_status' => 'E',
+						'cal_user_attendee' => $user_type == 'e' ? substr($uid, 1) : null,
 					), array(
 						'cal_id' => $event['cal_reference'],
 						'cal_recur_date' => 0,
@@ -1490,10 +1505,10 @@ ORDER BY cal_user_type, cal_usre_id
 				'cal_recur_date' => 0,
 			);
 			$old_participants = array();
-			foreach ($this->db->select($this->user_table,'cal_user_type,cal_user_id,cal_status,cal_quantity,cal_role', $where,
+			foreach ($this->db->select($this->user_table,'cal_user_type,cal_user_id,cal_user_attendee,cal_status,cal_quantity,cal_role', $where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
 			{
-				$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+				$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 				$status = self::combine_status($row['cal_status'], $row['cal_quantity'], $row['cal_role']);
 				$old_participants[$uid] = $status;
 			}
@@ -1747,17 +1762,42 @@ ORDER BY cal_user_type, cal_usre_id
 	}
 
 	/**
+	 * Format attendee as email
+	 *
+	 * @param string|array $attendee attendee information: email, json or array with attr cn and url
+	 * @return type
+	 */
+	static function attendee2email($attendee)
+	{
+		if (is_string($attendee) && $attendee[0] == '{' && substr($attendee, -1) == '}')
+		{
+			$user_attendee = json_decode($user_attendee, true);
+		}
+		if (is_array($attendee))
+		{
+			$email = !empty($attendee['email']) ? $user_attendee['email'] :
+				(strtolower(substr($attendee['url'], 0, 7)) == 'mailto:' ? substr($user_attendee['url'], 7) : $attendee['url']);
+			$attendee = !empty($attendee['cn']) ? $attendee['cn'].' <'.$email.'>' : $email;
+		}
+		return $attendee;
+	}
+	/**
 	 * combines user_type and user_id into a single string or integer (for users)
 	 *
 	 * @param string $user_type 1-char type: 'u' = user, ...
 	 * @param string|int $user_id id
+	 * @param string|array $attendee attendee information: email, json or array with attr cn and url
 	 * @return string|int combined id
 	 */
-	static function combine_user($user_type,$user_id)
+	static function combine_user($user_type, $user_id, $attendee=null)
 	{
 		if (!$user_type || $user_type == 'u')
 		{
 			return (int) $user_id;
+		}
+		if ($user_type == 'e' && $attendee)
+		{
+			$user_id = self::attendee2email($attendee);
 		}
 		return $user_type.$user_id;
 	}
@@ -1765,16 +1805,29 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * splits the combined user_type and user_id into a single values
 	 *
+	 * This is the only method building (normalized) md5 hashes for user_type="e",
+	 * if called with $md5_email=true parameter!
+	 *
 	 * @param string|int $uid
 	 * @param string &$user_type 1-char type: 'u' = user, ...
 	 * @param string|int &$user_id id
+	 * @param boolean $md5_email =false md5 hash user_id for email / user_type=="e"
 	 */
-	static function split_user($uid,&$user_type,&$user_id)
+	static function split_user($uid, &$user_type, &$user_id, $md5_email=false)
 	{
 		if (is_numeric($uid))
 		{
 			$user_type = 'u';
 			$user_id = (int) $uid;
+		}
+		// create md5 hash from lowercased and trimed raw email ("rb@stylite.de", not "Ralf Becker <rb@stylite.de>")
+		elseif ($md5_email && $uid[0] == 'e')
+		{
+			$user_type = $uid[0];
+			$email = substr($uid, 1);
+			$matches = null;
+			if (preg_match('/<([^<>]+)>$/', $email, $matches)) $email = $matches[1];
+			$user_id = md5(trim(strtolower($email)));
 		}
 		else
 		{
@@ -1877,7 +1930,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$old_participants = array();
 			foreach($existing_entries as $row)
 			{
-				$uid = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+				$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 				if ($row['cal_recur_date'] || !isset($old_participants[$uid]))
 				{
 					$old_participants[$uid] = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
@@ -1890,7 +1943,7 @@ ORDER BY cal_user_type, cal_usre_id
 				$deleted = array();
 				foreach($existing_entries as $row)
 				{
-					$uid = self::combine_user($row['cal_user_type'],$row['cal_user_id']);
+					$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 					// delete not longer set participants
 					if (!isset($participants[$uid]))
 					{
@@ -1937,12 +1990,13 @@ ORDER BY cal_user_type, cal_usre_id
 			foreach($participants as $uid => $status)
 			{
 				$type = $id = $quantity = $role = null;
-				self::split_user($uid,$type,$id);
+				self::split_user($uid, $type, $id, true);
 				self::split_status($status,$quantity,$role);
 				$set = array(
 					'cal_status'	  => $status,
 					'cal_quantity'	  => $quantity,
 					'cal_role'        => $role,
+					'cal_user_attendee' => $type == 'e' ? substr($uid, 1) : null,
 				);
 				foreach($recurrences as $recur_date)
 				{
@@ -1979,13 +2033,14 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param int $cal_id
 	 * @param char $user_type 'u' regular user, 'r' resource, 'c' contact
-	 * @param int $user_id
+	 * @param int|string $user_id
 	 * @param int|char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date =0 date to change, or 0 = all since now
 	 * @param string $role =null role to set if !is_null($role)
+	 * @param string $attendee =null extra attendee information to set for all types (incl. accounts!)
 	 * @return int number of changed recurrences
 	 */
-	function set_status($cal_id,$user_type,$user_id,$status,$recur_date=0,$role=null)
+	function set_status($cal_id,$user_type,$user_id,$status,$recur_date=0,$role=null,$attendee=null)
 	{
 		static $status_code_short = array(
 			REJECTED 	=> 'R',
@@ -2001,12 +2056,14 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if (is_numeric($status)) $status = $status_code_short[$status];
 
-		if (!$user_type) $user_type == 'u';
+		$uid = self::combine_user($user_type, $user_id);
+		$user_id_md5 = null;
+		self::split_user($uid, $user_type, $user_id_md5, true);
 
 		$where = array(
 			'cal_id'		=> $cal_id,
 			'cal_user_type'	=> $user_type,
-			'cal_user_id'   => $user_id,
+			'cal_user_id'   => $user_id_md5,
 		);
 		if ((int) $recur_date)
 		{
@@ -2025,6 +2082,7 @@ ORDER BY cal_user_type, cal_usre_id
 		else
 		{
 			$set = array('cal_status' => $status);
+			if ($user_type == 'e' || $attendee) $set['cal_user_attendee'] = $attendee ? $attendee : $user_id;
 			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
 			$this->db->insert($this->user_table,$set,$where,__LINE__,__FILE__,'calendar');
 			// for new or changed group-invitations, remove previously deleted members, so they show up again
@@ -2077,13 +2135,14 @@ ORDER BY cal_user_type, cal_usre_id
 
 				$type = '';
 				$id = null;
-				self::split_user($uid,$type,$id);
+				self::split_user($uid, $type, $id, true);
 				$quantity = $role = null;
 				self::split_status($status,$quantity,$role);
 				$this->db->insert($this->user_table,array(
 					'cal_status'	=> $status,
 					'cal_quantity'	=> $quantity,
-					'cal_role'		=> $role
+					'cal_role'		=> $role,
+					'cal_attendee'  => $type == 'e' ? substr($uid, 1) : null,
 				),array(
 					'cal_id'		 => $cal_id,
 					'cal_recur_date' => $start,
@@ -2458,7 +2517,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		if (is_null($uid)) return $participant_status;
 		$user_type = $user_id = null;
-		self::split_user($uid, $user_type, $user_id);
+		self::split_user($uid, $user_type, $user_id, true);
 
 		$where2 = array(
 			'cal_id'		=> $cal_id,
@@ -2489,6 +2548,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @return array participants
 	 */
+	/* seems NOT to be used anywhere, NOT ported to new md5-email schema!
 	function get_participants($cal_id, $recur_date=0)
 	{
 		$participants = array();
@@ -2508,7 +2568,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$participants[$id]['uid'] = $uid;
 		}
 		return $participants;
-	}
+	}*/
 
 	/**
 	 * get all releated events
@@ -2721,9 +2781,11 @@ ORDER BY cal_user_type, cal_usre_id
 			// get default stati
 			$recurrence_zero = array();
 			$user = $GLOBALS['egw_info']['user']['account_id'];
-			$where = array('cal_id' => $cal_id,
-							'cal_recur_date' => 0);
-			foreach ($this->db->select($this->user_table,'cal_user_id,cal_user_type,cal_status',$where,
+			$where = array(
+				'cal_id' => $cal_id,
+				'cal_recur_date' => 0,
+			);
+			foreach ($this->db->select($this->user_table,'cal_user_type,cal_user_id,cal_user_attendee,cal_status',$where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
 			{
 				switch ($row['cal_user_type'])
@@ -2731,7 +2793,7 @@ ORDER BY cal_user_type, cal_usre_id
 					case 'u':	// account
 					case 'c':	// contact
 					case 'e':	// email address
-						$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+						$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 						$recurrence_zero[$uid] = $row['cal_status'];
 				}
 			}
@@ -2743,9 +2805,11 @@ ORDER BY cal_user_type, cal_usre_id
 		//	array2string($recurrence_zero));
 
 		$participants = array();
-		$where = array('cal_id' => $cal_id,
-			'cal_recur_date' => $recur_date);
-		foreach ($this->db->select($this->user_table,'cal_user_id,cal_user_type,cal_status',$where,
+		$where = array(
+			'cal_id' => $cal_id,
+			'cal_recur_date' => $recur_date,
+		);
+		foreach ($this->db->select($this->user_table,'cal_user_type,cal_user_id,cal_user_attendee,cal_status',$where,
 			__LINE__,__FILE__,false,'','calendar') as $row)
 		{
 			switch ($row['cal_user_type'])
@@ -2753,7 +2817,7 @@ ORDER BY cal_user_type, cal_usre_id
 				case 'u':	// account
 				case 'c':	// contact
 				case 'e':	// email address
-					$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+					$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 					$participants[$uid] = $row['cal_status'];
 			}
 		}

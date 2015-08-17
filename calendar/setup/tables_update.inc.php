@@ -2520,7 +2520,7 @@ function calendar_upgrade14_2_004()
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'cal_recur_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'default' => '0'),
 			'cal_user_type' => array('type' => 'ascii','precision' => '1','nullable' => False,'default' => 'u','comment' => 'u=user, g=group, c=contact, r=resource, e=email'),
-			'cal_user_id' => array('type' => 'ascii','meta' => array("cal_user_type='u'" => 'account'),'precision' => '128','nullable' => False,'comment' => 'id or email-address for type=e'),
+			'cal_user_id' => array('type' => 'varchar','meta' => array("cal_user_type='u'" => 'account'),'precision' => '128','nullable' => False,'comment' => 'id or email-address for type=e'),
 			'cal_status' => array('type' => 'ascii','precision' => '1','default' => 'A','comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'),
 			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1','comment' => 'only for certain types (eg. resources)'),
 			'cal_role' => array('type' => 'ascii','precision' => '64','default' => 'REQ-PARTICIPANT','comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'),
@@ -2553,3 +2553,55 @@ function calendar_upgrade14_2_005()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3';
 }
 
+/**
+ * Store md5 of lowercased raw email-address as cal_user_id to only have a short ascii column for indexes and full rfc822 email in cal_user_attendee
+ *
+ * @return string
+ */
+function calendar_upgrade14_3()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal_user','cal_user_attendee',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'comment' => 'email or json object with attr. cn, url, ...'
+	));
+	$email = "TRIM(LOWER(CASE SUBSTR(cal_user_id, -1, 1) WHEN '>' THEN SUBSTR(cal_user_id, 1+".
+		$GLOBALS['egw_setup']->db->strpos("cal_user_id", "'<'").", CHAR_LENGTH(cal_user_id)-".
+		$GLOBALS['egw_setup']->db->strpos("cal_user_id", "'<'")."-1) ELSE cal_user_id END))";
+
+	// delete all but one row, which would give a doublicate key, after above normalising of email addresses
+	// by ordering by status we prever accepted over tentative over unknow over deleted
+	foreach($GLOBALS['egw_setup']->db->select('egw_cal_user', "cal_id,cal_recur_date,$email AS email", array(
+		'cal_user_type' => 'e',
+	), __LINE__, __FILE__, false, "GROUP BY cal_id,cal_recur_date,$email HAVING COUNT(*)>1") as $row)
+	{
+		$n = 0;
+		foreach($GLOBALS['egw_setup']->db->select('egw_cal_user', "*,$email AS email", array(
+			'cal_id' => $row['cal_id'],
+			'cal_recur_date' => $row['cal_recur_date'],
+			'cal_user_type' => 'e',
+			$email.'='.$GLOBALS['egw_setup']->db->quote($row['email']),
+		), __LINE__, __FILE__, 'ORDER BY cal_status') as $user)	// order A, T, U, X
+		{
+			if (strpos($user['email'], '@') !== false && $n++) continue;
+			$GLOBALS['egw_setup']->db->delete('egw_cal_user', array_intersect_key($user, array_flip(array('cal_id','cal_recur_date','cal_user_type','cal_user_id','cal_status'))));
+		}
+	}
+
+	// store only md5 of normalized email to always fit in 32 ascii chars (and allow non-ascii email)
+	$GLOBALS['egw_setup']->db->query(
+		"UPDATE egw_cal_user SET cal_user_attendee=cal_user_id,cal_user_id=MD5($email) WHERE cal_user_type='e'",
+		__LINE__, __FILE__);
+
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_user_id',array(
+		'type' => 'ascii',
+		'meta' => array(
+			"cal_user_type='u'" => 'account'
+		),
+		'precision' => '32',
+		'nullable' => False,
+		'comment' => 'id or md5(email-address) for type=e'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.001';
+}
