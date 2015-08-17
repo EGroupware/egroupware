@@ -3798,6 +3798,10 @@ div.admin-config form > table td b {
   font-weight: bold;
   background-image: url(../images/dialog_error.png);
 }
+.info_message .discard  {
+	float:right;
+	margin-top: 4px;
+}
 /**
  * Message in popup
  */
