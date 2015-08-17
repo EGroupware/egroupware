@@ -295,15 +295,9 @@
 
 			// Check if user runs the app in full screen or not,
 			// then prompt user base on the mode, and if the user
-			// dismisses the message do not show it again
+			// discards the message once then do not show it again
 			var fullScreen = this.isNotFullScreen();
-			if (fullScreen && !egw.getLocalStorageItem('fw_mobile', 'fullscreen_message')){
-				egw.message(fullScreen,'info');
-				jQuery('#egw_message').on('click', function(e){
-					egw.setLocalStorageItem('fw_mobile','fullscreen_message', 'true');
-					return true;
-				});
-			}
+			if (fullScreen) egw.message(fullScreen,'info', true);
 		},
 
 		/**
