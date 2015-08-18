@@ -2625,7 +2625,7 @@ class emailadmin_imapbase
 		if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.' ('.__LINE__.') ');
 		return $folders2return[$this->icServer->ImapServerId];
 	}
-	
+
 	/**
 	 * Get IMAP folders for a mailbox
 	 *
@@ -2649,27 +2649,27 @@ class emailadmin_imapbase
 	{
 		// delimiter
 		$delimiter = $this->getHierarchyDelimiter();
-		
+
 		$folders = array();
-		
+
 		if ($_onlyTopLevel) // top level leaves
 		{
 			// Get top mailboxes of icServer
 			$topFolders = $this->icServer->getMailboxes("", 2, true);
-			
+
 			foreach ($topFolders as &$node)
 			{
 				$pattern = "/\\".$delimiter."/";
 				$reference = preg_replace($pattern, '', $node['MAILBOX']);
 				$mainFolder = $subFolders = array();
-				
+
 				// Get special use folders
 				if (!isset(self::$specialUseFolders)) $this->getSpecialUseFolders (); // Set self::$sepecialUseFolders
 				// Create autofolders if they all not created yet
 				if (count(self::$autoFolders) > count(self::$specialUseFolders)) $this->check_create_autofolders(self::$specialUseFolders);
 				// Merge of all auto folders and specialusefolders
 				$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
-				
+
 				if ($_subscribedOnly)
 				{
 					$mainFolder = $this->icServer->listSubscribedMailboxes($reference, 1, true);
@@ -2734,7 +2734,7 @@ class emailadmin_imapbase
 			{
 				$folders = $this->icServer->getMailboxes($path, $_search, true);
 			}
-			
+
 			ksort($folders);
 		}
 		elseif(!$_nodePath) // all
@@ -2748,7 +2748,7 @@ class emailadmin_imapbase
 				$folders = $this->icServer->getMailboxes('', 0, true);
 			}
 		}
-		
+
 		// Get counter information and add them to each fetched folders array
 		if ($_getCounter)
 		{
@@ -2759,8 +2759,8 @@ class emailadmin_imapbase
 		}
 		return $folders;
 	}
-	
-	
+
+
 	/**
 	 * Check if all automatic folders exist and create them if not
 	 *
@@ -2799,7 +2799,7 @@ class emailadmin_imapbase
 		}
 		return $rv;
 	}
-	
+
 	/**
 	 * sortByName
 	 *
@@ -2815,7 +2815,7 @@ class emailadmin_imapbase
 		// 0, 1 und -1
 		return strcasecmp($a['name'],$b['name']);
 	}
-	
+
 	/**
 	 * sortByAutoFolderPos
 	 *
@@ -2834,7 +2834,7 @@ class emailadmin_imapbase
 		if ($pos1 == $pos2) return 0;
 		return ($pos1 < $pos2) ? -1 : 1;
 	}
-	
+
 	/**
 	 * sortByDisplayName
 	 *
@@ -4261,11 +4261,12 @@ class emailadmin_imapbase
 		$part = $this->icServer->fetch($_folder, $fquery, array(
 			'ids' => $uidsToFetch,
 		))->first();
-
-		if (!$part) return null;
-
-		$_encoding = $part->getBodyPartDecode($_partID);
-		$partToReturn = $part->getBodyPart($_partID, $_stream);
+		$partToReturn = null;
+		if ($part)
+		{
+			$_encoding = $part->getBodyPartDecode($_partID);
+			$partToReturn = $part->getBodyPart($_partID, $_stream);
+		}
 		// if we get an empty result, server may have trouble fetching data with UID FETCH $_uid (BINARY.PEEK[$_partID])
 		// thus we trigger a second go with UID FETCH $_uid (BODY.PEEK[$_partID])
 		if (empty($partToReturn)&&$_tryDecodingServerside===true)
@@ -4273,7 +4274,7 @@ class emailadmin_imapbase
 			error_log(__METHOD__.__LINE__.' failed to fetch bodyPart in  BINARY. Try BODY');
 			$partToReturn = $this->getBodyPart($_uid, $_partID, $_folder, $_preserveSeen, $_stream, $_encoding, false);
 		}
-		return $partToReturn;
+		return ($partToReturn?$partToReturn:null);
 	}
 
 	/**
