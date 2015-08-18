@@ -373,6 +373,17 @@ class calendar_uilist extends calendar_ui
 		{
 			$search_params['users'] = explode(',',$this->owner);
 		}
+		if ($params['col_filter'])
+		{
+			$col_filter = array();
+			foreach($params['col_filter'] as $name => $val)
+			{
+				if ($name != 'participants' && (string)$val !== '')
+				{
+					$col_filter[$name] = $val;
+				}
+			}
+		}
 		$rows = $js_integration_data = array();
 		if ($label)
 		{
@@ -381,7 +392,7 @@ class calendar_uilist extends calendar_ui
 			$rows['sel_options']['filter'] = $this->date_filters;
 			$rows['sel_options']['filter'][$params['filter']] = $label;
 		}
-		foreach((array) $this->bo->search($search_params) as $event)
+		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
 		{
 			if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
 			{
