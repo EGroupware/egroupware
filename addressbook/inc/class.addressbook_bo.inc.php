@@ -813,7 +813,6 @@ class addressbook_bo extends addressbook_so
 				// Don't notify of final purge
 				if ($ok && $old['tid'] != addressbook_so::DELETED_TYPE)
 				{
-					$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 					if (!isset($this->tracking)) $this->tracking = new addressbook_tracking($this);
 					$this->tracking->track(array('id' => $id), array('id' => $id), null, true);
 				}
@@ -961,13 +960,12 @@ class addressbook_bo extends addressbook_so
 				unset($to_write['owner']);
 			}
 		}
-		// we dont update the content-history, if we run inside setup (admin-account-creation)
-		if(!($this->error = parent::save($to_write)) && is_object($GLOBALS['egw']->contenthistory))
+
+		if(!($this->error = parent::save($to_write)))
 		{
 			$contact['id'] = $to_write['id'];
 			$contact['uid'] = $to_write['uid'];
 			$contact['etag'] = $to_write['etag'];
-			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 
 			// if contact is an account and account-relevant data got updated, handle it like account got updated
 			if ($contact['account_id'] && $isUpdate &&

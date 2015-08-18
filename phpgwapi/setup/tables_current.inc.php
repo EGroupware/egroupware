@@ -199,21 +199,6 @@ $phpgw_baseline = array(
 		'ix' => array(),
 		'uc' => array('async_id')
 	),
-	'egw_api_content_history' => array(
-		'fd' => array(
-			'sync_appname' => array('type' => 'ascii','precision' => '32','nullable' => False,'comment' => 'not just app-names!'),
-			'sync_contentid' => array('type' => 'ascii','precision' => '48','nullable' => False,'comment' => 'eworkflow uses 36-char uuids'),
-			'sync_added' => array('type' => 'timestamp'),
-			'sync_modified' => array('type' => 'timestamp'),
-			'sync_deleted' => array('type' => 'timestamp'),
-			'sync_id' => array('type' => 'auto','nullable' => False),
-			'sync_changedby' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False)
-		),
-		'pk' => array('sync_id'),
-		'fk' => array(),
-		'ix' => array('sync_added','sync_modified','sync_deleted','sync_changedby',array('sync_appname','sync_contentid')),
-		'uc' => array()
-	),
 	'egw_links' => array(
 		'fd' => array(
 			'link_id' => array('type' => 'auto','nullable' => False),

@@ -1219,7 +1219,6 @@ class calendar_boupdate extends calendar_bo
 			unset($save_event['participants']);
 			$this->set_recurrences($save_event, $set_recurrences_start);
 		}
-		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, $event['id'] ? 'modify' : 'add', $this->now);
 
 		// create links for new participants from addressbook, if configured
 		if ($cal_id && $GLOBALS['egw_info']['server']['link_contacts'])
@@ -1453,10 +1452,6 @@ class calendar_boupdate extends calendar_bo
 					}
 				}
 			}
-			if ($updateTS)
-			{
-				$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
-			}
 
 			static $status2msg = array(
 				'R' => MSG_REJECTED,
@@ -1565,7 +1560,6 @@ class calendar_boupdate extends calendar_bo
 					}
 				}
 			}
-			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'delete', $this->now);
 
 			// delete or keep (with new uid) exceptions of a recurring event
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
@@ -1828,8 +1822,6 @@ class calendar_boupdate extends calendar_bo
 		}
 		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
 
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
-
 		return $this->so->save_alarm($cal_id, $alarm, $update_modified);
 	}
 
@@ -1847,8 +1839,6 @@ class calendar_boupdate extends calendar_bo
 		{
 			return false;	// no rights to delete the alarm
 		}
-
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
 		return $this->so->delete_alarm($id);
 	}

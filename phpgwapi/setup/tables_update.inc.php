@@ -813,3 +813,19 @@ function phpgwapi_upgrade14_3_001()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.002';
 }
+
+/**
+ * Updates on the way to 15.1
+ */
+
+/**
+ * Drop egw_api_content_history table used by no longer supported SyncML
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_002()
+{
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_api_content_history');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.900';
+}

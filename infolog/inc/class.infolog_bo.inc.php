@@ -684,8 +684,6 @@ class infolog_bo
 		}
 		if ($info['info_status'] != 'deleted')	// dont notify of final purge of already deleted items
 		{
-			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
-
 			// send email notifications and do the history logging
 			if(!$skip_notification)
 			{
@@ -914,22 +912,7 @@ class infolog_bo
 			{
 				$values = $this->read($info_id, true, 'server');
 			}
-			if ($values['info_id'] && $old['info_status'] != 'deleted')
-			{
-				// update
-				$GLOBALS['egw']->contenthistory->updateTimeStamp(
-					'infolog_'.$values['info_type'],
-					$info_id, 'modify', time()
-				);
-			}
-			else
-			{
-				// add
-				$GLOBALS['egw']->contenthistory->updateTimeStamp(
-					'infolog_'.$values['info_type'],
-					$info_id, 'add', time()
-				);
-			}
+
 			$values['info_id'] = $info_id;
 			$to_write['info_id'] = $info_id;
 
@@ -1147,7 +1130,7 @@ class infolog_bo
 			$names[] = $address['name'];
 			$emails[] =$address['email'];
 		}
-		
+
 		$type = isset($this->enums['type']['email']) ? 'email' : 'note';
 		$status = isset($this->status['defaults'][$type]) ? $this->status['defaults'][$type] : 'done';
 		$info = array(
