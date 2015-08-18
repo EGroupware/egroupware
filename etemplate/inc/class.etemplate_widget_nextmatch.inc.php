@@ -215,17 +215,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				{
 					self::$request->sel_options[$select] = array();
 				}
-				foreach($_value as &$label)
-				{
-					if(!is_array($label))
-					{
-						$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
-					}
-					elseif($label['label'])
-					{
-						$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
-					}
-				}
+				etemplate_widget_menupopup::fix_encoded_options($_value, TRUE);
 				self::$request->sel_options[$select] += $_value;
 				// The client doesn't need them in content, but we can't unset them because
 				// some apps don't send them on re-load, pulling them from the session
