@@ -378,9 +378,20 @@ class calendar_uilist extends calendar_ui
 		{
 			$search_params['users'] = explode(',',$this->owner);
 		}
+		if ($params['col_filter'])
+		{
+			$col_filter = array();
+			foreach($params['col_filter'] as $name => $val)
+			{
+				if ($name != 'participants' && (string)$val !== '')
+				{
+					$col_filter[$name] = $val;
+				}
+			}
+		}
 		$rows = $js_integration_data = array();
 		
-		foreach((array) $this->bo->search($search_params) as $event)
+		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
 		{
 			$this->to_client($event);
 

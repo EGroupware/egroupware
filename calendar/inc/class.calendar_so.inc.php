@@ -687,7 +687,7 @@ class calendar_so
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 *      array: everything is directly used as $where
 	 * @param string $params['order'] ='cal_start' column-names plus optional DESC|ASC separted by comma
-	 * @param string $params['sql_filter'] sql to be and'ed into query (fully quoted)
+	 * @param string|array $params['sql_filter'] sql to be and'ed into query (fully quoted), or usual filter array
 	 * @param string|array $params['cols'] what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
 	 * 						if specified and not false an iterator for the rows is returned
 	 * @param string $params['append'] SQL to append to the query before $order, eg. for a GROUP BY clause
@@ -746,9 +746,16 @@ class calendar_so
 			$private_filter = '(cal_public=1 OR cal_public=0 AND '.$this->db->expression($this->cal_table, array('cal_owner' => $params['private_grants'])) . ')';
 			$where[] = $private_filter;
 		}
-		if (!empty($params['sql_filter']) && is_string($params['sql_filter']))
+		if (!empty($params['sql_filter']))
 		{
-			$where[] = $params['sql_filter'];
+			if (is_string($params['sql_filter']))
+			{
+				$where[] = $params['sql_filter'];
+			}
+			elseif(is_array($params['sql_filter']))
+			{
+				$where = array_merge($where, $params['sql_filter']);
+			}
 		}
 		if ($users)
 		{
