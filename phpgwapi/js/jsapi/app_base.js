@@ -373,7 +373,7 @@ var AppJS = Class.extend(
 					li.siblings().removeClass('ui-state-highlight');
 
 					// Wait an arbitrary 50ms to avoid having the class removed again
-						// by the change handler.
+					// by the change handler.
 					if(li.attr('data-id') !== 'blank')
 					{
 						window.setTimeout(function() {
@@ -381,12 +381,16 @@ var AppJS = Class.extend(
 						},50);
 					}
 					
-					var href = jQuery('a[href^="javascript:"]', this).prop('href');
-					var matches = href ? href.match(/^javascript:([^\(]+)\((.*)?\);?$/) : null;
-					if (matches && matches.length > 1 && matches[2] !== undefined)
+					var state = {};
+					var pref = egw.preference('favorite_' + this.dataset.id, self.appname);
+					if(pref)
+					{
+						state = pref;
+					}
+					if(this.dataset.id != 'add')
 					{
 						event.stopImmediatePropagation();
-						self.setState.call(self, JSON.parse(matches[2]));
+						self.setState.call(self, state);
 						return false;
 					}
 				})
@@ -760,16 +764,15 @@ var AppJS = Class.extend(
 		var state = this.getState();
 		var best_match = false;
 		var best_count = 0;
+		var self = this;
 
 		$j('li[data-id]',this.sidebox).removeClass('ui-state-highlight');
 
-		$j('li[data-id] a[href^="javascript:"]',this.sidebox).each(function(i,href) {
-
-			var matches = href.href ? href.href.match(/^javascript:([^\(]+)\((.*)?\);?$/) : null;
+		$j('li[data-id]',this.sidebox).each(function(i,href) {
 			var favorite = {}
-			if (matches && matches.length > 1 && matches[2] !== undefined)
+			if(this.dataset.id && egw.preference('favorite_'+this.dataset.id,self.appname))
 			{
-				favorite = JSON.parse(matches[2]);
+				favorite = egw.preference('favorite_'+this.dataset.id,self.appname);
 			}
 			if(!favorite || jQuery.isEmptyObject(favorite)) return;
 			
@@ -834,7 +837,7 @@ var AppJS = Class.extend(
 			}
 			if(match_count > best_count)
 			{
-				best_match = href.parentNode.dataset.id;
+				best_match = this.dataset.id;
 				best_count = match_count;
 			}
 		});

@@ -78,10 +78,9 @@ class egw_favorites
 				error_log(__METHOD__.'Favorite filter "'.$name.'" is not supposed to be empty, it should be an array.  Skipping, more investigation needed. filter = '. array2string($filters[$name]));
 				continue;
 			}
-
 			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
 			$li = "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
-			$li .= '<a href="'.htmlspecialchars($href).'" class="ui-corner-all" tabindex="-1">';
+			$li .= '<a href="#" class="ui-corner-all" tabindex="-1">';
 			$li .= "<div class='" . ((string)$name === (string)$default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
 				$filter['name'];
 			$li .= ($filter['group'] != false && !$is_admin || $name === 'blank' ? "" :
