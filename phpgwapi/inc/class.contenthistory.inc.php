@@ -51,11 +51,28 @@ class contenthistory
 	}
 
 	/**
+	 * Encode app-name for egw_api_content_history.sync_appname only allowing ascii
+	 *
+	 * We encode all non-ascii as "?" for MySQL, as it happend during schema update and for inserts.
+	 *
+	 * @param string $_appname
+	 * @return string
+	 */
+	protected function encode_appname($_appname)
+	{
+		if ($this->db->Type == 'mysql')
+		{
+			$_appname = preg_replace('/[\x80-\xFF]/u', '?', $_appname);
+		}
+		return $_appname;
+	}
+
+	/**
 	 * get the timestamp for action
 	 *
 	 * find which content changed since $_ts for application $_appName
 	 *
-	 * @param string$_appName the appname example: infolog_notes
+	 * @param string $_appName the appname example: infolog_notes
 	 * @param string $_action can be modify, add or delete
 	 * @param string $_ts timestamp where to start searching from
 	 * @param array $readableItems	(optional) readable items of current user
@@ -63,10 +80,10 @@ class contenthistory
 	 */
 	function getHistory($_appName, $_action, $_ts, $readableItems = false)
 	{
-		$where = array('sync_appname' => $_appName);
+		$where = array('sync_appname' => $this->encode_appname($_appName));
 		$ts = $this->db->to_timestamp($_ts);
 		$idList = array();
-		
+
 		switch($_action)
 		{
 			case 'modify':
@@ -82,7 +99,7 @@ class contenthistory
 				// no valid $_action set
 				return array();
 		}
-		
+
 		if (is_array($readableItems))
 		{
 			foreach ($readableItems as $id)
@@ -91,7 +108,7 @@ class contenthistory
 				if ($this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__)->fetchColumn())
 				{
 					$idList[] = $id;
-				}	
+				}
 			}
 		}
 		else
@@ -129,7 +146,7 @@ class contenthistory
 				return false;
 		}
 		$where = array (
-			'sync_appname' => $_appName,
+			'sync_appname' => $this->encode_appname($_appName),
 			'sync_contentid' => $_id,
 		);
 
@@ -152,7 +169,7 @@ class contenthistory
 	function updateTimeStamp($_appName, $_id, $_action, $_ts)
 	{
 		$newData = array (
-			'sync_appname'		=> $_appName,
+			'sync_appname'		=> $this->encode_appname($_appName),
 			'sync_contentid'	=> $_id,
 			'sync_added'		=> $this->db->to_timestamp($_ts),
 			'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
@@ -168,7 +185,7 @@ class contenthistory
 			case 'delete':
 				// first check that this entry got ever added to database already
 				$where = array (
-					'sync_appname'		=> $_appName,
+					'sync_appname'		=> $this->encode_appname($_appName),
 					'sync_contentid'	=> $_id,
 				);
 
@@ -187,21 +204,21 @@ class contenthistory
 		}
 		return true;
 	}
-	
+
 	/**
 	 * get the timestamp of last change for appname
 	 *
 	 * find which content changed since $_ts for application $_appName
 	 *
 	 * @param string$_appName the appname example: infolog_notes
-	 * 
+	 *
 	 * @return timestamp of last change for this application
 	 */
 	function getLastChange($_appName)
 	{
 		$max = 0;
-		
-		$where = array('sync_appname' => $_appName);
+
+		$where = array('sync_appname' => $this->encode_appname($_appName));
 
 		foreach (array('modified','deleted','added') as $action)
 		{
@@ -211,8 +228,8 @@ class contenthistory
 				if ($ts > $max) $max = $ts;
 			}
 		}
-			
+
 		return $max;
 	}
-	
+
 }
