@@ -471,16 +471,15 @@ var et2_widget = ClassWithAttributes.extend(
 	},
 
 	/**
-	 * The parseXMLAttrs function takes an XML DOM attributes object
+	 * The parseJSONAttrs function takes a JSON object
 	 * and adds the given attributes to the _target associative array. This
 	 * function also parses the legacyOptions.
 	 *
-	 * @param _attrsObj is the XML DOM attributes object
+	 * @param _attrsObj is the JSON object
 	 * @param {object} _target is the object to which the attributes should be written.
 	 * @param {et2_widget} _proto prototype with attributes and legacyOptions attribute
 	 */
-	parseXMLAttrs: function(_attrsObj, _target, _proto) {
-
+	parseJSONAttrs: function(_attrsObj, _target, _proto) {
 		// Check whether the attributes object is really existing, if not abort
 		if (typeof _attrsObj == "undefined")
 		{
@@ -488,71 +487,62 @@ var et2_widget = ClassWithAttributes.extend(
 		}
 
 		// Iterate over the given attributes and parse them
-		var mgr = this.getArrayMgr("content");
-		for (var i = 0; i < _attrsObj.length; i++)
+		for (var name in _attrsObj)
 		{
-			var attrName = _attrsObj[i].name;
-			var attrValue = _attrsObj[i].value;
+			this._parseAttr(name, _attrsObj[name], _target, _proto);
+		}
+	},
 
-			// Special handling for the legacy options
-			if (attrName == "options" && _proto.legacyOptions.length > 0)
+	/**
+	 * Parse a single attribute
+	 *
+	 * @param {string} attrName Attribute name
+	 * @param {object} attrValue Attribute value
+	 * @param {object} _target is the object to which the attributes should be written.
+	 * @param {et2_widget} _proto prototype with attributes and legacyOptions attribute
+	 */
+	_parseAttr: function(attrName, attrValue, _target, _proto)
+	{
+		var mgr = this.getArrayMgr("content");
+		// Special handling for the legacy options
+		if (attrName == "options" && _proto.legacyOptions.length > 0)
+		{
+			// Check for modifications on legacy options here.  Normal modifications
+			// are handled in widget constructor, but it's too late for legacy options then
+			if(_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
 			{
-				// Check for modifications on legacy options here.  Normal modifications
-				// are handled in widget constructor, but it's too late for legacy options then
-				if(_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
-				{
-					var mod = this.getArrayMgr("modifications").getEntry(_target.id);
-					if(typeof mod.options != "undefined") attrValue = _attrsObj[i].value = mod.options;
-				}
-				// expand legacyOptions with content
-				if(attrValue.charAt(0) == '@' || attrValue.indexOf('$') != -1)
-				{
-					attrValue = mgr.expandName(attrValue);
-				}
-
-				// Parse the legacy options (as a string, other types not allowed)
-				var splitted = et2_csvSplit(attrValue+"");
-
-				for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++)
-				{
-					// Blank = not set
-					if(splitted[j].trim().length == 0) continue;
-
-					// Check to make sure we don't overwrite a current option with a legacy option
-					if(typeof _target[_proto.legacyOptions[j]] === "undefined")
-					{
-						attrValue = splitted[j];
-
-						/**
-						If more legacy options than expected, stuff them all in the last legacy option
-						Some legacy options take a comma separated list.
-						*/
-						if(j == _proto.legacyOptions.length - 1 && splitted.length > _proto.legacyOptions.length)
-						{
-							attrValue = splitted.slice(j);
-						}
-
-						var attr = _proto.attributes[_proto.legacyOptions[j]];
-
-						// If the attribute is marked as boolean, parse the
-						// expression as bool expression.
-						if (attr.type == "boolean")
-						{
-							attrValue = mgr.parseBoolExpression(attrValue);
-						}
-						else if (typeof attrValue != "object")
-						{
-							attrValue = mgr.expandName(attrValue);
-						}
-						_target[_proto.legacyOptions[j]] = attrValue;
-					}
-				}
+				var mod = this.getArrayMgr("modifications").getEntry(_target.id);
+				if(typeof mod.options != "undefined") attrValue = attrValue = mod.options;
 			}
-			else
+			// expand legacyOptions with content
+			if(attrValue.charAt(0) == '@' || attrValue.indexOf('$') != -1)
 			{
-				if (mgr != null && typeof _proto.attributes[attrName] != "undefined")
+				attrValue = mgr.expandName(attrValue);
+			}
+
+			// Parse the legacy options (as a string, other types not allowed)
+			var splitted = et2_csvSplit(attrValue+"");
+
+			for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++)
+			{
+				// Blank = not set
+				if(splitted[j].trim().length == 0) continue;
+
+				// Check to make sure we don't overwrite a current option with a legacy option
+				if(typeof _target[_proto.legacyOptions[j]] === "undefined")
 				{
-					var attr = _proto.attributes[attrName];
+					attrValue = splitted[j];
+
+					/**
+					If more legacy options than expected, stuff them all in the last legacy option
+					Some legacy options take a comma separated list.
+					*/
+					if(j == _proto.legacyOptions.length - 1 && splitted.length > _proto.legacyOptions.length)
+					{
+						attrValue = splitted.slice(j);
+					}
+
+					var attr = _proto.attributes[_proto.legacyOptions[j]];
 
 					// If the attribute is marked as boolean, parse the
 					// expression as bool expression.
@@ -560,15 +550,34 @@ var et2_widget = ClassWithAttributes.extend(
 					{
 						attrValue = mgr.parseBoolExpression(attrValue);
 					}
-					else
+					else if (typeof attrValue != "object")
 					{
 						attrValue = mgr.expandName(attrValue);
 					}
+					_target[_proto.legacyOptions[j]] = attrValue;
 				}
-
-				// Set the attribute
-				_target[attrName] = attrValue;
 			}
+		}
+		else
+		{
+			if (mgr != null && typeof _proto.attributes[attrName] != "undefined")
+			{
+				var attr = _proto.attributes[attrName];
+
+				// If the attribute is marked as boolean, parse the
+				// expression as bool expression.
+				if (attr.type == "boolean")
+				{
+					attrValue = mgr.parseBoolExpression(attrValue);
+				}
+				else
+				{
+					attrValue = mgr.expandName(attrValue);
+				}
+			}
+
+			// Set the attribute
+			_target[attrName] = attrValue;
 		}
 	},
 
@@ -622,47 +631,51 @@ var et2_widget = ClassWithAttributes.extend(
 	},
 
 	/**
-	 * Create a et2_widget from an XML node.
+	 * Create a et2_widget from a JSON object.
 	 *
 	 * First the type and attributes are read from the node.  Then the readonly & modifications
 	 * arrays are checked for changes specific to the loaded data.  Then the appropriate
 	 * constructor is called.  After the constructor returns, the widget has a chance to
-	 * further initialize itself from the XML node when the widget's loadFromXML() method
-	 * is called with the node.
+	 * further initialize itself from the object when the widget's loadFromObject() method
+	 * is called with the object.
 	 *
-	 * @param _node XML node to read
+	 * @param _node Object to read
 	 *
 	 * @return et2_widget
 	 */
-	createElementFromNode: function(_node) {
+	createElementFromObject: function(_node) {
 		var attributes = {};
+		if(typeof _node.attributes === 'undefined')
+		{
+			_node.attributes = {};
+		}
 
 		// Parse the "readonly" and "type" flag for this element here, as they
 		// determine which constructor is used
-		var _nodeName = attributes["type"] = _node.getAttribute("type") ?
-			_node.getAttribute("type") : _node.nodeName.toLowerCase();
+		var _nodeName = attributes["type"] = _node.attributes.type ?
+			_node.attributes.type : _node.tag;
 		var readonly = attributes["readonly"] =
 			this.getArrayMgr("readonlys").isReadOnly(
-				_node.getAttribute("id"), _node.getAttribute("readonly"),
+				_node.attributes.id, _node.attributes.readonly,
 				typeof this.readonly !== 'undefined' ? this.readonly : this.options.readonly );
 
 		// Check to see if modifications change type
 		var modifications = this.getArrayMgr("modifications");
-		if(modifications && _node.getAttribute("id")) {
-			var entry = modifications.getEntry(_node.getAttribute("id"));
+		if(modifications && _node.attributes.id) {
+			var entry = modifications.getEntry(_node.attributes.id);
 			if(entry == null)
 			{
 				// Try again, but skip the fancy stuff
 				// TODO: Figure out why the getEntry() call doesn't always work
-				var entry = modifications.data[_node.getAttribute("id")];
+				var entry = modifications.data[_node.attributes.id];
 				if(entry)
 				{
-					this.egw().debug("warn", "getEntry("+_node.getAttribute("id")+") failed, but the data is there.", modifications, entry);
+					this.egw().debug("warn", "getEntry("+_node.attributes.id+") failed, but the data is there.", modifications, entry);
 				}
 				else
 				{
 					// Try the root, in case a namespace got missed
-					var entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
+					var entry = modifications.getRoot().getEntry(_node.attributes.id);
 				}
 			}
 			if(entry && entry.type)
@@ -689,7 +702,7 @@ var et2_widget = ClassWithAttributes.extend(
 		}
 
 		// Parse the attributes from the given XML attributes object
-		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
+		this.parseJSONAttrs(_node.attributes, attributes, constructor.prototype);
 
 		// Do an sanity check for the attributes
 		constructor.prototype.generateAttributeSet(attributes);
@@ -699,39 +712,31 @@ var et2_widget = ClassWithAttributes.extend(
 		var widget = new constructor(this, attributes);
 
 		// Load the widget itself from XML
-		widget.loadFromXML(_node);
+		widget.loadFromJSON(_node);
 
 		return widget;
 	},
 
 	/**
-	 * Loads the widget tree from an XML node
+	 * Loads the widget tree from JSON object
 	 *
-	 * @param _node xml node
+	 * @param {Object} _content
 	 */
-	loadFromXML: function(_node) {
-		// Load the child nodes.
-		for (var i = 0; i < _node.childNodes.length; i++)
+	loadFromJSON: function(object)
+	{
+		if(object.content)
 		{
-			var node = _node.childNodes[i];
-			var widgetType = node.nodeName.toLowerCase();
-
-			if (widgetType == "#comment")
-			{
-				continue;
-			}
-
-			if (widgetType == "#text")
-			{
-				if (node.data.replace(/^\s+|\s+$/g, ''))
-				{
-					this.loadContent(node.data);
-				}
-				continue;
-			}
-
+			this.loadContent(object.content);
+		}
+		if(!object.children) return;
+		// Load the child nodes.
+		for (var i = 0; i < object.children.length; i++)
+		{
+			var node = object.children[i];
+			node.parentNode = object;
+			
 			// Create the new element
-			this.createElementFromNode(node);
+			this.createElementFromObject(node);
 		}
 	},
 

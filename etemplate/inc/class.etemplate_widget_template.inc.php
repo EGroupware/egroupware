@@ -36,6 +36,13 @@ class etemplate_widget_template extends etemplate_widget
 	protected static $cache = array();
 
 	/**
+	 * Tell egw framework it's ok to call this
+	 */
+	public $public_functions = array(
+		'ajaxtoJSON' => true
+	);
+	
+	/**
 	 * Get instance of template specified by name, template(-set) and version
 	 *
 	 * @param string $_name

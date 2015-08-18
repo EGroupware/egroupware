@@ -86,10 +86,10 @@ var et2_template = et2_DOMWidget.extend(
 			var cache_buster = parts.length > 1 ? parts.pop() : null;
 			var template_name = parts.pop();
 
-			// Check to see if XML is known
-			var xml = null;
+			// Check to see if the template is known
+			var template = null;
 			var templates = etemplate2.prototype.templates;	// use global eTemplate cache
-			if(!(xml = templates[template_name]))
+			if(!(template = templates[template_name]))
 			{
 				// Check to see if ID is short form --> prepend parent/top-level name
 				if(template_name.indexOf('.') < 0)
@@ -98,42 +98,52 @@ var et2_template = et2_DOMWidget.extend(
 					var top_name = root && root._inst ? root._inst.name : null;
 					if (top_name && template_name.indexOf('.') < 0) template_name = top_name+'.'+template_name;
 				}
-				xml = templates[template_name];
-				if(!xml)
+				template = templates[template_name];
+				if(!template)
 				{
 					// Ask server
 					var splitted = template_name.split('.');
 					// use template base url from initial template, to continue using webdav, if that was loaded via webdav
-					var path = this.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
-						splitted.join('.')+ ".xet" + (cache_buster ? '?download='+cache_buster :
+					var path = this.getRoot()._inst.template_base_url + 
+						splitted.join('.') + (cache_buster ? '&download='+cache_buster :
 						// if server did not give a cache-buster, fall back to current time
-						'?download='+(new Date).valueOf());
+						'&download='+(new Date).valueOf());
 
 					if(splitted.length)
 					{
-						et2_loadXMLFromURL(path, function(_xmldoc) {
-							// Scan for templates and store them
-							for(var i = 0; i < _xmldoc.childNodes.length; i++) {
-								var template = _xmldoc.childNodes[i];
-								if(template.nodeName.toLowerCase() != "template") continue;
-								templates[template.getAttribute("id")] = template;
+						jQuery.ajax({
+							url: path,
+							context: this,
+							type: 'GET',
+							dataType: 'json',
+							success: function(_data, _status, _xmlhttp){
+								for(var i = 0; i < _data.children.length; i++)
+								{
+									var template = _data.children[i];
+									if(template.tag !== "template") continue;
+									templates[template.attributes.id] = template;
+								}// Read the structure of the requested template
+								if (typeof templates[template_name] != 'undefined') this.loadFromJSON(templates[template_name]);
+
+								// Update flag
+								this.loading.resolve();
+							},
+							error: function(_xmlhttp, _err) {
+								egw().debug('error', 'Loading eTemplate from '+_url+' failed! '+_xmlhttp.status+' '+_xmlhttp.statusText);
 							}
-
-							// Read the XML structure of the requested template
-							if (typeof templates[template_name] != 'undefined') this.loadFromXML(templates[template_name]);
-
-							// Update flag
-							this.loading.resolve();
-
-						}, this);
+						});
 					}
 					return;
 				}
 			}
-			if(xml !== null && typeof xml !== "undefined")
+			if(template !== null && typeof template !== "undefined")
 			{
-				this.egw().debug("log", "Loading template from XML: ", template_name);
-				this.loadFromXML(xml);
+				this.egw().debug("log", "Loading template: ", template_name);
+				if(template.tag)
+				{
+					this.loadFromJSON(template);
+				}
+				
 				// Don't call this here - done by caller, or on whole widget tree
 				//this.loadingFinished();
 
@@ -142,7 +152,7 @@ var et2_template = et2_DOMWidget.extend(
 			}
 			else
 			{
-				this.egw().debug("warn", "Unable to find XML for ", template_name);
+				this.egw().debug("warn", "Unable to find ", template_name);
 				this.loading.reject();
 			}
 		}

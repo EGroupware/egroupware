@@ -53,7 +53,7 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 	 *
 	 * @param {object} _node
 	 */
-	loadFromXML: function(_node) {
+	loadFromJSON: function(_node) {
 		if(this._type != "box")
 		{
 			return this._super.apply(this, arguments);
@@ -61,30 +61,16 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 		// Load the child nodes.
 		var childIndex = 0;
 		var repeatNode = null;
-		for (var i=0; i < _node.childNodes.length; i++)
+		for (var i=0; i < _node.children.length; i++)
 		{
-			var node = _node.childNodes[i];
-			var widgetType = node.nodeName.toLowerCase();
-
-			if (widgetType == "#comment")
-			{
-				continue;
-			}
-
-			if (widgetType == "#text")
-			{
-				if (node.data.replace(/^\s+|\s+$/g, ''))
-				{
-					this.loadContent(node.data);
-				}
-				continue;
-			}
+			var node = _node.children[i];
+			var widgetType = node.tag;
 
 			// Create the new element, if no expansion needed
 			var id = et2_readAttrWithDefault(node, "id", "");
 			if(id.indexOf('$') < 0 || widgetType != 'box')
 			{
-				this.createElementFromNode(node);
+				this.createElementFromObject(node);
 				childIndex++;
 			}
 			else
@@ -109,7 +95,7 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 					}
 				}
 
-				this.createElementFromNode(repeatNode);
+				this.createElementFromObject(repeatNode);
 			}
 
 			// Reset

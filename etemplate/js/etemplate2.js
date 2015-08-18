@@ -446,8 +446,11 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			}
 			etemplate2._byTemplate[_name].push(this);
 
-			// Read the XML structure of the requested template
-			this.widgetContainer.loadFromXML(this.templates[this.name]);
+			// Read the structure of the requested template
+			if (this.templates[this.name].children)
+			{
+				this.widgetContainer.loadFromJSON(this.templates[this.name]);
+			}
 
 			// List of Promises from widgets that are not quite fully loaded
 			var deferred = [];
@@ -543,18 +546,25 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		// Load & process
 		if(!this.templates[_name])
 		{
-			// Asynchronously load the XET file
-			et2_loadXMLFromURL(_url, function(_xmldoc) {
-
-				// Scan for templates and store them
-				for(var i = 0; i < _xmldoc.childNodes.length; i++) {
-					var template = _xmldoc.childNodes[i];
-					if(template.nodeName.toLowerCase() != "template") continue;
-					this.templates[template.getAttribute("id")] = template;
-					if(!_name) this.name = template.getAttribute("id");
+			jQuery.ajax({
+				url: _url,
+				context: this,
+				type: 'GET',
+				dataType: 'json',
+				success: function(_data, _status, _xmlhttp){
+					for(var i = 0; i < _data.children.length; i++)
+					{
+						var template = _data.children[i];
+						if(template.tag !== "template") continue;
+						this.templates[template.attributes.id] = template;
+						if(!_name) this.name = template.attributes.id;
+					}
+					_load.apply(this,[]);
+				},
+				error: function(_xmlhttp, _err) {
+					egw().debug('error', 'Loading eTemplate from '+_url+' failed! '+_xmlhttp.status+' '+_xmlhttp.statusText);
 				}
-				_load.apply(this,[]);
-			}, this);
+			});
 
 			// Split the given data into array manager objects and pass those to the
 			// widget container - do this here because file is loaded async

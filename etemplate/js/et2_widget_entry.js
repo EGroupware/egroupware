@@ -86,7 +86,7 @@ var et2_entry = et2_valueWidget.extend(
 		this.setDOMNode(document.createElement('span'));
 	},
 
-	loadFromXML: function(_node) {
+	loadFromJSON: function(_node) {
 		// Load the nodes as usual
 		this._super.apply(this, arguments);
 

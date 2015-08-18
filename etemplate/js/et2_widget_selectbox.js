@@ -398,9 +398,9 @@ var et2_selectbox = et2_inputWidget.extend(
 		return true;
 	},
 
-	loadFromXML: function(_node) {
+	loadFromJSON: function(_node) {
 		// Handle special case where legacy option for empty label is used (conflicts with rows), and rows is set as an attribute
-		var legacy = _node.getAttribute("options");
+		var legacy = _node.attributes.options || false;
 		if(legacy)
 		{
 			var legacy = legacy.split(",");
