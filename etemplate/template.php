@@ -44,7 +44,6 @@ function ajaxtoJSON($name)
 	{
 		return false;
 	}
-	error_log("Filename: $filename");
 
 	$mtime = filemtime($filename);
 
@@ -89,12 +88,10 @@ function ajaxtoJSON($name)
 
 function nodeToArray($xmlnode, &$jsnode = false)
 {
-	if(!$xmlnode) return;
-
 	if(!($xmlnode instanceof SimpleXMLElement) && trim($xmlnode))
 	{
 		$jsnode['content'] = $xmlnode;
-		return '';
+		return;
 	}
 	$nodename = $xmlnode->getName();
 	$node =& $jsnode ? $jsnode : array();
