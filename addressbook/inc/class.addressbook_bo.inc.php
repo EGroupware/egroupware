@@ -931,7 +931,7 @@ class addressbook_bo extends addressbook_so
 		}
 		$to_write = $contact;
 		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
-		if (!$ignore_acl && !$contact['owner'] && !$this->is_admin($contact))
+		if (!$ignore_acl && !$contact['owner'] && !($this->is_admin($contact) || $this->allow_account_edit()))
 		{
 			foreach($contact as $field => $value)
 			{
@@ -940,7 +940,7 @@ class addressbook_bo extends addressbook_so
 					// user is not allowed to change that
 					if ($old)
 					{
-						$to_write[$field] = $old[$field];
+						$to_write[$field] = $contact[$field] = $old[$field];
 					}
 					else
 					{
