@@ -595,6 +595,12 @@ class accounts_sql
 				$table = $this->table;
 				$cols .= ',account_type';
 				$where[$which] = $name;
+				// check if we need to treat username case-insensitive
+				if ($which == 'account_lid' && !$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
+				{
+					$where[] = 'account_lid '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($where['account_lid']);
+					unset($where['account_lid']);
+				}
 		}
 		if ($account_type)
 		{
