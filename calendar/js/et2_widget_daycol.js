@@ -195,7 +195,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Add timezone offset back in, or formatDate will lose those hours
 		var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 		var date_string = this._parent._children.length === 1 ?
-			this.long_date(formatDate,false, false, true) :
+			app.calendar.date.long_date(formatDate,false, false, true) :
 			jQuery.datepicker.formatDate('DD dd',formatDate);
 		this.title.text(date_string);
 
@@ -548,114 +548,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		pos = pos.toFixed(1)
 
 		return pos;
-	},
-
-	/**
-	* Formats one or two dates (range) as long date (full monthname), optionaly with a time
-	*
-	* Take care of any timezone issues before you pass the dates in.
-	*
-	* @param {Date} first first date
-	* @param {Date} last=0 last date for range, or false for a single date
-	* @param {boolean} display_time=false should a time be displayed too
-	* @param {boolean} display_day=false should a day-name prefix the date, eg. monday June 20, 2006
-	* @return string with formatted date
-	*/
-	long_date: function(first, last, display_time, display_day)
-	{
-		if(!last || typeof last !== 'object')
-		{
-			 last = false;
-		}
-
-		if(!display_time) display_time = false;
-		if(!display_day) display_day = false;
-
-		var range = '';
-
-		var datefmt = egw.preference('dateformat');
-		var timefmt = egw.preference('timeformat') == 12 ? 'h:i a' : 'H:i';
-
-		var month_before_day = datefmt[0].toLowerCase() == 'm' ||
-			datefmt[2].toLowerCase() == 'm' && datefmt[4] == 'd';
-
-		if (display_day)
-		{
-			range = jQuery.datepicker.formatDate('DD',first)+(datefmt[0] != 'd' ? ' ' : ', ');
-		}
-		for (var i = 0; i < 5; i += 2)
-		{
-			 switch(datefmt[i])
-			 {
-				 case 'd':
-					 range += first.getUTCDate()+ (datefmt[1] == '.' ? '.' : '');
-					 if (last && (first.getUTCMonth() != last.getUTCMonth() || first.getFullYear() != last.getFullYear()))
-					 {
-						 if (!month_before_day)
-						 {
-							 range += jQuery.datepicker.formatDate('MM',first);
-						 }
-						 if (first.getFullYear() != last.getFullYear() && datefmt[0] != 'Y')
-						 {
-							 range += (datefmt[0] != 'd' ? ', ' : ' ') . first.getFullYear();
-						 }
-						 if (display_time)
-						 {
-							 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),first);
-						 }
-						 if (!last)
-						 {
-							 return range;
-						 }
-						 range += ' - ';
-
-						 if (first.getFullYear() != last.getFullYear() && datefmt[0] == 'Y')
-						 {
-							 range += last.getFullYear() + ', ';
-						 }
-
-						 if (month_before_day)
-						 {
-							 range += jQuery.datepicker.formatDate('MM',last);
-						 }
-					 }
-					 else
-					 {
-						 if (display_time)
-						 {
-							 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last);
-						 }
-						 if(last)
-						 {
-							 range += ' - ';
-						 }
-					 }
-					 if(last)
-					 {
-						 range += ' ' + last.getUTCDate() + (datefmt[1] == '.' ? '.' : '');
-					 }
-					 break;
-				 case 'm':
-				 case 'M':
-					 range += ' '+jQuery.datepicker.formatDate('MM',month_before_day ? first : last) + ' ';
-					 break;
-				 case 'Y':
-					 if (datefmt[0] != 'm')
-					 {
-						 range += ' ' + (datefmt[0] == 'Y' ? first.getFullYear()+(datefmt[2] == 'd' ? ', ' : ' ') : last.getFullYear()+' ');
-					 }
-					 break;
-			 }
-		}
-		if (display_time && last)
-		{
-			 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last);
-		}
-		if (datefmt[4] == 'Y' && datefmt[0] == 'm')
-		{
-			 range += ', ' + last.getFullYear();
-		}
-		return range;
 	},
 
 	attachToDOM: function()

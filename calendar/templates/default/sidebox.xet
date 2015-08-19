@@ -27,7 +27,7 @@ Egroupware
 				</columns>
 				<rows><row width="100%">
 				<buttononly align="center" class="sideboxstar" id="add" onclick="egw.open(null,'calendar','add');" image="new" label="Add"/>
-				<buttononly align="center" class="sideboxstar" id="day" image="today" label="Today" onclick="app.calendar.update_state({view:'day',date:new Date()});"/>
+				<buttononly align="center" class="sideboxstar" id="day" image="today" label="Today" onclick="var formatDate = new Date(); app.calendar.update_state({view:'day',date:new Date(formatDate.valueOf() - formatDate.getTimezoneOffset() * 60 * 1000)});"/>
 				<buttononly align="center" class="sideboxstar" id="week" image="week" label="Weekview" onclick="app.calendar.update_state({view:'week'});"/>
 				<buttononly align="center" class="sideboxstar" id="weekN" image="multiweek" label="Multiple week view" onclick="app.calendar.update_state({view:'weekN'});"/>
 				<buttononly align="center" class="sideboxstar" id="month" image="month" label="Month view" onclick="app.calendar.update_state({view:'month'});"/>

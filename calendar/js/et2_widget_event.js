@@ -48,7 +48,13 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.div = $j(document.createElement("div"))
 			.addClass("calendar_calEvent")
 			.addClass(this.options.class)
-			.css('width',this.options.width);
+			.css('width',this.options.width)
+			.on('mouseenter', function() {
+				// Hacky to remove egw's tooltip border
+				window.setTimeout(function() {
+					$j('body .egw_tooltip').css('border','none');
+				},105);
+			});
 		this.title = $j(document.createElement('div'))
 			.addClass("calendar_calEventHeader")
 			.appendTo(this.div);

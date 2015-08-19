@@ -122,6 +122,10 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		// Used for owners
 		this.owner = et2_createWidget('select-account_ro',{},this);
+
+		this._labelContainer = $j(document.createElement("label"))
+			.addClass("et2_label")
+			.appendTo(this.gridHeader);
 		
 		// List of dates in Ymd
 		// The first one should be start_date, last should be end_date
@@ -449,6 +453,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	 * lines (mostly via CSS) that span the whole time span.
 	 */
 	_drawTimes: function() {
+		$j('.calendar_calTimeRow',this.div).remove();
+		
 		var wd_start = 60*this.options.day_start;
 		var wd_end = 60*this.options.day_end;
 		var granularity = this.options.granularity;
@@ -1006,7 +1012,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	set_owner: function(_owner)
 	{
 		var old = this.options.owner || 0;
-		
+		this.owner.set_label('');
+
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
 			switch(_owner[0])
@@ -1019,16 +1026,12 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		}
 		else if (typeof _owner == 'object' && _owner.length)
 		{
-			this.owner.options.application = false;
-			var owner_objected = [];
-			for(var i = 0; i < _owner.length; i++)
+			// Don't show owners if more than one, show week number
+			this.owner.set_value('');
+			if(this.options.start_date)
 			{
-				owner_objected[i] = {
-					app: _owner[i][0] == 'r' ? 'resources' : 'home-accounts',
-					id: isNaN(_owner[i]) ? _owner[i].substr(1) : _owner[i]
-				};
+				this.set_label(egw.lang('wk') + ' ' +app.calendar.date.week_number(this.options.start_date));
 			}
-			this.owner.set_value(owner_objected);
 		}
 		else
 		{
@@ -1046,7 +1049,34 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			this.invalidate(true);
 		}
 	},
+
+	/**
+	 * Set a label for this week
+	 *
+	 * May conflict with owner, which is displayed when there's only one owner.
+	 *
+	 * @param {string} label
+	 */
+	set_label: function(label)
+	{
+		this.options.label = label;
+		this.gridHeader.text(label);
+	},
 	
+	/**
+	 * Set how big the time divisions are
+	 * 
+	 * @param {number} minutes
+	 */
+	set_granularity: function(minutes)
+	{
+		if(this.options.granularity != minutes)
+		{
+			this.options.granularity = minutes;
+			this._drawTimes();
+		}
+	},
+
 	/**
 	 * Turn on or off the visibility of weekends
 	 *

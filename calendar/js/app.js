@@ -1515,6 +1515,14 @@ app.classes.calendar = AppJS.extend(
 							widget.set_show_weekend(view.show_weekend(state.state));
 						}
 					},this, et2_valueWidget);
+
+					// Granularity needs to be done seperately
+					grid.iterateOver(function(widget) {
+						if(widget.set_granularity)
+						{
+							widget.set_granularity(view.granularity(state.state));
+						}
+					},this, et2_valueWidget);
 				}
 			}
 			else
@@ -1635,10 +1643,6 @@ app.classes.calendar = AppJS.extend(
 
 			// Sidebox is updated, we can clear the flag
 			this.state_update_in_progress = false;
-
-			// Show / Hide weekends in sidebox calendar based on if weekends should be shown
-			egw.css('#'+this.sidebox_et2.getWidgetById('date').input_date.attr('id') + ' .ui-datepicker-week-end',
-				(parseInt(this.state.days && this.state.days > 1 ? this.state.days: egw.preference('days_in_weekview','calendar'))) === 5 ? 'display: none;' : 'display: table-cell;');
 
 			return;
 		}
@@ -2030,6 +2034,150 @@ app.classes.calendar = AppJS.extend(
 				sprintf("%02d",date.getUTCMinutes()) + ':'+
 				sprintf("%02d",date.getUTCSeconds()) + 'Z';
 		},
+		
+		/**
+		* Formats one or two dates (range) as long date (full monthname), optionaly with a time
+		*
+		* Take care of any timezone issues before you pass the dates in.
+		*
+		* @param {Date} first first date
+		* @param {Date} last=0 last date for range, or false for a single date
+		* @param {boolean} display_time=false should a time be displayed too
+		* @param {boolean} display_day=false should a day-name prefix the date, eg. monday June 20, 2006
+		* @return string with formatted date
+		*/
+		long_date: function(first, last, display_time, display_day)
+		{
+			if(!first) return '';
+			if(typeof first === 'string')
+			{
+				first = new Date(first);
+			}
+			if(typeof last == 'string' && last)
+			{
+				last = new Date(last);
+			}
+			if(!last || typeof last !== 'object')
+			{
+				 last = false;
+			}
+
+			if(!display_time) display_time = false;
+			if(!display_day) display_day = false;
+
+			var range = '';
+
+			var datefmt = egw.preference('dateformat');
+			var timefmt = egw.preference('timeformat') == 12 ? 'h:i a' : 'H:i';
+
+			var month_before_day = datefmt[0].toLowerCase() == 'm' ||
+				datefmt[2].toLowerCase() == 'm' && datefmt[4] == 'd';
+
+			if (display_day)
+			{
+				range = jQuery.datepicker.formatDate('DD',first)+(datefmt[0] != 'd' ? ' ' : ', ');
+			}
+			for (var i = 0; i < 5; i += 2)
+			{
+				 switch(datefmt[i])
+				 {
+					 case 'd':
+						 range += first.getUTCDate()+ (datefmt[1] == '.' ? '.' : '');
+						 if (last && (first.getUTCMonth() != last.getUTCMonth() || first.getFullYear() != last.getFullYear()))
+						 {
+							 if (!month_before_day)
+							 {
+								 range += jQuery.datepicker.formatDate('MM',first);
+							 }
+							 if (first.getFullYear() != last.getFullYear() && datefmt[0] != 'Y')
+							 {
+								 range += (datefmt[0] != 'd' ? ', ' : ' ') . first.getFullYear();
+							 }
+							 if (display_time)
+							 {
+								 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),first);
+							 }
+							 if (!last)
+							 {
+								 return range;
+							 }
+							 range += ' - ';
+
+							 if (first.getFullYear() != last.getFullYear() && datefmt[0] == 'Y')
+							 {
+								 range += last.getFullYear() + ', ';
+							 }
+
+							 if (month_before_day)
+							 {
+								 range += jQuery.datepicker.formatDate('MM',last);
+							 }
+						 }
+						 else
+						 {
+							 if (display_time)
+							 {
+								 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last);
+							 }
+							 if(last)
+							 {
+								 range += ' - ';
+							 }
+						 }
+						 if(last)
+						 {
+							 range += ' ' + last.getUTCDate() + (datefmt[1] == '.' ? '.' : '');
+						 }
+						 break;
+					 case 'm':
+					 case 'M':
+						 range += ' '+jQuery.datepicker.formatDate('MM',month_before_day ? first : last) + ' ';
+						 break;
+					 case 'Y':
+						 if (datefmt[0] != 'm')
+						 {
+							 range += ' ' + (datefmt[0] == 'Y' ? first.getFullYear()+(datefmt[2] == 'd' ? ', ' : ' ') : last.getFullYear()+' ');
+						 }
+						 break;
+				 }
+			}
+			if (display_time && last)
+			{
+				 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last);
+			}
+			if (datefmt[4] == 'Y' && datefmt[0] == 'm')
+			{
+				 range += ', ' + last.getFullYear();
+			}
+			return range;
+		},
+		/**
+		* Calculate iso8601 week-number, which is defined for Monday as first day of week only
+		*
+		* We adjust the day, if user prefs want a different week-start-day
+		*
+		* @param string|Date date
+		* @return string
+		*/
+		week_number: function(_date)
+		{
+			var d = new Date(_date);
+			var day = d.getUTCDay();
+
+
+			// if week does not start Monday and date is Sunday --> add one day
+			if (egw.preference('weekdaystarts','calendar') != 'Monday' && !day)
+			{
+				d.setUTCDate(d.getUTCDate() + 1);
+			}
+			// if week does start Saturday and $time is Saturday --> add two days
+			else if (egw.preference('weekdaystarts','calendar') == 'Saturday' && day == 6)
+			{
+				d.setUTCDate(d.getUTCDate() + 2);
+			}
+
+			return jQuery.datepicker.iso8601Week(new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000));
+		},
 		start_of_week: function(date)
 		{
 			var d = new Date(date);
@@ -2038,7 +2186,7 @@ app.classes.calendar = AppJS.extend(
 			switch(egw.preference('weekdaystarts','calendar'))
 			{
 				case 'Saturday':
-					diff = day === 6 ? 0 : day === 0 ? -1 : day + 1;
+					diff = day === 6 ? 0 : day === 0 ? -1 : -(day + 1);
 					break;
 				case 'Monday':
 					diff = day === 0 ? 1 : 1-day;
@@ -2250,6 +2398,9 @@ app.classes.calendar = AppJS.extend(
 		{
 			return state.days ? parseInt(state.days) === 7 : parseInt(egw.preference('days_in_weekview','calendar')) == 7;
 		},
+		granularity: function(state) {
+			return parseInt(egw.preference('interval','calendar')) || 30;
+		},
 		extend: function(sub)
 		{
 			return jQuery.extend({},this,{_super:this},sub);
@@ -2349,11 +2500,17 @@ jQuery.extend(app.classes.calendar,{
 				d.setUTCSeconds(59);
 				d.setUTCMilliseconds(0);
 				return d;
+			},
+			show_weekend: function(state) {
+				return true;
 			}
 		}),
 		week: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				return egw.lang('Week view') + ': ' + app.calendar.View.header.call(this, state);
+				var formatDate = new Date(state.first);
+				return egw.lang('Week view') + ': ' + egw.lang('Week') + ' ' +
+					app.calendar.date.week_number(state.first) + ': ' +
+					app.calendar.date.long_date(state.first, state.last)
 			},
 			start_date: function(state) {
 				return app.calendar.date.start_of_week(app.calendar.View.start_date.call(this,state));
@@ -2375,7 +2532,10 @@ jQuery.extend(app.classes.calendar,{
 		}),
 		weekN: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				return egw.lang('Multiple week view') + ': ' + app.calendar.View.header.call(this, state);
+				return egw.lang('Week') + ' ' +
+					app.calendar.date.week_number(state.first) + ' - ' +
+					app.calendar.date.week_number(state.last) + ': ' +
+					app.calendar.date.long_date(state.first, state.last)
 			},
 			start_date: function(state) {
 				return app.calendar.date.start_of_week(state.date || new Date());
@@ -2387,6 +2547,9 @@ jQuery.extend(app.classes.calendar,{
 				// Always 7 days, we just turn weekends on or off
 				d.setUTCHours(24*7-1);
 				return d;
+			},
+			granularity: function(state) {
+				return 120;
 			}
 		}),
 		month: app.classes.calendar.prototype.View.extend({
@@ -2409,6 +2572,9 @@ jQuery.extend(app.classes.calendar,{
 				if(week_start < d) week_start.setUTCHours(24*7);
 				week_start.setUTCHours(week_start.getUTCHours()-1);
 				return week_start;
+			},
+			granularity: function(state) {
+				return 120;
 			},
 			scroll: function(delta)
 			{
