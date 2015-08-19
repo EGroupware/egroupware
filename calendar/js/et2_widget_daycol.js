@@ -181,7 +181,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			// Need a new date to avoid invalid month/date combinations when setting
 			// month then day
-			this._parent.date_helper.set_value(new Date(_date.substring(0,4),_date.substring(4,6)-1,_date.substring(6,8)));
+			this._parent.date_helper.set_value(new Date(_date.substring(0,4),_date.substring(4,6)-1,_date.substring(6,8),-new Date().getTimezoneOffset()/60,0,0));
 		}
 
 		this.date = new Date(this._parent.date_helper.getValue());

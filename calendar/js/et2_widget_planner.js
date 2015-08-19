@@ -413,14 +413,16 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				d = new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000);
 				for(var i = 0; i < 12; i++)
 				{
-					labels.push({id: d.getUTCFullYear() +'-'+d.getUTCMonth(), label:egw.lang(date('F',d))+' '+d.getUTCFullYear()});
-					d.setUTCMonth(d.getUTCMonth()+1);
+					// Not using UTC because we corrected for timezone offset
+					labels.push({id: d.getFullYear() +'-'+d.getMonth(), label:egw.lang(date('F',d))+' '+d.getFullYear()});
+					d.setMonth(d.getMonth()+1);
 				}
 				return labels;
 			},
 			group: function(labels, rows,event) {
 				var start = new Date(event.start);
-				var key = start.getUTCFullYear() +'-'+start.getUTCMonth();
+				start = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
+				var key = start.getFullYear() +'-'+start.getMonth();
 				var label_index = false;
 				for(var i = 0; i < labels.length; i++)
 				{
@@ -438,11 +440,12 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 
 				// end in a different month?
 				var end = new Date(event.end);
-				var end_key = end.getUTCFullYear() +'-'+end.getUTCMonth();
+				end = new Date(end.valueOf() + end.getTimezoneOffset() * 60 * 1000);
+				var end_key = end.getFullYear() +'-'+end.getMonth();
 				while(key !== end_key)
 				{
-					var year = start.getUTCFullYear();
-					var month = start.getUTCMonth();
+					var year = start.getFullYear();
+					var month = start.getMonth();
 					if (++month > 12)
 					{
 						++year;
@@ -707,34 +710,19 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		// calculate date for navigation links
 		var time = new Date(start);
 		time.setUTCFullYear(time.getUTCFullYear()-1);
-		var last_year = date('Ymd',time);
+		var last_year = time.toJSON();
 		time.setUTCMonth(time.getUTCMonth()+11);
-		var last_month = date('Ymd',time);
+		var last_month = time.toJSON();
 		time.setUTCMonth(time.getUTCMonth()+2);
-		var next_month = date('Ymd',time);
+		var next_month = time.toJSON();
 		time.setUTCMonth(time.getUTCMonth()+11);
-		var next_year = date('Ymd',time);
+		var next_year = time.toJSON();
 
-		title = last_year + ' ' + last_month + ' ' + title + ' ' +next_month +' ' +next_year;
-/*
- *  TODO: implement these arrows
-		title = html::a_href(html::image('phpgwapi','first',lang('back one year'),$options=' alt="<<"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => $last_year,
-			)) + ' &nbsp; '+
-			html::a_href(html::image('phpgwapi','left',lang('back one month'),$options=' alt="<"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => $last_month,
-			)) + ' &nbsp; '+title;
-		title += ' &nbsp; '.html::a_href(html::image('phpgwapi','right',lang('forward one month'),$options=' alt=">>"'),array(
-					'menuaction' => $this->view_menuaction,
-					'date'       => $next_month,
-				))+ ' &nbsp; '+
-				html::a_href(html::image('phpgwapi','last',lang('forward one year'),$options=' alt=">>"'),array(
-					'menuaction' => $this->view_menuaction,
-					'date'       => $next_year,
-				));
-		*/
+		title = this._scroll_button('first',last_year) +
+			this._scroll_button('left', last_month) +
+			title +
+			this._scroll_button('right', next_month) +
+			this._scroll_button('last', next_year);
 
 		content += '<div class="calendar_plannerMonthScale th" style="left: 0; width: 100%;">'+
 				title+"</div>";

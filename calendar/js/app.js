@@ -2651,6 +2651,17 @@ jQuery.extend(app.classes.calendar,{
 			},
 			scroll: function(delta)
 			{
+				var d = new Date(app.calendar.state.date);
+
+				// Yearly view, grouped by month - scroll 1 month
+				if(app.calendar.state.sortby === 'month')
+				{
+					d.setUTCMonth(d.getUTCMonth() + delta)
+					d.setUTCDate(1);
+					d.setUTCHours(0);
+					d.setUTCMinutes(0);
+					return d;
+				}
 				// Need to set the day count, or auto date ranging takes over and
 				// makes things buggy
 				if(app.calendar.state.first && app.calendar.state.last)
@@ -2658,7 +2669,6 @@ jQuery.extend(app.classes.calendar,{
 					var diff = new Date(app.calendar.state.last)  - new Date(app.calendar.state.first);
 					app.calendar.state.planner_days = Math.round(diff / (1000*3600*24));
 				}
-				var d = new Date(app.calendar.state.date);
 				d.setUTCDate(d.getUTCDate() + (app.calendar.state.planner_days*delta));
 				if(app.calendar.state.planner_days > 8)
 				{

@@ -179,7 +179,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			$j(this).resizable
 			({
 				distance: 10,
-				grid: [10000,timegrid.rowHeight],
+				grid: [10000,10],
 				autoHide: false,
 				handles: 's,se',
 				containment:'parent',
