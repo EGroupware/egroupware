@@ -40,6 +40,8 @@ class egw_session
 {
 	/**
 	 * Write debug messages about session verification and creation to the error_log
+	 *
+	 * This will contain passwords! Don't leave it permanently switched on!
 	 */
 	const ERROR_LOG_DEBUG = false;
 
@@ -441,196 +443,193 @@ class egw_session
 	 * @param boolean $no_session =false dont create a real session, eg. for GroupDAV clients using only basic auth, no cookie support
 	 * @param boolean $auth_check =true if false, the user is loged in without checking his password (eg. for single sign on), default = true
 	 * @param boolean $fail_on_forced_password_change =false true: do NOT create session, if password change requested
-	 * @return string session id
+	 * @return string|boolean session id or false if session was not created, $this->(cd_)reason contains cause
 	 */
 	function create($login,$passwd = '',$passwd_type = '',$no_session=false,$auth_check=true,$fail_on_forced_password_change=false)
 	{
-		if (is_array($login))
-		{
-			$this->login       = $login['login'];
-			$this->passwd      = $login['passwd'];
-			$this->passwd_type = $login['passwd_type'];
-			$login             = $this->login;
-		}
-		else
-		{
-			$this->login       = $login;
-			$this->passwd      = $passwd;
-			$this->passwd_type = $passwd_type;
-		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) starting ...");
-
-		self::split_login_domain($login,$this->account_lid,$this->account_domain);
-		// add domain to the login, if not already there
-		if (substr($this->login,-strlen($this->account_domain)-1) != '@'.$this->account_domain)
-		{
-			$this->login .= '@'.$this->account_domain;
-		}
-		$now = time();
-		//error_log(__METHOD__."($login,$passwd,$passwd_type,$no_session,$auth_check) account_lid=$this->account_lid, account_domain=$this->account_domain, default_domain={$GLOBALS['egw_info']['server']['default_domain']}, user/domain={$GLOBALS['egw_info']['user']['domain']}");
-
-		// This is to ensure that we authenticate to the correct domain (might not be default)
-		// if no domain is given we use the default domain, so we dont need to re-create everything
-		if (!$GLOBALS['egw_info']['user']['domain'] && $this->account_domain == $GLOBALS['egw_info']['server']['default_domain'])
-		{
-			$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
-		}
-		elseif (!$this->account_domain && $GLOBALS['egw_info']['user']['domain'])
-		{
-			$this->account_domain = $GLOBALS['egw_info']['user']['domain'];
-		}
-		elseif($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
-		{
-			throw new Exception("Wrong domain! '$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'");
-/*			$GLOBALS['egw']->ADOdb = null;
-			$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
-			// reset the db and all other (non-header!) egw_info/server data
-			$GLOBALS['egw_info']['server'] = array(
-				'sessions_type'  => $GLOBALS['egw_info']['server']['sessions_type'],
-				'default_domain' => $GLOBALS['egw_info']['server']['default_domain'],
-			);
-			$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$this->account_domain]['db_host'];
-			$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$this->account_domain]['db_port'];
-			$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$this->account_domain]['db_name'];
-			$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$this->account_domain]['db_user'];
-			$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$this->account_domain]['db_pass'];
-			$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->account_domain]['db_type'];
-			$GLOBALS['egw']->setup('',false);
-*/
-		}
-		unset($GLOBALS['egw_info']['server']['default_domain']); // we kill this for security reasons
-
-		//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
-		$user_ip = self::getuser_ip();
-
-		$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
-
-		if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
-			$GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid] ||
-			$auth_check && !$GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
-			$this->account_id && $GLOBALS['egw']->accounts->get_type($this->account_id) == 'g')
-		{
-			$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
-			$this->cd_reason = $blocked ? self::CD_BLOCKED : self::CD_BAD_LOGIN_OR_PASSWORD;
-
-			// we dont log anon users as it would block the website
-			if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($this->account_id,'anonymous','phpgwapi'))
+		try {
+			if (is_array($login))
 			{
-				$this->log_access($this->reason,$login,$user_ip,0);	// log unsuccessfull login
+				$this->login       = $login['login'];
+				$this->passwd      = $login['passwd'];
+				$this->passwd_type = $login['passwd_type'];
+				$login             = $this->login;
 			}
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
-			return false;
-		}
-		if ($fail_on_forced_password_change && auth::check_password_change($this->reason) === false)
-		{
-			$this->cd_reason = self::CD_FORCE_PASSWORD_CHANGE;
-			return false;
-		}
-		if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
-		{
-			if ($GLOBALS['egw_info']['server']['auto_create_acct'] == 'lowercase')
+			else
 			{
-				$this->account_lid = strtolower($this->account_lid);
+				$this->login       = $login;
+				$this->passwd      = $passwd;
+				$this->passwd_type = $passwd_type;
 			}
-			$this->account_id = $GLOBALS['egw']->accounts->auto_add($this->account_lid, $passwd);
-		}
-		// fix maybe wrong case in username, it makes problems eg. in filemanager (name of homedir)
-		if ($this->account_lid != ($lid = $GLOBALS['egw']->accounts->id2name($this->account_id)))
-		{
-			$this->account_lid = $lid;
-			$this->login = $lid.substr($this->login,strlen($lid));
-		}
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) starting ...");
 
-		$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
-		$GLOBALS['egw']->accounts->accounts($this->account_id);
-
-		// for *DAV and eSync we use a pseudo sessionid created from md5(user:passwd)
-		// --> allows this stateless protocolls which use basic auth to use sessions!
-		if (($this->sessionid = self::get_sessionid(true)))
-		{
-			session_id($this->sessionid);
-		}
-		else
-		{
-			self::cache_control();
-			session_start();
-			// set a new session-id, if not syncml (already done in Horde code and can NOT be changed)
-			if (!$no_session && $GLOBALS['egw_info']['flags']['currentapp'] != 'syncml')
+			self::split_login_domain($login,$this->account_lid,$this->account_domain);
+			// add domain to the login, if not already there
+			if (substr($this->login,-strlen($this->account_domain)-1) != '@'.$this->account_domain)
 			{
-				session_regenerate_id(true);
+				$this->login .= '@'.$this->account_domain;
 			}
-			$this->sessionid = session_id();
-		}
-		$this->kp3       = common::randomstring(24);
+			$now = time();
+			//error_log(__METHOD__."($login,$passwd,$passwd_type,$no_session,$auth_check) account_lid=$this->account_lid, account_domain=$this->account_domain, default_domain={$GLOBALS['egw_info']['server']['default_domain']}, user/domain={$GLOBALS['egw_info']['user']['domain']}");
 
-		$GLOBALS['egw_info']['user'] = $this->read_repositories();
-		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
-		{
-			$this->reason = 'account is expired';
-			$this->cd_reason = self::CD_ACCOUNT_EXPIRED;
-
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
-			return false;
-		}
-
-		egw_cache::setSession('phpgwapi', 'password', base64_encode($this->passwd));
-
-		if ($GLOBALS['egw']->acl->check('anonymous',1,'phpgwapi'))
-		{
-			$this->session_flags = 'A';
-		}
-		else
-		{
-			$this->session_flags = 'N';
-		}
-
-		if (($hook_result = $GLOBALS['egw']->hooks->process(array(
-			'location'       => 'session_creation',
-			'sessionid'      => $this->sessionid,
-			'session_flags'  => $this->session_flags,
-			'account_id'     => $this->account_id,
-			'account_lid'    => $this->account_lid,
-			'passwd'         => $this->passwd,
-			'account_domain' => $this->account_domain,
-			'user_ip'        => $user_ip,
-		),'',true)))	// true = run hooks from all apps, not just the ones the current user has perms to run
-		{
-			foreach($hook_result as $reason)
+			// This is to ensure that we authenticate to the correct domain (might not be default)
+			// if no domain is given we use the default domain, so we dont need to re-create everything
+			if (!$GLOBALS['egw_info']['user']['domain'] && $this->account_domain == $GLOBALS['egw_info']['server']['default_domain'])
 			{
-				if ($reason)	// called hook requests to deny the session
+				$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
+			}
+			elseif (!$this->account_domain && $GLOBALS['egw_info']['user']['domain'])
+			{
+				$this->account_domain = $GLOBALS['egw_info']['user']['domain'];
+			}
+			elseif($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
+			{
+				throw new Exception("Wrong domain! '$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'");
+			}
+			unset($GLOBALS['egw_info']['server']['default_domain']); // we kill this for security reasons
+
+			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
+			$user_ip = self::getuser_ip();
+
+			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
+
+			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
+				$GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid] ||
+				$auth_check && !$GLOBALS['egw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
+				$this->account_id && $GLOBALS['egw']->accounts->get_type($this->account_id) == 'g')
+			{
+				$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
+				$this->cd_reason = $blocked ? self::CD_BLOCKED : self::CD_BAD_LOGIN_OR_PASSWORD;
+
+				// we dont log anon users as it would block the website
+				if (!$GLOBALS['egw']->acl->get_specific_rights_for_account($this->account_id,'anonymous','phpgwapi'))
 				{
-					$this->reason = $this->cd_reason = $reason;
-					$this->log_access($this->reason,$login,$user_ip,0);		// log unsuccessfull login
-					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
-					return false;
+					$this->log_access($this->reason,$login,$user_ip,0);	// log unsuccessfull login
+				}
+				if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
+				return false;
+			}
+			if ($fail_on_forced_password_change && auth::check_password_change($this->reason) === false)
+			{
+				$this->cd_reason = self::CD_FORCE_PASSWORD_CHANGE;
+				return false;
+			}
+			if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
+			{
+				if ($GLOBALS['egw_info']['server']['auto_create_acct'] == 'lowercase')
+				{
+					$this->account_lid = strtolower($this->account_lid);
+				}
+				$this->account_id = $GLOBALS['egw']->accounts->auto_add($this->account_lid, $passwd);
+			}
+			// fix maybe wrong case in username, it makes problems eg. in filemanager (name of homedir)
+			if ($this->account_lid != ($lid = $GLOBALS['egw']->accounts->id2name($this->account_id)))
+			{
+				$this->account_lid = $lid;
+				$this->login = $lid.substr($this->login,strlen($lid));
+			}
+
+			$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
+			$GLOBALS['egw']->accounts->accounts($this->account_id);
+
+			// for *DAV and eSync we use a pseudo sessionid created from md5(user:passwd)
+			// --> allows this stateless protocolls which use basic auth to use sessions!
+			if (($this->sessionid = self::get_sessionid(true)))
+			{
+				session_id($this->sessionid);
+			}
+			else
+			{
+				self::cache_control();
+				session_start();
+				// set a new session-id, if not syncml (already done in Horde code and can NOT be changed)
+				if (!$no_session && $GLOBALS['egw_info']['flags']['currentapp'] != 'syncml')
+				{
+					session_regenerate_id(true);
+				}
+				$this->sessionid = session_id();
+			}
+			$this->kp3       = common::randomstring(24);
+
+			$GLOBALS['egw_info']['user'] = $this->read_repositories();
+			if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
+			{
+				$this->reason = 'account is expired';
+				$this->cd_reason = self::CD_ACCOUNT_EXPIRED;
+
+				if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
+				return false;
+			}
+
+			egw_cache::setSession('phpgwapi', 'password', base64_encode($this->passwd));
+
+			if ($GLOBALS['egw']->acl->check('anonymous',1,'phpgwapi'))
+			{
+				$this->session_flags = 'A';
+			}
+			else
+			{
+				$this->session_flags = 'N';
+			}
+
+			if (($hook_result = $GLOBALS['egw']->hooks->process(array(
+				'location'       => 'session_creation',
+				'sessionid'      => $this->sessionid,
+				'session_flags'  => $this->session_flags,
+				'account_id'     => $this->account_id,
+				'account_lid'    => $this->account_lid,
+				'passwd'         => $this->passwd,
+				'account_domain' => $this->account_domain,
+				'user_ip'        => $user_ip,
+			),'',true)))	// true = run hooks from all apps, not just the ones the current user has perms to run
+			{
+				foreach($hook_result as $reason)
+				{
+					if ($reason)	// called hook requests to deny the session
+					{
+						$this->reason = $this->cd_reason = $reason;
+						$this->log_access($this->reason,$login,$user_ip,0);		// log unsuccessfull login
+						if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
+						return false;
+					}
 				}
 			}
-		}
-		$GLOBALS['egw']->db->transaction_begin();
-		$this->register_session($this->login,$user_ip,$now,$this->session_flags);
-		if ($this->session_flags != 'A')		// dont log anonymous sessions
-		{
-			$this->sessionid_access_log = $this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
-		}
-		self::appsession('account_previous_login','phpgwapi',$GLOBALS['egw']->auth->previous_login);
-		$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
-		$GLOBALS['egw']->db->transaction_commit();
+			$GLOBALS['egw']->db->transaction_begin();
+			$this->register_session($this->login,$user_ip,$now,$this->session_flags);
+			if ($this->session_flags != 'A')		// dont log anonymous sessions
+			{
+				$this->sessionid_access_log = $this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
+			}
+			self::appsession('account_previous_login','phpgwapi',$GLOBALS['egw']->auth->previous_login);
+			$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
+			$GLOBALS['egw']->db->transaction_commit();
 
-		if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
-		{
-			self::egw_setcookie(self::EGW_SESSION_NAME,$this->sessionid);
-			self::egw_setcookie('kp3',$this->kp3);
-			self::egw_setcookie('domain',$this->account_domain);
-		}
-		if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
-		{
-			self::egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
-			self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
-		}
-		//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
+			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session)
+			{
+				self::egw_setcookie(self::EGW_SESSION_NAME,$this->sessionid);
+				self::egw_setcookie('kp3',$this->kp3);
+				self::egw_setcookie('domain',$this->account_domain);
+			}
+			if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
+			{
+				self::egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
+				self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
+			}
+			//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
 
-		return $this->sessionid;
+			return $this->sessionid;
+		}
+		// catch all exceptions, as their (allways logged) trace (eg. on a database error) would contain the user password
+		catch(Exception $e) {
+			$this->reason = $this->cd_reason = $e->getMessage();
+			error_log(__METHOD__."('$login', ".array2string(str_repeat('*', strlen($passwd))).
+				", '$passwd_type', no_session=".array2string($no_session).
+				", auth_check=".array2string($auth_check).
+				", fail_on_forced_password_change=".array2string($fail_on_forced_password_change).
+				") Exception ".$e->getMessage());
+			return false;
+		}
 	}
 
 	/**
