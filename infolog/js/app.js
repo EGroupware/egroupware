@@ -78,7 +78,8 @@ app.classes.infolog = AppJS.extend(
 				}
 				break;
 			case 'infolog.edit':
-				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
+				if (this.et2.getArrayMgr('content').data.info_des &&
+					this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
 				{
 					this._get_stylite(jQuery.proxy(function() {this.mailvelopeAvailable(jQuery.proxy(function() {
 						this.toggleEncrypt();
@@ -89,7 +90,7 @@ app.classes.infolog = AppJS.extend(
 						$j(history.getDOMNode(history))
 							.tooltip('option','position',{my:'top left', at: 'top left', of: history.getDOMNode(history)});
 
-					},this))},this));
+					},this));},this));
 					// This disables the diff in history
 					var history = this.et2.getArrayMgr('content').getEntry('history');
 					history['status-widgets'].De = 'description';
@@ -175,7 +176,7 @@ app.classes.infolog = AppJS.extend(
 			var content = this.et2.getArrayMgr('content');
 			nm = content? content.data.nm: {};
 		}
-		
+
 		state.action = nm.action || null;
 		state.action_id = nm.action_id || null;
 
@@ -706,11 +707,11 @@ app.classes.infolog = AppJS.extend(
 			app.stylite.onchangeResponsible.call(app.stylite, _event, _widget);
 		}
 	},
-	
+
 	/**
 	 * Handle encrypted info_desc for print purpose
 	 * and triggers print action after decryption
-	 * 
+	 *
 	 * @param {Keyring} _keyring Mailvelope keyring to use
 	 */
 	printEncrypt: function (_keyring)
@@ -736,13 +737,13 @@ app.classes.infolog = AppJS.extend(
 				};
 			}
 		}
-		
+
 		mailvelope.createEditorContainer('#infolog-edit-print_info_des', _keyring, options).then(function(_editor)
 		{
 			var $info_des_dom = jQuery(self.et2.getWidgetById('info_des').getDOMNode());
 			$info_des_dom.children('iframe').height($info_des_dom.height());
 			$info_des_dom.children('span').hide();
-			
+
 			//Trigger print action
 			self.infolog_print_preview();
 		},
@@ -751,5 +752,5 @@ app.classes.infolog = AppJS.extend(
 			self.egw.message(_err, 'error');
 		});
 	}
-	
+
 });
