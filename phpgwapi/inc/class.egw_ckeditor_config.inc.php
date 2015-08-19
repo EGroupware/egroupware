@@ -72,10 +72,7 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 			'moono'	=> lang('moono theme (default)'),
 			'moonocolor'	=> lang('moono color theme'),
 			'moono-dark'	=> lang('dark moono theme'),
-			'Moono_blue'	=> lang('blue moono theme'),
-			'bootstrapck'	=> lang('bootstrap theme for ckeditor'),
 			'icy_orange'	=> lang('icy-orange theme for ckeditor'),
-			'office2013'	=> lang('office-2013 theme for ckeditor'),
 			'minimalist'	=> lang('Minimalist theme'),
 			'flat'			=> lang('Flat theme')
 		);
@@ -200,21 +197,15 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 					//if (html::$user_agent=='firefox' || html::$user_agent=='msie') $skin='moonocolor';
 					break;
 				case 'silver':
-				case 'bootstrapck':
-					$skin = "bootstrapck";
-					break;
 				case 'moono-dark':
 					$skin = "moono-dark";
-					break;
-				case 'Moono_blue':
-					$skin = "Moono_blue";
 					break;
 				case 'icy_orange':
 					$skin = "icy_orange";
 					break;
+				case 'bootstrapck': // no longer support by egw
+				case 'Moono_blue':
 				case 'office2013':
-					$skin = "office2013";
-					break;
 				case 'office2003':
 				case 'moonocolor':
 					$skin = "moonocolor";
