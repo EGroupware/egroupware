@@ -351,9 +351,7 @@ class addressbook_so
 				if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $grants[0] |= EGW_ACL_DELETE;
 			}
 			// allow certain groups to edit contact-data of accounts
-			if ($GLOBALS['egw_info']['server']['allow_account_edit'] &&
-				array_intersect($GLOBALS['egw_info']['server']['allow_account_edit'],
-					$GLOBALS['egw']->accounts->memberships($user, true)))
+			if (self::allow_account_edit($user))
 			{
 				$grants[0] |= EGW_ACL_READ|EGW_ACL_EDIT;
 			}
@@ -377,6 +375,19 @@ class addressbook_so
 	function is_admin($contact=null)
 	{
 		return isset($GLOBALS['egw_info']['user']['apps']['admin']) && !$GLOBALS['egw']->acl->check('account_access',16,'admin');
+	}
+
+	/**
+	 * Check if current user is in a group, which is allowed to edit accounts
+	 *
+	 * @param int $user =null default $this->user
+	 * @return boolean
+	 */
+	function allow_account_edit($user=null)
+	{
+		return $GLOBALS['egw_info']['server']['allow_account_edit'] &&
+			array_intersect($GLOBALS['egw_info']['server']['allow_account_edit'],
+				$GLOBALS['egw']->accounts->memberships($user ? $user : $this->user, true));
 	}
 
 	/**
