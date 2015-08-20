@@ -2109,6 +2109,7 @@ window.egw_LAB.wait(function() {
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
 				$content['msg'] = lang('Contact copied');
+				$view = false;
 			}
 			else
 			{
