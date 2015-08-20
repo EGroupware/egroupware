@@ -886,8 +886,16 @@ function emailadmin_upgrade1_9_019()
 
 function emailadmin_upgrade14_1()
 {
-	$GLOBALS['egw_setup']->oProc->DropIndex('egw_ea_valid', array('acc_id', 'account_id'));
-	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_ea_valid', array('acc_id', 'account_id'), true);
+	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_ea_valid',array(
+		'fd' => array(
+			'acc_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'account_id' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False)
+		),
+		'pk' => array(),
+		'fk' => array(),
+		'ix' => array(array('account_id','acc_id')),
+		'uc' => array(array('acc_id','account_id'))
+	));
 
 	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '14.2';
 }
