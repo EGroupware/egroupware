@@ -47,10 +47,10 @@ app.classes.mail = AppJS.extend(
 		request: null
 	},
 	/**
-	 * 
+	 *
 	 */
 	subscription_treeLastState : "",
-	
+
 	/**
 	 * abbrevations for common access rights
 	 * @array
@@ -196,7 +196,7 @@ app.classes.mail = AppJS.extend(
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
 					self.mail_prepare_print();
-				
+
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
 					// Check if the iframe content is loaded then trigger the print command
@@ -285,11 +285,11 @@ app.classes.mail = AppJS.extend(
 				break;
 			case 'mail.subscribe':
 				if (this.subscription_treeLastState != "")
-				{	
+				{
 					var tree = this.et2.getWidgetById('foldertree');
 					//Saved state of tree
 					var state = jQuery.parseJSON(this.subscription_treeLastState);
-					
+
 					tree.input.loadJSONObject(tree._htmlencode_node(state));
 				}
 				break;
@@ -1741,10 +1741,10 @@ app.classes.mail = AppJS.extend(
 		}
 	//	alert(folder);
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
-		
+
 		//Open unloaded tree to get loaded
 		_widget.openItem(folder, true);
-		
+
 		this.lock_tree();
 		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
 			// Profile changed, select inbox
@@ -3530,7 +3530,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var rights = [];
-		
+
 		switch (widget.get_value())
 		{
 			case 'custom':
@@ -3687,15 +3687,15 @@ app.classes.mail = AppJS.extend(
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_sieve.editVacation&acc_id='+acc_id,'_blank','700x480');
 	},
-	
+
 	subscription_refresh: function(_data)
 	{
 		console.log(_data);
 	},
-	
+
 	/**
 	 * Submit on apply button and save current tree state
-	 * 
+	 *
 	 * @param {type} _egw
 	 * @param {type} _widget
 	 * @returns {undefined}
@@ -3710,10 +3710,10 @@ app.classes.mail = AppJS.extend(
 		}
 		this.et2._inst.submit(_widget);
 	},
-	
+
 	/**
 	 * Show ajax-loader when the autoloading get started
-	 * 
+	 *
 	 * @param {type} _id item id
 	 * @param {type} _widget tree widget
 	 * @returns {Boolean}
@@ -3728,7 +3728,7 @@ app.classes.mail = AppJS.extend(
 		}
 		return true;
 	},
-	
+
 	/**
 	 * Revert back the icon after autoloading is finished
 	 * @returns {Boolean}
@@ -3737,7 +3737,7 @@ app.classes.mail = AppJS.extend(
 	{
 		return true;
 	},
-	
+
 	/**
 	 * Popup the subscription dialog
 	 *
@@ -4324,18 +4324,18 @@ app.classes.mail = AppJS.extend(
 				var widget = self.et2.getWidgetById(this.getAttribute('name'));
 				var emails, distLists = [];
 				var fromWidget = {};
-				
+
 				var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
 				if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
 				{
 					fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
 				}
-				
+
 				var draggedValue = ui.draggable.text();
-				
+
 				// index of draggable item in selection list
 				var dValueKey = draggedValue;
-				
+
 				var distItem = ui.draggable.find('.mailinglist');
 				if (distItem.length>0)
 				{
@@ -4354,18 +4354,18 @@ app.classes.mail = AppJS.extend(
 						}
 					}
 				}
-				
+
 				if (typeof widget != 'undefined')
 				{
 					emails = widget.get_value();
 					if (emails) emails = emails.concat([draggedValue]);
-					
+
 					// Resolve the dist list and normal emails
 					distLists = resolveDistList(widget, emails);
-					
+
 					// Add normal emails
 					if (emails) widget.set_value(emails);
-					
+
 					// check if there's any dist list to be added
 					if (distLists.length>0) widget.taglist.addToSelection(distLists);
 
@@ -4418,10 +4418,10 @@ app.classes.mail = AppJS.extend(
 					emails.splice(itemIndex,1);
 					// Resolve the dist list and normal emails
 					var dist = resolveDistList(_widget, emails);
-					
+
 					// Add normal emails
 					_widget.set_value(emails);
-					
+
 					//check if there's any dist list to be added
 					if (dist)
 					{
@@ -4439,10 +4439,10 @@ app.classes.mail = AppJS.extend(
 			}
 			return true;
 		};
-		
+
 		/**
 		 * Resolve taglist widget which has distribution list
-		 * 
+		 *
 		 * @param {type} _widget
 		 * @param {type} _emails
 		 * @returns {Array} returns an array of distribution lists in selected widget
@@ -4459,7 +4459,7 @@ app.classes.mail = AppJS.extend(
 					list.push(selectedList[i]);
 				}
 			}
-			
+
 			// Remove dist list from emails list
 			for(var key in _emails)
 			{
@@ -4542,9 +4542,9 @@ app.classes.mail = AppJS.extend(
 				break;
 		}
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @returns {undefined}
 	 */
 	prepareMailvelopePrint: function()
@@ -4553,7 +4553,7 @@ app.classes.mail = AppJS.extend(
 		var mailvelopeTopContainer = jQuery('div.mailDisplayContainer');
 		var originFrame = jQuery('#mail-display_mailDisplayBodySrc');
 		var iframe = jQuery(this.mailvelope_iframe_selector);
-		
+
 		if (tempPrint.length >0)
 		{
 			// Mailvelope iframe height is approximately equal to the height of encrypted origin message
@@ -4565,7 +4565,7 @@ app.classes.mail = AppJS.extend(
 			mailvelopeTopContainer.addClass('mailvelopeTopContainer');
 		}
 	},
-	
+
 	/**
 	 * Mailvelope (clientside PGP) integration:
 	 * - detect Mailvelope plugin and open "egroupware" keyring (app_base.mailvelopeAvailable and _mailvelopeOpenKeyring)
@@ -4593,7 +4593,17 @@ app.classes.mail = AppJS.extend(
 
 		var container = iframe.parent()[0];
 		var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
-		mailvelope.createDisplayContainer(container_selector, armored, _keyring).then(function()
+
+		options = {
+			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
+		};
+		// get sender address, so Mailvelope can check signature
+		var from_widget = this.et2.getWidgetById('FROM_0') || this.et2.getWidgetById('previewFromAddress');
+		if (from_widget && from_widget.value)
+		{
+			options.senderAddress = from_widget.value.replace(/^.*<([^<>]+)>$/, '$1');
+		}
+		mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
 		{
 			// hide our iframe to give space for mailvelope iframe with encrypted content
 			iframe.hide();
@@ -4640,7 +4650,8 @@ app.classes.mail = AppJS.extend(
 					quotedMailHeader: options.predefinedText.slice(0, start_pgp).replace(/> /mg, '').trim()+"\n",
 					quotedMail: options.predefinedText.slice(start_pgp, end_pgp+this.end_pgp_message.length+1).replace(/> /mg, ''),
 					quotedMailIndent: start_pgp != 0,
-					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,'')
+					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,''),
+					signMsg: true	// for now (no UI) always sign, when we encrypt
 				};
 				// set encrypted checkbox, if not already set
 				var composeToolbar = this.et2.getWidgetById('composeToolbar');
@@ -4842,11 +4853,11 @@ app.classes.mail = AppJS.extend(
 			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save into VFS','info');
 		}
 	},
-	
+
 	/**
 	 * Folder Management, opens the folder magnt. dialog
 	 * with the selected acc_id from index tree
-	 * 
+	 *
 	 * @param {egw action object} _action actions
 	 * @param {object} _senders selected node
 	 */
@@ -4855,10 +4866,10 @@ app.classes.mail = AppJS.extend(
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x500');
 	},
-	
+
 	/**
 	 * Show ajax-loader when the autoloading get started
-	 * 
+	 *
 	 * @param {type} _id item id
 	 * @param {type} _widget tree widget
 	 * @returns {Boolean}
@@ -4867,18 +4878,20 @@ app.classes.mail = AppJS.extend(
 	{
 		return this.subscription_autoloadingStart (_id, _widget);
 	},
-	
+
 	/**
 	 * Revert back the icon after autoloading is finished
+	 * @param {type} _id item id
+	 * @param {type} _widget tree widget
 	 * @returns {Boolean}
 	 */
 	folderMgmt_autoloadingEnd: function(_id, _widget)
 	{
 		return true;
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @param {type} _ids
 	 * @param {type} _widget
 	 * @returns {undefined}
@@ -4887,12 +4900,12 @@ app.classes.mail = AppJS.extend(
 	{
 		// Flag to reset selected items
 		var resetSelection = false;
-		
+
 		var self = this;
-		
+
 		/**
 		 * helper function to multiselect range of nodes in same level
-		 * 
+		 *
 		 * @param {string} _a start node id
 		 * @param {string} _b end node id
 		 * @param {string} _branch totall node ids in the level
@@ -4913,7 +4926,7 @@ app.classes.mail = AppJS.extend(
 				self.folderMgmt_setCheckbox(_widget, branchItems[i], !_widget.input.isItemChecked(branchItems[i]));
 			}
 		};
-		
+
 		// extract items ids
 		var itemIds = _ids.split(_widget.input.dlmtr);
 
@@ -4927,16 +4940,16 @@ app.classes.mail = AppJS.extend(
 		{
 			resetSelection = true;
 		}
-		
+
 		if (resetSelection)
 		{
 			_widget.input._unselectItems();
 		}
 	},
-	
+
 	/**
 	 * Set enable/disable checkbox
-	 * 
+	 *
 	 * @param {object} _widget tree widget
 	 * @param {string} _itemId item tree id
 	 * @param {boolean} _stat - status to be set on checkbox true/false
@@ -4949,9 +4962,9 @@ app.classes.mail = AppJS.extend(
 			_widget.input.setSubChecked(_itemId,_stat);
 		}
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @param {type} _id
 	 * @param {type} _widget
 	 * @TODO: Implement onCheck handler in order to select or deselect subItems
@@ -4965,17 +4978,17 @@ app.classes.mail = AppJS.extend(
 			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'));
 		}
 	},
-	
+
 	/**
 	 * Detele button handler
 	 * triggers longTask dialog and send delete operation url
-	 * 
+	 *
 	 */
 	folderMgmt_deleteBtn: function ()
 	{
 		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
 		var menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
-		
+
 		var callbackDialog = function(_btn)
 		{
 			if (_btn === et2_dialog.YES_BUTTON)
@@ -5015,6 +5028,6 @@ app.classes.mail = AppJS.extend(
 		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to delete all selected folders?'), egw.lang('Delete folder'), {},
 			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
-	
-	
+
+
 });
