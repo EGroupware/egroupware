@@ -14,7 +14,7 @@
 , stati of participants reset	calendar	es-es	, estados de los participantes restablecidos
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	es-es	<b>Por favor, tenga en cuenta lo siguiente</b>: El calendario usa las fiestas de su país, que es %1. Puede cambiarlo en su %2.<br />Las vacaciones %3 se instalan automáticamente desde %4. Lo puede cambiar en %5.
 a non blocking event will not conflict with other events	calendar	es-es	Un evento que no bloquea no entrará en conflicto con otros eventos
-accept	calendar	es-es	aceptar
+accept	calendar	es-es	Aceptar
 accept or reject an invitation	calendar	es-es	Aceptar o rechazar una invitación
 accepted	calendar	es-es	Aceptado
 access denied to the calendar of %1 !!!	calendar	es-es	¡Acceso denegado al calendario de %1!
@@ -29,7 +29,7 @@ add new participants or resource	calendar	es-es	Añadir nuevos participantes o r
 add timesheet entry	calendar	es-es	Añadir entrada en la hoja de tiempos
 added	calendar	es-es	Añadido
 added by synchronisation	calendar	es-es	añadido por sincronización
-after	calendar	es-es	después
+after	calendar	es-es	Después
 after %1	calendar	es-es	Después de %1
 after current date	calendar	es-es	Después de la fecha actual
 alarm	calendar	es-es	Alarma
@@ -54,18 +54,18 @@ appointment settings	calendar	es-es	Ajustes de Citas
 are you sure you want to delete this country ?	calendar	es-es	¿Seguro que quiere borrar este país?
 are you sure you want to delete this holiday ?	calendar	es-es	¿Seguro que desea borrar esta fiesta?
 automatically purge old events after	admin	es-es	Purgar automáticamente eventos antiguos después de
-back half a month	calendar	es-es	medio mes hacia atrás
-back one month	calendar	es-es	un mes hacia atrás
-back one year	calendar	es-es	un año atrás
+back half a month	calendar	es-es	Medio mes hacia atrás
+back one month	calendar	es-es	Un mes hacia atrás
+back one year	calendar	es-es	Un año atrás
 before	calendar	es-es	Antes
 before %1	calendar	es-es	Antes de %1
 before current date	calendar	es-es	Antes de la fecha actual
-before the event	calendar	es-es	antes del evento
+before the event	calendar	es-es	Antes del evento
 birthday	calendar	es-es	Cumpleaños
 birthdays	admin	es-es	Cumpleaños
 birthdays only	calendar	es-es	Sólo cumpleaños
 both, holidays and birthdays	calendar	es-es	Ambos, festivos y cumpleaños
-busy	calendar	es-es	ocupado
+busy	calendar	es-es	Ocupado
 by	calendar	es-es	por
 calendar - list	calendar	es-es	Calendario - Lista
 calendar - multi-weekly	calendar	es-es	Calendario - Múltiples semanas
@@ -104,6 +104,7 @@ countries	calendar	es-es	Paises
 country	calendar	es-es	País
 create a new series	calendar	es-es	Crear una serie nueva
 create an exception for the given date	calendar	es-es	Crear una excepción para la fecha indicada
+create an infolog from this event	calendar	es-es	Crear un InfoLog de este evento
 create exception	calendar	es-es	Crear excepción
 create links for participants from addressbook	calendar	es-es	Crear enlaces para participantes desde la libreta de direcciones
 create new links	calendar	es-es	Crear enlaces nuevos
@@ -117,8 +118,8 @@ custom fields	common	es-es	Campos personalizados
 custom_2	common	es-es	disponibilidad
 daily	calendar	es-es	Diario
 data exchange settings	calendar	es-es	Opciones para intercambio de datos
-day	calendar	es-es	día
-days	calendar	es-es	días
+day	calendar	es-es	Día
+days	calendar	es-es	Días
 days of the week for a weekly repeated event	calendar	es-es	Días de la semana para un evento de repetición semanal
 days repeated	calendar	es-es	Días repetidos
 dayview	calendar	es-es	Vista diaria
@@ -169,7 +170,7 @@ edit status or alarms for this particular day	calendar	es-es	Editar el estado de
 edit this event	calendar	es-es	Editar este evento
 edit this series of recuring events	calendar	es-es	Editar esta serie de eventos recurrentes
 empty = no alarm	calendar	es-es	vacío = sin alarma
-empty for all	calendar	es-es	vacío para todos
+empty for all	calendar	es-es	Vacío para todos
 end	calendar	es-es	Fin
 end date/time	calendar	es-es	Fecha/Hora final
 enddate	calendar	es-es	Fecha final
@@ -276,6 +277,7 @@ ignore conflict	calendar	es-es	Ignorar conflicto
 import	calendar	es-es	Importar
 import csv-file	common	es-es	Importar fichero CSV
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	es-es	Importa eventos en su calendario desde un fichero CSV. CSV significa 'Valores Separados por Comas'. Sin embargo, en la pestaña de opciones también puede elegir otros separadores.
+imports events into your calendar from an ical file.	calendar	es-es	Importar eventos de un archivo iCal en su calendario.
 initially year aligned	calendar	es-es	inicialmente alineado al año
 insert	calendar	es-es	Insertar
 insert in document	calendar	es-es	Insertar en el documento
@@ -309,7 +311,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	es-es	N
 meeting request	calendar	es-es	Solicitud de reunión
 meetingrequest to all participants	calendar	es-es	Solicitud de reunión a todos los participantes
 midnight	calendar	es-es	Medianoche
-minutes	calendar	es-es	minutos
+minutes	calendar	es-es	Minutos
 modified	calendar	es-es	Modificado
 modifier	calendar	es-es	Modificador
 mon	calendar	es-es	Lun
@@ -327,6 +329,8 @@ no automatic purging	admin	es-es	Sin purgado automático
 no events found	calendar	es-es	No se encontraron eventos
 no filter	calendar	es-es	Sin filtro
 no matches found	calendar	es-es	No se encontraron coincidencias
+no meeting requests	calendar	es-es	No hay solicitudes de reunión
+no owner selected	calendar	es-es	Ningún propietario seleccionado.
 no recurrence	calendar	es-es	Sin recursión
 no response	calendar	es-es	Sin respuesta
 non blocking	calendar	es-es	no bloquea
@@ -347,15 +351,15 @@ occurence	calendar	es-es	Ocurrencia
 old startdate	calendar	es-es	Fecha de inicio antigua
 olddate	calendar	es-es	Fecha original
 on %1 %2 %3 your meeting request for %4	calendar	es-es	El %1 %2 %3 su solicitud de reunión para %4
-on all modification, but responses	calendar	es-es	en todas las modificaciones, excepto las respuestas
-on any time change too	calendar	es-es	también en cualquier cambio de hora
-on invitation / cancelation only	calendar	es-es	sólo en invitación o cancelación
-on participant responses too	calendar	es-es	también en las respuestas de los participantes
-on time change of more than 4 hours too	calendar	es-es	también en un cambio de hora superior a 4 horas
-one month	calendar	es-es	un mes
-one week	calendar	es-es	una semana
-one year	calendar	es-es	un año
-only group-events	calendar	es-es	sólo eventos de grupo
+on all modification, but responses	calendar	es-es	En todas las modificaciones, excepto las respuestas
+on any time change too	calendar	es-es	También en cualquier cambio de hora
+on invitation / cancelation only	calendar	es-es	Sólo en invitación o cancelación
+on participant responses too	calendar	es-es	También en las respuestas de los participantes
+on time change of more than 4 hours too	calendar	es-es	También en un cambio de hora superior a 4 horas
+one month	calendar	es-es	Un mes
+one week	calendar	es-es	Una semana
+one year	calendar	es-es	Un año
+only group-events	calendar	es-es	Sólo eventos grupales
 only the initial date of that recuring event is checked!	calendar	es-es	¡Sólo está marcada la fecha inicial del evento recurrente!
 open todo's:	calendar	es-es	Abrir tareas pendientes
 optional	calendar	es-es	Opcional
@@ -365,21 +369,21 @@ participants	calendar	es-es	Participantes
 participants disinvited from an event	calendar	es-es	Participantes que dejan de ser invitados de un evento
 participants, resources, ...	calendar	es-es	Participantes, recursos
 password for not loged in users to your freebusy information?	calendar	es-es	¿Contraseña para los usuarios sin sesión para la información de disponibilidad?
-people holiday	calendar	es-es	festivo para la gente
+people holiday	calendar	es-es	Festivo para la gente
 permission denied	calendar	es-es	Permiso denegado
 planner by category	calendar	es-es	Planificador por categorías
 planner by user	calendar	es-es	Planificador por usuario
 please note: you can configure the field assignments after you uploaded the file.	calendar	es-es	Por favor, tenga en cuenta: puede configurar el campo asignaciones DESPUES de subir el fichero.
 preselected group for entering the planner	calendar	es-es	Grupo preseleccionado para entrar en el planificador
 prevent deleting of entries	admin	es-es	Prevenir el borrado de entradas
-previous	calendar	es-es	anterior
+previous	calendar	es-es	Anterior
 private and global public	calendar	es-es	Privado y público global
 private and group public	calendar	es-es	Privado y público global
 private only	calendar	es-es	Privado solamente
 quantity	calendar	es-es	Cantidad
 re-edit event	calendar	es-es	Volver a editar evento
 receive email updates	calendar	es-es	Recibir actualizaciones de correo
-receive notifications about events you created/modified/deleted	calendar	es-es	Recibir notificaciones de evnetos que usted haya creado, modificado o borrado
+receive notifications about events you created/modified/deleted	calendar	es-es	Recibir notificaciones de eventos que usted haya creado, modificado o borrado
 receive summary of appointments	calendar	es-es	Recibir resumen de las citas
 recover	calendar	es-es	Recuperar
 recovered	calendar	es-es	Recuperado.
@@ -455,7 +459,7 @@ show only tentative accepted events	calendar	es-es	Mostrar sólo las tentativas 
 show only the date, not the year	admin	es-es	Mostrar sólo la fecha, no el año
 show this month	calendar	es-es	Mostrar este mes
 show this week	calendar	es-es	Mostrar esta semana
-single event	calendar	es-es	evento simple
+single event	calendar	es-es	Evento simple
 specify where url of the day links to	calendar	es-es	Especificar la URL del día
 start	calendar	es-es	Inicio
 start date/time	calendar	es-es	Fecha/Hora inicio
@@ -499,7 +503,7 @@ this module displays a planner calendar.	calendar	es-es	Este módulo muestra un 
 this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	es-es	Este módulo muestra el calendario de un usuario como múltiples semanas. ¡No conceda acceso para el calendario al usuario anónimo!
 this module displays calendar events as a list.	calendar	es-es	Este módulo muestra los eventos del calendario como una lista.
 this module displays the current month	calendar	es-es	Este módulo muestra el mes actual
-three month	calendar	es-es	tres meses
+three month	calendar	es-es	Tres meses
 thu	calendar	es-es	Jue
 til	calendar	es-es	hasta
 timeframe	calendar	es-es	Margen de tiempo
