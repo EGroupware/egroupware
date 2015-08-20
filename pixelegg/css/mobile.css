@@ -6421,10 +6421,6 @@ a.textSidebox {
     display: inline-block;
     background-position: center;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs:active {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl:before {
     content: "";
     background-repeat: no-repeat;
