@@ -100,22 +100,67 @@ function etemplate2(_container, _menuaction)
 
 }
 
-// List of templates (XML) that are known, not always used.  Indexed by id.
-// We share list of templates with iframes and popups
-try {
-	if (opener && opener.etemplate2)
-	{
-		etemplate2.prototype.templates = opener.etemplate2.prototype.templates;
-	}
-}
-catch (e) {
-	// catch security exception if opener is from a different domain
-}
-if (typeof etemplate2.prototype.templates == "undefined")
+/**
+ * Return template from global cache, or undefined if not cached
+ *
+ * @param {string} _name
+ * @returns {object|undefined}
+ */
+etemplate2.prototype.get_template_cache = function(_name)
 {
-	etemplate2.prototype.templates = top.etemplate2.prototype.templates || {};
-}
+	try {
+		if (opener && opener.etemplate2)
+		{
+			return opener.etemplate2.prototype.get_template_cache(_name);
+		}
+	}
+	catch (e) {
+		// catch security exception if opener is from a different domain
+	}
+	// use top window, if we are in an iframe
+	if (top !== window)
+	{
+		return top.etemplate2.prototype.get_template_cache(_name);
+	}
+	// we are the top window
+	if (typeof etemplate2.prototype.templates == "undefined")
+	{
+		etemplate2.prototype.templates = {};
+	}
+	return etemplate2.prototype.templates[_name];
+};
 
+/**
+ * Store template object in global cache
+ *
+ * @param {string} _name
+ * @param {object} _template
+ */
+etemplate2.prototype.set_template_cache = function(_name, _template)
+{
+	try {
+		if (opener && opener.etemplate2)
+		{
+			return opener.etemplate2.prototype.set_template_cache(_name, _template);
+		}
+	}
+	catch (e) {
+		// catch security exception if opener is from a different domain
+	}
+	// use top window, if we are in an iframe
+	if (top !== window)
+	{
+		return top.etemplate2.prototype.set_template_cache(_name, _template);
+	}
+	// we are the top window
+	if (typeof etemplate2.prototype.templates == "undefined")
+	{
+		etemplate2.prototype.templates = {};
+	}
+	// for IE we need to do a clone of template-object, as it might be from context of a different window
+	// and will become unavailable if that window closes
+	etemplate2.prototype.templates[_name] = jQuery.extend(true, {}, _template);
+};
 
 /**
  * Calls the resize event of all widgets
@@ -202,9 +247,8 @@ etemplate2.prototype.clear = function()
 	$j(this.DOMContainer).empty();
 
 	// Remove self from the index
-	for(name in this.templates)
+	for(name in etemplate2._byTemplate)
 	{
-		if(typeof etemplate2._byTemplate[name] == "undefined") continue;
 		for(var i = 0; i < etemplate2._byTemplate[name].length; i++)
 		{
 			if(etemplate2._byTemplate[name][i] == this)
@@ -447,9 +491,10 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			etemplate2._byTemplate[_name].push(this);
 
 			// Read the structure of the requested template
-			if (this.templates[this.name].children)
+			var template = this.get_template_cache(this.name);
+			if (template && template.children)
 			{
-				this.widgetContainer.loadFromJSON(this.templates[this.name]);
+				this.widgetContainer.loadFromJSON(template);
 			}
 
 			// List of Promises from widgets that are not quite fully loaded
@@ -544,7 +589,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 
 		// Load & process
-		if(!this.templates[_name])
+		var template = this.get_template_cache(_name);
+		if(!template)
 		{
 			jQuery.ajax({
 				url: _url,
@@ -556,7 +602,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 					{
 						var template = _data.children[i];
 						if(template.tag !== "template") continue;
-						this.templates[template.attributes.id] = template;
+						this.set_template_cache(template.attributes.id, template);
 						if(!_name) this.name = template.attributes.id;
 					}
 					_load.apply(this,[]);
