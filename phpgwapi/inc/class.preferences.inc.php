@@ -830,7 +830,7 @@ class preferences
 			{
 				$prefs = array_merge(self::unserialize($values), $prefs);
 			}
-
+			unset($row['preference_id']);
 			//error_log(__LINE__.': '.__METHOD__."() inserting app=$row[preference_app], owner=$row[preference_owner]: ".array2string($prefs));
 			$db->insert(self::TABLE, array(
 				'preference_value' => json_encode($prefs)
