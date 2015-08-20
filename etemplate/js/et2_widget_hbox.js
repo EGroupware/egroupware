@@ -96,15 +96,15 @@ var et2_hbox = et2_baseWidget.extend(
 	},
 
 	/**
-	 * The overwritten function checks whether any child element has
+	 * The overwritten loadFromXML function checks whether any child element has
 	 * a special align value.
 	 *
 	 * @param {object} _node
 	 */
-	loadFromJSON: function(_node) {
+	loadFromXML: function(_node) {
 		// Check whether any child node has an alignment tag
 		et2_filteredNodeIterator(_node, function(_node) {
-			var align = et2_readAttrWithDefault(_node, 'align','');
+			var align = _node.getAttribute("align");
 
 			if (!align)
 			{

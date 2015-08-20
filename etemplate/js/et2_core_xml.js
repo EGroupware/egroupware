@@ -64,14 +64,11 @@ function et2_directChildrenByTagName(_node, _tagName)
 	_tagName = _tagName.toLowerCase();
 
 	var result = [];
-	var children = _node.childNodes || _node.children || [];
-	for (var i = 0; i < children.length; i++)
+	for (var i = 0; i < _node.childNodes.length; i++)
 	{
-		var child = children[i];
-		child.parentNode = _node;
-		if (child.nodeName && _tagName === child.nodeName.toLowerCase() || child.tag && _tagName === child.tag)
+		if (_tagName == _node.childNodes[i].nodeName.toLowerCase())
 		{
-			result.push(child);
+			result.push(_node.childNodes[i]);
 		}
 	}
 
@@ -80,12 +77,10 @@ function et2_directChildrenByTagName(_node, _tagName)
 
 function et2_filteredNodeIterator(_node, _callback, _context)
 {
-	if(!_node.children) return;
-	for (var i = 0; i < _node.children.length; i++)
+	for (var i = 0; i < _node.childNodes.length; i++)
 	{
-		var node = _node.children[i];
-		node.parentNode = _node;
-		var nodeName = node.tag;
+		var node = _node.childNodes[i];
+		var nodeName = node.nodeName.toLowerCase();
 		if (nodeName.charAt(0) != "#")
 		{
 			_callback.call(_context, node, nodeName);
@@ -95,15 +90,9 @@ function et2_filteredNodeIterator(_node, _callback, _context)
 
 function et2_readAttrWithDefault(_node, _name, _default)
 {
-	if( _node.getAttribute)
-	{
 		var val = _node.getAttribute(_name);
-	}
-	else if (_node.attributes)
-	{
-		var val = _node.attributes[_name];
-	}
-	return (val === null || typeof val === 'undefined') ? _default : val;
+
+		return (val === null) ? _default : val;
 }
 
 

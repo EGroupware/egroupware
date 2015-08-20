@@ -352,9 +352,9 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 				var cell = this._getCell(cells, x, y);
 
 				// Read the span value of the element
-				if (node.attributes.span)
+				if (node.getAttribute("span"))
 				{
-					cell.rowSpan = node.attributes.span;
+					cell.rowSpan = node.getAttribute("span");
 				}
 				else
 				{
@@ -423,9 +423,9 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 				var cell = this._getCell(cells, x, y);
 
 				// Read the span value of the element
-				if (node.attributes && node.attributes.span)
+				if (node.getAttribute("span"))
 				{
-					cell.colSpan = node.attributes.span;
+					cell.colSpan = node.getAttribute("span");
 				}
 				else
 				{
@@ -441,20 +441,20 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 				var span = cell.colSpan = this._forceNumber(cell.colSpan);
 
 				// Read the align value of the element
-				if (node.attributes && node.attributes.align)
+				if (node.getAttribute("align"))
 				{
-					cell.align = node.attributes.align;
+					cell.align = node.getAttribute("align");
 				}
 
 				// store id of nextmatch-*headers, so it is available for disabled widgets, which get not instanciated
 				if (nodeName.substr(0, 10) == 'nextmatch-')
 				{
-					cell.nm_id = node.attributes.id;
+					cell.nm_id = node.getAttribute('id');
 				}
 				// Apply widget's class to td, for backward compatability
-				if(node.attributes && node.attributes.class)
+				if(node.getAttribute("class"))
 				{
-					cell.class += (cell.class ? " " : "") + node.attributes.class;
+					cell.class += (cell.class ? " " : "") + node.getAttribute("class");
 				}
 
 				// Create the element
@@ -480,7 +480,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 
 					}
 
-					var widget = this.createElementFromObject(node, nodeName);
+					var widget = this.createElementFromNode(node, nodeName);
 				}
 
 				// Fill all cells the widget is spanning
@@ -520,7 +520,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 				}
 				// If row disabled, just skip it
 				var disabled = false;
-				if(et2_readAttrWithDefault(node, "disabled", false) == "1")
+				if(node.getAttribute("disabled") == "1")
 				{
 					disabled = true;
 				}
@@ -595,23 +595,23 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 
 	/**
 	 * As the does not fit very well into the default widget structure, we're
-	 * overwriting the loadFromJSON function and doing a two-pass reading -
+	 * overwriting the loadFromXML function and doing a two-pass reading -
 	 * in the first step the
 	 *
 	 * @param {object} _node xml node to process
 	 */
-	loadFromJSON: function(_node) {
+	loadFromXML: function(_node) {
 		// Keep the node for later changing / reloading
 		this.template_node = _node;
 
 		// Get the columns and rows tag
-		var rowsElems = _node.children[1];
-		var columnsElems = _node.children[0];
+		var rowsElems = et2_directChildrenByTagName(_node, "rows");
+		var columnsElems = et2_directChildrenByTagName(_node, "columns");
 
-		if (rowsElems && columnsElems)
+		if (rowsElems.length == 1 && columnsElems.length == 1)
 		{
-			var columns = columnsElems;
-			var rows = rowsElems;
+			var columns = columnsElems[0];
+			var rows = rowsElems[0];
 			var colData = [];
 			var rowData = [];
 
@@ -870,7 +870,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 		}
 
 		// Rebuild grid
-		this.loadFromJSON(this.template_node);
+		this.loadFromXML(this.template_node);
 
 		// New widgets need to finish
 		this.loadingFinished();

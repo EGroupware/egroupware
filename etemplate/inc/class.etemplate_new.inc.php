@@ -166,11 +166,9 @@ class etemplate_new extends etemplate_widget_template
 
 		// Info required to load the etemplate client-side
 		$dom_id = str_replace('.','-',$this->dom_id);
-		$filename = etemplate_widget_template::rel2path(etemplate_widget_template::relPath($name));
 		$load_array = array(
 			'name' => $this->name,
-			'url' => egw_framework::link('/etemplate/template.php', array('name' => $this->name, 'download' => filemtime($filename))),
-			// etemplate_widget_template::rel2url($this->rel_path),
+			'url' => etemplate_widget_template::rel2url($this->rel_path),
 			'data' => $data,
 			'DOMNodeID' => $dom_id,
 		);

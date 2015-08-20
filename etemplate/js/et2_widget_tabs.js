@@ -132,7 +132,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 					"contentDiv": null,
 					"flagDiv": null,
 					"hidden": hide,
-					"JSON": null,
+					"XMLNode": null,
 					"promise": null
 				});
 			}
@@ -157,7 +157,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			if (i < tabData.length)
 			{
 				// Store node for later evaluation
-				tabData[i].JSON = node;
+				tabData[i].XMLNode = node;
 			}
 			else
 			{
@@ -167,7 +167,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 		}, this);
 	},
 
-	loadFromJSON: function(_node) {
+	loadFromXML: function(_node) {
 		// Get the tabs and tabpanels tags
 		var tabsElems = et2_directChildrenByTagName(_node, "tabs");
 		var tabpanelsElems = et2_directChildrenByTagName(_node, "tabpanels");
@@ -219,7 +219,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 					"contentDiv": null,
 					"flagDiv": null,
 					"hidden": typeof tab.hidden != "undefined" ? tab.hidden : readonly[tab_id] || false,
-					"JSON": null,
+					"XMLNode": null,
 					"promise": null
 				});
 			}
@@ -274,12 +274,12 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 	_loadTab: function(index,promises) {
 		var tabData = this.tabData[index];
 		if(!tabData || tabData.loaded) return;
-		if(tabData.JSON != null)
+		if(tabData.XMLNode != null)
 		{
-			tabData.widget = this.createElementFromObject(tabData.JSON,tabData.JSON.tag);
+			tabData.widget = this.createElementFromNode(tabData.XMLNode,tabData.XMLNode.nodeName.toLowerCase());
 
-			// Release the JSON object
-			tabData.JSON = null;
+			// Release the XML node
+			tabData.XMLNode = null;
 		}
 		else if (tabData.widget_options)
 		{

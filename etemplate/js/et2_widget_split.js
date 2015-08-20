@@ -114,7 +114,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 	 * Tap in here to check if we have real children, because all children should be created
 	 * by this point.  If there are, replace the placeholders.
 	 */
-	loadFromJSON: function() {
+	loadFromXML: function() {
 		this._super.apply(this, arguments);
 		if(this._children.length > 0)
 		{

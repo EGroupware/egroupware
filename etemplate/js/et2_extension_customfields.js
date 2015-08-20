@@ -328,13 +328,13 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 	},
 
-	loadFromJSON: function(_node) {
+	loadFromXML: function(_node) {
 		this.loadFields();
 
 		// Load the nodes as usual
 		this._super.apply(this, arguments);
 	},
-	
+
 	set_value: function(_value) {
 		if(!this.options.customfields) return;
 		for(var field_name in this.options.customfields)
