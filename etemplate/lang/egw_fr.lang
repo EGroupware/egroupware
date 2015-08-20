@@ -7,6 +7,7 @@
 %1 more...	etemplate	fr	%1 plus...
 %1 new etemplates imported for application '%2'	etemplate	fr	%1 eTemplate(s) importé(s) pour l'Application '%2'
 %1 not implemented for %2!	etemplate	fr	%1 pas implémenté pour %2 !
+%1' han an invalid format !!!	etemplate	fr	%1' a un format invalide !
 %1, duplicate id	etemplate	fr	%1, ID en doublon
 %s disabled	etemplate	fr	%s désactivé
 %s needed	etemplate	fr	%s nécessaire
@@ -468,6 +469,7 @@ template saved	etemplate	fr	Template enregistré
 text	etemplate	fr	Texte
 textarea	etemplate	fr	ChampTexte
 th	etemplate	fr	Je
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	fr	Le document peut contenir des mots clés comme {{%3}} , pour être remplacé avec les données. %1Listes complets des mots-clés%2.
 the following document-types are supported:	preferences	fr	Les types de documents suivant sont autorisés :
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 time	etemplate	fr	Heure
