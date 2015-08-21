@@ -10,13 +10,13 @@
  * @version $Id:$
  */
 
-	
+
 /**
  * Define tree as class tree widget
- */	
-use \etemplate_widget_tree as tree;	
+ */
+use \etemplate_widget_tree as tree;
 
-		
+
 /**
  * Mail tree worker class
  *  -provides backend functionality for folder tree
@@ -31,7 +31,7 @@ class mail_tree
 	 * @var string
 	 */
 	static $delimiter = '::';
-	
+
 	/**
 	 * Icons used for nodes different states
 	 *
@@ -46,7 +46,7 @@ class mail_tree
 		'folderHome' => "kfm_home.png",
 		'folderAccount' => "thunderbird.png",
 	);
-	
+
 	/**
 	 * Mail tree constructor
 	 *
@@ -55,7 +55,7 @@ class mail_tree
 	function __construct($mail_ui) {
 		$this->ui = $mail_ui;
 	}
-	
+
 	/**
 	 *
 	 * Structs an array of fake INBOX to show as an error node
@@ -90,7 +90,7 @@ class mail_tree
 					)
 		);
 	}
-	
+
 	/**
 	 * Get folder data from path
 	 *
@@ -112,7 +112,7 @@ class mail_tree
 			'path' => $path_chain
 		);
 	}
-	
+
 	/**
 	 * Check if a given node has children attribute set
 	 *
@@ -127,7 +127,7 @@ class mail_tree
 				in_array('\HasChildren', $_node['ATTRIBUTES'])) $hasChildren = 1;
 		return $hasChildren;
 	}
-	
+
 	/**
 	 * Check if the given tree id is account node (means root)
 	 *
@@ -140,7 +140,7 @@ class mail_tree
 		if ($leaf || $_node == null) return false;
 		return true;
 	}
-	
+
 	/**
 	 * Calculate node level form the root
 	 * @param type $_path tree node full path, e.g. INBOX/Drafts
@@ -157,7 +157,7 @@ class mail_tree
 		}
 		return false;
 	}
-	
+
 	/**
 	 * getTree provides tree structure regarding to selected node
 	 *
@@ -177,9 +177,9 @@ class mail_tree
 		//Init mail folders
 		$tree = array(tree::ID=> $_parent?$_parent:0,tree::CHILDREN => array());
 		$hDelimiter = $this->ui->mail_bo->getHierarchyDelimiter();
-		
+
 		if ($_parent) list($_profileID) = explode(self::$delimiter, $_parent);
-				
+
 		if (is_numeric($_profileID) && $_profileID != $this->ui->mail_bo->profileID)
 		{
 			try
@@ -189,7 +189,7 @@ class mail_tree
 				return self::treeLeafNoConnectionArray($_profileID, $ex->getMessage(),array($_profileID), '');
 			}
 		}
-		
+
 		try
 		{
 			// User defined folders based on account
@@ -203,9 +203,9 @@ class mail_tree
 			);
 			if ($_parent && !self::isAccountNode($_parent)) // Single node loader
 			{
-				$nodeInfo = self::pathToFolderData($_parent, $hDelimiter);	
+				$nodeInfo = self::pathToFolderData($_parent, $hDelimiter);
 				$folders = $this->ui->mail_bo->getFolderArrays($nodeInfo['mailbox'],false,$_allInOneGo?0:2, $_subscribedOnly);
-				
+
 				$childrenNode = array();
 				foreach ($folders as &$node)
 				{
@@ -297,10 +297,10 @@ class mail_tree
 			//mail_ui::callWizard($ex->getMessage(), false, 'error');
 			return self::treeLeafNoConnectionArray($_profileID, $ex->getMessage(),array($_profileID), '');
 		}
-		
+
 		return $tree;
 	}
-	
+
 	/**
 	 * setOutStructure - helper function to transform the folderObjectList to dhtmlXTreeObject requirements
 	 *
@@ -386,7 +386,7 @@ class mail_tree
 		{
 			$path = explode($data['folderarray']['delimiter'], $data['folderarray']['MAILBOX']);
 			$folderName = array_pop($path);
-			
+
 			if ($data['folderarray']['MAILBOX'] === "INBOX")
 			{
 				$data[tree::IMAGE_LEAF] = self::$leafImages['folderHome'];
@@ -420,10 +420,10 @@ class mail_tree
 				$data[tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderOpen'];
 				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderClose'];
 			}
-			
+
 			// Contains unseen mails for the folder
 			$unseen = $data['folderarray']['counter']['UNSEEN'];
-			
+
 			// if there's unseen mails then change the label and style
 			// accordingly to indicate useen mails
 			if ($unseen > 0)
@@ -435,10 +435,10 @@ class mail_tree
 		//Remove extra data from tree structure
 		unset($data['folderarray']);
 		unset($data['path']);
-		
+
 		$insert['item'][] = $data;
 	}
-	
+
 	/**
 	 * Get accounts root node, fetches all or an accounts for a user
 	 *
@@ -451,14 +451,14 @@ class mail_tree
 	static function getAccountsRootNode($_profileID = null, $_noCheckbox = false, $_openTopLevel = 0 )
 	{
 		$roots = array(tree::ID => 0, tree::CHILDREN => array());
-		
+
 		foreach(emailadmin_account::search(true, false) as $acc_id => $accObj)
 		{
 			if (!$accObj->is_imap()|| $_profileID && $acc_id != $_profileID) continue;
 			$identity = emailadmin_account::identity_name($accObj,true,$GLOBALS['egw_info']['user']['acount_id']);
 			// Open top level folders for active account
 			$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
-			
+
 			$baseNode = array(
 							tree::ID=> (string)$acc_id,
 							tree::LABEL => str_replace(array('<','>'),array('[',']'),$identity),
@@ -476,13 +476,13 @@ class mail_tree
 										'sieve' => $accObj->imapServer()->acc_sieve_enabled,
 										'spamfolder'=> $accObj->imapServer()->acc_folder_junk?true:false
 									),
-							tree::NOCHECKBOX  => $_noCheckbox	
+							tree::NOCHECKBOX  => $_noCheckbox
 			);
 			self::setOutStructure($baseNode, $roots,self::$delimiter);
 		}
 		return $roots;
 	}
-	
+
 	/**
 	 * Initialization tree for index sidebox menu
 	 *
@@ -490,7 +490,7 @@ class mail_tree
 	 * fill the active accounts with its children.
 	 *
 	 * @param string $_parent = null no parent node means root with the first level of folders
-	 * @param string $_profileID = '' icServer id
+	 * @param string $_profileID = '' active profile / acc_id
 	 * @param int|boolean $_openTopLevel = 1 Open top level folders on load if it's set to 1|true,
 	 *  false|0 leaves them in closed state
 	 * @param boolean $_subscribedOnly = false get only subscribed folders
@@ -499,12 +499,11 @@ class mail_tree
 	 */
 	function getInitialIndexTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_subscribedOnly= false, $_allInOneGo = false)
 	{
-		$tree = $this->getTree($_parent, $_profileID, $_openTopLevel, false, $_subscribedOnly, $_allInOneGo);
-		$activeAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		$branches = $this->getTree($activeAccount, $activeAccount,1,false,$_subscribedOnly,$_allInOneGo);
+		$tree = $this->getTree($_parent, '', $_openTopLevel, false, $_subscribedOnly, $_allInOneGo);
+		$branches = $this->getTree($_profileID, $_profileID,1,false,$_subscribedOnly,$_allInOneGo);
 		foreach ($tree[tree::CHILDREN] as &$account)
 		{
-			if ($account[tree::ID] == $activeAccount)
+			if ($account[tree::ID] == $_profileID)
 			{
 				$account = $branches;
 			}
