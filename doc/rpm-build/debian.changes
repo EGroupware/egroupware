@@ -1,3 +1,19 @@
+egroupware-epl (14.3.20150821) hardy; urgency=low
+
+  * All Apps: Implement drag and drop file from desktop into CKEditor / html-editor
+  * Login: catch all exceptions in session creation, to NOT log user passwords, in case of (eg. database-)errors
+  * PostgreSQL/Filemanager: fix SQL error while downloading files with long name (probably other cases too)
+  * PostgreSQL: fix SQL error on login with auto-create accounts enabled and user-name already exists with different case
+  * Admin: fix SQL error when searching in access rights popup (probably other places too)
+  * Calendar: fix SQL error on storing events containing rfc822 email addresses with non-ascii characters eg. "Hugo Müller <hm@test.org>"
+  * InfoLog: fix SQL errors for custom types containing non-ascii chars (eg. German umlauts or Frensh acents
+  * Mail: performance improvement for mail folder-tree
+  * Tracker: treat html2text properly when notifying with html_edit activated
+  * Addressbook: storing of account-contact-data did not work for non-admins which are in groups allowed to edit accounts (defined in Addressbook configuration)
+  * Addressbook: fixed copying a contact one can only read, gives a readonly popup with just a cancel button
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 21 Aug 2015 10:04:56 +0200
+
 egroupware-epl (14.3.20150811) hardy; urgency=low
 
   * Filemanager: fix comments show non-ascii chars as ? (requires DB schema update again!)
