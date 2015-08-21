@@ -588,7 +588,7 @@ class accounts_ads
 			$attributes = array();
 			foreach($new2adldap as $egw => $adldap)
 			{
-				if (isset($data[$egw])) $attributes[$adldap] = $data[$egw];
+				$attributes[$adldap] = (string)$data[$egw];
 			}
 			$attributes['container'] = $this->_get_container();
 
