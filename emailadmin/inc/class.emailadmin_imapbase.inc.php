@@ -282,10 +282,6 @@ class emailadmin_imapbase
 		{
 			$oldProfileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		}
-		else
-		{
-			$oldProfileID = emailadmin_account::get_default_acc_id();
-		}
 		if ($_testConnection)
 		{
 			try

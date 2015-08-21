@@ -23,7 +23,7 @@
  * If no profile change is needed they just call:
  *		$mail_ui = new mail_ui();
  * Afterwards they use $mail_ui instead of $this.
- */	
+ */
 class mail_ui
 {
 	/**
@@ -237,7 +237,7 @@ class mail_ui
 
 		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
-	
+
 	/**
 	 * Ajax function to request next branch of a tree branch
 	 */
@@ -247,7 +247,7 @@ class mail_ui
 		$_id = $_id? $_id:$_GET['id'];
 		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_id,'',1,false));
 	}
-	
+
 	/**
 	 * Subscription popup window
 	 *
@@ -269,7 +269,7 @@ class mail_ui
 		// Initial tree's options, the rest would be loaded dynamicaly by autoloading,
 		// triggered from client-side. Also, we keep this here as
 		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true);
-		
+
 		//Get all subscribed folders
 		// as getting all subscribed folders is very fast operation
 		// we can use it to get a comparison base for folders which
@@ -279,11 +279,11 @@ class mail_ui
 		} catch (Exception $ex) {
 			egw_framework::message($ex->getMessage());
 		}
-		
+
 		if (!is_array($content))
 		{
 			$content['foldertree'] = array();
-			
+
 			foreach ($subscribed as $folder)
 			{
 				$folderName = $profileId . self::$delimiter . $folder['MAILBOX'];
@@ -314,7 +314,7 @@ class mail_ui
 							if (is_array($subscribed) && !$subscribed[$node] && $value['value']) $to_subscribe [] = $node;
 							if ($value['value']) $cont[] = $path;
 						}
-						
+
 					}
 					$content['foldertree'] = $cont;
 					// set foldertree options to basic node in order to avoid initial autoloading
@@ -384,7 +384,7 @@ class mail_ui
 		}
 
 		$preserv['profileId'] = $profileId;
-		
+
 		$readonlys = array();
 
 		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,$preserv,2);
@@ -483,7 +483,7 @@ class mail_ui
 					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
 				}
 				//$zstarttime = microtime (true);
-				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, null, null, true,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, true,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 				//$zendtime = microtime(true) - $zstarttime;
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
@@ -765,7 +765,7 @@ class mail_ui
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 
 		if (!empty($_folderName)) $fetchCounters = true;
-		
+
 		// Check if it is called for refresh root
 		// then we need to reinitialized the index tree
 		if(!$nodeID && !$_profileID)
@@ -775,7 +775,7 @@ class mail_ui
 		else
 		{
 			$data = $this->mail_tree->getTree($nodeID,$_profileID,0, false,$subscribedOnly,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-		}	
+		}
 		if (!is_null($_nodeID)) return $data;
 		etemplate_widget_tree::send_quote_json($data);
 	}
@@ -805,7 +805,7 @@ class mail_ui
 		}
 	}
 
-	
+
 	/**
 	 * Get actions / context menu for index
 	 *
@@ -4590,7 +4590,7 @@ class mail_ui
 			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
 	}
-	
+
 	/**
 	 * Autoloading function to load branches of tree node
 	 * of management folder tree
@@ -4603,7 +4603,7 @@ class mail_ui
 		$_id = $_id? $_id:$_GET['id'];
 		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_id,'',1,true,false,false,false));
 	}
-	
+
 	/**
 	 * Main function to handle folder management dialog
 	 *
@@ -4614,12 +4614,12 @@ class mail_ui
 		$dtmpl = new etemplate_new('mail.folder_management');
 		$profileID = $_GET['acc_id']? $_GET['acc_id']: $content['acc_id'];
 		$sel_options['tree'] = $this->mail_tree->getTree(null,$profileID, 1, true, false, false);
-		
+
 		if (!is_array($content))
 		{
 			$content = array ('acc_id' => $profileID);
 		}
-		
+
 		$readonlys = array();
 		// Preserv
 		$preserv = array(
@@ -4627,7 +4627,7 @@ class mail_ui
 		);
 		$dtmpl->exec('mail.mail_ui.folderManagement', $content,$sel_options,$readonlys,$preserv,2);
 	}
-	
+
 	/**
 	 * Function to delete folder for management longTask dialog
 	 * it sends successfully deleted folder as response to be
