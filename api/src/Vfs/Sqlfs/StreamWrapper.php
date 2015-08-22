@@ -239,7 +239,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 			$stmt = self::$pdo->prepare($query);
 			$values = array(
-				'fs_name' => Vfs::basename($path),
+				'fs_name' => self::limit_filename(Vfs::basename($path)),
 				'fs_dir'  => $dir_stat['ino'],
 				// we use the mode of the dir, so files in group dirs stay accessible by all members
 				'fs_mode' => $dir_stat['mode'] & 0666,
@@ -661,7 +661,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			' WHERE fs_dir=:old_dir AND fs_name'.self::$case_sensitive_equal.':old_name');
 		$ok = $stmt->execute(array(
 			'fs_dir'   => $to_dir_stat['ino'],
-			'fs_name'  => Vfs::basename($path_to),
+			'fs_name' => self::limit_filename(Vfs::basename($path_to)),
 			'old_dir'  => $from_dir_stat['ino'],
 			'old_name' => $from_stat['name'],
 		));
@@ -751,7 +751,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
 					') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
 		if (($ok = $stmt->execute(array(
-			'fs_name' => Vfs::basename($path),
+			'fs_name' => self::limit_filename(Vfs::basename($path)),
 			'fs_dir'  => $parent['ino'],
 			'fs_mode' => $parent['mode'],
 			'fs_uid'  => $parent['uid'],
@@ -773,7 +773,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			if ($stmt->execute(array(
 				'fs_dir'  => $parent['ino'],
 				'fs_active' => self::_pdo_boolean(true),
-				'fs_name' => Vfs::basename($path),
+				'fs_name' => self::limit_filename(Vfs::basename($path)),
 			)) && $stmt->fetchColumn() > 1)	// if there's more then one --> remove our new dir
 			{
 				self::$pdo->query('DELETE FROM '.self::TABLE.' WHERE fs_id='.$new_fs_id);
@@ -1319,7 +1319,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		unset(self::$stat_cache[Vfs::parse_url($link,PHP_URL_PATH)]);
 
 		return !!$stmt->execute(array(
-			'fs_name' => Vfs::basename($link),
+			'fs_name' => self::limit_filename(Vfs::basename($link)),
 			'fs_dir'  => $dir_stat['ino'],
 			'fs_mode' => ($dir_stat['mode'] & 0666),
 			'fs_uid'  => $dir_stat['uid'] ? $dir_stat['uid'] : Vfs::$user,
@@ -1570,6 +1570,34 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($fs_ids).')='.array2string($pathes));
 		return is_array($fs_ids) ? $pathes : array_shift($pathes);
+	}
+
+	/**
+	 * Limit filename to precision of column while keeping the extension
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	static protected function limit_filename($name)
+	{
+		static $fs_name_precision = null;
+		if (!isset($fs_name_precision))
+		{
+			$fs_name_precision = $GLOBALS['egw']->db->get_column_attribute('fs_name', self::TABLE, 'phpgwapi', 'precision');
+		}
+		if (mb_strlen($name) > $fs_name_precision)
+		{
+			$parts = explode('.', $name);
+			if ($parts > 1 && mb_strlen($extension = '.'.array_pop($parts)) <= $fs_name_precision)
+			{
+				$name = mb_substr(implode('.', $parts), 0, $fs_name_precision-mb_strlen($extension)).$extension;
+			}
+			else
+			{
+				$name = mb_substr(implode('.', $parts), 0, $fs_name_precision);
+			}
+		}
+		return $name;
 	}
 
 	/**
