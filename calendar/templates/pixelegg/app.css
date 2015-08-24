@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 53324 2015-08-06 17:14:20Z nathangray $ */
+/* $Id: app.css 53347 2015-08-11 15:35:54Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -37,6 +37,15 @@
 }
 #calendar-sidebox_buttons tbody {
   width: 100%;
+}
+#calendar-sidebox_date td.ui-datepicker-week-col {
+  cursor: pointer;
+}
+#calendar-sidebox_date .calendar_calHoliday {
+  background: inherit;
+}
+#calendar-sidebox_date .calendar_calHoliday a {
+  background-color: #dac0c0;
 }
 #calendar-todo {
   float: right;
@@ -2275,6 +2284,9 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #uical_select_owner,
 #calendar_merge {
   font-size: 11px;
+}
+#calendar-sidebox_date .calendar_calHoliday a {
+  background-color: #679fd2;
 }
 #uical_select_owner {
   margin: 9px 0 9px;

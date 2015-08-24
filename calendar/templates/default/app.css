@@ -25,6 +25,15 @@
 #calendar-sidebox_buttons tbody {
 	width: 100%;
 }
+#calendar-sidebox_date td.ui-datepicker-week-col {
+	cursor: pointer;
+}
+#calendar-sidebox_date .calendar_calHoliday {
+	background: inherit;
+}
+#calendar-sidebox_date .calendar_calHoliday a {
+	background-color: #dac0c0;
+}
 
 #calendar-todo {
 	float: right;

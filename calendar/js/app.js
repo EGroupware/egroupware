@@ -558,9 +558,13 @@ app.classes.calendar = AppJS.extend(
 	 */
 	event_change: function(event, widget, dialog_button)
 	{
+		// Add loading spinner - not visible if the body / gradient is there though
+		widget.div.addClass('loading');
 		egw().json(
 			'calendar.calendar_uiforms.ajax_moveEvent',
-			[widget.options.value.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration]
+			[widget.options.value.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration],
+			// Remove loading spinner
+			function() {widget.div.removeClass('loading');}
 		).sendRequest(true);
 	},
 
@@ -2258,31 +2262,62 @@ app.classes.calendar = AppJS.extend(
 		if(date)
 		{
 			date.input_date.datepicker("option", {
-				showButtonPanel:	false
-				// TODO: We could include tooltips for holidays
+				showButtonPanel:	false,
+				onChangeMonthYear:	function(year, month, inst)
+				{
+					// Switch to month view for that month
+					var date = new Date(app.calendar.state.date);
+					date.setUTCDate(1);
+					date.setFullYear(year);
+					date.setUTCMonth(month-1);
+					app.calendar.update_state({
+						view: 'month',
+						date: date
+					})
+				},
+				// Mark holidays
+				beforeShowDay: function (date)
+				{
+					var holidays = et2_calendar_daycol.get_holidays({day_class_holiday: function() {}}, date.getFullYear());
+					var day_holidays = holidays[''+date.getUTCFullYear() +
+						sprintf("%02d",date.getUTCMonth()+1) +
+						sprintf("%02d",date.getUTCDate())];
+					var css_class = '';
+					var tooltip = '';
+					if(typeof day_holidays !== 'undefined' && day_holidays.length)
+					{
+						for(var i = 0; i < day_holidays.length; i++)
+						{
+							if (typeof day_holidays[i]['birthyear'] !== 'undefined')
+							{
+								css_class +='calendar_calBirthday ';
+							}
+							else
+							{
+								css_class += 'calendar_calHoliday ';
+							}
+							tooltip += day_holidays[i]['name'] + "\n";
+						}
+					}
+					return [true, css_class, tooltip];
+				}
 			});
+
+			// Clickable week numbers
+			date.input_date.on('mouseenter','.ui-datepicker-week-col', function() {
+					$j(this).siblings().find('a').addClass('ui-state-hover');
+				})
+				.on('mouseleave','.ui-datepicker-week-col', function() {
+					$j(this).siblings().find('a').removeClass('ui-state-hover');
+				})
+				.on('click', '.ui-datepicker-week-col', function() {
+					// Fake a click event on the first day to get the updated date
+					$j(this).next().click();
+
+					// Set to week view
+					app.calendar.update_state({view: 'week', date: date.getValue()});
+				});
 		}
-		// Show / Hide weekends based on preference of weekends should be shown
-		egw.css('#'+date.input_date.attr('id') + ' .ui-datepicker-week-end',
-			egw.preference('days_in_weekview', 'calendar') === "5" ? 'display: none;' : 'display: table-cell;'
-		);
-
-
-		// Clickable week numbers
-		date.input_date.on('mouseenter','.ui-datepicker-week-col', function() {
-				$j(this).siblings().find('a').addClass('ui-state-hover');
-			})
-			.on('mouseleave','.ui-datepicker-week-col', function() {
-				$j(this).siblings().find('a').removeClass('ui-state-hover');
-			})
-			.on('click', '.ui-datepicker-week-col', function() {
-				// Fake a click event on the first day to get the updated date
-				$j(this).next().click();
-
-				// Set to week view
-				app.calendar.update_state({view: 'week', date: date.getValue()});
-			});
-
 	},
 	
 	/**
