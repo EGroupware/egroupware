@@ -216,6 +216,15 @@ class preferences
 				$app = trim($row['preference_app']);
 
 				$prefs[$row['preference_owner']][$app] = self::unserialize($row['preference_value']);
+
+				// fix old PHP serialized attribute-values
+				foreach($prefs[$row['preference_owner']][$app] as &$val)
+				{
+					if (is_string($val) && $val[0] != 'a' && $val[1] != ':' && ($v = php_safe_unserialize($val)))
+					{
+						$val = $v;
+					}
+				}
 			}
 			foreach($db_read as $id)
 			{
