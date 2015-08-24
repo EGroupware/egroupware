@@ -880,8 +880,9 @@ class calendar_uiviews extends calendar_ui
 		{
 			$content = '';
 			$headerCounter = 0;
-			foreach($this->_get_planner_users(false) as $uid => $label)
+			foreach(explode(',',$this->owner) as $uid)
 			{
+				$label = $this->bo->participant_name($uid);
 				$content .= '<div data-sortable-id="'.$uid.'">';
 				$search_params['users'] = $uid;
 				$content .= '<b>'.$label."</b>\n";
