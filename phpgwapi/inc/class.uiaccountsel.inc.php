@@ -226,7 +226,6 @@ class uiaccountsel
 			}
 		}
 		// sort users and groups alphabeticaly and put the groups behind the users
-		uasort($already_selected,strcasecmp);
 		uasort($users,strcasecmp);
 		uasort($groups,strcasecmp);
 		$select = $already_selected + $users + $groups;
