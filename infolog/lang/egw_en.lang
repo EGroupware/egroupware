@@ -512,6 +512,7 @@ which additional fields should the responsible be allowed to edit without having
 which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get
 which participants should be preselected when scheduling an appointment.	infolog	en	Which participants should be preselected when scheduling an appointment.
 which types should the calendar show	infolog	en	Which types should the calendar show
+which types should the calendar show like events?	infolog	en	Which types should the calendar show like events?
 will-call	infolog	en	Will call
 write (add or update) a record by passing its fields.	infolog	en	Write, add or update a record by passing its fields.
 yes - close	infolog	en	Yes - Close
