@@ -218,9 +218,11 @@ class preferences
 				$prefs[$row['preference_owner']][$app] = self::unserialize($row['preference_value']);
 
 				// fix old PHP serialized attribute-values
-				foreach($prefs[$row['preference_owner']][$app] as &$val)
+				foreach($prefs[$row['preference_owner']][$app] as $name => &$val)
 				{
-					if (is_string($val) && $val[0] != 'a' && $val[1] != ':' && ($v = php_safe_unserialize($val)))
+					if (is_string($val) && $val[0] != 'a' && $val[1] != ':' &&
+						// using a white-list currently only matching favorites
+						substr($name, 0, 9) == 'favorite_' && ($v = php_safe_unserialize($val)))
 					{
 						$val = $v;
 					}
