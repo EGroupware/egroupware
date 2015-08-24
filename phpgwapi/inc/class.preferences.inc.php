@@ -731,7 +731,7 @@ class preferences
 	 *
 	 * @param string $app app-name or null for all apps
 	 * @param string $name attribute name or regular expression (enclosed in /) to match attribute-name eg. '/^favorite_/'
-	 * @param string|callable $value new value to set, or null or '' to delete it or callable returning new value: function($attr, $old_value)
+	 * @param string|callable $value new value to set, or null or '' to delete it or callable returning new value: function($attr, $old_value, $owner)
 	 * @param string $old_value if given, only change if that's current value
 	 * @param string $type if given limit to "user", "forced", "default", "group"
 	 */
@@ -778,7 +778,7 @@ class preferences
 			{
 				if (isset($old_value) && $prefs[$attr] != $old_value) continue;
 
-				$val = is_callable($value) ? call_user_func($value, $attr, $prefs[$attr]) : $value;
+				$val = is_callable($value) ? call_user_func($value, $attr, $prefs[$attr], $row['preference_owner']) : $value;
 				if ($val === $prefs[$attr]) continue;
 
 				$updated = true;
