@@ -216,17 +216,6 @@ class preferences
 				$app = trim($row['preference_app']);
 
 				$prefs[$row['preference_owner']][$app] = self::unserialize($row['preference_value']);
-
-				// fix old PHP serialized attribute-values
-				foreach($prefs[$row['preference_owner']][$app] as $name => &$val)
-				{
-					if (is_string($val) && $val[0] != 'a' && $val[1] != ':' &&
-						// using a white-list currently only matching favorites
-						substr($name, 0, 9) == 'favorite_' && ($v = php_safe_unserialize($val)))
-					{
-						$val = $v;
-					}
-				}
 			}
 			foreach($db_read as $id)
 			{
@@ -740,9 +729,9 @@ class preferences
 	/**
 	 * Change single value in preferences of all users (incl. groups, default and forced)
 	 *
-	 * @param string $app
-	 * @param string $name
-	 * @param string $value new value to set, or null or '' to delete it
+	 * @param string $app app-name or null for all apps
+	 * @param string $name attribute name or regular expression (enclosed in /) to match attribute-name eg. '/^favorite_/'
+	 * @param string|callable $value new value to set, or null or '' to delete it or callable returning new value: function($attr, $old_value)
 	 * @param string $old_value if given, only change if that's current value
 	 * @param string $type if given limit to "user", "forced", "default", "group"
 	 */
@@ -750,9 +739,9 @@ class preferences
 	{
 		$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 
-		$where = array(
-			'preference_app' => $app,
-		);
+		$where = array();
+		if ($app) $where['preference_app'] = $app;
+
 		switch($type)
 		{
 			case 'forced':
@@ -772,30 +761,53 @@ class preferences
 		{
 			$prefs = self::unserialize($row['preference_value']);
 
-			if (isset($old_value) && $prefs[$name] != $old_value) continue;
-
-			if ((string)$value !== '')
+			if ($name[0] == '/' && substr($name, -1) == '/')
 			{
-				$prefs[$name] = $value;
+				$attrs = array_filter(array_keys($prefs), function($n) use ($name)
+				{
+					return preg_match($name, $n);
+				});
 			}
 			else
 			{
-				unset($prefs[$name]);
+				$attrs = array($name);
 			}
 
-			$db->update(self::TABLE, array(
-				'preference_value' => json_encode($prefs),
-			), array(
-				'preference_owner' => $row['preference_owner'],
-				'preference_app'   => $row['preference_app'],
-			), __LINE__, __FILE__);
-
-			// update instance-wide cache
-			$cached = egw_cache::getInstance(__CLASS__, $row['preference_owner']);
-			if($cached && $cached[$row['preference_app']])
+			$updated = false;
+			foreach($attrs as $attr)
 			{
-				$cached[$row['preference_app']] = $prefs;
-				egw_cache::setInstance(__CLASS__, $row['preference_owner'], $cached);
+				if (isset($old_value) && $prefs[$attr] != $old_value) continue;
+
+				$val = is_callable($value) ? call_user_func($value, $attr, $prefs[$attr]) : $value;
+				if ($val === $prefs[$attr]) continue;
+
+				$updated = true;
+				if ((string)$val !== '')
+				{
+					$prefs[$attr] = $val;
+				}
+				else
+				{
+					unset($prefs[$attr]);
+				}
+			}
+			// if somethings changed or old row was php-serialized --> store it again json-encoded
+			if ($updated || $row['preference_value'][0] == 'a' && $row['preference_value'][1] == ':')
+			{
+				$db->update(self::TABLE, array(
+					'preference_value' => json_encode($prefs),
+				), array(
+					'preference_owner' => $row['preference_owner'],
+					'preference_app'   => $row['preference_app'],
+				), __LINE__, __FILE__);
+
+				// update instance-wide cache
+				$cached = egw_cache::getInstance(__CLASS__, $row['preference_owner']);
+				if($cached && $cached[$row['preference_app']])
+				{
+					$cached[$row['preference_app']] = $prefs;
+					egw_cache::setInstance(__CLASS__, $row['preference_owner'], $cached);
+				}
 			}
 		}
 	}
