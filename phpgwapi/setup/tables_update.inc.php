@@ -815,6 +815,32 @@ function phpgwapi_upgrade14_3_001()
 }
 
 /**
+ * Fix old php-serialized favorites to use new format with name, group and state attributes
+ * Change still php-serialized values in column egw_preferences.preference_value to json-encoding
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_002()
+{
+	$GLOBALS['run-from-upgrade14_3_002'] = true;
+
+	preferences::change_preference(null, '/^favorite_/', function($name, $value, $owner)
+	{
+		if (is_string($value) && $value[0] == 'a' && $value[1] == ':' && ($state = php_safe_unserialize($value)))
+		{
+			$value = array(
+				'name'  => substr($name, 9),	// skip "favorite_"
+				'group' => !($owner > 0),
+				'state' => $state,
+			);
+		}
+		return $value;
+	});
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.003';
+}
+
+/**
  * Updates on the way to 15.1
  */
 
@@ -823,9 +849,21 @@ function phpgwapi_upgrade14_3_001()
  *
  * @return string
  */
-function phpgwapi_upgrade14_3_002()
+function phpgwapi_upgrade14_3_003()
 {
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_api_content_history');
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.900';
+}
+
+/**
+ * Run 14.3.002 upgrade for everyone who was already on 14.3.900
+ */
+function phpgwapi_upgrade14_3_900()
+{
+	if (empty($GLOBALS['run-from-upgrade14_3_002']))
+	{
+		phpgwapi_upgrade14_3_002();
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.901';
 }

@@ -78,7 +78,6 @@ class egw_favorites
 				error_log(__METHOD__.'Favorite filter "'.$name.'" is not supposed to be empty, it should be an array.  Skipping, more investigation needed. filter = '. array2string($filters[$name]));
 				continue;
 			}
-			$href = "javascript:app.$app.setState(" . json_encode($filter,JSON_FORCE_OBJECT) . ');';
 			$li = "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
 			$li .= '<a href="#" class="ui-corner-all" tabindex="-1">';
 			$li .= "<div class='" . ((string)$name === (string)$default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
@@ -158,20 +157,8 @@ class egw_favorites
 		{
 			if(strpos($pref_name, $pref_prefix) === 0)
 			{
-				if(!is_array($pref))	// old favorite
-				{
-					if (!($pref = unserialize($pref)))
-					{
-						continue;
-					}
-					$pref = array(
-						'name' => substr($pref_name,strlen($pref_prefix)),
-						'group' => !isset($GLOBALS['egw']->preferences->user[$app][$pref_name]),
-						'state' => $pref,
-					);
-					//error_log(__METHOD__."() old favorite '$pref_name' converted to ".array2string($pref));
-				}
-				//else error_log(__METHOD__."() new favorite '$pref_name' ".array2string($pref));
+				if(!is_array($pref)) continue;	// old favorite
+
 				$favorites[(string)substr($pref_name,strlen($pref_prefix))] = $pref;
 			}
 		}
