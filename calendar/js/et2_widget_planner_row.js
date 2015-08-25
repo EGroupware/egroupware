@@ -181,6 +181,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			this._children[this._children.length-1].free();
 			this.removeChild(this._children[this._children.length-1]);
 		}
+		this._cached_rows = [];
 
 		for(var c = 0; c < events.length; c++)
 		{
@@ -249,6 +250,12 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	_spread_events: function()
 	{
+		// Keep it so we don't have to re-do it when the next event asks
+		if(this._cached_rows.length == this._children.length)
+		{
+			return this._cached_rows;
+		}
+
 		// sorting the events in non-overlapping rows
 		var rows = [];
 		var row_end = [0];
@@ -304,6 +311,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			rows[row].push(this._children[n]);
 			row_end[row] = new Date(event['end']).valueOf();
 		}
+		this._cached_rows = rows;
 		return rows;
 	},
 

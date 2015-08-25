@@ -84,7 +84,23 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	destroy: function() {
 		this._super.apply(this, arguments);
-			
+
+		if(this._actionObject)
+		{
+			this._actionObject.remove();
+			this._actionObject = null;
+		}
+		
+		this.div.off();
+		this.title.remove();
+		this.title = null;
+		this.body.remove();
+		this.body = null;
+		this.icons = null;
+		this.div.remove();
+		this.div = null;
+
+		
 		// Unregister, or we'll continue to be notified...
 		if(this.options.value)
 		{
@@ -280,7 +296,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end
 		var cat = et2_createWidget('select-cat',{'readonly':true},this);
 		cat.set_value(this.options.value.category);
-		var cat_label = cat.node.innerText;
+		var cat_label = cat.span.text();
 		cat.destroy();
 		
 		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background: '+bg_color+';">'+
@@ -477,33 +493,37 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	_link_actions: function(actions)
 	{
-		 // Get the top level element - timegrid or so
-		var objectManager = this.getParent().getParent()._actionObject ||
-			egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
-		var widget_object = objectManager.getObjectById('calendar::'+this.id);
-		if (widget_object == null) {
+		if(!this._actionObject)
+		{
+			// Get the top level element - timegrid or so
+			var objectManager = this.getParent().getParent()._actionObject ||
+			   egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
+			this._actionObject = objectManager.getObjectById('calendar::'+this.id);
+		}
+
+		if (this._actionObject == null) {
 			// Add a new container to the object manager which will hold the widget
 			// objects
-			widget_object = objectManager.insertObject(false, new egwActionObject(
+			this._actionObject = objectManager.insertObject(false, new egwActionObject(
 				'calendar::'+this.id, objectManager, new et2_event_action_object_impl(this,this.getDOMNode()),
 				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
 			));
 		}
 		else
 		{
-			widget_object.setAOI(new et2_event_action_object_impl(this, this.getDOMNode()));
+			this._actionObject.setAOI(new et2_event_action_object_impl(this, this.getDOMNode()));
 		}
 
 		// Delete all old objects
-		widget_object.clear();
-		widget_object.unregisterActions();
+		this._actionObject.clear();
+		this._actionObject.unregisterActions();
 
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
 		var action_links = this._get_action_links(actions);
 		action_links.push('egw_link_drag');
 		action_links.push('egw_link_drop');
-		widget_object.updateActionLinks(action_links);
+		this._actionObject.updateActionLinks(action_links);
 	},
 	
 	/**

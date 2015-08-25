@@ -1947,27 +1947,37 @@ app.classes.calendar = AppJS.extend(
 	 * @param {Object} state
 	 * @param {etemplate2} [instance] If the full calendar app isn't loaded
 	 *	(home app), pass a different instance to use it to get the data
+	 * @param {number} [start] Result offset.  Internal use only
 	 */
-	_fetch_data: function(state, instance)
+	_fetch_data: function(state, instance, start)
 	{
 		if(!this.sidebox_et2 && !instance) return;
+
+		if(typeof start === 'undefined')
+		{
+			start = 0;
+		}
+
+		var query = jQuery.extend({}, {
+			get_rows: 'calendar.calendar_uilist.get_rows',
+			row_id:'row_id',
+			startdate:state.first ||  state.date,
+			enddate:state.last,
+			// Participant must be an array or it won't work
+			col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
+			filter:'custom', // Must be custom to get start & end dates
+			status_filter: state.filter,
+			cat_id: state.cat_id,
+			search: state.keywords
+		});
+		// Show ajax loader
+		framework.applications.calendar.sidemenuEntry.showAjaxLoader()
 
 		this.egw.dataFetch(
 			instance ? instance.etemplate_exec_id :
 				this.sidebox_et2.getInstanceManager().etemplate_exec_id,
-			{start: 0, num_rows:0},
-			jQuery.extend({}, {
-				get_rows: 'calendar.calendar_uilist.get_rows',
-				row_id:'row_id',
-				startdate:state.first ||  state.date,
-				enddate:state.last,
-				// Participant must be an array or it won't work
-				col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
-				filter:'custom', // Must be custom to get start & end dates
-				status_filter: state.filter,
-				cat_id: state.cat_id,
-				search: state.keywords
-			}),
+			{start: start, num_rows:200},
+			query,
 			this.id,
 			function(data) {
 				console.log(data);
@@ -2017,6 +2027,18 @@ app.classes.calendar = AppJS.extend(
 				{
 					this.egw.dataStoreUID(app.classes.calendar._daywise_cache_id(day, state.owner), updated_days[day]);
 				}
+				
+				// More rows?
+				if(data.order.length + start < data.total)
+				{
+					// Wait a bit, let UI do something.
+					window.setTimeout( function() {
+						app.calendar._fetch_data(state, instance, start + data.order.length);
+					}, 100);
+				}
+
+				// Hide AJAX loader
+				framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
 			}, this,null
 		);
 	},

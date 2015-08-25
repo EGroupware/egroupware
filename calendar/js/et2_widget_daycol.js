@@ -30,7 +30,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		date: {
 			name: "Date",
 			type: "any",
-			description: "What date is this daycol for.  YYYYMMDD or Date"
+			description: "What date is this daycol for.  YYYYMMDD or Date",
+			default: et2_no_init
 		},
 		owner: {
 			name: "Owner",
@@ -103,6 +104,14 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 	destroy: function() {
 		this._super.apply(this, arguments);
+		this.div.off();
+		this.title.off();
+		this.div = null;
+		this.title = null;
+		
+		// date_helper has no parent, so we must explicitly remove it
+		this.date_helper.destroy();
+		this.date_helper = null;
 
 		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
 	},
@@ -247,27 +256,34 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 * @param {number|number[]} _owner Account ID
 	 */
 	set_owner: function(_owner) {
-		if(_owner !== this.options.owner)
+		// Simple comparison, both numbers
+		if(_owner === this.options.owner) return;
+
+		// More complicated comparison, one or the other is an array
+		if((typeof _owner == 'object' || typeof this.options.owner == 'object') &&
+			_owner.toString() == this.options.owner.toString())
 		{
-			egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id+(this.options.date,this.options.owner),false,this);
-
-			this.options.owner = _owner;
-			this.div.attr('data-sortable-id', this.options.owner);
-
-			// Register for updates on events for this day
-			egw.dataRegisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner), function(event_ids) {
-				var events = [];
-				for(var i = 0; i < event_ids.length; i++)
-				{
-					var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
-					if(event && event.date && event.date === this.options.date)
-					{
-						events.push(event);
-					}
-				}
-				this._update_events(events);
-			},this,this.getInstanceManager().execId,this.id);
+			return;
 		}
+
+		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id+(this.options.date,this.options.owner),false,this);
+
+		this.options.owner = _owner;
+		this.div.attr('data-sortable-id', this.options.owner);
+
+		// Register for updates on events for this day
+		egw.dataRegisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner), function(event_ids) {
+			var events = [];
+			for(var i = 0; i < event_ids.length; i++)
+			{
+				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
+				if(event && event.date && event.date === this.options.date)
+				{
+					events.push(event);
+				}
+			}
+			this._update_events(events);
+		},this,this.getInstanceManager().execId,this.id);
 	},
 
 	/**
@@ -335,7 +351,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		var events = _events || this.getArrayMgr('content').getEntry(this.options.date) || [];
 
 		// Remove extra events
-		while(this._children.length > events.length)
+		while(this._children.length > 0)
 		{
 			var node = this._children[this._children.length-1];
 			this.removeChild(node);
@@ -349,7 +365,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			return a.whole_day ? -1 : (start ? start : end);
 		});
 		
-		for(var c = this._children.length; c < events.length; c++)
+		for(var c = 0; c < events.length; c++)
 		{
 			// Create event
 			var event = et2_createWidget('calendar-event',{

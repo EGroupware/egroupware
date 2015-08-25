@@ -108,6 +108,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 
 		// Update timer, to avoid redrawing twice when changing start & end date
 		this.update_timer = null;
+		this.doInvalidate = true;
 
 		this.setDOMNode(this.div[0]);
 
@@ -549,27 +550,40 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	 */
 	invalidate: function(trigger) {
 
+		// Busy
+		if(!this.doInvalidate && this.update_timer) return;
+
 		// Wait a bit to see if anything else changes, then re-draw the days
-		if(this.update_timer === null)
+		if(this.update_timer !== null)
 		{
-			this.update_timer = window.setTimeout(jQuery.proxy(function() {
-				this.widget.value = this.widget._fetch_data();
-
-				this.widget._drawGrid();
-
-				// Update actions
-				if(this._actionManager)
-				{
-					this._link_actions(this._actionManager.children);
-				}
-
-				if(this.trigger)
-				{
-					this.widget.change();
-				}
-				this.widget.update_timer = null;
-			},{widget:this,"trigger":trigger}),ET2_GRID_INVALIDATE_TIMEOUT);
+			window.clearTimeout(this.update_timer);
 		}
+		this.update_timer = window.setTimeout(jQuery.proxy(function() {
+			this.doInvalidate = false;
+
+			this.widget.value = this.widget._fetch_data();
+
+			// Show AJAX loader
+			framework.applications.calendar.sidemenuEntry.showAjaxLoader();
+
+			this.widget._drawGrid();
+
+			// Update actions
+			if(this._actionManager)
+			{
+				this._link_actions(this._actionManager.children);
+			}
+
+			// Hide AJAX loader
+			framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
+
+			if(this.trigger)
+			{
+				this.widget.change();
+			}
+			this.widget.update_timer = null;
+			this.doInvalidate = true;
+		},{widget:this,"trigger":trigger}),ET2_GRID_INVALIDATE_TIMEOUT);
 	},
 
 	detachFromDOM: function() {
@@ -661,6 +675,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
 		}
 
+		this.value = [];
 	},
 
 	/**
@@ -1352,6 +1367,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	{
 		var value = [];
 		var fetch = false;
+		this.doInvalidate = false;
+
 		for(var i = 0; i < this.registeredCallbacks.length; i++)
 		{
 			egw.dataUnregisterUID(this.registeredCallbacks[i],false,this);
@@ -1412,6 +1429,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				filter: this.options.filter
 			}, this.getInstanceManager());
 		}
+
+		this.doInvalidate = true;
 		return value;
 	},
 

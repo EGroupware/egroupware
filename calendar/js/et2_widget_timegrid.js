@@ -139,8 +139,26 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.setDOMNode(this.div[0]);
 	},
 	destroy: function() {
+		
+		// Stop the invalidate timer
+		if(this.update_timer)
+		{
+			window.clearTimeout(this.update_timer);
+		}
+
 		this._super.apply(this, arguments);
+
+		// Delete all old objects
+		this._actionObject.clear();
+		this._actionObject.unregisterActions();
+		this._actionObject.remove();
+		this._actionObject = null;
+
 		this.div.off();
+		this.div = null;
+		this.gridHeader = null;
+		this.days = null;
+		this._labelContainer = null;
 
 		// date_helper has no parent, so we must explicitly remove it
 		this.date_helper.destroy();
@@ -548,6 +566,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			day = this.day_widgets[i];
 			// Set the date, and pass any data we have
+			/* Not needed due to registered callbacks (?)
 			if(typeof this.value[this.day_list[i]] === 'undefined')
 			{
 				var ids = (egw.dataGetUIDdata(app.classes.calendar._daywise_cache_id(this.day_list[i],this.options.owner))||{data:[]});
@@ -563,6 +582,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					}
 				}
 			}
+			*/
 
 			day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
 			day.set_owner(this.options.owner);
@@ -1067,7 +1087,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.options.label = label;
 		this.gridHeader.text(label);
 
-debugger;
 		// If it's a short label (eg week number), don't give it an extra line
 		// but is empty, but give extra space for a single owner name
 		this.div.removeClass('calendar_TimeGridNoLabel');
