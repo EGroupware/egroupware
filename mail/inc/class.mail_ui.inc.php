@@ -856,7 +856,7 @@ class mail_ui
 					{
 						$moveaction .= $lastFolderUsedForMoveCont;
 
-						if ($this->mail_bo->folderExists($i)) // only 4 entries per mailaccount.Control this on setting the buffered folders
+						if ($this->mail_bo->folderExists($i)) // only 10 entries per mailaccount.Control this on setting the buffered folders
 						{
 							$fS['profileID'] = $this->mail_bo->profileID;
 							$fS['profileName'] = $accArray[$this->mail_bo->profileID];
@@ -878,7 +878,7 @@ class mail_ui
 				foreach ($lastFoldersUsedForMoveCont[$pid] as $i => $lastFolderUsedForMoveCont)
 				{
 					//error_log(__METHOD__.__LINE__."$i => $lastFolderUsedForMoveCont");
-					if (!empty($lastFolderUsedForMoveCont)) // only 4 entries per mailaccount.Control this on setting the buffered folders
+					if (!empty($lastFolderUsedForMoveCont)) // only 10 entries per mailaccount.Control this on setting the buffered folders
 					{
 						$moveaction = 'move_';
 						$fS = array();
@@ -4447,7 +4447,7 @@ class mail_ui
 				$keys = array_keys($lastFoldersUsedForMoveCont[$targetProfileID]);
 				foreach( $keys as &$f)
 				{
-					if (count($lastFoldersUsedForMoveCont[$targetProfileID])>3) unset($lastFoldersUsedForMoveCont[$targetProfileID][$f]);
+					if (count($lastFoldersUsedForMoveCont[$targetProfileID])>9) unset($lastFoldersUsedForMoveCont[$targetProfileID][$f]);
 					else break;
 				}
 				//error_log(__METHOD__.__LINE__.array2string($lastFoldersUsedForMoveCont[$targetProfileID]));
