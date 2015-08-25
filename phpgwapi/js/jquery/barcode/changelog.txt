@@ -1,0 +1,30 @@
+2.0.3 - 2013-01-06
+  remove useless code from datamatrix
+  add upc support (Niels Leenheer)
+
+2.0.2 - 2011-03-01
+  integration to jquery updated
+  table B of code 128 fixed (\\ instead of \) thanks to jmcarson
+
+2.0.1 - 2010/09/05
+  CSS fixed to print easily - Thanks to Léo West for this fix
+  datamatrix added - Jonathan Hourez join developper team
+  canvas renderer added    
+  code cleaned
+  fontSize become an integer
+
+1.3.3 - 2009/10/17
+  no wait document is ready to add plugin
+
+1.3.2 - 2009/10/03
+  manage int and string formated values for barcode width/height
+
+1.3 - 2009/09/26
+  bmp and svg image renderer added   
+
+1.2 - 2009/09/10
+  parseInt replaced by intval (nb: parseInt("09") => 0)
+  code128 fixed (C Table analyse) - Thanks to Vadim for the bug report
+
+1.1 - 2009/05/26 
+  std25 fixed
