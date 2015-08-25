@@ -315,6 +315,9 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 	 * console function.
 	 */
 	return {
+		debug_level: function() {
+			return DEBUGLEVEL;
+		},
 		debug: function(_level) {
 			if (typeof _wnd.console != "undefined")
 			{

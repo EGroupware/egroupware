@@ -355,19 +355,26 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	// Register a handler for AJAX responses
 	egw(currentapp, window).registerJSONPlugin(etemplate2_handle_assign, this, 'assign');
 
-	if(console.groupCollapsed)
+	if(egw.debug_level() >= 3)
 	{
-		egw.window.console.groupCollapsed("Loading %s into ", _name, '#'+this.DOMContainer.id);
+		if(console.groupCollapsed)
+		{
+			egw.window.console.groupCollapsed("Loading %s into ", _name, '#'+this.DOMContainer.id);
+		}
 	}
-	if(console.time)
+	// Timing & profiling on debug level 'log' (4)
+	if(egw.debug_level() >= 4)
 	{
-		console.time(_name);
+		if(console.time)
+		{
+			console.time(_name);
+		}
+		if(console.profile)
+		{
+			console.profile(_name);
+		}
+		var start_time = (new Date).getTime();
 	}
-	if(console.profile)
-	{
-		console.profile(_name);
-	}
-	var start_time = (new Date).getTime();
 
 	// require necessary translations from server, if not already loaded
 	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
@@ -434,7 +441,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 		var _load = function() {
 			egw.debug("log", "Loading template...");
-			if(console.timeStamp)
+			if(egw.debug_level() >= 4 && console.timeStamp)
 			{
 				console.timeStamp("Begin rendering template");
 			}
@@ -462,7 +469,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
 
-			if(console.groupEnd)
+			if(egw.debug_level >= 3 && console.groupEnd)
 			{
 				egw.window.console.groupEnd();
 			}
@@ -524,19 +531,22 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				$j(this.DOMContainer).trigger('load', this);
 
 				// Profiling
-				if(console.timeEnd)
+				if(egw.debug_level() >= 4)
 				{
-					console.timeEnd(_name);
+					if(console.timeEnd)
+					{
+						console.timeEnd(_name);
+					}
+					if(console.profileEnd)
+					{
+						console.profileEnd(_name);
+					}
+					var end_time = (new Date).getTime();
+					var gen_time_div = $j('#divGenTime_'+appname);
+					if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
+					gen_time_div.find('.et2RenderTime').remove();
+					gen_time_div.append('<span class="et2RenderTime">'+egw.lang('eT2 rendering took %1s', (end_time-start_time)/1000)+'</span>');
 				}
-				if(console.profileEnd)
-				{
-					console.profileEnd(_name);
-				}
-				var end_time = (new Date).getTime();
-				var gen_time_div = $j('#divGenTime_'+appname);
-				if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
-				gen_time_div.find('.et2RenderTime').remove();
-				gen_time_div.append('<span class="et2RenderTime">'+egw.lang('eT2 rendering took %1s', (end_time-start_time)/1000)+'</span>');
 			},this));
 		};
 
