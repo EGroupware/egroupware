@@ -1498,7 +1498,7 @@ app.classes.calendar = AppJS.extend(
 								id: ""+date.getUTCFullYear() + sprintf("%02d",date.getUTCMonth()) + sprintf("%02d",date.getUTCDate()),
 								start_date: date,
 								end_date: end,
-								owner: state.state.owner[owner] || 0
+								owner: grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner
 							});
 						}
 						break;
@@ -1871,7 +1871,7 @@ app.classes.calendar = AppJS.extend(
 
 		// Determine if we're showing multiple owners seperate or consolidated
 		var seperate_owners = false;
-		var last_owner = value[0].owner;
+		var last_owner = value.length ? value[0].owner || 0 : 0;
 		for(var i = 0; i < value.length && !seperate_owners; i++)
 		{
 			seperate_owners = seperate_owners || (last_owner !== value[i].owner)
@@ -2584,7 +2584,7 @@ jQuery.extend(app.classes.calendar,{
 				return d;
 			},
 			granularity: function(state) {
-				return 120;
+				return (state.owner.length || 1) * app.calendar.View.granularity.call(this, state);
 			}
 		}),
 		month: app.classes.calendar.prototype.View.extend({

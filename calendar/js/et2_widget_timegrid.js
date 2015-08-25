@@ -104,7 +104,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		// Main container
 		this.div = $j(document.createElement("div"))
-			.addClass("calendar_calTimeGrid");
+			.addClass("calendar_calTimeGrid")
+			.addClass("calendar_TimeGridNoLabel");
 
 		// Contains times / rows
 		this.gridHeader = $j(document.createElement("div"))
@@ -1013,7 +1014,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	{
 		var old = this.options.owner || 0;
 		this.owner.set_label('');
-
+		this.div.removeClass('calendar_TimeGridNoLabel');
+		
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
 			switch(_owner[0])
@@ -1023,6 +1025,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					this.owner.set_value(_owner.substr(1));
 					break;
 			}
+
+			// Label is empty, but give extra space for the owner name
+			this.div.removeClass('calendar_TimeGridNoLabel');
 		}
 		else if (typeof _owner == 'object' && _owner.length)
 		{
@@ -1061,6 +1066,12 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	{
 		this.options.label = label;
 		this.gridHeader.text(label);
+
+debugger;
+		// If it's a short label (eg week number), don't give it an extra line
+		// but is empty, but give extra space for a single owner name
+		this.div.removeClass('calendar_TimeGridNoLabel');
+		this.div.toggleClass('calendar_TimeGridNoLabel', label.trim().length < 6 && typeof this.options.owner === 'object');
 	},
 	
 	/**
