@@ -5062,7 +5062,7 @@ class emailadmin_imapbase
 				'ids' => $uidsToFetch,
 			))->first();
 
-			return $mail->getStructure();
+			return is_object($mail)?$mail->getStructure():null;
 		}
 		catch (Exception $e)
 		{
