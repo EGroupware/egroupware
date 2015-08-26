@@ -1426,7 +1426,7 @@ class schema_proc
 							// for PostgreSQL we dont use length-limited indexes --> nothing to do
 							if ($this->m_odb->Type == 'pgsql') continue;
 							// for MySQL we drop current index and create it with correct length
-							$this->DropIndex($table, $definition);
+							$this->DropIndex($table, $columns);
 						}
 						$this->CreateIndex($table, $columns, $type == 'uc');
 					}
