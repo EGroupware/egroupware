@@ -789,7 +789,7 @@ app.classes.filemanager = AppJS.extend(
 
 		// Target will be missing ID if directory is empty
 		// so start with the current directory
-		var dst = this.get_path(_action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
+		var nm_dst = this.get_path(_action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
 
 		// File(s) were dropped on a row, they want them inside
 		if(_target)
@@ -809,7 +809,7 @@ app.classes.filemanager = AppJS.extend(
 			}
 		}
 
-		this._do_action(_action.id.replace("file_drop_",''), src, false, dst);
+		this._do_action(_action.id.replace("file_drop_",''), src, false, dst || nm_dst);
 	},
 
 	/**
