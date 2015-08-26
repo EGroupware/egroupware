@@ -688,6 +688,10 @@ class db_backup
 				}
 			}
 		}
+
+		// check if backup contained all indexes and create missing ones
+		$this->schema_proc->CheckCreateIndexes();
+
 		return $n;
 	}
 

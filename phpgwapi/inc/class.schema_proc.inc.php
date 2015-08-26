@@ -149,16 +149,18 @@ class schema_proc
 	/**
 	 * Check if the given $columns exist as index in the index array $indexes
 	 *
-	 * @param string/array $columns column-name as string or array of column-names plus optional options key
+	 * @param string|array $columns column-name as string or array of column-names plus optional options key
 	 * @param array $indexs array of indexes (column-name as string or array of column-names plus optional options key)
+	 * @param boolean $ignore_length_limit =false should we take lenght-limits of indexes into account or not
 	 * @return boolean true if index over $columns exist in the $indexes array
 	 */
-	function _in_index($columns,$indexs)
+	function _in_index($columns, $indexs, $ignore_length_limit=false)
 	{
 		if (is_array($columns))
 		{
 			unset($columns['options']);
 			$columns = implode('-',$columns);
+			if ($ignore_length_limit) $columns = preg_replace('/\(\d+\)/', '', $columns);
 		}
 		foreach($indexs as $index)
 		{
@@ -167,6 +169,7 @@ class schema_proc
 				unset($index['options']);
 				$index = implode('-',$index);
 			}
+			if ($ignore_length_limit) $index = preg_replace('/\(\d+\)/', '', $index);
 			if ($columns == $index) return true;
 		}
 		return false;
@@ -549,13 +552,13 @@ class schema_proc
 
 		$aSql = $this->dict->CreateIndexSQL($sIdxName,$sTableName,$aColumnNames,$options);
 
-		return $this->ExecuteSQLArray($aSql,2,'CreateIndexSQL(%1,%2,%3,%4) sql=%5',False,$name,$sTableName,$aColumnNames,$options,$aSql);
+		return $this->ExecuteSQLArray($aSql,2,'CreateIndexSQL(%1,%2,%3,%4) sql=%5',False,$sTableName,$aColumnNames,$options,$sIdxName,$aSql);
 	}
 
 	/**
 	 * Drop an Index
 	 *
-	 * @param string $sTablename table-name
+	 * @param string $sTableName table-name
 	 * @param array/string $aColumnNames columns of the index or the name of the index
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
@@ -1246,7 +1249,9 @@ class schema_proc
 					}
 					break;
 				case 'C': case 'C2':
-					$definition['fd'][$name]['type'] = 'varchar';
+					// ascii columns are reported as varchar
+					$definition['fd'][$name]['type'] = $this->m_odb->get_column_attribute($name, $sTableName, true, 'type') === 'ascii' ?
+						'ascii' : 'varchar';
 					$definition['fd'][$name]['precision'] = $column->max_length;
 					break;
 				case 'B':
@@ -1368,7 +1373,7 @@ class schema_proc
 		if (method_exists($this->dict,'MetaIndexes') &&
 			is_array($indexes = $this->dict->MetaIndexes($sTableName)) && count($indexes))
 		{
-			foreach($indexes as $index_name => $index)
+			foreach($indexes as $index)
 			{
 				if($this->capabilities['name_case'] == 'upper')
 				{
@@ -1381,11 +1386,53 @@ class schema_proc
 				}
 				$kind = $index['unique'] ? 'uc' : 'ix';
 
-				$definition[$kind][$index_name] = count($index['columns']) > 1 ? $index['columns'] : $index['columns'][0];
+				$definition[$kind][] = count($index['columns']) > 1 ? $index['columns'] : $index['columns'][0];
 			}
 			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaIndexes(%1) = %2",False,$sTableName,$indexes);
 		}
 		return $definition;
+	}
+
+	/**
+	 * Check if all indexes exist and create them if not
+	 *
+	 * Does not check index-type of length!
+	 */
+	function CheckCreateIndexes()
+	{
+		foreach($this->adodb->MetaTables('TABLES') as $table)
+		{
+			if (!($table_def = $this->m_odb->get_table_definitions(true, $table))) continue;
+
+			$definition = array();
+			$this->GetIndexes($table, $definition);
+
+			// iterate though indexes we should have according to tables_current
+			foreach(array('uc', 'ix') as $type)
+			{
+				foreach($table_def[$type] as $columns)
+				{
+					// sometimes primary key is listed as (unique) index too --> ignore it
+					if ($this->_in_index($columns, array($table_def['pk']), true)) continue;
+
+					// check if they exist in real table and create them if not
+					if (!$this->_in_index($columns, $definition[$type]) &&
+						// sometimes index is listed as unique index too --> ignore that
+						($type == 'uc' || !$this->_in_index($columns, $definition['uc'], true)))
+					{
+						// check if index may exists, but without limit in column-name
+						if ($this->_in_index($columns, $definition[$type], true))
+						{
+							// for PostgreSQL we dont use length-limited indexes --> nothing to do
+							if ($this->m_odb->Type == 'pgsql') continue;
+							// for MySQL we drop current index and create it with correct length
+							$this->DropIndex($table, $definition);
+						}
+						$this->CreateIndex($table, $columns, $type == 'uc');
+					}
+				}
+			}
+		}
 	}
 
 	/**
