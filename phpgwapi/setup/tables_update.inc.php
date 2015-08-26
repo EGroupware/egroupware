@@ -841,6 +841,22 @@ function phpgwapi_upgrade14_3_002()
 }
 
 /**
+ * Check and if necessary fix indexes, they have been completly lost on PostgreSQL with previous updates
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_003()
+{
+	$GLOBALS['run-from-upgrade14_3_003'] = true;
+
+	if ($GLOBALS['egw_setup']->db->Type == 'pgsql')
+	{
+		$GLOBALS['egw_setup']->oProc->CheckCreateIndexes();
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.004';
+}
+
+/**
  * Updates on the way to 15.1
  */
 
@@ -849,7 +865,7 @@ function phpgwapi_upgrade14_3_002()
  *
  * @return string
  */
-function phpgwapi_upgrade14_3_003()
+function phpgwapi_upgrade14_3_004()
 {
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_api_content_history');
 
@@ -866,4 +882,16 @@ function phpgwapi_upgrade14_3_900()
 		phpgwapi_upgrade14_3_002();
 	}
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.901';
+}
+
+/**
+ * Run 14.3.003 upgrade for everyone who was already on 14.3.900
+ */
+function phpgwapi_upgrade14_3_901()
+{
+	if (empty($GLOBALS['run-from-upgrade14_3_003']))
+	{
+		phpgwapi_upgrade14_3_003();
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.902';
 }
