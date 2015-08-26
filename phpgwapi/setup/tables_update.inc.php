@@ -835,3 +835,19 @@ function phpgwapi_upgrade14_3_002()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.003';
 }
+
+/**
+ * Check and if necessary fix indexes, they have been completly lost on PostgreSQL with previous updates
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_003()
+{
+	$GLOBALS['run-from-upgrade14_3_003'] = true;
+
+	if ($GLOBALS['egw_setup']->db->Type == 'pgsql')
+	{
+		$GLOBALS['egw_setup']->oProc->CheckCreateIndexes();
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.004';
+}
