@@ -1,3 +1,14 @@
+egroupware-epl (14.3.20150826) hardy; urgency=low
+
+  * Calendar/all apps: fix since last package not working old favorites and json-encode all php-serialized preferences
+  * InfoLog: fix not working "No filter" favorite
+  * PostgreSQL: repairing/creating missing indexes
+  * Backup/PostgreSQL: indexes were not reported for backup
+  * Backup/MySQL: limited index length was not reported for PHP mysqli driver
+  * Backup: backup ascii columns as such, allways check and if necessary fix indexes on restore
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 26 Aug 2015 16:44:00 +0200
+
 egroupware-epl (14.3.20150821) hardy; urgency=low
 
   * All Apps: Implement drag and drop file from desktop into CKEditor / html-editor
