@@ -1,4 +1,4 @@
-k<?php
+<?php
 /**
  * EGroupware EMailAdmin - DB schema
  *
