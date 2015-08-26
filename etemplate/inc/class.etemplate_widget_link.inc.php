@@ -182,6 +182,11 @@ class etemplate_widget_link extends etemplate_widget
 				$link['title'] = egw_vfs::decodePath($link['title']);
 				$link['icon'] = egw_link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
 				$link['download_url'] = egw_vfs::download_url($link['icon']);
+				// Make links to directories load in filemanager
+				if($link['type'] == 'httpd/unix-directory')
+				{
+					$link['target'] = 'filemanager';
+				}
 			}
 			else
 			{
@@ -231,6 +236,7 @@ class etemplate_widget_link extends etemplate_widget
 
 		if(!is_array($files)) $files = array($files);
 		foreach($files as $target) {
+			error_log(array2string($target));
 			egw_link::link_file($app, $id, $target);
 		}
 	}
