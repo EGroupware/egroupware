@@ -576,6 +576,9 @@ select viewname,'V' from pg_views where viewname like $mask";
       {
          global $ADODB_FETCH_MODE;
 
+				// table-name must NOT be quoted, otherwise we will not find any index
+				$table = str_replace($this->nameQuote, '', $table);
+
 				$schema = false;
 				$this->_findschema($table,$schema);
 
