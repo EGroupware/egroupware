@@ -320,7 +320,8 @@ class ADODB_mysqli extends ADOConnection {
 		                );
 		        }
 
-		        $indexes[$row[2]]['columns'][$row[3] - 1] = $row[4];
+		        $indexes[$row[2]]['columns'][$row[3] - 1] = $row[4].
+                	(is_numeric($row[7]) ? '('.(int)$row[7].')' : '');
 		}
 
 		// sort columns by order in the index
