@@ -135,6 +135,17 @@ function read_thumbnail($src)
 	// Generate the destination filename and check whether the destination directory
 	// had been successfully created (the cache class used in gen_dstfile does that).
 	$stat = egw_vfs::stat(egw_vfs::parse_url($src, PHP_URL_PATH));
+
+	// if pdf-thumbnail-creation is not available, generate a single scaled-down pdf-icon
+	if ($stat && egw_vfs::mime_content_type($src) == 'application/pdf' && !pdf_thumbnails_available())
+	{
+		list($app, $icon) = explode('/', egw_vfs::mime_icon('application/pdf'), 2);
+		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
+			common::image($app, $icon), 2);
+		$src = EGW_SERVER_ROOT.$path;
+		$stat = false;
+		$maxsize = $height = $width = $minsize = $maxh = $minh = $maxw = $minw = 16;
+	}
 	$dst = gen_dstfile($stat && !empty($stat['url']) ? $stat['url'] : $src, $maxsize, $height, $width, $minsize);
 	$dst_dir = dirname($dst);
 	if(file_exists($dst_dir))
@@ -290,6 +301,8 @@ function gd_image_load($file,$maxw,$maxh)
 {
 	// Get mime type
 	list($type, $image_type) = explode('/', egw_vfs::mime_content_type($file));
+	// if $file is not from vfs, use mime_magic::filename2mime to get mime-type from extension
+	if (!$type) list($type, $image_type) = explode('/', mime_magic::filename2mime($file));
 
 	// Call the according gd constructor depending on the file type
 	if($type == 'image')
@@ -342,6 +355,7 @@ function gd_image_load($file,$maxw,$maxh)
 				$thumb = $img_dst;
 			}
 			$mime = egw_vfs::mime_content_type($file);
+			$tag_image = null;
 			corner_tag($thumb, $tag_image, $mime);
 			imagedestroy($tag_image);
 		}
@@ -363,7 +377,7 @@ function gd_image_load($file,$maxw,$maxh)
  */
 function get_opendocument_thumbnail($file)
 {
-	list(, $file_type) = $mimetype = explode('/', egw_vfs::mime_content_type($file));
+	$mimetype = explode('/', egw_vfs::mime_content_type($file));
 
 	// Image is already there, but we can't access them directly through VFS
 	$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
@@ -379,7 +393,7 @@ function get_opendocument_thumbnail($file)
 	if($image)
 	{
 		$filter_color = array(0,0,0);
-		switch($file_type)
+		switch($mimetype[1])
 		{
 			// Type colors from LibreOffice (https://wiki.documentfoundation.org/Design/Whiteboards/LibreOffice_Initial_Icons)
 			case 'vnd.oasis.opendocument.text':
@@ -402,6 +416,15 @@ function get_opendocument_thumbnail($file)
 }
 
 /**
+ * Check if we have the necessary requirements to generate pdf thumbnails
+ *
+ * @return boolean
+ */
+function pdf_thumbnails_available()
+{
+	return class_exists('Imagick');
+}
+/**
  * Extract the thumbnail from a PDF file and apply a colored mask
  * so you can tell what type it is, and so it looks a little better in larger
  * thumbnails (eg: in tiled view).
@@ -413,7 +436,7 @@ function get_opendocument_thumbnail($file)
  */
 function get_pdf_thumbnail($file)
 {
-	if(!class_exists('Imagick')) return false;
+	if(!pdf_thumbnails_available()) return false;
 
 	// switch off max_excution_time, as some thumbnails take longer and
 	// will be startet over and over again, if they dont finish
@@ -432,8 +455,8 @@ function get_pdf_thumbnail($file)
  *
  * Used for thumbnails of documents, so you can still see the mime type
  *
- * @param resource $target_image
- * @param resource|null $tag_image
+ * @param resource& $target_image
+ * @param resource&|null $tag_image
  * @param string|null $mime Use correct mime type icon instead of $tag_image
  */
 function corner_tag(&$target_image, &$tag_image, $mime)
