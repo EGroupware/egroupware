@@ -189,7 +189,7 @@ class egw_favorites
 	{
 		// Only use alphanumeric for preference name, so it can be used directly as DOM ID
 		$name = strip_tags($_name);
-		$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/','_',$name);
+		$pref_name = "favorite_".$name;
 
 		// older group-favorites have just true as their group and are not deletable, if we dont find correct group
 		if ($group === true || $group === '1')
