@@ -23,6 +23,7 @@ class setup_detection
 	 */
 	function get_versions()
 	{
+		$setup_info = array();
 		$d = dir(EGW_SERVER_ROOT);
 		while($entry=$d->read())
 		{
@@ -51,7 +52,6 @@ class setup_detection
 	 */
 	function get_db_versions($setup_info=null)
 	{
-		$tname = Array();
 		try {	// catch DB errors
 			$GLOBALS['egw_setup']->set_table_names();
 
@@ -109,6 +109,7 @@ class setup_detection
 			}
 		}
 		catch (egw_exception_db $e) {
+			unset($e);
 			// ignore db errors
 		}
 		// _debug_array($setup_info);
@@ -173,7 +174,7 @@ class setup_detection
 					$setup_info['depends'][$depkey]['status'] = False;
 					/* Now we loop thru the versions looking for a compatible version */
 
-					foreach($depvalue['versions'] as $depskey => $depsvalue)
+					foreach($depvalue['versions'] as $depsvalue)
 					{
 						$currentver = $setup_info[$depvalue['appname']]['currentver'];
 						if ($depvalue['appname'] == 'phpgwapi' && substr($currentver,0,6) == '0.9.99')
@@ -189,7 +190,7 @@ class setup_detection
 						{
 							$major_depsvalue = $GLOBALS['egw_setup']->get_major($depsvalue);
 							$tmp = explode('.',$depsvalue); $minor_depsvalue = array_pop($tmp);
-							$tmp = explode('.',$currentver); $minor = array_pop($tmp);
+							$tmp2 = explode('.',$currentver); $minor = array_pop($tmp2);
 							if ($major == $major_depsvalue && $minor <= $minor_depsvalue)
 							{
 								$setup_info['depends'][$depkey]['status'] = True;
@@ -282,12 +283,12 @@ class setup_detection
 	/**
 	 * Check if database exists
 	 *
-	 * @param array $setup_info
+	 * @param array $setup_info =null default use $GLOBALS['setup_info']
 	 * @return int 1=no database, 3=empty, 4=need upgrade, 10=complete
 	 */
-	function check_db($setup_info='')
+	function check_db($setup_info=null)
 	{
-		$setup_info = $setup_info ? $setup_info : $GLOBALS['setup_info'];
+		if (!$setup_info) $setup_info = $GLOBALS['setup_info'];
 
 		try {	// catch DB errors
 			if (!$GLOBALS['egw_setup']->db->Link_ID)
@@ -296,12 +297,13 @@ class setup_detection
 				error_reporting($old & ~E_WARNING);	// no warnings
 				$GLOBALS['egw_setup']->db->connect();
 				error_reporting($old);
+
+				$GLOBALS['egw_setup']->set_table_names();
 			}
 		}
 		catch(egw_exception_db $e) {
 			// ignore error
 		}
-		$GLOBALS['egw_setup']->set_table_names();
 
 		if (!$GLOBALS['egw_setup']->db->Link_ID || !$GLOBALS['egw_setup']->db->Link_ID->_connectionID)
 		{
@@ -362,6 +364,7 @@ class setup_detection
 			}
 		}
 		catch (egw_exception_db $e) {
+			unset($e);
 			// ignore db errors
 		}
 		$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Needs Configuration)';
@@ -370,7 +373,8 @@ class setup_detection
 			return 1;
 		}
 		$config_errors =& $GLOBALS['egw_info']['setup']['config_errors'];
-		$config_errors = array();
+		$GLOBALS['egw_info']['setup']['config_errors'] = array();
+		$error_msg = null;
 		if (!$this->check_dir($config['temp_dir'],$error_msg))
 		{
 			$config_errors[] = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
@@ -413,7 +417,7 @@ class setup_detection
 				'config_app'  => 'phpgwapi',
 				'config_name' => 'backup_files',
 			),__LINE__,__FILE__);
-		};
+		}
 		if (!$this->check_dir($config['backup_dir'],$error_msg,true))
 		{
 			$config_errors[] = lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
@@ -451,7 +455,7 @@ class setup_detection
 		{
 			$GLOBALS['egw_info']['setup']['installed_langs'][$GLOBALS['egw_setup']->db->f('lang')] = $GLOBALS['egw_setup']->db->f('lang');
 		}
-		foreach($GLOBALS['egw_info']['setup']['installed_langs'] as $key => $value)
+		foreach($GLOBALS['egw_info']['setup']['installed_langs'] as $value)
 		{
 			$sql = "SELECT lang_name FROM {$GLOBALS['egw_setup']->languages_table} WHERE lang_id = '".$value."'";
 			$GLOBALS['egw_setup']->db->query($sql);
@@ -487,6 +491,7 @@ class setup_detection
 				}
 			}
 			catch (egw_exception_db $e) {
+				unset($e);
 				// ignore db error
 			}
 			foreach($copy[$appname]['tables'] as $key => $val)
@@ -546,7 +551,7 @@ class setup_detection
 	 *
 	 * @param string $dir path
 	 * @param string &$msg error-msg: 'does not exist', 'is not writeable by the webserver' or 'is in the webservers docroot' (run through lang)
-	 * @param boolean $check_in_docroot=false run an optional in docroot check
+	 * @param boolean $check_in_docroot =false run an optional in docroot check
 	 * @return boolean
 	 */
 	static function check_dir($dir,&$msg,$check_in_docroot=false)
