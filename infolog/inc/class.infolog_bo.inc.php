@@ -1186,7 +1186,8 @@ class infolog_bo
 				{
 					egw_link::link('infolog',$info['link_to']['to_id'],egw_link::DATA_APPNAME,  $attachment);
 				}
-				else if(is_readable($attachment['tmp_name']))
+				else if(is_readable($attachment['tmp_name']) ||
+					(egw_vfs::is_readable($attachment['tmp_name']) && parse_url($attachment['tmp_name'], PHP_URL_SCHEME) === 'vfs'))
 				{
 					egw_link::link('infolog',$info['link_to']['to_id'],'file',  $attachment);
 				}
