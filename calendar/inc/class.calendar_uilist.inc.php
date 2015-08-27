@@ -378,7 +378,7 @@ class calendar_uilist extends calendar_ui
 			$col_filter = array();
 			foreach($params['col_filter'] as $name => $val)
 			{
-				if ($name != 'participants' && (string)$val !== '')
+				if (!in_array($name, array('participant','row_id')) && (string)$val !== '')
 				{
 					$col_filter[$name] = $val;
 				}
