@@ -380,7 +380,7 @@ var AppJS = Class.extend(
 							li.addClass('ui-state-highlight');
 						},50);
 					}
-					
+
 					var state = {};
 					var pref = egw.preference('favorite_' + this.dataset.id, self.appname);
 					if(pref)
@@ -614,7 +614,7 @@ var AppJS = Class.extend(
 						self.egw.jsonq(self.appname+'.egw_framework.ajax_set_favorite.template',
 							[
 								self.appname,
-								name.val(),
+								safe_name,
 								"add",
 								self.favorite_popup.group.get_value(),
 								self.favorite_popup.state
@@ -775,7 +775,7 @@ var AppJS = Class.extend(
 				favorite = egw.preference('favorite_'+this.dataset.id,self.appname);
 			}
 			if(!favorite || jQuery.isEmptyObject(favorite)) return;
-			
+
 			var match_count = 0;
 			for(var state_key in state)
 			{
@@ -783,7 +783,7 @@ var AppJS = Class.extend(
 				{
 					match_count++;
 				}
-				else if (typeof state[state_key] != 'undefined' && state[state_key] && typeof state[state_key] === 'object' 
+				else if (typeof state[state_key] != 'undefined' && state[state_key] && typeof state[state_key] === 'object'
 							&& typeof favorite.state != 'undefined' && typeof favorite.state[state_key] != 'undefined' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
 				{
 					if((typeof state[state_key].length !== 'undefined' || typeof state[state_key].length !== 'undefined')
@@ -827,7 +827,7 @@ var AppJS = Class.extend(
 				{
 					// Skip, might be set, might not
 				}
-				else if (typeof state[state_key] !== 'undefined' 
+				else if (typeof state[state_key] !== 'undefined'
 						 && typeof favorite.state != 'undefined'&&typeof favorite.state[state_key] !== 'undefined'
 						 && state[state_key] != favorite.state[state_key])
 				{
