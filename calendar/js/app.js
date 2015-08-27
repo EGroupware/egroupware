@@ -975,7 +975,7 @@ app.classes.calendar = AppJS.extend(
 		}
 		return true;
 	},
-	
+
 	/**
 	 * Handles to select freetime, and replace the selected one on Start,
 	 * and End date&time in edit calendar entry popup.
@@ -1078,7 +1078,7 @@ app.classes.calendar = AppJS.extend(
 	 */
 	cal_open: function(_action, _senders)
 	{
-		
+
 		var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
 		var id = _senders[0].id;
 		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
@@ -1294,7 +1294,7 @@ app.classes.calendar = AppJS.extend(
 		// Don't store first and last
 		delete state.first;
 		delete state.last;
-		
+
 		return state;
 	},
 
@@ -1316,18 +1316,18 @@ app.classes.calendar = AppJS.extend(
 			}
 		}
 
+		if (jQuery.isEmptyObject(state)) state.state = {};
+
 		// old calendar state handling on server-side (incl. switching to and from listview)
 		var menuaction = 'calendar.calendar_uiviews.index';
 		if (typeof state.state != 'undefined' && (typeof state.state.view == 'undefined' || state.state.view == 'listview'))
 		{
-			if (state.name)
-			{
-				// 'blank' is the special name for no filters, send that instead of the nice translated name
-				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
-				// set date for "No Filter" (blank) favorite to todays date
-				if (state.state.favorite == 'blank')
-					state.state.date = jQuery.datepicker.formatDate('yymmdd', new Date);
-			}
+			// 'blank' is the special name for no filters, send that instead of the nice translated name
+			state.state.favorite = jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+			// set date for "No Filter" (blank) favorite to todays date
+			if (state.state.favorite == 'blank')
+				state.state.date = jQuery.datepicker.formatDate('yymmdd', new Date);
+
 			menuaction = 'calendar.calendar_uilist.listview';
 			state.state.ajax = 'true';
 			// check if we already use et2 / are in listview
