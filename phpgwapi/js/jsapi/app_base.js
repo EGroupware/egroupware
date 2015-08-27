@@ -614,7 +614,7 @@ var AppJS = Class.extend(
 						self.egw.jsonq(self.appname+'.egw_framework.ajax_set_favorite.template',
 							[
 								self.appname,
-								safe_name,
+								name.val(),
 								"add",
 								self.favorite_popup.group.get_value(),
 								self.favorite_popup.state
