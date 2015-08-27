@@ -135,6 +135,17 @@ function read_thumbnail($src)
 	// Generate the destination filename and check whether the destination directory
 	// had been successfully created (the cache class used in gen_dstfile does that).
 	$stat = egw_vfs::stat(egw_vfs::parse_url($src, PHP_URL_PATH));
+
+	// if pdf-thumbnail-creation is not available, generate a single scaled-down pdf-icon
+	if ($stat && egw_vfs::mime_content_type($src) == 'application/pdf' && !pdf_thumbnails_available())
+	{
+		list($app, $icon) = explode('/', egw_vfs::mime_icon('application/pdf'), 2);
+		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
+			common::image($app, $icon), 2);
+		$src = EGW_SERVER_ROOT.$path;
+		$stat = false;
+		$maxsize = $height = $width = $minsize = $maxh = $minh = $maxw = $minw = 16;
+	}
 	$dst = gen_dstfile($stat && !empty($stat['url']) ? $stat['url'] : $src, $maxsize, $height, $width, $minsize);
 	$dst_dir = dirname($dst);
 	if(file_exists($dst_dir))
@@ -176,8 +187,8 @@ function read_thumbnail($src)
 		if ($dst)
 		{
 			// Allow client to cache these, makes scrolling in filemanager much nicer
-			header('Pragma: private');
-			header('Cache-Control: max-age=300');
+			// setting maximum allow caching time of one year, if url contains (non-empty) moditication time
+			egw_session::cache_control(empty($_GET['mtime']) ? 300 : 31536000, true);	// true = private / browser only caching
 			header('Content-Type: '.$output_mime);
 			readfile($dst);
 			return true;
@@ -225,7 +236,7 @@ function gen_dstfile($src, $maxsize, $height=null, $width=null, $minsize=null)
  * TODO: As this is a general purpose function, it might probably be moved
  *   to some other php file or an "image utils" class.
  */
-function get_scaled_image_size($w, $h, $maxw, $maxh, $minw, $minh)
+function get_scaled_image_size($w, $h, $maxw, $maxh, $minw=0, $minh=0)
 {
 	//Scale will contain the factor by which the image has to be scaled down
 	$scale = 1.0;
@@ -282,12 +293,16 @@ function exif_thumbnail_load($file)
  * otherwise the gd-image is returned.
  *
  * @param string $file the file which to load
+ * @param int $maxw the maximum width of the thumbnail
+ * @param int $maxh the maximum height of the thumbnail
  * @returns boolean|resource false or a gd_image
  */
-function gd_image_load($file)
+function gd_image_load($file,$maxw,$maxh)
 {
 	// Get mime type
 	list($type, $image_type) = explode('/', egw_vfs::mime_content_type($file));
+	// if $file is not from vfs, use mime_magic::filename2mime to get mime-type from extension
+	if (!$type) list($type, $image_type) = explode('/', mime_magic::filename2mime($file));
 
 	// Call the according gd constructor depending on the file type
 	if($type == 'image')
@@ -308,12 +323,44 @@ function gd_image_load($file)
 				return imagecreatefromwbmp($file);
 		}
 	}
-	else if ($type == 'application' && strpos($image_type,'vnd.oasis.opendocument.') === 0)
+	else if ($type == 'application')
 	{
-		// OpenDocuments have thumbnails inside already
-		return get_opendocument_thumbnail($file);
-	}
+		$thumb = false;
+		if(strpos($image_type,'vnd.oasis.opendocument.') === 0)
+		{
+			// OpenDocuments have thumbnails inside already
+			$thumb = get_opendocument_thumbnail($file);
+		}
+		else if($image_type == 'pdf')
+		{
+			$thumb = get_pdf_thumbnail($file);
+		}
+		else if (strpos($image_type, 'vnd.openxmlformats-officedocument.') === 0)
+		{
+			// TODO: Figure out how this can be done reliably
+			//$thumb = get_msoffice_thumbnail($file);
+		}
+		// Mark it with mime type icon
+		if($thumb)
+		{
+			// Need to scale first, or the mark will be wrong size
+			$scaled = get_scaled_image_size(imagesx($thumb), imagesy($thumb), $maxw, $maxh);
+			if ($scaled !== false)
+			{
+				list($sw, $sh) = $scaled;
 
+				//Now scale it down
+				$img_dst = gd_create_transparent_image($sw, $sh);
+				imagecopyresampled($img_dst, $thumb, 0, 0, 0, 0, $sw, $sh, imagesx($thumb), imagesy($thumb));
+				$thumb = $img_dst;
+			}
+			$mime = egw_vfs::mime_content_type($file);
+			$tag_image = null;
+			corner_tag($thumb, $tag_image, $mime);
+			imagedestroy($tag_image);
+		}
+		return $thumb;
+	}
 	return false;
 }
 
@@ -330,7 +377,7 @@ function gd_image_load($file)
  */
 function get_opendocument_thumbnail($file)
 {
-	list(, $file_type) = $mimetype = explode('/', egw_vfs::mime_content_type($file));
+	$mimetype = explode('/', egw_vfs::mime_content_type($file));
 
 	// Image is already there, but we can't access them directly through VFS
 	$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
@@ -340,13 +387,13 @@ function get_opendocument_thumbnail($file)
 	$thumbnail_url = 'zip://'.$archive.'#Thumbnails/thumbnail.png';
 	$image = imagecreatefromstring(file_get_contents($thumbnail_url));
 	unlink($archive);
-
+/*
 	// Mask it with a color by type
 	$mask = imagecreatefrompng('templates/default/images/opendocument.png');
 	if($image)
 	{
 		$filter_color = array(0,0,0);
-		switch($file_type)
+		switch($mimetype[1])
 		{
 			// Type colors from LibreOffice (https://wiki.documentfoundation.org/Design/Whiteboards/LibreOffice_Initial_Icons)
 			case 'vnd.oasis.opendocument.text':
@@ -363,7 +410,88 @@ function get_opendocument_thumbnail($file)
 		imagefilter($mask, IMG_FILTER_COLORIZE, $filter_color[0],$filter_color[1],$filter_color[2] );
 		imagecopyresampled($image, $mask,0,0,0,0,imagesx($image),imagesy($image),imagesx($mask),imagesy($mask));
 	}
+ *
+ */
 	return $image;
+}
+
+/**
+ * Check if we have the necessary requirements to generate pdf thumbnails
+ *
+ * @return boolean
+ */
+function pdf_thumbnails_available()
+{
+	return class_exists('Imagick');
+}
+/**
+ * Extract the thumbnail from a PDF file and apply a colored mask
+ * so you can tell what type it is, and so it looks a little better in larger
+ * thumbnails (eg: in tiled view).
+ *
+ * Requires ImageMagick & ghostscript.
+ *
+ * @param string $file
+ * @return resource GD image
+ */
+function get_pdf_thumbnail($file)
+{
+	if(!pdf_thumbnails_available()) return false;
+
+	// switch off max_excution_time, as some thumbnails take longer and
+	// will be startet over and over again, if they dont finish
+	@set_time_limit(0);
+
+	$im = new Imagick($file);
+	$im->setimageformat('png');
+	$im->setresolution(300, 300);
+
+	$gd = imagecreatefromstring($im->getimageblob());
+	return $gd;
+}
+
+/**
+ * Put the tag image in the corner of the target image
+ *
+ * Used for thumbnails of documents, so you can still see the mime type
+ *
+ * @param resource& $target_image
+ * @param resource&|null $tag_image
+ * @param string|null $mime Use correct mime type icon instead of $tag_image
+ */
+function corner_tag(&$target_image, &$tag_image, $mime)
+{
+	$target_width = imagesx($target_image);
+	$target_height = imagesy($target_image);
+
+	// Find mime image, if no tag image set
+	if(!$tag_image && $mime)
+	{
+		list($app, $icon) = explode('/', egw_vfs::mime_icon($mime), 2);
+		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
+			common::image($app, $icon), 2);
+		$dst = EGW_SERVER_ROOT.$path;
+		$tag_image = imagecreatefrompng($dst);
+	}
+
+	// Find correct size - max 1/3 target
+	$tag_size = get_scaled_image_size(imagesx($tag_image), imagesy($tag_image), $target_width / 3, $target_height / 3);
+	if(!$tag_size) return;
+	list($tag_width,$tag_height) = $tag_size;
+
+	// Put it in
+	if($mime)
+	{
+		imagecopyresampled($target_image,$tag_image,
+			$target_width - $tag_width,
+			$target_height - $tag_height,
+			0,0,
+			$tag_width,
+			$tag_height,
+			imagesx($tag_image),
+			imagesy($tag_image)
+		);
+	}
 }
 
 /**
@@ -411,7 +539,7 @@ function gd_create_transparent_image($w, $h)
 function gd_image_thumbnail($file, $maxw, $maxh, $minw, $minh)
 {
 	//Load the image
-	if (($img_src = gd_image_load($file)) !== false)
+	if (($img_src = gd_image_load($file,$maxw,$maxh)) !== false)
 	{
 		//Get the constraints of the image
 		$w = imagesx($img_src);
