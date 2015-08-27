@@ -977,6 +977,117 @@ var AppJS = Class.extend(
 	},
 
 	/**
+	 * mailvelope object contains SyncHandlers
+	 * @property {function} descriptionuploadSync function called by Mailvelope to upload encrypted private key backup
+	 * @property {function} downloadSync function called by Mailvelope to download encrypted private key backup
+	 * @property {function} backup function called by Mailvelope to upload a public keyring backup
+	 * @property {function} restore function called by Mailvelope to restore a public keyring backup
+	 */
+	mailvelope_syncHandlerObj: {
+		/**
+		 * function called by Mailvelope to upload encrypted private key backup
+		 * @param {UploadSyncHandler} _uploadObj
+		 *	@property {string} etag entity tag for the uploaded encrypted keyring, or null if initial upload
+		 *	@property {AsciiArmored} keyringMsg encrypted keyring as PGP armored message
+		 * @returns {Promise.<UploadSyncReply, Error>}
+		 */
+		uploadSync: function(_uploadObj)
+		{
+			return new Promise(function(_resolve,_reject){});
+		},
+
+		/**
+		 * function called by Mailvelope to download encrypted private key backup
+		 *
+		 * @param {object} _downloadObj
+		 *	@property {string} etag entity tag for the current local keyring, or null if no local eTag
+		 * @returns {Promise.<DownloadSyncReply, Error>}
+		 */
+		downloadSync: function(_downloadObj)
+		{
+			return new Promise(function(_resolve,_reject){});
+		},
+
+		/**
+		 * function called by Mailvelope to upload a public keyring backup
+		 *
+		 * @param {BackupSyncPacket} _backup
+		 *	@property {AsciiArmored} backup encrypted key backup as PGP armored message
+		 * @returns {Promise.<undefined, Error>}
+		 */
+		backup: function(_backup)
+		{
+			return new Promise(function(_resolve,_reject){
+				// Store backup sync packet into .PK_PGP file in user directory
+				jQuery.ajax({
+					method:'PUT',
+					url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
+					contentType: 'application/json',
+					data: JSON.stringify(_backup),
+					success:function(){
+						_resolve(_backup);
+					},
+					error: function(_err){
+						_reject(_err);
+					}
+				});
+			});
+		},
+
+		/**
+		 * function called by Mailvelope to restore a public keyring backup
+		 * @returns {Promise.<BackupSyncPacket, Error>}
+		 * @todo
+		 */
+		restore: function()
+		{
+			return new Promise(function(_resolve,_reject){
+
+			});
+		}
+	},
+
+	/**
+	 * Create backup dialog
+	 * @returns {Promise.<backupPopupId, Error>}
+	 */
+	mailvelope_createBackupDialog: function()
+	{
+		var self = this;
+		return new Promise(function(_resolve, _reject)
+		{
+		   var resolve = _resolve;
+		   var reject = _reject;
+		   mailvelope.getKeyring('egroupware').then(function(_keyring)
+			{
+				_keyring.addSyncHandler(self.mailvelope_syncHandlerObj);
+
+				var options = {
+					userIds:[{email:egw.user('account_email'),fullName:egw.user('account_fullname')}]
+				 };
+				 _keyring.createKeyBackupContainer('body', options).then(function(_popupId){
+					 resolve(_popupId);
+				 },
+				 function(_err){
+					 reject(_err);
+				 });
+			},
+			function(_err)
+			{
+				reject(_err);
+			});
+		});
+	},
+
+	mailvelope_createRestoreDialog: function()
+	{
+		return new Promise(function(_resolve, _reject){
+
+		});
+	},
+
+
+	/**
 	 * PGP begin and end tags
 	 */
 	begin_pgp_message: '-----BEGIN PGP MESSAGE-----',
@@ -1013,7 +1124,7 @@ var AppJS = Class.extend(
 				self.mailvelope_keyring = _keyring;
 
 				resolve(_keyring);
-			},
+				},
 			function(_err)
 			{
 				mailvelope.createKeyring('egroupware').then(function(_keyring)
@@ -1031,15 +1142,41 @@ var AppJS = Class.extend(
 						jQuery(mvelo_settings_selector).css({position: 'absolute', top: 0});
 						// add a close button, so we know when to offer storing public key to AB
 						jQuery('<button class="et2_button et2_button_text" id="mailvelope_close_settings">'+self.egw.lang('Close')+'</button>')
-							.css({position: 'absolute', top: 8, right: 8})
+							.css({position: 'absolute', top: 8, right: 8, "z-index":2})
 							.click(function()
 							{
 								// try fetching public key, to check user created onw
 								self.mailvelope_keyring.exportOwnPublicKey(self.egw.user('account_email')).then(function(_pubKey)
 								{
-									// if yes, hide settings dialog
-									jQuery(mvelo_settings_selector).remove();
-									jQuery('button#mailvelope_close_settings').remove();
+									var $mvelo_selector = jQuery(mvelo_settings_selector);
+									// Build the backupDialog once and remove the setting dialog after
+									if($mvelo_selector.length && !$mvelo_selector[0].src.match(/keyBackupDialog.html/,'ig'))
+									{
+										// CreateBackupDialog
+										self.mailvelope_createBackupDialog().then(function(_popupId){
+											jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]').css({position:'absolute', "z-index":1});
+											_popupId.isReady().then(function(_popupId){
+												console.log(_popupId);
+											},
+											function(_err){
+												console.log(_err);
+												reject(_err);
+											});
+										},
+										function(_err){
+											console.log('rejected'+_err);
+										});
+										// if yes, hide settings dialog
+										jQuery(mvelo_settings_selector).remove();
+
+										return false;
+									}
+									else // close button on backup dialog
+									{
+										jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]').remove();
+										jQuery('button#mailvelope_close_settings').remove();
+									}
+
 									// offer user to store his public key to AB for other users to find
 									var buttons = [
 										{button_id: 2, text: 'Yes', id: 'dialog[yes]', image: 'check', default: true},
