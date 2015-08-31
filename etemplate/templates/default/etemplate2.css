@@ -865,6 +865,14 @@ ul.et2_vfs {
 .et2_vfs li.vfsFilename:not(:last-child):after {
   padding: 0.25ex;
 }
+.et2_vfs table {
+	width: 100%;
+	max-height: 6em;
+	overflow: auto;
+}
+.et2_vfs td.icon {
+	width: 16px;
+}
 button.et2_vfs_btn {
 	margin: 0;
 	text-align: left;

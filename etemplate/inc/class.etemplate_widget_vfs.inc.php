@@ -55,7 +55,11 @@ class etemplate_widget_vfs extends etemplate_widget_file
 				// Single file, already existing
 				if (substr($path,-1) != '/' && egw_vfs::file_exists($path) && !egw_vfs::is_dir($path))
 				{
-					$value = $path;
+					$file = egw_vfs::stat($path);
+					$file['path'] = egw_vfs::resolve_url($path);
+					$file['name'] = egw_vfs::basename($file['path']);
+					$file['mime'] = egw_vfs::mime_content_type($file['path']);
+					$value = array($file);
 				}
 				else if (substr($path, -1) == '/' && egw_vfs::is_dir($path))
 				{
@@ -63,6 +67,9 @@ class etemplate_widget_vfs extends etemplate_widget_file
 					foreach($value as &$file)
 					{
 						$file = egw_vfs::stat("$path$file");
+						$file['path'] = $file['url'];
+						$file['name'] = egw_vfs::basename($file['path']);
+						$file['mime'] = egw_vfs::mime_content_type($file['path']);
 					}
 				}
 			}
@@ -73,7 +80,7 @@ class etemplate_widget_vfs extends etemplate_widget_file
 		parent::ajax_upload();
 		foreach($_FILES as $field => $file)
 		{
-			self::store_file($field, $file);
+			self::store_file($_REQUEST['widget_id'], $file);
 		}
 	}
 
@@ -134,7 +141,7 @@ class etemplate_widget_vfs extends etemplate_widget_file
 	* $content array and the application should deal with the file.
 	*/
 	public static function store_file($path, $file) {
-		$name = $path;
+		$name = $_REQUEST['widget_id'];
 
 		// Find real path
 		if($path[0] != '/')

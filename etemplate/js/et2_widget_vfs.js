@@ -642,10 +642,15 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
  */
 var et2_vfsUpload = et2_file.extend(
 {
+	attributes: {
+		"value": {
+			"type": "any",	// Either nothing, or an object with file info
+		}
+	},
 	legacyOptions: ["mime"],
 
 	asyncOptions: {
-		url: egw.ajaxUrl("etemplate_widget_vfs::ajax_upload::etemplate")
+		target: egw.ajaxUrl(self.egw().getAppName()+".etemplate_widget_vfs.ajax_upload.etemplate")
 	},
 
 	/**
@@ -657,16 +662,64 @@ var et2_vfsUpload = et2_file.extend(
 	 */
 	init: function(_parent, attrs) {
 		this._super.apply(this, arguments);
-		this.input.addClass("et2_vfs");
+		$j(this.node).addClass("et2_vfs");
 
 		// If the ID is a directory, allow multiple uploads
 		if(this.options.id.substr(-1) == '/')
 		{
 			this.set_multiple(true);
 		}
+		this.list = $j(document.createElement('table')).appendTo(this.node);
 	},
 
+	/**
+	 * If there is a file / files in the specified location, display them
+	 *
+	 * @param {Object[]} _value
+	 */
 	set_value: function(_value) {
+		this.progress.empty();
+		this.list.empty();
+		for(var i = 0; i < _value.length; i++)
+		{
+			this._addFile(_value[i]);
+		}
+	},
+
+	getDOMNode: function(sender) {
+		if(sender !== this && sender._type.indexOf('vfs') >= 0 )
+		{
+			var value = sender.getValue && sender.getValue() || sender.options.value || {};
+			var row =  $j('[data-path="'+(value.path)+'"]',this.list);
+			if(sender._type === 'vfs-mime')
+			{
+				return $j('.icon',row).get(0) || null;
+			}
+			else
+			{
+				return $j('.title',row).get(0) || null;
+			}
+		}
+		else
+		{
+			return this._super.apply(this, arguments);
+		}
+	},
+
+	_addFile: function(file_data) {
+		var row = $j(document.createElement("tr"))
+			.attr("data-path", file_data.url)
+			.attr("draggable", "true")
+			.appendTo(this.list);
+		var mime = $j(document.createElement("td"))
+			.addClass('icon')
+			.appendTo(row);
+
+		var title = $j(document.createElement("td"))
+			.addClass('title')
+			.appendTo(row);
+		var mime = et2_createWidget('vfs-mime',{value: file_data},this);
+		var vfs = et2_createWidget('vfs', {value: file_data}, this);
 	}
 });
 et2_register_widget(et2_vfsUpload, ["vfs-upload"]);

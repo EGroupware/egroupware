@@ -469,7 +469,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
 
-			if(egw.debug_level >= 3 && console.groupEnd)
+			if(egw.debug_level() >= 3 && console.groupEnd)
 			{
 				egw.window.console.groupEnd();
 			}
