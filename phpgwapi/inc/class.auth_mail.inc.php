@@ -70,7 +70,7 @@ class auth_mail implements auth_backend
 
 				$mailauth = false;
 			}
-			error_log(__METHOD__."('$username', \$passwd) checked via Horde code returning ".array2string($mailauth));
+			//error_log(__METHOD__."('$username', \$passwd) checked via Horde code returning ".array2string($mailauth));
 		}
 		else
 		{
