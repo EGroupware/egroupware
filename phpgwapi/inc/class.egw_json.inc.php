@@ -68,7 +68,7 @@ class egw_json_request
 		{
 			$responses = array();
 			$response = egw_json_response::get();
-			foreach($parameters as $uid => $data)
+			foreach($parameters[0] as $uid => $data)
 			{
 				//error_log("$uid: menuaction=$data[menuaction], parameters=".array2string($data['parameters']));
 				$this->handleRequest($data['menuaction'], (array)$data['parameters']);
@@ -158,9 +158,8 @@ class egw_json_request
 		// they are already loaded, in fact jquery has a problem if loaded twice
 		egw_framework::js_files(array());
 
-		$parameters = translation::convert($parameters, 'utf-8');
-
-		call_user_func_array(array($ajaxClass, $functionName), $parameters);
+		call_user_func_array(array($ajaxClass, $functionName),
+			translation::convert($parameters, 'utf-8'));
 
 		// check if we have push notifications, if notifications app available
 		if (class_exists('notifications_push')) notifications_push::get();
@@ -688,7 +687,7 @@ class xajaxResponse
 		return call_user_func_array(array(egw_json_response::get(), $name), $args);
 	}
 
-	public function addScriptCall($func)
+	public function addScriptCall()
 	{
 		$args = func_get_args();
 		$func = array_shift($args);

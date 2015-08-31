@@ -17,11 +17,11 @@
 	egw_debug;
 */
 
-egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
-
+egw.extend('jsonq', egw.MODULE_GLOBAL, function()
+{
 	/**
 	 * Queued json requests (objects with attributes menuaction, parameters, context, callback, sender and callbeforesend)
-	 * 
+	 *
 	 * @access private, use jsonq method to queue requests
 	 */
 	var jsonq_queue = {};
@@ -38,13 +38,13 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 
 	/**
 	 * Dispatch responses received
-	 * 
-	 * @param object _data uid => response pairs
+	 *
+	 * @param {object} _data uid => response pairs
 	 */
 	function jsonq_callback(_data)
 	{
 		if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
-		
+
 		// Abort if type is set (multi-response support)
 		if (typeof _data.type != 'undefined') return;
 
@@ -59,7 +59,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 			}
 			var job = jsonq_queue[uid];
 			var response = _data[uid];
-			
+
 			// fake egw.json_request object, to call it with the current response
 			json.callback = job.callback;
 			json.sender = job.sender;
@@ -106,7 +106,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 			if (something_to_send)
 			{
 				// TODO: Passing this to the "home" application looks quite ugly
-				var request = egw.json('home.queue', jobs_to_send, jsonq_callback, this)
+				var request = egw.json('home.queue', jobs_to_send, jsonq_callback, this);
 				request.sendRequest(true);
 			}
 		}
@@ -115,14 +115,14 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 	return {
 		/**
 		 * Send a queued JSON call to the server
-		 * 
-		 * @param string _menuaction the menuaction function which should be called and
+		 *
+		 * @param {string} _menuaction the menuaction function which should be called and
 		 *   which handles the actual request. If the menuaction is a full featured
 		 *   url, this one will be used instead.
-		 * @param array _parameters which should be passed to the menuaction function.
-		 * @param function _callback callback function which should be called upon a "data" response is received
-		 * @param object _sender is the reference object the callback function should get
-		 * @param function _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
+		 * @param {array} _parameters which should be passed to the menuaction function.
+		 * @param  {function} _callback callback function which should be called upon a "data" response is received
+		 * @param {object} _sender is the reference object the callback function should get
+		 * @param {function} _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
 		 * @return string uid of the queued request
 		 */
 		jsonq: function(_menuaction, _parameters, _callback, _sender, _callbeforesend)
@@ -130,12 +130,16 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 			var uid = 'u'+(jsonq_uid++);
 			jsonq_queue[uid] = {
 				menuaction: _menuaction,
-				parameters: _parameters,
+				// IE JSON-serializes arrays passed in from different window contextx (eg. popups)
+				// as objects (it looses object-type of array), causing them to be JSON serialized
+				// as objects and loosing parameters which are undefined
+				// JSON.strigify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
+				parameters: _parameters ? [].concat(_parameters) : [],
 				callback: _callback,
 				sender: _sender,
 				callbeforesend: _callbeforesend
 			};
-			
+
 			if (jsonq_timer == null)
 			{
 				// check / send queue every N ms
@@ -148,7 +152,4 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 		}
 
 	};
-
 });
-
-
