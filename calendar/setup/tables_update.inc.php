@@ -2605,3 +2605,14 @@ function calendar_upgrade14_3()
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.001';
 }
+
+
+/**
+ * Setting new index url from setup.inc.php
+ *
+ * @return string
+ */
+function calendar_upgrade14_3_001()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.900';
+}
