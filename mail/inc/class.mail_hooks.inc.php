@@ -493,7 +493,7 @@ class mail_hooks
 			'link'=>false,
 			'icon' => false
 		);
-		
+
 		$linkData = array(
 			'menuaction' => 'mail.mail_ui.importMessage',
 		);
@@ -522,6 +522,7 @@ class mail_hooks
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
+		hooks::pgp_encryption_menu('mail');
 	}
 
 	/**

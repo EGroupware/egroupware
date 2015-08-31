@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<overlay>
+	<template id="etemplate.pgp_backup_restore" template="" lang="" group="" version="15.1">
+		<hbox width="700" height="300">
+			<grid id="menu" class="egwGridView_grid " width="200px">
+				<columns>
+					<column/>
+				</columns>
+				<rows>
+					<row class="th" part="header">
+						<description align="center" value="Menu"/>
+					</row>
+					<row>
+						<description id="${row}[id]" onclick="$row_cont[onclick]" class="click"/>
+					</row>
+				</rows>
+			</grid>
+			<hbox id="mvelo" width="500px" height="300" class="mveloFrame"/>
+		</hbox>
+		<styles>
+			#_mvelo.mveloFrame {
+				border:1px solid silver;
+				display: inline-block;
+				float:right;
+				position:absolute;
+			}
+			div#_mvelo:before {
+				content: "Select an operation from menu";
+				position: absolute;
+				top: 44%;
+				left: 33%;
+				font-size: medium;
+				color: silver;
+			}
+			table.mvelo_menu {
+				border-right:1px solid silver;
+				margin:0;
+				position:absolute;
+				top:80px;
+				left:150px;
+			}
+		</styles>
+	</template>
+</overlay>

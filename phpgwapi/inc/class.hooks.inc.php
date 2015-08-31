@@ -366,4 +366,17 @@ class hooks
 			}
 		}
 	}
+
+	/**
+	 * Static function to build pgp encryption sidebox menu
+	 * @param type $appname application name
+	 */
+	public static function pgp_encryption_menu($appname)
+	{
+		// PGP Encryption (Mailvelope plugin) restore/backup menu
+		$file = Array(
+			'Backup/Restore ...' => 'javascript:app.'.$appname.'.mailvelopeCreateBackupRestoreDialog();',
+		);
+		display_sidebox($appname, lang('PGP Encryption'), $file);
+	}
 }
