@@ -153,10 +153,13 @@ app.classes.calendar = AppJS.extend(
 					}
 					//send Syncronus ajax request to the server to unlock the on close entry
 					//set onbeforeunload with json request to send request when the window gets close by X button
-					window.onbeforeunload = function () {
-						this.egw.json('calendar.calendar_uiforms.ajax_unlock'
-						, [content.data['id'],content.data['lock_token']],null,true,null,null).sendRequest(true);
-					};
+					if (content.data.lock_token)
+					{
+						window.onbeforeunload = function () {
+							this.egw.json('calendar.calendar_uiforms.ajax_unlock',
+							[content.data.id, content.data.lock_token],null,true,null,null).sendRequest(true);
+						};
+					}
 				}
 				this.alarm_custom_date();
 				break;
