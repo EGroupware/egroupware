@@ -47,7 +47,11 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	{
 		// Copy the parameters
 		this.url = _egw.ajaxUrl(_menuaction);
-		this.parameters = _parameters ? _parameters : [];
+		// IE JSON-serializes arrays passed in from different window contextx (eg. popups)
+		// as objects (it looses object-type of array), causing them to be JSON serialized
+		// as objects and loosing parameters which are undefined
+		// JSON.strigify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
+		this.parameters = _parameters ? [].concat(_parameters) : [];
 		this.async = _async ? _async : false;
 		this.callback = _callback ? _callback : null;
 		this.context = _context ? _context : null;
