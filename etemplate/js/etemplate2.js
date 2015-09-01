@@ -609,7 +609,11 @@ etemplate2.prototype.autocomplete_fixer = function ()
 	var form = self.DOMContainer;
 	if (form)
 	{
-		form.onsubmit = function(){return false;};
+		// Stop submit propagation in order to not fire other possible submit events
+		// for instance, CKEditor has its own submit event handler which we do not want to
+		// fire that on submit
+		form.onsubmit = function(e){e.stopPropagation();};
+
 		// Firefox give a security warning when transmitting to "about:blank" from a https site
 		// we work around that by giving existing etemplate/empty.html url
 		// Safari shows same warning, thought Chrome userAgent also includes Safari
@@ -617,7 +621,9 @@ etemplate2.prototype.autocomplete_fixer = function ()
 		{
 			jQuery(form).attr({action: egw.webserverUrl+'/etemplate/empty.html',method:'post'});
 		}
-		form.submit();
+		// need to trigger submit because submit() would not trigger onsubmit event
+		// since the submit does not get fired directly via user interaction.
+		jQuery(form).trigger('submit');
 	}
 };
 
