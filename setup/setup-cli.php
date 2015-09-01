@@ -126,7 +126,7 @@ switch($action)
 			is_subclass_of($class,'admin_cmd') && @constant($class.'::SETUP_CLI_CALLABLE'))
 		{
 			$args = array();
-			$args['domain'] = array_shift($arguments);	// domain must be first argument, to ensure right domain get's selected in header-include
+			list($args['domain']) = explode(',', array_shift($arguments));	// domain must be first argument, to ensure right domain get's selected in header-include
 			foreach($arguments as $arg)
 			{
 				list($name,$value) = explode('=',$arg,2);

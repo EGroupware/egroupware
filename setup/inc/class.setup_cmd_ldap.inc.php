@@ -45,10 +45,10 @@
  * - copies mail-attributes from ldap to AD (example is from Mandriva mailAccount schema, need to adapt to other schema!)
  *   (no_sid_check=1 uses all objectClass=posixAccount, not checking for having a SID and uid not ending in $ for computer accounts)
  *
- * setup/setup-cli.php [--dry-run] --setup_cmd_ldap <domain>,<config-user>,<config-pw> sub_command=passwords_to_sql \
- * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost
+ * setup/setup-cli.php [--dry-run] --setup-cmd-ldap <domain>,<config-user>,<config-pw> sub_command=passwords_to_sql \
+ * 	ldap_context=ou=accounts,dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost
  *
- * Updating passwords for existing users in SQL from LDAP, eg. to switch off authentication to LDAP on a SQL install.
+ * - updating passwords for existing users in SQL from LDAP, eg. to switch off authentication to LDAP on a SQL install.
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -463,6 +463,12 @@ class setup_cmd_ldap extends setup_cmd
 			}
 			$what = ($account['account_type'] == 'u' ? lang('User') : lang('Group')).' '.
 				$account_id.' ('.$account['account_lid'].')';
+
+			// if we migrate passwords from an authentication source, we need to use account_lid, not numerical id
+			if ($passwords2sql && ($id = $accounts_obj->name2id($account['account_lid'], 'account_lid', 'u')))
+			{
+				$account_id = $id;
+			}
 
 			// invalidate cache: otherwise no migration takes place, if cached results says account already exists
 			accounts::cache_invalidate($account_id);
