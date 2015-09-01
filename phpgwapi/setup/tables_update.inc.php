@@ -525,11 +525,17 @@ function phpgwapi_upgrade14_2_017()
 		'precision' => '32',
 		'comment' => 'currently not used'
 	));
-	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_pubkey',array(
-		'type' => 'ascii',
-		'precision' => '8192',
-		'comment' => 'public key'
-	));
+	// only shorten pubkey to varchar(16384), if it does NOT contain longer input and it can be stored as varchar
+	$max_pubkey_length = $GLOBALS['egw']->db->query('SELECT MAX(LENGTH(contact_pubkey)) FROM egw_addressbook')->fetchColumn();
+	// returns NULL, if there are no rows!
+	if ((int)$max_pubkey_length <= 16384 && $GLOBALS['egw_setup']->oProc->max_varchar_length >= 16384)
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_pubkey',array(
+			'type' => 'ascii',
+			'precision' => '16384',
+			'comment' => 'public key'
+		));
+	}
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_uid',array(
 		'type' => 'ascii',
 		'precision' => '128',
@@ -894,4 +900,26 @@ function phpgwapi_upgrade14_3_901()
 		phpgwapi_upgrade14_3_003();
 	}
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.902';
+}
+
+/**
+ * Change egw_addressbook.contact_pubkey to 16k as an ascii-armored 4096 bit PGP key is ~12k
+ *
+ * @return type
+ */
+function phpgwapi_upgrade14_3_902()
+{
+	// only shorten pubkey to varchar(16384), if it does NOT contain longer input and it can be stored as varchar
+	$max_pubkey_length = $GLOBALS['egw']->db->query('SELECT MAX(LENGTH(contact_pubkey)) FROM egw_addressbook')->fetchColumn();
+	// returns NULL, if there are no rows!
+	if ((int)$max_pubkey_length <= 16384 && $GLOBALS['egw_setup']->oProc->max_varchar_length >= 16384)
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_pubkey',array(
+			'type' => 'ascii',
+			'precision' => '16384',
+			'comment' => 'public key'
+		));
+	}
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.903';
 }

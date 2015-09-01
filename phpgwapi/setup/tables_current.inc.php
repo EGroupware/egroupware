@@ -270,7 +270,7 @@ $phpgw_baseline = array(
 			'contact_note' => array('type' => 'varchar','precision' => '8192','comment' => 'notes field'),
 			'contact_tz' => array('type' => 'varchar','precision' => '8','comment' => 'timezone difference'),
 			'contact_geo' => array('type' => 'ascii','precision' => '32','comment' => 'currently not used'),
-			'contact_pubkey' => array('type' => 'ascii','precision' => '8192','comment' => 'public key'),
+			'contact_pubkey' => array('type' => 'ascii','precision' => '16384','comment' => 'public key'),
 			'contact_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the creation'),
 			'contact_creator' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account id of the creator'),
 			'contact_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the last modified'),
