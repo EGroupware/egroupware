@@ -92,7 +92,7 @@ function set_distro_defaults($distro=null)
 	{
 		$distro = file_exists('/etc/SuSE-release') ? 'suse' :
 			(file_exists('/etc/mandriva-release') ? 'mandriva' :
-			(file_exists('/etc/lsb-release') && preg_match('/^DISTRIB_ID="Univention"$/mi',
+			(file_exists('/etc/lsb-release') && preg_match('/^DISTRIB_ID="?Univention"?$/mi',
 				file_get_contents('/etc/lsb-release')) ? 'univention' :
 			(file_exists('/etc/debian_version') ? 'debian' : 'rh')));
 	}
