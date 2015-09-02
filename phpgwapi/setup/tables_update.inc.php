@@ -826,7 +826,7 @@ function phpgwapi_upgrade14_3_002()
 		{
 			$value = array(
 				'name'  => substr($name, 9),	// skip "favorite_"
-				'group' => !($owner > 0),
+				'group' => $owner < -2 ? $owner+2 : false,
 				'state' => $state,
 			);
 		}
@@ -850,4 +850,27 @@ function phpgwapi_upgrade14_3_003()
 		$GLOBALS['egw_setup']->oProc->CheckCreateIndexes();
 	}
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.004';
+}
+
+/**
+ * Fix by 14.3.003 broken group favorites
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_004()
+{
+	$GLOBALS['run-from-upgrade14_3_004'] = true;
+
+	preferences::change_preference(null, '/^favorite_/', function($name, $value, $owner)
+	{
+		unset($name);	// not used, but required by function signature
+
+		if ($value['group'] === true)
+		{
+			$value['group'] = $owner+2;
+		}
+		return $value;
+	});
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.005';
 }
