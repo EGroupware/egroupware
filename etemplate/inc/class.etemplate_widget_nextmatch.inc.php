@@ -638,7 +638,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				else if (!$widget || get_class($widget) != 'etemplate_widget_historylog')
 				{
 					// Fallback based on widget names
-					error_log(self::$request->template['name'] . ' had to fallback to run_beforeSendToClient() because it could not find the row');
+					//error_log(self::$request->template['name'] . ' had to fallback to run_beforeSendToClient() because it could not find the row');
 					$row = self::run_beforeSendToClient($row);
 				}
 				$rows[$n-$first+$value['start']] = $row;
