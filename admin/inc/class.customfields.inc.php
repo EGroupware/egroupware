@@ -90,6 +90,7 @@ class customfields
 		'ajax_select' => array('cf_values' => true),
 		'radio'		=> array('cf_values' => true),
 		'checkbox'	=> array('cf_values' => true),
+		'filemanager' => array('cf_values' => true),
 	);
 
 	/**

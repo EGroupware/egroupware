@@ -41,7 +41,6 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		'select-account' => 'Select account',
 		'button'   => 'Button',         // button to execute javascript
 		'url'      => 'Url',
-		'url-email'=> 'EMail',
 		'url-phone'=> 'Phone number',
 		'htmlarea' => 'Formatted Text (HTML)',
 		'link-entry' => 'Select entry',         // should be last type, as the individual apps get added behind
@@ -265,7 +264,14 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		// Link-tos needs to change from appname to link-to
 		if($link_types[$field['type']])
 		{
-			$type = 'link-to';
+			if($type == 'filemanager')
+			{
+				$type = 'vfs-upload';
+			}
+			else
+			{
+				$type = 'link-to';
+			}
 		}
 		$widget = self::factory($type, '<'.$type.' type="'.$type.'" id="'.self::$prefix.$fname.'"/>', self::$prefix.$fname);
 		$widget->id = self::$prefix.$fname;
@@ -281,6 +287,12 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				if($field['values']['max']) $widget->attrs['min'] = $field['values']['max'];
 				break;
 
+			case 'vfs-upload':
+				$widget->attrs['path'] = $field['app'] . ':' .
+					self::expand_name('$cont['.egw_link::get_registry($field['app'],'view_id').']',0,0,0,0,self::$request->content).
+					':'.$field['label'];
+				break;
+			
 			case 'link-to':
 				$widget->attrs['only_app'] = $field['type'];
 				break;

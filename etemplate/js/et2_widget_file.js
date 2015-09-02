@@ -395,9 +395,9 @@ var et2_file = et2_inputWidget.extend(
 		else
 		{
 			// Wrong mime type - show in the list of files
-			return self.createStatus(
-				self.egw().lang("File is of wrong type (%1 != %2)!", this.files[index].type, self.options.mime),
-				file_name
+			return this.createStatus(
+				this.egw().lang("File is of wrong type (%1 != %2)!", file.file.type, this.options.mime),
+				file
 			);
 		}
 

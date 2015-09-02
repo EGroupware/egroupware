@@ -767,7 +767,7 @@ ul.et2_link_string {
 .et2_link_list td.remark {
   font-style: italic;
 }
-.et2_link_list td div.delete {
+.et2_link_list td div.delete, .et2_vfs td div.delete {
   visibility: hidden;
   background-image: url("images/close.png");
   background-position: center;
@@ -775,12 +775,13 @@ ul.et2_link_string {
   padding: 0px;
 }
 .et2_link_list .icon img,
-.et2_link_list .icon {
+.et2_link_list .icon,
+.et2_vfs .icon img, .et2_vfs .icon {
   width: 16px;
   height: 16px;
   display: inline-block;
 }
-.et2_link_list tr:hover div.delete {
+.et2_link_list tr:hover div.delete, .et2_vfs tr:hover div.delete {
   visibility: visible;
 }
 .egw_tooltip {
@@ -872,6 +873,7 @@ ul.et2_vfs {
 }
 .et2_vfs td.icon {
 	width: 16px;
+	max-width: 16px;
 }
 button.et2_vfs_btn {
 	margin: 0;

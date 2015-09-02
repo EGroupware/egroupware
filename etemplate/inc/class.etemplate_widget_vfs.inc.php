@@ -31,12 +31,21 @@ class etemplate_widget_vfs extends etemplate_widget_file
 	 */
 	public function beforeSendToClient($cname, $expand = array())
 	{
-		if($this->type == 'vfs-upload')
+		if($this->type == 'vfs-upload' || $this->attrs['type'] == 'vfs-upload')
 		{
 			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont'=>self::$request->content));
+			if($this->attrs['path'])
+			{
+				$path = $this->attrs['path'];
+			}
+			else
+			{
+				$path = $this->id;
+			}
 
+			$this->setElementAttribute($form_name, 'path', $path);
 			// ID maps to path - check there for any existing files
-			list($app,$id,$relpath) = explode(':',$this->id,3);
+			list($app,$id,$relpath) = explode(':',$path,3);
 			if($app && $id)
 			{
 				if(!is_numeric($id))
@@ -52,24 +61,44 @@ class etemplate_widget_vfs extends etemplate_widget_file
 				$path = egw_link::vfs_path($app,$id,'',true);
 				if (!empty($relpath)) $path .= '/'.$relpath;
 
+				$value = array();
+				
 				// Single file, already existing
 				if (substr($path,-1) != '/' && egw_vfs::file_exists($path) && !egw_vfs::is_dir($path))
 				{
 					$file = egw_vfs::stat($path);
-					$file['path'] = egw_vfs::resolve_url($path);
+					$file['path'] = $path;
 					$file['name'] = egw_vfs::basename($file['path']);
 					$file['mime'] = egw_vfs::mime_content_type($file['path']);
 					$value = array($file);
 				}
+				// Single file, missing extension in path
+				else if (substr($path, -1) != '/' && !egw_vfs::file_exists($path) && $relpath && substr($relpath,-4,1) !== '.')
+				{
+					$find = egw_vfs::find(substr($path,0, - strlen($relpath)), array(
+						'type' => 'f',
+						'maxdepth' => 1,
+						'name' => $relpath . '*'
+					));
+					foreach($find as $file)
+					{
+						$file_info = egw_vfs::stat($file);
+						$file_info['path'] = $file;
+						$file_info['name'] = egw_vfs::basename($file_info['path']);
+						$file_info['mime'] = egw_vfs::mime_content_type($file_info['path']);
+						$value[] = $file_info;
+					}
+				}
 				else if (substr($path, -1) == '/' && egw_vfs::is_dir($path))
 				{
-					$value = egw_vfs::scandir($path);
-					foreach($value as &$file)
+					$scan = egw_vfs::scandir($path);
+					foreach($scan as $file)
 					{
-						$file = egw_vfs::stat("$path$file");
-						$file['path'] = $file['url'];
-						$file['name'] = egw_vfs::basename($file['path']);
-						$file['mime'] = egw_vfs::mime_content_type($file['path']);
+						$file_info = egw_vfs::stat("$path$file");
+						$file_info['path'] = "$path$file";
+						$file_info['name'] = egw_vfs::basename($file_info['path']);
+						$file_info['mime'] = egw_vfs::mime_content_type($file_info['path']);
+						$value[] = $file_info;
 					}
 				}
 			}
@@ -80,7 +109,7 @@ class etemplate_widget_vfs extends etemplate_widget_file
 		parent::ajax_upload();
 		foreach($_FILES as $field => $file)
 		{
-			self::store_file($_REQUEST['widget_id'], $file);
+			self::store_file($_REQUEST['path'] ? $_REQUEST['path'] : $_REQUEST['widget_id'], $file);
 		}
 	}
 

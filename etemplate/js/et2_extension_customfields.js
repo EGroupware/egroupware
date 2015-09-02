@@ -575,11 +575,21 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 	},
 	_setup_link_entry: function(field_name, field, attrs) {
+		if(field.type === 'filemanager')
+		{
+			return this._setup_filemanager(field_name, field, attrs);
+		}
 		// No label on the widget itself
 		delete(attrs.label);
 
 		attrs.type = "link-entry";
 		attrs.only_app = field.type;
+		return true;
+	},
+
+	_setup_filemanager: function(field_name, field, attrs) {
+		attrs.type = 'vfs-upload';
+		delete(attrs.label);
 		return true;
 	},
 

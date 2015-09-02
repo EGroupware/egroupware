@@ -645,6 +645,12 @@ var et2_vfsUpload = et2_file.extend(
 	attributes: {
 		"value": {
 			"type": "any",	// Either nothing, or an object with file info
+		},
+		"path": {
+			"name": "Path",
+			"description": "Upload files to the specified VFS path",
+			"type": "string",
+			"default": ''
 		}
 	},
 	legacyOptions: ["mime"],
@@ -663,9 +669,13 @@ var et2_vfsUpload = et2_file.extend(
 	init: function(_parent, attrs) {
 		this._super.apply(this, arguments);
 		$j(this.node).addClass("et2_vfs");
-
-		// If the ID is a directory, allow multiple uploads
-		if(this.options.id.substr(-1) == '/')
+		
+		if(!this.options.path)
+		{
+			this.options.path = this.options.id;
+		}
+		// If the path is a directory, allow multiple uploads
+		if(this.options.path.substr(-1) == '/')
 		{
 			this.set_multiple(true);
 		}
@@ -674,16 +684,38 @@ var et2_vfsUpload = et2_file.extend(
 
 	/**
 	 * If there is a file / files in the specified location, display them
+	 * Value is the information for the file[s] in the specified location.
 	 *
 	 * @param {Object[]} _value
 	 */
 	set_value: function(_value) {
+		// Remove previous
+		while(this._children.length > 0)
+		{
+			var node = this._children[this._children.length-1];
+			this.removeChild(node);
+			node.free();
+		}
 		this.progress.empty();
 		this.list.empty();
-		for(var i = 0; i < _value.length; i++)
+
+		// Set new
+		if(typeof _value == 'object' && _value && _value.length)
 		{
-			this._addFile(_value[i]);
+			for(var i = 0; i < _value.length; i++)
+			{
+				this._addFile(_value[i]);
+			}
 		}
+	},
+
+	/**
+	 * Value is determined by what's at the location specified by path
+	 *
+	 * @returns {null}
+	 */
+	getValue: function() {
+		return null;
 	},
 
 	getDOMNode: function(sender) {
@@ -706,9 +738,21 @@ var et2_vfsUpload = et2_file.extend(
 		}
 	},
 
+	/**
+	 * Add in the request id
+	 */
+	beforeSend: function(form)
+	{
+		var instance = this.getInstanceManager();
+
+		var extra = this._super.apply(this, arguments);
+		extra.path = this.options.path;
+		return extra;
+	},
+
 	_addFile: function(file_data) {
 		var row = $j(document.createElement("tr"))
-			.attr("data-path", file_data.url)
+			.attr("data-path", file_data.path)
 			.attr("draggable", "true")
 			.appendTo(this.list);
 		var mime = $j(document.createElement("td"))
@@ -720,6 +764,40 @@ var et2_vfsUpload = et2_file.extend(
 			.appendTo(row);
 		var mime = et2_createWidget('vfs-mime',{value: file_data},this);
 		var vfs = et2_createWidget('vfs', {value: file_data}, this);
+
+		// Add in delete button
+		if (!this.options.readonly)
+		{
+			var self = this;
+			var delete_button = $j(document.createElement("td"))
+				.appendTo(row);
+			$j("<div />")
+				.appendTo(delete_button)
+				// We don't use ui-icon because it assigns a bg image
+				.addClass("delete icon")
+				.bind( 'click', function() {
+					et2_dialog.show_dialog(
+						function(button) {
+							if(button == et2_dialog.YES_BUTTON)
+							{
+								egw.json("filemanager_ui::ajax_action", [
+										'delete',
+										[row.attr('data-path')],
+										''
+									],
+									function(data) {
+										if(data && data.errs == 0) {row.slideUp(row.remove);}
+										if(data && data.msg) {
+											self.egw().message(data.msg, data.errs == 0 ? 'success' : 'error');
+										}
+									}
+								).sendRequest();
+							}
+						},
+						egw.lang('Delete file?')
+					);
+				});
+		}
 	}
 });
 et2_register_widget(et2_vfsUpload, ["vfs-upload"]);
