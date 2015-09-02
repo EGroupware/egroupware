@@ -311,7 +311,6 @@ class importexport_export_ui {
 					}
 				}
 			}
-			error_log(array2string($filter));
 
 			unset($_content['filter']);
 			$definition->filter = $filter;

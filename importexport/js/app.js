@@ -61,16 +61,14 @@ app.classes.importexport = AppJS.extend(
 	export_preview: function(event, widget)
 	{
 		var preview = $j(widget.getRoot().getWidgetById('preview_box').getDOMNode());
-		$j('.content',preview).empty();
+		$j('.content',preview).empty()
+			.append('<div class="loading" style="width:100%;height:100%"></div>');
 
 		preview
-			.addClass('loading')
 			.show(100, jQuery.proxy(function() {
 				widget.clicked = true;
 				widget.getInstanceManager().submit(false, true);
 				widget.clicked = false;
-				$j(widget.getRoot().getWidgetById('preview_box').getDOMNode())
-					.removeClass('loading');
 			},this));
 		return false;
 	},
