@@ -7,7 +7,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-11 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2009-15 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -155,6 +155,13 @@ class calendar_timezones
 	}
 
 	/**
+	 * Import messages from init_static, if import happend in that request
+	 *
+	 * @var string
+	 */
+	protected static $import_msg;
+
+	/**
 	 * Init static variables for session and check for updated timezone information
 	 *
 	 * As we use returned references from the session, we do NOT need to care about storing the information explicitly
@@ -183,6 +190,8 @@ class calendar_timezones
 
 			$alias_msg = self::import_tz_aliases($updated);
 			if ($updated) error_log($alias_msg);	// log that timezone aliases have been updated
+
+			self::$import_msg = $msg.'<br/>'.$alias_msg;
 
 			egw_cache::setSession(__CLASS__, 'tzs_checked', true);
 		}
@@ -323,10 +332,12 @@ class calendar_timezones
 		{
 			throw new egw_exception_no_permission_admin();
 		}
-		$output = '<h3>'.self::import_zones()."</h3>\n";
-		$output .= '<h3>'.self::import_tz_aliases()."</h3>\n";
-
-		$GLOBALS['egw']->framework->render($output, lang('Update timezones'), false);
+		if (empty(self::$import_msg))
+		{
+			self::$import_msg = self::import_zones();
+			self::$import_msg .= '<br/>'.self::import_tz_aliases();
+		}
+		$GLOBALS['egw']->framework->render('<h3>'.self::$import_msg.'</h3>', lang('Update timezones'), false);
 	}
 
 	/**
