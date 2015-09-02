@@ -181,6 +181,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 						case 'mime_type':
 							data[mime_info.mime_type] = _type;
 							break;
+						case 'mime_id':
+							data[mime_info.mime_id] = path;
+							break;
 						default:
 							data[attr] = mime_info[attr];
 					}

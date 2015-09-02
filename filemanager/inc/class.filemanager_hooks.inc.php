@@ -272,8 +272,11 @@ class filemanager_hooks
 			'mime' => array(
 				egw_vfs::DIR_MIME_TYPE => array(
 					'menuaction' => 'filemanager.filemanager_ui.index',
+					'ajax' => 'true',
 					'mime_id' => 'path',
-					'mime_target' => '_self',
+					'mime_target' => 'filemanager',
+					// Prevent url from changing to webdav
+					'mime_url' => ''
 				),
 			),
 			'merge' => true,
