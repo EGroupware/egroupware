@@ -340,6 +340,17 @@ class mail_hooks
 				'default'=> 0,
 				'admin'  => False,
 			),
+			'previewPane' => array(
+				'type' => 'select',
+				'label' => 'Preview pane',
+				'help' => 'Show/Hide preview pane in mail list view',
+				'name' => 'previewPane',
+				'values' => array(
+					'0' => lang('show'),
+					'1' => lang('hide')
+				),
+				'default' => '0'
+			),
 			array(
 				'type'  => 'section',
 				'title' => lang('Configuration settings'),

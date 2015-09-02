@@ -676,17 +676,10 @@ app.classes.mail = AppJS.extend(
 		var splitter = this.et2.getWidgetById('mailSplitter');
 		// return if there's no splitter we maybe in mobile mode
 		if (typeof splitter == 'undefined' || splitter == null) return;
-		var splitterDN = splitter.getDOMNode();
-
 		if(splitter.isDocked())
 		{
 			this.mail_previewAreaActive = false;
 		}
-
-		//this.et2.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
-		//this.et2.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
-		//this.et2.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
-		//this.et2.getWidgetById('mailPreviewHeadersSubject').set_disabled(_value);
 		this.et2.getWidgetById('mailPreview').set_disabled(_value);
 		//Dock the splitter always if we are browsing with mobile
 		if (_value==true)
