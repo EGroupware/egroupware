@@ -178,17 +178,9 @@ class calendar_timezones
 		if (!egw_cache::getSession(__CLASS__, 'tzs_checked'))
 		{
 			$updated = false;
-			try
-			{
-				$msg = self::import_sqlite($updated);
-				if ($updated) error_log($msg);	// log that timezones have been updated
-			}
-			catch (egw_exception_wrong_userinput $e)
-			{
-				unset($e);
-				$msg = self::import_db_backup($updated);
-				if ($updated) error_log($msg);	// log that timezones have been updated
-			}
+			$msg = self::import_zones($updated);
+			if ($updated) error_log($msg);	// log that timezones have been updated
+
 			$alias_msg = self::import_tz_aliases($updated);
 			if ($updated) error_log($alias_msg);	// log that timezone aliases have been updated
 
@@ -197,7 +189,7 @@ class calendar_timezones
 	}
 
 	/**
-	 * Import timezones from sqlite file
+	 * Import timezones from zones.json file from Thunderbird
 	 *
 	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
 	 * @param string $file ='calendar/setup/timezones.sqlite' filename relative to EGW_SERVER_ROOT
@@ -205,105 +197,72 @@ class calendar_timezones
 	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
 	 * @throws egw_exception_wrong_userinput if no PDO sqlite support
 	 * @throws egw_exception_wrong_userinput for broken sqlite extension
+	 * @link https://hg.mozilla.org/comm-central/raw-file/tip/calendar/timezones/zones.json
 	 */
-	public static function import_sqlite(&$updated=null, $file='calendar/setup/timezones.sqlite')
+	public static function import_zones(&$updated=null, $file='calendar/setup/zones.json')
 	{
 		$path = EGW_SERVER_ROOT.'/'.$file;
 
-		if (!file_exists($path) || !is_readable($path))
+		if (!file_exists($path) || !is_readable($path) || !($fp = fopen($path, 'r')))
 		{
 			throw new egw_exception_wrong_parameter(__METHOD__."('$file') not found or readable!");
 		}
-		if (!check_load_extension('pdo') || !check_load_extension('pdo_sqlite'))
+		// only read a couple of bytes to parse version
+		$json = fread($fp, 80);
+		$matches = null;
+		if (!preg_match('/"version": *"([^"]+)"/', $json, $matches))
 		{
-			throw new egw_exception_wrong_userinput(__METHOD__."('$file') required SQLite support (PHP extension pdo_sqlite) missing!"."\n".
-				lang('As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.',
-					'', ' (http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2)'));
+			throw new egw_exception_wrong_parameter('Could not read timezoneversion!');
 		}
-		$pdo = new PDO('sqlite:'.$path);
-		// some PHP pdo_sqlite can for whatever reason NOT read the timezones database (reported eg. on Gentu)
-		// not much we can do, but give an good error message, with a download link to the MySQL dump
-		if (!($rs = $pdo->query('SELECT version FROM tz_schema_version')))
-		{
-			throw new egw_exception_wrong_userinput(
-				lang('Your PHP extension pdo_sqlite is broken!').'<br />'.lang('It can NOT read timezones from sqlite database %1!',$path)."\n".
-				lang('As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.',
-					'', ' (http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2)'));
-		}
-		if ($rs->fetchColumn() != 1)
-		{
-			throw new egw_exception_wrong_parameter(__METHOD__."('$file') only schema version 1 supported!");
-		}
-		$tz_version = $pdo->query('SELECT version FROM tz_version')->fetchColumn();
+		$tz_version = $matches[1];
 		$config = config::read('phpgwapi');
 		//echo "<p>tz_version($path)=$tz_version, tz_db_version=$config[tz_version]</p>\n";
 		if ($tz_version === $config['tz_version'])
 		{
 			$updated = false;
+			fclose($fp);
 			return lang('Nothing to update, version is already %1.',$config['tz_version']);	// we already have the right
 		}
-		$tz2id = array();
-		foreach($pdo->query('SELECT * FROM tz_data ORDER BY alias') as $data)
+		$json .= fread($fp, 1024*1024);
+		fclose($fp);
+		if (!($zones = json_decode($json, true)) || !isset($zones['aliases']) || !isset($zones['zones']))
 		{
-			if ($data['alias'])
+			throw new egw_exception_wrong_parameter('Could not parse zones.json!');
+		}
+		// import zones first and then aliases
+		$tz2id = array();
+		foreach(array('zones', 'aliases') as $type)
+		{
+			foreach($zones[$type] as $tzid => $data)
 			{
-				$data['alias'] = $tz2id[$data['alias']];
-				if (!$data['alias']) continue;	// there's no such tzid
+				if ($type == 'aliases')
+				{
+					$data = array('alias' => $tz2id[$data['aliasTo']]);
+					if (!$data['alias']) continue;	// there's no such tzid
+				}
+				// check if already in database
+				$tz2id[$tzid] = $GLOBALS['egw']->db->select('egw_cal_timezones','tz_id',array(
+						'tz_tzid' => $tzid,
+					),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
+
+				$GLOBALS['egw']->db->insert('egw_cal_timezones',array(
+					'tz_alias' => $data['alias'],
+					'tz_latitude' => $data['latitude'],
+					'tz_longitude' => $data['longitude'],
+					'tz_component' => $data['ics'],
+				),array(
+					'tz_tzid' => $tzid,
+				),__LINE__,__FILE__,'calendar');
+
+				// only query last insert id, if not already in database (gives warning for PostgreSQL)
+				if (!$tz2id[$tzid]) $tz2id[$tzid] = $GLOBALS['egw']->db->get_last_insert_id('egw_cal_timezones','tz_id');
 			}
-			// check if already in database
-			$tz2id[$data['tzid']] = $GLOBALS['egw']->db->select('egw_cal_timezones','tz_id',array(
-					'tz_tzid' => $data['tzid'],
-				),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
-
-			$GLOBALS['egw']->db->insert('egw_cal_timezones',array(
-				'tz_alias' => $data['alias'],
-				'tz_latitude' => $data['latitude'],
-				'tz_longitude' => $data['longitude'],
-				'tz_component' => $data['component'],
-			),array(
-				'tz_tzid' => $data['tzid'],
-			),__LINE__,__FILE__,'calendar');
-
-			// only query last insert id, if not already in database (gives warning for PostgreSQL)
-			if (!$tz2id[$data['tzid']]) $tz2id[$data['tzid']] = $GLOBALS['egw']->db->get_last_insert_id('egw_cal_timezones','tz_id');
 		}
 		config::save_value('tz_version', $tz_version, 'phpgwapi');
 
 		//_debug_array($tz2id);
 		$updated = true;
 		return lang('Timezones updated to version %1 (%2 records updated).',$tz_version,count($tz2id));
-	}
-
-	/**
-	 * Import timezone via db_backup of egw_cal_timezones
-	 *
-	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
-	 * @param string $file ='calendar/setup/tz_aliases.inc.php' filename relative to EGW_SERVER_ROOT
-	 * @return string message about update
-	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
-	 */
-	public static function import_db_backup(&$updated=null,$file='calendar/setup/timezones.db_backup')
-	{
-		$path = EGW_SERVER_ROOT.'/'.$file;
-
-		if (!file_exists($path) || !is_readable($path))
-		{
-			throw new egw_exception_wrong_parameter(__METHOD__."('$file') not found or readable!");
-		}
-		$config = config::read('phpgwapi');
-		$tz_version = date('Y-m-d H:i:s', filemtime($path));
-		if ($tz_version === $config['tz_version'])
-		{
-			$updated = false;
-			return lang('Nothing to update, version is already %1.',$tz_version);
-		}
-		$db_backup = new db_backup();
-		$rows = $db_backup->db_restore($db_backup->fopen_backup($path, true), 'tz_tzid');
-
-		config::save_value('tz_version', $tz_version, 'phpgwapi');
-
-		$updated = true;
-		return lang('Timezones updated to version %1 (%2 records updated).', $tz_version, $rows-8);	// -8 because of header-lines
 	}
 
 	/**
@@ -364,14 +323,7 @@ class calendar_timezones
 		{
 			throw new egw_exception_no_permission_admin();
 		}
-		try {
-			$output = '<h3>'.self::import_sqlite()."</h3>\n";
-		}
-		catch (egw_exception_wrong_userinput $e)
-		{
-			unset($e);
-			$output = '<h3>'.self::import_db_backup()."</h3>\n";
-		}
+		$output = '<h3>'.self::import_zones()."</h3>\n";
 		$output .= '<h3>'.self::import_tz_aliases()."</h3>\n";
 
 		$GLOBALS['egw']->framework->render($output, lang('Update timezones'), false);

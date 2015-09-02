@@ -65,9 +65,4 @@ $setup_info['calendar']['check_install'] = array(
 		'func' => 'pear_check',
 		'from' => 'Calendar (iCal import+export)',
 	),
-	// check if PDO SQLite support is available
-	'pdo_sqlite' => array(
-		'func' => 'extension_check',
-		'from' => 'Calendar',
-	),
 );
