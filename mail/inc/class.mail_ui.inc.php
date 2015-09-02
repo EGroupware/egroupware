@@ -722,6 +722,9 @@ class mail_ui
 		{
 			self::callWizard($e->getMessage(),true, 'error');
 		}
+		// Check preview pane is enabled, then show spliter
+		if ($this->mail_bo->mailPreferences['previewPane']) $etpl->setElementAttribute('mail.index.spliter', 'template', 'mail.index.nospliter');
+		
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 

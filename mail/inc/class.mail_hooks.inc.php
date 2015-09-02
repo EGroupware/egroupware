@@ -408,6 +408,17 @@ class mail_hooks
 				'admin'  => False,
 				'default'=> 'text',
 			),
+			'previewPane' => array(
+				'type' => 'select',
+				'label' => 'Preview pane',
+				'help' => 'Show/Hide preview pane in mail list view',
+				'name' => 'previewPane',
+				'values' => array(
+					'0' => lang('show'),
+					'1' => lang('hide')
+				),
+				'default' => '0'
+			),
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
 		return $settingsArray;
