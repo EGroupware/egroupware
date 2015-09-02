@@ -14,7 +14,6 @@ Egroupware
 <overlay>
     <template id="calendar.sidebox">
 		<vbox parent_node="calendar-et2_target">
-			<description label="eTemplate"/>
 			<grid id="buttons" width="100%">
 				<columns>
 					<column/>
@@ -27,7 +26,7 @@ Egroupware
 				</columns>
 				<rows><row width="100%">
 				<buttononly align="center" class="sideboxstar" id="add" onclick="egw.open(null,'calendar','add');" image="new" label="Add"/>
-				<buttononly align="center" class="sideboxstar" id="day" image="today" label="Today" onclick="var formatDate = new Date(); app.calendar.update_state({view:'day',date:new Date(formatDate.valueOf() - formatDate.getTimezoneOffset() * 60 * 1000)});"/>
+				<buttononly align="center" class="sideboxstar" id="day" image="today" label="Today" onclick="app.calendar.update_state({view:'day'});"/>
 				<buttononly align="center" class="sideboxstar" id="week" image="week" label="Weekview" onclick="app.calendar.update_state({view:'week'});"/>
 				<buttononly align="center" class="sideboxstar" id="weekN" image="multiweek" label="Multiple week view" onclick="app.calendar.update_state({view:'weekN'});"/>
 				<buttononly align="center" class="sideboxstar" id="month" image="month" label="Month view" onclick="app.calendar.update_state({view:'month'});"/>
@@ -38,7 +37,7 @@ Egroupware
 			</grid>
 			<select id="view" class="et2_fullWidth" onchange="app.calendar.update_state(JSON.parse(widget.getValue()));"/>
 			<textbox id="keywords" class="et2_fullWidth" blur="Search" onchange="app.calendar.update_state({keywords: widget.getValue()});"/>
-			<date id="date" class="et2_fullWidth" inline="true" onchange="app.calendar.update_state({date:widget.getValue(),view:'day'});"/>
+			<date id="date" class="et2_fullWidth" inline="true" onchange="app.calendar.update_state({date:widget.getValue()});"/>
 			<textbox type="hidden" id="first"/>
 			<textbox type="hidden" id="last"/>
 			<hbox width="100%">

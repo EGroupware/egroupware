@@ -491,6 +491,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.gridHeader
 			.css('height', rowHeight+'%')
 			.text(this.options.label)
+			.attr('data-date', this.options.start_date)
+			.attr('data-owner', this.options.owner)
+			.append(this.owner.getDOMNode())
 			.appendTo(this.div);
 
 		// the hour rows
@@ -1035,7 +1038,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var old = this.options.owner || 0;
 		this.owner.set_label('');
 		this.div.removeClass('calendar_TimeGridNoLabel');
-		
+
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
 			switch(_owner[0])
@@ -1062,6 +1065,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			this.owner.options.application = 'home-accounts'
 			this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
+			$j(this.getDOMNode(this.owner)).prepend(this.owner.getDOMNode());
 		}
 
 		this.options.owner = _owner;//this.owner.getValue();
@@ -1219,6 +1223,10 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				return false;
 			}
 			return result;
+		}
+		else if (this.gridHeader.is(_ev.target) && _ev.target.dataset)
+		{
+			app.calendar.update_state(jQuery.extend({view: 'week'},_ev.target.dataset));
 		}
 		else if (_ev.target.dataset.date)
 		{

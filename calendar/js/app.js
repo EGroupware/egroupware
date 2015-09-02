@@ -2458,8 +2458,13 @@ app.classes.calendar = AppJS.extend(
 		{
 			return state.days ? parseInt(state.days) === 7 : parseInt(egw.preference('days_in_weekview','calendar')) == 7;
 		},
+		/**
+		 * How big or small are the displayed time chunks?
+		 * We automatically scale the user's preference based on how many rows / calendars are shown.
+		 */
 		granularity: function(state) {
-			return parseInt(egw.preference('interval','calendar')) || 30;
+			return Math.min(240,(state.owner.length <= (egw.config('calview_no_consolidate','phpgwapi') || 5) ? state.owner.length : 1)
+				* (parseInt(egw.preference('interval','calendar')) || 30));
 		},
 		extend: function(sub)
 		{
@@ -2609,7 +2614,7 @@ jQuery.extend(app.classes.calendar,{
 				return d;
 			},
 			granularity: function(state) {
-				return (state.owner.length || 1) * app.calendar.View.granularity.call(this, state);
+				return  (parseInt(egw.preference('multiple_weeks','calendar')) || 3) * app.calendar.View.granularity.call(this, state);
 			}
 		}),
 		month: app.classes.calendar.prototype.View.extend({
