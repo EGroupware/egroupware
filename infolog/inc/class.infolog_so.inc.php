@@ -798,8 +798,8 @@ class infolog_so
 
 		if ((int)$query['cat_id'])
 		{
-			//$filtermethod .= ' AND info_cat='.intval($query['cat_id']).' ';
-			$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
+			$categories = new categories('','infolog');
+			$cats = $categories->return_all_children((int)$query['cat_id']);
 			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 		}
 		$join = $distinct = '';
