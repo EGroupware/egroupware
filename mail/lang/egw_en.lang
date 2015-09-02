@@ -211,6 +211,7 @@ get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP 
 greater than	mail	en	greater than
 header	mail	en	Header
 header lines	mail	en	Header lines
+hide	mail	en	hide
 hold %1 to drag files to your computer	mail	en	Hold %1 to drag files to your computer
 home page folders	mail	en	home page folders
 hostname or ip	mail	en	Hostname or IP
@@ -332,6 +333,7 @@ prevent managing filters	mail	en	Prevent managing filters
 prevent managing folders	mail	en	Prevent managing folders
 prevent managing notifications	mail	en	Prevent managing notifications
 prevent managing vacation notice	mail	en	Prevent managing vacation notice
+preview pane	mail	en	Preview pane
 primary profile	mail	en	Primary Profile
 printview	mail	en	printview
 processing of file %1 failed. failed to meet basic restrictions.	mail	en	Processing of file %1 failed. Failed to meet basic restrictions.
@@ -415,11 +417,13 @@ set / remove labels	mail	en	Set / Remove Labels
 set it as default:	mail	en	set it as default:
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.
+show	mail	en	show
 show all folders	mail	en	show all Folders
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in Main Screen Folder Pane
 show new messages on home page	mail	en	show new messages on home page
 show test connection section and control the level of info displayed?	mail	en	Show Test Connection section and control the level of info displayed?
 show test connection section and control the level of info displayed??	mail	en	Show Test Connection section and control the level of info displayed??
+show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in mail list view
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
