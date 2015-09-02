@@ -836,7 +836,7 @@ function phpgwapi_upgrade14_3_002()
 		{
 			$value = array(
 				'name'  => substr($name, 9),	// skip "favorite_"
-				'group' => !($owner > 0),
+				'group' => $owner < -2 ? $owner+2 : false,
 				'state' => $state,
 			);
 		}
@@ -863,6 +863,29 @@ function phpgwapi_upgrade14_3_003()
 }
 
 /**
+ * Fix by 14.3.003 broken group favorites
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_004()
+{
+	$GLOBALS['run-from-upgrade14_3_004'] = true;
+
+	preferences::change_preference(null, '/^favorite_/', function($name, $value, $owner)
+	{
+		unset($name);	// not used, but required by function signature
+
+		if ($value['group'] === true)
+		{
+			$value['group'] = $owner+2;
+		}
+		return $value;
+	});
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.005';
+}
+
+/**
  * Updates on the way to 15.1
  */
 
@@ -871,7 +894,7 @@ function phpgwapi_upgrade14_3_003()
  *
  * @return string
  */
-function phpgwapi_upgrade14_3_004()
+function phpgwapi_upgrade14_3_005()
 {
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_api_content_history');
 
@@ -922,4 +945,16 @@ function phpgwapi_upgrade14_3_902()
 	}
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.903';
+}
+
+/**
+ * Run 14.3.004 upgrade for everyone who was already on 14.3.900
+ */
+function phpgwapi_upgrade14_3_903()
+{
+	if (empty($GLOBALS['run-from-upgrade14_3_004']))
+	{
+		phpgwapi_upgrade14_3_004();
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.904';
 }
