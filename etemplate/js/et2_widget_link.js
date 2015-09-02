@@ -1761,7 +1761,12 @@ var et2_link_list = et2_link_string.extend(
 				.appendTo(row)
 				.addClass(columns[i])
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
-			
+
+			var dirs = _link_data[columns[i]] ? _link_data[columns[i]].split('/') : [];
+			if(columns[i] == 'title' && _link_data.type && dirs.length > 1)
+			{
+				this._format_vfs($td, dirs, _link_data);
+			}
 			//Bind the click handler if there is download_url	
 			if (_link_data && (typeof _link_data.download_url != 'undefined' || _link_data.app !='egw-data'))
 			{
@@ -1943,6 +1948,52 @@ var et2_link_list = et2_link_string.extend(
 					delete value.to_id[link_id.link_id];
 					_widget.set_value(value);
 				}
+			}
+		}
+	},
+
+	/**
+	 * When the link is to a VFS file, we do some special formatting.
+	 *
+	 * Instead of listing the full path, we use
+	 *	Path: - filename
+	 * When multiple files from the same directory are linked, we exclude
+	 * the directory name from all but the first link to that directory
+	 *
+	 * @param {JQuery} $td Current table data cell for the title
+	 * @param {String[]} dirs List of directories in the linked file's path
+	 * @param {String[]} _link_data Data for the egw_link
+	 * @returns {undefined}
+	 */
+	_format_vfs: function($td, dirs, _link_data)
+	{
+		// Keep it here for matching next row
+		$td.attr('data-title', _link_data['title']);
+
+		// VFS link - check for same dir as above, and hide dir
+		var prev = $j('td.title',$td.parent().prev('tr'));
+		if(prev.length === 1)
+		{
+			var prev_dirs = (prev.attr('data-title') || '').split('/');
+			if(prev_dirs.length > 1 && prev_dirs.length == dirs.length)
+			{
+				var span_size = 0.3;
+				for(var i = 0; i < dirs.length; i++)
+				{
+					// Current is same as prev, blank it
+					if(dirs[i] === prev_dirs[i])
+					{
+						span_size += dirs[i].length+1;
+						dirs[i] = '';
+					}
+				}
+				$td.html('<span style="display: inline-block; width:'+span_size+'ex;"></span>&nbsp;- '+dirs.join(''));
+			}
+			else
+			{
+				// Different format for directory
+				var filename = dirs.pop();
+				$td.text(dirs.join('/') + ': - ' + filename);
 			}
 		}
 	}
