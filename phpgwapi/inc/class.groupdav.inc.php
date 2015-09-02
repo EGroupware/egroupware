@@ -417,7 +417,8 @@ class groupdav extends HTTP_WebDAV_Server
 					$this->_slashify($options['path']));
 
 				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1
-				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' && $handler->get_agent() == 'dataaccess')
+				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' &&
+					$options['depth'] > 0 && $handler->get_agent() == 'dataaccess')
 				{
 					$this->log(__CLASS__."::$method(".array2string($options).') Enabling hack for iOS 5.0.1 addressbook: force Depth: 0 on PROPFIND for directory gateway!');
 					return true;
