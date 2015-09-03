@@ -416,9 +416,10 @@ class groupdav extends HTTP_WebDAV_Server
 				$files['files'][0] = $this->add_app($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,
 					$this->_slashify($options['path']));
 
-				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth=1
+				// Hack for iOS 5.0.1 addressbook to stop asking directory gateway permissions with depth != 0
+				// values for depth are 0, 1, "infinit" or not set which has to be interpreted as "infinit"
 				if ($method == 'PROPFIND' && $options['path'] == '/addressbook/' &&
-					$options['depth'] > 0 && $handler->get_agent() == 'dataaccess')
+					(!isset($options['depth']) || $options['depth']) && $handler->get_agent() == 'dataaccess')
 				{
 					$this->log(__CLASS__."::$method(".array2string($options).') Enabling hack for iOS 5.0.1 addressbook: force Depth: 0 on PROPFIND for directory gateway!');
 					return true;
