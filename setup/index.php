@@ -336,7 +336,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 					{
 						$setup_info = $GLOBALS['egw_setup']->detection->upgrade_exclude($setup_info);
 						// Set the DB's client charset if a system-charset is set
-						if ($_REQUEST['system_charset'])
+						if (preg_match('/^[a-z0-9-]+$/i', $_REQUEST['system_charset']))
 						{
 							$GLOBALS['egw_setup']->system_charset = $_REQUEST['system_charset'];
 							$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);

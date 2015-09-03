@@ -88,7 +88,7 @@ class setup
 		$this->detection = new setup_detection();
 		$this->process   = new setup_process();
 
-		if ($_REQUEST['system_charset']) $this->system_charset = $_REQUEST['system_charset'];
+		if (preg_match('/^[a-z0-9-]+$/i', $_REQUEST['system_charset'])) $this->system_charset = $_REQUEST['system_charset'];
 
 		/* The setup application needs these */
 		if ($html) $this->html = new setup_html();
