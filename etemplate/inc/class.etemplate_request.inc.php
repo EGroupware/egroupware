@@ -7,12 +7,15 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2007-15 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @version $Id$
  */
 
 /**
  * Class to represent the persitent information of an eTemplate request
+ *
+ * Current default for etemplate_request is to store request-data in egw_cache by
+ * setting a not set etemplate_request::$request_class to 'etemplate_request_cache'.
  *
  * This class stores the request-data direct in a hidden var in the form.
  * As this would allow an evil user to manipulate it and therefore compromise the security
@@ -26,9 +29,9 @@
  *
  * if this var is not set, the db_pass and EGW_SERVER_ROOT is used instead.
  *
- * The request object should be instancated only via the factory method etemplate::request($id=null)
+ * The request object should be instancated only via the factory method etemplate_request::read($id=null)
  *
- * $request = etemplate::request();
+ * $request = etemplate_request::read();
  *
  * // add request data
  *
@@ -36,7 +39,7 @@
  *
  * b) open or modify an existing request:
  *
- * if (!($request = etemplate::request($id)))
+ * if (!($request = etemplate_request::read($id)))
  * {
  * 		// request not found
  * }
@@ -131,7 +134,7 @@ class etemplate_request
 	 * over etemplate_request_session, which stores the data in the session (and causing
 	 * the sesison to constantly grow).
 	 *
-	 * @param string $id=null
+	 * @param string $id =null
 	 * @return etemplate_request
 	 */
 	public static function read($id=null)
@@ -211,11 +214,11 @@ class etemplate_request
 	/**
 	 * Private constructor to force the instancation of this class only via it's static factory method read
 	 *
-	 * @param string $id=null
+	 * @param string $id =null
 	 */
 	private function __construct($id=null)
 	{
-
+		unset($id);
 	}
 
 	/**
@@ -252,19 +255,19 @@ class etemplate_request
 	/**
 	 * Register a form-variable to be processed
 	 *
-	 * @param string $form_name form-name
+	 * @param string $_form_name form-name
 	 * @param string $type etemplate type
-	 * @param array $data=array() optional extra data
+	 * @param array $data =array() optional extra data
 	 */
-	public function set_to_process($form_name,$type,$data=array())
+	public function set_to_process($_form_name, $type, $data=array())
 	{
-		if (!$form_name || !$type) return;
+		if (!$_form_name || !$type) return;
 
 		//echo '<p>'.__METHOD__."($form_name,$type,".array2string($data).")</p>\n";
 		$data['type'] = $type;
 
 		// unquote single and double quotes, as this is how they get returned in $_POST
-		$form_name = str_replace(array('\\\'','&quot;'),array('\'','"'),$form_name);
+		$form_name = str_replace(array('\\\'','&quot;'), array('\'','"'), $_form_name);
 
 		$this->data['to_process'][$form_name] = $data;
 		$this->data_modified = true;
@@ -273,18 +276,18 @@ class etemplate_request
 	/**
 	 * Set an attribute of a to-process record
 	 *
-	 * @param string $form_name form-name
+	 * @param string $_form_name form-name
 	 * @param string $attribute etemplate type
 	 * @param array $value
-	 * @param boolean $add_to_array=false should $value be added to the attribute array
+	 * @param boolean $add_to_array =false should $value be added to the attribute array
 	 */
-	public function set_to_process_attribute($form_name,$attribute,$value,$add_to_array=false)
+	public function set_to_process_attribute($_form_name, $attribute, $value, $add_to_array=false)
 	{
 		//echo '<p>'.__METHOD__."($form_name,$attribute,$value,$add_to_array)</p>\n";
-		if (!$form_name) return;
+		if (!$_form_name) return;
 
 		// unquote single and double quotes, as this is how they get returned in $_POST
-		$form_name = str_replace(array('\\\'','&quot;'),array('\'','"'),$form_name);
+		$form_name = str_replace(array('\\\'','&quot;'), array('\'','"'), $_form_name);
 
 		if ($add_to_array)
 		{
@@ -312,7 +315,7 @@ class etemplate_request
 	/**
 	 * return the data of a form-var to process or the whole array
 	 *
-	 * @param string $form_name=null
+	 * @param string $form_name =null
 	 * @return array
 	 */
 	public function get_to_process($form_name=null)
@@ -417,8 +420,8 @@ class etemplate_request
 	/**
 	 * Check if session encryption is configured, possible and initialise it
 	 *
-	 * @param string $algo='tripledes'
-	 * @param string $mode='ecb'
+	 * @param string $algo ='tripledes'
+	 * @param string $mode ='ecb'
 	 * @return boolean true if encryption is used, false otherwise
 	 */
 	static public function init_crypt($algo='tripledes',$mode='ecb')
