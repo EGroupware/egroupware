@@ -480,6 +480,11 @@ class setup_cmd_ldap extends setup_cmd
 					$msg[] = lang('%1 does NOT exist in %2.',$what,$target);
 					$errors++;
 				}
+				elseif(empty($account['account_pwd']))
+				{
+					$msg[] = lang('%1 does NOT have a password (userPassword attribute) or we are not allowed to read it!',$what);
+					$errors++;
+				}
 				else
 				{
 					$sql_account['account_passwd'] = self::hash_ldap2sql($account['account_pwd']);
