@@ -1223,7 +1223,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					if (strtolower($attach['mimeType']) == 'text/calendar' && strtolower($attach['method']) == 'request' &&
 						isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
 						($attachment = $this->mail->getAttachment($id, $attach['partID'],0,false,false,$_folderName)) &&
-						($output->meetingrequest = calendar_activesync::meetingRequest($attachment['attachment'])))
+						($output->meetingrequest = calendar_zpush::meetingRequest($attachment['attachment'])))
 					{
 						$output->messageclass = "IPM.Schedule.Meeting.Request";
 						continue;	// do NOT add attachment as attachment
@@ -1292,7 +1292,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	function MeetingResponse($folderid, $requestid, $response)
 	{
-		if (!class_exists('calendar_activesync'))
+		if (!class_exists('calendar_zpush'))
 		{
 			debugLog(__METHOD__."(...) no EGroupware calendar installed!");
 			return null;
@@ -1577,7 +1577,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * 		[searchrange] => 0-99
 	 * 		[bodypref] => Array([1] => BodyPreference Object([unsetdata:protected] => Array([truncationsize] => [allornone] => [preview] => )[SO_internalid:StateObject:private] => [data:protected] =>
 	 * 			 Array([truncationsize] => 2147483647)[changed:protected] => 1))
-	 * 				[mimesupport] => 2)		
+	 * 				[mimesupport] => 2)
 	 * @return array(["range"] = $_searchquery->GetSearchRange(), ['searchtotal'] = count of results,
 	 *			array("class" => "Email",
 	 *					"longid" => folderid.':'.uid',
