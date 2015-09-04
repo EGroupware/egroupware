@@ -336,7 +336,7 @@ return array();	// temporary disabling meeting requests from calendar
 		// set timezone
 		try {
 			$as_tz = self::tz2as($event['tzid']);
-			$message->timezone = base64_encode(calendar_activesync::_getSyncBlobFromTZ($as_tz));
+			$message->timezone = base64_encode(self::_getSyncBlobFromTZ($as_tz));
 		}
 		catch(Exception $e) {
 			// ignore exception, simply set no timezone, as it is optional
@@ -1662,17 +1662,17 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		// get as timezone data for a given timezone
 		$ical = calendar_timezones::tz2id($tz,'component');
 		//echo "<pre>".print_r($ical,true)."</pre>\n";
-		$ical_arr = calendar_activesync::ical2array($ical_tz=$ical);
+		$ical_arr = calendar_zpush::ical2array($ical_tz=$ical);
 		//echo "<pre>".print_r($ical_arr,true)."</pre>\n";
-		$as_tz = calendar_activesync::tz2as($tz);
+		$as_tz = calendar_zpush::tz2as($tz);
 		//echo "$tz=<pre>".print_r($as_tz,true)."</pre>\n";
 
-		$as_tz_org = calendar_activesync::_getTZFromSyncBlob(base64_decode($sync_blob));
+		$as_tz_org = calendar_zpush::_getTZFromSyncBlob(base64_decode($sync_blob));
 		//echo "sync_blob=<pre>".print_r($as_tz_org,true)."</pre>\n";
 
 		// find matching timezone from as data
 		// this returns the FIRST match, which is in case of Pacific/Auckland eg. Antarctica/McMurdo ;-)
-		$matched = calendar_activesync::as2tz($as_tz);
+		$matched = calendar_zpush::as2tz($as_tz);
 		//echo array2string($matched);
 
 		echo "<tr><td><b onclick='toggle_display(this.nextSibling);' style='cursor:pointer;'>$tz</b><pre style='margin:0; font-size: 90%; display:none;'>$ical</pre></td><td>$as_tz_org[bias]<br/>$as_tz[bias]</td><td>$as_tz_org[dstbias]<br/>$as_tz[dstbias]</td>\n";
