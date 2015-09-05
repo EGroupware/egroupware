@@ -724,7 +724,7 @@ class mail_ui
 		}
 		// Check preview pane is enabled, then show spliter
 		if ($this->mail_bo->mailPreferences['previewPane']) $etpl->setElementAttribute('mail.index.spliter', 'template', 'mail.index.nospliter');
-		
+
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
@@ -2935,7 +2935,7 @@ class mail_ui
 					{
 						if ($_type !="background")
 						{
-							$bo = emailadmin_imapbase::getInstance(false, self::$icServerID);
+							$bo = emailadmin_imapbase::getInstance(false, mail_ui::$icServerID);
 							$attachment = $bo->getAttachmentByCID($_uid, $CID, $_partID);
 
 							// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
