@@ -23,14 +23,6 @@ foreach(array(
 	),__FILE__,__LINE__);
 }
 
-// import timezone data from sqlite database
-try
-{
-	calendar_timezones::import_sqlite();
-}
-// catch missing or broken sqlite support and use timezones.db_backup to install timezones
-catch (egw_exception_wrong_userinput $e)	// all other exceptions are fatal
-{
-	calendar_timezones::import_db_backup();
-}
+// import timezone data
+calendar_timezones::import_zones();
 calendar_timezones::import_tz_aliases();
