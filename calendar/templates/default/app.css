@@ -793,3 +793,9 @@ img.calendar_print_button, img.calendar_print_appicon {
 #calendar-edit_category {
 	max-width:230px;
 }
+
+#calendar_sidebox_content .ui-datepicker div.ui-datepicker-buttonpane {
+	border-top: 0;
+    margin: 0;
+    padding-right: 3px;
+}

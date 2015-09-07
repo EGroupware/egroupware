@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 53462 2015-08-25 00:00:45Z nathangray $ */
+/* $Id: app.css 53550 2015-09-02 22:40:38Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -789,6 +789,11 @@ img.calendar_print_appicon {
 }
 #calendar-edit_category {
   max-width: 230px;
+}
+#calendar_sidebox_content .ui-datepicker div.ui-datepicker-buttonpane {
+  border-top: 0;
+  margin: 0;
+  padding-right: 3px;
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {

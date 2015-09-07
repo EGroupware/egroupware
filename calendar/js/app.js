@@ -63,7 +63,7 @@ app.classes.calendar = AppJS.extend(
 		owner: egw.user('account_id'),
 		days: egw.preference('days_in_weekview','calendar')
 	},
-	
+
 	/**
 	 * Constructor
 	 *
@@ -116,7 +116,7 @@ app.classes.calendar = AppJS.extend(
 
 		// Avoid many problems with home
 		if(_et2.app !== 'calendar') return;
-		
+
 		// Re-init sidebox, since it was probably initialized too soon
 		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
 		if(sidebox.length == 0 && egw_getFramework() != null)
@@ -1605,7 +1605,7 @@ app.classes.calendar = AppJS.extend(
 				// Pass status filter in as status filter, avoids conflicts with nm filter
 				state.state.status_filter = state.state.filter;
 				delete state.state.filter;
-				
+
 				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
 				nm.applyFilters(state.state);
 			}
@@ -1925,7 +1925,7 @@ app.classes.calendar = AppJS.extend(
 				t.setUTCDate(t.getUTCDate() + 1);
 			}
 			while(t < end);
-			
+
 			// Some data is missing for the current owner, go get it
 			if(need_data && seperate_owners)
 			{
@@ -2030,7 +2030,7 @@ app.classes.calendar = AppJS.extend(
 				{
 					this.egw.dataStoreUID(app.classes.calendar._daywise_cache_id(day, state.owner), updated_days[day]);
 				}
-				
+
 				// More rows?
 				if(data.order.length + start < data.total)
 				{
@@ -2063,7 +2063,7 @@ app.classes.calendar = AppJS.extend(
 				sprintf("%02d",date.getUTCMinutes()) + ':'+
 				sprintf("%02d",date.getUTCSeconds()) + 'Z';
 		},
-		
+
 		/**
 		* Formats one or two dates (range) as long date (full monthname), optionaly with a time
 		*
@@ -2287,7 +2287,7 @@ app.classes.calendar = AppJS.extend(
 		if(date)
 		{
 			date.input_date.datepicker("option", {
-				showButtonPanel:	false,
+				showButtonPanel:	true,
 				onChangeMonthYear:	function(year, month, inst)
 				{
 					// Switch to month view for that month
@@ -2344,10 +2344,10 @@ app.classes.calendar = AppJS.extend(
 				});
 		}
 	},
-	
+
 	/**
 	 * Record view templates so we can quickly switch between them.
-	 * 
+	 *
 	 * @param {etemplate2} _et2 etemplate2 template that was just loaded
 	 * @param {String} _name Name of the template
 	 */
@@ -2358,10 +2358,10 @@ app.classes.calendar = AppJS.extend(
 
 		// Avoid home portlets using our templates, and get them right
 		if(_et2.uniqueId.indexOf('portlet') === 0) return;
-		
+
 		// Flag to make sure we don't hide non-view templates
 		var view_et2 = false;
-		
+
 		for(var view in app.classes.calendar.views)
 		{
 			var index = app.classes.calendar.views[view].etemplates.indexOf(_name);
