@@ -254,7 +254,7 @@
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="bday" value="Birthday"/>
-					<date id="bday" options="Y-m-d" class="et2_fullWidth"/>
+					<date id="bday" options="Y-m-d"  year_range="c-90:c+2" class="et2_fullWidth"/>
 					<description/>
 					<description value="Region"/>
 					<textbox statustext="State" id="adr_two_region" maxlength="64" class="et2_fullWidth"/>
