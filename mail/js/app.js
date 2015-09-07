@@ -3624,7 +3624,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	loadIframe: function (_url, _iFrame)
 	{
-		var mailSplitter = this.et2.getWidgetById('mailSplitter');
+		var mailSplitter = this.et2.getWidgetById('mail.index.spliter');
 		var quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
 		var iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
 		if (typeof iframe != 'undefined' && iframe)
