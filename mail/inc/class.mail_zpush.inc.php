@@ -1250,7 +1250,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					$attachment->attoid = "";//isset($part->headers['content-id']) ? trim($part->headers['content-id']) : "";
 					if (!empty($attach['cid']) && $attach['cid'] <> 'NIL' )
 					{
-						$attachment->isinline=true;
+						if ($bpReturnType != 4 && $attach['disposition'] == 'inline')
+						{
+							$attachment->isinline = true;
+						}
 						if (Request::GetProtocolVersion() >= 12.0) {
 							$attachment->method=1;
 							$attachment->contentid= str_replace(array("<",">"), "",$attach['cid']);
@@ -1344,9 +1347,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
-		$attachment = $this->mail->getAttachment($id,$part,0,false,false,$folder);
+		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
         $SIOattachment = new SyncItemOperationsAttachment();
-        $SIOattachment->data = StringStreamWrapper::Open($attachment['attachment']);
+        $SIOattachment->data = $attachment['attachment'];
         if (isset($attachment['type']) )
             $SIOattachment->contenttype = $attachment['type'];
 
@@ -1375,9 +1378,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
-		$attachment = $this->mail->getAttachment($id,$part,0,false,false,$folder);
+		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
         $SIOattachment = new SyncItemOperationsAttachment();
-        $SIOattachment->data = StringStreamWrapper::Open($attachment['attachment']);
+        $SIOattachment->data = $attachment['attachment'];
         if (isset($attachment['type']) )
             $SIOattachment->contenttype = $attachment['type'];
 
