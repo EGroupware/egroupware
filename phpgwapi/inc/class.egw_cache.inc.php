@@ -90,6 +90,42 @@ class egw_cache
 	static $max_expiration;
 
 	/**
+	 * Add some data in the cache, only if the key does not yet exist
+	 *
+	 * @param string $level use egw_cache::(TREE|INSTANCE)
+	 * @param string $app application storing data
+	 * @param string $location location name for data
+	 * @param mixed $data
+	 * @param int $expiration =0 expiration time in seconds, default 0 = never
+	 * @return boolean true if data could be stored, false otherwise incl. key already existed
+	 */
+	static public function addCache($level,$app,$location,$data,$expiration=0)
+	{
+		//error_log(__METHOD__."('$level','$app','$location',".array2string($data).",$expiration)");
+		switch($level)
+		{
+			case self::SESSION:
+			case self::REQUEST:
+				throw new egw_exception_wrong_parameter(__METHOD__."('$level', ...) unsupported level parameter!");
+
+			case self::INSTANCE:
+			case self::TREE:
+			default:
+				if (!($provider = self::get_provider($level)))
+				{
+					return false;
+				}
+				// limit expiration to configured maximum time
+				if (isset(self::$max_expiration) && (!$expiration || $expiration > self::$max_expiration))
+				{
+					$expiration = self::$max_expiration;
+				}
+				return $provider->add(self::keys($level,$app,$location),$data,$expiration);
+		}
+		throw new egw_exception_wrong_parameter(__METHOD__."() unknown level '$level'!");
+	}
+
+	/**
 	 * Set some data in the cache
 	 *
 	 * @param string $level use egw_cache::(TREE|INSTANCE|SESSION|REQUEST)
@@ -461,7 +497,7 @@ class egw_cache
 
 		if ($level != self::TREE) $level = self::INSTANCE;
 
-		if (!isset($providers[$level]))
+		//if (!isset($providers[$level]))
 		{
 			$params = $GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)];
 			if (!isset($params) && $level == self::INSTANCE && isset(self::$default_provider))
@@ -703,6 +739,16 @@ interface egw_cache_provider
 	function __construct(array $params);
 
 	/**
+	 * Stores some data in the cache, if it does NOT already exists there
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @param mixed $data
+	 * @param int $expiration =0
+	 * @return boolean true on success, false on error, incl. key already exists in cache
+	 */
+	function add(array $keys,$data,$expiration=0);
+
+	/**
 	 * Stores some data in the cache
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
@@ -769,7 +815,9 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 	{
 		// set us up as provider for egw_cache class
 		$GLOBALS['egw_info']['server']['install_id'] = md5(microtime(true));
-		egw_cache::$default_provider = $this;
+		unset($GLOBALS['egw_info']['server']['cache_provider_instance']);
+		unset($GLOBALS['egw_info']['server']['cache_provider_tree']);
+		egw_cache::$default_provider = get_class($this);
 
 		$failed = 0;
 		foreach(array(
@@ -807,6 +855,12 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 						++$failed;
 					}
 				}
+				$add_after_set = $this->add(array($level,__CLASS__,$location), 'other-data');
+				if ($add_after_set !== false)
+				{
+					if ($verbose) echo "$label: add_after_set=".array2string($add_after_set)."\n";
+					++$failed;
+				}
 				if (($delete = $this->delete(array($level,__CLASS__,$location))) !== true)
 				{
 					if ($verbose) echo "$label: delete returned ".array2string($delete)." !== TRUE\n";
@@ -828,12 +882,25 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 						if ($verbose) echo "$label: mget_after_delete['$location']=".array2string($mget_after_delete[$location])." != NULL\n";
 						++$failed;
 					}
-					$this->set(array($level,__CLASS__,$location), $data, 10);
 				}
 				elseif (!is_null($data))	// emulation can NOT distinquish between null and not set
 				{
 					$locations[$location] = $data;
-					egw_cache::setCache($level, __CLASS__, $location, $data);
+				}
+				$add_after_delete = $this->add(array($level,__CLASS__,$location), $data, 10);
+				if ($add_after_delete !== true)
+				{
+					if ($verbose) echo "$label: add_after_delete=".array2string($add_after_delete)."\n";
+					++$failed;
+				}
+				else
+				{
+					$get_after_add = $this->get(array($level,__CLASS__,$location));
+					if ($get_after_add !== $data)
+					{
+						if ($verbose) echo "$label: get_after_add=".array2string($get_after_add)." !== ".array2string($data)."\n";
+						++$failed;
+					}
 				}
 			}
 			// get all above in one request
@@ -843,21 +910,23 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 			{
 				$mget = $this->mget(array($level,__CLASS__,$keys));
 				$mget_bogus = $this->mget(array($level,__CLASS__,$keys_bogus));
+			/* egw_cache::getCache() gives a different result, as it does NOT use $level direkt
 			}
 			else
 			{
 				$mget = egw_cache::getCache($level, __CLASS__, $keys);
 				$mget_bogus = egw_cache::getCache($level, __CLASS__, $keys_bogus);
-			}
-			if ($mget !== $locations)
-			{
-				if ($verbose) echo "$label: mget=<br/>".array2string($mget)." !==<br/>".array2string($locations)."\n";
-				++$failed;
-			}
-			if ($mget_bogus !== $locations)
-			{
-				if ($verbose) echo "$label: mget(".array2string($keys_bogus).")=<br/>".array2string($mget_bogus)." !==<br/>".array2string($locations)."\n";
-				++$failed;
+			}*/
+				if ($mget !== $locations)
+				{
+					if ($verbose) echo "$label: mget=\n".array2string($mget)." !==\n".array2string($locations)."\n";
+					++$failed;
+				}
+				if ($mget_bogus !== $locations)
+				{
+					if ($verbose) echo "$label: mget(".array2string($keys_bogus).")=\n".array2string($mget_bogus)." !==\n".array2string($locations)."\n";
+					++$failed;
+				}
 			}
 		}
 
@@ -894,13 +963,12 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 	);
 	include_once '../../header.inc.php';
 
-	if (isset($_SERVER['HTTP_HOST'])) echo "<pre>\n";
+	if (isset($_SERVER['HTTP_HOST'])) echo "<pre style='whitespace: nowrap'>\n";
 
 	foreach(array(
-		'egw_cache_memcache' => array('localhost'),
 		'egw_cache_apc' => array(),
+		'egw_cache_memcache' => array('localhost'),
 		'egw_cache_files' => array('/tmp'),
-		'egw_cache_xcache' => array(),
 	) as $class => $param)
 	{
 		echo "Checking $class:\n";

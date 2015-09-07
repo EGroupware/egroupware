@@ -55,6 +55,42 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 	}
 
 	/**
+	 * Stores some data in the cache, if it does NOT already exists there
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @param mixed $data
+	 * @param int $expiration =0
+	 * @return boolean true on success, false on error, incl. key already exists in cache
+	 */
+	function add(array $keys,$data,$expiration=0)
+	{
+		// open only if file does NOT exist
+		if (!($ret = fopen($fname=$this->filename($keys,true), 'x')))
+		{
+			// if file exists, check if it is expired
+			if (file_exists($fname_expiration=$fname.self::EXPIRATION_EXTENSION) &&
+				($expiration = (int)file_get_contents($fname_expiration)) &&
+				filemtime($fname) < time()-$expiration)
+			{
+				// open and truncate it
+				$ret = fopen($fname, 'w');
+				// remove expiration
+				unlink($fname_expiration);
+			}
+		}
+		if ($ret)
+		{
+			flock($ret, LOCK_EX);
+			$ok = fwrite($ret, serialize($data));
+			if ((int)$expiration > 0) file_put_contents($fname.self::EXPIRATION_EXTENSION,(string)$expiration);
+			flock($ret, LOCK_UN);
+			fclose($ret);
+			$ret = $ok !== false;
+		}
+		return $ret;
+	}
+
+	/**
 	 * Stores some data in the cache
 	 *
 	 * @param array $keys eg. array($level,$app,$location)

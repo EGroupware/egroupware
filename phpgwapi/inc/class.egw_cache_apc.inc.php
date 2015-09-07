@@ -83,6 +83,19 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	}
 
 	/**
+	 * Stores some data in the cache, if it does NOT already exists there
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @param mixed $data
+	 * @param int $expiration =0
+	 * @return boolean true on success, false on error, incl. key already exists in cache
+	 */
+	function add(array $keys,$data,$expiration=0)
+	{
+		return apc_add(self::key($keys),$data,$expiration);
+	}
+
+	/**
 	 * Stores some data in the cache
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
