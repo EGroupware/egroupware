@@ -780,7 +780,7 @@ jQuery.extend(et2_selectbox,
 	{
 		var name_parts = widget.id.replace(/&#x5B;/g,'[').replace(/]|&#x5D;/g,'').split('[');
 
-		var type_options = [];
+		var type_options = {};
 		var content_options = {};
 
 		// First check type, there may be static options.  There's some special handling
@@ -796,7 +796,18 @@ jQuery.extend(et2_selectbox,
 				attrs.other = attrs.other.split(',');
 			}
 			// Copy, to avoid accidental modification
-			jQuery.extend(true, type_options, this[type_function].call(this, widget, attrs));
+			//
+			// type options used to use jQuery.extend deep copy to get a clone object of options
+			// but as jQuery.extend deep copy is very expensive operation in MSIE (in this case almost 400ms)
+			// we use JSON parsing instead to copy the options object
+			type_options =  this[type_function].call(this, widget, attrs);
+			try{
+				type_options = JSON.parse(JSON.stringify(type_options));
+			}catch(e)
+			{
+				egw.debug(e);
+			}
+
 			widget._type = old_type;
 		}
 
@@ -891,7 +902,7 @@ jQuery.extend(et2_selectbox,
 		{
 			content_options = {};
 		}
-		
+
 		// Include type options, preferring any content options
 		if(type_options.length || !jQuery.isEmptyObject(type_options))
 		{
@@ -1081,7 +1092,7 @@ jQuery.extend(et2_selectbox,
 	{
 		// normalize options by removing trailing commas
 		options_string = options_string.replace(/,+$/, '');
-		
+
 		var cache_id = widget._type+'_'+options_string;
 		var cache = egw.window.et2_selectbox.type_cache[cache_id];
 		if (typeof cache == 'undefined')
