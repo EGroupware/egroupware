@@ -325,6 +325,115 @@
 
         &:hover {background-color: @egw_color_1;}
     }
+
+	// Toggle menu
+	#egw_fw_toggler {
+		display: block;
+		width: 28px;
+		height: 30px;
+		position: relative;
+		z-index: 1;
+		top: 4px;
+		margin-top: 0;
+		margin-bottom: -30px;
+		float: right;
+		margin-right:5px;
+
+		&:hover {
+			span {
+				background-color: #b4b4b4;
+				&:before {
+					transition-duration: 0.7s;
+					transform: rotate(156deg) translate(7px, 1px);
+					background-color: #b4b4b4;
+				}
+				&:after {
+					transition-duration: 0.7s;
+					transform: rotate(-150deg) translate(10px, -1px);
+					background-color: #b4b4b4;
+				}
+			}
+		}
+		span {
+			background-color: transparent;
+			&:before{
+				transition-duration: 1s;
+				transform: rotate(45deg) translate(5px, 5px);
+			}
+			&:before, &:after {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: -9px;
+				width: 100%;
+				height: 5px;
+				background-color: #b3b3b3;
+				backface-visibility: hidden;
+				border-radius: 2px;
+			}
+			&:after {
+				top:9px;
+				transition-duration: 0.7s;
+				transform: rotate(-45deg) translate(7px, -8px);
+			}
+			position: relative;
+			display: block;
+			width: 100%;
+			height: 5px;
+			backface-visibility: hidden;
+			border-radius: 2px;
+			top:11px;
+		}
+	}
+	.egw_fw_sidebar_toggleOn {
+		/* toggler button*/
+		#egw_fw_toggler {
+			margin: 1px auto 4px;
+			float:none;
+			span {
+				background-color: #b3b3b3;
+				transition: all 0.3s;
+				&:before, &:after {
+					transform:none;
+				}
+			}
+			&:hover {
+				span {
+					background-color: #b4b4b4;
+					&:before {
+						background-color: #b4b4b4;
+					}
+					&:after {
+						background-color: #b4b4b4;
+					}
+				}
+			}
+		}
+
+		/*sidebar adjustments*/
+		.egw_fw_ui_sidemenu_entry_content {
+			display: none !important;
+		}
+
+		.egw_fw_ui_sidemenu_entry_header_active {
+			border-radius: 0 !important;
+			width: auto !important;
+		}
+		.egw_fw_ui_sidemenu_entry_header {
+			width: 50px;
+			height: 35px;
+			h1 {
+				visibility: hidden;
+			}
+			img {
+				margin: 4px auto 0px !important;
+				padding: 0 !important;
+				float: none !important;
+				display: block !important;
+				height: 24px !important;
+			}
+		}
+	}
     // Ende Sidebar
 
 // Menu Seite links
