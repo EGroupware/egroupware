@@ -1975,6 +1975,7 @@ var et2_link_list = et2_link_string.extend(
 		if(prev.length === 1)
 		{
 			var prev_dirs = (prev.attr('data-title') || '').split('/');
+			var reformat = false;
 			if(prev_dirs.length > 1 && prev_dirs.length == dirs.length)
 			{
 				var span_size = 0.3;
@@ -1983,10 +1984,18 @@ var et2_link_list = et2_link_string.extend(
 					// Current is same as prev, blank it
 					if(dirs[i] === prev_dirs[i])
 					{
+						reformat = true;
 						span_size += dirs[i].length+1;
 						dirs[i] = '';
 					}
+					else
+					{
+						break;
+					}
 				}
+			}
+			if(reformat)
+			{
 				$td.html('<span style="display: inline-block; width:'+span_size+'ex;"></span>&nbsp;- '+dirs.join(''));
 			}
 			else
