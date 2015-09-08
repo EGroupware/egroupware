@@ -1086,12 +1086,12 @@ var AppJS = Class.extend(
 			case 'PUT':
 				jQuery.extend({},ajaxObj, {
 					data: JSON.stringify(_data),
-					contentType: 'application/json',
+					contentType: 'application/json'
 				});
 				break;
 			case 'GET':
 				jQuery.extend({},ajaxObj, {
-					dataType: 'json',
+					dataType: 'json'
 				});
 				break;
 			case 'DELETE':
@@ -1271,7 +1271,7 @@ var AppJS = Class.extend(
 			});
 		},
 		function(){
-			mailvelope.createKeyring('egroupware').then(function(){dialog(menu)});
+			mailvelope.createKeyring('egroupware').then(function(){dialog(menu);});
 		});
 
 	},
