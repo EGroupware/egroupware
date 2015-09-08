@@ -5,8 +5,8 @@
 	<template id="addressbook.index.org_rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="20"/>
-				<column width="20"/>
+				<column width="75"/>
+				<column width="25"/>
 				<column width="40%"/>
 				<column width="30%"/>
 				<column width="30%"/>
