@@ -1,3 +1,18 @@
+egroupware-epl (14.3.20150908) hardy; urgency=low
+
+  * All apps: fix broken group-favorites
+  * All apps: some favorites could not be deleted (reappeared after reload/next login)
+  * CardDAV/Addressbook: fixed not working adding or update of photo
+  * Calendar: fixed SQL error in list-view
+  * Calendar: fix not working "no filter" favorite
+  * Calendar/CalDAV: update timezones to 2015e from Thunderbird zones.json
+  * Mail/preferences: Add Preview Pane option into mail preferences in order to be able to show/hide mail preview pane (split panel)
+  * Mail: fix PHP Fatal error under 5.3 when displaying mails containing inline-images
+  * Projectmanager: fix external role to NOT lose project when storing a new timesheet
+  * LDAP: fix not working connect under newer PHP 5.6 (maybe other versions too) with PHP Warning: invalid port number: 0
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 08 Sep 2015 08:12:36 +0200
+
 egroupware-epl (14.3.20150826) hardy; urgency=low
 
   * Calendar/all apps: fix since last package not working old favorites and json-encode all php-serialized preferences
