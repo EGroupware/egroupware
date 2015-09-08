@@ -29,23 +29,23 @@
 			<rows>
 				<row>
 					<description for="n_prefix" value="prefix"/>
-					<textbox id="n_prefix" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
+					<textbox id="n_prefix" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="honorific-prefix" />
 				</row>
 				<row>
 					<description for="n_given" value="first name"/>
-					<textbox id="n_given" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
+					<textbox id="n_given" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="given-name" />
 				</row>
 				<row>
 					<description for="n_middle" value="middle name"/>
-					<textbox id="n_middle" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
+					<textbox id="n_middle" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="additional-name" />
 				</row>
 				<row>
 					<description for="n_family" value="last name"/>
-					<textbox id="n_family" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
+					<textbox id="n_family" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="family-name" />
 				</row>
 				<row>
 					<description for="n_suffix" value="suffix"/>
-					<textbox id="n_suffix" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
+					<textbox id="n_suffix" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="honorific-suffix" />
 				</row>
 				<row>
 					<description/>
@@ -68,12 +68,12 @@
 				<row>
 					<description for="role" value="Role"/>
 					<hbox width="100%">
-						<textbox id="role" width="200" maxlength="64"/>
+						<textbox id="role" width="200" maxlength="64" autocomplete="section-one" />
 						<textbox label="Room" id="room" width="40"/>
 					</hbox>
 					<description/>
 					<description for="adr_one_street" value="street"/>
-					<textbox id="adr_one_street" class="et2_fullWidth" maxlength="64"/>
+					<textbox id="adr_one_street" class="et2_fullWidth" maxlength="64" autocomplete="address-line1"/>
 					<description/>
 				</row>
 				<row>
@@ -81,39 +81,39 @@
 					<textbox id="assistent" class="et2_fullWidth"/>
 					<description/>
 					<description/>
-					<textbox statustext="address line 2" id="adr_one_street2" class="et2_fullWidth" maxlength="64"/>
+					<textbox statustext="address line 2" id="adr_one_street2" class="et2_fullWidth" maxlength="64" autocomplete="address-line2"/>
 					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="tel_assistent" value="Assistent phone"/>
 					<url-phone id="tel_assistent" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
-					<description for="adr_one_locality" value="city"/>
+					<description for="adr_one_locality" value="city" />
 					<hbox>
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" width="40" maxlength="64"/>
-						<textbox statustext="City" id="adr_one_locality" maxlength="64"  width="242"/>
+						<textbox statustext="ZIP Code" id="adr_one_postalcode" width="40" maxlength="64" autocomplete="postal-code"/>
+						<textbox statustext="City" id="adr_one_locality" maxlength="64"  width="242" autocomplete="address-level2"/>
 					</hbox>
 					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="tel_fax" value="fax"/>
-					<url-phone id="tel_fax" class="et2_fullWidth"/>
+					<url-phone id="tel_fax" class="et2_fullWidth" autocomplete="fax" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						</menulist>
-						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth"/>
+						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
 					</vbox>
 					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="tel_other" value="Other phone"/>
-					<url-phone id="tel_other" class="et2_fullWidth"/>
+					<url-phone id="tel_other" class="et2_fullWidth"  autocomplete="tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 					<description value="Region"/>
-					<textbox statustext="State" id="adr_one_region" maxlength="64" class="et2_fullWidth"/>
+					<textbox statustext="State" id="adr_one_region" maxlength="64" class="et2_fullWidth" autocomplete="address-level1"/>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
@@ -122,28 +122,28 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description value="City"/>
 					<hbox>
-						<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64"/>
-						<textbox statustext="State" id="adr_one_region" size="3" maxlength="64"/>
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64"/>
+						<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" autocomplete="address-level2"/>
+						<textbox statustext="State" id="adr_one_region" size="3" maxlength="64" autocomplete="address-level1"/>
+						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" autocomplete="postal-code"/>
 					</hbox>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_fax" value="fax"/>
-					<url-phone id="tel_fax" class="et2_fullWidth"/>
+					<url-phone id="tel_fax" class="et2_fullWidth" autocomplete="fax" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist>
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						</menulist>
-						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth"/>
+						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
 					</vbox>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_other" value=" Other Phone"/>
-					<url-phone id="tel_other" class="et2_fullWidth"/>
+					<url-phone id="tel_other" class="et2_fullWidth" autocomplete="tel"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 					<description/>
 					<description/>
@@ -214,41 +214,41 @@
 			<rows>
 				<row>
 					<description for="tel_home" value="Home phone"/>
-					<url-phone id="tel_home" class="et2_fullWidth"/>
+					<url-phone id="tel_home" class="et2_fullWidth" autocomplete="section-two home tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
 					<description for="adr_two_street" value="street"/>
-					<textbox id="adr_two_street" class="et2_fullWidth" maxlength="64"/>
+					<textbox id="adr_two_street" class="et2_fullWidth" maxlength="64" autocomplete="section-two address-line1" />
 					<description/>
 				</row>
 				<row>
 					<description for="tel_cell_private" value="mobile phone"/>
-					<url-phone id="tel_cell_private" class="et2_fullWidth"/>
+					<url-phone id="tel_cell_private" class="et2_fullWidth" autocomplete="section-two mobile tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell_private,&amp;hearts;"/>
 					<description/>
-					<textbox statustext="address line 2" id="adr_two_street2" class="et2_fullWidth" maxlength="64"/>
+					<textbox statustext="address line 2" id="adr_two_street2" class="et2_fullWidth" maxlength="64" autocomplete="section-two address-line2" />
 					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="tel_fax_home" value="fax"/>
-					<url-phone id="tel_fax_home" class="et2_fullWidth"/>
+					<url-phone id="tel_fax_home" class="et2_fullWidth" autocomplete="section-two fax tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 					<description for="adr_two_locality" value="city"/>
 					<hbox>
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64"/>
-						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="242"/>
+						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64" autocomplete="section-two postal-code" />
+						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="242" autocomplete="section-two address-level2" />
 					</hbox>
 					<description/>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_pager" value="pager"/>
+					<description for="tel_pager" value="pager" autocomplete="section-two pager tel" />
 					<url-phone id="tel_pager" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
 					<description for="adr_two_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
 						</menulist>
-						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth"/>
+						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
 					</vbox>
 					<description/>
 				</row>
@@ -257,18 +257,18 @@
 					<date id="bday" options="Y-m-d"  year_range="c-90:c+2" class="et2_fullWidth"/>
 					<description/>
 					<description value="Region"/>
-					<textbox statustext="State" id="adr_two_region" maxlength="64" class="et2_fullWidth"/>
+					<textbox statustext="State" id="adr_two_region" maxlength="64" class="et2_fullWidth" autocomplete="section-two address-level1" />
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_fax_home" value="fax"/>
-					<url-phone id="tel_fax_home" class="et2_fullWidth"/>
+					<url-phone id="tel_fax_home" class="et2_fullWidth" autocomplete="fax tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 					<description value="City"/>
 					<hbox>
-						<textbox statustext="City" id="adr_two_locality" size="30" maxlength="64"/>
-						<textbox statustext="State" id="adr_two_region" size="3" maxlength="64"/>
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64"/>
+						<textbox statustext="City" id="adr_two_locality" size="30" maxlength="64" autocomplete="section-two address-level2" />
+						<textbox statustext="State" id="adr_two_region" size="3" maxlength="64" autocomplete="section-two address-level1"/>
+						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64" autocomplete="section-two postal-code" />
 					</hbox>
 					<description/>
 				</row>
@@ -279,9 +279,9 @@
 					<description for="adr_two_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist>
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"/>
+							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
 						</menulist>
-						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth"/>
+						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
 					</vbox>
 					<description/>
 				</row>
@@ -295,10 +295,10 @@
 				</row>
 				<row>
 					<description for="email_home" value="EMail"/>
-					<url-email id="email_home" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth"/>
+					<url-email id="email_home" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" autocomplete="section-two home email" />
 					<description/>
 					<description for="url_home" value="URL"/>
-					<url id="url_home" class="et2_fullWidth"/>
+					<url id="url_home" class="et2_fullWidth" autocomplete="section-two url" />
 					<description/>
 				</row>
 			</rows>
@@ -361,16 +361,16 @@
 						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
 						<template id="addressbook.edit.upload"/>
 					</hbox>
-					<textbox id="n_fn" blur="Name" no_lang="1" span="2" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();"/>
+					<textbox id="n_fn" blur="Name" no_lang="1" span="2" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" />
 					<description/>
 					<description for="org_name" value="Organisation"/>
-					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" class="et2_fullWidth"/>
+					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" class="et2_fullWidth" autocomplete="organization" />
 					<appicon/>
 				</row>
 				<row class="dialogHeader2">
 					<description/>
 					<description for="tel_work" value="Business phone"/>
-					<url-phone id="tel_work" class="telNumbers et2_fullWidth"/>
+					<url-phone id="tel_work" class="telNumbers et2_fullWidth" autocomplete="work tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
 					<description for="org_unit" value="department"/>
 					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
@@ -379,19 +379,19 @@
 				<row class="dialogHeader3">
 					<description/>
 					<description for="tel_cell" value="mobile phone"/>
-					<url-phone id="tel_cell" class="telNumbers et2_fullWidth"/>
+					<url-phone id="tel_cell" class="telNumbers et2_fullWidth" autocomplete="mobile tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
 					<description for="title" value="Title"/>
-					<textbox id="title" size="36" maxlength="64" class="et2_fullWidth"/>
+					<textbox id="title" size="36" maxlength="64" class="et2_fullWidth" autocomplete="organization-title" />
 					<description/>
 				</row>
 				<row class="dialogHeader4">
 					<description/>
 					<description for="email" value="email"/>
-					<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth"/>
+					<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" autocomplete="work email" />
 					<description/>
 					<description for="url" value="url"/>
-					<url id="url" class="et2_fullWidth"/>
+					<url id="url" class="et2_fullWidth" autocomplete="url" />
 					<description/>
 				</row>
 				<row>

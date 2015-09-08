@@ -272,6 +272,11 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 		this.options.blur = _value;
 	},
 
+	set_autocomplete: function(_value) {
+		this.options.autocomplete = _value;
+		this.input.attr('autocomplete', _value);
+	},
+	
 	resize: function (_height)
 	{
 		if (_height && this.options.multiline)
