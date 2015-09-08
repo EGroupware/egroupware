@@ -1,0 +1,16 @@
+Fri Apr 18 01:51:00 CEST 2003
+- resize icons to 32x32
+- renamed css file for better compatibility
+- removed unneccesary files in calender and email template directory
+- merged changed from Ralf Becker
+- remade the logo
+- changed gif to png where possible (create_tabs in class.common.inc.php only uses gifs!!!)
+- moved tree to 0.9.16 branch
+
+Wed Apr 16 23:07:54 CEST 2003
+- Get app titles from new array without using the lang() call
+- Moved 'Homelink' from navbar to sidebox
+- Use preference setting 'icons', 'icons and text'
+- sidebox menu's can be hooked now (see template hook-files in phpgwapi/templates/idots/doc/hook_templates/
+- replaces correct gimpsource file for navbar icons: phpgwapi/templates/idots/source/navbar.xcf
+- additional information in the README

@@ -1,0 +1,153 @@
+/*@import url("traditional.css");*/
+
+/**
+ * Stylite theme changes
+ */
+#divAppIconBar {
+	padding-top: 5px;
+	border: none;
+	background-position: 0px 30px;
+	background-color: white;
+	background-image: url(../images/gradient22.png);
+}
+
+#divStatusBar {
+	height: 22px;
+}
+
+#divAppboxHeader {
+	background-image: url(../images/gradient22.png);
+	border: none;
+	height: 18px;
+	line-height: 18px;
+}
+
+.divSidebox,.textSidebox {
+	border: none;
+	overflow: visible;
+}
+
+#tdSidebox {
+	overflow: hidden;
+}
+
+.textSidebox {
+	border-top: 1px solid #d3d3d3;
+	padding-left: 1px;
+}
+
+.divSidebox table {
+	border: 1px solid #d3d3d3;
+	border-top: none;
+}
+/*
+ ** Popups
+ */
+#popupMainDiv
+{
+	width:auto;
+}
+.divSideboxHeader {
+	background-image: url(../images/gradient22.png);
+	border: none;
+	height: 18px;
+	line-height: 18px;
+	padding-top: 0;
+}
+
+#divAppbox {
+	padding-left: 15px;
+	padding-right: 10px;
+	border: 1px solid #d3d3d3;
+}
+
+#divMain {
+	padding: 0px;
+	border: none;
+}
+
+#divLogo {
+	left: 3px;
+	top: 3px;
+}
+
+#divUpperTabs {
+	position: absolute;
+	top: 69px;
+	right: 6px;
+}
+#divUpperTabs li
+{
+	border: 1px solid #d3d3d3;
+	border-top: none;
+}
+
+#topmenu {
+	background-image: url(../images/gradient22.png);
+	border: none;
+	x-background-color: #e0e0e0;
+	x-background-image: none;
+	x-border-bottom: 1px solid silver;
+	line-height: 12px;
+	padding-top: 2px;
+	height: auto;
+	color: black;
+}
+
+#topmenu a {
+	color: black;
+}
+
+#sideresize {
+	background-image:url(../images/resize-transparent.png);
+}
+
+.th {
+	background-color: #e0e0e0;
+}
+
+a:link, a:visited, select, input, textarea {
+	color: #004090;
+	color: #4a6184;
+	color: #336699;
+	color: #003075;
+}
+
+.lettersearch_active,.lettersearch:hover {
+	background-color: #d0d0d0 !important;
+}
+
+.lettersearch {
+	background-color: #e0e0e0 !important;
+}
+
+.nextmatch_header table {
+	border: none !important;
+}
+
+/* login page */
+#loginMainDiv {
+	padding: 0px;
+	background-position: center 64px;
+	height: 720px;
+}
+
+.divLoginbox {
+	border: 1px solid #d3d3d3;
+	border-top: none;
+}
+.divLoginbox td {
+	padding-left: 8px;
+}
+.divLoginboxHeader {
+	background-image: url(../images/gradient22.png);
+}
+#menu1Container{
+	position: absolute;
+	top: 3px;
+	right: -16px;
+	z-index: 10000;
+}
+#menu2Container{
+	z-index: 10000;
+}

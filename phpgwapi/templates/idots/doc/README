@@ -1,0 +1,41 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   IDOTS TEMPLATE SET FOR eGroupWare
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+The template set idots, formaly known as MYiDOTS is 
+havely based on the Crystal Icon theme from 
+Everaldo. 
+
+   APPLICATION ICONS 
+===================================================
+Because of a bug in Internet Explorer which causes 
+it to display transpancy in PNG's as black I gave 
+all icons a background.
+
+Everybody is encouraged to make more icons for the 
+idots template set. Please don't use gif as Image
+type because this filetype in not an open standard
+
+The source Gimp-files can be found in 
+phpgwapi/templates/idots/source/
+
+The logo source file can also be found in the above
+directory.
+
+   APPLICATION HOOKS
+===================================================
+In the hook_file, hook_sidebox_menu.inc.php, 
+developers can define the sidebox menu's for their 
+applications template hook files can be found in 
+phpgwapi/templates/idots/hook_templates/
+
+
+Hope you enjoy this template set,
+Pim Snel
+
+
+
+
+

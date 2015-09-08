@@ -1,0 +1,45 @@
+#
+# ldapadd -f <file.ldif> -x -D "cn=Manager,dc=enterprise,dc=subnet" -w <password>
+#
+## Example
+# --- French version ---
+#dn: dc=entreprise,dc=subnet
+#objectClass: top
+#objectClass: organization
+#l: Paris
+#st: Ile-de-France
+#o: entreprise
+#
+## Personnes, edge-it, subnet
+#dn: ou=Personnes,dc=entreprise,dc=subnet
+#objectClass: top
+#objectClass: organizationalUnit
+#ou: Personnes
+#
+## Groupes, edge-it, subnet
+#dn: ou=Groupes,dc=entreprise,dc=subnet
+#objectClass: top
+#objectClass: organizationalUnit
+#ou: Groupes
+
+# Example
+# --- English version ---
+dn: dc=enterprise,dc=loc
+objectClass: top
+objectClass: organization
+l: City
+st: States
+o: enterprise
+
+# People, edge-it, subnet
+dn: ou=People,dc=enterprise,dc=loc
+objectClass: top
+objectClass: organizationalUnit
+ou: People
+
+# Groups, edge-it, subnet
+dn: ou=Groups,dc=enterprise,dc=loc
+objectClass: top
+objectClass: organizationalUnit
+ou: Groups
+

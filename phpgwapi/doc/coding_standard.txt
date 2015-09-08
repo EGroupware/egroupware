@@ -1,0 +1,130 @@
+1) Format your code so that we can read it, please!
+
+2) Use tabs for formatting, NOT SPACES.  Tabs create smaller files and editors allow
+	developers to view a tab as however many spaces as they prefer.  Spaces do not allow this.
+	There is one exception (see #11 below).
+
+3) Use ' instead of " for strings.  This is a performance issue, and prevents
+	a lot of inconsistent coding styles.
+
+4) Comments go on the line ABOVE the code, NOT to the right of the code!
+
+5) For each section of code put a section divider with basic explanation of the following
+	code/functions.  It should look like this:
+
+	/****************************************************************************\
+	* These functions are used to pick my nose                                   *
+	\****************************************************************************/
+
+6) Do not document every bit of code in comments.  PHP is an interpreted language and it will be
+	nasty on performance.
+
+7) Use switch statements where many elseif's are going to be used.  Switch is faster and I like it
+	better!
+
+8) 'If' statements need to use the following format:
+
+	if ($var == 'example')
+	{
+		echo 'This is only an example';
+	}
+	else
+	{
+		echo 'This is not a test.  This is the real thing';
+	}
+
+	Do NOT make if statements like this:
+
+	if ($var == 'example'){ echo 'An example'; }
+
+	All other styles are not to be used.  This is it. Use it or I will personally come and nag you to
+	death.
+
+9) ALL 'if' statements MUST have matching { } (brackets).  Do NOT create 'if' statements like this:
+
+	if ($a == b)
+		dosomething();
+
+	or:
+
+	if ($a == b) dosomething();
+
+	They make the code more difficult to read and follow.
+
+10) class/function format:
+
+	class testing 
+	{
+		function print_to_screen()
+		{
+			if($var == 'example')
+			{
+				echo 'This is only an example';
+			}
+			else
+			{
+				echo 'This is not a test.  This is the real thing';
+			}
+		}
+	}
+
+11) Associative arrays must be written in the following manner:
+
+	$array = array(
+		'var'  => 'value',
+		'var2' => 'value2'
+	);
+
+	OR:
+
+	$array = array
+	(
+		'var'  => 'value',
+		'var2' => 'value2'
+	);
+
+	Note that spaces are preferred around the '=>'.  This is because only tabs
+	on the left side are guaranteed to line up correctly using different
+	tabstops.
+
+12) Use the long format for <?php.  Do NOT use <?.
+
+13) All code should start with 1 tab.  Example:
+
+<?php
+	dosomething();
+	if ($a)
+	{
+		dosomemorestuff();
+	}
+
+	NOT:
+
+<?php
+dosomething();
+if ($a)
+{
+	dosomemorestuff();
+}
+
+14) Use lower case for variable and function names.  No stubbly-case (mixed-case) code.
+
+15) (int)$var is preferred vs. intval($var).  Also, is_int()/is_string()/is_array()
+  should be used instead of gettype() where possible.
+
+16) str_ functions should be used instead of ereg_ for simple text replacement, etc.
+  For example, ereg_replace(';','',$string) is much slower than str_replace(';','',$string.
+  Of course, for complicated regular expressions, you may still need ereg_.
+
+17) Use the api function, copyobj($oldobject,$newobject), instead of
+  $newobject = $oldobject.  This is for performance when using php5.
+
+18) Try to avoid creating new objects when the api-created ones will work.
+  This is a performance issue.  You might also be able to use copyobj() and then
+  call the constructor of the class if another version of the object exists
+  already.
+
+19) Do not use, e.g., global $var; unless absolutely necessary.  Please
+consider developing with register_globals=off to understand why.
+
+20) Thanks for following these rules :)

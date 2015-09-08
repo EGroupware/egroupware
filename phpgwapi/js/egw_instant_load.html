@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>EGroupware [Loading Data]</title>
+		<meta http-equiv="Cache-control" content="public" />
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+	</head>
+	<body style="background-color: #F0F0F0">
+		<script type="text/javascript">
+			window.egw_instant_load = function(_data)
+			{
+				// Empty the document tree
+				while (document.childNodes.length > 0)
+				{
+					document.removeChild(document.childNodes[0]);
+				}
+
+				// Write the given content
+				document.write(_data);
+
+				// Close the document
+				document.close();
+			}
+		</script>
+	</body>
+</html>
+

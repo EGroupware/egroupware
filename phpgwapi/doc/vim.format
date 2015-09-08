@@ -1,0 +1,100 @@
+VIM 6.0:
+
+The following should be helpful in making sure your code adheres to
+our required format.  This should turn on indenting and syntax
+highlighting for .php files in vim.
+
+Add the following to your ~/.vimrc:
+
+set ts=4
+filetype on
+filetype indent on
+set sw=4 
+set smarttab
+
+You can adjust the ts and sw variables to use your preferred tabstop.
+
+
+Place the following into, e.g., /usr/share/vim/vim60/indent/php.vim.
+This is not a vim syntax file, so don't overwrite your syntax/php.vim
+with this:
+
+----CUT HERE----
+" Vim indent file
+" Language:	Php
+" Author:	Miles Lott <milos@groupwhere.org>
+" URL:		http://milosch.dyndns.org/php.vim
+" Last Change:	2001 Sep 08
+
+" Only load this indent file when no other was loaded.
+if exists("b:did_indent")
+  finish
+endif
+let b:did_indent = 1
+
+setlocal indentexpr=GetPhpIndent()
+setlocal indentkeys+=0=,0),=EO
+
+" Only define the function once.
+if exists("*GetPhpIndent")
+  finish
+endif
+
+function GetPhpIndent()
+  " Get the line to be indented
+  let cline = getline(v:lnum)
+
+  " Find a non-blank line above the current line.
+  let lnum = prevnonblank(v:lnum - 1)
+  " Hit the start of the file, use zero indent.
+  if lnum == 0
+    return 0
+  endif
+  let line = getline(lnum)
+  let ind = indent(lnum)
+
+  " Indent after php open tags
+  if line =~ '<?php'
+    let ind = ind + &sw
+  endif
+  if cline =~ '^\s*[?>]'
+    let ind = ind - &sw
+  endif
+
+  " Indent blocks enclosed by {} or ()
+  if line =~ '[{(]\s*\(#[^)}]*\)\=$'
+    let ind = ind + &sw
+  endif
+  if cline =~ '^\s*[)}]'
+    let ind = ind - &sw
+  endif
+
+  return ind
+endfunction
+----CUT HERE----
+
+
+HINT:  To reformat an already-coded file using the above:
+
+1. Format the first few lines of the file manually
+<?php
+	$GLOBALS['phpgw_info']['flags']['appname'] = 'yourapp';
+	include('../header.inc.php');
+	if(1)
+	{
+		hello();
+	}
+
+2. Enter command mode (hit ESC key).
+
+3. Type 'v' to enter visual mode.  Use your arrow and PAGEUP/DOWN keys
+   to select the rest of the file or a section you wish to format.
+
+4. Type '='.  This should format the selected area, using cues from
+   the section above to set the initial TAB, etc.
+
+5. Visually inspect this section to make sure the formatting is correct.
+   Using the above method is nearly perfect, but depends on the proper
+   use of brackets for if statements, etc, as outlined in coding_standard.txt.
+
+FIN
