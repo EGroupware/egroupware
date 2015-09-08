@@ -41,6 +41,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		'select-account' => 'Select account',
 		'button'   => 'Button',         // button to execute javascript
 		'url'      => 'Url',
+		'url-email'=> 'EMail',
 		'url-phone'=> 'Phone number',
 		'htmlarea' => 'Formatted Text (HTML)',
 		'link-entry' => 'Select entry',         // should be last type, as the individual apps get added behind
@@ -187,7 +188,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					$sel_options[$lname] = lang($label);
 					$fields_with_vals[]=$lname;
 				}
-				$link_types = egw_link::app_list();
+				$link_types = egw_link::app_list('query');
 				ksort($link_types);
 				foreach($link_types as $lname => $label)
 				{
