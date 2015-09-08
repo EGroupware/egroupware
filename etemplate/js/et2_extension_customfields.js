@@ -590,7 +590,51 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 	_setup_filemanager: function(field_name, field, attrs) {
 		attrs.type = 'vfs-upload';
 		delete(attrs.label);
-		return true;
+
+		if (this._type == 'customfields-list')
+		{
+			// No special UI needed?
+			return true;
+		}
+		else
+		{
+			// Complicated case, a single custom field you get multiple widgets
+			// Handle it all here, since this is the exception
+			var row = $j('tr',this.tbody).last();
+			var cf = $j('td',row);
+
+			// Label in first column, widget in 2nd
+			cf.text(field.label + "");
+			cf = jQuery(document.createElement("td"))
+				.appendTo(row);
+
+			// Add a link to existing VFS file
+			var select_attrs = jQuery.extend({},
+				attrs,
+				// Filemanager select
+				{
+					label: '',
+					method: 'etemplate_widget_link::link_existing',
+					method_id: attrs.path,
+					button_label: egw.lang('Link')
+				},{type: 'vfs-select'});
+			select_attrs.id = attrs.id + '_vfs_select';
+
+			// This controls where the button is placed in the DOM
+			this.rows[select_attrs.id] = cf[0];
+
+			// Do not store in the widgets list, one name for multiple widgets would cause problems
+			widget = et2_createWidget(select_attrs.type, select_attrs, this);
+			$j(widget.getDOMNode(widget)).css('vertical-align','top');
+
+			// Create upload widget
+			var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
+			
+			// This controls where the widget is placed in the DOM
+			this.rows[attrs.id] = cf[0];
+			$j(widget.getDOMNode(widget)).css('vertical-align','top');			
+		}
+		return false;
 	},
 
 	/**

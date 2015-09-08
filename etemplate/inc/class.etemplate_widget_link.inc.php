@@ -232,11 +232,14 @@ class etemplate_widget_link extends etemplate_widget
 	 */
 	public static function link_existing($app_id, $files)
 	{
-		list($app, $id) = explode(':', $app_id);
+		list($app, $id, $dest_file) = explode(':', $app_id);
+		if($id && $dest_file && trim($dest_file) !== '')
+		{
+			$id .= "/$dest_file";
+		}
 
 		if(!is_array($files)) $files = array($files);
 		foreach($files as $target) {
-			error_log(array2string($target));
 			egw_link::link_file($app, $id, $target);
 		}
 	}
