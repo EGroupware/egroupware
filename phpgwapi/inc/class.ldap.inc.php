@@ -188,7 +188,7 @@ class ldap
 			$host = parse_url($host,PHP_URL_HOST);
 		}
 		// connect to ldap server (never fails, as connection happens in bind!)
-		if(!$this->ds = ldap_connect($host, $port))
+		if(!($this->ds = !empty($port) ? ldap_connect($host, $port) : ldap_connect($host)))
 		{
 			return False;
 		}
