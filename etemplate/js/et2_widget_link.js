@@ -1971,14 +1971,14 @@ var et2_link_list = et2_link_string.extend(
 		$td.attr('data-title', _link_data['title']);
 
 		// VFS link - check for same dir as above, and hide dir
+		var reformat = false;
+		var span_size = 0.3;
 		var prev = $j('td.title',$td.parent().prev('tr'));
 		if(prev.length === 1)
 		{
 			var prev_dirs = (prev.attr('data-title') || '').split('/');
-			var reformat = false;
 			if(prev_dirs.length > 1 && prev_dirs.length == dirs.length)
 			{
-				var span_size = 0.3;
 				for(var i = 0; i < dirs.length; i++)
 				{
 					// Current is same as prev, blank it
@@ -1994,16 +1994,17 @@ var et2_link_list = et2_link_string.extend(
 					}
 				}
 			}
-			if(reformat)
-			{
-				$td.html('<span style="display: inline-block; width:'+span_size+'ex;"></span>&nbsp;- '+dirs.join(''));
-			}
-			else
-			{
-				// Different format for directory
-				var filename = dirs.pop();
-				$td.text(dirs.join('/') + ': - ' + filename);
-			}
+		}
+		if(reformat)
+		{
+			$td.html('<span style="display: inline-block; width:'+span_size+'ex;"></span> - '+dirs.join(''));
+		}
+		else
+		{
+			// Different format for directory
+			var filename = dirs.pop();
+			span_size += dirs.join('/').length+1;
+			$td.html('<span style="display: inline-block; width:'+span_size+'ex;">'+dirs.join('/')+':</span> - ' + filename);
 		}
 	}
 });
