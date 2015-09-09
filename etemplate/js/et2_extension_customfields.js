@@ -608,6 +608,13 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			cf = jQuery(document.createElement("td"))
 				.appendTo(row);
 
+			// Create upload widget
+			var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
+
+			// This controls where the widget is placed in the DOM
+			this.rows[attrs.id] = cf[0];
+			$j(widget.getDOMNode(widget)).css('vertical-align','top');
+			
 			// Add a link to existing VFS file
 			var select_attrs = jQuery.extend({},
 				attrs,
@@ -625,14 +632,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 			// Do not store in the widgets list, one name for multiple widgets would cause problems
 			widget = et2_createWidget(select_attrs.type, select_attrs, this);
-			$j(widget.getDOMNode(widget)).css('vertical-align','top');
-
-			// Create upload widget
-			var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
-			
-			// This controls where the widget is placed in the DOM
-			this.rows[attrs.id] = cf[0];
-			$j(widget.getDOMNode(widget)).css('vertical-align','top');			
+			$j(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);	
 		}
 		return false;
 	},
