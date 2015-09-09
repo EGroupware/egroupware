@@ -107,6 +107,14 @@ class timesheet_hooks
 			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list($appname));
 
 			$file = array(
+				'Timesheet list' => egw::link('/index.php',array(
+					'menuaction' => 'timesheet.timesheet_ui.index',
+					'ajax' => 'true')),
+				array(
+					'text' => lang('Add %1',lang(egw_link::get_registry($appname, 'entry'))),
+					'no_lang' => true,
+					'link' => "javascript:egw.open('','$appname','add')"
+				),
 			);
 			$file['Placeholders'] = egw::link('/index.php','menuaction=timesheet.timesheet_merge.show_replacements');
 			display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
