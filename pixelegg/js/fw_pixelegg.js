@@ -46,7 +46,7 @@
 
 		$j(document).ready(function() {
 			window.framework = new fw_pixelegg("egw_fw_sidemenu", "egw_fw_tabs",
-					window.egw_webserverUrl, egw_setSideboxSize,"egw_fw_splitter", 255, 70);	// should be identical to jdots_framework::(DEFAULT|MIN)_SIDEBAR_WIDTH
+					window.egw_webserverUrl, egw_setSideboxSize,"egw_fw_splitter", 255, 215);	// should be identical to jdots_framework::(DEFAULT|MIN)_SIDEBAR_WIDTH
 			window.callManual = window.framework.callManual;
 			jQuery('#egw_fw_print').click(function(){window.framework.print();});
 			jQuery('#egw_fw_logout').click(function(){ window.framework.redirect(this.getAttribute('data-logout-url')); });

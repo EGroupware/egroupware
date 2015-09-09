@@ -1228,16 +1228,18 @@ egw_fw_ui_splitter.prototype.set_disable = function (_state)
  * Constructor for toggleSidebar UI object
  *
  * @param {type} _contentDiv sidemenu div
+ * @param {function} _toggleCallback callback function to set toggle prefernces and resize handling
+ * @param {object} _callbackContext context of the toggleCallback
  * @returns {egw_fw_ui_toggleSidebar}
  */
-function egw_fw_ui_toggleSidebar (_contentDiv)
+function egw_fw_ui_toggleSidebar (_contentDiv, _toggleCallback, _callbackContext)
 {
 	var self = this;
-
+	this.toggleCallback = _toggleCallback;
 	this.toggleDiv = $j(document.createElement('div'))
 			.attr({id:"egw_fw_toggler"})
 			.click(function(){
-				self.onToggle();
+				self.onToggle(_callbackContext);
 			});
 	var span = $j(document.createElement('span')).addClass('et2_clickable').appendTo(this.toggleDiv);
 
@@ -1253,18 +1255,35 @@ function egw_fw_ui_toggleSidebar (_contentDiv)
 
 /**
  * Toggle menu on/off
+ * @param {object} _callbackContext context of the toggleCallback
  */
-egw_fw_ui_toggleSidebar.prototype.onToggle = function()
+egw_fw_ui_toggleSidebar.prototype.onToggle = function(_callbackContext)
 {
 	if (typeof this.toggleAudio != 'undefined') this.toggleAudio[0].play();
 	if (this.contDiv.hasClass('egw_fw_sidebar_toggleOn'))
 	{
 		this.contDiv.removeClass('egw_fw_sidebar_toggleOn');
-		framework.splitterUi.set_disable(false);
+		_callbackContext.splitterUi.set_disable(false);
+		this.toggleCallback.call(_callbackContext,'off');
 	}
 	else
 	{
 		this.contDiv.addClass('egw_fw_sidebar_toggleOn');
-		framework.splitterUi.set_disable(true);
+		_callbackContext.splitterUi.set_disable(true);
+		this.toggleCallback.call(_callbackContext, 'on');
 	}
+};
+
+/**
+ * Set sidebar toggle state
+ *
+ * @param {string} _state state can be 'on' or 'off'
+ * @param {type} _toggleCallback callback function to handle toggle preference and resize
+ * @param {type} _context context of callback function
+ */
+egw_fw_ui_toggleSidebar.prototype.set_toggle = function (_state, _toggleCallback, _context)
+{
+		this.contDiv.toggleClass('egw_fw_sidebar_toggleOn',_state === 'on'?true:false);
+		_context.splitterUi.set_disable(_state === 'on'?true:false);
+		_toggleCallback.call(_context, _state);
 };

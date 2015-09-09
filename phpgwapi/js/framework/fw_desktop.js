@@ -184,6 +184,9 @@
 				//Wrap a scroll area handler around the applications
 				this.scrollAreaUi = new egw_fw_ui_scrollarea(this.sidemenuDiv);
 
+				// Create toggleSidebar menu
+				this.toggleSidebarUi = new egw_fw_ui_toggleSidebar(this.sidemenuDiv, this._toggleSidebarCallback,this);
+
 				//Create the sidemenu, the tabs area and the splitter
 				this.sidemenuUi = new desktop_ui_sidemenu(this.scrollAreaUi.contentDiv,
 					this.sortCallback);
@@ -292,24 +295,26 @@
 		},
 
 		/**
-		 *
+		 * Splitter resize callback
 		 * @param {type} _width
+		 * @param {string} _toggleMode if mode is "toggle" then resize happens without changing splitter preference
 		 * @returns {undefined}
 		 */
-		splitterResize: function(_width)
+		splitterResize: function(_width, _toggleMode)
 		{
 			if (this.tag.activeApp)
 			{
-				var req = egw.jsonq(
-					this.tag.activeApp.getMenuaction('ajax_sideboxwidth'),
-					[this.tag.activeApp.internalName, _width]
-				);
 
-				//If there are no global application width values, set the sidebox width of
-				//the application every time the splitter is resized
-				if (this.tag.activeApp.sideboxWidth !== false)
+				if (_toggleMode !== "toggle")
 				{
-					this.tag.activeApp.sideboxWidth = _width;
+					egw.set_preference(this.tag.activeApp.internalName, 'jdotssideboxwidth', _width);
+
+					//If there are no global application width values, set the sidebox width of
+					//the application every time the splitter is resized
+					if (this.tag.activeApp.sideboxWidth !== false)
+					{
+						this.tag.activeApp.sideboxWidth = _width;
+					}
 				}
 			}
 			this.tag.sideboxSizeCallback(_width);
@@ -355,6 +360,7 @@
 			{
 				this.splitterUi.constraints[0].size = _app.sideboxWidth;
 			}
+			this.getToggleSidebarState();
 		},
 
 		/**
@@ -401,6 +407,48 @@
 		categoryAnimationCallback: function()
 		{
 			this.tag.parentFw.scrollAreaUi.update();
+		},
+
+		/**
+		 * tabClickCallback is used internally by egw_fw in order to handle clicks on
+		 * a tab.
+		 *
+		 * @param {egw_fw_ui_tab} _sender specifies the tab ui object, the user has clicked
+		 */
+		tabClickCallback: function(_sender)
+		{
+			this._super.apply(this,arguments);
+
+			framework.getToggleSidebarState();
+			framework.activeApp.browser.callResizeHandler();
+		},
+
+		/**
+		 * toggleSidebar callback function, handles preference and resize
+		 * @param {string} _state state can be on/off
+		 */
+		_toggleSidebarCallback: function (_state)
+		{
+			var splitterWidth = egw.preference('jdotssideboxwidth',this.activeApp.appName) || this.activeApp.sideboxWidth;
+			if (_state === "on")
+			{
+				this.splitterUi.resizeCallback(70,'toggle');
+				egw.set_preference(this.activeApp.appName, 'toggleSidebar', 'on');
+			}
+			else
+			{
+				this.splitterUi.resizeCallback(splitterWidth);
+				egw.set_preference(this.activeApp.appName, 'toggleSidebar', 'off');
+			}
+		},
+
+		/**
+		 * function to get the stored toggleSidebar state and set the sidebar accordingly
+		 */
+		getToggleSidebarState: function()
+		{
+			var toggleSidebar = egw.preference('toggleSidebar',this.activeApp.appName);
+			this.toggleSidebarUi.set_toggle(toggleSidebar?toggleSidebar:"off", this._toggleSidebarCallback, this);
 		}
 	});
 })(window);
