@@ -265,7 +265,6 @@
 				{
 					this.sideboxSizeCallback(_app.sideboxWidth);
 					this.splitterUi.constraints[0].size = _app.sideboxWidth;
-
 				}
 				_app.parentFw.scrollAreaUi.update();
 				_app.parentFw.scrollAreaUi.setScrollPos(0);
@@ -275,6 +274,13 @@
 
 			//...and scroll to the top
 			this.scrollAreaUi.setScrollPos(0);
+
+			// Handles toggleSidebar initialization
+			if (typeof framework != 'undefined')
+			{
+				framework.getToggleSidebarState();
+				framework.activeApp.browser.callResizeHandler();
+			}
 		},
 
 		/**
@@ -407,20 +413,6 @@
 		categoryAnimationCallback: function()
 		{
 			this.tag.parentFw.scrollAreaUi.update();
-		},
-
-		/**
-		 * tabClickCallback is used internally by egw_fw in order to handle clicks on
-		 * a tab.
-		 *
-		 * @param {egw_fw_ui_tab} _sender specifies the tab ui object, the user has clicked
-		 */
-		tabClickCallback: function(_sender)
-		{
-			this._super.apply(this,arguments);
-
-			framework.getToggleSidebarState();
-			framework.activeApp.browser.callResizeHandler();
 		},
 
 		/**
