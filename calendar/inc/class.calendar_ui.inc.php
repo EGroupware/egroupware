@@ -262,14 +262,10 @@ class calendar_ui
 	 */
 	function manage_states($set_states=NULL)
 	{
-		$states = $states_session = $GLOBALS['egw']->session->appsession('session_data','calendar');
-
 		// retrieve saved states from prefs
-		if(!$states)
-		{
-			$states = unserialize($this->bo->cal_prefs['saved_states']);
-			error_log(array2string($states));
-		}
+		$states = is_array($this->bo->cal_prefs['saved_states']) ?
+			$this->bo->cal_prefs['saved_states'] : unserialize($this->bo->cal_prefs['saved_states']);
+		
 		// only look at _REQUEST, if we are in the calendar (prefs and admin show our sidebox menu too!)
 		if (is_null($set_states))
 		{
@@ -373,7 +369,10 @@ class calendar_ui
 			unset($owners[$k]);
 			$this->owner = $states['owner'] = implode(',',$owners);
 		}
-
+		if(is_array($this->owner))
+		{
+			$this->owner = implode(',',$this->owner);
+		}
 		if (substr($this->view,0,8) == 'planner_')
 		{
 			$states['sortby'] = $this->sortby = $this->view == 'planner_cat' ? 'category' : 'user';
@@ -423,7 +422,6 @@ class calendar_ui
 		// save the states in the session only when we are in calendar
 		if ($GLOBALS['egw_info']['flags']['currentapp']=='calendar')
 		{
-			$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
 			// save defined states into the user-prefs
 			if(!empty($states) && is_array($states))
 			{

@@ -64,6 +64,8 @@ app.classes.calendar = AppJS.extend(
 		days: egw.preference('days_in_weekview','calendar')
 	},
 
+	states_to_save: ['owner','filter','cat_id','view','sortby','planner_days'],
+
 	/**
 	 * Constructor
 	 *
@@ -1650,6 +1652,14 @@ app.classes.calendar = AppJS.extend(
 
 			// Sidebox is updated, we can clear the flag
 			this.state_update_in_progress = false;
+
+			// Update saved state in preferences
+			var save = {};
+			for(var i = 0; i < this.states_to_save.length; i++)
+			{
+				save[this.states_to_save[i]] = this.state[this.states_to_save[i]];
+			}
+			egw.set_preference('calendar','saved_states', save);
 
 			return;
 		}

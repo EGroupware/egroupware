@@ -284,11 +284,14 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				{
 					this.headers.append(this._header_months(start, day_count));
 				}
-				if(day_count >= 5)
+				if(day_count >= 5 && day_count < 120)
 				{
 					this.headers.append(this._header_weeks(start, day_count));
 				}
-				this.headers.append(this._header_days(start, day_count));
+				if(day_count < 60)
+				{
+					this.headers.append(this._header_days(start, day_count));
+				}
 				if(day_count <= 7)
 				{
 					this.headers.append(this._header_hours(start, day_count));
@@ -487,11 +490,14 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					this.headers.append(this._header_months(start, day_count));
 				}
 				
-				if(day_count >= 5)
+				if(day_count >= 5 && day_count < 120)
 				{
 					this.headers.append(this._header_weeks(start, day_count));
 				}
-				this.headers.append(this._header_days(start, day_count));
+				if(day_count < 60)
+				{
+					this.headers.append(this._header_days(start, day_count));
+				}
 				if(day_count <= 7)
 				{
 					this.headers.append(this._header_hours(start, day_count));
