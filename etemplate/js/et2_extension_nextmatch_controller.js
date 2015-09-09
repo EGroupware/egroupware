@@ -332,6 +332,11 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 
 		var drop_action = mgr.getActionById('egw_link_drop');
 		var drag_action = mgr.getActionById('egw_link_drag');
+		
+		if(!this._actionLinks)
+		{
+			this._actionLinks = [];
+		}
 
 		// Check if this app supports linking
 		if(!egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'query') ||
