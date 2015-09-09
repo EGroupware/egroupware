@@ -182,7 +182,8 @@ class calendar_ui
 	function check_owners_access()
 	{
 		$no_access = $no_access_group = array();
-		foreach(explode(',',$this->owner) as $owner)
+		$owner_array = explode(',',$this->owner);
+		foreach($owner_array as $idx => $owner)
 		{
 			$owner = trim($owner);
 			if (is_numeric($owner) && $GLOBALS['egw']->accounts->get_type($owner) == 'g')
@@ -199,23 +200,13 @@ class calendar_ui
 			elseif (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$owner))
 			{
 				$no_access[$owner] = $this->bo->participant_name($owner);
+				unset($owner_array[$idx]);
 			}
 		}
 		if (count($no_access))
 		{
-			$msg = '<p class="message" align="center">'.htmlspecialchars(lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access)))."</p>\n";
-
-			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'home')
-			{
-				return $msg;
-			}
-			common::egw_header();
-			if ($GLOBALS['egw_info']['flags']['nonavbar']) parse_navbar();
-
-			echo $msg;
-
-			common::egw_footer();
-			common::egw_exit();
+			egw_framework::message(lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access)),'error');
+			$this->owner = implode(',',$owner_array);
 		}
 		if (count($no_access_group))
 		{

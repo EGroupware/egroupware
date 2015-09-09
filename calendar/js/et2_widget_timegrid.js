@@ -109,7 +109,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		// Contains times / rows
 		this.gridHeader = $j(document.createElement("div"))
-			.addClass("calendar_calGridHeader")
+			.addClass("calendar_calGridHeader et2_link")
 			.appendTo(this.div);
 		
 		// Contains days / columns
