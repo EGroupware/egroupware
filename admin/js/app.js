@@ -303,7 +303,7 @@ app.classes.admin = AppJS.extend(
 		}
 		else if (link[0] == '/' || link.substr(0,4) == 'http')
 		{
-			this.load(link+(link.match(/\?/)?'&':'?')+'nonavbar=1');
+			this.load(egw.link(link,'nonavbar=1'));
 		}
 		else if (link.substr(0,11) == 'javascript:')
 		{
