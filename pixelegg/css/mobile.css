@@ -2196,7 +2196,6 @@ body {
  * @package pixelegg
  * @version $Id$
  */
-@import-once "def_colors.less";
 #socialMedia {
   position: relative;
   bottom: 20px;
@@ -4990,19 +4989,6 @@ td.message span.message {
   float: right;
   margin-right: 5px;
 }
-#egw_fw_sidebar #egw_fw_toggler:hover span {
-  background-color: #b4b4b4;
-}
-#egw_fw_sidebar #egw_fw_toggler:hover span:before {
-  transition-duration: 0.7s;
-  transform: rotate(156deg) translate(7px, 1px);
-  background-color: #b4b4b4;
-}
-#egw_fw_sidebar #egw_fw_toggler:hover span:after {
-  transition-duration: 0.7s;
-  transform: rotate(-150deg) translate(10px, -1px);
-  background-color: #b4b4b4;
-}
 #egw_fw_sidebar #egw_fw_toggler span {
   background-color: transparent;
   position: relative;
@@ -5014,8 +5000,9 @@ td.message span.message {
   top: 11px;
 }
 #egw_fw_sidebar #egw_fw_toggler span:before {
-  transition-duration: 1s;
-  transform: rotate(45deg) translate(5px, 5px);
+  transition-duration: 0.7s;
+  transform: rotate(145deg) translate(8px, -2px);
+  background-color: #b4b4b4;
 }
 #egw_fw_sidebar #egw_fw_toggler span:before,
 #egw_fw_sidebar #egw_fw_toggler span:after {
@@ -5023,8 +5010,8 @@ td.message span.message {
   position: absolute;
   left: 0;
   top: -9px;
-  width: 100%;
-  height: 5px;
+  width: 12px;
+  height: 3px;
   background-color: #b3b3b3;
   backface-visibility: hidden;
   border-radius: 2px;
@@ -5032,7 +5019,8 @@ td.message span.message {
 #egw_fw_sidebar #egw_fw_toggler span:after {
   top: 9px;
   transition-duration: 0.7s;
-  transform: rotate(-45deg) translate(7px, -8px);
+  transform: rotate(-145deg) translate(8px, 2px);
+  background-color: #b4b4b4;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn {
   /* toggler button*/
@@ -5049,6 +5037,8 @@ td.message span.message {
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler span:before,
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler span:after {
   transform: none;
+  width: 100%;
+  height: 5px;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler:hover span {
   background-color: #b4b4b4;
