@@ -124,7 +124,8 @@ class calendar_egw_record implements importexport_iface_egw_record
 	 * @return string identifier
 	 */
 	public function save ( $_dst_identifier ) {
-
+		// Not yet implemeted
+		$this->identifier = $_dst_identifier;
 	}
 
 	/**

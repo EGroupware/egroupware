@@ -2,8 +2,7 @@
 /**
  * eGroupWare
  *
- * This plugin is blacklisted in importexport_helper_functions.  You should use iCal,
- * but if you need to import CSV, you can remove the blacklist.
+ * Plugin to import events from a CSV file
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -18,53 +17,19 @@
 /**
  * class import_csv for calendar
  */
-class calendar_import_csv implements importexport_iface_import_plugin  {
-
-	private static $plugin_options = array(
-		'fieldsep', 		// char
-		'charset',		// string
-		'owner', 		// int
-		'update_cats', 			// string {override|add} overides record
-								// with cat(s) from csv OR add the cat from
-								// csv file to exeisting cat(s) of record
-		'num_header_lines', // int number of header lines
-		'field_conversion', // array( $csv_col_num => conversion)
-		'field_mapping',	// array( $csv_col_num => adb_filed)
-		'conditions',		/* => array containing condition arrays:
-				'type' => exists, // exists
-				'string' => '#kundennummer',
-				'true' => array(
-					'action' => update,
-					'last' => true,
-				),
-				'false' => array(
-					'action' => insert,
-					'last' => true,
-				),*/
-
-	);
+class calendar_import_csv extends importexport_basic_import_csv  {
 
 	/**
 	 * actions wich could be done to data entries
 	 */
-	protected static $actions = array( 'none', 'insert' );
+	protected static $actions = array( 'none', 'update', 'insert' );
 
 	/**
 	 * conditions for actions
 	 *
 	 * @var array
 	 */
-	protected static $conditions = array();
-
-	/**
-	 * @var definition
-	 */
-	private $definition;
-
-	/**
-	 * @var bo
-	 */
-	private $bo;
+	protected static $conditions = array('exists');
 
 	/**
 	* For figuring out if an entry has changed
@@ -72,92 +37,26 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 	protected $tracking;
 
 	/**
-	 * @var bool
-	 */
-	private $dry_run = false;
-
-	/**
-	 * @var bool is current user admin?
-	 */
-	private $is_admin = false;
-
-	/**
-	 * @var int
-	 */
-	private $user = null;
-
-	/**
 	 * List of import warnings
 	 */
 	protected $warnings = array();
 
 	/**
-	 * List of import errors
+	 * Set up tracker
 	 */
-	protected $errors = array();
-
-	/**
-	 * List of actions, and how many times that action was taken
-	 */
-	protected $results = array();
-
-	/**
-	 * imports entries according to given definition object.
-	 * @param resource $_stream
-	 * @param string $_charset
-	 * @param definition $_definition
-	 */
-	public function import( $_stream, importexport_definition $_definition ) {
-		$import_csv = new importexport_import_csv( $_stream, array(
-			'fieldsep' => $_definition->plugin_options['fieldsep'],
-			'charset' => $_definition->plugin_options['charset'],
-		));
-
-		$this->definition = $_definition;
-
-		// user, is admin ?
-		$this->is_admin = isset( $GLOBALS['egw_info']['user']['apps']['admin'] ) && $GLOBALS['egw_info']['user']['apps']['admin'];
-		$this->user = $GLOBALS['egw_info']['user']['account_id'];
-
-		// dry run?
-		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false;
-
+	protected function init(importexport_definition &$definition)
+	{
 		// fetch the addressbook bo
 		$this->bo= new calendar_boupdate();
 
 		// Get the tracker for changes
 		$this->tracking = new calendar_tracking();
 
-		// set FieldMapping.
-		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
-
-		// set FieldConversion
-		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
-
-		//check if file has a header lines
-		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
-			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
-		} elseif(isset($_definition->plugin_options['has_header_line']) && $_definition->plugin_options['has_header_line']) {
-			// First method is preferred
-			$import_csv->skip_records(1);
-		}
-
-		// set eventOwner
-		$options =& $_definition->plugin_options;
-		$options['owner'] = $options['owner'] ? $options['owner'] : $this->user;
-
-		// Start counting successes
-		$count = 0;
-		$this->results = array();
-
-		// Failures
-		$this->errors = array();
-
 		// Used for participants
-		$status_map = array_flip(array_map('lang',$this->bo->verbose_status));
-		$role_map = array_flip($this->bo->roles);
+		$this->status_map = array_flip(array_map('lang',$this->bo->verbose_status));
+		$this->role_map = array_flip($this->bo->roles);
 
-		$lookups = array(
+		$this->lookups = array(
 			'priority'	=> Array(
 				0 => lang('None'),
 				1 => lang('Low'),
@@ -166,105 +65,179 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 	 		),
 			'recurrence' => $this->bo->recur_types
 		);
+	}
 
-		while ( $record = $import_csv->get_record() ) {
-			$success = false;
+	/**
+	 * imports a single entry according to given definition object.
+	 * Handles the conditions and the actions taken.
+	 *
+	 * @param importepport_iface_egw_record record The egw_record object being imported
+	 * @param importexport_iface_import_record import_csv Import object contains current state
+	 *
+	 * @return boolean success
+	 */
+	public function import_record(\importexport_iface_egw_record &$record, &$import_csv)
+	{
+		// set eventOwner
+		$options =& $this->definition->plugin_options;
+		$options['owner'] = $options['owner'] ? $options['owner'] : $this->user;
 
-			// don't import empty records
-			if( count( array_unique( $record ) ) < 2 ) continue;
-
-			// Automatic conversions
-			importexport_import_csv::convert($record, calendar_egw_record::$types, 'calendar', $lookups,
-				$_definition->plugin_options['convert']
-			);
-
-			// Set owner, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['owner_from_csv']) {
-				if(!is_numeric($record['owner'])) {
-					$this->errors[$import_csv->get_current_position()] = lang(
-						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.',
-						$record['owner'],
-						$options['owner']
-					);
-					$record['owner'] = $options['owner'];
-				}
-			} else {
-				$record['owner'] = $options['owner'];
+		// Set owner, unless it's supposed to come from CSV file
+		if($options['owner_from_csv']) {
+			if(!is_numeric($record['owner'])) {
+				$this->errors[$import_csv->get_current_position()] = lang(
+					'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.',
+					$record->owner,
+					$options['owner']
+				);
+				$record->owner = $options['owner'];
 			}
-
-			if ($record['participants'] && !is_array($record['participants'])) {
-				// Importing participants in human friendly format
-				preg_match_all('/(([^(]+?)( \(([0-9]+)\))? \((.+?)\) ([^,]+)),?/',$record['participants'],$participants);
-				$record['participants'] = array();
-				list($lines, $p, $names, $q, $quantity, $status, $role) = $participants;
-				foreach($names as $key => $name) {
-					$id = $GLOBALS['egw']->accounts->name2id($name, 'account_fullname');
-					if(!$id) {
-						$contacts = ExecMethod2('addressbook.addressbook_bo.search', $name,array('contact_id','account_id'),'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR',array(0,1));
-						if($contacts) $id = $contacts[0]['account_id'] ? $contacts[0]['account_id'] : 'c'.$contacts[0]['id'];
-					}
-					if($id) {
-						$record['participants'][$id] = calendar_so::combine_status(
-							$status_map[lang($status[$key])] ? $status_map[lang($status[$key])] : $status[$key][0],
-							$quantity[$key] ? $quantity[$key] : 1,
-							$role_map[lang($role[$key])] ? $role_map[lang($role[$key])] : $role[$key]
-						);
-					}
-				}
-			}
-
-			if($record['recurrence'])
-			{
-				list($record['recur_type'], $record['recur_interval']) = explode('/',$record['recurrence'],2);
-				$record['recur_interval'] = trim($record['recur_interval']);
-				$record['recur_type'] = array_search(strtolower(trim($record['recur_type'])), array_map('strtolower',$lookups['recurrence']));
-				unset($record['recurrence']);
-			}
-			$record['tzid'] = calendar_timezones::id2tz($record['tz_id']);
-
-			// Calendar doesn't actually support conditional importing
-			if ( $_definition->plugin_options['conditions'] ) {
-				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
-					$records = array();
-					switch ( $condition['type'] ) {
-						// exists
-						case 'exists' :
-							if($record[$condition['string']] && $condition['string'] == 'id') {
-								$event = $this->bo->read($record[$condition['string']]);
-								$records = array($event);
-							}
-
-							if ( is_array( $records ) && count( $records ) >= 1) {
-								// apply action to all records matching this exists condition
-								$action = $condition['true'];
-								foreach ( (array)$records as $event ) {
-									$record['id'] = $event['id'];
-									if ( $_definition->plugin_options['update_cats'] == 'add' ) {
-										if ( !is_array( $record['category'] ) ) $record['category'] = explode( ',', $record['category'] );
-										$record['category'] = implode( ',', array_unique( array_merge( $record['category'], $event['category'] ) ) );
-									}
-									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
-								}
-							} else {
-								$action = $condition['false'];
-								$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
-							}
-							break;
-
-						// not supported action
-						default :
-							die('condition / action not supported!!!');
-							break;
-					}
-					if ($action['last']) break;
-				}
-			} else {
-				// unconditional insert
-				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
-			}
-			if($success) $count++;
 		}
-		return $count;
+		else
+		{
+			$record->owner = $options['owner'];
+		}
+
+		if ($record->participants && !is_array($record->participants)) {
+			// Importing participants in human friendly format:
+			// Name (quantity)? (status) Role[, Name (quantity)? (status) Role]+
+			preg_match_all('/(([^(]+?)(?: \(([\d]+)\))? \(([^,)]+)\)(?: ([^ ,]+))?)(?:, )?/',$record->participants,$participants);
+			$p_participants = array();
+			$missing = array();
+			list($lines, $p, $names, $quantity, $status, $role) = $participants;
+			foreach($names as $key => $name) {
+				//error_log("Name: $name Quantity: {$quantity[$key]} Status: {$status[$key]} Role: {$role[$key]}");
+
+				// Search for direct account name, then user in accounts first
+				$search = "\"$name\"";
+				$id = $GLOBALS['egw']->accounts->name2id($name, 'account_fullname');
+				if(!$id) {
+					$contacts = ExecMethod2('addressbook.addressbook_bo.search', $search,array('contact_id','account_id'),'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR',array(0,1));
+					if($contacts) $id = $contacts[0]['account_id'] ? $contacts[0]['account_id'] : 'c'.$contacts[0]['contact_id'];
+				}
+				if(!$id)
+				{
+					// Use calendar's registered resources to find participant
+					foreach($this->bo->resources as $resource)
+					{
+						// Can't search for email
+						if($resource['app'] == 'email') continue;
+						// Special resource search, since it does special stuff in link_query
+						if($resource['app'] == 'resources')
+						{
+							if(!$this->resource_so)
+							{
+								$this->resource_so = new resources_so();
+							}
+							$result = $this->resource_so->search($search,'res_id');
+							if(count($result) >= 1) {
+								$id = $resource['type'].$result[0]['res_id'];
+								break;
+							}
+						}
+						else
+						{
+							// Search app via link query
+							$result = egw_link::query($resource['app'], $search, $options);
+						
+							if($result)
+							{
+								$id = $resource['type'] . key($result);
+								break;
+							}
+						}
+					}
+				}
+				if($id) {
+					$p_participants[$id] = calendar_so::combine_status(
+						$this->status_map[lang($status[$key])] ? $this->status_map[lang($status[$key])] : $status[$key][0],
+						$quantity[$key] ? $quantity[$key] : 1,
+						$this->role_map[lang($role[$key])] ? $this->role_map[lang($role[$key])] : $role[$key]
+					);
+				}
+				else
+				{
+					$missing[] = $name;
+				}
+				if(count($missing) > 0)
+				{
+					$this->warnings[$import_csv->get_current_position()] = $record->title . ' ' . lang('participants') . ': ' .
+						lang('Contact not found!') . '<br />'.implode(", ",$missing);
+				}
+			}
+			$record->participants = $p_participants;
+		}
+
+		if($record->recurrence)
+		{
+			list($record->recur_type, $record->recur_interval) = explode('/',$record->recurrence,2);
+			$record->recur_interval = trim($record->recur_interval);
+			$record->recur_type = array_search(strtolower(trim($record->recur_type)), array_map('strtolower',$lookups['recurrence']));
+			unset($record->recurrence);
+		}
+		$record->tzid = calendar_timezones::id2tz($record->tz_id);
+
+		if ( $_definition->plugin_options['conditions'] ) {
+			foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+				$records = array();
+				switch ( $condition['type'] ) {
+					// exists
+					case 'exists' :
+						// Check for that record
+						$result = $this->exists($record, $condition, $records);
+
+						if ( is_array( $records ) && count( $records ) >= 1) {
+							// apply action to all records matching this exists condition
+							$action = $condition['true'];
+							foreach ( (array)$records as $event ) {
+								$record->id = $event['id'];
+								if ( $this->definition->plugin_options['update_cats'] == 'add' ) {
+									if ( !is_array( $record->category ) ) $record->category = explode( ',', $record->category );
+									$record->category = implode( ',', array_unique( array_merge( $record->category, $event['category'] ) ) );
+								}
+								$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
+							}
+						} else {
+							$action = $condition['false'];
+							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+						}
+						break;
+
+					// not supported action
+					default :
+						die('condition / action not supported!!!');
+						break;
+				}
+				if ($action['last']) break;
+			}
+		} else {
+			// unconditional insert
+			$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
+		}
+		
+		return $success;
+	}
+
+	/**
+	 * Search for matching records, based on the the given condition
+	 *
+	 * @param record
+	 * @param condition array = array('string' => field name)
+	 * @param matches - On return, will be filled with matching records
+	 *
+	 * @return boolean
+	 */
+	protected function exists(importexport_iface_egw_record &$record, Array &$condition, &$records = array())
+	{
+		if($record->__get($condition['string']) && $condition['string'] == 'id') {
+			$event = $this->bo->read($record[$condition['string']]);
+			$records = array($event);
+		}
+
+		if ( is_array( $records ) && count( $records ) >= 1) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -274,7 +247,9 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 	 * @param array $_data record data for the action
 	 * @return bool success or not
 	 */
-	private function action ( $_action, $_data, $record_num = 0 ) {
+	protected function action ( $_action, importexport_iface_egw_record &$record, $record_num = 0 )
+	{
+		$_data = $record->get_record_array();
 		switch ($_action) {
 			case 'none' :
 				return true;
@@ -317,6 +292,8 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 						$this->errors[$record_num] = lang('Unable to save');
 					} else {
 						$this->results[$_action]++;
+						// This does nothing (yet?) but update the identifier
+						$record->save($result);
 					}
 					return $result;
 				}
