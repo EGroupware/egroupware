@@ -1283,7 +1283,7 @@ egw_fw_ui_toggleSidebar.prototype.onToggle = function(_callbackContext)
  */
 egw_fw_ui_toggleSidebar.prototype.set_toggle = function (_state, _toggleCallback, _context)
 {
-		this.contDiv.toggleClass('egw_fw_sidebar_toggleOn',_state === 'on'?true:false);
-		_context.splitterUi.set_disable(_state === 'on'?true:false);
-		_toggleCallback.call(_context, _state);
+	this.contDiv.toggleClass('egw_fw_sidebar_toggleOn',_state === 'on'?true:false);
+	_context.splitterUi.set_disable(_state === 'on'?true:false);
+	_toggleCallback.call(_context, _state);
 };

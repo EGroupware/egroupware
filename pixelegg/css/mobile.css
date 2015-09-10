@@ -4738,6 +4738,14 @@ td.message span.message {
   font-size: 1.4em;
   color: #000000;
   padding-top: .8em;
+  background-image: url(../images/reload.png);
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position-x: 74%;
+  background-position-y: 60%;
+}
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active h1:active {
+  background-image: url(../images/ajax-loader.gif) !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -4794,7 +4802,8 @@ td.message span.message {
   height: 16px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active .egw_fw_ui_ajaxloader {
-  margin-top: -26px;
+  margin-top: -15%;
+  margin-right: 25%;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content {
   display: block;
@@ -5012,7 +5021,7 @@ td.message span.message {
   top: -9px;
   width: 12px;
   height: 3px;
-  background-color: #b3b3b3;
+  background-color: #606060;
   backface-visibility: hidden;
   border-radius: 2px;
 }
@@ -5020,7 +5029,7 @@ td.message span.message {
   top: 9px;
   transition-duration: 0.7s;
   transform: rotate(-145deg) translate(8px, 2px);
-  background-color: #b4b4b4;
+  background-color: #606060;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn {
   /* toggler button*/
@@ -5031,7 +5040,7 @@ td.message span.message {
   float: none;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler span {
-  background-color: #b3b3b3;
+  background-color: #b4b4b4;
   transition: all 0.3s;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler span:before,
@@ -5039,15 +5048,16 @@ td.message span.message {
   transform: none;
   width: 100%;
   height: 5px;
+  background-color: #b4b4b4;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler:hover span {
-  background-color: #b4b4b4;
+  background-color: #606060;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler:hover span:before {
-  background-color: #b4b4b4;
+  background-color: #606060;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn #egw_fw_toggler:hover span:after {
-  background-color: #b4b4b4;
+  background-color: #606060;
 }
 #egw_fw_sidebar .egw_fw_sidebar_toggleOn .egw_fw_ui_sidemenu_entry_content {
   display: none !important;
