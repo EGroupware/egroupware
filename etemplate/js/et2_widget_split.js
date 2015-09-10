@@ -182,7 +182,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 			sizeTop: this.dynheight.outerNode.height() / 2,
 			sizeLeft: this.dynheight.outerNode.width() / 2
 		};
-		
+
 		var widget = this;
 		//Convert percent size to pixel
 		var per2pix = function(_size)
@@ -302,12 +302,9 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 
 				// Ok, update children
 				self.iterateOver(function(widget) {
-					if(widget != self)
-					{
 						widget.resize();
 						// Above forcing is not enough for Firefox, defer
 						window.setTimeout(jQuery.proxy(function() {this.resize();},widget),200);
-					}
 				},self,et2_IResizeable);
 			});
 		}
