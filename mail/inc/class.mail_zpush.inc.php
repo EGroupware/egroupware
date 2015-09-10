@@ -254,12 +254,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if ($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']<$hereandnow)
 			{
 				if ($this->debugLevel>0) error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Refuse to open connection for Profile:".self::$profileID.' Device '.$this->backend->_devid.' should still wait '.array2string($waitOnFailure[self::$profileID][$this->backend->_devid]));
-				header("HTTP/1.1 503 Service Unavailable");
+				//header("HTTP/1.1 503 Service Unavailable");
 				$hL = $waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']-$hereandnow;
-				header("Retry-After: ".$hL);
-				$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
+				header("Retry-After: 30");
+				// let z-push know we want to terminate
+				ZLog::Write(LOGLEVEL_ERROR, "($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
+				throw new HTTPReturnCodeException('Service Unavailable', 503);
+				/*$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
 				_egw_log_exception($ethrown);
-				exit;
+				exit;*/
 			}
 		}
 		if (!$this->mail)
@@ -1013,104 +1016,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				{
 					debugLog(__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->asbody->type = 4;
-					//$rawBody = $this->mail->getMessageRawBody($id);
-					$mailObject = new egw_mailer();
-					// this try catch block is probably of no use anymore, as it was intended to catch exceptions thrown by parseRawMessageIntoMailObject
-					try
-					{
-						// we create a complete new rfc822 message here to pass a clean one to the client.
-						// this strips a lot of information, but ...
-						$Header = $Body = '';
-						if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__." Creation of Mailobject.");
-						//if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__." Using data from ".$rawHeaders.$rawBody);
-						//$this->mail->parseRawMessageIntoMailObject($mailObject,$rawHeaders.$rawBody,$Header,$Body);
-						//debugLog(__METHOD__.__LINE__.array2string($headers));
-						// now force UTF-8, Horde SMTP Class uses utf-8 by default.
-						$mailObject->Priority = $headers['PRIORITY'];
-						//$mailObject->Encoding = 'quoted-printable'; // handled by horde
-
-						$mailObject->RFCDateToSet = $headers['DATE'];
-						$mailObject->Sender = $headers['RETURN-PATH'];
-						$mailObject->Subject = $headers['SUBJECT'];
-						$mailObject->MessageID = $headers['MESSAGE-ID'];
-						// from
-						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['FROM']):$headers['FROM'])) as $addressObject) {
-							//debugLog(__METHOD__.__LINE__.'Address to add (FROM):'.array2string($addressObject));
-							if (!$addressObject->valid) continue;
-							$mailObject->From = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
-							$mailObject->FromName = $addressObject->personal;
-//error_log(__METHOD__.__LINE__.'Address to add (FROM):'.array2string($addressObject));
-						}
-						// to
-						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['TO']):$headers['TO'])) as $addressObject) {
-							//debugLog(__METHOD__.__LINE__.'Address to add (TO):'.array2string($addressObject));
-							if (!$addressObject->valid) continue;
-							$mailObject->AddAddress($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
-						}
-						// CC
-						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['CC']):$headers['CC'])) as $addressObject) {
-							//debugLog(__METHOD__.__LINE__.'Address to add (CC):'.array2string($addressObject));
-							if (!$addressObject->valid) continue;
-							$mailObject->AddCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
-						}
-						//	AddReplyTo
-						foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($headers['REPLY-TO']):$headers['REPLY-TO'])) as $addressObject) {
-							//debugLog(__METHOD__.__LINE__.'Address to add (ReplyTO):'.array2string($addressObject));
-							if (!$addressObject->valid) continue;
-							$mailObject->AddReplyTo($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
-						}
-						$Header = $Body = ''; // we do not use Header and Body we use the MailObject
-						if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__." Creation of Mailobject succeeded.");
-					}
-					catch (egw_exception_assertion_failed $e)
-					{
-						debugLog(__METHOD__.__LINE__." Creation of Mail failed.".$e->getMessage());
-						$Header = $Body = '';
-					}
-
-					if ($this->debugLevel>0) debugLog("MIME Body -> ".$body); // body is retrieved up
-					if ($output->nativebodytype==2) { //html
-						if ($this->debugLevel>0) debugLog("HTML Body with requested pref 4");
-						$html = '<html>'.
-	    					    '<head>'.
-						        '<meta name="Generator" content="Z-Push">'.
-						        '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
-								$css.
-							    '</head>'.
-							    '<body>'.
-						        str_replace("\n","<BR>",str_replace("\r","", str_replace("\r\n","<BR>",$body))).
-							    '</body>'.
-								'</html>';
-						$mailObject->setHtmlBody(str_replace("\n","\r\n", str_replace("\r","",$html)),null,false);
-						if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." MIME Body (constructed)-> ".$mailObject->findBody('html')->getContents());
-						$mailObject->setBody(empty($plainBody)?strip_tags($body):$plainBody);
-					}
-					if ($output->nativebodytype==1) { //plain
-						if ($this->debugLevel>0) debugLog("Plain Body with requested pref 4");
-						$mailObject->setBody($plainBody);
-					}
-					// we still need the attachments to be added ( if there are any )
-					// start handle Attachments
-					//												$_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folderName=''
-					$attachments = $this->mail->getMessageAttachments($id, null,          null,								true,						false,					 true				, $_folderName);
-					if (is_array($attachments) && count($attachments)>0)
-					{
-						debugLog(__METHOD__.__LINE__.' gather Attachments for BodyCreation of/for MessageID:'.$id.' found:'.count($attachments));
-						//error_log(__METHOD__.__LINE__.array2string($attachments));
-						foreach((array)$attachments as $key => $attachment)
-						{
-							if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
-							$attachmentData	= $this->mail->getAttachment($id, $attachment['partID'],0,false,false,$_folderName);
-							$mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
-						}
-					}
-
-					$Header = $mailObject->getMessageHeader();
-					//debugLog(__METHOD__.__LINE__.' MailObject-Header:'.array2string($Header));
-					$Body = trim($mailObject->getMessageBody()); // philip thinks this is needed, so lets try if it does any good/harm
-					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' MailObject:'.array2string($mailObject));
-					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Header.self::$LE.self::$LE.$Body);
-					$output->asbody->data = $Header.self::$LE.self::$LE.$Body;
+					$Body = $this->mail->getMessageRawBody($id, '', $_folderName);
+					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Body);
+					$output->asbody->data = $Body;
 				}
 				else if ($bpReturnType==2)
 				{
