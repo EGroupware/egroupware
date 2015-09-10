@@ -270,7 +270,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		link: function(_url, _extravars)
 		{
-			if (_url.substr(0,4) == 'http' && _url.indexOf('://') < 5)
+			if (_url.substr(0,4) == 'http' && _url.indexOf('://') <= 5)
 			{
 				// already a full url (eg. download_url of vfs), nothing to do
 			}
