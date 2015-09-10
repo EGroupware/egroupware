@@ -301,9 +301,6 @@ input.et2_radiobox {
   #addressbook-index div.filters select#infolog-index_filter2 {
     width: 10%;
   }
-  #addressbook-index table.egwGridView_outer {
-    width: 99%;
-  }
   /*##################################################################*/
   /*Infolog*/
   .et2_container[id^="infolog-index-addressbook"] {
