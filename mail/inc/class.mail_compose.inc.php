@@ -1336,9 +1336,9 @@ class mail_compose
 			switch($from)
 			{
 				case 'composefromdraft':
-					$content['mode'] = 'composefromdraft';
 				case 'composeasnew':
 					$content = $this->getDraftData($icServer, $folder, $msgUID, $part_id);
+					if ($from =='composefromdraft') $content['mode'] = 'composefromdraft';
 					$content['processedmail_id'] = $mail_id;
 
 					$_focusElement = 'body';
@@ -2998,7 +2998,14 @@ class mail_compose
 		{
 			try
 			{
-				$mail_bo->deleteMessages($lastDrafted['uid'],$lastDrafted['folder'],'remove_immediately');
+				if ($this->sessionData['lastDrafted'] != $this->sessionData['uid'] || !($_formData['mode']=='composefromdraft' &&
+					($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' )&&$this->sessionData['attachments']))
+				{
+					//error_log(__METHOD__.__LINE__."#".$lastDrafted['uid'].'#'.$lastDrafted['folder'].array2string($_formData));
+					//error_log(__METHOD__.__LINE__."#".array2string($_formData));
+					//error_log(__METHOD__.__LINE__."#".array2string($this->sessionData));
+					$mail_bo->deleteMessages($lastDrafted['uid'],$lastDrafted['folder'],'remove_immediately');
+				}
 			}
 			catch (egw_exception $e)
 			{
@@ -3018,10 +3025,14 @@ class mail_compose
 			// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
 			if ($mail_bo->isDraftFolder($this->sessionData['messageFolder']) && !$mail_bo->isTemplateFolder($this->sessionData['messageFolder']))
 			{
-				//error_log(__METHOD__.__LINE__."#".$this->sessionData['uid'].'#'.$this->sessionData['messageFolder']);
 				try // message may be deleted already, as it maybe done by autosave
 				{
-					if ($_formData['mode']=='composefromdraft') $mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
+					if ($_formData['mode']=='composefromdraft' &&
+						!(($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on') && $this->sessionData['attachments']))
+					{
+						//error_log(__METHOD__.__LINE__."#".$this->sessionData['uid'].'#'.$this->sessionData['messageFolder']);
+						$mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
+					}
 				}
 				catch (egw_exception $e)
 				{

@@ -77,7 +77,7 @@ class mail_integration {
 			$_date = egw_time::server2user($time->now,'ts');
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
-		
+		//error_log(__METHOD__.__LINE__.': RowID:'.$_GET['rowid'].': emailAddress:'. array2string($_to_emailAddress).' && '.$app);		
 		// Integrate not yet saved mail
 		if (empty($_GET['rowid']) && $_to_emailAddress && $app)
 		{
@@ -90,9 +90,10 @@ class mail_integration {
 				if (!isset($_icServerID)) $_icServerID =& egw_cache::getSession($sessionLocation,'activeProfileID');
 				$mo = mail_bo::getInstance(true,$_icServerID);
 				$mo->openConnection();
-
+				$messageUID = $messagePartId = $messageFolder = null;
 				foreach ($_attachments as $attachment)
 				{
+					//error_log(__METHOD__.__LINE__.array2string($attachment));
 					if (trim(strtoupper($attachment['type'])) == 'MESSAGE/RFC822' && !empty($attachment['uid']) && !empty($attachment['folder']))
 					{
 						$mo->reopen(($attachment['folder']?$attachment['folder']:$mailbox));
@@ -120,8 +121,11 @@ class mail_integration {
 						if (!empty($attachment['folder']))
 						{
 							$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
+							$messageFolder = $attachment['folder'];
+							$messageUid = $attachment['uid'];
+							$messagePartId = $attachment['partID'];
 							$mo->reopen($attachment['folder']);
-							$attachmentData = $mo->getAttachment($attachment['uid'],$attachment['partID'],$is_winmail);
+							$attachmentData = $mo->getAttachment($attachment['uid'],$attachment['partID'],$is_winmail,false,false,$attachment['folder']);
 							$attachment['file'] =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 							$tmpfile = fopen($attachment['file'],'w');
 							fwrite($tmpfile,$attachmentData['attachment']);
@@ -140,6 +144,19 @@ class mail_integration {
 							'tmp_name' => $attachment['file'],
 							'size' => $attachment['size'],
 						);
+					}
+				}
+				if ($messageFolder && $messageUid && $messagePartId && $mo->isDraftFolder($messageFolder) && !$mo->isTemplateFolder($messageFolder))
+				{
+					//error_log(__METHOD__.__LINE__."#".$messageUid.'#'.$messageFolder);
+					try // message may be deleted already, as it maybe done by autosave
+					{
+						$mo->deleteMessages(array($messageUid),$messageFolder);
+					}
+					catch (egw_exception $e)
+					{
+						//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
+						unset($e);
 					}
 				}
 				$mo->closeConnection();
