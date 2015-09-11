@@ -305,14 +305,14 @@ class egw_mailer extends Horde_Mime_Mail
 	 * "text/calendar; method=..." get automatic detected and added as highes priority alternative,
 	 * overwriting evtl. existing html body!
 	 *
-	 * @param string $file     The path to the file.
+	 * @param string|resource $data Path to the attachment or open file-descriptor
 	 * @param string $name     The file name to use for the attachment.
 	 * @param string $type     The content type of the file.
 	 * @param string $charset  The character set of the part, only relevant for text parts.
 	 * @return integer part-number
 	 * @throws egw_exception_not_found if $file could not be opened for reading
 	 */
-	public function addAttachment($file, $name = null, $type = null, $charset = 'us-ascii')
+	public function addAttachment($data, $name = null, $type = null, $charset = 'us-ascii')
 	{
 		// deprecated PHPMailer::AddAttachment($path, $name = '', $encoding = 'base64', $type = 'application/octet-stream') call
 		if ($type === 'base64')
@@ -322,19 +322,23 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 
 		// pass file as resource to Horde_Mime_Part::setContent()
-		if (!($resource = fopen($file, 'r')))
+		if (is_resource($data))
 		{
-			throw new egw_exception_not_found("File '$file' not found!");
+			$resource = $data;
+		}
+		elseif (!($resource = fopen($data, 'r')))
+		{
+			throw new egw_exception_not_found("File '$data' not found!");
 		}
 		$part = new Horde_Mime_Part();
-		$part->setType($type ? $type : egw_vfs::mime_content_type($file));
+		if ($type || !is_resource($data)) $part->setType($type ? $type : egw_vfs::mime_content_type($data));
 		$matches = null;
 		if (preg_match('/^([^;]+);\s*([^=]+)=([^;]+)$/', $type, $matches))
 		{
 			$part->setContentTypeParameter($matches[2], $matches[3]);
 		}
 		$part->setContents($resource);
-		$part->setName($name ? $name : egw_vfs::basename($file));
+		if ($name || !is_resource($data)) $part->setName($name ? $name : egw_vfs::basename($data));
 
 		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
 		if (stripos($type,"text/calendar; method=") !== false)
@@ -353,14 +357,14 @@ class egw_mailer extends Horde_Mime_Mail
 	/**
 	 * Adds an embedded image or other inline attachment
 	 *
-	 * @param string $path Path to the attachment.
+	 * @param string|resource $data Path to the attachment or open file-descriptor
 	 * @param string $cid Content ID of the attachment.  Use this to identify
 	 *        the Id for accessing the image in an HTML form.
 	 * @param string $name Overrides the attachment name.
 	 * @param string $type File extension (MIME) type.
 	 * @return integer part-number
 	 */
-	public function addEmbeddedImage($path, $cid, $name = '', $type = 'application/octet-stream')
+	public function addEmbeddedImage($data, $cid, $name = '', $type = 'application/octet-stream')
 	{
 		// deprecated PHPMailer::AddEmbeddedImage($path, $cid, $name='', $encoding='base64', $type='application/octet-stream') call
 		if ($type === 'base64' || func_num_args() == 5)
@@ -368,8 +372,8 @@ class egw_mailer extends Horde_Mime_Mail
 			$type = func_get_arg(4);
 		}
 
-		$part_id = $this->addAttachment($path, $name, $type);
-		error_log(__METHOD__."('$path', '$cid', '$name', '$type') added with (temp.) part_id=$part_id");
+		$part_id = $this->addAttachment($data, $name, $type);
+		error_log(__METHOD__."(".array2string($data).", '$cid', '$name', '$type') added with (temp.) part_id=$part_id");
 
 		$part = $this->_parts[$part_id];
 		$part->setDisposition('inline');
@@ -384,7 +388,7 @@ class egw_mailer extends Horde_Mime_Mail
 	 * "text/calendar; method=..." get automatic detected and added as highest priority alternative,
 	 * overwriting evtl. existing html body!
 	 *
-	 * @param string $content String attachment data.
+	 * @param string|resource $content String attachment data or open file descriptor
 	 * @param string $filename Name of the attachment. We assume that this is NOT a path
 	 * @param string $type File extension (MIME) type.
 	 * @return int part-number
