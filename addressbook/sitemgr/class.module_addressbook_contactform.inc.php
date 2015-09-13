@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -23,6 +23,7 @@ class module_addressbook_contactform extends sitemgr_module
 	 */
 	function __construct()
 	{
+		$this->i18n = true;
 		$this->arguments = array();	// get's set in get_user_interface
 		$this->title = lang('Contactform');
 		$this->description = lang('This module displays a contactform, that stores direct into the addressbook.');
