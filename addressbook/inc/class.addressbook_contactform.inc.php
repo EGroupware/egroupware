@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -212,6 +212,6 @@ class addressbook_contactform
 			$content['captcha_task'] = sprintf('%d - %d =',$num1,$num2);
 			$preserv['captcha_result'] = $num1-$num2;
 		}
-		return $tpl->exec($this->callback,$content,$sel_options,$readonlys,$preserv);
+		return $tpl->exec($this->callback,$content,$sel_options,array(),$preserv);
 	}
 }
