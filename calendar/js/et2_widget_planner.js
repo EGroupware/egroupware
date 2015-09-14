@@ -773,12 +773,16 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var content = '<div class="calendar_plannerScale" data-planner_days="0" data-last="">';
 		var days_in_month = 0;
 		var day_width = 100 / days;
-		for(var t = new Date(start),left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + days_in_month),left += days_in_month*day_width,i += days_in_month)
+		var t = new Date(start.valueOf());
+		for(var left = 0,i = 0; i < days;t.setUTCDate(1),t.setUTCMonth(t.getUTCMonth()+1),left += days_in_month*day_width,i += days_in_month)
 		{
+			var u = new Date(t.getUTCFullYear(),t.getUTCMonth()+1,0,-t.getTimezoneOffset()/60);
 			this.date_helper.set_year(t.getUTCFullYear());
-			this.date_helper.set_month(t.getUTCMonth()+1);
+			this.date_helper.set_month(t.getUTCMonth()+2);
 			this.date_helper.set_date(0);
 			days_in_month = this.date_helper.get_date() - (t.getUTCDate()-1);
+
+			if(days_in_month <= 0) break;
 			
 			if (i + days_in_month > days)
 			{
@@ -849,10 +853,11 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var state = ''
 
 		// we're not using UTC so date() formatting function works
-		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
-		for(var left = 0,i = 0; i < days; t.setDate(t.getDate() + 7),left += week_width,i += 7)
+		//var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
+		var t = new Date(start);
+		for(var left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + 7),left += week_width,i += 7)
 		{
-			var title = egw.lang('Week')+' '+date('W',t);
+			var title = egw.lang('Week')+' '+app.calendar.date.week_number(t);
 
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
 			if (days  <= 7)

@@ -66,6 +66,11 @@ app.classes.calendar = AppJS.extend(
 
 	states_to_save: ['owner','filter','cat_id','view','sortby','planner_days'],
 
+	// If you are in one of these views and select a date in the sidebox, the view
+	// will change as needed to show the date.  Other views will only change the
+	// date in the current view.
+	sidebox_changes_views: ['day','week','month'],
+
 	/**
 	 * Constructor
 	 *
@@ -2305,10 +2310,17 @@ app.classes.calendar = AppJS.extend(
 					date.setUTCDate(1);
 					date.setFullYear(year);
 					date.setUTCMonth(month-1);
-					app.calendar.update_state({
-						view: 'month',
-						date: date
-					})
+					var state = {date: date};
+					if(app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view) >= 0)
+					{
+						state.view = 'month';
+					}
+					else if (app.calendar.state.view == 'planner')
+					{
+						state.planner_days = 0;
+						state.last = false;
+					}
+					app.calendar.update_state(state);
 				},
 				// Mark holidays
 				beforeShowDay: function (date)
@@ -2346,11 +2358,21 @@ app.classes.calendar = AppJS.extend(
 					$j(this).siblings().find('a').removeClass('ui-state-hover');
 				})
 				.on('click', '.ui-datepicker-week-col', function() {
+					var view = app.calendar.state.view;
+
 					// Fake a click event on the first day to get the updated date
 					$j(this).next().click();
 
-					// Set to week view
-					app.calendar.update_state({view: 'week', date: date.getValue()});
+					// Set to week view, if in one of the views where we change view
+					if(app.calendar.sidebox_changes_views.indexOf(view) >= 0)
+					{
+						app.calendar.update_state({view: 'week', date: date.getValue()});
+					}
+					else if (app.calendar.state.view == 'planner')
+					{
+						// Clicked a week, show just a week
+						app.calendar.update_state({planner_days: 7});
+					}
 				});
 		}
 	},
@@ -2406,6 +2428,11 @@ app.classes.calendar = AppJS.extend(
 		}
 	},
 
+	/**
+	 * Super class for the different views.
+	 *
+	 * Each separate view overrides what it needs
+	 */
 	View: {
 		// List of etemplates to show for this view
 		etemplates: ['calendar.view'],
@@ -2578,6 +2605,12 @@ jQuery.extend(app.classes.calendar,{
 			},
 			show_weekend: function(state) {
 				return true;
+			},
+			scroll: function(delta)
+			{
+				var d = new Date(app.calendar.state.date);
+				d.setUTCDate(d.getUTCDate() + (4 * delta));
+				return d;
 			}
 		}),
 		week: app.classes.calendar.prototype.View.extend({

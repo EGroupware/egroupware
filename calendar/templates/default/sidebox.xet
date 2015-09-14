@@ -37,7 +37,9 @@ Egroupware
 			</grid>
 			<select id="view" class="et2_fullWidth" onchange="app.calendar.update_state(JSON.parse(widget.getValue()));"/>
 			<textbox id="keywords" class="et2_fullWidth" blur="Search" onchange="app.calendar.update_state({keywords: widget.getValue()});"/>
-			<date id="date" class="et2_fullWidth" inline="true" onchange="var update = {date:widget.getValue()}; if(app.calendar.state.view != 'day4') {update.view = 'day'}; app.calendar.update_state(update);"/>
+			<date id="date" class="et2_fullWidth" inline="true" onchange="var view_change = app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view);
+var update = {date:widget.getValue()};
+if(view_change >= 0) {update.view = app.calendar.sidebox_changes_views[view_change ? view_change - 1 : view_change]}; app.calendar.update_state(update);"/>
 			<textbox type="hidden" id="first"/>
 			<textbox type="hidden" id="last"/>
 			<hbox width="100%">
