@@ -775,8 +775,11 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var day_width = 100 / days;
 		for(var t = new Date(start),left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + days_in_month),left += days_in_month*day_width,i += days_in_month)
 		{
-			days_in_month = new Date(t.getUTCFullYear(),t.getUTCMonth()+1,0).getUTCDate() - (t.getUTCDate()-1);
-
+			this.date_helper.set_year(t.getUTCFullYear());
+			this.date_helper.set_month(t.getUTCMonth()+1);
+			this.date_helper.set_date(0);
+			days_in_month = this.date_helper.get_date() - (t.getUTCDate()-1);
+			
 			if (i + days_in_month > days)
 			{
 				days_in_month = days - i;
