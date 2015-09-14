@@ -793,6 +793,7 @@ class calendar_ui
 		{
 			$event['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
 		}
+		$event['non_blocking'] = boolval($event['non_blocking']);
 
 		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
 		{
