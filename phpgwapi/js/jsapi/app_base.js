@@ -971,6 +971,7 @@ var AppJS = Class.extend(
 		}
 		else
 		{
+			egw.message('You need to install Mailvelope plugin available for Chrome and Firefox from <a target="_blank">mailvelope.com</a>.Add your domain as "*.localhost" in options to list of email providers and enable API.', true);
 			jQuery(window).on('mailvelope', function()
 			{
 				self.mailvelopeOpenKeyring().then(callback);
@@ -1272,6 +1273,65 @@ var AppJS = Class.extend(
 		},
 		function(){
 			mailvelope.createKeyring('egroupware').then(function(){dialog(menu);});
+		});
+
+	},
+
+	mailvelopeInstallationOffer: function ()
+	{
+		var dialog = function(_content, _callback)
+		{
+			return et2_createWidget("dialog", {
+						callback: function(_button_id, _value) {
+							if (typeof _callback == "function")
+							{
+								_callback.call(this, _button_id, _value.value);
+							}
+						},
+						title: egw.lang('PGP Encryption Installation'),
+						buttons: et2_dialog.BUTTONS_YES_NO,
+						dialog_type: 'info',
+						value: {
+							content: _content
+						},
+						template: egw.webserverUrl+'/etemplate/templates/default/pgp_installation.xet',
+						class: "pgp_installation",
+						modal: true,
+						//resizable:false,
+
+			});
+		};
+		var content = [{}];
+		dialog(content, function(_button){
+			if (_button == et2_dialog.YES_BUTTON)
+			{
+				if (typeof chrome != 'undefined' && typeof chrome.webstore != 'undefined')
+				{
+					chrome.webstore.install("https://chrome.google.com/webstore/detail/mailvelope/kajibbejlbohfaggdiogboambcijhkke",
+					function(){
+						et2_dialog.alert(lang('Mailvelope addon installation succeded. Now you may configure the options.'));
+						return;
+					},
+					function(){
+						et2_dialog.alert(lang('Mailvelope addon installation faild! Please try agian.'));
+					});
+				}
+				else if (typeof InstallTrigger != 'undefined' && InstallTrigger.enabled())
+				{
+					InstallTrigger.install({mailvelope:"https://download.mailvelope.com/releases/latest/mailvelope.firefox.xpi"},
+						function(_url, _status){
+							if (_status == 0)
+							{
+								et2_dialog.alert(lang('Mailvelope addon installation succeded. Now you may configure the options.'));
+								return;
+							}
+							else
+							{
+								et2_dialog.alert(lang('Mailvelope addon installation faild! Please try agian.'));
+							}
+						});
+				}
+			}
 		});
 
 	},

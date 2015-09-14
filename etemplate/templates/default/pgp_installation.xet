@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<overlay>
+	<template id="etemplate.pgp_installation" template="" lang="" group="" version="15.1">
+		<vbox height="300" width="300">
+			<description value="You need to have mailvelope plugin installed on your browser, although, before procceding further, we do recommend you to watch this short video tutorial about how to work with mailvelope plugin."/>
+			<video video_src="webdav.php/home/sysop/Tutorials/20150616_PGP_EN.mp4" controls="true" height="260" width="60%"/>
+		</vbox>
+	</template>
+</overlay>
