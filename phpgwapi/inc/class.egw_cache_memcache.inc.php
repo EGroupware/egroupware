@@ -62,8 +62,9 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 		$ok = false;
 		foreach($params as $host_port)
 		{
-			list($host,$port) = explode(':',$host_port);
-			if (!$port) $port = 11211;	// default port
+			$parts = explode(':',$host_port);
+			$host = array_shift($parts);
+			$port = $parts ? array_shift($parts) : 11211;	// default port
 
 			$ok = $this->memcache->addServer($host,$port) || $ok;
 			//error_log(__METHOD__."(".array2string($params).") memcache->addServer('$host',$port) = ".(int)$ok);

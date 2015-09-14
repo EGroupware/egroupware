@@ -497,7 +497,7 @@ class egw_cache
 
 		if ($level != self::TREE) $level = self::INSTANCE;
 
-		//if (!isset($providers[$level]))
+		if (!isset($providers[$level]))
 		{
 			$params = $GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)];
 			if (!isset($params) && $level == self::INSTANCE && isset(self::$default_provider))
