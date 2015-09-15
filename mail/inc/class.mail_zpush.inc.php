@@ -1983,7 +1983,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	{
 		if(!isset($this->folderHashes)) $this->readFolderHashes();
 
-		return $this->folderHashes[$account][$index];
+		return isset($this->folderHashes[$account]) ? $this->folderHashes[$account][$index] : null;
 	}
 
 	private $folderHashes;
@@ -1993,7 +1993,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	private function readFolderHashes()
 	{
-		if (file_exists($file = $this->hashFile()) &&
+		if ((file_exists($file = $this->hashFile()) || file_exists($file = $this->hashFile(true))) &&
 			($hashes = file_get_contents($file)))
 		{
 			$this->folderHashes = json_decode($hashes,true);
@@ -2024,19 +2024,26 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	/**
 	 * Get name of hashfile in state dir
 	 *
+	 * New z-push 2 directory is in activesync_statemachine::getDeviceDirectory.
+	 * On request this function also returns, but never creates (!), old z-push 1 directory.
+	 *
+	 * @param boolean $old =false true: return old / pre-15 hash-file
 	 * @throws egw_exception_assertion_failed
 	 */
-	private function hashFile()
+	private function hashFile($old=false)
 	{
 		if (!($dev_id=Request::GetDeviceID()))
 		{
-			throw new egw_exception_assertion_failed(__METHOD__."() called without this->_devid set!");
+			throw new egw_exception_assertion_failed(__METHOD__."() no DeviceID set!");
 		}
-		if (!file_exists(STATE_DIR.$dev_id))
+		if ($old)
 		{
-			mkdir(STATE_DIR.$dev_id);
+			return STATE_DIR.$dev_id.'/'.$dev_id.'.hashes';
 		}
-		return STATE_DIR.$dev_id.'/'.$dev_id.'.hashes';
+		if (!file_exists($dir = activesync_statemachine::getDeviceDirectory($dev_id)))
+		{
+			mkdir($dir);
+		}
+		return $dir.'/'.$dev_id.'.hashes';
 	}
-
 }
