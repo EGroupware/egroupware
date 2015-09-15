@@ -2,9 +2,30 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <overlay>
 	<template id="etemplate.pgp_installation" template="" lang="" group="" version="15.1">
-		<vbox height="300" width="300">
-			<description value="You need to have mailvelope plugin installed on your browser, although, before procceding further, we do recommend you to watch this short video tutorial about how to work with mailvelope plugin."/>
-			<video video_src="webdav.php/home/sysop/Tutorials/20150616_PGP_EN.mp4" controls="true" height="260" width="60%"/>
-		</vbox>
+		<grid height="300" width="450">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row part="header">
+					<description value="You need to install Mailvelope plugin available for Chrome and Firefox from www.mailvelope.com or by clicking on install button."/>
+				</row>
+				<row>
+					<description value="$row_cont[domain]"/>
+				</row>
+				<row>
+					<description value="Although, before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware."/>
+				</row>
+				<row>
+					<video video_src="https://www.egroupware.de/videos/mailvelope_only_EN.mp4" controls="true" height="260" width="60%"/>	
+				</row>
+			</rows>
+		</grid>
+		
+		<styles>
+			video {
+				margin-left: 18%;
+			}
+		</styles>
 	</template>
 </overlay>

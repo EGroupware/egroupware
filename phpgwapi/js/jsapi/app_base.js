@@ -1237,7 +1237,7 @@ var AppJS = Class.extend(
 							}
 						},
 						title: egw.lang('Backup/Restore'),
-						buttons:[{"button_id": 'close',"text": 'Close', id: 'dialog[close]', image: 'check', "default":true}],
+						buttons:[{"button_id": 'close',"text": 'Close', id: 'dialog[close]', image: 'cancelled', "default":true}],
 						value: {
 							content: {
 								menu:_content
@@ -1271,9 +1271,17 @@ var AppJS = Class.extend(
 			this.mailvelopeInstallationOffer();
 		}
 	},
-
+	
+	/**
+	 * Create a dialog and offers installation option for installing mailvelope plugin
+	 * plus it offers a video tutorials to get the user morte familiar with mailvelope
+	 */
 	mailvelopeInstallationOffer: function ()
 	{
+		var buttons = [
+			{"text": 'Install', id: 'install', image: 'check', "default":true},
+			{"text": 'Close', id:'close', image: 'cancelled'}
+		];
 		var dialog = function(_content, _callback)
 		{
 			return et2_createWidget("dialog", {
@@ -1284,7 +1292,7 @@ var AppJS = Class.extend(
 							}
 						},
 						title: egw.lang('PGP Encryption Installation'),
-						buttons: et2_dialog.BUTTONS_YES_NO,
+						buttons: buttons,
 						dialog_type: 'info',
 						value: {
 							content: _content
@@ -1296,20 +1304,23 @@ var AppJS = Class.extend(
 
 			});
 		};
-		var content = [{}];
+		var content = [
+			// Header row should be empty item 0
+			{},
+			{domain:this.egw.lang('Add your domain as "%1" in options to list of email providers and enable API.',
+					'*.'+this._mailvelopeDomain()), video:"test", control:"true"}
+		];
+			
 		dialog(content, function(_button){
-			if (_button == et2_dialog.YES_BUTTON)
+			if (_button == 'install')
 			{
-				if (typeof chrome != 'undefined' && typeof chrome.webstore != 'undefined')
+				if (typeof chrome != 'undefined')
 				{
-					chrome.webstore.install("https://chrome.google.com/webstore/detail/mailvelope/kajibbejlbohfaggdiogboambcijhkke",
-					function(){
-						et2_dialog.alert(lang('Mailvelope addon installation succeded. Now you may configure the options.'));
-						return;
-					},
-					function(){
-						et2_dialog.alert(lang('Mailvelope addon installation faild! Please try agian.'));
-					});
+					// ATM we are not able to trigger mailvelope installation directly
+					// since the installation should be triggered from the extension
+					// owner validate website (mailvelope.com), therefore, we just redirect
+					// user to chrome webstore to install mailvelope from there. 
+					window.open('https://chrome.google.com/webstore/detail/mailvelope/kajibbejlbohfaggdiogboambcijhkke');
 				}
 				else if (typeof InstallTrigger != 'undefined' && InstallTrigger.enabled())
 				{
