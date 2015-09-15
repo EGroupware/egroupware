@@ -971,7 +971,6 @@ var AppJS = Class.extend(
 		}
 		else
 		{
-			egw.message('You need to install Mailvelope plugin available for Chrome and Firefox from <a target="_blank">mailvelope.com</a>.Add your domain as "*.localhost" in options to list of email providers and enable API.', true);
 			jQuery(window).on('mailvelope', function()
 			{
 				self.mailvelopeOpenKeyring().then(callback);
