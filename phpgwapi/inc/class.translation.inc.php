@@ -1043,7 +1043,7 @@ class translation
 	static function decodeMailHeader($_string, $displayCharset='utf-8')
 	{
 		//error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
-		if(function_exists(imap_mime_header_decode))
+		if(function_exists('imap_mime_header_decode'))
 		{
 			// some characterreplacements, as they fail to translate
 			$sar = array(
