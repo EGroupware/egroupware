@@ -6,13 +6,15 @@
 			<grid id="menu" class="egwGridView_grid " width="200px">
 				<columns>
 					<column/>
+					<column/>
 				</columns>
 				<rows>
 					<row class="th" part="header">
 						<description align="center" value="Menu"/>
 					</row>
 					<row>
-						<description id="${row}[id]" onclick="$row_cont[onclick]" class="click"/>
+						<image src="$row_cont[image]"/>
+						<description value= "$row_cont[label]" onclick="$row_cont[onclick]" class="click"/>
 					</row>
 				</rows>
 			</grid>
