@@ -174,7 +174,9 @@ var fw_base =  Class.extend({
 		else if (_app.browser != null &&
 			// check if app has its own linkHandler
 			!(this.applications[_app.appName].app_refresh) &&
-			_app.browser.iframe == null && _url == _app.browser.currentLocation)
+			_app.browser.iframe == null && _url == _app.browser.currentLocation 
+			// links with load may needs to be reloaded e.g. admin applications global cats
+			&& (!_app.browser.currentLocation.match(/&load=[^&]+/g) && _app == 'admin'))
 		{
 			// Just do an egw_refresh to avoid a full reload
 			egw_refresh('',_app.appName);
