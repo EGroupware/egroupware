@@ -987,7 +987,7 @@ var AppJS = Class.extend(
 	 */
 	mailvelopeSyncHandlerObj: {
 		/**
-		 * function called by Mailvelope to upload encrypted private key backup
+		 * function called by Mailvelope to upload a public keyring
 		 * @param {UploadSyncHandler} _uploadObj
 		 *	@property {string} etag entity tag for the uploaded encrypted keyring, or null if initial upload
 		 *	@property {AsciiArmored} keyringMsg encrypted keyring as PGP armored message
@@ -999,7 +999,7 @@ var AppJS = Class.extend(
 					},
 
 		/**
-		 * function called by Mailvelope to download encrypted private key backup
+		 * function called by Mailvelope to download a public keyring
 		 *
 		 * @param {object} _downloadObj
 		 *	@property {string} etag entity tag for the current local keyring, or null if no local eTag
@@ -1011,19 +1011,19 @@ var AppJS = Class.extend(
 					},
 
 		/**
-		 * function called by Mailvelope to upload a public keyring backup
+		 * function called by Mailvelope to upload an encrypted private key backup
 		 *
 		 * @param {BackupSyncPacket} _backup
-		 *	@property {AsciiArmored} backup encrypted public keyring as PGP armored message
+		 *	@property {AsciiArmored} backup an encrypted private key as PGP armored message
 		 * @returns {Promise.<undefined, Error>}
 		 */
 		backup: function(_backup)
 		{
 			return new Promise(function(_resolve,_reject){
-				// Store backup sync packet into .pubKring_PGP file in user directory
+				// Store backup sync packet into .PK_PGP file in user directory
 				jQuery.ajax({
 					method:'PUT',
-					url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.pubKring_PGP',
+					url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
 					contentType: 'application/json',
 					data: JSON.stringify(_backup),
 					success:function(){
@@ -1037,7 +1037,7 @@ var AppJS = Class.extend(
 		},
 
 		/**
-		 * function called by Mailvelope to restore a public keyring backup
+		 * function called by Mailvelope to restore an encrypted private key backup
 		 * @returns {Promise.<BackupSyncPacket, Error>}
 		 * @todo
 		 */
@@ -1047,10 +1047,11 @@ var AppJS = Class.extend(
 				var resolve = _resolve;
 				var reject = _reject;
 				jQuery.ajax({
-					url:egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.pubKring_PGP',
+					url:egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
 					method: 'GET',
 					success: function(_backup){
 						resolve(JSON.parse(_backup));
+						egw.message('Your key has been restored successfully.');
 					},
 					error: function(_err){
 						reject(_err);
@@ -1076,7 +1077,7 @@ var AppJS = Class.extend(
 	_mailvelopeBackupFileOperator: function(_url, _cmd, _successCallback, _errorCallback, _data)
 	{
 		var ajaxObj = {
-			url: _url || egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.pubKring_PGP',
+			url: _url || egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
 			method: _cmd,
 			success: _successCallback,
 			error: _errorCallback
@@ -1112,6 +1113,7 @@ var AppJS = Class.extend(
 		var self = this;
 		var selector = _selector || 'body';
 		var initSetup = _initSetup;
+		jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]').remove();
 		return new Promise(function(_resolve, _reject)
 		{
 			var resolve = _resolve;
@@ -1127,13 +1129,6 @@ var AppJS = Class.extend(
 				_keyring.createKeyBackupContainer(selector, options).then(function(_popupId){
 					var $backup_selector = jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]');
 					$backup_selector.css({position:'absolute', "z-index":1});
-					// add a close button, so we know when to offer storing public key to AB
-					jQuery('<button class="et2_button et2_button_text" id="mailvelope_close_settings">'+self.egw.lang('Close')+'</button>')
-						.css({position: 'absolute', top: 8, right: 8, "z-index":2})
-						.click(function(){
-							$backup_selector.remove();
-							this.remove();
-						}).appendTo(selector);
 					resolve(_popupId);
 				},
 				function(_err){
@@ -1148,7 +1143,7 @@ var AppJS = Class.extend(
 	},
 
 	/**
-	 * Delete backup keyring from filesystem
+	 * Delete backup key from filesystem
 	 */
 	mailvelopeDeleteBackup: function()
 	{
@@ -1158,14 +1153,14 @@ var AppJS = Class.extend(
 			if (_button_id == et2_dialog.YES_BUTTON )
 			{
 				self._mailvelopeBackupFileOperator(undefined, 'DELETE', function(){
-					self.egw.message(self.egw.lang('The keyring backup has been deleted.'));
+					self.egw.message(self.egw.lang('The key backup has been deleted.'));
 				}, function(_err){
-					self.egw.message(self.egw.lang('Was not able to delete keyring backup because %1',_err));
+					self.egw.message(self.egw.lang('Was not able to delete key backup because %1',_err));
 				});
 			}
 		},
-		self.egw.lang('Are you sure, you would like to delete the backup keyring?'),
-		self.egw.lang('Delete backup keyring'),
+		self.egw.lang('Are you sure, you would like to delete the backup key?'),
+		self.egw.lang('Delete backup key'),
 		{}, et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
 	},
 
@@ -1181,6 +1176,8 @@ var AppJS = Class.extend(
 		var self = this;
 		var restorePassword = _restorePassword;
 		var selector = _selector || 'body';
+		//Clear the 
+		jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]').remove();
 		return new Promise(function(_resolve, _reject){
 			var resolve = _resolve;
 			var reject = _reject;
@@ -1195,13 +1192,6 @@ var AppJS = Class.extend(
 				_keyring.restoreBackupContainer(selector, options).then(function(_restoreId){
 					var $restore_selector = jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]');
 					$restore_selector.css({position:'absolute', "z-index":1});
-					// add a close button, so we know when to offer storing public key to AB
-					jQuery('<button class="et2_button et2_button_text" id="mailvelope_close_settings">'+self.egw.lang('Close')+'</button>')
-						.css({position: 'absolute', top: 8, right: 8, "z-index":2})
-						.click(function(){
-							$restore_selector.remove();
-							this.remove();
-						}).appendTo(selector);
 					resolve(_restoreId);
 				},
 				function(_err){
@@ -1228,13 +1218,13 @@ var AppJS = Class.extend(
 			// Header row should be empty item 0
 			{},
 			// Restore Keyring item 1
-			{id:"Restore Keyring", image:"lock", onclick:"app."+appname+".mailvelopeCreateRestoreDialog('#_mvelo')"},
+			{label:"Restore key" ,image:"lock", onclick:"app."+appname+".mailvelopeCreateRestoreDialog('#_mvelo')"},
 			// Restore pass phrase item 2
-			{id:"Restore Password", image:"password", onclick:"app."+appname+".mailvelopeCreateRestoreDialog('#_mvelo', true)"},
-			// Delete backup keyring item 3
-			{id:"Delete backup", image:"delete", onclick:"app."+appname+".mailvelopeDeleteBackup"},
-			// Backup keyring item 4
-			{id:"Backup Keyring", image:"save", onclick:"app."+appname+".mailvelopeCreateBackupDialog('#_mvelo', false)"}
+			{label:"Restore password",image:"password", onclick:"app."+appname+".mailvelopeCreateRestoreDialog('#_mvelo', true)"},
+			// Delete backup Key item 3
+			{label:"Delete backup", image:"delete", onclick:"app."+appname+".mailvelopeDeleteBackup"},
+			// Backup Key item 4
+			{label:"Backup Key", image:"save", onclick:"app."+appname+".mailvelopeCreateBackupDialog('#_mvelo', false)"}
 		];
 
 		var dialog = function(_content, _callback)
@@ -1258,22 +1248,28 @@ var AppJS = Class.extend(
 						modal:true
 			});
 		};
-		mailvelope.getKeyring('egroupware').then(function(_keyring)
+		if (typeof mailvelope != 'undefined')
 		{
-			self._mailvelopeBackupFileOperator(undefined, 'GET', function(_data){
-				dialog(menu);
+			mailvelope.getKeyring('egroupware').then(function(_keyring)
+			{
+				self._mailvelopeBackupFileOperator(undefined, 'GET', function(_data){
+					dialog(menu);
+				},
+				function(){
+					// Remove delete item
+					menu.splice(3,1);
+					menu[3]['onclick'] = "app."+appname+".mailvelopeCreateBackupDialog('#_mvelo', true)";
+					dialog(menu);
+				});
 			},
 			function(){
-				// Remove delete item
-				menu.splice(3,1);
-				menu[3]['onclick'] = "app."+appname+".mailvelopeCreateBackupDialog('#_mvelo', true)";
-				dialog(menu);
+				mailvelope.createKeyring('egroupware').then(function(){dialog(menu);});
 			});
-		},
-		function(){
-			mailvelope.createKeyring('egroupware').then(function(){dialog(menu);});
-		});
-
+		}
+		else
+		{
+			this.mailvelopeInstallationOffer();
+		}
 	},
 
 	mailvelopeInstallationOffer: function ()
@@ -1332,7 +1328,6 @@ var AppJS = Class.extend(
 				}
 			}
 		});
-
 	},
 
 	/**
