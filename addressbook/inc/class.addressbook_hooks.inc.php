@@ -44,9 +44,14 @@ class addressbook_hooks
 			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list('addressbook'));
 
 			$file = array(
-				'Add'             => "javascript:egw_openWindowCentered2('".
-					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit'),false).
-					"','_blank',870,480,'yes')",
+				'Addressbook list' => egw::link('/index.php',array(
+					'menuaction' => 'addressbook.addressbook_ui.index',
+					'ajax' => 'true')),
+				array(
+					'text' => lang('Add %1',lang(egw_link::get_registry($appname, 'entry'))),
+					'no_lang' => true,
+					'link' => "javascript:egw.open('','$appname','add')"
+				),
 				'Advanced search' => "javascript:egw_openWindowCentered2('".
 					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
 					"','_blank',870,480,'yes')",
