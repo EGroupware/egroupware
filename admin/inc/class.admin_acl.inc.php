@@ -248,6 +248,34 @@ class admin_acl
 		}
 		//error_log(__METHOD__."(".array2string($query).") returning ".$total);
 
+		// Get supporting or all apps for filter2 depending on filter
+		if($query['filter'] == 'run')
+		{
+			$rows['sel_options']['filter2'] = array(
+				'' => lang('All applications'),
+			)+etemplate_widget_menupopup::app_options('enabled');
+		}
+		else
+		{
+			$rows['sel_options']['filter2'] = array(
+				array('value' => '', 'label' => lang('All applications'))
+			);
+			$apps = $GLOBALS['egw']->hooks->process(array(
+				'location' => 'acl_rights',
+				'owner' => $query['account_id'],
+			), array(), true);
+			foreach($apps as $appname => $rights)
+			{
+				$rows['sel_options']['filter2'][] = array(
+					'value' => $appname,
+					'label' => lang($appname)
+				);
+			}
+			usort($rows['sel_options']['filter2'], function($a,$b) {
+				return strcasecmp($a['label'], $b['label']);
+			});
+		}
+
 		return $total;
 	}
 
@@ -388,12 +416,9 @@ class admin_acl
 				'other' => lang('Access to %1 data by others', $user),
 				'own'   => lang('%1 access to other data', $user),
 				'run'   => lang('%1 run rights for applications', $user),
-			),
-			'filter2' => array(
-				'' => lang('All applications'),
-			)+etemplate_widget_menupopup::app_options('enabled'),
+			)
 		);
-
+		
 		$tpl->exec('admin.admin_acl.index', $content, $sel_options);
 	}
 

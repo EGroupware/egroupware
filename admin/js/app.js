@@ -447,11 +447,17 @@ app.classes.admin = AppJS.extend(
 			else
 			{
 				// Restrict application selectbox to only apps that support ACL
-				sel_options.acl_appname = {};
+				sel_options.acl_appname = [];
 				for(var app in acl_rights)
 				{
-					sel_options.acl_appname[app] = this.egw.lang(app);
+					sel_options.acl_appname.push({value: app, label: this.egw.lang(app)});
 				}
+				// Sort list
+				sel_options.acl_appname.sort(function(a,b) {
+					if(a.label > b.label) return 1;
+					if(a.label < b.label) return -1;
+					return 0;
+				});
 			}
 
 		}
