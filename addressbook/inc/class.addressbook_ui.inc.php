@@ -330,7 +330,6 @@ class addressbook_ui extends addressbook_bo
 		if (isset($org_view))
 		{
 			$content['nm']['org_view'] = $org_view;
-			$content['nm']['default_cols'] = '';
 		}
 
 		$content['nm']['actions'] = $this->get_actions($content['nm']['col_filter']['tid'], $content['nm']['org_view']);
