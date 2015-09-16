@@ -52,6 +52,7 @@ add shortcut	common	en	Add shortcut
 add sub	common	en	Add sub
 add user to responsibles	groupdav	en	add user to responsibles
 add user to responsibles, removing evtl. previous category user	groupdav	en	add user to responsibles, removing evtl. previous category user
+add your domain as "%1" in options to list of email providers and enable api.	common	en	Add your domain as "%1" in options to list of email providers and enable API.
 addressbook	common	en	Address Book
 addressbooks to sync in addition to personal addressbook	groupdav	en	Addressbooks to sync in addition to personal addressbook
 admin	common	en	Admin
@@ -832,9 +833,9 @@ tajikistan	common	en	TAJIKISTAN
 tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
 text color:	common	en	Text color:
 thailand	common	en	THAILAND
+the backup key has been deleted.	common	en	The backup key has been deleted.
 the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
 the following applications require upgrades	common	en	The following applications require upgrades
-the key backup has been deleted.	common	en	The key backup has been deleted.
 the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
@@ -909,7 +910,7 @@ view	common	en	View
 virgin islands, british	common	en	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	en	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	en	WALLIS AND FUTUNA
-was not able to delete key backup because %1	common	en	Was not able to delete key backup because %1
+was not able to delete the backup key because %1	common	en	Was not able to delete the backup key because %1
 wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western european	common	en	Western european

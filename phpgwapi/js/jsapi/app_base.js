@@ -1153,9 +1153,9 @@ var AppJS = Class.extend(
 			if (_button_id == et2_dialog.YES_BUTTON )
 			{
 				self._mailvelopeBackupFileOperator(undefined, 'DELETE', function(){
-					self.egw.message(self.egw.lang('The key backup has been deleted.'));
+					self.egw.message(self.egw.lang('The backup key has been deleted.'));
 				}, function(_err){
-					self.egw.message(self.egw.lang('Was not able to delete key backup because %1',_err));
+					self.egw.message(self.egw.lang('Was not able to delete the backup key because %1',_err));
 				});
 			}
 		},

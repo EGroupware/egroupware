@@ -86,6 +86,7 @@ apply the action on the whole query, not only the shown entries	common	de	Befehl
 april	common	de	April
 are you sure you want to delete these entries ?	common	de	Sind Sie sicher, daß Sie diese Einträge löschen möchten?
 are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen möchten?
+are you sure, you would like to delete the backup key?	common	de	Sind Sie sicher, dass Sie den Backup Schlüssel löschen möchten?
 argentina	common	de	ARGENTINIEN
 armenia	common	de	ARMENIEN
 aruba	common	de	ARUBA
@@ -104,6 +105,7 @@ azerbaijan	common	de	ASERBAIDSCHAN
 back	common	de	Zurück
 back to user login	common	de	Zurück zur Benutzer Anmeldung
 background color:	common	de	Hintergrund Farbe:
+backup/restore	common	de	Backup/Wiederherstellung
 backupdir '%1' is not writeable by the webserver	common	de	Der Webserver hat keine Schreibrechte auf das Backupverzeichnis '%1' .
 bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
@@ -111,7 +113,7 @@ bahrain	common	de	BAHRAIN
 bangladesh	common	de	BANGLADESH
 barbados	common	de	BARBADOS
 bcc	common	de	Blindkopie
-before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	de	Außerdem empfehlen wir Ihnen dieses kurze Video, bevor Sie mit der Installation starten. Hier wird gezeigt, wie das Mailvelope Plugin zusammen mit EGroupware funktioniert.
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	de	Bevor Sie mit der Installation starten, empfehlen wir Ihnen dieses kurze Video. Hier wird gezeigt, wie das Mailvelope Plugin zusammen mit EGroupware funktioniert.
 belarus	common	de	BELORUSSLAND (WEISSRUSSLAND)
 belgium	common	de	BELGIEN
 belize	common	de	BELIZE
@@ -232,6 +234,7 @@ default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
 del	common	de	Ent
 delete	common	de	Löschen
+delete backup key	common	de	Backup Schlüssel löschen
 delete category	common	de	Kategorie entfernen
 delete file	common	de	Datei löschen
 delete row	common	de	Zeile löschen
@@ -500,6 +503,8 @@ macau	common	de	MACAU
 macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
 madagascar	common	de	MADAGASCAR
 mail domain, eg. "%1"	common	de	Mail Domain, z.B. "%1"
+mailvelope addon installation faild! please try agian.	common	de	Installation des Mailvelope Add-on gescheitert! Bitte versuchen Sie es erneut.
+mailvelope addon installation succeded. now you may configure the options.	common	de	Installation des Mailvelope Add-on erfolgreich. Jetzt können Sie die Optionen konfigurieren.
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 maintainer	common	de	Maintainer
@@ -638,6 +643,8 @@ personal	common	de	persönlich
 peru	common	de	PERU
 pg down	common	de	Pg down
 pg up	common	de	Pg up
+pgp encryption	common	de	PGP Verschlüsselung
+pgp encryption installation	common	de	Installation der PGP Verschlüsselung
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 phpgwapi	common	de	EGroupware API
@@ -826,6 +833,7 @@ tajikistan	common	de	TAJIKISTAN
 tanzania, united republic of	common	de	TANZANIA, VEREINIGTE REPUBLIK
 text color:	common	de	Textfarbe:
 thailand	common	de	THAILAND
+the backup key has been deleted.	common	de	Der Backup-Schlüssel wurde gelöscht.
 the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	de	Ihr Browser hat das Öffnen eines Popup-Dialogs blockiert. Bitte klicken Sie OK, um das Popup angezeigt zu bekommen.\n\nWenn Sie die Meldung nicht nochmals erhalten wollen, erlauben Sie bitte in den Einstellungen vom Browser für %1 das Öffnen von Popups.
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
@@ -902,6 +910,7 @@ view	common	de	Anzeigen
 virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	de	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	de	WALLIS AND FUTUNA
+was not able to delete the backup key because %1	common	de	Es war nicht möglich das Backup-Schlüssel zu löschen weil...
 wednesday	common	de	Mittwoch
 welcome	common	de	Willkommen
 western european	common	de	Westeuropäisch
