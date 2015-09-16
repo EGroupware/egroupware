@@ -245,14 +245,15 @@ app.classes.mail = AppJS.extend(
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
-					window.setTimeout(function(){that.compose_resizeHandler();}, 300);
+					window.setTimeout(function(){
+						that.compose_fieldExpander();
+					}, 300);
 				});
+				
 				//Resize compose after window resize to not getting scrollbar
 				jQuery(window).on ('resize',function() {
 					that.compose_resizeHandler();
 				});
-
-				this.compose_fieldExpander();
 
 				//Call drag_n_drop initialization for emails on compose
 				this.init_dndCompose();
