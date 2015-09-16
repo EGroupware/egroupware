@@ -1202,8 +1202,9 @@ class calendar_uiforms extends calendar_ui
 	 *	edit_single int timestamp of single event edited, unset/null otherwise
 	 * @param string $msg ='' msg to display
 	 * @param mixed $link_to_id ='' from or for the link-widget
+	 * @param string $msg_type =null default automatic detect, if it contains "error"
 	 */
-	function edit($event=null,$preserv=null,$msg='',$link_to_id='')
+	function edit($event=null,$preserv=null,$msg='',$link_to_id='',$msg_type=null)
 	{
 		$sel_options = array(
 			'recur_type' => &$this->bo->recur_types,
@@ -1258,7 +1259,7 @@ class calendar_uiforms extends calendar_ui
 			if (!empty($_GET['ical']))
 			{
 				$ical = new calendar_ical();
-				if (!($events = $ical->icaltoegw($_GET['ical'], '', 'utf-8')) || count($events) != 1)
+				if (!($events = $ical->icaltoegw($_GET['ical'], '', 'utf-8')))
 				{
 					error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
 					$msg = lang('Error: importing the iCal');
@@ -1266,6 +1267,11 @@ class calendar_uiforms extends calendar_ui
 				}
 				else
 				{
+					if (count($events) > 1)
+					{
+						$msg = lang('%1 events in iCal file, only first one imported and displayed!', count($events));
+						$msg_type = 'notice';	// no not hide automatic
+					}
 					// as icaltoegw returns timestamps in server-time, we have to convert them here to user-time
 					$this->bo->db2data($events, 'ts');
 
@@ -1415,9 +1421,9 @@ class calendar_uiforms extends calendar_ui
 			'edit_single' => $preserv['edit_single'],	// need to be in content too, as it is used in the template
 			'tabs'   => $preserv['tabs'],
 			'view' => $view,
-			'msg' => $msg,
 			'query_delete_exceptions' => (int)($event['recur_type'] && $event['recur_exception']),
 		));
+		egw_framework::message($msg, $msg_type);
 		$content['duration'] = $content['end'] - $content['start'];
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
 

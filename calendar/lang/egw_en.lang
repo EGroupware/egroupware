@@ -2,6 +2,7 @@
 %1 days	calendar	en	%1 days
 %1 event(s) %2	calendar	en	%1 event(s) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	en	%1 event(s) %2, %3 failed because of insufficient rights!
+%1 events in ical file, only first one imported and displayed!	calendar	en	%1 events in iCal file, only first one imported and displayed!
 %1 hours	calendar	en	%1 hours
 %1 minutes	calendar	en	%1 minutes
 %1 participants removed because of missing invite grants	calendar	en	%1 participants removed because of missing invite grants.
