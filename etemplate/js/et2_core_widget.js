@@ -641,10 +641,10 @@ var et2_widget = ClassWithAttributes.extend(
 		// determine which constructor is used
 		var _nodeName = attributes["type"] = _node.getAttribute("type") ?
 			_node.getAttribute("type") : _node.nodeName.toLowerCase();
-		var readonly = attributes["readonly"] =
+		var readonly = attributes["readonly"] = this.getArrayMgr("readonlys") ?
 			this.getArrayMgr("readonlys").isReadOnly(
 				_node.getAttribute("id"), _node.getAttribute("readonly"),
-				typeof this.readonly !== 'undefined' ? this.readonly : this.options.readonly );
+				typeof this.readonly !== 'undefined' ? this.readonly : this.options.readonly ) : false;
 
 		// Check to see if modifications change type
 		var modifications = this.getArrayMgr("modifications");
