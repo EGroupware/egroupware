@@ -54,11 +54,11 @@
             // DRAG AND DROP
             div.ui-sortable {
 
-                div {
-                    padding: 3px 0 1px 3px;
-                    cursor: pointer;
-                }
-            }
+				div {
+					padding: 3px 0 1px 3px;
+					cursor: pointer;
+				}
+			}
 
 
             //####################################################
@@ -120,23 +120,14 @@
 
                 img {padding-left: 9px; padding-top: 6px; height: 18px;}
 
-                h1 {
-					text-transform: uppercase;
-					font-size: 1.4em;
-					.color_100_gray;
-					padding-top: .8em;
-					background-image: url(../images/reload.png);
-					background-repeat: no-repeat;
-					background-size: 16px;
-					background-position-x: 74%;
-					background-position-y: 60%;
-					background-position: 74%;
-					&:active {background-image: url(../images/ajax-loader.gif) !important;}
-				}
+                h1 {text-transform: uppercase;font-size: 1.4em;.color_100_gray;padding-top: .8em;}
 
-                &:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
                 &:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
-
+				&:hover {
+					img {
+						content: url(../images/reload.png);
+					}
+				}
                 &:focus {
                     background-image: url("../images/ajax-loader.gif");
                     background-repeat: no-repeat;
@@ -153,7 +144,7 @@
                     .dimension_width_height_s;
                 }
 
-                .egw_fw_ui_ajaxloader {margin-top: -15%;margin-right: 25%;}
+                .egw_fw_ui_ajaxloader {margin-top: -26px;}
 
             }
 
@@ -349,7 +340,7 @@
 		margin-top: 0;
 		margin-bottom: -30px;
 		float: right;
-		margin-right:5px;
+		margin-right:-15px;
 
 		span {
 			background-color: transparent;
