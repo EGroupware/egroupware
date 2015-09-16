@@ -52,6 +52,7 @@ add shortcut	common	de	Abkürzung hinzufügen
 add sub	common	de	Untergeordnete hinzufügen
 add user to responsibles	groupdav	de	füge Benutzer zu Verantwortlichen hinzu
 add user to responsibles, removing evtl. previous category user	groupdav	de	füge Benutzer zu Verantwortlichen hinzu, entferne Benutzer der vorherigen Kategorie
+add your domain as "%1" in options to list of email providers and enable api.	common	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
 addressbook	common	de	Adressbuch
 addressbooks to sync in addition to personal addressbook	groupdav	de	Adressbücher die zusätzlich zum persönlichen synchronisiert werden sollen
 admin	common	de	Admin
@@ -110,6 +111,7 @@ bahrain	common	de	BAHRAIN
 bangladesh	common	de	BANGLADESH
 barbados	common	de	BARBADOS
 bcc	common	de	Blindkopie
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	de	Außerdem empfehlen wir Ihnen dieses kurze Video, bevor Sie mit der Installation starten. Hier wird gezeigt, wie das Mailvelope Plugin zusammen mit EGroupware funktioniert.
 belarus	common	de	BELORUSSLAND (WEISSRUSSLAND)
 belgium	common	de	BELGIEN
 belize	common	de	BELIZE
@@ -938,6 +940,7 @@ you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
 you need to %1set your timezone preference%2.	common	de	Sie müssen %1Ihre Zeitzone in den Einstellungen setzen%2
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	de	Bitte installieren Sie das Mailvelope Plugin, erhältlich für Firefox und Chrome, von www.mailvelope.com oder klicken Sie auf den Button "Installieren".
 you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
 you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie müssen logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
 you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail sender oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!

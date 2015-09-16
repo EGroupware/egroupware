@@ -85,6 +85,7 @@ apply the action on the whole query, not only the shown entries	common	en	Apply 
 april	common	en	April
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries?
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry?
+are you sure, you would like to delete the backup key?	common	en	Are you sure, you would like to delete the backup key?
 argentina	common	en	ARGENTINA
 armenia	common	en	ARMENIA
 aruba	common	en	ARUBA
@@ -103,6 +104,7 @@ azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
 background color:	common	en	Background color:
+backup/restore	common	en	Backup/Restore
 backupdir '%1' is not writeable by the webserver	common	en	Backupdir '%1' is not writeable by the web server.
 bad login or password	common	en	Bad login or password.
 bahamas	common	en	BAHAMAS
@@ -110,6 +112,7 @@ bahrain	common	en	BAHRAIN
 bangladesh	common	en	BANGLADESH
 barbados	common	en	BARBADOS
 bcc	common	en	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	en	Before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware.
 belarus	common	en	BELARUS
 belgium	common	en	BELGIUM
 belize	common	en	BELIZE
@@ -230,6 +233,7 @@ default height for the windows	common	en	Default height for the windows
 default width for the windows	common	en	Default width for the windows
 del	common	en	Del
 delete	common	en	Delete
+delete backup key	common	en	Delete backup key
 delete category	common	en	Delete category
 delete file	common	en	Delete file
 delete row	common	en	Delete row
@@ -498,6 +502,8 @@ macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	en	MADAGASCAR
 mail domain, eg. "%1"	common	en	Mail domain, eg. "%1"
+mailvelope addon installation faild! please try agian.	common	en	Mailvelope addon installation faild! Please try agian.
+mailvelope addon installation succeded. now you may configure the options.	common	en	Mailvelope addon installation succeded. Now you may configure the options.
 main category	common	en	Main category
 main screen	common	en	Main screen
 maintainer	common	en	Maintainer
@@ -636,6 +642,8 @@ personal	common	en	Personal
 peru	common	en	PERU
 pg down	common	en	Pg down
 pg up	common	en	Pg up
+pgp encryption	common	en	PGP Encryption
+pgp encryption installation	common	en	PGP Encryption Installation
 philippines	common	en	PHILIPPINES
 phone number	common	en	Phone number
 phpgwapi	common	en	EGroupware API
@@ -826,6 +834,7 @@ text color:	common	en	Text color:
 thailand	common	en	THAILAND
 the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
 the following applications require upgrades	common	en	The following applications require upgrades
+the key backup has been deleted.	common	en	The key backup has been deleted.
 the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
@@ -900,6 +909,7 @@ view	common	en	View
 virgin islands, british	common	en	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	en	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	en	WALLIS AND FUTUNA
+was not able to delete key backup because %1	common	en	Was not able to delete key backup because %1
 wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western european	common	en	Western european
@@ -938,6 +948,7 @@ you have successfully logged out	common	en	You have successfully logged out.
 you need to %1set your timezone preference%2.	common	en	You need to %1set your time zone preference%2.
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the web server user '%1' to the group '%2'.
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an EGroupware administrator to access this functionality!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	en	You need to install Mailvelope plugin available for Chrome and Firefox from www.mailvelope.com or by clicking on install button.
 you need to select some entries first!	common	en	You need to select some entries first!
 you need to set enable logging to "%1" to create/update a log.	groupdav	en	You need to set enable logging to "%1" to create/update a log.
 you will not be able to send or receive encrypted mails before completing that step!	common	en	You will NOT be able to send or receive encrypted mails before completing that step!

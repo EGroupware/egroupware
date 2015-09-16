@@ -14,7 +14,7 @@
 					<description value="$row_cont[domain]"/>
 				</row>
 				<row>
-					<description value="Although, before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware."/>
+					<description value="Before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware."/>
 				</row>
 				<row>
 					<video video_src="https://www.egroupware.de/videos/mailvelope_only_EN.mp4" controls="true" height="260" width="60%"/>	
