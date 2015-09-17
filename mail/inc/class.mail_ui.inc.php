@@ -1463,7 +1463,8 @@ class mail_ui
 	function get_toolbar_actions()
 	{
 		$actions = $this->get_actions();
-		$arrActions = array('composeasnew','reply','reply_all','forward','flagged','delete','print','infolog','tracker','calendar','save','view');
+		$arrActions = array('composeasnew', 'reply', 'reply_all', 'forward', 'flagged', 'delete', 'print',
+			'infolog', 'tracker', 'calendar', 'save', 'view', 'read');
 		foreach( $arrActions as &$act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
@@ -1480,6 +1481,9 @@ class mail_ui
 					$actionsenabled[$act]=$actions[$act];
 					break;
 				case 'flagged':
+					$actionsenabled[$act]= $actions['mark']['children'][$act];
+					break;
+				case 'read':
 					$actionsenabled[$act]= $actions['mark']['children'][$act];
 					break;
 				default:
@@ -1848,35 +1852,7 @@ class mail_ui
 				);
 			}
 		}
-		$actionsenabled = self::get_actions();
-		unset($actionsenabled['open']);
-		unset($actionsenabled['mark']['children']['setLabel']);
-		unset($actionsenabled['mark']['children']['read']);
-		unset($actionsenabled['mark']['children']['unread']);
-		unset($actionsenabled['mark']['children']['undelete']);
-		unset($actionsenabled['mark']['children']['readall']);
-		unset($actionsenabled['moveto']);
-		unset($actionsenabled['drag_mail']);
-		$actionsenabled['mark']['children']['flagged']=array(
-			'group' => $actionsenabled['mark']['children']['flagged']['group'],
-			'caption' => 'Flagged',
-			'icon' => 'unread_flagged_small',
-			'onExecute' => 'javaScript:app.mail.mail_flag',
-		);
-		$actionsenabled['mark']['children']['unflagged']=array(
-			'group' => $actionsenabled['mark']['children']['flagged']['group'],
-			'caption' => 'Unflagged',
-			'icon' => 'read_flagged_small',
-			'onExecute' => 'javaScript:app.mail.mail_flag',
-		);
-		$actionsenabled['tracker']['toolbarDefault'] = true;
-		$actionsenabled['mark']['toolbarDefault'] = true;
-		$actionsenabled['forward']['toolbarDefault'] = true;
-		$cAN = $actionsenabled['composeasnew'];
-		unset($actionsenabled['composeasnew']);
-		$actionsenabled = array_reverse($actionsenabled,true);
-		$actionsenabled['composeasnew']=$cAN;
-		$actionsenabled = array_reverse($actionsenabled,true);
+		$actionsenabled = $this->getDisplayToolbarActions();
 		$content['displayToolbaractions'] = json_encode($actionsenabled);
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
@@ -1914,7 +1890,35 @@ class mail_ui
 
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
-
+	
+	/**
+	 * Build actions for display toolbar
+	 */
+	function getDisplayToolbarActions ()
+	{
+		$actions = $this->get_toolbar_actions();
+		$actions['mark']['children']['flagged']=array(
+			'group' => $actions['mark']['children']['flagged']['group'],
+			'caption' => 'Flagged',
+			'icon' => 'unread_flagged_small',
+			'onExecute' => 'javaScript:app.mail.mail_flag',
+		);
+		$actions['mark']['children']['unflagged']=array(
+			'group' => $actions['mark']['children']['flagged']['group'],
+			'caption' => 'Unflagged',
+			'icon' => 'read_flagged_small',
+			'onExecute' => 'javaScript:app.mail.mail_flag',
+		);
+		$actions['tracker']['toolbarDefault'] = true;
+		$actions['forward']['toolbarDefault'] = true;
+		$compose = $actions['composeasnew'];
+		unset($actions['composeasnew']);
+		$actions = array_reverse($actions,true);
+		$actions['composeasnew']= $compose;
+		$actions = array_reverse($actions,true);
+		return $actions;
+	}
+	
 	/**
 	 * createAttachmentBlock
 	 * helper function to create the attachment block/table
