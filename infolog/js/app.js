@@ -63,7 +63,7 @@ app.classes.infolog = AppJS.extend(
 				// Enable decrypt on hover
 				if(this.egw.user('apps').stylite)
 				{
-					this._get_stylite(function() {this.mailvelopeAvailable(function() {app.stylite.decrypt_hover(nm);})});
+					this._get_stylite(function() {this.mailvelopeAvailable(function() {app.stylite.decrypt_hover(nm);});});
 				}
 				break;
 			case 'infolog.edit.print':
@@ -320,7 +320,7 @@ app.classes.infolog = AppJS.extend(
 
 			}
 		};
-		var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
+		et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
 	},
 
 	/**
@@ -672,6 +672,10 @@ app.classes.infolog = AppJS.extend(
 
 	/**
 	 * Make sure stylite javascript is loaded, and call the given callback when it is
+	 * 
+	 * @param {function} callback
+	 * @param {object} attrs
+	 * 
 	 */
 	_get_stylite: function(callback,attrs)
 	{
@@ -734,7 +738,8 @@ app.classes.infolog = AppJS.extend(
 					quotedMailHeader: start_pgp ? options.predefinedText.slice(0, start_pgp).replace(/> /mg, '').trim()+"\n" : "",
 					quotedMail: options.predefinedText.slice(start_pgp, end_pgp+this.end_pgp_message.length+1).replace(/> /mg, ''),
 					quotedMailIndent: start_pgp != 0,
-					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,'')
+					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,''),
+					keepAttachments:true
 				};
 			}
 		}
@@ -743,11 +748,11 @@ app.classes.infolog = AppJS.extend(
 		{
 			var $info_des_dom = jQuery(self.et2.getWidgetById('info_des').getDOMNode());
 			$info_des_dom.children('iframe').height($info_des_dom.height());
-			$info_des_dom.children('span').hide();
+					$info_des_dom.children('span').hide();
 
-			//Trigger print action
+					//Trigger print action
 			self.infolog_print_preview();
-		},
+				},
 		function(_err)
 		{
 			self.egw.message(_err, 'error');
