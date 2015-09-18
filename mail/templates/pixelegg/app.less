@@ -347,14 +347,11 @@ body {
 
     // ##################################
     //	Toolbar
-.et2_toolbar button.toolbar_toggled {
-    background-color: @color_positive_action;
-}
-
-
-
-
-
+	.et2_toolbar button.toolbar_toggled {
+		&:hover{
+			background-color: white !important;
+		}
+	}
 
 	#mail-compose_composeToolbar{
 
@@ -382,7 +379,7 @@ body {
 		button#composeToolbar-to_tracker:hover,
 		button#composeToolbar-disposition:hover,
 		button#composeToolbar-to_calendar:hover {
-			background: none;
+			background-color: @egw_color_1_a;;
 		}
     } // Toolbar Ende
 

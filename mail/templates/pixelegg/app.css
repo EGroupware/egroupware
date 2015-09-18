@@ -1133,8 +1133,8 @@ body {
   /*background-color: @gray-0;*/
   /*.gradient_thead;*/
 }
-#mail-compose .et2_toolbar button.toolbar_toggled {
-  background-color: #189800;
+#mail-compose .et2_toolbar button.toolbar_toggled:hover {
+  background-color: white !important;
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send {
   height: 24px;
@@ -1165,7 +1165,7 @@ body {
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_tracker:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_calendar:hover {
-  background: none;
+  background-color: #ffc200;
 }
 #mail-compose table.et2_grid {
   display: inline-block;
