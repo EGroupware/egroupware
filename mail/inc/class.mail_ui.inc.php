@@ -1464,7 +1464,7 @@ class mail_ui
 	{
 		$actions = $this->get_actions();
 		$arrActions = array('composeasnew', 'reply', 'reply_all', 'forward', 'flagged', 'delete', 'print',
-			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4');
+			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4', 'label5');
 		foreach( $arrActions as &$act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
