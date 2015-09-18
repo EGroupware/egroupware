@@ -47,6 +47,9 @@ class accounts_univention extends accounts_ldap
 	 */
 	function save(&$data)
 	{
+		// UCS lowercases email when storing
+		$data['account_email'] = strtolower($data['account_email']);
+
 		if (self::available())
 		{
 			$config = $this->frontend->config && $this->frontend->config['ldap_context'] ?
