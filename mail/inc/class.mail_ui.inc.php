@@ -1464,7 +1464,7 @@ class mail_ui
 	{
 		$actions = $this->get_actions();
 		$arrActions = array('composeasnew', 'reply', 'reply_all', 'forward', 'flagged', 'delete', 'print',
-			'infolog', 'tracker', 'calendar', 'save', 'view', 'read');
+			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4', 'label5');
 		foreach( $arrActions as &$act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
@@ -1485,6 +1485,26 @@ class mail_ui
 					break;
 				case 'read':
 					$actionsenabled[$act]= $actions['mark']['children'][$act];
+					break;
+				case 'label1':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('important');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label2':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('job');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label3':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('personal');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label4':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('to do');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label5':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('later');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
 					break;
 				default:
 					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
