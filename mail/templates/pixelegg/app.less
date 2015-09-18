@@ -378,7 +378,10 @@ body {
             &:disabled {background-color: @color_disabled !important;}
 
         }
-		button#composeToolbar-to_infolog:hover, button#composeToolbar-to_tracker:hover, button#composeToolbar-disposition:hover {
+		button#composeToolbar-to_infolog:hover,
+		button#composeToolbar-to_tracker:hover,
+		button#composeToolbar-disposition:hover,
+		button#composeToolbar-to_calendar:hover {
 			background: none;
 		}
     } // Toolbar Ende
@@ -549,7 +552,8 @@ div.mailUploadSection {
             }
 
             button[id*="toolbar-infolog"],
-            button[id*="toolbar-tracker"]{
+            button[id*="toolbar-tracker"],
+			button[id*="toolbar-calendar"]{
                 &:active {background-color: .background_color_15_gray;}
             }
 
@@ -695,7 +699,8 @@ div.mailUploadSection {
                     }
 
                     button[id*="toolbar-infolog"],
-                    button[id*="toolbar-tracker"]{
+                    button[id*="toolbar-tracker"],
+					button[id*="toolbar-calendar"]{
                         &:hover {background-color: @egw_color_1_a;}
                         &:active {background-color: .background_color_15_gray;}
                     }
@@ -1531,7 +1536,8 @@ input[type=button] {
             }
 
             button[id*="toolbar-infolog"],
-            button[id*="toolbar-tracker"]{
+            button[id*="toolbar-tracker"],
+			button[id*="toolbar-calendar"]{
                                 &:focus {
                     background-color: @egw_color_1_a;
                     .gradient_vertical (@egw_color_1_a, @egw_color_1_a);
