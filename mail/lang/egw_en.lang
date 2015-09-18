@@ -165,6 +165,7 @@ error:could not save the acl! because some names are empty!	mail	en	Error:Could 
 esync will fail without a working email configuration!	mail	en	eSync will FAIL without a working eMail configuration!
 event details follow	mail	en	Event Details follow
 everyone	mail	en	Everyone
+examine namespace to retrieve folders in others and shared	mail	en Examine Namespace to retrieve Folders in OTHERS and SHARED
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra sent folders
 failed to delete %1	mail	en	Failed to delete %1
@@ -312,6 +313,7 @@ notify when new mails arrive in these folders	mail	en	notify when new mails arri
 on	mail	en	on
 one address is not valid	mail	en	One address is not valid
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	en	Only makes sense, if you transport password through a different channel / outside of this mail to recipients!
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	en	only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level
 only one window	mail	en	only one window
 only send message, do not copy a version of the message to the configured sent folder	mail	en	only send message, do not copy a version of the message to the configured sent folder
 open in html mode	mail	en	Open in HTML mode

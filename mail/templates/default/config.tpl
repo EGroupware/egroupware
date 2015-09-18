@@ -13,6 +13,17 @@
    <tr class="th">
 	   <td colspan="2"><b>{lang_Deny_certain_groups_access_to_following_features}</b></td>
    </tr>
+   <tr class="row_off">
+    <td> <b>{lang_examine_namespace_to_retrieve_folders_in_others_and_shared}</b><br/>
+	{lang_only_needed_for_some_servers,_that_do_not_return_all_folders_on_root_level_queries_to_retrieve_all_folders_for_that_level}
+	</td>
+    <td>
+     <select name="newsettings[examineNamespace]">
+      <option value=""{selected_examineNamespace_False}>{lang_No}</option>
+      <option value="True"{selected_examineNamespace_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
    <tr class="row_on">
 	<td>
 	 <b>{lang_Create_new_account}</b>
