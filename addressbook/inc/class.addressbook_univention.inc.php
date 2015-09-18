@@ -23,4 +23,18 @@ class addressbook_univention extends addressbook_ldap
 		);
 		parent::__construct($ldap_config, $ds);
 	}
+
+	/**
+	 * saves the content of data to the db
+	 *
+	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
+	 * @return int 0 on success and errno != 0 else
+	 */
+	function save($keys=null)
+	{
+		// UCS lowercases email when storing
+		$keys['email'] = strtolower(!empty($keys['email']) ? $keys['email'] : $this->data['email']);
+
+		return parent::save($keys);
+	}
 }
