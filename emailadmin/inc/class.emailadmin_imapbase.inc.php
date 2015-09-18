@@ -842,7 +842,7 @@ class emailadmin_imapbase
 		$mailbox=null;
 		try
 		{
-			if($this->folderExists($this->sessionData['mailbox'])) $mailbox = $this->sessionData['mailbox'];
+			if(isset($this->sessionData['mailbox'])&&$this->folderExists($this->sessionData['mailbox'])) $mailbox = $this->sessionData['mailbox'];
 			if (empty($mailbox)) $mailbox = $this->icServer->getCurrentMailbox();
 /*
 			if (isset(emailadmin_imap::$supports_keywords[$_icServerID]))
@@ -1109,12 +1109,7 @@ class emailadmin_imapbase
 		}
 		static $folderInfoCache; // reduce traffic on single request
 		static $folderBasicInfo;
-		if (is_null($folderBasicInfo) || !isset($folderBasicInfo[$this->profileID]))
-		{
-			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
-			$folderInfoCache = $folderBasicInfo[$this->profileID];
-		}
-		else
+		if (isset($folderBasicInfo[$this->profileID]))
 		{
 			$folderInfoCache = $folderBasicInfo[$this->profileID];
 		}
@@ -1159,7 +1154,7 @@ class emailadmin_imapbase
 				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
 				$folderInfo = is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
 					'ATTRIBUTES' => '');
-				if (empty($folderInfo['HIERACHY_DELIMITER']) || (isset($folderInfo['delimiter']) && empty($folderInfo['delimiter'])))
+				if (!isset($folderInfo['HIERACHY_DELIMITER']) || empty($folderInfo['HIERACHY_DELIMITER']) || (isset($folderInfo['delimiter']) && empty($folderInfo['delimiter'])))
 				{
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($folderInfo));
 					$folderInfo['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
@@ -1169,8 +1164,8 @@ class emailadmin_imapbase
 		#if(!is_array($folderInfo)) {
 		#	return false;
 		#}
-		$retValue['delimiter']		= ($folderInfo['HIERACHY_DELIMITER']?$folderInfo['HIERACHY_DELIMITER']:$folderInfo['delimiter']);
-		$retValue['attributes']		= ($folderInfo['ATTRIBUTES']?$folderInfo['ATTRIBUTES']:$folderInfo['attributes']);
+		$retValue['delimiter']		= (isset($folderInfo['HIERACHY_DELIMITER']) && $folderInfo['HIERACHY_DELIMITER']?$folderInfo['HIERACHY_DELIMITER']:$folderInfo['delimiter']);
+		$retValue['attributes']		= (isset($folderInfo['ATTRIBUTES']) && $folderInfo['ATTRIBUTES']?$folderInfo['ATTRIBUTES']:$folderInfo['attributes']);
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
 		$retValue['displayName']	= $_folderName;
@@ -1185,7 +1180,6 @@ class emailadmin_imapbase
 			$retValue['displayName'] = $retValue['shortDisplayName'] = lang($retValue['shortName']);
 		}
 		if ($folderInfo) $folderBasicInfo[$this->profileID][$_folderName]=$retValue;
-		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
 		//error_log(__METHOD__.' ('.__LINE__.') '.' '.$_folderName.array2string($retValue['attributes']));
 		if ($basicInfoOnly || (isset($retValue['attributes']) && stripos(array2string($retValue['attributes']),'noselect')!==false))
 		{
@@ -1195,10 +1189,6 @@ class emailadmin_imapbase
 		// cache it for a minute 60*60*1
 		// this should reduce communication to the imap server
 		static $subscribedFolders;
-		if ($fetchSubscribedInfo && is_null($subscribedFolders)||empty($subscribedFolders[$this->profileID]))
-		{
-			$subscribedFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','subscribedFolders'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
-		}
 		static $nameSpace;
 		static $prefix;
 		if (is_null($nameSpace) || empty($nameSpace[$this->profileID])) $nameSpace[$this->profileID] = $this->_getNameSpaces();
@@ -1216,7 +1206,6 @@ class emailadmin_imapbase
 		if ($fetchSubscribedInfo && is_null($subscribedFolders) || empty($subscribedFolders[$this->profileID]))
 		{
 			$subscribedFolders[$this->profileID] = $this->icServer->listSubscribedMailboxes();
-			egw_cache::setCache(egw_cache::INSTANCE,'email','subscribedFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$subscribedFolders,$expiration=60*60*1);
 		}
 
 		if($fetchSubscribedInfo && is_array($subscribedFolders[$this->profileID]) && in_array($_folderName,$subscribedFolders[$this->profileID])) {
@@ -1289,6 +1278,7 @@ class emailadmin_imapbase
 		$rByUid = true; // try searching by uid. this var will be passed by reference to getSortedList, and may be set to false, if UID retrieval fails
 		#print "<pre>";
 		#$this->icServer->setDebug(true);
+		$total=0;
 		if ($_thisUIDOnly === null)
 		{
 			if (($_startMessage || $_numberOfMessages) && !isset($_filter['range']))
@@ -1388,7 +1378,7 @@ class emailadmin_imapbase
 				'X-PRIORITY'
 			),array(
 				// Cache headers, we'll look at them below
-				'cache' => true,
+				'cache' => true,//$_cacheResult,
 				// Set peek so messages are not flagged as read
 				'peek' => true
 			));
@@ -1459,11 +1449,12 @@ class emailadmin_imapbase
 				$headerObject['SUBJECT'] = (is_array($headerForPrio['SUBJECT'])?$headerForPrio['SUBJECT'][0]:$headerForPrio['SUBJECT']);
 				$headerObject['FROM'] = (array)($headerForPrio['FROM']?$headerForPrio['FROM']:($headerForPrio['REPLY-TO']?$headerForPrio['REPLY-TO']:$headerForPrio['RETURN-PATH']));
 				$headerObject['TO'] = (array)$headerForPrio['TO'];
-				$headerObject['CC'] = (array)$headerForPrio['CC'];
-				$headerObject['PRIORITY'] = $headerForPrio['X-PRIORITY'];
+				$headerObject['CC'] = isset($headerForPrio['CC'])?(array)$headerForPrio['CC']:array();
+				$headerObject['PRIORITY'] = isset($headerForPrio['X-PRIORITY'])?$headerForPrio['X-PRIORITY']:null;
 				foreach (array('FROM','TO','CC') as $_k => $key)
 				{
 					$address = array();
+					$remember=null;
 					foreach ($headerObject[$key] as $k => $ad)
 					{
 						if (stripos($ad,'@')===false)
@@ -1601,7 +1592,7 @@ class emailadmin_imapbase
 						}
 					}
 				}
-				if(is_array($headerObject['CC']) && $headerObject['CC'][0]) {
+				if(is_array($headerObject['CC']) && count($headerObject['CC'])>0) {
 					$ki=0;
 					foreach($headerObject['CC'] as $k => $add)
 					{
@@ -2652,11 +2643,44 @@ class emailadmin_imapbase
 		{
 			// Get top mailboxes of icServer
 			$topFolders = $this->icServer->getMailboxes("", 2, true);
+			// Trigger examination of namespace to retrieve
+			// folders located in other and shared; needed only for some servers
+			if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
+			if (self::$mailConfig['examineNamespace'])
+			{
+				$nameSpace = $this->_getNameSpaces();
+				//error_log(__METHOD__.__LINE__.array2string($nameSpace));
+				$prefixes=array();
+				if (is_array($nameSpace))
+				{
+					foreach($nameSpace as $k => $singleNameSpace) {
+						$type = $singleNameSpace['type'];
+						// the following line (assumption that for the same namespace the delimiter should be equal) may be wrong
+						$foldersNameSpace[$type]['delimiter']  = $singleNameSpace['delimiter'];
 
+						if(is_array($singleNameSpace) && $singleNameSpace['prefix']){
+							$prefixes[$type] = $singleNameSpace['prefix'];
+							$result = $this->icServer->getMailboxes($singleNameSpace['prefix'], 2, true);
+							if (is_array($result))
+							{
+								ksort($result);
+								$topFolders = array_merge($topFolders,$result);
+							}
+						}
+					}
+				}
+			}
 			foreach ($topFolders as &$node)
 			{
+				//error_log(__METHOD__.__LINE__.array2string($node));
 				$pattern = "/\\".$delimiter."/";
 				$reference = preg_replace($pattern, '', $node['MAILBOX']);
+				if(!empty($prefixes))
+				{
+					$reference = '';
+					$tmpArray = explode($delimiter,$node['MAILBOX']);
+					foreach($tmpArray as $p) $reference = empty($reference)?$p:$reference.$delimiter.$p;
+				}
 				$mainFolder = $subFolders = array();
 
 				// Get special use folders
@@ -2676,6 +2700,8 @@ class emailadmin_imapbase
 					$mainFolder = $this->icServer->getMailboxes($reference, 1, true);
 					$subFolders = $this->icServer->getMailboxes($node['MAILBOX'].$node['delimiter'], $_search, true);
 				}
+				//error_log(__METHOD__.__LINE__.$reference.'.'.array2string($mainFolder));
+				//error_log(__METHOD__.__LINE__.$node['MAILBOX'].$node['delimiter'].'.'.array2string($subFolders));
 				if (is_array($mainFolder['INBOX']))
 				{
 					// Array container of auto folders
@@ -2746,6 +2772,7 @@ class emailadmin_imapbase
 		}
 
 		// Get counter information and add them to each fetched folders array
+		// TODO:  do not fetch counters for user .... as in shared / others
 		if ($_getCounter)
 		{
 			foreach ($folders as &$folder)
@@ -4232,7 +4259,7 @@ class emailadmin_imapbase
 
 		if (empty($_folder))
 		{
-			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+			$_folder = (isset($this->sessionData['mailbox'])&&$this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_folder).'/'.$this->icServer->getCurrentMailbox().'/'. $this->sessionData['mailbox']);
 		// querying contents of body part
@@ -4491,6 +4518,7 @@ class emailadmin_imapbase
 	 */
 	static function &getdisplayableBody(&$mailClass, $bodyParts, $preserveHTML = false)
 	{
+		$message='';
 		for($i=0; $i<count($bodyParts); $i++)
 		{
 			if (!isset($bodyParts[$i]['body'])) {
@@ -5089,7 +5117,7 @@ class emailadmin_imapbase
 	{
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
-
+		$attachments = array();
 		if (!isset($_structure))
 		{
 			$_structure = $this->getStructure($_uid, $_partID,$_folder,true);
@@ -5099,6 +5127,7 @@ class emailadmin_imapbase
 		if (!empty($_partID)) $_structure = $_structure->getPart($_partID);
 		$skipParts = array();
 		$tnefParts = array();
+		$skip = 0;
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
 			$part = $_structure->getPart($mime_id);
@@ -5289,7 +5318,7 @@ class emailadmin_imapbase
 	 */
 	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
-		//error_log(__METHOD__.__LINE__."Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr, ReturnPart:$_returnPart, Stream:$_stream");
+		error_log(__METHOD__.__LINE__."Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr, ReturnPart:$_returnPart, Stream:$_stream, Folder:$_folder".function_backtrace());
 		if (!isset($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
@@ -5320,7 +5349,7 @@ class emailadmin_imapbase
 					if (empty($partDisposition)) $partDisposition='attachment';
 					if ($part && ($partDisposition=='attachment' || $partDisposition=='inline' || ($part->getPrimaryType() == 'text' && $part->getSubType() == 'calendar')))
 					{
-						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
+						//$headerObject=$part->getAllDispositionParameters();//not used anywhere around here
 
 						$structure_bytes = $part->getBytes();
 						$structure_mime=$part->getType();
