@@ -80,7 +80,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.dropdowns = {};
 		this.preference = {};
 		
-		this._build_menu(this.default_toolbar);
+		this._build_menu(this.default_toolbar, true);
 	},
 
 	destroy: function() {
@@ -94,13 +94,61 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.actionbox.empty().remove();
 		this.actionlist.empty().remove();
 	},
-
+	
+	/**
+	 * Fix function in order to fix toolbar preferences with the new preference structure
+	 * @param {action object} _action
+	 * @todo ** SEE IMPORTANT TODO **
+	 */
+	_fix_preference: function (_action)
+	{
+		
+		// ** IMPORTANT TODO: This switch case should be removed for new release **
+		// This is an ugly hack but we need to add this switch becuase to update and fix
+		// current users toolbar preferences with the new structure which is:
+		// - All actions should be stored in preference
+		// - Actions inside menu set as true
+		// - Actions outside menu set as false
+		// - if an action gets added to toolbar it would be undefined in
+		//  the preference which we need to consider to add it to the preference
+		//  according to its toolbarDefault option.
+		if (this.dom_id === 'mail-display_displayToolbar' || this.dom_id === 'mail-index_toolbar')
+		{
+			switch (_action.id)
+			{
+				// Actions newly added to mail index and display toolbar
+				case 'read':
+				case 'label1':
+				case 'label2':
+				case 'label3':
+				case 'label4':
+				case 'label5':	
+					this.set_prefered(_action.id, !_action.toolbarDefault);
+					break;
+				default:
+					// Fix structure and add the actions not the preference
+					// into the preference with value false, as they're already
+					// outside of the menu.
+					this.set_prefered(_action.id, false);
+			}
+		}
+		else
+		{
+			//** IMPORTANT TODO: This line needs to stay and be fixed with !toolbarDefault after the if condition
+			// has been removed.
+			this.set_prefered(_action.id, false/*!toolbarDefault*/);
+		}
+	},
+	
 	/**
 	 * Go through actions and build buttons for the toolbar
 	 *
 	 * @param {Object} actions egw-actions to build menu from
+	 * @param {boolean} isDefault setting isDefault with true will
+	 *  avoid actions get into the preferences, for instandce, first
+	 *  time toolbar_default actions initialization.
 	 */
-	_build_menu: function(actions)
+	_build_menu: function(actions, isDefault)
 	{
 		// Clear existing
 		this.div.empty();
@@ -114,13 +162,28 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 			
 		//Set the default actions for the first time
-		if (typeof pref === 'undefined')
+		if (typeof pref === 'undefined' && !isDefault)
 		{
 			for (var name in actions)
 			{
-				if (!actions[name].toolbarDefault &&
-						(typeof actions[name].children === 'undefined' || !this.options.flat_list))
-					this.set_prefered(actions[name].id,'add');
+				if ((typeof actions[name].children === 'undefined' || !this.options.flat_list) && actions[name].id)
+				{
+					this.set_prefered(actions[name].id,!actions[name].toolbarDefault);
+				}
+			}
+		}
+		else if(!isDefault)
+		{
+			for (var name in actions)
+			{
+				// Check if the action is not in the preference, means it's an new added action
+				// therefore it needs to be added to the preference with taking its toolbarDefault
+				// option into account.
+				if ((typeof actions[name].children === 'undefined' || !this.options.flat_list)
+						&& typeof pref[name] === 'undefined')
+				{
+					this._fix_preference(actions[name]);
+				}
 			}
 		}
 
@@ -158,8 +221,13 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			}
 			return totalCount;
 		};
-
-		this.countActions = countActions(actions) - Object.keys(this.preference).length;
+		var menuLen = 0;
+		for (var key in this.preference)
+		{
+			if (this.preference[key]) menuLen++;
+		}
+	
+		this.countActions = countActions(actions) - menuLen;
 
 		var last_group = false;
 		var last_group_id = false;
@@ -206,11 +274,22 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 						if (that.flat_list)
 						{
 							childaction = root.children[id];
-							if (typeof pref === 'undefined')
+							if (typeof pref === 'undefined' && !isDefault)
 							{
 								if (!childaction.toolbarDefault)
 								{
-									that.set_prefered(childaction.id,'add');
+									that.set_prefered(childaction.id,true);
+								}
+								else
+								{
+									that.set_prefered(childaction.id,false);
+								}
+							}
+							else if(!isDefault)
+							{
+								if (typeof pref[childaction.id] === 'undefined')
+								{
+									that._fix_preference(childaction);
 								}
 							}
 							if (typeof root.children[id].group !== 'undefined' &&
@@ -322,7 +401,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		toolbox.children().droppable({
 			accept:toolbar,
 			drop:function (event, ui) {
-					that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"add");
+					that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),true);
 					ui.draggable.appendTo(menulist);
 					if (that.actionlist.find(".ui-draggable").length == 0)
 					{
@@ -336,7 +415,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.actionlist.droppable({
 			tolerance:"pointer",
 			drop:function (event,ui) {
-				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),"remove");
+				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),false);
 				ui.draggable.appendTo(that.actionlist);
 				that._build_menu(actions);
 			}
@@ -370,21 +449,13 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	 * Add/Or remove an action from prefence
 	 *
 	 * @param {string} _action name of the action which needs to be stored in pereference
-	 * @param {string} _do if set to "add" add the action to preference and "remove" remove one from preference
+	 * @param {boolean} _state if set to true action will be set to actionbox, false will set it to actionlist
 	 *
 	 */
-	set_prefered: function(_action,_do)
+	set_prefered: function(_action,_state)
 	{
-		switch(_do)
-		{
-			case "add":
-				this.preference[_action] = true;
-				egw.set_preference(this.egw().getAppName(),this.dom_id,this.preference);
-				break;
-			case "remove":
-				delete this.preference[_action];
-				egw.set_preference(this.egw().getAppName(),this.dom_id,this.preference);
-		}
+		this.preference[_action] = _state;
+		egw.set_preference(this.egw().getAppName(),this.dom_id,this.preference);
 	},
 
 	/**
