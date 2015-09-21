@@ -1987,144 +1987,154 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_callFlagMessages: function(_action, _elems, _allMessagesChecked)
 	{
-		var do_nmactions = true;
-		var msg;
-		var ftree;
-		var _folder;
-		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
-		if (_action.id=='read')
+		/**
+		 * vars
+		 */
+		var folder = '',
+			tree = {},
+			formData = {},
+			data = {
+				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
+				all: _allMessagesChecked || false,
+				popup: egw(window).is_popup() || false,
+				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
+			},
+			rowClass = _action.id;
+	
+		if (typeof _elems === 'undefined' || _elems.length == 0)
 		{
-			ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-			var _foldernode = ftree.getSelectedNode();
-			_folder = _foldernode.id;
-		}
-		if (typeof _elems == 'undefined'|| _elems.length==0)
-		{
-			do_nmactions = false;//indicates that this action is probably a popup?
-			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			if (this.mail_isMainWindow && this.mail_currentlyFocussed)
 			{
-				msg = {};
-				msg['msg'] = [this.et2.getArrayMgr('content').getEntry('mail_id') || ''];
-			}
-			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.mail_isMainWindow)
-			{
-				if (this.mail_currentlyFocussed)
-				{
-					msg = {};
-					msg['msg'] = [this.mail_currentlyFocussed];
-					_elems = msg;
-					do_nmactions = true;// is triggered from preview
-				}
+				data.msg = [this.mail_currentlyFocussed];
+				_elems = data;
+				data.msg = this.mail_getFormData(_elems).msg;
 			}
 		}
-
-		var classToProcess = _action.id;
-		if (_action.id=='read') classToProcess='seen';
-		else if (_action.id=='readall') classToProcess='seen';
-		else if (_action.id=='label1') classToProcess='labelone';
-		else if (_action.id=='label2') classToProcess='labeltwo';
-		else if (_action.id=='label3') classToProcess='labelthree';
-		else if (_action.id=='label4') classToProcess='labelfour';
-		else if (_action.id=='label5') classToProcess='labelfive';
-
-		if (do_nmactions)
+		else // action called by contextmenu
 		{
-			msg = this.mail_getFormData(_elems);
-			msg['all'] = _allMessagesChecked;
-			if (msg['all']=='cancel') return false;
-			msg['activeFilters'] = (_action.id=='readall'?false:this.mail_getActiveFilters(_action));
-			if (_action.id.substring(0,2)=='un') {
-				//old style, only available for undelete and unlabel (no toggle)
-				if ( _action.id=='unlabel') // this means all labels should be removed
+			data.msg = this.mail_getFormData(_elems).msg;
+		}
+		switch (_action.id)
+		{
+			case 'read':
+				rowClass = 'seen';
+				if (data.popup)
 				{
-					var labels = ['labelone','labeltwo','labelthree','labelfour','labelfive'];
-					for (var i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
-					this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
+					tree = opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 				}
 				else
 				{
-					this.mail_removeRowClass(_elems,_action.id.substring(2));
-					this.mail_setRowClass(_elems,_action.id);
-					this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
+					tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				}
-			}
-			else if (_action.id=='readall')
+				folder = tree.getSelectedNode().id;
+				break;
+			case 'readall':
+				rowClass = 'seen';
+				break;
+			case 'label1':
+				rowClass = 'labelone';
+				break;
+			case 'label2':
+				rowClass = 'labeltwo';
+				break;
+			case 'label3':
+				rowClass = 'labelthree';
+				break;
+			case 'label4':
+				rowClass = 'labelfour';
+				break;
+			case 'label5':
+				rowClass = 'labelfive';
+				break;
+			default:
+				break;	
+		}
+		jQuery(data).extend({},data, formData);
+		if (data['all']=='cancel') return false;
+
+		if (_action.id.substring(0,2)=='un') {
+			//old style, only available for undelete and unlabel (no toggle)
+			if ( _action.id=='unlabel') // this means all labels should be removed
 			{
-				this.mail_flagMessages('read',msg,(do_nmactions?false:true));
+				var labels = ['labelone','labeltwo','labelthree','labelfour','labelfive'];
+				for (var i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
+				this.mail_flagMessages(_action.id,data);
 			}
 			else
 			{
-				var msg_set = {msg:[]};
-				var msg_unset = {msg:[]};
-				var dataElem;
-				var flags;
-				var classes = '';
-				for (var i=0; i<msg.msg.length; i++)
-				{
-					dataElem = egw.dataGetUIDdata(msg.msg[i]);
-					if(typeof dataElem.data.flags == 'undefined')
-					{
-						dataElem.data.flags = {};
-					}
-					flags = dataElem.data.flags;
-					classes = dataElem.data['class'] || "";
-					classes = classes.split(' ');
-					// since we toggle we need to unset the ones already set, and set the ones not set
-					// flags is data, UI is done by class, so update both
-					// Flags are there or not, class names are flag or 'un'+flag
-					if(classes.indexOf(classToProcess) >= 0)
-					{
-						classes.splice(classes.indexOf(classToProcess),1);
-					}
-					if(classes.indexOf('un' + classToProcess) >= 0)
-					{
-						classes.splice(classes.indexOf('un' + classToProcess),1);
-					}
-					if (flags[_action.id])
-					{
-						msg_unset['msg'].push(msg.msg[i]);
-						classes.push('un'+classToProcess);
-						delete flags[_action.id];
-					}
-					else
-					{
-						msg_set['msg'].push(msg.msg[i]);
-						flags[_action.id] = _action.id;
-						classes.push(classToProcess);
-					}
-
-					// Update cache & call callbacks - updates list
-					dataElem.data['class']  = classes.join(' ');
-					egw.dataStoreUID(msg.msg[i],dataElem.data);
-
-					//Refresh the nm rows after we told dataComponent about all changes, since the dataComponent doesn't talk to nm, we need to do it manually
-					this.updateFilter_data(msg.msg[i], _action.id, msg.activeFilters);
-				}
-
-				// Notify server of changes
-				if (msg_unset['msg'] && msg_unset['msg'].length)
-				{
-					if (!msg['all']) this.mail_flagMessages('un'+_action.id,msg_unset);
-				}
-				if (msg_set['msg'] && msg_set['msg'].length)
-				{
-					if (!msg['all']) this.mail_flagMessages(_action.id,msg_set);
-				}
-				//server must do the toggle, as we apply to ALL, not only the visible
-				if (msg['all']) this.mail_flagMessages(_action.id,msg);
-				// No further update needed, only in case of read, the counters should be refreshed
-				if (_action.id=='read') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
-				return;
+				this.mail_removeRowClass(_elems,_action.id.substring(2));
+				this.mail_setRowClass(_elems,_action.id);
+				this.mail_flagMessages(_action.id,data);
 			}
+		}
+		else if (_action.id=='readall')
+		{
+			this.mail_flagMessages('read',data);
 		}
 		else
 		{
-			this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
+			var msg_set = {msg:[]};
+			var msg_unset = {msg:[]};
+			var dataElem;
+			var flags;
+			var classes = '';
+			for (var i=0; i<data.msg.length; i++)
+			{
+				dataElem = egw.dataGetUIDdata(data.msg[i]);
+				if(typeof dataElem.data.flags == 'undefined')
+				{
+					dataElem.data.flags = {};
+				}
+				flags = dataElem.data.flags;
+				classes = dataElem.data['class'] || "";
+				classes = classes.split(' ');
+				// since we toggle we need to unset the ones already set, and set the ones not set
+				// flags is data, UI is done by class, so update both
+				// Flags are there or not, class names are flag or 'un'+flag
+				if(classes.indexOf(rowClass) >= 0)
+				{
+					classes.splice(classes.indexOf(rowClass),1);
+				}
+				if(classes.indexOf('un' + rowClass) >= 0)
+				{
+					classes.splice(classes.indexOf('un' + rowClass),1);
+				}
+				if (flags[_action.id])
+				{
+					msg_unset['msg'].push(data.msg[i]);
+					classes.push('un'+rowClass);
+					delete flags[_action.id];
+				}
+				else
+				{
+					msg_set['msg'].push(data.msg[i]);
+					flags[_action.id] = _action.id;
+					classes.push(rowClass);
+				}
+
+				// Update cache & call callbacks - updates list
+				dataElem.data['class']  = classes.join(' ');
+				egw.dataStoreUID(data.msg[i],dataElem.data);
+
+				//Refresh the nm rows after we told dataComponent about all changes, since the dataComponent doesn't talk to nm, we need to do it manually
+				this.updateFilter_data(data.msg[i], _action.id, data.activeFilters);
+			}
+
+			// Notify server of changes
+			if (msg_unset['msg'] && msg_unset['msg'].length)
+			{
+				if (!data['all']) this.mail_flagMessages('un'+_action.id,msg_unset);
+			}
+			if (msg_set['msg'] && msg_set['msg'].length)
+			{
+				if (!data['all']) this.mail_flagMessages(_action.id,msg_set);
+			}
+			//server must do the toggle, as we apply to ALL, not only the visible
+			if (data['all']) this.mail_flagMessages(_action.id,data);
+			// No further update needed, only in case of read, the counters should be refreshed
+			if (_action.id=='read') this.mail_refreshFolderStatus(folder,'thisfolderonly',false,true);
+			return;
 		}
-		// only refresh counter. not grid as the ajaxmethod is called asyncronously
-		// on flagging, only seen/unseen has effect on counterdisplay
-		if (_action.id=='read' || _action.id=='readall') this.mail_refreshFolderStatus(_folder,'thisfolderonly',false,true);
-		//this.mail_refreshFolderStatus();
 	},
 
 	/**
