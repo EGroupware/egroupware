@@ -68,6 +68,7 @@ class customfields
 	 * @var Description of the options or value format for each cf_type
 	 */
 	public static $type_option_help = array(
+		'search'	=> 'set get_rows, get_title and id_field, or use @path to read options from a file in EGroupware directory',
 		'select'	=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'radio'		=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'button'	=> 'each value is a line like label=[javascript]'
