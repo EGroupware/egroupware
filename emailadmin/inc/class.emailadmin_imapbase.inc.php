@@ -2649,15 +2649,12 @@ class emailadmin_imapbase
 			if (self::$mailConfig['examineNamespace'])
 			{
 				$nameSpace = $this->_getNameSpaces();
-				//error_log(__METHOD__.__LINE__.array2string($nameSpace));
 				$prefixes=array();
 				if (is_array($nameSpace))
 				{
 					foreach($nameSpace as $k => $singleNameSpace) {
 						$type = $singleNameSpace['type'];
-						// the following line (assumption that for the same namespace the delimiter should be equal) may be wrong
-						$foldersNameSpace[$type]['delimiter']  = $singleNameSpace['delimiter'];
-
+					
 						if(is_array($singleNameSpace) && $singleNameSpace['prefix']){
 							$prefixes[$type] = $singleNameSpace['prefix'];
 							$result = $this->icServer->getMailboxes($singleNameSpace['prefix'], 2, true);
@@ -2672,14 +2669,16 @@ class emailadmin_imapbase
 			}
 			foreach ($topFolders as &$node)
 			{
-				//error_log(__METHOD__.__LINE__.array2string($node));
 				$pattern = "/\\".$delimiter."/";
 				$reference = preg_replace($pattern, '', $node['MAILBOX']);
 				if(!empty($prefixes))
 				{
 					$reference = '';
 					$tmpArray = explode($delimiter,$node['MAILBOX']);
-					foreach($tmpArray as $p) $reference = empty($reference)?$p:$reference.$delimiter.$p;
+					foreach($tmpArray as $p)
+					{
+						$reference = empty($reference)?$p:$reference.$delimiter.$p;
+					}
 				}
 				$mainFolder = $subFolders = array();
 
@@ -2700,8 +2699,7 @@ class emailadmin_imapbase
 					$mainFolder = $this->icServer->getMailboxes($reference, 1, true);
 					$subFolders = $this->icServer->getMailboxes($node['MAILBOX'].$node['delimiter'], $_search, true);
 				}
-				//error_log(__METHOD__.__LINE__.$reference.'.'.array2string($mainFolder));
-				//error_log(__METHOD__.__LINE__.$node['MAILBOX'].$node['delimiter'].'.'.array2string($subFolders));
+
 				if (is_array($mainFolder['INBOX']))
 				{
 					// Array container of auto folders
