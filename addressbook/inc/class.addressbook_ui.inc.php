@@ -135,7 +135,7 @@ class addressbook_ui extends addressbook_bo
 				$content['nm']['action'] = 'document';
 				$content['nm']['selected'] = array($id);
 			}
-			if ($content['nm']['action'] !== '')
+			if ($content['nm']['action'] !== '' && $content['nm']['action'] !== null)
 			{
 				if (!count($content['nm']['selected']) && !$content['nm']['select_all'] && $content['nm']['action'] != 'delete_list')
 				{
