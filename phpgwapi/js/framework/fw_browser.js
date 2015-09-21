@@ -136,7 +136,7 @@ var fw_browser =  Class.extend({
 		{
 			var ret = window.app[this.app.appName].linkHandler.call(window.app[this.app.appName], _url);
 			{
-				if (ret === true) return;
+				if (ret === true) return this.loadingDeferred.promise();
 				if (typeof ret === 'string')
 				{
 					_url = ret;
