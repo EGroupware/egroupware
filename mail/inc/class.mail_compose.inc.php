@@ -3324,7 +3324,7 @@ class mail_compose
 					$_rfcAddr=$rfcAddr->first();
 					if (!$_rfcAddr->valid)
 					{
-						break; // skip address if we encounter an error here
+						continue; // skip address if we encounter an error here
 					}
 					$email = $_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 
