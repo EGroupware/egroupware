@@ -1043,7 +1043,17 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$pref_name = 'nextmatch-' . (isset($content_value['columnselection_pref']) ? $content_value['columnselection_pref'] : $this->attrs['template']);
 			$refresh_pref_name = $pref_name.'-autorefresh';
-			$pref_level = $value['nm_col_preference'] == 'force' ? 'forced' : 'default';
+			switch($value['nm_col_preference']) {
+				case 'force':
+					$pref_level = 'forced';
+					break;
+				case 'reset':
+				case 'default':
+					$pref_level = 'default';
+					break;
+				default:
+					$pref_level = 'user';
+			}
 
 			// Clear forced pref before setting default
 			if($pref_level != 'forced')
