@@ -110,7 +110,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 
 				// Search for direct account name, then user in accounts first
 				$search = "\"$name\"";
-				$id = $GLOBALS['egw']->accounts->name2id($name, 'account_fullname');
+				$id = importexport_helper_functions::account_name2id($name);
 				if(!$id) {
 					$contacts = ExecMethod2('addressbook.addressbook_bo.search', $search,array('contact_id','account_id'),'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR',array(0,1));
 					if($contacts) $id = $contacts[0]['account_id'] ? $contacts[0]['account_id'] : 'c'.$contacts[0]['contact_id'];
