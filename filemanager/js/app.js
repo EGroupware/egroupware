@@ -725,7 +725,17 @@ app.classes.filemanager = AppJS.extend(
 		nm.activeFilters.view = view;
 
 		// Change template to match
-		nm.set_template(view == nm.controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile');
+		var template = view == nm.controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
+		nm.set_template(template);
+
+		// Wait for template to load, then refresh
+		template = nm.getWidgetById(template);
+		if(template && template.loading)
+		{
+			template.loading.done(function() {
+				nm.applyFilters({view: view});
+			})
+		}
 	},
 
 	/**
