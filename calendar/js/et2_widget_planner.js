@@ -745,7 +745,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			this._scroll_button('right', next_month) +
 			this._scroll_button('last', next_year);
 
-		content += '<div class="calendar_plannerMonthScale th" style="left: 0; width: 100%;">'+
+		content += '<div class="calendar_plannerMonthScale th et2_link" style="left: 0; width: 100%;">'+
 				title+"</div>";
 		content += "</div>";		// end of plannerScale
 
@@ -829,7 +829,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			{
 				title = '&nbsp;';
 			}
-			content += '<div class="calendar_plannerMonthScale et2_clickable" data-date="'+t.toJSON()+ '"'+// data-planner_days='+days_in_month+
+			content += '<div class="calendar_plannerMonthScale et2_clickable et2_link" data-date="'+t.toJSON()+ '"'+// data-planner_days='+days_in_month+
 				' style="left: '+left+'%; width: '+(day_width*days_in_month)+'%;">'+
 				title+"</div>";
 		}
@@ -877,7 +877,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				title = this._scroll_button('left',left.toJSON()) + title + this._scroll_button('right',right.toJSON());
 			}
 			
-			content += '<div class="calendar_plannerWeekScale et2_clickable" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
+			content += '<div class="calendar_plannerWeekScale et2_clickable et2_link" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
 		}
 		content += "</div>";		// end of plannerScale
 
@@ -937,7 +937,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					title += this._scroll_button('right',next.toJSON());
 				}
 			}
-			content += '<div class="calendar_plannerDayScale et2_clickable '+ day_class+
+			content += '<div class="calendar_plannerDayScale et2_clickable et2_link '+ day_class+
 				'" data-date=\'' + state +'\' style="left: '+left+'%; width: '+day_width+'%;"'+
 				(holidays ? ' title="'+holidays.join(',')+'"' : '')+'>'+title+"</div>\n";
 		}
@@ -982,7 +982,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		{
 			var title = date(egw.preference('timeformat','calendar') == 12 ? 'ha' : 'H',t);
 
-			content += '<div class="calendar_plannerHourScale" data-date="' + t.toJSON() +'" style="left: '+left+'%; width: '+(cell_width)+'%;">'+title+"</div>";
+			content += '<div class="calendar_plannerHourScale et2_link" data-date="' + t.toJSON() +'" style="left: '+left+'%; width: '+(cell_width)+'%;">'+title+"</div>";
 			t.setHours(t.getHours()+decr);
 		}
 		content += "</div>";		// end of plannerScale

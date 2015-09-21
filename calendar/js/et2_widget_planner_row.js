@@ -128,7 +128,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(this._parent.options.group_by === 'month')
 		{
 			this.title.attr('data-date', this.options.start_date.toJSON());
-			this.title.addClass('et2_clickable');
+			this.title.addClass('et2_clickable et2_link');
 		}
 		else
 		{
