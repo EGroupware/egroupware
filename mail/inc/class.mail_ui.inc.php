@@ -4337,7 +4337,11 @@ class mail_ui
 		if ($_sendJsonResponse)
 		{
 			$response = egw_json_response::get();
-			if ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false)))
+			if (isset($_messageList['msg']) && $_messageList['popup'])
+			{
+				$response->call('egw.refresh',lang('flagged %1 message as %2 in %3',$_messageList['msg'],lang($_flag),$folder),'mail', $_messageList['msg'], 'update');
+			}
+			else if ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false)))
 			{
 				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder),'mail');
 			}
