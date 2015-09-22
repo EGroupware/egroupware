@@ -98,6 +98,14 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 			$record->owner = $options['owner'];
 		}
 
+		// Handle errors in length or start/end date
+		if($record->start > $record->end)
+		{
+			$record->end = $record->start + $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength'] * 60;
+			$this->warnings[$import_csv->get_current_position()] = lang('error: starttime has to be before the endtime !!!');
+		}
+
+		// Parse particpants
 		if ($record->participants && !is_array($record->participants)) {
 			// Importing participants in human friendly format:
 			// Name (quantity)? (status) Role[, Name (quantity)? (status) Role]+
