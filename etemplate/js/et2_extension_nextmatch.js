@@ -1421,15 +1421,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 				// Auto refresh
 				self._set_autorefresh(autoRefresh.get_value());
 
-				// Set default or clear forced?
-				if(defaultCheck.get_value())
+				// Set default or clear forced
+				if(show_letters)
 				{
-					if(show_letters)
-					{
-						self.activeFilters.selectcols.push('lettersearch');
-					}
-					self.getInstanceManager().submit();
+					self.activeFilters.selectcols.push('lettersearch');
 				}
+				self.getInstanceManager().submit();
+				
 				self.selectPopup = null;
 			};
 
