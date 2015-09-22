@@ -438,11 +438,21 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		{
 			// Convert to human-friendly
 			importexport_export_csv::convert($row_data,$record_class::$types,$definition->application,$this->lookups);
+			$this->row_preview($row_data);
 			$rows[] = $row_data->get_record_array();
 		}
 		$this->preview_records = array();
 
 		return html::table($rows);
+	}
+
+	/**
+	 * Allows an extending class to alter a row for preview
+	 *
+	 * @param egw_record $row_entry
+	 */
+	protected function row_preview(importexport_iface_egw_record &$row_entry)
+	{
 	}
 
 	/**
@@ -626,6 +636,18 @@ error_log("Searching for $custom_field = $value");
 		// lets do it!
 	}
 
+	/**
+	* Returns warnings that were encountered during importing
+	* Maximum of one warning message per record, but you can append if you need to
+	*
+	* @return Array (
+	*       record_# => warning message
+	*       )
+	*/
+	public function get_warnings() {
+		return $this->warnings;
+	}
+	
 	/**
 	* Returns errors that were encountered during importing
 	* Maximum of one error message per record, but you can append if you need to

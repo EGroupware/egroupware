@@ -136,20 +136,7 @@ class calendar_tracking extends bo_tracking
 		{
 			$participants = $data['participants'];
 			$data['participants'] = array();
-			foreach($participants as $uid => $status)
-			{
-				$quantity = $role = $user_type = $user_id = null;
-				calendar_so::split_status($status, $quantity, $role);
-				calendar_so::split_user($uid, $user_type, $user_id);
-				$field = is_numeric($uid) ? 'participants' : 'participants-'.$user_type;
-				$data[$field][] = array(
-					'user_id'	=>	$user_id,
-					'status'	=>	$status,
-					'quantity'	=>	$quantity,
-					'role'		=>	$role,
-					'recur'		=>	$data['recur_date'] ? $data['recur_date'] : 0,
-				);
-			}
+			$data = array_merge($data, $this->alter_participants($participants));
 		}
 		// if clients eg. CalDAV do NOT set participants, they are left untouched
 		// therefore we should not track them, as all updates then show up as all participants removed
@@ -161,19 +148,7 @@ class calendar_tracking extends bo_tracking
 		{
 			$participants = $old['participants'];
 			$old['participants'] = array();
-			foreach($participants as $uid => $status)
-			{
-				calendar_so::split_status($status, $quantity, $role);
-				calendar_so::split_user($uid, $user_type, $user_id);
-				$field = is_numeric($uid) ? 'participants' : 'participants-'.$user_type;
-				$old[$field][] = array(
-					'user_id'	=>	$user_id,
-					'status'	=>	$status,
-					'quantity'	=>	$quantity,
-					'role'		=>	$role,
-					'recur'		=>	$data['recur_date'] ? $data['recur_date'] : 0,
-				);
-			}
+			$old = array_merge($old, $this->alter_participants($participants));
 		}
 		parent::track($data,$old,$user,$deleted, $changed_fields);
 	}
@@ -185,5 +160,58 @@ class calendar_tracking extends bo_tracking
 	{
 		unset($data, $old, $deleted);	// unused, but required by function signature
 		return true;
+	}
+
+
+	/**
+	 * Compute changes between new and old data
+	 *
+	 * Can be used to check if saving the data is really necessary or user just pressed save
+	 * Overridden to handle various participants options
+	 *
+	 * @param array $data
+	 * @param array $old = null
+	 * @return array of keys with different values in $data and $old
+	 */
+	public function changed_fields(array $data,array $old=null)
+	{
+		if(is_array($data['participants']))
+		{
+			$participants = $data['participants'];
+			$data['participants'] = array();
+			$data = array_merge($data, $this->alter_participants($participants));
+		}
+		if(is_array($old['participants']))
+		{
+			$participants = $old['participants'];
+			$old['participants'] = array();
+			$old = array_merge($old, $this->alter_participants($participants));
+		}
+		return parent::changed_fields($data,$old);
+	}
+
+	/**
+	* Do some magic with the participants and recurrance.
+	* If this is one of a recurring event, append the recur_date to the participant field so we can
+	* filter by it later.
+	*/
+	protected function alter_participants($participants)
+	{
+		$data = array();
+		foreach($participants as $uid => $status)
+		{
+			$quantity = $role = $user_type = $user_id = null;
+			calendar_so::split_status($status, $quantity, $role);
+			calendar_so::split_user($uid, $user_type, $user_id);
+			$field = is_numeric($uid) ? 'participants' : 'participants-'.$user_type;
+			$data[$field][] = array(
+				'user_id'	=>	$user_id,
+				'status'	=>	$status,
+				'quantity'	=>	$quantity,
+				'role'		=>	$role,
+				'recur'		=>	$data['recur_date'] ? $data['recur_date'] : 0,
+			);
+		}
+		return $data;
 	}
 }

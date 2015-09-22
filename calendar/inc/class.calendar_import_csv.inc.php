@@ -111,7 +111,9 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 				// Search for direct account name, then user in accounts first
 				$search = "\"$name\"";
 				$id = importexport_helper_functions::account_name2id($name);
-				if(!$id) {
+
+				// If not found, or not an exact match to a user (account_name2id is pretty generous)
+				if(!$id || $names[$key] !== $this->bo->participant_name($id)) {
 					$contacts = ExecMethod2('addressbook.addressbook_bo.search', $search,array('contact_id','account_id'),'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR',array(0,1));
 					if($contacts) $id = $contacts[0]['account_id'] ? $contacts[0]['account_id'] : 'c'.$contacts[0]['contact_id'];
 				}
@@ -177,8 +179,8 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		}
 		$record->tzid = calendar_timezones::id2tz($record->tz_id);
 
-		if ( $_definition->plugin_options['conditions'] ) {
-			foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+		if ( $options['conditions'] ) {
+			foreach ( $options['conditions'] as $condition ) {
 				$records = array();
 				switch ( $condition['type'] ) {
 					// exists
@@ -230,7 +232,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	protected function exists(importexport_iface_egw_record &$record, Array &$condition, &$records = array())
 	{
 		if($record->__get($condition['string']) && $condition['string'] == 'id') {
-			$event = $this->bo->read($record[$condition['string']]);
+			$event = $this->bo->read($record->__get($condition['string']));
 			$records = array($event);
 		}
 
@@ -331,64 +333,14 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	}
 
 	/**
-	 * return etemplate components for options.
-	 * @abstract We can't deal with etemplate objects here, as an uietemplate
-	 * objects itself are scipt orientated and not "dialog objects"
+	 * Alter a row for preview to show multiple participants instead of Array
 	 *
-	 * @return array (
-	 * 		name 		=> string,
-	 * 		content		=> array,
-	 * 		sel_options => array,
-	 * 		preserv		=> array,
-	 * )
+	 * @param egw_record $row_entry
 	 */
-	public function get_options_etpl() {
-		// lets do it!
+	protected function row_preview(importexport_iface_egw_record &$row_entry)
+	{
+		$row_entry->participants = implode('<br />', $this->bo->participants(array('participants' => $row_entry->participants),true));
 	}
 
-	/**
-	 * returns etemplate name for slectors of this plugin
-	 *
-	 * @return string etemplate name
-	 */
-	public function get_selectors_etpl() {
-		// lets do it!
-	}
-
-	/**
-        * Returns warnings that were encountered during importing
-        * Maximum of one warning message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => warning message
-        *       )
-        */
-        public function get_warnings() {
-		return $this->warnings;
-	}
-
-	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
-		return $this->errors;
-	}
-
-	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
 } // end of iface_export_plugin
 ?>
