@@ -102,6 +102,32 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	function exec($method,array $content,array $sel_options=null,array $readonlys=null,array $preserv=null,$output_mode=0,$ignore_validation='',array $changes=null)
 	{
+		$hook_data = $GLOBALS['egw']->hooks->process(
+			array('location'        => 'etemplate2_before_exec') +
+			array('location_name'   => $this->name) +
+			array('location_object' => &$this) +
+			$content
+			);
+
+		foreach($hook_data as $extras) {
+			if (!$extras) continue;
+
+			foreach(isset($extras[0]) ? $extras : array($extras) as $extra) {
+				if ($extra['data'] && is_array($extra['data'])) {
+					$content = array_merge($content, $extra['data']);
+				}
+
+				if ($extra['preserve'] && is_array($extra['preserve'])) {
+					$preserv = array_merge($preserv, $extra['preserve']);
+				}
+
+				if ($extra['readonlys'] && is_array($extra['readonlys'])) {
+					$readonlys = array_merge($readonlys, $extra['readonlys']);
+				}
+			}
+		}
+		unset($hook_data);
+		
 		// Include the etemplate2 javascript code
 		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
 
@@ -322,9 +348,60 @@ class etemplate_new extends etemplate_widget_template
 		// tell request call to remove request, if it is not modified eg. by call to exec in callback
 		self::$request->remove_if_not_modified();
 
+		$hook_data = $GLOBALS['egw']->hooks->process(
+			array(
+				'location'        => 'etemplate2_before_process',
+				'location_name'   => $template->id) +
+				self::complete_array_merge(self::$request->preserv, $validated)
+			);
+
+		foreach($hook_data as $extras) {
+			if (!$extras) continue;
+
+			foreach(isset($extras[0]) ? $extras : array($extras) as $extra) {
+				if ($extra['data'] && is_array($extra['data'])) {
+					$validated = array_merge($validated, $extra['data']);
+				}
+			}
+		}
+		unset($hook_data);
+
 		//error_log(__METHOD__."(,".array2string($content).')');
 		//error_log(' validated='.array2string($validated));
 		$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+
+		$tcontent = array();
+
+		if( is_array($content) ) {
+			$tcontent = $content;
+		}
+		else {
+			$tcontent = self::complete_array_merge(
+				self::$request->preserv,
+				$validated
+				);
+		}
+
+		$hook_data = $GLOBALS['egw']->hooks->process(
+			array(
+				'location'        => 'etemplate2_after_process',
+				'location_name'   => $template->id) +
+				$tcontent
+			);
+		unset($tcontent);
+
+		if( is_array($content) ) {
+			foreach($hook_data as $extras) {
+				if (!$extras) continue;
+
+				foreach(isset($extras[0]) ? $extras : array($extras) as $extra) {
+					if ($extra['data'] && is_array($extra['data'])) {
+						$content = array_merge($content, $extra['data']);
+					}
+				}
+			}
+		}
+		unset($hook_data);
 
 		if (isset($GLOBALS['egw_info']['flags']['java_script']))
 		{
