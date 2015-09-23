@@ -607,6 +607,16 @@ etemplate2.prototype.autocomplete_fixer = function ()
 {
 	var self = this;
 	var form = self.DOMContainer;
+	
+	// Safari always do the autofill for password field regardless of autocomplete = off
+	// and since there's no other way to switch the autocomplete of, we should switch the
+	// form autocomplete off (e.g. compose dialog, attachment password field)
+	if (navigator.userAgent.match(/safari/i) && !navigator.userAgent.match(/chrome/i)
+			&& jQuery('input[type="password"]').length > 0)
+	{
+		return;
+	}
+	
 	if (form)
 	{
 		// Stop submit propagation in order to not fire other possible submit events
