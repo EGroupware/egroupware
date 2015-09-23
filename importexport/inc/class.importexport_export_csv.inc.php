@@ -258,7 +258,7 @@ class importexport_export_csv implements importexport_iface_export_record
 				case 'select':
 					if (count($c_field['values']) == 1 && isset($c_field['values']['@']))
 					{
-						$c_field['values'] = ExecMethod('etemplate.customfields_widget._get_options_from_file', $c_field['values']['@']);
+						$c_field['values'] = egw_customfields::get_options_from_file($c_field['values']['@']);
 					}
 					$fields['select'][] = $name;
 					$selects[$name] = $c_field['values'];
