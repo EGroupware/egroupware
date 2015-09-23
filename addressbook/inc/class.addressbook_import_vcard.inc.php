@@ -121,8 +121,8 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		// Failures
 		$this->errors = array();
 
-		 // Fix for Apple Addressbook
-                $vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1', stream_get_contents($_stream));
+		// Fix for Apple Addressbook
+        $vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1', stream_get_contents($_stream));
 
 		$contacts = new egw_ical_iterator($vCard, '', $charset, array($this, '_vcard'),array(
 			// Owner (addressbook)
@@ -272,7 +272,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		foreach($this->preview_records as $i => $record)
 		{
 			// Convert to human-friendly
-                        importexport_export_csv::convert($record,$record_class::$types,$_definition->application);
+            importexport_export_csv::convert($record,$record_class::$types,$_definition->application);
 			$record = $record->get_record_array();
 			$row = array();
 			foreach($labels as $field => $label)
@@ -282,7 +282,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 				// Don't scare users, do something with jpeg
 				if($field == 'jpegphoto' && $row[$field])
 				{
-					$row[$field] = '<span style="white-space: nowrap;">-ENCODED IMAGE-</span>';
+					$row[$field] = '<img style="max-width:50px;max-height:50px;" src="data:image/jpeg;base64,'.$row[$field].'"/>';
 				}
 				unset($record[$field]);
 			}

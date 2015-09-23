@@ -953,8 +953,11 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'jpegphoto':
-								$contact[$fieldName] = $vcardValues[$vcardKey]['params']['ENCODING'] == 'b' ?
-									base64_decode($vcardValues[$vcardKey]['value']): $vcardValues[$vcardKey]['value'];
+								$contact[$fieldName] = $vcardValues[$vcardKey]['value'];
+								if(in_array($vcardValues[$vcardKey]['params']['ENCODING'],array('b','B','BASE64')))
+								{
+									$contact[$fieldName] = base64_decode($contact[$fieldName]);
+								}
 								break;
 
 							case 'note':
