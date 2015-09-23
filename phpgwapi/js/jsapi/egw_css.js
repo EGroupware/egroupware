@@ -51,7 +51,7 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			// Set the current index to the maximum index
 			var index = sheet ? Math.min(selectorCount, sheet.cssRules.length) : 0;
 
-			if (!sheet || !sheet.ownerNode)
+			if (!sheet || !sheet.ownerNode || sheet.ownerNode.ownerDocument !== _wnd.document)
 			{
 				// Generate a style tag, which will be used to hold the newly generated css
 				// rules.
@@ -60,6 +60,9 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 				// Obtain the reference to the styleSheet object of the generated style tag
 				sheet = style.sheet ? style.sheet : style.styleSheet;
+
+				selectorCount = 0;
+				selectors = {};
 			}
 
 			// Remove any existing rule first, of no rule exists for the
