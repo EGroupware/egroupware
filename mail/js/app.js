@@ -225,12 +225,13 @@ app.classes.mail = AppJS.extend(
  				// use a wrapper on a different url to be able to use a different fpm pool
 				et2.menuaction = 'mail_compose::ajax_send';
 				var that = this;
+				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
 				this.check_sharing_filemode();
-
+				
 				this.subject2title();
-
+				
 				// Set autosaving interval to 2 minutes for compose message
 				this.W_INTERVALS.push(window.setInterval(function (){
 					that.saveAsDraft(null, 'autosaving');
@@ -245,9 +246,14 @@ app.classes.mail = AppJS.extend(
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
-					window.setTimeout(function(){
-						that.compose_fieldExpander();
-					}, 300);
+					if (textAreaWidget && typeof textAreaWidget.ckeditor != 'undefined')
+					{
+						textAreaWidget.ckeditor.on('instanceReady', function(){that.compose_fieldExpander();});
+					}
+					else
+					{
+						this.compose_fieldExpander();
+					}
 				});
 				
 				//Resize compose after window resize to not getting scrollbar
@@ -274,7 +280,7 @@ app.classes.mail = AppJS.extend(
 					}
 					else
 					{
-						this.et2.getWidgetById('mail_htmltext').ckeditor.on('instanceReady', function(e) {
+						textAreaWidget.ckeditor.on('instanceReady', function(e) {
 							this.focus();
 						});
 					}
