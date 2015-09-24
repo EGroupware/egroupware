@@ -1118,28 +1118,7 @@ class mail_compose
 
 		// prepare body
 		// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
-		if (strtoupper($this->displayCharset) == 'UTF-8')
-		{
-			$test = @json_encode($content['body']);
-			//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-			//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
-			if ($test=="null" && strlen($content['body'])>0)
-			{
-				// try to fix broken utf8
-				$x = (function_exists('mb_convert_encoding')?mb_convert_encoding($content['body'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$content['body']):$content['body']));
-				$test = @json_encode($x);
-				if ($test=="null" && strlen($content['body'])>0)
-				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					error_log(__METHOD__.__LINE__.' Charset problem detected; Charset Detected:'.mail_bo::detect_encoding($content['body']));
-					$content['body'] = utf8_encode($content['body']);
-				}
-				else
-				{
-					$content['body'] = $x;
-				}
-			}
-		}
+		$content['body'] = translation::convert_jsonsafe($content['body'],'utf-8');
 		//error_log(__METHOD__.__LINE__.array2string($content));
 
 		// get identities of all accounts as "$acc_id:$ident_id" => $identity
@@ -1630,7 +1609,7 @@ class mail_compose
 					$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 				}
 				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
-				$bodyParts[$i]['body'] = translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				$bodyParts[$i]['body'] = translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
 			}
@@ -1644,7 +1623,7 @@ class mail_compose
 					$this->sessionData['body'] .= "<hr>";
 				}
 				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
-				$bodyParts[$i]['body'] = translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				$bodyParts[$i]['body'] = translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
 			}
@@ -2094,7 +2073,7 @@ class mail_compose
 				$_htmlConfig = mail_bo::$htmLawed_config;
 				mail_bo::$htmLawed_config['comment'] = 2;
 				mail_bo::$htmLawed_config['transform_anchor'] = false;
-				$this->sessionData['body'] .= "<br>".self::_getCleanHTML(translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+				$this->sessionData['body'] .= "<br>".self::_getCleanHTML(translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
 				mail_bo::$htmLawed_config = $_htmlConfig;
 				#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 			}
@@ -2117,8 +2096,7 @@ class mail_compose
 				}
 
 				// add line breaks to $bodyParts
-				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
-				$newBody	= translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				$newBody = translation::convert_jsonsafe($bodyParts[$i]['body'],$bodyParts[$i]['charSet']);
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$newBody = mail_ui::resolve_inline_images($newBody, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";

@@ -1961,23 +1961,7 @@ class mail_ui
 			foreach ($attachments as $key => $value)
 			{
 				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $value['filename'] ? $value['filename'] : $value['name'] ) : lang('(no subject)'));
-				$test = @json_encode($attachmentHTML[$key]['filename']);
-				//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-				if (($test=="null" || $test === false || is_null($test)) && strlen($attachmentHTML[$key]['filename'])>0)
-				{
-					// try to fix broken utf8
-					$x = utf8_encode($attachmentHTML[$key]['filename']);
-					$test = @json_encode($x);
-					if (($test=="null" || $test === false || is_null($test)) && strlen($attachmentHTML[$key]['filename'])>0)
-					{
-						// this should not be needed, unless something fails with charset detection/ wrong charset passed
-						$attachmentHTML[$key]['filename'] = (function_exists('mb_convert_encoding')?mb_convert_encoding($attachmentHTML[$key]['filename'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$attachmentHTML[$key]['filename']):$attachmentHTML[$key]['filename']));
-					}
-					else
-					{
-						$attachmentHTML[$key]['filename'] = $x;
-					}
-				}
+				$attachmentHTML[$key]['filename'] = translation::convert_jsonsafe($attachmentHTML[$key]['filename'],'utf-8');
 				//error_log(array2string($value));
 				//error_log(strtoupper($value['mimeType']) .'<->'. mime_magic::filename2mime($attachmentHTML[$key]['filename']));
 				if (strtoupper($value['mimeType']=='APPLICATION/OCTET-STREAM')) $value['mimeType'] = mime_magic::filename2mime($attachmentHTML[$key]['filename']);
@@ -2749,33 +2733,7 @@ class mail_ui
 			{
 				$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
 			}
-			if ($singleBodyPart['charSet']===false) $singleBodyPart['charSet'] = translation::detect_encoding($singleBodyPart['body']);
-			$singleBodyPart['body'] = $GLOBALS['egw']->translation->convert(
-				$singleBodyPart['body'],
-				strtolower($singleBodyPart['charSet'])
-			);
-			// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
-			if (strtoupper(mail_bo::$displayCharset) == 'UTF-8')
-			{
-				$test = @json_encode($singleBodyPart['body']);
-				//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-				if (($test=="null" || $test === false || is_null($test)) && strlen($singleBodyPart['body'])>0)
-				{
-					// try to fix broken utf8
-					$x = (function_exists('mb_convert_encoding')?mb_convert_encoding($singleBodyPart['body'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$singleBodyPart['body']):$singleBodyPart['body']));
-					$test = @json_encode($x);
-					if (($test=="null" || $test === false || is_null($test)) && strlen($singleBodyPart['body'])>0)
-					{
-						// this should not be needed, unless something fails with charset detection/ wrong charset passed
-						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Charset Detected:'.translation::detect_encoding($singleBodyPart['body']));
-						$singleBodyPart['body'] = utf8_encode($singleBodyPart['body']);
-					}
-					else
-					{
-						$singleBodyPart['body'] = $x;
-					}
-				}
-			}
+			$singleBodyPart['body'] = translation::convert_jsonsafe($singleBodyPart['body'],$singleBodyPart['charSet']);
 			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
 			if($singleBodyPart['mimeType'] == 'text/plain')
 			{
