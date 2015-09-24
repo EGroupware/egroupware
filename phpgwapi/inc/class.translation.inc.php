@@ -922,6 +922,42 @@ class translation
 	}
 
 	/**
+	 * converts a string $data from charset $from to something that is json_encode tested
+	 *
+	 * @param string/array $data string(s) to convert
+	 * @param string/boolean $from charset $data is in or False if it should be detected
+	 * @return string/array converted string(s) from $data
+	 */
+	static function convert_jsonsafe($data,$from=False)
+	{
+		if ($from===false) $from = self::detect_encoding($data);
+		$data = self::convert($data,strtolower($from));
+		// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
+		if (strtoupper(self::charset()) == 'UTF-8')
+		{
+			$test = @json_encode($data);
+			//error_log(__METHOD__.__LINE__.' ->'.strlen($data).' Error:'.json_last_error().'<- data:#'.$test.'#');
+			if (($test=="null" || $test === false || is_null($test)) && strlen($data)>0)
+			{
+				// try to fix broken utf8
+				$x = (function_exists('mb_convert_encoding')?mb_convert_encoding($data,'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$data):$data));
+				$test = @json_encode($x);
+				if (($test=="null" || $test === false || is_null($test)) && strlen($data)>0)
+				{
+					// this should not be needed, unless something fails with charset detection/ wrong charset passed
+					error_log(__METHOD__.__LINE__.' Charset Reported:'.$from.' Charset Detected:'.translation::detect_encoding($data));
+					$data = utf8_encode($data);
+				}
+				else
+				{
+					$data = $x;
+				}
+			}
+		}
+		return $data;
+	}
+
+	/**
 	 * insert/update/delete one phrase in the lang-table
 	 *
 	 * @param string $lang
