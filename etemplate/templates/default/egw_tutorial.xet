@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.egw_tutorial" template="" lang="" group="0" version="15.1">
+		<grid id="list" class="egwGridView_grid" height="200" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<vbox>
+						<description value = "$row_cont[title]" onclick="$row_cont[onclick]"/>
+						<iframe value="$row_cont[src]" width="99%" seamless="true" fullscreen="true"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

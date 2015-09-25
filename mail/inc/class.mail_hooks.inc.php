@@ -534,6 +534,8 @@ class mail_hooks
 			display_sidebox($appname,lang('Admin'),$file);
 		}
 		hooks::pgp_encryption_menu('mail');
+		
+		hooks::egw_tutorial_menu('mail');
 	}
 
 	/**

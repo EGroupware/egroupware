@@ -147,6 +147,9 @@ var AppJS = Class.extend(
 
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
+		
+		// Initialize egw tutorial sidebox
+		this.egwTutorial_init();
 	},
 
 	/**
@@ -954,7 +957,111 @@ var AppJS = Class.extend(
 			}).sendRequest(true);
 		}
 	},
-
+	
+	/**
+	 * Get json data for videos from the given url
+	 * @param {string} _url url of tutorials json file
+	 * 
+	 * @return {Promise, object} return Promise, json object as resolved result and error message in case of failure
+	 */
+	egwTutorialGetData: function(_url){
+		var url = _url;
+		return new Promise (function(_resolve, _reject)
+		{
+			var resolve = _resolve;
+			var reject = _reject;
+			jQuery.ajax({
+				method:'GET',
+				url: url,
+				success: function (_data) {
+					resolve(_data);
+				},
+				fail: function (_err) {
+					reject(_err);
+				}
+			});
+		});
+	},
+	
+	/**
+	 * Create and Render etemplate2 for egroupware tutorial
+	 * sidebox option. The .xet file is stored in etemplate/templates/default/egw_tutorials
+	 * 
+	 * @description tutorials json object should have the following structure:
+	 *	object:
+	 *		{
+	 *			[app name]:{
+	 *				[language tag]:[
+	 *					{src:"",title:"",top:""}		
+	 *				]
+	 *			}
+	 *		}
+	 *	
+	 *	*Note: "top" and "title" are optional attributes, which "top" means that specific video should
+	 *		appears on top of the list.
+	 *	
+	 *	example:
+	 *		{
+	 *			"mail":{
+	 *				"en":[
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", "title":"PGP Encryption"},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", "title":"Subscription", top:true},
+	 *				],
+	 *				"de":[
+	 *					{src:"https://www.youtube.com/embed/m40", "title":"PGP Verschlüsselung"},
+	 *					{src:"https://www.youtube.com/embed/mpjO", "title":"Ordner Abonnieren", top:true},
+	 *				]
+	 *			}
+	 *		}
+	 */
+	egwTutorial_init: function()
+	{
+		//DOM container
+		var div = document.getElementById('egw_tutorial_'+egw.app_name()+'_sidebox');
+		// et2 object
+		var etemplate = new etemplate2 (div, false);
+		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet';
+		
+		this.egwTutorialGetData(egw.webserverUrl+'/tutorials.json').then(function(_data){
+			var lang = egw.preference('lang');
+			var content = {content:{list:[]}};
+			if (_data && _data[egw.app_name()])
+			{
+				if (_data[egw.app_name()][lang] == 'undefined' || _data[egw.app_name()][lang].length == 0 ) lang = 'en';
+				if (typeof _data[egw.app_name()][lang] !='undefined' 
+					&& _data[egw.app_name()][lang].length > 0)
+				{
+					for (var i=0;i<=_data[egw.app_name()][lang];i++)
+					{
+						_data[egw.app_name()][lang][i]['onclick'] = 'egw.open()';
+					}
+					content.content.list = _data[egw.app_name()][lang];
+					// Get the video with top property into the top of the list
+					content.content.list.sort(function(a){
+						if (!a.top) return 1;
+					});
+					
+					if (template.indexOf('.xet') >0)
+					{
+						etemplate.load ('',template , content, function(){});
+					}
+					else
+					{
+						etemplate.load (template, '', content);
+					}
+				}
+			}	
+		},
+		function(_err){
+			consloe.log(_err);
+		});
+	},
+	
+	egwTutorialPopup: function ()
+	{
+		
+	},
+	
 	/**
 	 * Check if Mailvelope is available, open (or create) "egroupware" keyring and call callback with it
 	 *

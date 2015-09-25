@@ -379,4 +379,23 @@ class hooks
 		);
 		display_sidebox($appname, lang('PGP Encryption'), $file);
 	}
+	
+	/**
+	 * Static function to build egw tutorial sidebox menu
+	 *
+	 * @param type $appname application name
+	 */
+	public static function egw_tutorial_menu($appname)
+	{
+		$file = Array (
+			array(
+				'text'    => '<div id="egw_tutorial_'.$appname.'_sidebox"/>',
+				'no_lang' => true,
+				'link'    => false,
+				'icon'    => false,
+			),
+			'menuOpened'  => true
+		);
+		display_sidebox($appname, lang('EGroupware Tutorial'), $file);
+	}
 }
