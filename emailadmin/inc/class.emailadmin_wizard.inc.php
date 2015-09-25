@@ -849,6 +849,23 @@ class emailadmin_wizard
 				if ($content['accounts'])
 				{
 					list($content['acc_id']) = each($content['accounts']);
+					//error_log(__METHOD__.__LINE__.'.'.array2string($content['acc_id']));
+					// test if the "to be selected" acccount is imap or not
+					if (count($content['accounts'])>1 && emailadmin_account::is_multiple($content['acc_id']))
+					{
+						try {
+							$account = emailadmin_account::read($content['acc_id'], $content['called_for']);
+							//try to select the first account that is of type imap
+							if (!$account->is_imap())
+							{
+								list($content['acc_id']) = each($content['accounts']);
+								//error_log(__METHOD__.__LINE__.'.'.array2string($content['acc_id']));
+							}
+						}
+						catch(egw_exception_not_found $e) {
+							if (self::$debug) _egw_log_exception($e);
+						}
+					}
 				}
 				if (!$content['accounts'])	// no email account, call wizard
 				{
@@ -1168,6 +1185,7 @@ class emailadmin_wizard
 				}
 			}
 		}
+
 		$sel_options['acc_imap_type'] = emailadmin_base::getIMAPServerTypes(false);
 		$sel_options['acc_smtp_type'] = emailadmin_base::getSMTPServerTypes(false);
 		$sel_options['acc_imap_logintype'] = self::$login_types;
