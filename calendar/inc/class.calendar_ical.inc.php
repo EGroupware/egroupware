@@ -459,7 +459,7 @@ class calendar_ical extends calendar_boupdate
 								$organizerURL = $participantURL;
 								$rsvp = '';
 								$organizerCN = $participantCN;
-								$organizerUID = ($info['type'] != 'e' ? $uid : '');
+								$organizerUID = ($info['type'] != 'e' ? (string)$uid : '');
 							}
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
 							$status = $this->status_egw2ical[$status];
@@ -480,7 +480,7 @@ class calendar_ical extends calendar_boupdate
 											'PARTSTAT'	=> 'NEEDS-ACTION',
 											'CUTYPE'	=> 'INDIVIDUAL',
 											'RSVP'		=> 'TRUE',
-											'X-EGROUPWARE-UID'	=> $this->user,
+											'X-EGROUPWARE-UID'	=> (string)$this->user,
 			    						);
 			    						$event['participants'][$this->user] = true;
 									}
@@ -517,8 +517,8 @@ class calendar_ical extends calendar_boupdate
 							{
 								$options['EMAIL'] = $info['email'];	// only add EMAIL attribute, if not already URL, as eg. Akonadi is reported to have problems with it
 							}
-							if ($info['type'] != 'e') $options['X-EGROUPWARE-UID'] = $uid;
-							if ($quantity > 1) $options['X-EGROUPWARE-QUANTITY'] = $quantity;
+							if ($info['type'] != 'e') $options['X-EGROUPWARE-UID'] = (string)$uid;
+							if ($quantity > 1) $options['X-EGROUPWARE-QUANTITY'] = (string)$quantity;
 							$attributes['ATTENDEE'][] = $participantURL;
 							$parameters['ATTENDEE'][] = $options;
 						}
