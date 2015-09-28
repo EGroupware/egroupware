@@ -1018,6 +1018,8 @@ var AppJS = Class.extend(
 	{
 		//DOM container
 		var div = document.getElementById('egw_tutorial_'+egw.app_name()+'_sidebox');
+		if (!div) return;
+		
 		// et2 object
 		var etemplate = new etemplate2 (div, false);
 		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet';
@@ -1027,7 +1029,7 @@ var AppJS = Class.extend(
 			var content = {content:{list:[]}};
 			if (_data && _data[egw.app_name()])
 			{
-				if (_data[egw.app_name()][lang] == 'undefined' || _data[egw.app_name()][lang].length == 0 ) lang = 'en';
+				if (!_data[egw.app_name()][lang]) lang = 'en';
 				if (typeof _data[egw.app_name()][lang] !='undefined' 
 					&& _data[egw.app_name()][lang].length > 0)
 				{
