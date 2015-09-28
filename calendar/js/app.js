@@ -2366,7 +2366,7 @@ app.classes.calendar = AppJS.extend(
 					// Set to week view, if in one of the views where we change view
 					if(app.calendar.sidebox_changes_views.indexOf(view) >= 0)
 					{
-						app.calendar.update_state({view: 'week', date: date.getValue()});
+						app.calendar.update_state({view: 'week', date: date.getValue(), days: false});
 					}
 					else if (app.calendar.state.view == 'planner')
 					{
@@ -2689,6 +2689,10 @@ jQuery.extend(app.classes.calendar,{
 				var d = new Date(app.calendar.state.date);
 				d.setUTCMonth(d.getUTCMonth() + delta);
 				return d;
+			},
+			show_weekend: function(state)
+			{
+				return true;
 			}
 		}),
 
