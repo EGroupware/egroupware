@@ -1659,9 +1659,13 @@ class groupdav extends HTTP_WebDAV_Server
 			if (is_bool($status)) $status = $status ? '204 No Content' : '400 Something went wrong';
 
 			// check/handle Prefer: return-representation
-			if ($status[0] === '2')
+			if ($status[0] === '2' || $status === true)
 			{
-				$handler->check_return_representation($options, $id, $user);
+				// we can NOT use 204 No content (forbidds a body) with return=representation, therefore we need to use 200 Ok instead!
+				if ($handler->check_return_representation($options, $id, $user) && (int)$status == 204)
+				{
+					$status = '200 Ok';
+				}
 			}
 			return $status;
 		}
