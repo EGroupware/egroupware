@@ -237,7 +237,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			for(var i = 0; i < event_ids.length; i++)
 			{
 				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
-				if(event && event.date && event.date === this.options.date)
+				if(event && event.date && (
+					event.date === this.options.date ||
+					// Accept multi-day events
+					new Date(event.start) <= this.date //&& new Date(event.end) >= this.date
+				))
 				{
 					events.push(event);
 				}
@@ -420,7 +424,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			var event = this._children[i].options.value || false;
 			if(!event) continue;
-			if(event.date && event.date != this.options.date)
+			if(event.date && event.date != this.options.date && 
+				// Multi-day events date may be different
+				(new Date(event.start) >= this.date || new Date(event.end) <= this.date )
+			)
 			{
 				// Still have a child event that has changed date (DnD)
 				this._children[i].destroy();
