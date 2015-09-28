@@ -389,7 +389,7 @@ class hooks
 	{
 		$file = Array (
 			array(
-				'text'    => '<div id="egw_tutorial_'.$appname.'_sidebox"/>',
+				'text'    => '<div id="egw_tutorial_'.$appname.'_sidebox" class="egwTutorial"/>',
 				'no_lang' => true,
 				'link'    => false,
 				'icon'    => false,

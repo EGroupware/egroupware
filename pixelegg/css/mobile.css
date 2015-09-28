@@ -5123,6 +5123,12 @@ td.message span.message {
   height: 16px;
   vertical-align: middle;
 }
+.egw_fw_ui_category_content .egwTutorial div#list_grid_wrapper {
+  border-bottom-left-radius: 10px;
+}
+.egw_fw_ui_category_content .egwTutorial div#list_grid_wrapper .et2_label {
+  padding-bottom: 5px;
+}
 .egw_fw_ui_sidemenu_listitem {
   padding: 9px 0px 0px 0px;
   margin: 0px 0 1px 0px;
