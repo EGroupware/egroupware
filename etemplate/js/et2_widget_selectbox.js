@@ -941,7 +941,8 @@ jQuery.extend(et2_selectbox,
 		return [
 			{value: 1, label: 'low'},
 			{value: 2, label: 'normal'},
-			{value: 3, label: 'high'}
+			{value: 3, label: 'high'},
+			{value: 0, label: 'undefined'}
 		];
 	},
 	bool_options: function(widget) {
