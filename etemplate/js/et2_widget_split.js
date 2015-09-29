@@ -295,7 +295,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 				{
 					// Store current position in preferences
 					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
-					self.prefSize = size[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
+					self.prefSize = size[self.orientation == "v" ?'sizeLeft' : 'sizeTop'];
 					var prefInPercent = self.orientation == "v" ?{sizeLeft:pix2per(size.sizeLeft)}:{sizeTop:pix2per(size.sizeTop)};
 					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, prefInPercent);
 				}
