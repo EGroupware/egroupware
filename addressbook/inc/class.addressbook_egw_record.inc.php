@@ -78,8 +78,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 * @return array complete record as associative array
 	 */
 	public function get_record_array() {
-		// do not return binary jpeg, it messes up json data
-		return array_diff_key($this->contact, array('jpegphoto' => true));
+		return $this->contact;
 	}
 
 	/**
