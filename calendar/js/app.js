@@ -790,7 +790,9 @@ app.classes.calendar = AppJS.extend(
 		if (typeof duration != 'undefined' && typeof end != 'undefined')
 		{
 			end.set_disabled(duration.get_value()!=='');
-			if (!end.disabled )
+
+			// Only set end date if not provided, adding seconds fails with DST
+			if (!end.disabled && !content.end)
 			{
 				end.set_value(start.get_value());
 				if (typeof content.duration != 'undefined') end.set_value("+"+content.duration);
