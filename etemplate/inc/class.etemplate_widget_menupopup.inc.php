@@ -831,11 +831,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 *
 	 * @param string $type
 	 * @param Array|String $attributes
-	 *
+	 * @param string $value Optional current value, to make sure it's included
 	 */
-	public static function ajax_get_options($type, $attributes)
+	public static function ajax_get_options($type, $attributes, $value = null)
 	{
-		$options = self::typeOptions($type, $attributes);
+		$no_lang = false;
+		$options = self::typeOptions($type, $attributes,$no_lang,false,$value);
 		self::fix_encoded_options($options,true);
 		$response = egw_json_response::get();
 		$response->data($options);

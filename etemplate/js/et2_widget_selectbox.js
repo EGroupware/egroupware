@@ -1103,7 +1103,7 @@ jQuery.extend(et2_selectbox,
 			// and we can't do that when it's queued.
 			egw.window.et2_selectbox.type_cache[cache_id] = egw.json(
 				widget.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
-				[widget._type,options_string]
+				[widget._type,options_string,attrs.value]
 			).sendRequest(true);
 		}
 		cache = egw.window.et2_selectbox.type_cache[cache_id];
@@ -1128,6 +1128,24 @@ jQuery.extend(et2_selectbox,
 		}
 		else
 		{
+			// Check that the value is in there
+			if(attrs.value)
+			{
+				var missing_option = true;
+				for(var i = 0; i < cache.length && missing_option; i++)
+				{
+					if(cache[i].value == attrs.value)
+					{
+						missing_option = false;
+					}
+				}
+				// Try again - ask the server with the current value this time
+				if(missing_option)
+				{
+					delete egw.window.et2_selectbox.type_cache[cache_id];
+					return this.cached_server_side_options(widget, options_string, attrs);
+				}
+			}
 			return cache;
 		}
 	}
