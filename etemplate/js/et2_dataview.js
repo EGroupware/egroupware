@@ -258,6 +258,24 @@ var et2_dataview = Class.extend({
 			this.columnMgr = null;
 		}
 
+		// Remove dynamic CSS,
+		for (var i = 0; i < this.columns.length; i++)
+		{
+			if(this.columns[i].tdClass)
+			{
+				this.egw.css('.'+this.columns[i].tdClass);
+			}
+			if(this.columns[i].divClass)
+			{
+				this.egw.css('.'+this.columns[i].divClass);
+				this.egw.css(".egwGridView_outer ." + this.columns[i].divClass);
+				this.egw.css(".egwGridView_grid ." + this.columns[i].divClass);
+			}
+		}
+		this.egw.css(".egwGridView_grid ." + this.uniqueId + "_div_fullRow");
+		this.egw.css(".egwGridView_outer ." + this.uniqueId + "_td_fullRow");
+		this.egw.css(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow");
+		
 		// Reset the headerColumns array and empty the table row
 		this.columnNodes = [];
 		this.columns = [];

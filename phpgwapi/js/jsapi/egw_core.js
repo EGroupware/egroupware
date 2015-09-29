@@ -449,7 +449,7 @@
 			{
 				case 0:
 					// Return the global instance
-					return egw;
+					return instances['~global~'][0]['instance'];
 
 				case 1:
 					if (typeof arguments[0] === 'string')
