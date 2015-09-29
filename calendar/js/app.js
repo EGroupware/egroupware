@@ -2361,6 +2361,7 @@ app.classes.calendar = AppJS.extend(
 				})
 				.on('click', '.ui-datepicker-week-col', function() {
 					var view = app.calendar.state.view;
+					var days = app.calendar.state.days;
 
 					// Fake a click event on the first day to get the updated date
 					$j(this).next().click();
@@ -2368,7 +2369,7 @@ app.classes.calendar = AppJS.extend(
 					// Set to week view, if in one of the views where we change view
 					if(app.calendar.sidebox_changes_views.indexOf(view) >= 0)
 					{
-						app.calendar.update_state({view: 'week', date: date.getValue(), days: false});
+						app.calendar.update_state({view: 'week', date: date.getValue(), days: days});
 					}
 					else if (app.calendar.state.view == 'planner')
 					{
