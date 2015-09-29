@@ -1222,7 +1222,7 @@ class calendar_boupdate extends calendar_bo
 		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, $event['id'] ? 'modify' : 'add', $this->now);
 
 		// create links for new participants from addressbook, if configured
-		if ($cal_id && $GLOBALS['egw_info']['server']['link_contacts'])
+		if ($cal_id && $GLOBALS['egw_info']['server']['link_contacts'] && $event['participants'])
 		{
 			foreach($event['participants'] as $uid => $status)
 			{
