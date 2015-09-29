@@ -390,7 +390,8 @@ var AppJS = Class.extend(
 					var pref = egw.preference('favorite_' + this.dataset.id, self.appname);
 					if(pref)
 					{
-						state = pref;
+						// Extend, to prevent changing the preference by reference
+						jQuery.extend(true, state, pref);
 					}
 					if(this.dataset.id != 'add')
 					{
