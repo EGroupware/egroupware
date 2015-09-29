@@ -182,7 +182,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 			sizeTop: this.dynheight.outerNode.height() / 2,
 			sizeLeft: this.dynheight.outerNode.width() / 2
 		};
-		
+
 		var widget = this;
 		//Convert percent size to pixel
 		var per2pix = function(_size)
@@ -295,19 +295,16 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 				{
 					// Store current position in preferences
 					var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
-					self.prefSize = size[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
+					self.prefSize = size[self.orientation == "v" ?'sizeLeft' : 'sizeTop'];
 					var prefInPercent = self.orientation == "v" ?{sizeLeft:pix2per(size.sizeLeft)}:{sizeTop:pix2per(size.sizeTop)};
 					self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, prefInPercent);
 				}
 
 				// Ok, update children
 				self.iterateOver(function(widget) {
-					if(widget != self)
-					{
 						widget.resize();
 						// Above forcing is not enough for Firefox, defer
 						window.setTimeout(jQuery.proxy(function() {this.resize();},widget),200);
-					}
 				},self,et2_IResizeable);
 			});
 		}
