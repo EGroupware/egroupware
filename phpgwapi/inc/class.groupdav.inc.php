@@ -1382,10 +1382,11 @@ class groupdav extends HTTP_WebDAV_Server
 		// turn inline attachments into managed ones
 		foreach($attach as $key => $attr)
 		{
-			if ($attr['params']['VALUE'] === 'BINARY')
+			if (!empty($attr['params']['FMTTYPE']))
 			{
 				if (!($to = self::fopen_attachment($app, $id, $filename=$attr['params']['FILENAME'], $attr['params']['FMTTYPE'], $path)) ||
-					($copied=fwrite($to, $attr['value'])) === false)
+					// Horde Icalendar does NOT decode automatic
+					($copied=fwrite($to, $attr['params']['ENCODING'] == 'BASE64' ? base64_decode($attr['value']) : $attr['value'])) === false)
 				{
 					error_log(__METHOD__."('$app', $id, ...) failed to add attachment ".array2string($attr).") ");
 					continue;
@@ -1484,13 +1485,13 @@ class groupdav extends HTTP_WebDAV_Server
 			$parameters['ATTACH'][] = array(
 				'MANAGED-ID' => groupdav::path2managed_id($path),
 				'FMTTYPE'    => $stat['mime'],
-				'SIZE'       => $stat['size'],
+				'SIZE'       => (string)$stat['size'],	// Horde_Icalendar renders int as empty string
 				'FILENAME'   => egw_vfs::basename($path),
 			);
+			// if we have attachments, set X-attribute to enable deleting them by put
+			// (works around events synced before without ATTACH attributes)
+			$attributes['X-EGROUPWARE-ATTACH-INCLUDED'] = 'TRUE';
 		}
-		// if we have attachments, set X-attribute to enable deleting them by put
-		// (works around events synced before without ATTACH attributes)
-		if ($attributes['ATTACH']) $attributes['X-EGROUPWARE-ATTACH-INCLUDED'] = 'TRUE';
 	}
 
 	/**
