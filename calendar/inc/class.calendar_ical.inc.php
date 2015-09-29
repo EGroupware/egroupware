@@ -2978,6 +2978,9 @@ class calendar_ical extends calendar_boupdate
 				case 'X-LIC-ERROR':	// parse errors from libical, makes no sense to store them
 					break;
 
+				case 'ATTACH':
+					if ($attributes['params'] && !empty($attributes['params']['FMTTYPE'])) break;	// handeled by managed attachment code
+					// fall throught to store external attachment url
 				default:	// X- attribute or other by EGroupware unsupported property
 					//error_log(__METHOD__."() $attributes[name] = ".array2string($attributes));
 					// for attributes with multiple values in multiple lines, merge the values
