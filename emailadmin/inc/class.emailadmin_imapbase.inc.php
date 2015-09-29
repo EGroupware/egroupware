@@ -2722,6 +2722,10 @@ class emailadmin_imapbase
 					}
 					if (is_array($aFolders)) uasort ($aFolders, array($this,'sortByAutofolder'));
 					ksort($aFolders);
+					
+					// Sort none auto folders base on mailbox name
+					uasort($nFolders,array($this,'sortByMailbox'));
+
 					$subFolders = array_merge($aFolders,$nFolders);
 				}
 				else
@@ -2822,23 +2826,20 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * sortByName
+	 * sortByMailbox
 	 *
-	 * Helper function to sort folders array by name
+	 * Helper function to sort folders array by mailbox
 	 * @param array $a
 	 * @param array $b array of folders
 	 * @return int expect values (0, 1 or -1)
 	 */
-	function sortByName($a,$b)
+	function sortByMailbox($a,$b)
 	{
-		$a = mail_tree::pathToFolderData($a['MAILBOX'], $a['delimiter']);
-		$b = mail_tree::pathToFolderData($b['MAILBOX'], $b['delimiter']);
-		// 0, 1 und -1
-		return strcasecmp($a['name'],$b['name']);
+		return strcasecmp($a['MAILBOX'],$b['MAILBOX']);
 	}
 
 	/**
-	 * sortByAutoFolderPos
+	 * sortByAutoFolder
 	 *
 	 * Helper function to sort folder-objects by auto Folder Position
 	 * @param array $a
