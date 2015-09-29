@@ -5803,7 +5803,7 @@ table.egwGridView_outer thead tr th:active {
   border-bottom: 1px solid silver;
 }
 table.egwGridView_outer thead tr th div.innerContainer {
-  max-height: 7em;
+  max-height: 10em;
   overflow-y: auto;
 }
 table.egwGridView_outer thead tr th.optcol {
