@@ -216,6 +216,9 @@ class groupdav extends HTTP_WebDAV_Server
 
 	function __construct()
 	{
+		// log which CalDAVTester test is currently running, set as User-Agent header
+		if (substr($_SERVER['HTTP_USER_AGENT'], 0, 14) == 'scripts/tests/') error_log('****** '.$_SERVER['HTTP_USER_AGENT']);
+
 		if (!$this->debug) $this->debug = (int)$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level'];
 
 		if ($this->debug > 2) error_log('groupdav: $_SERVER='.array2string($_SERVER));
@@ -1359,6 +1362,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @param int|string $id
 	 * @param array $attach array of array with values for keys 'name', 'params', 'value'
 	 * @param boolean $delete_via_put
+	 * @return boolean false on error, eg. invalid managed id, for false an xml-error body has been send
 	 */
 	public static function handle_attach($app, $id, $attach, $delete_via_put=false)
 	{
@@ -1397,6 +1401,32 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if (!empty($attr['params']['FMTTYPE']))
 			{
+				if (isset($attr['params']['MANAGED-ID']))
+				{
+					// invalid managed-id
+					if (!($path = self::managed_id2path($attr['params']['MANAGED-ID'])) || !egw_vfs::is_readable($path))
+					{
+						error_log(__METHOD__."('$app', $id, ...) invalid MANAGED-ID ".array2string($attr));
+						self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id', ''));
+						return false;
+					}
+					if($path == ($link = egw_link::vfs_path($app, $id, egw_vfs::basename($path))))
+					{
+						error_log(__METHOD__."('$app', $id, ...) trying to modify existing MANAGED-ID --> ignored! ".array2string($attr));
+						continue;
+					}
+					// reuse valid managed-id --> symlink attachment
+					if (egw_vfs::file_exists($link))
+					{
+						if (egw_vfs::readlink($link) === $path) continue;	// no need to recreate identical link
+						egw_vfs::unlink($link);		// symlink will fail, if $link exists
+					}
+					if (!egw_vfs::symlink($path, $link))
+					{
+						error_log(__METHOD__."('$app', $id, ...) failed to symlink($path, $link) --> ignored!");
+					}
+					continue;
+				}
 				if (!($to = self::fopen_attachment($app, $id, $filename=$attr['params']['FILENAME'], $attr['params']['FMTTYPE'], $path)) ||
 					// Horde Icalendar does NOT decode automatic
 					($copied=fwrite($to, $attr['params']['ENCODING'] == 'BASE64' ? base64_decode($attr['value']) : $attr['value'])) === false)
@@ -1494,6 +1524,17 @@ class groupdav extends HTTP_WebDAV_Server
 			'need_mime' => true,
 		), true) as $path => $stat)
 		{
+			// handle symlinks --> return target size and mime-type
+			if (($target = readlink($path)))
+			{
+				if (!($stat = egw_vfs::stat($target))) continue;	// broken or inaccessible symlink
+
+				// check if target is in /apps, probably reused MANAGED-ID --> return it
+				if (substr($target, 0, 6) == '/apps/')
+				{
+					$path = $target;
+				}
+			}
 			$attributes['ATTACH'][] = self::path2location($path);
 			$parameters['ATTACH'][] = array(
 				'MANAGED-ID' => groupdav::path2managed_id($path),
