@@ -1525,7 +1525,7 @@ class groupdav extends HTTP_WebDAV_Server
 		), true) as $path => $stat)
 		{
 			// handle symlinks --> return target size and mime-type
-			if (($target = readlink($path)))
+			if (($target = egw_vfs::readlink($path)))
 			{
 				if (!($stat = egw_vfs::stat($target))) continue;	// broken or inaccessible symlink
 
