@@ -1306,11 +1306,16 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$target','$link')");
 
-		if (self::url_stat($link,0) || !($dir = Vfs::dirname($link)) ||
-			!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))
+		if (self::url_stat($link,0))
 		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!stat('$link') || !is_writable('$dir'))");
-			return false;	// $link already exists or parent dir does not
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') $link exists, returning false!");
+			return false;	// $link already exists
+		}
+		if (!($dir = Vfs::dirname($link)) ||
+			!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=static::url_stat($dir,0)))
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!is_writable('$dir'), dir_stat=".array2string($dir_stat).")");
+			return false;	// parent dir does not exist or is not writable
 		}
 		$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_link'.
 			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_link)';
