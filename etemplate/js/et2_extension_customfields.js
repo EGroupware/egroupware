@@ -472,6 +472,11 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		return true;
 	},
+	_setup_select_account: function(field_name, field, attrs) {
+		attrs.empty_label = egw.lang('Select');
+		return this._setup_select(field_name, field, attrs);
+	},
+	
 	 _setup_date: function(field_name, field, attrs) {
 		attrs.data_format = 'Y-m-d';
 		return true;
