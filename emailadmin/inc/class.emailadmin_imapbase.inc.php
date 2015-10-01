@@ -2667,6 +2667,24 @@ class emailadmin_imapbase
 					}
 				}
 			}
+			
+			// Get special use folders
+			if (!isset(self::$specialUseFolders)) $this->getSpecialUseFolders ();
+			$autofolders = array();
+			
+			foreach(self::$specialUseFolders as $path => $folder)
+			{
+				if ($this->folderExists($path))
+				{
+					$autofolders[$folder] = $folder;
+				}
+			}
+			// Check if the special use folders are there, otherwise try to create them
+			if (count($autofolders) < count(self::$autoFolders) && $this->check_create_autofolders ($autofolders))
+			{
+				return $this->getFolderArrays ($_nodePath, $_onlyTopLevel, $_search, $_subscribedOnly, $_getCounter);
+			}
+			
 			foreach ($topFolders as &$node)
 			{
 				$pattern = "/\\".$delimiter."/";
@@ -2681,14 +2699,7 @@ class emailadmin_imapbase
 					}
 				}
 				$mainFolder = $subFolders = array();
-
-				// Get special use folders
-				if (!isset(self::$specialUseFolders)) $this->getSpecialUseFolders (); // Set self::$sepecialUseFolders
-				// Create autofolders if they all not created yet
-				if (count(self::$autoFolders) > count(self::$specialUseFolders)) $this->check_create_autofolders(self::$specialUseFolders);
-				// Merge of all auto folders and specialusefolders
-				$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
-
+		
 				if ($_subscribedOnly)
 				{
 					$mainFolder = $this->icServer->listSubscribedMailboxes($reference, 1, true);
@@ -2711,7 +2722,7 @@ class emailadmin_imapbase
 					foreach ($subFolders as $path => $folder)
 					{
 						$folderInfo = mail_tree::pathToFolderData($folder['MAILBOX'], $folder['delimiter']);
-						if (in_array(trim($folderInfo['name']), $autoFoldersTmp))
+						if (in_array(trim($folderInfo['name']), $autofolders))
 						{
 							$aFolders [$path] = $folder;
 						}
@@ -2772,7 +2783,7 @@ class emailadmin_imapbase
 				$folders = $this->icServer->getMailboxes('', 0, true);
 			}
 		}
-
+		
 		// Get counter information and add them to each fetched folders array
 		// TODO:  do not fetch counters for user .... as in shared / others
 		if ($_getCounter)
