@@ -2722,7 +2722,7 @@ class emailadmin_imapbase
 					foreach ($subFolders as $path => $folder)
 					{
 						$folderInfo = mail_tree::pathToFolderData($folder['MAILBOX'], $folder['delimiter']);
-						if (in_array(trim($folderInfo['name']), $autofolders))
+						if (in_array(trim($folderInfo['name']), $autofolders) || in_array(trim($folderInfo['name']), self::$autoFolders))
 						{
 							$aFolders [$path] = $folder;
 						}
