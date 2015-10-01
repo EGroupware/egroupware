@@ -241,6 +241,11 @@
 			// to take padding/margin into account
 			var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
 			var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
+			
+			// Don't let the window gets horizental scrollbar
+			var scrollWidth = document.body.scrollWidth - document.body.clientWidth;
+			if (scrollWidth > 0 && scrollWidth + egw_getWindowOuterWidth() < screen.availWidth) delta_width = -scrollWidth;
+			
 			if (delta_height && egw_getWindowOuterHeight() >= egw.availHeight())
 			{
 				delta_height = 0;
