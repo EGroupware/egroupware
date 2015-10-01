@@ -1397,7 +1397,8 @@ abstract class egw_framework
 			self::includeCSS($theme_css);
 
 			// search for app specific css file, so it can customize the theme
-			self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
+			self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+				self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
 
 			// sending print css last, so it can overwrite anything
 			$print_css = $this->template_dir.'/print.css';
