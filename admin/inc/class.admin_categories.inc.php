@@ -369,6 +369,19 @@ class admin_categories
 			{
 				$row['class'] .= ' rowNoEdit rowNoDelete ';
 			}
+			else if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+			{
+				if(!$cats->check_perms(EGW_ACL_EDIT, $row['id']) || !self::$acl_edit)
+				{
+					$row['class'] .= ' rowNoEdit';
+				}
+				if(!$cats->check_perms(EGW_ACL_DELETE, $row['id']) || !self::$acl_delete ||
+					// Only admins can delete globals
+					$cats->is_global($row['id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
+				{
+					$row['class'] .= ' rowNoDelete';
+				}
+			}
 			// Can only edit (via context menu) categories for the selected app (backend restriction)
 			if($row['appname'] != $query['appname'] || (array_sum($row['owner']) > 0))
 			{
@@ -661,11 +674,18 @@ class admin_categories
 		switch($action)
 		{
 			case 'delete':
+				$action_msg = lang('deleted');
 				foreach($checked as $id)
 				{
-					$cats->delete($id,$settings == 'sub',$settings != 'sub');
-					$action_msg = lang('deleted');
-					$success++;
+					if($cats->check_perms(EGW_ACL_DELETE, $id, (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
+					{
+						$cats->delete($id,$settings == 'sub',$settings != 'sub');
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
 				}
 				break;
 			case 'owner':
