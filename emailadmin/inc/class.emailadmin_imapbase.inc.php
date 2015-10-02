@@ -2737,7 +2737,7 @@ class emailadmin_imapbase
 						}
 					}
 					if (is_array($aFolders)) uasort ($aFolders, array($this,'sortByAutofolder'));
-					ksort($aFolders);
+					//ksort($aFolders);
 					
 					// Sort none auto folders base on mailbox name
 					uasort($nFolders,array($this,'sortByMailbox'));
@@ -2817,7 +2817,8 @@ class emailadmin_imapbase
 					foreach($autoFoldersTmp as $afk=>$aF)
 					{
 						//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-						if($aF && strlen($mySpecialUseFolders[$aF])&&strlen($k)>=strlen($mySpecialUseFolders[$aF])&&substr($k,0,strlen($mySpecialUseFolders[$aF]))==$mySpecialUseFolders[$aF])
+						if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
+							($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
 						{
 							//error_log($k.'->'.$mySpecialUseFolders[$aF]);
 							$isAutoFolder=true;
@@ -2840,7 +2841,8 @@ class emailadmin_imapbase
 					foreach($autoFoldersTmp as $afk=>$aF)
 					{
 						//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-						if($aF && strlen($mySpecialUseFolders[$aF])&&strlen($k)>=strlen($mySpecialUseFolders[$aF])&&substr($k,0,strlen($mySpecialUseFolders[$aF]))==$mySpecialUseFolders[$aF])
+						if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
+							($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
 						{
 							//error_log($k.'->'.$mySpecialUseFolders[$aF]);
 							$isAutoFolder=true;
@@ -2857,7 +2859,8 @@ class emailadmin_imapbase
 				foreach($autoFoldersTmp as $afk=>$aF)
 				{
 					//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-					if($aF && strlen($mySpecialUseFolders[$aF])&&strlen($k)>=strlen($mySpecialUseFolders[$aF])&&substr($k,0,strlen($mySpecialUseFolders[$aF]))==$mySpecialUseFolders[$aF])
+					if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
+							($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
 					{
 						//error_log($k.'->'.$mySpecialUseFolders[$aF]);
 						$isAutoFolder=true;
@@ -2886,12 +2889,38 @@ class emailadmin_imapbase
 			}
 		}
 		//error_log(__METHOD__.__LINE__.array2string($autoFoldersTmp));
-		uasort ($autoFolderObjects, array($this,'sortByAutofolder'));
+		// avoid calling sortByAutoFolder as it is not regarding subfolders
+		$autoFolderObjectsTmp = $autoFolderObjects;
+		unset($autoFolderObjects);
+		uasort($autoFolderObjectsTmp, array($this,'sortByMailbox'));
+		foreach($autoFoldersTmp as $afk=>$aF)
+		{
+			foreach($autoFolderObjectsTmp as $k => $f)
+			{
+				if($aF && ($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+				{
+					$autoFolderObjects[$k]=$f;
+				}
+			}
+		}
 		//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
 		if (!$isGoogleMail) {
 			$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
 		} else {
-			uasort ($googleAutoFolderObjects, array($this,'sortByAutofolder'));
+			// avoid calling sortByAutoFolder as it is not regarding subfolders
+			$gAutoFolderObjectsTmp = $googleAutoFolderObjects;
+			unset($googleAutoFolderObjects);
+			uasort($gAutoFolderObjectsTmp, array($this,'sortByMailbox'));
+			foreach($autoFoldersTmp as $afk=>$aF)
+			{
+				foreach($gAutoFolderObjectsTmp as $k => $f)
+				{
+					if($aF && ($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+					{
+						$googleAutoFolderObjects[$k]=$f;
+					}
+				}
+			}
 			$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$folders,(array)$googleMailFolderObject,$googleAutoFolderObjects,$googleSubFolderObjects,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
 		}
 		if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.' ('.__LINE__.') Sorting:');
