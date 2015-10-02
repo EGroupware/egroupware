@@ -2793,7 +2793,7 @@ class emailadmin_imapbase
 		if (self::$debugTimes) $starttime = microtime (true);
 		// Merge of all auto folders and specialusefolders
 		$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
-		ksort($folders);
+		uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
 		$tmpFolders = $folders;
 		$inboxFolderObject=$inboxSubFolderObjects=$autoFolderObjects=$typeFolderObject=$mySpecialUseFolders=array();
 		$googleMailFolderObject=$googleAutoFolderObjects=$googleSubFolderObjects=array();
