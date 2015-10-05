@@ -177,7 +177,7 @@ class admin_categories
 					}
 					if ($button == 'save')
 					{
-						egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', 'admin');
+						egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', $this->appname);
 						egw_framework::window_close();
 					}
 					break;
@@ -187,8 +187,8 @@ class admin_categories
 					{
 						$cats->delete($content['id'],$delete_subs,!$delete_subs);
 						$msg = lang('Category deleted.');
-						// Refresh internally looks for template name, which starts with 'admin'
-						egw_framework::refresh_opener($msg, $refresh_app, $content['id'],'delete', 'admin');
+
+						egw_framework::refresh_opener($msg, $refresh_app, $content['id'],'delete', $this->appname);
 						egw_framework::window_close();
 						return;
 					}
@@ -199,8 +199,8 @@ class admin_categories
 					}
 					break;
 			}
-			// Refresh internally looks for template name, which starts with 'admin'
-			egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', 'admin');
+
+			egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', $this->appname);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -529,7 +529,7 @@ class admin_categories
 				{
 					$msg .= lang('%1 category(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
-				egw_framework::refresh_opener($msg, 'admin');
+				egw_framework::refresh_opener($msg, $this->appname);
 				$msg = '';
 			}
 		}
