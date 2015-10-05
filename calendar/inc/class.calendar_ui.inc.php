@@ -256,7 +256,7 @@ class calendar_ui
 		// retrieve saved states from prefs
 		$states = is_array($this->bo->cal_prefs['saved_states']) ?
 			$this->bo->cal_prefs['saved_states'] : unserialize($this->bo->cal_prefs['saved_states']);
-		
+
 		// only look at _REQUEST, if we are in the calendar (prefs and admin show our sidebox menu too!)
 		if (is_null($set_states))
 		{
@@ -586,7 +586,7 @@ class calendar_ui
 
 		// Merge print placeholders (selectbox in etemplate)
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
-		{			
+		{
 			$file['Placeholders'] = egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
 		}
 		$appname = 'calendar';
@@ -793,7 +793,7 @@ class calendar_ui
 		{
 			$event['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
 		}
-		$event['non_blocking'] = boolval($event['non_blocking']);
+		$event['non_blocking'] = (bool)$event['non_blocking'];
 
 		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
 		{
@@ -834,7 +834,7 @@ class calendar_ui
 			}
 		}
 	}
-	
+
 	public function merge($timespan = array())
 	{
 		// Merge print
