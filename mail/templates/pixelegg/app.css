@@ -2617,10 +2617,12 @@ div.mailComposeHeaderSection > table {
   padding-top: 10px;
 }
 /* transition delay breaks splitter resize, because it doesn't get the right height
-	in a right time. So we reduce the delay to 0 to fix the timing issue.*/
+	in a right time. So we reduce the delay to 0.1 to fix the timing issue.
+	The delay should not be set to 0 or none because it wil conflict with blueimp gallery plugin (Expose).
+*/
 :hover {
-  -webkit-transition: all 0s ease-out;
-  -moz-transition: all 0s ease-out;
-  -o-transition: all 0s ease-out;
-  transition: all 0s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  -o-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
