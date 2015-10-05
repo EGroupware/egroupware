@@ -214,6 +214,14 @@ app.classes.calendar = AppJS.extend(
 				return _url.replace(/menuaction=[^&]+/, 'menuaction=calendar.calendar_uilist.listview&ajax=true');
 			}
 		}
+		else if (_url.indexOf('merge=') > 0)
+		{
+			// Just open the merge
+			window.open(_url.replace('&ajax=true',''),'_blank');
+			
+			// Tell framework app took care of it
+			return true;
+		}
 		// can not load our own index page, has to be done by framework
 		return false;
 	},
