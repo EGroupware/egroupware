@@ -188,7 +188,10 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					$sel_options[$lname] = lang($label);
 					$fields_with_vals[]=$lname;
 				}
-				$link_types = egw_link::app_list('query');
+				$link_types = array_intersect_key(egw_link::app_list('query'),egw_link::app_list('title'));
+				// Explicitly add in filemanager, which does not support query or title
+				$link_types['filemanager'] = lang('filemanager');
+
 				ksort($link_types);
 				foreach($link_types as $lname => $label)
 				{
