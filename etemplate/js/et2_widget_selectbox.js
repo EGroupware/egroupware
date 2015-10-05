@@ -490,7 +490,9 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			if(_value && jQuery("option[value='"+_value+"']", this.input).prop("selected", true).length == 0)
 			{
-				if(this.options.select_options[_value])
+				if(this.options.select_options[_value] ||
+					this.options.select_options.filter && 
+					this.options.select_options.filter(function(value) {return value == _value;}))
 				{
 					// Options not set yet? Do that now, which will try again.
 					return this.set_select_options(this.options.select_options);
