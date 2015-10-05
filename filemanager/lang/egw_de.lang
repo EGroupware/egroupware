@@ -237,6 +237,7 @@ show link "your home directory" in side box menu?	filemanager	de	Möchten Sie de
 show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte, bitte loggen sie sich hier als Dateimanager Superuser ein - zulässige Benutzer werden im Setup festgelegt.
 sqlfs statistics	filemanager	de	sqlFS Statistik
 start search	filemanager	de	Suche starten
 startfolder	filemanager	de	Anfangsordner

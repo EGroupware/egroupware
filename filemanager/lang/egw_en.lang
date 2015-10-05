@@ -237,6 +237,7 @@ show link "your home directory" in side box menu?	filemanager	en	Show link "Your
 show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home directory*" in side box menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side menu?
 size	filemanager	en	Size
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	en	Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.
 sqlfs statistics	filemanager	en	sqlFS Statistics
 start search	filemanager	en	Start search
 startfolder	filemanager	en	Start folder
