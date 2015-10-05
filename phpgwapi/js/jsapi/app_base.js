@@ -961,26 +961,18 @@ var AppJS = Class.extend(
 	
 	/**
 	 * Get json data for videos from the given url
-	 * @param {string} _url url of tutorials json file
 	 * 
 	 * @return {Promise, object} return Promise, json object as resolved result and error message in case of failure
 	 */
-	egwTutorialGetData: function(_url){
-		var url = _url;
+	egwTutorialGetData: function(){
+		var self = this;
 		return new Promise (function(_resolve, _reject)
 		{
 			var resolve = _resolve;
 			var reject = _reject;
-			jQuery.ajax({
-				method:'GET',
-				url: url,
-				success: function (_data) {
+			self.egw.json('home.home_tutorial_ui.ajax_data', [self.egw.app_name()], function(_data){
 					resolve(_data);
-				},
-				fail: function (_err) {
-					reject(_err);
-				}
-			});
+			}).sendRequest();
 		});
 	},
 	
@@ -993,7 +985,7 @@ var AppJS = Class.extend(
 	 *		{
 	 *			[app name]:{
 	 *				[language tag]:[
-	 *					{src:"",title:"",top:""}		
+	 *					{src:"",thumbnail:"",title:"",top:""}		
 	 *				]
 	 *			}
 	 *		}
@@ -1005,12 +997,12 @@ var AppJS = Class.extend(
 	 *		{
 	 *			"mail":{
 	 *				"en":[
-	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", "title":"PGP Encryption"},
-	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", "title":"Subscription", top:true},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", thumbnail:"http://img.youtube.com/vi/mCDJndpjO40/1.jpg", "title":"PGP Encryption"},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", thumbnail:"http://img.youtube.com/vi/mCDJndpjO/1.jpg", "title":"Subscription", top:true},
 	 *				],
 	 *				"de":[
-	 *					{src:"https://www.youtube.com/embed/m40", "title":"PGP Verschlüsselung"},
-	 *					{src:"https://www.youtube.com/embed/mpjO", "title":"Ordner Abonnieren", top:true},
+	 *					{src:"https://www.youtube.com/embed/m40", thumbnail:"http://img.youtube.com/vi/m40/1.jpg", "title":"PGP Verschlüsselung"},
+	 *					{src:"https://www.youtube.com/embed/mpjO", thumbnail:"http://img.youtube.com/vi/mpjO/1.jpg", "title":"Ordner Abonnieren", top:true},
 	 *				]
 	 *			}
 	 *		}
@@ -1025,7 +1017,7 @@ var AppJS = Class.extend(
 		var etemplate = new etemplate2 (div, false);
 		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet';
 		
-		this.egwTutorialGetData(egw.webserverUrl+'/tutorials.json').then(function(_data){
+		this.egwTutorialGetData().then(function(_data){
 			var lang = egw.preference('lang');
 			var content = {content:{list:[]}};
 			if (_data && _data[egw.app_name()])
@@ -1034,9 +1026,10 @@ var AppJS = Class.extend(
 				if (typeof _data[egw.app_name()][lang] !='undefined' 
 					&& _data[egw.app_name()][lang].length > 0)
 				{
-					for (var i=0;i<=_data[egw.app_name()][lang];i++)
+					for (var i=0;i < _data[egw.app_name()][lang].length;i++)
 					{
-						_data[egw.app_name()][lang][i]['onclick'] = 'egw.open()';
+						var tuid = egw.app_name() + '-' +lang + '-' + i;
+						_data[egw.app_name()][lang][i]['onclick'] = 'app.'+egw.app_name()+'.egwTutorialPopup("'+tuid+'")';
 					}
 					content.content.list = _data[egw.app_name()][lang];
 					// Get the video with top property into the top of the list
@@ -1056,13 +1049,19 @@ var AppJS = Class.extend(
 			}	
 		},
 		function(_err){
-			consloe.log(_err);
+			console.log(_err);
 		});
 	},
 	
-	egwTutorialPopup: function ()
+	/**
+	 * Open popup to show given tutorial id
+	 * @param {string} _tuid tutorial object id
+	 *	- tuid: appname-lang-index
+	 */
+	egwTutorialPopup: function (_tuid)
 	{
-		
+		var url = egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid='+_tuid);
+		egw.open_link(url,'_blank','500x400');
 	},
 	
 	/**

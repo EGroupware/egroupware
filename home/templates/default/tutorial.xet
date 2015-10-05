@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="home.tutorial" template="" lang="" group="0" version="15.1">
+		<hbox height="87%">
+			<iframe id="src" height="100%" width="100%" seamless="true" fullscreen="true"/>
+		</hbox>
+		<hbox class="dialogFooterToolbar">
+			<button align="left" statustext="Close this window" label="Close" id="button[close]" onclick="window.close()" image="close" background_image="1"/>
+		</hbox>				
+	</template>
+</overlay>

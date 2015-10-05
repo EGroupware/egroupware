@@ -8,11 +8,11 @@
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<vbox>
-						<description value = "$row_cont[title]" onclick="$row_cont[onclick]"/>
-						<iframe value="$row_cont[src]" width="99%" seamless="true" fullscreen="true"/>
-					</vbox>
+				<row >
+					<hbox onclick="$row_cont[onclick]">
+						<image src="$row_cont[thumbnail]" height="70px"/>
+						<description value = "$row_cont[title]" class="et2_ellipsis"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>
