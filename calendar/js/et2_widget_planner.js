@@ -418,7 +418,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				for(var i = 0; i < 12; i++)
 				{
 					// Not using UTC because we corrected for timezone offset
-					labels.push({id: d.getFullYear() +'-'+d.getMonth(), label:egw.lang(date('F',d))+' '+d.getFullYear()});
+					labels.push({id: d.getFullYear() +'-'+d.getMonth(), label:app.calendar.egw.lang(date('F',d))+' '+d.getFullYear()});
 					d.setMonth(d.getMonth()+1);
 				}
 				return labels;
@@ -461,6 +461,10 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 						if(labels[i].id == key)
 						{
 							label_index = i;
+							if(typeof rows[label_index] === 'undefined')
+							{
+								rows[label_index] = [];
+							}
 							break;
 						}
 					}
@@ -725,8 +729,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var end = new Date(this.options.end_date);
 		end = new Date(end.valueOf() + end.getTimezoneOffset() * 60 * 1000);
 
-		var title = egw.lang(date('F',start))+' '+date('Y',start)+' - '+
-			egw.lang(date('F',end))+' '+date('Y',end);
+		var title = app.calendar.egw.lang(date('F',start))+' '+date('Y',start)+' - '+
+			app.calendar.egw.lang(date('F',end))+' '+date('Y',end);
 
 		// calculate date for navigation links
 		var time = new Date(start);
@@ -790,7 +794,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			}
 			if (days_in_month > 5)
 			{
-				var title = egw.lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)))
+				var title = app.calendar.egw.lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)))
 			}
 			if (days_in_month > 10)
 			{
@@ -857,7 +861,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var t = new Date(start);
 		for(var left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + 7),left += week_width,i += 7)
 		{
-			var title = egw.lang('Week')+' '+app.calendar.date.week_number(t);
+			var title = app.calendar.egw.lang('Week')+' '+app.calendar.date.week_number(t);
 
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
 			if (days  <= 7)
@@ -907,15 +911,15 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 
 			if (days <= 3)
 			{
-				title = egw.lang(date('l',t))+', '+date('j',t)+'. '+egw.lang(date('F',t));
+				title = app.calendar.egw.lang(date('l',t))+', '+date('j',t)+'. '+app.calendar.egw.lang(date('F',t));
 			}
 			else if (days <= 7)
 			{
-				title = egw.lang(date('l',t))+' '+date('j',t);
+				title = app.calendar.egw.lang(date('l',t))+' '+date('j',t);
 			}
 			else
 			{
-				title = egw.lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
+				title = app.calendar.egw.lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
 			}
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
 			if (days < 5)

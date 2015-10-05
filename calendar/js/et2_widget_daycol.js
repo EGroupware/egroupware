@@ -65,8 +65,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.div = $j(document.createElement("div"))
 			.addClass("calendar_calDayCol")
 			.css('width',this.options.width);
-		this.title = $j(document.createElement('div'))
+		this.header = $j(document.createElement('div'))
+			.addClass("calendar_calDayColHeader")
 			.appendTo(this.div);
+		this.title = $j(document.createElement('div'))
+			.appendTo(this.header);
 
 		this.setDOMNode(this.div[0]);
 
@@ -80,7 +83,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			wd_start:	60*9,
 			wd_end:		60*17,
 			granularity:	30,
-			extraRows:	2,
 			rowsToDisplay:	10,
 			rowHeight:	20,
 			// Percentage; not yet available
@@ -105,8 +107,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	destroy: function() {
 		this._super.apply(this, arguments);
 		this.div.off();
+		this.header.off().remove();
 		this.title.off();
 		this.div = null;
+		this.header = null;
 		this.title = null;
 		
 		// date_helper has no parent, so we must explicitly remove it
@@ -129,15 +133,16 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			this.display_settings.wd_start = 60*this._parent.options.day_start;
 			this.display_settings.wd_end = 60*this._parent.options.day_end;
 			this.display_settings.granularity = this._parent.options.granularity;
-			this.display_settings.extraRows = this._parent.options.extra_rows;
+			this._parent.dayHeader.append(this.header);
 		}
 
-		this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity)+2+2*this.display_settings.extraRows;
+		this.header.css('left', this.div.css('left'));
+		this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity);
 		this.display_settings.rowHeight= (100/this.display_settings.rowsToDisplay).toFixed(1);
 		this.display_settings.titleHeight = (this.title.height()/this.div.height())*100;
 
 		// adding divs to click on for each row / time-span
-		for(var t =this.display_settings.wd_start,i = 1+this.display_settings.extraRows; t <= this.display_settings.wd_end; t += this.display_settings.granularity,++i)
+		for(var t = 0,i = 1; t < 1440; t += this.display_settings.granularity,++i)
 		{
 			var linkData = {
 				'menuaction':'calendar.calendar_uiforms.edit',
@@ -150,7 +155,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			var droppableDateTime = linkData['date'] + "T" + linkData['hour'] + linkData['minute'];
 			var droppableID='drop_'+droppableDateTime+'_O'+(this.options.owner<0?'group'+Math.abs(this.options.owner):this.options.owner);
 
-			var hour = jQuery('<div id="' + droppableID + '" style="height:'+ this.display_settings.rowHeight +'%; top: '+ (i*this.display_settings.rowHeight).toFixed(1) +'%;" class="calendar_calAddEvent">')
+			var hour = jQuery('<div id="' + droppableID + '" style="height:'+ this._parent.rowHeight+'px; " class="calendar_calAddEvent">')
 				.attr('data-date',linkData.date)
 				.attr('data-hour',linkData.hour)
 				.attr('data-minute',linkData.minute)
@@ -206,7 +211,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		var date_string = this._parent._children.length === 1 ?
 			app.calendar.date.long_date(formatDate,false, false, true) :
 			jQuery.datepicker.formatDate('DD dd',formatDate);
-		this.title.text(date_string);
+		this.title.text(date_string)
+			.attr("data-date", new_date);
 
 		// Avoid redrawing if date is the same
 		if(new_date === this.options.date && !force_redraw)
@@ -220,8 +226,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		}
 
 		this.options.date = new_date;
-
-		this.div.attr("data-date", this.options.date);
 
 		// Set holiday and today classes
 		this.day_class_holiday();
@@ -290,6 +294,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		},this,this.getInstanceManager().execId,this.id);
 	},
 
+	set_left: function(left) {
+		this.div.css('left',left);
+		this.header.css('left',left);
+	},
+	set_width: function(width) {
+		this._super.apply(this, arguments);
+		this.header.width(width);
+	},
+
 	/**
 	 * Applies class for today, and any holidays for current day
 	 */
@@ -297,12 +310,13 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Remove all classes
 		this.title.removeClass()
 			// Except this one...
-			.addClass("et2_clickable calendar_calDayColHeader et2_link");
+			.addClass("et2_clickable et2_link");
+		this.header.removeClass('calendar_calBirthday calendar_calHoliday');
 
 		// Set today class - note +1 when dealing with today, as months in JS are 0-11
 		var today = new Date();
 		
-		this.title.toggleClass("calendar_calToday", this.options.date === ''+today.getUTCFullYear()+
+		this.header.toggleClass("calendar_calToday", this.options.date === ''+today.getUTCFullYear()+
 			sprintf("%02d",today.getUTCMonth()+1)+
 			sprintf("%02d",today.getUTCDate())
 		);
@@ -317,7 +331,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			{
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
-					this.title.addClass('calendar_calBirthday');
+					this.header.addClass('calendar_calBirthday');
 
 					//If the birthdays are already displayed as event, don't
 					//show them in the caption
@@ -328,8 +342,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				}
 				else
 				{
-					this.title.addClass('calendar_calHoliday');
-					this.title.attr('data-holiday', holidays[i]['name']);
+					this.header.addClass('calendar_calHoliday');
+					this.header.attr('data-holiday', holidays[i]['name']);
 
 					//If the birthdays are already displayed as event, don't
 					//show them in the caption
@@ -340,7 +354,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				}
 			}
 		}
-		this.title.attr('title', holiday_list.join(','));
+		this.header.attr('title', holiday_list.join(','));
 	},
 
 	/**
@@ -509,8 +523,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				var height = 0;
 				if(columns[c][i].options.value.whole_day_on_top)
 				{
-					top = this.display_settings.titleHeight + this.display_settings.rowHeight*whole_day_counter++;
-					height = this.display_settings.rowHeight;
+					columns[c][i].div
+						.appendTo(this.header)
+						.css('position', 'relative');
+					continue;
 				}
 				else
 				{
@@ -539,7 +555,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	/**
 	 * Calculates the vertical position based on the time
 	 *
-	 * workday start- and end-time, is taken into account, as well as timeGrids px_m - minutes per pixel param
+	 * This calculation is a percentage from 00:00 to 23:59
 	 *
 	 * @param {int} time in minutes from midnight
 	 * @param {int} [row_offset=0] Add extra spacing for additional rows
@@ -553,21 +569,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			row_offset = 0;
 		}
 		
-		// time before workday => condensed in the first $this->extraRows rows
-		if (this.display_settings.wd_start > 0 && time < this.display_settings.wd_start)
-		{
-			pos = this.display_settings.titleHeight + (row_offset + (time / this.display_settings.wd_start )) * this.display_settings.rowHeight;
-		}
-		// time after workday => condensed in the last row
-		else if (this.display_settings.wd_end < 24*60 && time > this.display_settings.wd_end+1*this.display_settings.granularity)
-		{
-			pos = 100 - (row_offset * this.display_settings.rowHeight * (1 - (time - this.display_settings.wd_end) / (24*60 - this.display_settings.wd_end)));
-		}
-		// time during the workday => 2. row on (= + granularity)
-		else
-		{
-			pos = this.display_settings.rowHeight * (1+this.display_settings.extraRows+(time-this.display_settings.wd_start)/this.display_settings.granularity);
-		}
+		// 24h
+		pos = ((time / 60) / 24) * 100
+		
 		pos = pos.toFixed(1)
 
 		return pos;
@@ -600,9 +604,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 * @param {Event} _ev
 	 * @returns {boolean}
 	 */
-	click: function(_ev) {
-		
-		if($j(_ev.target).hasClass('calendar_calDayColHeader'))
+	click: function(_ev)
+	{
+		// Click on the title
+		if(this.title.is(_ev.target))
 		{
 			this._parent.set_start_date(this.date);
 			this._parent.set_end_date(this.date);

@@ -317,7 +317,11 @@ class calendar_ui
 					else	// change only the owners of the given type
 					{
 						$res_type = is_numeric($set_owners[0]) ? false : $set_owners[0][0];
-						$owners = explode(',',$states['owner'] ? $states['owner'] : $default);
+						$owners = $states['owner'] ? $states['owner'] : $default;
+						if(!is_array($owners))
+						{
+							$owners = explode(',',$owners);
+						}
 						foreach($owners as $key => $owner)
 						{
 							if (!$res_type && is_numeric($owner) || $res_type && $owner[0] == $res_type)
