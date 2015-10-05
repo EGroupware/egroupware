@@ -75,6 +75,9 @@
 				</columns>
 				<rows>
 					<row disabled="@is_root">
+						<description span="all" value="Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup."/>
+					</row>
+					<row disabled="@is_root">
 						<description value="User"/>
 						<textbox id="user"/>
 					</row>
