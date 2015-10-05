@@ -440,6 +440,15 @@ app.classes.calendar = AppJS.extend(
 			.on('wheel.calendar','.et2_container .calendar_calTimeGrid, .et2_container .calendar_plannerWidget',
 				function(e)
 				{
+					var at_bottom = true;
+					var at_top = true;
+					$j(this).children().each(function() {
+						at_bottom = at_bottom && this.scrollTop === (this.scrollHeight - this.offsetHeight)
+					}).each(function() {
+						at_top = at_top && this.scrollTop === 0;
+					});
+					if(!at_bottom && !at_top) return;
+					
 					e.preventDefault();
 					var direction = e.originalEvent.deltaY > 0 ? 1 : -1;
 					var delta = 1;
@@ -1609,6 +1618,11 @@ app.classes.calendar = AppJS.extend(
 			if(state.state.view === 'listview')
 			{
 				state.state.startdate = state.state.date;
+
+				if(state.state.end_date)
+				{
+					state.state.enddate = state.state.end_date;
+				}
 				state.state.col_filter = {participant: state.state.owner};
 
 				// Pass status filter in as status filter, avoids conflicts with nm filter
@@ -2322,6 +2336,12 @@ app.classes.calendar = AppJS.extend(
 						state.planner_days = 0;
 						state.last = false;
 					}
+					else if (app.calendar.state.view == 'listview')
+					{
+						var d = app.calendar.View.end_date.call(this,state);
+						d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
+						state.end_date = d;
+					}
 					app.calendar.update_state(state);
 				},
 				// Mark holidays
@@ -2371,10 +2391,16 @@ app.classes.calendar = AppJS.extend(
 					{
 						app.calendar.update_state({view: 'week', date: date.getValue(), days: days});
 					}
-					else if (app.calendar.state.view == 'planner')
+					else if (view == 'planner')
 					{
 						// Clicked a week, show just a week
 						app.calendar.update_state({planner_days: 7});
+					}
+					else if (view == 'listview')
+					{
+						app.calendar.update_state({
+							end_date: app.classes.calendar.views.week.end_date({date:date.getValue()})
+						});
 					}
 				});
 		}
