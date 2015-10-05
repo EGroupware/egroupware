@@ -334,7 +334,6 @@ class egw_mailer extends Horde_Mime_Mail
 			$part->setContentTypeParameter($matches[2], $matches[3]);
 		}
 		$part->setContents($resource);
-		$part->setName($name ? $name : egw_vfs::basename($file));
 
 		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
 		if (stripos($type,"text/calendar; method=") !== false)
@@ -342,6 +341,9 @@ class egw_mailer extends Horde_Mime_Mail
 			$this->_htmlBody = $part;
 			return;
 		}
+		// setting name, also sets content-disposition attachment (!), therefore we have to do it after "text/calendar; method=" handling
+		if ($name || !is_resource($data)) $part->setName($name ? $name : egw_vfs::basename($data));
+
 		// this should not be necessary, because binary data get detected by mime-type,
 		// but at least Cyrus complains about NUL characters
 		$part->setTransferEncoding('base64', array('send' => true));
