@@ -143,7 +143,7 @@ class egw_link extends solink
 			'icon' => 'addressbook/accounts',
 			'query' => 'accounts::link_query',
 			'title' => 'common::grab_owner_name',
-			'view' => array('menuaction'=>'addressbook.addressbook_ui.view'),
+			'view' => array('menuaction'=>'addressbook.addressbook_ui.view','ajax'=>'true'),
 			'view_id' => 'account_id'
 		),
 		'home' => array(
