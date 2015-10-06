@@ -347,7 +347,7 @@ class egw_db
 		{
 			$this->Type = $GLOBALS['egw_info']['server']['db_type'];
 		}
-		foreach(array('Database', 'Host', 'Port', 'User', 'Password', 'Type') as $var)
+		foreach(array('Database', 'Host', 'Port', 'User', 'Type') as $var)
 		{
 			$val = (string)$this->$var;
 			if ($val[0] === '@') $this->$var = getenv(substr($val, 1));
