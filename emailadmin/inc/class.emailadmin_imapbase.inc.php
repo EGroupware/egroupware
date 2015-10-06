@@ -2189,7 +2189,7 @@ class emailadmin_imapbase
 	 */
 	function createFolder($_parent, $_folderName, &$_error)
 	{
-		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."->"."$_parent, $_folderName");
+		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."->"."$_parent, $_folderName called from:".function_backtrace());
 		$parent		= $_parent;//$this->_encodeFolderName($_parent);
 		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
 
@@ -2645,7 +2645,7 @@ class emailadmin_imapbase
 		//error_log(__METHOD__.__LINE__.array2string($nameSpace));
 		// Get special use folders
 		if (!isset(self::$specialUseFolders)) $this->getSpecialUseFolders (); // Set self::$specialUseFolders
-
+		// topLevelQueries generally ignore the $_search param. Except for Config::examineNamespace
 		if ($_onlyTopLevel) // top level leaves
 		{
 			// Get top mailboxes of icServer
@@ -2663,7 +2663,8 @@ class emailadmin_imapbase
 					
 						if(is_array($singleNameSpace) && $singleNameSpace['prefix']){
 							$prefixes[$type] = $singleNameSpace['prefix'];
-							$result = $this->icServer->getMailboxes($singleNameSpace['prefix'], 2, true);
+							//regard extra care for nameSpacequeries when configured AND respect $_search
+							$result = $this->icServer->getMailboxes($singleNameSpace['prefix'], $_search==0?0:2, true);
 							if (is_array($result))
 							{
 								ksort($result);
@@ -2775,7 +2776,7 @@ class emailadmin_imapbase
 				$folders = $this->icServer->getMailboxes($path, $_search, true);
 			}
 
-			ksort($folders);
+			uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
 		}
 		elseif(!$_nodePath) // all
 		{
@@ -2788,143 +2789,147 @@ class emailadmin_imapbase
 				$folders = $this->icServer->getMailboxes('', 0, true);
 			}
 		}
-		// SORTING FOLDERS
-		//self::$debugTimes=true;
-		if (self::$debugTimes) $starttime = microtime (true);
-		// Merge of all auto folders and specialusefolders
-		$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
-		uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
-		$tmpFolders = $folders;
-		$inboxFolderObject=$inboxSubFolderObjects=$autoFolderObjects=$typeFolderObject=$mySpecialUseFolders=array();
-		$googleMailFolderObject=$googleAutoFolderObjects=$googleSubFolderObjects=array();
-		$isGoogleMail=false;
-		foreach($autoFoldersTmp as $afk=>$aF)
+		// only sort (autofolders, shared, others ...) when retrieving all folders or toplevelquery
+		if ($_onlyTopLevel || !$_nodePath)
 		{
-			if (!isset($mySpecialUseFolders[$aF]) && $aF) $mySpecialUseFolders[$aF]=$this->getFolderByType($aF);
-			//error_log($afk.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-		}
-		//error_log(array2string($mySpecialUseFolders));
-		foreach ($tmpFolders as $k => $f) {
-			$sorted=false;
-			if (strtoupper(substr($k,0,5))=='INBOX') {
-				if (strtoupper($k)=='INBOX') {
-					//error_log(__METHOD__.__LINE__.':'.strtoupper(substr($k,0,5)).':'.$k);
-					$inboxFolderObject[$k]=$f;
-					unset($folders[$k]);
-					$sorted=true;
+			// SORTING FOLDERS
+			//self::$debugTimes=true;
+			if (self::$debugTimes) $starttime = microtime (true);
+			// Merge of all auto folders and specialusefolders
+			$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
+			uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
+			$tmpFolders = $folders;
+			$inboxFolderObject=$inboxSubFolderObjects=$autoFolderObjects=$typeFolderObject=$mySpecialUseFolders=array();
+			$googleMailFolderObject=$googleAutoFolderObjects=$googleSubFolderObjects=array();
+			$isGoogleMail=false;
+			foreach($autoFoldersTmp as $afk=>$aF)
+			{
+				if (!isset($mySpecialUseFolders[$aF]) && $aF) $mySpecialUseFolders[$aF]=$this->getFolderByType($aF,false);
+				//error_log($afk.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
+			}
+			//error_log(array2string($mySpecialUseFolders));
+			foreach ($tmpFolders as $k => $f) {
+				$sorted=false;
+				if (strtoupper(substr($k,0,5))=='INBOX') {
+					if (strtoupper($k)=='INBOX') {
+						//error_log(__METHOD__.__LINE__.':'.strtoupper(substr($k,0,5)).':'.$k);
+						$inboxFolderObject[$k]=$f;
+						unset($folders[$k]);
+						$sorted=true;
+					} else {
+						$isAutoFolder=false;
+						foreach($autoFoldersTmp as $afk=>$aF)
+						{
+							//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
+							if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
+								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+							{
+								//error_log($k.'->'.$mySpecialUseFolders[$aF]);
+								$isAutoFolder=true;
+								$autoFolderObjects[$k]=$f;
+								break;
+							}
+						}
+						if ($isAutoFolder==false) $inboxSubFolderObjects[$k]=$f;
+						unset($folders[$k]);
+						$sorted=true;
+					}
+				} elseif (strtoupper(substr($k,0,13))=='[GOOGLE MAIL]') {
+					$isGoogleMail=true;
+					if (strtoupper($k)=='[GOOGLE MAIL]') {
+						$googleMailFolderObject[$k]=$f;
+						unset($folders[$k]);
+						$sorted=true;
+					} else {
+						$isAutoFolder=false;
+						foreach($autoFoldersTmp as $afk=>$aF)
+						{
+							//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
+							if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
+								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+							{
+								//error_log($k.'->'.$mySpecialUseFolders[$aF]);
+								$isAutoFolder=true;
+								$googleAutoFolderObjects[$k]=$f;
+								break;
+							}
+						}
+						if ($isAutoFolder==false) $googleSubFolderObjects[$k]=$f;
+						unset($folders[$k]);
+						$sorted=true;
+					}
 				} else {
 					$isAutoFolder=false;
 					foreach($autoFoldersTmp as $afk=>$aF)
 					{
 						//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
 						if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-							($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
 						{
 							//error_log($k.'->'.$mySpecialUseFolders[$aF]);
 							$isAutoFolder=true;
 							$autoFolderObjects[$k]=$f;
-							break;
-						}
-					}
-					if ($isAutoFolder==false) $inboxSubFolderObjects[$k]=$f;
-					unset($folders[$k]);
-					$sorted=true;
-				}
-			} elseif (strtoupper(substr($k,0,13))=='[GOOGLE MAIL]') {
-				$isGoogleMail=true;
-				if (strtoupper($k)=='[GOOGLE MAIL]') {
-					$googleMailFolderObject[$k]=$f;
-					unset($folders[$k]);
-					$sorted=true;
-				} else {
-					$isAutoFolder=false;
-					foreach($autoFoldersTmp as $afk=>$aF)
-					{
-						//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-						if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-							($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
-						{
-							//error_log($k.'->'.$mySpecialUseFolders[$aF]);
-							$isAutoFolder=true;
-							$googleAutoFolderObjects[$k]=$f;
-							break;
-						}
-					}
-					if ($isAutoFolder==false) $googleSubFolderObjects[$k]=$f;
-					unset($folders[$k]);
-					$sorted=true;
-				}
-			} else {
-				$isAutoFolder=false;
-				foreach($autoFoldersTmp as $afk=>$aF)
-				{
-					//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-					if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-							($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
-					{
-						//error_log($k.'->'.$mySpecialUseFolders[$aF]);
-						$isAutoFolder=true;
-						$autoFolderObjects[$k]=$f;
-						unset($folders[$k]);
-						$sorted=true;
-						break;
-					}
-				}
-			}
-
-			if ($sorted==false)
-			{
-				foreach(array('others','shared') as $type)
-				{
-					if ($nameSpace[$type]['prefix_present']&&$nameSpace[$type]['prefix'])
-					{
-						if (substr($k,0,strlen($nameSpace[$type]['prefix']))==$nameSpace[$type]['prefix']||
-							substr($k,0,strlen($nameSpace[$type]['prefix'])-strlen($nameSpace[$type]['delimiter']))==substr($nameSpace[$type]['prefix'],0,strlen($nameSpace[$type]['delimiter'])*-1)) {
-							//error_log(__METHOD__.__LINE__.':'.substr($k,0,strlen($nameSpace[$type]['prefix'])).':'.$k);
-							$typeFolderObject[$type][$k]=$f;
 							unset($folders[$k]);
+							$sorted=true;
+							break;
+						}
+					}
+				}
+
+				if ($sorted==false)
+				{
+					foreach(array('others','shared') as $type)
+					{
+						if ($nameSpace[$type]['prefix_present']&&$nameSpace[$type]['prefix'])
+						{
+							if (substr($k,0,strlen($nameSpace[$type]['prefix']))==$nameSpace[$type]['prefix']||
+								substr($k,0,strlen($nameSpace[$type]['prefix'])-strlen($nameSpace[$type]['delimiter']))==substr($nameSpace[$type]['prefix'],0,strlen($nameSpace[$type]['delimiter'])*-1)) {
+								//error_log(__METHOD__.__LINE__.':'.substr($k,0,strlen($nameSpace[$type]['prefix'])).':'.$k);
+								$typeFolderObject[$type][$k]=$f;
+								unset($folders[$k]);
+							}
 						}
 					}
 				}
 			}
-		}
-		//error_log(__METHOD__.__LINE__.array2string($autoFoldersTmp));
-		// avoid calling sortByAutoFolder as it is not regarding subfolders
-		$autoFolderObjectsTmp = $autoFolderObjects;
-		unset($autoFolderObjects);
-		uasort($autoFolderObjectsTmp, array($this,'sortByMailbox'));
-		foreach($autoFoldersTmp as $afk=>$aF)
-		{
-			foreach($autoFolderObjectsTmp as $k => $f)
-			{
-				if($aF && ($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
-				{
-					$autoFolderObjects[$k]=$f;
-				}
-			}
-		}
-		//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
-		if (!$isGoogleMail) {
-			$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
-		} else {
+			//error_log(__METHOD__.__LINE__.array2string($autoFoldersTmp));
 			// avoid calling sortByAutoFolder as it is not regarding subfolders
-			$gAutoFolderObjectsTmp = $googleAutoFolderObjects;
-			unset($googleAutoFolderObjects);
-			uasort($gAutoFolderObjectsTmp, array($this,'sortByMailbox'));
+			$autoFolderObjectsTmp = $autoFolderObjects;
+			unset($autoFolderObjects);
+			uasort($autoFolderObjectsTmp, array($this,'sortByMailbox'));
 			foreach($autoFoldersTmp as $afk=>$aF)
 			{
-				foreach($gAutoFolderObjectsTmp as $k => $f)
+				foreach($autoFolderObjectsTmp as $k => $f)
 				{
 					if($aF && ($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
 					{
-						$googleAutoFolderObjects[$k]=$f;
+						$autoFolderObjects[$k]=$f;
 					}
 				}
 			}
-			$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$folders,(array)$googleMailFolderObject,$googleAutoFolderObjects,$googleSubFolderObjects,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
+			//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
+			if (!$isGoogleMail) {
+				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
+			} else {
+				// avoid calling sortByAutoFolder as it is not regarding subfolders
+				$gAutoFolderObjectsTmp = $googleAutoFolderObjects;
+				unset($googleAutoFolderObjects);
+				uasort($gAutoFolderObjectsTmp, array($this,'sortByMailbox'));
+				foreach($autoFoldersTmp as $afk=>$aF)
+				{
+					foreach($gAutoFolderObjectsTmp as $k => $f)
+					{
+						if($aF && ($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+						{
+							$googleAutoFolderObjects[$k]=$f;
+						}
+					}
+				}
+				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$folders,(array)$googleMailFolderObject,$googleAutoFolderObjects,$googleSubFolderObjects,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
+			}
+			if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.' ('.__LINE__.') Sorting:');
+			//self::$debugTimes=false;
 		}
-		if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.' ('.__LINE__.') Sorting:');
-		//self::$debugTimes=false;
 		// Get counter information and add them to each fetched folders array
 		// TODO:  do not fetch counters for user .... as in shared / others
 		if ($_getCounter)
@@ -3174,7 +3179,7 @@ class emailadmin_imapbase
 			}
 			catch(Exception $e)
 			{
-				error_log(__METHOD__.' ('.__LINE__.') '.' Failed to create Folder '.$_folderName." for $_type:".$e->getMessage());
+				error_log(__METHOD__.' ('.__LINE__.') '.' Failed to create Folder '.$_folderName." for $_type:".$e->getMessage().':'.function_backtrace());
 				$_folderName = false;
 			}
 		}

@@ -268,7 +268,7 @@ class mail_ui
 		}
 		// Initial tree's options, the rest would be loaded dynamicaly by autoloading,
 		// triggered from client-side. Also, we keep this here as
-		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true);
+		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true,false,true);
 
 		//Get all subscribed folders
 		// as getting all subscribed folders is very fast operation
