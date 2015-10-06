@@ -347,11 +347,6 @@ class egw_db
 		{
 			$this->Type = $GLOBALS['egw_info']['server']['db_type'];
 		}
-		foreach(array('Database', 'Host', 'Port', 'User', 'Type') as $var)
-		{
-			$val = (string)$this->$var;
-			if ($val[0] === '@') $this->$var = getenv(substr($val, 1));
-		}
 		// on connection failure re-try with an other host
 		// remembering in session which host we used last time
 		$use_host_from_session = true;
@@ -420,7 +415,7 @@ class egw_db
 	 */
 	public function get_host($next = false)
 	{
-		$hosts = explode(';', $this->Host);
+		$hosts = explode(';', $this->Host[0] == '@' ? getenv(substr($this->Host, 1)) : $this->Host);
 		$num_hosts = count($hosts);
 		$n =& egw_cache::getSession(__CLASS__, $this->Host);
 		if (!isset($n)) $n = 0;
@@ -449,43 +444,45 @@ class egw_db
 	{
 		if (!$this->Link_ID)
 		{
-			foreach(array('Database','User','Password') as $name)
+			$Database = $User = $Password = $Port = $Type = '';
+			foreach(array('Database','User','Password','Port','Type') as $name)
 			{
 				$$name = $this->$name;
+				if (${$name}[0] == '@' && $name != 'Password') $$name = getenv(substr($$name, 1));
 			}
-			$this->setupType = $php_extension = $type = $this->Type;
+			$this->setupType = $php_extension = $Type;
 
-			switch($this->Type)	// convert to ADO db-type-names
+			switch($Type)	// convert to ADO db-type-names
 			{
 				case 'pgsql':
 					$type = 'postgres'; // name in ADOdb
 					// create our own pgsql connection-string, to allow unix domain soccets if !$Host
-					$Host = "dbname=$this->Database".($Host ? " host=$Host".($this->Port ? " port=$this->Port" : '') : '').
-						" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
+					$Host = "dbname=$Database".($Host ? " host=$Host".($Port ? " port=$Port" : '') : '').
+						" user=$User".($Password ? " password='".addslashes($Password)."'" : '');
 					$User = $Password = $Database = '';	// to indicate $Host is a connection-string
 					break;
 
 				case 'odbc_mssql':
 					$php_extension = 'odbc';
-					$this->Type = 'mssql';
+					$Type = 'mssql';
 					// fall through
 				case 'mssql':
-					if ($this->Port) $Host .= ','.$this->Port;
+					if ($Port) $Host .= ','.$Port;
 					break;
 
 				case 'odbc_oracle':
 					$php_extension = 'odbc';
-					$this->Type = 'oracle';
+					$Type = 'oracle';
 					break;
 				case 'oracle':
-					$php_extension = $type = 'oci8';
+					$php_extension = $Type = 'oci8';
 					break;
 
 				case 'sapdb':
-					$this->Type = 'maxdb';
+					$Type = 'maxdb';
 					// fall through
 				case 'maxdb':
-					$type ='sapdb';	// name in ADOdb
+					$Type ='sapdb';	// name in ADOdb
 					$php_extension = 'odbc';
 					break;
 
@@ -493,10 +490,10 @@ class egw_db
 					$php_extension = 'mysql';	// you can use $this->setupType to determine if it's mysqlt or mysql
 					// fall through
 				case 'mysqli':
-					$this->Type = 'mysql';
+					$this->Type = 'mysql';		// need to be "mysql", so apps can check just for "mysql"!
 					// fall through
 				default:
-					if ($this->Port) $Host .= ':'.$this->Port;
+					if ($Port) $Host .= ':'.$Port;
 					break;
 			}
 			if (!isset($GLOBALS['egw']->ADOdb) ||	// we have no connection so far
@@ -519,10 +516,10 @@ class egw_db
 				{
 					$this->privat_Link_ID = True;	// remember that we use a privat Link_ID for disconnect
 				}
-				$this->Link_ID = ADONewConnection($type);
+				$this->Link_ID = ADONewConnection($Type);
 				if (!$this->Link_ID)
 				{
-					throw new egw_exception_db_connection("No ADOdb support for '$type' ($this->Type) !!!");
+					throw new egw_exception_db_connection("No ADOdb support for '$Type' ($this->Type) !!!");
 				}
 				$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
 				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
@@ -538,12 +535,12 @@ class egw_db
 				if ($this->Debug)
 				{
 					echo function_backtrace();
-					echo "<p>new ADOdb connection to $this->Type://$this->Host/$this->Database: Link_ID".($this->Link_ID === $GLOBALS['egw']->ADOdb ? '===' : '!==')."\$GLOBALS[egw]->ADOdb</p>";
+					echo "<p>new ADOdb connection to $Type://$Host/$Database: Link_ID".($this->Link_ID === $GLOBALS['egw']->ADOdb ? '===' : '!==')."\$GLOBALS[egw]->ADOdb</p>";
 					//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
 					_debug_array($this);
 					echo "\$GLOBALS[egw]->db="; _debug_array($GLOBALS[egw]->db);
 				}
-				if ($this->Type == 'mssql')
+				if ($Type == 'mssql')
 				{
 					// this is the format ADOdb expects
 					$this->Link_ID->Execute('SET DATEFORMAT ymd');
@@ -560,8 +557,8 @@ class egw_db
 		}
 		if (!$this->Link_ID->isConnected() && !$this->Link_ID->Connect())
 		{
-			$Host = preg_replace('/password=[^ ]+/','password=$Password',$this->Host);	// eg. postgres dsn contains password
-			throw new egw_exception_db_connection("ADOdb::$connect($Host, $this->User, \$Password, $this->Database) reconnect failed.");
+			$Host = preg_replace('/password=[^ ]+/','password=$Password',$Host);	// eg. postgres dsn contains password
+			throw new egw_exception_db_connection("ADOdb::$connect($Host, $User, \$Password, $Database) reconnect failed.");
 		}
 
 		if ($new_connection)
