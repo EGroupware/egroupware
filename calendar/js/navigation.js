@@ -52,7 +52,8 @@
 		var calendar_window = egw_appWindow('calendar');
 		// include template specific app.css
 		var link_tags = calendar_window.document.getElementsByTagName('link');
-		var cal_app_css = /calendar\/templates\/[^/]+\/app.css/;
+		var str_regex = "calendar\/templates\/[^/]+\/(app.css|app-"+ egw.preference('theme', 'common') +".css)";
+		var cal_app_css = new RegExp(str_regex, 'g');
 		for(var i=0; i < link_tags.length; i++)
 		// include template specific app.css
 		{
