@@ -241,10 +241,6 @@ class calendar_ui
 		// load our app.js file
 		egw_framework::validate_file('/calendar/js/app.js');
 
-		// search for app specific css file, so it can customize the theme
-		egw_framework::includeCSS('calendar', 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
-			egw_framework::includeCSS('calendar', 'app');
-
 		common::egw_header();
 
 		if ($this->bo->warnings) echo '<pre class="message" align="center">'.html::htmlspecialchars(implode("\n",$this->bo->warnings))."</pre>\n";
