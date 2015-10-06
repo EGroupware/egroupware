@@ -378,7 +378,7 @@ class egw_db
 		}
 		if (!isset($e))
 		{
-			die('No DB Host set!');
+			$e = new egw_exception_db_connection('No DB host set!');
 		}
 		throw $e;
 	}
