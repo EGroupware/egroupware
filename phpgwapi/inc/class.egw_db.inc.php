@@ -167,6 +167,13 @@ class egw_db
 	var $Query_ID = 0;
 
 	/**
+	 * Callback to check if selected node is healty / should be used
+	 *
+	 * @var callback throwing egw_exception_db_connection, if connected node should NOT be used
+	 */
+	static $health_check;
+
+	/**
 	 * Can be used to transparently convert tablenames, eg. 'mytable' => 'otherdb.othertable'
 	 *
 	 * Can be set eg. at the *end* of header.inc.php.
