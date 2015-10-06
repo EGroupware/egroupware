@@ -347,6 +347,11 @@ class egw_db
 		{
 			$this->Type = $GLOBALS['egw_info']['server']['db_type'];
 		}
+		foreach(array('Database', 'Host', 'Port', 'User', 'Password', 'Type') as $var)
+		{
+			$val = (string)$this->$var;
+			if ($val[0] === '@') $this->$var = getenv(substr($val, 1));
+		}
 		// on connection failure re-try with an other host
 		// remembering in session which host we used last time
 		$use_host_from_session = true;
@@ -370,6 +375,10 @@ class egw_db
 				$this->Type = $this->setupType;	// get set to "mysql" for "mysqli"
 				$use_host_from_session = false;	// re-try with next host from list
 			}
+		}
+		if (!isset($e))
+		{
+			die('No DB Host set!');
 		}
 		throw $e;
 	}
@@ -451,7 +460,7 @@ class egw_db
 				case 'pgsql':
 					$type = 'postgres'; // name in ADOdb
 					// create our own pgsql connection-string, to allow unix domain soccets if !$Host
-					$Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
+					$Host = "dbname=$this->Database".($Host ? " host=$Host".($this->Port ? " port=$this->Port" : '') : '').
 						" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
 					$User = $Password = $Database = '';	// to indicate $Host is a connection-string
 					break;
@@ -1670,6 +1679,7 @@ class egw_db
 				$column_type = is_array($column_definitions) ? @$column_definitions[$col]['type'] : False;
 				$not_null = is_array($column_definitions) && isset($column_definitions[$col]['nullable']) ? !$column_definitions[$col]['nullable'] : false;
 
+				$maxlength = null;
 				if ($truncate_varchar)
 				{
 					$maxlength = in_array($column_definitions[$col]['type'], array('varchar','ascii')) ? $column_definitions[$col]['precision'] : null;
