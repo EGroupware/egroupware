@@ -697,8 +697,6 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 	width: 100%;
 	height: 100%;
 	z-index: 10000;
-	// only change styling below:
-	background-image: url(../../../phpgwapi/templates/default/images/ajax-loader.gif);
 	background-position: left top;
 	background-repeat: no-repeat;
 }
