@@ -1061,7 +1061,7 @@ var AppJS = Class.extend(
 	egwTutorialPopup: function (_tuid)
 	{
 		var url = egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid='+_tuid);
-		egw.open_link(url,'_blank','500x400');
+		egw.open_link(url,'_blank','750x580');
 	},
 	
 	/**

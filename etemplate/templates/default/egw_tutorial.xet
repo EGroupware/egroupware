@@ -9,10 +9,10 @@
 			</columns>
 			<rows>
 				<row >
-					<hbox onclick="$row_cont[onclick]">
-						<image src="$row_cont[thumbnail]" height="70px"/>
+					<vbox onclick="$row_cont[onclick]" align="center" statustext="$row_cont[title]">
 						<description value = "$row_cont[title]" class="et2_ellipsis"/>
-					</hbox>
+						<image src="$row_cont[thumbnail]" height="70px"/>
+					</vbox>
 				</row>
 			</rows>
 		</grid>
