@@ -618,7 +618,7 @@ return array();	// temporary disabling meeting requests from calendar
 			'end' => 'endtime',
 		) as $key => $attr)
 		{
-			$event[$key] = egw_time::server2user($message->$attr);
+			if (isset($message->$attr)) $event[$key] = egw_time::server2user($message->$attr);
 		}
 		// copying strings
 		foreach(array(
