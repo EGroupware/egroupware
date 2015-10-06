@@ -346,6 +346,11 @@ class egw_db
 		{
 			$this->Type = $GLOBALS['egw_info']['server']['db_type'];
 		}
+		foreach(array('Database', 'Host', 'Port', 'User', 'Type') as $var)
+		{
+			$val = (string)$this->$var;
+			if ($val[0] === '@') $this->$var = getenv(substr($val, 1));
+		}
 		// on connection failure re-try with an other host
 		// remembering in session which host we used last time
 		$use_host_from_session = true;
@@ -353,7 +358,15 @@ class egw_db
 		{
 			try {
 				//error_log(__METHOD__."() this->Host(s)=$this->Host, n=$n --> host=$host");
-				return $this->_connect($host);
+				$new_connection = !$this->Link_ID || !$this->Link_ID->IsConnected();
+				$this->_connect($host);
+				// check if connected node is healty
+				if ($new_connection && self::$health_check)
+				{
+					call_user_func(self::$health_check, $this);
+				}
+				//error_log(__METHOD__."() host=$host, new_connection=$new_connection, this->Type=$this->Type, this->Host=$this->Host, wsrep_local_state=".array2string($state));
+				return $this->Link_ID;
 			}
 			catch(egw_exception_db_connection $e) {
 				_egw_log_exception($e);
@@ -362,7 +375,38 @@ class egw_db
 				$use_host_from_session = false;	// re-try with next host from list
 			}
 		}
+		if (!isset($e))
+		{
+			$e = new egw_exception_db_connection('No DB host set!');
+		}
 		throw $e;
+	}
+
+	/**
+	 * Check if just connected Galera cluster node is healthy / fully operational
+	 *
+	 * A node in state "Donor/Desynced" will block updates at the end of a SST.
+	 * Therefore we try to avoid that node, if we have an alternative.
+	 *
+	 * To enable this check add the following to your header.inc.php:
+	 *
+	 * require_once(EGW_API_INC.'/class.egw_db.inc.php');
+	 * egw_db::$health_check = array('egw_db', 'galera_cluster_health');
+	 *
+	 * @param egw_db $db already connected egw_db instance to check
+	 * @throws egw_exception_db_connection if node should NOT be used
+	 */
+	static function galera_cluster_health(egw_db $db)
+	{
+		if (($state = $db->query("SHOW STATUS WHERE Variable_name in ('wsrep_cluster_size','wsrep_local_state','wsrep_local_state_comment')")->GetAssoc()))
+		{
+			if ($state['wsrep_local_state_comment'] == 'Synced' ||
+				// if we have only 2 nodes (2. one starting), we can only use the donor
+				$state['wsrep_local_state_comment'] == 'Donor/Desynced' &&
+					$state['wsrep_cluster_size'] == 2) return;
+
+			throw new egw_exception_db_connection('Node is NOT Synced! '.array2string($state));
+		}
 	}
 
 	/**
@@ -382,9 +426,15 @@ class egw_db
 
 		if ($next && ++$n >= $num_hosts+2)
 		{
-			return false;
+			$n = 0;	// start search again with default on next request
+			$ret = false;
 		}
-		return $hosts[$n % $num_hosts];
+		else
+		{
+			$ret = $hosts[$n % $num_hosts];
+		}
+		//error_log(__METHOD__."(next=".array2string($next).") n=$n returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**
@@ -409,7 +459,7 @@ class egw_db
 				case 'pgsql':
 					$type = 'postgres'; // name in ADOdb
 					// create our own pgsql connection-string, to allow unix domain soccets if !$Host
-					$Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
+					$Host = "dbname=$this->Database".($Host ? " host=$Host".($this->Port ? " port=$this->Port" : '') : '').
 						" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
 					$User = $Password = $Database = '';	// to indicate $Host is a connection-string
 					break;
@@ -458,8 +508,7 @@ class egw_db
 			{
 				if (!check_load_extension($php_extension))
 				{
-					$this->halt("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
-					return null;	// in case error-reporting = 'no'
+					throw new egw_exception_db_connection("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
 				}
 				if (!isset($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
 				{
@@ -472,8 +521,7 @@ class egw_db
 				$this->Link_ID = ADONewConnection($type);
 				if (!$this->Link_ID)
 				{
-					$this->halt("No ADOdb support for '$type' ($this->Type) !!!");
-					return null;	// in case error-reporting = 'no'
+					throw new egw_exception_db_connection("No ADOdb support for '$type' ($this->Type) !!!");
 				}
 				$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
 				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
@@ -484,8 +532,7 @@ class egw_db
 				if (!$Ok)
 				{
 					$Host = preg_replace('/password=[^ ]+/','password=$Password',$Host);	// eg. postgres dsn contains password
-					$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
-					return null;	// in case error-reporting = 'no'
+					throw new egw_exception_db_connection("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
 				}
 				if ($this->Debug)
 				{
@@ -513,8 +560,7 @@ class egw_db
 		if (!$this->Link_ID->isConnected() && !$this->Link_ID->Connect())
 		{
 			$Host = preg_replace('/password=[^ ]+/','password=$Password',$this->Host);	// eg. postgres dsn contains password
-			$this->halt("ADOdb::$connect($Host, $this->User, \$Password, $this->Database) reconnect failed.");
-			return null;	// in case error-reporting = 'no'
+			throw new egw_exception_db_connection("ADOdb::$connect($Host, $this->User, \$Password, $this->Database) reconnect failed.");
 		}
 
 		if ($new_connection)
