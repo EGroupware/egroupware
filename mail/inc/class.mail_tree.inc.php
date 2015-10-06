@@ -240,7 +240,7 @@ class mail_tree
 				}
 
 				//List of folders
-				$foldersList = $this->ui->mail_bo->getFolderArrays(null, true, $_allInOneGo?0:2,$_subscribedOnly, true);
+				$foldersList = $this->ui->mail_bo->getFolderArrays(null, true, $_allInOneGo?0:2,$_subscribedOnly, false);
 				foreach ($foldersList as &$folder)
 				{
 					$path = $parent = $parts = explode($folder['delimiter'], $folder['MAILBOX']);
