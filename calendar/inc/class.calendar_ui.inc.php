@@ -238,6 +238,9 @@ class calendar_ui
 		// load etemplate2
 		egw_framework::validate_file('/etemplate/js/etemplate2.js');
 
+		// load our app.js file
+		egw_framework::validate_file('/calendar/js/app.js');
+
 		// search for app specific css file, so it can customize the theme
 		egw_framework::includeCSS('calendar', 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
 			egw_framework::includeCSS('calendar', 'app');
