@@ -1158,7 +1158,7 @@ class calendar_uiforms extends calendar_ui
 			'menuaction'      => 'mail.mail_compose.compose',
 			'mimeType'		  => 'plain', // force type to plain as thunderbird seems to try to be smart while parsing html messages with ics attachments
 			'preset[to]'      => $to,
-			'preset[subject]' => $subject,
+			'preset[subject]' => $event['title'],
 			'preset[body]'    => $body,
 			'preset[name]'    => 'event.ics',
 			'preset[file]'    => $ics_file,
