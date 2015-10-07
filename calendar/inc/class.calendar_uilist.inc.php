@@ -447,12 +447,6 @@ class calendar_uilist extends calendar_ui
 				if (!isset($js_integration_data[$app]))
 				{
 					$js_integration_data[$app] = calendar_bo::integration_get_data($app,'edit_link');
-					if (!is_array($js_integration_data[$app]) || !isset($js_integration_data[$app]['edit']))
-					{
-						$js_integration_data[$app]['edit'] = egw_link::get_registry($app, 'edit');
-						$js_integration_data[$app]['edit_id'] = egw_link::get_registry($app, 'edit_id');
-						$js_integration_data[$app]['edit_popup'] = egw_link::get_registry($app, 'edit_popup');
-					}
 				}
 			}
 			elseif ($event['recur_type'] != MCAL_RECUR_NONE)
