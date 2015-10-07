@@ -1131,7 +1131,9 @@ jQuery.extend(et2_selectbox,
 		else
 		{
 			// Check that the value is in there
-			if(attrs.value)
+			// Make sure we are not requesting server for an empty value option
+			// as server won't find anything and it will fall into an infinitive loop
+			if(attrs.value && attrs.value != "" && attrs.value != "0")
 			{
 				var missing_option = true;
 				for(var i = 0; i < cache.length && missing_option; i++)
