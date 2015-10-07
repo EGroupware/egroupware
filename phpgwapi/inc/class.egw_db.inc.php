@@ -455,7 +455,7 @@ class egw_db
 			switch($Type)	// convert to ADO db-type-names
 			{
 				case 'pgsql':
-					$type = 'postgres'; // name in ADOdb
+					$Type = 'postgres'; // name in ADOdb
 					// create our own pgsql connection-string, to allow unix domain soccets if !$Host
 					$Host = "dbname=$Database".($Host ? " host=$Host".($Port ? " port=$Port" : '') : '').
 						" user=$User".($Password ? " password='".addslashes($Password)."'" : '');
@@ -525,7 +525,7 @@ class egw_db
 				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
 				{
 					$this->ServerInfo = $this->Link_ID->ServerInfo();
-					$this->set_capabilities($type,$this->ServerInfo['version']);
+					$this->set_capabilities($Type,$this->ServerInfo['version']);
 				}
 				if (!$Ok)
 				{
