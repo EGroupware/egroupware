@@ -585,6 +585,24 @@ class egw_db
 	}
 
 	/**
+	 * Magic method called when object get's serialized
+	 *
+	 * We do NOT store Link_ID and private_Link_ID, as we need to reconnect anyway.
+	 * This also ensures reevaluating environment-data or multiple hosts in connection-data!
+	 *
+	 * @return array
+	 */
+	function __sleep()
+	{
+		if (!empty($this->setupType)) $this->Type = $this->setupType;	// restore Type eg. to mysqli
+
+		$vars = get_object_vars($this);
+		unset($vars['Link_ID']);
+		unset($vars['privat_Link_ID']);
+		return array_keys($vars);
+	}
+
+	/**
 	 * changes defaults set in class-var $capabilities depending on db-type and -version
 	 *
 	 * @param string $adodb_driver mysql, postgres, mssql, sapdb, oci8
@@ -639,7 +657,7 @@ class egw_db
 		unset($this->Link_ID);
 		$this->Link_ID = 0;
 
-		if (!empty($this->setupType)) $this->type = $this->setupType;
+		if (!empty($this->setupType)) $this->Type = $this->setupType;
 	}
 
 	/**
