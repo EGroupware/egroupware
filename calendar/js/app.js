@@ -1051,21 +1051,27 @@ app.classes.calendar = AppJS.extend(
 	 */
 	cal_open: function(_action, _senders)
 	{
-
-		if(_action.parent.data && _action.parent.data.nextmatch)
-		{
-			var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
-		}
+		// Check for series
 		var id = _senders[0].id;
 		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
-		var backup = _action.data;
 		if (matches)
 		{
 			this.edit_series(matches[1],matches[2]);
 			return;
 		}
-		matches = id.match(/^([a-z_-]+)([0-9]+)/i);
-		if (matches && js_integration_data)
+		
+		// Check for other app integration data sent from server
+		var backup = _action.data;
+		if(_action.parent.data && _action.parent.data.nextmatch)
+		{
+			var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
+			if(typeof js_integration_data == 'string')
+			{
+				js_integration_data = JSON.parse(js_integration_data);
+			}
+		}
+		matches = id.match(/^calendar::([a-z_-]+)([0-9]+)/i);
+		if (matches && js_integration_data && js_integration_data[matches[1]])
 		{
 			var app = matches[1];
 			_action.data.url = window.egw_webserverUrl+'/index.php?';
@@ -1076,20 +1082,23 @@ app.classes.calendar = AppJS.extend(
 
 			if (js_integration_data[app].edit_popup)
 			{
-				matches = js_integration_data[app].edit_popup.match(/^(.*)x(.*)$/);
-				if (matches)
-				{
-					_action.data.width = matches[1];
-					_action.data.height = matches[2];
-				}
-				else
-				{
-					_action.data.nm_action = 'location';
-				}
+				egw.open_link(_action.data.url,'_blank',js_integration_data[app].edit_popup,app);
+
+				_action.data = backup;	// restore url, width, height, nm_action
+				return;
 			}
 		}
+		else
+		{
+			// Other app integration using link registry
+			var data = egw.dataGetUIDdata(_senders[0].id);
+			if(data && data.data)
+			{
+				return egw.open(data.data.app_id, data.data.app, 'edit');
+			}
+		}
+		// Regular, single event
 		egw.open(id.replace(/^calendar::/g,''),'calendar','edit');
-		_action.data = backup;	// restore url, width, height, nm_action
 	},
 
 	/**
