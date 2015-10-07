@@ -1374,9 +1374,9 @@ class calendar_uiviews extends calendar_ui
 	function dayColWidget($day_ymd,$events,$pleft,$pwidth,$indent,$short_title=True,$on_off=False,$owner=0)
 	{
 		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$pleft,$pwidth);
-		$time_grid_overflow = !$this->use_time_grid?'overflow-y:auto;overflow-x:hidden;':'';
+		
 		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calendar_calDayCol" '.'data-sortable-id="'.$owner.'" style="left: '.$pleft.
-			'%;width: '.$pwidth.'%;'.$time_grid_overflow.'">'."\n";
+			'%;width: '.$pwidth.'%;">'."\n";
 
 		// Creation of the header-column with date, evtl. holiday-names and a matching background-color
 		$ts = $this->bo->date2ts((string)$day_ymd);
@@ -1453,7 +1453,7 @@ class calendar_uiviews extends calendar_ui
 
 				$droppableDateTime = $linkData['date'] . "T" . $linkData['hour'] . $linkData['minute'];
 				$droppableID='drop_'.$droppableDateTime.'_O'.($owner<0?str_replace('-','group',$owner):$owner);
-
+				
 				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
 					'%;" class="calendar_calAddEvent"';
 				if ($this->allowEdit)
@@ -1591,7 +1591,7 @@ class calendar_uiviews extends calendar_ui
 			// regions are not clickable anymore. The z_index has now moved the the eventWidget
 			// function.
 			//(!is_null($z_index) ? ' z-index:'.$z_index.';' : '').
-			(!$this->use_time_grid ? ' top: '.$this->rowHeight.'%;' : '').'">'."\n";
+			(!$this->use_time_grid ? ' top: '.$this->rowHeight.'%;height: '.(100 - $this->rowHeight).'%;overflow-y:auto;' : '').'">'."\n";
 		foreach($events as $event)
 		{
 			$html .= $this->eventWidget($event,$width,$indent."\t",$owner,false,'event_widget',$z_index);
