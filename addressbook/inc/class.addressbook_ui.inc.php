@@ -2497,6 +2497,24 @@ window.egw_LAB.wait(function() {
 		}
 		else
 		{
+			// allow to search eg. for a phone number
+			if (isset($_GET['search']))
+			{
+				$query = egw_session::appsession('index', 'addressbook');
+				$query['search'] = $_GET['search'];
+				unset($_GET['search']);
+				// reset all filters
+				unset($query['advanced_search']);
+				$query['col_filter'] = array();
+				$query['filter'] = $query['filter2'] = $query['cat_id'] = '';
+				egw_session::appsession('index', 'addressbook', $query);
+				$query['start'] = 0;
+				$query['num_rows'] = 1;
+				$rows = $readonlys = array();
+				$num_rows = $this->get_rows($query, $rows, $readonlys, true);
+				$_GET['contact_id'] = array_shift($rows);
+				$_GET['index'] = 0;
+			}
 			$contact_id = $_GET['contact_id'] ? $_GET['contact_id'] : ((int)$_GET['account_id'] ? 'account:'.(int)$_GET['account_id'] : 0);
 			if(!$contact_id || !is_array($content = $this->read($contact_id)))
 			{
@@ -2504,7 +2522,7 @@ window.egw_LAB.wait(function() {
 					'menuaction' => 'addressbook.addressbook_ui.index',
 					'msg' => $content,
 					'ajax' => 'true'
-				));
+				)+(isset($_GET['search']) ? array('search' => $_GET['search']) : array()));
 			}
 			if (isset($_GET['index']))
 			{
