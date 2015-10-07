@@ -155,15 +155,15 @@ var fw_browser =  Class.extend({
 		var self = this;
 		this.ajaxLoaderDiv = jQuery('<div class="loading ui-widget-overlay ui-front">'+egw.lang('please wait...')+'</div>').insertBefore(this.baseDiv);
 		this.loadingDeferred = new jQuery.Deferred();
-		
+
 		// Try to escape from infinitive not resolved loadingDeferred
 		// At least user can close the broken tab and work with the others.
 		// Define a escape timeout for 5 sec
 		this.ajaxLoaderDivTimeout = setTimeout(function(){
-			self.ajaxLoaderDiv.hide().remove();
+			(self.ajaxLoaderDiv || jQuery('div.loading')).hide().remove();
 			self.ajaxLoaderDiv = null;
 		},5000);
-			
+
 		this.loadingDeferred.always(function() {
 			if(self.ajaxLoaderDiv)
 			{
@@ -173,7 +173,7 @@ var fw_browser =  Class.extend({
 				clearTimeout(self.ajaxLoaderDivTimeout);
 			}
 		});
-		
+
 		// Check whether the given url is a pseudo url which should be executed
 		// by calling the ajax_exec function
 		// we now send whole url back to server, so apps can use $_GET['ajax']==='true'
