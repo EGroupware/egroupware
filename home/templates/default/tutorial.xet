@@ -7,7 +7,15 @@
 			<iframe id="src" height="100%" width="100%" seamless="true" fullscreen="true"/>
 		</hbox>
 		<hbox class="dialogFooterToolbar">
-			<button align="left" statustext="Close this window" label="Close" id="button[close]" onclick="window.close()" image="close" background_image="1"/>
+			<button  align="left" statustext="Close this window" label="Close" id="button[close]" onclick="window.close()" image="close" background_image="1"/>
+			<hbox>
+				<menulist>
+					<menupopup id="apps" label="Applications" statustext="Please select application name" options="Please select" onchange="app.home.tutorial_appChange"/>
+				</menulist>
+				<menulist>
+					<menupopup id="tutorials" label="Tutorilas" statustext="Please select a tutorial" options="Please select" onchange="app.home.tutorial_tutorialsChange"/>
+				</menulist>
+			</hbox>
 		</hbox>				
 	</template>
 </overlay>

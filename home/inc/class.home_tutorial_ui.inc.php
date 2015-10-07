@@ -34,13 +34,38 @@ class home_tutorial_ui {
 		
 		// Get tutorial object id
 		$tuid_indx = explode('-',$_GET['tuid']);
-		
-		// read tutorials json file to fetch data
-		$tutorials = json_decode(self::getJsonData(), true);
-		
-		$content = $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]];
+		if (!is_array($content))
+		{
+			// read tutorials json file to fetch data
+			$tutorials = json_decode(self::getJsonData(), true);
+			$apps = array();
+			foreach ($tutorials as $app => $val)
+			{
+				$apps [$app] = $app;
+			}
+			$sel_options = array(
+				'apps' => $apps,
+			);
+			$content = array (
+				'src' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['src'],
+				'title' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['title'],
+			);
+		}
 				
-		$tmpl->exec('home.home_tutorial_ui.popup', $content,array(),array(),array(),array(),2);
+		$tmpl->exec('home.home_tutorial_ui.popup', $content,$sel_options,array(),array(),array(),2);
+	}
+	
+	/**
+	 * Ajax function to retrive selected app's tutorials based on prefered user lang
+	 *
+	 * @param type $_app application name
+	 */
+	function ajax_getAppsTutorials($_app)
+	{
+		$tutorials = json_decode(self::getJsonData(), true);
+		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+		$response = egw_json_response::get();
+		$response->data($tutorials[$_app][$lang]);
 	}
 	
 	/**

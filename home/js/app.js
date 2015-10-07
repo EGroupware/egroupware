@@ -746,6 +746,46 @@ app.classes.home = AppJS.extend(
 		nm.div.toggleClass('header_hidden');
 		nm.set_hide_header(nm.div.hasClass('header_hidden'));
 		nm.resize();
+	},
+	
+	/**
+	 * Function to set apps and tutorials selectboxes values
+	 * 
+	 * @param {type} egw
+	 * @param {type} widget apps selectbox widget
+	 */
+	tutorial_appChange: function (egw, widget) {
+		var tutorials = etemplate2.getByApplication('home')[0].widgetContainer.getWidgetById('tutorials');
+		var sel_options = {};
+		if (widget)
+		{
+			this.egw.json('home.home_tutorial_ui.ajax_getAppsTutorials', [widget.get_value()], function(_data){
+				if(_data && tutorials)
+				{
+					for (var i=0;i<_data.length;i++)
+					{
+						sel_options[i] = {label:_data[i].title, value:_data[i].src};
+					}
+					tutorials.set_select_options(sel_options);
+				}
+			}).sendRequest();
+		}
+	},
+	
+	/**
+	 * Function to set video iframe base on selected tutorial from
+	 * tutorials selectbox
+	 * 
+	 * @param {type} egw
+	 * @param {type} widget tutorials selectbox
+	 */
+	tutorial_tutorialsChange: function (egw, widget)
+	{
+		var frame = etemplate2.getByApplication('home')[0].widgetContainer.getWidgetById('src');
+		if (frame)
+		{
+			frame.set_value(widget.get_value());
+		}
 	}
 });
 
