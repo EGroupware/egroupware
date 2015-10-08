@@ -283,9 +283,12 @@ app.classes.calendar = AppJS.extend(
 						 */
 						start: function(event, ui)
 						{
-							oldInnerHTML = ui.helper[0].innerHTML;
-							oldWidth = ui.helper.width();
-							ui.helper.width(jQuery("#calColumn").width());
+							//Safari 9 needs a delay to get the jquery helper width
+							setTimeout(function(){
+								oldInnerHTML = ui.helper[0].innerHTML;
+								oldWidth = ui.helper.width();
+								ui.helper.width(jQuery("#calColumn").width());
+							},1);
 						}
 					})
 
