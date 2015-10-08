@@ -509,7 +509,7 @@ class resources_ui
 		// Set original size picture
 		$content['picture_original'] = $content['picture_src'] == 'own_src'?
 				'webdav.php/apps/resources/'.$content['res_id'].'/.picture.jpg': $this->bo->get_picture($content['res_id'],true);
-		
+
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
@@ -647,10 +647,10 @@ class resources_ui
 			$selectbox = html::select(
 				'owner',
 				$selected,
-				array_merge($resources,$res_cats),
-				$no_lang=true,
-				$options=' style="width: 100%;" id="uical_select_resource"',
-				$multiple=4,
+				$options=array_merge(array('r0' => lang('None')),$resources,$res_cats),
+				true,	// no lang
+				' style="width: 100%;" id="uical_select_resource"',
+				min(4, count($options)),	// multiple
 				false
 			);
 			return array(
