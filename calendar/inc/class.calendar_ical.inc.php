@@ -1099,7 +1099,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $charset  The encoding charset for $text. Defaults to
 	 *                         utf-8 for new format, iso-8859-1 for old format.
 	 * @param string $caldav_name=null name from CalDAV client or null (to use default)
-	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag|permission denied
+	 * @return int|boolean|null cal_id > 0 on success, false on failure or 0 for a failed etag|permission denied or null for "403 Forbidden"
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null, $caldav_name=null,$skip_notification=false)
 	{
@@ -1743,9 +1743,9 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// handle ATTACH attribute for managed attachments
-			if ($updated_id)
+			if ($updated_id && groupdav::handle_attach('calendar', $updated_id, $event['attach'], $event['attach-delete-by-put']) === false)
 			{
-				groupdav::handle_attach('calendar', $updated_id, $event['attach'], $event['attach-delete-by-put']);
+				$return_id = null;
 			}
 
 			if ($this->log)
