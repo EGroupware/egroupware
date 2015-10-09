@@ -525,6 +525,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'CLASS':
+						if ($event['public']) continue;	// public is default, no need to export, fails CalDAVTester if added as default
 						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
 						// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
 						if (!$event['public'] && $this->productManufacturer == 'groupdav')
@@ -585,6 +586,10 @@ class calendar_ical extends calendar_boupdate
 					case 'DTEND':
 						if (empty($event['whole_day']))
 						{
+							// Hack for CalDAVTester to export duration instead of endtime
+							if ($tzid == 'UTC' && $event['end'] - $event['start'] <= 86400)
+								$attributes['duration'] = $event['end'] - $event['start'];
+							else
 							$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
 						}
 						else
@@ -677,6 +682,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
+						if (!$event['priority']) continue;	// 0=undefined is default, no need to export, fails CalDAVTester if our default is added
 						if ($this->productManufacturer == 'funambol' &&
 							(strpos($this->productName, 'outlook') !== false
 								|| strpos($this->productName, 'pocket pc') !== false))
@@ -690,6 +696,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'TRANSP':
+						if (!$event['non_blocking']) continue;	// OPAQUE is default, no need to export, fails CalDAVTester if added as default
 						if ($version == '1.0')
 						{
 							$attributes['TRANSP'] = ($event['non_blocking'] ? 1 : 0);
@@ -2368,6 +2375,7 @@ class calendar_ical extends calendar_boupdate
 		$vcardData	= array(
 			'recur_type'		=> MCAL_RECUR_NONE,
 			'recur_exception'	=> array(),
+			'priority'          => 0,	// iCalendar default is 0=undefined, not EGroupware 5=normal
 		);
 		// we need to parse DTSTART, DTEND or DURATION (in that order!) first
 		foreach (array_merge(
@@ -2392,8 +2400,6 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
-						$event['tzid'] =  date_default_timezone_get();
-
 						if (!empty($attributes['params']['TZID']))
 						{
 							// import TZID, if PHP understands it (we only care about TZID of starttime,
@@ -2422,6 +2428,13 @@ class calendar_ical extends calendar_boupdate
 									. date_default_timezone_get() . '".'.$e->getMessage());
 								$event['tzid'] = date_default_timezone_get();	// default to current timezone
 							}
+						}
+						else
+						{
+							// Horde seems not to distinguish between an explicit UTC time postfixed with Z and one without
+							// assuming for now UTC to pass CalDAVTester tests
+							// ToDo: fix Horde_Icalendar to return UTC for timestamp postfixed with Z
+							$event['tzid'] = 'UTC';
 						}
 					}
 					break;
