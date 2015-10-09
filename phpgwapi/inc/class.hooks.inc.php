@@ -387,15 +387,18 @@ class hooks
 	 */
 	public static function egw_tutorial_menu($appname)
 	{
-		$file = Array (
-			array(
-				'text'    => '<div id="egw_tutorial_'.$appname.'_sidebox" class="egwTutorial"/>',
-				'no_lang' => true,
-				'link'    => false,
-				'icon'    => false,
-			),
-			'menuOpened'  => true
-		);
-		display_sidebox($appname, lang('EGroupware Tutorial'), $file);
+		if (!$GLOBALS['egw_info']['server']['egw_tutorial_disable'])
+		{
+			$file = Array (
+				array(
+					'text'    => '<div id="egw_tutorial_'.$appname.'_sidebox" class="egwTutorial"/>',
+					'no_lang' => true,
+					'link'    => false,
+					'icon'    => false,
+				),
+				'menuOpened'  => true
+			);
+			display_sidebox($appname, lang('EGroupware Tutorial'), $file);
+		}
 	}
 }

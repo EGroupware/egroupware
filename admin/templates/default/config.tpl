@@ -100,7 +100,17 @@
      </select>
     </td>
    </tr>
-
+   
+   <tr class="row_off">
+    <td>{lang_Disable_EGroupware_Tutorial_in_sidebox_menu}:</td>
+    <td>
+     <select name="newsettings[egw_tutorial_disable]">
+      <option value="">{lang_No}</option>
+      <option value="True">{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+   
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_security}</b></td>
    </tr>
