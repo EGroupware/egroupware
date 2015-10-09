@@ -645,10 +645,14 @@ class calendar_groupdav extends groupdav_handler
 		);
 		if (is_array($expand)) $params += $expand;
 
-		$events =& $bo->search($params);
+		if (!($events =& $bo->search($params)))
+		{
+			return array();
+		}
 
 		// find master, which is not always first event, eg. when first event is an exception
 		$master = null;
+		$exceptions = array();
 		foreach($events as $k => &$recurrence)
 		{
 			if ($recurrence['recur_type'])
@@ -660,20 +664,18 @@ class calendar_groupdav extends groupdav_handler
 			}
 		}
 		// if recurring event starts in future behind horizont, nothing will be returned by bo::search()
-		if (!isset($master) && !($master = $bo->read($uid)))
-		{
-			return array();
-		}
+		if (!isset($master)) $master = $bo->read($uid);
+
 		foreach($events as $k => &$recurrence)
 		{
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($uid)[$k]:" . array2string($recurrence));
-			if ($recurrence['id'] != $master['id'])	// real exception
+			if (!$master || $recurrence['id'] != $master['id'])	// real exception
 			{
 				// user is NOT participating in this exception
 				if ($user && !self::isParticipant($recurrence, $user))
 				{
 					// if he is NOT in master, delete this exception
-					if (!self::isParticipant($master, $user))
+					if (!$master || !self::isParticipant($master, $user))
 					{
 						unset($events[$k]);
 						continue;
@@ -692,8 +694,17 @@ class calendar_groupdav extends groupdav_handler
 				}
 				continue;	// nothing to change
 			}
+			// alarms are reported on recurrences --> move them to master
+			if ($master)
+			{
+				foreach($recurrence['alarm'] as $alarm)
+				{
+					$master['alarm'][] = $alarm;
+				}
+				$recurrence['alarm'] = array();
+			}
 			// now we need to check if this recurrence is an exception
-			if (!$expand && $master['participants'] == $recurrence['participants'])
+			if (!$expand && $master && $master['participants'] == $recurrence['participants'])
 			{
 				//error_log('NO exception: '.array2string($recurrence));
 				unset($events[$k]);	// no exception --> remove it
@@ -702,12 +713,12 @@ class calendar_groupdav extends groupdav_handler
 			// this is a virtual exception now (no extra event/cal_id in DB)
 			//error_log('virtual exception: '.array2string($recurrence));
 			$recurrence['recurrence'] = $recurrence['start'];
-			$recurrence['reference'] = $master['id'];
+			if ($master) $recurrence['reference'] = $master['id'];
 			$recurrence['recur_type'] = MCAL_RECUR_NONE;	// is set, as this is a copy of the master
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
 		// only add master if we are not expanding and current user participates in master (and not just some exceptions)
-		if (!$expand && (!$user || self::isParticipant($master, $user)))
+		if (!$expand && $master && (!$user || self::isParticipant($master, $user)))
 		{
 			$events = array_merge(array($master), $events);
 		}
@@ -1349,7 +1360,9 @@ class calendar_groupdav extends groupdav_handler
 		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true, 'server');
 		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
 
-		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')))
+		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')) &&
+			// above can be true, if current user is not in master but just a recurrence
+			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo))))
 		{
 			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
 			return $retval;

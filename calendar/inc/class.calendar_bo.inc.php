@@ -632,11 +632,11 @@ class calendar_bo
 			'id'    => $event['id'],
 			'start' => $event['start'],
 			'end'   => $event['end'],
+			'whole_day' => $event['whole_day'],
 			'tzid'  => $event['tzid'],
 			'title' => lang('private'),
 			'modified'	=> $event['modified'],
 			'owner'		=> $event['owner'],
-			'recur_type' => MCAL_RECUR_NONE,
 			'uid'	=> $event['uid'],
 			'etag'	=> $event['etag'],
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
@@ -644,7 +644,17 @@ class calendar_bo
 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
 			'non_blocking' => $event['non_blocking'],
 			'caldav_name' => $event['caldav_name'],
-		);
+		// we need full recurrence information, as they are relevant free/busy information
+		)+($event['recur_type'] ? array(
+			'recur_type'     => $event['recur_type'],
+			'recur_interval' => $event['recur_interval'],
+			'recur_data'     => $event['recur_data'],
+			'recur_enddate'  => $event['recur_enddate'],
+			'recur_exception'=> $event['recur_exception'],
+		):array(
+			'reference'      => $event['reference'],
+			'recurrence'     => $event['recurrence'],
+		));
 	}
 
 	/**
