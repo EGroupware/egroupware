@@ -53,7 +53,7 @@ class etemplate_request_cache extends etemplate_request
 	/**
 	 * Expiration time of 4 hours
 	 */
-	const EXPIRATION = 7200;
+	const EXPIRATION = 14400;
 
 	/**
 	 * request id
