@@ -177,7 +177,7 @@ class calendar_groupdav extends groupdav_handler
 
 		if ($path == '/calendar/')
 		{
-			$filter['filter'] = 'default';
+			$filter['filter'] = 'owner';
 		}
 		// scheduling inbox, shows only not yet accepted or rejected events
 		elseif (substr($path,-7) == '/inbox/')
