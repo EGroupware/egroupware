@@ -41,15 +41,30 @@ class home_tutorial_ui {
 			$apps = array();
 			foreach ($tutorials as $app => $val)
 			{
-				$apps [$app] = $app;
+				// show only apps user has access to them
+				if (in_array($app, array_keys($GLOBALS['egw_info']['user']['apps']))) $apps [$app] = $app;
 			}
 			$sel_options = array(
 				'apps' => $apps,
 			);
-			$content = array (
-				'src' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['src'],
-				'title' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['title'],
-			);
+			// Check if the user has right to see the app's tutorial
+			if (in_array($tuid_indx[0], array_keys($GLOBALS['egw_info']['user']['apps'])))
+			{
+				$content = array (
+					'src' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['src'],
+					'title' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['title'],
+				);
+			}
+			else
+			{
+				$content = array();
+				egw_framework::message(lang('You do not have permission to see this tutorial!'));
+			}
+			// If its the autoloading tutorial
+			if ($tuid_indx[3] === 'a')
+			{
+				$content ['discardbox'] = true;
+			}
 		}
 				
 		$tmpl->exec('home.home_tutorial_ui.popup', $content,$sel_options,array(),array(),array(),2);

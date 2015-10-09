@@ -98,7 +98,9 @@ app.classes.home = AppJS.extend(
 		{
 			// call parent
 			this._super.apply(this, arguments);
-
+			
+			this.tutorial_autoload_popup();
+			
 			this.et2.set_id('home.index');
 			this.et2.set_actions(this.et2.getArrayMgr('modifications').getEntry('home.index')['actions']);
 
@@ -785,6 +787,35 @@ app.classes.home = AppJS.extend(
 		if (frame)
 		{
 			frame.set_value(widget.get_value());
+		}
+	},
+	
+	/**
+	 * Open tutorial popup with a general video about egroupware
+	 * the popup can be discarded for the next time show if user
+	 * check the discard checkbox
+	 */
+	tutorial_autoload_popup:function()
+	{
+		var discarded = this.egw.preference('egw_tutorial_autoload', 'home');
+		if (!discarded)
+		{
+			this.egwTutorialPopup('home-'+this.egw.preference('lang')+'-0-a');
+		}
+	},
+	
+	/**
+	 * Function calls on discard checkbox and will set
+	 * the egw_tutorial_autoload preference
+	 * 
+	 * @param {type} egw
+	 * @param {type} widget
+	 */
+	tutorial_autoloadDiscard: function (egw, widget)
+	{
+		if (widget)
+		{
+			this.egw.set_preference('home', 'egw_tutorial_autoload', widget.get_value());
 		}
 	}
 });
