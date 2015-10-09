@@ -1304,6 +1304,19 @@ class groupdav extends HTTP_WebDAV_Server
 				}
 				else
 				{
+					// check for rename of attachment via Content-Disposition:filename=
+					if (isset($this->_SERVER['HTTP_CONTENT_DISPOSITION']) &&
+						substr($this->_SERVER['HTTP_CONTENT_DISPOSITION'], 0, 10) === 'attachment' &&
+						preg_match('/filename="?([^";]+)/', $this->_SERVER['HTTP_CONTENT_DISPOSITION'], $matches) &&
+						($filename = egw_vfs::basename($matches[1])) != egw_vfs::basename($path))
+					{
+						$old_path = $path;
+						if (!egw_vfs::rename($old_path, $path = egw_vfs::concat(egw_vfs::dirname($path), $filename)))
+						{
+							self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
+							return '403 Forbidden';
+						}
+					}
 					if (!($to = egw_vfs::fopen($path, 'w')) ||
 						isset($options['stream']) && ($copied=stream_copy_to_stream($options['stream'], $to)) === false ||
 						isset($options['content']) && ($copied=fwrite($to, $options['content'])) === false)
