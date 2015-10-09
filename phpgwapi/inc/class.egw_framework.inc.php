@@ -2276,7 +2276,8 @@ abstract class egw_framework
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		// try to add app specific css file
-		self::includeCSS($app,'app');
+		self::includeCSS($app, 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+			self::includeCSS($app,'app');
 
 		// add all css files from egw_framework::includeCSS()
 		$query = null;

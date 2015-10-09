@@ -121,7 +121,8 @@ class home_favorite_portlet extends home_portlet
 
 
 		// Always load app's css
-		egw_framework::includeCSS($this->context['appname'],'app');
+		egw_framework::includeCSS($this->context['appname'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+			egw_framework::includeCSS($this->context['appname'],'app');
 
 		// Always load app's javascript, so most actions have a chance of working
 		egw_framework::validate_file('','app',$this->context['appname']);

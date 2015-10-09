@@ -117,7 +117,8 @@ class home_link_portlet extends home_portlet
 		{
 
 			// Always load app's css
-			egw_framework::includeCSS($this->context['entry']['app'],'app');
+			egw_framework::includeCSS($this->context['entry']['app'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+				egw_framework::includeCSS($this->context['entry']['app'],'app');
 			
 			try
 			{
