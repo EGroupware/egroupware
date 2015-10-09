@@ -206,7 +206,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			this.div.addClass('cat_' + event.category);
 		}
-		this.div.css('border-color', this.div.css('background-color'));
 
 		this.div.toggleClass('calendar_calEventUnknown', event.participants[egw.user('account_id')] ? event.participants[egw.user('account_id')][0] === 'U' : false);
 		this.div.addClass(this._status_class());
@@ -224,10 +223,17 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 		this.div.attr('data-title', title);
-		this.title.text(small_height ? title : this._get_timespan(event))
-			// Set title color based on background brightness
-			.css('background-color', this.div.css('background-color'))
-			.css('color', jQuery.Color(this.div.css('background-color')).lightness() > 0.5 ? 'black':'white');
+		this.title.text(small_height ? title : this._get_timespan(event));
+
+		// Colors - don't make them transparent if there is no color
+		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
+		{
+			this.div.css('border-color', this.div.css('background-color'));
+				// Set title color based on background brightness
+			this.title
+				.css('background-color', this.div.css('background-color'))
+				.css('color', jQuery.Color(this.div.css('background-color')).lightness() > 0.5 ? 'black':'white');
+		}
 
 		this.icons.appendTo(this.title)
 			.html(this._icons());
