@@ -1641,6 +1641,10 @@ app.classes.calendar = AppJS.extend(
 
 				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
 				nm.applyFilters(state.state);
+				if(!state.state.end_date && nm.activeFilters.enddate)
+				{
+					this.state.last = nm.activeFilters.enddate;
+				}
 			}
 
 			/* Update re-orderable calendars */

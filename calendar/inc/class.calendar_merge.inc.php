@@ -92,9 +92,51 @@ class calendar_merge extends bo_merge
 		foreach(self::$relative as $day) {
 			$this->table_plugins[$day] = 'day'; // Current day
 		}
-		$this->query = $GLOBALS['egw']->session->appsession('session_data','calendar');
-		$this->query['users'] = explode(',', $this->query['owner']);
+		$this->query = is_array($this->bo->cal_prefs['saved_states']) ?
+			$this->bo->cal_prefs['saved_states'] : unserialize($this->bo->cal_prefs['saved_states']);
+
+		$this->query['users'] = is_array($this->query['owner']) ? $this->query['owner'] : explode(',', $this->query['owner']);
 		$this->query['num_rows'] = -1;
+	}
+
+	/**
+	 * Merges a given document with contact data
+	 *
+	 * Overridden from parent to be able to change a list of events into a range,
+	 * if the target document has no pagerepeat tag.  Otherwise, parent::merge_string()
+	 * would fail because we're trying to merge multiple records with no pagerepeat tag.
+	 *
+	 *
+	 * @param string $content
+	 * @param array $ids array with contact id(s)
+	 * @param string &$err error-message on error
+	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
+	 * @param array $fix=null regular expression => replacement pairs eg. to fix garbled placeholders
+	 * @param string $charset=null charset to override default set by mimetype or export charset
+	 * @return string|boolean merged document or false on error
+	 */
+	function merge_string($content,$ids,$err,$mimetype,$fix)
+	{
+		// Handle merging a list of events into a document with range instead of pagerepeat
+		if(strpos($content, '$$pagerepeat') === false && count($ids) > 1)
+		{
+			// Merging more than one something will fail without pagerepeat
+			if (is_array($ids) && $ids[0]['id'])
+			{
+				// Passed an array of events, to be handled like a date range
+				$events = $ids;
+				$ids = array('start' => PHP_INT_MAX, 'end' => 0);
+				$this->ids = array();
+				foreach($events as $event) {
+					if($event['start'] && egw_time::to($event['start'],'ts') < $ids['start']) $ids['start'] = egw_time::to($event['start'],'ts');
+					if($event['end'] && egw_time::to($event['end'],'ts') > $ids['end']) $ids['end'] = egw_time::to($event['end'],'ts');
+					// Keep ids for future use
+					$this->ids[] = $event['id'];
+				}
+				$ids = array($ids);
+			}
+		}
+		return parent::merge_string($content, $ids, $err, $mimetype,$fix);
 	}
 
 	/**
@@ -133,6 +175,7 @@ class calendar_merge extends bo_merge
 				// Keep ids for future use
 				$this->ids[]  = $event['id'];
 			}
+			$id = array($id);
 		}
 		else
 		{

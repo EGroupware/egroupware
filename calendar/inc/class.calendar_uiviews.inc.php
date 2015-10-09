@@ -162,6 +162,12 @@ class calendar_uiviews extends calendar_ui
 			// for a single owner we add it's name to the app-header
 			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
 
+		// Check for GET message (from merge)
+		if($_GET['msg'])
+		{
+			egw_framework::message($_GET['msg']);
+			unset($_GET['msg']);
+		}
 		// standard params for calling bocal::search for all views
 		$this->owner = str_replace('%2C',',',$this->owner);
 		$this->search_params = array(

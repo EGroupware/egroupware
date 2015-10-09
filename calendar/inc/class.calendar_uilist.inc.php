@@ -590,6 +590,7 @@ class calendar_uilist extends calendar_ui
 				$document_merge = new calendar_merge();
 				$msg = $document_merge->download($settings, $checked, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 				$failed = count($checked);
+				error_log($msg);
 				return false;
 		}
 

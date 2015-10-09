@@ -53,7 +53,7 @@ if(view_change >= 0) {update.view = app.calendar.sidebox_changes_views[view_chan
 			<taglist id="owner" class="et2_fullWidth" onchange="app.calendar.update_state({owner: widget.getValue()});" autocomplete_params=''/>
 			-->
 			<select id="filter" no_lang="true" class="et2_fullWidth" onchange="app.calendar.update_state({filter: widget.getValue()});"/>
-			<select id="merge" empty_label="Insert in document" onchange="if(widget.getValue()) {widget.getInstanceManager().postSubmit();}window.setTimeout(function() {widget.set_value('');},100);return false;" class="et2_fullWidth"/>/>
+			<select id="merge" empty_label="Insert in document" onchange="if(widget.getValue()) {widget.getRoot().getWidgetById('first').set_value(app.calendar.state.first);widget.getRoot().getWidgetById('last').set_value(app.calendar.state.last); widget.getInstanceManager().postSubmit();} window.setTimeout(function() {widget.set_value('');},100);return false;" class="et2_fullWidth"/>/>
 		</vbox>
 		<iframe id="iframe" width="100%" height="100%"/>
 	</template>
