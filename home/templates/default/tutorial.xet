@@ -10,10 +10,10 @@
 			<button  align="left" statustext="Close this window" label="Close" id="button[close]" onclick="window.close()" image="close" background_image="1"/>
 			<hbox disabled="@discardbox">
 				<menulist>
-					<menupopup id="apps" label="Applications" statustext="Please select application name" options="Please select" onchange="app.home.tutorial_appChange"/>
+					<menupopup id="apps" label="Applications" statustext="Please select application name" onchange="app.home.tutorial_appChange"/>
 				</menulist>
 				<menulist>
-					<menupopup id="tutorials" label="Tutorilas" statustext="Please select a tutorial" options="Please select" onchange="app.home.tutorial_tutorialsChange"/>
+					<menupopup id="tutorials" label="Tutorilas" statustext="Please select a tutorial" onchange="app.home.tutorial_tutorialsChange"/>
 				</menulist>
 			</hbox>
 			<hbox disabled="!@discardbox" class="discard_checkbox">

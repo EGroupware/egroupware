@@ -25,7 +25,7 @@ class home_tutorial_ui {
 	 * Popup window to display youtube video
 	 * @param type $content
 	 */
-	function popup ($content)
+	function popup ($content=null)
 	{
 		//Allow youtube frame to pass the CSP check
 		egw_framework::csp_frame_src_attrs(array('www.youtube.com'));
@@ -38,7 +38,7 @@ class home_tutorial_ui {
 		{
 			// read tutorials json file to fetch data
 			$tutorials = json_decode(self::getJsonData(), true);
-			$apps = array();
+			$apps = array('introduction' => lang('Introduction'));
 			foreach ($tutorials as $app => $val)
 			{
 				// show only apps user has access to them
@@ -48,11 +48,15 @@ class home_tutorial_ui {
 				'apps' => $apps,
 			);
 			// Check if the user has right to see the app's tutorial
-			if (in_array($tuid_indx[0], array_keys($GLOBALS['egw_info']['user']['apps'])))
+			if (in_array($tuid_indx[0], array_keys($GLOBALS['egw_info']['user']['apps'])) || $tuid_indx[0] === "introduction")
 			{
+				// fallback to english video
+				$tutorial = $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]? $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]:
+					$tutorials[$tuid_indx[0]]['en'][$tuid_indx[2]];
+				
 				$content = array (
-					'src' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['src'],
-					'title' => $tutorials[$tuid_indx[0]][$tuid_indx[1]][$tuid_indx[2]]['title'],
+					'src' => $tutorial['src'],
+					'title' => $tutorial['title']
 				);
 			}
 			else
@@ -80,7 +84,7 @@ class home_tutorial_ui {
 		$tutorials = json_decode(self::getJsonData(), true);
 		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		$response = egw_json_response::get();
-		$response->data($tutorials[$_app][$lang]);
+		$response->data($tutorials[$_app][$lang]?$tutorials[$_app][$lang]:$tutorials[$_app]['en']);
 	}
 	
 	/**
@@ -103,8 +107,8 @@ class home_tutorial_ui {
 		if (!($json = egw_cache::getCache(egw_cache::TREE, 'home', 'egw_tutorial_json')))
 		{
 			$json = file_get_contents('http://www.egroupware.de/videos/tutorials.json');
-			// Cache the json object for one month
-			egw_cache::addCache(egw_cache::TREE, 'home', 'egw_tutorial_json', $json, 3600 * 720);
+			// Cache the json object for two hours
+			egw_cache::setCache(egw_cache::TREE, 'home', 'egw_tutorial_json', $json, 720);
 		}
 		
 		return $json;

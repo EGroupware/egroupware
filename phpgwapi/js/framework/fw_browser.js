@@ -172,6 +172,14 @@ var fw_browser =  Class.extend({
 				// Remove escape timeout
 				clearTimeout(self.ajaxLoaderDivTimeout);
 			}
+			
+			// Open tutorial popup with an introduction video about egroupware
+			// the popup can be discarded for the next time show if user
+			// check the discard checkbox
+			if (!egw.preference('egw_tutorial_autoload', 'common'))
+			{
+				egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','750x580');
+			}
 		});
 
 		// Check whether the given url is a pseudo url which should be executed
