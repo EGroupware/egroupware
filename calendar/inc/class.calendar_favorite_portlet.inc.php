@@ -55,7 +55,8 @@ class calendar_favorite_portlet extends home_favorite_portlet
 	{
 
 		// Always load app's css
-		egw_framework::includeCSS('calendar','app');
+		egw_framework::includeCSS('calendar', 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+			egw_framework::includeCSS('calendar','app');
 		
 		if($this->favorite['state']['view'] == 'listview' || is_array($this->favorite) && !$this->favorite['state']['view'])
 		{
