@@ -90,6 +90,13 @@ class egw_cache
 	static $max_expiration;
 
 	/**
+	 * Used to determine keys for tree- and instance-level caches
+	 *
+	 * @var string
+	 */
+	static $egw_server_root = EGW_SERVER_ROOT;
+
+	/**
 	 * Add some data in the cache, only if the key does not yet exist
 	 *
 	 * @param string $level use egw_cache::(TREE|INSTANCE)
@@ -675,7 +682,7 @@ class egw_cache
 			case self::TREE:
 				if (!isset($tree_key))
 				{
-					$tree_key = $level.'-'.str_replace(array(':','/','\\'),'-',EGW_SERVER_ROOT);
+					$tree_key = $level.'-'.str_replace(array(':','/','\\'),'-', self::$egw_server_root);
 					// add charset to key, if not utf-8 (as everything we store depends on charset!)
 					if (($charset = self::get_system_config('system_charset',false)) && $charset != 'utf-8')
 					{
