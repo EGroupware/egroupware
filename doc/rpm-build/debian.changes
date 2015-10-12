@@ -1,3 +1,24 @@
+egroupware-epl (14.3.20151012) hardy; urgency=low
+
+  * Calendar/eSync: iOS 9.0.2 (maybe other clients and versions too) moved start- and end-date of synchronised meeting requests to date of sync
+  * Calendar: use event title for mails generated via edit popup actions: mail all participants and meeting request
+  * Calendar/Mail: fix edit action meeting-requests to NOT set content-disposition: attachment, as this seems to stop automatic processing in Exchange
+  * Calendar/CalDAV: fixed event not show if user only participates in an exeception (not the master) and has no read-rights for any master participant
+  * Calendar/CalDAV: could not set own status for participation in an exception, if not being a participant of master
+  * Calendar/CalDAV: fix Outlook does not import invitations with wired error "organizer needs not to send responses"
+  * Calendar/Filemanager: display warning when clicking on an iCal file with more then 1 event, only first one is displayed
+  * Projectmanager: fix external role to NOT lose project when storing a new timesheet
+  * Wiki: respect table settings (eg. border) of user in html
+  * Wiki: search in comment too
+  * Tracker: CRM bugfixes
+  * Preferences: Fix ACL error allowing regular users to delete global categories
+  * Mail: implement the sorting by AutoFolders into the retrieval of folders and fix some sorting issues
+  * eTemplate: setting higher request timeout of 4 hours (was 2 hours)
+  * Addressbook: allow eg. telephone apps to jump directly into CRM view of a phonenumber with https://domain.com/egroupware/index.php?menuaction=addressbook.addressbook_ui.view&search="49 123 456789"&ajax=true&cd=yes
+  * LDAP: fix not working connect under newer PHP 5.6 (maybe other versions too) with PHP Warning: invalid port number: 0
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 12 Oct 2015 13:59:59 +0200
+
 egroupware-epl (14.3.20150908) hardy; urgency=low
 
   * All apps: fix broken group-favorites
