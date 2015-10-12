@@ -20,6 +20,7 @@
 '%1' is not a valid date !!!	etemplate	en	'%1' is not a valid date!
 '%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floating point number!
 '%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer!
+'%1' is not a valid timezone!	etemplate	en	'%1' is not a valid timezone!
 '%1' is not allowed ('%2')!	etemplate	en	'%1' is NOT allowed ('%2')!
 '%1' is not allowed%2)!	etemplate	en	'%1' is NOT allowed%2)!
 1 minute	etemplate	en	1 Minute
