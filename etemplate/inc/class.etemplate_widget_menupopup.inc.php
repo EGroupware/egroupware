@@ -162,6 +162,13 @@ class etemplate_widget_menupopup extends etemplate_widget
 						}
 						break;
 
+					case 'select-timezone':
+						if (!calendar_timezones::tz2id($val))
+						{
+							self::set_validation_error($form_name, lang("'%1' is NOT a valid timezone!", $val));
+						}
+						break;
+
 					default:
 						if(!in_array($val, $allowed))
 						{

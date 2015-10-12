@@ -19,6 +19,7 @@
 '%1' is not a valid date !!!	etemplate	de	'%1' ist ein ungültiges Datum !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Gleitkommazahl !!!
 '%1' is not a valid integer !!!	etemplate	de	'%1' ist keine gültige Ganzzahl !!!
+'%1' is not a valid timezone!	etemplate	de	'%1' ist keine gültige Zeitzone!
 '%1' is not allowed ('%2')!	etemplate	de	'%1' ist NICHT erlaubt ('%2')!
 '%1' is not allowed%2)!	etemplate	de	'%1' ist NICHT erlaubt '%2'!
 1 minute	etemplate	de	1 Minute
