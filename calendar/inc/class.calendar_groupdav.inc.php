@@ -842,7 +842,9 @@ class calendar_groupdav extends groupdav_handler
 			{
 				$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 				$user_and_memberships[] = $user;
-				if (!array_intersect(array_keys($oldEvent['participants']), $user_and_memberships))
+				if (!array_intersect(array_keys($oldEvent['participants']), $user_and_memberships) &&
+					// above can be true, if current user is not in master but just a recurrence
+					(!$oldEvent['recur_type'] || !($series = self::get_series($oldEvent['uid'], $this->bo))))
 				{
 					if ($this->debug) error_log(__METHOD__."(,,$user) user $user is NOT an attendee!");
 					return '403 Forbidden';
@@ -851,11 +853,10 @@ class calendar_groupdav extends groupdav_handler
 				if (($events = $handler->icaltoegw($vCalendar)))
 				{
 					$modified = 0;
-					$series = null;
 					foreach($events as $n => $event)
 					{
 						// for recurrances of event series, we need to read correct recurrence (or if series master is no first event)
-						if ($event['recurrence'] || $n && !$event['recurrence'])
+						if ($event['recurrence'] || $n && !$event['recurrence'] || isset($series))
 						{
 							// first try reading (virtual and real) exceptions
 							if (!isset($series))
@@ -868,7 +869,7 @@ class calendar_groupdav extends groupdav_handler
 								if ($oldEvent['recurrence'] == $event['recurrence']) break;
 							}
 							// if no exception found, check if it might be just a recurrence (no exception)
-							if ($oldEvent['recurrence'] != $event['recurrence'])
+							if ($event['recurrence'] && $oldEvent['recurrence'] != $event['recurrence'])
 							{
 								if (!($oldEvent = $this->bo->read($eventId, $event['recurrence'], true)) ||
 									// virtual exceptions have recurrence=0 and recur_date=recurrence (series master or real exceptions have recurence=0)

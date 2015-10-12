@@ -2059,7 +2059,6 @@ class calendar_bo
 		if (!is_array($entry))
 		{
 			list($id,$recur_date) = explode(':',$entry);
-			if (!$this->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server')) return false;
 			$entry = $this->read($id, $recur_date, true, 'server');
 		}
 		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
