@@ -1131,9 +1131,10 @@ jQuery.extend(et2_selectbox,
 		else
 		{
 			// Check that the value is in there
-			// Make sure we are not requesting server for an empty value option
-			// as server won't find anything and it will fall into an infinitive loop
-			if(attrs.value && attrs.value != "" && attrs.value != "0")
+			// Make sure we are not requesting server for an empty value option or 
+			// other widgets but select-timezone as server won't find anything and
+			// it will fall into an infinitive loop, e.g. select-cat widget.
+			if(attrs.value && attrs.value != "" && attrs.value != "0" && attrs.type == "select-timezone")
 			{
 				var missing_option = true;
 				for(var i = 0; i < cache.length && missing_option; i++)
