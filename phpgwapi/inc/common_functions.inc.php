@@ -1464,6 +1464,13 @@ function _check_script_tag(&$var,$name='')
 				static $preg = '/<\/?[^>]*\b(iframe|script|javascript|on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b[^>]*>/i';
 				if (preg_match($preg,$val))
 				{
+					// special handling for $_POST[json_data], to decend into it's decoded content, fixing json direct might break json syntax
+					if ($name == '_POST' && $key == 'json_data' && ($json_data = json_decode($val, true)))
+					{
+						_check_script_tag($json_data, $name.'[json_data]');
+						$_REQUEST[$key] = $var[$key] = json_encode($json_data);
+						continue;
+					}
 					error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
 					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] = $var[$key];
 					// attempt to clean the thing
