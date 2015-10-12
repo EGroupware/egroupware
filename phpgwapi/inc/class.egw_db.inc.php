@@ -560,7 +560,12 @@ class egw_db
 			$Host = preg_replace('/password=[^ ]+/','password=$Password',$Host);	// eg. postgres dsn contains password
 			throw new egw_exception_db_connection("ADOdb::$connect($Host, $User, \$Password, $Database) reconnect failed.");
 		}
-
+		// fix due to caching and reusing of connection not correctly set $this->Type == 'mysql'
+		if ($this->Type == 'mysqli')
+		{
+			$this->setupType = $this->Type;
+			$this->Type = 'mysql';
+		}
 		if ($new_connection)
 		{
 			foreach(get_included_files() as $file)
