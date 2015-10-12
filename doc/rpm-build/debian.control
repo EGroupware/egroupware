@@ -22,7 +22,6 @@ Depends:
  egroupware-epl-filemanager (= ${binary:Version}),
  egroupware-epl-infolog (= ${binary:Version}),
  egroupware-epl-importexport (= ${binary:Version}),
- egroupware-epl-manual (= ${binary:Version}),
  egroupware-epl-news-admin (= ${binary:Version}),
  egroupware-epl-notifications (= ${binary:Version}),
  egroupware-epl-phpbrain (= ${binary:Version}),
@@ -66,9 +65,9 @@ Suggests: egroupware-epl,
 Provides: egroupware-epl-addressbook, egroupware-epl-etemplate, egroupware-epl-pear
 Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook, egroupware-etemplate, egroupware-epl-etemplate,
  egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupare-epl-phpsysinfo,
- egroupware-epl-pear, egroupware-pear
+ egroupware-epl-pear, egroupware-pear, egroupware-epl-manual, egroupware-manual
 Conflicts: egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupware-epl-phpsysinfo,
- egroupware-epl-pear, egroupware-pear
+ egroupware-epl-pear, egroupware-pear, egroupware-epl-manual, egroupware-manual
 Description: web-based groupware suite - core modules
  ${commondesc}
  .
@@ -202,18 +201,6 @@ Description: web-based groupware suite - infolog application
  .
  This EGroupware application allows tracking on-going and previous support
  requests, phone calls, and other customer relations.
-
-Package: egroupware-epl-manual
-Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-wiki (>= ${binary:Version}),
- ${misc:Depends}
-Conflicts: egroupware-manual
-Replaces: egroupware-manual
-Description: web-based groupware suite - manual
- ${commondesc}
- .
- This package contains the EGroupware manual, provided as an
- EGroupware application.
 
 Package: egroupware-epl-news-admin
 Architecture: all

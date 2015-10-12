@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 14.3.20150811
+Version: 14.3.20151012
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -115,7 +115,6 @@ Requires: %{name}-infolog         = %{version}
 Requires: %{name}-importexport    = %{version}
 Requires: %{name}-jdots           = %{version}
 Requires: %{name}-mail            = %{version}
-Requires: %{name}-manual          = %{version}
 Requires: %{name}-news_admin      = %{version}
 Requires: %{name}-notifications   = %{version}
 Requires: %{name}-phpbrain        = %{version}
@@ -169,6 +168,8 @@ Obsoletes: %{egw_packagename}-phpsysinfo
 Obsoletes: %{egw_packagename}-polls
 # packages no longer in 14.2
 Obsoletes: %{name}-egw-pear
+# packages no longer in 14.3
+Obsoletes: %{name}-manual
 
 %post
 # Check binary paths and create links for opensuse/sles
@@ -198,7 +199,7 @@ This package automatically requires the EGroupware default applications:
 
 egroupware core with: admin, api, docs, etemplate, prefereces and setup,
 addressbook, bookmarks, calendar, translation-tools, emailadmin, mail,
-filemanager, infolog, manual, news admin, knowledgebase, polls, jdots, pixelegg,
+filemanager, infolog, news admin, knowledgebase, polls, jdots, pixelegg,
 projectmanager, resources, sambaadmin, sitemgr, eSync, timesheet, tracker, wiki
 
 It also provides an API for developing additional applications.
@@ -349,17 +350,6 @@ Requires: egw-core >= %{version}
 Requires: %{name}-jdots >= %{version}
 %description pixelegg
 New 14.1 default template from Pixelegg.
-
-%package manual
-Version: %{version}
-Summary: The EGroupware manual application
-Group: Web/Database
-AutoReqProv: no
-Requires: egw-core >= %{version}
-Requires: %{name}-wiki >= %{version}
-Obsoletes: %{egw_packagename}-manual
-%description manual
-This is the manual app for EGroupware: online help system.
 
 %package news_admin
 Version: %{version}
@@ -662,10 +652,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files mail
 %defattr(-,root,root)
 %{egwdir}/mail
-
-%files manual
-%defattr(-,root,root)
-%{egwdir}/manual
 
 %files news_admin
 %defattr(-,root,root)
