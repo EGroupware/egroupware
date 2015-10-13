@@ -69,7 +69,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 *
 	 * @var int
 	 */
-	protected $waitOnFailureDefault = 120;
+	protected $waitOnFailureDefault = 30;
 
 	/**
 	 * Integer waitOnFailureLimit how long (in seconds) to wait on connection failure until a 500 is raised
@@ -229,119 +229,112 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	/**
 	 * Open IMAP connection
 	 *
+	 * Behavior on connection failure (flags stored by user and device-ID):
+	 * a) if connections fails initialy:
+	 *    we log time under "lastattempt" and initial blocking-time of $this->waitOnFailureDefault=30 as "howlong" and
+	 *    send a "Retry-After: 30" header and a HTTP-Status of "503 Service Unavailable"
+	 * b) if clients attempts connection before lastattempt+howlong:
+	 *    send a "Retry-After: <remaining-time>" header and a HTTP-Status of "503 Service Unavailable"
+	 * c) if connection fails again (after the blocking time):
+	 *    we double the blocking time up to maximum of $this->waitOnFailureLimit=7200=2h and
+	 *    send a "Retry-After: 2*<blocking-time>" header and a HTTP-Status of "503 Service Unavailable"
+	 * d) if connection succeeds:
+	 *    we remove lastattempt and howlong flags
+	 *
+	 * @link https://social.msdn.microsoft.com/Forums/en-US/3658aca8-36fd-4058-9d43-10f48c3f7d3b/what-does-commandfrequency-mean-with-respect-to-eas-throttling?forum=os_exchangeprotocols
 	 * @param int $account integer id of account to use
 	 * @param boolean $verify_mode mode used for verify_settings; we want the exception but not the header stuff
 	 * @todo support different accounts
 	 */
 	private function _connect($account=0, $verify_mode=false)
 	{
-		static $waitOnFailure = null;
-		//if (is_null($account)) $account = 0;
 		if (!$account) $account = self::$profileID ? self::$profileID : 0;
 		if ($this->mail && $this->account != $account) $this->_disconnect();
 
-		$hereandnow = egw_time::to('now','ts');
 		$this->_wasteID = false;
 		$this->_sentID = false;
 
 		$connectionFailed = false;
 
-		if ($verify_mode==false && (is_null($waitOnFailure)||empty($waitOnFailure[self::$profileID])||empty($waitOnFailure[self::$profileID][Request::GetDeviceID()])))
+		if ($verify_mode)
 		{
-			$waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*2);
-		}
-		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]) && isset($waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']) && !empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']) && isset($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']) && !empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']))
-		{
-			if ($waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']+$waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']<$hereandnow)
-			{
-				if ($this->debugLevel>0) error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Refuse to open connection for Profile:".self::$profileID.' Device '.Request::GetDeviceID().' should still wait '.array2string($waitOnFailure[self::$profileID][Request::GetDeviceID()]));
-				//header("HTTP/1.1 503 Service Unavailable");
-				$hL = $waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']+$waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']-$hereandnow;
-				header("Retry-After: 30");
-				// let z-push know we want to terminate
-				ZLog::Write(LOGLEVEL_ERROR, "($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID()." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
-				throw new HTTPReturnCodeException('Service Unavailable', 503);
-				/*$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID()." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
-				_egw_log_exception($ethrown);
-				exit;*/
-			}
-		}
-		if (!$this->mail)
-		{
-			$this->account = $account;
-			// todo: tell mail which account to use
-			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
-			try
-			{
-				$this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
-				if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
-				$this->mail->openConnection(self::$profileID,false);
-				$connectionFailed = false;
-			}
-			catch (Exception $e)
-			{
-				$connectionFailed = true;
-				$errorMessage = $e->getMessage();
-			}
+			$waitOnFailure = array();
 		}
 		else
 		{
-			//error_log(__METHOD__.__LINE__." connect with profileID: ".self::$profileID);
-			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
-			try
+			$waitOnFailure = egw_cache::getInstance(__CLASS__, 'waitOnFailure-'.$GLOBALS['egw_info']['user']['account_lid'], function()
 			{
-				$this->mail->openConnection(self::$profileID,false);
-				$connectionFailed = false;
-			}
-			catch (Exception $e)
-			{
-				$connectionFailed = true;
-				$errorMessage = $e->getMessage();
-			}
+				return array();
+			});
 		}
-		if (empty($waitOnFailure[self::$profileID][Request::GetDeviceID()])) $waitOnFailure[self::$profileID][Request::GetDeviceID()] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
-		if ($connectionFailed)
+		$deviceWaitOnFailure =& $waitOnFailure[Request::GetDeviceID()];
+
+		// case b: client attempts new connection, before blocking-time is over --> return 503 Service Unavailable immediatly
+		if ($deviceWaitOnFailure && $deviceWaitOnFailure['lastattempt']+$deviceWaitOnFailure['howlong'] > time())
 		{
-			// in verify_moode, we want the exeption, but not the exit
-			if ($verify_mode)
+			$keepwaiting = $deviceWaitOnFailure['lastattempt']+$deviceWaitOnFailure['howlong'] - time();
+			ZLog::Write(LOGLEVEL_ERROR, "($account) still blocking for an other $keepwaiting s #".self::$profileID."!".' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID());
+			// let z-push know we want to terminate
+			header("Retry-After: ".$keepwaiting);
+			throw new HTTPReturnCodeException('Service Unavailable', 503);
+		}
+		try {
+			if (!$this->mail)
 			{
-				throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain']);
+				$this->account = $account;
+				// todo: tell mail which account to use
+				//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
+				$this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+				if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
 			}
 			else
 			{
-				error_log(__METHOD__.__LINE__."($account) could not open connection!".$errorMessage);
-				error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
-					($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
-				if ($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong'] > $this->waitOnFailureLimit )
-				{
-					$waitOnFailure[self::$profileID][Request::GetDeviceID()] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
-					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-					header("HTTP/1.1 500 Internal Server Error");
-					throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID());
-				}
-				else
-				{
-					//error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device:'.Request::GetDeviceID().' should wait '.array2string($waitOnFailure[self::$profileID][Request::GetDeviceID()]));
-					$waitaslongasthis = $waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong'];
-					$waitOnFailure[self::$profileID][Request::GetDeviceID()] = array('howlong'=>(empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong'])?$this->waitOnFailureDefault:$waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']) * 2,'lastattempt'=>$hereandnow);
-					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-					header("HTTP/1.1 503 Service Unavailable");
-					header("Retry-After: ".$waitaslongasthis);
-					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID()." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
-					_egw_log_exception($ethrown);
-					exit;
-				}
+				//error_log(__METHOD__.__LINE__." connect with profileID: ".self::$profileID);
+				if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
 			}
-			//die('Mail not or mis-configured!');
+			$this->mail->openConnection(self::$profileID,false);
 		}
-		else
+		catch (Exception $e)
 		{
-			if (!empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]))
+			if ($verify_mode)
 			{
-				$waitOnFailure[self::$profileID][Request::GetDeviceID()] = array();
-				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+				throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$e->getMessage().' for Instance='.$GLOBALS['egw_info']['user']['domain']);
 			}
+			// case a) initial failure: set lastattempt and howlong=$this->waitOnFailureDefault=30
+			if (!$deviceWaitOnFailure || time() > $deviceWaitOnFailure['lastattempt']+$deviceWaitOnFailure['howlong'])
+			{
+				$deviceWaitOnFailure = array(
+					'lastattempt' => time(),
+					'howlong'     => $this->waitOnFailureDefault,
+				);
+			}
+			// case c) connection failed again: double waiting time up to max. of $this->waitOnFailureLimit=2h
+			else
+			{
+				$deviceWaitOnFailure = array(
+					'lastattempt' => time(),
+					'howlong'     => 2*$deviceWaitOnFailure['howlong'],
+				);
+				if ($deviceWaitOnFailure['howlong'] > $this->waitOnFailureLimit)
+				{
+					$deviceWaitOnFailure['howlong'] = $this->waitOnFailureLimit;
+				}
+			}
+			egw_cache::setInstance(__CLASS__, 'waitOnFailure-'.$GLOBALS['egw_info']['user']['account_lid'], $waitOnFailure);
+
+			ZLog::Write(LOGLEVEL_ERROR, "($account) connection failed ".$e->getMessage()." blocking for $deviceWaitOnFailure[howlong] s #".self::$profileID."!".' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID());
+			// let z-push know we want to terminate
+			header("Retry-After: ".$deviceWaitOnFailure['howlong']);
+			throw new HTTPReturnCodeException('Service Unavailable', 503);
 		}
+
+		// case d) success, remove failure flag for device
+		if ($deviceWaitOnFailure)
+		{
+			$deviceWaitOnFailure = array();
+			egw_cache::setInstance(__CLASS__, 'waitOnFailure-'.$GLOBALS['egw_info']['user']['account_lid'], $waitOnFailure);
+		}
+
 		$this->_wasteID = $this->mail->getTrashFolder(false);
 		//error_log(__METHOD__.__LINE__.' TrashFolder:'.$this->_wasteID);
 		$this->_sentID = $this->mail->getSentFolder(false);
