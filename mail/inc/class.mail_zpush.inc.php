@@ -942,7 +942,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				// remove all other html
 				$body = strip_tags($raw_body);
 				if(strlen($body) > $truncsize) {
-					$body = utf8_truncate($body, $truncsize);
+					$body = Utils::Utf8_truncate($body, $truncsize);
 					$output->bodytruncated = 1;
 				}
 				else
@@ -1053,7 +1053,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 					if(isset($truncsize) && strlen($htmlbody) > $truncsize)
 					{
-						$htmlbody = utf8_truncate($htmlbody,$truncsize);
+						$htmlbody = Utils::Utf8_truncate($htmlbody,$truncsize);
 						$output->asbody->truncated = 1;
 					}
 					$output->asbody->data = $htmlbody;
@@ -1074,7 +1074,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					if(isset($truncsize) &&
 			    		strlen($plainBody) > $truncsize)
 					{
-						$plainBody = utf8_truncate($plainBody, $truncsize);
+						$plainBody = Utils::Utf8_truncate($plainBody, $truncsize);
 						$output->asbody->truncated = 1;
 					}
 					$output->asbody->data = $plainBody;
