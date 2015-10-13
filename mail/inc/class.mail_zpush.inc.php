@@ -348,7 +348,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	private function _disconnect()
 	{
-		debugLog(__METHOD__);
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__);
 		if ($this->mail) $this->mail->closeConnection();
 
 		unset($this->mail);
@@ -364,24 +364,24 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	public function GetFolderList()
 	{
 		$folderlist = array();
-		debugLog(__METHOD__.__LINE__);
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__);
 		/*foreach($available_accounts as $account)*/ $account = 0;
 		{
 			$this->_connect($account);
 			if (!isset($this->folders)) $this->folders = $this->mail->getFolderObjects(true,false,$_alwaysGetDefaultFolders=true);
-			debugLog(__METHOD__.__LINE__.array2string($this->folders));
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($this->folders));
 
 			foreach ($this->folders as $folder => $folderObj) {
-				debugLog(__METHOD__.__LINE__.' folder='.$folder);
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' folder='.$folder);
 				$folderlist[] = $f = array(
 					'id'     => $this->createID($account,$folder),
 					'mod'    => $folderObj->shortDisplayName,
 					'parent' => $this->getParentID($account,$folder),
 				);
-				if ($this->debugLevel>0) debugLog(__METHOD__."() returning ".array2string($f));
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() returning ".array2string($f));
 			}
 		}
-		debugLog(__METHOD__."() returning ".array2string($folderlist));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() returning ".array2string($folderlist));
 
 		return $folderlist;
 	}
@@ -426,7 +426,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
      */
 	public function SendMail($smartdata)
 	{
-		//$this->debugLevel=3;
+		//$this->debugLevel=2;
 		$ClientSideMeetingRequest = false;
 		$allowSendingInvitations = 'sendifnocalnotif';
 		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-allowSendingInvitations']) &&
@@ -441,8 +441,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		$smartdata_task = ($smartdata->replyflag?'reply':($smartdata->forwardflag?'forward':'new'));
 
-   		debugLog(__METHOD__.__LINE__ . (isset($smartdata->mime) ? $smartdata->mime : ""). "task: ".(isset($smartdata_task) ? $smartdata_task : "")." itemid: ".(isset($smartdata->source->itemid) ? $smartdata->source->itemid : "")." folder: ".(isset($smartdata->source->folderid) ? $smartdata->source->folderid : ""));
-		if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__."): Smartdata = ".array2string($smartdata));
+   		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__ . (isset($smartdata->mime) ? $smartdata->mime : ""). "task: ".(isset($smartdata_task) ? $smartdata_task : "")." itemid: ".(isset($smartdata->source->itemid) ? $smartdata->source->itemid : "")." folder: ".(isset($smartdata->source->folderid) ? $smartdata->source->folderid : ""));
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__."): Smartdata = ".array2string($smartdata));
 		//error_log("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
 
 		// initialize our mail_bo
@@ -451,7 +451,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// use the standardIdentity
 		$activeMailProfile = mail_bo::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
 
-		if ($this->debugLevel>2) debugLog(__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
 		// initialize the new egw_mailer object for sending
 		$mailObject = new egw_mailer(self::$profileID);
@@ -468,21 +468,21 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("To")) as $addressObject) {
 			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") Header Sentmail To: ".array2string($addressObject) );
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail To: ".array2string($addressObject) );
 			//$mailObject->AddAddress($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$toMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// CC
 		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Cc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") Header Sentmail CC: ".array2string($addressObject) );
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail CC: ".array2string($addressObject) );
 			//$mailObject->AddCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
 		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Bcc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
-			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") Header Sentmail BCC: ".array2string($addressObject) );
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail BCC: ".array2string($addressObject) );
 			//$mailObject->AddBCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$bccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
@@ -523,13 +523,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			{
 				$Body = $body;
 				$AltBody = "<pre>".nl2br($body)."</pre>";
-				if ($this->debugLevel>1) debugLog(__METHOD__."(".__LINE__.") fetched Body as :". $simpleBodyType.'=> Created AltBody');
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") fetched Body as :". $simpleBodyType.'=> Created AltBody');
 			}
 			else
 			{
 				$AltBody = $body;
 				$Body =  trim(translation::convertHTMLToText($body));
-				if ($this->debugLevel>1) debugLog(__METHOD__."(".__LINE__.") fetched Body as :". $simpleBodyType.'=> Created Body');
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") fetched Body as :". $simpleBodyType.'=> Created Body');
 			}
 		}
 		else
@@ -541,20 +541,20 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$AltBody = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i","[$2]",
 				($html_body = $mailObject->findBody('html')) ? $html_body->getContents() : null);
 		}
-		if ($this->debugLevel>1 && $Body) debugLog(__METHOD__."(".__LINE__.") fetched Body as with MessageContentType:". $ContentType.'=>'.$Body);
-		if ($this->debugLevel>1 && $AltBody) debugLog(__METHOD__."(".__LINE__.") fetched AltBody as with MessageContentType:". $ContentType.'=>'.$AltBody);
+		if ($this->debugLevel>1 && $Body) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") fetched Body as with MessageContentType:". $ContentType.'=>'.$Body);
+		if ($this->debugLevel>1 && $AltBody) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") fetched AltBody as with MessageContentType:". $ContentType.'=>'.$AltBody);
 		//error_log(__METHOD__.__LINE__.array2string($mailObject));
 		// if this is a multipart message with a boundary, we must use the original body
-		//if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' mailObject after Inital Parse:'.array2string($mailObject));
+		//if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' mailObject after Inital Parse:'.array2string($mailObject));
         if ($use_orgbody) {
-    	    if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") use_orgbody = true ContentType:".$ContentType);
+    	    ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") use_orgbody = true ContentType:".$ContentType);
  			// if it is a ClientSideMeetingRequest, we report it as send at all times
 			if (stripos($ContentType,'text/calendar') !== false )
 			{
 				$body = ($text_body = $mailObject->findBody('calendar')) ? $text_body->getContents() : null;
 				$Body = $body;
 				$AltBody = "<pre>".nl2br($body)."</pre>";
-				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") we have a Client Side Meeting Request");
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") we have a Client Side Meeting Request");
 				// try figuring out the METHOD -> [ContentType] => text/calendar; name=meeting.ics; method=REQUEST
 				$tA = explode(' ',$ContentType);
 				foreach ((array)$tA as $k => $p)
@@ -597,12 +597,12 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if ($ClientSideMeetingRequest === true && $allowSendingInvitations===false) return true;
 		// as we use our mailer (horde mailer) it is detecting / setting the mimetype by itself while creating the mail
 /*
-		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body:'.$body);
+		if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' retrieved Body:'.$body);
 		$body = str_replace("\r",((preg_match("^text/html^i", $ContentType))?'<br>':""),$body); // what is this for?
-		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' retrieved Body (modified):'.$body);
+		if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' retrieved Body (modified):'.$body);
 */
 		// add signature!! -----------------------------------------------------------------
-		if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' ActiveMailProfile:'.array2string($activeMailProfile));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ActiveMailProfile:'.array2string($activeMailProfile));
 		try
 		{
 			$acc = emailadmin_account::read($this->mail->icServer->ImapServerId);
@@ -624,7 +624,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
 		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
 		$sigText = emailadmin_imapbase::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
-		if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Signature to use:'.$sigText);
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
 		$sigTextHtml = $beforeHtml.$sigText;
 		$sigTextPlain = $beforePlain.translation::convertHTMLToText($sigText);
 		$isreply = $isforward = false;
@@ -636,26 +636,26 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		{
 			// now get on, and fetch the original mail
 			$uid = $smartdata->source->itemid;
-			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") IMAP Smartreply is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") IMAP Smartreply is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
 			$this->splitID($smartdata->source->folderid, $account, $folder);
 
 			$this->mail->reopen($folder);
 			$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
 			$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
-			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
+			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 		    if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 				// may be html
-				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
 				$AltBody = $AltBody."</br>".$bodyBUFFHtml.$sigTextHtml;
 				$isreply = true;
 			}
 			// plain text Message part
-			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
 			// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 			$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 			if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
-				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 				$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
 				$isreply = true;
 			}
@@ -663,7 +663,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			{
 				$isreply = true;
 				$AltBody = $AltBody."</br><pre>".nl2br($bodyBUFF).'</pre>'.$sigTextHtml;
-				if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__." no html Body found use modified plaintext body for txt/html: ".$AltBody);
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." no html Body found use modified plaintext body for txt/html: ".$AltBody);
 			}
 		}
 
@@ -686,7 +686,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 			// construct the uid of the message out of the itemid - seems to be the uid, no construction needed
 			$uid = $smartdata->source->itemid;
-			if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.")IMAP Smartfordward is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")IMAP Smartfordward is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
 			$this->splitID($smartdata->source->folderid, $account, $folder);
 
 			$this->mail->reopen($folder);
@@ -708,33 +708,33 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			{
 				// now get on, and fetch the original mail
 				$uid = $smartdata->source->itemid;
-				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") IMAP Smartreply is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") IMAP Smartreply is called with FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
 				$this->splitID($smartdata->source->folderid, $account, $folder);
 
 				$this->mail->reopen($folder);
 				$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
 				$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
-				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 				if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
-					if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
+					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:html (fetched with html_only):'.$bodyBUFFHtml);
 					$AltBody = $AltBody."</br>".$bodyBUFFHtml.$sigTextHtml;
 					$isforward = true;
 				}
 				// plain text Message part
-				if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
 				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
 				if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
-					if ($this->debugLevel>0) debugLog(__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
+					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 					$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
 					$isforward = true;
 				}
 				if (!empty($bodyBUFF) && empty($bodyBUFFHtml) && !empty($AltBody))
 				{
 					$AltBody = $AltBody."</br><pre>".nl2br($bodyBUFF).'</pre>'.$sigTextHtml;
-					if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__." no html Body found use modified plaintext body for txt/html: ".$AltBody);
+					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." no html Body found use modified plaintext body for txt/html: ".$AltBody);
 					$isforward = true;
 				}
 				// get all the attachments and add them too.
@@ -744,15 +744,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$attachmentNames = false;
 				if (is_array($attachments) && count($attachments)>0)
 				{
-					if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' gather Attachments for BodyCreation of/for MessageID:'.$uid.' found:'.count($attachments));
+					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' gather Attachments for BodyCreation of/for MessageID:'.$uid.' found:'.count($attachments));
 					foreach((array)$attachments as $key => $attachment)
 					{
-						if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
+						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
 						$attachmentData = '';
 						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
 						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
-						//debugLog(__METHOD__.__LINE__.' added part with number:'.$x);
+						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
 					}
 				}
 			}
@@ -766,36 +766,36 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// now set the body
 		if ($AltBody && ($html_body = $mailObject->findBody('html')))
 		{
-			if ($this->debugLevel>1) debugLog(__METHOD__.__LINE__.' -> '.$AltBody);
+			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> '.$AltBody);
 			$html_body->setContents($AltBody,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		if ($Body && ($text_body = $mailObject->findBody('plain')))
 		{
-			if ($this->debugLevel>1) debugLog(__METHOD__.__LINE__.' -> '.$Body);
+			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> '.$Body);
 			$text_body->setContents($Body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		//advanced debugging
 		// Horde SMTP Class uses utf-8 by default.
         //debugLog("IMAP-SendMail: parsed message: ". print_r($message,1));
-		if ($this->debugLevel>2) debugLog(__METHOD__."(".__LINE__."): MailObject:".array2string($mailObject));
+		if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__."): MailObject:".array2string($mailObject));
 
 		// set a higher timeout for big messages
 		@set_time_limit(120);
-
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> '.' about to send ....');
 		// send
 		$send = true;
 		try {
 			$mailObject->Send();
 		}
 		catch(phpmailerException $e) {
-			debugLog(__METHOD__."(".__LINE__.") The email could not be sent. Last-SMTP-error: ". $e->getMessage());
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") The email could not be sent. Last-SMTP-error: ". $e->getMessage());
 			$send = false;
 		}
 
 		if (( $smartdata_task == 'reply' || $smartdata_task == 'forward') && $send == true)
 		{
 			$uid = $smartdata->source->itemid;
-			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' tASK:'.$smartdata_task." FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' tASK:'.$smartdata_task." FolderID:".$smartdata->source->folderid.' and ItemID:'.$smartdata->source->itemid);
 			$this->splitID($smartdata->source->folderid, $account, $folder);
 			//error_log(__METHOD__.__LINE__.' Folder:'.$folder.' Uid:'.$uid);
 			$this->mail->reopen($folder);
@@ -828,7 +828,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			// No Sent folder set, try defaults
 			else
 			{
-				debugLog(__METHOD__."(".__LINE__.") IMAP-SendMail: No Sent mailbox set");
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") IMAP-SendMail: No Sent mailbox set");
 				// we dont try guessing
 				$asf = true;
 			}
@@ -850,7 +850,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$flags = '';
 					}
 					$asf = true;
-					//debugLog(__METHOD__.__LINE__.'->'.array2string($this->mail->icServer));
+					//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.'->'.array2string($this->mail->icServer));
 					$this->mail->openConnection(self::$profileID,false);
 					if ($this->mail->folderExists($folderName)) {
 						try
@@ -861,15 +861,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						catch (egw_exception_wrong_userinput $e)
 						{
 							//$asf = false;
-							debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$mailObject->getHeader('Subject'),$folderName,$e->getMessage()));
+							ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$mailObject->getHeader('Subject'),$folderName,$e->getMessage()));
 						}
 					}
 					else
 					{
 						//$asf = false;
-						debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$mailObject->getHeader('Subject'),$folderName));
+						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$mailObject->getHeader('Subject'),$folderName));
 					}
-			        debugLog(__METHOD__."(".__LINE__."): Outgoing mail saved in configured 'Sent' folder '".$folderName."': ". (($asf)?"success":"failed"));
+			        ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__."): Outgoing mail saved in configured 'Sent' folder '".$folderName."': ". (($asf)?"success":"failed"));
 				}
 				//$this->mail->closeConnection();
 			}
@@ -879,14 +879,14 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		if ($send && $asf)
 		{
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> send successfully');
 			return true;
 		}
 		else
 		{
-			debugLog(__METHOD__." returning ".($ClientSideMeetingRequest ? true : 120)." (MailSubmissionFailed)".($ClientSideMeetingRequest ?" is ClientSideMeetingRequest (we ignore the failure)":""));
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__." returning ".($ClientSideMeetingRequest ? true : 120)." (MailSubmissionFailed)".($ClientSideMeetingRequest ?" is ClientSideMeetingRequest (we ignore the failure)":""));
 			return ($ClientSideMeetingRequest ? true : 120);   //MAIL Submission failed, see MS-ASCMD
 		}
-
 	}
 
 	/**
@@ -903,24 +903,24 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	public function GetMessage($folderid, $id, $contentparameters)
 	{
 		//$this->debugLevel=4;
-		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' ContentParams='.array2string($contentparameters));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' ContentParams='.array2string($contentparameters));
 		$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
 		$mimesupport = $contentparameters->GetMimeSupport();
-		debugLog(__METHOD__."() truncsize=$truncsize, mimeSupport=".array2string($mimesupport));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() truncsize=$truncsize, mimeSupport=".array2string($mimesupport));
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
 		//$this->debugLevel=4;
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
-		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
 		$account = $_folderName = $xid = null;
 		$this->splitID($folderid,$account,$_folderName,$xid);
 		$this->mail->reopen($_folderName);
 		$stat = $this->StatMessage($folderid, $id);
-		if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($stat));
+		if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($stat));
 		// StatMessage should reopen the folder in question, so we dont need folderids in the following statements.
 		if ($stat)
 		{
-			debugLog(__METHOD__.__LINE__." Message $id with stat ".array2string($stat));
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." Message $id with stat ".array2string($stat));
 			// initialize the object
 			$output = new SyncMail();
 			$headers = $this->mail->getMessageHeader($id,'',true,true,$_folderName);
@@ -932,7 +932,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			//$rawHeaders = $this->mail->getMessageRawHeader($id);
 			// simple style
 			// start AS12 Stuff (bodypreference === false) case = old behaviour
-			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__. ' for message with ID:'.$id.' with headers:'.array2string($headers));
+			if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__. ' for message with ID:'.$id.' with headers:'.array2string($headers));
 
 			if ($bodypreference === false) {
 				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', null, true,$_folderName);
@@ -957,17 +957,27 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				//Select body type preference
 				$bpReturnType = 1;//SYNC_BODYPREFERENCE_PLAIN;
 				if ($bodypreference !== false) {
-					$bpReturnType = Utils::GetBodyPreferenceBestMatch($bodypreference); // changed by mku ZP-330
+					// bodypreference can occur multiple times
+					// usually we would use Utils::GetBodyPreferenceBestMatch($bodypreference);
+					$bpReturnType = Utils::GetBodyPreferenceBestMatch($bodypreference);
+/*
+					foreach($bodypreference as $bpv)
+					{
+						// we use the last, or MIMEMESSAGE when present
+						$bpReturnType = $bpv;
+						if ($bpReturnType==SYNC_BODYPREFERENCE_MIME) break;
+					}
+*/
 				}
-				debugLog(__METHOD__.__LINE__." getBodyPreferenceBestMatch: ".array2string($bpReturnType));
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." getBodyPreferenceBestMatch: ".array2string($bpReturnType));
 				// set the protocoll class
 				$output->asbody = new SyncBaseBody();
 				// fetch the body (try to gather data only once)
 				$css ='';
 				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true,$_folderName);
-				if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
+				if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
 				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);//$this->ui->getdisplayableBody($bodyStruct,false);
-				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$body);
+				if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$body);
 			    if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:html (fetched with html_only)');
@@ -978,18 +988,19 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text (HTML, if no text available)');
 					$output->nativebodytype=1;
 					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
-					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
+					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
 					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
-					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' never display html(plain text only):'.$body);
+					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' never display html(plain text only):'.$body);
 				}
 				// whatever format decode (using the correct encoding)
-				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__."MIME Body".' Type:'.($output->nativebodytype==2?' html ':' plain ').$body);
+				if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__."MIME Body".' Type:'.($output->nativebodytype==2?' html ':' plain ').$body);
 				//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				// prepare plaintextbody
+				$plainBody='';
 				if ($output->nativebodytype == 2)
 				{
 					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
-					if($bodyStructplain[0]['error']==1)
+					if(isset($bodyStructplain[0])&&isset($bodyStructplain[0]['error'])&&$bodyStructplain[0]['error']==1)
 					{
 						$plainBody = translation::convertHTMLToText($body); // always display with preserved HTML
 					}
@@ -1003,21 +1014,23 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				// remove all other html
 				$plainBody = preg_replace("/<br.*>/is","\r\n",$plainBody);
 				$plainBody = strip_tags($plainBody);
-				if ($this->debugLevel>3 && $output->nativebodytype==1) debugLog(__METHOD__.__LINE__.' Plain Text:'.$plainBody);
+				if ($this->debugLevel>3 && $output->nativebodytype==1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Plain Text:'.$plainBody);
 				//$body = str_replace("\n","\r\n", str_replace("\r","",$body)); // do we need that?
-				if ($bpReturnType==4)//$mimesupport==2 || $mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)
+				if ($bpReturnType==SYNC_BODYPREFERENCE_MIME)//4)//$mimesupport==2 || $mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)
 				{
-					debugLog(__METHOD__.__LINE__." bodypreference 4 requested");
-					$output->asbody->type = 4;
+					//SYNC_BODYPREFERENCE_MIME
+					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." bodypreference 4 requested");
+					$output->asbody->type = SYNC_BODYPREFERENCE_MIME;//4;
 					$Body = $this->mail->getMessageRawBody($id, '', $_folderName);
 					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Body);
 					$output->asbody->data = $Body;
 				}
-				else if ($bpReturnType==2)
+				else if ($bpReturnType==2) //SYNC_BODYPREFERENCE_HTML
 				{
 					if ($this->debugLevel>0) debugLog("HTML Body with requested pref 2");
 					// Send HTML if requested and native type was html
 					$output->asbody->type = 2;
+					$output->nativebodytype = 2;
 					$htmlbody = '<html>'.
 						'<head>'.
 						'<meta name="Generator" content="Z-Push">'.
@@ -1038,7 +1051,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					$htmlbody .= '</body>'.
 							'</html>';
 
-					if(isset($truncsize) && strlen($html) > $truncsize)
+					if(isset($truncsize) && strlen($htmlbody) > $truncsize)
 					{
 						$htmlbody = utf8_truncate($htmlbody,$truncsize);
 						$output->asbody->truncated = 1;
@@ -1057,6 +1070,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					//$plain = str_replace("\n","\r\n",str_replace("\r","",$plain));
 					*/
 					$output->asbody->type = 1;
+					$output->nativebodytype = 1;
 					if(isset($truncsize) &&
 			    		strlen($plainBody) > $truncsize)
 					{
@@ -1075,50 +1089,57 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$output->asbody->estimatedDataSize = strlen($output->asbody->data);
 			}
 			// end AS12 Stuff
-			debugLog(__METHOD__.__LINE__.' gather Header info:'.$headers['SUBJECT'].' from:'.$headers['DATE']);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' gather Header info:'.$headers['SUBJECT'].' from:'.$headers['DATE']);
 			$output->read = $stat["flags"];
+
+			$output->flag = new SyncMailFlags();
+			if ($this->messages[$id]['flagged'] == 1)
+			{
+				$output->flag->flagstatus = 2;
+				//$output->flag->flagtype = "Flag for Follow up";
+			} else {
+				$output->flag->flagstatus = 0;
+			}
+			if ($this->messages[$id]['answered'])
+			{
+				$output->lastverexecuted = AS_REPLYTOSENDER;
+			}
+			elseif ($this->messages[$id]['forwarded'])
+			{
+				$output->lastverexecuted = AS_FORWARD;
+			}
 			$output->subject = $this->messages[$id]['subject'];
 			$output->importance = $this->messages[$id]['priority'] > 3 ? 0 :
 				($this->messages[$id]['priority'] < 3 ? 2 : 1) ;
 			$output->datereceived = $this->mail->_strtotime($headers['DATE'],'ts',true);
-			$output->displayto = ($headers['TO'] ? $headers['TO']:null); //$stat['FETCHED_HEADER']['to_name']
-			// $output->to = $this->messages[$id]['to_address']; //$stat['FETCHED_HEADER']['to_name']
-			// $output->from = $this->messages[$id]['sender_address']; //$stat['FETCHED_HEADER']['sender_name']
 //error_log(__METHOD__.__LINE__.' To:'.$headers['TO']);
 			$output->to = $headers['TO'];
+			if ($headers['TO']) $output->displayto = ($headers['TO'] ? $headers['TO']:null); //$stat['FETCHED_HEADER']['to_name']
 //error_log(__METHOD__.__LINE__.' From:'.$headers['FROM']);
 			$output->from = $headers['FROM'];
-			$output->cc = ($headers['CC'] ? $headers['CC']:null);
-			$output->reply_to = ($headers['REPLY_TO']?$headers['REPLY_TO']:null);
+			if (isset($headers['CC']) && $headers['CC']) $output->cc = ($headers['CC'] ? $headers['CC']:null);
+			if (isset($headers['REPLY_TO']) && $headers['REPLY_TO']) $output->reply_to = ($headers['REPLY_TO']?$headers['REPLY_TO']:null);
+
 			$output->messageclass = "IPM.Note";
 			if (stripos($this->messages[$id]['mimetype'],'multipart')!== false &&
 				stripos($this->messages[$id]['mimetype'],'signed')!== false)
 			{
 				$output->messageclass = "IPM.Note.SMIME.MultipartSigned";
 			}
-			// start AS12 Stuff
-			//$output->poommailflag = new SyncMailFlags();
-
-			if ($this->messages[$id]['flagged'] == 1)
-			{
-				$output->flag = new SyncMailFlags();
-				$output->flag->flagstatus = 2;
-				$output->flag->flagtype = "Flag for Follow up";
+			if (Request::GetProtocolVersion() >= 12.0) {
+				$output->contentclass = "urn:content-classes:message";
 			}
-
-			$output->internetcpid = 65001;
-			$output->contentclass="urn:content-classes:message";
-			// end AS12 Stuff
 
 			// start handle Attachments (include text/calendar multipart alternative)
 			$attachments = $this->mail->getMessageAttachments($id, $_partID='', $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=true, true, $_folderName);
-			if (is_array($attachments) && count($attachments)>0)
+			// Attachments should not needed for MIME messages, so skip this part if bpReturnType==4
+			if (/*$bpReturnType != SYNC_BODYPREFERENCE_MIME &&*/ is_array($attachments) && count($attachments)>0)
 			{
-				debugLog(__METHOD__.__LINE__.' gather Attachments for MessageID:'.$id.' found:'.count($attachments));
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' gather Attachments for MessageID:'.$id.' found:'.count($attachments));
 				//error_log(__METHOD__.__LINE__.array2string($attachments));
 				foreach ($attachments as $key => $attach)
 				{
-					if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attach));
+					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attach));
 
 					// pass meeting requests to calendar plugin
 					if (strtolower($attach['mimeType']) == 'text/calendar' && strtolower($attach['method']) == 'request' &&
@@ -1127,6 +1148,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						($output->meetingrequest = calendar_zpush::meetingRequest($attachment['attachment'])))
 					{
 						$output->messageclass = "IPM.Schedule.Meeting.Request";
+						unset($attachment);
 						continue;	// do NOT add attachment as attachment
 					}
 					if (Request::GetProtocolVersion() >= 12.0) {
@@ -1149,6 +1171,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					//error_log(__METHOD__.__LINE__.'->'.$folderid . ":" . $id . ":" . $attach['partID']);
 
 					$attachment->attoid = "";//isset($part->headers['content-id']) ? trim($part->headers['content-id']) : "";
+					//$attachment->isinline=0; // if not inline, do not use isinline
 					if (!empty($attach['cid']) && $attach['cid'] <> 'NIL' )
 					{
 						if ($bpReturnType != 4 && $attach['disposition'] == 'inline')
@@ -1171,11 +1194,17 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					} else {
 						array_push($output->attachments, $attachment);
 					}
+					unset($attachment);
 				}
 			}
 			//$this->debugLevel=0;
 			// end handle Attachments
-			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($output));
+			unset($attachments);
+
+            // Language Code Page ID: http://msdn.microsoft.com/en-us/library/windows/desktop/dd317756%28v=vs.85%29.aspx
+            $output->internetcpid = INTERNET_CPID_UTF8;
+
+			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($output));
 //$this->debugLevel=0;
 			return $output;
 		}
@@ -1198,12 +1227,12 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	{
 		if (!class_exists('calendar_zpush'))
 		{
-			debugLog(__METHOD__."(...) no EGroupware calendar installed!");
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(...) no EGroupware calendar installed!");
 			return null;
 		}
 		if (!($stat = $this->StatMessage($folderid, $requestid)))
 		{
-			debugLog(__METHOD__."($requestid, '$folderid', $response) returning FALSE (can NOT stat message)");
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($requestid, '$folderid', $response) returning FALSE (can NOT stat message)");
 			return false;
 		}
 		$ret = false;
@@ -1212,7 +1241,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if (strtolower($attach['mimeType']) == 'text/calendar' && strtolower($attach['method']) == 'request' &&
 				($attachment = $this->mail->getAttachment($requestid, $attach['partID'],0,false)))
 			{
-				debugLog(__METHOD__."($requestid, '$folderid', $response) iCal found, calling now backend->MeetingResponse('$attachment[attachment]')");
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($requestid, '$folderid', $response) iCal found, calling now backend->MeetingResponse('$attachment[attachment]')");
 
 				// calling backend again with iCal attachment, to let calendar add the event
 				if (($ret = $this->backend->MeetingResponse($attachment['attachment'],
@@ -1224,7 +1253,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				break;
 			}
 		}
-		debugLog(__METHOD__."($requestid, '$folderid', $response) returning ".array2string($ret));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($requestid, '$folderid', $response) returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -1239,7 +1268,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @return true, prints the content of the attachment
 	 */
 	function GetAttachmentData($fid,$attname) {
-		debugLog("getAttachmentData: $fid (attname: '$attname')");
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')".function_backtrace());
 		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
 		list($folderid, $id, $part) = explode(":", $attname);
 
@@ -1251,6 +1280,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
         $SIOattachment = new SyncItemOperationsAttachment();
         $SIOattachment->data = $attachment['attachment'];
+		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname') Data:".$attachment['attachment']);
         if (isset($attachment['type']) )
             $SIOattachment->contenttype = $attachment['type'];
 
@@ -1270,7 +1300,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @return SyncItemOperationsAttachment-object
 	 */
 	function ItemOperationsGetAttachmentData($fid,$attname) {
-		debugLog(__METHOD__.": $fid (attname: '$attname')");
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')".function_backtrace());
 		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
 		list($folderid, $id, $part) = explode(":", $attname);
 
@@ -1325,17 +1355,17 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	function ChangeMessage($folderid, $id, $message, $contentParameters)
 	{
-		debugLog(__METHOD__.__LINE__." $folderid, $id,".array2string($message).",".array2string($contentParameters));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." $folderid, $id,".array2string($message).",".array2string($contentParameters));
 		//unset($folderid, $id, $message, $contentParameters);
 		$account = $folder = null;
 		$this->splitID($folderid, $account, $folder);
 		if (isset($message->flag)) {
 			if (isset($message->flag->flagstatus) && $message->flag->flagstatus == 2) {
 				$rv = $this->mail->flagMessages((($message->flag->flagstatus == 2) ? "flagged" : "unflagged"), $id,$folder);
-				debugLog(__METHOD__." -> set ".array2string($id).' in Folder '.$folder." as " . (($message->flag->flagstatus == 2) ? "flagged" : "unflagged") . "-->". $rv);
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__." -> set ".array2string($id).' in Folder '.$folder." as " . (($message->flag->flagstatus == 2) ? "flagged" : "unflagged") . "-->". $rv);
 			} else {
 				$rv = $this->mail->flagMessages("unflagged", $id,$folder);
-				debugLog(__METHOD__." -> set ".array2string($id).' in Folder '.$folder." as " . "unflagged" . "-->". $rv);
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__." -> set ".array2string($id).' in Folder '.$folder." as " . "unflagged" . "-->". $rv);
 			}
 		}
 		return $this->StatMessage($folderid, $id);
@@ -1371,7 +1401,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		// move message
 		$rv = $this->mail->moveMessages($destFolder,(array)$id,true,$srcFolder,true);
-		debugLog(__METHOD__.__LINE__.": New Status of $destFolder :".array2string($status).", ReturnValOf moveMessage".array2string($rv)); // this may be true, so try using the nextUID value by examine
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.": New Status of $destFolder :".array2string($status).", ReturnValOf moveMessage".array2string($rv)); // this may be true, so try using the nextUID value by examine
 		// return the new id "as string"
 		return ($rv===true ? $uidNext : $rv[$id]) . "";
 	}
@@ -1389,7 +1419,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (empty($cutdate))
 		{
 			$cutdate = egw_time::to('now','ts')-(3600*24*28*3);
-			debugLog(__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutdate));
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutdate));
 		}
 		return $this->fetchMessages($folderid, $cutdate);
 	}
@@ -1397,12 +1427,12 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	private function fetchMessages($folderid, $cutoffdate=NULL, $_id=NULL)
 	{
 		if ($this->debugLevel>1) $gstarttime = microtime (true);
-		//debugLog(__METHOD__.__LINE__);
+		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__);
 		$rv_messages = array();
 		// if the message is still available within the class, we use it instead of fetching it again
 		if (is_array($_id) && count($_id)==1 && is_array($this->messages) && isset($this->messages[$_id[0]]) && is_array($this->messages[$_id[0]]))
 		{
-			//debugLog(__METHOD__.__LINE__." the message ".$_id[0]." is still available within the class, we use it instead of fetching it again");
+			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." the message ".$_id[0]." is still available within the class, we use it instead of fetching it again");
 			$rv_messages = array('header'=>array($this->messages[$_id[0]]));
 		}
 		if (empty($rv_messages))
@@ -1412,9 +1442,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if ($this->debugLevel>1)
 			{
 				$endtime = microtime(true) - $starttime;
-				debugLog(__METHOD__. " connect took : ".$endtime.' for account:'.$this->account);
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__. " connect took : ".$endtime.' for account:'.$this->account);
 			}
-			$messagelist = array();
+			$messagelist = $_filter = array();
 			// if not connected, any further action must fail
 			if (!empty($cutoffdate)) $_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 			if ($this->debugLevel>1) $starttime = microtime (true);
@@ -1423,47 +1453,74 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if ($this->debugLevel>1)
 			{
 				$endtime = microtime(true) - $starttime;
-				debugLog(__METHOD__. " splitID took : ".$endtime.' for FolderID:'.$folderid);
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__. " splitID took : ".$endtime.' for FolderID:'.$folderid);
 			}
-			if ($this->debugLevel>1) debugLog(__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
+			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
 			if ($this->debugLevel>1) $starttime = microtime (true);
 			$_numberOfMessages = (empty($cutoffdate)?250:99999);
 			$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages, $_sort=0, $_reverse=false, $_filter, $_id);
 			if ($this->debugLevel>1)
 			{
 				$endtime = microtime(true) - $starttime;
-				debugLog(__METHOD__. " getHeaders call took : ".$endtime.' for FolderID:'.$_folderName);
+				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__. " getHeaders call took : ".$endtime.' for FolderID:'.$_folderName);
 			}
 		}
-		if ($_id == NULL && $this->debugLevel>1)  debugLog(__METHOD__." found :". count($rv_messages['header']));
-		//debugLog(__METHOD__.__LINE__.' Result:'.array2string($rv_messages));
+		if ($_id == NULL && $this->debugLevel>1)  ZLog::Write(LOGLEVEL_DEBUG,__METHOD__." found :". count($rv_messages['header']));
+		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Result:'.array2string($rv_messages));
+		$messagelist = array();
+		if (!isset($rv_messages['header'])||empty($rv_messages['header'])) return $messagelist;
+		//if ($_returnModHash) $messageFolderHash = array();
 		foreach ((array)$rv_messages['header'] as $k => $vars)
 		{
-			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' ID to process:'.$vars['uid'].' Subject:'.$vars['subject']);
+			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ID to process:'.$vars['uid'].' Subject:'.$vars['subject']);
 			$this->messages[$vars['uid']] = $vars;
-			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' MailID:'.$k.'->'.array2string($vars));
+			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' MailID:'.$k.'->'.array2string($vars));
 			if (!empty($vars['deleted'])) continue; // cut of deleted messages
 			if ($cutoffdate && $vars['date'] < $cutoffdate) continue; // message is out of range for cutoffdate, ignore it
-			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.' ID to report:'.$vars['uid'].' Subject:'.$vars['subject']);
-			$mess["mod"] = $vars['date'];
+			if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ID to report:'.$vars['uid'].' Subject:'.$vars['subject']);
+			$mess["mod"] = self::doFlagsMod($vars).$vars['date'];
 			$mess["id"] = $vars['uid'];
 			// 'seen' aka 'read' is the only flag we want to know about
 			$mess["flags"] = 0;
 			// outlook supports additional flags, set them to 0
-			$mess["olflags"] = 0;
 			if($vars["seen"]) $mess["flags"] = 1;
-			if($vars["flagged"]) $mess["olflags"] = 2;
-			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($mess));
+			if ($this->debugLevel>3); ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($mess));
 			$messagelist[$vars['uid']] = $mess;
 			unset($mess);
 		}
-
 		if ($this->debugLevel>1)
 		{
 			$endtime = microtime(true) - $gstarttime;
-			debugLog(__METHOD__. " total time used : ".$endtime.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__. " total time used : ".$endtime.' for Folder:'.$_folderName.' Filter:'.array2string($_filter).' Ids:'.array2string($_id).'/'.$id);
 		}
 		return $messagelist;
+	}
+
+	/**
+	 * static function doFlagsMod
+	 * prepare headeinfo on a message to return some standardized string to tell which flags are set for a message
+	 * @param array $headerFlags  - array to process, a full return array from getHeaders
+	 * @return string string of a representation of all flags present
+	 */
+	static function doFlagsMod($headerFlags)
+	{
+		$retValue = '';
+		if (in_array('recent', $headerFlags)&&$headerFlags['recent']) $retValue.='r';
+		if (in_array('flagged', $headerFlags)&&$headerFlags['flagged']) $retValue.='f';
+		if (in_array('answered', $headerFlags)&&$headerFlags['answered']) $retValue.='a';
+		if (in_array('forwarded', $headerFlags)&&$headerFlags['forwarded']) $retValue.='w';
+		if (in_array('deleted', $headerFlags)&&$headerFlags['deleted']) $retValue.='x';
+		if (in_array('seen', $headerFlags)&&$headerFlags['seen']) $retValue.='s';
+		if (in_array('draft', $headerFlags)&&$headerFlags['draft']) $retValue.='e';
+		if (in_array('mdnsent', $headerFlags)&&$headerFlags['mdnsent']) $retValue.='m';
+		if (in_array('mdnnotsent', $headerFlags)&&$headerFlags['mdnnotsent']) $retValue.='n';
+		if (in_array('label1', $headerFlags)&&$headerFlags['label1']) $retValue.='1';
+		if (in_array('label2', $headerFlags)&&$headerFlags['label2']) $retValue.='2';
+		if (in_array('label3', $headerFlags)&&$headerFlags['label3']) $retValue.='3';
+		if (in_array('label4', $headerFlags)&&$headerFlags['label4']) $retValue.='4';
+		if (in_array('label5', $headerFlags)&&$headerFlags['label5']) $retValue.='5';
+		//error_log(__METHOD__.' ('.__LINE__.') '.$headerFlags['SUBJECT'].':'.array2string($retValue));
+		return $retValue;
 	}
 
 	/**
@@ -1494,7 +1551,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		//$this->debugLevel=1;
 		$searchquery=$_searchquery->GetDataArray();
 		if (!is_array($searchquery)) return array();
-		if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__.array2string($searchquery));
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($searchquery));
 
 		if (isset($searchquery['searchrebuildresults'])) {
 			$rebuildresults = $searchquery['searchrebuildresults'];
@@ -1545,7 +1602,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 //$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
-		debugLog(__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' FolderID:'.$folderid.' Foldername:'.$_folderName);
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' FolderID:'.$folderid.' Foldername:'.$_folderName);
 		$this->_connect($account);
 		// this should not be needed ???
 		emailadmin_imapbase::$supportsORinQuery[self::$profileID]=true; // trigger quicksearch (if possible)
@@ -1557,7 +1614,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		//$_filter[] = array('type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		if ($this->debugLevel>1) debugLog (__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter));
 		$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=($range?$start:1), $_numberOfMessages=($limit?$limit:9999999), $_sort=0, $_reverse=false, $_filter, $_id=NULL);
-		//debugLog(__METHOD__.__LINE__.array2string($rv_messages));
+		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($rv_messages));
 		$list=array();
 
 		$cnt = count($rv_messages['header']);
@@ -1573,7 +1630,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($list));
-		//debugLog(__METHOD__.__LINE__.array2string($list));
+		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($list));
 		return $list;
 	}
 
@@ -1597,7 +1654,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$parent = implode($delimiter,$parent);
 
 		$id = $parent ? $this->createID($account, $parent) : '0';
-		if ($this->debugLevel>1) debugLog(__METHOD__."('$folder') --> parent=$parent --> $id");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$folder') --> parent=$parent --> $id");
 		return $id;
 	}
 
@@ -1618,7 +1675,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$this->splitID($id, $account, $folder);
 		}
 		catch(Exception $e) {
-			debugLog(__METHOD__.__LINE__.' failed for '.$e->getMessage());
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' failed for '.$e->getMessage());
 			return $folderObj=false;
 		}
 		$this->_connect($account);
@@ -1631,7 +1688,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$folderObj->serverid = $id;
 		$folderObj->parentid = $this->getParentID($account,$folder);
 		$folderObj->displayname = $mailFolder->shortDisplayName;
-		if ($this->debugLevel>1) debugLog(__METHOD__.__LINE__." ID: $id, Account:$account, Folder:$folder");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." ID: $id, Account:$account, Folder:$folder");
 		// get folder-type
 		foreach($this->folders as $inbox => $mailFolder) break;
 		if ($folder == $inbox)
@@ -1640,7 +1697,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		elseif($this->mail->isDraftFolder($folder, false))
 		{
-			//debugLog(__METHOD__.' isDraft');
+			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' isDraft');
 			$folderObj->type = SYNC_FOLDER_TYPE_DRAFTS;
 			$folderObj->parentid = 0; // required by devices
 		}
@@ -1660,17 +1717,17 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		elseif($this->mail->isOutbox($folder, false))
 		{
-			//debugLog(__METHOD__.' isOutbox');
+			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' isOutbox');
 			$folderObj->type = SYNC_FOLDER_TYPE_OUTBOX;
 			$folderObj->parentid = 0; // required by devices
 		}
 		else
 		{
-			//debugLog(__METHOD__.' isOther Folder'.$folder);
+			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' isOther Folder'.$folder);
 			$folderObj->type = SYNC_FOLDER_TYPE_USER_MAIL;
 		}
 
-		if ($this->debugLevel>1) debugLog(__METHOD__."($id) --> $folder --> type=$folderObj->type, parentID=$folderObj->parentid, displayname=$folderObj->displayname");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($id) --> $folder --> type=$folderObj->type, parentID=$folderObj->parentid, displayname=$folderObj->displayname");
 		return $folderObj;
 	}
 
@@ -1715,24 +1772,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$account = $folder = null;
 		$this->splitID($folderid, $account, $folder);
 		if (is_numeric($account)) $type = 'mail';
+        ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": on $folderid -> $folder ($account) type: ". $type);
 		if ($type != 'mail') return false;
 
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 
 		$changes = array();
-        debugLog("AlterPingChanges on $folderid ($folder) stat: ". $syncstate);
+        ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": on $folderid ($folder) stat: ". $syncstate);
         $this->mail->reopen($folder);
-//        $oldStat = $this->mail->getFolderStatus($folder);
-//error_log(__METHOD__.__LINE__.' withCache:'.array2string($oldStat));
         $status = $this->mail->getFolderStatus($folder,$ignoreStatusCache=true);
-//error_log(__METHOD__.__LINE__.' noCache:'.array2string($status));
         if (!$status) {
-            debugLog("AlterPingChanges: could not stat folder $folder ");
+            ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not stat folder $folder ");
             return false;
         } else {
             $syncstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
         }
-		debugLog(__METHOD__.' called with ('.$folderid.', ....) returning '.array2string($syncstate));
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' called with ('.$folderid.', ....) returning '.array2string($syncstate));
 		return $changes;
 	}
 
@@ -1746,7 +1801,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	{
 		$this->_connect($this->account);
 		$id = $this->createID($account=0, $this->_wasteID);
-		debugLog(__METHOD__.__LINE__."() account=$this->account returned $id for folder $this->_wasteID");
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__."() account=$this->account returned $id for folder $this->_wasteID");
 		return $id;
 	}
 
@@ -1778,7 +1833,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// we may have to split folderid
 		$account = $folder = null;
 		$this->splitID($folderid, $account, $folder);
-		debugLog(__METHOD__.__LINE__.' '.$folderid.'->'.$folder);
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' '.$folderid.'->'.$folder);
 		$_messageUID = (array)$id;
 
 		$this->_connect($this->account);
@@ -1790,7 +1845,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		catch (egw_exception $e)
 		{
 			$error = $e->getMessage();
-			debugLog(__METHOD__.__LINE__." $_messageUID, $folder ->".$error);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." $_messageUID, $folder ->".$error);
 			// if the server thinks the message does not exist report deletion as success
 			if (stripos($error,'[NONEXISTENT]')!==false) return true;
 			return false;
@@ -1851,7 +1906,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
-		debugLog(__METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
 		return false;
 	}
 
@@ -1866,7 +1921,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	public function DeleteFolder($parentid, $id)
 	{
-		debugLog(__METHOD__."('$parentid', '$id') NOT supported!");
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$parentid', '$id') NOT supported!");
 		return false;
 	}
 
@@ -1911,7 +1966,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$str = $this->backend->createID($account, $folder, $id);
 
-		if ($this->debugLevel>1) debugLog(__METHOD__."($account,'$f',$id) type=$account, folder=$folder --> '$str'");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($account,'$f',$id) type=$account, folder=$folder --> '$str'");
 
 		return $str;
 	}
@@ -1932,7 +1987,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// convert numeric folder-id back to folder name
 		$folder = $this->hash2folder($account,$f=$folder);
 
-		if ($this->debugLevel>1) debugLog(__METHOD__."('$str','$account','$folder',$id)");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$str','$account','$folder',$id)");
 	}
 
 	/**
