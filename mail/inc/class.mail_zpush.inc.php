@@ -236,7 +236,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	private function _connect($account=0, $verify_mode=false)
 	{
 		static $waitOnFailure = null;
-		if (is_null($account)) $account = 0;
+		//if (is_null($account)) $account = 0;
+		if (!$account) $account = self::$profileID ? self::$profileID : 0;
 		if ($this->mail && $this->account != $account) $this->_disconnect();
 
 		$hereandnow = egw_time::to('now','ts');
@@ -245,22 +246,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$connectionFailed = false;
 
-		if ($verify_mode==false && (is_null($waitOnFailure)||empty($waitOnFailure[self::$profileID])||empty($waitOnFailure[self::$profileID][$this->backend->_devid])))
+		if ($verify_mode==false && (is_null($waitOnFailure)||empty($waitOnFailure[self::$profileID])||empty($waitOnFailure[self::$profileID][Request::GetDeviceID()])))
 		{
 			$waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*2);
 		}
-		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']))
+		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]) && isset($waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']) && !empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']) && isset($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']) && !empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']))
 		{
-			if ($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']<$hereandnow)
+			if ($waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']+$waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']<$hereandnow)
 			{
-				if ($this->debugLevel>0) error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Refuse to open connection for Profile:".self::$profileID.' Device '.$this->backend->_devid.' should still wait '.array2string($waitOnFailure[self::$profileID][$this->backend->_devid]));
+				if ($this->debugLevel>0) error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Refuse to open connection for Profile:".self::$profileID.' Device '.Request::GetDeviceID().' should still wait '.array2string($waitOnFailure[self::$profileID][Request::GetDeviceID()]));
 				//header("HTTP/1.1 503 Service Unavailable");
-				$hL = $waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']-$hereandnow;
+				$hL = $waitOnFailure[self::$profileID][Request::GetDeviceID()]['lastattempt']+$waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']-$hereandnow;
 				header("Retry-After: 30");
 				// let z-push know we want to terminate
-				ZLog::Write(LOGLEVEL_ERROR, "($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
+				ZLog::Write(LOGLEVEL_ERROR, "($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID()." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
 				throw new HTTPReturnCodeException('Service Unavailable', 503);
-				/*$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
+				/*$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) still waiting for Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID()." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
 				_egw_log_exception($ethrown);
 				exit;*/
 			}
@@ -298,36 +299,35 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$errorMessage = $e->getMessage();
 			}
 		}
-		if (empty($waitOnFailure[self::$profileID][$this->backend->_devid])) $waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
+		if (empty($waitOnFailure[self::$profileID][Request::GetDeviceID()])) $waitOnFailure[self::$profileID][Request::GetDeviceID()] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
 		if ($connectionFailed)
 		{
 			// in verify_moode, we want the exeption, but not the exit
 			if ($verify_mode)
 			{
-				throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$this->mail->getErrorMessage().' for Instance='.$GLOBALS['egw_info']['user']['domain']);
+				throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain']);
 			}
 			else
 			{
-				//error_log(__METHOD__.__LINE__."($account) could not open connection!".$errorMessage);
-				//error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
-				//error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
-				//	($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
-				if ($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'] > $this->waitOnFailureLimit )
+				error_log(__METHOD__.__LINE__."($account) could not open connection!".$errorMessage);
+				error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+					($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
+				if ($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong'] > $this->waitOnFailureLimit )
 				{
-					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
+					$waitOnFailure[self::$profileID][Request::GetDeviceID()] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
 					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
 					header("HTTP/1.1 500 Internal Server Error");
-					throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid);
+					throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID());
 				}
 				else
 				{
-					//error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device:'.$this->backend->_devid.' should wait '.array2string($waitOnFailure[self::$profileID][$this->backend->_devid]));
-					$waitaslongasthis = $waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'];
-					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>(empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'])?$this->waitOnFailureDefault:$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) * 2,'lastattempt'=>$hereandnow);
+					//error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device:'.Request::GetDeviceID().' should wait '.array2string($waitOnFailure[self::$profileID][Request::GetDeviceID()]));
+					$waitaslongasthis = $waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong'];
+					$waitOnFailure[self::$profileID][Request::GetDeviceID()] = array('howlong'=>(empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong'])?$this->waitOnFailureDefault:$waitOnFailure[self::$profileID][Request::GetDeviceID()]['howlong']) * 2,'lastattempt'=>$hereandnow);
 					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
 					header("HTTP/1.1 503 Service Unavailable");
 					header("Retry-After: ".$waitaslongasthis);
-					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
+					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.Request::GetDeviceID()." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
 					_egw_log_exception($ethrown);
 					exit;
 				}
@@ -336,9 +336,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		else
 		{
-			if (!empty($waitOnFailure[self::$profileID][$this->backend->_devid]))
+			if (!empty($waitOnFailure[self::$profileID][Request::GetDeviceID()]))
 			{
-				$waitOnFailure[self::$profileID][$this->backend->_devid] = array();
+				$waitOnFailure[self::$profileID][Request::GetDeviceID()] = array();
 				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
 			}
 		}
