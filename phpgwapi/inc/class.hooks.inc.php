@@ -51,7 +51,7 @@ class hooks
 	/**
 	 * constructor, reads and caches the complete hooks table
 	 *
-	 * @param egw_db $db=null database class, if null we use $GLOBALS['egw']->db
+	 * @param egw_db $db =null database class, if null we use $GLOBALS['egw']->db
 	 */
 	function __construct($db=null)
 	{
@@ -94,7 +94,7 @@ class hooks
 	function process($args, $order = array(), $no_permission_check = False)
 	{
 		//echo "<p>".__METHOD__.'('.array2string($args).','.array2string($order).','.array2string($no_permission_check).")</p>\n";
-		$location = is_array($args) ? $args['location'] : $args;
+		$location = is_array($args) ? (isset($args['hook_location']) ? $args['hook_location'] : $args['location']) : $args;
 
 		$hooks = $this->locations[$location];
 		if (!isset($hooks) || empty($hooks)) return array();	// not a single app implements that hook
@@ -123,16 +123,16 @@ class hooks
 	 * @param string|array $args location-name as string or array with keys location, appname and
 	 *	further data to be passed to the hook, if its a new method-hook
 	 * @param string $appname name of the app, which's hook to execute, if empty the current app is used
-	 * @param boolean $no_permission_check if True execute all hooks, not only the ones a user has rights to
+	 * @param boolean $no_permission_check =false if True execute all hooks, not only the ones a user has rights to
 	 *	$no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
-	 * @param boolean $try_unregisterd If true, try to include old file-hook anyway (for setup)
+	 * @param boolean $try_unregistered =false If true, try to include old file-hook anyway (for setup)
 	 * @return mixed False if no hook exists, True if old hook exists and whatever the new method-hook returns (can be True or False too!).
 	 */
 	function single($args, $appname = '', $no_permission_check = False,$try_unregistered = False)
 	{
 		//echo "<p>hooks::single(".array2string($args).",'$appname','$no_permission_check','$try_unregistered')</p>\n";
 		if (!is_array($args)) $args = array('location' => $args);
-		$location = $args['location'];
+		$location = isset($args['hook_location']) ? $args['hook_location'] : $args['location'];
 
 		if (!$appname)
 		{
@@ -224,7 +224,7 @@ class hooks
 	 * First all existing hooks of $appname get deleted in the db and then the given ones get registered.
 	 *
 	 * @param string $appname Application 'name'
-	 * @param array $hooks=null hooks to register, eg $setup_info[$app]['hooks'] or not used for only deregister the hooks
+	 * @param array $hooks =null hooks to register, eg $setup_info[$app]['hooks'] or not used for only deregister the hooks
 	 * @return boolean|int false on error, true if new hooks are supplied and registed or number of removed hooks
 	 */
 	function register_hooks($appname,$hooks=null)
@@ -379,7 +379,7 @@ class hooks
 		);
 		display_sidebox($appname, lang('PGP Encryption'), $file);
 	}
-	
+
 	/**
 	 * Static function to build egw tutorial sidebox menu
 	 *
