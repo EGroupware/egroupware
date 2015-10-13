@@ -1426,6 +1426,8 @@ class emailadmin_imapbase
 
 				// Get already cached headers, 'fetchHeaders' is a label matchimg above
 				$headerForPrio = array_change_key_case($_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
+				// Try to fetch header with key='' as some servers might have no fetchHeaders index. e.g. yandex.com
+				if (empty($headerForPrio)) $headerForPrio = array_change_key_case($_headerObject->getHeaders('',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
 				if (self::$debug) {
 					error_log(__METHOD__.' ('.__LINE__.') '.array2string($_headerObject).'UID:'.$_headerObject->getUid().' Size:'.$_headerObject->getSize().' Date:'.$_headerObject->getImapDate().'/'.egw_time::to($_headerObject->getImapDate(),'Y-m-d H:i:s'));
 					error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerForPrio));
