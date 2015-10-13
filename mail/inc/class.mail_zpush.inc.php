@@ -1279,6 +1279,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
         $SIOattachment = new SyncItemOperationsAttachment();
+		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
         $SIOattachment->data = $attachment['attachment'];
 		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname') Data:".$attachment['attachment']);
         if (isset($attachment['type']) )
@@ -1311,6 +1312,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
         $SIOattachment = new SyncItemOperationsAttachment();
+		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
         $SIOattachment->data = $attachment['attachment'];
         if (isset($attachment['type']) )
             $SIOattachment->contenttype = $attachment['type'];
@@ -1484,7 +1486,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$mess["flags"] = 0;
 			// outlook supports additional flags, set them to 0
 			if($vars["seen"]) $mess["flags"] = 1;
-			if ($this->debugLevel>3); ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($mess));
+			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($mess));
 			$messagelist[$vars['uid']] = $mess;
 			unset($mess);
 		}
@@ -1497,30 +1499,23 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	}
 
 	/**
-	 * static function doFlagsMod
-	 * prepare headeinfo on a message to return some standardized string to tell which flags are set for a message
+	 * Prepare headeinfo on a message to return some standardized string to tell which flags are set for a message
+	 *
+	 * AS currently only supports flagged, answered/replied and forwarded flags.
+	 * Seen/read is in under flags key of stat!
+	 *
 	 * @param array $headerFlags  - array to process, a full return array from getHeaders
-	 * @return string string of a representation of all flags present
+	 * @link https://sourceforge.net/p/zimbrabackend/code/HEAD/tree/zimbra-backend/branches/z-push-2/zimbra.php#l11652
+	 * @return string string of a representation of supported flags
 	 */
 	static function doFlagsMod($headerFlags)
 	{
-		$retValue = '';
-		if (in_array('recent', $headerFlags)&&$headerFlags['recent']) $retValue.='r';
-		if (in_array('flagged', $headerFlags)&&$headerFlags['flagged']) $retValue.='f';
-		if (in_array('answered', $headerFlags)&&$headerFlags['answered']) $retValue.='a';
-		if (in_array('forwarded', $headerFlags)&&$headerFlags['forwarded']) $retValue.='w';
-		if (in_array('deleted', $headerFlags)&&$headerFlags['deleted']) $retValue.='x';
-		if (in_array('seen', $headerFlags)&&$headerFlags['seen']) $retValue.='s';
-		if (in_array('draft', $headerFlags)&&$headerFlags['draft']) $retValue.='e';
-		if (in_array('mdnsent', $headerFlags)&&$headerFlags['mdnsent']) $retValue.='m';
-		if (in_array('mdnnotsent', $headerFlags)&&$headerFlags['mdnnotsent']) $retValue.='n';
-		if (in_array('label1', $headerFlags)&&$headerFlags['label1']) $retValue.='1';
-		if (in_array('label2', $headerFlags)&&$headerFlags['label2']) $retValue.='2';
-		if (in_array('label3', $headerFlags)&&$headerFlags['label3']) $retValue.='3';
-		if (in_array('label4', $headerFlags)&&$headerFlags['label4']) $retValue.='4';
-		if (in_array('label5', $headerFlags)&&$headerFlags['label5']) $retValue.='5';
-		//error_log(__METHOD__.' ('.__LINE__.') '.$headerFlags['SUBJECT'].':'.array2string($retValue));
-		return $retValue;
+		$flags = 'nnn';
+		if ($headerFlags['flagged']) $flags[0] = 'f';
+		if ($headerFlags['answered']) $flags[1] = 'a';
+		if ($headerFlags['forwarded']) $flags[2] = 'f';
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($headerFlags).') returning '.array2string($flags));
+		return $flags;
 	}
 
 	/**
