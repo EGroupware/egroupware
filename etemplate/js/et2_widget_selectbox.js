@@ -213,6 +213,17 @@ var et2_selectbox = et2_inputWidget.extend(
 					this._appendOptionElement('', this.options.empty_label);
 				}
 			}
+			if(this.expand_button)
+			{
+				if(_multiple)
+				{
+					this.expand_button.addClass('ui-icon-minus').removeClass('ui-icon-plus');
+				}
+				else
+				{
+					this.expand_button.removeClass('ui-icon-minus').addClass('ui-icon-plus');
+				}
+			}
 		}
 	},
 
@@ -571,15 +582,18 @@ var et2_selectbox = et2_inputWidget.extend(
 			if (!this.expand_button)
 			{
 				var button_id = this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + "_expand";
-				this.expand_button = $j("<button class='et2_button et2_button_icon et2_selectbox_expand' id='" + button_id + "'/>")
+				this.expand_button = $j("<button class='et2_button et2_button_icon et2_selectbox_expand ui-icon' id='" + button_id + "'/>")
+					.addClass(this.options.multiple ? 'ui-icon-minus' : 'ui-icon-plus')
 					.on("click", jQuery.proxy(function(e) {
 						if(typeof this.input.attr('size') !== 'undefined' && this.input.attr('size') != 1)
 						{
 							this.set_multiple(false, 1);
+							this.expand_button.removeClass('ui-icon-minus').addClass('ui-icon-plus');
 						}
 						else
 						{
 							this.set_multiple(true, this.options.expand_multiple_rows);
+							this.expand_button.addClass('ui-icon-minus').removeClass('ui-icon-plus');
 						}
 					},this));
 			}

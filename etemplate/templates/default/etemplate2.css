@@ -207,7 +207,7 @@ input[type=button] {
 }
 .et2_button_icon {
   border: none;
-  background: transparent;
+  background-color: transparent;
   padding: 0px;
 }
 button.et2_button_text:hover,
@@ -304,6 +304,7 @@ button#cancel {
  */
 .et2_selectbox_expand {
   width: 16px;
+  display: inline-block;
 }
 .et2_selectbox .ui-widget-header {
   padding: 0px 6px 0px 6px;
