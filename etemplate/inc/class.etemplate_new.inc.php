@@ -103,11 +103,11 @@ class etemplate_new extends etemplate_widget_template
 	function exec($method,array $content,array $sel_options=null,array $readonlys=null,array $preserv=null,$output_mode=0,$ignore_validation='',array $changes=null)
 	{
 		$hook_data = $GLOBALS['egw']->hooks->process(
-			array('location'        => 'etemplate2_before_exec') +
+			array('hook_location'   => 'etemplate2_before_exec') +
 			array('location_name'   => $this->name) +
 			array('location_object' => &$this) +
 			$content
-			);
+		);
 
 		foreach($hook_data as $extras) {
 			if (!$extras) continue;
@@ -127,7 +127,7 @@ class etemplate_new extends etemplate_widget_template
 			}
 		}
 		unset($hook_data);
-		
+
 		// Include the etemplate2 javascript code
 		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
 
@@ -350,7 +350,7 @@ class etemplate_new extends etemplate_widget_template
 
 		$hook_data = $GLOBALS['egw']->hooks->process(
 			array(
-				'location'        => 'etemplate2_before_process',
+				'hook_location'   => 'etemplate2_before_process',
 				'location_name'   => $template->id) +
 				self::complete_array_merge(self::$request->preserv, $validated)
 			);
@@ -384,7 +384,7 @@ class etemplate_new extends etemplate_widget_template
 
 		$hook_data = $GLOBALS['egw']->hooks->process(
 			array(
-				'location'        => 'etemplate2_after_process',
+				'hook_location'   => 'etemplate2_after_process',
 				'location_name'   => $template->id) +
 				$tcontent
 			);
