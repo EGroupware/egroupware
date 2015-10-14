@@ -271,18 +271,19 @@ app.classes.calendar = AppJS.extend(
 				else
 				{
 					// Full refresh, clear the caches
-					var daywise = egw.dataKnownUIDs(app.classes.calendar.DAYWISE_CACHE_ID);
-					for(var i = 0; i < daywise.length; i++)
-					{
-						egw.dataDeleteUID(app.classes.calendar.DAYWISE_CACHE_ID + '::' + daywise[i]);
-					}
 					var events = egw.dataKnownUIDs(_app);
 					for(var i = 0; i < events.length; i++)
 					{
 						egw.dataDeleteUID(_app + '::' + events[i]);
 					}
-					// Force redraw to default state
-					this.setState({});
+					var daywise = egw.dataKnownUIDs(app.classes.calendar.DAYWISE_CACHE_ID);
+					for(var i = 0; i < daywise.length; i++)
+					{
+						// Empty to clear existing widgets
+						egw.dataStoreUID(app.classes.calendar.DAYWISE_CACHE_ID + '::' + daywise[i], null);
+					}
+					// Force redraw to current state
+					this.setState({state: this.state});
 				}
 				break;
 		}
@@ -1308,7 +1309,6 @@ app.classes.calendar = AppJS.extend(
 
 		var changed = [];
 		var new_state = jQuery.extend({}, this.state);
-		var cachable_changes = ['date','view','days','planner_days','sortby'];
 		if (typeof _set === 'object')
 		{
 			for(var s in _set)
@@ -1317,16 +1317,6 @@ app.classes.calendar = AppJS.extend(
 				{
 					changed.push(s + ': ' + new_state[s] + ' -> ' + _set[s]);
 					new_state[s] = _set[s];
-					
-					if(cachable_changes.indexOf(s) === -1)
-					{
-						// Expire daywise cache
-						var daywise = egw.dataKnownUIDs(app.classes.calendar.DAYWISE_CACHE_ID);
-						for(var i = 0; i < daywise.length; i++)
-						{
-							egw.dataDeleteUID(app.classes.calendar.DAYWISE_CACHE_ID + '::' + daywise[i]);
-						}
-					}
 				}
 			}
 		}
@@ -1421,6 +1411,27 @@ app.classes.calendar = AppJS.extend(
 		if(this.sidebox_et2)
 		{
 			$j(this.sidebox_et2.getInstanceManager().DOMContainer).hide();
+		}
+
+		// Check for valid cache
+		var cachable_changes = ['date','view','days','planner_days','sortby'];
+		for(var s in this.state)
+		{
+			if (this.state[s] !== state.state[s])
+			{
+				if(cachable_changes.indexOf(s) === -1)
+				{
+					// Expire daywise cache
+					var daywise = egw.dataKnownUIDs(app.classes.calendar.DAYWISE_CACHE_ID);
+
+					// Can't delete from here, as that would disconnect the existing widgets listening
+					for(var i = 0; i < daywise.length; i++)
+					{
+						egw.dataStoreUID(app.classes.calendar.DAYWISE_CACHE_ID + '::' + daywise[i],null);
+					}
+					break;
+				}
+			}
 		}
 
 		// Check for a supported client-side view
@@ -1678,6 +1689,11 @@ app.classes.calendar = AppJS.extend(
 						// Update widget.  This may trigger an infinite loop of
 						// updates, so we do it after changing this.state and set a flag
 						widget.set_value(state.state[widget.id]);
+					}
+					else if (widget.instanceOf(et2_inputWidget) && typeof state.state[widget.id] == 'undefined')
+					{
+						// No value, clear it
+						widget.set_value('');
 					}
 				},this,et2_valueWidget);
 			}
@@ -2029,6 +2045,33 @@ app.classes.calendar = AppJS.extend(
 			this.id,
 			function(data) {
 				console.log(data);
+				// Look for any updated select options
+				if(data.rows && data.rows.sel_options && this.sidebox_et2)
+				{
+					for(var field in data.rows.sel_options)
+					{
+						var widget = this.sidebox_et2.getWidgetById(field);
+						if(widget && widget.set_select_options)
+						{
+							// Merge in new, update label of existing
+							for(var i in data.rows.sel_options[field])
+							{
+								var option = data.rows.sel_options[field][i];
+								for(var j in widget.options.select_options)
+								{
+									if(option.value == widget.options.select_options[j].value)
+									{
+										widget.options.select_options[j].label = option.label;
+										break;
+									}
+
+								}
+							}
+							widget.set_select_options(widget.options.select_options);
+							widget.set_value(widget.getValue());
+						}
+					}
+				}
 				var updated_days = {};
 				for(var i = 0; i < data.order.length && data.total; i++)
 				{
@@ -2050,7 +2093,7 @@ app.classes.calendar = AppJS.extend(
 						};
 						if(dates.start.substr(0,10) !== dates.end.substr(0,10))
 						{
-							var end = new Date(record.data.end);
+							var end = new Date(Math.min(new Date(record.data.end), new Date(state.last)));
 							var t = new Date(record.data.start);
 
 							do

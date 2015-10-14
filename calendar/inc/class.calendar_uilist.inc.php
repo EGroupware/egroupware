@@ -54,10 +54,6 @@ class calendar_uilist extends calendar_ui
 	{
 		parent::__construct(true,$set_states);	// call the parent's constructor
 
-		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Listview').
-			// for a single owner we add it's name to the app-header
-			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
-
 		foreach($this->date_filters as $name => $label)
 		{
 			$this->date_filters[$name] = lang($label);
@@ -308,7 +304,7 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		$search_params = array(
-			'cat_id'  => $params['cat_id'] ? explode(',',$params['cat_id']) : 0,
+			'cat_id'  => $params['cat_id'] ? $params['cat_id'] : 0,
 			'filter'  => isset($params['filter']) ? $params['filter'] : $this->filter,
 			'query'   => $params['search'],
 			'offset'  => (int) $params['start'],
@@ -478,6 +474,23 @@ class calendar_uilist extends calendar_ui
 
 		$wv=0;
 		$dv=0;
+		
+		// Add in some select options
+		$users = is_array($search_params['users']) ? $search_params['users'] : explode(',',$search_params['users']);
+		foreach($users as $owner)
+		{
+			if(!is_int($owner) && $this->bo->resources[$owner[0]])
+			{
+				$app = $this->bo->resources[$owner[0]]['app'];
+				$_owner = substr($owner,1);
+				// Try link first
+				$title = egw_link::title($app, $_owner );
+				if($title)
+				{
+					$rows['sel_options']['owner'][$owner] = $title;
+				}
+			}
+		}
 		$params['options-selectcols']['week'] = lang('Week');
 		$params['options-selectcols']['weekday'] = lang('Weekday');
 		if ((substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,4) == 'week' && strlen($this->cal_prefs['nextmatch-calendar.list.rows'])==4) || substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,5) == 'week,')

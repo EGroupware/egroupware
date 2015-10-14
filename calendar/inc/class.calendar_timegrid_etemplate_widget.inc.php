@@ -34,6 +34,10 @@
 
 		foreach($value as $day => &$events)
 		{
+			if(!is_array($events))
+			{
+				continue;
+			}
 			foreach($events as &$event)
 			{
 				if(!is_array($event)) continue;

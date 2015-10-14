@@ -238,6 +238,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		var cache_id = app.classes.calendar._daywise_cache_id(new_date,this.options.owner);
 		egw.dataRegisterUID(cache_id, function(event_ids) {
 			var events = [];
+			if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
 			for(var i = 0; i < event_ids.length; i++)
 			{
 				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
@@ -274,7 +275,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			return;
 		}
 
-		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id+(this.options.date,this.options.owner),false,this);
+		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
 
 		this.options.owner = _owner;
 		this.div.attr('data-sortable-id', this.options.owner);
@@ -282,6 +283,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Register for updates on events for this day
 		egw.dataRegisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner), function(event_ids) {
 			var events = [];
+			if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
 			for(var i = 0; i < event_ids.length; i++)
 			{
 				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
