@@ -204,7 +204,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.options.class = event.class;
 		if(event.category)
 		{
-			this.div.addClass('cat_' + event.category);
+			var cats = event.category.split(',');
+			for(var i = 0; i < cats.length; i++)
+			{
+				this.div.addClass('cat_' + cats[i]);
+			}
 		}
 
 		this.div.toggleClass('calendar_calEventUnknown', event.participants[egw.user('account_id')] ? event.participants[egw.user('account_id')][0] === 'U' : false);
