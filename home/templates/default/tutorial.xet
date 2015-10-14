@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="home.tutorial" template="" lang="" group="0" version="15.1">
-		<hbox height="87%" class="tutorial_popup">
+		<hbox height="90%" class="tutorial_popup">
 			<hbox class="tutorial_videoList">
 				<grid id="list" classs="egwGridView_grid" resize_ratio="0" width="190px">
 					<columns>

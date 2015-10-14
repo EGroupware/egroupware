@@ -20,6 +20,7 @@ span.egw_tutorial_title {
   border: 1px solid #B3B3B3;
   padding-top: 4px;
   padding-left: 5px;
+  padding-bottom: 5px;
   border-radius: 2px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -72,6 +73,16 @@ span.egw_tutorial_title {
 }
 #home-tutorial_list .egw_tutorial_thumb {
   display: block;
+}
+#home-tutorial_list .th .et2_label {
+  font-size: 12px;
+  padding-left: 7px;
+}
+#home-tutorial_list .th #home-tutorial_apps {
+  margin-left: 5px;
+}
+#home-tutorial_list tbody td:first-child {
+  padding-top: 4px;
 }
 #home-tutorial_src {
   border-left: 6px solid #E0E0E0;
