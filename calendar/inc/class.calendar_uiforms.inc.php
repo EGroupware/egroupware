@@ -730,7 +730,7 @@ class calendar_uiforms extends calendar_ui
 							{
 								$event['end'] = $event['start'] + $event['end'] - $actual_date;
 							}
-							//echo "<p>".__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration=$content[duration], event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset</p>\n";
+							//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration=$content[duration], event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
 							$event['participants'] = $old_event['participants'];
 							foreach ($old_event['recur_exception'] as $key => $exdate)
 							{
@@ -919,8 +919,10 @@ class calendar_uiforms extends calendar_ui
 						// For new events, make sure we have the whole event, not just form data
 						$event = $this->bo->read($event['id']);
 					}
-					$this->to_client($event);
-					$response->call('egw.dataStoreUID','calendar::'.$event['id'],$event);
+					// Copy, so as to not change things for subsequent processing
+					$converted = $event;
+					$this->to_client($converted);
+					$response->call('egw.dataStoreUID','calendar::'.$converted['id'],$converted);
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
