@@ -191,9 +191,10 @@ class calendar_ical extends calendar_boupdate
 	 *                          default 0 => export whole series (or events, if not recurring)
 	 * @param string $principalURL ='' Used for CalDAV exports
 	 * @param string $charset ='UTF-8' encoding of the vcalendar, default UTF-8
+	 * @param int|string $current_user =0 uid of current user to only export that one as participant for method=REPLY
 	 * @return string|boolean string with iCal or false on error (e.g. no permission to read the event)
 	 */
-	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='', $charset='UTF-8')
+	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='', $charset='UTF-8', $current_user=0)
 	{
 		if ($this->log)
 		{
@@ -460,6 +461,11 @@ class calendar_ical extends calendar_boupdate
 								$rsvp = '';
 								$organizerCN = $participantCN;
 								$organizerUID = ($info['type'] != 'e' ? (string)$uid : '');
+							}
+							// iCal method=REPLY only exports replying / current user, except external organiser / chair above
+							if ($method == 'REPLY' && $current_user && (string)$current_user !== (string)$uid)
+							{
+								continue;
 							}
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
 							$status = $this->status_egw2ical[$status];
