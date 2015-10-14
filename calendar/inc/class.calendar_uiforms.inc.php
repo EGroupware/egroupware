@@ -1752,7 +1752,6 @@ class calendar_uiforms extends calendar_ui
 				$ical_string = $session_data['attachment'];
 				$ical_charset = $session_data['charset'];
 				$ical_method = $session_data['method'];
-				$ical_sender = $session_data['sender'];
 				unset($session_data);
 			}
 			$ical = new calendar_ical();
@@ -1773,13 +1772,15 @@ class calendar_uiforms extends calendar_ui
 				switch(strtolower($ical_method))
 				{
 					case 'reply':
-						if ($ical_sender && ($event['ical_sender_uid'] = groupdav_principals::url2uid('mailto:'.$ical_sender)) &&
-							isset($existing_event['participants'][$event['ical_sender_uid']]) &&
-							$this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
+						// first participant is the one replying (our iCal parser adds owner first!)
+						$parts = $event['participants'];
+						unset($parts[$existing_event['owner']]);
+						list($event['ical_sender_uid'], $event['ical_sender_status']) = each($parts);
+						$quantity = $role = null;
+						calendar_so::split_status($event['ical_sender_status'], $quantity, $role);
+
+						if ($event['ical_sender_uid'] && $this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
 						{
-							$event['ical_sender_status'] = $event['participants'][$event['ical_sender_uid']];
-							$quantity = $role = null;
-							calendar_so::split_status($event['ical_sender_status'], $quantity, $role);
 							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
 							calendar_so::split_status($existing_status, $quantity, $role);
 							if ($existing_status != $event['ical_sender_status'])
@@ -1805,6 +1806,17 @@ class calendar_uiforms extends calendar_ui
 						{
 							$msg = lang('Using already existing event on server.');
 						}
+						$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
+						$user_and_memberships[] = $user;
+						if (!array_intersect(array_keys($event['participants']), $user_and_memberships))
+						{
+							$msg .= ($msg ? "\n" : '').lang('You are not invited to that event!');
+							if ($event['id'])
+							{
+								$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
+									$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
+							}
+						}
 						break;
 				}
 				$event['id'] = $existing_event['id'];
@@ -1825,17 +1837,6 @@ class calendar_uiforms extends calendar_ui
 			$event['recure'] = $this->bo->recure2string($event);
 			$event['all_participants'] = implode(",\n",$this->bo->participants($event, true));
 
-			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
-			$user_and_memberships[] = $user;
-			if (!array_intersect(array_keys($event['participants']), $user_and_memberships))
-			{
-				$msg .= ($msg ? "\n" : '').lang('You are not invited to that event!');
-				if ($event['id'])
-				{
-					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
-						$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
-				}
-			}
 			// ignore events in the past (for recurring events check enddate!)
 			if ($this->bo->date2ts($event['start']) < $this->bo->now_su &&
 				(!$event['recur_type'] || $event['recur_enddate'] && $event['recur_enddate'] < $this->bo->now_su))
@@ -1913,7 +1914,7 @@ class calendar_uiforms extends calendar_ui
 			// add notification-errors, if we have some
 			$msg = array_merge((array)$msg, notifications::errors(true));
 		}
-		$event['msg'] = implode("\n",(array)$msg);
+		egw_framework::message(implode("\n", (array)$msg));
 		$readonlys['button[edit]'] = !$event['id'];
 		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
 		switch(strtolower($ical_method))

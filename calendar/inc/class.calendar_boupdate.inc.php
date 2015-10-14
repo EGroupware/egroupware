@@ -911,7 +911,8 @@ class calendar_boupdate extends calendar_bo
 							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
 							// we need to pass $event[id] so iCal class reads event again,
 							// as event is in user TZ, but iCal class expects server TZ!
-							$ics = $calendar_ical->exportVCal(array(isset($cleared_event) ? $cleared_event : $event['id']),'2.0',$method);
+							$ics = $calendar_ical->exportVCal(array(isset($cleared_event) ? $cleared_event : $event['id']),
+								'2.0', $method, 0, '', 'utf-8', $method == 'REPLY' ? $user : 0);
 							unset($calendar_ical);
 						}
 						$attachment = array(
@@ -1067,10 +1068,12 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $event
 	 * @param boolean $ignore_acl =false should we ignore the acl
 	 * @param boolean $updateTS =true update the content history of the event
+	 * DEPRECATED: we allways (have to) update timestamp, as they are required for sync!
 	 * @return int|boolean $cal_id > 0 or false on error (eg. permission denied)
 	 */
 	function save($event,$ignore_acl=false,$updateTS=true)
 	{
+		unset($updateTS);
 		//error_log(__METHOD__.'('.array2string($event).", $ignore_acl, $updateTS)");
 
 		// check if user has the permission to update / create the event
@@ -1416,13 +1419,17 @@ class calendar_boupdate extends calendar_bo
 	 * @param int|array $event event-array or id of the event
 	 * @param string|int $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
 	 * @param int|char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
-	 * @param int $recur_date=0 date to change, or 0 = all since now
-	 * @param boolean $ignore_acl=false do not check the permisions for the $uid, if true
-	 * @param boolean $updateTS=true update the content history of the event
+	 * @param int $recur_date =0 date to change, or 0 = all since now
+	 * @param boolean $ignore_acl =false do not check the permisions for the $uid, if true
+	 * @param boolean $updateTS =true update the content history of the event
+	 * DEPRECATED: we allways (have to) update timestamp, as they are required for sync!
+	 * @param boolean $skip_notification =false true: do not send notification messages
 	 * @return int number of changed recurrences
 	 */
 	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true,$skip_notification=false)
 	{
+		unset($updateTS);
+
 		$cal_id = is_array($event) ? $event['id'] : $event;
 		//echo "<p>calendar_boupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
 		if (!$cal_id || (!$ignore_acl && !$this->check_status_perms($uid,$event)))
