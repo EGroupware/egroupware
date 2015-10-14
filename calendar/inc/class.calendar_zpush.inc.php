@@ -80,14 +80,13 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		$cals = $GLOBALS['egw_info']['user']['preferences']['activesync']['calendar-cals'];
-		$cals = $cals ? explode(',',$cals) : array('P');	// implicit default of 'P'
+		$cals_pref = $GLOBALS['egw_info']['user']['preferences']['activesync']['calendar-cals'];
+		$cals = $cals_pref ? explode(',',$cals_pref) : array('P');	// implicit default of 'P'
 		$folderlist = array();
 
 		foreach ($this->calendar->list_cals() as $entry)
 		{
 			$account_id = $entry['grantor'];
-			$label = $entry['name'];
 			if (in_array('A',$cals) || in_array($account_id,$cals) ||
 				$account_id == $GLOBALS['egw_info']['user']['account_id'] ||	// always incl. own calendar!
 				$account_id == $GLOBALS['egw_info']['user']['account_primary_group'] && in_array('G',$cals))
@@ -98,9 +97,9 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 					'parent'=>	'0',
 				);
 			}
-		};
+		}
 		//error_log(__METHOD__."() returning ".array2string($folderlist));
-		debugLog(__METHOD__."() returning ".array2string($folderlist));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
 
@@ -112,6 +111,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 */
 	public function GetFolder($id)
 	{
+		$type = $owner = null;
 		$this->backend->splitID($id, $type, $owner);
 
 		$folderObj = new SyncFolder();
@@ -127,7 +127,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			$folderObj->type = SYNC_FOLDER_TYPE_USER_APPOINTMENT;
 		}
 		//error_log(__METHOD__."('$id') folderObj=".array2string($folderObj));
-		//debugLog(__METHOD__."('$id') folderObj=".array2string($folderObj));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id') folderObj=".array2string($folderObj));
 		return $folderObj;
 	}
 
@@ -146,7 +146,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 */
 	public function StatFolder($id)
 	{
-		$folder = $this->GetFolder($id);
+		$type = $owner = null;
 		$this->backend->splitID($id, $type, $owner);
 
 		$stat = array(
@@ -155,7 +155,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			'parent' => '0',
 		);
 		//error_log(__METHOD__."('$id') folderObj=".array2string($stat));
-		//debugLog(__METHOD__."('$id') folderObj=".array2string($stat));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id') folderObj=".array2string($stat));
 		return $stat;
 	}
 
@@ -171,15 +171,16 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * will work OK apart from that.
 	 *
 	 * @param string $id folder id
-	 * @param int $cutoffdate=null
-	 * @param array $not_uids=null uids NOT to return for meeting requests
+	 * @param int $cutoffdate =null
+	 * @param array $not_uids =null uids NOT to return for meeting requests
 	 * @return array
   	 */
 	function GetMessageList($id, $cutoffdate=NULL, array $not_uids=null)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		debugLog (__METHOD__."('$id',$cutoffdate)");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id',$cutoffdate)");
+		$type = $user = null;
 		$this->backend->splitID($id,$type,$user);
 
 		if (!$cutoffdate) $cutoffdate = $this->bo->now - 100*24*3600;	// default three month back -30 breaks all sync recurrences
@@ -223,12 +224,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * List all meeting requests / invitations of user NOT having a UID in $not_uids (already received by email)
 	 *
 	 * @param array $not_uids
-	 * @param int $cutoffdate=null
+	 * @param int $cutoffdate =null
 	 * @return array
 	 */
 	function GetMeetingRequests(array $not_uids, $cutoffdate=NULL)
 	{
-return array();	// temporary disabling meeting requests from calendar
+		unset($not_uids, $cutoffdate);
+		return array();
+		/* temporary disabling meeting requests from calendar
 		$folderid = $this->backend->createID('calendar', $GLOBALS['egw_info']['user']['account_id']);	// users personal calendar
 
 		$ret = $this->GetMessageList($folderid, $cutoffdate, $not_uids);
@@ -238,8 +241,8 @@ return array();	// temporary disabling meeting requests from calendar
 			$message['id'] = -$message['id'];
 		}
 
-		debugLog(__METHOD__.'('.array2string($not_uids).", $cutoffdate) returning ".array2string($ret));
-		return $ret;
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($not_uids).", $cutoffdate) returning ".array2string($ret));
+		return $ret;*/
 	}
 
 	/**
@@ -255,7 +258,7 @@ return array();	// temporary disabling meeting requests from calendar
 		$ret = $this->StatMessage($folderid, abs($id));
 		$ret['id'] = $id;
 
-		debugLog(__METHOD__."($id) returning ".array2string($ret));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($id) returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -271,6 +274,8 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	function GetMeetingRequest($id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
 	{
+		unset($truncsize, $optionbodypreference, $mimesupport);	// not used, but required by function signature
+
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
 		if (!($event = $this->calendar->read(abs($id), 0, false, 'server')))
@@ -307,7 +312,7 @@ return array();	// temporary disabling meeting requests from calendar
 				$this->backend->note2messagenote($event['description'], $bodypreference, $message->airsyncbasebody);
 			}
 		}
-		debugLog(__METHOD__."($id) returning ".array2string($message));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($id) returning ".array2string($message));
 		return $message;
 	}
 
@@ -326,11 +331,11 @@ return array();	// temporary disabling meeting requests from calendar
 			$ical = new calendar_ical();
 			if (!($events = $ical->icaltoegw($event, '', 'utf-8')) || count($events) != 1)
 			{
-				debugLog(__METHOD__."('$event') error parsing iCal!");
+				ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$event') error parsing iCal!");
 				return null;
 			}
 			$event = array_shift($events);
-			debugLog(__METHOD__."(...) parsed as ".array2string($event));
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."(...) parsed as ".array2string($event));
 		}
 		$message = new SyncMeetingRequest();
 		// set timezone
@@ -339,6 +344,7 @@ return array();	// temporary disabling meeting requests from calendar
 			$message->timezone = base64_encode(self::_getSyncBlobFromTZ($as_tz));
 		}
 		catch(Exception $e) {
+			unset($e);
 			// ignore exception, simply set no timezone, as it is optional
 		}
 		// copying timestamps (they are already read in servertime, so non tz conversation)
@@ -402,7 +408,7 @@ return array();	// temporary disabling meeting requests from calendar
 			2 => 'T',
 			3 => 'D',
 		);
-		$status = isset($as2status[$response]) ? $as2status[$response] : 'U';
+		$status_in = isset($as2status[$response]) ? $as2status[$response] : 'U';
 		$uid = $GLOBALS['egw_info']['user']['account_id'];
 
 		if (!is_numeric($requestid))	// iCal from fmail
@@ -410,11 +416,11 @@ return array();	// temporary disabling meeting requests from calendar
 			$ical = new calendar_ical();
 			if (!($events = $ical->icaltoegw($requestid, '', 'utf-8')) || count($events) != 1)
 			{
-				debugLog(__METHOD__."('$event') error parsing iCal!");
+				ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid, '$requestid') error parsing iCal!");
 				return null;
 			}
 			$parsed_event = array_shift($events);
-			debugLog(__METHOD__."(...) parsed as ".array2string($parsed_event));
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."(...) parsed as ".array2string($parsed_event));
 
 			// check if event already exist (invitation of or already imported by other user)
 			if (!($event = $this->calendar->read($parsed_event['uid'], 0, false, 'server')))
@@ -423,23 +429,24 @@ return array();	// temporary disabling meeting requests from calendar
 			}
 			elseif(!isset($event['participants'][$uid]))
 			{
-				debugLog(__METHOD__.'('.array2string($requestid).", $folderid, $response) current user ($uid) is NO participant of event ".array2string($event));
+				ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($requestid).", $folderid, $response) current user ($uid) is NO participant of event ".array2string($event));
 				// maybe we should silently add him, as he might not have the rights to add him himself with calendar->update ...
 			}
 			elseif($event['deleted'])
 			{
-				debugLog(__METHOD__.'('.array2string($requestid).", $folderid, $response) event ($uid) deleted on server --> return false");
+				ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($requestid).", $folderid, $response) event ($uid) deleted on server --> return false");
 				return false;
 			}
 		}
 		elseif (!($event = $this->calendar->read(abs($requestid), 0, false, 'server')))
 		{
-			debugLog(__METHOD__."('$requestid', '$folderid', $response) returning FALSE");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$requestid', '$folderid', $response) returning FALSE");
 			return false;
 		}
 		// keep role and quantity as AS has no idea about it
+		$quantity = $role = null;
 		calendar_so::split_status($event['participants'][$uid], $quantity, $role);
-		$status = calendar_so::combine_status($status,$quantity,$role);
+		$status = calendar_so::combine_status($status_in, $quantity, $role);
 
 		if ($event['id'] && isset($event['participants'][$uid]))
 		{
@@ -450,7 +457,7 @@ return array();	// temporary disabling meeting requests from calendar
 			$event['participants'][$uid] = $status;
 			$ret = $this->calendar->update($event, true);	// true = ignore conflicts, as there seems no conflict handling in AS
 		}
-		debugLog(__METHOD__.'('.array2string($requestid).", '$folderid', $response) returning ".array2string($ret));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.'('.array2string($requestid).", '$folderid', $response) returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -499,7 +506,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 * expects user-time!
 	 *
 	 * @param string $folderid
-	 * @param int $id for change | empty for create new
+	 * @param int $_id for change | empty for create new
 	 * @param SyncAppointment $message object to SyncObject to create
 	 * @param ContentParameters   $contentParameters
 	 *
@@ -512,38 +519,41 @@ return array();	// temporary disabling meeting requests from calendar
 	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
 	 * can only set them as 'read'.
 	 */
-	public function ChangeMessage($folderid, $id, $message, $contentParameters)
+	public function ChangeMessage($folderid, $_id, $message, $contentParameters)
 	{
+		unset($contentParameters);	// unused, but required by function signature
+
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		$event = array();
+		$old_event = array();
+		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
 
-		debugLog (__METHOD__."('$folderid', $id, ".array2string($message).") type='$type', account=$account");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $_id, ".array2string($message).") type='$type', account=$account");
 
-		list($id,$recur_date) = explode(':',$id);
+		list($id,$recur_date) = explode(':', $_id);
 
-		if ($type != 'calendar' || $id && !($event = $this->calendar->read($id, $recur_date, false, 'server')))
+		if ($type != 'calendar' || $id && !($old_event = $this->calendar->read($id, $recur_date, false, 'server')))
 		{
-			debugLog(__METHOD__."('$folderid',$id,...) Folder wrong or event does not existing");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) Folder wrong or event does not existing");
 			return false;
 		}
 		if ($recur_date)	// virtual exception
 		{
 			// @todo check if virtual exception needs to be saved as real exception, or only stati need to be changed
-			debugLog(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
-			error_log(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
+			//error_log(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 		}
-		if (!$this->calendar->check_perms($id ? EGW_ACL_EDIT : EGW_ACL_ADD,$event ? $event : 0,$account))
+		if (!$this->calendar->check_perms($id ? EGW_ACL_EDIT : EGW_ACL_ADD, $old_event ? $old_event : 0,$account))
 		{
 			// @todo: write in users calendar and make account only a participant
-			debugLog(__METHOD__."('$folderid',$id,...) no rights to add/edit event!");
-			error_log(__METHOD__."('$folderid',$id,".array2string($message).") no rights to add/edit event!");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) no rights to add/edit event!");
+			//error_log(__METHOD__."('$folderid',$id,".array2string($message).") no rights to add/edit event!");
 			return false;
 		}
-		if (!$id) $event['owner'] = $account;	// we do NOT allow to change the owner of existing events
+		if (!$id) $old_event['owner'] = $account;	// we do NOT allow to change the owner of existing events
 
-		$event = $this->message2event($message, $account, $event);
+		$event = $this->message2event($message, $account, $old_event);
 
 		// store event, ignore conflicts and skip notifications, as AS clients do their own notifications
 		$skip_notification = false;
@@ -552,9 +562,10 @@ return array();	// temporary disabling meeting requests from calendar
 		{
 			$skip_notification = true; // to avoid double notification from client AND Server
 		}
-		if (!($id = $this->calendar->update($event,$ignore_conflicts=true,$touch_modified=true,$ignore_acl=false,$updateTS=true,$messages=null, $skip_notification)))
+		$messages = null;
+		if (!($id = $this->calendar->update($event, true, true, false, true, $messages, $skip_notification)))
 		{
-			debugLog(__METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
 			return false;
 		}
 		// store non-delete exceptions
@@ -567,11 +578,14 @@ return array();	// temporary disabling meeting requests from calendar
 					$ex_event = $event;
 					unset($ex_event['id']);
 					unset($ex_event['etag']);
-					foreach($ex_event as $name => $value) if (substr($name,0,6) == 'recur_') unset($ex_event[$name]);
+					foreach(array_keys($ex_event) as $name)
+					{
+						if (substr($name,0,6) == 'recur_') unset($ex_event[$name]);
+					}
 					$ex_event['recur_type'] = calendar_rrule::NONE;
 
 					if ($event['id'] && ($ex_events = $this->calendar->search(array(
-						'user' => $user,
+						'user' => $account,
 						'enum_recuring' => false,
 						'daywise' => false,
 						'filter' => 'owner',  // return all possible entries
@@ -588,17 +602,17 @@ return array();	// temporary disabling meeting requests from calendar
 					{
 						$participants = $event['participants'];
 					}
-					$ex_event = $this->message2event($exception, $account, $ex_event);
-					$ex_event['participants'] = $participants;	// not contained in $exception
-					$ex_event['reference'] = $event['id'];
-					$ex_event['recurrence'] = egw_time::server2user($exception->exceptionstarttime);
-					$ex_ok = $this->calendar->save($ex_event);
-					debugLog(__METHOD__."('$folderid',$id,...) saving exception=".array2string($ex_event).' returned '.array2string($ex_ok));
-					error_log(__METHOD__."('$folderid',$id,...) exception=".array2string($exception).") saving exception=".array2string($ex_event).' returned '.array2string($ex_ok));
+					$save_event = $this->message2event($exception, $account, $ex_event);
+					$save_event['participants'] = $participants;	// not contained in $exception
+					$save_event['reference'] = $event['id'];
+					$save_event['recurrence'] = egw_time::server2user($exception->exceptionstarttime);
+					$ex_ok = $this->calendar->save($save_event);
+					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) saving exception=".array2string($save_event).' returned '.array2string($ex_ok));
+					//error_log(__METHOD__."('$folderid',$id,...) exception=".array2string($exception).") saving exception=".array2string($save_event).' returned '.array2string($ex_ok));
 				}
 			}
 		}
-		debugLog(__METHOD__."('$folderid',$id,...) SUCESS saving event=".array2string($event).", id=$id");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) SUCESS saving event=".array2string($event).", id=$id");
 		//error_log(__METHOD__."('$folderid',$id,".array2string($message).") SUCESS saving event=".array2string($event).", id=$id");
 		return $this->StatMessage($folderid, $id);
 	}
@@ -608,7 +622,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 *
 	 * @param SyncAppointment $message
 	 * @param int $account
-	 * @param array $event=array()
+	 * @param array $event =array()
 	 * @return array
 	 */
 	private function message2event(SyncAppointment $message, $account, $event=array())
@@ -633,7 +647,7 @@ return array();	// temporary disabling meeting requests from calendar
 
 		// only change description, if one given, as iOS5 skips description in ChangeMessage after MeetingResponse
 		// --> we ignore empty / not set description, so description get no longer lost, but you cant empty it via eSync
-		if (($description = $this->backend->messagenote2note($message->body, $message->rtf, $message->airsyncbasebody)))
+		if (($description = $this->backend->messagenote2note($message->body, $message->rtf, $message->asbody)))
 		{
 			$event['description'] = $description;
 		}
@@ -656,6 +670,7 @@ return array();	// temporary disabling meeting requests from calendar
 		{
 			if ($attendee->type == 3) continue;	// we can not identify resources and re-add them anyway later
 
+			$matches = null;
 			if (preg_match('/^noreply-(.*)-uid@egroupware.org$/',$attendee->email,$matches))
 			{
 				$uid = $matches[1];
@@ -689,8 +704,9 @@ return array();	// temporary disabling meeting requests from calendar
 			if ($event['id'] && isset($event['participants'][$uid]))
 			{
 				$status = $event['participants'][$uid];
+				$quantity = $role = null;
 				calendar_so::split_status($status, $quantity, $role);
-				//debugLog("old status for $uid is status=$status, quantity=$quantitiy, role=$role");
+				//ZLog::Write(LOGLEVEL_DEBUG, "old status for $uid is status=$status, quantity=$quantitiy, role=$role");
 			}
 			// check if just email is an existing attendee (iOS returns email as name too!), keep it to keep status/role if not set
 			elseif ($event['id'] && (isset($event['participants'][$u='e'.$attendee->email]) ||
@@ -698,14 +714,14 @@ return array();	// temporary disabling meeting requests from calendar
 			{
 				$status = $event['participants'][$u];
 				calendar_so::split_status($status, $quantity, $role);
-				//debugLog("old status for $uid as $u is status=$status, quantity=$quantitiy, role=$role");
+				//ZLog::Write(LOGLEVEL_DEBUG, "old status for $uid as $u is status=$status, quantity=$quantitiy, role=$role");
 			}
 			else	// set some defaults
 			{
 				$status = 'U';
 				$quantitiy = 1;
 				$role = 'REQ-PARTICIPANT';
-				//debugLog("default status for $uid is status=$status, quantity=$quantitiy, role=$role");
+				//ZLog::Write(LOGLEVEL_DEBUG, "default status for $uid is status=$status, quantity=$quantitiy, role=$role");
 			}
 			if ($role == 'CHAIR') $chair_set = true;	// by role from existing participant
 
@@ -725,7 +741,7 @@ return array();	// temporary disabling meeting requests from calendar
 			{
 				$role = $r;
 			}
-			//debugLog("-> status for $uid is status=$status ($s), quantity=$quantitiy, role=$role ($r)");
+			//ZLog::Write(LOGLEVEL_DEBUG, "-> status for $uid is status=$status ($s), quantity=$quantitiy, role=$role ($r)");
 			$participants[$uid] = calendar_so::combine_status($status,$quantitiy,$role);
 		}
 		// if organizer is not already participant, add him as chair
@@ -860,7 +876,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
-		debugLog(__METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
 		return false;
 	}
 
@@ -875,7 +891,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	public function DeleteFolder($parentid, $id)
 	{
-		debugLog(__METHOD__."('$parentid', '$id') NOT supported!");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$parentid', '$id') NOT supported!");
 		return false;
 	}
 
@@ -895,7 +911,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	public function MoveMessage($folderid, $id, $newfolderid, $contentParameters)
 	{
-		debugLog(__METHOD__."('$folderid', $id, '$newfolderid',".array2string($contentParameters).") NOT supported!");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, '$newfolderid',".array2string($contentParameters).") NOT supported!");
 		return false;
 	}
 
@@ -915,10 +931,12 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	public function DeleteMessage($folderid, $id, $contentParameters)
 	{
+		unset($contentParameters);	// not used, but required by function signature
+
 		if (!isset($this->caledar)) $this->calendar = new calendar_boupdate();
 
 		$ret = $this->calendar->delete($id);
-		debugLog(__METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
 		return $ret;
 	}
 
@@ -941,7 +959,9 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	function SetReadFlag($folderid, $id, $flags, $contentParameters)
 	{
-		debugLog(__METHOD__."('$folderid', $id, ".array2string($flags)." NOT supported!");
+		unset($contentParameters);	// not used, but required by function signature
+
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, ".array2string($flags)." NOT supported!");
 		return false;
 	}
 
@@ -956,7 +976,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	function ChangeMessageFlag($folderid, $id, $flags)
 	{
-		debugLog(__METHOD__."('$folderid', $id, ".array2string($flags)." NOT supported!");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, ".array2string($flags)." NOT supported!");
 		return false;
 	}
 
@@ -980,7 +1000,8 @@ return array();	// temporary disabling meeting requests from calendar
 		$mimesupport = $contentparameters->GetMimeSupport();
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
-		debugLog (__METHOD__."('$folderid', ".array2string($id).", truncsize=$truncsize, bodyprefence=".array2string($bodypreference).", mimesupport=$mimesupport)");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', ".array2string($id).", truncsize=$truncsize, bodyprefence=".array2string($bodypreference).", mimesupport=$mimesupport)");
+		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
 		if (is_array($id))
 		{
@@ -996,9 +1017,11 @@ return array();	// temporary disabling meeting requests from calendar
 				return false;
 			}
 		}
-		debugLog(__METHOD__."($folderid,$id,...) start=$event[start]=".date('Y-m-d H:i:s',$event['start']).", recurrence=$event[recurrence]=".date('Y-m-d H:i:s',$event['recurrence']));
-		foreach($event['recur_exception'] as $ex) debugLog("exception=$ex=".date('Y-m-d H:i:s',$ex));
-
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id,...) start=$event[start]=".date('Y-m-d H:i:s',$event['start']).", recurrence=$event[recurrence]=".date('Y-m-d H:i:s',$event['recurrence']));
+		foreach($event['recur_exception'] as $ex)
+		{
+			ZLog::Write(LOGLEVEL_DEBUG, "exception=$ex=".date('Y-m-d H:i:s',$ex));
+		}
 		$message = new SyncAppointment();
 
 		// set timezone
@@ -1007,6 +1030,7 @@ return array();	// temporary disabling meeting requests from calendar
 			$message->timezone = base64_encode(self::_getSyncBlobFromTZ($as_tz));
 		}
 		catch(Exception $e) {
+			unset($e);
 			// ignore exception, simply set no timezone, as it is optional
 		}
 		// copying timestamps (they are already read in servertime, so non tz conversation)
@@ -1044,7 +1068,7 @@ return array();	// temporary disabling meeting requests from calendar
 		{
 			if (strlen($event['description']) > 0)
 			{
-				debugLog("airsyncbasebody!");
+				ZLog::Write(LOGLEVEL_DEBUG, "airsyncbasebody!");
 				$message->asbody = new SyncBaseBody();
 				$message->nativebodytype=1;
 				$this->backend->note2messagenote($event['description'], $bodypreference, $message->asbody);
@@ -1065,6 +1089,7 @@ return array();	// temporary disabling meeting requests from calendar
 		{
 			// AS does NOT want calendar owner as participant
 			if ($uid == $account) continue;
+			$quantity = $role = null;
 			calendar_so::split_status($status, $quantity, $role);
 
 			$attendee = new SyncAttendee();
@@ -1094,7 +1119,7 @@ return array();	// temporary disabling meeting requests from calendar
 				{
 					$message->organizername  = $attendee->name;
 					$message->organizeremail = $attendee->email;
-					debugLog(__METHOD__."($folderid, $id, ...) external organizer detected (role=$role, uid=$uid), set as AS organizer: $message->organizername <$message->organizeremail>");
+					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid, $id, ...) external organizer detected (role=$role, uid=$uid), set as AS organizer: $message->organizername <$message->organizeremail>");
 				}
 				if ($uid[0] == 'r') $attendee->type = 3;	// 3 = resource
 			}
@@ -1156,9 +1181,9 @@ return array();	// temporary disabling meeting requests from calendar
 				}
 				else
 				{
-					debugLog(__METHOD__.__LINE__." Exceptions found but no UID given for Event:".$event['id'].' Exceptions:'.array2string($event['recur_exception']));
+					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." Exceptions found but no UID given for Event:".$event['id'].' Exceptions:'.array2string($event['recur_exception']));
 				}
-				if (count($ex_events)>=1) debugLog(__METHOD__.__LINE__." found ".count($ex_events)." exeptions for event with UID/ID:".$event['uid'].'/'.$event['id']);
+				if (count($ex_events)>=1) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." found ".count($ex_events)." exeptions for event with UID/ID:".$event['uid'].'/'.$event['id']);
 
 				$message->exceptions = array();
 				foreach($ex_events as $ex_event)
@@ -1175,7 +1200,7 @@ return array();	// temporary disabling meeting requests from calendar
 					{
 						unset($event['recur_exception'][$key]);
 					}
-					debugLog(__METHOD__."() added exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
 					$message->exceptions[] = $exception;
 				}
 				// add rest of exceptions as deleted
@@ -1183,11 +1208,11 @@ return array();	// temporary disabling meeting requests from calendar
 				{
 					if (!empty($exception_time))
 					{
-						if (empty($event['uid'])) debugLog(__METHOD__.__LINE__." BEWARE no UID given for this event:".$event['id'].' but exception is set for '.$exception_time);
+						if (empty($event['uid'])) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." BEWARE no UID given for this event:".$event['id'].' but exception is set for '.$exception_time);
 						$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
 						$exception->deleted = 1;
 						$exception->exceptionstarttime = $exception_time;
-						debugLog(__METHOD__."() added deleted exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+						ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added deleted exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
 						$message->exceptions[] = $exception;
 					}
 				}
@@ -1201,10 +1226,10 @@ return array();	// temporary disabling meeting requests from calendar
 				$exception = $this->GetMessage($folderid, $event['id'].':'.$exception_time, $contentparameters);
 				$exception->deleted = 0;
 				$exception->exceptionstarttime = $exception_time;
-				debugLog(__METHOD__."() added virtual exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+				ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added virtual exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
 				$message->exceptions[] = $exception;
 			}*/
-			//debugLog(__METHOD__."($id) message->exceptions=".array2string($message->exceptions));
+			//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($id) message->exceptions=".array2string($message->exceptions));
 		}
 		// only return alarms if in own calendar
 		if ($account == $GLOBALS['egw_info']['user']['account_id'] && $event['alarm'])
@@ -1237,8 +1262,11 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	public function StatMessage($folderid, $id)
 	{
+		unset($folderid);	// not used ($id is unique), but required by function signature
+
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
+		$nul = null;
 		if (!($etag = $this->calendar->get_etag($id, $nul, true, true)))	// last true: $only_master=true
 		{
 			$stat = false;
@@ -1257,7 +1285,7 @@ return array();	// temporary disabling meeting requests from calendar
 				'flags' => 1,
 			);
 		}
-		//debugLog (__METHOD__."('$folderid',".array2string(is_array($id) ? $id['id'] : $id).") returning ".array2string($stat));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',".array2string(is_array($id) ? $id['id'] : $id).") returning ".array2string($stat));
 
 		return $stat;
 	}
@@ -1273,8 +1301,9 @@ return array();	// temporary disabling meeting requests from calendar
 	 */
 	function AlterPingChanges($folderid, &$syncstate)
 	{
+		$type = $owner = null;
 		$this->backend->splitID($folderid, $type, $owner);
-		debugLog(__METHOD__."('$folderid','$syncstate') type='$type', owner=$owner");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid','$syncstate') type='$type', owner=$owner");
 
 		if ($type != 'calendar') return false;
 
@@ -1292,7 +1321,7 @@ return array();	// temporary disabling meeting requests from calendar
 			$changes = array(array('type' => 'fakeChange'));
 		}
 		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
-		debugLog(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
 		return $changes;
 	}
 
@@ -1316,7 +1345,6 @@ return array();	// temporary disabling meeting requests from calendar
 	 * matching timezones for incomming timezone data. iPhone seems not to care on receiving about the above.
 	 *
 	 * @param string|DateTimeZone $tz timezone, timezone name (eg. "Europe/Berlin") or ical with VTIMEZONE
-	 * @param int|string|DateTime $ts=null time for which active sync timezone data is requested, default current time
 	 * @return array with values for keys:
 	 * - "bias": timezone offset from UTC in minutes for NO DST
 	 * - "dstendmonth", "dstendday", "dstendweek", "dstendhour", "dstendminute", "dstendsecond", "dstendmillis"
@@ -1327,7 +1355,7 @@ return array();	// temporary disabling meeting requests from calendar
 	 * @link http://download.microsoft.com/download/5/D/D/5DD33FDF-91F5-496D-9884-0A0B0EE698BB/%5BMS-ASDTYPE%5D.pdf
 	 * @throws egw_exception_assertion_failed if no vtimezone data found for given timezone
 	 */
-	static public function tz2as($tz,$ts=null)
+	static public function tz2as($tz)
 	{
 /*
 BEGIN:VTIMEZONE
@@ -1366,12 +1394,13 @@ END:VTIMEZONE
 		$name = $component = is_a($tz,'DateTimeZone') ? $tz->getName() : $tz;
 		if (strpos($component, 'VTIMEZONE') === false) $component = calendar_timezones::tz2id($name,'component');
 		// parse ical timezone defintion
-		$ical = self::ical2array($ical=$component);
+		$ical = self::ical2array($component);
 		$standard = $ical['VTIMEZONE']['STANDARD'];
 		$daylight = $ical['VTIMEZONE']['DAYLIGHT'];
 
 		if (!isset($standard))
 		{
+			$matches = null;
 			if (preg_match('/^etc\/gmt([+-])([0-9]+)$/i',$name,$matches))
 			{
 				$standard = array(
@@ -1426,7 +1455,7 @@ END:VTIMEZONE
 			if ($data['dststartmonth'] > $data['dstendmonth'])
 			{
 				$start = $data['dststarthour'];   $data['dststarthour'] = $data['dstendhour'];     $data['dstendhour'] = $start;
-				$start = $data['dststartminute']; $data['dststartminute'] = $data['dstendminute']; $data['dstendminute'] = $start;
+				$end = $data['dststartminute']; $data['dststartminute'] = $data['dstendminute']; $data['dstendminute'] = $end;
 			}
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($data));
@@ -1481,10 +1510,9 @@ END:VTIMEZONE
 	 * )
 	 *
 	 * @param string|array $ical lines of ical file
-	 * @param string $component=null
 	 * @return array with parsed ical components
 	 */
-	static public function ical2array(&$ical,$component=null)
+	static public function ical2array($ical)
 	{
 		$arr = array();
 		if (!is_array($ical)) $ical = preg_split("/[\r\n]+/m", $ical);
@@ -1493,7 +1521,7 @@ END:VTIMEZONE
 			list($name,$value) = explode(':',$line,2);
 			if ($name == 'BEGIN')
 			{
-				$arr[$value] = self::ical2array($ical,$value);
+				$arr[$value] = self::ical2array($ical);
 			}
 			elseif($name == 'END')
 			{
@@ -1519,7 +1547,7 @@ END:VTIMEZONE
 	 */
 	public static function as2tz(array $data)
 	{
-		static $cache;	// some caching withing the request
+		static $cache=null;	// some caching withing the request
 
 		unset($data['name']);	// not used, but can stall the match
 
@@ -1545,6 +1573,7 @@ END:VTIMEZONE
 				}
 			}
 			catch(Exception $e) {
+				unset($e);
 				// simpy ignore that, as it only means $tz can NOT be converted, because it has no VTIMEZONE component
 			}
 		}

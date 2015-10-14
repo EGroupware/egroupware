@@ -254,8 +254,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$this->_wasteID = false;
 		$this->_sentID = false;
 
-		$connectionFailed = false;
-
 		if ($verify_mode)
 		{
 			$waitOnFailure = array();
@@ -1244,12 +1242,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($requestid, '$folderid', $response) iCal found, calling now backend->MeetingResponse('$attachment[attachment]')");
 
 				// calling backend again with iCal attachment, to let calendar add the event
-				if (($ret = $this->backend->MeetingResponse($attachment['attachment'],
+				$ret = $this->backend->MeetingResponse($attachment['attachment'],
 					$this->backend->createID('calendar',$GLOBALS['egw_info']['user']['account_id']),
-					$response, $calendarid)))
-				{
-					$ret = $calendarid;
-				}
+					$response);
 				break;
 			}
 		}
