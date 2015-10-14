@@ -1,0 +1,92 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Definitions for tutorials
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi NAtegh <hn@stylite.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+
+span.egw_tutorial_title {
+    color: black;
+    font-weight: bold;
+    text-align: left;
+    width: 95%;
+    background-color: #D6DEF0;
+    border: 1px solid #B3B3B3;
+    padding-top: 4px;
+    padding-left: 5px;
+    border-radius: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+.egw_tutorial_thumb:hover [id^="egw_tutorial_"][id$="_play"].egw_tutorial_playBtn,
+.egw_tutorial_thumb:hover #home-tutorial_play.egw_tutorial_playBtn{
+	background-color: #FF0000;
+	opacity: 0.68;
+}
+.egw_tutorial_thumb:hover [id^="egw_tutorial_"][id$="_play"].egw_tutorial_playBtn> div,
+.egw_tutorial_thumb:hover #home-tutorial_play.egw_tutorial_playBtn> div{
+	border-left-color: white;
+}
+.egw_tutorial_thumb {
+	background-repeat: no-repeat;
+	background-position: -2px;
+	border-radius: 5px;
+}
+[id^="egw_tutorial_"][id$="_play"].egw_tutorial_playBtn,
+#home-tutorial_play.egw_tutorial_playBtn{
+	display:block;
+	margin:10%;
+	border: 2px solid rgba(0,0,0,0.7);
+	-webkit-border-radius: 100%;
+	-moz-border-radius: 100%;
+	border-radius: 100%;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
+[id^="egw_tutorial_"][id$="_play"].egw_tutorial_playBtn> div,
+#home-tutorial_play.egw_tutorial_playBtn>div{
+	display:block;
+	position:relative;
+	top: 10px;
+	left: 45%;
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 10px solid rgba(0,0,0,0.8);
+}
+[id^="egw_tutorial_"][id$="sidebox_list"] {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+
+#home-tutorial_list {
+	float:left;
+	.egw_tutorial_thumb {
+		display:block;
+	}
+}
+#home-tutorial_src {
+	border-left: 6px solid #E0E0E0;
+}
+.tutorial_popup {
+	background-color:white;
+	padding-top: 5px;
+	overflow-y: hidden;
+}
+.tutorial_videoList {
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 100%;
+	display: inline-block !important;
+}

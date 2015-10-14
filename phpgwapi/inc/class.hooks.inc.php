@@ -398,7 +398,7 @@ class hooks
 				),
 				'menuOpened'  => true
 			);
-			display_sidebox($appname, lang('EGroupware Tutorial'), $file);
+			display_sidebox($appname, lang('Video Tutorials'), $file);
 		}
 	}
 }

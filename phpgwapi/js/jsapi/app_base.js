@@ -997,12 +997,12 @@ var AppJS = Class.extend(
 	 *		{
 	 *			"mail":{
 	 *				"en":[
-	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", thumbnail:"http://img.youtube.com/vi/mCDJndpjO40/1.jpg", "title":"PGP Encryption"},
-	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", thumbnail:"http://img.youtube.com/vi/mCDJndpjO/1.jpg", "title":"Subscription", top:true},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", thumbnail:"http://img.youtube.com/vi/mCDJndpjO40/0.jpg", "title":"PGP Encryption"},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", thumbnail:"http://img.youtube.com/vi/mCDJndpjO/0.jpg", "title":"Subscription", top:true},
 	 *				],
 	 *				"de":[
-	 *					{src:"https://www.youtube.com/embed/m40", thumbnail:"http://img.youtube.com/vi/m40/1.jpg", "title":"PGP Verschlüsselung"},
-	 *					{src:"https://www.youtube.com/embed/mpjO", thumbnail:"http://img.youtube.com/vi/mpjO/1.jpg", "title":"Ordner Abonnieren", top:true},
+	 *					{src:"https://www.youtube.com/embed/m40", thumbnail:"http://img.youtube.com/vi/m40/0.jpg", "title":"PGP Verschlüsselung"},
+	 *					{src:"https://www.youtube.com/embed/mpjO", thumbnail:"http://img.youtube.com/vi/mpjO/0.jpg", "title":"Ordner Abonnieren", top:true},
 	 *				]
 	 *			}
 	 *		}

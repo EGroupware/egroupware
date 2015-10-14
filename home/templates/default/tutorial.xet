@@ -3,22 +3,35 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="home.tutorial" template="" lang="" group="0" version="15.1">
-		<hbox height="87%">
-			<iframe id="src" height="100%" width="100%" seamless="true" fullscreen="true"/>
+		<hbox height="87%" class="tutorial_popup">
+			<hbox class="tutorial_videoList">
+				<grid id="list" classs="egwGridView_grid" resize_ratio="0" width="190px">
+					<columns>
+						<column/>
+					</columns>
+					<rows>
+						<row class="th" part="header">
+							<menulist>
+								<menupopup id="apps" label="Applications" statustext="Please select application name" onchange="1"/>
+							</menulist>
+						</row>
+						<row>
+							<vbox onclick="$row_cont[onclick]" align="center" statustext="$row_cont[title]">
+								<hbox background="$row_cont[thumbnail]" height="130px" width="98%" class="egw_tutorial_thumb">
+									<description value = "$row_cont[title]" class="egw_tutorial_title"/>
+									<hbox id="play" class="egw_tutorial_playBtn">
+										<hbox></hbox>
+									</hbox>
+								</hbox>
+							</vbox>
+						</row>
+					</rows>
+				</grid>
+			</hbox>
+			<iframe id="src" height="100%" seamless="true" width="73%" fullscreen="true"/>
 		</hbox>
 		<hbox class="dialogFooterToolbar">
 			<button  align="left" statustext="Close this window" label="Close" id="button[close]" onclick="window.close()" image="close" background_image="1"/>
-			<hbox disabled="@discardbox">
-				<menulist>
-					<menupopup id="apps" label="Applications" statustext="Please select application name" onchange="app.home.tutorial_appChange"/>
-				</menulist>
-				<menulist>
-					<menupopup id="tutorials" label="Tutorilas" statustext="Please select a tutorial" onchange="app.home.tutorial_tutorialsChange"/>
-				</menulist>
-			</hbox>
-			<hbox disabled="!@discardbox" class="discard_checkbox">
-				<checkbox id="checkbox" label="Do not show this video next time" onchange="app.home.tutorial_autoloadDiscard"/>
-			</hbox>
 		</hbox>
 	</template>
 </overlay>

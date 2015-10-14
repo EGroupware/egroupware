@@ -175,10 +175,31 @@ var fw_browser =  Class.extend({
 			
 			// Open tutorial popup with an introduction video about egroupware
 			// the popup can be discarded for the next time show if user
-			// check the discard checkbox
-			if (!egw.preference('egw_tutorial_autoload', 'common'))
+			// select "Never" or can select "Later" and the introduction
+			// dialog will show upon the next session refresh
+			if (!egw.preference('egw_tutorial_noautoload', 'common') && !sessionStorage.getItem('egw_tutorial_visited'))
 			{
-				egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','750x580');
+				sessionStorage.setItem('egw_tutorial_visited', true);
+				var buttons = [
+					{text:"Show", id:"show", default:"true"},
+					{text:"Later", id:"later"},
+					{text:"Never", id:"never"}
+				];
+				et2_dialog.show_dialog(function (_button_id)
+				{
+					if (_button_id == "show" )
+					{
+						egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','750x580');
+					}
+					else if(_button_id == "never")
+					{
+						egw.set_preference('common', 'egw_tutorial_noautoload',true);
+					}
+				},
+				egw.lang('We would like to introduce you to EGroupware by showing a short introduction video.'),
+				egw.lang('Introduction'),
+				{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, egw);
+				
 			}
 		});
 

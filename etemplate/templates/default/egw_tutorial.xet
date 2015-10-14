@@ -3,14 +3,14 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="etemplate.egw_tutorial" template="" lang="" group="0" version="15.1">
-		<grid id="list" width="97%" height="200" overflow="auto">
+		<grid id="list" width="99%" height="200" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row >
 					<vbox onclick="$row_cont[onclick]" align="center" statustext="$row_cont[title]">
-						<hbox background="$row_cont[thumbnail]" height="176px" width="99%" class="egw_tutorial_thumb">
+						<hbox background="$row_cont[thumbnail]" height="130px" width="99%" class="egw_tutorial_thumb">
 							<description value = "$row_cont[title]" class="egw_tutorial_title"/>
 							<hbox id="play" class="egw_tutorial_playBtn">
 								<hbox></hbox>
@@ -20,8 +20,5 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
-			
-		</styles>
 	</template>
 </overlay>
