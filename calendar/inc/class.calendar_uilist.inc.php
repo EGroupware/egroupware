@@ -370,7 +370,7 @@ class calendar_uilist extends calendar_ui
 		{
 			$search_params['users'] = is_array($params['col_filter']['participant']) ? $params['col_filter']['participant'] : (int) $params['col_filter']['participant'];
 		}
-		elseif(empty($params['search']))	// active search displays entries from all users
+		elseif (!$params['col_filter'] || !array_key_exists('participant',$params['col_filter']))
 		{
 			$search_params['users'] = explode(',',$this->owner);
 		}

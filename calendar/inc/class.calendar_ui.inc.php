@@ -857,11 +857,13 @@ class calendar_ui
 			egw_framework::refresh_opener($error, 'calendar');
 		}
 		unset($_GET['merge']);
-
-		// This doesn't give message either, but at least it doesn't give a blank screen
-		egw_framework::redirect_link('/index.php', array(
-			'msg' => $error,
-			'cd' => 'yes'
-		));
+		if($error)
+		{
+			// This doesn't give message either, but at least it doesn't give a blank screen
+			egw_framework::redirect_link('/index.php', array(
+				'msg' => $error,
+				'cd' => 'yes'
+			));
+		}
 	}
 }

@@ -313,7 +313,19 @@ app.classes.calendar = AppJS.extend(
 
 			if (this.sidebox_et2 && typeof app.classes.calendar.views[view] == 'undefined')
 			{
-				this.sidebox_et2.getWidgetById('iframe').set_src(_url);
+				for(var key in q)
+				{
+					q[key] = unescape(q[key]);
+				}
+				if(q.owner)
+				{
+					q.owner = q.owner.split(',');
+					q.owner = q.owner.reduce(function(p,c) {if(p.indexOf(c)<0) p.push(c);return p;},[]);
+					q.owner = q.owner.join(',');
+				}
+				q.menuaction = 'calendar.calendar_uiviews.index';
+				this.sidebox_et2.getWidgetById('iframe').set_src(egw.link('/index.php',q));
+				$j(this.sidebox_et2.parentNode).show();
 				return true;
 			}
 			// Known AJAX view
@@ -1645,6 +1657,7 @@ app.classes.calendar = AppJS.extend(
 					state.state.enddate = state.state.end_date;
 				}
 				state.state.col_filter = {participant: state.state.owner};
+				state.state.search = state.state.keywords;
 
 				// Pass status filter in as status filter, avoids conflicts with nm filter
 				state.state.status_filter = state.state.filter;
