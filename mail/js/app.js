@@ -699,7 +699,11 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			if (!this.mail_previewAreaActive) splitter.undock();
+			if (!this.mail_previewAreaActive)
+			{
+				splitter.undock();
+				window.setTimeout(function(){splitter.left.trigger('resize.et2_split.mailSplitter');},200);
+			}
 			this.mail_previewAreaActive = true;
 		}
 	},
