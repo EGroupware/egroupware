@@ -297,6 +297,10 @@ app.classes.calendar = AppJS.extend(
 	 */
 	linkHandler: function(_url)
 	{
+		if (_url == 'about:blank')
+		{
+			return false;
+		}
 		if (_url.match('menuaction=calendar\.calendar_uiviews\.'))
 		{
 			var view = _url.match(/calendar_uiviews\.([^&?]+)/);
@@ -305,18 +309,13 @@ app.classes.calendar = AppJS.extend(
 			// Get query
 			var q = {};
 			_url.split('?')[1].split('&').forEach(function(i){
-				q[i.split('=')[0]]=i.split('=')[1];
+				q[i.split('=')[0]]=unescape(i.split('=')[1]);
 			});
 			delete q.ajax;
 			delete q.menuaction;
-			if((!view || view == 'index') && q.view) view = q.view;
-
-			if (this.sidebox_et2 && typeof app.classes.calendar.views[view] == 'undefined')
+			if(!view && q.view) view = q.view;
+			if (this.sidebox_et2 && typeof app.classes.calendar.views[view] == 'undefined' && view != 'index')
 			{
-				for(var key in q)
-				{
-					q[key] = unescape(q[key]);
-				}
 				if(q.owner)
 				{
 					q.owner = q.owner.split(',');
@@ -331,6 +330,13 @@ app.classes.calendar = AppJS.extend(
 			// Known AJAX view
 			else if(app.classes.calendar.views[view])
 			{
+				// Reload of known view?
+				if(view == 'index')
+				{
+					var pref = this.egw.preference('saved_states','calendar');
+					view = pref.view || 'day';
+				}
+				// View etemplate not loaded
 				if(typeof app.classes.calendar.views[view].etemplates[0] == 'string')
 				{
 					return _url + '&ajax=true';
@@ -341,9 +347,10 @@ app.classes.calendar = AppJS.extend(
 				return true;
 			}
 		}
-		else if (_url.indexOf('menuaction=calendar.calendar_') >= 0)
+		else if (this.sidebox_et2)
 		{
 			var iframe = this.sidebox_et2.getWidgetById('iframe');
+			if(!iframe) return false;
 			iframe.set_src(_url);
 			$j(this.sidebox_et2.parentNode).show();
 			// Hide other views
@@ -1808,7 +1815,7 @@ app.classes.calendar = AppJS.extend(
 		// prepend an owner 0, to reset all owners and not just set given resource type
 		if(typeof query.owner != 'undefined')
 		{
-			query.owner = '0,'+ query.owner;
+			query.owner = '0,'+ query.owner.replace('0,','');
 		}
 
 		this.egw.open_link(this.egw.link('/index.php',query), 'calendar');
@@ -2502,7 +2509,7 @@ app.classes.calendar = AppJS.extend(
 				app.classes.calendar.views[view].etemplates[index] = _et2;
 				// If a template disappears, we want to release it
 				$j(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
-					this.view[index] = _name;
+					this.view.etemplates[this.index] = _name;
 				},jQuery.extend({},{view: app.classes.calendar.views[view], index: ""+index, name: _name})));
 
 				if(this.state.view === view)
@@ -2544,7 +2551,23 @@ app.classes.calendar = AppJS.extend(
 		header: function(state) {
 			var formatDate = new Date(state.date);
 			formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
-			return date(egw.preference('dateformat'),formatDate);
+			return app.calendar.View._owner(state) + date(egw.preference('dateformat'),formatDate);
+		},
+
+		/**
+		 * If one owner, get the owner text
+		 */
+		_owner: function(state) {
+			var owner = '';
+			if(state.owner.length && state.owner.length == 1)
+			{
+				var own = app.calendar.sidebox_et2.getWidgetById('owner').getDOMNode();
+				if(own.selectedIndex >= 0)
+				{
+					owner = own.options[own.selectedIndex].innerHTML + ": ";
+				}
+			}
+			return owner;
 		},
 
 		/**
@@ -2714,8 +2737,8 @@ jQuery.extend(app.classes.calendar,{
 		}),
 		week: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				var formatDate = new Date(state.first);
-				return app.calendar.egw.lang('Weekview') + ': ' + app.calendar.egw.lang('Week') + ' ' +
+				
+				return app.calendar.egw.lang('Weekview') + ': ' + app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
 					app.calendar.date.week_number(state.first) + ': ' +
 					app.calendar.date.long_date(state.first, state.last)
 			},
@@ -2739,7 +2762,7 @@ jQuery.extend(app.classes.calendar,{
 		}),
 		weekN: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				return app.calendar.egw.lang('Week') + ' ' +
+				return app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
 					app.calendar.date.week_number(state.first) + ' - ' +
 					app.calendar.date.week_number(state.last) + ': ' +
 					app.calendar.date.long_date(state.first, state.last)
@@ -2764,7 +2787,7 @@ jQuery.extend(app.classes.calendar,{
 			{
 				var formatDate = new Date(state.date);
 				formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
-				return app.calendar.egw.lang('Monthview') + ':' + app.calendar.egw.lang(date('F',formatDate)) + ' ' + date('Y',formatDate);
+				return app.calendar.View._owner(state) + app.calendar.egw.lang('Monthview') + ': ' + app.calendar.egw.lang(date('F',formatDate)) + ' ' + date('Y',formatDate);
 			},
 			start_date: function(state) {
 				var d = app.calendar.View.start_date.call(this,state);
@@ -2803,7 +2826,7 @@ jQuery.extend(app.classes.calendar,{
 				var endDate = new Date(state.last);
 				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
 				var title = state.sortby == 'user' ? 'planner by user' : state.sortby=='month' ? 'yearly planner' : 'planner by category';
-				return app.calendar.egw.lang(title) + ': ' + date(egw.preference('dateformat'),startDate) +
+				return app.calendar.egw.lang(title) + ': ' + app.calendar.View._owner(state) + date(egw.preference('dateformat'),startDate) +
 					(startDate == endDate ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
 			},
 			etemplates: ['calendar.planner'],
@@ -2891,7 +2914,7 @@ jQuery.extend(app.classes.calendar,{
 		}),
 
 		listview: app.classes.calendar.prototype.View.extend({
-			header: function() {return app.calendar.egw.lang('Listview');},
+			header: function() {return app.calendar.egw.lang('Listview')},
 			etemplates: ['calendar.list']
 		})
 	}}
