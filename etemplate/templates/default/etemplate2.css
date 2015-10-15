@@ -795,6 +795,7 @@ ul.et2_link_string {
   background-color: #FDF9DB;
   max-width: 300px;
   color: black;
+  z-index: 999;
 }
 /**
  * Tabs widget

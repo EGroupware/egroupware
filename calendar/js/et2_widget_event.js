@@ -291,7 +291,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	_tooltip: function() {
 		
-		var border = this.div.css('border-color');
+		var border = this.div.css('borderTopColor');
 		var bg_color = this.div.css('background-color');
 		var header_color = this.title.css('color');
 

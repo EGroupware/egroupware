@@ -2559,7 +2559,7 @@ app.classes.calendar = AppJS.extend(
 		 */
 		_owner: function(state) {
 			var owner = '';
-			if(state.owner.length && state.owner.length == 1)
+			if(state.owner.length && state.owner.length == 1 && app.calendar.sidebox_et2)
 			{
 				var own = app.calendar.sidebox_et2.getWidgetById('owner').getDOMNode();
 				if(own.selectedIndex >= 0)
