@@ -160,6 +160,10 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	{
 		if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
 	}
+	if (isset($attribute_array['face']))
+	{
+		if (stripos($attribute_array['face'],'script')!==false) $attribute_array['face']=str_ireplace('script','',$attribute_array['face']);
+	}
 	if ($element == 'blockquote')
 	{
 		if (isset($attribute_array['cite']))
