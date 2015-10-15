@@ -306,13 +306,15 @@ var et2_selectbox = et2_inputWidget.extend(
 			if(option_data.icon)
 			{
 				var img = this.egw().image(option_data.icon);
-				jQuery(document.createElement("img"))
+				jQuery(document.createElement(img ? "img" : "div"))
 					.attr("src", img)
+					.addClass('cat_icon cat_' + _value)
 					.appendTo(label);
 			}
 			if(option_data.color)
 			{
-				label.css("background-color",option_data.color);
+				label.css("background-color",option_data.color)
+					.addClass('cat_' + _value);
 			}
 		}
 		label.append(jQuery("<span>"+_label+"</span>"));

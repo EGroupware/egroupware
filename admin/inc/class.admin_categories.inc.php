@@ -573,8 +573,8 @@ class admin_categories
 
 		if($tmpl instanceof etemplate_widget_template)
 		{
-			// Send categories for row colors
-			$sel_options['cat_id'] = etemplate_widget_menupopup::typeOptions('select-cat', ',,,'.$appname.',0');
+			// Category styles
+			egw_framework::includeCSS('/phpgwapi/categories.php?app='.$appname);
 		}
 
 		$tmpl->exec($this->list_link,$content,$sel_options,$readonlys,array(

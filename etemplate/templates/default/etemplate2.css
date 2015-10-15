@@ -368,9 +368,12 @@ button#cancel {
 .et2_selectbox input[type="checkbox"] {
   margin: 3px;
 }
-.et2_selectbox .ui-multiselect-checkboxes img {
+.et2_selectbox .ui-multiselect-checkboxes img, .et2_selectbox .ui-multiselect-checkboxes div {
   float: right;
   height: 1.8em;
+  width: 1.8em;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
   visibility: hidden;
