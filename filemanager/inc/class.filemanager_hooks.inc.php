@@ -94,6 +94,7 @@ class filemanager_hooks
 			display_sidebox(self::$appname,$title,$file);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['admin']) self::admin(self::$appname);
+		hooks::egw_tutorial_menu('filemanager');
 	}
 
 	/**

@@ -621,6 +621,7 @@ class calendar_ui
 			);
 			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
+		hooks::egw_tutorial_menu('calendar');
 	}
 
 	/**

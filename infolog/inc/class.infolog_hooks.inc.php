@@ -130,6 +130,7 @@ class infolog_hooks
 				display_sidebox($appname,lang('Admin'),$file);
 			}
 		}
+		hooks::egw_tutorial_menu('infolog');
 	}
 
 	/**
