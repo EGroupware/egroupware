@@ -157,8 +157,8 @@ class calendar_uiviews extends calendar_ui
 			'year' => lang('yearview'),
 			'planner' => lang('Group planner'),
 		);
-		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].
-			(isset($app_header[$this->view]) ? ' - '.$app_header[$this->view] : '').
+		$GLOBALS['egw_info']['flags']['app_header'] =
+			(isset($app_header[$this->view]) ? $app_header[$this->view] : '').
 			// for a single owner we add it's name to the app-header
 			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
 
