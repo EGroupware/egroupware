@@ -1451,6 +1451,17 @@ function function_backtrace($remove=0)
  */
 function _check_script_tag(&$var,$name='')
 {
+	static $preg=null;
+	//old: '/<\/?[^>]*\b(iframe|script|javascript|on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b[^>]*>/i';
+	if (!isset($preg)) $preg =
+		// forbidden tags like iframe or script
+		'/(<(\s*\/)?\s*(iframe|script|object|embed|math|meta)|'.
+		// on* attributes
+		'<[^>]*on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mouse[^=]+|reset|select|submit|unload|resize|propertychange|page[^=]*|scroll|readystatechange|start|popstate|form[^=]+|input)\s*=|'.
+		// ="javascript:*" diverse javascript attribute value
+		'<[^>]+(href|src|dynsrc|lowsrc|background|style|poster|action)\s*=\s*("|\')?[^"\']*javascript|'.
+		// benavior:url and expression in style attribute
+		'<[^>]+style\s*=\s*("|\')[^>]*(behavior\s*:\s*url|expression)\s*\()/i';
 	if (is_array($var))
 	{
 		foreach($var as $key => $val)
@@ -1461,7 +1472,6 @@ function _check_script_tag(&$var,$name='')
 			}
 			elseif(strpos($val, '<') !== false)	// speedup: ignore everything without <
 			{
-				static $preg = '/<\/?[^>]*\b(iframe|script|javascript|on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b[^>]*>/i';
 				if (preg_match($preg,$val))
 				{
 					// special handling for $_POST[json_data], to decend into it's decoded content, fixing json direct might break json syntax
@@ -1501,11 +1511,26 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	$total = $num_failed = 0;
 	$patterns = array(
 		// pattern => true: should fail, false: should not fail
-		'<script>alert(1)</script>' => true,
-		'<span onmouseover="alert(1)">blah</span>' => true,
-		'<a href="javascript:alert(1)">Click Me</a>' => true,
+		'< script >alert(1)< / script >' => true,
+		'<span onMouseOver ="alert(1)">blah</span>' => true,
+		'<a href=          "JaVascript: alert(1)">Click Me</a>' => true,
+		// from https://www.acunetix.com/websitesecurity/cross-site-scripting/
+		'<body onload=alert("XSS")>' => true,
+		'<body background="javascript:alert("XSS")">' => true,
+		'<iframe src=”http://evil.com/xss.html”>' => true,
+		'<input type="image" src="javascript:alert(\'XSS\');">' => true,
+		'<link rel="stylesheet" href="javascript:alert(\'XSS\');">' => true,
+		'<table background="javascript:alert(\'XSS\')">' => true,
+		'<td background="javascript:alert(\'XSS\')">' => true,
+		'<div style="background-image: url(javascript:alert(\'XSS\'))">' => true,
+		'<div style="width: expression(alert(\'XSS\'));">' => true,
+		'<object type="text/x-scriptlet" data="http://hacker.com/xss.html">' => true,
+		// false positiv tests
 		'If 1 < 2, what does that mean for description, if 2 > 1.' => false,
-		'If 1 < 2, what does that mean for a script, if 2 > 1.' => false,	// false positive
+		'If 1 < 2, what does that mean for a script, if 2 > 1.' => false,
+		'<div>Script and Javascript: not evil ;-)' => false,
+		'<span>style=background-color' => false,
+		'<font face="Script MT Bold" size="4"><span style="font-size:16pt;">Hugo Sonstwas</span></font>' => false,
 	);
 	foreach($patterns as $pattern => $should_fail)
 	{
@@ -1518,21 +1543,58 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		echo "<p style='color: ".($failed?'red':'black')."'> ".html::htmlspecialchars($pattern).' '.
 			(isset($GLOBALS['egw_unset_vars'])?'removed':'passed')."</p>";
 	}
-	// no all xss attack vectors from http://ha.ckers.org/xssAttacks.xml are relevant here! (needs interpretation)
-	$vectors = new SimpleXMLElement(file_get_contents('http://ha.ckers.org/xssAttacks.xml'));
-	foreach($vectors->attack as $attack)
+	$x = 1;
+	// urls with attack vectors
+	$urls = array(
+		// we currently fail 76 of 666 test, thought they seem not to apply to our use case, as we check request data
+		'https://gist.github.com/JohannesHoppe/5612274' => file(
+			'https://gist.githubusercontent.com/JohannesHoppe/5612274/raw/60016bccbfe894dcd61a6be658a4469e403527de/666_lines_of_XSS_vectors.html'),
+		// we currently fail 44 of 140 tests, thought they seem not to apply to our use case, as we check request data
+		'https://html5sec.org/' => call_user_func(function() {
+			$payloads = $items = null;
+			if (!($items_js = file_get_contents('https://html5sec.org/items.js')) ||
+				!preg_match_all("|^\s+'data'\s+:\s+'(.*)',$|m", $items_js, $items, PREG_PATTERN_ORDER) ||
+				!($payload_js = file_get_contents('https://html5sec.org/payloads.js')) ||
+				!preg_match_all("|^\s+'([^']+)'\s+:\s+'(.*)',$|m", $payload_js, $payloads, PREG_PATTERN_ORDER))
+			{
+				return false;
+			}
+			$replace = array(
+				"\\'" => "'",
+				'\\\\'=> '\\,',
+				'\r'  => "\r",
+				'\n'  => "\n",
+			);
+			foreach($payloads[1] as $n => $from) {
+				$replace['%'.$from.'%'] = $payloads[2][$n];
+			}
+			return array_map(function($item) use ($replace) {
+				return strtr($item, $replace);
+			}, $items[1]);
+		}),
+	);
+	foreach($urls as $url => $vectors)
 	{
-		$test = array((string)$attack->code);
-		unset($GLOBALS['egw_unset_vars']);
-		_check_script_tag($test, $attack->name);
-		$failed = !isset($GLOBALS['egw_unset_vars']);
-		++$total;
-		if ($failed) $num_failed++;
-		echo "<p><span style='color: ".($failed?'red':'black')."'>".html::htmlspecialchars($attack->name).": ".html::htmlspecialchars($attack->code)." ".
-			(isset($GLOBALS['egw_unset_vars'])?'removed':'passed').
-			"</span><br /><span style='color: gray'>".html::htmlspecialchars($attack->desc)."</span></p>";
+		// no all xss attack vectors from http://ha.ckers.org/xssAttacks.xml are relevant here! (needs interpretation)
+		if (!$vectors)
+		{
+			echo "<p style='color:red'>Could NOT download or parse $url with attack vectors!</p>\n";
+			continue;
+		}
+		echo "<p><b>Attacks from <a href='$url' target='_blank'>$url</a> with ".count($vectors)." tests:</b></p>";
+		foreach($vectors as $line => $pattern)
+		{
+			$test = array($pattern);
+			unset($GLOBALS['egw_unset_vars']);
+			_check_script_tag($test, 'line '.(1+$line));
+			$failed = !isset($GLOBALS['egw_unset_vars']);
+			++$total;
+			if ($failed) $num_failed++;
+			echo "<p style='color: ".($failed?'red':'black')."'>".(1+$line).": ".html::htmlspecialchars($pattern).' '.
+				(isset($GLOBALS['egw_unset_vars'])?'removed':'passed')."</p>";
+		}
 	}
-	die("<p>Tests finished: $num_failed / $total failed</p>");
+	die("<p style='color: ".($num_failed?'red':'black')."'>Tests finished: $num_failed / $total failed</p>");
 }*/
 
 foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)

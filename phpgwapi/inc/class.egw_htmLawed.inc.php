@@ -138,7 +138,7 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	//if ($element=='img') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
 	if ($element=='td' && isset($attribute_array['background']))
 	{
-		if (stripos($attribute_array['background'],$GLOBALS['egw']->link('/index.php'))!==false)
+		if (is_object($GLOBALS['egw']) && stripos($attribute_array['background'],$GLOBALS['egw']->link('/index.php'))!==false)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($attribute_array));
 			//$attribute_array['background'] = 'url('.$attribute_array['background'].');';
@@ -159,10 +159,6 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	if (isset($attribute_array['title']))
 	{
 		if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
-	}
-	if (isset($attribute_array['face']))
-	{
-		if (stripos($attribute_array['face'],'script')!==false) $attribute_array['face']=str_ireplace('script','',$attribute_array['face']);
 	}
 	if ($element == 'blockquote')
 	{
