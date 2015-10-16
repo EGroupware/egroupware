@@ -305,6 +305,12 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 
 				// Ok, update children
 				self.iterateOver(function(widget) {
+						// Extra resize would cause stalling chrome
+						// as resize might confilict with bottom download bar
+						// in chrome which does a window resize, so better to not
+						// trigger second resize and leave that to an application 
+						// if it is neccessary.
+						
 						// Above forcing is not enough for Firefox, defer
 						window.setTimeout(jQuery.proxy(function() {this.resize();},widget),200);
 				},self,et2_IResizeable);
