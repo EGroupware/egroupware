@@ -1032,10 +1032,6 @@ var AppJS = Class.extend(
 						_data[egw.app_name()][lang][i]['onclick'] = 'app.'+egw.app_name()+'.egwTutorialPopup("'+tuid+'")';
 					}
 					content.content.list = _data[egw.app_name()][lang];
-					// Get the video with top property into the top of the list
-					content.content.list.sort(function(a){
-						if (!a.top) return 1;
-					});
 					
 					if (template.indexOf('.xet') >0)
 					{

@@ -3,9 +3,9 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="home.tutorial" template="" lang="" group="0" version="15.1">
-		<hbox height="90%" class="tutorial_popup">
-			<hbox class="tutorial_videoList">
-				<grid id="list" classs="egwGridView_grid" resize_ratio="0" width="190px">
+		<hbox height="90%"  class="tutorial_popup">
+			<hbox class="tutorial_videoList" width="200px">
+				<grid id="list" classs="egwGridView_grid" resize_ratio="0" width="200px">
 					<columns>
 						<column/>
 					</columns>
@@ -17,7 +17,7 @@
 						</row>
 						<row>
 							<vbox onclick="$row_cont[onclick]" align="center" statustext="$row_cont[title]">
-								<hbox background="$row_cont[thumbnail]" height="130px" width="98%" class="egw_tutorial_thumb">
+								<hbox background="$row_cont[thumbnail]" height="130px" width="190px" class="egw_tutorial_thumb">
 									<description value = "$row_cont[title]" class="egw_tutorial_title"/>
 									<hbox id="play" class="egw_tutorial_playBtn">
 										<hbox></hbox>
@@ -28,7 +28,7 @@
 					</rows>
 				</grid>
 			</hbox>
-			<iframe id="src" height="100%" seamless="true" width="73%" fullscreen="true"/>
+			<iframe id="src" height="100%" seamless="true" width="70%" fullscreen="true"/>
 		</hbox>
 		<hbox class="dialogFooterToolbar">
 			<button  align="left" statustext="Close this window" label="Close" id="button[close]" onclick="window.close()" image="close" background_image="1"/>
