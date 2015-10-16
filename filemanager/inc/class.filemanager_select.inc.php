@@ -258,6 +258,7 @@ class filemanager_select
 					'name' => $favorite['name'],
 					'path' => $path,
 					'mime' => $mime,
+					'is_dir' => true
 				);
 				if ($content['mode'] == 'open-multiple')
 				{
