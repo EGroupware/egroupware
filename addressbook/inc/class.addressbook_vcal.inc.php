@@ -929,7 +929,10 @@ class addressbook_vcal extends addressbook_bo
 				{
 					if (!empty($fieldName))
 					{
-						$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+						if (is_scalar($vcardValues[$vcardKey]['values'][$fieldKey]))
+						{
+							$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+						}
 						if ($pref_tel && (($vcardKey == $pref_tel) ||
 								($vcardValues[$vcardKey]['name'] == 'TEL') &&
 								($vcardValues[$vcardKey]['value'] == $vcardValues[$pref_tel]['value'])))
@@ -939,9 +942,9 @@ class addressbook_vcal extends addressbook_bo
 						switch($fieldName)
 						{
 							case 'bday':
-								$contact[$fieldName] = $vcardValues[$vcardKey]['values']['year'] .
-									'-' . $vcardValues[$vcardKey]['values']['month'] .
-									'-' . $vcardValues[$vcardKey]['values']['mday'];
+								$contact[$fieldName] = $vcardValues[$vcardKey]['value']['year'] .
+									'-' . $vcardValues[$vcardKey]['value']['month'] .
+									'-' . $vcardValues[$vcardKey]['value']['mday'];
 								break;
 
 							case 'private':

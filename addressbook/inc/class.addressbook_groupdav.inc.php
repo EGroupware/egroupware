@@ -672,6 +672,8 @@ class addressbook_groupdav extends groupdav_handler
 			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$save_ok");
 			if ($save_ok === 0)
 			{
+				// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
+				$this->check_return_representation($options, $id, $user);
 				return '412 Precondition Failed';
 			}
 			return '403 Forbidden';	// happens when writing new entries in AB's without ADD rights
