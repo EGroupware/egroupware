@@ -2567,12 +2567,20 @@ class mail_ui
 		}
 
 		$file_list = array();
+		$dupe_count = array();
 		$this->mail_bo->reopen($mailbox);
 		foreach($attachments as $file)
 		{
 			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false,true);
 			$success=true;
 			if (empty($file['filename'])) $file['filename'] = $file['name'];
+			if(in_array($path.$file['filename'], $file_list))
+			{
+				$dupe_count[$path.$file['filename']]++;
+				$file['filename'] = pathinfo($file['filename'], PATHINFO_FILENAME) .
+					' ('.($dupe_count[$path.$file['filename']] + 1).')' . '.' .
+					pathinfo($file['filename'], PATHINFO_EXTENSION);
+			}
 			if (!($fp = egw_vfs::fopen($path.$file['filename'],'wb')) ||
 				!(!fseek($attachment['attachment'], 0, SEEK_SET) && stream_copy_to_stream($attachment['attachment'], $fp)))
 			{
