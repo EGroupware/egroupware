@@ -140,7 +140,9 @@ class etemplate_request_cache extends etemplate_request
 		{
 			//error_log(__METHOD__."() saving $this->id".($this->data_modified?'':' data NOT modified, just keeping session alife'));
 			$this->data['last_saved'] = time();
-			if (!egw_cache::setTree($GLOBALS['egw_info']['server']['install_id'].'_etemplate', $this->id, $this->data, self::EXPIRATION))
+			if (!egw_cache::setTree($GLOBALS['egw_info']['server']['install_id'].'_etemplate', $this->id, $this->data,
+				// use bigger one of our own self::EXPIRATION=4h and session lifetime (session.gc_maxlifetime) as expiration time
+				max(self::EXPIRATION, ini_get('session.gc_maxlifetime'))))
 			{
 				error_log("Error storing etemplate request data for id=$this->id!");
 			}
