@@ -177,9 +177,9 @@ var fw_browser =  Class.extend({
 			// the popup can be discarded for the next time show if user
 			// select "Never" or can select "Later" and the introduction
 			// dialog will show upon the next session refresh
-			if (!egw.preference('egw_tutorial_noautoload', 'common') && !sessionStorage.getItem('egw_tutorial_visited'))
+			if (!egw.preference('egw_tutorial_noautoload', 'common') 
+					&& !parseInt(document.getElementById('egw_script_id').getAttribute('data-framework-reload')))
 			{
-				sessionStorage.setItem('egw_tutorial_visited', true);
 				var buttons = [
 					{text:"Show", id:"show", default:"true"},
 					{text:"Later", id:"later"},
