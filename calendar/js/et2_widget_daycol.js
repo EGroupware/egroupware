@@ -135,7 +135,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			this._parent.dayHeader.append(this.header);
 		}
 
-		this.header.css('left', this.div.css('left'));
 		this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity);
 		this.display_settings.rowHeight= (100/this.display_settings.rowsToDisplay).toFixed(1);
 		this.display_settings.titleHeight = (this.title.height()/this.div.height())*100;
@@ -297,7 +296,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 	set_left: function(left) {
 		this.div.css('left',left);
-		this.header.css('left',left);
+		// Maybe?
+		window.setTimeout(jQuery.proxy(function() {
+			this.header.css('left',left);
+		},this),1);
+		
 	},
 	set_width: function(width) {
 		this._super.apply(this, arguments);
