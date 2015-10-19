@@ -222,8 +222,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var small_height = true;
 		if(this._parent.display_settings)
 		{
-			small_height = event['end_m']-event['start_m'] < 2*this._parent.display_settings.granularity ||
-				event['end_m'] <= this._parent.display_settings.wd_start || event['start_m'] >= this._parent.display_settings.wd_end;
+			small_height = event['end_m']-event['start_m'] < this._parent.display_settings.granularity;
 		}
 
 		this.div.attr('data-title', title);
@@ -385,7 +384,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 			if(this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U')
 			{
-				icons.push('<img src="'+this.egw().image('cnr-pending','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
+				icons.push('<img src="'+this.egw().image('needs-action','calendar')+'" title="'+this.egw().lang('Needs action')+'"/>');
 			}
 		}
 		return icons;
