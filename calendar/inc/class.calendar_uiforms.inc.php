@@ -1142,7 +1142,20 @@ class calendar_uiforms extends calendar_ui
 				//error_log(__METHOD__.__LINE__.array2string($to));
 			}
 		}
-		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
+		// prefer event description over standard notification text
+		if (empty($event['description']))
+		{
+			list(,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
+		}
+		else
+		{
+			$body = $event['description'];
+		}
+		// respect user preference about html mail
+		if ($GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] != 'text')
+		{
+			$body = '<pre>'.$body.'</pre>';
+		}
 		//error_log(__METHOD__.print_r($event,true));
 		$boical = new calendar_ical();
 		// we need to pass $event[id] so iCal class reads event again,
@@ -1158,7 +1171,7 @@ class calendar_uiforms extends calendar_ui
 		//error_log(__METHOD__.__LINE__.array2string($to));
 		$vars = array(
 			'menuaction'      => 'mail.mail_compose.compose',
-			'mimeType'		  => 'plain', // force type to plain as thunderbird seems to try to be smart while parsing html messages with ics attachments
+			'mimeType'		  => $GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] != 'text' ? 'html' : 'plain',
 			'preset[to]'      => $to,
 			'preset[subject]' => $event['title'],
 			'preset[body]'    => $body,

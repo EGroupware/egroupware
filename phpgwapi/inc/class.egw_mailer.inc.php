@@ -330,21 +330,21 @@ class egw_mailer extends Horde_Mime_Mail
 		{
 			throw new egw_exception_not_found("File '$data' not found!");
 		}
-		$part = new Horde_Mime_Part();
-		if ($type || !is_resource($data)) $part->setType($type ? $type : egw_vfs::mime_content_type($data));
-		$matches = null;
-		if (preg_match('/^([^;]+);\s*([^=]+)=([^;]+)$/', $type, $matches))
-		{
-			$part->setContentTypeParameter($matches[2], $matches[3]);
-		}
-		$part->setContents($resource);
 
-		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
-		if (stripos($type,"text/calendar; method=") !== false)
+		if (empty($type) && !is_resource($data)) $type = egw_vfs::mime_content_type($data);
+
+		// set "text/calendar; method=*" as alternativ body
+		$matches = null;
+		if (preg_match('|^text/calendar; method=([^;]+)|i', $type, $matches))
 		{
-			$this->_htmlBody = $part;
+			$this->setAlternativBody($resource, $type, array('method' => $matches[1]), 'utf-8');
 			return;
 		}
+
+		$part = new Horde_Mime_Part();
+		$part->setType($type);
+		$part->setContents($resource);
+
 		// setting name, also sets content-disposition attachment (!), therefore we have to do it after "text/calendar; method=" handling
 		if ($name || !is_resource($data)) $part->setName($name ? $name : egw_vfs::basename($data));
 
@@ -375,7 +375,7 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 
 		$part_id = $this->addAttachment($data, $name, $type);
-		error_log(__METHOD__."(".array2string($data).", '$cid', '$name', '$type') added with (temp.) part_id=$part_id");
+		//error_log(__METHOD__."(".array2string($data).", '$cid', '$name', '$type') added with (temp.) part_id=$part_id");
 
 		$part = $this->_parts[$part_id];
 		$part->setDisposition('inline');
@@ -403,22 +403,19 @@ class egw_mailer extends Horde_Mime_Mail
 			$type = func_get_arg(3);
 		}
 
+		// set "text/calendar; method=*" as alternativ body
+		$matches = null;
+		if (preg_match('|^text/calendar; method=([^;]+)|i', $type, $matches))
+		{
+			$this->setAlternativBody($content, $type, array('method' => $matches[1]), 'utf-8');
+			return;
+		}
+
 		$part = new Horde_Mime_Part();
 		$part->setType($type);
-		$matches = null;
-		if (preg_match('/^([^;]+);\s*([^=]+)=([^;]+)$/', $type, $matches))
-		{
-			$part->setContentTypeParameter($matches[2], $matches[3]);
-		}
 		$part->setCharset('utf-8');
 		$part->setContents($content);
 
-		// store "text/calendar" as _htmlBody, to trigger "multipart/alternative"
-		if (stripos($type,"text/calendar; method=") !== false)
-		{
-			$this->_htmlBody = $part;
-			return;
-		}
 		// this should not be necessary, because binary data get detected by mime-type,
 		// but at least Cyrus complains about NUL characters
 		$part->setTransferEncoding('base64', array('send' => true));
@@ -426,6 +423,28 @@ class egw_mailer extends Horde_Mime_Mail
 		$part->setDisposition('attachment');
 
 		return $this->addMimePart($part);
+	}
+
+	/**
+	 * Sets alternativ body, eg. text/calendar has highest / last alternativ
+	 *
+	 * Until pull request to Horde_Mime_Mail gets approved.
+	 *
+	 * @param string|resource $content
+	 * @param string $type eg. "text/calendar" or "text/calendar; method=REQUEST"
+	 * @param array $parameters =array() eg. array('method' => 'REQUEST')
+	 * @param string $charset =null default to $this->_charset="utf-8"
+	 */
+	function setAlternativBody($content, $type, $parameters=array(), $charset=null)
+	{
+		$this->_alternativBody = new Horde_Mime_Part();
+		$this->_alternativBody->setType($type);
+		foreach($parameters as $label => $data)
+		{
+			$this->_alternativBody->setContentTypeParameter($label, $data);
+		}
+		$this->_alternativBody->setCharset($charset ? $charset : $this->_charset);
+		$this->_alternativBody->setContents($content);
 	}
 
 	/**
@@ -481,8 +500,44 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 
 		try {
-			parent::send($this->account->smtpTransport(), true,		// true: keep Message-ID
-				$this->_body && $this->_body->getType() != 'multipart/encrypted');	// no flowed for encrypted messages
+			// no flowed for encrypted messages
+			$flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
+
+			// vvv until pull request to Horde_Mime_Mail gets approved vvvvvvvvv
+			if (!empty($this->_alternativBody) && empty($this->_htmlBody))
+			{
+				$this->_htmlBody = $this->_alternativBody;
+				unset($this->_alternativBody);
+			}
+			if (!empty($this->_alternativBody))
+			{
+				parent::send(new Horde_Mail_Transport_Null, true, $flowed);		// true: keep Message-ID
+
+				$this->_base[] = $this->_alternativBody;
+
+				/* Build recipients. */
+				$recipients = clone $this->_recipients;
+				foreach (array('to', 'cc') as $header) {
+					if (($h = $this->_headers[$header])) {
+						$recipients->add($h->getAddressList());
+					}
+				}
+				if ($this->_bcc) {
+					$recipients->add($this->_bcc);
+				}
+
+				/* Trick Horde_Mime_Part into re-generating the message headers. */
+				$this->_headers->removeHeader('MIME-Version');
+
+				/* Send message. */
+				$recipients->unique();
+				$this->_base->send($recipients->writeAddress(), $this->_headers, $this->account->smtpTransport());
+			}
+			else
+			// ^^^ until pull request to Horde_Mime_Mail gets approved ^^^^^^^^^
+			{
+				parent::send($this->account->smtpTransport(), true,	$flowed);	// true: keep Message-ID
+			}
 		}
 		catch (Exception $e) {
 			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
