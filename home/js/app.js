@@ -98,7 +98,7 @@ app.classes.home = AppJS.extend(
 		{
 			// call parent
 			this._super.apply(this, arguments);
-
+			
 			this.et2.set_id('home.index');
 			this.et2.set_actions(this.et2.getArrayMgr('modifications').getEntry('home.index')['actions']);
 
@@ -746,6 +746,36 @@ app.classes.home = AppJS.extend(
 		nm.div.toggleClass('header_hidden');
 		nm.set_hide_header(nm.div.hasClass('header_hidden'));
 		nm.resize();
+	},
+	
+	/**
+	 * Function to set video iframe base on selected tutorial from
+	 * tutorials box
+	 * 
+	 * @param {type} url
+	 */
+	tutorial_videoOnClick: function (_url)
+	{
+		var frame = etemplate2.getByApplication('home')[0].widgetContainer.getWidgetById('src');
+		if (frame)
+		{
+			frame.set_value(_url);
+		}
+	},
+	
+	/**
+	 * Function calls on discard checkbox and will set
+	 * the egw_tutorial_autoload preference
+	 * 
+	 * @param {type} egw
+	 * @param {type} widget
+	 */
+	tutorial_autoloadDiscard: function (egw, widget)
+	{
+		if (widget)
+		{
+			this.egw.set_preference('common', 'egw_tutorial_autoload', widget.get_value());
+		}
 	}
 });
 
