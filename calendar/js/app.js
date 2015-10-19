@@ -1655,10 +1655,6 @@ app.classes.calendar = AppJS.extend(
 			}
 			this.state = jQuery.extend({},state.state);
 
-			var formatDate = new Date(this.state.date);
-			formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
-			egw_app_header(view.header(state.state),'calendar');
-
 			// List view (nextmatch) has slightly different fields
 			if(state.state.view === 'listview')
 			{
@@ -1734,6 +1730,9 @@ app.classes.calendar = AppJS.extend(
 
 			// If current state matches a favorite, hightlight it
 			this.highlight_favorite();
+
+			// Update app header
+			egw_app_header(view.header(state.state),'calendar');
 
 			// Sidebox is updated, we can clear the flag
 			this.state_update_in_progress = false;
