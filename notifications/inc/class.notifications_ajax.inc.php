@@ -109,7 +109,11 @@ class notifications_ajax {
 	 *
 	 * @return xajax response
 	 */
-	public function get_notifications($browserNotify = false) {
+	public function get_notifications($browserNotify = false)
+	{
+		// close session now, to not block other user actions, as specially mail checks can be time consuming
+		$GLOBALS['egw']->session->commit_session();
+
 		// call a hook for notifications on new mail
 		//if ($GLOBALS['egw_info']['user']['apps']['mail'])  $this->check_mailbox();
 		$GLOBALS['egw']->hooks->process('check_notify');
