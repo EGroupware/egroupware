@@ -985,24 +985,23 @@ var AppJS = Class.extend(
 	 *		{
 	 *			[app name]:{
 	 *				[language tag]:[
-	 *					{src:"",thumbnail:"",title:"",top:""}		
+	 *					{src:"",thumbnail:"",title:"",desc:""}		
 	 *				]
 	 *			}
 	 *		}
 	 *	
-	 *	*Note: "top" and "title" are optional attributes, which "top" means that specific video should
-	 *		appears on top of the list.
+	 *	*Note: "desc" and "title" are optional attributes, which "desc" would appears as tooltip for the video.
 	 *	
 	 *	example:
 	 *		{
 	 *			"mail":{
 	 *				"en":[
-	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", thumbnail:"http://img.youtube.com/vi/mCDJndpjO40/0.jpg", "title":"PGP Encryption"},
-	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", thumbnail:"http://img.youtube.com/vi/mCDJndpjO/0.jpg", "title":"Subscription", top:true},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", thumbnail:"http://img.youtube.com/vi/mCDJndpjO40/0.jpg", "title":"PGP Encryption", "desc":""},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", thumbnail:"http://img.youtube.com/vi/mCDJndpjO/0.jpg", "title":"Subscription", "desc":""},
 	 *				],
 	 *				"de":[
-	 *					{src:"https://www.youtube.com/embed/m40", thumbnail:"http://img.youtube.com/vi/m40/0.jpg", "title":"PGP Verschlüsselung"},
-	 *					{src:"https://www.youtube.com/embed/mpjO", thumbnail:"http://img.youtube.com/vi/mpjO/0.jpg", "title":"Ordner Abonnieren", top:true},
+	 *					{src:"https://www.youtube.com/embed/m40", thumbnail:"http://img.youtube.com/vi/m40/0.jpg", "title":"PGP Verschlüsselung", "desc":""},
+	 *					{src:"https://www.youtube.com/embed/mpjO", thumbnail:"http://img.youtube.com/vi/mpjO/0.jpg", "title":"Ordner Abonnieren", "desc":""},
 	 *				]
 	 *			}
 	 *		}
@@ -1057,7 +1056,7 @@ var AppJS = Class.extend(
 	egwTutorialPopup: function (_tuid)
 	{
 		var url = egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid='+_tuid);
-		egw.open_link(url,'_blank','750x580');
+		egw.open_link(url,'_blank','960x580');
 	},
 	
 	/**

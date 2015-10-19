@@ -535,7 +535,6 @@ class mail_hooks
 		}
 		hooks::pgp_encryption_menu('mail');
 		
-		hooks::egw_tutorial_menu('mail');
 	}
 
 	/**

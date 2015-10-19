@@ -111,6 +111,12 @@ span.egw_tutorial_title {
   height: 100%;
   display: inline-block !important;
 }
+div.tutorial_iframe_wrapper {
+  position: absolute;
+  left: 211px;
+  right: 2px;
+  height: 90%;
+}
 span.egw_tutorial_title {
   color: #FFFFFF;
   font-weight: bold;

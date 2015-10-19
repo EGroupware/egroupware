@@ -75,6 +75,7 @@ class home_tutorial_ui {
 			$content = array (
 				'src' => $tutorial['src'],
 				'title' => $tutorial['title'],
+				'desc' => $tutorial['desc'],
 				'list' => $list
 			);
 		}
@@ -82,11 +83,6 @@ class home_tutorial_ui {
 		{
 			$content = array();
 			egw_framework::message(lang('You do not have permission to see this tutorial!'));
-		}
-		// If its the autoloading tutorial
-		if ($tuid_indx[3] === 'a')
-		{
-			$content ['discardbox'] = true;
 		}
 				
 		$tmpl->exec('home.home_tutorial_ui.popup', $content,$sel_options,array(),array(),array(),2);
@@ -112,6 +108,8 @@ class home_tutorial_ui {
 		if (!($json = egw_cache::getCache(egw_cache::TREE, 'home', 'egw_tutorial_json')))
 		{
 			$json = file_get_contents('http://www.egroupware.de/videos/tutorials.json');
+			// Fallback tutorials.json
+			if (!$json) $json = file_get_contents('home/setup/tutorials.json');
 			// Cache the json object for two hours
 			egw_cache::setCache(egw_cache::TREE, 'home', 'egw_tutorial_json', $json, 720);
 		}

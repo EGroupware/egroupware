@@ -9,7 +9,7 @@
 			</columns>
 			<rows>
 				<row >
-					<vbox onclick="$row_cont[onclick]" align="center" statustext="$row_cont[title]">
+					<vbox onclick="$row_cont[onclick]" align="center" statustext="$row_cont[desc]">
 						<hbox background="$row_cont[thumbnail]" height="130px" width="99%" class="egw_tutorial_thumb">
 							<description value = "$row_cont[title]" class="egw_tutorial_title"/>
 							<hbox id="play" class="egw_tutorial_playBtn">

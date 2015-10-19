@@ -27,6 +27,7 @@ $setup_info['home']['maintainer'] = array(
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['home']['hooks']['hasUpdates'] = 'home.updates.hasUpdates';
 $setup_info['home']['hooks']['showUpdates'] = 'home.updates.showUpdates';
+$setup_info['home']['hooks']['sidebox_all'] = 'hooks::egw_tutorial_menu';
 
 /* Dependencies for this app to work */
 $setup_info['home']['depends'][] = array(

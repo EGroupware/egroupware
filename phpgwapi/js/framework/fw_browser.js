@@ -189,7 +189,7 @@ var fw_browser =  Class.extend({
 				{
 					if (_button_id == "show" )
 					{
-						egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','750x580');
+						egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','960x580');
 					}
 					else if(_button_id == "never")
 					{

@@ -383,10 +383,12 @@ class hooks
 	/**
 	 * Static function to build egw tutorial sidebox menu
 	 *
-	 * @param type $appname application name
 	 */
-	public static function egw_tutorial_menu($appname)
+	public static function egw_tutorial_menu()
 	{
+		$tutorials = json_decode(home_tutorial_ui::getJsonData(),true);
+		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
+		if (!is_array($tutorials[$appname])) return false;
 		if (!$GLOBALS['egw_info']['server']['egw_tutorial_disable'])
 		{
 			$file = Array (

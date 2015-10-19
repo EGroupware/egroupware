@@ -4683,7 +4683,7 @@ td.message span.message {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12.100000000000001px;
+  font-size: 12.1px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
@@ -6456,6 +6456,12 @@ span.egw_tutorial_title {
   overflow-y: auto;
   height: 100%;
   display: inline-block !important;
+}
+div.tutorial_iframe_wrapper {
+  position: absolute;
+  left: 211px;
+  right: 2px;
+  height: 90%;
 }
 span.egw_tutorial_title {
   color: #FFFFFF;
