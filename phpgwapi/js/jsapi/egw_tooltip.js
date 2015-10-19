@@ -24,7 +24,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	var time_delta = 100;
 	var show_delta = 0;
-	var show_delay = 800;
+	var show_delay = 200;
 
 	var x = 0;
 	var y = 0;
