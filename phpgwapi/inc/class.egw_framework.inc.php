@@ -285,6 +285,10 @@ abstract class egw_framework
 		header("Content-Security-Policy: $csp");
 		header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
 		header("X-Content-Security-Policy: $csp");	// FF <= 22
+
+		// allow client-side to detect first load aka just logged in
+		$reload_count =& egw_cache::getSession(__CLASS__, 'framework-reload');
+		self::$extra['framework-reload'] = (int)(bool)$reload_count++;
 	}
 
 	/**
@@ -1460,7 +1464,7 @@ abstract class egw_framework
 	{
 		$matches = null;
 
-		list($file,$query) = explode('?',$path,2);
+		list($file) = explode('?',$path,2);
 		if (($to_check = file_get_contents (EGW_SERVER_ROOT.$file, false, null, -1, 1024)) &&
 			stripos($to_check, '/*@import') !== false && preg_match_all('|/\*@import url\("([^"]+)"|i', $to_check, $matches))
 		{
