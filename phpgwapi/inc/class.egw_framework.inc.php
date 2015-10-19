@@ -302,7 +302,6 @@ abstract class egw_framework
 
 			// allways load jquery (not -ui) and egw_json first
 			'/phpgwapi/js/jquery/jquery.js',
-			'/phpgwapi/js/./egw_json.js',
 			// always include javascript helper functions
 			'/phpgwapi/js/jsapi/jsapi.js',
 			'/phpgwapi/js/jsapi/egw.js',
@@ -1390,7 +1389,7 @@ abstract class egw_framework
 			self::includeCSS('/etemplate/templates/default/etemplate2.css');
 
 			// Category styles
-			self::includeCSS('/phpgwapi/categories.php');
+			categories::css(categories::GLOBAL_APPNAME);
 
 			// For mobile user-agent we prefer mobile theme over selected one with a final fallback to theme named as template
 			$themes_to_check = array();
@@ -2296,7 +2295,7 @@ abstract class egw_framework
 		{
 			unset($query);
 			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. filemtime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
+			$path .= '?'. ($query ? $query : filemtime(EGW_SERVER_ROOT.$path));
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 

@@ -1023,6 +1023,27 @@ class categories
 	}
 
 	/**
+	 * Have the framework include the CSS file
+	 *
+	 * We calculate the cachebuster timestamp from the last modified category in
+	 * the application.
+	 *
+	 * @param string appname
+	 *
+	 * @return Returns the URL, but you do not need to do anything with it.
+	 */
+	public static function css($appname)
+	{
+		$cats = new categories('',$appname);
+		$last_mod = $cats->return_array('all',0,1,'','DESC','last_mod', $appname == self::GLOBAL_APPNAME);
+		$time = count($last_mod) ? $last_mod[0]['last_mod'] : time();
+		$path = '/phpgwapi/categories.php?app='.$appname.'&'.$time;
+		egw_framework::includeCSS($path);
+
+		return $path;
+	}
+
+	/**
 	 * Delete categories belonging to a given account, when account got deleted
 	 *
 	 * @param int $account_id
