@@ -606,17 +606,18 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		}
 
 		// Create / update day widgets with dates and data
+		var day_width = (100/this.day_list.length).toFixed(2);
 		for(var i = 0; i < this.day_list.length; i++)
 		{
 			day = this.day_widgets[i];
 			
 			// Position
-			day.set_left(((100/this.day_list.length).toFixed(2) * i) + '%');
+			day.set_left((day_width * i) + '%');
 			
 			day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
 			day.set_owner(this.options.owner);
 			day.set_id(this.day_list[i]);
-			day.set_width((100/this.day_list.length).toFixed(2) + '%');
+			day.set_width(day_width + '%');
 		}
 
 		// Don't hold on to value any longer, use the data cache for best info
