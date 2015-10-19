@@ -87,6 +87,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			type: "string",
 			default: '',
 			description: 'data="mime:${row}[mime]" would generate data-mime="..." in DOM, eg. to use it in CSS on a parent'
+		},
+		background: {
+			name: "Add background image",
+			type: "string",
+			default:'',
+			description: "Sets background image, left, right and scale on DOM",
 		}
 	},
 
@@ -423,7 +429,23 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			}
 		}
 	},
-
+	
+	set_background: function(_value)
+	{
+		var node = this.getDOMNode(this);
+		var values = '';
+		if (_value && node)
+		{
+			values = _value.split(',');
+			jQuery(node).css({
+				"background-image":'url("'+values[0]+'")',
+				"background-position-x":values[1],
+				"background-position-y":values[2],
+				"background-scale":values[3]
+			});
+		}
+	},
+	
 	/**
 	 * Set Actions on the widget
 	 *

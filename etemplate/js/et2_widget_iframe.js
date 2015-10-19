@@ -45,7 +45,13 @@ var et2_iframe = et2_valueWidget.extend(
 			"default": "",
 			description: "Specifies name of frame, to be used as target for links",
 			type: "string"
-		}
+		},
+		fullscreen: {
+			name: "Fullscreen",
+			"default": false,
+			description: "Make the iframe compatible to be a fullscreen video player mode",
+			type: "boolean"
+		},
 	},
 
 	/**
@@ -63,6 +69,10 @@ var et2_iframe = et2_valueWidget.extend(
 		if(this.options.label)
 		{
 			this.htmlNode.append('<span class="et2_label">'+this.options.label+'</span>');
+		}
+		if (this.options.fullscreen)
+		{
+			this.htmlNode.attr('allowfullscreen', true);
 		}
 		this.setDOMNode(this.htmlNode[0]);
 	},

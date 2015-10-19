@@ -145,6 +145,9 @@ var AppJS = Class.extend(
 
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
+		
+		// Initialize egw tutorial sidebox
+		this.egwTutorial_init();
 	},
 
 	/**
@@ -905,5 +908,105 @@ var AppJS = Class.extend(
 		{
 			return this.et2._inst.uniqueId;
 		}
+	},
+
+	/**
+	 * Get json data for videos from the given url
+	 * 
+	 * @return {Promise, object} return Promise, json object as resolved result and error message in case of failure
+	 */
+	egwTutorialGetData: function(){
+		var self = this;
+		return new Promise (function(_resolve, _reject)
+		{
+			var resolve = _resolve;
+			var reject = _reject;
+			self.egw.json('home.home_tutorial_ui.ajax_data', [self.egw.app_name()], function(_data){
+					resolve(_data);
+			}).sendRequest();
+		});
+	},
+	
+	/**
+	 * Create and Render etemplate2 for egroupware tutorial
+	 * sidebox option. The .xet file is stored in etemplate/templates/default/egw_tutorials
+	 * 
+	 * @description tutorials json object should have the following structure:
+	 *	object:
+	 *		{
+	 *			[app name]:{
+	 *				[language tag]:[
+	 *					{src:"",thumbnail:"",title:"",desc:""}		
+	 *				]
+	 *			}
+	 *		}
+	 *	
+	 *	*Note: "desc" and "title" are optional attributes, which "desc" would appears as tooltip for the video.
+	 *	
+	 *	example:
+	 *		{
+	 *			"mail":{
+	 *				"en":[
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO40", thumbnail:"http://img.youtube.com/vi/mCDJndpjO40/0.jpg", "title":"PGP Encryption", "desc":""},
+	 *					{src:"https://www.youtube.com/embed/mCDJndpjO", thumbnail:"http://img.youtube.com/vi/mCDJndpjO/0.jpg", "title":"Subscription", "desc":""},
+	 *				],
+	 *				"de":[
+	 *					{src:"https://www.youtube.com/embed/m40", thumbnail:"http://img.youtube.com/vi/m40/0.jpg", "title":"PGP Verschlüsselung", "desc":""},
+	 *					{src:"https://www.youtube.com/embed/mpjO", thumbnail:"http://img.youtube.com/vi/mpjO/0.jpg", "title":"Ordner Abonnieren", "desc":""},
+	 *				]
+	 *			}
+	 *		}
+	 */
+	egwTutorial_init: function()
+	{
+		//DOM container
+		var div = document.getElementById('egw_tutorial_'+egw.app_name()+'_sidebox');
+		if (!div) return;
+		
+		// et2 object
+		var etemplate = new etemplate2 (div, false);
+		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet';
+		
+		this.egwTutorialGetData().then(function(_data){
+			var lang = egw.preference('lang');
+			var content = {content:{list:[]}};
+			if (_data && _data[egw.app_name()])
+			{
+				if (!_data[egw.app_name()][lang]) lang = 'en';
+				if (typeof _data[egw.app_name()][lang] !='undefined' 
+					&& _data[egw.app_name()][lang].length > 0)
+				{
+					for (var i=0;i < _data[egw.app_name()][lang].length;i++)
+					{
+						var tuid = egw.app_name() + '-' +lang + '-' + i;
+						_data[egw.app_name()][lang][i]['onclick'] = 'app.'+egw.app_name()+'.egwTutorialPopup("'+tuid+'")';
+					}
+					content.content.list = _data[egw.app_name()][lang];
+					
+					if (template.indexOf('.xet') >0)
+					{
+						etemplate.load ('',template , content, function(){});
+					}
+					else
+					{
+						etemplate.load (template, '', content);
+					}
+				}
+			}	
+		},
+		function(_err){
+			console.log(_err);
+		});
+	},
+	
+	/**
+	 * Open popup to show given tutorial id
+	 * @param {string} _tuid tutorial object id
+	 *	- tuid: appname-lang-index
+	 */
+	egwTutorialPopup: function (_tuid)
+	{
+		var url = egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid='+_tuid);
+		egw.open_link(url,'_blank','960x580');
 	},
 });
