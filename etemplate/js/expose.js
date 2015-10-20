@@ -48,7 +48,10 @@ function expose (widget)
 	};
 
 	// For filtering to only show things we can handle
-	var mime_regex = new RegExp(/(video\/)|(image\/:*(?!tif|x-xcf))|(audio\/)/);
+	var mime_regex = new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))/);
+	
+	// IE only supports video/mp4 mime type
+	if (navigator.userAgent.match(/(MSIE|Trident)/)) mime_regex.compile(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))/);
 
 	// Only one gallery
 	var gallery = null;

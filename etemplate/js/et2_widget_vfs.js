@@ -345,7 +345,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				mediaContent[0].download_href = mediaContent[0].href + '?download';
 			}
 		}
-		if (_value && _value.mime && _value.mime.match(/video\/|audio\//,'ig'))
+		if (_value && _value.mime && _value.mime.match(/video\//,'ig'))
 		{
 			mediaContent[0].thumbnail = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
 		}
