@@ -285,6 +285,10 @@ abstract class egw_framework
 		header("Content-Security-Policy: $csp");
 		header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
 		header("X-Content-Security-Policy: $csp");	// FF <= 22
+
+		// allow client-side to detect first load aka just logged in
+		$reload_count =& egw_cache::getSession(__CLASS__, 'framework-reload');
+		self::$extra['framework-reload'] = (int)(bool)$reload_count++;
 	}
 
 	/**
