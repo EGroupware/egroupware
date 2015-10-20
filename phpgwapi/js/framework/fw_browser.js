@@ -173,34 +173,7 @@ var fw_browser =  Class.extend({
 				clearTimeout(self.ajaxLoaderDivTimeout);
 			}
 			
-			// Open tutorial popup with an introduction video about egroupware
-			// the popup can be discarded for the next time show if user
-			// select "Never" or can select "Later" and the introduction
-			// dialog will show upon the next session refresh
-			if (!egw.preference('egw_tutorial_noautoload', 'common') 
-					&& !parseInt(document.getElementById('egw_script_id').getAttribute('data-framework-reload')))
-			{
-				var buttons = [
-					{text:"Show", id:"show", default:"true"},
-					{text:"Later", id:"later"},
-					{text:"Never", id:"never"}
-				];
-				et2_dialog.show_dialog(function (_button_id)
-				{
-					if (_button_id == "show" )
-					{
-						egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','960x580');
-					}
-					else if(_button_id == "never")
-					{
-						egw.set_preference('common', 'egw_tutorial_noautoload',true);
-					}
-				},
-				egw.lang('We would like to introduce you to EGroupware by showing a short introduction video.'),
-				egw.lang('Introduction'),
-				{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, egw);
-				
-			}
+			
 		});
 
 		// Check whether the given url is a pseudo url which should be executed
