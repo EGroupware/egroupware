@@ -230,113 +230,26 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 	 * Open IMAP connection
 	 *
 	 * @param int $account integer id of account to use
-	 * @param boolean $verify_mode mode used for verify_settings; we want the exception but not the header stuff
 	 * @todo support different accounts
 	 */
-	private function _connect($account=0, $verify_mode=false)
+	private function _connect($account=0)
 	{
-		static $waitOnFailure;
 		if (is_null($account)) $account = 0;
 		if ($this->mail && $this->account != $account) $this->_disconnect();
 
-		$hereandnow = egw_time::to('now','ts');
 		$this->_wasteID = false;
 		$this->_sentID = false;
 
-		$connectionFailed = false;
-
-		if ($verify_mode==false && (is_null($waitOnFailure)||empty($waitOnFailure[self::$profileID])||empty($waitOnFailure[self::$profileID][$this->backend->_devid])))
-		{
-			$waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*2);
-		}
-		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']))
-		{
-			if ($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']<$hereandnow)
-			{
-				if ($this->debugLevel>0); error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Refuse to open connection for Profile:".self::$profileID.' Device '.$this->backend->_devid.' should still wait '.array2string($waitOnFailure[self::$profileID][$this->backend->_devid]));
-				header("HTTP/1.1 503 Service Unavailable");
-				$hL = $waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']-$hereandnow;
-				header("Retry-After: ".$hL);
-				exit;
-			}
-		}
 		if (!$this->mail)
 		{
 			$this->account = $account;
 			// todo: tell mail which account to use
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
-			try
-			{
-				$this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
-				if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
-				$this->mail->openConnection(self::$profileID,false);
-				$connectionFailed = false;
-			}
-			catch (Exception $e)
-			{
-				$connectionFailed = true;
-				$errorMessage = $e->getMessage();
-			}
+			$this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 		}
-		else
-		{
-			//error_log(__METHOD__.__LINE__." connect with profileID: ".self::$profileID);
-			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
-			try
-			{
-				$this->mail->openConnection(self::$profileID,false);
-				$connectionFailed = false;
-			}
-			catch (Exception $e)
-			{
-				$connectionFailed = true;
-				$errorMessage = $e->getMessage();
-			}
-		}
-		if (empty($waitOnFailure[self::$profileID][$this->backend->_devid])) $waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
-		if ($connectionFailed)
-		{
-			// in verify_moode, we want the exeption, but not the exit
-			if ($verify_mode)
-			{
-				throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$this->mail->getErrorMessage().' for Instance='.$GLOBALS['egw_info']['user']['domain']);
-			}
-			else
-			{
-				//error_log(__METHOD__.__LINE__."($account) could not open connection!".$errorMessage);
-				//error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
-				//error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
-				//	($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
-				if ($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'] > $this->waitOnFailureLimit )
-				{
-					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
-					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-					header("HTTP/1.1 500 Internal Server Error");
-					throw new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid);
-				}
-				else
-				{
-					//error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device:'.$this->backend->_devid.' should wait '.array2string($waitOnFailure[self::$profileID][$this->backend->_devid]));
-					$waitaslongasthis = $waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'];
-					$waitOnFailure[self::$profileID][$this->backend->_devid] = array('howlong'=>(empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong'])?$this->waitOnFailureDefault:$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) * 2,'lastattempt'=>$hereandnow);
-					egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-					header("HTTP/1.1 503 Service Unavailable");
-					header("Retry-After: ".$waitaslongasthis);
-					$ethrown = new egw_exception_not_found(__METHOD__.__LINE__."($account) can not open connection on Profile #".self::$profileID."!".$errorMessage.' for Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', Device:'.$this->backend->_devid." Should wait for:".$waitaslongasthis.'(s)'.' WaitInfoStored2Cache:'.array2string($waitOnFailure));
-					_egw_log_exception($ethrown);
-					exit;
-				}
-			}
-			//die('Mail not or mis-configured!');
-		}
-		else
-		{
-			if (!empty($waitOnFailure[self::$profileID][$this->backend->_devid]))
-			{
-				$waitOnFailure[self::$profileID][$this->backend->_devid] = array();
-				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-			}
-		}
+		if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
+		$this->mail->openConnection(self::$profileID,false);
+
 		$this->_wasteID = $this->mail->getTrashFolder(false);
 		//error_log(__METHOD__.__LINE__.' TrashFolder:'.$this->_wasteID);
 		$this->_sentID = $this->mail->getSentFolder(false);
