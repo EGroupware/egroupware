@@ -124,6 +124,23 @@ class mime_magic
 	}
 
 	/**
+	 * Fix old / aliased mime-types by returning valid/default mime-type
+	 *
+	 * @param string $_alias
+	 * @return string new type, of $alias, if there is no alias defined for it
+	 */
+	public static function fix_mime_type($_alias)
+	{
+		$alias = strtolower($_alias);
+
+		if (isset(self::$mime_alias_map[$alias]))
+		{
+			return self::$mime_alias_map[$alias];
+		}
+		return $alias;
+	}
+
+	/**
 	 * Uses variants of the UNIX "file" command to attempt to determine the
 	 * MIME type of an unknown file.
 	 *
@@ -1671,6 +1688,7 @@ class mime_magic
 		'application/x-javascript' => 'application/javascript',
 		'application/x-troff' => 'text/troff',
 		'application/x-egroupware-etemplate' => 'application/xml',
+		'image/pdf' => 'application/pdf',
 	);
 
 	/**

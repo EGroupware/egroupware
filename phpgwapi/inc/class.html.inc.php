@@ -1515,6 +1515,9 @@ egw_LAB.wait(function() {
 	 */
 	public static function safe_content_header(&$content, $path, &$mime='', &$length=0, $nocache=true, $force_download=true, $no_content_type=false)
 	{
+		// change old/aliased mime-types to new one, eg. image/pdf to application/pdf
+		$mime = mime_magic::fix_mime_type($mime);
+
 		// mitigate risk of serving javascript or css via webdav from our domain,
 		// which will get around same origin policy and CSP
 		list($type, $subtype) = explode('/', strtolower($mime));

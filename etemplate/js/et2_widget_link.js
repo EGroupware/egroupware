@@ -1360,7 +1360,7 @@ var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 	{
 		var base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
 		var mediaContent = [];
-		if (_value && typeof _value.type !='undefined' && _value.type.match(/video\/|audio\//,'ig'))
+		if (_value && typeof _value.type !='undefined' && _value.type.match(/video\//,'ig'))
 		{
 			mediaContent = [{
 					title: _value.id,
