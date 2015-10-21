@@ -505,13 +505,25 @@ class egw_mailer extends Horde_Mime_Mail
 		}
 
 		try {
+			// no flowed for encrypted messages
+			$flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
+
 			// handling of alternativ body
-			if (!empty($this->_alternateBody))
+			if (!empty($this->_alternativBody))
 			{
 				$body = new Horde_Mime_Part();
 				$body->setType('multipart/alternative');
 				if (!empty($this->_body))
 				{
+					// Send in flowed format.
+					if ($flowed)
+					{
+						$text_flowed = new Horde_Text_Flowed($this->_body->getContents(), $this->_body->getCharset());
+						$text_flowed->setDelSp(true);
+						$this->_body->setContentTypeParameter('format', 'flowed');
+						$this->_body->setContentTypeParameter('DelSp', 'Yes');
+						$this->_body->setContents($text_flowed->toFlowed());
+					}
 					$body[] = $this->_body;
 				}
 				if (!empty($this->_htmlBody))
@@ -521,11 +533,9 @@ class egw_mailer extends Horde_Mime_Mail
 				}
 				$body[] = $this->_alternativBody;
 				unset($this->_alternativBody);
-				$this->setBody($body);
+				$this->_body = $body;
+				$flowed = false;
 			}
-			// no flowed for encrypted messages
-			$flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
-
 			parent::send($this->account->smtpTransport(), true,	$flowed);	// true: keep Message-ID
 		}
 		catch (Exception $e) {
