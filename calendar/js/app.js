@@ -464,17 +464,22 @@ app.classes.calendar = AppJS.extend(
 			.on('wheel.calendar','.et2_container .calendar_calTimeGrid, .et2_container .calendar_plannerWidget',
 				function(e)
 				{
-					var at_bottom = true;
-					var at_top = true;
-					$j(this).children().each(function() {
+					// Ignore if they're going the other way
+					var direction = e.originalEvent.deltaY > 0 ? 1 : -1;
+					var at_bottom = direction !== -1;
+					var at_top = direction !== 1;
+					
+					$j(this).children(":not(.calendar_calGridHeader)").each(function() {
 						at_bottom = at_bottom && this.scrollTop === (this.scrollHeight - this.offsetHeight)
 					}).each(function() {
 						at_top = at_top && this.scrollTop === 0;
 					});
 					if(!at_bottom && !at_top) return;
-					
+
+					// Scrolling too fast?
+					if(app.calendar._scroll_disabled) return;
+
 					e.preventDefault();
-					var direction = e.originalEvent.deltaY > 0 ? 1 : -1;
 					var delta = 1;
 					var start = new Date(app.calendar.state.date);
 					var end = null;
@@ -485,6 +490,80 @@ app.classes.calendar = AppJS.extend(
 					var template = etemplate2.getById(id);
 					if(!template) return;
 
+					// Prevent scrolling too fast
+					app.calendar._scroll_disabled = true;
+
+					// Animate the transition, if possible
+					var widget = null
+					template.widgetContainer.iterateOver(function(w) {
+						if (w.getDOMNode() == this) widget = w;
+					},this,et2_widget);
+					if(widget == null) return;
+					
+					// We apply the reverse quickly, then let it animate as the changes are
+					// removed, leaving things where they should be.
+					var original = $j(this);
+					var cloned = original.clone(true).attr("id","CLONE");
+					var wrapper = $j(document.createElement("div"));
+					original.parent().append(wrapper);
+					// This is to hide the scrollbar
+					wrapper.wrap("<div style='overflow:hidden; height:"+original.outerHeight()+"px'></div>");
+					wrapper.height(original.outerHeight() + cloned.outerHeight());
+					wrapper.append(original);
+					if(direction == -1)
+					{
+						// Scrolling up
+						original.parent().append(cloned);
+						wrapper.css({"transform": "translateY(" + (direction * 50) + "%)"});
+						// Makes it jump to destination
+						wrapper.css({
+							"transition-duration": "0s",
+							"transition-delay": "0s"
+						});
+						wrapper.css({
+							"transition-duration": "",
+							"transition-delay": ""
+						});
+					}
+					else
+					{
+						// Scrolling down
+						$j(this).parent().prepend(cloned);
+						$j('.calendar_calTimeGridScroll',cloned).scrollTop(10000);
+					}
+					
+					// Remove
+					var remove = function() {
+						// Starting animation
+						wrapper.addClass("calendar_slide");
+						wrapper.css({"transform": direction == 1 ? "translateY(-50%)" : ""});
+						window.setTimeout(function() {
+							// Clean up from animation
+							cloned.remove();
+							// Moving this stuff around breaks scroll to day start in Chrome
+							var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
+							var parent = wrapper.parent().parent();
+							wrapper.parent().remove();
+							original.appendTo(parent);
+							// Also detaches events
+							if(widget)
+							{
+								widget.attachToDOM();
+							}
+							// Re-scroll to start of day
+							$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
+
+
+							window.setTimeout(function() {
+								if(app.calendar)
+								{
+									app.calendar._scroll_disabled = false;
+								}
+							}, 500);
+						},1000);
+					}
+					// If detecting the transition end worked, we wouldn't need to use a timeout.
+					window.setTimeout(remove,100);
 
 					// Get the view to calculate
 					var view = app.classes.calendar.views[app.calendar.state.view] || false;
@@ -498,6 +577,7 @@ app.classes.calendar = AppJS.extend(
 						// Home - always 1 week
 						// TODO
 						return false;
+						/*
 						var widget = [];
 						var value = [];
 						template.widgetContainer.iterateOver(function(w) {
@@ -523,6 +603,7 @@ app.classes.calendar = AppJS.extend(
 							app.calendar._need_data([value[i]], state);
 							widget[i].set_value(value[i]);
 						}
+						*/
 					}
 
 					return false;
@@ -1419,13 +1500,15 @@ app.classes.calendar = AppJS.extend(
 		}
 
 		// Hide other views
+		var view = app.classes.calendar.views[state.state.view];
 		for(var _view in app.classes.calendar.views)
 		{
 			if(state.state.view != _view && app.classes.calendar.views[_view])
 			{
 				for(var i = 0; i < app.classes.calendar.views[_view].etemplates.length; i++)
 				{
-					if(typeof app.classes.calendar.views[_view].etemplates[i] !== 'string')
+					if(typeof app.classes.calendar.views[_view].etemplates[i] !== 'string' &&
+						view.etemplates.indexOf(app.classes.calendar.views[_view].etemplates[i]) == -1)
 					{
 						$j(app.classes.calendar.views[_view].etemplates[i].DOMContainer).hide();
 					}
@@ -1468,8 +1551,6 @@ app.classes.calendar = AppJS.extend(
 			// We set a flag to ignore changes from the sidebox which would
 			// cause infinite loops.
 			this.state_update_in_progress = true;
-
-			var view = app.classes.calendar.views[state.state.view];
 
 			// Sanitize owner so it's always an array
 			if(state.state.owner === null)
@@ -1632,11 +1713,12 @@ app.classes.calendar = AppJS.extend(
 				$j(view.etemplates[i].DOMContainer).show();
 			}
 			// Toggle todos
-			if(state.state.view == 'day')
+			if(state.state.view == 'day' || this.state.view == 'day')
 			{
-				if(state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] > 0)
+				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] > 0)
 				{
-					view.etemplates[0].widgetContainer.set_width("70%");
+					view.etemplates[0].DOMContainer.style.width = "70%";
+					$j(view.etemplates[1].DOMContainer).css("left","69%");
 					// TODO: Maybe some caching here
 					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
 						this.getWidgetById('label').set_value(data.label||'');
@@ -1645,13 +1727,17 @@ app.classes.calendar = AppJS.extend(
 				}
 				else
 				{
-					$j(view.etemplates[1].DOMContainer).hide();
-					view.etemplates[0].widgetContainer.set_width("");
+					$j(app.classes.calendar.views.day.etemplates[1].DOMContainer).show();
+					$j(app.classes.calendar.views.day.etemplates[1].DOMContainer).css("left","100%");
+					window.setTimeout(jQuery.proxy(function() {
+						$j(this).hide();
+					},app.classes.calendar.views.day.etemplates[1].DOMContainer),1000);
+					$j(app.classes.calendar.views.day.etemplates[0].DOMContainer).css("width","100%");
 				}
 			}
 			else
 			{
-				view.etemplates[0].widgetContainer.set_width("");
+				$j(view.etemplates[0].DOMContainer).css("width","100%");
 			}
 			this.state = jQuery.extend({},state.state);
 

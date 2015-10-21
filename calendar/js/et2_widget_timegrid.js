@@ -578,35 +578,61 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
 
+		var day_width = (100/this.day_list.length).toFixed(2);
+
 		// Create any needed widgets - otherwise, we'll just recycle
 		// Add any needed day widgets (now showing more days)
+		var add_index = 0;
+		var before = true;
 		while(this.day_list.length > this.day_widgets.length)
 		{
+			var existing_index = this.day_widgets[add_index] ? this.day_list.indexOf(this.day_widgets[add_index].options.date) : -1;
+			before = existing_index > add_index;
+			
 			var day = et2_createWidget('calendar-daycol',{
-				owner: this.options.owner
+				owner: this.options.owner,
+				width: (before ? 0 : day_width) + "%"
 			},this);
 			if(this.isInTree())
 			{
 				day.doLoadingFinished();
 			}
-			this.day_widgets.push(day);
+			if(existing_index != -1 && parseInt(this.day_list[add_index]) < parseInt(this.day_list[existing_index]))
+			{
+				this.day_widgets.unshift(day);
+				$j(this.getDOMNode(day)).prepend(day.getDOMNode(day));
+			}
+			else
+			{
+				this.day_widgets.push(day);
+			}
+			add_index++;
 		}
 		// Remove any extra day widgets (now showing less)
 		var delete_index = this.day_widgets.length - 1;
+		before = false;
 		while(this.day_widgets.length > this.day_list.length)
 		{
 			// If we're going down to an existing one, just keep it for cool CSS animation
 			while(this.day_list.indexOf(this.day_widgets[delete_index].options.date) > -1)
 			{
 				delete_index--;
+				before = true;
 			}
-			this.day_widgets[delete_index].set_width('0px');
-			this.day_widgets[delete_index].free();
+			// Wait until any animations or other timeouts are done
+			window.setTimeout(jQuery.proxy(function() {
+				this.free();
+			},this.day_widgets[delete_index]),1000);
+
+			// Widgets that are before our date shrink, after just get pushed out
+			if(before)
+			{
+				this.day_widgets[delete_index].set_width('0px');
+			}
 			this.day_widgets.splice(delete_index--,1);
 		}
 
 		// Create / update day widgets with dates and data
-		var day_width = (100/this.day_list.length).toFixed(2);
 		for(var i = 0; i < this.day_list.length; i++)
 		{
 			day = this.day_widgets[i];
@@ -619,7 +645,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			day.set_id(this.day_list[i]);
 			day.set_width(day_width + '%');
 		}
-
+		
 		// Don't hold on to value any longer, use the data cache for best info
 		this.value = {};
 		

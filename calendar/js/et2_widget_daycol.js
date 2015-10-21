@@ -64,12 +64,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Main container
 		this.div = $j(document.createElement("div"))
 			.addClass("calendar_calDayCol")
-			.css('width',this.options.width);
+			.css('width',this.options.width)
+			.css('left', this.options.left);
 		this.header = $j(document.createElement('div'))
-			.addClass("calendar_calDayColHeader");
+			.addClass("calendar_calDayColHeader")
+			.css('width',this.options.width)
+			.css('left', this.options.left);
 		this.title = $j(document.createElement('div'))
 			.appendTo(this.header);
-
+		
 		this.setDOMNode(this.div[0]);
 
 		// Used for its date calculations - note this is a datetime, parent
@@ -132,7 +135,24 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			this.display_settings.wd_start = 60*this._parent.options.day_start;
 			this.display_settings.wd_end = 60*this._parent.options.day_end;
 			this.display_settings.granularity = this._parent.options.granularity;
-			this._parent.dayHeader.append(this.header);
+			var header = this._parent.dayHeader.children();
+
+			// Figure out insert index
+			var idx = 0;
+			var siblings = this._parent.getDOMNode(this).childNodes
+			while(idx < siblings.length && siblings[idx] != this.getDOMNode())
+			{
+				idx++;
+			}
+			// Stick header in the right place
+			if(idx == 0)
+			{
+				this._parent.dayHeader.prepend(this.header);
+			}
+			else if(header.length)
+			{
+				header.eq(Math.min(header.length,idx)-1).after(this.header);
+			}
 		}
 
 		this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity);
@@ -295,16 +315,25 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	},
 
 	set_left: function(left) {
-		this.div.css('left',left);
 		// Maybe?
 		window.setTimeout(jQuery.proxy(function() {
-			this.header.css('left',left);
+			if(this.div)
+			{
+				this.div.css('left',left);
+				this.header.css('left',left);
+			}
 		},this),1);
 		
 	},
 	set_width: function(width) {
-		this._super.apply(this, arguments);
-		this.header.width(width);
+		this.options.width = width;
+		window.setTimeout(jQuery.proxy(function() {
+			if(this.div)
+			{
+				this.div.width(this.options.width);
+				this.header.width(this.options.width);
+			}
+		},this),1);
 	},
 
 	/**
@@ -528,8 +557,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				if(columns[c][i].options.value.whole_day_on_top)
 				{
 					columns[c][i].div
-						.appendTo(this.header)
-						.css('position', 'relative');
+						.appendTo(this.header);
 					continue;
 				}
 				else
