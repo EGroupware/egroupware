@@ -530,8 +530,9 @@ app.classes.admin = AppJS.extend(
 						var removed = [];
 
 						// Loop through all apps, remove the ones with no permission
-						for(var app in sel_options.filter2)
+						for(var idx in sel_options.filter2)
 						{
+							var app = sel_options.filter2[idx].value || false;
 							if (!app) continue;
 							var run_id = app+":"+_value.acl_account+":run";
 							if(_value.apps.indexOf(app) < 0 && (content.apps.indexOf(app) >= 0 || content.apps.length == 0))
