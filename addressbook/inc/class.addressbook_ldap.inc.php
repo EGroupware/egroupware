@@ -317,7 +317,7 @@ class addressbook_ldap
 	function connect($admin = false)
 	{
 		// if egw object does not yet exists (eg. in sharing), we have to use our own ldap instance!
-		$ldap = isset($GLOBALS['egw']) ? $GLOBALS['egw']->ldap : new ldap();
+		$ldap = isset($GLOBALS['egw']) && is_a($GLOBALS['egw']->ldap, 'ldap') ? $GLOBALS['egw']->ldap : new ldap();
 
 		if ($admin)
 		{
