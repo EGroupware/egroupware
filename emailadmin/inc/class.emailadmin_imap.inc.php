@@ -192,6 +192,7 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 		// switch to allow to disable some capabilites known to be troublesome
 		switch (strtolower(trim($this->params['acc_imap_host'])))
 		{
+			case 'imap.yandex.ru':
 			case 'imap.yandex.com':
 				// imap.yandex.com - reports BINARY (server side decoding) but does not decode but
 				// returns undecoded bodyParts AND reports an encoding for the returned part.
