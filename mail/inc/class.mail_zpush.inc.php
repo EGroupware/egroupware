@@ -456,18 +456,14 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
         if ($use_orgbody) {
     	    ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") use_orgbody = true ContentType:".$ContentType);
  			// if it is a ClientSideMeetingRequest, we report it as send at all times
-			if (stripos($ContentType,'text/calendar') !== false )
+			if (($cal_body = $mailObject->findBody('calendar')) &&
+				($cSMRMethod = $cal_body->getContentTypeParameter('method')))
 			{
-				$body = ($text_body = $mailObject->findBody('calendar')) ? $text_body->getContents() : null;
-				$Body = $body;
-				$AltBody = "<pre>".nl2br($body)."</pre>";
-				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") we have a Client Side Meeting Request");
-				// try figuring out the METHOD -> [ContentType] => text/calendar; name=meeting.ics; method=REQUEST
-				$tA = explode(' ',$ContentType);
-				foreach ((array)$tA as $k => $p)
+				if ($cSMRMethod == 'REPLY' && class_exists('calendar_ical'))
 				{
-					if (stripos($p,"method=")!==false) $cSMRMethod= trim(str_replace('METHOD=','',strtoupper($p)));
+					$organizer = calendar_ical::getIcalOrganizer($cal_body->getContents());
 				}
+				if ($this->debugLevel) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") we have a Client Side Meeting Request from organizer=$organizer");
 				$ClientSideMeetingRequest = true;
 			}
         }
@@ -477,7 +473,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		foreach((array)$toMailAddr as $address) {
 			foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
-				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress,(isset($cSMRMethod)?$cSMRMethod:'REQUEST'))) continue;
+				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' &&
+					calendar_boupdate::email_update_requested($emailAddress, isset($cSMRMethod) ? $cSMRMethod : 'REQUEST',
+						$organizer && !strcasecmp($emailAddress, $organizer) ? 'CHAIR' : ''))
+				{
+					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") skiping mail to organizer '$organizer', as it will be send by calendar app");
+					continue;
+				}
 				$mailObject->AddAddress($emailAddress, $addressObject->personal);
 				$toCount++;
 			}
@@ -500,7 +502,11 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$bccCount++;
 			}
 		}
-		if ($toCount+$ccCount+$bccCount == 0) return 0; // noone to send mail to
+		// typical organizer reply will end here with nothing send --> return true, because we suppressed the send above
+		if ($toCount+$ccCount+$bccCount == 0)
+		{
+			return $ClientSideMeetingRequest && $allowSendingInvitations === 'sendifnocalnotif' && $organizer ? true : 0; // noone to send mail to
+		}
 		if ($ClientSideMeetingRequest === true && $allowSendingInvitations===false) return true;
 		// as we use our mailer (horde mailer) it is detecting / setting the mimetype by itself while creating the mail
 /*
@@ -694,7 +700,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		try {
 			$mailObject->Send();
 		}
-		catch(phpmailerException $e) {
+		catch(Exception $e) {
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") The email could not be sent. Last-SMTP-error: ". $e->getMessage());
 			$send = false;
 		}

@@ -2289,6 +2289,32 @@ class calendar_ical extends calendar_boupdate
 	}
 
 	/**
+	 * Get email of organizer of first vevent in given iCalendar
+	 *
+	 * @param string $_ical
+	 * @return string|boolean
+	 */
+	public static function getIcalOrganizer($_ical)
+	{
+		$vcal = new Horde_Icalendar;
+		if (!$vcal->parsevCalendar($_ical, 'VCALENDAR'))
+		{
+			return false;
+		}
+		if (($vevent = $vcal->findComponentByAttribute('Vevent', 'ORGANIZER')))
+		{
+			$organizer = $vevent->getAttribute('ORGANIZER');
+			if (stripos($organizer, 'mailto:') === 0)
+			{
+				return substr($organizer, 7);
+			}
+			$params = $vevent->getAttribute('ORGANIZER', true);
+			return $params['email'];
+		}
+		return false;
+	}
+
+	/**
 	 * Callback for egw_ical_iterator to convert Horde_iCalendar_Vevent to EGw event array
 	 *
 	 * @param Horde_iCalendar $component

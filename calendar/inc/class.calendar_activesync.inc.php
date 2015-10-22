@@ -314,7 +314,7 @@ return array();	// temporary disabling meeting requests from calendar
 	/**
 	 * Generate SyncMeetingRequest object from an event array
 	 *
-	 * Used by (calendar|felamimail)_activesync
+	 * Used by (calendar|mail)_activesync
 	 *
 	 * @param array|string $event event array or string with iCal
 	 * @return SyncMeetingRequest or null ical not parsable
@@ -546,8 +546,8 @@ return array();	// temporary disabling meeting requests from calendar
 
 		// store event, ignore conflicts and skip notifications, as AS clients do their own notifications
 		$skip_notification = false;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']) &&
-			$GLOBALS['egw_info']['user']['preferences']['activesync']['felamimail-allowSendingInvitations']=='send')
+		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-allowSendingInvitations']) &&
+			$GLOBALS['egw_info']['user']['preferences']['activesync']['mail-allowSendingInvitations']=='send')
 		{
 			$skip_notification = true; // to avoid double notification from client AND Server
 		}
