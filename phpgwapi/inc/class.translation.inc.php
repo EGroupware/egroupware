@@ -825,6 +825,9 @@ class translation
 			*/
 			switch($from)
 			{
+				case 'ks_c_5601-1987':
+					$from = 'CP949';
+					break;
 				case 'gb2312':
 				case 'gb18030':
 					$from = 'EUC-CN';

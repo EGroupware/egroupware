@@ -189,6 +189,22 @@ class emailadmin_imap extends Horde_Imap_Client_Socket implements defaultimap
 				)),
 			);
 		}
+		// switch to allow to disable some capabilites known to be troublesome
+		switch (strtolower(trim($this->params['acc_imap_host'])))
+		{
+			case 'imap.yandex.com':
+				// imap.yandex.com - reports BINARY (server side decoding) but does not decode but
+				// returns undecoded bodyParts AND reports an encoding for the returned part.
+				// expected behavior would be: if server side decoding succeeds , horde should
+				// either report 7bit or 8bit when calling getBodyPartDecode. if it fails or BINARY
+				// is not supported NULL is expected on getBodyPartDecode
+				// yandex.com does not succeed in decoding but getBodyPartDecode is reported as 7bit/8bit
+				// as we have no way to tell this apart we ignore BINARY this affects
+				// Horde_Imap_Client_Fetch_Query::bodyPart for its fetch parameter decode=true is ignored
+				// (other functionality depending on BINARY is, of cause, affected too)
+				$parent_params['capability_ignore']= array_merge((array)$parent_params['capability_ignore'],array('BINARY'));
+				break;
+		}
 		parent::__construct($parent_params);
 	}
 
