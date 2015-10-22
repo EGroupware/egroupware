@@ -2662,7 +2662,7 @@ class emailadmin_imapbase
 				{
 					foreach($nameSpace as $k => $singleNameSpace) {
 						$type = $singleNameSpace['type'];
-					
+
 						if(is_array($singleNameSpace) && $singleNameSpace['prefix']){
 							$prefixes[$type] = $singleNameSpace['prefix'];
 							//regard extra care for nameSpacequeries when configured AND respect $_search
@@ -2676,9 +2676,9 @@ class emailadmin_imapbase
 					}
 				}
 			}
-			
+
 			$autofolders = array();
-			
+
 			foreach(self::$specialUseFolders as $path => $folder)
 			{
 				if ($this->folderExists($path))
@@ -2691,7 +2691,7 @@ class emailadmin_imapbase
 			{
 				return $this->getFolderArrays ($_nodePath, $_onlyTopLevel, $_search, $_subscribedOnly, $_getCounter);
 			}
-			
+
 			// now process topFolders for next level
 			foreach ($topFolders as &$node)
 			{
@@ -2741,7 +2741,7 @@ class emailadmin_imapbase
 					}
 					if (is_array($aFolders)) uasort ($aFolders, array($this,'sortByAutofolder'));
 					//ksort($aFolders);
-					
+
 					// Sort none auto folders base on mailbox name
 					uasort($nFolders,array($this,'sortByMailbox'));
 
@@ -4151,7 +4151,6 @@ class emailadmin_imapbase
 	}
 
 	/**
-	 * getMultipartAlternative
 	 * get part of the message, if its stucture is indicating its of multipart alternative style
 	 * a wrapper for multipartmixed
 	 * @param string/int $_uid the messageuid,
@@ -4187,11 +4186,6 @@ class emailadmin_imapbase
 				case 'text':
 					switch($mimePart->getSubType())
 					{
-						case 'calendar':	// only if there is no partText set already
-							//if ($partText) break;
-							if ($mimePart->getBytes() > 0) $partCalendar = $mimePart;
-							break;
-							// fall throught
 						case 'plain':
 							if ($mimePart->getBytes() > 0) $partText = $mimePart;
 							break;
@@ -4224,9 +4218,6 @@ class emailadmin_imapbase
 					}
 			}
 		}
-		// seems we have a multipart/alternative; as we assume we are able to display events
-		// the text/calendar part has higher precedence then text/plain
-		if ($partCalendar && $partText) $partText = $partCalendar;
 
 		switch($_htmlMode)
 		{
