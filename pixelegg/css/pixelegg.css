@@ -969,7 +969,7 @@
     border-radius: 3px;
     border-top-left-radius: 10px;
     height: 24px;
-    margin: 6px -2px;
+    margin: -2px 2px;
   }
   button#admin-categories-index_add:before {
     content: "";
