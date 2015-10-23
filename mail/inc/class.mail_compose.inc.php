@@ -2299,7 +2299,7 @@ class mail_compose
 		}
 		else
 		{
-			$this->convertHTMLToText($_formData['body'],false);
+			$body = $this->convertHTMLToText($_formData['body'],false);
 
 			if ($attachment_links) $body .= $attachment_links;
 
