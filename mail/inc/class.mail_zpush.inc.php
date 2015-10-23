@@ -554,7 +554,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 			$this->mail->reopen($folder);
 			$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
-			$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
+			$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 		    if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 				// may be html
@@ -566,7 +566,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
 			// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 			$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
-			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 			if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
 				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 				$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
@@ -626,7 +626,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 				$this->mail->reopen($folder);
 				$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
-				$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
+				$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 				if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
@@ -638,7 +638,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain, fetch text:');
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
-				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 				if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
 					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 					$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
@@ -849,7 +849,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 			if ($bodypreference === false) {
 				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', null, true,$_folderName);
-				$raw_body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
+				$raw_body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 				//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				if (stripos($raw_body,'<style')!==false) $body = preg_replace("/<style.*?<\/style>/is", "", $raw_body); // in case there is only a html part
 				// remove all other html
@@ -889,7 +889,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$css ='';
 				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true,$_folderName);
 				if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
-				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);//$this->ui->getdisplayableBody($bodyStruct,false);
+				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 				if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$body);
 			    if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
@@ -902,7 +902,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					$output->nativebodytype=1;
 					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
 					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
-					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' never display html(plain text only):'.$body);
 				}
 				// whatever format decode (using the correct encoding)
@@ -919,7 +919,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					}
 					else
 					{
-						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain);//$this->ui->getdisplayableBody($bodyStruct,false);
+						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain,false,false);
 					}
 				}
 				//if ($this->debugLevel>0) debugLog("MIME Body".$body);
@@ -977,7 +977,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					if ($this->debugLevel>0) debugLog("Plaintext Body:".$plainBody);
 					/* we use plainBody (set above) instead
 					$bodyStruct = $this->mail->getMessageBody($id,'only_if_no_text'); //'never_display');
-					$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+					$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
 					$plain = html_entity_decode($plain,ENT_QUOTES,$this->mail->detect_encoding($plain));
 					$plain = strip_tags($plain);
 					//$plain = str_replace("\n","\r\n",str_replace("\r","",$plain));

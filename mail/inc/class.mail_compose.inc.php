@@ -552,7 +552,7 @@ class mail_compose
 					$content['mail_htmltext'] = implode('',$contentArr);
 				}
 			}
-			$content['mail_htmltext'] = $this->_getCleanHTML($content['mail_htmltext'], false, false);
+			$content['mail_htmltext'] = $this->_getCleanHTML($content['mail_htmltext']);
 			$content['mail_htmltext'] = translation::convertHTMLToText($content['mail_htmltext'],$charset=false,false,true);
 
 			$content['body'] = $content['mail_htmltext'];
@@ -2127,12 +2127,12 @@ class mail_compose
 
 	}
 
-	static function _getCleanHTML($_body, $usepurify = false, $cleanTags=true)
+	static function _getCleanHTML($_body)
 	{
 		static $nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-		mail_bo::getCleanHTML($_body, $usepurify, $cleanTags);
+		mail_bo::getCleanHTML($_body);
 		return preg_replace($nonDisplayAbleCharacters, '', $_body);
 	}
 
@@ -2299,7 +2299,7 @@ class mail_compose
 		}
 		else
 		{
-			$body = $this->convertHTMLToText($_formData['body'],false);
+			$this->convertHTMLToText($_formData['body'],false);
 
 			if ($attachment_links) $body .= $attachment_links;
 
