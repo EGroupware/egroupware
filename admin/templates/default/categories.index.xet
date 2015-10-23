@@ -68,7 +68,7 @@
 			</columns>
 			<rows>
 				<row>
-					<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_right="admin.categories.index.right"/>
+					<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_row="admin.categories.index.right"/>
 				</row>
 			</rows>
 		</grid>
