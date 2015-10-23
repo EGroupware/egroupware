@@ -1318,9 +1318,6 @@
   iframe#admin-index_iframe {
     background-color: yellow;
   }
-  #admin-categories-index div.egwGridView_scrollarea {
-    min-height: 500px;
-  }
   table.egwGridView_grid img {
     /*filter grey*/
     /*filter grey*/
@@ -6973,7 +6970,7 @@ span.egw_tutorial_title {
     margin: 5px 0px 3px 5px;
     padding: 0px 0px 0px 15px;
     line-height: 1em;
-    font-size: 12.1px;
+    font-size: 12.100000000000001px;
     background-image: url(../images/arrow_left.png);
     background-repeat: no-repeat;
     background-position: left center;

@@ -1307,9 +1307,6 @@
   iframe#admin-index_iframe {
     background-color: yellow;
   }
-  #admin-categories-index div.egwGridView_scrollarea {
-    min-height: 500px;
-  }
   table.egwGridView_grid img {
     /*filter grey*/
     /*filter grey*/
