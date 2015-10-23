@@ -2733,11 +2733,13 @@ class mail_ui
 			{
 				$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
 			}
+			//error_log(__METHOD__.__LINE__.'reports:'.$singleBodyPart['charSet']);
 			$singleBodyPart['body'] = translation::convert_jsonsafe($singleBodyPart['body'],$singleBodyPart['charSet']);
 			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
 			if($singleBodyPart['mimeType'] == 'text/plain')
 			{
 				$newBody	= @htmlentities($singleBodyPart['body'],ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
+				//error_log(__METHOD__.__LINE__.'..'.$newBody);
 				// if empty and charset is utf8 try sanitizing the string in question
 				if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
 				// if the conversion to htmlentities fails somehow, try without specifying the charset, which defaults to iso-
@@ -2749,6 +2751,7 @@ class mail_ui
 
 				// create links for websites
 				if ($modifyURI) $newBody = html::activate_links($newBody);
+				//error_log(__METHOD__.__LINE__.'..'.$newBody);
 				// redirect links for websites if you use no cookies
 				#if (!($GLOBALS['egw_info']['server']['usecookies']))
 				#	$newBody = preg_replace("/href=(\"|\')((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\(,\),\*,#,:,~,\+]+)(\"|\')/ie",
@@ -2766,7 +2769,7 @@ class mail_ui
 				// to display a mailpart of mimetype plain/text, may be better taged as preformatted
 				#$newBody	= nl2br($newBody);
 				// since we do not display the message as HTML anymore we may want to insert good linebreaking (for visibility).
-				//error_log($newBody);
+				//error_log(__METHOD__.__LINE__.'..'.$newBody);
 				// dont break lines that start with > (&gt; as the text was processed with htmlentities before)
 				$newBody	= "<pre>".mail_bo::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
 			}
@@ -2777,9 +2780,8 @@ class mail_ui
 				#error_log(print_r($newBody,true));
 
 				// do the cleanup, set for the use of purifier
-				$usepurifier = true;
 				$newBodyBuff = $newBody;
-				mail_bo::getCleanHTML($newBody,$usepurifier);
+				mail_bo::getCleanHTML($newBody);
 				// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
 				if (strtoupper(mail_bo::$displayCharset) == 'UTF-8')
 				{
@@ -2790,7 +2792,7 @@ class mail_ui
 						$newBody = $newBodyBuff;
 						$tv = mail_bo::$htmLawed_config['tidy'];
 						mail_bo::$htmLawed_config['tidy'] = 0;
-						mail_bo::getCleanHTML($newBody,$usepurifier);
+						mail_bo::getCleanHTML($newBody);
 						mail_bo::$htmLawed_config['tidy'] = $tv;
 					}
 				}

@@ -537,7 +537,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 
 			$this->mail->reopen($folder);
 			$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
-			$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
+			$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 		    if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 				// may be html
@@ -549,7 +549,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
 			// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 			$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
-			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 			if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
 				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 				$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
@@ -609,7 +609,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 
 				$this->mail->reopen($folder);
 				$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
-				$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
+				$bodyBUFFHtml = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$bodyBUFFHtml);
 				if ($bodyBUFFHtml != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
@@ -621,7 +621,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain, fetch text:');
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
-				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 				if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/plain')) {
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:plain (fetched with never_display):'.$bodyBUFF);
 					$Body = $Body."\r\n".$bodyBUFF.$sigTextPlain;
@@ -819,7 +819,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__. ' for message with ID:'.$id.' with headers:'.array2string($headers));
 			if ($bodypreference === false) {
 				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', null, true,$_folderName);
-				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
+				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 				//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				if (stripos($body,'<style')!==false) $body = preg_replace("/<style.*?<\/style>/is", "", $body); // in case there is only a html part
 				// remove all other html
@@ -852,7 +852,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 				$css ='';
 				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true,$_folderName);
 				if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
-				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);//$this->ui->getdisplayableBody($bodyStruct,false);
+				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$body);
 			    if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
@@ -865,7 +865,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					$output->airsyncbasenativebodytype=1;
 					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
-					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' never display html(plain text only):'.$body);
 				}
 				// whatever format decode (using the correct encoding)
@@ -881,7 +881,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					}
 					else
 					{
-						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain);//$this->ui->getdisplayableBody($bodyStruct,false);
+						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain,false,false);
 					}
 				}
 				//if ($this->debugLevel>0) debugLog("MIME Body".$body);
@@ -1033,7 +1033,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					if ($this->debugLevel>0) debugLog("Plaintext Body:".$plainBody);
 					/* we use plainBody (set above) instead
 					$bodyStruct = $this->mail->getMessageBody($id,'only_if_no_text'); //'never_display');
-					$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+					$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
 					$plain = html_entity_decode($plain,ENT_QUOTES,$this->mail->detect_encoding($plain));
 					$plain = strip_tags($plain);
 					//$plain = str_replace("\n","\r\n",str_replace("\r","",$plain));
