@@ -4707,56 +4707,59 @@ class emailadmin_imapbase
 			$mailClass->activeMimeType = 'text/plain';
 			if ($bodyParts[$i]['mimeType'] == 'text/html') {
 				$mailClass->activeMimeType = $bodyParts[$i]['mimeType'];
-				// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
-				$newBody = str_replace("\n"," ",$newBody);
-				// convert HTML to text, as we dont want HTML in infologs
-				if ($useTidy && extension_loaded('tidy'))
+				if (!$preserveHTML)
 				{
-					$tidy = new tidy();
-					$cleaned = $tidy->repairString($newBody, self::$tidy_config,'utf8');
-					// Found errors. Strip it all so there's some output
-					if($tidy->getStatus() == 2)
+					// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
+					$newBody = str_replace("\n"," ",$newBody);
+					// convert HTML to text, as we dont want HTML in infologs
+					if ($useTidy && extension_loaded('tidy'))
 					{
-						error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$tidy->errorBuffer);
+						$tidy = new tidy();
+						$cleaned = $tidy->repairString($newBody, self::$tidy_config,'utf8');
+						// Found errors. Strip it all so there's some output
+						if($tidy->getStatus() == 2)
+						{
+							error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$tidy->errorBuffer);
+						}
+						else
+						{
+							$newBody = $cleaned;
+						}
+						if (!$preserveHTML)
+						{
+							// filter only the 'body', as we only want that part, if we throw away the html
+							preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
+							if ($matches[2])
+							{
+								$hasOther = true;
+								$newBody = $matches[2];
+							}
+						}
 					}
 					else
 					{
-						$newBody = $cleaned;
-					}
-					if (!$preserveHTML)
-					{
-						// filter only the 'body', as we only want that part, if we throw away the html
+						// htmLawed filter only the 'body'
 						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
 						if ($matches[2])
 						{
 							$hasOther = true;
 							$newBody = $matches[2];
 						}
+						$htmLawed = new egw_htmLawed();
+						// the next line should not be needed, but produces better results on HTML 2 Text conversion,
+						// as we switched off HTMLaweds tidy functionality
+						$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
+						$newBody = $htmLawed->egw_htmLawed($newBody);
+						if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
 					}
+					//error_log(__METHOD__.' ('.__LINE__.') '.' after purify:'.$newBody);
+					if ($preserveHTML==false) $newBody = translation::convertHTMLToText($newBody,self::$displayCharset,true,true);
+					//error_log(__METHOD__.' ('.__LINE__.') '.' after convertHTMLToText:'.$newBody);
+					if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
+					$mailClass->getCleanHTML($newBody); // remove stuff we regard as unwanted
+					if ($preserveHTML==false) $newBody = str_replace("<br />","\r\n",$newBody);
+					//error_log(__METHOD__.' ('.__LINE__.') '.' after getClean:'.$newBody);
 				}
-				else
-				{
-					// htmLawed filter only the 'body'
-					preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
-					if ($matches[2])
-					{
-						$hasOther = true;
-						$newBody = $matches[2];
-					}
-					$htmLawed = new egw_htmLawed();
-					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
-					// as we switched off HTMLaweds tidy functionality
-					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
-					$newBody = $htmLawed->egw_htmLawed($newBody);
-					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
-				}
-				//error_log(__METHOD__.' ('.__LINE__.') '.' after purify:'.$newBody);
-				if ($preserveHTML==false) $newBody = translation::convertHTMLToText($newBody,self::$displayCharset,true,true);
-				//error_log(__METHOD__.' ('.__LINE__.') '.' after convertHTMLToText:'.$newBody);
-				if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
-				$mailClass->getCleanHTML($newBody); // remove stuff we regard as unwanted
-				if ($preserveHTML==false) $newBody = str_replace("<br />","\r\n",$newBody);
-				//error_log(__METHOD__.' ('.__LINE__.') '.' after getClean:'.$newBody);
 				$message .= $newBody;
 				continue;
 			}
