@@ -699,7 +699,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			*/
 			$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
 
-			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
+			$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 			if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$bodyBUFF);
 		    if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 				// may be html
@@ -711,7 +711,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				// if the new part of the message is html, we must preserve it, and handle that the original mail is text/plain
 				if ($orgMessageContentType!='text/html') $mailObject->IsHTML(false);
 				$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
-				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 
 				if ($this->debugLevel>0) debugLog("MIME Body ContentType ".$mailObject->ContentType);
 				$bodyBUFF = ($mailObject->ContentType=='text/html'?'<pre>':'').$bodyBUFF.($mailObject->ContentType=='text/html'?'</pre>':'');
@@ -770,7 +770,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 */
 				//$body .= $this->mail->createHeaderInfoSection($headers,lang("original message"));
 				$bodyStruct = $this->mail->getMessageBody($uid, 'html_only');
-				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);
+				$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$body);
 				if ($bodyBUFF != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
@@ -782,7 +782,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 					// as we glue together the send mail part, and the smartforward part, we stick to the ContentType of the to be sent-Mail
 					$mailObject->IsHTML($mailObject->ContentType=='text/html');
 					$bodyStruct = $this->mail->getMessageBody($uid,'never_display');//'never_display');
-					$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+					$bodyBUFF = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 
 					if ($this->debugLevel>0) debugLog("MIME Body ContentType ".$mailObject->ContentType);
 					$bodyBUFF = ($mailObject->ContentType=='text/html'?'<pre>':'').$bodyBUFF.($mailObject->ContentType=='text/html'?'</pre>':'');
@@ -1047,7 +1047,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			if ($this->debugLevel>0) debugLog(__METHOD__.__LINE__. ' for message with ID:'.$id.' with headers:'.array2string($headers));
 			if ($bodypreference === false) {
 				$bodyStruct = $this->mail->getMessageBody($id, 'only_if_no_text', '', '', true);
-				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
+				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 				$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				if (stripos($body,'<style')!==false) $body = preg_replace("/<style.*?<\/style>/is", "", $body); // in case there is only a html part
 				// remove all other html
@@ -1080,7 +1080,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				$css ='';
 				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', '', true);
 				if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
-				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true);//$this->ui->getdisplayableBody($bodyStruct,false);
+				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' html_only:'.$body);
 			    if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
@@ -1093,7 +1093,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 					$output->airsyncbasenativebodytype=1;
 					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', '', true); //'only_if_no_text');
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
-					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 					if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.' never display html(plain text only):'.$body);
 				}
 				// whatever format decode (using the correct encoding)
@@ -1109,7 +1109,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 					}
 					else
 					{
-						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain);//$this->ui->getdisplayableBody($bodyStruct,false);
+						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain,false,false);
 					}
 				}
 				//if ($this->debugLevel>0) debugLog("MIME Body".$body);
@@ -1283,7 +1283,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 					if ($this->debugLevel>0) debugLog("Plaintext Body:".$plainBody);
 					/* we use plainBody (set above) instead
 					$bodyStruct = $this->mail->getMessageBody($id,'only_if_no_text'); //'never_display');
-					$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct);//$this->ui->getdisplayableBody($bodyStruct,false);
+					$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
 					$plain = html_entity_decode($plain,ENT_QUOTES,$this->mail->detect_encoding($plain));
 					$plain = strip_tags($plain);
 					//$plain = str_replace("\n","\r\n",str_replace("\r","",$plain));

@@ -1543,66 +1543,34 @@ class felamimail_bo
 		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
 		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
 		//error_log(__METHOD__.__LINE__.$_html);
-		// force the use of kses, as it is still have the edge over purifier with some stuff
-		$usepurify = true;
-		if ($usepurify)
-		{
-			// we need a customized config, as we may allow external images, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs']
-			if (get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
-			// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
-			if (stripos($_html,'!doctype')!==false) self::replaceTagsCompletley($_html,'!doctype');
-			if (stripos($_html,'?xml:namespace')!==false) self::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
-			if (stripos($_html,'?xml version')!==false) self::replaceTagsCompletley($_html,'\?xml version','\?>',false);
-			if (strpos($_html,'!CURSOR')!==false) self::replaceTagsCompletley($_html,'!CURSOR');
-			// htmLawed filter only the 'body'
-			//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
-			//if ($matches[2])
-			//{
-			//	$hasOther = true;
-			//	$_html = $matches[2];
-			//}
-			// purify got switched to htmLawed
-			// some testcode to test purifying / htmlawed
-			//$_html = "<BLOCKQUOTE>hi <div> there </div> kram <br> </blockquote>".$_html;
-			$_html = html::purify($_html,self::$htmLawed_config,array(),true);
-			//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
-			// clean out comments , should not be needed as purify should do the job.
-			$search = array(
-				'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-				'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
-			);
-			$_html = preg_replace($search,"",$_html);
-			// remove non printable chars
-            $_html = preg_replace('/([\000-\012])/','',$_html);
-			//error_log($_html);
-		}
-		// using purify above should have tidied the tags already sufficiently
-		if ($usepurify == false && $cleanTags==true)
-		{
-			if (extension_loaded('tidy'))
-			{
-				$tidy = new tidy();
-				$cleaned = $tidy->repairString($_html, self::$tidy_config,'utf8');
-				// Found errors. Strip it all so there's some output
-				if($tidy->getStatus() == 2)
-				{
-					error_log(__METHOD__.__LINE__.' ->'.$tidy->errorBuffer);
-				}
-				else
-				{
-					$_html = $cleaned;
-				}
-			}
-			else
-			{
-				//$to = ini_get('max_execution_time');
-				//@set_time_limit(10);
-				$htmLawed = new egw_htmLawed();
-				$_html = $htmLawed->egw_htmLawed($_html);
-				//error_log(__METHOD__.__LINE__.$_html);
-				//@set_time_limit($to);
-			}
-		}
+
+		if (get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
+		// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
+		if (stripos($_html,'!doctype')!==false) self::replaceTagsCompletley($_html,'!doctype');
+		if (stripos($_html,'?xml:namespace')!==false) self::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
+		if (stripos($_html,'?xml version')!==false) self::replaceTagsCompletley($_html,'\?xml version','\?>',false);
+		if (strpos($_html,'!CURSOR')!==false) self::replaceTagsCompletley($_html,'!CURSOR');
+		// htmLawed filter only the 'body'
+		//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
+		//if ($matches[2])
+		//{
+		//	$hasOther = true;
+		//	$_html = $matches[2];
+		//}
+		// purify got switched to htmLawed
+		// some testcode to test purifying / htmlawed
+		//$_html = "<BLOCKQUOTE>hi <div> there </div> kram <br> </blockquote>".$_html;
+		$_html = html::purify($_html,self::$htmLawed_config,array(),true);
+		//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
+		// clean out comments , should not be needed as purify should do the job.
+		$search = array(
+			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
+			'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
+		);
+		$_html = preg_replace($search,"",$_html);
+		// remove non printable chars
+		$_html = preg_replace('/([\000-\012])/','',$_html);
+		//error_log($_html);
 	}
 
 	/**
@@ -5215,12 +5183,12 @@ class felamimail_bo
 	 * @param array $bodyParts  with the bodyparts
 	 * @return string a preformatted string with the mails converted to text
 	 */
-	static function &getdisplayableBody(&$bofelamimail, $bodyParts, $preserveHTML = false)
+	static function &getdisplayableBody(&$bofelamimail, $bodyParts, $preserveHTML = false, $useTidy = true)
 	{
 		for($i=0; $i<count($bodyParts); $i++)
 		{
 			if (!isset($bodyParts[$i]['body'])) {
-				$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i], $preserveHTML);
+				$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i], $preserveHTML, $useTidy);
 				$message .= empty($bodyParts[$i]['body'])?'':$bodyParts[$i]['body'];
 				continue;
 			}
@@ -5278,7 +5246,7 @@ class felamimail_bo
 				// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
 				$newBody = str_replace("\n"," ",$newBody);
 				// convert HTML to text, as we dont want HTML in infologs
-				if (extension_loaded('tidy'))
+				if ($useTidy && extension_loaded('tidy'))
 				{
 					$tidy = new tidy();
 					$cleaned = $tidy->repairString($newBody, self::$tidy_config,'utf8');
