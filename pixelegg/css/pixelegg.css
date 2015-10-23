@@ -957,6 +957,7 @@
   button#admin-categories-index_add {
     width: 32px;
     /*border: 1px solid #0C5DA5;*/
+    margin: 6px 2px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
     background-color: #e6e6e6 !important;
@@ -968,7 +969,7 @@
     border-radius: 3px;
     border-top-left-radius: 10px;
     height: 24px;
-    margin: 6px 2px;
+    margin: 6px -2px;
   }
   button#admin-categories-index_add:before {
     content: "";
