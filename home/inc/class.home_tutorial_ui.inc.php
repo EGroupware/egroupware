@@ -7,11 +7,11 @@
  * @author Hadi Nategh [hn@stylite.de]
  * @copyright (c) 2015 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id:$
+ * @version $Id$
  */
-	
-class home_tutorial_ui {
-	
+
+class home_tutorial_ui
+{
 	/**
 	 * Methods callable via menuaction
 	 *
@@ -20,16 +20,17 @@ class home_tutorial_ui {
 	public $public_functions = array(
 		'popup' => true
 	);
-	
+
 	/**
 	 * Popup window to display youtube video
-	 * @param type $content
+	 *
+	 * @param array $content
 	 */
 	function popup ($content=null)
 	{
 		//Allow youtube frame to pass the CSP check
 		egw_framework::csp_frame_src_attrs(array('www.youtube.com'));
-		
+
 		$tmpl = new etemplate_new('home.tutorial');
 		if (!is_array($content))
 		{
@@ -48,7 +49,7 @@ class home_tutorial_ui {
 		// read tutorials json file to fetch data
 		$tutorials = json_decode(self::getJsonData(), true);
 		$apps = array('introduction' => lang('Introduction'));
-		foreach ($tutorials as $app => $val)
+		foreach (array_keys($tutorials) as $app)
 		{
 			// show only apps user has access to them
 			if (in_array($app, array_keys($GLOBALS['egw_info']['user']['apps']))) $apps [$app] = $app;
@@ -84,10 +85,10 @@ class home_tutorial_ui {
 			$content = array();
 			egw_framework::message(lang('You do not have permission to see this tutorial!'));
 		}
-				
-		$tmpl->exec('home.home_tutorial_ui.popup', $content,$sel_options,array(),array(),array(),2);
+
+		$tmpl->exec('home.home_tutorial_ui.popup', $content, $sel_options, array(), array(), 2);
 	}
-	
+
 	/**
 	 * Ajax function to get videos links as json
 	 */
@@ -96,12 +97,11 @@ class home_tutorial_ui {
 		$response = egw_json_response::get();
 		$response->data(json_decode(self::getJsonData()));
 	}
-	
+
 	/**
 	 * Function to fetch data from tutorials.json file
-	 * @return string returns json string
 	 *
-	 * @TODO: implement tree level caching
+	 * @return string returns json string
 	 */
 	static function getJsonData()
 	{
@@ -111,9 +111,9 @@ class home_tutorial_ui {
 			// Fallback tutorials.json
 			if (!$json) $json = file_get_contents('home/setup/tutorials.json');
 			// Cache the json object for two hours
-			egw_cache::setCache(egw_cache::TREE, 'home', 'egw_tutorial_json', $json, 720);
+			egw_cache::setCache(egw_cache::TREE, 'home', 'egw_tutorial_json', $json, 7200);
 		}
-		
+
 		return $json;
 	}
-}	
+}
