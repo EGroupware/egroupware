@@ -55,18 +55,20 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		 *
 		 * @param {string} _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
 		 * @param {string} _app default 'common'
-		 * @return string preference value
-		 * @todo add a callback to query it asynchron
+		 * @param {function} _callback optional callback, if preference needs loading first
+		 * @param {object} _context context for callback
+		 * @return string|bool preference value or false, if callback given and preference not yet loaded
 		 */
-		preference: function(_name, _app)
+		preference: function(_name, _app, _callback, _context)
 		{
 			if (typeof _app == 'undefined') _app = 'common';
 
 			if (typeof prefs[_app] == 'undefined')
 			{
-				var request = this.json('home.egw_framework.ajax_get_preference.template', [_app]);
-				request.sendRequest(false, 'GET');	// use synchronous (cachable) GET request
+				var request = this.json('home.egw_framework.ajax_get_preference.template', [_app], _callback, _context);
+				request.sendRequest(typeof _callback == 'function', 'GET');	// use synchronous (cachable) GET request
 				if (typeof prefs[_app] == 'undefined') prefs[_app] = {};
+				if (typeof _callback == 'function') return false;
 			}
 			if (_name == "*") return typeof prefs[_app] ==='object' ? jQuery.extend({},prefs[_app]) : prefs[_app];
 

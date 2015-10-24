@@ -503,7 +503,7 @@ jQuery.extend(et2_dialog,
 		// create a dummy parent with a correct reference to an application specific egw object
 		var parent = new et2_widget();
 		// if egw object is passed in because called from et2, just use it
-		if (typeof _egw_or_appname == 'object')
+		if (typeof _egw_or_appname != 'string')
 		{
 			parent._egw = _egw_or_appname;
 		}
@@ -543,10 +543,10 @@ jQuery.extend(et2_dialog,
 			value: _value
 		}, parent);
 	},
-	
+
 	/**
 	 * Show an alert message with OK button
-	 * 
+	 *
 	 * @param {String} _message Message to be place in the dialog.
 	 * @param {String} _title Text in the top bar of the dialog.
 	 * @param integer _type One of the message constants.  This defines the style of the message.
@@ -562,7 +562,7 @@ jQuery.extend(et2_dialog,
 			dialog_type: _type || et2_dialog.INFORMATION_MESSAGE
 			}, parent);
 	},
-	
+
 	/**
 	 * Show a prompt dialog
 	 *
