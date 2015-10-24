@@ -241,11 +241,11 @@
 			// to take padding/margin into account
 			var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
 			var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
-			
+
 			// Don't let the window gets horizental scrollbar
 			var scrollWidth = document.body.scrollWidth - document.body.clientWidth;
 			if (scrollWidth > 0 && scrollWidth + egw_getWindowOuterWidth() < screen.availWidth) delta_width = -scrollWidth;
-			
+
 			if (delta_height && egw_getWindowOuterHeight() >= egw.availHeight())
 			{
 				delta_height = 0;
@@ -311,6 +311,35 @@
 			if (egw_script.getAttribute('data-mobile'))
 			{
 				window.scrollTo(0, 1);
+			}
+			// Open tutorial popup with an introduction video about egroupware
+			if (window.framework === window.top.framework && typeof et2_dialog != 'undefined' &&
+				!egw.preference('egw_tutorial_noautoload', 'common') &&
+				!parseInt(document.getElementById('egw_script_id').getAttribute('data-framework-reload')))
+			{
+				// we need to wait until common translations are loaded
+				egw.langRequireApp(window, 'common', function()
+				{
+					var buttons = [
+						{text:egw.lang("Show now"), id:"show", image: "check", default:"true"},
+						{text:egw.lang("Show next login"), id:"later", image: "right"},
+						{text:egw.lang("No thanks"), id:"never", image: "cancel"}
+					];
+					et2_dialog.show_dialog(function (_button_id)
+					{
+						if (_button_id == "show" )
+						{
+							egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','960x580');
+						}
+						if(_button_id != "later")
+						{
+							egw.set_preference('common', 'egw_tutorial_noautoload',true);
+						}
+					},
+					egw.lang('We would like to introduce you to EGroupware by showing a short introduction video.'),
+					egw.lang('Introduction'),
+					{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, egw(window));
+				}, this);
 			}
 		});
 	});

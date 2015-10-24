@@ -426,6 +426,7 @@ insert in dokument	common	de	In Dokument einfügen
 insert row after	common	de	Zeile danach einfügen
 insert row before	common	de	Zeile davor einfügen
 international	common	de	International
+introduction	common	de	Einführung
 invalid filename	common	de	Ungültiger Dateiname
 invalid ip address	common	de	Ungültige IP Adresse
 invalid password	common	de	Ungültiges Passwort
@@ -574,6 +575,7 @@ no history for this record	common	de	Keine Historie für diesen Datensatz
 no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
 no savant2 template directories were found in:	common	de	Kein Savant2 Vorlagen Verzeichnis gefunden in:
 no subject	common	de	Kein Betreff
+no thanks	common	de	Nein danke
 none	common	de	Keine
 none of %1	common	de	keines von %1
 norfolk island	common	de	NORFOLK INSELN
@@ -781,6 +783,8 @@ show in sidebox	common	de	In Seitenmenü anzeigen
 show log of following device	groupdav	de	Zeige Log des folgenden Geräts
 show logo's on the desktop.	common	de	Logos auf der Arbeitsfläche anzeigen.
 show menu	common	de	Menü anzeigen
+show next login	common	de	Beim nächsten Anmelden
+show now	common	de	Jetzt anzeigen
 show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen
 show page generation time?	common	de	Erstellungszeit der Seite anzeigen?
@@ -912,6 +916,7 @@ virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	de	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	de	WALLIS AND FUTUNA
 was not able to delete the backup key because %1	common	de	Es war nicht möglich das Backup-Schlüssel zu löschen weil...
+we would like to introduce you to egroupware by showing a short introduction video.	common	de	Wir möchten Ihnen EGroupware mit einem kurzen Einführungsvideo vorstellen.
 wednesday	common	de	Mittwoch
 welcome	common	de	Willkommen
 western european	common	de	Westeuropäisch

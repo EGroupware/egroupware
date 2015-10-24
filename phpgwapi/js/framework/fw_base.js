@@ -57,35 +57,6 @@ var fw_base =  Class.extend({
 
 		// Override the egw_getAppName function
 		window.egw_getAppName = this.egw_getAppName;
-		
-		
-		// Open tutorial popup with an introduction video about egroupware
-		// the popup can be discarded for the next time show if user
-		// select "Never" or can select "Later" and the introduction
-		// dialog will show upon the next session refresh
-		if (!egw.preference('egw_tutorial_noautoload', 'common') 
-				&& !parseInt(document.getElementById('egw_script_id').getAttribute('data-framework-reload')))
-		{
-			var buttons = [
-				{text:"Show", id:"show", default:"true"},
-				{text:"Later", id:"later"},
-				{text:"Never", id:"never"}
-			];
-			et2_dialog.show_dialog(function (_button_id)
-			{
-				if (_button_id == "show" )
-				{
-					egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','960x580');
-				}
-				else if(_button_id == "never")
-				{
-					egw.set_preference('common', 'egw_tutorial_noautoload',true);
-				}
-			},
-			egw.lang('We would like to introduce you to EGroupware by showing a short introduction video.'),
-			egw.lang('Introduction'),
-			{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, egw);
-		}
 	},
 
 	/**
@@ -203,7 +174,7 @@ var fw_base =  Class.extend({
 		else if (_app.browser != null &&
 			// check if app has its own linkHandler
 			!(this.applications[_app.appName].app_refresh) &&
-			_app.browser.iframe == null && _url == _app.browser.currentLocation 
+			_app.browser.iframe == null && _url == _app.browser.currentLocation
 			// links with load may needs to be reloaded e.g. admin applications global cats
 			&& !(_app.browser.currentLocation.match(/&load=[^&]+/g) && _app == 'admin'))
 		{
@@ -570,23 +541,17 @@ var fw_base =  Class.extend({
 	{
 		var _app = null;
 
-		//Read the menuaction parts from the url and check whether the first part
-		//of the url contains a valid app name
-		var matches = _url.match(/menuaction=([a-z0-9_-]+)\./i);
-		if (matches && (_app = this.getApplicationByName(matches[1])))
+		// Check the menuaction parts from the url
+		var matches = _url.match(/menuaction=([a-z0-9_-]+)\./i) ||
+			// Check the url for a scheme of "/app/something.php"
+			_url.match(/\/([^\/]+)\/[^\/]+\.php/i);
+		if (matches)
 		{
-			return _app;
+			// check if this is a regular app-name
+			_app = this.getApplicationByName(matches[1]);
 		}
 
-		//Check the url for a scheme of "/app/something.php" and check this one for a valid app
-		//name
-		var matches = _url.match(/\/([^\/]+)\/[^\/]+\.php/i);
-		if (matches && (_app = this.getApplicationByName(matches[1])))
-		{
-			return _app;
-		}
-
-		return null;
+		return _app;
 	},
 
 	/**
@@ -1005,7 +970,7 @@ var fw_base =  Class.extend({
 				appWindow.focus();
 
 				// et2 available, let its widgets prepare
-				var deferred = []
+				var deferred = [];
 				var et2_list = [];
 				$j('.et2_container',this.activeApp.tab.contDiv).each(function() {
 					var et2 = etemplate2.getById(this.id);

@@ -426,6 +426,7 @@ insert in dokument	common	en	Insert in document
 insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
 international	common	en	International
+introduction	common	en	Introduction
 invalid filename	common	en	Invalid file name.
 invalid ip address	common	en	Invalid IP address.
 invalid password	common	en	Invalid password.
@@ -574,6 +575,7 @@ no history for this record	common	en	No history for this record
 no key for recipient:	common	en	No key for recipient:
 no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
 no subject	common	en	No subject
+no thanks	common	en	No thanks
 none	common	en	None
 none of %1	common	en	none of %1
 norfolk island	common	en	NORFOLK ISLAND
@@ -781,6 +783,8 @@ show in sidebox	common	en	Show in side menu
 show log of following device	groupdav	en	Show log of following device
 show logo's on the desktop.	common	en	Show logo on the desktop.
 show menu	common	en	Show menu
+show next login	common	en	Show next login
+show now	common	en	Show now
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page.
 show page generation time?	common	en	Show page generation time
@@ -912,6 +916,7 @@ virgin islands, british	common	en	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	en	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	en	WALLIS AND FUTUNA
 was not able to delete the backup key because %1	common	en	Was not able to delete the backup key because %1
+we would like to introduce you to egroupware by showing a short introduction video.	common	en	We would like to introduce you to EGroupware by showing a short introduction video.
 wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western european	common	en	Western european
