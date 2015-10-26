@@ -232,7 +232,8 @@ class etemplate_new extends etemplate_widget_template
 			// check if we are in an ajax-exec call from jdots template (or future other tabbed templates)
 			if (isset($GLOBALS['egw']->framework->response))
 			{
-				$content = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container"></form><iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"/>';
+				$content = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container"></form>'."\n".
+					'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
 				// add server-side page-generation times
 				if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
 				{
@@ -265,7 +266,8 @@ class etemplate_new extends etemplate_widget_template
 				$load_array['response'] = egw_json_response::get()->returnResult();
 			}
 			// <iframe> and <form> tags added only to get browser autocomplete handling working again
-			echo '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container" data-etemplate="'.html::htmlspecialchars(egw_json_response::json_encode($load_array), true).'"></form><iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"/>';
+			echo '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container" data-etemplate="'.html::htmlspecialchars(egw_json_response::json_encode($load_array), true).'"></form>'."\n".
+				'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
 
 			if ($output_mode == 2)
 			{
