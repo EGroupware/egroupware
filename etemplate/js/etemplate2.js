@@ -108,15 +108,19 @@ try {
 	{
 		etemplate2.prototype.templates = opener.etemplate2.prototype.templates;
 	}
+	else if (top.etemplate2)
+	{
+		etemplate2.prototype.templates = top.etemplate2.prototype.templates;
+	}
 }
 catch (e) {
 	// catch security exception if opener is from a different domain
+	console.log('Security exception accessing etemplate2.prototype of opener or top!');
 }
 if (typeof etemplate2.prototype.templates == "undefined")
 {
-	etemplate2.prototype.templates = top.etemplate2.prototype.templates || {};
+	etemplate2.prototype.templates = {};
 }
-
 
 /**
  * Calls the resize event of all widgets
@@ -552,33 +556,38 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 
 		// Load & process
-		if(!this.templates[_name])
-		{
-			// Asynchronously load the XET file
-			et2_loadXMLFromURL(_url, function(_xmldoc) {
+		try {
+			if (this.templates[_name])
+			{
+				// Set array managers first, or errors will happen
+				this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
 
-				// Scan for templates and store them
-				for(var i = 0; i < _xmldoc.childNodes.length; i++) {
-					var template = _xmldoc.childNodes[i];
-					if(template.nodeName.toLowerCase() != "template") continue;
-					this.templates[template.getAttribute("id")] = template;
-					if(!_name) this.name = template.getAttribute("id");
-				}
+				// Already have it
 				_load.apply(this,[]);
-			}, this);
-
-			// Split the given data into array manager objects and pass those to the
-			// widget container - do this here because file is loaded async
-			this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+				return;
+			}
 		}
-		else
-		{
-			// Set array managers first, or errors will happen
-			this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+		catch (e) {
+			// wired security exception in IE denying access to template cache in opener
+			//this.templates =
+			etemplate2.prototype.templates = {};
+		}
+		// Asynchronously load the XET file
+		et2_loadXMLFromURL(_url, function(_xmldoc) {
 
-			// Already have it
+			// Scan for templates and store them
+			for(var i = 0; i < _xmldoc.childNodes.length; i++) {
+				var template = _xmldoc.childNodes[i];
+				if(template.nodeName.toLowerCase() != "template") continue;
+				this.templates[template.getAttribute("id")] = template;
+				if(!_name) this.name = template.getAttribute("id");
+			}
 			_load.apply(this,[]);
-		}
+		}, this);
+
+		// Split the given data into array manager objects and pass those to the
+		// widget container - do this here because file is loaded async
+		this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
 	}, this);
 };
 
@@ -607,7 +616,7 @@ etemplate2.prototype.autocomplete_fixer = function ()
 {
 	var self = this;
 	var form = self.DOMContainer;
-	
+
 	// Safari always do the autofill for password field regardless of autocomplete = off
 	// and since there's no other way to switch the autocomplete of, we should switch the
 	// form autocomplete off (e.g. compose dialog, attachment password field)
@@ -616,7 +625,7 @@ etemplate2.prototype.autocomplete_fixer = function ()
 	{
 		return;
 	}
-	
+
 	if (form)
 	{
 		// Stop submit propagation in order to not fire other possible submit events

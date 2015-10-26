@@ -205,7 +205,7 @@ var et2_taglist = et2_selectbox.extend(
 		// Unbind change handler of widget's ancestor to stop it from bubbling
 		// taglist has its own onchange
 		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
-		
+
 		// onChange
 		if(this.options.onchange && typeof this.options.onchange == 'function')
 		{
@@ -278,7 +278,7 @@ var et2_taglist = et2_selectbox.extend(
 	{
 		var label = jQuery('<span>').text(item.label);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
-		
+
 		return label;
 	},
 
@@ -577,7 +577,7 @@ var et2_taglist_email = et2_taglist.extend(
 							for(var i=0; i < parts.length; ++i)
 							{
 								items.push({id: parts[i], label: parts[i]});
-								
+
 							}
 							taglist.addToSelection(items);
 						}, 10);
@@ -627,4 +627,4 @@ et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro", "taglist_a
 
 // Require css
 // TODO: merge into etemplate2.css with all other widgets when done
-if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/magicsuggest.css");
+if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/magicsuggest.css");

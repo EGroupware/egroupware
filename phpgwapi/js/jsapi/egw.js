@@ -129,6 +129,16 @@
 			window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
 		}
 	}
+	try {
+		egw(window).message;
+	}
+	catch (e) {
+		console.log('Security exception accessing window specific egw object --> creating new one', e);
+		window.egw = {
+			prefsOnly: true,
+			webserverUrl: egw_webserverUrl
+		};
+	}
 
 	// focus window / call window.focus(), if data-window-focus is specified
 	var window_focus = egw_script.getAttribute('data-window-focus');

@@ -17,10 +17,7 @@
 */
 
 // Need CSS, or it doesn't really work
-if(typeof egw != 'undefined')
-{
-	egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css");
-}
+if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css");
 function egwMenuImpl(_structure)
 {
 	//Create a new dhtmlxmenu object
