@@ -145,7 +145,6 @@ app.classes.calendar = AppJS.extend(
 			case 'calendar.edit':
 				if (typeof content.data['conflicts'] == 'undefined')
 				{
-					$j(document.getElementById('calendar-edit_calendar-delete_series')).hide();
 					//Check if it's fallback from conflict window or it's from edit window
 					if (content.data['button_was'] != 'freetime')
 					{
@@ -874,21 +873,21 @@ app.classes.calendar = AppJS.extend(
 			var buttons = [
 				{
 					button_id: 'keep',
-					statustext:'All exceptions are converted into single events.',
-					text: 'Keep exceptions',
+					title: this.egw.lang('All exceptions are converted into single events.'),
+					text: this.egw.lang('Keep exceptions'),
 					id: 'button[delete_keep_exceptions]',
 					image: 'keep', "default":true
 				},
 				{
 					button_id: 'delete',
-					statustext:'The exceptions are deleted together with the series.',
-					text: 'Delete exceptions',
+					title: this.egw.lang('The exceptions are deleted together with the series.'),
+					text: this.egw.lang('Delete exceptions'),
 					id: 'button[delete_exceptions]',
 					image: 'delete'
 				},
 				{
 					button_id: 'cancel',
-					text: 'Cancel',
+					text: this.egw.lang('Cancel'),
 					id: 'dialog[cancel]',
 					image: 'cancel'
 				}
