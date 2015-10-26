@@ -1689,6 +1689,12 @@ class calendar_uiforms extends calendar_ui
 
 		if (!empty($preserved['lock_token'])) $content['lock_token'] = $preserved['lock_token'];
 
+		// disabling Apply button for IE 10/11 and Edge, because all but current tab fail to load
+		if (html::$user_agent == 'msie' || html::$user_agent == 'edge')
+		{
+			$readonlys['button[apply]'] = true;
+		}
+
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
 		{
