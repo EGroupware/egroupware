@@ -69,7 +69,7 @@ class html
 			$parts = array_pop($all_parts);
 			foreach($all_parts as $p)
 			{
-				if ($p[1] == 'Chrome')
+				if ($p[1] == 'Chrome' && $parts[1] != 'Edge')
 				{
 					$parts = $p;
 					break;
@@ -90,6 +90,12 @@ class html
 		if (self::$user_agent == 'iceweasel')
 		{
 			self::$user_agent = 'firefox';
+		}
+		// MS Edge sometimes reports just "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+		if (self::$user_agent == 'mozilla' && self::$ua_version == '5.0')
+		{
+			self::$user_agent = 'edge';
+			self::$ua_version = '12.0';
 		}
 		self::$ua_mobile = preg_match('/(iPhone|iPod|iPad|Android|SymbianOS|Blackberry|Kindle|Opera Mobi|Windows Phone)/i',
 			$_SERVER['HTTP_USER_AGENT'], $matches) ? strtolower($matches[1]) : null;
