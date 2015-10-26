@@ -325,7 +325,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			if (entry.widget_options && typeof entry.widget_options.class != 'undefined')
 			{
 				entry.flagDiv.addClass(entry.widget_options.class);
-			}	
+			}
 			entry.flagDiv.text(entry.label || "Tab");
 			if(entry.hidden)
 			{
@@ -431,13 +431,13 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			return null;
 		}
 	},
-	
+
 	set_tab_height: function (_height)
 	{
 		this.tab_height = _height;
 		this.tabContainer.css("height", _height);
 	},
-	
+
 	set_height: function(_value) {
 		this.height = _value;
 
@@ -469,7 +469,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 	isValid: function(messages) {
 		return true;
 	},
-	
+
 	resize: function (_height)
 	{
 		if(_height)

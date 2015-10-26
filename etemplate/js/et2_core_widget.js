@@ -952,7 +952,7 @@ var et2_widget = ClassWithAttributes.extend(
 	 * @param {string} _part name of array mgr to return
 	 */
 	getArrayMgr: function(_part) {
-		if (typeof this._mgrs[_part] != "undefined")
+		if (this._mgrs && typeof this._mgrs[_part] != "undefined")
 		{
 			return this._mgrs[_part];
 		}
