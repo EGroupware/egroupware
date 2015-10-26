@@ -418,9 +418,9 @@ class admin_categories
 			{
 				$row['class'] .= ' rowNoEdit ';
 			}
-			$readonlys["edit[$row[id]]"]   = !self::$acl_edit;
-			$readonlys["add[$row[id]]"]    = !self::$acl_add_sub;
-			$readonlys["delete[$row[id]]"] = !self::$acl_delete;
+			$readonlys['nm']["edit[$row[id]]"]   = !self::$acl_edit;
+			$readonlys['nm']["add[$row[id]]"]    = !self::$acl_add_sub;
+			$readonlys['nm']["delete[$row[id]]"] = !self::$acl_delete;
 		}
 		if (true) $rows = $count <= $query['num_rows'] ? array_values($rows) : array_slice($rows, $query['start'], $query['num_rows']);
 		// make appname available for actions
