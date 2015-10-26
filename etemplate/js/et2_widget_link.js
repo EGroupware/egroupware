@@ -695,7 +695,7 @@ var et2_link_entry = et2_inputWidget.extend(
 				self.search.autocomplete("option","minLength", 0);
 				self.search.autocomplete("search");
 				self.search.autocomplete("option","minLength", self.minimum_characters);
-				e.stopPropagation();
+				return false;
 			}
 		});
 
