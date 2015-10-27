@@ -679,12 +679,17 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			grouper.group.call(this, labels, events, this.value[i]);
 		}
 
+		// Set height for rows
+		this.rows.height(this.div.parent().height() - this.headers.outerHeight());
+
 		// Draw the rows
 		for(var key in labels)
 		{
 			grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
 		}
 
+		// Adjust header if there's a scrollbar
+		this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().first().width()) + 'px')
 		this.value = [];
 	},
 
@@ -1417,8 +1422,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 							value.push(egw.dataGetUIDdata('calendar::'+c.data[j]).data);
 						}
 					}
+					last_data = c.data;
 				}
-				last_data = c.data;
 			}
 			else
 			{

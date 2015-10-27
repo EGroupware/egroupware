@@ -496,16 +496,16 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	 */
 	_drawTimes: function() {
 		$j('.calendar_calTimeRow',this.div).remove();
-		
+
 		var wd_start = 60*this.options.day_start;
 		var wd_end = 60*this.options.day_end;
 		var granularity = this.options.granularity;
 		var totalDisplayMinutes	= wd_end - wd_start;
-		var rowsToDisplay	= (totalDisplayMinutes/granularity);
+		var rowsToDisplay	= (totalDisplayMinutes/granularity) + (60 / granularity);
 		// Percent
 		var rowHeight = (100/rowsToDisplay).toFixed(1);
-		// Pixels
-		this.rowHeight = this.div.height() / rowsToDisplay;
+		// Pixels - add 1 for room for header
+		this.rowHeight = this.div.height() / (rowsToDisplay + 1);
 
 		this.gridHeader
 			.empty()
