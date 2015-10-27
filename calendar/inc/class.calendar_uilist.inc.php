@@ -397,7 +397,6 @@ class calendar_uilist extends calendar_ui
 		}
 		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
 		{
-			$this->to_client($event);
 
 			if ($params['csv_export'])
 			{
@@ -405,8 +404,7 @@ class calendar_uilist extends calendar_ui
 			}
 			else
 			{
-				$event['parts'] = implode(",\n",$this->bo->participants($event,true));
-				$event['date'] = $this->bo->date2string($event['start']);
+				$this->to_client($event);
 			}
 
 

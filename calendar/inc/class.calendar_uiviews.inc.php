@@ -2978,6 +2978,7 @@ class calendar_uiviews extends calendar_ui
 							$dayEvents[$day][$num]['whole_day']=true;
 						}
 					}
+					$this->to_client($dayEvents[$day][$num]);
 				}
 				// check after every day if we have to increase $this->extraRows
 				if(($this->extraRowsOriginal+$extraRowsToAdd) > $this->extraRows)

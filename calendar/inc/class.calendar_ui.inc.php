@@ -826,7 +826,7 @@ class calendar_ui
 		{
 			$event['app_id'] .= ':'.$event['recur_date'];
 		}
-		$event['parts'] = implode(",\n",$this->bo->participants($event,true));
+		$event['parts'] = implode(",\n",$this->bo->participants($event,false));
 		$event['date'] = $this->bo->date2string($event['start']);
 
 		// Change dates
