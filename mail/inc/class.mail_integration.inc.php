@@ -76,6 +76,10 @@ class mail_integration {
 			$time = time();
 			$_date = egw_time::server2user($time->now,'ts');
 		}
+		
+		// For dealing with multiple files of the same name
+		$dupe_count = $file_list = array();
+
 		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
 		//error_log(__METHOD__.__LINE__.': RowID:'.$_GET['rowid'].': emailAddress:'. array2string($_to_emailAddress).' && '.$app);		
 		// Integrate not yet saved mail
@@ -137,6 +141,13 @@ class mail_integration {
 						{
 							$attachment['file'] = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file']);
 						}
+						if(in_array($attachment['name'], $file_list))
+						{
+							$dupe_count[$attachment['name']]++;
+							$attachment['name'] = pathinfo($attachment['name'], PATHINFO_FILENAME) .
+								' ('.($dupe_count[$attachment['name']] + 1).')' . '.' .
+								pathinfo($attachment['name'], PATHINFO_EXTENSION);
+						}
 						$attachments[] = array(
 							'name' => $attachment['name'],
 							'mimeType' => $attachment['type'],
@@ -144,6 +155,7 @@ class mail_integration {
 							'tmp_name' => $attachment['file'],
 							'size' => $attachment['size'],
 						);
+						$file_list[] = $attachment['name'];
 					}
 				}
 				if ($messageFolder && $messageUid && $messagePartId && $mo->isDraftFolder($messageFolder) && !$mo->isTemplateFolder($messageFolder))

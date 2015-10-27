@@ -5763,6 +5763,9 @@ class emailadmin_imapbase
 			//_debug_array($attachments);
 			if (is_array($attachments))
 			{
+				// For dealing with multiple files of the same name
+				$dupe_count = $file_list = array();
+
 				foreach ($attachments as $num => $attachment)
 				{
 					if ($attachment['mimeType'] == 'MESSAGE/RFC822')
@@ -5809,11 +5812,19 @@ class emailadmin_imapbase
 							//if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = translation::detect_encoding($attachments[$num]['attachment']);
 							translation::convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
 						}
+						if(in_array($attachments[$num]['name'], $file_list))
+						{
+							$dupe_count[$attachments[$num]['name']]++;
+							$attachments[$num]['name'] = pathinfo($attachments[$num]['name'], PATHINFO_FILENAME) .
+								' ('.($dupe_count[$attachments[$num]['name']] + 1).')' . '.' .
+								pathinfo($attachments[$num]['name'], PATHINFO_EXTENSION);
+						}
 						$attachments[$num]['type'] = $attachments[$num]['mimeType'];
 						$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 						$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
 						fwrite($tmpfile,$attachments[$num]['attachment']);
 						fclose($tmpfile);
+						$file_list[] = $attachments[$num]['name'];
 						unset($attachments[$num]['attachment']);
 					}
 				}
