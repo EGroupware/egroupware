@@ -255,6 +255,14 @@ app.classes.calendar = AppJS.extend(
 				}
 				break;
 			case 'calendar':
+				// Categories
+				if(this.state.view == '')
+				{
+					var iframe = this.sidebox_et2.getWidgetById('iframe');
+					if(!iframe) return;
+					iframe.set_src(iframe.node.src);
+					return false;
+				}
 				// Regular refresh
 				if(_id)
 				{

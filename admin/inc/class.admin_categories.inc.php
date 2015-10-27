@@ -149,43 +149,7 @@ class admin_categories
 					if ($content['id'] && self::$acl_edit)
 					{
 
-						// If color changed, we need to do an edit 'refresh' instead of 'update'
-						// to reload the whole nextmatch instead of just the row
 						$data = $cats->id2name($content['id'],'data');
-						$change_color = ($data['color'] != $content['data']['color']);
-						// Nicely reload just the category window / iframe
-						if($change_color)
-						{
-							if(egw_json_response::isJSONResponse())
-							{
-								// Update category styles
-								egw_json_response::get()->apply('opener.egw.includeCSS',array(categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app)));
-								if($this->appname != 'admin')
-								{
-									egw_json_response::get()->apply('opener.egw.show_preferences',array(
-										'cats',
-										$this->appname == 'admin' ? categories::GLOBAL_APPNAME : array($refresh_app)
-									));
-									$change_color = false;
-								}
-								else
-								{
-									categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
-									egw_json_response::get()->apply('opener.app.admin.load',array(
-										egw_framework::link('/index.php', array(
-											'menuaction' => $this->list_link,
-											'appname' => $appname
-										)
-									)));
-								}
-							}
-							else
-							{
-								categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
-								egw_framework::refresh_opener('', null, null);
-								return;
-							}
-						}
 						try {
 							$cats->edit($content);
 							$msg = lang('Category saved.');
@@ -207,9 +171,51 @@ class admin_categories
 						$msg = lang('Permission denied!');
 						unset($button);
 					}
+					// If color changed, we need to do an edit 'refresh' instead of 'update'
+					// to reload the whole nextmatch instead of just the row
+					$change_color = ($data['color'] != $content['data']['color']);
+					// Nicely reload just the category window / iframe
+					if($change_color)
+					{
+						if(egw_json_response::isJSONResponse())
+						{
+							// Update category styles
+							egw_json_response::get()->apply('opener.egw.includeCSS',array(categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app)));
+							if($this->appname != 'admin')
+							{
+								egw_json_response::get()->apply('opener.egw.show_preferences',array(
+									'cats',
+									$this->appname == 'admin' ? categories::GLOBAL_APPNAME : array($refresh_app)
+								));
+								$change_color = false;
+							}
+							else
+							{
+								categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
+								// Need to forcably re-load the iframe to avoid smart etemplate refresh
+								egw_json_response::get()->apply('opener.app.admin.load',array(
+									egw_framework::link('/index.php', array(
+										'menuaction' => $this->list_link,
+										'appname' => $appname
+									)
+								)));
+							}
+						}
+						else
+						{
+							categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
+							egw_framework::refresh_opener('', null, null);
+							if ($button == 'save')
+							{
+								egw_framework::window_close();
+							}
+							return;
+						}
+					}
+					
 					if ($button == 'save')
 					{
-						egw_framework::refresh_opener($msg, $change_color ? null : $refresh_app, $change_color ? null : $content['id'], $change_color ? null : 'update', $this->appname);
+						egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
 						egw_framework::window_close();
 					}
 					break;
@@ -231,7 +237,8 @@ class admin_categories
 					}
 					break;
 			}
-			egw_framework::refresh_opener($msg, $change_color ? null : $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
+			// This should probably refresh the application $this->appname in the target tab $refresh_app, but that breaks pretty much everything
+			egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
