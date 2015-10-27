@@ -2801,10 +2801,50 @@ class mail_ui
 				$newBody	= $singleBodyPart['body'];
 				//TODO:$newBody	= $this->highlightQuotes($newBody);
 				#error_log(print_r($newBody,true));
-
+				if (extension_loaded('tidy'))
+				{
+					$tidy = new tidy();
+					$cleaned = $tidy->repairString($newBody, mail_bo::$tidy_config,'utf8');
+					// Found errors. Strip it all so there's some output
+					if($tidy->getStatus() == 2)
+					{
+						error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$tidy->errorBuffer);
+					}
+					else
+					{
+						$newBody = $cleaned;
+					}
+					if (!$preserveHTML)
+					{
+						// filter only the 'body', as we only want that part, if we throw away the html
+						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
+						if ($matches[2])
+						{
+							$hasOther = true;
+							$newBody = $matches[2];
+						}
+					}
+				}
+				else
+				{
+					// htmLawed filter only the 'body'
+					preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
+					if ($matches[2])
+					{
+						$hasOther = true;
+						$newBody = $matches[2];
+					}
+					$htmLawed = new egw_htmLawed();
+					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
+					// as we switched off HTMLaweds tidy functionality
+					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
+					$newBody = $htmLawed->egw_htmLawed($newBody);
+					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
+				}
 				// do the cleanup, set for the use of purifier
-				$newBodyBuff = $newBody;
+				//$newBodyBuff = $newBody;
 				mail_bo::getCleanHTML($newBody);
+/*
 				// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
 				if (strtoupper(mail_bo::$displayCharset) == 'UTF-8')
 				{
@@ -2819,7 +2859,7 @@ class mail_ui
 						mail_bo::$htmLawed_config['tidy'] = $tv;
 					}
 				}
-
+*/
 				// removes stuff between http and ?http
 				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
 				$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
