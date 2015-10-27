@@ -569,8 +569,15 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		}
 		catch (e) {
 			// wired security exception in IE denying access to template cache in opener
-			//this.templates =
-			etemplate2.prototype.templates = {};
+			if (e.message == 'Permission denied')
+			{
+				etemplate2.prototype.templates = {};
+			}
+			// other error eg. in app.js et2_ready or event handlers --> rethrow it
+			else
+			{
+				throw e;
+			}
 		}
 		// Asynchronously load the XET file
 		et2_loadXMLFromURL(_url, function(_xmldoc) {
