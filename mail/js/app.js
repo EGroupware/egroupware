@@ -169,10 +169,10 @@ app.classes.mail = AppJS.extend(
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 				this.mail_disablePreviewArea(true);
-				
+
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
-				
+
 				// Bind to nextmatch refresh to update folder status
 				if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
@@ -232,9 +232,9 @@ app.classes.mail = AppJS.extend(
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
 				this.check_sharing_filemode();
-				
+
 				this.subject2title();
-				
+
 				// Set autosaving interval to 2 minutes for compose message
 				this.W_INTERVALS.push(window.setInterval(function (){
 					that.saveAsDraft(null, 'autosaving');
@@ -255,10 +255,10 @@ app.classes.mail = AppJS.extend(
 					}
 					else
 					{
-						this.compose_fieldExpander();
+						that.compose_fieldExpander();
 					}
 				});
-				
+
 				//Resize compose after window resize to not getting scrollbar
 				jQuery(window).on ('resize',function() {
 					that.compose_resizeHandler();
@@ -2013,7 +2013,7 @@ app.classes.mail = AppJS.extend(
 				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
 			},
 			rowClass = _action.id;
-	
+
 		if (typeof _elems === 'undefined' || _elems.length == 0)
 		{
 			if (this.mail_isMainWindow && this.mail_currentlyFocussed)
@@ -2060,7 +2060,7 @@ app.classes.mail = AppJS.extend(
 				rowClass = 'labelfive';
 				break;
 			default:
-				break;	
+				break;
 		}
 		jQuery(data).extend({},data, formData);
 		if (data['all']=='cancel') return false;
@@ -3907,48 +3907,53 @@ app.classes.mail = AppJS.extend(
 		// very limited resources and slow proccessor.
 		if (egwIsMobile()) return;
 
-		var bodyH = egw_getWindowInnerHeight();
-		var textArea = this.et2.getWidgetById('mail_plaintext');
-		var $headerSec = jQuery('.mailComposeHeaderSection');
-		var attachments = this.et2.getWidgetById('attachments');
-		var content = this.et2.getArrayMgr('content').data;
+		try {
+			var bodyH = egw_getWindowInnerHeight();
+			var textArea = this.et2.getWidgetById('mail_plaintext');
+			var $headerSec = jQuery('.mailComposeHeaderSection');
+			var attachments = this.et2.getWidgetById('attachments');
+			var content = this.et2.getArrayMgr('content').data;
 
-		// @var arrbitary int represents px
-		// Visible height of attachment progress
-		var prgV_H = 150;
+			// @var arrbitary int represents px
+			// Visible height of attachment progress
+			var prgV_H = 150;
 
-		// @var arrbitary int represents px
-		// Visible height of attchements list
-		var attchV_H = 68;
+			// @var arrbitary int represents px
+			// Visible height of attchements list
+			var attchV_H = 68;
 
-		if (typeof textArea != 'undefined' && textArea != null)
-		{
-			if (textArea.getParent().disabled)
+			if (typeof textArea != 'undefined' && textArea != null)
 			{
-				textArea = this.et2.getWidgetById('mail_htmltext');
-			}
-			// Tolerate values base on plain text or html, in order to calculate freespaces
-			var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
+				if (textArea.getParent().disabled)
+				{
+					textArea = this.et2.getWidgetById('mail_htmltext');
+				}
+				// Tolerate values base on plain text or html, in order to calculate freespaces
+				var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
 
-			// while attachments are in progress take progress visiblity into account
-			// otherwise the attachment progress is finished and consider attachments list
-			var delta = (attachments.table.find('li').length>0 && attachments.table.height() > 0)? prgV_H: (content.attachments? attchV_H: textAreaDelta);
+				// while attachments are in progress take progress visiblity into account
+				// otherwise the attachment progress is finished and consider attachments list
+				var delta = (attachments.table.find('li').length>0 && attachments.table.height() > 0)? prgV_H: (content.attachments? attchV_H: textAreaDelta);
 
-			var bodySize = (bodyH  - Math.round($headerSec.height() + $headerSec.offset().top) - delta);
+				var bodySize = (bodyH  - Math.round($headerSec.height() + $headerSec.offset().top) - delta);
 
-			if (textArea.id != "mail_htmltext")
-			{
-				textArea.getParent().set_height(bodySize);
-				textArea.set_height(bodySize);
+				if (textArea.id != "mail_htmltext")
+				{
+					textArea.getParent().set_height(bodySize);
+					textArea.set_height(bodySize);
+				}
+				else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
+				{
+					textArea.ckeditor.resize('100%', bodySize);
+				}
+				else
+				{
+					textArea.set_height(bodySize - 90);
+				}
 			}
-			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
-			{
-				textArea.ckeditor.resize('100%', bodySize);
-			}
-			else
-			{
-				textArea.set_height(bodySize - 90);
-			}
+		}
+		catch(e) {
+			// ignore errors causing compose to load twice
 		}
 	},
 
