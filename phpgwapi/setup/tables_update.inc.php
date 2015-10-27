@@ -415,13 +415,6 @@ function phpgwapi_upgrade14_2_014()
 		'comment' => 'app.class.method class::method to execute'
 	));*/
 	/* done by RefreshTable() anyway
-	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_async','async_data',array(
-		'type' => 'ascii',
-		'precision' => '8192',
-		'nullable' => False,
-		'comment' => 'serialized array with data to pass to method'
-	));*/
-	/* done by RefreshTable() anyway
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_async','async_auto_id',array(
 		'type' => 'auto',
 		'nullable' => False
@@ -432,7 +425,7 @@ function phpgwapi_upgrade14_2_014()
 			'async_next' => array('type' => 'int','meta' => 'timestamp','precision' => '4','nullable' => False,'comment' => 'timestamp of next run'),
 			'async_times' => array('type' => 'ascii','precision' => '255','nullable' => False,'comment' => 'serialized array with values for keys hour,min,day,month,year'),
 			'async_method' => array('type' => 'ascii','precision' => '80','nullable' => False,'comment' => 'app.class.method class::method to execute'),
-			'async_data' => array('type' => 'ascii','precision' => '8192','nullable' => False,'comment' => 'serialized array with data to pass to method'),
+			'async_data' => array('type' => 'varchar','precision' => '8192','nullable' => False,'comment' => 'serialized array with data to pass to method'),
 			'async_account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'default' => '0','comment' => 'creator of job'),
 			'async_auto_id' => array('type' => 'auto','nullable' => False)
 		),
@@ -884,4 +877,21 @@ function phpgwapi_upgrade14_3_004()
 	});
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.005';
+}
+
+/**
+ * Change egw_async.async_data back to varchar, as it can contain utf-8 data
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_005()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_async','async_data',array(
+		'type' => 'varchar',
+		'precision' => '8192',
+		'nullable' => False,
+		'comment' => 'serialized array with data to pass to method'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.006';
 }

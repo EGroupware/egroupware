@@ -190,7 +190,7 @@ $phpgw_baseline = array(
 			'async_next' => array('type' => 'int','meta' => 'timestamp','precision' => '4','nullable' => False,'comment' => 'timestamp of next run'),
 			'async_times' => array('type' => 'ascii','precision' => '255','nullable' => False,'comment' => 'serialized array with values for keys hour,min,day,month,year'),
 			'async_method' => array('type' => 'ascii','precision' => '80','nullable' => False,'comment' => 'app.class.method class::method to execute'),
-			'async_data' => array('type' => 'ascii','precision' => '8192','nullable' => False,'comment' => 'serialized array with data to pass to method'),
+			'async_data' => array('type' => 'varchar','precision' => '8192','nullable' => False,'comment' => 'serialized array with data to pass to method'),
 			'async_account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'default' => '0','comment' => 'creator of job'),
 			'async_auto_id' => array('type' => 'auto','nullable' => False)
 		),
