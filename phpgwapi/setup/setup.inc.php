@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
 $setup_info['phpgwapi']['title']     = 'EGroupware API';
-$setup_info['phpgwapi']['version']   = '14.3.904';
+$setup_info['phpgwapi']['version']   = '14.3.905';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;

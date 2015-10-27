@@ -897,6 +897,25 @@ function phpgwapi_upgrade14_3_004()
 }
 
 /**
+ * Change egw_async.async_data back to varchar, as it can contain utf-8 data
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_005()
+{
+	$GLOBALS['run-from-upgrade14_3_005'] = true;
+
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_async','async_data',array(
+		'type' => 'varchar',
+		'precision' => '8192',
+		'nullable' => False,
+		'comment' => 'serialized array with data to pass to method'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.006';
+}
+
+/**
  * Updates on the way to 15.1
  */
 
@@ -905,7 +924,7 @@ function phpgwapi_upgrade14_3_004()
  *
  * @return string
  */
-function phpgwapi_upgrade14_3_005()
+function phpgwapi_upgrade14_3_006()
 {
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_api_content_history');
 
@@ -968,4 +987,16 @@ function phpgwapi_upgrade14_3_903()
 		phpgwapi_upgrade14_3_004();
 	}
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.904';
+}
+
+/**
+ * Run 14.3.005 upgrade for everyone who was already on 14.3.9xx
+ */
+function phpgwapi_upgrade14_3_904()
+{
+	if (empty($GLOBALS['run-from-upgrade14_3_005']))
+	{
+		phpgwapi_upgrade14_3_005();
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.905';
 }
