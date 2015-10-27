@@ -791,11 +791,13 @@ ul.et2_link_string {
 .egw_tooltip {
   position: fixed;
   border: 1px solid #897f51;
-  padding: 3px;
   background-color: #FDF9DB;
   max-width: 300px;
   color: black;
   z-index: 999;
+  -webkit-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
 }
 /**
  * Tabs widget
