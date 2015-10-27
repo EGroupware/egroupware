@@ -2487,6 +2487,7 @@ class mail_ui
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); egw(window).close();';
 		}
 		$err=null;
+		$dupe_count = array();
 		$rememberServerID = $this->mail_bo->profileID;
 		foreach((array)$ids as $id)
 		{
@@ -2504,13 +2505,27 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.array2string($hA));
 			$this->mail_bo->reopen($mailbox);
 			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
+
+			$file = $name;
+			while(egw_vfs::file_exists($path.($file ? '/'.$file : '')))
+			{
+				$dupe_count[$name]++;
+				$file = pathinfo($name, PATHINFO_FILENAME) .
+					' ('.($dupe_count[$name] + 1).')' . '.' .
+					pathinfo($name, PATHINFO_EXTENSION);
+			}
+			$name = $file;
 			//error_log(__METHOD__.__LINE__.array2string($attachment));
 			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
 				$err .= lang('Error saving %1!',$file);
 			}
-			if ($fp) fclose($fp);
+			if ($fp)
+			{
+				fclose($fp);
+				$file_list[] = $name;
+			}
 		}
 		$this->mail_bo->closeConnection();
 		if ($rememberServerID != $this->mail_bo->profileID)
