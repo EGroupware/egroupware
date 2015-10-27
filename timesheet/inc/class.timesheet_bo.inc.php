@@ -377,76 +377,12 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * @param string $name
 	 * @param int &$start
-	 * @param int &$end_param
+	 * @param int &$end
 	 * @return string
 	 */
-	function date_filter($name,&$start,&$end_param)
+	function date_filter($name,&$start,&$end)
 	{
-		$end = $end_param;
-
-		if ($name == 'custom' && $start)
-		{
-			if ($end)
-			{
-				$end += 24*60*60;
-			}
-			else
-			{
-				$end = $start + 7*24*60*60;
-			}
-		}
-		else
-		{
-			if (!isset($this->date_filters[$name]))
-			{
-				return '1=1';
-			}
-			$year  = (int) date('Y',$this->today);
-			$month = (int) date('m',$this->today);
-			$day   = (int) date('d',$this->today);
-
-			list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) = $this->date_filters[$name];
-
-			if ($syear || $eyear)
-			{
-				$start = mktime(0,0,0,1,1,$syear+$year);
-				$end   = mktime(0,0,0,1,1,$eyear+$year);
-			}
-			elseif ($smonth || $emonth)
-			{
-				$start = mktime(0,0,0,$smonth+$month,1,$year);
-				$end   = mktime(0,0,0,$emonth+$month,1,$year);
-			}
-			elseif ($sday || $eday)
-			{
-				$start = mktime(0,0,0,$month,$sday+$day,$year);
-				$end   = mktime(0,0,0,$month,$eday+$day,$year);
-			}
-			elseif ($sweek || $eweek)
-			{
-				$wday = (int) date('w',$this->today); // 0=sun, ..., 6=sat
-				switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
-				{
-					case 'Sunday':
-						$weekstart = $this->today - $wday * 24*60*60;
-						break;
-					case 'Saturday':
-						$weekstart = $this->today - (6-$wday) * 24*60*60;
-						break;
-					case 'Moday':
-					default:
-						$weekstart = $this->today - ($wday ? $wday-1 : 6) * 24*60*60;
-						break;
-				}
-				$start = $weekstart + $sweek*7*24*60*60;
-				$end   = $weekstart + $eweek*7*24*60*60;
-			}
-		}
-		$end_param = $end - 24*60*60;
-
-		//echo "<p align='right'>date_filter($name,$start,$end) today=".date('l, Y-m-d H:i',$this->today)." ==> ".date('l, Y-m-d H:i:s',$start)." <= date < ".date('l, Y-m-d H:i:s',$end)."</p>\n";
-		// convert start + end from user to servertime for the filter
-		return '('.($start-$this->tz_offset_s).' <= ts_start AND ts_start < '.($end-$this->tz_offset_s).')';
+		return egw_time::sql_filter($name, $start, $end, 'ts_start', $this->date_filters);
 	}
 
 	/**

@@ -167,6 +167,126 @@ class egw_time extends DateTime
 	}
 
 	/**
+	 * Like DateTime::add, but additional allow to use a string run through DateInterval::createFromDateString
+	 *
+	 * @param DateInterval|string $interval eg. '1 day', '-2 weeks'
+	 */
+	public function add($interval)
+	{
+		if (is_string($interval)) $interval = DateInterval::createFromDateString($interval);
+
+		parent::add($interval);
+	}
+
+	/**
+	 * Set date to beginning of the week taking into account calendar weekdaystarts preference
+	 */
+	public function setWeekstart()
+	{
+		$wday = (int) $this->format('w'); // 0=sun, ..., 6=sat
+		switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
+		{
+			case 'Sunday':
+				$wstart = -$wday;
+				break;
+			case 'Saturday':
+				$wstart =  -(6-$wday);
+				break;
+			case 'Moday':
+			default:
+				$wstart = -($wday ? $wday-1 : 6);
+				break;
+		}
+		if ($wstart) $this->add($wstart.'days');
+	}
+
+	/**
+	 * return SQL implementing filtering by date
+	 *
+	 * @param string $name
+	 * @param int &$start
+	 * @param int &$end
+	 * @param string $column name of timestamp column to use in returned sql
+	 * @param array $filters $name => list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) pairs with offsets
+	 * @return string
+	 */
+	public static function sql_filter($name, &$start, &$end, $column, array $filters=array())
+	{
+		if ($name == 'custom' && $start)
+		{
+			$start = new egw_time($start);
+			$start->setTime(0, 0, 0);
+
+			if ($end)
+			{
+				$end = new egw_time($end);
+				$end->setTime(0, 0, 0);
+				$end->add('+1day');
+			}
+			else
+			{
+				$end = new egw_time($start);
+				$end->add('+1week');
+			}
+		}
+		else
+		{
+			if (!isset($filters[$name]))
+			{
+				return '1=1';
+			}
+			$start = new egw_time('now');
+			$start->setTime(0, 0, 0);
+			$end   = new egw_time('now');
+			$end->setTime(0, 0, 0);
+
+			$year  = (int) $start->format('Y');
+			$month = (int) $start->format('m');
+
+			list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) = $filters[$name];
+
+			// Handle quarters
+			if(stripos($name, 'quarter') !== false)
+			{
+				$start->setDate($year, ((int)floor(($smonth+$month) / 3.1)) * 3 + 1, 1);
+				$end->setDate($year, ((int)floor(($emonth+$month) / 3.1)+1) * 3 + 1, 1);
+			}
+			elseif ($syear || $eyear)
+			{
+				$start->setDate($year+$syear, 1, 1);
+				$end->setDate($year+$eyear, 1, 1);
+			}
+			elseif ($smonth || $emonth)
+			{
+				$start->setDate($year, $month+$smonth, 1);
+				$end->setDate($year, $month+$emonth, 1);
+			}
+			elseif ($sday || $eday)
+			{
+				if ($sday) $start->add($sday.'days');
+				if ($eday) $end->add($eday.'days');
+			}
+			elseif ($sweek || $eweek)
+			{
+				$start->setWeekstart();
+				if ($sweek) $start->add($sweek.'weeks');
+				$end->setWeekstart();
+				if ($eweek) $end->add($eweek.'weeks');
+			}
+		}
+		// convert start + end from user to servertime for the filter
+		$sql = '('.egw_time::user2server($start, 'ts').' <= '.$column.' AND '.$column.' < '.egw_time::user2server($end, 'ts').')';
+		//error_log(__METHOD__."('$name', ...) syear=$syear, smonth=$smonth, sday=$sday, sweek=$sweek, eyear=$eyear, emonth=$emonth, eday=$eday, eweek=$eweek --> start=".$start->format().', end='.$end->format().", sql='$sql'");
+
+		// returned timestamps: $end is an inclusive date, eg. for today it's equal to start!
+		$start = $start->format('ts');
+		$end->add('-1day');
+		$end = $end->format('ts');
+
+		return $sql;
+	}
+
+	/**
 	 * Set user timezone, according to user prefs: converts current time to user time
 	 *
 	 * Does nothing if self::$user_timezone is current timezone!
