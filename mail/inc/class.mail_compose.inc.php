@@ -2123,6 +2123,22 @@ class mail_compose
 		static $nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+
+		if (extension_loaded('tidy'))
+		{
+			$tidy = new tidy();
+			$cleaned = $tidy->repairString($_body, mail_bo::$tidy_config,'utf8');
+			// Found errors. Strip it all so there's some output
+			if($tidy->getStatus() == 2)
+			{
+				error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$tidy->errorBuffer);
+			}
+			else
+			{
+				$_body = $cleaned;
+			}
+		}
+
 		mail_bo::getCleanHTML($_body);
 		return preg_replace($nonDisplayAbleCharacters, '', $_body);
 	}

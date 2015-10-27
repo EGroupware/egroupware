@@ -4687,23 +4687,8 @@ class emailadmin_imapbase
 			if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = translation::detect_encoding($bodyParts[$i]['body']);
 			// add line breaks to $bodyParts
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Charset:'.$bodyParts[$i]['charSet'].'->'.$bodyParts[$i]['body']);
-			$newBody  = translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+			$newBody  = translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 			//error_log(__METHOD__.' ('.__LINE__.') '.' MimeType:'.$bodyParts[$i]['mimeType'].'->'.$newBody);
-			/*
-			// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
-			if (strtoupper(self::$displayCharset) == 'UTF-8')
-			{
-				$test = json_encode($newBody);
-				//error_log(__METHOD__.' ('.__LINE__.') '.'#'.$test.'# ->'.strlen($newBody).' Error:'.json_last_error());
-				if (json_last_error() != JSON_ERROR_NONE && strlen($newBody)>0)
-				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					error_log(__METHOD__.' ('.__LINE__.') '.' Charset Reported:'.$bodyParts[$i]['charSet'].' Carset Detected:'.translation::detect_encoding($bodyParts[$i]['body']));
-					$newBody = utf8_encode($newBody);
-				}
-			}
-			*/
-			//error_log(__METHOD__.' ('.__LINE__.') '.' before purify:'.$newBody);
 			$mailClass->activeMimeType = 'text/plain';
 			if ($bodyParts[$i]['mimeType'] == 'text/html') {
 				$mailClass->activeMimeType = $bodyParts[$i]['mimeType'];
