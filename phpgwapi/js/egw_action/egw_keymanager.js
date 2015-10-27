@@ -258,76 +258,72 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 	{
 		var shortcut = egw_registeredShortcuts[idx];
 
-		// Call the registered shortcut function and return its result.
-		shortcut.handler.call(shortcut.context, shortcut.shortcut);
-
-		return true;
+		// Call the registered shortcut function and return its result, if it handled it
+		var result = shortcut.handler.call(shortcut.context, shortcut.shortcut);
+		if(result) return result;
 	}
-	else
+	
+	// Pass the keypress to the currently focused action object
+
+	// Get the object manager and fetch the container of the currently
+	// focused object
+	var appMgr = egw_getAppObjectManager(false);
+	if (appMgr)
 	{
-		// Pass the keypress to the currently focused action object
+		var focusedObject = appMgr.getFocusedObject();
 
-		// Get the object manager and fetch the container of the currently
-		// focused object
-		var appMgr = egw_getAppObjectManager(false);
-		if (appMgr)
+		if (!focusedObject)
 		{
-			var focusedObject = appMgr.getFocusedObject();
-
-			if (!focusedObject)
+			// If the current application doesn't have a focused object,
+			// check whether the application object manager contains an object
+			// with the EGW_AO_FLAG_DEFAULT_FOCUS flag set.
+			var cntr = null;
+			for (var i = 0; i < appMgr.children.length; i++)
 			{
-				// If the current application doesn't have a focused object,
-				// check whether the application object manager contains an object
-				// with the EGW_AO_FLAG_DEFAULT_FOCUS flag set.
-				var cntr = null;
-				for (var i = 0; i < appMgr.children.length; i++)
+				var child = appMgr.children[i];
+				if (egwBitIsSet(EGW_AO_FLAG_DEFAULT_FOCUS, child.flags))
 				{
-					var child = appMgr.children[i];
-					if (egwBitIsSet(EGW_AO_FLAG_DEFAULT_FOCUS, child.flags))
-					{
-						cntr = child;
-						break;
-					}
-				}
-
-				// Get the first child of the found container and focus the first
-				// object
-				if (cntr && cntr.children.length > 0)
-				{
-					cntr.children[0].setFocused(true);
-					focusedObject = cntr.children[0];
+					cntr = child;
+					break;
 				}
 			}
 
-			if (focusedObject)
+			// Get the first child of the found container and focus the first
+			// object
+			if (cntr && cntr.children.length > 0)
 			{
-
-				// Handle the default keys (arrow_up, down etc.)
-				var cntr = focusedObject.getContainerRoot();
-				var handled = false;
-
-				if (cntr)
-				{
-					handled = cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
-				}
-
-				// Execute the egw_popup key handler of the focused object
-				if (!handled) {
-					return focusedObject.executeActionImplementation(
-					{
-						"keyEvent": {
-							"keyCode": _keyCode,
-							"shift": _shift,
-							"ctrl": _ctrl,
-							"alt": _alt
-						}
-					}, "popup", EGW_AO_EXEC_SELECTED);
-				}
-
-				return handled;
+				cntr.children[0].setFocused(true);
+				focusedObject = cntr.children[0];
 			}
 		}
 
+		if (focusedObject)
+		{
+
+			// Handle the default keys (arrow_up, down etc.)
+			var cntr = focusedObject.getContainerRoot();
+			var handled = false;
+
+			if (cntr)
+			{
+				handled = cntr.handleKeyPress(_keyCode, _shift, _ctrl, _alt);
+			}
+
+			// Execute the egw_popup key handler of the focused object
+			if (!handled) {
+				return focusedObject.executeActionImplementation(
+				{
+					"keyEvent": {
+						"keyCode": _keyCode,
+						"shift": _shift,
+						"ctrl": _ctrl,
+						"alt": _alt
+					}
+				}, "popup", EGW_AO_EXEC_SELECTED);
+			}
+
+			return handled;
+		}
 	}
 
 	return false;

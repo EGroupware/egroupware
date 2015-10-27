@@ -106,6 +106,9 @@ app.classes.calendar = AppJS.extend(
 			delete window.top.app.calendar;
 		}
 		jQuery('body').off('.calendar');
+
+		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false);
+		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false);
 	},
 
 	/**
@@ -252,6 +255,7 @@ app.classes.calendar = AppJS.extend(
 				}
 				break;
 			case 'calendar':
+				// Regular refresh
 				if(_id)
 				{
 					var event = egw.dataGetUIDdata('calendar::'+_id);
@@ -457,157 +461,224 @@ app.classes.calendar = AppJS.extend(
 	 * When the user scrolls, we'll move enddate - startdate days
 	 */
 	_scroll: function() {
+		/**
+		 * Function we can pass all this off to
+		 *
+		 * @param {String} direction up, down, left or right
+		 * @param {number} delta Integer for how many we're moving, should be +/- 1
+		 */
+		var scroll_animate = function(direction, delta)
+		{
+			// Scrolling too fast?
+			if(app.calendar._scroll_disabled) return;
+
+			// Find the template
+			var id = $j(this).closest('.et2_container').attr('id');
+			if(id)
+			{
+				var template = etemplate2.getById(id);
+			}
+			else
+			{
+				template = app.classes.calendar.views[app.calendar.state.view].etemplates[0];
+			}
+			if(!template) return;
+
+			// Prevent scrolling too fast
+			app.calendar._scroll_disabled = true;
+
+			// Animate the transition, if possible
+			var widget = null
+			template.widgetContainer.iterateOver(function(w) {
+				if (w.getDOMNode() == this) widget = w;
+			},this,et2_widget);
+			if(widget == null)
+			{
+				template.widgetContainer.iterateOver(function(w) {
+					widget = w;
+				},this, et2_calendar_timegrid);
+				if(widget == null) return;
+			}
+
+			// We clone the nodes so we can animate the transition
+			var original = $j(widget.getDOMNode());
+			var cloned = original.clone(true).attr("id","CLONE");
+			var wrapper = $j(document.createElement("div"));
+			original.parent().append(wrapper);
+
+			// This is to hide the scrollbar
+			wrapper.wrap("<div style='overflow:hidden; height:"+original.outerHeight()+"px; width:" + original.outerWidth() + "px;'></div>");
+			wrapper.height(direction == "up" || direction == "down" ? 2 * original.outerHeight()  : original.outerHeight());
+			wrapper.width(direction == "left" || direction == "right" ? 2 * original.outerWidth() : original.outerWidth());
+
+			// Moving this stuff around breaks scroll to day start in Chrome
+			var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
+
+			if(direction == "right" || direction == "left")
+			{
+				original.css({"display":"inline-block","width":original.width()+"px"});
+				cloned.css({"display":"inline-block","width":original.width()+"px"});
+			}
+			wrapper.append(original);
+
+			// Re-scroll to previous to avoid "jumping"
+			$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
+			switch(direction)
+			{
+				case "up":
+				case "left":
+					// Scrolling up
+					// Apply the reverse quickly, then let it animate as the changes are
+					// removed, leaving things where they should be.
+					original.parent().append(cloned);
+					wrapper.css({"transform": direction == "up" ? "translateY(-50%)" : "translateX(-50%)"});
+					// Makes it jump to destination
+					wrapper.css({
+						"transition-duration": "0s",
+						"transition-delay": "0s"
+					});
+					wrapper.css({
+						"transition-duration": "",
+						"transition-delay": ""
+					});
+					break;
+				case "down":
+				case "right":
+					// Scrolling down
+					original.parent().prepend(cloned);
+					break;
+			}
+			// Scroll clone to match to avoid "jumping"
+			$j('.calendar_calTimeGridScroll',cloned).scrollTop(scrollTop);
+
+			// Remove
+			var remove = function() {
+				// Starting animation
+				wrapper.addClass("calendar_slide");
+				var translate = direction == "down" ? "translateY(-50%)" : (direction == "right" ? "translateX(-50%)" : "");
+				wrapper.css({"transform": translate});
+				window.setTimeout(function() {
+					var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
+					// Clean up from animation
+					cloned.remove();
+					var parent = wrapper.parent().parent();
+					wrapper.parent().remove();
+					original.appendTo(parent);
+					original.css("display","");
+					// Re-attach events, if widget is still there
+					if(widget && widget.getDOMNode(widget))
+					{
+						widget.attachToDOM();
+					}
+					// Re-scroll to start of day
+					$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
+
+
+					window.setTimeout(function() {
+						if(app.calendar)
+						{
+							app.calendar._scroll_disabled = false;
+						}
+					}, 100);
+				},2000);
+			}
+			// If detecting the transition end worked, we wouldn't need to use a timeout.
+			window.setTimeout(remove,100);
+
+			// Get the view to calculate - this actually loads the new data
+			// Using a timeout make it a little faster (in Chrome)
+			window.setTimeout(function() {
+				var view = app.classes.calendar.views[app.calendar.state.view] || false;
+				var start = new Date(app.calendar.state.date);
+				if (view && view.etemplates.indexOf(template) !== -1)
+				{
+					start = view.scroll(delta);
+					app.calendar.update_state({date:app.calendar.date.toString(start)});
+				}
+				else
+				{
+					// Home - always 1 week
+					// TODO
+					return false;
+				}
+			},0);
+		};
+		
 		// Bind only once, to the whole thing
 		jQuery('body').off('.calendar')
 			//.on('wheel','.et2_container:#calendar-list,#calendar-sidebox)',
 			.on('wheel.calendar','.et2_container .calendar_calTimeGrid, .et2_container .calendar_plannerWidget',
 				function(e)
 				{
+					// Consume scroll if in the middle of something
+					if(app.calendar._scroll_disabled) return false;
+					
 					// Ignore if they're going the other way
 					var direction = e.originalEvent.deltaY > 0 ? 1 : -1;
 					var at_bottom = direction !== -1;
 					var at_top = direction !== 1;
 					
 					$j(this).children(":not(.calendar_calGridHeader)").each(function() {
-						at_bottom = at_bottom && this.scrollTop === (this.scrollHeight - this.offsetHeight)
+						// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
+						// 2px left to go
+						at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
 					}).each(function() {
 						at_top = at_top && this.scrollTop === 0;
 					});
 					if(!at_bottom && !at_top) return;
 
-					// Scrolling too fast?
-					if(app.calendar._scroll_disabled) return;
-
 					e.preventDefault();
-					var delta = 1;
-					var start = new Date(app.calendar.state.date);
-					var end = null;
 
-					// Find the template
-					var id = $j(this).closest('.et2_container').attr('id');
-					if(!id) return;
-					var template = etemplate2.getById(id);
-					if(!template) return;
-
-					// Prevent scrolling too fast
-					app.calendar._scroll_disabled = true;
-
-					// Animate the transition, if possible
-					var widget = null
-					template.widgetContainer.iterateOver(function(w) {
-						if (w.getDOMNode() == this) widget = w;
-					},this,et2_widget);
-					if(widget == null) return;
-					
-					// We apply the reverse quickly, then let it animate as the changes are
-					// removed, leaving things where they should be.
-					var original = $j(this);
-					var cloned = original.clone(true).attr("id","CLONE");
-					var wrapper = $j(document.createElement("div"));
-					original.parent().append(wrapper);
-					// This is to hide the scrollbar
-					wrapper.wrap("<div style='overflow:hidden; height:"+original.outerHeight()+"px'></div>");
-					wrapper.height(original.outerHeight() + cloned.outerHeight());
-					wrapper.append(original);
-					if(direction == -1)
-					{
-						// Scrolling up
-						original.parent().append(cloned);
-						wrapper.css({"transform": "translateY(" + (direction * 50) + "%)"});
-						// Makes it jump to destination
-						wrapper.css({
-							"transition-duration": "0s",
-							"transition-delay": "0s"
-						});
-						wrapper.css({
-							"transition-duration": "",
-							"transition-delay": ""
-						});
-					}
-					else
-					{
-						// Scrolling down
-						$j(this).parent().prepend(cloned);
-						$j('.calendar_calTimeGridScroll',cloned).scrollTop(10000);
-					}
-					
-					// Remove
-					var remove = function() {
-						// Starting animation
-						wrapper.addClass("calendar_slide");
-						wrapper.css({"transform": direction == 1 ? "translateY(-50%)" : ""});
-						window.setTimeout(function() {
-							// Clean up from animation
-							cloned.remove();
-							// Moving this stuff around breaks scroll to day start in Chrome
-							var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
-							var parent = wrapper.parent().parent();
-							wrapper.parent().remove();
-							original.appendTo(parent);
-							// Also detaches events
-							if(widget)
-							{
-								widget.attachToDOM();
-							}
-							// Re-scroll to start of day
-							$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
-
-
-							window.setTimeout(function() {
-								if(app.calendar)
-								{
-									app.calendar._scroll_disabled = false;
-								}
-							}, 500);
-						},1000);
-					}
-					// If detecting the transition end worked, we wouldn't need to use a timeout.
-					window.setTimeout(remove,100);
-
-					// Get the view to calculate
-					var view = app.classes.calendar.views[app.calendar.state.view] || false;
-					if (view && view.etemplates.indexOf(template) !== -1)
-					{
-						start = view.scroll(direction * delta);
-						app.calendar.update_state({date:app.calendar.date.toString(start)});
-					}
-					else
-					{
-						// Home - always 1 week
-						// TODO
-						return false;
-						/*
-						var widget = [];
-						var value = [];
-						template.widgetContainer.iterateOver(function(w) {
-							if(typeof w.set_start_date === 'function' && typeof w.set_value === 'function')
-							{
-								widget.push(w);
-							}
-						},this,et2_valueWidget);
-						for(var i = 0; i < widget.length; i++)
-						{
-							var state = template.widgetContainer.getParent().settings.favorite.state || {};
-							debugger;
-							var start = new Date(widget[i].options.start_date || state.start);
-							start.setUTCDate(start.getUTCDate() + (7 * direction * delta));
-							var end = new Date(widget[i].options.end_date || state.end);
-							end.setUTCDate(end.getUTCDate() + (7 * direction * delta));
-
-							// Get data
-							value[i] = {
-								start_date: start,
-								end_date: end
-							};
-							app.calendar._need_data([value[i]], state);
-							widget[i].set_value(value[i]);
-						}
-						*/
-					}
+					scroll_animate.call(this, direction > 0 ? "down" : "up", direction);
 
 					return false;
 				}
-			);
+			)
+			.swipe({
+				//Generic swipe handler for all directions
+				swipe:function(event, direction, distance, duration, fingerCount) {
+					if(direction == "up" || direction == "down")
+					{
+						var at_bottom = direction !== -1;
+						var at_top = direction !== 1;
+
+						$j(this).children(":not(.calendar_calGridHeader)").each(function() {
+							// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
+							// 2px left to go
+							at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
+						}).each(function() {
+							at_top = at_top && this.scrollTop === 0;
+						});
+						if(!at_bottom && !at_top && fingerCount == 1) return;
+					}
+
+					var delta = direction == "down" || direction == "right" ? -1 : 1;
+					// But we animate in the opposite direction to the swipe
+					var opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
+					direction = opposite[direction];
+					scroll_animate.call($j(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta)
+					return false;
+				},
+				allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL
+			});
+
+		// Page up & page down
+		egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false, function() {
+			if(app.calendar.state.view == 'listview')
+			{
+				return false
+			}
+			scroll_animate.call(this,"up", -1);
+			return true;
+		});
+		egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false, function() {
+			if(app.calendar.state.view == 'listview')
+			{
+				return false
+			}
+			scroll_animate.call(this,"down", 1);
+			return true;
+		});
 	},
 
 	/**

@@ -463,15 +463,15 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	getDOMNode: function(_sender) {
 		if(_sender === this || !_sender)
 		{
-			return this.div[0];
+			return this.div ? this.div[0] : null;
 		}
 		else if (_sender.instanceOf(et2_calendar_daycol))
 		{
-			return this.days[0];
+			return this.days ? this.days[0] : null;
 		}
 		else if (_sender)
 		{
-			return this.gridHeader[0];
+			return this.gridHeader ? this.gridHeader[0] : null;
 		}
 	},
 

@@ -812,8 +812,9 @@ img.calendar_print_button, img.calendar_print_appicon {
  * View animation stuff
  */
 .calendar_slide {
-	transition-duration: 1s;
-	transition-delay: 100ms;
+	/* There is a cleanup timeout in calendar app.js line 563 that must match */
+	transition-duration: 2s;
+	transition-delay: 50ms;
 }
 
 /**
