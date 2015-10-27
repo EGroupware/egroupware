@@ -45,10 +45,10 @@ app.classes.mail = AppJS.extend(
 		request: null
 	},
 	/**
-	 * 
+	 *
 	 */
 	subscription_treeLastState : "",
-	
+
 	/**
 	 * abbrevations for common access rights
 	 * @array
@@ -209,9 +209,9 @@ app.classes.mail = AppJS.extend(
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
 				this.check_sharing_filemode();
-				
+
 				this.subject2title();
-				
+
 				// Set autosaving interval to 2 minutes for compose message
 				this.W_INTERVALS.push(window.setInterval(function (){
 					that.saveAsDraft(null, 'autosaving');
@@ -232,10 +232,10 @@ app.classes.mail = AppJS.extend(
 					}
 					else
 					{
-						this.compose_fieldExpander();
+						that.compose_fieldExpander();
 					}
 				});
-				
+
 				//Resize compose after window resize to not getting scrollbar
 				jQuery(window).on ('resize',function() {
 					that.compose_resizeHandler();
@@ -272,11 +272,11 @@ app.classes.mail = AppJS.extend(
 				break;
 			case 'mail.subscribe':
 				if (this.subscription_treeLastState != "")
-				{	
+				{
 					var tree = this.et2.getWidgetById('foldertree');
 					//Saved state of tree
 					var state = jQuery.parseJSON(this.subscription_treeLastState);
-					
+
 					tree.input.loadJSONObject(tree._htmlencode_node(state));
 				}
 				break;
@@ -1721,10 +1721,10 @@ app.classes.mail = AppJS.extend(
 		}
 	//	alert(folder);
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
-		
+
 		//Open unloaded tree to get loaded
 		_widget.openItem(folder, true);
-		
+
 		this.lock_tree();
 		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
 			// Profile changed, select inbox
@@ -1986,7 +1986,7 @@ app.classes.mail = AppJS.extend(
 				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
 			},
 			rowClass = _action.id;
-	
+
 		if (typeof _elems === 'undefined' || _elems.length == 0)
 		{
 			if (this.mail_isMainWindow && this.mail_currentlyFocussed)
@@ -2033,7 +2033,7 @@ app.classes.mail = AppJS.extend(
 				rowClass = 'labelfive';
 				break;
 			default:
-				break;	
+				break;
 		}
 		jQuery(data).extend({},data, formData);
 		if (data['all']=='cancel') return false;
@@ -3504,7 +3504,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var rights = [];
-		
+
 		switch (widget.get_value())
 		{
 			case 'custom':
@@ -3661,15 +3661,15 @@ app.classes.mail = AppJS.extend(
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_sieve.editVacation&acc_id='+acc_id,'_blank','700x480');
 	},
-	
+
 	subscription_refresh: function(_data)
 	{
 		console.log(_data);
 	},
-	
+
 	/**
 	 * Submit on apply button and save current tree state
-	 * 
+	 *
 	 * @param {type} _egw
 	 * @param {type} _widget
 	 * @returns {undefined}
@@ -3684,10 +3684,10 @@ app.classes.mail = AppJS.extend(
 		}
 		this.et2._inst.submit(_widget);
 	},
-	
+
 	/**
 	 * Show ajax-loader when the autoloading get started
-	 * 
+	 *
 	 * @param {type} _id item id
 	 * @param {type} _widget tree widget
 	 * @returns {Boolean}
@@ -3702,7 +3702,7 @@ app.classes.mail = AppJS.extend(
 		}
 		return true;
 	},
-	
+
 	/**
 	 * Revert back the icon after autoloading is finished
 	 * @returns {Boolean}
@@ -3711,7 +3711,7 @@ app.classes.mail = AppJS.extend(
 	{
 		return true;
 	},
-	
+
 	/**
 	 * Popup the subscription dialog
 	 *
@@ -3864,47 +3864,52 @@ app.classes.mail = AppJS.extend(
 		// very limited resources and slow proccessor.
 		if (egwIsMobile()) return;
 
-		var bodyH = egw_getWindowInnerHeight();
-		var textArea = this.et2.getWidgetById('mail_plaintext');
-		var $headerSec = jQuery('.mailComposeHeaderSection');
-		var attachments = this.et2.getWidgetById('attachments');
-		var content = this.et2.getArrayMgr('content').data;
+		try {
+			var bodyH = egw_getWindowInnerHeight();
+			var textArea = this.et2.getWidgetById('mail_plaintext');
+			var $headerSec = jQuery('.mailComposeHeaderSection');
+			var attachments = this.et2.getWidgetById('attachments');
+			var content = this.et2.getArrayMgr('content').data;
 
-		// @var arrbitary int represents px
-		// Visible height of attachment progress
-		var prgV_H = 150;
+			// @var arrbitary int represents px
+			// Visible height of attachment progress
+			var prgV_H = 150;
 
-		// @var arrbitary int represents px
-		// Visible height of attchements list
-		var attchV_H = 68;
+			// @var arrbitary int represents px
+			// Visible height of attchements list
+			var attchV_H = 68;
 
-		if (typeof textArea != 'undefined' && textArea != null)
-		{
-			if (textArea.getParent().disabled)
+			if (typeof textArea != 'undefined' && textArea != null)
 			{
-				textArea = this.et2.getWidgetById('mail_htmltext');
-			}
-			// Tolerate values base on plain text or html, in order to calculate freespaces
-			var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
+				if (textArea.getParent().disabled)
+				{
+					textArea = this.et2.getWidgetById('mail_htmltext');
+				}
+				// Tolerate values base on plain text or html, in order to calculate freespaces
+				var textAreaDelta = textArea.id == "mail_htmltext"?20:40;
 
-			// while attachments are in progress take progress visiblity into account
-			// otherwise the attachment progress is finished and consider attachments list
-			var delta = (attachments.table.find('li').length>0 && attachments.table.height() > 0)? prgV_H: (content.attachments? attchV_H: textAreaDelta);
+				// while attachments are in progress take progress visiblity into account
+				// otherwise the attachment progress is finished and consider attachments list
+				var delta = (attachments.table.find('li').length>0 && attachments.table.height() > 0)? prgV_H: (content.attachments? attchV_H: textAreaDelta);
 
-			var bodySize = (bodyH  - Math.round($headerSec.height() + $headerSec.offset().top) - delta);
+				var bodySize = (bodyH  - Math.round($headerSec.height() + $headerSec.offset().top) - delta);
 
-			if (textArea.id != "mail_htmltext")
-			{
-				textArea.set_height(bodySize);
+				if (textArea.id != "mail_htmltext")
+				{
+					textArea.set_height(bodySize);
+				}
+				else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
+				{
+					textArea.ckeditor.resize('100%', bodySize);
+				}
+				else
+				{
+					textArea.set_height(bodySize - 90);
+				}
 			}
-			else if (typeof textArea != 'undefined' && textArea.id == 'mail_htmltext')
-			{
-				textArea.ckeditor.resize('100%', bodySize);
-			}
-			else
-			{
-				textArea.set_height(bodySize - 90);
-			}
+		}
+		catch(e) {
+			// ignore errors causing compose to load twice
 		}
 	},
 
@@ -4278,18 +4283,18 @@ app.classes.mail = AppJS.extend(
 				var widget = self.et2.getWidgetById(this.getAttribute('name'));
 				var emails, distLists = [];
 				var fromWidget = {};
-				
+
 				var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
 				if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
 				{
 					fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
 				}
-				
+
 				var draggedValue = ui.draggable.text();
-				
+
 				// index of draggable item in selection list
 				var dValueKey = draggedValue;
-				
+
 				var distItem = ui.draggable.find('.mailinglist');
 				if (distItem.length>0)
 				{
@@ -4308,18 +4313,18 @@ app.classes.mail = AppJS.extend(
 						}
 					}
 				}
-				
+
 				if (typeof widget != 'undefined')
 				{
 					emails = widget.get_value();
 					if (emails) emails = emails.concat([draggedValue]);
-					
+
 					// Resolve the dist list and normal emails
 					distLists = resolveDistList(widget, emails);
-					
+
 					// Add normal emails
 					if (emails) widget.set_value(emails);
-					
+
 					// check if there's any dist list to be added
 					if (distLists.length>0) widget.taglist.addToSelection(distLists);
 
@@ -4372,10 +4377,10 @@ app.classes.mail = AppJS.extend(
 					emails.splice(itemIndex,1);
 					// Resolve the dist list and normal emails
 					var dist = resolveDistList(_widget, emails);
-					
+
 					// Add normal emails
 					_widget.set_value(emails);
-					
+
 					//check if there's any dist list to be added
 					if (dist)
 					{
@@ -4393,10 +4398,10 @@ app.classes.mail = AppJS.extend(
 			}
 			return true;
 		};
-		
+
 		/**
 		 * Resolve taglist widget which has distribution list
-		 * 
+		 *
 		 * @param {type} _widget
 		 * @param {type} _emails
 		 * @returns {Array} returns an array of distribution lists in selected widget
@@ -4413,7 +4418,7 @@ app.classes.mail = AppJS.extend(
 					list.push(selectedList[i]);
 				}
 			}
-			
+
 			// Remove dist list from emails list
 			for(var key in _emails)
 			{
@@ -4575,11 +4580,11 @@ app.classes.mail = AppJS.extend(
 			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save into VFS','info');
 		}
 	},
-	
+
 	/**
 	 * Folder Management, opens the folder magnt. dialog
 	 * with the selected acc_id from index tree
-	 * 
+	 *
 	 * @param {egw action object} _action actions
 	 * @param {object} _senders selected node
 	 */
@@ -4588,10 +4593,10 @@ app.classes.mail = AppJS.extend(
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x500');
 	},
-	
+
 	/**
 	 * Show ajax-loader when the autoloading get started
-	 * 
+	 *
 	 * @param {type} _id item id
 	 * @param {type} _widget tree widget
 	 * @returns {Boolean}
@@ -4600,7 +4605,7 @@ app.classes.mail = AppJS.extend(
 	{
 		return this.subscription_autoloadingStart (_id, _widget);
 	},
-	
+
 	/**
 	 * Revert back the icon after autoloading is finished
 	 * @returns {Boolean}
@@ -4609,9 +4614,9 @@ app.classes.mail = AppJS.extend(
 	{
 		return true;
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @param {type} _ids
 	 * @param {type} _widget
 	 * @returns {undefined}
@@ -4620,12 +4625,12 @@ app.classes.mail = AppJS.extend(
 	{
 		// Flag to reset selected items
 		var resetSelection = false;
-		
+
 		var self = this;
-		
+
 		/**
 		 * helper function to multiselect range of nodes in same level
-		 * 
+		 *
 		 * @param {string} _a start node id
 		 * @param {string} _b end node id
 		 * @param {string} _branch totall node ids in the level
@@ -4646,7 +4651,7 @@ app.classes.mail = AppJS.extend(
 				self.folderMgmt_setCheckbox(_widget, branchItems[i], !_widget.input.isItemChecked(branchItems[i]));
 			}
 		};
-		
+
 		// extract items ids
 		var itemIds = _ids.split(_widget.input.dlmtr);
 
@@ -4660,16 +4665,16 @@ app.classes.mail = AppJS.extend(
 		{
 			resetSelection = true;
 		}
-		
+
 		if (resetSelection)
 		{
 			_widget.input._unselectItems();
 		}
 	},
-	
+
 	/**
 	 * Set enable/disable checkbox
-	 * 
+	 *
 	 * @param {object} _widget tree widget
 	 * @param {string} _itemId item tree id
 	 * @param {boolean} _stat - status to be set on checkbox true/false
@@ -4682,9 +4687,9 @@ app.classes.mail = AppJS.extend(
 			_widget.input.setSubChecked(_itemId,_stat);
 		}
 	},
-	
+
 	/**
-	 * 
+	 *
 	 * @param {type} _id
 	 * @param {type} _widget
 	 * @TODO: Implement onCheck handler in order to select or deselect subItems
@@ -4698,17 +4703,17 @@ app.classes.mail = AppJS.extend(
 			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'));
 		}
 	},
-	
+
 	/**
 	 * Detele button handler
 	 * triggers longTask dialog and send delete operation url
-	 * 
+	 *
 	 */
 	folderMgmt_deleteBtn: function ()
 	{
 		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
 		var menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
-		
+
 		var callbackDialog = function(_btn)
 		{
 			if (_btn === et2_dialog.YES_BUTTON)
@@ -4748,6 +4753,6 @@ app.classes.mail = AppJS.extend(
 		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to delete all selected folders?'), egw.lang('Delete folder'), {},
 			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
-	
-	
+
+
 });
