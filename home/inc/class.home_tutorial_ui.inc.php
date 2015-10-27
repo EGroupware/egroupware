@@ -68,7 +68,7 @@ class home_tutorial_ui
 				'apps' => $appName,
 				'0' => ''
 			);
-			foreach ($tutorials[$appName][$lang] as $v)
+			foreach (isset($tutorials[$appName][$lang]) ? $tutorials[$appName][$lang] : $tutorials[$appName]['en'] as $v)
 			{
 				$v ['onclick'] = 'app.home.tutorial_videoOnClick("'.$v['src'].'")';
 				array_push($list, $v);
