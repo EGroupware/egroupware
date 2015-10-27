@@ -1,7 +1,10 @@
 {
 	"introduction":{
+		"de":[
+			{"src":"https://www.youtube.com/embed/0JqoFhAGLwo?rel=0&autoplay=1","title":"EGroupware Basics","thumbnail":"https://img.youtube.com/vi/0JqoFhAGLwo/0.jpg","desc":"In diesem Tutorial erklären wird grundlegende Funktionen aller EGroupware Apps."}
+		],
 		"en":[
-			{"src":"https://www.youtube.com/embed/iPrtjeEnXeU?rel=0&autoplay=1", "thumbnail":"https://img.youtube.com/vi/iPrtjeEnXeU/0.jpg", "title":"EGroupware Basics", "desc":"Some of EGroupwares most important basic features and functions in all apps."}
+			{"src":"https://www.youtube.com/embed/iPrtjeEnXeU?rel=0&autoplay=1","title":"EGroupware Basics","thumbnail":"https://img.youtube.com/vi/iPrtjeEnXeU/0.jpg","desc":"Some of EGroupwares most important basic features and functions in all apps."}
 		]
 	},
 	"mail":{
@@ -35,7 +38,6 @@
 		]
 
 	},
-
 	"filemanager":{
 		"de":[
 			{"src":"https://www.youtube.com/embed/scB_l7OjdJI?rel=0&autoplay=1","title":"EGroupware Dateimanager","thumbnail":"https://img.youtube.com/vi/scB_l7OjdJI/0.jpg", "desc":"In diesem Tutorial gibt es praktische Tipps und Erklärungen zur Nutzung des Dateimanagers."},
