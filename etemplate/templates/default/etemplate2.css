@@ -302,7 +302,7 @@ button#cancel {
 /**
  * Multi-select widget
  */
-.et2_selectbox_expand {
+button.et2_selectbox_expand {
   width: 16px;
   display: inline-block;
 }
