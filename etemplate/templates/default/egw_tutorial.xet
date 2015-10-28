@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="etemplate.egw_tutorial" template="" lang="" group="0" version="15.1">
-		<grid id="list" width="99%" height="200" overflow="auto">
+		<grid id="list" width="99%" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
