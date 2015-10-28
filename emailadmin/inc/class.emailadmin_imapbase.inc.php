@@ -94,7 +94,7 @@ class emailadmin_imapbase
 	 *
 	 * @array
 	 */
-	static $tidy_config = array('clean'=>true,'output-html'=>true,'join-classes'=>true,'join-styles'=>true,'show-body-only'=>"auto",'word-2000'=>true,'wrap'=>0);
+	static $tidy_config = array('clean'=>false,'output-html'=>true,'join-classes'=>true,'join-styles'=>true,'show-body-only'=>"auto",'word-2000'=>true,'wrap'=>0);
 
 	/**
 	 * static used to configure htmLawed, for use with emails
