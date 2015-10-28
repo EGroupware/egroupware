@@ -115,6 +115,9 @@ var AppJS = Class.extend(
 				this._init_sidebox(sidebox);
 			}
 		}
+		
+		// Initialize egw tutorial sidebox
+		this.egwTutorial_init();
 	},
 
 	/**
@@ -149,8 +152,7 @@ var AppJS = Class.extend(
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
 
-		// Initialize egw tutorial sidebox
-		this.egwTutorial_init();
+		
 	},
 
 	/**
@@ -1015,7 +1017,7 @@ var AppJS = Class.extend(
 
 		// et2 object
 		var etemplate = new etemplate2 (div, false);
-		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet';
+		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet?1';
 
 		this.egwTutorialGetData().then(function(_data){
 			var lang = egw.preference('lang');
