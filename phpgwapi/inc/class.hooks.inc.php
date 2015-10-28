@@ -383,24 +383,10 @@ class hooks
 	/**
 	 * Static function to build egw tutorial sidebox menu
 	 *
+	 * @deprecated can be removed 2016, as replaced by home_tutorial_ui::tutorial_menu
 	 */
 	public static function egw_tutorial_menu()
 	{
-		$tutorials = json_decode(home_tutorial_ui::getJsonData(),true);
-		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-		if (!is_array($tutorials[$appname])) return false;
-		if (!$GLOBALS['egw_info']['server']['egw_tutorial_disable'])
-		{
-			$file = Array (
-				array(
-					'text'    => '<div id="egw_tutorial_'.$appname.'_sidebox" class="egwTutorial"/>',
-					'no_lang' => true,
-					'link'    => false,
-					'icon'    => false,
-				),
-				'menuOpened'  => true
-			);
-			display_sidebox($appname, lang('Video Tutorials'), $file);
-		}
+		home_tutorial_ui::tutorial_menu();
 	}
 }

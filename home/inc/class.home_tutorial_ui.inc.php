@@ -28,6 +28,15 @@ class home_tutorial_ui
 	 */
 	function popup ($content=null)
 	{
+		// check and if not done register tutorial_menu hook
+		if (!$GLOBALS['egw']->hooks->hook_exists('sidebox_all', 'home') ||
+			$GLOBALS['egw']->hooks->locations['sidebox_all']['home'] != 'home_tutorial_ui::tutorial_menu')
+		{
+			$setup_info = array();
+			include(EGW_SERVER_ROOT.'/home/setup/setup.inc.php');
+			$GLOBALS['egw']->hooks->register_hooks('home', $setup_info['home']['hooks']);
+		}
+
 		//Allow youtube frame to pass the CSP check
 		egw_framework::csp_frame_src_attrs(array('www.youtube.com'));
 
@@ -115,5 +124,29 @@ class home_tutorial_ui
 		}
 
 		return $json;
+	}
+
+	/**
+	 * Static function to build egw tutorial sidebox menu
+	 *
+	 */
+	public static function tutorial_menu()
+	{
+		$tutorials = json_decode(self::getJsonData(),true);
+		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
+		if (!is_array($tutorials[$appname])) return false;
+		if (!$GLOBALS['egw_info']['server']['egw_tutorial_disable'])
+		{
+			$file = Array (
+				array(
+					'text'    => '<div id="egw_tutorial_'.$appname.'_sidebox" class="egwTutorial"/>',
+					'no_lang' => true,
+					'link'    => false,
+					'icon'    => false,
+				),
+				'menuOpened'  => true
+			);
+			display_sidebox($appname, lang('Video Tutorials'), $file);
+		}
 	}
 }
