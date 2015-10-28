@@ -1,3 +1,9 @@
+egroupware-epl (14.3.20151028) hardy; urgency=low
+
+  * Tutorials: divers fixes for different browsers, specially IE 10/11 and Safari
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 28 Oct 2015 17:58:33 +0100
+
 egroupware-epl (14.3.20151027) hardy; urgency=low
 
   * All Applications: Implement new features for showing all video tutorials accessible from app's sidebox
