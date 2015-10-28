@@ -685,21 +685,17 @@ class home_ui
 	/**
 	 * Current version of home screen, there need to be a function matching that number!
 	 */
-	const CURRENT_HOME_VERSION = '14.2rc';
+	const CURRENT_HOME_VERSION = '14.3';
 
 	/**
 	 * Setup default home screen for 14.2
 	 */
-	public static function setup_default_home_14_2rc()
+	public static function setup_default_home_14_3()
 	{
 		$preferences = $GLOBALS['egw']->preferences;
 		$preferences->read_repository();
 		$lang = $preferences->default['common']['lang'];
 		if (empty($lang)) $lang = 'en';
-
-		$tutorial_url = $lang == 'de' ?
-			'//www.egroupware.org/de/discover/tutorials/egroupware.html' :
-			'//www.egroupware.org/discover/tutorials/egroupware.html';
 
 		translation::add_app('calendar', $lang);
 		$weekview = lang('Weekview');
@@ -712,19 +708,6 @@ class home_ui
 
 		$app_prefs = array(
 			'home' => array(
-				// show tutorials from www.egroupware.org
-				'portlet_setup142t' => array(
-					'id' => 'portlet_setup142t',
-					'class' => 'home_note_portlet',
-					'row' => 1,
-					'col' => 1,
-					'width' => 15,
-					'height' => 5,
-					'title' => 'Tutorials: www.egroupware.org',
-					'color' => '',
-					'group' => 'default',
-					'note' => '<iframe src="'.$tutorial_url.'" width="100%" height="250"></iframe>',
-				),
 				// current users week favorite
 				'portlet_setup142w' => array(
 					'id' => 'portlet_setup-142wp',
@@ -793,10 +776,14 @@ class home_ui
 		{
 			foreach($prefs as $name => $value)
 			{
-				preferences::delete_preference($app, $name);
+				preferences::delete_preference($app, $name, 'default');
 				$preferences->add($app, $name, $value, 'default');
 			}
 		}
+		// remove tutorial from home, as it is now in sidebox
+		preferences::delete_preference('home', 'portlet_setup142t', 'default');
+		$preferences->delete('home', 'portlet_setup142t', 'default');
+
 		// assigning saved preferences to egw_info, which is used for this request
 		$GLOBALS['egw_info']['user']['preferences'] = $preferences->save_repository(null, 'default');
 	}
