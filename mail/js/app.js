@@ -249,7 +249,7 @@ app.classes.mail = AppJS.extend(
 				});
 				/*Trigger compose_resizeHandler after the CKEditor is fully loaded*/
 				jQuery('#mail-compose').on ('load',function() {
-					if (textAreaWidget && typeof textAreaWidget.ckeditor != 'undefined')
+					if (textAreaWidget && textAreaWidget.ckeditor)
 					{
 						textAreaWidget.ckeditor.on('instanceReady', function(){that.compose_fieldExpander();});
 					}
