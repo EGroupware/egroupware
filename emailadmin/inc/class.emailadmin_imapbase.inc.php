@@ -4050,7 +4050,7 @@ class emailadmin_imapbase
 		);
 		$_html = preg_replace($search,"",$_html);
 		// remove non printable chars
-		$_html = preg_replace('/([\000-\012])/','',$_html);
+		$_html = preg_replace('/([\000-\011])/','',$_html);
 		//error_log(__METHOD__.':'.__LINE__.':'.$_html);
 	}
 
