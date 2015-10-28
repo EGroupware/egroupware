@@ -14,7 +14,8 @@
 "use strict";
 
 /*egw:uses
-        egw_inheritance;
+	egw_inheritance;
+	/phpgwapi/js/es6-promise.min.js;
 */
 
 /**
@@ -147,7 +148,7 @@ var AppJS = Class.extend(
 
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
-		
+
 		// Initialize egw tutorial sidebox
 		this.egwTutorial_init();
 	},
@@ -961,7 +962,7 @@ var AppJS = Class.extend(
 	
 	/**
 	 * Get json data for videos from the given url
-	 * 
+	 *
 	 * @return {Promise, object} return Promise, json object as resolved result and error message in case of failure
 	 */
 	egwTutorialGetData: function(){
@@ -975,23 +976,23 @@ var AppJS = Class.extend(
 			}).sendRequest();
 		});
 	},
-	
+
 	/**
 	 * Create and Render etemplate2 for egroupware tutorial
 	 * sidebox option. The .xet file is stored in etemplate/templates/default/egw_tutorials
-	 * 
+	 *
 	 * @description tutorials json object should have the following structure:
 	 *	object:
 	 *		{
 	 *			[app name]:{
 	 *				[language tag]:[
-	 *					{src:"",thumbnail:"",title:"",desc:""}		
+	 *					{src:"",thumbnail:"",title:"",desc:""}
 	 *				]
 	 *			}
 	 *		}
-	 *	
+	 *
 	 *	*Note: "desc" and "title" are optional attributes, which "desc" would appears as tooltip for the video.
-	 *	
+	 *
 	 *	example:
 	 *		{
 	 *			"mail":{
@@ -1011,18 +1012,18 @@ var AppJS = Class.extend(
 		//DOM container
 		var div = document.getElementById('egw_tutorial_'+egw.app_name()+'_sidebox');
 		if (!div) return;
-		
+
 		// et2 object
 		var etemplate = new etemplate2 (div, false);
 		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet';
-		
+
 		this.egwTutorialGetData().then(function(_data){
 			var lang = egw.preference('lang');
 			var content = {content:{list:[]}};
 			if (_data && _data[egw.app_name()])
 			{
 				if (!_data[egw.app_name()][lang]) lang = 'en';
-				if (typeof _data[egw.app_name()][lang] !='undefined' 
+				if (typeof _data[egw.app_name()][lang] !='undefined'
 					&& _data[egw.app_name()][lang].length > 0)
 				{
 					for (var i=0;i < _data[egw.app_name()][lang].length;i++)
@@ -1031,7 +1032,7 @@ var AppJS = Class.extend(
 						_data[egw.app_name()][lang][i]['onclick'] = 'app.'+egw.app_name()+'.egwTutorialPopup("'+tuid+'")';
 					}
 					content.content.list = _data[egw.app_name()][lang];
-					
+
 					if (template.indexOf('.xet') >0)
 					{
 						etemplate.load ('',template , content, function(){});
@@ -1041,13 +1042,13 @@ var AppJS = Class.extend(
 						etemplate.load (template, '', content);
 					}
 				}
-			}	
+			}
 		},
 		function(_err){
 			console.log(_err);
 		});
 	},
-	
+
 	/**
 	 * Open popup to show given tutorial id
 	 * @param {string} _tuid tutorial object id
