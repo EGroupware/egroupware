@@ -501,25 +501,24 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var wd_end = 60*this.options.day_end;
 		var granularity = this.options.granularity;
 		var totalDisplayMinutes	= wd_end - wd_start;
-		var rowsToDisplay	= (totalDisplayMinutes/granularity) + (60 / granularity);
+		var rowsToDisplay	= (totalDisplayMinutes + 60)/granularity;
 		// Percent
 		var rowHeight = (100/rowsToDisplay).toFixed(1);
-		// Pixels - add 1 for room for header
-		this.rowHeight = this.div.height() / (rowsToDisplay + 1);
-
+		// Pixels
+		this.rowHeight = this.div.height() / rowsToDisplay;
+debugger;
 		this.gridHeader
 			.empty()
-			.css('height', this.rowHeight+'px')
 			.attr('data-date', this.options.start_date)
 			.attr('data-owner', this.options.owner)
-			.append(this.options.label)
+			.append(this._labelContainer)
 			.append(this.owner.getDOMNode())
 			.append(this.dayHeader)
 			.appendTo(this.div);
 
+		var header_height = this.gridHeader.height();
 		this.scrolling
-			.css('top', this.rowHeight+'px')
-			.css('height', (this.options.height - this.rowHeight)+'px')
+			.css('height', (this.options.height - header_height)+'px')
 			.appendTo(this.div)
 			.empty();
 
@@ -577,8 +576,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
-
-		var day_width = (100/this.day_list.length).toFixed(2);
+		var day_width = ( this.days.width()/this.day_list.length);
 
 		// Create any needed widgets - otherwise, we'll just recycle
 		// Add any needed day widgets (now showing more days)
@@ -591,7 +589,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			
 			var day = et2_createWidget('calendar-daycol',{
 				owner: this.options.owner,
-				width: (before ? 0 : day_width) + "%"
+				width: (before ? 0 : day_width) + "px"
 			},this);
 			if(this.isInTree())
 			{
@@ -638,12 +636,12 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			day = this.day_widgets[i];
 			
 			// Position
-			day.set_left((day_width * i) + '%');
+			day.set_left((day_width * i) + 'px');
 			
 			day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
 			day.set_owner(this.options.owner);
 			day.set_id(this.day_list[i]);
-			day.set_width(day_width + '%');
+			day.set_width(day_width + 'px');
 		}
 		
 		// Don't hold on to value any longer, use the data cache for best info
@@ -1142,10 +1140,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	set_label: function(label)
 	{
 		this.options.label = label;
-		this.gridHeader.contents().filter(function() {
-			return (this.nodeType == 3);
-		}).remove();
-		this.gridHeader.append(label);
+		this._labelContainer.html(label);
+		this.gridHeader.prepend(this._labelContainer);
 
 		// If it's a short label (eg week number), don't give it an extra line
 		// but is empty, but give extra space for a single owner name

@@ -641,7 +641,8 @@ app.classes.calendar = AppJS.extend(
 
 					return false;
 				}
-			)
+			);
+		jQuery(framework.applications.calendar.tab.contentDiv).swipe('destroy')
 			.swipe({
 				//Generic swipe handler for all directions
 				swipe:function(event, direction, distance, duration, fingerCount) {
@@ -667,7 +668,10 @@ app.classes.calendar = AppJS.extend(
 					scroll_animate.call($j(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta)
 					return false;
 				},
-				allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL
+				allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL,
+				threshold: 100,
+				fallbackToMouseEvents: false,
+				triggerOnTouchEnd: false
 			});
 
 		// Page up & page down

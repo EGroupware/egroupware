@@ -72,6 +72,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			.css('left', this.options.left);
 		this.title = $j(document.createElement('div'))
 			.appendTo(this.header);
+		this.all_day = $j(document.createElement('div'))
+			.addClass("calendar_calDayColAllDay")
+			.appendTo(this.header);
 		
 		this.setDOMNode(this.div[0]);
 
@@ -320,7 +323,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			if(this.div)
 			{
 				this.div.css('left',left);
-				this.header.css('left',left);
+				// Headers are positioned relative
+				//this.header.css('left',left);
 			}
 		},this),1);
 		
@@ -330,8 +334,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		window.setTimeout(jQuery.proxy(function() {
 			if(this.div)
 			{
-				this.div.width(this.options.width);
-				this.header.width(this.options.width);
+				this.div.outerWidth(this.options.width);
+				this.header.outerWidth(this.options.width);
 			}
 		},this),1);
 	},
@@ -557,7 +561,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				if(columns[c][i].options.value.whole_day_on_top)
 				{
 					columns[c][i].div
-						.appendTo(this.header);
+						.appendTo(this.all_day);
 					continue;
 				}
 				else
