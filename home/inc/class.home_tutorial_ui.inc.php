@@ -38,7 +38,7 @@ class home_tutorial_ui
 		}
 
 		//Allow youtube frame to pass the CSP check
-		egw_framework::csp_frame_src_attrs(array('www.youtube.com'));
+		egw_framework::csp_frame_src_attrs(array('https://www.youtube.com'));
 
 		$tmpl = new etemplate_new('home.tutorial');
 		if (!is_array($content))
