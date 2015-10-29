@@ -1709,18 +1709,19 @@ app.classes.calendar = AppJS.extend(
 						{
 							var val = {
 								id: ""+date.getUTCFullYear() + sprintf("%02d",date.getUTCMonth()) + sprintf("%02d",date.getUTCDate()),
-								start_date: new Date(date),
-								end_date: new Date(date),
+								start_date: date.toJSON(),
+								end_date: new Date(date.toJSON()),
 								owner: state.state.owner
 							};
 							val.end_date.setUTCHours(24*7-1);
+							val.end_date = val.end_date.toJSON();
 							value.push(val);
 							date.setUTCHours(24*7);
 						}
 						state.state.last=val.end_date;
 						break;
 					default:
-						var end = state.state.last = view.end_date(state.state);
+						var end = state.state.last = view.end_date(state.state).toJSON();
 						for(var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++)
 						{
 							value.push({
@@ -1732,7 +1733,6 @@ app.classes.calendar = AppJS.extend(
 						}
 						break;
 				}
-				state.state.last = state.state.last.toJSON()
 				// If we have cached data for the timespan, pass it along
 				this._need_data(value,state.state);
 				if(grid)
@@ -2584,7 +2584,8 @@ app.classes.calendar = AppJS.extend(
 					date.setUTCDate(1);
 					date.setFullYear(year);
 					date.setUTCMonth(month-1);
-					var state = {date: date};
+					// Use toJSON() to get UTC, not browser timezone
+					var state = {date: date.toJSON()};
 					if(app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view) >= 0)
 					{
 						state.view = 'month';

@@ -506,7 +506,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var rowHeight = (100/rowsToDisplay).toFixed(1);
 		// Pixels
 		this.rowHeight = this.div.height() / rowsToDisplay;
-debugger;
+
 		this.gridHeader
 			.empty()
 			.attr('data-date', this.options.start_date)
