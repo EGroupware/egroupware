@@ -1368,6 +1368,7 @@ class calendar_uiforms extends calendar_ui
 			// set new start and end if given by $_GET
 			if(isset($_GET['start'])) { $event['start'] = $_GET['start']; }
 			if(isset($_GET['end'])) { $event['end'] = $_GET['end']; }
+			if(isset($_GET['non_blocking'])) { $event['non_blocking'] = (bool)$_GET['non_blocking']; }
 			// check if the event is the whole day
 			$start = $this->bo->date2array($event['start']);
 			$end = $this->bo->date2array($event['end']);

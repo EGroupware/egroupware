@@ -502,10 +502,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var granularity = this.options.granularity;
 		var totalDisplayMinutes	= wd_end - wd_start;
 		var rowsToDisplay	= (totalDisplayMinutes + 60)/granularity;
-		// Percent
-		var rowHeight = (100/rowsToDisplay).toFixed(1);
-		// Pixels
-		this.rowHeight = this.div.height() / rowsToDisplay;
 
 		this.gridHeader
 			.empty()
@@ -521,6 +517,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			.css('height', (this.options.height - header_height)+'px')
 			.appendTo(this.div)
 			.empty();
+
+		// Percent
+		var rowHeight = (100/rowsToDisplay).toFixed(1);
+		// Pixels
+		this.rowHeight = this.div.height() / rowsToDisplay;
 
 		// the hour rows
 		var show = {
@@ -1286,7 +1287,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			// First child is a selectAccount
 			for(var i = 1; i < this._children.length; i++)
 			{
-				if(this._children[i].header && this._children[i].header.has(_ev.target).length)
+				if(this._children[i].header && (
+					this._children[i].header.has(_ev.target).length || this._children[i].header.is(_ev.target))
+				)
 				{
 					return this._children[i].click(_ev);
 				}

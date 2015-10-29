@@ -348,12 +348,12 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.title.removeClass()
 			// Except this one...
 			.addClass("et2_clickable et2_link");
-		this.header.removeClass('calendar_calBirthday calendar_calHoliday');
+		this.title.attr('data-holiday','');
 
 		// Set today class - note +1 when dealing with today, as months in JS are 0-11
 		var today = new Date();
 		
-		this.header.toggleClass("calendar_calToday", this.options.date === ''+today.getUTCFullYear()+
+		this.title.toggleClass("calendar_calToday", this.options.date === ''+today.getUTCFullYear()+
 			sprintf("%02d",today.getUTCMonth()+1)+
 			sprintf("%02d",today.getUTCDate())
 		);
@@ -368,7 +368,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			{
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
-					this.header.addClass('calendar_calBirthday');
+					this.title.addClass('calendar_calBirthday');
 
 					//If the birthdays are already displayed as event, don't
 					//show them in the caption
@@ -379,8 +379,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				}
 				else
 				{
-					this.header.addClass('calendar_calHoliday');
-					this.header.attr('data-holiday', holidays[i]['name']);
+					this.title.addClass('calendar_calHoliday');
+					this.title.attr('data-holiday', holidays[i]['name']);
 
 					//If the birthdays are already displayed as event, don't
 					//show them in the caption
@@ -391,7 +391,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				}
 			}
 		}
-		this.header.attr('title', holiday_list.join(','));
+		this.title.attr('title', holiday_list.join(','));
 	},
 
 	/**
@@ -542,7 +542,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		for(var c = 0; c < columns.length; c++)
 		{
 			// Calculate horizontal positioning
-			var left = Math.ceil(5 + (1.5 * 100 / (this.options.width || 100)));
+			var left = Math.ceil(5 + (1.5 * 100 / (parseFloat(this.options.width) || 100)));
 			var width = 98 - left;
 			if (columns.length !== 1)
 			{
@@ -655,6 +655,17 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				date: _ev.target.dataset.date || this.options.date,
 				hour: _ev.target.dataset.hour || this._parent.options.day_start,
 				minute: _ev.target.dataset.minute || 0
+			} , '_blank');
+			return false;
+		}
+		else if ($j(_ev.target).is(this.header))
+		{
+			// Click on the header, but not the title.  That's an all-day non-blocking
+			var end = this.date.getFullYear() + '-' + (this.date.getUTCMonth()+1) + '-' + this.date.getUTCDate() + 'T23:59';
+			this.egw().open(null, 'calendar', 'add', {
+				start: this.date.toJSON(),
+				end: end,
+				non_blocking: true
 			} , '_blank');
 			return false;
 		}
