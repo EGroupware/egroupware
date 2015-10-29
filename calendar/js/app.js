@@ -2979,7 +2979,6 @@ jQuery.extend(app.classes.calendar,{
 			start_date: function(state) {
 				var d = app.calendar.View.start_date.call(this,state);
 				d.setUTCDate(1);
-				state.date = app.calendar.date.toString(d);
 				return app.calendar.date.start_of_week(d);
 			},
 			end_date: function(state) {

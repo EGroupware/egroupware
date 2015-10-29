@@ -645,8 +645,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Click on the title
 		if(this.title.is(_ev.target))
 		{
-			this._parent.set_start_date(this.date);
-			this._parent.set_end_date(this.date);
+			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;
 		}
 		else if ($j(_ev.target).hasClass('calendar_calAddEvent'))
