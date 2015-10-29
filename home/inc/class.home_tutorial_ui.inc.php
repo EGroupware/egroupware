@@ -143,8 +143,7 @@ class home_tutorial_ui
 					'no_lang' => true,
 					'link'    => false,
 					'icon'    => false,
-				),
-				'menuOpened'  => true
+				)
 			);
 			display_sidebox($appname, lang('Video Tutorials'), $file);
 		}
