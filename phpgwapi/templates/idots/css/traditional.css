@@ -3,6 +3,8 @@
 	allowed attributes: font-family,font-size,color,font-weight
 */
 
+/*@import url("../../default/def_tutorials.css");*/
+
 body
 {
 	overflow-x: hidden;
