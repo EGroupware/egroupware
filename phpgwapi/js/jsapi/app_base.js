@@ -115,9 +115,6 @@ var AppJS = Class.extend(
 				this._init_sidebox(sidebox);
 			}
 		}
-		
-		// Initialize egw tutorial sidebox
-		this.egwTutorial_init();
 	},
 
 	/**
@@ -152,7 +149,7 @@ var AppJS = Class.extend(
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
 
-		
+
 	},
 
 	/**
@@ -366,6 +363,15 @@ var AppJS = Class.extend(
 	 */
 	_init_sidebox: function(sidebox)
 	{
+		// Initialize egw tutorial sidebox
+		var egw_fw = egw_getFramework();
+		var tutorial = $j('#egw_tutorial_'+this.appname+'_sidebox', egw_fw ? egw_fw.sidemenuDiv : document);
+		// _init_sidebox gets currently called multiple times, which needs to be fixed
+		if (tutorial.length && !this.tutorial_initialised)
+		{
+			this.egwTutorial_init(tutorial[0]);
+			this.tutorial_initialised = true;
+		}
 		if(sidebox.length)
 		{
 			var self = this;
@@ -1009,12 +1015,8 @@ var AppJS = Class.extend(
 	 *			}
 	 *		}
 	 */
-	egwTutorial_init: function()
+	egwTutorial_init: function(div)
 	{
-		//DOM container
-		var div = document.getElementById('egw_tutorial_'+egw.app_name()+'_sidebox');
-		if (!div) return;
-
 		// et2 object
 		var etemplate = new etemplate2 (div, false);
 		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet?1';
