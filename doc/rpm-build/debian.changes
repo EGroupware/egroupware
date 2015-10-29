@@ -1,3 +1,30 @@
+egroupware-epl (14.3.20151028) hardy; urgency=low
+
+  * Tutorials: divers fixes for different browsers, specially IE 10/11 and Safari
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 28 Oct 2015 17:58:33 +0100
+
+egroupware-epl (14.3.20151027) hardy; urgency=low
+
+  * All Applications: Implement new features for showing all video tutorials accessible from app's sidebox
+  * Calendar/CalDAV/iMip: only include replying participant in iMip REPLY messages
+  * Mail: Fix issue download an attachment from mail preview, crashes Chrome
+  * Addressbook/CardDAV: fix not working import / PUT of birthday in vCard
+  * Mail/Wiki/Sitemgr: reworked XSS tests to allow eg. font-names containing "script" and other patterns forbidden by previous test, also added new html5 specific tests
+  * Filemanager/all apps: fix not working filemanager favorites in file selection popup
+  * Notifications/all apps: do not block other requests while notifications are queried
+  * Calendar/Mail: send meeting requests including html body like current Exchange server does it
+  * Etemplate: Fix issue expose view gets opened for not supported mime-type (eg. image/pdf)
+  * Filemanager/Mail/LDAP/UCS: fix not working sharing, if accounts are stored in ldap
+  * Mail: disable BINARY IMAP extension wrongly reported by yandex.ru, causing mails to be shown in transfer encoding
+  * Mail/API: map charset ks_c_5601-1987 to CP949 as the former is not supported by php(s) conversion functions
+  * Calendar: disabling Apply button for IE 10/11 and Edge, because all but current tab fail to load
+  * IE10/11 and Edge: catching "Permission denied" error when accessing reloaded opener
+  * API: fix SQL error in upgrade from 1.8/11.1: Incorrect string value *** for column async_data
+  * Timesheet/Tracker: date filters like "last week" where not aware of daylight saving time changes
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 27 Oct 2015 14:46:17 +0100
+
 egroupware-epl (14.3.20151012) hardy; urgency=low
 
   * Calendar/eSync: iOS 9.0.2 (maybe other clients and versions too) moved start- and end-date of synchronised meeting requests to date of sync
