@@ -1,3 +1,9 @@
+egroupware-epl (14.3.20151030) hardy; urgency=low
+
+  * Calendar: fix not working storing of events
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 30 Oct 2015 10:05:23 +0100
+
 egroupware-epl (14.3.20151028) hardy; urgency=low
 
   * Tutorials: divers fixes for different browsers, specially IE 10/11 and Safari
