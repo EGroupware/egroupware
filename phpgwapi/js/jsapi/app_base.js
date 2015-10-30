@@ -363,14 +363,17 @@ var AppJS = Class.extend(
 	 */
 	_init_sidebox: function(sidebox)
 	{
-		// Initialize egw tutorial sidebox
-		var egw_fw = egw_getFramework();
-		var tutorial = $j('#egw_tutorial_'+this.appname+'_sidebox', egw_fw ? egw_fw.sidemenuDiv : document);
-		// _init_sidebox gets currently called multiple times, which needs to be fixed
-		if (tutorial.length && !this.tutorial_initialised)
+		// Initialize egw tutorial sidebox, but only for non-popups, as calendar edit app.js has this.et2 set to tutorial et2 object
+		if (!this.egw.is_popup())
 		{
-			this.egwTutorial_init(tutorial[0]);
-			this.tutorial_initialised = true;
+			var egw_fw = egw_getFramework();
+			var tutorial = $j('#egw_tutorial_'+this.appname+'_sidebox', egw_fw ? egw_fw.sidemenuDiv : document);
+			// _init_sidebox gets currently called multiple times, which needs to be fixed
+			if (tutorial.length && !this.tutorial_initialised)
+			{
+				this.egwTutorial_init(tutorial[0]);
+				this.tutorial_initialised = true;
+			}
 		}
 		if(sidebox.length)
 		{
