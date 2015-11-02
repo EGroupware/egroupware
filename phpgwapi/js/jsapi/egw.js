@@ -130,7 +130,7 @@
 		}
 	}
 	try {
-		egw(window).message;
+		if (typeof egw == 'function') egw(window).message;
 	}
 	catch (e) {
 		console.log('Security exception accessing window specific egw object --> creating new one', e);
