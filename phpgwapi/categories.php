@@ -16,7 +16,7 @@ ini_set('zlib.output_compression', 0);
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp' => 'preferences',
+		'currentapp' => 'home',
 		'noheader' => true,
 		'nocachecontrol' => true,
 	)
