@@ -13,12 +13,7 @@
 	jquery.jquery;
 	egw_menu;
 	/phpgwapi/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
-	/phpgwapi/js/zeroclipboard/dist/ZeroClipboard.min.js;
 */
-
-/* Set flashLoadTimeout to something close to immediate as we need to inspect error event, right when
- * we open the context menu in order to detect Flash player's click-to-play mode*/
-ZeroClipboard.config( { swfPath: egw.webserverUrl+"/phpgwapi/js/zeroclipboard/dist/ZeroClipboard.swf", flashLoadTimeout: 400} );
 
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};
@@ -137,7 +132,7 @@ function egwPopupActionImplementation()
 			// Prevent bubbling bound event on <a> tag, on touch devices
 			// a tag should be handled by default event
 			if (egwIsMobile && e.target.tagName == "A")	return true;
-			
+
 			if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined")
 			{
 				document.selection.empty();
@@ -351,44 +346,6 @@ function egwPopupActionImplementation()
 			var menu = ai._buildMenu(_links, _selected, _target);
 			menu.showAt(_context.posx, _context.posy);
 
-			// Bindings for copy to system clipboard
-			menu.instance.dhtmlxmenu.attachEvent("onShow", function(zoneId,ev) {
-				var client = new ZeroClipboard($j('#'+this.idPrefix+'egw_os_clipboard', this.base));
-
-				// We need to check if the browser settings for Flash player is set to click-to-play
-				// then prompting user in order to allow or block Flash player
-				jQuery('#global-zeroclipboard-html-bridge').hover(function (){
-					var $zeroClip = jQuery(this);
-					if ($zeroClip.hasClass('flash-deactivated'))
-					{
-						$zeroClip.addClass('flash-click-to-play-dialog');
-						egw.message("In order to copy to clipboard, you need to allow Flash player by clicking on gray box.\nYou can permanently allow Flash player for EGroupware in your browser settings.","info")
-					}
-					else
-					{
-						$zeroClip.removeClass('flash-click-to-play-dialog')
-					}
-				});
-				client.on({
-					error:function (e){
-						// Detect if the Flash player is on click-to-play mode or is deactivated
-						if (e.name == "flash-deactivated")
-						{
-							// Indicate both flash-deactivated and click-to-play mode
-							jQuery('#global-zeroclipboard-html-bridge').addClass('flash-deactivated');
-						}
-						else
-						{
-							jQuery('#global-zeroclipboard-html-bridge').removeClass('flash-deactivated');
-						}
-					}
-				})
-
-				client.on("copy",function(event) {
-					 event.clipboardData.setData('text/plain', $j(_links.egw_os_clipboard.actionObj.data.target).text().trim());
-					 event.clipboardData.setData('text/html', $j(_links.egw_os_clipboard.actionObj.data.target).html());
-				 });
-			});
 			return true;
 		}
 		else
@@ -748,12 +705,51 @@ function egwPopupActionImplementation()
 				// Create an action to add selected to clipboard
 				clipboard_action = mgr.addAction('popup', 'egw_os_clipboard', egw.lang('Copy to OS clipboard'), egw.image('copy'), function(action) {
 
+					if(document.queryCommandSupported('copy'))
+					{
+						$j(action.data.target).trigger('copy');
+					}
 				},true);
 				clipboard_action.group = 2.5;
 			}
 			var os_clipboard_caption = this._context.event.originalEvent.target.innerHTML.trim();
 			clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length>20 ? os_clipboard_caption.substring(0,20)+'...':os_clipboard_caption));
 			clipboard_action.data.target = this._context.event.originalEvent.target;
+			$j(clipboard_action.data.target).off('copy').on('copy', function(event) {
+				// Cancel any no-select css
+				var target = $j(clipboard_action.data.target);
+				var old_select = target.css('user-select');
+				target.css('user-select','all');
+
+				var range = document.createRange();
+				range.selectNode(clipboard_action.data.target);
+				window.getSelection().removeAllRanges();
+				window.getSelection().addRange(range);
+
+				target.css('user-select',old_select);
+
+				var successful = false;
+				try {
+					if(event.clipboardData)
+					{
+						event.clipboardData.setData('text/plain', $j(clipboard_action.data.target).text().trim());
+						event.clipboardData.setData('text/html', $j(clipboard_action.data.target).html());
+					}
+					// Show fail message, just in case
+					egw.message(egw.lang('Use Ctrl-C/Cmd-C to copy'));
+
+					successful = document.execCommand('copy');
+				} catch(err) {}
+
+				if(successful)
+				{
+					// Clear fail message
+					egw.message('');
+					window.getSelection().removeAllRanges();
+					target.css('user-select',old_select);
+					return false;
+				}
+			});
 			if(typeof _links[copy_action.id] == 'undefined')
 			{
 				_links[copy_action.id] = {
