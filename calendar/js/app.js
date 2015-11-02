@@ -222,7 +222,7 @@ app.classes.calendar = AppJS.extend(
 							if (match[1]== _id)	do_refresh = true;
 						}
 					});
-				if (jQuery('div [id^="infolog'+_id+'"],div [id^="drag_infolog'+_id+'"]').length > 0) do_refresh = true;
+				if (jQuery('div [data-app="infolog"][data-id="'+_id+'"]').length > 0) do_refresh = true;
 				switch (_type)
 				{
 					case 'add':

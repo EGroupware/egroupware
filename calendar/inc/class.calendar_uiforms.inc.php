@@ -2639,6 +2639,12 @@ class calendar_uiforms extends calendar_ui
 			$date = $d->format('ts');
 		}
 
+		// Drag a whole day to a time
+		if($event['whole_day'] && $durationT)
+		{
+			$event['whole_day'] = false;
+		}
+
 		$event['start'] = $this->bo->date2ts($targetDateTime);
 		$event['end'] = $event['start']+$duration;
 		$status_reset_to_unknown = false;

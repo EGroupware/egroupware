@@ -304,19 +304,24 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		element.dropEnd = this._get_time_from_position(helper.getBoundingClientRect().left,
 			helper.getBoundingClientRect().top+parseInt(height));
 
+		if(element.dropEnd.length)
+		{
+			this._drop_data = element.dropEnd[0].dataset || {};
+		}
+
 		if (typeof element.dropEnd != 'undefined' && element.dropEnd.length)
 		{
 			element.dropEnd.addClass("drop-hover");
 
 			// Make sure the target is visible in the scrollable day
 			var scrollto = element.dropEnd.next() ? element.dropEnd.next() : element.dropEnd;
-			if(this.scrolling.height() + this.scrolling.scrollTop() < scrollto[0].offsetTop+scrollto.height() )
+			if(this.scrolling.height() + this.scrolling.scrollTop() < scrollto.position().top+scrollto.height() )
 			{
 				scrollto.get(0).scrollIntoView(false);
 			}
-			else if(element.dropEnd[0].offsetTop < this.scrolling[0].scrollTop)
+			else if(element.dropEnd.position().top < this.scrolling[0].scrollTop)
 			{
-				element.dropEnd.get(0).scrollIntoView(true);
+				this.scrolling.scrollTop(element.dropEnd.position().top);
 			}
 			var time = jQuery.datepicker.formatTime(
 				egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
@@ -341,13 +346,17 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	/**
 	 * Handler for dropping an event on the timegrid
 	 */
-	_event_drop: function(timegrid, event,ui) {
+	_event_drop: function(timegrid, event,ui, dropEnd) {
 		var e = new jQuery.Event('change');
 		e.originalEvent = event;
 		e.data = {start: 0};
 		if (typeof this.dropEnd != 'undefined' && this.dropEnd.length >= 1)
 		{
-			var drop_date = this.dropEnd.attr('data-date')||false;
+			dropEnd = this.dropEnd[0].dataset || false;
+		}
+		if(typeof dropEnd != 'undefined' && dropEnd)
+		{
+			var drop_date = dropEnd.date||false;
 
 			var event_data = timegrid._get_event_info(ui.draggable);
 			var event_widget = timegrid.getWidgetById('event_'+event_data.id);
@@ -361,8 +370,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				event_widget._parent.date_helper.set_year(drop_date.substring(0,4));
 				event_widget._parent.date_helper.set_month(drop_date.substring(4,6));
 				event_widget._parent.date_helper.set_date(drop_date.substring(6,8));
-				event_widget._parent.date_helper.set_hours(this.dropEnd.attr('data-hour'));
-				event_widget._parent.date_helper.set_minutes(this.dropEnd.attr('data-minute'));
+				event_widget._parent.date_helper.set_hours(dropEnd.hour);
+				event_widget._parent.date_helper.set_minutes(dropEnd.minute);
 				event_widget.options.value.start = new Date(event_widget._parent.date_helper.getValue());
 
 				// Leave the helper there until the update is done
@@ -371,7 +380,13 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
 				
 				event_widget.recur_prompt(function(button_id) {
-					if(button_id === 'cancel' || !button_id) return;
+					if(button_id === 'cancel' || !button_id)
+					{
+						// Need to refresh the event with original info to clean up
+						var app_id = event_widget.options.value.app_id ? event_widget.options.value.app_id : event_widget.options.value.id + (event_widget.options.value.recur_type ? ':'+event_widget.options.value.recur_date : '');
+						egw().dataStoreUID(app_id,event_dataGetUIDdata(app_id));
+						return;
+					}
 					//Get infologID if in case if it's an integrated infolog event
 					if (event_data.app === 'infolog')
 					{
@@ -387,7 +402,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
 								button_id==='series' ? event_data.id : event_data.app_id,event_data.owner,
 								event_widget.options.value.start,
-								timegrid.options.owner||egw.user('account_id')
+								timegrid.options.owner||egw.user('account_id'),
+								// Check for whole day dragged to a certain time
+								event_widget.options.value.whole_day ? (egw().preference('defaultlength','calendar')*60) : false
 							],
 							function() { loading.remove();}
 						).sendRequest(true);
@@ -862,8 +879,29 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				for(var i = 0; i < source.length; i++)
 				{
 					// Check for no ID (invalid) or same manager (dragging an event)
-					// Handled by direct jQuery event binding set in doLoadingFinished();
-					if(!source[i].id || source[i].manager === target.manager) continue;
+					if(!source[i].id) continue;
+					if(source[i].manager === target.manager)
+					{
+						// Check for hidden helper
+						var dropEnd = $j('.calendar_d-n-d_timeCounter',action.ui.helper);
+						if(dropEnd.length && dropEnd[0].dropEnd)
+						{
+							dropEnd = dropEnd[0].dropEnd[0].dataset || {};
+						}
+						else if (self._drop_data)
+						{
+							dropEnd = self._drop_data;
+						}
+						else
+						{
+							self._drag_helper(source[i].iface.getDOMNode(),target.iface.getDOMNode(),$j(source[i].iface.getDOMNode()).height());
+							dropEnd = undefined;
+						}
+						
+						self._event_drop.call(source[i].iface.getDOMNode(),self,null, action.ui,dropEnd);
+						// Ok, stop.
+						return false;
+					}
 					
 					id = source[i].id.split('::');
 					links.push({app: id[0] == 'filemanager' ? 'link' : id[0], id: id[1]});
