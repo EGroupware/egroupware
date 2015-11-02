@@ -70,6 +70,10 @@ class emailadmin_notifications
 			if (!is_array($rows))
 			{
 				self::$cache[$acc_id][$row['account_id']][] = $row['notif_folder'];
+			} // make sure set the account_specific correctly when notify_folder gets removed
+			elseif (!$row['account_id'] && is_array($rows[$account_id]))
+			{
+				$account_specific = $account_id;
 			}
 		}
 		$folders = (array)self::$cache[$acc_id][$account_specific];
