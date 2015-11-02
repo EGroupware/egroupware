@@ -13,12 +13,7 @@
 	jquery.jquery;
 	egw_menu;
 	/phpgwapi/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
-	/phpgwapi/js/zeroclipboard/dist/ZeroClipboard.min.js;
 */
-
-/* Set flashLoadTimeout to something close to immediate as we need to inspect error event, right when
- * we open the context menu in order to detect Flash player's click-to-play mode*/
-ZeroClipboard.config( { swfPath: egw.webserverUrl+"/phpgwapi/js/zeroclipboard/dist/ZeroClipboard.swf", flashLoadTimeout: 400} );
 
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};
@@ -137,7 +132,7 @@ function egwPopupActionImplementation()
 			// Prevent bubbling bound event on <a> tag, on touch devices
 			// a tag should be handled by default event
 			if (egwIsMobile && e.target.tagName == "A")	return true;
-			
+
 			if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined")
 			{
 				document.selection.empty();
