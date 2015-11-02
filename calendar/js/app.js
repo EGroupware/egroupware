@@ -2539,11 +2539,30 @@ app.classes.calendar = AppJS.extend(
 				.find('.egw_fw_ui_category_content').not(sidebox.parent())
 				.on('change.sidebox', 'select:not(.et2_selectbox),input', this, function(event) {
 					var state = {};
+					var name = this.name.replace('[]','');
+					var value = $j(this).val();
 
+					// Handle special value like r0, which removes all r
+					if(typeof value == 'string' && parseInt(value.substring(1)==0) ||
+						value[0] && typeof value[0] == 'string' && parseInt(value[0].substring(1))==0) 
+					{
+						value = typeof value == 'string' ? value : value[0];
+						var type = value.substring(0,1);
+						state[name] = [];
+						for(var key in app.calendar.state[name])
+						{
+							var cur_item = app.calendar.state[name][key];
+							if(cur_item && (cur_item+'').substring(0,1) != type)
+							{
+								state[name].push(cur_item);
+							}
+						}
+						$j('option', this).removeAttr('selected');
+						return app.calendar.update_state(state);
+					}
 					// Here we look for things like owner: ['r1,r2'] and change them
 					// to owner: ['r1','r2']
-					state[this.name.replace('[]','')] = $j(this).val();
-					$j('option', this).removeAttr('selected');
+					state[name] = value;
 					for(var key in state)
 					{
 						if(state[key] && typeof state[key].length !== 'undefined')
@@ -2556,6 +2575,11 @@ app.classes.calendar = AppJS.extend(
 									delete state[key][sub_key];
 									jQuery.extend(state[key], explode_me.split(','));
 								}
+							}
+							// Add to, not replace, current value
+							if(typeof state[key] == 'object' && typeof app.calendar.state[key])
+							{
+								jQuery.extend(state[key],app.calendar.state[key]);
 							}
 						}
 					}
@@ -2575,8 +2599,8 @@ app.classes.calendar = AppJS.extend(
 		var date = this.sidebox_et2.getWidgetById('date');
 		if(date)
 		{
-			date.input_date.datepicker("option", {
-				showButtonPanel:	true,
+			var datepicker = date.input_date.datepicker("option", {
+				showButtonPanel:	false,
 				onChangeMonthYear:	function(year, month, inst)
 				{
 					// Switch to month view for that month
@@ -2662,6 +2686,24 @@ app.classes.calendar = AppJS.extend(
 						});
 					}
 				});
+
+			// Today
+			var today = et2_createWidget('buttononly', {image: 'calendar/today', label: 'Today', id: 'today'},date);
+			today.set_image('calendar/today');
+			var today_button = $j(today.getDOMNode());
+			today_button
+				.prependTo(date.getDOMNode())
+				.on('click', function() {
+					var inst = $j.datepicker._getInst(datepicker[0]);
+					inst.drawMonth = new Date().getUTCMonth();
+					inst.drawYear = new Date().getFullYear();
+					jQuery.datepicker._updateDatepicker(inst);
+				});
+			var position_today = function() {
+				var week_col = $j('#calendar-sidebox_date th.ui-datepicker-week-col');
+				today_button.position({my: 'left top', at: 'left top', of: week_col,collision:'none'});
+			};
+			window.setTimeout(position_today,0);
 		}
 	},
 
