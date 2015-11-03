@@ -2573,7 +2573,7 @@ function calendar_upgrade14_3()
 	// by ordering by status we prever accepted over tentative over unknow over deleted
 	foreach($GLOBALS['egw_setup']->db->select('egw_cal_user', "cal_id,cal_recur_date,$email AS email", array(
 		'cal_user_type' => 'e',
-	), __LINE__, __FILE__, false, "GROUP BY cal_id,cal_recur_date,$email HAVING COUNT(*)>1") as $row)
+	), __LINE__, __FILE__, false, "GROUP BY cal_id,cal_recur_date,$email HAVING COUNT(*)>1", 'calendar') as $row)
 	{
 		$n = 0;
 		foreach($GLOBALS['egw_setup']->db->select('egw_cal_user', "*,$email AS email", array(
@@ -2581,7 +2581,7 @@ function calendar_upgrade14_3()
 			'cal_recur_date' => $row['cal_recur_date'],
 			'cal_user_type' => 'e',
 			$email.'='.$GLOBALS['egw_setup']->db->quote($row['email']),
-		), __LINE__, __FILE__, 'ORDER BY cal_status') as $user)	// order A, T, U, X
+		), __LINE__, __FILE__, false, 'ORDER BY cal_status', 'calendar') as $user)	// order A, T, U, X
 		{
 			if (strpos($user['email'], '@') !== false && !$n++) continue;
 			$GLOBALS['egw_setup']->db->delete('egw_cal_user', array_intersect_key($user, array_flip(array('cal_id','cal_recur_date','cal_user_type','cal_user_id','cal_status'))));
@@ -2604,4 +2604,29 @@ function calendar_upgrade14_3()
 	));
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.001';
+}
+
+/**
+ * Fix NULL in egw_cal_user.cal_user_attendee for recurrences by using value from master (cal_recur_date=0)
+ *
+ * @return string
+ */
+function calendar_upgrade14_3_001()
+{
+	foreach($GLOBALS['egw_setup']->db->query("SELECT egw_cal_user.cal_id AS cal_id,egw_cal_user.cal_user_id AS cal_user_id,egw_cal_user.cal_user_attendee AS cal_user_attendee
+FROM egw_cal_user
+JOIN egw_cal_user user ON user.cal_id=egw_cal_user.cal_id AND user.cal_user_type='e' AND user.cal_user_id=egw_cal_user.cal_user_id AND user.cal_user_attendee IS NULL
+WHERE egw_cal_user.cal_user_type='e' AND egw_cal_user.cal_user_attendee IS NOT NULL
+GROUP BY egw_cal_user.cal_id,egw_cal_user.cal_user_id,egw_cal_user.cal_user_attendee", __LINE__, __FILE__) as $row)
+	{
+		$GLOBALS['egw_setup']->db->update('egw_cal_user', array(
+			'cal_user_attendee' => $row['cal_user_attendee'],
+		), array(
+			'cal_id' => $row['cal_id'],
+			'cal_user_type' => 'e',
+			'cal_user_id' => $row['cal_user_id'],
+			'cal_user_attendee IS NULL'
+		), __LINE__, __FILE__, 'calendar');
+	}
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.002';
 }
