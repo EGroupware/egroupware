@@ -264,7 +264,7 @@ class config
 				'site_title','login_logo_file','login_logo_url','login_logo_title','favicon_file',
 				'markuntranslated','link_list_thumbnail','enabled_spellcheck','debug_minify',
 				'call_link','call_popup',	// addressbook
-				'hide_birthdays','calview_no_consolidate'),	// calendar
+				'hide_birthdays','calview_no_consolidate', 'egw_tutorial_disable'),	// calendar
 			'projectmanager' => array('hours_per_workday', 'duration_units'),
 			'manual' => array('manual_remote_egw_url'),
 			'infolog' => array('status'),

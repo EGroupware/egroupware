@@ -102,11 +102,13 @@
    </tr>
    
    <tr class="row_off">
-    <td>{lang_Disable_EGroupware_Tutorial_in_sidebox_menu}:</td>
+    <td>{lang_Disable_EGroupware_Tutorial}:</td>
     <td>
      <select name="newsettings[egw_tutorial_disable]">
       <option value="">{lang_No}</option>
-      <option value="True">{lang_Yes}</option>
+      <option value="sidebox"{selected_egw_tutorial_disable_sidebox}>{lang_Sidebox_video_tutorials}</option>
+	  <option value="intro"{selected_egw_tutorial_disable_intro}>{lang_ask_show_introduction_video}</option>
+	  <option value="all"{selected_egw_tutorial_disable_all}>{lang_All}</option>
      </select>
     </td>
    </tr>
