@@ -2149,7 +2149,7 @@ ORDER BY cal_user_type, cal_usre_id
 					'cal_status'	=> $status,
 					'cal_quantity'	=> $quantity,
 					'cal_role'		=> $role,
-					'cal_attendee'  => $type == 'e' ? substr($uid, 1) : null,
+					'cal_user_attendee' => $type == 'e' ? substr($uid, 1) : null,
 				),array(
 					'cal_id'		 => $cal_id,
 					'cal_recur_date' => $start,
