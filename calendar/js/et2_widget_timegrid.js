@@ -315,7 +315,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 			// Make sure the target is visible in the scrollable day
 			var scrollto = element.dropEnd.next() ? element.dropEnd.next() : element.dropEnd;
-			if(this.scrolling.height() + this.scrolling.scrollTop() < scrollto.position().top+scrollto.height() )
+			if(scrollto.length && this.scrolling.height() + this.scrolling.scrollTop() < scrollto.position().top+scrollto.height() )
 			{
 				scrollto.get(0).scrollIntoView(false);
 			}
@@ -350,10 +350,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var e = new jQuery.Event('change');
 		e.originalEvent = event;
 		e.data = {start: 0};
-		if (typeof this.dropEnd != 'undefined' && this.dropEnd.length >= 1)
-		{
-			dropEnd = this.dropEnd[0].dataset || false;
-		}
+		
 		if(typeof dropEnd != 'undefined' && dropEnd)
 		{
 			var drop_date = dropEnd.date||false;
@@ -529,7 +526,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			.append(this.dayHeader)
 			.appendTo(this.div);
 
-		var header_height = this.gridHeader.height();
+		// Max with 45 avoids problems when it's not shown
+		var header_height = Math.max(this.gridHeader.height(), 45);
+		
 		this.scrolling
 			.css('height', (this.options.height - header_height)+'px')
 			.appendTo(this.div)
@@ -763,7 +762,14 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			*/
 			if(event.type === 'drop')
 			{
-				this.getWidget()._event_drop.call($j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui);
+				var dropEnd = false;
+				var helper = $j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0];
+				if(helper && helper.dropEnd && helper.dropEnd.length >= 1)
+				if (typeof this.dropEnd != 'undefined' && this.dropEnd.length >= 1)
+				{
+					dropEnd = helper.dropEnd[0].dataset || false;
+				}
+				this.getWidget()._event_drop.call($j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui, dropEnd);
 			}
 			var drag_listener = function(event, ui) {
 				aoi.getWidget()._drag_helper($j('.calendar_d-n-d_timeCounter',ui.helper)[0],ui.helper[0],0);
@@ -882,11 +888,20 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					if(!source[i].id) continue;
 					if(source[i].manager === target.manager)
 					{
-						if (self._drop_data)
+						// Find the timegrid, could have dropped on an event
+						var timegrid = target.iface.getWidget();
+						while(target.parent && timegrid.instanceOf && !timegrid.instanceOf(et2_calendar_timegrid))
 						{
-							self._event_drop.call(source[i].iface.getDOMNode(),self,null, action.ui,self._drop_data);
+							target = target.parent;
+							timegrid = target.iface.getWidget();
 						}
-						self._drop_data = false;
+
+
+						if (timegrid && timegrid._drop_data)
+						{
+							timegrid._event_drop.call(source[i].iface.getDOMNode(),timegrid,null, action.ui,timegrid._drop_data);
+						}
+						timegrid._drop_data = false;
 						// Ok, stop.
 						return false;
 					}
