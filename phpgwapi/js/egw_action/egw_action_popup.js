@@ -720,16 +720,22 @@ function egwPopupActionImplementation()
 				var target = $j(clipboard_action.data.target);
 				var old_select = target.css('user-select');
 				target.css('user-select','all');
-
+				
 				var range = document.createRange();
 				range.selectNode(clipboard_action.data.target);
 				window.getSelection().removeAllRanges();
 				window.getSelection().addRange(range);
 
 				target.css('user-select',old_select);
-
+				
 				var successful = false;
 				try {
+					// detect we are in IE via checking setActive, since it's 
+					// only supported in IE, and make sure there's clipboardData object
+					if (typeof event.target.setActive !='undefined' && window.clipboardData)
+					{
+						window.clipboardData.setData('Text', $j(clipboard_action.data.target).text().trim());
+					}
 					if(event.clipboardData)
 					{
 						event.clipboardData.setData('text/plain', $j(clipboard_action.data.target).text().trim());
