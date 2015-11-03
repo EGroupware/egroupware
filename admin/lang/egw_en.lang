@@ -484,6 +484,7 @@ operating system	admin	en	Operating system
 order	admin	en	Order
 outbound	admin	en	Outbound
 own categories	admin	en	Own categories
+own install id	admin	en	Own install ID
 own install id:	admin	en	Own install ID:
 owner "%1" removed, please select group-owner	admin	en	Owner "%1" removed, please select group owner
 passthrough	admin	en	Passthrough
