@@ -108,6 +108,7 @@ are you sure you want to delete this global category ?	admin	de	Sind Sie sicher,
 are you sure you want to delete this group ?	admin	de	Sind Sie sicher, dass Sie diese Gruppe löschen möchten?
 are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie diesen Server löschen möchten?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie diese Session beenden möchten?
+ask show introduction video	admin	de	Benutzer wegen Anzeige des Einführungsvideos fragen
 async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
 asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst ist noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
@@ -228,6 +229,7 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
 disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
+disable egroupware tutorial	admin	de	EGroupware Video Tutorials abschalten
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
@@ -482,6 +484,7 @@ operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 outbound	admin	de	ausgehend
 own categories	admin	de	eigene Kategorien
+own install id	admin	de	Eigene Install ID
 own install id:	admin	de	eigene Install-ID
 owner "%1" removed, please select group-owner	admin	de	Besitzer "%1" entfernt, bitte einen Gruppenbesitzer auswählen.
 passthrough	admin	de	durchgehend
@@ -575,6 +578,7 @@ show error log	admin	de	Fehlerprotokoll anzeigen
 show members	admin	de	Mitglieder dieser Gruppe anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen
 show session ip address	admin	de	IP-Adresse der Sitzung anzeigen
+sidebox video tutorials	admin	de	Videotutorials im Seitenmenü anzeigen
 site	admin	de	Site
 soap	admin	de	SOAP
 sorry, that group name has already been taken.	admin	de	Dieser Gruppenname wird bereits verwendet.
