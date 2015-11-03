@@ -882,23 +882,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					if(!source[i].id) continue;
 					if(source[i].manager === target.manager)
 					{
-						// Check for hidden helper
-						var dropEnd = $j('.calendar_d-n-d_timeCounter',action.ui.helper);
-						if(dropEnd.length && dropEnd[0].dropEnd)
+						if (self._drop_data)
 						{
-							dropEnd = dropEnd[0].dropEnd[0].dataset || {};
+							self._event_drop.call(source[i].iface.getDOMNode(),self,null, action.ui,self._drop_data);
 						}
-						else if (self._drop_data)
-						{
-							dropEnd = self._drop_data;
-						}
-						else
-						{
-							self._drag_helper(source[i].iface.getDOMNode(),target.iface.getDOMNode(),$j(source[i].iface.getDOMNode()).height());
-							dropEnd = undefined;
-						}
-						
-						self._event_drop.call(source[i].iface.getDOMNode(),self,null, action.ui,dropEnd);
+						self._drop_data = false;
 						// Ok, stop.
 						return false;
 					}
