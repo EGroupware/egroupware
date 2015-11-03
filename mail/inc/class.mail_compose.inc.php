@@ -2334,6 +2334,7 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.array2string($_formData['attachments']));
 			$tnfattachments = null;
 			foreach((array)$_formData['attachments'] as $attachment) {
+				//error_log(__METHOD__.__LINE__.array2string($attachment));
 				if(is_array($attachment))
 				{
 					if (!empty($attachment['uid']) && !empty($attachment['folder'])) {
@@ -2348,19 +2349,21 @@ class mail_compose
 						*/
 						if (!$connection_opened)
 						{
-							$mail_bo->openConnection();
+							$mail_bo->openConnection($mail_bo->profileID);
 							$connection_opened = true;
 						}
 						$mail_bo->reopen($attachment['folder']);
 						switch(strtoupper($attachment['type'])) {
 							case 'MESSAGE/RFC':
 							case 'MESSAGE/RFC822':
-								$rawHeader='';
+								$rawBody='';
 								if (isset($attachment['partID'])) {
-									$rawHeader      = $mail_bo->getMessageRawHeader($attachment['uid'], $attachment['partID'],$attachment['folder']);
+									$eml = $mail_bo->getAttachment($attachment['uid'],$attachment['partID'],0,false,true,$attachment['folder']);
+									$rawBody=$eml['attachment'];
+								} else {
+									$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
 								}
-								$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
-								$_mailObject->addStringAttachment($rawHeader.$rawBody, $attachment['name'], 'message/rfc822');
+								$_mailObject->addStringAttachment($rawBody, $attachment['name'], 'message/rfc822');
 								break;
 							default:
 								$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
