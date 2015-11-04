@@ -697,11 +697,6 @@ class calendar_ui
 				'selected' => $this->view == 'month',
 			),
 			array(
-				'text' => lang('yearview'),
-				'value' => '{"view":"year", "menuaction":"calendar.calendar_uiviews.index"}',
-				'selected' => $this->view == 'year',
-			),
-			array(
 				'text' => lang('planner by category'),
 				'value' => '{"view":"planner", "sortby":"category"}',
 				'selected' => $this->view == 'planner' && $this->sortby != 'user',
