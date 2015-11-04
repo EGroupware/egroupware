@@ -577,7 +577,7 @@ var AppJS = Class.extend(
 			<ul id="'+this.appname+'_favorites_popup_state"/>\
 			</form>\
 			</div>'
-		).appendTo(this.et2 ? this.et2.getDOMNode() : $j('body'));
+		).appendTo(this.et2 && this.appname != 'calendar' ? this.et2.getDOMNode() : $j('body'));
 
 		$j(".ui-icon-circle-plus",this.favorite_popup).prev().andSelf().click(function() {
 			var details = $j("#"+self.appname+"_favorites_popup_state",self.favorite_popup)
@@ -597,7 +597,7 @@ var AppJS = Class.extend(
 				empty_label: "Groups",
 				no_lang: true,
 				parent_node: this.appname+'_favorites_popup_admin'
-			},this.et2 || null);
+			},(this.et2 && this.appname != 'calendar'? this.et2:null));
 			this.favorite_popup.group.loadingFinished();
 		}
 
