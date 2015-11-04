@@ -456,6 +456,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.div.children('.hiddenEventAfter').remove();
 
 		var timegrid = this._parent;
+		var day = this;
 
 		// elem is jquery div of event
 		function isHidden(elem) {
@@ -504,16 +505,23 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				if(hidden.hidden === 'top' && $j('.hiddenEventBefore',this.header).length == 0)
 				{
 					indicator = $j('<div class="hiddenEventBefore"></div>')
-						.appendTo(this.header);
+						.appendTo(this.header)
+						.on('click', function() {
+							$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
+						});
 				}
 				else if(hidden.hidden === 'bottom')
-
 				{
 					indicator = $j('.hiddenEventAfter',this.div);
 					if(indicator.length == 0)
 					{
 						indicator = $j('<div class="hiddenEventAfter"></div>');
-						this.div.append(indicator);
+						this.div.append(indicator)
+							.on('click', function() {
+								$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
+								// Better re-run this to clean up
+								day._out_of_view();
+							});
 					}
 					indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.height());
 				}

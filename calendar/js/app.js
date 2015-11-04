@@ -551,7 +551,7 @@ app.classes.calendar = AppJS.extend(
 					});
 					// Stop browser from caching style by forcing reflow
 					wrapper[0].offsetHeight;
-					
+
 					wrapper.css({
 						"transition-duration": "",
 						"transition-delay": ""
