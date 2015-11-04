@@ -509,25 +509,28 @@ app.classes.calendar = AppJS.extend(
 			}
 
 			// We clone the nodes so we can animate the transition
-			var original = $j(widget.getDOMNode());
+			var original = $j(widget.getDOMNode()).closest('.et2_grid');
 			var cloned = original.clone(true).attr("id","CLONE");
-			var wrapper = $j(document.createElement("div"));
-			original.parent().append(wrapper);
 
-			// This is to hide the scrollbar
-			wrapper.wrap("<div style='overflow:hidden; height:"+original.outerHeight()+"px; width:" + original.outerWidth() + "px;'></div>");
-			wrapper.height(direction == "up" || direction == "down" ? 2 * original.outerHeight()  : original.outerHeight());
-			wrapper.width(direction == "left" || direction == "right" ? 2 * original.outerWidth() : original.outerWidth());
-
-			// Moving this stuff around breaks scroll to day start in Chrome
+			// Moving this stuff around scrolls things around too
+			// We need this later
 			var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
 
+			// This is to hide the scrollbar
+			var wrapper = original.parent();
 			if(direction == "right" || direction == "left")
 			{
 				original.css({"display":"inline-block","width":original.width()+"px"});
 				cloned.css({"display":"inline-block","width":original.width()+"px"});
 			}
-			wrapper.append(original);
+			else
+			{
+				original.css("height",original.height() + "px");
+				cloned.css("height",original.height() + "px");
+			}
+			wrapper.parent().css({overflow:'hidden', height:original.outerHeight()+"px", width:original.outerWidth() + "px"});
+			wrapper.height(direction == "up" || direction == "down" ? 2 * original.outerHeight()  : original.outerHeight());
+			wrapper.width(direction == "left" || direction == "right" ? 2 * original.outerWidth() : original.outerWidth());
 
 			// Re-scroll to previous to avoid "jumping"
 			$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
@@ -538,13 +541,17 @@ app.classes.calendar = AppJS.extend(
 					// Scrolling up
 					// Apply the reverse quickly, then let it animate as the changes are
 					// removed, leaving things where they should be.
+
 					original.parent().append(cloned);
-					wrapper.css({"transform": direction == "up" ? "translateY(-50%)" : "translateX(-50%)"});
 					// Makes it jump to destination
 					wrapper.css({
 						"transition-duration": "0s",
-						"transition-delay": "0s"
+						"transition-delay": "0s",
+						"transform": direction == "up" ? "translateY(-50%)" : "translateX(-50%)"
 					});
+					// Stop browser from caching style by forcing reflow
+					wrapper[0].offsetHeight;
+					
 					wrapper.css({
 						"transition-duration": "",
 						"transition-delay": ""
@@ -567,20 +574,29 @@ app.classes.calendar = AppJS.extend(
 				wrapper.css({"transform": translate});
 				window.setTimeout(function() {
 					var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
-					// Clean up from animation
+
 					cloned.remove();
-					var parent = wrapper.parent().parent();
-					wrapper.parent().remove();
-					original.appendTo(parent);
+					
+					// Makes it jump to destination
+					wrapper.css({
+						"transition-duration": "0s",
+						"transition-delay": "0s"
+					});
+					
+					// Clean up from animation
+					wrapper
+						.removeClass("calendar_slide")
+						.css({"transform": '',height: '', width:'',overflow:''});
+					wrapper.parent().css({overflow: '', width: '', height: ''});
 					original.css("display","");
-					// Re-attach events, if widget is still there
-					if(widget && widget.getDOMNode(widget))
-					{
-						widget.attachToDOM();
-					}
+					wrapper[0].offsetHeight;
+					wrapper.css({
+						"transition-duration": "",
+						"transition-delay": ""
+					});
+
 					// Re-scroll to start of day
 					$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
-
 
 					window.setTimeout(function() {
 						if(app.calendar)

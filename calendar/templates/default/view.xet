@@ -13,7 +13,7 @@ Egroupware
 
 <overlay>
     <template id="calendar.view">
-		<grid id="view" width="100%" height="100%">
+		<grid id="view" width="100%">
 			<columns>
 				<column/>
 			</columns>

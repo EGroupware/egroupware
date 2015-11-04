@@ -532,7 +532,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.scrolling
 			.css('height', (this.options.height - header_height)+'px')
 			.appendTo(this.div)
-			.empty();
+			.empty()
+			.off().on('scroll', jQuery.proxy(this._scroll, this));
 
 		// Percent
 		var rowHeight = (100/rowsToDisplay).toFixed(1);
@@ -666,6 +667,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		
 		// Scroll to start of day
 		this.scrolling.scrollTop(this._top_time);
+
+		// Handle not fully visible elements
+		this._scroll();
 		
 		// TODO: Figure out how to do this with detached nodes
 		/*
@@ -679,6 +683,21 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			this.day_col.setDetachedAttributes(nodes.clone(),)
 		}
 		*/
+	},
+
+	/**
+	 * Update UI while scrolling within the selected time
+	 * 
+	 * Toggles out of view indicators and adjusts not visible headers
+	 * @param {Event} event Scroll event
+	 */
+	_scroll: function(event)
+	{
+		// Loop through days, let them deal with it
+		for(var day = 0; day < this.day_widgets.length; day++)
+		{
+			this.day_widgets[day]._out_of_view();
+		}
 	},
 
 	/**

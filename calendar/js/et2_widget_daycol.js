@@ -441,6 +441,90 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			this._children[c].set_value(events[c]);
 		}
+
+		// Apply styles to hidden events
+		this._out_of_view();
+	},
+
+	/**
+	 * Apply styles for out-of-view and partially hidden events
+	 */
+	_out_of_view: function()
+	{
+		// Reset
+		this.header.children('.hiddenEventBefore').remove();
+		this.div.children('.hiddenEventAfter').remove();
+
+		var timegrid = this._parent;
+
+		// elem is jquery div of event
+		function isHidden(elem) {
+			var docViewTop = timegrid.scrolling.scrollTop(),
+			docViewBottom = docViewTop + timegrid.scrolling.height(),
+			elemTop = elem.position().top,
+			elemBottom = elemTop + elem.outerHeight();
+			if((elemBottom <= docViewBottom) && (elemTop >= docViewTop))
+			{
+				// Entirely visible
+				return false;
+			}
+			var visible = {
+				hidden: elemTop > docViewTop ? 'bottom' : 'top',
+				completely: false
+			};
+			visible.completely = visible.hidden == 'top' ? elemBottom < docViewTop : elemTop > docViewBottom;
+			return visible;
+		}
+
+		// Check each event
+		this.iterateOver(function(event) {
+			// Skip whole day events and events missing value
+			if(!event.options || !event.options.value || event.options.value.whole_day) return;
+
+			// Reset
+			event.title.css('top','');
+			event.body.css('padding-top','');
+
+			var hidden = isHidden.call(this,event.div);
+			if(!hidden)
+			{
+				return;
+			}
+			// Only top is hidden, move label
+			// Bottom hidden is fine
+			if(hidden.hidden === 'top' && !hidden.completely)
+			{
+				event.title.css('top',timegrid.scrolling.scrollTop() - event.div.position().top);
+				event.body.css('padding-top',timegrid.scrolling.scrollTop() - event.div.position().top);
+			}
+			// Completely out of view, show indicator
+			else if (hidden.completely)
+			{
+				var indicator = '';
+				if(hidden.hidden === 'top' && $j('.hiddenEventBefore',this.header).length == 0)
+				{
+					indicator = $j('<div class="hiddenEventBefore"></div>')
+						.appendTo(this.header);
+				}
+				else if(hidden.hidden === 'bottom')
+
+				{
+					indicator = $j('.hiddenEventAfter',this.div);
+					if(indicator.length == 0)
+					{
+						indicator = $j('<div class="hiddenEventAfter"></div>');
+						this.div.append(indicator);
+					}
+					indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.height());
+				}
+				// Match color to the event
+				if(indicator != '')
+				{
+					// Use border-top-color, Firefox doesn't give a value with border-color
+					indicator.css('border-color', event.div.css('border-top-color'));
+				}
+			}
+		}, this, et2_calendar_event);
 	},
 
 	/**
