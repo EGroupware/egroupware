@@ -332,12 +332,23 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 
 		var drop_action = mgr.getActionById('egw_link_drop');
 		var drag_action = mgr.getActionById('egw_link_drag');
+		var drop_cancel = mgr.getActionById('egw_cancel_drop');
 		
 		if(!this._actionLinks)
 		{
 			this._actionLinks = [];
 		}
-
+		
+		if (!drop_cancel)
+		{
+			// Create a generic cancel action in order to cancel drop action
+			// applied for all apps plus file and link action.
+			drop_cancel = mgr.addAction('drop', 'egw_cancel_drop', this.egw.lang('Cancel'), egw.image('cancel'), function(){},true);
+			drop_cancel.set_group('99');
+			drop_cancel.acceptedTypes = drop_cancel.acceptedTypes.concat(Object.keys(egw.user('apps')).concat(['link', 'file']));
+			this._actionLinks.push (drop_cancel.id);
+		}
+		
 		// Check if this app supports linking
 		if(!egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'query') ||
 			egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'title'))

@@ -1249,6 +1249,7 @@ class infolog_ui
 		}
 		$actions['info_drop_mail'] = array(
 			'type' => 'drop',
+			'caption' => 'Link mail',
 			'acceptedTypes' => 'mail',
 			'onExecute' => 'javaScript:app.infolog.handle_dropped_mail',
 			'hideOnDisabled' => true
