@@ -764,6 +764,7 @@ ul.et2_link_string {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  white-space: normal;
 }
 .et2_link_list tr {
   cursor: pointer;
