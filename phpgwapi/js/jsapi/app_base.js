@@ -579,7 +579,11 @@ var AppJS = Class.extend(
 			<ul id="'+this.appname+'_favorites_popup_state"/>\
 			</form>\
 			</div>'
-		).appendTo(this.et2 ? this.et2.getDOMNode() : $j('body'));
+			// Ugly hack to exclude calendar from using this.et2 since calendar in 14.3
+			// still running under iframe and that gets into conflict with et2 object created for
+			// video tutorials in sidebox.
+			// TODO: this.appname != 'calendar' should be removed after we released new calendar
+		).appendTo(this.et2 && this.appname != 'calendar' ? this.et2.getDOMNode() : $j('body')); 
 
 		$j(".ui-icon-circle-plus",this.favorite_popup).prev().andSelf().click(function() {
 			var details = $j("#"+self.appname+"_favorites_popup_state",self.favorite_popup)
@@ -599,7 +603,11 @@ var AppJS = Class.extend(
 				empty_label: "Groups",
 				no_lang: true,
 				parent_node: this.appname+'_favorites_popup_admin'
-			},this.et2 || null);
+			// Ugly hack to exclude calendar from using this.et2 since calendar in 14.3
+			// still running under iframe and that gets into conflict with et2 object created for
+			// video tutorials in sidebox.
+			// TODO: this.appname != 'calendar' should be removed after we released new calendar	
+			},(this.et2 && this.appname != 'calendar'? this.et2:null));
 			this.favorite_popup.group.loadingFinished();
 		}
 
