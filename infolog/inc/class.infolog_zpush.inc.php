@@ -16,7 +16,7 @@
 class infolog_zpush implements activesync_plugin_write
 {
 	/**
-	 * @var BackendEGW
+	 * @var activesync_backend
 	 */
 	private $backend;
 
@@ -57,9 +57,9 @@ class infolog_zpush implements activesync_plugin_write
 	/**
 	 * Constructor
 	 *
-	 * @param BackendEGW $backend
+	 * @param activesync_backend $backend
 	 */
-	public function __construct(BackendEGW $backend)
+	public function __construct(activesync_backend $backend)
 	{
 		$this->backend = $backend;
 	}

@@ -7,7 +7,7 @@
  * @author Stylite AG [info@stylite.de]
  * @author Ralf Becker <rb@stylite.de>
  * @author Philip Herbert <philip@knauber.de>
- * @copyright (c) 2014 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2014-15 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -20,7 +20,7 @@
 class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail, activesync_plugin_meeting_response, activesync_plugin_search_mailbox
 {
 	/**
-	 * var BackendEGW
+	 * var activesync_backend
 	 */
 	private $backend;
 
@@ -74,9 +74,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	/**
 	 * Constructor
 	 *
-	 * @param BackendEGW $backend
+	 * @param activesync_backend $backend
 	 */
-	public function __construct(BackendEGW $backend)
+	public function __construct(activesync_backend $backend)
 	{
 		if ($GLOBALS['egw_setup']) return;
 

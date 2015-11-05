@@ -18,7 +18,7 @@
 class addressbook_zpush implements activesync_plugin_write, activesync_plugin_search_gal
 {
 	/**
-	 * @var BackendEGW
+	 * @var activesync_backend
 	 */
 	private $backend;
 
@@ -102,9 +102,9 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	/**
 	 * Constructor
 	 *
-	 * @param BackendEGW $backend
+	 * @param activesync_backend $backend
 	 */
-	public function __construct(BackendEGW $backend)
+	public function __construct(activesync_backend $backend)
 	{
 		$this->backend = $backend;
 	}

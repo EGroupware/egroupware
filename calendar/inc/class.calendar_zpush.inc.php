@@ -45,7 +45,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeting_requests
 {
 	/**
-	 * var BackendEGW
+	 * var activesync_backend
 	 */
 	private $backend;
 
@@ -66,9 +66,9 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	/**
 	 * Constructor
 	 *
-	 * @param BackendEGW $backend
+	 * @param activesync_backend $backend
 	 */
-	public function __construct(BackendEGW $backend)
+	public function __construct(activesync_backend $backend)
 	{
 		$this->backend = $backend;
 	}
@@ -385,7 +385,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		// ToDo: alarme: Reminder
 
 		// convert UID to GlobalObjID
-		$message->globalobjid = BackendEGW::uid2globalObjId($event['uid']);
+		$message->globalobjid = activesync_backend::uid2globalObjId($event['uid']);
 
 		return $message;
 	}
