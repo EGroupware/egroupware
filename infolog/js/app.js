@@ -138,22 +138,6 @@ app.classes.infolog = AppJS.extend(
 		{
 			this.et2._inst.refresh(_msg, _app, _id, _type);
 		}
-		// Refresh handler for infologs integrated in calendar
-		if (_app == 'infolog' && _id && _type != 'delete')
-		{
-			var info_type = egw.dataGetUIDdata(_app+"::"+_id)?egw.dataGetUIDdata(_app+"::"+_id).data.info_type:false;
-			var cal_show = egw.preference('cal_show','infolog')||false;
-
-			if (info_type && cal_show)
-			{
-				var rex = RegExp(info_type,'gi');
-				if (cal_show.match(rex))
-				{
-					//Trigger refresh the whole calendar if the changed infolog entry is integrated one
-					if (typeof app['calendar'] != 'undefined') app.calendar.egw.window.location.reload();
-				}
-			}
-		}
 	},
 
 	/**

@@ -763,7 +763,7 @@ class calendar_ui
 	 *
 	 * @param type $event
 	 */
-	protected function to_client(&$event)
+	public function to_client(&$event)
 	{
 		if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{

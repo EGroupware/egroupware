@@ -253,10 +253,13 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						$j(this).trigger(e);
 
 						// That cleared the resize handles, so remove for re-creation...
-						$j(this).resizable('destroy');
+						if($j(this).resizable('instance'))
+						{
+							$j(this).resizable('destroy');
+						}
 					}
 					// Clear the helper, re-draw
-					if(event_widget)
+					if(event_widget && event_widget._parent)
 					{
 						event_widget._parent.position_event(event_widget);
 					}
@@ -1433,6 +1436,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	// Resizable interface
 	resize: function ()
 	{
+		if(!this.div.is(':visible'))
+		{
+			return;
+		}
+
 		// We expect the timegrid to be in a table with 0 or more other timegrids,
 		// 1 per row.  We want each timegrid to be as large as possible, but space
 		// shared equally.  Height can't be set to a percentage on the rows, because

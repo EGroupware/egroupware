@@ -160,6 +160,14 @@ class calendar_uiforms extends calendar_ui
 		{
 			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
 		}
+		if(isset($_GET['cat_id']))
+		{
+			$cat_id = explode(',',$_GET['cat_id']);
+			foreach($cat_id as &$cat)
+			{
+				$cat = (int)$cat;
+			}
+		}
 		$alarms = array();
 		// if default alarm set in prefs --> add it
 		// we assume here that user does NOT have a whole-day but no regular default-alarm, no whole-day!
@@ -187,6 +195,7 @@ class calendar_uiforms extends calendar_ui
 			'alarm' => $alarms,
 			'recur_exception' => array(),
 			'title' => $title ? $title : '',
+			'category' => $cat_id,
 		);
 	}
 

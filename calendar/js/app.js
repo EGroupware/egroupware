@@ -231,27 +231,8 @@ app.classes.calendar = AppJS.extend(
 				}
 				if (do_refresh)
 				{
-					if (typeof this.et2 != 'undefined' && this.et2 !=null)
-					{
-						this.egw.refresh(_msg, 'calendar');
-					}
-					else
-					{
-						var iframe = parent.jQuery(parent.document).find('.egw_fw_content_browser_iframe');
-						var calTab = iframe.parentsUntil(jQuery('.egw_fw_ui_tab_content'),'.egw_fw_ui_tab_content');
-
-						if (!calTab.is(':visible'))
-						{
-							// F.F can not handle to style correctly an iframe which is hidden (display:none), therefore we need to
-							// bind a handler to refresh the calendar views after it shows up
-							iframe.one('show',function(){egw_refresh('','calendar');});
-						}
-						else
-						{
-							//window.location.reload();
-							window.egw_refresh('refreshing calendar','calendar');
-						}
-					}
+					// Discard cache, reload
+					return this.observer('','calendar',_id ? 'infolog'+_id : false, _type);
 				}
 				break;
 			case 'calendar':
@@ -264,24 +245,26 @@ app.classes.calendar = AppJS.extend(
 					return false;
 				}
 				// Regular refresh
+				var event = false;
 				if(_id)
 				{
-					var event = egw.dataGetUIDdata('calendar::'+_id);
-					if(event && event.data && event.data.date)
+					event = egw.dataGetUIDdata('calendar::'+_id);
+				}
+				if(event && event.data && event.data.date)
+				{
+					var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date,this.state.owner)
+					var daywise = egw.dataGetUIDdata(new_cache_id);
+					daywise = daywise ? daywise.data : [];
+					if(_type === 'delete')
 					{
-						var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date,this.state.owner)
-						var daywise = egw.dataGetUIDdata(new_cache_id);
-						daywise = daywise ? daywise.data : [];
-						if(_type === 'delete')
-						{
-							daywise.splice(daywise.indexOf(_id),1);
-						}
-						else if (daywise.indexOf(_id) < 0)
-						{
-							daywise.push(_id);
-						}
-						egw.dataStoreUID(new_cache_id,daywise);
+						daywise.splice(daywise.indexOf(_id),1);
 					}
+					else if (daywise.indexOf(_id) < 0)
+					{
+						daywise.push(_id);
+					}
+					egw.dataStoreUID(new_cache_id,daywise);
+					return false;
 				}
 				else
 				{
@@ -782,12 +765,29 @@ app.classes.calendar = AppJS.extend(
 	{
 		// Add loading spinner - not visible if the body / gradient is there though
 		widget.div.addClass('loading');
-		egw().json(
-			'calendar.calendar_uiforms.ajax_moveEvent',
-			[widget.options.value.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration],
-			// Remove loading spinner
-			function() {widget.div.removeClass('loading');}
-		).sendRequest(true);
+
+		// Integrated infolog event
+		//Get infologID if in case if it's an integrated infolog event
+		var infolog_id = widget.options.value.id.split('infolog')[1];
+		if (infolog_id)
+		{
+			// If it is an integrated infolog event we need to edit infolog entry
+			egw().json(
+				'stylite_infolog_calendar_integration::ajax_moveInfologEvent',
+				[infolog_id, widget.options.value.start, widget.options.value.duration],
+				// Remove loading spinner
+				function() {if(widget.div) widget.div.removeClass('loading');}
+			).sendRequest();
+		}
+		else
+		{
+			egw().json(
+				'calendar.calendar_uiforms.ajax_moveEvent',
+				[widget.options.value.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration],
+				// Remove loading spinner
+				function() {widget.div.removeClass('loading');}
+			).sendRequest(true);
+		}
 	},
 
 	/**
