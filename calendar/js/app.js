@@ -2646,12 +2646,18 @@ app.classes.calendar = AppJS.extend(
 				// Mark holidays
 				beforeShowDay: function (date)
 				{
+					var tempDate = new Date();
+					var today = new Date(tempDate.getFullYear(), tempDate.getUTCMonth(), tempDate.getUTCDate());
 					var holidays = et2_calendar_daycol.get_holidays({day_class_holiday: function() {}}, date.getFullYear());
 					var day_holidays = holidays[''+date.getUTCFullYear() +
 						sprintf("%02d",date.getUTCMonth()+1) +
 						sprintf("%02d",date.getUTCDate())];
 					var css_class = '';
 					var tooltip = '';
+					if(date.getTime() == today.getTime())
+					{
+						css_class += 'calendar_calToday ';
+					}
 					if(typeof day_holidays !== 'undefined' && day_holidays.length)
 					{
 						for(var i = 0; i < day_holidays.length; i++)
