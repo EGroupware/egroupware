@@ -265,8 +265,8 @@ class mail_compose
 		//lang('compose'),lang('from') // needed to be found by translationtools
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST).function_backtrace());
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
-		$_contentHasSigID = array_key_exists('mailidentity',(array)$_content);
-		$_contentHasMimeType = array_key_exists('mimeType',(array)$_content);
+		$_contentHasSigID = $_content?array_key_exists('mailidentity',(array)$_content):false;
+		$_contentHasMimeType = $_content? array_key_exists('mimeType',(array)$_content):false;
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
 
@@ -742,7 +742,7 @@ class mail_compose
 				if ($method)
 				{
 					$res = ExecMethod($method,array($id,'html'));
-					//_debug_array($res);
+					//error_log(__METHOD__.__LINE__.array2string($res));
 					if (!empty($res))
 					{
 						$insertSigOnTop = 'below';
@@ -756,7 +756,7 @@ class mail_compose
 						$content['subject'] = lang($app).' #'.$res['id'].': ';
 						foreach(array('subject','body','mimetype') as $name) {
 							$sName = $name;
-							if ($name=='mimetype')
+							if ($name=='mimetype'&&$res[$name])
 							{
 								$sName = 'mimeType';
 								$content[$sName] = $res[$name];
@@ -772,6 +772,7 @@ class mail_compose
 			// handle preset info/values
 			if (is_array($_REQUEST['preset']))
 			{
+				$alreadyProcessed=array();
 				//_debug_array($_REQUEST);
 				if ($_REQUEST['preset']['mailto']) {
 					// handle mailto strings such as
@@ -791,8 +792,10 @@ class mail_compose
 						}
 					}
 					$content['to']=$mailtoArray[0];
+					$alreadyProcessed['to']='to';
 					// if the mailto string is not htmlentity decoded the arguments are passed as simple requests
 					foreach(array('cc','bcc','subject','body') as $name) {
+						$alreadyProcessed[$name]=$name;
 						if ($_REQUEST[$name]) $content[$name] .= (strlen($content[$name])>0 ? ( $name == 'cc' || $name == 'bcc' ? ',' : ' ') : '') . $_REQUEST[$name];
 					}
 				}
@@ -861,6 +864,7 @@ class mail_compose
 								}
 							}
 							//error_log(__METHOD__.__LINE__.array2string($mailtoArray));
+							$alreadyProcessed['to']='to';
 							$content['to']=$mailtoArray;
 						}
 					}
@@ -931,13 +935,25 @@ class mail_compose
 					{
 						foreach(array_keys($content) as $k)
 						{
-							if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))&&isset($this->sessionData[$k])) $remember[$k] = $this->sessionData[$k];
+							if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))&&isset($this->sessionData[$k]))
+							{
+								$alreadyProcessed[$k]=$k;
+								$remember[$k] = $this->sessionData[$k];
+							}
 						}
 					}
 					if(!empty($remember)) $content = array_merge($content,$remember);
 				}
-				foreach(array('to','cc','bcc','subject','body') as $name)
+				foreach(array('to','cc','bcc','subject','body','mimeType') as $name)
 				{
+					//always handle mimeType
+					if ($name=='mimeType' && $_REQUEST['preset'][$name])
+					{
+						$_content[$name]=$content[$name]=$_REQUEST['preset'][$name];
+					}
+					//skip if already processed by "preset Routines"
+					if ($alreadyProcessed[$name]) continue;
+					//error_log(__METHOD__.__LINE__.':'.$name.'->'. $_REQUEST['preset'][$name]);
 					if ($_REQUEST['preset'][$name]) $content[$name] = $_REQUEST['preset'][$name];
 				}
 			}
@@ -982,9 +998,11 @@ class mail_compose
 				if (!empty($_REQUEST['subject'])) $content['subject'] = html::purify(trim(html_entity_decode($_REQUEST['subject'])));
 			}
 		}
+		//error_log(__METHOD__.__LINE__.array2string($content));
 		//is the MimeType set/requested
 		if ($isFirstLoad && !empty($_REQUEST['mimeType']))
 		{
+			$_content['mimeType'] = $content['mimeType'];
 			if (($_REQUEST['mimeType']=="text" ||$_REQUEST['mimeType']=="plain") && $content['mimeType'] == 'html')
 			{
 				$_content['mimeType'] = $content['mimeType']  = 'plain';
