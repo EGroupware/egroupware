@@ -58,32 +58,52 @@ class egw_ckeditor_config
 
 	/**
 	 * Get available CKEditor Skins
-	 * @return array
+	 *
+	 * Only return skins existing in filesystem, as we disable / remove them if not compatible with supported browsers.
+	 *
+	 * @return array skin => label pairs alphabetical sorted with default moono first
 	 */
 	public static function getAvailableCKEditorSkins()
 	{
-/*
-drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 icy_orange
-drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 Moono_blue
-drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
-*/
-		return array(
+		$labels = array(
 			'kama'  => lang('kama theme'),
 			'moono'	=> lang('moono theme (default)'),
 			'moonocolor'	=> lang('moono color theme'),
 			'moono-dark'	=> lang('dark moono theme'),
+			'Moono_blue'	=> lang('blue moono theme'),
+			'bootstrapck'	=> lang('bootstrap theme for ckeditor'),
 			'icy_orange'	=> lang('icy-orange theme for ckeditor'),
+			'office2013'	=> lang('office-2013 theme for ckeditor'),
 			'minimalist'	=> lang('Minimalist theme'),
 			'flat'			=> lang('Flat theme')
 		);
+		$skins = array();
+
+		foreach(scandir(EGW_SERVER_ROOT.'/phpgwapi/js/ckeditor/skins') as $skin)
+		{
+			if ($skin[0] == '.') continue;
+
+			if (isset($labels[$skin]))
+			{
+				$skins[$skin] = $labels[$skin];
+			}
+			else
+			{
+				$skins[$skin] = str_replace('_', '-', $skin).' '.lang('Theme');
+			}
+		}
+		uasort($skins, 'strcasecmp');
+
+		// return our default "moono" first
+		return isset($skins['moono']) ? array('moono' => $skins['moono'])+$skins : $skins;
 	}
 
 	/**
 	 * Get font size from preferences
 	 *
-	 * @param array $prefs=null default $GLOBALS['egw_info']['user']['preferences']
-	 * @param string &$size=null on return just size, without unit
-	 * @param string &$unit=null on return just unit
+	 * @param array $prefs =null default $GLOBALS['egw_info']['user']['preferences']
+	 * @param string &$size =null on return just size, without unit
+	 * @param string &$unit =null on return just unit
 	 * @return string font-size including unit
 	 */
 	public static function font_size_from_prefs(array $prefs=null, &$size=null, &$unit=null)
@@ -223,9 +243,10 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
-			if (!(file_exists($basePath.'skins/'.$skin) || file_exists($skin) || !empty($skin)))
+			if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/js/ckeditor/skins/'.$skin))
+			{
 				$skin = "moono"; //this is the basic skin for ckeditor
-
+			}
 			self::$skin = $skin;
 		}
 
@@ -419,6 +440,7 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 		$spellchecker_button = null;
 
 		self::add_default_options($config, $height, $expanded_toolbar, $start_path);
+		$scayt_button = null;
 		self::add_spellchecker_options($config, $spellchecker_button, $scayt_button);
 		self::add_toolbar_options($config, $mode, $spellchecker_button, $scayt_button);
 		//error_log(__METHOD__."('$mode', $height, ".array2string($expanded_toolbar).") returning ".array2string($config));
@@ -426,7 +448,7 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 		self::append_extraPlugins_config_array($config, array('uploadimage','uploadwidget','widget','notification','notificationaggregator','lineutils'));
 		return $config;
 	}
-	
+
 	/**
 	 * Adds extra
 	 * @param array $config
@@ -449,7 +471,7 @@ drwxr-xr-x 3 kl kl 4096 Dez  9 14:26 office2013
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns a json encoded string containing the configuration for the ckeditor.
 	 * @param string $mode specifies the count of toolbar buttons available to the user. Possible
