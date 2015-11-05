@@ -2593,9 +2593,9 @@ app.classes.calendar = AppJS.extend(
 								}
 							}
 							// Add to, not replace, current value
-							if(typeof state[key] == 'object' && typeof app.calendar.state[key])
+							if(typeof state[key] == 'object' && typeof app.calendar.state[key] == 'object')
 							{
-								jQuery.extend(state[key],app.calendar.state[key]);
+								jQuery.merge(state[key],app.calendar.state[key]);
 							}
 						}
 					}
@@ -2706,14 +2706,13 @@ app.classes.calendar = AppJS.extend(
 			// Today
 			var today = et2_createWidget('buttononly', {image: 'calendar/today', label: 'Today', id: 'today'},date);
 			today.set_image('calendar/today');
+			today.set_label(egw.lang('Today'));
 			var today_button = $j(today.getDOMNode());
 			today_button
 				.prependTo(date.getDOMNode())
+				.addClass('et2_clickable')
 				.on('click', function() {
-					var inst = $j.datepicker._getInst(datepicker[0]);
-					inst.drawMonth = new Date().getUTCMonth();
-					inst.drawYear = new Date().getFullYear();
-					jQuery.datepicker._updateDatepicker(inst);
+					app.calendar.update_state({date: new Date().toJSON()});
 				});
 			var position_today = function() {
 				var week_col = $j('#calendar-sidebox_date th.ui-datepicker-week-col');
