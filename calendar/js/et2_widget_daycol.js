@@ -502,26 +502,44 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			else if (hidden.completely)
 			{
 				var indicator = '';
-				if(hidden.hidden === 'top' && $j('.hiddenEventBefore',this.header).length == 0)
+				if(hidden.hidden === 'top')
 				{
-					indicator = $j('<div class="hiddenEventBefore"></div>')
-						.appendTo(this.header)
-						.on('click', function() {
-							$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
-						});
+					if($j('.hiddenEventBefore',this.header).length == 0)
+					{
+						indicator = $j('<div class="hiddenEventBefore"></div>')
+							.appendTo(this.header)
+							.text(event.options.value.title)
+							.attr('data-hidden_count', 1)
+							.on('click', function() {
+								$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
+							});
+					}
+					else
+					{
+						indicator = $j('.hiddenEventBefore',this.header);
+						indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
+						indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+					}
 				}
 				else if(hidden.hidden === 'bottom')
 				{
 					indicator = $j('.hiddenEventAfter',this.div);
 					if(indicator.length == 0)
 					{
-						indicator = $j('<div class="hiddenEventAfter"></div>');
+						indicator = $j('<div class="hiddenEventAfter"></div>')
+							.text(event.options.value.title)
+							.attr('data-hidden_count', 1);
 						this.div.append(indicator)
 							.on('click', function() {
 								$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
 								// Better re-run this to clean up
 								day._out_of_view();
 							});
+					}
+					else
+					{
+						indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
+						indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
 					}
 					indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.height());
 				}
