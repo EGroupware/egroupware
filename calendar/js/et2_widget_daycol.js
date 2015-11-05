@@ -480,7 +480,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Check each event
 		this.iterateOver(function(event) {
 			// Skip whole day events and events missing value
-			if(!event.options || !event.options.value || event.options.value.whole_day) return;
+			if(!event.options || !event.options.value || event.options.value.whole_day_on_top) return;
 
 			// Reset
 			event.title.css('top','');
