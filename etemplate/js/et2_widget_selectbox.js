@@ -473,11 +473,6 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			return this.set_multi_value(_value);
 		}
-		if(typeof _value != 'string' && jQuery(this.value).not(_value).length == 0 && jQuery(_value).not(this.value).length == 0)
-		{
-			// Unchanged
-			if(_value == this.value) return;
-		}
 		// Auto-expand multiple if not yet turned on, and value has multiple
 		if(this.options.expand_multiple_rows && !this.options.multiple && jQuery.isArray(_value) && _value.length > 1)
 		{
