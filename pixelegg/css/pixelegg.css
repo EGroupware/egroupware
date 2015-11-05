@@ -1531,7 +1531,7 @@ option:checked {
   color: #ff0000;
 }
 .drop-hover {
-  background-color: #ffdd73;
+  background-color: #ffdd73 !important;
 }
 .ui-icon-close {
   /*visibility: hidden;*/
