@@ -1168,17 +1168,21 @@ abstract class egw_framework
 	 */
 	public static function api_version(&$changelog=null)
 	{
-		$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['phpgwapi']);
-		// parse version from changelog
 		$changelog = EGW_SERVER_ROOT.'/doc/rpm-build/debian.changes';
-		$matches = null;
-		if (($f = fopen($changelog, 'r')) && preg_match('/egroupware-epl \(([0-9.]+)/', fread($f, 80), $matches) &&
-			version_compare($version, $matches[1], '<'))
+
+		return egw_cache::getTree(__CLASS__, 'api_version', function() use ($changelog)
 		{
-			$version = $matches[1];
-			fclose($f);
-		}
-		return $version;
+			$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+			// parse version from changelog
+			$matches = null;
+			if (($f = fopen($changelog, 'r')) && preg_match('/egroupware-epl \(([0-9.]+)/', fread($f, 80), $matches) &&
+				version_compare($version, $matches[1], '<'))
+			{
+				$version = $matches[1];
+				fclose($f);
+			}
+			return $version;
+		}, array(), 300);
 	}
 
 	/**
