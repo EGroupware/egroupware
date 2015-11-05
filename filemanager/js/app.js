@@ -541,28 +541,29 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	createdir: function(action, selected)
 	{
-		var dir = prompt(this.egw.lang('New directory'));
-
-		if (dir)
-		{
-			var path = this.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
-			if(action && action instanceof egwAction)
+		var self = this;
+		et2_dialog.show_prompt(function(button, dir){
+			if (button && dir)
 			{
-				var paths = this._elems2paths(selected);
-				if(paths[0]) path = paths[0];
-				// check if target is a file --> use it's directory instead
-				if(selected[0].id || path)
+				var path = self.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
+				if(action && action instanceof egwAction)
 				{
-					var data = egw.dataGetUIDdata(selected[0].id || 'filemanager::'+path );
-					if (data && data.data.mime != 'httpd/unix-directory')
+					var paths = self._elems2paths(selected);
+					if(paths[0]) path = paths[0];
+					// check if target is a file --> use it's directory instead
+					if(selected[0].id || path)
 					{
-						path = this.dirname(path);
+						var data = egw.dataGetUIDdata(selected[0].id || 'filemanager::'+path );
+						if (data && data.data.mime != 'httpd/unix-directory')
+						{
+							path = self.dirname(path);
+						}
 					}
 				}
+				self._do_action('createdir', dir, true, path);	// true=synchronous request
+				self.change_dir((path == '/' ? '' : path)+'/'+ dir);
 			}
-			this._do_action('createdir', dir, true, path);	// true=synchronous request
-			this.change_dir((path == '/' ? '' : path)+'/'+dir);
-		}
+		},this.egw.lang('New directory'),this.egw.lang('Create directroy'));
 	},
 
 	/**
@@ -570,12 +571,13 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	symlink: function()
 	{
-		var target = prompt(this.egw.lang('Link target'));
-
-		if (target)
-		{
-			this._do_action('symlink', target);
-		}
+		var self = this;
+		et2_dialog.show_prompt(function (button, target) {
+			if (button && target)
+			{
+				self._do_action('symlink', target);
+			}
+		},this.egw.lang('Link target'), this.egw.lang('Create link'));
 	},
 
 	/**
