@@ -1531,7 +1531,7 @@ option:checked {
   color: #ff0000;
 }
 .drop-hover {
-  background-color: #ffdd73 !important;
+  background-color: #ffdd73;
 }
 .ui-icon-close {
   /*visibility: hidden;*/
@@ -6035,6 +6035,9 @@ table.egwGridView_grid tr.subentry {
   background: rgba(255, 221, 115, 0.2);
 }
 table.egwGridView_grid tr.subentry:hover {
+  background: #ffdd73 !important;
+}
+table.egwGridView_grid tr.drop-hover {
   background: #ffdd73 !important;
 }
 table.egwGridView_grid span.arrow {

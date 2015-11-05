@@ -6048,6 +6048,9 @@ table.egwGridView_grid tr.subentry {
 table.egwGridView_grid tr.subentry:hover {
   background: #ffdd73 !important;
 }
+table.egwGridView_grid tr.drop-hover {
+  background: #ffdd73 !important;
+}
 table.egwGridView_grid span.arrow {
   -moz-user-select: none;
   background-repeat: no-repeat;
