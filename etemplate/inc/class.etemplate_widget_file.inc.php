@@ -45,7 +45,7 @@ class etemplate_widget_file extends etemplate_widget
 	 */
 	public static function ajax_upload() {
 		$response = egw_json_response::get();
-		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
+		$request_id = urldecode($_REQUEST['request_id']);
 		$widget_id = $_REQUEST['widget_id'];
 		if(!self::$request = etemplate_request::read($request_id)) {
 			$response->error("Could not read session");
@@ -94,8 +94,9 @@ class etemplate_widget_file extends etemplate_widget
 		$response->data($file_data);
 
 		// Check for a callback, call it if there is one
-		foreach($_FILES as $field => $file) {
-			if($element = $template->getElementById($field))
+		foreach($_FILES as $field => $file)
+		{
+			if(($element = $template->getElementById($field)))
 			{
 				$callback = $element->attrs['callback'];
 				if(!$callback) $callback = $template->getElementAttribute($field, 'callback');
@@ -112,6 +113,8 @@ class etemplate_widget_file extends etemplate_widget
 	 */
 	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
 	{
+		unset($field);	// not used
+
 		// Chunks get mangled a little
 		if($file['name'] == 'blob')
 		{
@@ -177,7 +180,7 @@ class etemplate_widget_file extends etemplate_widget
 	 * gather all the parts of the file together
 	 *
 	 * From Resumable samples - http://resumablejs.com/
-	 * @param string $dir - the temporary directory holding all the parts of the file
+	 * @param string $temp_dir - the temporary directory holding all the parts of the file
 	 * @param string $fileName - the original file name
 	 * @param string $chunkSize - each chunk size (in bytes)
 	 * @param string $totalSize - original file size (in bytes)
