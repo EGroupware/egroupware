@@ -633,8 +633,8 @@ egw_fw_ui_tabs.prototype.removeTab = function(_tab)
 		if (this.tabs.length > 0)
 		{
 			//Check whether there is another tab in the tab history,
-			//if not, simply show the first tab in the list.
-			var tab = this.tabs[0];
+			//if not, simply show the first (or next, if tab is first) tab in the list.
+			var tab = _tab == this.tabs[0] ? this.tabs[1] : this.tabs[0];
 			if (typeof this.tabHistory[this.tabHistory.length - 1] != 'undefined')
 			{
 				tab = this.tabHistory[this.tabHistory.length - 1];
