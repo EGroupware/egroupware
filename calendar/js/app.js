@@ -1599,6 +1599,10 @@ app.classes.calendar = AppJS.extend(
 		{
 			state.state.date = new Date();
 		}
+		if(typeof state.state.weekend == 'undefined')
+		{
+			state.state.weekend = true;
+		}
 
 		// Hide other views
 		var view = app.classes.calendar.views[state.state.view];
