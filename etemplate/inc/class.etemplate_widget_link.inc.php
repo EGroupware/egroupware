@@ -98,9 +98,9 @@ class etemplate_widget_link extends etemplate_widget
 		$options['type'] = $type ? $type : $options['type'];
 		if(!$options['num_rows']) $options['num_rows'] = 1000;
 		$links = egw_link::query($app, $pattern, $options);
-		$links = array_combine(array_map(create_function('$k', 'return (string)" ".$k;'), array_keys($links)), $links);
+		$linksc = array_combine(array_map(create_function('$k', 'return (string)" ".$k;'), array_keys($links)), $links);
 		$response = egw_json_response::get();
-		$response->data($links);
+		$response->data($linksc);
 	}
 
 	/**
@@ -217,8 +217,8 @@ class etemplate_widget_link extends etemplate_widget
 			$link = egw_link::get_link((int)$link_id);
 			if($link && $link['app'] == egw_link::VFS_APPNAME)
 			{
-				$file = egw_link::list_attached($link['app2'],$link['id2']);
-				$file = $file[(int)$link_id];
+				$files = egw_link::list_attached($link['app2'],$link['id2']);
+				$file = $files[(int)$link_id];
 				$path = egw_link::vfs_path($link['app2'],$link['id2'],$file['id']);
 				$result = egw_vfs::proppatch($path, array(array('name' => 'comment', 'val' => $comment)));
 			}
@@ -299,6 +299,12 @@ class etemplate_widget_link extends etemplate_widget
 		{
 			$value = $value_in =& self::get_array($content, $form_name);
 
+			// keep values added into request by other ajax-functions, eg. files draged into htmlarea (etemplate_widget_vfs)
+			if (!$value['to_id'])
+			{
+				$value['to_id'] = $expand['cont'][$this->id]['to_id'];
+			}
+
 			// Link widgets can share IDs, make sure to preserve values from others
 			$already = self::get_array($validated,$form_name);
 			if($already != null)
@@ -312,7 +318,7 @@ class etemplate_widget_link extends etemplate_widget
 				// Do we have enough information to link automatically?
 				if(is_array($value) && $value['to_id'])
 				{
-					$result = egw_link::link($value['to_app'], $value['to_id'], $link['app'], $link['id']);
+					egw_link::link($value['to_app'], $value['to_id'], $link['app'], $link['id']);
 				}
 				else
 				{
@@ -349,7 +355,7 @@ class etemplate_widget_link extends etemplate_widget
 				}
 			}
 			$valid =& self::get_array($validated, $form_name, true);
-			$valid = $value;
+			if (true) $valid = $value;
 			//error_log($this);
 			//error_log("   " . array2string($valid));
 		}

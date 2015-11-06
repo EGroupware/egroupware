@@ -61,8 +61,8 @@ class etemplate_widget_vfs extends etemplate_widget_file
 				$path = egw_link::vfs_path($app,$id,'',true);
 				if (!empty($relpath)) $path .= '/'.$relpath;
 
-				$value = array();
-				
+				if (true) $value = array();
+
 				// Single file, already existing
 				if (substr($path,-1) != '/' && egw_vfs::file_exists($path) && !egw_vfs::is_dir($path))
 				{
@@ -105,9 +105,10 @@ class etemplate_widget_vfs extends etemplate_widget_file
 		}
 	}
 
-	public static function ajax_upload() {
+	public static function ajax_upload()
+	{
 		parent::ajax_upload();
-		foreach($_FILES as $field => $file)
+		foreach($_FILES as $file)
 		{
 			self::store_file($_REQUEST['path'] ? $_REQUEST['path'] : $_REQUEST['widget_id'], $file);
 		}
@@ -118,7 +119,7 @@ class etemplate_widget_vfs extends etemplate_widget_file
 	 */
 	public static function ajax_htmlarea_upload()
 	{
-		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
+		$request_id = urldecode($_REQUEST['request_id']);
 		$widget_id = $_REQUEST['widget_id'];
 		if(!self::$request = etemplate_request::read($request_id))
 		{
@@ -130,10 +131,6 @@ class etemplate_widget_vfs extends etemplate_widget_file
 			// Can't use callback
 			$error = lang("Could not get template for file upload, callback skipped");
 		}
-		/*elseif (!($widget = $template->getElementById($widget_id)))
-		{
-			$error = "Widget '$widget_id' not found!";
-		}*/
 		elseif (!isset($_FILES['upload']))
 		{
 			$error = lang('No _FILES[upload] found!');
@@ -142,6 +139,17 @@ class etemplate_widget_vfs extends etemplate_widget_file
 		{
 			$data = self::$request->content[$widget_id];
 			$path = self::store_file($path = self::get_vfs_path($data['to_app'].':'.$data['to_id']).'/', $_FILES['upload']);
+
+			// store temp. vfs-path like links to be able to move it to correct location after entry is stored
+			if (!$data['to_id'] || is_array($data['to_id']))
+			{
+				egw_link::link($data['to_app'], $data['to_id'], egw_link::VFS_APPNAME, array(
+					'name' => $_FILES['upload']['name'],
+					'type' => $_FILES['upload']['type'],
+					'tmp_name' => egw_vfs::PREFIX.$path,
+				));
+				self::$request->content = array_merge(self::$request->content, array($widget_id => $data));
+			}
 		}
 		// switch regular JSON response handling off
 		egw_json_request::isJSONRequest(false);
@@ -162,6 +170,55 @@ class etemplate_widget_vfs extends etemplate_widget_file
 	}
 
 	/**
+	 * Fix source/url of dragged in images in html
+	 *
+	 * @param string $app
+	 * @param int|string $id
+	 * @param array $links
+	 * @param string& $html
+	 * @return boolean true if something was fixed and $html needs to be stored
+	 */
+	static function fix_html_dragins($app, $id, array $links, &$html)
+	{
+		$replace = $remove_dir = array();
+		foreach($links as $link)
+		{
+			$matches = null;
+			if (is_array($link) && preg_match('|^'.preg_quote(egw_vfs::PREFIX,'|').'('.preg_quote(self::get_temp_dir($app, ''), '|').'[^/]+)/|', $link['id']['tmp_name'], $matches))
+			{
+				$replace[substr($link['id']['tmp_name'], strlen(egw_vfs::PREFIX))] =
+					egw_link::vfs_path($app, $id, egw_vfs::basename($link['id']['tmp_name']), true);
+
+				if (!in_array($matches[1], $remove_dir)) $remove_dir[] = $matches[1];
+			}
+		}
+		if ($replace)
+		{
+			$html = strtr($old = $html, $replace);
+			// remove all dirs
+			foreach($remove_dir as $dir)
+			{
+				egw_vfs::remove($dir);
+			}
+		}
+		return isset($old) && $old != $html;
+	}
+
+	/**
+	 * Generate a temp. directory for htmlarea uploads: /home/$user/.tmp/$app_$postfix
+	 *
+	 * @param string $app app-name
+	 * @param string $postfix =null default random id
+	 * @return string vfs path
+	 */
+	static function get_temp_dir($app, $postfix=null)
+	{
+		if (!isset($postfix)) $postfix = md5(time().session_id());
+
+		return '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.tmp/'.$app.'_'.$postfix;
+	}
+
+	/**
 	* Ajax callback to receive an incoming file
 	*
 	* The incoming file is automatically placed into the appropriate VFS location.
@@ -169,7 +226,8 @@ class etemplate_widget_vfs extends etemplate_widget_file
 	* When the form is submitted, the information for all files uploaded is available in the returned
 	* $content array and the application should deal with the file.
 	*/
-	public static function store_file($path, $file) {
+	public static function store_file($path, $file)
+	{
 		$name = $_REQUEST['widget_id'];
 
 		// Find real path
@@ -232,30 +290,30 @@ class etemplate_widget_vfs extends etemplate_widget_file
 		{
 			case 'vfs-upload':
 				if(!is_array($value)) $value = array();
-				// Check & skip files that made it asyncronously
+				/* Check & skip files that made it asyncronously
 				list($app,$id,$relpath) = explode(':',$this->id,3);
 		//...
 				foreach($value as $tmp => $file)
 				{
 					if(egw_vfs::file_exists(self::get_vfs_path($id) . $relpath)) {}
-				}
+				}*/
 				parent::validate($cname, $content, $validated);
 				break;
 		}
-		$valid = $value;
+		if (true) $valid = $value;
 	}
 
 	/**
 	 * Change an ID like app:id:relative/path to an actual VFS location
 	 */
-	public static function get_vfs_path($path) {
+	public static function get_vfs_path($path)
+	{
 		list($app,$id,$relpath) = explode(':',$path,3);
 		if (empty($id) || $id == 'undefined')
 		{
 			static $tmppath = array();      // static var, so all vfs-uploads get created in the same temporary dir
-			if (!isset($tmppath[$app])) $tmppath[$app] = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.'.$app.'_'.md5(time().session_id());
+			if (!isset($tmppath[$app])) $tmppath[$app] = self::get_temp_dir ($app);
 			$path = $tmppath[$app];
-			unset($cell['onchange']);       // no onchange, if we have to use a temporary dir
 		}
 		else
 		{
