@@ -17,6 +17,7 @@
  * 1. query Mozilla ISPDB for domain from email (perfering SSL over STARTTLS over insecure connection)
  * 2. guessing and verifying in DNS server-names based on domain from email:
  *	- (imap|smtp).$domain, mail.$domain
+ *  - MX is *.mail.protection.outlook.com use (outlook|smtp).office365.com
  *  - MX for $domain
  *  - replace host in MX with (imap|smtp) or mail
  */
@@ -29,7 +30,7 @@ class emailadmin_wizard
 	/**
 	 * Connection timeout in seconds used in autoconfig, can and should be really short!
 	 */
-	const TIMEOUT = 2;
+	const TIMEOUT = 3;
 	/**
 	 * Prefix for callback names
 	 *
@@ -131,7 +132,7 @@ class emailadmin_wizard
 	 *
 	 * @var array
 	 */
-	public static $no_sieve_blacklist = array('gmail.com', 'googlemail.com');
+	public static $no_sieve_blacklist = array('gmail.com', 'googlemail.com', 'outlook.office365.com');
 
 	/**
 	 * Is current use a mail administrator / has run rights for EMailAdmin
@@ -1425,6 +1426,11 @@ class emailadmin_wizard
 		if (($dns = dns_get_record($domain, DNS_MX)))
 		{
 			//error_log(__METHOD__."('$email') dns_get_record('$domain', DNS_MX) returned ".array2string($dns));
+			// hosts for office365 are outlook|smpt.office365.com for MX *.mail.protection.outlook.com
+			if (substr($dns[0]['target'], -28) == '.mail.protection.outlook.com')
+			{
+				$hosts[($type == 'imap' ? 'outlook' : 'smtp').'.office365.com'] = true;
+			}
 			$hosts[preg_replace('/^[^.]+/', $type, $dns[0]['target'])] = true;
 			$hosts[preg_replace('/^[^.]+/', 'mail', $dns[0]['target'])] = true;
 			if ($type == 'smtp') $hosts[preg_replace('/^[^.]+/', 'send', $dns[0]['target'])] = true;
