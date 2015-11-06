@@ -598,6 +598,12 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
 		var day_width = ( this.days.width()/this.day_list.length);
+		if(!day_width || !this.day_list)
+		{
+			// Hidden on another tab, or no days for some reason
+			var dim = egw.getHiddenDimensions(this.days, false);
+			day_width = ( dim.w /Math.max(this.day_list.length,1));
+		}
 
 		// Create any needed widgets - otherwise, we'll just recycle
 		// Add any needed day widgets (now showing more days)

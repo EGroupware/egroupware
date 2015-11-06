@@ -23,7 +23,7 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 
 	attributes: {
@@ -779,12 +779,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			} , '_blank');
 			return false;
 		}
-	},
-
-	// Resizable interface
-	resize: function (_height)
-	{
-		this.display_settings.titleHeight = (this.title.height()/_height)*100;
 	},
 
 	/**
