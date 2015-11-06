@@ -58,6 +58,10 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Used for its date calculations
 		this.date_helper = et2_createWidget('date-time',{},null);
 		this.date_helper.loadingFinished();
+		
+		this.set_start_date(this.options.start_date);
+		this.set_end_date(this.options.end_date);
+
 	},
 
 	doLoadingFinished: function() {
@@ -137,6 +141,43 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	},
 
+	/**
+	 * Change the start date
+	 *
+	 * @param {Date} new_date New end date
+	 * @returns {undefined}
+	 */
+	set_start_date: function(new_date)
+	{
+		if(!new_date || new_date === null)
+		{
+			throw exception('Invalid end date. ' + new_date.toString());
+		}
+
+		this.options.start_date = new Date(typeof new_date == 'string' ? new_date : new_date.toJSON());
+		this.options.start_date.setUTCHours(0);
+		this.options.start_date.setUTCMinutes(0);
+		this.options.start_date.setUTCSeconds(0);
+	},
+	/**
+	 * Change the end date
+	 *
+	 * @param {string|number|Date} new_date New end date
+	 * @returns {undefined}
+	 */
+	set_end_date: function(new_date)
+	{
+		if(!new_date || new_date === null)
+		{
+			throw exception('Invalid end date. ' + new_date.toString());
+		}
+
+		this.options.end_date = new Date(typeof new_date == 'string' ? new_date : new_date.toJSON());
+		this.options.end_date.setUTCHours(23);
+		this.options.end_date.setUTCMinutes(59);
+		this.options.end_date.setUTCSeconds(59);
+	},
+	
 	/**
 	 * Mark special days (birthdays, holidays) on the planner
 	 *
@@ -357,7 +398,6 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Basic scaling, doesn't consider working times
 		pos = (t - start) / (end - start);
 
-
 		// Month view
 		if(this._parent.options.group_by !== 'month')
 		{
@@ -388,6 +428,11 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 				pos += day_percentage / days;
 			}
 			*/
+		}
+		else
+		{
+			// 2678400 is the number of seconds in 31 days
+			//pos = (t - start) / 2678400000;
 		}
 		pos = 100 * pos;
 

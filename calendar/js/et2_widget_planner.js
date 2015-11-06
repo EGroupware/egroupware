@@ -99,6 +99,10 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 
 		this.rows = $j(document.createElement("div"))
 			.appendTo(this.div);
+
+		this.vertical_bar = $j(document.createElement("div"))
+			.addClass('verticalBar')
+			.appendTo(this.div);
 		
 		// Used for its date calculations
 		this.date_helper = et2_createWidget('date-time',{},null);
@@ -158,96 +162,124 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		 * than binding it for every calendar event.
 		 */
 		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function() {
+				// Load the event
+				planner._get_event_info(this);
+				var that = this;
 
-			// Load the event
-			planner._get_event_info(this);
-			var that = this;
+				//Resizable event handler
+				$j(this).resizable
+				({
+					distance: 10,
+					grid: [5, 10000],
+					autoHide: false,
+					handles: 'e',
+					containment:'parent',
 
-			//Resizable event handler
-			$j(this).resizable
-			({
-				distance: 10,
-				grid: [5, 10000],
-				autoHide: false,
-				handles: 'e',
-				containment:'parent',
-
-				/**
-				 *  Triggered when the resizable is created.
-				 *
-				 * @param {event} event
-				 * @param {Object} ui
-				 */
-				create:function(event, ui)
-				{
-					var resizeHelper = event.target.getAttribute('data-resize');
-					if (resizeHelper == 'WD' || resizeHelper == 'WDS')
+					/**
+					 *  Triggered when the resizable is created.
+					 *
+					 * @param {event} event
+					 * @param {Object} ui
+					 */
+					create:function(event, ui)
 					{
-						jQuery(this).resizable('destroy');
-					}
-				},
+						var resizeHelper = event.target.getAttribute('data-resize');
+						if (resizeHelper == 'WD' || resizeHelper == 'WDS')
+						{
+							jQuery(this).resizable('destroy');
+						}
+					},
 
-				/**
-				 * Triggered at the end of resizing the calEvent.
-				 *
-				 * @param {event} event
-				 * @param {Object} ui
-				 */
-				stop:function(event, ui)
-				{
-					var e = new jQuery.Event('change');
-					e.originalEvent = event;
-					e.data = {duration: 0};
-					var event_data = planner._get_event_info(this);
-					var event_widget = planner.getWidgetById('event_'+event_data.id);
-					var sT = event_widget.options.value.start_m;
-					if (typeof this.dropEnd != 'undefined')
+					/**
+					 * Triggered at the end of resizing the calEvent.
+					 *
+					 * @param {event} event
+					 * @param {Object} ui
+					 */
+					stop:function(event, ui)
 					{
-						var eT = parseInt(this.dropEnd.getUTCHours() * 60) + parseInt(this.dropEnd.getUTCMinutes());
-						e.data.duration = ((eT - sT)/60) * 3600;
+						var e = new jQuery.Event('change');
+						e.originalEvent = event;
+						e.data = {duration: 0};
+						var event_data = planner._get_event_info(this);
+						var event_widget = planner.getWidgetById('event_'+event_data.id);
+						var sT = event_widget.options.value.start_m;
+						if (typeof this.dropEnd != 'undefined')
+						{
+							var eT = parseInt(this.dropEnd.getUTCHours() * 60) + parseInt(this.dropEnd.getUTCMinutes());
+							e.data.duration = ((eT - sT)/60) * 3600;
 
+							if(event_widget)
+							{
+								event_widget.options.value.end_m = eT;
+								event_widget.options.value.duration = e.data.duration;
+							}
+
+							// Leave the helper there until the update is done
+							var loading = ui.helper.clone().appendTo(ui.helper.parent());
+
+							// and add a loading icon so user knows something is happening
+							$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+
+							$j(this).trigger(e);
+
+							// That cleared the resize handles, so remove for re-creation...
+							$j(this).resizable('destroy');
+
+							// Remove loading, done or not
+							loading.remove();
+						}
+						// Clear the helper, re-draw
 						if(event_widget)
 						{
-							event_widget.options.value.end_m = eT;
-							event_widget.options.value.duration = e.data.duration;
+							event_widget._parent.position_event(event_widget);
 						}
+					},
 
-						// Leave the helper there until the update is done
-						var loading = ui.helper.clone().appendTo(ui.helper.parent());
-						
-						// and add a loading icon so user knows something is happening
-						$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
-
-						$j(this).trigger(e);
-
-						// That cleared the resize handles, so remove for re-creation...
-						$j(this).resizable('destroy');
-
-						// Remove loading, done or not
-						loading.remove();
-					}
-					// Clear the helper, re-draw
-					if(event_widget)
+					/**
+					 * Triggered during the resize, on the drag of the resize handler
+					 *
+					 * @param {event} event
+					 * @param {Object} ui
+					 */
+					resize:function(event, ui)
 					{
-						event_widget._parent.position_event(event_widget);
+						planner._drag_helper(this,{
+							top:ui.position.top,
+							left: ui.position.left + ui.helper.width()
+						},ui.helper.outerHeight());
 					}
-				},
+				});
+			})
+			.on('mousemove', function(event) {
+				// Position bar by mouse
+				planner.vertical_bar.position({
+					my: 'right-1',
+					of: event,
+					collision: 'fit'
+				});
+				planner.vertical_bar.css('top','0px');
 
-				/**
-				 * Triggered during the resize, on the drag of the resize handler
-				 *
-				 * @param {event} event
-				 * @param {Object} ui
-				 */
-				resize:function(event, ui)
+				// Get time at mouse
+				if(planner.options.group_by == 'month')
 				{
-					planner._drag_helper(this,{
-						top:ui.position.top,
-						left: ui.position.left + ui.helper.width()
-					},ui.helper.outerHeight());
+					var time = planner._get_time_from_position(event.clientX, event.clientY);
+				}
+				else
+				{
+					var time = planner._get_time_from_position(event.offsetX, event.offsetY);
+				}
+				// Passing to formatter, cancel out timezone
+				if(time)
+				{
+					var formatDate = new Date(time.valueOf() + time.getTimezoneOffset() * 60 * 1000);
+					planner.vertical_bar.html('<span>'+date(egw.preference('timeformat','calendar') == 12 ? 'h:ia' : 'H:i',formatDate)+'</span>');
+				}
+				else
+				{
+					planner.vertical_bar.text('');
 				}
 			});
-		});
 
 		// Customize and override some draggable settings
 		this.div.on('dragcreate','.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
@@ -327,14 +359,14 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 								row.set_label(name);
 							}
 						},user);
-						labels.push({id: user, label: label});
+						labels.push({id: user, label: label, data: {participants:user,owner:''}});
 					}
 					else if (user < 0)	// groups
 					{
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
 							{
-								this.push({id: id, label: result[id]});
+								this.push({id: id, label: result[id], data: {participants:id,owner:''}});
 							}
 						},labels);
 					}
@@ -345,7 +377,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 						{
 							if(accounts[j].value === user)
 							{
-								labels.push({id: user, label: accounts[j].label});
+								labels.push({id: user, label: accounts[j].label, data: {participants:user,owner:''}});
 								break;
 							}
 						}
@@ -475,7 +507,11 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			draw_row: function(sort_key, label, events)
 			{
 				var key = sort_key.split('-');
-				this._drawRow(sort_key, label, events, new Date(key[0],key[1],1),new Date(key[0],parseInt(key[1])+1,0));
+				this._drawRow(
+					sort_key, label, events,
+					new Date(key[0]+"-"+sprintf("%02d",parseInt(key[1])+1)+"-01T00:00:00Z"),
+					new Date(key[0],parseInt(key[1])+1,0)
+				);
 			}
 		},
 		// Group by category has one row for each [sub]category
@@ -508,7 +544,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				}
 			},
 			row_labels: function() {
-				return [{id:'',label: egw.lang('none')}];
+				return [{id:'',label: egw.lang('none'), data: {}}];
 			},
 			group: function(labels, rows, event) {
 				var label_index = false;
@@ -523,7 +559,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				if(label_index === false)
 				{
 					label_index = labels.length;
-					labels.push({id: event.category, label: ''});
+					labels.push({id: event.category, label: '', data: {cat_id:event.category}});
 					var im = this.getInstanceManager();
 					// Fake it to use the cache / call
 					var categories = et2_selectbox.cat_options({
@@ -685,7 +721,13 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		// Draw the rows
 		for(var key in labels)
 		{
-			grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
+			var row = grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
+
+			// Add extra data for clicking on row
+			for(var extra in labels[key].data)
+			{
+				row.getDOMNode().dataset[extra] = labels[key].data[extra];
+			}
 		}
 
 		// Adjust header if there's a scrollbar
@@ -720,6 +762,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		
 		// Add actual events
 		row._update_events(events);
+
+		return row;
 	},
 
 
@@ -1035,13 +1079,13 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			{
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
-					day_class += ' calendar_calBirthday';
+					day_class += ' calendar_calBirthday ';
 
 					holiday_list.push(holidays[i]['name']);
 				}
 				else
 				{
-					day_class += 'calendar_calHoliday';
+					day_class += 'calendar_calHoliday ';
 
 					holiday_list.push(holidays[i]['name']);
 				}
@@ -1054,11 +1098,11 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			sprintf("%02d",today.getUTCDate())
 		)
 		{
-			day_class += "calendar_calToday";
+			day_class += "calendar_calToday ";
 		}
 		if(date.getUTCDay() == 0 || date.getUTCDay() == 6)
 		{
-			day_class += "calendar_weekend";
+			day_class += "calendar_weekend ";
 		}
 		return day_class;
 	},
@@ -1531,7 +1575,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		}
 
 		var old_date = this.options.start_date;
-		this.options.start_date = this.date_helper.getValue();
+		this.options.start_date = new Date(this.date_helper.getValue());
 
 		if(old_date !== this.options.start_date && this.isAttached())
 		{
@@ -1567,7 +1611,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		this.date_helper.set_minutes(59);
 		this.date_helper.date.setSeconds(59);
 		var old_date = this.options.end_date;
-		this.options.end_date = this.date_helper.getValue();
+		this.options.end_date = new Date(this.date_helper.getValue());
 
 		if(old_date !== this.options.end_date && this.isAttached())
 		{
@@ -1711,6 +1755,26 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 
 				return false;
 			}
+			else if (!event.id)
+			{
+				// Clicked in row, but not on an event
+				// Default handler to open a new event at the selected time
+				if(this.options.group_by == 'month')
+				{
+					var date = this._get_time_from_position(_ev.clientX, _ev.clientY);
+				}
+				else
+				{
+					var date = this._get_time_from_position(_ev.offsetX, _ev.offsetY);
+				}
+				var data = $j(_ev.target).closest('.calendar_plannerRowWidget')[0].dataset || {};
+				this.egw().open(null, 'calendar', 'add', jQuery.extend({
+					start: date.toJSON(),
+					hour: date.getUTCHours(),
+					minute: date.getUTCMinutes()
+				},data) , '_blank');
+				return false;
+			}
 			return result;
 		}
 		else if (!jQuery.isEmptyObject(_ev.target.dataset))
@@ -1787,9 +1851,38 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		y = Math.round(y);
 
 		var rel_x = Math.min(x / $j('.calendar_eventRows',this.div).width(),1);
+		var rel_time = 0;
 
-		var rel_time = (new Date(this.options.end_date) - new Date(this.options.start_date))*rel_x/1000;
-		this.date_helper.set_value(this.options.start_date);
+		// Simple math, the x is offset from start date
+		if(this.options.group_by !== 'month')
+		{
+			rel_time = (new Date(this.options.end_date) - new Date(this.options.start_date))*rel_x/1000;
+			this.date_helper.set_value(this.options.start_date.toJSON());
+		}
+		else
+		{
+			// Find the correct row so we know which month, then get the offset
+			var row = $j(document.elementFromPoint(x, y)).closest('.calendar_plannerRowWidget');
+			var row_widget = null;
+			for(var i = 0; i < this._children.length && row.length > 0; i++)
+			{
+				if(this._children[i].div[0] == row[0])
+				{
+					row_widget = this._children[i];
+					break;
+				}
+			}
+			if(row_widget)
+			{
+				rel_x = Math.min((x-row_widget.rows.offset().left)/row_widget.rows.width(),1);
+				rel_time = (new Date(row_widget.options.end_date) - new Date(row_widget.options.start_date))*rel_x/1000;
+				this.date_helper.set_value(row_widget.options.start_date.toJSON());
+			}
+			else
+			{
+				return false;
+			}
+		}
 		var interval = egw.preference('interval','calendar') || 30;
 		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
 
