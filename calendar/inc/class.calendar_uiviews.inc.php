@@ -269,19 +269,6 @@ class calendar_uiviews extends calendar_ui
 		// List view in a separate file
 		$list_ui = new calendar_uilist();
 		$list_ui->listview();
-
-		// Set the current state
-		if (egw_json_request::isJSONRequest())// && strpos($_GET['menuaction'], 'calendar_uiforms') === false)
-		{
-			$states = array();
-			foreach(array('date','cat_id','filter','owner','view','sortby') as $state)
-			{
-				if($this->$state) $states[$state] = $this->$state;
-			}
-			$states['date'] = egw_time::to($states['date'],egw_time::ET2);
-			$response = egw_json_response::get();
-			$response->apply('app.calendar.set_state', array($states));
-		}
 	}
 
 	/**

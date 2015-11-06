@@ -60,11 +60,10 @@ app.classes.calendar = AppJS.extend(
 	state: {
 		date: new Date(),
 		view: egw.preference('defaultcalendar','calendar') || 'day',
-		owner: egw.user('account_id'),
-		days: egw.preference('days_in_weekview','calendar')
+		owner: egw.user('account_id')
 	},
 
-	states_to_save: ['owner','filter','cat_id','view','sortby','planner_days'],
+	states_to_save: ['owner','filter','cat_id','view','sortby','planner_days','weekend'],
 
 	// If you are in one of these views and select a date in the sidebox, the view
 	// will change as needed to show the date.  Other views will only change the
@@ -90,6 +89,7 @@ app.classes.calendar = AppJS.extend(
 
 		// Scroll
 		jQuery(jQuery.proxy(this._scroll,this));
+		jQuery.extend(this.state, this.egw.preference('saved_states','calendar'));
 	},
 
 	/**
@@ -2553,7 +2553,7 @@ app.classes.calendar = AppJS.extend(
 		{
 			sidebox.parentsUntil('#calendar_sidebox_content')
 				.find('.egw_fw_ui_category_content').not(sidebox.parent())
-				.on('change.sidebox', 'select:not(.et2_selectbox),input', this, function(event) {
+				.on('change.sidebox', 'select:not(.et2_selectbox),input[type!="checkbox"]', this, function(event) {
 					var state = {};
 					var name = this.name.replace('[]','');
 					var value = $j(this).val();
@@ -2860,7 +2860,7 @@ app.classes.calendar = AppJS.extend(
 		 */
 		show_weekend: function(state)
 		{
-			return state.days ? parseInt(state.days) === 7 : parseInt(egw.preference('days_in_weekview','calendar')) == 7;
+			return state.weekend;
 		},
 		/**
 		 * How big or small are the displayed time chunks?
@@ -2947,7 +2947,7 @@ jQuery.extend(app.classes.calendar,{
 			},
 			show_weekend: function(state) {
 				state.days = '1';
-
+				state.weekend = 'true';
 				return app.calendar.View.show_weekend.call(this,state);
 			},
 			scroll: function(delta)
@@ -2971,6 +2971,7 @@ jQuery.extend(app.classes.calendar,{
 				return d;
 			},
 			show_weekend: function(state) {
+				state.weekend = 'true';
 				return true;
 			},
 			scroll: function(delta)
@@ -3002,12 +3003,7 @@ jQuery.extend(app.classes.calendar,{
 				d.setUTCMinutes(59);
 				d.setUTCSeconds(59);
 				d.setUTCMilliseconds(0);
-				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
 				return d;
-			},
-			show_weekend: function(state)
-			{
-				return parseInt(state.days) === 7;
 			}
 		}),
 		weekN: app.classes.calendar.prototype.View.extend({
@@ -3060,10 +3056,6 @@ jQuery.extend(app.classes.calendar,{
 				var d = new Date(app.calendar.state.date);
 				d.setUTCMonth(d.getUTCMonth() + delta);
 				return d;
-			},
-			show_weekend: function(state)
-			{
-				return true;
 			}
 		}),
 

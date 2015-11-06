@@ -127,7 +127,7 @@ class calendar_ui
 	/**
 	 * @var array $states_to_save all states that will be saved to the user prefs
 	 */
-	var $states_to_save = array('owner','filter','cat_id','view','sortby','planner_days');
+	var $states_to_save = array('owner','filter','cat_id','view','sortby','planner_days','weekend');
 
 	/**
 	 * Constructor
@@ -420,30 +420,12 @@ class calendar_ui
 			// save defined states into the user-prefs
 			if(!empty($states) && is_array($states))
 			{
-				$saved_states = serialize(array_intersect_key($states,array_flip($this->states_to_save)));
+				$saved_states = array_intersect_key($states,array_flip($this->states_to_save));
 				if ($saved_states != $this->cal_prefs['saved_states'])
 				{
 					$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
 					$GLOBALS['egw']->preferences->save_repository(false,'user',true);
 				}
-
-				// store state in request for clientside favorites to use
-				// remove date and other states never stored in a favorite
-				$states = array_diff_key($states,array('date'=>false,'year'=>false,'month'=>false,'day'=>false,'save_owner'=>false));
-				if (strpos($_GET['menuaction'], 'ajax_sidebox') !== false)
-				{
-					// sidebox request is from top frame, which has app.calendar NOT loaded by time response arrives
-				}
-				elseif (egw_json_request::isJSONRequest())// && strpos($_GET['menuaction'], 'calendar_uiforms') === false)
-				{
-					$response = egw_json_response::get();
-					//$response->apply('app.calendar.set_state', array($states, $_GET['menuaction']));
-				}
-				else
-				{
-					egw_framework::set_extra('calendar', 'state', $states);
-				}
-
 			}
 		}
 	}
@@ -647,6 +629,7 @@ class calendar_ui
 		$sidebox = new etemplate_new('calendar.sidebox');
 
 
+		$content = $this->cal_prefs['saved_states'];
 		$content['view'] = $this->view ? $this->view : 'week';
 		$content['date'] = $this->date ? $this->date : egw_time();
 		$owners = $this->owner ? is_array($this->owner) ? array($this->owner) : explode(',',$this->owner) : array($GLOBALS['egw_info']['user']['account_id']);
@@ -677,14 +660,9 @@ class calendar_ui
 				'selected' => $this->view == 'day4',
 			),
 			array(
-				'text' => lang('weekview with weekend'),
-				'value' => '{"view":"week","days":7}',
-				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] != 5,
-			),
-			array(
-				'text' => lang('weekview without weekend'),
-				'value' => '{"view":"week","days":5}',
-				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] == 5,
+				'text' => lang('weekview'),
+				'value' => '{"view":"week"}',
+				'selected' => $this->view == 'week',
 			),
 			array(
 				'text' => lang('Multiple week view'),

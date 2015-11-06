@@ -23,6 +23,7 @@ Egroupware
 					<column/>
 					<column/>
 					<column/>
+					<column/>
 				</columns>
 				<rows><row width="100%">
 				<buttononly align="center" class="sideboxstar" id="add" onclick="egw.open(null,'calendar','add');" image="new" label="Add"/>
@@ -32,6 +33,7 @@ Egroupware
 				<buttononly align="center" class="sideboxstar" id="month" image="month" label="Month view" onclick="app.calendar.update_state({view:'month'});"/>
 				<buttononly align="center" class="sideboxstar" id="planner" image="planner" label="Group planner" onclick="app.calendar.update_state({view:'planner',planner_days:0});"/>
 				<buttononly align="center" class="sideboxstar" id="listview" image="list" label="Listview" onclick="app.calendar.update_state({view:'listview'});"/>
+				<checkbox class="sideboxstar" id="weekend" label="Toggle weekend" onchange="app.calendar.update_state({weekend: widget.getValue()}); return false;"/>
 				</row>
 				</rows>
 			</grid>

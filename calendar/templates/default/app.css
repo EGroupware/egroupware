@@ -25,6 +25,9 @@
 #calendar-sidebox_buttons tbody {
 	width: 100%;
 }
+#calendar-sidebox_weekend {
+	/* Special css styling goes here */
+}
 #calendar-sidebox_date td.ui-datepicker-week-col {
 	cursor: pointer;
 }

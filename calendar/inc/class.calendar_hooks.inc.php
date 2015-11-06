@@ -119,12 +119,6 @@ class calendar_hooks
 			'day4' => lang('Dayview').' &amp; '.lang('Four days view'),
 			'day' => lang('Dayview'),
 		);
-		/* Select list with number of day by week */
-		$week_view = array(
-			'5' => lang('Weekview without weekend'),
-			'7' => lang('Weekview with weekend'),
-		);
-
 		$updates = array(
 			'no'             => lang('Never'),
 			'add_cancel'     => lang('on invitation / cancelation only'),
@@ -235,16 +229,6 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> '1',	// 1 = week
 			),*/
-			'days_in_weekview' => array(
-				'type'   => 'select',
-				'label'  => 'default week view',
-				'name'   => 'days_in_weekview',
-				'values' => $week_view,
-				'help'   => 'Do you want a weekview with or without weekend?',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> '7',
-			),
 			'multiple_weeks' => array(
 				'type'   => 'select',
 				'label'  => 'Weeks in multiple week view',
