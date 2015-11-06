@@ -106,6 +106,10 @@ app.classes.calendar = AppJS.extend(
 			delete window.top.app.calendar;
 		}
 		jQuery('body').off('.calendar');
+		
+		var date = this.sidebox_et2.getWidgetById('date');
+		debugger;
+		$j(window).off('resize.calendar'+date.dom_id);
 
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false);
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false);
@@ -2722,9 +2726,23 @@ app.classes.calendar = AppJS.extend(
 				});
 			var position_today = function() {
 				var week_col = $j('#calendar-sidebox_date th.ui-datepicker-week-col');
-				today_button.position({my: 'left top', at: 'left top', of: week_col,collision:'none'});
+				today_button.position({my: 'left top', at: 'left top', of: week_col,collision:'none'})
+					.outerHeight(week_col.outerHeight());
 			};
-			window.setTimeout(position_today,0);
+
+			// Dynamic resize to fill sidebox
+			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
+			var temp = $j('<div></div>').appendTo(today_button);
+			var font_ratio = parseFloat(temp.css('font-size')) / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
+			temp.remove();
+
+			$j(window).on('resize.calendar'+date.dom_id, function() {
+				var percent = 1+(($j(date.getDOMNode()).width() - preferred_width) / preferred_width);
+				percent *= font_ratio;
+				$j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size',(percent*100)+'%');
+				position_today();
+			}).trigger('resize');
+			
 		}
 	},
 
