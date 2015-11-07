@@ -22,7 +22,7 @@
  *
  * You can set more then one server and specify a port, if it's not the default one 11211.
  *
- * It allows addtional named parameters "timeout" (default 20ms) and "retry" (default not).
+ * It allows addtional named parameters "timeout" (default 20ms), "retry" (default not) and "prefix".
  *
  * If igbinary extension is available, it is prefered over PHP (un)serialize.
  */
@@ -53,6 +53,7 @@ class egw_cache_memcached extends egw_cache_provider_check implements egw_cache_
 	 * @throws Exception if connection to backend could not be established
 	 * @param array $params eg. array('localhost'[,'localhost:11211',...])
 	 *	"timeout" in ms, "retry" on node failure 0: no retry (default), 1: retry on set/add/delete, 2: allways retry
+	 *  "prefix" prefix for keys
 	 */
 	function __construct(array $params=null)
 	{
@@ -67,6 +68,11 @@ class egw_cache_memcached extends egw_cache_provider_check implements egw_cache_
 		{
 			$this->retry = (int)$params['retry'];
 			unset($params['retry']);
+		}
+		if (isset($params['prefix']))
+		{
+			$prefix = $params['prefix'];
+			unset($params['prefix']);
 		}
 
 		check_load_extension('memcached',true);
@@ -87,6 +93,8 @@ class egw_cache_memcached extends egw_cache_provider_check implements egw_cache_
 			// automatic failover and disabling of failed nodes
 			Memcached::OPT_SERVER_FAILURE_LIMIT => 2,
 			Memcached::OPT_AUTO_EJECT_HOSTS => true,
+			// setting a prefix for all keys
+			Memcached::OPT_PREFIX_KEY => $prefix,
 		));
 
 		// with persistent connections, only add servers, if they not already added!
