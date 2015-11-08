@@ -150,6 +150,14 @@ class calendar_groupdav extends groupdav_handler
 			return $this->free_busy_report($path, $options, $user);
 		}
 
+		if (isset($_GET['checkout']))
+		{
+			$this->groupdav->propfind_options['props'] = array(array(
+				'xmlns' => groupdav::CALDAV,
+				'name'  => 'calendar-data',
+			));
+		}
+
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
 			'users' => $user,
@@ -245,7 +253,53 @@ class calendar_groupdav extends groupdav_handler
 			// return iterator, calling ourself to return result in chunks
 			$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
 		}
+		if (isset($_GET['checkout']))
+		{
+			$this->output_vcalendar($files['files']);
+		}
 		return true;
+	}
+
+	/**
+	 * Download whole calendar as big ics file
+	 *
+	 * @param iterator|array $files
+	 */
+	function output_vcalendar($files)
+	{
+		// todo ETag logic with CTag to not download unchanged calendar again
+		html::content_header('calendar.ics', 'text/calendar');
+
+		$n = 0;
+		foreach($files as $file)
+		{
+			if (!$n++) continue;	// first entry is collection itself
+
+			$icalendar = $file['props']['calendar-data']['val'];
+			if (($start = strpos($icalendar, 'BEGIN:VEVENT')) !== false &&
+				($end = strrpos($icalendar, 'END:VCALENDAR')) !== false)
+			{
+				if ($n === 2)
+				{
+					// skip timezones, as we would need to collect them from all events
+					// ans most clients understand timezone by reference anyway
+					if (($tz = strpos($icalendar, 'BEGIN:VTIMEZONE')) !== false)
+					{
+						echo substr($icalendar, 0, $tz);
+					}
+					else
+					{
+						echo substr($icalendar, 0, $start);
+					}
+				}
+				echo substr($icalendar, $start, $end-$start);
+			}
+		}
+		if ($icalendar && $end)
+		{
+			echo "END:VCALENDAR\n";
+		}
+		common::egw_exit();
 	}
 
 	/**
