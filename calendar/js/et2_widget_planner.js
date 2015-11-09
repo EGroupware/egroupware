@@ -252,6 +252,12 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				});
 			})
 			.on('mousemove', function(event) {
+				// Not when over header
+				if($j(event.target).closest('.calendar_eventRows').length == 0)
+				{
+					planner.vertical_bar.hide();
+					return;
+				}
 				// Position bar by mouse
 				planner.vertical_bar.position({
 					my: 'right-1',
@@ -273,11 +279,14 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				if(time)
 				{
 					var formatDate = new Date(time.valueOf() + time.getTimezoneOffset() * 60 * 1000);
-					planner.vertical_bar.html('<span>'+date(egw.preference('timeformat','calendar') == 12 ? 'h:ia' : 'H:i',formatDate)+'</span>');
+					planner.vertical_bar
+						.html('<span>'+date(egw.preference('timeformat','calendar') == 12 ? 'h:ia' : 'H:i',formatDate)+'</span>')
+						.show();
 				}
 				else
 				{
-					planner.vertical_bar.text('');
+					// No (valid) time, just hide
+					planner.vertical_bar.hide();
 				}
 			});
 
@@ -547,38 +556,56 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				return [{id:'',label: egw.lang('none'), data: {}}];
 			},
 			group: function(labels, rows, event) {
-				var label_index = false;
-				for(var i = 0; i < labels.length; i++)
+				var cats = event.category;
+				if(typeof event.category === 'string')
 				{
-					if(labels[i].id == event.category)
-					{
-						label_index = i;
-						break;
-					}
+					cats = cats.split(',');
 				}
-				if(label_index === false)
+				for(var cat = 0; cat < cats.length; cat++)
 				{
-					label_index = labels.length;
-					labels.push({id: event.category, label: '', data: {cat_id:event.category}});
-					var im = this.getInstanceManager();
-					// Fake it to use the cache / call
-					var categories = et2_selectbox.cat_options({
-						_type:'select-cat',
-						getInstanceManager: function() {return im;}
-					}, {application: 'calendar'});
-					for(var i in categories )
+					var label_index = false;
+					var category = cats[cat];
+					if(category == '0' || !category) category = '';
+					for(var i = 0; i < labels.length; i++)
 					{
-						if(parseInt(categories[i].value) === parseInt(event.category))
+						if(labels[i].id == category)
 						{
-							labels[labels.length-1].label = categories[i].label;
+							label_index = i;
+							break;
 						}
 					}
+					if(label_index === false)
+					{
+						label_index = labels.length;
+						labels.push({id: category, label: '', data: {cat_id:category}});
+						var im = this.getInstanceManager();
+						// Fake it to use the cache / call
+						var categories = et2_selectbox.cat_options({
+							_type:'select-cat',
+							getInstanceManager: function() {return im;}
+						}, {application:event.app||'calendar'});
+						if(categories && !categories.length)
+						{
+							// Categories not loaded.  They've started, but it's too late now
+							// Try again once they're all loaded
+							this.invalidate();
+							return;
+						}
+						for(var i in categories )
+						{
+							if(parseInt(categories[i].value) === parseInt(category))
+							{
+								labels[labels.length-1].label = categories[i].label;
+								break;
+							}
+						}
+					}
+					if(typeof rows[label_index] === 'undefined')
+					{
+						rows[label_index] = [];
+					}
+					rows[label_index].push(event);
 				}
-				if(typeof rows[label_index] === 'undefined')
-				{
-					rows[label_index] = [];
-				}
-				rows[label_index].push(event);
 			},
 			draw_row: function(sort_key, label, events) {
 				return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
@@ -597,7 +624,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	invalidate: function(trigger) {
 
 		// Busy
-		if(!this.doInvalidate && this.update_timer) return;
+		if(!this.doInvalidate || this.update_timer) return;
 
 		// Wait a bit to see if anything else changes, then re-draw the days
 		if(this.update_timer !== null)
@@ -1479,6 +1506,24 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			egw.dataRegisterUID(cache_id, function(data) {
 				if(data && data.length)
 				{
+					// If displaying by category, we need the infolog (or other app) categories too
+					var im = this.getInstanceManager();
+					for(var i = 0; i < data.length && this.options.group_by == 'category'; i++)
+					{
+						var event = egw.dataGetUIDdata('calendar::'+data[i]);
+						if(event && event.data && event.data.app)
+						{
+							// Fake it to use the cache / call
+							et2_selectbox.cat_options({
+								_type:'select-cat',
+								getInstanceManager: function() {return im;}
+							}, {application:event.data.app||'calendar'});
+
+							// Get CSS too
+							egw.includeCSS('/phpgwapi/categories.php?app='+event.data.app);
+						}
+					}
+					
 					this.invalidate(false);
 				}
 			}, this, this.getInstanceManager().execId,this.id);
@@ -1767,7 +1812,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				{
 					var date = this._get_time_from_position(_ev.offsetX, _ev.offsetY);
 				}
-				var data = $j(_ev.target).closest('.calendar_plannerRowWidget')[0].dataset || {};
+				var row = $j(_ev.target).closest('.calendar_plannerRowWidget');
+				var data = row.length ? row[0].dataset : {};
 				this.egw().open(null, 'calendar', 'add', jQuery.extend({
 					start: date.toJSON(),
 					hour: date.getUTCHours(),
@@ -1781,7 +1827,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		{
 			// Click on a header, we can go there
 			_ev.data = jQuery.extend({},_ev.target.parentNode.dataset, _ev.target.dataset);
-			
+
 			// Handle it locally
 			var old_start = this.options.start_date;
 			if(_ev.data.date)
@@ -1798,7 +1844,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					this.set_end_date(d);
 				}
 			}
-			else
+			else if (old_start !== this.options.start_date)
 			{
 				var diff = Math.round((new Date(this.options.start_date) - new Date(old_start)) / (1000 * 3600 * 24));
 				var end = new Date(this.options.end_date);
@@ -1883,6 +1929,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				return false;
 			}
 		}
+		if(rel_time < 0) return false;
+		
 		var interval = egw.preference('interval','calendar') || 30;
 		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
 

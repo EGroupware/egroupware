@@ -172,6 +172,19 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		this.set_id('event_' + (eventId || event.id));
 		
+		// Make sure category stuff is there
+		// Fake it to use the cache / call - if already there, these will return
+		// immediately.
+		var im = this.getInstanceManager();
+		et2_selectbox.cat_options({
+			_type:'select-cat',
+			getInstanceManager: function() {return im}
+		}, {application:event.app||'calendar'});
+
+		// Get CSS too
+		egw.includeCSS('/phpgwapi/categories.php?app='+event.app);
+
+		// DOM nodes
 		this.div
 			// Empty & re-append to make sure dnd helpers are gone
 			.empty()
