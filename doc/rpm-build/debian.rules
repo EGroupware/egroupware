@@ -41,11 +41,11 @@ install: build
 
 	# customize apache config
 	mkdir -p $(CURDIR)/debian/egroupware-epl-core/etc/egroupware
-	cp $(CURDIR)/doc/rpm-build/apache.conf $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
+	sed 's/\/usr\/share\/pear/\/usr\/share\/php:\/usr\/local\/zend\/share\/pear/' $(CURDIR)/doc/rpm-build/apache.conf > $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
 
 	# install core modules
 
-	for DIR in admin home phpgwapi preferences etemplate addressbook setup doc; do \
+	for DIR in admin api home phpgwapi preferences etemplate addressbook setup doc; do \
 	  cd $(CURDIR)/$${DIR}; \
 	  find $(FINDOPT) $(APPFILES) \
 	    -exec $(INSTALL) {} $(CURDIR)/$(COREDIR)/$${DIR}/{} \; ; \

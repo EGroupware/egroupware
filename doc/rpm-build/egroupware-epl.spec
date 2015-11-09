@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 14.2.20141211
+Version: 16.1.20151109
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -33,11 +33,15 @@ Prefix: /usr/share
 	%define distribution SUSE Linux %{?suse_version}
 
     %if 0%{?sles_version}
-        # sle 10 and 11 does NOT contain libtidy
-    	%define extra_requires apache2 mod_php_any php_any_db php-dom php-bz2 php-openssl php-zip php-ctype php-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom
-
+        # sles 10, 11 does NOT contain libtidy, 11sp3 does not contain php5-posix
+    	%define     extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom
     %else
-    	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype php5-sqlite php5-tidy %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom
+        # SLES 12 no longer sets sles_version, but suse_version == 1315: does contain broken php5-tidy, because no libtidy
+        %if 0%{?suse_version} == 1315
+    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix 
+        %else
+    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix %{php}-tidy
+        %endif
     %endif
 
 	%define cron cron
@@ -56,12 +60,12 @@ Prefix: /usr/share
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy
+	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
 %endif
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
 	%define distribution Mandriva %{?mandriva_version}
-	%define extra_requires apache php-mysql php-dom php-pdo_mysql php-pdo_sqlite php-tidy
+	%define extra_requires apache php-mysql php-dom php-pdo_mysql php-pdo_sqlite php-tidy php-posix
 # try to keep build from searching (for wrong) dependencys
 	%undefine __find_provides
 	%undefine __find_requires
@@ -69,19 +73,19 @@ Prefix: /usr/share
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
 	%define distribution Red Hat %{?rhel_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy
+	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
 %endif
 %if 0%{?centos_version}
 	%define osversion %{?centos_version}
 	%define distribution CentOS %{?centos_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy
+	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
 %endif
 
 Distribution: %{distribution}
 
 Source0: %{name}-%{version}.tar.gz
 Source2: %{name}-stylite-%{version}.tar.bz2
-#Source3: %{name}-pixelegg-%{version}.tar.bz2
+Source3: %{name}-archive-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
 #Source5: %{name}-jdots-%{version}.tar.bz2
 Source6: phpfreechat_data_public.tar.gz
@@ -111,7 +115,6 @@ Requires: %{name}-infolog         = %{version}
 Requires: %{name}-importexport    = %{version}
 Requires: %{name}-jdots           = %{version}
 Requires: %{name}-mail            = %{version}
-Requires: %{name}-manual          = %{version}
 Requires: %{name}-news_admin      = %{version}
 Requires: %{name}-notifications   = %{version}
 Requires: %{name}-phpbrain        = %{version}
@@ -165,6 +168,8 @@ Obsoletes: %{egw_packagename}-phpsysinfo
 Obsoletes: %{egw_packagename}-polls
 # packages no longer in 14.2
 Obsoletes: %{name}-egw-pear
+# packages no longer in 14.3
+Obsoletes: %{name}-manual
 
 %post
 # Check binary paths and create links for opensuse/sles
@@ -194,7 +199,7 @@ This package automatically requires the EGroupware default applications:
 
 egroupware core with: admin, api, docs, etemplate, prefereces and setup,
 addressbook, bookmarks, calendar, translation-tools, emailadmin, mail,
-filemanager, infolog, manual, news admin, knowledgebase, polls, jdots, pixelegg,
+filemanager, infolog, news admin, knowledgebase, polls, jdots, pixelegg,
 projectmanager, resources, sambaadmin, sitemgr, eSync, timesheet, tracker, wiki
 
 It also provides an API for developing additional applications.
@@ -205,7 +210,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.3.2
-Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-posix %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
+Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
 Provides: egw-core %{version}
 Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
@@ -227,6 +232,20 @@ Requires: egw-core >= %{version}
 Obsoletes: %{egw_packagename}-esync
 %description esync
 Z-Push based ActiveSync protocol implementation.
+
+%package archive
+Version: %{version}
+Summary: Benno Mail Archive integration
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}
+Obsoletes: %{egw_packagename}-archive
+%description archive
+Shows (not included) Benno Mail Archive inside EGroupware and logs you in automatic.
+
+%post archive
+# update/install archive
+%{post_install} --install-update-app archive 2>&1 | tee -a %{install_log}
 
 %package bookmarks
 Version: %{version}
@@ -331,17 +350,6 @@ Requires: egw-core >= %{version}
 Requires: %{name}-jdots >= %{version}
 %description pixelegg
 New 14.1 default template from Pixelegg.
-
-%package manual
-Version: %{version}
-Summary: The EGroupware manual application
-Group: Web/Database
-AutoReqProv: no
-Requires: egw-core >= %{version}
-Requires: %{name}-wiki >= %{version}
-Obsoletes: %{egw_packagename}-manual
-%description manual
-This is the manual app for EGroupware: online help system.
 
 %package news_admin
 Version: %{version}
@@ -515,7 +523,7 @@ echo "post_install: %{post_install}"
 %setup0 -c -n %{egwdirname}
 #%setup1 -T -D -a 1 -n %{egwdirname}
 %setup2 -T -D -a 2 -n %{egwdirname}
-#%setup3 -T -D -a 3 -n %{egwdirname}
+%setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
 #%setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
@@ -573,6 +581,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/webdav.php
 %{egwdir}/addressbook
 %{egwdir}/admin
+%{egwdir}/api
 %{egwdir}/doc
 %{egwdir}/etemplate
 %{egwdir}/files
@@ -591,6 +600,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/files
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/backup
 %config(noreplace) %attr(0640,%{apache_user},%{apache_group}) %{egwdatadir}/header.inc.php
+
+%files archive
+%defattr(-,root,root)
+%{egwdir}/archive
 
 %files bookmarks
 %defattr(-,root,root)
@@ -639,10 +652,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files mail
 %defattr(-,root,root)
 %{egwdir}/mail
-
-%files manual
-%defattr(-,root,root)
-%{egwdir}/manual
 
 %files news_admin
 %defattr(-,root,root)
