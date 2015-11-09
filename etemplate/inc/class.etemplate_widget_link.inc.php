@@ -300,7 +300,7 @@ class etemplate_widget_link extends etemplate_widget
 			$value = $value_in =& self::get_array($content, $form_name);
 
 			// keep values added into request by other ajax-functions, eg. files draged into htmlarea (etemplate_widget_vfs)
-			if (!$value['to_id'])
+			if ((!$value || !$value['to_id']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
 			{
 				$value['to_id'] = $expand['cont'][$this->id]['to_id'];
 			}
