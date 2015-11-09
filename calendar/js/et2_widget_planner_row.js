@@ -189,7 +189,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		var day_width = 100/days;
 		var t = new Date(start);
 		var content = '';
-		for(var left = 0,i = 0; i < days;left += day_width,++i)
+		for(var i = 0; i < days;i++)
 		{
 			var holidays = [];
 			// TODO: implement this, pull / copy data from et2_widget_timegrid
@@ -198,7 +198,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			if (day_class)	// no regular weekday
 			{
 				content += '<div class="calendar_eventRowsMarkedDay '+day_class+
-					'" style="left: '+left+'%; width:'+day_width+'%;"'+
+					'" style="left: '+(i*day_width)+'%; width:'+day_width+'%;"'+
 					(holidays ? ' title="'+holidays.join(',')+'"' : '')+
 					' ></div>';
 			}

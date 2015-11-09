@@ -1096,8 +1096,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		// Holidays and birthdays
 		var holidays = et2_calendar_daycol.get_holidays(this,date.getUTCFullYear());
 
-		// Pass a number rather than the date object, to make sure it doesn't get changed
-		this.date_helper.set_value(date.getTime()/1000);
+		// Pass a string rather than the date object, to make sure it doesn't get changed
+		this.date_helper.set_value(date.toJSON());
 		var date_key = ''+this.date_helper.get_year() + sprintf('%02d',this.date_helper.get_month()) + sprintf('%02d',this.date_helper.get_date());
 		if(holidays && holidays[date_key])
 		{
@@ -1120,9 +1120,9 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		}
 		holidays = holiday_list.join(',');
 		var today = new Date();
-		if(date_key === ''+today.getUTCFullYear()+
-			sprintf("%02d",today.getUTCMonth()+1)+
-			sprintf("%02d",today.getUTCDate())
+		if(date_key === ''+today.getFullYear()+
+			sprintf("%02d",today.getMonth()+1)+
+			sprintf("%02d",today.getDate())
 		)
 		{
 			day_class += "calendar_calToday ";
@@ -1827,6 +1827,13 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		{
 			// Click on a header, we can go there
 			_ev.data = jQuery.extend({},_ev.target.parentNode.dataset, _ev.target.dataset);
+			for(var key in _ev.data)
+			{
+				if(!_ev.data[key])
+				{
+					delete _ev.data[key];
+				}
+			}
 
 			// Handle it locally
 			var old_start = this.options.start_date;
