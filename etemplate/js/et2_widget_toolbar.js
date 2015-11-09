@@ -134,7 +134,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		}
 		else
 		{
-			//** IMPORTANT TODO: This line needs to stay and be fixed with !toolbarDefault after the if condition
+			// ** IMPORTANT TODO: This line needs to stay and be fixed with !toolbarDefault after the if condition
 			// has been removed.
 			this.set_prefered(_action.id, false/*!toolbarDefault*/);
 		}
