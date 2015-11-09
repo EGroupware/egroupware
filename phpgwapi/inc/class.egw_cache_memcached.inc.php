@@ -114,9 +114,9 @@ class egw_cache_memcached extends egw_cache_provider_check implements egw_cache_
 			{
 				throw new Exception (__METHOD__.'('.array2string($params).") Can't open connection to any memcached server!");
 			}
-			error_log(__METHOD__."(".array2string($params).") creating new pool / persitent connection");
+			//error_log(__METHOD__."(".array2string($params).") creating new pool / persitent connection");
 		}
-		else error_log(__METHOD__."(".array2string($params).") using existing pool / persitent connection");
+		//else error_log(__METHOD__."(".array2string($params).") using existing pool / persitent connection");
 	}
 
 	/**
