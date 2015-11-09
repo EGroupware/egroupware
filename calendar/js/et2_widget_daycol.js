@@ -417,14 +417,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		events.sort(function(a,b) {
 			var start = new Date(a.start) - new Date(b.start);
 			var end = new Date(a.end) - new Date(b.end);
-			return a.whole_day ? -1 : (start ? start : end);
+			// Whole day events sorted by ID, normal events by start / end time
+			return a.whole_day ? (a.app_id - b.app_id) : (start ? start : end);
 		});
 		
 		for(var c = 0; c < events.length; c++)
 		{
 			// Create event
 			var event = et2_createWidget('calendar-event',{
-				id:events[c].app_id||events[c].id,
+				id:events[c].id,
 				value: events[c]
 			},this);
 			if(this.isInTree())
@@ -439,7 +440,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Seperate loop so column sorting finds all children in the right place
 		for(var c = 0; c < events.length && c < this._children.length; c++)
 		{
-			this._children[c].set_value(events[c]);
+			this.getWidgetById(events[c].id).set_value(events[c]);
 		}
 
 		// Apply styles to hidden events
