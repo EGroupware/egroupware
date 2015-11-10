@@ -199,6 +199,9 @@ app.classes.calendar = AppJS.extend(
 	 *
 	 * App is responsible for only reacting to "messages" it is interested in!
 	 *
+	 * Calendar binds listeners to the data cache, so if the data is updated, the widget
+	 * will automatically update itself.  
+	 *
 	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
 	 * @param {string} _app application name
 	 * @param {(string|number)} _id id of entry to refresh or null

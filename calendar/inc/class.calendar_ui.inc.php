@@ -179,10 +179,10 @@ class calendar_ui
 	 *
 	 * @return boolean/string false if there's no error or string with error-message
 	 */
-	function check_owners_access()
+	function check_owners_access($users = null, &$no_access = array())
 	{
 		$no_access = $no_access_group = array();
-		$owner_array = explode(',',$this->owner);
+		$owner_array = $users ? $users : explode(',',$this->owner);
 		foreach($owner_array as $idx => $owner)
 		{
 			$owner = trim($owner);
@@ -205,8 +205,10 @@ class calendar_ui
 		}
 		if (count($no_access))
 		{
-			egw_framework::message(lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access)),'error');
+			$message = lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access));
+			egw_framework::message($message,'error');
 			$this->owner = implode(',',$owner_array);
+			return $message;
 		}
 		if (count($no_access_group))
 		{

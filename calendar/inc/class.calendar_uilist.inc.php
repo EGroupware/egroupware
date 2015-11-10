@@ -480,9 +480,15 @@ class calendar_uilist extends calendar_ui
 
 		$wv=0;
 		$dv=0;
-		
+
 		// Add in some select options
 		$users = is_array($search_params['users']) ? $search_params['users'] : explode(',',$search_params['users']);
+
+		if($message = $this->check_owners_access($users,$no_access))
+		{
+			egw_json_response::get()->error($message);
+		}
+		
 		foreach($users as $owner)
 		{
 			if(!is_int($owner) && $this->bo->resources[$owner[0]])
