@@ -536,6 +536,13 @@ function phpgwapi_upgrade14_2_017()
 		'precision' => '32',
 		'comment' => 'currently not used'
 	));
+	// remove non-ascii chars from contact_pubkey for MySQL, before converting it to ascii to avoid SQL error
+	if ($GLOBALS['egw_setup']->db->Type == 'mysql')
+	{
+		$GLOBALS['egw_setup']->db->query("UPDATE egw_addressbook
+SET contact_pubkey=CONVERT(contact_pubkey USING ASCII)
+WHERE contact_pubkey IS NOT NULL", __LINE__, __FILE__);
+	}
 	// only shorten pubkey to varchar(16384), if it does NOT contain longer input and it can be stored as varchar
 	$max_pubkey_length = $GLOBALS['egw']->db->query('SELECT MAX(LENGTH(contact_pubkey)) FROM egw_addressbook')->fetchColumn();
 	// returns NULL, if there are no rows!
@@ -712,7 +719,7 @@ function phpgwapi_upgrade14_2_022()
 			'fs_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'prop_namespace' => array('type' => 'ascii','precision' => '64','nullable' => False),
 			'prop_name' => array('type' => 'ascii','precision' => '64','nullable' => False),
-			'prop_value' => array('type' => 'ascii','precision' => '16384'),
+			'prop_value' => array('type' => 'varchar','precision' => '16384'),
 			'prop_id' => array('type' => 'auto','nullable' => False)
 		),
 		'pk' => array('prop_id'),
@@ -916,7 +923,24 @@ function phpgwapi_upgrade14_3_005()
 }
 
 /**
- * Updates on the way to 15.1
+ * Change egw_sqlfs_props.prop_value back to utf-8/varchar, as it can contain user content eg. our comments
+ *
+ * @return string
+ */
+function phpgwapi_upgrade14_3_006()
+{
+	$GLOBALS['run-from-upgrade14_3_006'] = true;
+
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sqlfs_props','prop_value',array(
+		'type' => 'varchar',
+		'precision' => '16384'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.007';
+}
+
+/**
+ * Updates on the way to 16.1
  */
 
 /**
@@ -924,7 +948,7 @@ function phpgwapi_upgrade14_3_005()
  *
  * @return string
  */
-function phpgwapi_upgrade14_3_006()
+function phpgwapi_upgrade14_3_007()
 {
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_api_content_history');
 
@@ -999,4 +1023,16 @@ function phpgwapi_upgrade14_3_904()
 		phpgwapi_upgrade14_3_005();
 	}
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.905';
+}
+
+/**
+ * Run 14.3.006 upgrade for everyone who was already on 14.3.9xx
+ */
+function phpgwapi_upgrade14_3_905()
+{
+	if (empty($GLOBALS['run-from-upgrade14_3_006']))
+	{
+		phpgwapi_upgrade14_3_006();
+	}
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.906';
 }

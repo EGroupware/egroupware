@@ -412,7 +412,7 @@ $phpgw_baseline = array(
 			'fs_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'prop_namespace' => array('type' => 'ascii','precision' => '64','nullable' => False),
 			'prop_name' => array('type' => 'ascii','precision' => '64','nullable' => False),
-			'prop_value' => array('type' => 'ascii','precision' => '16384'),
+			'prop_value' => array('type' => 'varchar','precision' => '16384'),
 			'prop_id' => array('type' => 'auto','nullable' => False)
 		),
 		'pk' => array('prop_id'),
