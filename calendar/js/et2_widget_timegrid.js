@@ -396,9 +396,16 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				event_widget.options.value.start = new Date(event_widget._parent.date_helper.getValue());
 
 				// Leave the helper there until the update is done
-				var loading = ui.helper.clone().appendTo(ui.helper.parent());
+				var loading = ui.helper.clone(true).appendTo($j('body'));
 				// and add a loading icon so user knows something is happening
-				$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+				if($j('.calendar_timeDemo',loading).length == 0)
+				{
+					$j('.calendar_calEventHeader',loading).addClass('loading');
+				}
+				else
+				{
+					$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+				}
 				
 				event_widget.recur_prompt(function(button_id) {
 					if(button_id === 'cancel' || !button_id)
