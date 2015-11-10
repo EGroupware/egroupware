@@ -342,6 +342,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			row_labels: function() {
 				var labels = [];
 				var accounts = egw.accounts();
+				var already_added = [];
 				for(var i = 0; i < this.options.owner.length; i++)
 				{
 					var user = this.options.owner[i];
@@ -368,25 +369,34 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 								row.set_label(name);
 							}
 						},user);
-						labels.push({id: user, label: label, data: {participants:user,owner:''}});
+						if(already_added.indexOf(user) < 0)
+						{
+							labels.push({id: user, label: label, data: {participants:user,owner:''}});
+							already_added.push(user);
+						}
 					}
 					else if (user < 0)	// groups
 					{
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
 							{
-								this.push({id: id, label: result[id], data: {participants:id,owner:''}});
+								if(already_added.indexOf(id) < 0)
+								{
+									this.push({id: id, label: result[id], data: {participants:id,owner:''}});
+									already_added.push(id);
+								}
 							}
 						},labels);
 					}
 					else	// users
 					{
 						user = parseInt(user)
-						for(var j = 0; j < accounts.length; j++)
+						for(var j = 0; j < accounts.length && already_added.indexOf(user) < 0; j++)
 						{
 							if(accounts[j].value === user)
 							{
 								labels.push({id: user, label: accounts[j].label, data: {participants:user,owner:''}});
+								already_added.push(user);
 								break;
 							}
 						}
