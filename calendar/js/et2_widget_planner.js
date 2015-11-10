@@ -442,15 +442,16 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					var participant = participants[user];
 					if (parseInt(user) < 0)	// groups
 					{
+						var planner = this;
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
 							{
-								if(!participants[id]) add_row(id,participant);
+								if(!participants[id]) add_row.call(planner,id,participant);
 							}
 						},labels);
 						continue;
 					}
-					add_row(user, participant);
+					add_row.call(this, user, participant);
 				}
 			},
 			// Draw a single row
