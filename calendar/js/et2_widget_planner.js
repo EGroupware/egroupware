@@ -416,9 +416,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					default:
 						status_to_show = ['U','A','T','D','G']; break;
 				}
-				for(var user in event.participants)
-				{
-					var participant = event.participants[user];
+				var participants = event.participants;
+				var add_row = function(user, participant) {
 					var label_index = false;
 					for(var i = 0; i < labels.length; i++)
 					{
@@ -437,6 +436,21 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 						}
 						rows[label_index].push(event);
 					}
+				}
+				for(var user in participants)
+				{
+					var participant = participants[user];
+					if (parseInt(user) < 0)	// groups
+					{
+						egw.accountData(user,'account_fullname',true,function(result) {
+							for(var id in result)
+							{
+								if(!participants[id]) add_row(id,participant);
+							}
+						},labels);
+						continue;
+					}
+					add_row(user, participant);
 				}
 			},
 			// Draw a single row

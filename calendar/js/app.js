@@ -3093,7 +3093,7 @@ jQuery.extend(app.classes.calendar,{
 			},
 			etemplates: ['calendar.planner'],
 			group_by: function(state) {
-				return state.cat_id? state.cat_id : (state.sortby ? state.sortby : 0);
+				return state.sortby ? state.sortby : 0;
 			},
 			start_date: function(state) {
 				var d = app.calendar.View.start_date.call(this, state);
