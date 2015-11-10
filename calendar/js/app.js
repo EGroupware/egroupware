@@ -106,9 +106,12 @@ app.classes.calendar = AppJS.extend(
 			delete window.top.app.calendar;
 		}
 		jQuery('body').off('.calendar');
-		
-		var date = this.sidebox_et2.getWidgetById('date');
-		$j(window).off('resize.calendar'+date.dom_id);
+
+		if(this.sidebox_et2)
+		{
+			var date = this.sidebox_et2.getWidgetById('date');
+			$j(window).off('resize.calendar'+date.dom_id);
+		}
 
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false);
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false);
