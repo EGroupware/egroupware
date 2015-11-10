@@ -1,20 +1,26 @@
-egroupware-epl (16.1.20151109) hardy; urgency=low
+egroupware-epl (14.3.20151110) hardy; urgency=low
 
-  * first test-build for upcomming 16.1 release
+  * all apps: replace flash based clipboard with html5 solution supported by Chrome, IE, FF 41+, not working in Safari
+  * all apps: update CKEditor to version 4.5.4
+  * Mail: account wizzard uses now higher timeout of 3 seconds and detects office365 account automatic
+  * Mail: fix for cascading forward problem (problem when forwarding mails with forwarded messages attached in inline mode)
+  * Calendar/CalDAV: recurring events with non-EGroupware participants (specified by email) were showing additional participants with cryptic mailto addresses (DB update required!)
+  * Calendar/favorites: Fix not working setting a group while creating a calendar favorite
+  * Tracker/ProjectManager: images dragged into new (not yet saved) entries where not accessible by other users
 
- -- Ralf Becker <rb@stylite.de>  Mon, 09 Nov 2015 14:13:13 +0100
+ -- Ralf Becker <rb@stylite.de>  Tue, 10 Nov 2015 09:53:18 +0100
 
 egroupware-epl (14.3.20151030) hardy; urgency=low
 
   * Calendar: fix not working storing of events
 
- -- Ralf Becker <rb@stylite.de>  Fri, 30 Oct 2015 10:05:29 +0100
+ -- Ralf Becker <rb@stylite.de>  Fri, 30 Oct 2015 10:05:23 +0100
 
 egroupware-epl (14.3.20151028) hardy; urgency=low
 
   * Tutorials: divers fixes for different browsers, specially IE 10/11 and Safari
 
- -- Ralf Becker <rb@stylite.de>  Wed, 28 Oct 2015 17:58:43 +0100
+ -- Ralf Becker <rb@stylite.de>  Wed, 28 Oct 2015 17:58:33 +0100
 
 egroupware-epl (14.3.20151027) hardy; urgency=low
 
@@ -35,7 +41,7 @@ egroupware-epl (14.3.20151027) hardy; urgency=low
   * API: fix SQL error in upgrade from 1.8/11.1: Incorrect string value *** for column async_data
   * Timesheet/Tracker: date filters like "last week" where not aware of daylight saving time changes
 
- -- Ralf Becker <rb@stylite.de>  Tue, 27 Oct 2015 14:46:28 +0100
+ -- Ralf Becker <rb@stylite.de>  Tue, 27 Oct 2015 14:46:17 +0100
 
 egroupware-epl (14.3.20151012) hardy; urgency=low
 
@@ -56,7 +62,7 @@ egroupware-epl (14.3.20151012) hardy; urgency=low
   * Addressbook: allow eg. telephone apps to jump directly into CRM view of a phonenumber with https://domain.com/egroupware/index.php?menuaction=addressbook.addressbook_ui.view&search="49 123 456789"&ajax=true&cd=yes
   * LDAP: fix not working connect under newer PHP 5.6 (maybe other versions too) with PHP Warning: invalid port number: 0
 
- -- Ralf Becker <rb@stylite.de>  Mon, 12 Oct 2015 14:00:11 +0200
+ -- Ralf Becker <rb@stylite.de>  Mon, 12 Oct 2015 13:59:59 +0200
 
 egroupware-epl (14.3.20150908) hardy; urgency=low
 
@@ -69,6 +75,7 @@ egroupware-epl (14.3.20150908) hardy; urgency=low
   * Mail/preferences: Add Preview Pane option into mail preferences in order to be able to show/hide mail preview pane (split panel)
   * Mail: fix PHP Fatal error under 5.3 when displaying mails containing inline-images
   * Projectmanager: fix external role to NOT lose project when storing a new timesheet
+  * LDAP: fix not working connect under newer PHP 5.6 (maybe other versions too) with PHP Warning: invalid port number: 0
 
  -- Ralf Becker <rb@stylite.de>  Tue, 08 Sep 2015 08:12:36 +0200
 
