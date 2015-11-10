@@ -2452,6 +2452,12 @@ function calendar_upgrade14_2_003()
 		'nullable' => False,
 		'comment' => 'unique id of event(-series)'
 	));
+	// remove all category values, which are not comma-separated nummerical ids
+	// as they might give an SQL error and wont work anyway
+	if ($GLOBALS['egw_setup']->db->Type == 'mysql')
+	{
+		$GLOBALS['egw_setup']->db->query("UPDATE egw_cal SET cal_category='' WHERE cal_category NOT REGEXP '^[0-9,]*$'", __LINE__, __FILE__);
+	}
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_category',array(
 		'type' => 'ascii',
 		'meta' => 'category',
