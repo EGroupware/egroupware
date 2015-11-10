@@ -1,3 +1,15 @@
+egroupware-epl (14.3.20151110) hardy; urgency=low
+
+  * all apps: replace flash based clipboard with html5 solution supported by Chrome, IE, FF 41+, not working in Safari
+  * all apps: update CKEditor to version 4.5.4
+  * Mail: account wizzard uses now higher timeout of 3 seconds and detects office365 account automatic
+  * Mail: fix for cascading forward problem (problem when forwarding mails with forwarded messages attached in inline mode)
+  * Calendar/CalDAV: recurring events with non-EGroupware participants (specified by email) were showing additional participants with cryptic mailto addresses (DB update required!)
+  * Calendar/favorites: Fix not working setting a group while creating a calendar favorite
+  * Tracker/ProjectManager: images dragged into new (not yet saved) entries where not accessible by other users
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 10 Nov 2015 09:53:18 +0100
+
 egroupware-epl (14.3.20151030) hardy; urgency=low
 
   * Calendar: fix not working storing of events
