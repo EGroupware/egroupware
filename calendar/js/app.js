@@ -2256,7 +2256,8 @@ app.classes.calendar = AppJS.extend(
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.filter,
 			cat_id: state.cat_id,
-			search: state.keywords
+			search: state.keywords,
+			csv_export: false
 		});
 		// Show ajax loader
 		framework.applications.calendar.sidemenuEntry.showAjaxLoader()

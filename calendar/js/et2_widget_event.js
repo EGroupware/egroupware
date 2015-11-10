@@ -441,7 +441,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 			else
 			{
-				timespan = egw.lang('all day');
+				timespan = egw.lang('Whole day');
 			}
 		}
 		else

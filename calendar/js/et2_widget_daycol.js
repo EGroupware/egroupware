@@ -234,6 +234,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			jQuery.datepicker.formatDate('DD dd',formatDate);
 		this.title.text(date_string)
 			.attr("data-date", new_date);
+		this.header
+			.attr('data-date',new_date)
+			.attr('data-whole_day',true);
 
 		// Avoid redrawing if date is the same
 		if(new_date === this.options.date && !force_redraw)
@@ -677,6 +680,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				}
 				else
 				{
+					columns[c][i].div.appendTo(this.div);
 					top = this._time_to_position(columns[c][i].options.value.start_m,whole_day_counter);
 					height = this._time_to_position(columns[c][i].options.value.end_m,whole_day_counter)-top;
 				}

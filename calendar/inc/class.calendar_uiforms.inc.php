@@ -2627,7 +2627,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		else
 		{
-			$duration = $durationT;
+			$duration = (int)$durationT;
 		}
 
 		// If we have a recuring event for a particular day, make an exception
@@ -2649,9 +2649,18 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		// Drag a whole day to a time
-		if($event['whole_day'] && $durationT)
+		if($duration && $durationT != 'whole_day')
 		{
-			$event['whole_day'] = false;
+			$event['whole_day'] = ($duration == DAY_s);
+			$event['non_blocking'] = false;
+			// Whole day non blocking with DAY_s would add a day
+			if($duration==DAY_s) $duration=0;
+		}
+		// Drag a normal event to whole day non-blocking
+		else if ($durationT == 'whole_day')
+		{
+			$event['whole_day'] = true;
+			$event['non_blocking'] = true;
 		}
 
 		$event['start'] = $this->bo->date2ts($targetDateTime);

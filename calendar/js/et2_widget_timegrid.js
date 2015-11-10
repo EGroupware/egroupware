@@ -286,7 +286,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		
 		// Customize and override some draggable settings
 		this.div.on('dragcreate','.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
-				$j(this).draggable('option','cursorAt',false);
+				// Act like you clicked the header, makes it easier to position
+				$j(this).draggable('option','cursorAt', {top: 5, left: 5});
 			})
 			.on('dragstart', '.calendar_calEvent', function(event,ui) {
 				$j('.calendar_calEvent',ui.helper).width($j(this).width())
@@ -304,6 +305,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	 */
 	_drag_helper: function(element, helper,height)
 	{
+		if(!element) return;
+		
 		element.dropEnd = this._get_time_from_position(helper.getBoundingClientRect().left,
 			helper.getBoundingClientRect().top+parseInt(height));
 
@@ -326,16 +329,24 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			{
 				this.scrolling.scrollTop(element.dropEnd.position().top);
 			}
-			var time = jQuery.datepicker.formatTime(
-				egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
-				{
-					hour: element.dropEnd.attr('data-hour'),
-					minute: element.dropEnd.attr('data-minute'),
-					seconds: 0,
-					timezone: 0
-				},
-				{"ampm": (egw.preference("timeformat") == "12")}
-			);
+			var time = '';
+			if(this._drop_data.whole_day)
+			{
+				time = this.egw().lang('Whole day');
+			}
+			else
+			{
+				time = jQuery.datepicker.formatTime(
+					egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
+					{
+						hour: element.dropEnd.attr('data-hour'),
+						minute: element.dropEnd.attr('data-minute'),
+						seconds: 0,
+						timezone: 0
+					},
+					{"ampm": (egw.preference("timeformat") == "12")}
+				);
+			}
 			element.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span class="calendar_timeDemo" >'+time+'</span></div>';
 		}
 		else
@@ -353,7 +364,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var e = new jQuery.Event('change');
 		e.originalEvent = event;
 		e.data = {start: 0};
-		
+
 		if(typeof dropEnd != 'undefined' && dropEnd)
 		{
 			var drop_date = dropEnd.date||false;
@@ -370,8 +381,18 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				event_widget._parent.date_helper.set_year(drop_date.substring(0,4));
 				event_widget._parent.date_helper.set_month(drop_date.substring(4,6));
 				event_widget._parent.date_helper.set_date(drop_date.substring(6,8));
-				event_widget._parent.date_helper.set_hours(dropEnd.hour);
-				event_widget._parent.date_helper.set_minutes(dropEnd.minute);
+				// Make sure whole day events stay as whole day events by ignoring drop time
+				if(event_data.app == 'calendar' && event_widget.options.value.whole_day)
+				{
+					event_widget._parent.date_helper.set_hours(0);
+					event_widget._parent.date_helper.set_minutes(0)
+				}
+				else
+				{
+					// Non-whole day events, and integrated apps, can change
+					event_widget._parent.date_helper.set_hours(dropEnd.whole_day ? 0 : dropEnd.hour||0);
+					event_widget._parent.date_helper.set_minutes(dropEnd.whole_day ? 0 : dropEnd.minute||0);
+				}
 				event_widget.options.value.start = new Date(event_widget._parent.date_helper.getValue());
 
 				// Leave the helper there until the update is done
@@ -390,21 +411,30 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					//Get infologID if in case if it's an integrated infolog event
 					if (event_data.app === 'infolog')
 					{
+						// Duration - infologs are always non-blocking
+						var duration = dropEnd.whole_day ? 86400-1 : (
+							event_widget.options.value.whole_day ? (egw().preference('defaultlength','calendar')*60) : false);
+
 						// If it is an integrated infolog event we need to edit infolog entry
 						egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent',
-							[event_data.id, event_widget.options.value.start||false],
+							[event_data.id, event_widget.options.value.start||false,duration],
 							function() {loading.remove();}
 						).sendRequest(true);
 					}
 					else
 					{
 						//Edit calendar event
+						
+						// Duration - check for whole day dropped on a time, change it to full day
+						var duration = event_widget.options.value.whole_day && dropEnd.hour ? 86400-1 : false;
+						// Event (whole day or not) dropped on whole day section, change to whole day non blocking
+						if(dropEnd.whole_day) duration = 'whole_day';
+
 						egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
 								button_id==='series' ? event_data.id : event_data.app_id,event_data.owner,
 								event_widget.options.value.start,
 								timegrid.options.owner||egw.user('account_id'),
-								// Check for whole day dragged to a certain time
-								event_widget.options.value.whole_day ? (egw().preference('defaultlength','calendar')*60) : false
+								duration
 							],
 							function() { loading.remove();}
 						).sendRequest(true);
@@ -1402,7 +1432,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		
 		x = Math.round(x);
 		y = Math.round(y);
-		var nodes = $j('.calendar_calAddEvent[data-hour]',this.div).removeClass('drop-hover').filter(function() {
+		var nodes = $j('.calendar_calAddEvent[data-hour],.calendar_calDayColHeader',this.div).removeClass('drop-hover').filter(function() {
 			var offset = $j(this).offset();
 			var range={x:[offset.left,offset.left+$j(this).outerWidth()],y:[offset.top,offset.top+$j(this).outerHeight()]};
 			
