@@ -125,20 +125,27 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			if(this._parent && this._parent.instanceOf(et2_calendar_daycol) &&
 				this.options.value.date && event.date != this.options.value.date)
 			{
-				// Date changed, reparent
-				var new_parent = this._parent._parent.getWidgetById(event.date);
-				if(new_parent)
+				// Delete all old actions
+				this._actionObject.clear();
+				this._actionObject.unregisterActions();
+				this._actionObject = null;
+
+				// Update daywise caches
+				var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this.options.owner);
+				var old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this.options.owner);
+				var new_daywise = egw.dataGetUIDdata(new_cache_id);
+				var old_daywise = egw.dataGetUIDdata(old_cache_id);
+				new_daywise = new_daywise ? new_daywise.data : [];
+				old_daywise = old_daywise ? old_daywise.data : [];
+				if (new_daywise.indexOf(event.id) < 0)
 				{
-					new_parent.addChild(this);
+					new_daywise.push(event.id);
 				}
-				else
-				{
-					// Could not find the right date
-					this._parent.removeChild(this);
-					this.destroy();
-					return;
-				}
+				old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
+				egw.dataStoreUID(old_cache_id,old_daywise);				
+				egw.dataStoreUID(new_cache_id,new_daywise);
 			}
+
 			// Copy to avoid changes, which may cause nm problems
 			this.options.value = jQuery.extend({},event);
 
