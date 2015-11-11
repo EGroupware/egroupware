@@ -692,6 +692,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 					columns[c][i].div.css('height', height+'%');
 					columns[c][i].div.css('left', left.toFixed(1)+'%');
 					columns[c][i].div.css('width', width.toFixed(1)+'%');
+					columns[c][i].div.css('z-index',parseInt(columns[c][i].div.css('z-index'))+c);
 
 				}
 			}

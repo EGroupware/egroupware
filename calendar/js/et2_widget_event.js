@@ -239,15 +239,12 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		
 		// Header
 		var title = !event.is_private ? event['title'] : egw.lang('private');
-		var small_height = true;
-		if(this._parent.display_settings)
-		{
-			small_height = event['end_m']-event['start_m'] < this._parent.display_settings.granularity;
-		}
+		// If there isn't enough height for header + 1 line in the body, it's small
+		var small_height = this.div.innerHeight() <= this.title.height() * 2;
 
 		this.div.attr('data-title', title);
 		this.title.text(small_height ? title : this._get_timespan(event));
-
+		
 		// Colors - don't make them transparent if there is no color
 		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
 		{
@@ -268,7 +265,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		else
 		{
-			this.body.html('<span class="calendar_calEventTitle">'+title+'</span>')
+			this.body
+				.html('<span class="calendar_calEventTitle">'+title+'</span>')
+				.append('<p>'+this.options.value.description+'</p>');
 		}
 		this.body
 			// Set background color to a lighter version of the header color
