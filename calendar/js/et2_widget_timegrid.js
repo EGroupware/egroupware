@@ -285,7 +285,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		});
 		
 		// Customize and override some draggable settings
-		this.div.on('dragcreate','.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
+		this.div
+			.on('dragcreate','.calendar_calEvent', function(event, ui) {
+				$j(this).draggable('option','cancel','.rowNoEdit');
 				// Act like you clicked the header, makes it easier to position
 				$j(this).draggable('option','cursorAt', {top: 5, left: 5});
 			})

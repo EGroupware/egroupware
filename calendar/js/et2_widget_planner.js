@@ -291,8 +291,10 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			});
 
 		// Customize and override some draggable settings
-		this.div.on('dragcreate','.calendar_calEvent:not(.rowNoEdit)', function(event,ui) {
-				$j(this).draggable('option','cursorAt',false);
+		this.div.on('dragcreate','.calendar_calEvent', function(event, ui) {
+				$j(this).draggable('option','cancel','.rowNoEdit');
+				// Act like you clicked the header, makes it easier to position
+				$j(this).draggable('option','cursorAt', {top: 5, left: 5});
 			})
 			.on('dragstart', '.calendar_calEvent', function(event,ui) {
 				$j('.calendar_calEvent',ui.helper).width($j(this).width())
