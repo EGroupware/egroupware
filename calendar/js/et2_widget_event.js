@@ -255,7 +255,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				// Set title color based on background brightness
 			this.title
 				.css('background-color', this.div.css('background-color'))
-				.css('color', jQuery.Color(this.div.css('background-color')).lightness() > 0.5 ? 'black':'white');
+				.css('color', jQuery.Color(this.div.css('background-color')).lightness() > 0.45 ? 'black':'white');
 		}
 
 		this.icons.appendTo(this.title)
