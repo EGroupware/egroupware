@@ -13,17 +13,6 @@
    <tr class="th">
 	   <td colspan="2"><b>{lang_Deny_certain_groups_access_to_following_features}</b></td>
    </tr>
-   <tr class="row_off">
-    <td> <b>{lang_examine_namespace_to_retrieve_folders_in_others_and_shared}</b><br/>
-	{lang_only_needed_for_some_servers,_that_do_not_return_all_folders_on_root_level_queries_to_retrieve_all_folders_for_that_level}
-	</td>
-    <td>
-     <select name="newsettings[examineNamespace]">
-      <option value=""{selected_examineNamespace_False}>{lang_No}</option>
-      <option value="True"{selected_examineNamespace_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
    <tr class="row_on">
 	<td>
 	 <b>{lang_Create_new_account}</b>
@@ -74,6 +63,34 @@
 	 {lang_provide_a_default_vacation_text,_(used_on_new_vacation_messages_when_there_was_no_message_set_up_previously)}
 	</td>
     <td><textarea name="newsettings[default_vacation_text]" cols="50" rows="8">{value_default_vacation_text}</textarea></td>
+   </tr>
+   <tr class="th">
+	   <td colspan="2"><b>{lang_Miscellaneous}</b></td>
+   </tr>
+   <tr class="row_off">
+    <td> <b>{lang_examine_namespace_to_retrieve_folders_in_others_and_shared}</b><br/>
+	{lang_only_needed_for_some_servers,_that_do_not_return_all_folders_on_root_level_queries_to_retrieve_all_folders_for_that_level}
+	</td>
+    <td>
+     <select name="newsettings[examineNamespace]">
+      <option value=""{selected_examineNamespace_False}>{lang_No}</option>
+      <option value="True"{selected_examineNamespace_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_on">
+	<td>
+     <b>{lang_Disable_use_of_flowed_lines_in_plain_text_mails_(RFC3676)}</b><br>
+     {lang_Some_clients_fail_to_detect_correct_charset,_if_flowed_lines_are_enabled.}
+	</td>
+    <td>
+     <select name="newsettings[disable_rfc3676_flowed]">
+      <option value=""{selected_disable_rfc3676_flowed}>{lang_No}</option>
+      <option value="True"{selected_disable_rfc3676_flowed_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+
 <!-- END body -->
 <!-- BEGIN footer -->
   <tr valign="bottom" style="height: 30px;">
