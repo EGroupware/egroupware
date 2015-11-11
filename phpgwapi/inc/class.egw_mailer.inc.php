@@ -513,6 +513,12 @@ class egw_mailer extends Horde_Mime_Mail
 			// no flowed for encrypted messages
 			$flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
 
+			// check if flowed is disabled in mail site configuration
+			if (($config = config::read('mail')) && $config['disable_rfc3676_flowed'])
+			{
+				$flowed = false;
+			}
+
 			// handling of alternativ body
 			if (!empty($this->_alternativBody))
 			{
