@@ -1154,6 +1154,11 @@ div.message.floating {
   margin-top: -5px;
   margin-right: 2px;
 }
+ul[id$='favorites_popup_state'] span.filter_value {
+	position: absolute;
+	left: 50%;
+	white-space: nowrap;
+}
 .nextmatch_sortheader {
   color: #003075;
   cursor: pointer;
