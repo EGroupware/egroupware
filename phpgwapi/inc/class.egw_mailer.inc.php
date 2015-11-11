@@ -669,9 +669,16 @@ class egw_mailer extends Horde_Mime_Mail
 					$content = translation::convert($part->toString(array(
 						'encode' => Horde_Mime_Part::ENCODE_BINARY,	// otherwise we cant recode charset
 					)), $charset, 'utf-8');
-					$part->setContents($content);
+					$part->setContents($content, array(
+						'encode' => Horde_Mime_Part::ENCODE_BINARY,	// $content is NOT encoded
+					));
 					$part->setContentTypeParameter('charset', 'utf-8');
-					if ($part === $base) $mailer->addHeader('Content-Type', $base->getType(true));
+					if ($part === $base)
+					{
+						$mailer->addHeader('Content-Type', $part->getType(true));
+						// need to set Transfer-Encoding used by base-part, it always seems to be "quoted-printable"
+						$mailer->addHeader('Content-Transfer-Encoding', 'quoted-printable');
+					}
 					$converted = true;
 				}
 			}
