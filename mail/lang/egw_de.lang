@@ -98,6 +98,7 @@ deny certain groups access to following features	mail	de	Den Zugriff auf bestimm
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
+disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in text Mails (RFC3676) abschalten
 disabled!	mail	de	deaktiviert
 discard	mail	de	verwerfen
 discard message	mail	de	Nachricht verwerfen
@@ -278,6 +279,7 @@ message preview area	mail	de	Vorschaubereich
 message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
+miscellaneous	mail	de	Verschiedenes
 move selected to	mail	de	Verschiebe ausgewählte nach
 move to	mail	de	verschieben
 move to trash	mail	de	in den Papierkorb verschieben
@@ -436,6 +438,7 @@ size(...->0)	mail	de	Größe(...->0)
 size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
 smtp	mail	de	Postausgang-Server
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mailprogramme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird.
 sort order	mail	de	Sortierreihenfolge
 source	mail	de	Quelltext
 sources	mail	de	HTML Quellcode
