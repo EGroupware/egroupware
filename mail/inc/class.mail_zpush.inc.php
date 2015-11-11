@@ -934,7 +934,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					//SYNC_BODYPREFERENCE_MIME
 					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->asbody->type = SYNC_BODYPREFERENCE_MIME;//4;
-					$Body = $this->mail->getMessageRawBody($id, '', $_folderName);
+					// use egw_mailer::convert to convert charset of all text parts to utf-8, which is a z-push or AS requirement!
+					$Body = egw_mailer::convert($this->mail->getMessageRawBody($id, '', $_folderName));
 					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Body);
 					$output->asbody->data = $Body;
 				}

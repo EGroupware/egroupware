@@ -52,7 +52,8 @@ class egw_mailer extends Horde_Mime_Mail
 	/**
 	 * Constructor: always throw exceptions instead of echoing errors and EGw pathes
 	 *
-	 * @param int|emailadmin_account $account =null mail account to use, default use emailadmin_account::get_default($smtp=true)
+	 * @param int|emailadmin_account|boolean $account =null mail account to use, default use emailadmin_account::get_default($smtp=true)
+	 *	false: no NOT initialise account and set other EGroupware specific headers, used to parse mails (not sending them!)
 	 */
 	function __construct($account=null)
 	{
@@ -60,16 +61,20 @@ class egw_mailer extends Horde_Mime_Mail
 		common::setlocale(LC_MESSAGES);
 
 		parent::__construct();
-		$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 
-		$this->setAccount($account);
+		if ($account !== false)
+		{
+			$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 
-		$this->is_html = false;
+			$this->setAccount($account);
 
-		$this->clearAllRecipients();
-		$this->clearReplyTos();
+			$this->is_html = false;
 
-		$this->clearParts();
+			$this->clearAllRecipients();
+			$this->clearReplyTos();
+
+			$this->clearParts();
+		}
 	}
 
 	/**
@@ -639,6 +644,49 @@ class egw_mailer extends Horde_Mime_Mail
         return $this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)) .
 			$this->getBasePart()->toString(array('canonical' => true));
     }
+
+	/**
+	 * Convert charset of text-parts of message to utf-8
+	 *
+	 * @param string|resource $message
+	 * @param boolean $stream =false return stream or string (default)
+	 * @param string $charset ='utf-8' charset to convert to
+	 * @param boolean &$converted =false on return if conversation was necessary
+	 * @return string|stream
+	 */
+	static function convert($message, $stream=false, $charset='utf-8', &$converted=false)
+	{
+		$mailer = new egw_mailer(false);	// false = no default headers and mail account
+		$mailer->addHeaders(Horde_Mime_Headers::parseHeaders($message));
+		$base = Horde_Mime_Part::parseMessage($message);
+		foreach($base->partIterator() as $part)
+		{
+			if ($part->getPrimaryType()== 'text')
+			{
+				$charset = $part->getContentTypeParameter('charset');
+				if ($charset && $charset != 'utf-8')
+				{
+					$content = translation::convert($part->toString(array(
+						'encode' => Horde_Mime_Part::ENCODE_BINARY,	// otherwise we cant recode charset
+					)), $charset, 'utf-8');
+					$part->setContents($content);
+					$part->setContentTypeParameter('charset', 'utf-8');
+					if ($part === $base) $mailer->addHeader('Content-Type', $base->getType(true));
+					$converted = true;
+				}
+			}
+			elseif ($part->getType() == 'message/rfc822')
+			{
+				$part->setContents(self::convert($part->toString(), $stream, $charset, $converted));
+			}
+		}
+		if ($converted)
+		{
+			$mailer->setBasePart($base);
+			return $mailer->getRaw($stream);
+		}
+		return $message;
+	}
 
 	/**
 	 * Find body: 1. part with mimetype "text/$subtype"
