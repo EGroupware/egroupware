@@ -1910,7 +1910,7 @@ class mail_ui
 
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
-	
+
 	/**
 	 * Build actions for display toolbar
 	 */
@@ -1938,7 +1938,7 @@ class mail_ui
 		$actions = array_reverse($actions,true);
 		return $actions;
 	}
-	
+
 	/**
 	 * createAttachmentBlock
 	 * helper function to create the attachment block/table
@@ -2373,7 +2373,6 @@ class mail_ui
 		$this->mail_bo->reopen($mailbox);
 
 		$message = $this->mail_bo->getMessageRawBody($uid, $partID, $mailbox);
-		$headers = $this->mail_bo->getMessageHeader($uid, $partID, true,false, $mailbox);
 
 		$this->mail_bo->closeConnection();
 		if ($rememberServerID != $this->mail_bo->profileID)
@@ -2385,6 +2384,7 @@ class mail_ui
 		$GLOBALS['egw']->session->commit_session();
 		if (!$display)
 		{
+			$headers = Horde_Mime_Headers::parseHeaders($message);
 			$subject = str_replace('$$','__',mail_bo::decode_header($headers['SUBJECT']));
 			html::safe_content_header($message, $subject.".eml", $mime='message/rfc822', $size=0, true, true);
 			echo $message;
