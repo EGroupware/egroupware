@@ -971,11 +971,16 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		var display = this.date.toString();
 
 		switch(this._type) {
+			case "time_or_date":
 			case "date-time_today":
 				// Today - just the time
 				if(date('Y-m-d', this.date) == date('Y-m-d'))
 				{
 					display = date(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
+				}
+				else if (this._type === "time_or_date")
+				{
+					display = date(this.egw().preference('dateformat'), this.date);
 				}
 				// Before today - date and time
 				else
@@ -1087,7 +1092,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	}
 });
-et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today"]);
+et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date"]);
 
 /**
  * @augments et2_date_ro
