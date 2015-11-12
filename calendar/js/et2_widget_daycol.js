@@ -323,23 +323,23 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	set_left: function(left) {
 		// Maybe?
 		window.setTimeout(jQuery.proxy(function() {
-			if(this.div)
-			{
-				this.div.css('left',left);
-				// Headers are positioned relative
-				//this.header.css('left',left);
-			}
+		if(this.div)
+		{
+			this.div.css('left',left);
+			// Headers are positioned relative
+			//this.header.css('left',left);
+		}
 		},this),1);
-		
+
 	},
 	set_width: function(width) {
 		this.options.width = width;
 		window.setTimeout(jQuery.proxy(function() {
-			if(this.div)
-			{
-				this.div.outerWidth(this.options.width);
-				this.header.outerWidth(this.options.width);
-			}
+		if(this.div)
+		{
+			this.div.outerWidth(this.options.width);
+			this.header.outerWidth(this.options.width);
+		}
 		},this),1);
 	},
 

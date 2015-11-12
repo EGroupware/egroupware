@@ -639,11 +639,12 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			this.rowHeight = new_height;
 			var rows = $j('.calendar_calTimeRow',this.scrolling).height(this.rowHeight);
 			this.days.css('height', (this.rowHeight*rows.length)+'px');
-			
-			// Scroll to start of day
-			this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
-			this.scrolling.scrollTop(this._top_time);
+
+			$j('.calendar_calAddEvent',this.scrolling).height(this.rowHeight);
 		}
+		// Scroll to start of day
+		this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
+		this.scrolling.scrollTop(this._top_time);
 	},
 
 	/**
@@ -1531,6 +1532,21 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			
 			// Re-do time grid
 			this._drawGrid();
+
+			// Just re-did everything, no need to do more
+			return;
+		}
+
+		// Try to resize width, though animations cause problems
+		var day_width = ( $j(this.getInstanceManager().DOMContainer).width() - (this.div.innerWidth() - this.days.innerWidth()))/this.day_list.length;
+		// update day widgets
+		for(var i = 0; i < this.day_list.length; i++)
+		{
+			var day = this.day_widgets[i];
+
+			// Position
+			day.set_left((day_width * i) + 'px');
+			day.set_width(day_width + 'px');
 		}
 	}
 });

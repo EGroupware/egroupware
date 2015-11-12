@@ -566,7 +566,6 @@ app.classes.calendar = AppJS.extend(
 				var translate = direction == "down" ? "translateY(-50%)" : (direction == "right" ? "translateX(-50%)" : "");
 				wrapper.css({"transform": translate});
 				window.setTimeout(function() {
-					var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
 
 					cloned.remove();
 					
@@ -589,7 +588,9 @@ app.classes.calendar = AppJS.extend(
 					});
 
 					// Re-scroll to start of day
-					$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
+					template.widgetContainer.iterateOver(function(w) {
+						w._resizeTimes();
+					},this, et2_calendar_timegrid);
 
 					window.setTimeout(function() {
 						if(app.calendar)
@@ -1823,19 +1824,26 @@ app.classes.calendar = AppJS.extend(
 			for(var i = 0; i < view.etemplates.length; i++)
 			{
 				$j(view.etemplates[i].DOMContainer).show();
+				view.etemplates[i].resize();
 			}
 			// Toggle todos
 			if(state.state.view == 'day' || this.state.view == 'day')
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] > 0)
 				{
-					view.etemplates[0].DOMContainer.style.width = "70%";
+					if(this.state.view !== 'day')
+					{
+						view.etemplates[0].widgetContainer.iterateOver(function(w) {
+							w.set_width(w.div.width() * 0.7);
+						},this,et2_calendar_timegrid);
+					}
 					$j(view.etemplates[1].DOMContainer).css("left","69%");
 					// TODO: Maybe some caching here
 					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
 						this.getWidgetById('label').set_value(data.label||'');
 						this.getWidgetById('todos').set_value({content:data.todos||''});
 					},view.etemplates[1].widgetContainer);
+					view.etemplates[0].resize();
 				}
 				else
 				{
@@ -1845,11 +1853,21 @@ app.classes.calendar = AppJS.extend(
 						$j(this).hide();
 					},app.classes.calendar.views.day.etemplates[1].DOMContainer),1000);
 					$j(app.classes.calendar.views.day.etemplates[0].DOMContainer).css("width","100%");
+					view.etemplates[0].widgetContainer.iterateOver(function(w) {
+						w.set_width('100%');
+					},this,et2_calendar_timegrid);
 				}
 			}
 			else
 			{
 				$j(view.etemplates[0].DOMContainer).css("width","100%");
+			}
+
+			// Trigger resize to get correct sizes, as they may have sized while
+			// hidden
+			for(var i = 0; i < view.etemplates.length; i++)
+			{
+				view.etemplates[i].resize();
 			}
 			this.state = jQuery.extend({},state.state);
 
