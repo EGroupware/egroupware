@@ -254,10 +254,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
 		{
 			// Most statuses use colored borders
-			if(status_class === 'calendar_calEventAllAccepted')
-			{
-				this.div.css('border-color', this.div.css('background-color'));
-			}
+			this.div.css('border-color',status_class === 'calendar_calEventAllAccepted' ? this.div.css('background-color') : '');
 
 			// Set title color based on background brightness
 			this.title
