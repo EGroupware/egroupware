@@ -131,8 +131,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				this._actionObject = null;
 
 				// Update daywise caches
-				var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this.options.owner);
-				var old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this.options.owner);
+				var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this._parent.options.owner);
+				var old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
 				var new_daywise = egw.dataGetUIDdata(new_cache_id);
 				var old_daywise = egw.dataGetUIDdata(old_cache_id);
 				new_daywise = new_daywise ? new_daywise.data : [];

@@ -674,13 +674,21 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				var height = 0;
 				if(columns[c][i].options.value.whole_day_on_top)
 				{
-					columns[c][i].div
-						.appendTo(this.all_day);
+					if(!this.all_day.has(columns[c][i].div).length)
+					{
+						columns[c][i].div
+							.appendTo(this.all_day);
+						this._parent._resizeTimes();
+					}
 					continue;
 				}
 				else
 				{
-					columns[c][i].div.appendTo(this.div);
+					if(this.all_day.has(columns[c][i].div).length)
+					{
+						columns[c][i].div.appendTo(this.div);
+						this._parent._resizeTimes();
+					}
 					top = this._time_to_position(columns[c][i].options.value.start_m,whole_day_counter);
 					height = this._time_to_position(columns[c][i].options.value.end_m,whole_day_counter)-top;
 				}

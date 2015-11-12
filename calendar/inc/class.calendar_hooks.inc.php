@@ -162,7 +162,7 @@ class calendar_hooks
 			$times[$i] = $GLOBALS['egw']->common->formattime($i,'00');
 		}
 
-		for ($i = 2; $i <= 9; ++$i)
+		for ($i = 2; $i <= 3; ++$i)
 		{
 			$muliple_weeks[$i.' weeks'] = lang('%1 weeks',$i);
 		}

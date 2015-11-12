@@ -103,7 +103,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		// Headers
 		this.gridHeader = $j(document.createElement("div"))
-			.addClass("calendar_calGridHeader et2_link")
+			.addClass("calendar_calGridHeader")
 			.appendTo(this.div);
 		this.dayHeader = $j(document.createElement("div"))
 			.appendTo(this.gridHeader);
@@ -482,6 +482,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 				}
 				
 				this.widget._drawDays();
+				this.widget._resizeTimes();
 				if(this.trigger)
 				{
 					this.widget.change();
@@ -557,8 +558,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		var wd_end = 60*this.options.day_end;
 		var granularity = this.options.granularity;
 		var totalDisplayMinutes	= wd_end - wd_start;
-		var rowsToDisplay	= (totalDisplayMinutes + 60)/granularity;
-
+		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/granularity);
+		
 		this.gridHeader
 			.empty()
 			.attr('data-date', this.options.start_date)
@@ -569,10 +570,10 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			.appendTo(this.div);
 
 		// Max with 45 avoids problems when it's not shown
-		var header_height = Math.max(this.gridHeader.height(), 45);
+		var header_height = Math.max(this.gridHeader.outerHeight(true), 45);
 		
 		this.scrolling
-			.css('height', (this.options.height - header_height)+'px')
+			.css('height', (this.div.innerHeight() - header_height)+'px')
 			.appendTo(this.div)
 			.empty()
 			.off().on('scroll', jQuery.proxy(this._scroll, this));
@@ -580,7 +581,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		// Percent
 		var rowHeight = (100/rowsToDisplay).toFixed(1);
 		// Pixels
-		this.rowHeight = this.div.height() / rowsToDisplay;
+		this.rowHeight = this.scrolling.height() / rowsToDisplay;
 
 		// the hour rows
 		var show = {
@@ -616,11 +617,33 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		// Set heights in pixels for scrolling
 		this.scrolling
-			.append('<div class="calendar_calTimeLabels" style="height: ' +(this.rowHeight*i)+'px" >' + html + '</div>');
+			.append('<div class="calendar_calTimeLabels">' + html + '</div>');
 		this.days.css('height', (this.rowHeight*i)+'px');
 
 		// Scroll to start of day
 		this.scrolling.scrollTop(this._top_time);
+	},
+
+	_resizeTimes: function() {
+
+		var wd_start = 60*this.options.day_start;
+		var wd_end = 60*this.options.day_end;
+		var totalDisplayMinutes	= wd_end - wd_start;
+		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/this.options.granularity);
+		this.scrolling
+			.css('height', (this.options.height - this.gridHeader.outerHeight(true))+'px');
+
+		var new_height = this.scrolling.height() / rowsToDisplay;
+		if(new_height != this.rowHeight)
+		{
+			this.rowHeight = new_height;
+			var rows = $j('.calendar_calTimeRow',this.scrolling).height(this.rowHeight);
+			this.days.css('height', (this.rowHeight*rows.length)+'px');
+			
+			// Scroll to start of day
+			this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
+			this.scrolling.scrollTop(this._top_time);
+		}
 	},
 
 	/**
@@ -713,8 +736,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		// Don't hold on to value any longer, use the data cache for best info
 		this.value = {};
 		
-		// Scroll to start of day
-		this.scrolling.scrollTop(this._top_time);
+		// Adjust and scroll to start of day
+		this._resizeTimes();
 
 		// Handle not fully visible elements
 		this._scroll();
@@ -1507,7 +1530,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			this.div.css('height', this.options.height);
 			
 			// Re-do time grid
-			this._drawGrid()
+			this._drawGrid();
 		}
 	}
 });

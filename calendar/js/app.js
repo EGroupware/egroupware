@@ -520,6 +520,7 @@ app.classes.calendar = AppJS.extend(
 				original.css("height",original.height() + "px");
 				cloned.css("height",original.height() + "px");
 			}
+			var original_size = {height: wrapper.parent().css('height'), width: wrapper.parent().css('width')};
 			wrapper.parent().css({overflow:'hidden', height:original.outerHeight()+"px", width:original.outerWidth() + "px"});
 			wrapper.height(direction == "up" || direction == "down" ? 2 * original.outerHeight()  : original.outerHeight());
 			wrapper.width(direction == "left" || direction == "right" ? 2 * original.outerWidth() : original.outerWidth());
@@ -579,7 +580,7 @@ app.classes.calendar = AppJS.extend(
 					wrapper
 						.removeClass("calendar_slide")
 						.css({"transform": '',height: '', width:'',overflow:''});
-					wrapper.parent().css({overflow: '', width: '', height: ''});
+					wrapper.parent().css({overflow: '', width: original_size.width, height: original_size.height});
 					original.css("display","");
 					wrapper[0].offsetHeight;
 					wrapper.css({
@@ -3053,7 +3054,8 @@ jQuery.extend(app.classes.calendar,{
 				return d;
 			},
 			granularity: function(state) {
-				return  (parseInt(egw.preference('multiple_weeks','calendar')) || 3) * app.calendar.View.granularity.call(this, state);
+				// Does not care how many users you select
+				return parseInt(egw.preference('interval','calendar')) || 30;
 			}
 		}),
 		month: app.classes.calendar.prototype.View.extend({
