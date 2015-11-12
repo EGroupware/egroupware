@@ -144,6 +144,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
 				egw.dataStoreUID(old_cache_id,old_daywise);				
 				egw.dataStoreUID(new_cache_id,new_daywise);
+				
+				this._parent.removeChild(this);
 			}
 
 			// Copy to avoid changes, which may cause nm problems

@@ -2653,6 +2653,10 @@ class calendar_uiforms extends calendar_ui
 		{
 			$event['whole_day'] = ($duration == DAY_s);
 			$event['non_blocking'] = false;
+			// If there's a conflict, it won't save the change and the conflict popup will be blank
+			// so save the change now, and then let the conflict check happen.
+			$this->bo->update($event,true, true, false, true, $message,true);
+
 			// Whole day non blocking with DAY_s would add a day
 			if($duration==DAY_s) $duration=0;
 		}
