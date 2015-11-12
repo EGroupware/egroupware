@@ -782,7 +782,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			} , '_blank');
 			return false;
 		}
-		else if ($j(_ev.target).is(this.header))
+		else if (this.header.has(_ev.target).length || this.header.is(_ev.target))
 		{
 			// Click on the header, but not the title.  That's an all-day non-blocking
 			var end = this.date.getFullYear() + '-' + (this.date.getUTCMonth()+1) + '-' + this.date.getUTCDate() + 'T23:59';
