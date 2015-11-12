@@ -2649,7 +2649,7 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		// Drag a whole day to a time
-		if($duration && $durationT != 'whole_day')
+		if($durationT && $durationT != 'whole_day')
 		{
 			$event['whole_day'] = ($duration == DAY_s);
 			$event['non_blocking'] = false;
