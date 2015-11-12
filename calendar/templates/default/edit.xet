@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
-		<hbox options="0,0">
+		<hbox>
 			<grid width="60%">
 				<columns>
 					<column width="80px"/>
@@ -83,7 +83,7 @@
 					</row>
 				</rows>
 			</grid>
-			<vbox align="right" options="0,0" width="100%">
+			<vbox align="right" width="100%">
 				<description for="category" value="Categories" class="row_on"/>
 				<listbox type="select-cat" id="category" rows="9" />
 			</vbox>
@@ -113,7 +113,7 @@
 						</menulist>
 						<link-entry id="resource" options="@cal_resources" query="app.calendar.edit_participant_search"/>
 					</vbox>
-					<vbox span="2" valign="middle">
+					<vbox span="2">
 						<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
 						<menulist>
 							<menupopup class="selectRole" id="role"/>
@@ -185,7 +185,7 @@
 				<row valign="top">
 					<description for="recur_data" value="Repeat days"/>
 					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
-					<vbox options="0,0">
+					<vbox>
 						<description value="Exceptions"/>
 						<button statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" no_lang="1" />
 					</vbox>
