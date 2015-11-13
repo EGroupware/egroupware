@@ -548,6 +548,9 @@ class egw_db
 					ini_set('mssql.textlimit',2147483647);
 					ini_set('mssql.sizelimit',2147483647);
 				}
+				// set our default charset
+				$this->Link_ID->SetCharSet('utf-8');
+
 				$new_connection = true;
 			}
 			else
