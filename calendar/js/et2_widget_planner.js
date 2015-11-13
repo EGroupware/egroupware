@@ -382,9 +382,9 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
 							{
-								if(already_added.indexOf(id) < 0)
+								if(already_added.indexOf(''+id) < 0)
 								{
-									this.push({id: id, label: result[id], data: {participants:id,owner:''}});
+									this.push({id: id, label: result[id], data: {participants:id,owner:id}});
 									already_added.push(id);
 								}
 							}
@@ -393,11 +393,11 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					else	// users
 					{
 						user = parseInt(user)
-						for(var j = 0; j < accounts.length && already_added.indexOf(user) < 0; j++)
+						for(var j = 0; j < accounts.length && already_added.indexOf(''+user) < 0; j++)
 						{
 							if(accounts[j].value === user)
 							{
-								labels.push({id: user, label: accounts[j].label, data: {participants:user,owner:''}});
+								labels.push({id: user, label: accounts[j].label, data: {participants:user,owner:user}});
 								already_added.push(user);
 								break;
 							}

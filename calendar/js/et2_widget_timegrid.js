@@ -1427,11 +1427,16 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		else if (_ev.target.dataset.date)
 		{
 			// Default handler to open a new event at the selected time
-			this.egw().open(null, 'calendar', 'add', {
+			var options = {
 				date: _ev.target.dataset.date || this.day_list[0],
 				hour: _ev.target.dataset.hour || this.options.day_start,
 				minute: _ev.target.dataset.minute || 0
-			} , '_blank');
+			};
+			if (this.options.owner != app.calendar.state.owner)
+			{
+				options.owner = this.options.owner;
+			}
+			this.egw().open(null, 'calendar', 'add', options , '_blank');
 			return false;
 		}
 	},

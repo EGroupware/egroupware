@@ -111,7 +111,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			$owner = $this->user;
 		}
-		//echo "<p>this->owner=$this->owner, _GET[owner]=$_GET[owner], user=$this->user => owner=$owner, extra_participants=".implode(',',$extra_participants)."</p>\n";
+		//error_log("this->owner=$this->owner, _GET[owner]=$_GET[owner], user=$this->user => owner=$owner, extra_participants=".implode(',',$extra_participants).")");
 
 		// by default include the owner as participant (the user can remove him)
 		$extra_participants[] = $owner;

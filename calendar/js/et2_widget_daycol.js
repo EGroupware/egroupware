@@ -775,11 +775,16 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		else if ($j(_ev.target).hasClass('calendar_calAddEvent'))
 		{
 			// Default handler to open a new event at the selected time
-			this.egw().open(null, 'calendar', 'add', {
+			var options = {
 				date: _ev.target.dataset.date || this.options.date,
 				hour: _ev.target.dataset.hour || this._parent.options.day_start,
 				minute: _ev.target.dataset.minute || 0
-			} , '_blank');
+			};
+			if (this.options.owner != app.calendar.state.owner)
+			{
+				options.owner = this.options.owner;
+			}
+			this.egw().open(null, 'calendar', 'add', options, '_blank');
 			return false;
 		}
 		else if (this.header.has(_ev.target).length || this.header.is(_ev.target))
