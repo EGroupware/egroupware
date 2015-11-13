@@ -2657,14 +2657,13 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			// For DnD, create an exception if they gave the date
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
-			$date = $d->format('ts');
 			
 			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
 			if (!is_array($conflicts) && $conflicts)
 			{
 				// now we need to add the original start as recur-execption to the series
 				$recur_event = $this->bo->read($event['reference']);
-				$recur_event['recur_exception'][] = $this->bo->date2ts($targetDateTime);
+				$recur_event['recur_exception'][] = $date;
 				// check if we need to move the alarms, because they are next on that exception
 				foreach($recur_event['alarm'] as $id => $alarm)
 				{
