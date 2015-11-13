@@ -150,7 +150,7 @@ class calendar_groupdav extends groupdav_handler
 			return $this->free_busy_report($path, $options, $user);
 		}
 
-		if (isset($_GET['checkout']))
+		if (isset($_GET['download']))
 		{
 			$this->groupdav->propfind_options['props'] = array(array(
 				'xmlns' => groupdav::CALDAV,
@@ -253,7 +253,7 @@ class calendar_groupdav extends groupdav_handler
 			// return iterator, calling ourself to return result in chunks
 			$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
 		}
-		if (isset($_GET['checkout']))
+		if (isset($_GET['download']))
 		{
 			$this->output_vcalendar($files['files']);
 		}
@@ -281,9 +281,14 @@ class calendar_groupdav extends groupdav_handler
 			{
 				if ($n === 2)
 				{
+					// skip X-CALENDARSERVER-ACCESS:CONFIDENTIAL, as it is on VCALENDAR not VEVENT level
+					if (($x_calendarserver_access = strpos($icalendar, 'X-CALENDARSERVER-ACCESS:')) !== false)
+					{
+						echo substr($icalendar, 0, $x_calendarserver_access);
+					}
 					// skip timezones, as we would need to collect them from all events
 					// ans most clients understand timezone by reference anyway
-					if (($tz = strpos($icalendar, 'BEGIN:VTIMEZONE')) !== false)
+					elseif (($tz = strpos($icalendar, 'BEGIN:VTIMEZONE')) !== false)
 					{
 						echo substr($icalendar, 0, $tz);
 					}
