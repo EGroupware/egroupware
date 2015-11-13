@@ -2623,7 +2623,7 @@ function calendar_upgrade14_3_001()
 
 	foreach($GLOBALS['egw_setup']->db->query("SELECT egw_cal_user.cal_id AS cal_id,egw_cal_user.cal_user_id AS cal_user_id,egw_cal_user.cal_user_attendee AS cal_user_attendee
 FROM egw_cal_user
-JOIN egw_cal_user user ON user.cal_id=egw_cal_user.cal_id AND user.cal_user_type='e' AND user.cal_user_id=egw_cal_user.cal_user_id AND user.cal_user_attendee IS NULL
+JOIN egw_cal_user euser ON euser.cal_id=egw_cal_user.cal_id AND euser.cal_user_type='e' AND euser.cal_user_id=egw_cal_user.cal_user_id AND euser.cal_user_attendee IS NULL
 WHERE egw_cal_user.cal_user_type='e' AND egw_cal_user.cal_user_attendee IS NOT NULL
 GROUP BY egw_cal_user.cal_id,egw_cal_user.cal_user_id,egw_cal_user.cal_user_attendee", __LINE__, __FILE__) as $row)
 	{
