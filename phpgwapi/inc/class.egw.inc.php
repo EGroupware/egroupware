@@ -127,7 +127,7 @@ class egw extends egw_minimal
 		{
 			$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
 		}
-		if ($GLOBALS['egw_info']['server']['system_charset'])
+		if ($GLOBALS['egw_info']['server']['system_charset'] && $GLOBALS['egw_info']['server']['system_charset'] != 'utf-8')
 		{
 			$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['server']['system_charset']);
 		}
