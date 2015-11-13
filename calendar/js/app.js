@@ -2326,6 +2326,13 @@ app.classes.calendar = AppJS.extend(
 					}
 				}
 				var updated_days = {};
+				var first = new Date(state.first);
+				var last = new Date(state.last);
+				var bounds = {
+					first: ''+first.getUTCFullYear() + sprintf('%02d',first.getUTCMonth()+1) + sprintf('%02d',first.getUTCDate()),
+					last: ''+last.getUTCFullYear() + sprintf('%02d',last.getUTCMonth()+1) + sprintf('%02d',last.getUTCDate())
+				};
+
 				for(var i = 0; i < data.order.length && data.total; i++)
 				{
 					var record = this.egw.dataGetUIDdata(data.order[i]);
@@ -2333,10 +2340,18 @@ app.classes.calendar = AppJS.extend(
 					{
 						if(typeof updated_days[record.data.date] === 'undefined')
 						{
-							updated_days[record.data.date] = [];
+							// Check to make sure it's in range first, record.data.date is start date
+							// and could be before our start
+							if(record.data.date >= bounds.first && record.data.date <= bounds.last)
+							{
+								updated_days[record.data.date] = [];
+							}
 						}
-						// Copy, to avoid unwanted changes by reference
-						updated_days[record.data.date].push(record.data.row_id);
+						if(typeof updated_days[record.data.date] != 'undefined')
+						{
+							// Copy, to avoid unwanted changes by reference
+							updated_days[record.data.date].push(record.data.row_id);
+						}
 
 						// Check for multi-day events listed once
 						// Date must stay a string or we might cause problems with nextmatch
@@ -2347,7 +2362,7 @@ app.classes.calendar = AppJS.extend(
 						if(dates.start.substr(0,10) !== dates.end.substr(0,10))
 						{
 							var end = new Date(Math.min(new Date(record.data.end), new Date(state.last)));
-							var t = new Date(record.data.start);
+							var t = new Date(Math.max(new Date(record.data.start), new Date(state.first)));
 
 							do
 							{

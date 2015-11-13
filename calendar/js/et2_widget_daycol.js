@@ -265,7 +265,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
 			for(var i = 0; i < event_ids.length; i++)
 			{
-				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
+				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]);
+				event = event.data || false;
 				if(event && event.date && (
 					event.date === this.options.date ||
 					// Accept multi-day events
