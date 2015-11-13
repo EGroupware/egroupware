@@ -44,7 +44,7 @@
 			$definition = $_GET['definition'] ? $_GET['definition'] : $content['definition'];
 
 			$template = new etemplate_new('importexport.import_dialog');
-			
+
 			// Load application's translations
 			if($appname)
 			{
@@ -204,6 +204,7 @@
 			$data['appname'] = $preserve['appname'] = $appname ? $appname : ($definition_obj ? $definition_obj->application : '');
 			$data['definition'] = $definition;
 			$data['delimiter'] = $definition_obj->plugin_options['delimiter'];
+			$data['no_notifications'] = true;	// switch notifications off by default
 
 			$sel_options = self::get_select_options($data);
 
@@ -418,7 +419,7 @@
 					continue;
 				}
 				//error_log("Raw[Defn: {$options['csv_fields'][$index]} File: $header] Lang[Defn: $lang_defn File: $lang_file] MSG_ID[Defn: $defn_message_id File: $file_message_id]");
-		
+
 				// Problem
 				$message[] = lang("Column mismatch: %1 should be %2, not %3",
 					$index,$options['csv_fields'][$index], $header);
