@@ -135,7 +135,8 @@ class home_tutorial_ui
 		$tutorials = json_decode(self::getJsonData(),true);
 		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		if (!is_array($tutorials[$appname])) return false;
-		if (!$GLOBALS['egw_info']['server']['egw_tutorial_disable'])
+		if (!$GLOBALS['egw_info']['server']['egw_tutorial_disable']
+			|| $GLOBALS['egw_info']['server']['egw_tutorial_disable'] == 'intro')
 		{
 			$file = Array (
 				array(
