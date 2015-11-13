@@ -215,6 +215,13 @@ class calendar_uiforms extends calendar_ui
 		notifications::errors(true);
 		$messages = null;
 		$msg_permission_denied_added = false;
+		
+		// We'd like to just refresh the data as that's the fastest, but some changes
+		// affect more than just one event widget, so require a full refresh.
+		// $update_type is one of the update types
+		// (add, edit, update, delete)
+		$update_type = 'update';
+
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
 		unset($content['button']); unset($content['action']);
@@ -247,6 +254,7 @@ class calendar_uiforms extends calendar_ui
 				unset($content['recur_exception'][$key]);
 				$content['recur_exception'] = array_values($content['recur_exception']);
 			}
+			$update_type = 'edit';
 		}
 		// delete an alarm
 		if ($content['alarm']['delete_alarm'])
@@ -691,6 +699,7 @@ class calendar_uiforms extends calendar_ui
 					unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
 					unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 					$this->bo->update($recur_event,true);	// no conflict check here
+foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 					unset($recur_event);
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
 					unset($preserv['edit_single']);
@@ -701,6 +710,7 @@ class calendar_uiforms extends calendar_ui
 					$event['reference'] = $event['recurrence'] = 0;
 					$event['uid'] = $content['uid'];
 				}
+				$update_type = 'edit';
 			}
 			else	// we edited a non-reccuring event or the whole series
 			{
@@ -708,6 +718,8 @@ class calendar_uiforms extends calendar_ui
 				{
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
+						$update_type = 'edit';
+						
 						// we edit a existing series event
 						if ($event['start'] != $old_event['start'] ||
 							$event['whole_day'] != $old_event['whole_day'])
@@ -851,6 +863,7 @@ class calendar_uiforms extends calendar_ui
 				// series moved by splitting in two --> move alarms and exceptions
 				if ($old_event && $old_event['id'] != $event['id'])
 				{
+					$update_type = 'edit';
 					foreach ((array)$old_alarms as $alarm)
 					{
 						// check if alarms still needed in old event, if not delete it
@@ -919,7 +932,7 @@ class calendar_uiforms extends calendar_ui
 				}
 
 				$response = egw_json_response::get();
-				if($response)
+				if($response && $update_type == 'update')
 				{
 					// Directly update stored data.  If event is still visible, it will
 					// be notified & update itself.
@@ -935,7 +948,7 @@ class calendar_uiforms extends calendar_ui
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
-				egw_framework::refresh_opener($msg, 'calendar', $event['id']);
+				egw_framework::refresh_opener($msg, 'calendar', $event['id'], $event['recur_type'] ? 'edit' : $update_type);
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))
 				{
@@ -2640,12 +2653,42 @@ class calendar_uiforms extends calendar_ui
 				$d->setUser();
 			}
 			$event = $this->bo->read($eventId, $d, true);
-			$preserv['actual_date'] = $d;		// remember the date clicked
 
-			// For DnD, always create an exception
+			// For DnD, create an exception if they gave the date
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
 			$date = $d->format('ts');
+			
+			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
+			if (!is_array($conflicts) && $conflicts)
+			{
+				// now we need to add the original start as recur-execption to the series
+				$recur_event = $this->bo->read($event['reference']);
+				$recur_event['recur_exception'][] = $this->bo->date2ts($targetDateTime);
+				// check if we need to move the alarms, because they are next on that exception
+				foreach($recur_event['alarm'] as $id => $alarm)
+				{
+					if ($alarm['time'] == $content['edit_single'] - $alarm['offset'])
+					{
+						$rrule = calendar_rrule::event2rrule($recur_event, true);
+						foreach ($rrule as $time)
+						{
+							if ($content['edit_single'] < $time->format('ts'))
+							{
+								$alarm['time'] = $time->format('ts') - $alarm['offset'];
+								$this->bo->save_alarm($event['reference'], $alarm);
+								break;
+							}
+						}
+					}
+				}
+				unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
+				unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
+				$this->bo->update($recur_event,true);	// no conflict check here
+				unset($recur_event);
+				unset($event['edit_single']);			// if we further edit it, it's just a single event
+				unset($preserv['edit_single']);
+			}
 		}
 
 		// Drag a whole day to a time
@@ -2699,14 +2742,16 @@ class calendar_uiforms extends calendar_ui
 		$response = egw_json_response::get();
 		if(!is_array($conflicts) && $conflicts)
 		{
-			// Directly update stored data.  If event is still visible, it will
-			// be notified & update itself.
-			$this->to_client($event);
-			$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
-
-			if(!$sameday )
+			if(!$event['recur_type'] && !$old_event['recur_type'])
 			{
-				$response->call('egw.refresh', '','calendar',$event['id'],'update');
+				// Directly update stored data.  If event is still visible, it will
+				// be notified & update itself.
+				$this->to_client($event);
+				$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
+			}
+			else
+			{
+				$response->call('egw.refresh', '','calendar',$event['id'],'edit');
 			}
 		}
 		else if ($conflicts)

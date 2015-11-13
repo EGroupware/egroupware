@@ -162,7 +162,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				egw.dataStoreUID(old_cache_id,old_daywise);				
 				egw.dataStoreUID(new_cache_id,new_daywise);
 				
-				this._parent.removeChild(this);
+				// This should now cease to exist, as new events have been created
+				this.free();
+				return;
 			}
 
 			// Copy to avoid changes, which may cause nm problems

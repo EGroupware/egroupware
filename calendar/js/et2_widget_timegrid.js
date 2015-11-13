@@ -414,7 +414,8 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					{
 						// Need to refresh the event with original info to clean up
 						var app_id = event_widget.options.value.app_id ? event_widget.options.value.app_id : event_widget.options.value.id + (event_widget.options.value.recur_type ? ':'+event_widget.options.value.recur_date : '');
-						egw().dataStoreUID(app_id,event_dataGetUIDdata(app_id));
+						egw().dataStoreUID('calendar::'+app_id,egw.dataGetUIDdata('calendar::'+app_id).data);
+						loading.remove();
 						return;
 					}
 					//Get infologID if in case if it's an integrated infolog event
