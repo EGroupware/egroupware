@@ -33,6 +33,7 @@ require_once('HTTP/WebDAV/Server.php');
  * - /<current-username>/addressbook-<other-username>/ shared addressbooks from other user or group
  * - /<current-username>/addressbook-accounts/ all accounts current user has rights to see
  * - /<username>/calendar/    calendar of user <username> given the user has rights to view it
+ * - /<username>/calendar/?download download whole calendar as .ics file (GET request!)
  * - /<current-username>/calendar-<other-username>/ shared calendar from other user or group (only current <username>!)
  * - /<username>/inbox/       scheduling inbox of user <username>
  * - /<username>/outbox/      scheduling outbox of user <username>
