@@ -259,7 +259,10 @@ app.classes.calendar = AppJS.extend(
 				{
 					event = egw.dataGetUIDdata('calendar::'+_id);
 				}
-				if(_type != 'edit' && event && event.data && event.data.date)
+				if(_type != 'edit' && event && event.data && event.data.date && 
+					// Cannot handle adding recurring events easily
+					!(_type == 'add' && event.data.recur_type)
+				)
 				{
 					var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date,this.state.owner)
 					var daywise = egw.dataGetUIDdata(new_cache_id);
