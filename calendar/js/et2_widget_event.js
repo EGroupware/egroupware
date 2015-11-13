@@ -315,8 +315,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			var status = this.options.value.participants[id];
 
-			if (parseInt(id) < 0) continue;	// as we cant accept/reject groups, we dont care about them here
-
 			status = et2_calendar_event.split_status(status);
 
 			switch (status)
