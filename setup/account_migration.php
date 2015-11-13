@@ -55,6 +55,12 @@ if (!$from && !($from = $GLOBALS['egw_info']['server']['auth_type']))
 	$from = 'sql';
 }
 $to = $from == 'sql' ? 'ldap' : 'sql';
+
+// for Univention: cant check /etc/lsb-release, because it's not in open_basedir!
+if ($to == 'ldap' && @file_exists('/usr/share/univention-directory-manager-tools'))
+{
+	$to = 'univention';
+}
 $direction = strtoupper($from).' --> '.strtoupper($to);
 
 $GLOBALS['egw_setup']->html->show_header($direction,False,'config',$GLOBALS['egw_setup']->ConfigDomain .
@@ -76,7 +82,7 @@ $cmd = new setup_cmd_ldap(array(
 
 if (!$_POST['migrate'] && !$_POST['passwords2sql'])
 {
-	$accounts = $cmd->accounts($from == 'ldap');
+	$accounts = $cmd->accounts($from);
 
 	// now outputting the account selection
 	$setup_tpl->set_block('migration','header','header');

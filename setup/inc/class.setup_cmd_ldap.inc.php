@@ -146,6 +146,7 @@ class setup_cmd_ldap extends setup_cmd
 				break;
 			case 'migrate_to_ldap':
 			case 'migrate_to_sql':
+			case 'migrate_to_univention':
 			case 'passwords_to_sql':
 				$msg = $this->migrate($this->sub_command);
 				break;
@@ -421,18 +422,21 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Migrate to other account storage
 	 *
-	 * @param boolean|string $to_ldap true: sql --> ldap, false: ldap --> sql, "passwords_to_sql", "migrate_to_(sql|ldap)"
+	 * @param string $mode "passwords_to_sql", "migrate_to_(sql|ldap|univention)"
 	 * @return string with success message
 	 * @throws Exception on error
 	 */
-	private function migrate($to_ldap)
+	private function migrate($mode)
 	{
-		$passwords2sql = $to_ldap === "passwords_to_sql";
-		if (is_string($to_ldap)) $to_ldap = substr($to_ldap, -8) == '_to_ldap';
+		// support old boolean mode
+		if (is_bool($mode)) $mode = $mode ? 'migrate_to_ldap' : 'migrate_to_sql';
+
+		$passwords2sql = $mode === "passwords_to_sql";
+		list(,$to) = explode('_to_', $mode);
 
 		$msg = array();
 		// if migrating to ldap, check ldap and create context if not yet exiting
-		if ($to_ldap && !empty($this->ldap_admin_pw))
+		if ($to == 'ldap' && !empty($this->ldap_admin_pw))
 		{
 			$msg[] = $this->create();
 		}
@@ -441,20 +445,20 @@ class setup_cmd_ldap extends setup_cmd
 			$msg[] = $this->connect();
 		}
 		// read accounts from old store
-		$accounts = $this->accounts(!$to_ldap, $passwords2sql ? 'accounts' : 'both');
+		$accounts = $this->accounts($to == 'sql' ? 'ldap' : 'sql', $passwords2sql ? 'accounts' : 'both');
 
 		// clean up SQL before migration
-		if (!$to_ldap && $this->truncate_egw_accounts)
+		if ($to == 'sql' && $this->truncate_egw_accounts)
 		{
-		        $GLOBALS['egw']->db->query('TRUNCATE TABLE egw_accounts', __LINE__, __FILE__);
-		        $GLOBALS['egw']->db->query('DELETE FROM egw_addressbook WHERE account_id IS NOT NULL', __LINE__, __FILE__);
+			$GLOBALS['egw']->db->query('TRUNCATE TABLE egw_accounts', __LINE__, __FILE__);
+			$GLOBALS['egw']->db->query('DELETE FROM egw_addressbook WHERE account_id IS NOT NULL', __LINE__, __FILE__);
 		}
 		// instanciate accounts obj for new store
-		$accounts_obj = $this->accounts_obj($to_ldap);
+		$accounts_obj = $this->accounts_obj($to);
 
 		$accounts_created = $groups_created = $errors = $egw_info_set = 0;
 		$emailadmin_src = $ldap_class = null;
-		$target = $to_ldap ? 'LDAP' : 'SQL';
+		$target = strtoupper($to);
 		foreach($accounts as $account_id => $account)
 		{
 			if (isset($this->only) && !in_array($account_id,$this->only))
@@ -511,7 +515,7 @@ class setup_cmd_ldap extends setup_cmd
 					$errors++;
 					continue;
 				}
-				if ($to_ldap)
+				if ($to != 'sql')
 				{
 					if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
 					{
@@ -560,7 +564,7 @@ class setup_cmd_ldap extends setup_cmd
 					if (!isset($emailadmin_src))
 					{
 						include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$ldap_class.'.inc.php');
-						if ($to_ldap)
+						if ($to != 'sql')
 						{
 							$emailadmin_src = new emailadmin_smtp_sql();
 							$emailadmin_dst = new $ldap_class();
@@ -662,7 +666,7 @@ class setup_cmd_ldap extends setup_cmd
 			}
 		}
 		ob_start();
-		$addressbook->migrate2ldap($to_ldap ? 'accounts' : 'accounts-back');
+		$addressbook->migrate2ldap($to != 'sql' ? 'accounts' : 'accounts-back');
 		$msgs = array_merge($msg, explode("\n", strip_tags(ob_get_clean())));
 
 		$this->restore_db();
@@ -723,16 +727,16 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Read all accounts from sql or ldap
 	 *
-	 * @param boolean $from_ldap =true true: ldap, false: sql
+	 * @param string $from ='ldap', 'ldap', 'sql', 'univention'
 	 * @param string $type ='both'
 	 * @return array
 	 */
-	public function accounts($from_ldap=true, $type='both')
+	public function accounts($from='ldap', $type='both')
 	{
-		$accounts_obj = $this->accounts_obj($from_ldap);
+		$accounts_obj = $this->accounts_obj($from);
 		//error_log(__METHOD__."(from_ldap=".array2string($from_ldap).') get_class(accounts_obj->backend)='.get_class($accounts_obj->backend));
 
-		$accounts = $accounts_obj->search(array('type' => $type, 'objectclass' => true));
+		$accounts = $accounts_obj->search(array('type' => $type, 'objectclass' => true, 'active' => false));
 
 		foreach($accounts as $account_id => &$account)
 		{
@@ -760,10 +764,10 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Instancate accounts object from either sql of ldap
 	 *
-	 * @param boolean $ldap true: ldap, false: sql
+	 * @param string $type 'ldap', 'sql', 'univention'
 	 * @return accounts
 	 */
-	private function accounts_obj($ldap)
+	private function accounts_obj($type)
 	{
 		static $enviroment_setup=null;
 		if (!$enviroment_setup)
@@ -771,19 +775,19 @@ class setup_cmd_ldap extends setup_cmd
 			parent::_setup_enviroment($this->domain);
 			$enviroment_setup = true;
 		}
-		if ($ldap) $this->connect();	// throws exception, if it can NOT connect
+		if ($type != 'sql') $this->connect();	// throws exception, if it can NOT connect
 
 		// otherwise search does NOT work, as accounts_sql uses addressbook_bo for it
-		$GLOBALS['egw_info']['server']['account_repository'] = $ldap ? 'ldap' : 'sql';
+		$GLOBALS['egw_info']['server']['account_repository'] = $type;
 
 		if (!self::$egw_setup->setup_account_object(
 			array(
 				'account_repository' => $GLOBALS['egw_info']['server']['account_repository'],
 			) + $this->as_array()) ||
 			!is_a(self::$egw_setup->accounts,'accounts') ||
-			!is_a(self::$egw_setup->accounts->backend,'accounts_'.($ldap?'ldap':'sql')))
+			!is_a(self::$egw_setup->accounts->backend,'accounts_'.$type))
 		{
-			throw new Exception(lang("Can NOT instancate accounts object for %1",$ldap?'LDAP':'SQL'));
+			throw new Exception(lang("Can NOT instancate accounts object for %1", strtoupper($type)));
 		}
 		return self::$egw_setup->accounts;
 	}
@@ -1015,7 +1019,6 @@ class setup_cmd_ldap extends setup_cmd
 	 */
 	private function _create_node($dn,$extra=array())
 	{
-		//echo "<p>_create_node($dn,".array2string($extra).")</p>\n";
 		// check if the node already exists and return if it does
 		if (@ldap_read($this->test_ldap->ds,$dn,'objectClass=*'))
 		{
