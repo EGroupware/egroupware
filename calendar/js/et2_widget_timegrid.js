@@ -634,14 +634,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			.css('height', (this.options.height - this.gridHeader.outerHeight(true))+'px');
 
 		var new_height = this.scrolling.height() / rowsToDisplay;
-		if(new_height != this.rowHeight)
-		{
-			this.rowHeight = new_height;
-			var rows = $j('.calendar_calTimeRow',this.scrolling).height(this.rowHeight);
-			this.days.css('height', (this.rowHeight*rows.length)+'px');
-
-			$j('.calendar_calAddEvent',this.scrolling).height(this.rowHeight);
-		}
+		this.rowHeight = new_height;
+		var rows = $j('.calendar_calTimeRow',this.scrolling).height(this.rowHeight);
+		this.days.css('height', (this.rowHeight*rows.length)+'px');
+		$j('.calendar_calAddEvent',this.scrolling).height(this.rowHeight);
+		
 		// Scroll to start of day
 		this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
 		this.scrolling.scrollTop(this._top_time);

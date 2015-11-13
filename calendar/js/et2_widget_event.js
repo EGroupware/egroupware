@@ -44,15 +44,32 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	init: function() {
 		this._super.apply(this, arguments);
 
+		var event = this;
+		
 		// Main container
 		this.div = $j(document.createElement("div"))
 			.addClass("calendar_calEvent")
 			.addClass(this.options.class)
 			.css('width',this.options.width)
 			.on('mouseenter', function() {
-				// Hacky to remove egw's tooltip border
+				// Hacky to remove egw's tooltip border and let the mouse in
 				window.setTimeout(function() {
-					$j('body .egw_tooltip').css('border','none');
+					$j('body .egw_tooltip')
+						.css('border','none')
+						.on('mouseenter', function() {
+							event.div.off('mouseleave.tooltip');
+							$j('body.egw_tooltip').remove();
+							$j('body').append(this);
+							$j(this).stop(true).fadeTo(400, 1)
+								.on('mouseleave', function() {
+									$j(this).fadeOut('400', function() {
+										$j(this).remove();
+										// Set up to work again
+										event.set_statustext(event._tooltip());
+									});
+								});
+						});
+
 				},105);
 			});
 		this.title = $j(document.createElement('div'))
