@@ -514,16 +514,16 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				var end = new Date(event.end);
 				end = new Date(end.valueOf() + end.getTimezoneOffset() * 60 * 1000);
 				var end_key = end.getFullYear() +'-'+end.getMonth();
+				var year = start.getFullYear();
+				var month = start.getMonth();
 				while(key !== end_key)
 				{
-					var year = start.getFullYear();
-					var month = start.getMonth();
-					if (++month > 12)
+					if (++month > 11)
 					{
 						++year;
-						month = 1;
+						month = 0;
 					}
-					key = sprintf('%04d-%02d',year,month);
+					key = sprintf('%04d-%d',year,month);
 					for(var i = 0; i < labels.length; i++)
 					{
 						if(labels[i].id == key)
@@ -764,6 +764,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		
 		// Group the events
 		var events = {};
+		debugger;
 		for(var i = 0; i < this.value.length; i++)
 		{
 			grouper.group.call(this, labels, events, this.value[i]);
