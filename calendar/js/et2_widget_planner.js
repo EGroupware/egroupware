@@ -374,7 +374,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 						if(already_added.indexOf(user) < 0)
 						{
 							labels.push({id: user, label: label, data: {participants:user,owner:''}});
-							already_added.push(user);
+							already_added.push(''+user);
 						}
 					}
 					else if (user < 0)	// groups
@@ -385,7 +385,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 								if(already_added.indexOf(''+id) < 0)
 								{
 									this.push({id: id, label: result[id], data: {participants:id,owner:id}});
-									already_added.push(id);
+									already_added.push(''+id);
 								}
 							}
 						},labels);
@@ -398,7 +398,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 							if(accounts[j].value === user)
 							{
 								labels.push({id: user, label: accounts[j].label, data: {participants:user,owner:user}});
-								already_added.push(user);
+								already_added.push(''+user);
 								break;
 							}
 						}
@@ -764,7 +764,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		
 		// Group the events
 		var events = {};
-		debugger;
 		for(var i = 0; i < this.value.length; i++)
 		{
 			grouper.group.call(this, labels, events, this.value[i]);
