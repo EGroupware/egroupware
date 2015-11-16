@@ -2433,7 +2433,20 @@ abstract class egw_framework
 			foreach($account_id < 0 && $_resolve_groups ?
 				$GLOBALS['egw']->accounts->members($account_id, true) : array($account_id) as $account_id)
 			{
-				$list[$account_id] = $GLOBALS['egw']->accounts->id2name($account_id, $_field);
+				// Make sure name is formatted according to preference
+				if($_field == 'account_fullname')
+				{
+					$list[$account_id] = common::display_fullname(
+						$GLOBALS['egw']->accounts->id2name($account_id, 'lid'),
+						$GLOBALS['egw']->accounts->id2name($account_id, 'account_firstname'),
+						$GLOBALS['egw']->accounts->id2name($account_id, 'account_lastname'),
+						$account_id
+					);
+				}
+				else
+				{
+					$list[$account_id] = $GLOBALS['egw']->accounts->id2name($account_id, $_field);
+				}
 			}
 		}
 
