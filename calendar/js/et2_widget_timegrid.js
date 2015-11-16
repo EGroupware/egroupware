@@ -584,6 +584,13 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		// Pixels
 		this.rowHeight = this.scrolling.height() / rowsToDisplay;
 
+		// We need a reasonable bottom limit here...
+		if(this.rowHeight < 5)
+		{
+			this.options.granularity *= 2;
+			return this._drawTimes();
+		}
+
 		// the hour rows
 		var show = {
 			5  : [0,15,30,45],
@@ -592,6 +599,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			45 : [0,15,30,45]
 		};
 		var html = '';
+		var line_height = parseInt(this.div.css('line-height'));
 		this._top_time = 0
 		for(var t = 0,i = 0; t < 1440; t += granularity,++i)
 		{
@@ -613,6 +621,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			}
 
 			var time_label = (typeof show[granularity] === 'undefined' ? t % 60 === 0 : show[granularity].indexOf(t % 60) !== -1) ? time : '';
+			if(this.rowHeight < line_height)
+			{
+				// Rows too small for regular label frequency, use automatic calculation
+				time_label = ( i % Math.ceil(line_height / this.rowHeight) ) === 0 ? time : '';
+			}
 			html += '<div class="calendar_calTimeRowTime et2_clickable" data-time="'+time.trim()+'" data-hour="'+Math.floor(t/60)+'" data-minute="'+(t%60)+'">'+time_label+"</div></div>\n";
 		}
 
