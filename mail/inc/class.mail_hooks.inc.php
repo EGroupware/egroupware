@@ -526,7 +526,7 @@ class mail_hooks
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
 
-		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !html::$ua_mobile)
 		{
 			$file = Array(
 				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),

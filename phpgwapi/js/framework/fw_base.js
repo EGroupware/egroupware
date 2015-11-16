@@ -32,7 +32,7 @@ var fw_base =  Class.extend({
 		window.egw_webserverUrl = _webserverUrl;
 
 		this.serializedTabState = '';
-		this.notifyTabChangeEnabled = false;
+		this.notifyTabChangeEnabled = true;
 
 		this.sidemenuUi = null;
 		this.tabsUi = null;
@@ -395,20 +395,31 @@ var fw_base =  Class.extend({
 
 		if (this.notifyTabChangeEnabled)
 		{
-			//Send the current tab list to the server
-			var data = this.assembleTabList();
-
-			//Serialize the tab list and check whether it really has changed since the last
-			//submit
-			var serialized = egw.jsonEncode(data);
-			if (serialized != this.serializedTabState)
-			{
-				this.serializedTabState = serialized;
-
-				var request = egw.jsonq("home.jdots_framework.ajax_tab_changed_state", [data]);
-			}
+			this.storeTabsStatus();
 		}
 	},
+	
+	/**
+	 * Store last status of tabs
+	 * tab status being used in order to open all previous opened
+	 * tabs and to activate the last active tab
+	 */
+	storeTabsStatus: function ()
+	{
+		//Send the current tab list to the server
+		var data = this.assembleTabList();
+
+		//Serialize the tab list and check whether it really has changed since the last
+		//submit
+		var serialized = egw.jsonEncode(data);
+		if (serialized != this.serializedTabState)
+		{
+			this.serializedTabState = serialized;
+
+			egw.jsonq("home.jdots_framework.ajax_tab_changed_state", [data]);
+		}
+	},
+	
 	/**
 	 * @param {function} _opened
 	 * Sends sidemenu entry category open/close information to the server using an AJAX request

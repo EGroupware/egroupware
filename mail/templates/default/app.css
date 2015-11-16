@@ -838,6 +838,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		padding-top: 8px;
 		padding-bottom: 8px;
 	}
+	table.egwGridView_grid span.et2_date_ro.et2_label {
+		font-size: 9px;
+	}
 	/*Make Font size readable in mobile theme*/
 	#mail-compose .mailComposeHeaders span, #mail-compose .mailComposeHeadersSection span,
 	div.mailDisplayHeaders > span:first-child, div.mailComposeHeaders > span:first-child, div.mailComposeBody, div.mailPreviewHeaders > *{
@@ -845,6 +848,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	}
 	.mailDisplayHeaders, .mailDisplayAttachments > * {
 		font-size: large !important;
+	}
+	span.status_img {
+		background-image: none !important;
 	}
 }
 /* tablets and smartphones (portrait) ----------- */

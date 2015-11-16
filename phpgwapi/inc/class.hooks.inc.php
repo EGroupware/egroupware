@@ -373,6 +373,7 @@ class hooks
 	 */
 	public static function pgp_encryption_menu($appname)
 	{
+		if (html::$ua_mobile) return;
 		// PGP Encryption (Mailvelope plugin) restore/backup menu
 		$file = Array(
 			'Backup/Restore ...' => 'javascript:app.'.$appname.'.mailvelopeCreateBackupRestoreDialog();',

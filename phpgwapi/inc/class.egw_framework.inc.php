@@ -587,7 +587,7 @@ abstract class egw_framework
 		//error_log(__METHOD__."() this->template=$this->template, this->template_dir=$this->template_dir, get_class(this)=".get_class($this));
 		$tmpl = new Template(EGW_SERVER_ROOT.$this->template_dir);
 
-		$tmpl->set_file(array('login_form' => 'login.tpl'));
+		$tmpl->set_file(array('login_form' => html::$ua_mobile?'login_mobile.tpl':'login.tpl'));
 
 		$tmpl->set_var('lang_message',$GLOBALS['loginscreenmessage']);
 

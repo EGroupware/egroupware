@@ -132,6 +132,7 @@ class home_tutorial_ui
 	 */
 	public static function tutorial_menu()
 	{
+		if (html::$ua_mobile) return;
 		$tutorials = json_decode(self::getJsonData(),true);
 		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		if (!is_array($tutorials[$appname])) return false;

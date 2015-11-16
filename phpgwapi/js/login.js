@@ -15,6 +15,9 @@ egw_LAB.wait(function()
 {
 	$j(document).ready(function()
 	{
+		// lock the device orientation in portrait view
+		if (screen.orientation) screen.orientation.lock('portrait');
+		
 		function do_social(_data)
 		{
 			var isPixelegg = $j('link[href*="pixelegg.css"]')[0];

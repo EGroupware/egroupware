@@ -109,7 +109,7 @@ class infolog_hooks
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}
 
-		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !html::$ua_mobile)
 		{
 			$file = Array(
 				'Site configuration' => egw::link('/index.php',array(
