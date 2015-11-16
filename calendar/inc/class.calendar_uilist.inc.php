@@ -484,9 +484,14 @@ class calendar_uilist extends calendar_ui
 		// Add in some select options
 		$users = is_array($search_params['users']) ? $search_params['users'] : explode(',',$search_params['users']);
 
+		$this->bo->warnings['groupmembers'] = '';
 		if($message = $this->check_owners_access($users,$no_access))
 		{
 			egw_json_response::get()->error($message);
+		}
+		else if($this->bo->warnings['groupmembers'])
+		{
+			egw_json_response::get()->error($this->bo->warnings['groupmembers']);
 		}
 		
 		foreach($users as $owner)
