@@ -968,12 +968,10 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			}
 			break;
 
-		case 'delete':					// delete of regular event
-		case 'delete_keep_exceptions':	// series and user selected to keep the exceptions
-		case 'delete_exceptions':		// series and user selected to delete the exceptions too
+		case 'delete':					// delete of event (regular or series)
 			$exceptions_kept = null;
 			if ($this->bo->delete($event['id'], (int)$content['edit_single'], false, $event['no_notifications'],
-				$button == 'delete_exceptions', $exceptions_kept))
+				$content['delete_exceptions'] == 'true', $exceptions_kept))
 			{
 				if ($event['recur_type'] != MCAL_RECUR_NONE && $content['reference'] == 0 && !$content['edit_single'])
 				{

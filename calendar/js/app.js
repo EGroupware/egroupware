@@ -1013,7 +1013,8 @@ app.classes.calendar = AppJS.extend(
 					{
 						if (_button_id != 'dialog[cancel]')
 						{
-							self.et2._inst.submit(_button_id);
+							widget.getRoot().getWidgetById('delete_exceptions').set_value(_button_id == 'button[delete_exceptions]');
+							widget.getInstanceManager().submit('button[delete]');
 							return true;
 						}
 						else
