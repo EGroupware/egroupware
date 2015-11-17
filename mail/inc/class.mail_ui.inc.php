@@ -436,9 +436,10 @@ class mail_ui
 							'actions'        => self::get_actions(),
 							'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 							'placeholder_actions' => array('composeasnew'),
-							'header_row' => 'mail.mobile_index.header_right'
+							
 						);
 					}
+					if (html::$ua_mobile) $content[self::$nm_index]['header_row'] = 'mail.mobile_index.header_right';
 				}
 
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
