@@ -488,8 +488,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	
 	_sameday_check: function(event)
 	{
-		// Event somehow got orphaned
-		if(!this._parent)
+		// Event somehow got orphaned, or deleted
+		if(!this._parent || event === null)
 		{
 			return false;
 		}

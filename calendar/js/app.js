@@ -270,6 +270,7 @@ app.classes.calendar = AppJS.extend(
 					if(_type === 'delete')
 					{
 						daywise.splice(daywise.indexOf(_id),1);
+						egw.dataStoreUID('calendar::'+_id, null);
 					}
 					else if (daywise.indexOf(_id) < 0)
 					{

@@ -670,6 +670,11 @@ class calendar_uilist extends calendar_ui
 								}
 							}
 						}
+
+						if(egw_json_response::isJSONResponse())
+						{
+							egw_json_response::get()->call('egw.refresh','','calendar',$id,'delete');
+						}
 					}
 					else
 					{
@@ -690,6 +695,12 @@ class calendar_uilist extends calendar_ui
 						if($this->bo->save($event))
 						{
 							$success++;
+
+							if(egw_json_response::isJSONResponse())
+							{
+								egw_json_response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
+								egw_json_response::get()->call('egw.refresh','','calendar',$id,'edit');
+							}
 							break;
 						}
 					}
@@ -708,6 +719,10 @@ class calendar_uilist extends calendar_ui
 							if ($this->bo->set_status($event,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date,
 								false,true,$skip_notification))
 							{
+								if(egw_json_response::isJSONResponse())
+								{
+									egw_json_response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
+								}
 								$success++;
 								//$msg = lang('Status changed');
 							}
