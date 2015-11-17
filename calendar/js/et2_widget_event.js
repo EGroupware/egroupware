@@ -331,7 +331,10 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end
 		var cat = et2_createWidget('select-cat',{'readonly':true},this);
 		cat.set_value(this.options.value.category);
-		var cat_label = cat.span.text();
+		var cat_label = [];
+		cat.span.children().each(function() {
+			cat_label.push($j(this).text());
+		});
 		cat.destroy();
 		
 		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background: '+bg_color+';">'+
@@ -346,7 +349,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				this.options.value.description+'</p>'+
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
 				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + this.options.value.location+'</p>' : '')+
-				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label+'</p>' : '')+
+				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label.join(', ')+'</p>' : '')+
 				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
 					(this.options.value.parts ? this.options.value.parts.replace("\n","<br />"):'')+'</p>'+
 			'</div>'+
