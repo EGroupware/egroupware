@@ -2437,7 +2437,7 @@ abstract class egw_framework
 				if($_field == 'account_fullname')
 				{
 					$list[$account_id] = common::display_fullname(
-						$GLOBALS['egw']->accounts->id2name($account_id, 'lid'),
+						$GLOBALS['egw']->accounts->id2name($account_id, 'account_lid'),
 						$GLOBALS['egw']->accounts->id2name($account_id, 'account_firstname'),
 						$GLOBALS['egw']->accounts->id2name($account_id, 'account_lastname'),
 						$account_id
