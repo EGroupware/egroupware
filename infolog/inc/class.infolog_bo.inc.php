@@ -752,6 +752,15 @@ class infolog_bo
 		{
 			return false;
 		}
+		
+		// Make sure status is still valid if the type changes
+		if($old['info_type'] != $values['info_type'] && $values['info_status'])
+		{
+			if(!in_array($values['info_status'], array_keys($this->status[$values['info_type']])))
+			{
+				$values['info_status'] = $this->status['defaults'][$values['info_type']];
+			}
+		}
 		if ($status_only && !$undelete)	// make sure only status gets writen
 		{
 			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set
@@ -833,7 +842,7 @@ class infolog_bo
 				$custom = egw_customfields::get('infolog');
 				foreach($custom as $c_name => $c_field)
 				{
-					if($c_field['type2']) $type2 = explode(',',$c_field['type2']);
+					if($c_field['type2']) $type2 = is_array($c_field['type2']) ? $c_field['type2'] : explode(',',$c_field['type2']);
 					if($c_field['needed'] && (!$c_field['type2'] || $c_field['type2'] && in_array($values['info_type'],$type2)))
 					{
 						// Required custom field
