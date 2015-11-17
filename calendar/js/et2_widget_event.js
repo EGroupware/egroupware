@@ -482,7 +482,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	_sameday_check: function(event)
 	{
 		// Event somehow got orphaned
-		if(!this._parent || !this._parent.instanceOf(et2_calendar_daycol))
+		if(!this._parent)
 		{
 			return false;
 		}

@@ -228,7 +228,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			// Create event
 			var event = et2_createWidget('calendar-event',{
-				id:events[c].app_id||events[c].id,
+				id:events[c].id,
 				value: events[c]
 			},this);
 			if(this.isInTree())
@@ -241,9 +241,9 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 		// Seperate loop so column sorting finds all children in the right place
-		for(var c = 0; c < events.length; c++)
+		for(var c = 0; c < events.length && c < this._children.length; c++)
 		{
-			this._children[c].set_value(events[c]);
+			this.getWidgetById(events[c].id).set_value(events[c]);
 		}
 	},
 

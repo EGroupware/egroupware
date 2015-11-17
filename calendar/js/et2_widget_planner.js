@@ -1842,7 +1842,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				var row = $j(_ev.target).closest('.calendar_plannerRowWidget');
 				var data = row.length ? row[0].dataset : {};
 				this.egw().open(null, 'calendar', 'add', jQuery.extend({
-					date: date.toJSON(),
+					start: date.toJSON(),
 					hour: date.getUTCHours(),
 					minute: date.getUTCMinutes()
 				},data) , '_blank');

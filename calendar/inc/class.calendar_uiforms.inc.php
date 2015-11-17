@@ -116,11 +116,18 @@ class calendar_uiforms extends calendar_ui
 		// by default include the owner as participant (the user can remove him)
 		$extra_participants[] = $owner;
 
-		$start = $this->bo->date2ts(array(
-			'full' => isset($_GET['date']) && (int) $_GET['date'] ? (int) $_GET['date'] : $this->date,
-			'hour' => (int) (isset($_GET['hour']) && (int) $_GET['hour'] ? $_GET['hour'] : $this->bo->cal_prefs['workdaystarts']),
-			'minute' => (int) $_GET['minute'],
-		));
+		if(isset($_GET['start']))
+		{
+			$start = egw_time::to($_GET['start'], 'ts');
+		}
+		else
+		{
+			$start = $this->bo->date2ts(array(
+				'full' => isset($_GET['date']) && (int) $_GET['date'] ? (int) $_GET['date'] : $this->date,
+				'hour' => (int) (isset($_GET['hour']) && (int) $_GET['hour'] ? $_GET['hour'] : $this->bo->cal_prefs['workdaystarts']),
+				'minute' => (int) $_GET['minute'],
+			));
+		}
 		//echo "<p>_GET[date]=$_GET[date], _GET[hour]=$_GET[hour], _GET[minute]=$_GET[minute], this->date=$this->date ==> start=$start=".date('Y-m-d H:i',$start)."</p>\n";
 
 		$participant_types['u'] = $participant_types = $participants = array();
@@ -1393,8 +1400,8 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 				}
 			}
 			// set new start and end if given by $_GET
-			if(isset($_GET['start'])) { $event['start'] = $_GET['start']; }
-			if(isset($_GET['end'])) { $event['end'] = $_GET['end']; }
+			if(isset($_GET['start'])) { $event['start'] = egw_time::to($_GET['start'],'ts'); }
+			if(isset($_GET['end'])) { $event['end'] = egw_time::to($_GET['end'],'ts'); }
 			if(isset($_GET['non_blocking'])) { $event['non_blocking'] = (bool)$_GET['non_blocking']; }
 			// check if the event is the whole day
 			$start = $this->bo->date2array($event['start']);
