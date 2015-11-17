@@ -321,7 +321,7 @@ class egw_ckeditor_config
 			// to use browsers native spellchecker, you have to hold CMD/CTRL button on rightclick to
 			// access the browsers spell correction options
 			if ($GLOBALS['egw_info']['server']['enabled_spellcheck']!='YesNoSCAYT') $config['disableNativeSpellChecker'] = false;
-			$spellchecker_button = 'SpellChecker';
+			
 			if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
 				is_executable($GLOBALS['egw_info']['server']['aspell_path']) &&
 				($GLOBALS['egw_info']['server']['enabled_spellcheck']!='YesUseWebSpellCheck' &&
