@@ -339,7 +339,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			else
 			{
 				time = jQuery.datepicker.formatTime(
-					egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
+					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
 					{
 						hour: element.dropEnd.attr('data-hour'),
 						minute: element.dropEnd.attr('data-minute'),
@@ -606,14 +606,14 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			html += '<div class="calendar_calTimeRow" style="height: '+this.rowHeight+'px;">';
 			// show time for full hours, always for 45min interval and at least on every 3 row
 			var time = jQuery.datepicker.formatTime(
-					egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
+					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
 					{
 						hour: t / 60,
 						minute: t % 60,
 						seconds: 0,
 						timezone: 0
 					},
-					{"ampm": (egw.preference("timeformat") == "12")}
+					{"ampm": (egw.preference("timeformat") === "12")}
 				);
 			if(t <= wd_start && t + granularity > wd_start)
 			{

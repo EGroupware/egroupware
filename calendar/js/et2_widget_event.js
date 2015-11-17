@@ -433,7 +433,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			if (event['end_m'] > 24*60)
 			{
 				timespan = jQuery.datepicker.formatTime(
-					egw.preference("timeformat") === 12 ? "h:mmtt" : "HH:mm",
+					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
 					{
 						hour: event.start_m / 60,
 						minute: event.start_m % 60,
@@ -442,7 +442,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 					},
 					{"ampm": (egw.preference("timeformat") === "12")}
 				).trim()+' - '+jQuery.datepicker.formatTime(
-					egw.preference("timeformat") === 12 ? "h:mmtt" : "HH:mm",
+					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
 					{
 						hour: event.end_m / 60,
 						minute: event.end_m % 60,
@@ -464,7 +464,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			duration = Math.floor(duration/60) + this.egw().lang('h')+(duration%60 ? duration%60 : '');
 
 			timespan = jQuery.datepicker.formatTime(
-				egw.preference("timeformat") === 12 ? "h:mmtt" : "HH:mm",
+				egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
 				{
 					hour: event.start_m / 60,
 					minute: event.start_m % 60,

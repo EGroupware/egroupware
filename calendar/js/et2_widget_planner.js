@@ -1414,14 +1414,14 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var time = this._get_time_from_position(position.left, position.top);
 		element.dropEnd = time;
 		var formatted_time = jQuery.datepicker.formatTime(
-			egw.preference("timeformat") == 12 ? "h:mmtt" : "HH:mm",
+			egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
 			{
 				hour: time.getUTCHours(),
 				minute: time.getUTCMinutes(),
 				seconds: 0,
 				timezone: 0
 			},
-			{"ampm": (egw.preference("timeformat") == "12")}
+			{"ampm": (egw.preference("timeformat") === "12")}
 		);
 
 		element.innerHTML = '<div class="calendar_d-n-d_timeCounter"><span class="calendar_timeDemo" >'+formatted_time+'</span></div>';

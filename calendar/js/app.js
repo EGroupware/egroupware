@@ -2454,7 +2454,7 @@ app.classes.calendar = AppJS.extend(
 			var range = '';
 
 			var datefmt = egw.preference('dateformat');
-			var timefmt = egw.preference('timeformat') == 12 ? 'h:i a' : 'H:i';
+			var timefmt = egw.preference('timeformat') === '12' ? 'h:i a' : 'H:i';
 
 			var month_before_day = datefmt[0].toLowerCase() == 'm' ||
 				datefmt[2].toLowerCase() == 'm' && datefmt[4] == 'd';
