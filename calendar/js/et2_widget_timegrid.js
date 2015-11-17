@@ -585,7 +585,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.rowHeight = this.scrolling.height() / rowsToDisplay;
 
 		// We need a reasonable bottom limit here...
-		if(this.rowHeight < 5)
+		if(this.rowHeight < 5 && this.div.is(':visible'))
 		{
 			this.options.granularity *= 2;
 			return this._drawTimes();

@@ -220,7 +220,7 @@ class calendar_uiforms extends calendar_ui
 		// affect more than just one event widget, so require a full refresh.
 		// $update_type is one of the update types
 		// (add, edit, update, delete)
-		$update_type = 'update';
+		$update_type = $event['recur_type'] == MCAL_RECUR_NONE ? 'update' : 'edit';
 
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
@@ -842,6 +842,13 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			{
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
+			}
+			
+			// Event spans multiple days, need an edit to make sure they all get updated
+			// We could check old date, as removing from days could still be an update
+			if(date('Ymd', $event['start']) != date('Ymd', $event['end']))
+			{
+				$update_type = 'edit';
 			}
 			// check if there are messages from update, eg. removed participants or categories because of missing rights
 			if ($messages)

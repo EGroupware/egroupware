@@ -247,6 +247,14 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(this.options.date)
 		{
 			egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
+
+			// Remove existing events
+			while(this._children.length > 0)
+			{
+				var node = this._children[this._children.length-1];
+				this.removeChild(node);
+				node.free();
+			}
 		}
 
 		this.options.date = new_date;

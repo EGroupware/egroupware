@@ -2770,7 +2770,9 @@ app.classes.calendar = AppJS.extend(
 				.prependTo(date.getDOMNode())
 				.addClass('et2_clickable')
 				.on('click', function() {
-					app.calendar.update_state({date: new Date().toJSON()});
+					var tempDate = new Date();
+					var today = new Date(tempDate.getFullYear(), tempDate.getUTCMonth(), tempDate.getUTCDate());
+					app.calendar.update_state({date: today.toJSON()});
 				});
 			var position_today = function() {
 				var week_col = $j('#calendar-sidebox_date th.ui-datepicker-week-col');

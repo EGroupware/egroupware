@@ -139,36 +139,16 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var app_id = this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
 		egw.dataRegisterUID('calendar::'+app_id, function(event) {
 			// Check for changing days in the grid view
-			if(this._parent && this._parent.instanceOf(et2_calendar_daycol) &&
-				this.options.value.date && event.date != this.options.value.date)
+			if(!this._sameday_check(event))
 			{
-				// Delete all old actions
-				this._actionObject.clear();
-				this._actionObject.unregisterActions();
-				this._actionObject = null;
-
-				// Update daywise caches
-				var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this._parent.options.owner);
-				var old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
-				var new_daywise = egw.dataGetUIDdata(new_cache_id);
-				var old_daywise = egw.dataGetUIDdata(old_cache_id);
-				new_daywise = new_daywise ? new_daywise.data : [];
-				old_daywise = old_daywise ? old_daywise.data : [];
-				if (new_daywise.indexOf(event.id) < 0)
-				{
-					new_daywise.push(event.id);
-				}
-				old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
-				egw.dataStoreUID(old_cache_id,old_daywise);				
-				egw.dataStoreUID(new_cache_id,new_daywise);
-				
 				// This should now cease to exist, as new events have been created
 				this.free();
 				return;
 			}
-
+			
 			// Copy to avoid changes, which may cause nm problems
 			this.options.value = jQuery.extend({},event);
+			this.options.value.date = this._parent.options.date;
 
 			// Let parent position
 			this._parent.position_event(this);
@@ -334,6 +314,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	},
 
 	_tooltip: function() {
+		if(!this.div) return '';
 		
 		var border = this.div.css('borderTopColor');
 		var bg_color = this.div.css('background-color');
@@ -496,6 +477,51 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			timespan += ' ' + duration;
 		}
 		return timespan;
+	},
+	
+	_sameday_check: function(event)
+	{
+		// Event somehow got orphaned
+		if(!this._parent || !this._parent.instanceOf(et2_calendar_daycol))
+		{
+			return false;
+		}
+
+		// Simple, same day
+		if(this.options.value.date && event.date == this.options.value.date)
+		{
+			return true;
+		}
+
+		// Multi-day non-recurring event spans days - date does not match
+		var event_start = new Date(event.start);
+		var event_end = new Date(event.end);
+		if(this._parent.date >= event_start && this._parent.date <= event_end)
+		{
+			return true;
+		}
+
+		// Delete all old actions
+		this._actionObject.clear();
+		this._actionObject.unregisterActions();
+		this._actionObject = null;
+
+		// Update daywise caches
+		var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this._parent.options.owner);
+		var old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
+		var new_daywise = egw.dataGetUIDdata(new_cache_id);
+		var old_daywise = egw.dataGetUIDdata(old_cache_id);
+		new_daywise = new_daywise ? new_daywise.data : [];
+		old_daywise = old_daywise ? old_daywise.data : [];
+		if (new_daywise.indexOf(event.id) < 0)
+		{
+			new_daywise.push(event.id);
+		}
+		old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
+		egw.dataStoreUID(old_cache_id,old_daywise);
+		egw.dataStoreUID(new_cache_id,new_daywise);
+
+		return false;
 	},
 
 	attachToDOM: function()
