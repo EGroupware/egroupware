@@ -43,6 +43,9 @@
 			$appname = $_GET['appname'] ? $_GET['appname'] : $content['appname'];
 			$definition = $_GET['definition'] ? $_GET['definition'] : $content['definition'];
 
+			// We use some inline js in preview results if it fails
+			egw_framework::csp_script_src_attrs("unsafe-inline");
+			
 			$template = new etemplate_new('importexport.import_dialog');
 
 			// Load application's translations
