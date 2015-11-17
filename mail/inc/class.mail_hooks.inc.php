@@ -716,8 +716,12 @@ class mail_hooks
 		//error_log(__METHOD__.__LINE__.' '.$feature.':'.array2string($config['deny_'.$feature]));
 		if (!empty($config['deny_'.$feature]))
 		{
-			$denied_groups = explode(',', $config['deny_'.$feature]);
-			return array_intersect($denied_groups, $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true));
+			//error_log(__METHOD__.__LINE__.' feature:'.$feature.':'.array2string($config['deny_'.$feature]));
+			$denied_groups = (is_array($config['deny_'.$feature])?$config['deny_'.$feature]:explode(',', $config['deny_'.$feature]));
+			//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true)));
+			//error_log(__METHOD__.__LINE__.array2string(array_intersect($denied_groups, $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true))));
+			// since access asks positively, the stored deny_$feature must return false if we find the denied group in the users membership-list
+			return (array_intersect($denied_groups, $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true))?false:true);
 		}
 		return true;
 	}
