@@ -1375,7 +1375,6 @@ class egw_link extends solink
 						if ($prop['ns'] == egw_vfs::DEFAULT_PROP_NAMESPACE && $prop['name'] == 'comment')
 						{
 							$link['remark'] = $prop['val'];
-							break;
 						}
 					}
 				}
