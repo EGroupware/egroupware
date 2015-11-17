@@ -318,6 +318,7 @@
 			</menulist>
 			<checkbox label="Do not notify" id="no_notifications"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
+			<textbox type="hidden" id="delete_exceptions"/>
 		</hbox>
 	</template>
 </overlay>
