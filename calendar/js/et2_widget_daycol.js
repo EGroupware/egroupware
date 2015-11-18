@@ -268,24 +268,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		// Register for updates on events for this day
 		var cache_id = app.classes.calendar._daywise_cache_id(new_date,this.options.owner);
-		egw.dataRegisterUID(cache_id, function(event_ids) {
-			var events = [];
-			if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
-			for(var i = 0; i < event_ids.length; i++)
-			{
-				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]);
-				event = event.data || false;
-				if(event && event.date && (
-					event.date === this.options.date ||
-					// Accept multi-day events
-					new Date(event.start) <= this.date //&& new Date(event.end) >= this.date
-				))
-				{
-					events.push(event);
-				}
-			}
-			this._update_events(events);
-		},this,this.getInstanceManager().execId,this.id);
+		egw.dataRegisterUID(cache_id, this._data_callback,this,this.getInstanceManager().execId,this.id);
 
 		if(events) {
 			this._update_events(events);
@@ -314,19 +297,35 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.div.attr('data-sortable-id', this.options.owner);
 
 		// Register for updates on events for this day
-		egw.dataRegisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner), function(event_ids) {
-			var events = [];
-			if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
-			for(var i = 0; i < event_ids.length; i++)
+		egw.dataRegisterUID(
+			app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),
+			this._data_callback,this,this.getInstanceManager().execId,this.id
+		);
+	},
+
+	/**
+	 * Callback used when the daywise data changes
+	 * 
+	 * @param {String[]} event_ids
+	 * @returns {undefined}
+	 */
+	_data_callback: function(event_ids) {
+		var events = [];
+		if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
+		for(var i = 0; i < event_ids.length; i++)
+		{
+			var event = egw.dataGetUIDdata('calendar::'+event_ids[i]);
+			event = event.data || false;
+			if(event && event.date && (
+				event.date === this.options.date ||
+				// Accept multi-day events
+				new Date(event.start) <= this.date //&& new Date(event.end) >= this.date
+			))
 			{
-				var event = egw.dataGetUIDdata('calendar::'+event_ids[i]).data;
-				if(event && event.date && event.date === this.options.date)
-				{
-					events.push(event);
-				}
+				events.push(event);
 			}
-			this._update_events(events);
-		},this,this.getInstanceManager().execId,this.id);
+		}
+		this._update_events(events);
 	},
 
 	set_left: function(left) {

@@ -117,6 +117,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.div.remove();
 		this.div = null;
 
+		$j('body.egw_tooltip').remove();
 		
 		// Unregister, or we'll continue to be notified...
 		if(this.options.value)

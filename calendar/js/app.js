@@ -2203,7 +2203,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				// Cache is by date (and owner, if seperate)
 				var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
-				var cache_id = app.classes.calendar._daywise_cache_id(date, seperate_owners ? value[i].owner : state.owner||false);
+				var cache_id = app.classes.calendar._daywise_cache_id(date, seperate_owners && value[i].owner ? value[i].owner : state.owner||false);
 
 				if(egw.dataHasUID(cache_id))
 				{
@@ -2285,7 +2285,7 @@ app.classes.calendar = AppJS.extend(
 			col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.filter,
-			cat_id: state.cat_id,
+			cat_id: state.cat_id.join('') != '' ? state.cat_id : false,
 			search: state.keywords,
 			csv_export: false
 		});
@@ -2371,9 +2371,13 @@ app.classes.calendar = AppJS.extend(
 								var expanded_date = ''+t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
 								if(typeof(updated_days[expanded_date]) === 'undefined')
 								{
-									updated_days[expanded_date] = [];
+									// Check to make sure it's in range first, expanded_date could be after our end
+									if(expanded_date >= bounds.first && expanded_date <= bounds.last)
+									{
+										updated_days[expanded_date] = [];
+									}
 								}
-								if(record.data.date !== expanded_date)
+								if(record.data.date !== expanded_date && typeof updated_days[expanded_date] !== 'undefined')
 								{
 									// Copy, to avoid unwanted changes by reference
 									updated_days[expanded_date].push(record.data.row_id);
