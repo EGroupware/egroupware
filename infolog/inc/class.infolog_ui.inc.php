@@ -405,7 +405,7 @@ class infolog_ui
 			}
 			// If status is not valid for selected type, clear status filter
 			if($query['col_filter']['info_status'] && $query['col_filter']['info_status'] != 'deleted' &&
-				!in_array($query['col_filter']['info_status'], $this->bo->status[$query['col_filter']['info_type']]))
+				!in_array($query['col_filter']['info_status'], array_keys($this->bo->status[$query['col_filter']['info_type']])))
 			{
 				$query['col_filter']['info_status'] = '';
 			}
