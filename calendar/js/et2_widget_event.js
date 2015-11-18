@@ -199,6 +199,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.empty()
 			.append(this.title)
 			.append(this.body)
+
+			// Let timegrid always get the drag
+			.droppable('option','greedy',false)
 		
 			// ?
 			.attr('data-draggable-id',event['id']+'_O'+event.owner+'_C'+(event.owner<0?'group'+Math.abs(event.owner):event.owner))
