@@ -53,6 +53,18 @@ var et2_checkbox = et2_inputWidget.extend(
 		"value": {
 			// Stop framework from messing with value
 			"type": "any"
+		},
+		"toggle_on": {
+			"name": "Toggle on caption",
+			"type": "string",
+			"default": "",
+			"description": "String caption to show for ON status"
+		},
+		"toggle_off": {
+			"name": "Toggle off caption",
+			"type": "string",
+			"default": "",
+			"description": "String caption to show OFF status"
 		}
 	},
 
@@ -74,10 +86,39 @@ var et2_checkbox = et2_inputWidget.extend(
 
 	createInputWidget: function() {
 		this.input = $j(document.createElement("input")).attr("type", "checkbox");
-
+		
 		this.input.addClass("et2_checkbox");
-
-		this.setDOMNode(this.input[0]);
+	
+		if (this.options.toggle_on || this.options.toggle_off)
+		{
+			var self = this;
+			// checkbox container
+			this.toggle = $j(document.createElement('span'))
+					.addClass('et2_checkbox_slideSwitch')
+					.append(this.input);
+			// update switch status on change
+			this.input.change(function(){
+					self.getValue();
+					return true;	
+			});
+			// switch container
+			var area = jQuery(document.createElement('span')).addClass('slideSwitch_container').appendTo(this.toggle);
+			// on span tag
+			var on = jQuery(document.createElement('span')).addClass('on').appendTo(area);
+			// off span tag
+			var off = jQuery(document.createElement('span')).addClass('off').appendTo(area);
+			on.text(this.options.toggle_on);
+			off.text(this.options.toggle_off);
+			
+			// handle a tag
+			var handle = jQuery(document.createElement('a')).appendTo(area);
+			this.setDOMNode(this.toggle[0]);
+		}
+		else
+		{
+			this.setDOMNode(this.input[0]);
+		}
+		
 	},
 
 	/**
@@ -98,9 +139,11 @@ var et2_checkbox = et2_inputWidget.extend(
 			if(_value == this.options.selected_value ||
 					_value && this.options.selected_value == this.attributes.selected_value["default"] &&
 					_value != this.options.unselected_value) {
-				this.input.prop("checked", true);
+				if (this.options.toggle_on || this.options.toggle_off) this.input.prop("checked", true);
+				this.toggle.addClass('switchOn');
 			} else {
 				this.input.prop("checked", false);
+				if (this.options.toggle_on || this.options.toggle_off) this.toggle.removeClass('switchOn');
 			}
 		}
 	},
@@ -120,8 +163,10 @@ var et2_checkbox = et2_inputWidget.extend(
 	 */
 	getValue: function() {
 		if(this.input.prop("checked")) {
+			if (this.options.toggle_on || this.options.toggle_off) this.toggle.addClass('switchOn');
 			return this.options.selected_value;
 		} else {
+			if (this.options.toggle_on || this.options.toggle_off) this.toggle.removeClass('switchOn');
 			return this.options.unselected_value;
 		}
 	}

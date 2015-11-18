@@ -1661,6 +1661,79 @@ div.et2_toolbar_activeList h.ui-accordion-header {
 .et2_label > input.et2_checkbox {
 	margin-right: 5px;
 }
+
+/*slide switch representing checkbox*/
+span.et2_checkbox_slideSwitch {
+	position: relative;
+    display: inline-block;
+	vertical-align: middle;
+}
+span.et2_checkbox_slideSwitch > span.slideSwitch_container {
+	width: 50px;
+    height: 12px;
+    display: block;
+    position: relative;
+    background-color: #B4B4B4;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    padding: 3px;
+    margin: 1px;
+}
+span.et2_checkbox_slideSwitch > span.slideSwitch_container > span:first-child {
+	width: 50%;
+    display: -webkit-inline-box;
+    text-align: -webkit-center;
+	position: absolute;
+	left:0;
+	z-index: 6;
+	font-weight: bold;
+	color:#5A5A5A;
+}
+span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container > span:first-child {
+	color:white;
+}
+span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container> span:nth-child(2) {
+	color:#5A5A5A;
+}
+span.et2_checkbox_slideSwitch > span.slideSwitch_container> span:nth-child(2) {
+	width: 50%;
+    display: -webkit-inline-box;
+    text-align: -webkit-center;
+	position: absolute;
+	z-index: 6;
+	left:50%;
+	font-weight: bold;
+	color:white;
+}
+span.et2_checkbox_slideSwitch > span.slideSwitch_container a {
+	position: absolute;
+    right: 0%;
+    top: 0;
+    z-index: 4;
+    display: block;
+    width: 50%;
+    height: 100%;
+    padding-bottom: 0px;
+    margin-top: -1px;
+    border: 1px solid #000000;
+    background-color: #0c5da5;
+    border-radius: 3px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+span.et2_checkbox_slideSwitch > input {
+	opacity: 0;
+    position: absolute;
+    z-index: 7;
+    width: 100%;
+    height: 100%;
+}
+span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
+	right:50%;
+}
+
 .et2_radiobox {
 	margin-right: 5px;
 }
