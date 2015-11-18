@@ -1077,7 +1077,7 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			}
 			else
 			{
-				egw_framework::refresh_opener($msg, 'calendar', $event['id'], $button == 'save' ? ($content['id'] ? 'update' : 'add') : 'delete');
+				egw_framework::refresh_opener($msg, 'calendar', $event['id'], $button == 'save' ? ($content['id'] ? $update_type : 'add') : 'delete');
 			}
 			egw_framework::window_close();
 			common::egw_exit();
