@@ -1710,19 +1710,19 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container> span:nth-child(2) {
 span.et2_checkbox_slideSwitch > span.slideSwitch_container a {
 	position: absolute;
     right: 0%;
-    top: 0;
+    top: -1px;
     z-index: 4;
     display: block;
-    width: 50%;
-    height: 100%;
+    width: 48%;
+    height: 99%;
     padding-bottom: 0px;
-    margin-top: -1px;
-    border: 1px solid #000000;
     background-color: #0c5da5;
     border-radius: 3px;
     -webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 span.et2_checkbox_slideSwitch > input {
 	opacity: 0;

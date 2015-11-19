@@ -936,3 +936,8 @@ img.calendar_print_button, img.calendar_print_appicon {
     margin: 0;
     padding-right: 3px;
 }
+
+#calendar-sidebox_buttons .sideboxstar .slideSwitch_container {
+	width: 36px;
+	height: 13px;
+}
