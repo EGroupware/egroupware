@@ -2285,7 +2285,7 @@ app.classes.calendar = AppJS.extend(
 			col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.filter,
-			cat_id: state.cat_id.join('') != '' ? state.cat_id : false,
+			cat_id: state.cate_id && state.cat_id.join('') != '' ? state.cat_id : false,
 			search: state.keywords,
 			csv_export: false
 		});
