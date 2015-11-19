@@ -32,7 +32,7 @@ var fw_base =  Class.extend({
 		window.egw_webserverUrl = _webserverUrl;
 
 		this.serializedTabState = '';
-		this.notifyTabChangeEnabled = true;
+		this.notifyTabChangeEnabled = false;
 
 		this.sidemenuUi = null;
 		this.tabsUi = null;
