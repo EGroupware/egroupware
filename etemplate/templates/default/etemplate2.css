@@ -1669,7 +1669,8 @@ span.et2_checkbox_slideSwitch {
 	vertical-align: middle;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container {
-	width: 50px;
+	width: 100%;
+	min-width:12px;
     height: 12px;
     display: block;
     position: relative;
