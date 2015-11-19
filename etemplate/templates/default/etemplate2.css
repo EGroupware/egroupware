@@ -1683,10 +1683,10 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container {
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container > span:first-child {
 	width: 50%;
-    display: -webkit-inline-box;
+    display: inline-block;
+	text-align: center;
     text-align: -webkit-center;
 	text-align: -moz-center;
-	text-align: center;
 	position: absolute;
 	left:0;
 	z-index: 6;
@@ -1701,10 +1701,10 @@ span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container> span:nth-ch
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container> span:nth-child(2) {
 	width: 50%;
-    display: -webkit-inline-box;
+    display: inline-block;
+	text-align: center;
     text-align: -webkit-center;
 	text-align: -moz-center;
-	text-align: center;
 	position: absolute;
 	z-index: 6;
 	left:50%;
