@@ -139,8 +139,8 @@ var et2_checkbox = et2_inputWidget.extend(
 			if(_value == this.options.selected_value ||
 					_value && this.options.selected_value == this.attributes.selected_value["default"] &&
 					_value != this.options.unselected_value) {
-				if (this.options.toggle_on || this.options.toggle_off) this.input.prop("checked", true);
-				this.toggle.addClass('switchOn');
+				if (this.options.toggle_on || this.options.toggle_off) this.toggle.addClass('switchOn');
+				this.input.prop("checked", true);
 			} else {
 				this.input.prop("checked", false);
 				if (this.options.toggle_on || this.options.toggle_off) this.toggle.removeClass('switchOn');
