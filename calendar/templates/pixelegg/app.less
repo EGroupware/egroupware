@@ -1412,4 +1412,34 @@ div#calendar-container {
 /* * Calendar END */
 
 
-//
+// toggle weekend slide-switch
+#calendar-sidebox_buttons {
+	.et2_checkbox_slideSwitch {
+		.slideSwitch_container {
+			background-color: white;
+			box-shadow: inset 1px 1px 4px 0px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.2);
+			a {
+				background-color: #B4B4B4;
+				transition: none;
+			}
+			span {
+				&:first-child {
+					color: 	#D4D4D4;
+				}
+				&:nth-child(2) {
+					color: #606060;
+				}
+			}
+		}
+		&.switchOn {
+			span {
+				&:first-child {
+					color:#606060;
+				}
+				&:nth-child(2) {
+					color: 	#D4D4D4;
+				}
+			}
+		}	
+	}
+}
