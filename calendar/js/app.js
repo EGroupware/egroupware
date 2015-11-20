@@ -1711,6 +1711,10 @@ app.classes.calendar = AppJS.extend(
 				// Add in any new owners
 				state.state.owner = owner.concat(state.state.owner);
 			}
+			if (state.state.owner.indexOf(0) >= 0)
+			{
+				state.state.owner[state.state.owner.indexOf(0)] = this.egw.user('account_id');
+			}
 
 
 			// Show the correct number of grids
@@ -1834,7 +1838,7 @@ app.classes.calendar = AppJS.extend(
 			// Toggle todos
 			if(state.state.view == 'day' || this.state.view == 'day')
 			{
-				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] > 0)
+				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0)
 				{
 					if(this.state.view !== 'day')
 					{
