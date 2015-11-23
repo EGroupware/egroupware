@@ -265,13 +265,14 @@ app.classes.calendar = AppJS.extend(
 				)
 				{
 					var multiple_owner = typeof this.state.owner != 'string' &&
-						this.state.owner.length < parseInt(this.egw.config('calview_no_consolidate','phpgwapi') || 5) ? true : false;
+						this.state.owner.length > 1 &&
+						this.state.owner.length < parseInt(this.egw.config('calview_no_consolidate','phpgwapi') || 5);
 					for(var i = 0; i < this.state.owner.length; i++)
 					{
 						var owner = multiple_owner ? this.state.owner[i] : this.state.owner
 						var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date, owner)
 						var daywise = egw.dataGetUIDdata(new_cache_id);
-						daywise = daywise ? daywise.data : [];
+						daywise = daywise && daywise.data != null ? daywise.data : [];
 						if(daywise.indexOf(_id) >= 0 && (_type === 'delete' ||
 							// Make sure we only update the calendars of those actually in the event
 							multiple_owner && typeof event.data.participants[owner] == 'undefined'))

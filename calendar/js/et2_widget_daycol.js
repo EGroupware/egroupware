@@ -541,8 +541,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 					{
 						indicator = $j('<div class="hiddenEventAfter"></div>')
 							.text(event.options.value.title)
-							.attr('data-hidden_count', 1);
-						this.div.append(indicator)
+							.attr('data-hidden_count', 1)
+							.appendTo(this.div)
 							.on('click', function() {
 								$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
 								// Better re-run this to clean up
