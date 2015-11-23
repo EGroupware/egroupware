@@ -2303,6 +2303,13 @@ app.classes.calendar = AppJS.extend(
 			start = 0;
 		}
 
+		// Category needs to be false if empty, not an empty array or string
+		var cat_id = state.cat_id ? state.cat_id : false;
+		if(cat_id && typeof cat_id.join != 'undefined')
+		{
+			if(cat_id.join('') == '') cat_id = false;
+		}
+
 		var query = jQuery.extend({}, {
 			get_rows: 'calendar.calendar_uilist.get_rows',
 			row_id:'row_id',
@@ -2312,7 +2319,7 @@ app.classes.calendar = AppJS.extend(
 			col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.filter,
-			cat_id: state.cat_id && typeof state.cat_id.join != "undefined" && state.cat_id.join('') != '' ? state.cat_id : false,
+			cat_id: cat_id,
 			search: state.keywords,
 			csv_export: false
 		});
