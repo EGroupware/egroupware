@@ -1905,6 +1905,17 @@ app.classes.calendar = AppJS.extend(
 				// Updates the display of start & end date
 				this.filter_change();
 			}
+			else
+			{
+				// Turn off nextmatch's automatic stuff - it won't work while it
+				// is hidden, and can cause an infinite loop as it tries to layout.
+				// (It will automatically re-start when shown)
+				try
+				{
+					var nm = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+					nm.controller._grid.doInvalidate = false;
+				} catch (e) {}
+			}
 
 			/* Update re-orderable calendars */
 			this._sortable();
