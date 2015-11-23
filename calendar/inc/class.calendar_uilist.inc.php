@@ -392,7 +392,7 @@ class calendar_uilist extends calendar_ui
 		if($params['view'] && $params['view'] == 'listview')
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('listview') . ': '.
-				(count($search_params['users']) == 1 ? common::display_fullname($search_params['users'][0]).': ' : '') .
+				(count($search_params['users']) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
 				$label;
 		}
 		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
