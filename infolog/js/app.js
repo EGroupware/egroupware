@@ -369,7 +369,18 @@ app.classes.infolog = AppJS.extend(
 				if (completed || status.value == 'not-started' ||
 					(status.value == 'ongoing') != (percent.value > 0 && percent.value < 100))
 				{
-					percent.value = completed ? 100 : (status.value == 'not-started' ? 0 : 10);
+					if(completed)
+					{
+						percent.value = 100;
+					}
+					else if (status.value == 'not-started')
+					{
+						percent.value = 0;
+					}
+					else if (!completed && percent.value == 100)
+					{
+						percent.value = 10;
+					}
 				}
 				break;
 
