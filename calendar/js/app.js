@@ -2391,6 +2391,9 @@ app.classes.calendar = AppJS.extend(
 						if(dates.start.substr(0,10) !== dates.end.substr(0,10))
 						{
 							var end = new Date(Math.min(new Date(record.data.end), new Date(state.last)));
+							end.setUTCHours(23);
+							end.setUTCMinutes(59);
+							end.setUTCSeconds(59);
 							var t = new Date(Math.max(new Date(record.data.start), new Date(state.first)));
 
 							do
