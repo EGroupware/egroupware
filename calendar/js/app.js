@@ -264,19 +264,31 @@ app.classes.calendar = AppJS.extend(
 					!(_type == 'add' && event.data.recur_type)
 				)
 				{
-					var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date,this.state.owner)
-					var daywise = egw.dataGetUIDdata(new_cache_id);
-					daywise = daywise ? daywise.data : [];
-					if(_type === 'delete')
+					var multiple_owner = typeof this.state.owner != 'string' &&
+						this.state.owner.length < parseInt(this.egw.config('calview_no_consolidate','phpgwapi') || 5) ? true : false;
+					for(var i = 0; i < this.state.owner.length; i++)
 					{
-						daywise.splice(daywise.indexOf(_id),1);
-						egw.dataStoreUID('calendar::'+_id, null);
+						var owner = multiple_owner ? this.state.owner[i] : this.state.owner
+						var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date, owner)
+						var daywise = egw.dataGetUIDdata(new_cache_id);
+						daywise = daywise ? daywise.data : [];
+						if(_type === 'delete' ||
+							// Make sure we only update the calendars of those actually in the event
+							multiple_owner && typeof event.data.participants[owner] == 'undefined')
+						{
+							daywise.splice(daywise.indexOf(_id),1);
+						}
+						else if (daywise.indexOf(_id) < 0)
+						{
+							daywise.push(_id);
+						}
+						if(_type === 'delete')
+						{
+							egw.dataStoreUID('calendar::'+_id, null);
+						}
+						egw.dataStoreUID(new_cache_id,daywise);
+						if(!multiple_owner) break;
 					}
-					else if (daywise.indexOf(_id) < 0)
-					{
-						daywise.push(_id);
-					}
-					egw.dataStoreUID(new_cache_id,daywise);
 					return false;
 				}
 				else
