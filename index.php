@@ -97,7 +97,7 @@ if(@file_exists($tpl_info))
 }
 
 
-if($app == 'home' && !$class && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile))
+if($app == 'home' && !$class && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile) && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'idots')
 {
 	if ($GLOBALS['egw_info']['server']['force_default_app'] && $GLOBALS['egw_info']['server']['force_default_app'] != 'user_choice')
 	{
