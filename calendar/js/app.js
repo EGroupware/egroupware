@@ -2838,6 +2838,14 @@ app.classes.calendar = AppJS.extend(
 			}).trigger('resize');
 			
 		}
+
+		// Avoid wrapping owner icons if user has group + search
+		var button = $j('#calendar-sidebox_owner ~ span.et2_clickable');
+		if(button.length == 1)
+		{
+			button.parent().width(button.parent().width() - button.width());
+			button.parent().parent().css('white-space','nowrap');
+		}
 	},
 
 	/**
