@@ -6237,7 +6237,7 @@ class emailadmin_imapbase
 					}
 
 					if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
-					if ($needTempFile && !$attachment) $data = file_get_contents($basedir.urldecode($myUrl));
+					if ($needTempFile && !$attachment && substr($myUrl,0,4) !== "http") $data = file_get_contents($basedir.urldecode($myUrl));
 				}
 				if (substr($url,0,strlen('data:'))=='data:')
 				{
