@@ -524,6 +524,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 							.attr('data-hidden_count', 1)
 							.on('click', function() {
 								$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
+								return false;
 							});
 					}
 					else
@@ -546,6 +547,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 								$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
 								// Better re-run this to clean up
 								day._out_of_view();
+								return false;
 							});
 					}
 					else
