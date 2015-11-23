@@ -2806,7 +2806,7 @@ app.classes.calendar = AppJS.extend(
 				.addClass('et2_clickable')
 				.on('click', function() {
 					var tempDate = new Date();
-					var today = new Date(tempDate.getFullYear(), tempDate.getUTCMonth(), tempDate.getUTCDate());
+					var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
 					app.calendar.update_state({date: today.toJSON()});
 				});
 			var position_today = function() {
