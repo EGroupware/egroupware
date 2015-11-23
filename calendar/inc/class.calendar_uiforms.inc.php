@@ -336,6 +336,11 @@ class calendar_uiforms extends calendar_ui
 			{
 				$event['recur_data'] = 1 << (int)date('w',$event['start']);
 			}
+			if ($event['recur_type'] != MCAL_RECUR_NONE && !isset($event['recur_enddate']))
+			{
+				// No recur end date, make sure it's set to something or it won't be changed
+				$event['recur_enddate'] = 0;
+			}
 			if (isset($content['participants']))
 			{
 
@@ -813,6 +818,10 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 								}
 								$event['alarm'] = array();
 							}
+						}
+						else if ($event['recur_enddate'] != $old_event['recur_enddate'])
+						{
+							error_log(__METHOD__ . ':'.__LINE__ . ' ' .$event['recur_enddate'] . (isset($event['recur_enddate']) ? ' SET' : ' NOT SET'));
 						}
 					}
 					else
