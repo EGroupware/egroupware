@@ -1654,8 +1654,10 @@ app.classes.calendar = AppJS.extend(
 
 		// Check for valid cache
 		var cachable_changes = ['date','view','days','planner_days','sortby'];
-		for(var s in this.state)
+		var keys = jQuery.unique(Object.keys(this.state).concat(Object.keys(state.state)));
+		for(var i = 0; i < keys.length; i++)
 		{
+			var s = keys[i];
 			if (this.state[s] !== state.state[s])
 			{
 				if(cachable_changes.indexOf(s) === -1)
