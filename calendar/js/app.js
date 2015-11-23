@@ -272,13 +272,14 @@ app.classes.calendar = AppJS.extend(
 						var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date, owner)
 						var daywise = egw.dataGetUIDdata(new_cache_id);
 						daywise = daywise ? daywise.data : [];
-						if(_type === 'delete' ||
+						if(daywise.indexOf(_id) >= 0 && (_type === 'delete' ||
 							// Make sure we only update the calendars of those actually in the event
-							multiple_owner && typeof event.data.participants[owner] == 'undefined')
+							multiple_owner && typeof event.data.participants[owner] == 'undefined'))
 						{
 							daywise.splice(daywise.indexOf(_id),1);
 						}
-						else if (daywise.indexOf(_id) < 0)
+						else if (daywise.indexOf(_id) < 0 && (
+							!multiple_owner || typeof event.data.participants[owner] !== 'undefined'))
 						{
 							daywise.push(_id);
 						}
