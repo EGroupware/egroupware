@@ -131,6 +131,12 @@ var et2_selectAccount = et2_selectbox.extend(
 			var button = jQuery(document.createElement("span"))
 				.addClass("et2_clickable")
 				.click(this, jQuery.proxy(function(e) {
+					// Auto-expand
+					if(this.options.expand_multiple_rows && !this.options.multiple)
+					{
+						this.set_multiple(true, this.options.expand_multiple_rows);
+					}
+					
 					if(this.options.multiple)
 					{
 						this._open_multi_search(e);
