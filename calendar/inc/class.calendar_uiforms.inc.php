@@ -96,10 +96,14 @@ class calendar_uiforms extends calendar_ui
 		{
 			if ($owner)	// make an owner who is no user or we have no add-rights a participant
 			{
+				if(!is_array($owner))
+				{
+					$owner = explode(',',$owner);
+				}
 				// if we come from ressources we don't need any users selected in calendar
 				if (!isset($_GET['participants']) || $_GET['participants'][0] != 'r')
 				{
-					foreach(explode(',',$owner) as $uid)
+					foreach($owner as $uid)
 					{
 						// only add users or a single ressource, not all ressources displayed by a category
 						if (is_numeric($uid) || $owner == $uid)

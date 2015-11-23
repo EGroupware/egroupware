@@ -304,7 +304,7 @@ class calendar_ui
 				if ($state == 'owner')
 				{
 					// only change the owners of the same resource-type as given in set_state[owner]
-					$set_owners = explode(',',$set_states['owner']);
+					$set_owners = is_array($set_states['owner']) ? $set_states['owner'] : explode(',',$set_states['owner']);
 					if ((string)$set_owners[0] === '0')	// set exactly the specified owners (without the 0)
 					{
 						if ($set_states['owner'] === '0,r0')	// small fix for resources
