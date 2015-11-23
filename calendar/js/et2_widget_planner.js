@@ -492,6 +492,9 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				return labels;
 			},
 			group: function(labels, rows,event) {
+				// Yearly planner does not show infologs
+				if(event && event.app && event.app == 'infolog') return;
+
 				var start = new Date(event.start);
 				start = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
 				var key = start.getFullYear() +'-'+start.getMonth();
