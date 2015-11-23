@@ -2843,7 +2843,7 @@ app.classes.calendar = AppJS.extend(
 		var button = $j('#calendar-sidebox_owner ~ span.et2_clickable');
 		if(button.length == 1)
 		{
-			button.parent().width(button.parent().width() - button.width());
+			button.parent().css('margin-right',button.outerWidth(true)+2);
 			button.parent().parent().css('white-space','nowrap');
 		}
 	},

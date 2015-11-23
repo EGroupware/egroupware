@@ -19,8 +19,16 @@
 #calendar-sidebox_owner {
 	width: 90%;
 }
+#calendar-sidebox_owner ~ * {
+	vertical-align: top;
+	display: inline-block;
+}
 #calendar-sidebox_cat_id {
 	width: 90%;
+}
+#calendar-sidebox_cat_id ~ * {
+	vertical-align: top;
+	display: inline-block;
 }
 #calendar-sidebox_buttons tbody {
 	width: 100%;
