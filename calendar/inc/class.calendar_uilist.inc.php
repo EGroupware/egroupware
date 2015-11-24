@@ -493,7 +493,11 @@ class calendar_uilist extends calendar_ui
 		{
 			egw_json_response::get()->error($this->bo->warnings['groupmembers']);
 		}
-		
+		$rows['sel_options']['filter'] = $this->date_filters;
+		if($label)
+		{
+			$rows['sel_options']['filter'][$params['filter']] = $label;
+		}
 		foreach($users as $owner)
 		{
 			if(!is_int($owner) && $this->bo->resources[$owner[0]])
