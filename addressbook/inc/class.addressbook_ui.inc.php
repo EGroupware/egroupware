@@ -1329,7 +1329,7 @@ window.egw_LAB.wait(function() {
 		{
 			if(!is_numeric($key)) continue;
 			if(preg_match('/'.$GLOBALS['egw']->db->capabilities['case_insensitive_like'].
-				' '.$GLOBALS['egw']->db->quote('[a-z]%').'$/i',$col_filter) == 1
+				' '.$GLOBALS['egw']->db->quote('[a-z]%').'$/',$col_filter) == 1
 			)
 			{
 				unset($query['col_filter'][$key]);
@@ -1522,7 +1522,7 @@ window.egw_LAB.wait(function() {
 			{
 				$no_letter_search = array('adr_one_postalcode', 'adr_two_postalcode', 'contact_id', 'contact_created','contact_modified');
 				$query['col_filter'][] = (in_array($query['order'],$no_letter_search) ? 'org_name' : (substr($query['order'],0,1)=='#'?'':'egw_addressbook.').$query['order']).' '.
-					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
+					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote(strtolower($query['searchletter']).'%');
 			}
 			$wildcard = '%';
 			$op = 'OR';
