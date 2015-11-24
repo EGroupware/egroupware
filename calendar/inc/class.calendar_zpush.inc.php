@@ -1033,6 +1033,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			unset($e);
 			// ignore exception, simply set no timezone, as it is optional
 		}
+
 		// copying timestamps (they are already read in servertime, so non tz conversation)
 		foreach(array(
 			'start' => 'starttime',
@@ -1512,7 +1513,7 @@ END:VTIMEZONE
 	 * @param string|array $ical lines of ical file
 	 * @return array with parsed ical components
 	 */
-	static public function ical2array($ical)
+	static public function ical2array(&$ical,$section=null)
 	{
 		$arr = array();
 		if (!is_array($ical)) $ical = preg_split("/[\r\n]+/m", $ical);
@@ -1521,10 +1522,11 @@ END:VTIMEZONE
 			list($name,$value) = explode(':',$line,2);
 			if ($name == 'BEGIN')
 			{
-				$arr[$value] = self::ical2array($ical);
+				$arr[$value] = self::ical2array($ical,$value);
 			}
 			elseif($name == 'END')
 			{
+				if ($section && $section==$value) return $arr;
 				break;
 			}
 			else
