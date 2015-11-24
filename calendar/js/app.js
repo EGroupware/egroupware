@@ -1580,12 +1580,6 @@ app.classes.calendar = AppJS.extend(
 			state = state ? JSON.parse(state) : {};
 		}
 
-		// Make sure date is consitantly a string, in case it needs to be passed to server
-		if(state.date && state.date.toJSON)
-		{
-			state.date = state.date.toJSON();
-		}
-
 		// Don't store current user in state to allow admins to create favourites for all
 		// Should make no difference for normal users.
 		if(state.owner == egw.user('account_id'))
@@ -1594,7 +1588,8 @@ app.classes.calendar = AppJS.extend(
 			// it will work for other users too.
 			state.owner = 0;
 		}
-		// Don't store first and last
+		// Don't store date or first and last
+		delete state.date;
 		delete state.first;
 		delete state.last;
 
