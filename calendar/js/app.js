@@ -3282,12 +3282,14 @@ jQuery.extend(app.classes.calendar,{
 			{
 				var startDate = new Date(state.first);
 				startDate = new Date(startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000);
+				var start_check = ''+startDate.getFullYear() + startDate.getMonth() + startDate.getDate();
 
 				var endDate = new Date(state.last);
 				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
+				var end_check = ''+endDate.getFullYear() + endDate.getMonth() + endDate.getDate();
 				return  app.calendar.egw.lang('Listview') + ': ' + app.calendar.View._owner(state) +
 					date(egw.preference('dateformat'),startDate) +
-					(startDate == endDate ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
+					(start_check == end_check ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
 			},
 			etemplates: ['calendar.list']
 		})
