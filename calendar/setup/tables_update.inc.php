@@ -2662,3 +2662,20 @@ function calendar_upgrade14_3_900()
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.901';
 }
+
+/**
+ * Remove dates from favorites
+ *
+ * @return string New version number
+ */
+function calendar_upgrade14_3_901()
+{
+	preferences::change_preference('calendar', '/^favorite_/', function($attr, $old_value, $owner) {
+		if($old_value['state'])
+		{
+			unset($old_value['state']['date']);
+		}
+		return $old_value;
+	});
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.902';
+}
