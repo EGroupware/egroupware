@@ -2135,14 +2135,22 @@ class mail_compose
 		return $this->sessionData;
 
 	}
-
-	static function _getCleanHTML($_body)
+	
+	/**
+	 * HTML cleanup
+	 *
+	 * @param type $_body message
+	 * @param type $_useTidy = false, if true tidy extention will be loaded and tidy will try to clean body message
+	 *			since the tidy causes segmentation fault ATM, we set the default to false.
+	 * @return type
+	 */
+	static function _getCleanHTML($_body, $_useTidy = false)
 	{
 		static $nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 
-		if (extension_loaded('tidy'))
+		if ($_useTidy && extension_loaded('tidy') )
 		{
 			$tidy = new tidy();
 			$cleaned = $tidy->repairString($_body, mail_bo::$tidy_config,'utf8');
