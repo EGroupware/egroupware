@@ -1592,7 +1592,11 @@ app.classes.calendar = AppJS.extend(
 		delete state.date;
 		delete state.first;
 		delete state.last;
-
+		delete state.startdate;
+		delete state.enddate;
+		delete state.start_date;
+		delete state.end_date;
+		
 		return state;
 	},
 
@@ -1895,10 +1899,18 @@ app.classes.calendar = AppJS.extend(
 			if(state.state.view === 'listview')
 			{
 				state.state.startdate = state.state.date;
+				if(state.state.startdate.toJSON)
+				{
+					state.state.startdate = state.state.startdate.toJSON();
+				}
 
 				if(state.state.end_date)
 				{
 					state.state.enddate = state.state.end_date;
+				}
+				if(state.state.enddate && state.state.enddate.toJSON)
+				{
+					state.state.enddate = state.state.enddate.toJSON();
 				}
 				state.state.col_filter = {participant: state.state.owner};
 				state.state.search = state.state.keywords;
@@ -1908,6 +1920,16 @@ app.classes.calendar = AppJS.extend(
 				delete state.state.filter;
 
 				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
+
+				// 'Custom' filter needs an end date
+				if(nm.activeFilters.filter === 'custom' && !state.state.end_date)
+				{
+					state.state.enddate = state.state.last;
+				}
+				if(state.state.enddate && state.state.startdate && state.state.startdate > state.state.enddate)
+				{
+					state.state.enddate = state.state.startdate;
+				}
 				nm.applyFilters(state.state);
 				if(!state.state.end_date && nm.activeFilters.enddate)
 				{

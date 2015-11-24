@@ -5,9 +5,9 @@
 	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
 		<hbox>
 			<description value="Start"/>
-			<date id="startdate"/>
+			<date id="startdate" onchange="app.calendar.update_state({date: widget.getValue()}); return false;"/>
 			<description value="End"/>
-			<date id="enddate"/>
+			<date id="enddate" onchange="app.calendar.update_state({end_date: widget.getValue()}); return false;"/>
 		</hbox>
 	</template>
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
