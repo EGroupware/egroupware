@@ -140,7 +140,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 				// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
 				$pref = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
-				$pref_abs = (string)$pref_abs !== '' ? explode(',',$pref) : array();
+				$pref_abs = (string)$pref !== '' ? explode(',',$pref) : array();
 
 				foreach ($this->addressbook->get_addressbooks() as $account_id => $label)
 				{
