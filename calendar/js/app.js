@@ -1730,6 +1730,12 @@ app.classes.calendar = AppJS.extend(
 			{
 				state.state.owner[state.state.owner.indexOf(0)] = this.egw.user('account_id');
 			}
+			if(state.state.owner.length === 1 && this.sidebox_et2)
+			{
+				// If only one owner selected, go back to single select
+				var owner = this.sidebox_et2.getWidgetById('owner');
+				owner.set_multiple(false);
+			}
 
 
 			// Show the correct number of grids
