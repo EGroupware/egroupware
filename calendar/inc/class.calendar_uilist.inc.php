@@ -41,6 +41,8 @@ class calendar_uilist extends calendar_ui
 	var $date_filters = array(
 		'after'  => 'After current date',
 		'before' => 'Before current date',
+		'week'   => 'Week',
+		'month'  => 'Month',
 		'all'	=> 'All events',
 		'custom' => 'Selected range',
 	);
@@ -252,10 +254,6 @@ class calendar_uilist extends calendar_ui
 	function get_rows(&$params,&$rows,&$readonlys)
 	{
 		//echo "uilist::get_rows() params="; _debug_array($params);
-		if (isset($_GET['listview_days']) && is_numeric($_GET['listview_days']))
-		{
-			$params['filter'] = 'fixed';
-		}
 		if ($params['filter'] == 'custom')
 		{
 			if (!$params['startdate'] && !$params['enddate'])
@@ -317,43 +315,41 @@ class calendar_uilist extends calendar_ui
 			case 'all':
 				break;
 			case 'before':
-				$search_params['end'] = $this->date;
-				$label = lang('Before %1',$this->bo->long_date($this->date));
+				$search_params['end'] = $params['date'] ? egw_time::to($params['date'],'ts') : $this->date;
+				$label = lang('Before %1',$this->bo->long_date($search_params['end']));
 				break;
 			case 'custom':
 				$this->first = $search_params['start'] = egw_time::to($params['startdate'],'ts');
 				$this->last  = $search_params['end'] = strtotime('+1 day', $this->bo->date2ts($params['enddate']))-1;
 				$label = $this->bo->long_date($this->first,$this->last);
 				break;
-			case 'fixed':
-				if ($this->listview_days == 5 || $this->listview_days == 7)	// weekview
-				{
-					$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
-					$this->last = $this->bo->date2array($this->first);
-					$this->last['day'] += (int) $this->listview_days - 1;
-					$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
-					unset($this->last['raw']);
-					$this->last = $this->bo->date2ts($this->last);
-					$this->date_filters['fixed'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
-					$params['startdate'] = $search_params['start'] = $this->first;
-					$params['enddate'] = $search_params['end'] = $this->last;
-					break;
-				}
-				elseif ((string)$this->listview_days === '0')	// monthview
-				{
-					$this->first = $this->bo->date2array($this->date);
-					$this->first['day'] = 1;
-					unset($this->first['raw']);
-					$this->last = $this->first;
-					$this->last['month'] += 1;
-					$this->first = $this->bo->date2ts($this->first);
-					$this->last = $this->bo->date2ts($this->last);
-					$this->last--;
-					$this->date_filters['fixed'] = $label = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
-					$params['startdate'] = $search_params['start'] = $this->first;
-					$params['enddate'] = $search_params['end'] = $this->last;
-					break;
-				}
+			case 'week':
+				$start = $this->bo->date2array($params['date'] ? $params['date'] : $this->date);
+				$this->first = $this->datetime->get_weekday_start($start['year'],$start['month'],$start['day']);
+				$this->last = $this->bo->date2array($this->first);
+				$this->last['day'] += ($params['weekend'] == 'true' ? 7 : 5) - 1;
+				$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
+				unset($this->last['raw']);
+				$this->last = $this->bo->date2ts($this->last);
+				$this->date_filters['week'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
+				$params['startdate'] = $search_params['start'] = $this->first;
+				$params['enddate'] = $search_params['end'] = $this->last;
+				break;
+
+			case 'month':
+				$this->first = $this->bo->date2array($params['date'] ? $params['date'] : $this->date);
+				$this->first['day'] = 1;
+				unset($this->first['raw']);
+				$this->last = $this->first;
+				$this->last['month'] += 1;
+				$this->date_filters['month'] = $label = lang(adodb_date('F',$this->bo->date2ts($params['date']))).' '.$this->first['year'];
+				$this->first = $this->bo->date2ts($this->first);
+				$this->last = $this->bo->date2ts($this->last);
+				$this->last--;
+				$params['startdate'] = $search_params['start'] = $this->first;
+				$params['enddate'] = $search_params['end'] = $this->last;
+				break;
+				
 				// fall through to after given date
 			case 'after':
 			default:
