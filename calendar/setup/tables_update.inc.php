@@ -2674,6 +2674,10 @@ function calendar_upgrade14_3_901()
 		if($old_value['state'])
 		{
 			unset($old_value['state']['date']);
+			unset($old_value['state']['startdate']);
+			unset($old_value['state']['start_date']);
+			unset($old_value['state']['enddate']);
+			unset($old_value['state']['end_date']);
 		}
 		return $old_value;
 	});
