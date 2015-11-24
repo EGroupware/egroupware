@@ -800,7 +800,7 @@ class calendar_bo
 		{
 			$exceptions[] = egw_time::to($exception, true);	// true = date
 		}
-		//error_log(__METHOD__."(".array2string($event).", $start) exceptions=".array2string($exceptions));
+		error_log(__METHOD__."(".array2string($event).", $start) exceptions=".array2string($exceptions));
 		foreach($events as $event)
 		{
 			$is_exception = in_array(egw_time::to($event['start'], true), $exceptions);
@@ -1020,6 +1020,7 @@ class calendar_bo
 		foreach($rrule as $time)
 		{
 			$time->setUser();	// $time is in timezone of event, convert it to usertime used here
+			error_log($time);
 			if (($ts = $this->date2ts($time)) < $start-$event_length)
 			{
 				//echo "<p>".$time." --> ignored as $ts < $start-$event_length</p>\n";

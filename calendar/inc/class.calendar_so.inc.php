@@ -1328,7 +1328,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		$cal_id = (int) $event['id'];
 		unset($event['id']);
-		$set_recurrences = !$cal_id && $event['recur_type'] != MCAL_RECUR_NONE;
+		$set_recurrences = $set_recurrences || !$cal_id && $event['recur_type'] != MCAL_RECUR_NONE;
 
 		if ($event['recur_type'] != MCAL_RECUR_NONE &&
 			!(int)$event['recur_interval'])

@@ -819,10 +819,6 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 								$event['alarm'] = array();
 							}
 						}
-						else if ($event['recur_enddate'] != $old_event['recur_enddate'])
-						{
-							error_log(__METHOD__ . ':'.__LINE__ . ' ' .$event['recur_enddate'] . (isset($event['recur_enddate']) ? ' SET' : ' NOT SET'));
-						}
 					}
 					else
 					{
