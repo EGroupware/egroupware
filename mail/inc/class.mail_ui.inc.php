@@ -1251,6 +1251,7 @@ class mail_ui
 		}
 
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
+		//mail_bo::$debugTimes=true;
 		if (mail_bo::$debugTimes) $starttime = microtime(true);
 		//$query['search'] is the phrase in the searchbox
 
@@ -1345,7 +1346,9 @@ class mail_ui
 						$sort,
 						$reverse,
 						$filter,
-						$sRToFetch
+						$sRToFetch,
+						true//, //cacheResult
+						//true // fetchPreview
 					);
 				}
 			}
@@ -1359,7 +1362,10 @@ class mail_ui
 					$maxMessages,
 					$sort,
 					$reverse,
-					$filter
+					$filter,
+					null, // this uids only
+					true//, // cacheResult
+					//true // fetchPreview
 				);
 				$rowsFetched['messages'] = $sortResultwH['info']['total'];
 			}
@@ -1400,7 +1406,7 @@ class mail_ui
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified');
+		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified','bodypreview');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $mail_ui->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
@@ -1728,6 +1734,10 @@ class mail_ui
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
+			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
+			{
+				$data["bodypreview"] = $header['bodypreview'];
+			}
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
 		}
@@ -2656,7 +2666,7 @@ class mail_ui
 		// Compose the content of the frame
 		$frameHtml =
 			$this->get_email_header($this->mail_bo->getStyles($bodyParts)).
-			$this->showBody($this->getdisplayableBody($bodyParts), false);
+			$this->showBody($this->getdisplayableBody($bodyParts,true,false), false);
 		//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
 		$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
 		$this->mail_bo->htmlOptions = $bufferHtmlOptions;
@@ -2694,7 +2704,7 @@ class mail_ui
 		}
 	}
 
-	function &getdisplayableBody($_bodyParts,$modifyURI=true)
+	function &getdisplayableBody($_bodyParts,$modifyURI=true,$useTidy = true)
 	{
 		$bodyParts	= $_bodyParts;
 
@@ -2708,7 +2718,7 @@ class mail_ui
 		if (empty($bodyParts)) return "";
 		foreach((array)$bodyParts as $singleBodyPart) {
 			if (!isset($singleBodyPart['body'])) {
-				$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart,$modifyURI);
+				$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart,$modifyURI,$useTidy);
 				$body .= $singleBodyPart['body'];
 				continue;
 			}
@@ -2790,10 +2800,11 @@ class mail_ui
 			}
 			else
 			{
+				$alreadyHtmlLawed=false;
 				$newBody	= $singleBodyPart['body'];
 				//TODO:$newBody	= $this->highlightQuotes($newBody);
 				#error_log(print_r($newBody,true));
-				if (extension_loaded('tidy'))
+				if ($useTidy && extension_loaded('tidy'))
 				{
 					$tidy = new tidy();
 					$cleaned = $tidy->repairString($newBody, mail_bo::$tidy_config,'utf8');
@@ -2830,12 +2841,13 @@ class mail_ui
 					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
 					// as we switched off HTMLaweds tidy functionality
 					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
-					$newBody = $htmLawed->egw_htmLawed($newBody);
+					$newBody = $htmLawed->egw_htmLawed($newBody,mail_bo::$htmLawed_config);
 					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
+					$alreadyHtmlLawed=true;
 				}
 				// do the cleanup, set for the use of purifier
 				//$newBodyBuff = $newBody;
-				mail_bo::getCleanHTML($newBody);
+				/* if (!$alreadyHtmlLawed)*/ mail_bo::getCleanHTML($newBody);
 /*
 				// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
 				if (strtoupper(mail_bo::$displayCharset) == 'UTF-8')

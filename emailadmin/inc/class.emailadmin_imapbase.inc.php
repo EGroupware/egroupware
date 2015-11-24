@@ -4694,6 +4694,7 @@ class emailadmin_imapbase
 				$mailClass->activeMimeType = $bodyParts[$i]['mimeType'];
 				if (!$preserveHTML)
 				{
+					$alreadyHtmlLawed=false;
 					// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
 					$newBody = str_replace("\n"," ",$newBody);
 					// convert HTML to text, as we dont want HTML in infologs
@@ -4734,14 +4735,15 @@ class emailadmin_imapbase
 						// the next line should not be needed, but produces better results on HTML 2 Text conversion,
 						// as we switched off HTMLaweds tidy functionality
 						$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
-						$newBody = $htmLawed->egw_htmLawed($newBody);
+						$newBody = $htmLawed->egw_htmLawed($newBody,self::$htmLawed_config);
 						if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
+						$alreadyHtmlLawed=true;
 					}
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after purify:'.$newBody);
 					if ($preserveHTML==false) $newBody = translation::convertHTMLToText($newBody,self::$displayCharset,true,true);
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after convertHTMLToText:'.$newBody);
 					if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
-					$mailClass->getCleanHTML($newBody); // remove stuff we regard as unwanted
+					/*if (!$alreadyHtmlLawed) */ $mailClass->getCleanHTML($newBody); // remove stuff we regard as unwanted
 					if ($preserveHTML==false) $newBody = str_replace("<br />","\r\n",$newBody);
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after getClean:'.$newBody);
 				}
