@@ -3242,6 +3242,10 @@ jQuery.extend(app.classes.calendar,{
 			},
 			end_date: function(state) {
 				var d = app.calendar.View.end_date.call(this, state);
+				if(state.planner_days)
+				{
+					state.planner_days = parseInt(state.planner_days);
+				}
 				if(state.sortby && state.sortby === 'month')
 				{
 					d.setUTCDate(0);
