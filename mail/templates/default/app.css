@@ -858,7 +858,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 and (max-device-width : 1024px)
 and (orientation : portrait) {
 	#mail-index div#mail-index_nm tr.mail.row {
-		font-size: medium;
+		
 	}
 }
 
@@ -867,7 +867,7 @@ and (orientation : portrait) {
 and (min-width : 321px)
 and (max-device-width:768){
 	#mail-index div#mail-index_nm tr.mail.row {
-		font-size: medium;
+		
 	}
 }
 

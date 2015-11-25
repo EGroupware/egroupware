@@ -855,17 +855,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
 }
 /* tablets and smartphones (portrait) ----------- */
-@media only screen and (max-device-width: 1024px) and (orientation: portrait) {
-  #mail-index div#mail-index_nm tr.mail.row {
-    font-size: medium;
-  }
-}
 /* Smartphones (landscape) ----------- */
-@media only screen and (min-width: 321px) and (max-device-width: 768) {
-  #mail-index div#mail-index_nm tr.mail.row {
-    font-size: medium;
-  }
-}
 /* Mobile (landscape) Tablet----------- */
 span#mail-compose_cc_expander,
 span#mail-compose_bcc_expander,

@@ -505,6 +505,13 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	public function read($name,$template_set=null,$lang='default',$group=0,$version='',$load_via='')
 	{
+		
+		// For mobile experience try to load custom mobile templates
+		if (html::$ua_mobile)
+		{
+			$template_set = "mobile";
+		}
+		
 		unset($lang); unset($group);	// not used, but in old signature
 		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
 			$this->version=$version, $this->laod_via = $load_via);

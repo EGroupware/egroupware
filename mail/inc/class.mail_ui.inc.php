@@ -439,7 +439,7 @@ class mail_ui
 							
 						);
 					}
-					if (html::$ua_mobile) $content[self::$nm_index]['header_row'] = 'mail.mobile_index.header_right';
+					if (html::$ua_mobile) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
 				}
 
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
@@ -523,7 +523,7 @@ class mail_ui
 				$sel_options['filter2'] = $this->searchTypes;
 				$sel_options['filter'] = $this->statusTypes;
 
-				$etpl = new etemplate_new(html::$ua_mobile?'mail.mobile_index':'mail.index');
+				$etpl = new etemplate_new('mail.index');
 				// Start at 2 so auto-added copy+paste actions show up as second group
 				// Needed because there's no 'select all' action to push things down
 				$group=2;
