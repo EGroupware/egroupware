@@ -803,7 +803,7 @@ class calendar_ui
 
 		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
-			$event['app_id'] .= ':'.$event['recur_date'];
+			$event['app_id'] .= ':'.($event['recur_date'] ? $event['recur_date'] : $event['start']);
 		}
 		$event['parts'] = implode(",\n",$this->bo->participants($event,false));
 		$event['date'] = $this->bo->date2string($event['start']);

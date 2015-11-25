@@ -450,7 +450,7 @@ class calendar_uilist extends calendar_ui
 			elseif ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$event['edit_link'] = "edit_series({$event['id']}, {$event['start']});return false;";
-				$event['app_id'] .= ':'.$event['recur_date'];
+				$event['app_id'] .= ':'.($event['recur_date'] ? $event['recur_date'] : $event['start']);
 			}
 			else
 			{
@@ -459,7 +459,7 @@ class calendar_uilist extends calendar_ui
 			}
 
 			// set id for grid
-			$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.$event['recur_date'] : '');
+			$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.($event['recur_date'] ? $event['recur_date'] : $event['start']) : '');
 
 			// Format start and end with timezone
 			foreach(array('start','end') as $time)

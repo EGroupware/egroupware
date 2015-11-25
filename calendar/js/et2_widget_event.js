@@ -122,7 +122,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Unregister, or we'll continue to be notified...
 		if(this.options.value)
 		{
-			var old_app_id = this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
+			var old_app_id = this.options.value.app_id;
 			egw.dataUnregisterUID('calendar::'+old_app_id,false,this);
 		}
 	},
@@ -131,13 +131,14 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Un-register for updates
 		if(this.options.value)
 		{
-			var old_app_id = this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
+			var old_app_id = this.options.value.app_id;
 			egw.dataUnregisterUID('calendar::'+old_app_id,false,this);
 		}
 		this.options.value = _value;
 
 		// Register for updates
-		var app_id = this.options.value.id + (this.options.value.recur_type ? ':'+this.options.value.recur_date : '');
+		var app_id = this.options.value.id + (this.options.value.recur_type ? ':'+
+			(this.options.value.recur_date ? this.options.value.recur_date : this.options.value.start) : '');
 		egw.dataRegisterUID('calendar::'+app_id, function(event) {
 			// Check for changing days in the grid view
 			if(!this._sameday_check(event))
