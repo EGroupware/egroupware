@@ -2671,7 +2671,7 @@ function calendar_upgrade14_3_900()
 function calendar_upgrade14_3_901()
 {
 	preferences::change_preference('calendar', '/^favorite_/', function($attr, $old_value, $owner) {
-		if($old_value['state'])
+		if($old_value['state'] && is_array($old_value['state']))
 		{
 			unset($old_value['state']['date']);
 			unset($old_value['state']['startdate']);
