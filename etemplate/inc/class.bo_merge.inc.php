@@ -958,7 +958,7 @@ abstract class bo_merge
 					case 'text/html':
 						$replace_tags = array(
 							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-							'<table>','<tr>','<td>','<a>',
+							'<table>','<tr>','<td>','<a>','<style>',
 						);
 						break;
 					case 'application/vnd.oasis.opendocument.text':		// open office
