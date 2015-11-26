@@ -408,6 +408,7 @@ class infolog_ui
 				!in_array($query['col_filter']['info_status'], array_keys($this->bo->status[$query['col_filter']['info_type']])))
 			{
 				$query['col_filter']['info_status'] = '';
+				$clear_status_filter = true;
 			}
 		}
 		// Template change forces the UI to do a full update first, no point in getting rows right now
@@ -521,6 +522,10 @@ class infolog_ui
 		if ($query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['no_actions']) $rows['no_actions'] = true;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
+		if($clear_status_filter)
+		{
+			$rows['info_status'] = '';
+		}
 
 		// switch cf column off, if we have no cf's
 		if (!$query['custom_fields']) $rows['no_customfields'] = true;

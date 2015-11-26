@@ -401,7 +401,7 @@ app.classes.infolog = AppJS.extend(
 					{
 						percent.value = 0;
 					}
-					else if (!completed && percent.value == 100)
+					else if (!completed && (percent.value == 0 || percent.value == 100))
 					{
 						percent.value = 10;
 					}
