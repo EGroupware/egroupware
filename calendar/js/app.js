@@ -1321,6 +1321,8 @@ app.classes.calendar = AppJS.extend(
 		// Don't store first and last
 		delete state.first;
 		delete state.last;
+		delete state.startdate;
+		delete state.enddate;
 
 		return state;
 	},
