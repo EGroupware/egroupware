@@ -161,6 +161,9 @@ app.classes.mail = AppJS.extend(
 				this.mail_isMainWindow = true;
 				this.mail_disablePreviewArea(true);
 
+				//Get initial folder status
+				this.mail_refreshFolderStatus(undefined,undefined,false);
+
 				// Bind to nextmatch refresh to update folder status
 				if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
