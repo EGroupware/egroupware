@@ -1414,6 +1414,10 @@ class infolog_ui
 					{
 						$entry['info_status'] = 'ongoing';
 					}
+					if($entry['info_percent'] == 0)
+					{
+						$entry['info_status'] = 'not-started';
+					}
 					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
 						$success++;
@@ -1436,7 +1440,11 @@ class infolog_ui
 						if(!in_array($settings,array('done','billed','cancelled','archive')) && $entry['info_percent'] == 100)
 						{
 							// Done entries will get changed right back if we don't change the completion too
-							$entry['info_percent'] = 90;
+							$entry['info_percent'] = 10;
+						}
+						if(in_array($settings, array('not-started')) && $entry['info_percent'] > 0)
+						{
+							$entry['info_percent'] = 0;
 						}
 						$entry['info_status'] = $settings;
 						if($this->bo->write($entry, true,true,true,$skip_notifications))
