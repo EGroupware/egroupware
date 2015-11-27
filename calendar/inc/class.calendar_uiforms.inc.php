@@ -740,15 +740,6 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 						if ($event['start'] != $old_event['start'] ||
 							$event['whole_day'] != $old_event['whole_day'])
 						{
-							if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
-							{
-								$msg = lang("Error: You can't shift a series from the past!");
-								$noerror = false;
-								break;
-							}
-							// splitting of series confirmed or first event clicked (no confirmation necessary)
-							$orig_event = $event;
-
 							// calculate offset against old series start or clicked recurrance,
 							// depending on which is smaller
 							$offset = $event['start'] - $old_event['start'];
@@ -756,67 +747,10 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 							{
 								$offset = $off2;
 							}
-							// base start-date of new series on actual / clicked date
-							$actual_date = $event['actual_date'];
-							$event['start'] = $actual_date + $offset;
-							if ($content['duration'])
+							$msg = $this->_break_recurring($event, $old_event, $event['actual_date'] + $offset,$content['no_notifications']);
+							if($msg)
 							{
-								$event['end'] = $event['start'] + $content['duration'];
-							}
-							elseif($event['end'] < $event['start'])
-							{
-								$event['end'] = $event['start'] + $event['end'] - $actual_date;
-							}
-							//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration=$content[duration], event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
-							$event['participants'] = $old_event['participants'];
-							foreach ($old_event['recur_exception'] as $key => $exdate)
-							{
-								if ($exdate > $actual_date)
-								{
-									unset($old_event['recur_exception'][$key]);
-									$event['recur_exception'][$key] += $offset;
-								}
-								else
-								{
-									unset($event['recur_exception'][$key]);
-								}
-							}
-							$old_alarms = $old_event['alarm'];
-							if ($old_event['start'] < $actual_date)
-							{
-								unset($orig_event);
-								// copy event by unsetting the id(s)
-								unset($event['id']);
-								unset($event['uid']);
-								unset($event['caldav_name']);
-
-								// set enddate of existing event
-								$rriter = calendar_rrule::event2rrule($old_event, true);
-								$rriter->rewind();
-								$last = $rriter->current();
-								do
-								{
-									$rriter->next_no_exception();
-									$occurrence = $rriter->current();
-								}
-								while ($rriter->valid() &&
-										egw_time::to($occurrence, 'ts') < $actual_date &&
-										($last = $occurrence));
-								$last->setTime(0, 0, 0);
-								$old_event['recur_enddate'] = egw_time::to($last, 'ts');
-								if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$content['no_notifications']))
-								{
-									$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
-										lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-											htmlspecialchars(egw::link('/index.php',array(
-												'menuaction' => 'calendar.calendar_uiforms.edit',
-												'cal_id'    => $content['id'],
-											))).'">','</a>');
-									$noerror = false;
-									$event = $orig_event;
-									break;
-								}
-								$event['alarm'] = array();
+								$noerror = false;
 							}
 						}
 					}
@@ -1129,6 +1063,124 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			return lang('Save event as exception - Delete single occurrence - Edit status or alarms for this particular day');
 		}
 		return lang('Edit status or alarms for this particular day');
+	}
+
+	/**
+	 * Since we cannot change recurrences in the past, break a recurring
+	 * event (that starts in the past), and create a new event.
+	 *
+	 * $old_event will be ended (if needed) and $event will be modified with the
+	 * new start date and time.  It is not allowed to edit events in the past,
+	 * so if $as_of_date is in the past, it will be adjusted to today.
+	 *
+	 * @param array &$event Event to be modified
+	 * @param array $old_event Unmodified (original) event, as read from the database
+	 * @param date $as_of_date If provided, the break will be done as of this
+	 *	date instead of today
+	 * @param boolean $no_notifications Toggle notifications to participants
+	 *
+	 * @return false or error message
+	 */
+	function _break_recurring(&$event, $old_event, $as_of_date = null, $no_notifications = true)
+	{
+		$msg = false;
+
+		if(!$as_of_date )
+		{
+			$as_of_date = time();
+		}
+
+		//error_log(__METHOD__ . egw_time::to($old_event['start']) . ' -> '. egw_time::to($event['start']) . ' as of ' . egw_time::to($as_of_date));
+		
+		if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
+		{
+			$msg = lang("Error: You can't shift a series from the past!");
+			$noerror = false;
+			return $msg;
+		}
+
+		// Hold on to this in case something goes wrong
+		$orig_event = $event;
+
+		$offset = $event['start'] - $old_event['start'];
+		
+		// base start-date of new series on actual / clicked date
+		$event['start'] = $as_of_date ;
+
+		if (egw_time::to($old_event['start'],'Ymd') < egw_time::to($as_of_date,'Ymd') ||
+			// Adjust for requested date in the past
+			egw_time::to($as_of_date,'ts') < time()
+		)
+		{
+			
+			unset($orig_event);
+			// copy event by unsetting the id(s)
+			unset($event['id']);
+			unset($event['uid']);
+			unset($event['caldav_name']);
+			$event['alarm'] = array();
+
+			// set enddate of existing event
+			$rriter = calendar_rrule::event2rrule($old_event, true);
+			$rriter->rewind();
+			$last = $rriter->current();
+			do
+			{
+				$rriter->next_no_exception();
+				$occurrence = $rriter->current();
+			}
+			while ($rriter->valid()  && (
+				egw_time::to($occurrence, 'ts') <= time() ||
+				egw_time::to($occurrence, 'Ymd') < egw_time::to($as_of_date,'Ymd')
+			) && ($last = $occurrence));
+
+
+			// Make sure as_of_date is still valid, may have to move forward
+			if(egw_time::to($as_of_date,'ts') < egw_time::to($last,'ts') ||
+				egw_time::to($as_of_date, 'Ymd') == egw_time::to($last, 'Ymd')) {
+				//$rriter->next_no_exception();
+				$event['start'] = egw_time::to($rriter->current(),'ts') + $offset;
+			}
+
+			//error_log(__METHOD__ ." Series should end at " . egw_time::to($last));
+			//error_log(__METHOD__ ." New series starts at " . egw_time::to($event['start']));
+			if ($content['duration'])
+			{
+				$event['end'] = $event['start'] + $content['duration'];
+			}
+			elseif($event['end'] < $event['start'])
+			{
+				$event['end'] = $old_event['end'] - $old_event['start'] + $event['start'];
+			}
+			//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration={$content['duration']}, event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
+
+			$last->setTime(0, 0, 0);
+			$event['participants'] = $old_event['participants'];
+			foreach ($old_event['recur_exception'] as $key => $exdate)
+			{
+				if ($exdate > $last)
+				{
+					unset($old_event['recur_exception'][$key]);
+					$event['recur_exception'][$key] += $offset;
+				}
+				else
+				{
+					unset($event['recur_exception'][$key]);
+				}
+			}
+			$old_event['recur_enddate'] = egw_time::to($last, 'ts');
+			if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$no_notifications))
+			{
+				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+					lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+						htmlspecialchars(egw::link('/index.php',array(
+							'menuaction' => 'calendar.calendar_uiforms.edit',
+							'cal_id'    => $content['id'],
+						))).'">','</a>');
+				$event = $orig_event;
+			}
+		}
+		return $msg;
 	}
 
 	/**
@@ -2621,9 +2673,11 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 	 * @param string $targetDateTime the datetime where the event should be moved to, format: YYYYMMDD
 	 * @param string|string[] $targetOwner the owner of the target calendar
 	 * @param string $durationT the duration to support resizable calendar event
+	 * @param string $seriesInstance If moving a whole series, not an exception, this is
+	 *	which particular instance was dragged
 	 * @return string XML response if no error occurs
 	 */
-	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
+	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null,$seriesInstance=null)
 	{
 		// we do not allow dragging into another users calendar ATM
 		if($targetOwner < 0)
@@ -2710,7 +2764,7 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 				unset($preserv['edit_single']);
 			}
 		}
-
+		
 		// Drag a whole day to a time
 		if($durationT && $durationT != 'whole_day')
 		{
@@ -2731,6 +2785,19 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 		}
 
 		$event['start'] = $this->bo->date2ts($targetDateTime);
+		
+		if ($event['recur_type'] != MCAL_RECUR_NONE && !$date && $seriesInstance)
+		{
+			// calculate offset against clicked recurrance,
+			// depending on which is smaller
+			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($seriesInstance,'ts');
+			$event['start'] = $old_event['start'] + $offset;
+		
+			// We have a recurring event starting in the past -
+			// stop it & create a new one.
+			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
+		}
+
 		$event['end'] = $event['start']+$duration;
 		$status_reset_to_unknown = false;
 		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
@@ -2762,6 +2829,10 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 		$response = egw_json_response::get();
 		if(!is_array($conflicts) && $conflicts)
 		{
+			if(is_int($conflicts))
+			{
+				$event['id'] = $conflicts;
+			}
 			if(!$event['recur_type'] && !$old_event['recur_type'])
 			{
 				// Directly update stored data.  If event is still visible, it will

@@ -372,7 +372,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			var drop_date = dropEnd.date||false;
 
 			var event_data = timegrid._get_event_info(ui.draggable);
-			var event_widget = timegrid.getWidgetById('event_'+event_data.id);
+			var event_widget = timegrid.getWidgetById('event_'+event_data.app_id);
 			if(!event_widget)
 			{
 				// Widget was moved across weeks / owners
@@ -395,7 +395,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					event_widget._parent.date_helper.set_hours(dropEnd.whole_day ? 0 : dropEnd.hour||0);
 					event_widget._parent.date_helper.set_minutes(dropEnd.whole_day ? 0 : dropEnd.minute||0);
 				}
-				event_widget.options.value.start = new Date(event_widget._parent.date_helper.getValue());
 
 				// Leave the helper there until the update is done
 				var loading = ui.helper.clone(true).appendTo($j('body'));
@@ -427,7 +426,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 						// If it is an integrated infolog event we need to edit infolog entry
 						egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent',
-							[event_data.id, event_widget.options.value.start||false,duration],
+							[event_data.id, event_widget._parent.date_helper.getValue()||false,duration],
 							function() {loading.remove();}
 						).sendRequest(true);
 					}
@@ -439,15 +438,47 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						var duration = event_widget.options.value.whole_day && dropEnd.hour ? 86400-1 : false;
 						// Event (whole day or not) dropped on whole day section, change to whole day non blocking
 						if(dropEnd.whole_day) duration = 'whole_day';
+						
+						// Send the update
+						var _send = function(series_instance)
+						{
+							var start = new Date(event_widget._parent.date_helper.getValue());
 
-						egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
-								button_id==='series' ? event_data.id : event_data.app_id,event_data.owner,
-								event_widget.options.value.start,
-								timegrid.options.owner||egw.user('account_id'),
-								duration
-							],
-							function() { loading.remove();}
-						).sendRequest(true);
+							egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
+									button_id==='series' ? event_data.id : event_data.app_id,event_data.owner,
+									start,
+									timegrid.options.owner||egw.user('account_id'),
+									duration,
+									series_instance
+								],
+								function() { loading.remove();}
+							).sendRequest(true);
+						};
+
+						// Check for modifying a series that started before today
+						var tempDate = new Date();
+						var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
+						if (today >= new Date(event_widget.options.value.start))
+						{
+							et2_dialog.show_dialog(function(_button_id)
+								{
+									if (_button_id == et2_dialog.OK_BUTTON)
+									{
+										_send(event_widget.options.value.recur_date);
+
+									}
+									else
+									{
+										return false;
+									}
+								},
+								egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
+								egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
+						}
+						else
+						{
+							_send(event_widget.options.value.recur_date);
+						}
 					}
 				});
 			}

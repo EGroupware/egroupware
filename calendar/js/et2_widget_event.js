@@ -180,7 +180,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this._parent.date_helper.set_value(event.start.valueOf ? new Date(event.start) : event.start);
 		var formatted_start = this._parent.date_helper.getValue();
 
-		this.set_id('event_' + (eventId || event.id));
+		this.set_id('event_' + event.app_id);
 		
 		// Make sure category stuff is there
 		// Fake it to use the cache / call - if already there, these will return
