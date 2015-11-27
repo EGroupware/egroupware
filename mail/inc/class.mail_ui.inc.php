@@ -3657,7 +3657,39 @@ class mail_ui
 		$response->call('app.mail.mail_reloadNode',$refreshData);
 
 	}
-
+	
+	/**
+	 * ResolveWinmail fetches the encoded attachments
+	 * from winmail.data and will response expected structure back
+	 * to client in order to display them.
+	 *
+	 * Note: this ajax function should only be called via
+	 * nm mail selection as it does not support profile change
+	 * and uses the current available ic_server connection.
+	 *
+	 * @param type $_rowid row id from nm
+	 *
+	 */
+	function ajax_resolveWinmail ($_rowid)
+	{
+		$response = egw_json_response::get();
+		
+		$idParts = self::splitRowID($_rowid);
+		$uid = $idParts['msgUID'];
+		$mbox = $idParts['folder'];
+		
+		$attachments = $this->mail_bo->getMessageAttachments($uid, null, null, false,true,true,$mbox);
+		if (is_array($attachments))
+		{
+			$attachments = $this->createAttachmentBlock($attachments, $_rowid, $uid, $mbox, false);
+			$response->data($attachments);
+		}
+		else
+		{
+			$response->call('egw.message', lang('Can not resolve the winmail.data attachment!'));
+		}
+	}
+	
 	/**
 	 * move folder
 	 *
