@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: #000000;
+  color: black;
 }
 .high {
   color: #cc0000;
@@ -407,5 +407,46 @@ input#infolog-edit_info_subject {
 /*Historie*/
 button#infolog-edit_encrypt {
   top: 13px;
+}
+/* tablets and smartphones  */
+@media only screen and (max-device-width: 1024px) {
+  span.infolog_infoId:before {
+    content: "#";
+  }
+  span.infolog_infoId {
+    font-size: 10px;
+    position: absolute;
+    padding-top: 9px;
+  }
+  div.infoDescRow {
+    height: 50px;
+    font-size: 10px;
+    max-width: 99%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  div.infoLinksRow {
+    font-size: 10px;
+    max-width: 99%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  label[id^='infolog-index_'][id$='info_enddate]'],
+  label[id^='infolog-index_'][id$='info_startdate]'] {
+    font-size: 10px;
+    float: right;
+  }
+  ul[id^='infolog-index_'][id$='info_responsible]'] > li {
+    float: right;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .infoSubRow:last-child {
+    float: right;
+  }
 }
 /**/

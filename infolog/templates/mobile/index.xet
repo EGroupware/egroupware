@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.9.001">
+		<hbox>
+			<description value="Add:" class="infolog_headertext"/>
+			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');" image="task"/>
+			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="app.infolog.add_with_extras(widget,'phone','$cont[action]','$cont[action_id]');" image="phone"/>
+			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="app.infolog.add_with_extras(widget,'note','$cont[action]','$cont[action_id]');" image="note"/>
+		</hbox>
+	</template>
+	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
+		<hbox>
+			<date id="startdate" label="Start"/>
+			<date statustext="Leave it empty for a full week" id="enddate" label="End"/>
+		</hbox>
+	</template>
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
+		<grid width="100%" >
+			<columns>
+				<column width="70"/>
+				<column width="95%" />
+			</columns>
+			<rows>
+				<row class="th">
+					
+				</row>
+				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
+					<vbox align="center"  class="infolog_CompletedClmn">
+						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8" class="infolog_fixedHeight"/>
+						<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar" class="infoDetails"/>
+						<image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" class="infoDetails" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_status_label]" default_src="status"/>
+						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
+						<description align="right" id="{$row}[info_number]" no_lang="1" class="infolog_infoId"/>
+					</vbox>
+					<vbox class="infolog_fullWidth">
+						<hbox>
+							<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b" class="infoDetails"/>
+							<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] infolog_fixedHeight"/>
+						</hbox>
+						<hbox class="infoSubRow">
+							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="65%"/>
+							<listbox disabled="@no_info_owner_info_responsible" type="select-account" id="${row}[info_responsible]" readonly="true" width ="55%" rows="1" class="infoDetails"/>
+						</hbox>
+						<box class="infoDescRow">
+							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
+						</box>
+						<hbox class ="infoLinksRow infoDetails" overflow="hidden">
+							<link-string id="${row}[filelinks]"/>
+						</hbox>
+						
+					</vbox>
+					
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
+		<grid width="100%" border="0" spacing="0" padding="0">
+			<columns>
+				<column width="70%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@css">
+					<html id="css" span="all"/>
+				</row>
+				<row>
+					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
+				</row>
+				<row disabled="1">
+					<template id="dates"/>
+					<template id="header_right"/>
+				</row>
+				<row>
+					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.dates" span="all"/>
+				</row>
+				<row>
+					<hbox class=" ">
+						<box id="responsible_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Change responsible" class="promptheader"/>
+								<description value="Select users or groups"/>
+								<listbox type="select-account" id="responsible" rows="5" account_type="both" class="action_popup-content"/>
+								<hbox>
+									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+						<box id="delete_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Delete" class="promptheader"/>
+								<description value="Delete selected entries?" id="delete_prompt"/>
+								<hbox>
+									<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"/>
+									<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+						<box id="link_popup" class="action_popup prompt">
+							<vbox>
+								<description value="Add / Remove link" class="promptheader"/>
+								<link-entry id="link" class="action_popup-content"/>
+								<hbox>
+									<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
+									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+								</hbox>
+							</vbox>
+						</box>
+					</hbox>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			/**
+ * Add / remove link or category popup used for actions on multiple entries
+ */
+
+div.action_popup[id] {
+	position: fixed;
+	top: 200px;
+	left: 450px;
+	width: 76ex;
+	z-index: 20000;
+	display: none;
+	border-collapse:collapse;
+	border-spacing:0px
+}
+.action_popup-content {
+	display:block;
+	padding:2ex;
+	color:#666666;
+	margin: -2px -1px 0px -2px;
+}
+.action_popup &gt; table {
+	width: 100%
+}
+.action_popup .promptheader {
+	padding: 1ex;
+	width: 100%
+}
+
+.action_select {
+	width: 100%
+}
+		</styles>
+	</template>
+</overlay>
