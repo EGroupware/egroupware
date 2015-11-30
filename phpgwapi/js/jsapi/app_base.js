@@ -785,7 +785,7 @@ var AppJS = Class.extend(
 		$j('li[data-id]',this.sidebox).removeClass('ui-state-highlight');
 
 		$j('li[data-id]',this.sidebox).each(function(i,href) {
-			var favorite = {}
+			var favorite = {};
 			if(this.dataset.id && egw.preference('favorite_'+this.dataset.id,self.appname))
 			{
 				favorite = egw.preference('favorite_'+this.dataset.id,self.appname);
@@ -922,6 +922,53 @@ var AppJS = Class.extend(
 		}
 	},
 
+	/**
+	 * Handler for drag and drop when dragging nextmatch rows from mail app
+	 * and dropped on a row in the current application.  We copy the mail into
+	 * the filemanager to link it since we can't link directly.
+	 *
+	 * This doesn't happen automatically.  Each application must indicate that
+	 * it will accept dropped mail by it's nextmatch actions:
+	 *
+	 * $actions['info_drop_mail'] = array(
+	 *		'type' => 'drop',
+	 *		'acceptedTypes' => 'mail',
+	 *		'onExecute' => 'javaScript:app.infolog.handle_dropped_mail',
+	 *		'hideOnDisabled' => true
+	 *	);
+	 *
+	 * This action, when defined, will not affect the automatic linking between
+	 * normal applications.
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected Dragged mail rows
+	 * @param {egwActionObject} _target Current application's nextmatch row the mail was dropped on
+	 */
+	handle_dropped_mail: function(_action, _selected, _target)
+	{
+		/**
+		 * Mail doesn't support link system, so we copy it to VFS
+		 */
+		var ids = _target.id.split("::");
+		if(ids.length != 2 || ids[0] == 'mail') return;
+
+		var vfs_path = "/apps/"+ids[0]+"/"+ids[1];
+		var mail_ids = [];
+
+		for(var i = 0; i < _selected.length; i++)
+		{
+			mail_ids.push(_selected[i].id);
+		}
+		if(mail_ids.length)
+		{
+			egw.message(egw.lang("Please wait..."));
+			this.egw.json('filemanager.filemanager_ui.ajax_action',['mail',mail_ids, vfs_path],function(data){
+				// Trigger an update (minimal, no sorting changes) to display the new link
+				egw.refresh(data.msg||'',ids[0],ids[1],'update');
+			}).sendRequest(true);
+		}
+	},
+	
 	/**
 	 * Get json data for videos from the given url
 	 *
