@@ -2647,7 +2647,7 @@ app.classes.calendar = AppJS.extend(
 					diff = day === 6 ? 0 : day === 0 ? -1 : -(day + 1);
 					break;
 				case 'Monday':
-					diff = day === 0 ? 1 : 1-day;
+					diff = day === 0 ? -6 : 1-day;
 					break;
 				case 'Sunday':
 				default:
