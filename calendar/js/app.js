@@ -814,7 +814,7 @@ app.classes.calendar = AppJS.extend(
 				'calendar.calendar_uiforms.ajax_moveEvent',
 				[widget.options.value.id, widget.options.value.owner, widget.options.value.start, widget.options.value.owner, widget.options.value.duration],
 				// Remove loading spinner
-				function() {widget.div.removeClass('loading');}
+				function() {if(widget && widget.div) widget.div.removeClass('loading');}
 			).sendRequest(true);
 		}
 	},

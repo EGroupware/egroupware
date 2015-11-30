@@ -421,8 +421,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			var node = this._children[this._children.length-1];
 			this.removeChild(node);
-			node.free();
-		}
+				node.free();
+			}
 		
 		// Make sure children are in cronological order, or columns are backwards
 		events.sort(function(a,b) {

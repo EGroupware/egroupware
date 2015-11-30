@@ -174,8 +174,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Copy new information
 		this.options.value = event;
 
-		var eventId = event.id.match(/-?\d+\.?\d*/g)[0];
-		var appName = event.id.replace(/-?\d+\.?\d*/g,'');
 		var app_id = event.app_id ? event.app_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
 		this._parent.date_helper.set_value(event.start.valueOf ? new Date(event.start) : event.start);
 		var formatted_start = this._parent.date_helper.getValue();
@@ -208,8 +206,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.attr('data-draggable-id',event['id']+'_O'+event.owner+'_C'+(event.owner<0?'group'+Math.abs(event.owner):event.owner))
 		
 			// Put everything we need for basic interaction here, so it's available immediately
-			.attr('data-id', eventId || event.id)
-			.attr('data-app', appName || 'calendar')
+			.attr('data-id', event.id)
+			.attr('data-app', event.app || 'calendar')
 			.attr('data-app_id', app_id)
 			.attr('data-start', formatted_start)
 			.attr('data-owner', event.owner)

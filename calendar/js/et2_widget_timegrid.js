@@ -238,7 +238,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					e.originalEvent = event;
 					e.data = {duration: 0};
 					var event_data = timegrid._get_event_info(this);
-					var event_widget = timegrid.getWidgetById('event_'+event_data.id);
+					var event_widget = timegrid.getWidgetById('event_'+event_data.app_id);
 					var sT = event_widget.options.value.start_m;
 					if (typeof this.dropEnd != 'undefined' && this.dropEnd.length == 1)
 					{
@@ -376,7 +376,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			if(!event_widget)
 			{
 				// Widget was moved across weeks / owners
-				event_widget = timegrid.getParent().getWidgetById('event_'+event_data.id);
+				event_widget = timegrid.getParent().getWidgetById('event_'+event_data.app_id);
 			}
 			if(event_widget)
 			{
@@ -1381,7 +1381,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		if (this.onevent_change)
 		{
 			var event_data = this._get_event_info(dom_node);
-			var event_widget = this.getWidgetById('event_'+event_data.id);
+			var event_widget = this.getWidgetById('event_'+event_data.app_id);
 			et2_calendar_event.recur_prompt(event_data, jQuery.proxy(function(button_id, event_data) {
 				// No need to continue
 				if(button_id === 'cancel') return false;
