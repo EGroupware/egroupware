@@ -1419,20 +1419,17 @@ app.classes.calendar = AppJS.extend(
 	 */
 	move_edit_series: function(_DOM,_button)
 	{
-		var content = _button.getRoot().getArrayMgr('content').data;
-		var start_date = _button.getRoot().getWidgetById('start').get_value();
-		var whole_day = _button.getRoot().getWidgetById('whole_day');
+		var content = this.et2.getArrayMgr('content').data;
+		var start_date = this.et2.getWidgetById('start').get_value();
+		var whole_day = this.et2.getWidgetById('whole_day');
 		var is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
 		var button = _button;
 		var that = this;
-
-		var tempDate = new Date();
-		var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
 		if (typeof content != 'undefined' && content.id != null &&
 			typeof content.recur_type != 'undefined' && content.recur_type != null && content.recur_type != 0
 		)
 		{
-			if (content.start != start_date && today >= new Date(content.start) || content.whole_day != is_whole_day)
+			if (content.start != start_date || content.whole_day != is_whole_day)
 			{
 				et2_dialog.show_dialog(function(_button_id)
 					{
