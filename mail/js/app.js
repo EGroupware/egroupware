@@ -827,21 +827,28 @@ app.classes.mail = AppJS.extend(
 			
 			// Try to resolve winmail.data attachment
 			if (dataElem.data && dataElem.data.attachmentsBlock[0]
-					&& dataElem.data.attachmentsBlock[0].winmailFlag)
+					&& dataElem.data.attachmentsBlock[0].winmailFlag 
+					&& (dataElem.data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
+					dataElem.data.attachmentsBlock[0].filename == "winmail.dat"))
 			{
 				attachmentArea.getDOMNode().classList.add('loading');
-				this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[_id], function(_data){
+				this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[_id], jQuery.proxy(function(_data){
 					attachmentArea.getDOMNode().classList.remove('loading');
 					if (typeof _data == 'object')
 					{
 						attachmentArea.set_value({content:_data});
+						
+						this.data.attachmentsBlock = _data;
+						// Update client cache to avoid resolving winmail.dat attachment again
+						egw.dataStoreUID(this.data.uid, this.data);
+						
 						set_prev_iframe_top();
 					}
 					else
 					{
 						console.log('Can not resolve the winmail.data!');
 					}
-				});
+				},dataElem));
 			}
 		}
 
