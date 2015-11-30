@@ -851,6 +851,11 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	}
 	span.status_img {
 		background-image: none !important;
+		padding-left: 3px;
+		float: right;
+	}
+	#mail-index div#mail-index_nm tr.mail td img, span[id^='mail-index_'][id$='attachments]'] {
+		float: right;
 	}
 }
 /* tablets and smartphones (portrait) ----------- */
