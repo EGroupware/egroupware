@@ -855,6 +855,7 @@ app.classes.mail = AppJS.extend(
 					if (typeof _data == 'object')
 					{
 						attachmentArea.set_value({content:_data});
+						set_prev_iframe_top();
 					}
 					else
 					{
