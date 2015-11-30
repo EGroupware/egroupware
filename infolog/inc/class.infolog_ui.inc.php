@@ -1845,7 +1845,23 @@ class infolog_ui
 			if (!array_key_exists($content['info_status'],$this->bo->status[$content['info_type']]))
 			{
 				$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-				if ($content['info_status'] != 'done') $content['info_datecompleted'] = '';
+				// Make sure we don't end up with invalid status / percent combinations
+				if ($content['info_status'] != 'done')
+				{
+					$content['info_datecompleted'] = '';
+					if((int)$content['info_percent'] === 100)
+					{
+						$content['info_percent'] = 10;
+					}
+				}
+				else
+				{
+					$content['info_percent'] = 100;
+				}
+				if($content['info_status'] != 'not-started' && (int)$content['info_percent'] == 0)
+				{
+					$content['info_percent'] = 10;
+				}
 			}
 		}
 		else	// new call via GET

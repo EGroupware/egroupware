@@ -804,9 +804,19 @@ class infolog_bo
 			{
 				$values['info_datecompleted'] = $user2server ? $this->user_time_now : $this->now;	// set date completed to today if status == done
 			}
+			// Check for valid status / percent combinations
 			if (in_array($values['info_status'],array('done','billed')))
 			{
 				$values['info_percent'] = 100;
+			}
+			else if (in_array($values['info_status'], array('not-started')))
+			{
+				$values['info_percent'] = 0;
+			}
+			else if ((int)$values['info_percent'] == 100 || $values['info_percent'] == 0)
+			{
+				// We change percent to match status, not status to match percent
+				$values['info_percent'] = 10;
 			}
 			if ((int)$values['info_percent'] == 100 && !in_array($values['info_status'],array('done','billed','cancelled','archive')))
 			{
