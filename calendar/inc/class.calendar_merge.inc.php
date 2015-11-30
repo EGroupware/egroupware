@@ -116,7 +116,7 @@ class calendar_merge extends bo_merge
 	function merge_string($content,$ids,$err,$mimetype,$fix)
 	{
 		// Handle merging a list of events into a document with range instead of pagerepeat
-		if(strpos($content, '$$pagerepeat') === false && count($ids) > 1)
+		if(strpos($content, '$$pagerepeat') === false && strpos($content, '{{pagerepeat') === false && count($ids) > 1)
 		{
 			// Merging more than one something will fail without pagerepeat
 			if (is_array($ids) && $ids[0]['id'])
