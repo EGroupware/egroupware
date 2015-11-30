@@ -1033,7 +1033,39 @@ class translation
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
 
-		return self::$db->select(self::LANG_TABLE,'message_id',$where,__LINE__,__FILE__)->fetchColumn();
+		$id = self::$db->select(self::LANG_TABLE,'message_id',$where,__LINE__,__FILE__)->fetchColumn();
+
+		// Check cache, since most things aren't in the DB anymore
+		if(!$id)
+		{
+			$ids = array_filter(array_keys(self::$lang_arr), function($haystack) use($translation) {
+				return stripos(self::$lang_arr[$haystack],$translation) !== false;
+			});
+			$id = array_shift($ids);
+			if(!$id && ($lang && $lang !== 'en' || self::$userlang != 'en'))
+			{
+				// Try english
+				if (in_array($app, self::$instance_specific_translations))
+				{
+					$instance_level[] = $app.':en';
+				}
+				else
+				{
+					$tree_level[] = $app.':en';
+				}
+
+				// load all translations from cache at once
+				if ($tree_level) $lang_arr = egw_cache::getTree(__CLASS__, $tree_level);
+				if ($instance_level) $lang_arr = egw_cache::getInstance(__CLASS__, $instance_level);
+				$lang_arr = $lang_arr[$app.':en'];
+				$ids = array_filter(array_keys($lang_arr), function($haystack) use($translation, $lang_arr) {
+					return stripos($lang_arr[$haystack],$translation) !== false;
+				});
+				$id = array_shift($ids);
+			}
+		}
+
+		return $id;
 	}
 
  	/**
