@@ -784,6 +784,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		color: black;
 		background-color: #FFFFFF;
 	}
+	.tmpPrintDiv .td_display span[style] {
+		font-size: 110% !important;
+	}
 	pre {
 		width:99% !important;
 	}
