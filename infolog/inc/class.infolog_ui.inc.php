@@ -1252,7 +1252,13 @@ class infolog_ui
 				'disableClass' => 'rowNoUndelete',
 			);
 		}
-
+		$actions['info_drop_mail'] = array(
+			'type' => 'drop',
+			'caption' => 'Link mail',
+			'acceptedTypes' => 'mail',
+			'onExecute' => 'javaScript:app.infolog.handle_dropped_mail',
+			'hideOnDisabled' => true
+		);
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
 		return $actions;
 	}
