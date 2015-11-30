@@ -2549,7 +2549,7 @@ app.classes.calendar = AppJS.extend(
 							 }
 							 if (first.getFullYear() != last.getFullYear() && datefmt[0] != 'Y')
 							 {
-								 range += (datefmt[0] != 'd' ? ', ' : ' ') . first.getFullYear();
+								 range += (datefmt[0] != 'd' ? ', ' : ' ') + first.getFullYear();
 							 }
 							 if (display_time)
 							 {
