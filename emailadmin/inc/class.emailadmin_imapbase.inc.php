@@ -1515,31 +1515,7 @@ class emailadmin_imapbase
 						if (!strcasecmp($headerObject['ATTACHMENTS'][$mime_id]['name'],'winmail.dat') ||
 							$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/ms-tnef')
 						{
-							$tnefResolved=false;
-							$tnef_data = $this->getAttachment($headerObject['ATTACHMENTS'][$mime_id]['uid'],$headerObject['ATTACHMENTS'][$mime_id]['partID'],0,false);
-							$myTnef = $this->tnef_decoder($tnef_data['attachment']);
-							//error_log(__METHOD__.__LINE__.array2string($myTnef->getParts()));
-							// Note: MimeId starts with 0, almost always, we cannot use that as winmail_id
-							// we need to build Something that meets the needs
-							if ($myTnef)
-							{
-								foreach($myTnef->getParts() as $vmime_id => $part)
-								{
-									$tnefResolved=true;
-									$attachment = $part->getAllDispositionParameters();
-
-									$attachment['mimeType'] = $part->getType();
-									$attachment['uid'] = $headerObject['ATTACHMENTS'][$mime_id]['uid'];
-									$attachment['partID'] = $headerObject['ATTACHMENTS'][$mime_id]['partID'];
-									$attachment['is_winmail'] = $headerObject['ATTACHMENTS'][$mime_id]['uid'].'@'.$headerObject['ATTACHMENTS'][$mime_id]['partID'].'@'.$vmime_id;
-									if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName();
-									$attachment['size'] = $part->getBytes();
-									if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
-									if (empty($attachment['name'])) $attachment['name'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$attachment['uid'].'_Part'.$mime_id).'.'.mime_magic::mime2ext($attachment['mimeType']);
-									$headerObject['ATTACHMENTS'][$mime_id.'.'.$vmime_id] = $attachment;
-								}
-								if ($tnefResolved) unset($headerObject['ATTACHMENTS'][$mime_id]);
-							}
+							$headerObject['ATTACHMENTS'][$mime_id]['is_winmail'] = true;
 						}
 						//error_log(__METHOD__.' ('.__LINE__.') '.' PartDisposition:'.$mime_id.'->'.array2string($part->getName()));
 						//error_log(__METHOD__.' ('.__LINE__.') '.' PartDisposition:'.$mime_id.'->'.array2string($part->getAllDispositionParameters()));

@@ -824,6 +824,25 @@ app.classes.mail = AppJS.extend(
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
+			
+			// Try to resolve winmail.data attachment
+			if (dataElem.data && dataElem.data.attachmentsBlock[0]
+					&& dataElem.data.attachmentsBlock[0].winmailFlag)
+			{
+				attachmentArea.getDOMNode().classList.add('loading');
+				this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[_id], function(_data){
+					attachmentArea.getDOMNode().classList.remove('loading');
+					if (typeof _data == 'object')
+					{
+						attachmentArea.set_value({content:_data});
+						set_prev_iframe_top();
+					}
+					else
+					{
+						console.log('Can not resolve the winmail.data!');
+					}
+				});
+			}
 		}
 
 		var $preview_iframe = jQuery('#mail-index_mailPreviewContainer');
