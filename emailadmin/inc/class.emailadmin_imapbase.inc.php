@@ -4222,16 +4222,18 @@ class emailadmin_imapbase
 	 * @param Horde_Mime_Part $_structure = '' if given use structure for parsing
 	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @param array	&$skipParts - passed by reference to have control/knowledge which parts are already fetched
 	 * @return array containing the desired part
 	 */
-	function getMultipartMixed($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false)
+	function getMultipartMixed($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false, &$skipParts=array())
 	{
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
 		$bodyPart = array();
 		if (self::$debug) _debug_array($_structure);
 
 		$ignore_first_part = true;
-		$skipParts = array();
+		//$skipParts = array();
+		//error_log(__METHOD__.__LINE__.array2string($_structure->contentTypeMap()));
 		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
 		{
 			//error_log(__METHOD__."($_uid, ".$_structure->getMimeId().") $mime_id: $mime_type");
@@ -4261,7 +4263,7 @@ class emailadmin_imapbase
 
 						case 'mixed':
 						case 'signed':
-							$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part, $_htmlMode, $_preserveSeen));
+							$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part, $_htmlMode, $_preserveSeen, $skipParts));
 							break;
 
 						case 'related':
@@ -4277,6 +4279,8 @@ class emailadmin_imapbase
 								$part->getType() == 'application/octet-stream')
 							{
 								$this->fetchPartContents($_uid, $part);
+								$skipParts[$mime_id]=$mime_type;
+								$skipParts[$mime_id+1]=$part->getType();
 								$bodyPart[] = array(
 									'body'		=> $part->getContents(array(
 										'stream' => false,
@@ -4298,6 +4302,7 @@ class emailadmin_imapbase
 							if($part->getDisposition() != 'attachment')
 							{
 								$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
+								$skipParts[$mime_id]=$mime_type;
 							}
 							//error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$part->type."/".$part->subType.' -> BodyPart:'.array2string($bodyPart[count($bodyPart)-1]));
 							break;
@@ -4309,6 +4314,7 @@ class emailadmin_imapbase
 					if($part->getSubType() == 'delivery-status' && $part->getDisposition() != 'attachment')
 					{
 						$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
+						$skipParts[$mime_id]=$mime_type;
 					}
 					// do not descend into attached Messages
 					if($part->getSubType() == 'rfc822' || $part->getDisposition() == 'attachment')
