@@ -1,3 +1,19 @@
+egroupware-epl (14.3.20151130) hardy; urgency=low
+
+  * PostgreSQL/Calendar: fix SQL error on update, caused by using reserved word "user" as alias
+  * all apps/Tutorials:
+  * Univention: allow to migrate accounts from SQL backupt to Univention (install new EGroupware app and delete all users and groups in Univention first)
+  * Calendar/CalDAV: allow to download whole calendar as one big iCal file using "https://$user:$passwd@domain.com/egroupware/groupdav.php/$user/calendar/?download"
+  * ImportExport: switch notifications off by default on import
+  * Calendar/edit: Fix broken tooltip for participant image in conflict dialog
+  * Addressbook: Fix conflict between search letter and delete a contact
+  * Mail: Fix not showing mail quota for the first time load
+  * Infolog: Fix infolog status
+  * Mail: Fix slow loading of mail list if there is mail with winmail.dat attachment
+  * Mail: Fix mail print version has very small font size
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 30 Nov 2015 12:53:37 +0100
+
 egroupware-epl (14.3.20151110) hardy; urgency=low
 
   * all apps: replace flash based clipboard with html5 solution supported by Chrome, IE, FF 41+, not working in Safari
