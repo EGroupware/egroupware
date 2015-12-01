@@ -140,6 +140,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var app_id = this.options.value.id + (this.options.value.recur_type ? ':'+
 			(this.options.value.recur_date ? this.options.value.recur_date : this.options.value.start) : '');
 		egw.dataRegisterUID('calendar::'+app_id, function(event) {
+			// Make sure id is a string
+			if(event.id)
+			{
+				event.id = ''+event.id;
+			}
 			// Check for changing days in the grid view
 			if(!this._sameday_check(event))
 			{

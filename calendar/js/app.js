@@ -267,6 +267,10 @@ app.classes.calendar = AppJS.extend(
 					var multiple_owner = typeof this.state.owner != 'string' &&
 						this.state.owner.length > 1 &&
 						this.state.owner.length < parseInt(this.egw.config('calview_no_consolidate','phpgwapi') || 5);
+					
+					// Make sure it's a string
+					if(_id) _id = ''+_id;
+					
 					for(var i = 0; i < this.state.owner.length; i++)
 					{
 						var owner = multiple_owner ? this.state.owner[i] : this.state.owner
