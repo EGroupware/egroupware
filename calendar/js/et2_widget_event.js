@@ -661,7 +661,7 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
  */
 et2_calendar_event.recur_prompt = function(event_data, callback)
 {
-	var edit_id = event_data.id;
+	var edit_id = event_data.app_id;
 	var edit_date = event_data.start;
 	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : (window.opener || window).egw;
 	var that = this;

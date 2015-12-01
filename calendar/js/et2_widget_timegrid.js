@@ -426,7 +426,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 						// If it is an integrated infolog event we need to edit infolog entry
 						egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent',
-							[event_data.id, event_widget._parent.date_helper.getValue()||false,duration],
+							[event_data.app_id, event_widget._parent.date_helper.getValue()||false,duration],
 							function() {loading.remove();}
 						).sendRequest(true);
 					}
@@ -458,7 +458,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						// Check for modifying a series that started before today
 						var tempDate = new Date();
 						var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
-						if (today >= new Date(event_widget.options.value.start))
+						if (event_widget.options.value.recur_type && today >= new Date(event_widget.options.value.start))
 						{
 							et2_dialog.show_dialog(function(_button_id)
 								{
@@ -469,7 +469,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 									}
 									else
 									{
-										return false;
+										loading.remove();
 									}
 								},
 								egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),

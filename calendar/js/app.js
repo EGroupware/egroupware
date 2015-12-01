@@ -231,7 +231,7 @@ app.classes.calendar = AppJS.extend(
 							if (match[1]== _id)	do_refresh = true;
 						}
 					});
-				if (jQuery('div [data-app="infolog"][data-id="'+_id+'"]').length > 0) do_refresh = true;
+				if (jQuery('div [data-app="infolog"][data-app_id="'+_id+'"]').length > 0) do_refresh = true;
 				switch (_type)
 				{
 					case 'add':
@@ -797,13 +797,12 @@ app.classes.calendar = AppJS.extend(
 
 		// Integrated infolog event
 		//Get infologID if in case if it's an integrated infolog event
-		var infolog_id = widget.options.value.id.split('infolog')[1];
-		if (infolog_id)
+		if (widget.options.value.app == 'infolog')
 		{
 			// If it is an integrated infolog event we need to edit infolog entry
 			egw().json(
 				'stylite_infolog_calendar_integration::ajax_moveInfologEvent',
-				[infolog_id, widget.options.value.start, widget.options.value.duration],
+				[widget.options.value.app_id, widget.options.value.start, widget.options.value.duration],
 				// Remove loading spinner
 				function() {if(widget.div) widget.div.removeClass('loading');}
 			).sendRequest();

@@ -787,6 +787,8 @@ class calendar_ui
 			{
 				$icons = calendar_uiviews::integration_get_icons($app,$app_id,$event);
 			}
+			$event['app'] = $app;
+			$event['app_id'] = $app_id;
 		}
 		else
 		{
@@ -798,8 +800,14 @@ class calendar_ui
 			$event['class'] .= 'rowNoView ';
 		}
 
-		$event['app'] = 'calendar';
-		$event['app_id'] = $event['id'];
+		if(!$event['app'])
+		{
+			$event['app'] = 'calendar';
+		}
+		if(!$event['app_id'])
+		{
+			$event['app_id'] = $event['id'];
+		}
 
 		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
