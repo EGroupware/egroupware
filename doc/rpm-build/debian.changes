@@ -1,3 +1,9 @@
+egroupware-epl (14.3.20151201) hardy; urgency=low
+
+  * All applications: Prompt user to select an action when drag and drop on lists
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 01 Dec 2015 10:32:13 +0100
+
 egroupware-epl (14.3.20151130) hardy; urgency=low
 
   * PostgreSQL/Calendar: fix SQL error on update, caused by using reserved word "user" as alias
