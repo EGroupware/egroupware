@@ -2803,7 +2803,7 @@ app.classes.calendar = AppJS.extend(
 					// Set to week view, if in one of the views where we change view
 					if(app.calendar.sidebox_changes_views.indexOf(view) >= 0)
 					{
-						app.calendar.update_state({view: 'week', date: date.getValue(), days: days});
+						app.calendar.update_state({view: 'week', date: date_widget.getValue(), days: days});
 					}
 					else if (view == 'planner')
 					{
@@ -2813,7 +2813,7 @@ app.classes.calendar = AppJS.extend(
 					else if (view == 'listview')
 					{
 						app.calendar.update_state({
-							end_date: app.classes.calendar.views.week.end_date({date:date.getValue()})
+							end_date: app.classes.calendar.views.week.end_date({date:date_widget.getValue()})
 						});
 					}
 				});
