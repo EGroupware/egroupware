@@ -2773,9 +2773,9 @@ app.classes.calendar = AppJS.extend(
 					var tempDate = new Date();
 					var today = new Date(tempDate.getFullYear(), tempDate.getUTCMonth(), tempDate.getUTCDate());
 					var holidays = et2_calendar_daycol.get_holidays({day_class_holiday: function() {}}, date.getFullYear());
-					var day_holidays = holidays[''+date.getUTCFullYear() +
-						sprintf("%02d",date.getUTCMonth()+1) +
-						sprintf("%02d",date.getUTCDate())];
+					var day_holidays = holidays[''+date.getFullYear() +
+						sprintf("%02d",date.getMonth()+1) +
+						sprintf("%02d",date.getDate())];
 					var css_class = '';
 					var tooltip = '';
 					if(date.getTime() == today.getTime())
