@@ -33,15 +33,14 @@
 #calendar-sidebox_buttons tbody {
 	width: 100%;
 }
+#calendar-sidebox_date_header > button {
+	width: 45%;
+}
 #calendar-sidebox_weekend {
 	/* Special css styling goes here */
 }
 #calendar-sidebox_date td.ui-datepicker-week-col {
 	cursor: pointer;
-}
-#calendar-sidebox_date img.et2_button {
-	position: absolute;
-	padding: 4px;
 }
 #calendar-sidebox_date .calendar_calHoliday {
 	background: inherit;

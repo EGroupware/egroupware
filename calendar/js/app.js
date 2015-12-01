@@ -2736,36 +2736,21 @@ app.classes.calendar = AppJS.extend(
 	_setup_sidebox_filters: function()
 	{
 		// Further date customizations
-		var date = this.sidebox_et2.getWidgetById('date');
-		if(date)
+		var date_widget = this.sidebox_et2.getWidgetById('date');
+		if(date_widget)
 		{
-			var datepicker = date.input_date.datepicker("option", {
+			var datepicker = date_widget.input_date.datepicker("option", {
 				showButtonPanel:	false,
 				onChangeMonthYear:	function(year, month, inst)
 				{
-					// Switch to month view for that month
-					var date = new Date(app.calendar.state.date);
-					date.setUTCDate(1);
-					date.setFullYear(year);
-					date.setUTCMonth(month-1);
-					// Use toJSON() to get UTC, not browser timezone
-					var state = {date: date.toJSON()};
-					if(app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view) >= 0)
+					// Update month button label
+					var month_button = date_widget.getRoot().getWidgetById('header_month');
+					if(month_button)
 					{
-						state.view = 'month';
+						var temp_date = new Date(year, month-1, 1);
+						//temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
+						month_button.set_label(egw.lang(date('F',temp_date)));
 					}
-					else if (app.calendar.state.view == 'planner')
-					{
-						state.planner_days = 0;
-						state.last = false;
-					}
-					else if (app.calendar.state.view == 'listview')
-					{
-						var d = app.calendar.View.end_date.call(this,state);
-						d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
-						state.end_date = d;
-					}
-					app.calendar.update_state(state);
 				},
 				// Mark holidays
 				beforeShowDay: function (date)
@@ -2802,7 +2787,7 @@ app.classes.calendar = AppJS.extend(
 			});
 
 			// Clickable week numbers
-			date.input_date.on('mouseenter','.ui-datepicker-week-col', function() {
+			date_widget.input_date.on('mouseenter','.ui-datepicker-week-col', function() {
 					$j(this).siblings().find('a').addClass('ui-state-hover');
 				})
 				.on('mouseleave','.ui-datepicker-week-col', function() {
@@ -2832,37 +2817,24 @@ app.classes.calendar = AppJS.extend(
 						});
 					}
 				});
-
-			// Today
-			var today = et2_createWidget('buttononly', {image: 'calendar/today', label: 'Today', id: 'today'},date);
-			today.set_image('calendar/today');
-			today.set_label(egw.lang('Today'));
-			var today_button = $j(today.getDOMNode());
-			today_button
-				.prependTo(date.getDOMNode())
-				.addClass('et2_clickable')
-				.on('click', function() {
-					var tempDate = new Date();
-					var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
-					app.calendar.update_state({date: today.toJSON()});
-				});
-			var position_today = function() {
-				var week_col = $j('#calendar-sidebox_date th.ui-datepicker-week-col');
-				today_button.position({my: 'left top', at: 'left top', of: week_col,collision:'none'})
-					.outerHeight(week_col.outerHeight());
-			};
-
+				
+			// Set month button label
+			var month_button = date_widget.getRoot().getWidgetById('header_month');
+			if(month_button)
+			{
+				var temp_date = new Date(date_widget.get_value());
+				temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
+				month_button.set_label(egw.lang(date('F',temp_date)));
+			}
+			
 			// Dynamic resize to fill sidebox
 			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
-			var temp = $j('<div></div>').appendTo(today_button);
-			var font_ratio = parseFloat(temp.css('font-size')) / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
-			temp.remove();
+			var font_ratio = parseFloat(month_button.btn.css('font-size')) / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
 
 			$j(window).on('resize.calendar'+date.dom_id, function() {
-				var percent = 1+(($j(date.getDOMNode()).width() - preferred_width) / preferred_width);
+				var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
 				percent *= font_ratio;
 				$j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size',(percent*100)+'%');
-				position_today();
 			}).trigger('resize');
 			
 		}
