@@ -176,7 +176,7 @@ var fw_base =  Class.extend({
 			!(this.applications[_app.appName].app_refresh) &&
 			_app.browser.iframe == null && _url == _app.browser.currentLocation
 			// links with load may needs to be reloaded e.g. admin applications global cats
-			&& !(_app.browser.currentLocation.match(/&load=[^&]+/g) && _app == 'admin'))
+			&& !(_app.browser.currentLocation.match(/&load=[^&]+/g) && _app.appName === 'admin'))
 		{
 			// Just do an egw_refresh to avoid a full reload
 			egw_refresh('',_app.appName);
