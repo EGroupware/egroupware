@@ -1864,13 +1864,12 @@ app.classes.calendar = AppJS.extend(
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0)
 				{
-					if(this.state.view !== 'day')
-					{
-						view.etemplates[0].widgetContainer.iterateOver(function(w) {
-							w.set_width(w.div.width() * 0.7);
-						},this,et2_calendar_timegrid);
-					}
-					$j(view.etemplates[1].DOMContainer).css("left","69%");
+					
+					view.etemplates[0].widgetContainer.iterateOver(function(w) {
+						w.set_width($j(view.etemplates[0].DOMContainer).width() * 0.69);
+					},this,et2_calendar_timegrid);
+								
+					$j(view.etemplates[1].DOMContainer).css({"left":"69%", "height":$j(framework.tabsUi.activeTab.contentDiv).height()+'px'});
 					// TODO: Maybe some caching here
 					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
 						this.getWidgetById('label').set_value(data.label||'');
