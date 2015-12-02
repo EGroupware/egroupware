@@ -43,7 +43,7 @@ Egroupware
 				<buttononly id="header_today" label="Today" onclick="var tempDate = new Date();
 					var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
 					app.calendar.update_state({date: today.toJSON()});return false;"/>
-				<buttononly id="header_month" label="Month" onclick="app.calendar.update_state({view:'month'});" />
+				<buttononly id="header_month" label="Month" onclick="app.calendar.update_state({date: widget.btn.data('date'), view:'month'});" />
 			</hbox>
 			<date id="date" class="et2_fullWidth" inline="true" onchange="var view_change = app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view);
 var update = {date:widget.getValue()};

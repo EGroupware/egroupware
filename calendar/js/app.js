@@ -2747,9 +2747,13 @@ app.classes.calendar = AppJS.extend(
 					var month_button = date_widget.getRoot().getWidgetById('header_month');
 					if(month_button)
 					{
-						var temp_date = new Date(year, month-1, 1);
+						var temp_date = new Date(year, month-1, 1,0,0,0);
 						//temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
 						month_button.set_label(egw.lang(date('F',temp_date)));
+
+						// Store current _displayed_ date in date button for clicking
+						temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
+						month_button.btn.attr('data-date', temp_date.toJSON());
 					}
 				},
 				// Mark holidays
