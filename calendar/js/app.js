@@ -1939,7 +1939,9 @@ app.classes.calendar = AppJS.extend(
 					state.state.enddate = state.state.startdate;
 				}
 				nm.applyFilters(state.state);
-				if(!state.state.end_date && nm.activeFilters.enddate)
+
+				// Try to keep last value up to date with what's in nextmatch
+				if(nm.activeFilters.enddate)
 				{
 					this.state.last = nm.activeFilters.enddate;
 				}

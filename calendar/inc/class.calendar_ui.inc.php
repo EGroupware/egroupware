@@ -622,7 +622,9 @@ class calendar_ui
 			}
 			if($content['last'])
 			{
-				$this->last = egw_time::to($content['last'],'ts');
+				$this->last = new egw_time($content['last']);
+				$this->last->setTime(23, 59, 59);
+				$this->last = $this->last->format('ts');
 			}
 			$_GET['merge'] = $content['merge'];
 			$this->merge();

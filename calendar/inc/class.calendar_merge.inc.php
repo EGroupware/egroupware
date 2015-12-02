@@ -117,6 +117,7 @@ class calendar_merge extends bo_merge
 	 */
 	function merge_string($content,$ids,$err,$mimetype,$fix)
 	{
+		error_log(__METHOD__ . ' IDs: ' . array2string($ids));
 		// Handle merging a list of events into a document with range instead of pagerepeat
 		if(strpos($content, '$$pagerepeat') === false && strpos($content, '{{pagerepeat') === false && count($ids) > 1)
 		{
@@ -136,6 +137,22 @@ class calendar_merge extends bo_merge
 				$ids = array($ids);
 			}
 		}
+		// Handle merging a range of events into a document with pagerepeat instead of range
+		else if ((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false) && is_array($ids) && $ids[0] && !$id[0]['id'])
+		{
+			// Passed a range, needs to be expanded
+			$events = $this->bo->search($this->query + $ids[0] + array(
+				'offset' => 0,
+				'enum_recuring' => true,
+				'order' => 'cal_start',
+				'cfs' => strpos($content, '#') !== false ? array_keys(config::get_customfields('calendar')) : null
+			));
+			$ids = array();
+			foreach($events as $event) {
+				$ids[] = $event;
+			}
+		}
+		
 		return parent::merge_string($content, $ids, $err, $mimetype,$fix);
 	}
 
