@@ -32,7 +32,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 		'select-app',
 		'select-bool',
 		'select-country',
-		'select-dow',
+		// DOW needs some server-side pre-processing to unpack the options,
+		// so can't be skipped.
+		//'select-dow',
 		'select-number',
 		'select-priority',
 		'select-percent',
