@@ -72,7 +72,7 @@ class admin_cmd_delete_account extends admin_cmd
 		{
 			$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
 		}
-		if (!$this->is_user) $GLOBALS['egw']->accounts->delete($account_id);	// groups get not deleted via the admin hook, as users
+		$GLOBALS['egw']->accounts->delete($account_id);
 
 		if ($account_id < 0)
 		{
