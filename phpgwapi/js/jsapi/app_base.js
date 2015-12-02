@@ -73,7 +73,35 @@ var AppJS = Class.extend(
 	appname: '',
 
 	/**
-	 * Internal reference to etemplate2 widget tree
+	 * Internal reference to the most recently loaded etemplate2 widget tree
+	 *
+	 * NOTE: This variable can change which etemplate it points to as the user
+	 * works.  For example, loading the home or admin apps can cause
+	 * et2_ready() to be called again with a different template.  this.et2 will
+	 * then point to a different template.  If the user then closes that tab,
+	 * this.et2 will point to a destroyed object, and trying to use it will fail.
+	 *
+	 * If you need a reference to a certain template you can either store a local
+	 * reference or access it through etemplate2.
+	 * 
+	 * @example <caption>Store a local reference</caption>
+	 *	// in et2_ready()
+	 *	if(name == 'index') this.index_et2 = et2.widgetContainer;
+	 *
+	 *	// Remember to clean up in destroy()
+	 *	delete this.index_et2;
+	 *
+	 *	// Instead of this.et2, using a local reference
+	 *	this.index_et2 ...
+	 *
+	 *
+	 * @example <caption>Access via etemplate2 object</caption>
+	 * // Instead of this.et2, using it's unique ID
+	 * var et2 = etemplate2.getById('myapp-index)
+	 * if(et2)
+	 * {
+	 *		et2.widgetContainer. ...
+	 * }
 	 *
 	 * @var {et2_container}
 	 */

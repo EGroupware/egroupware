@@ -153,9 +153,10 @@ app.classes.infolog = AppJS.extend(
 		// call parent
 		var state = this._super.apply(this, arguments);
 		var nm = {};
-		// Prevents to get access to freed et2 object
-		// TODO: needs more investigation to see why this.et2 sometimes gets free
-		if(this.et2 && Object.keys(this.et2).length >1)
+
+		// Get index etemplate
+		var et2 = etemplate2.getById('infolog-index');
+		if(et2)
 		{
 			var content = this.et2.getArrayMgr('content');
 			nm = content? content.data.nm: {};
