@@ -2491,7 +2491,7 @@ class mail_ui
 	function vfsSaveAttachment($ids,$path)
 	{
 		//error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
-
+		
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); egw(window).close();';
@@ -2499,34 +2499,79 @@ class mail_ui
 		$err=null;
 		$dupe_count = array();
 		$rememberServerID = $this->mail_bo->profileID;
-		foreach((array)$ids as $id)
-		{
+		
+		/**
+		 * Extract all parameteres from the given id
+		 * @param int $id message id ('::' delimited mailbox::uid::part-id::is_winmail::name)
+		 *
+		 * @return array an array of parameters
+		 */
+		$getParams = function ($id) {
 			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
 			$lId = implode('::',array($app,$user,$serverID,$mailbox,$uid));
 			$hA = self::splitRowID($lId);
-			$uid = $hA['msgUID'];
-			$mailbox = $hA['folder'];
-			$icServerID = $hA['profileID'];
-			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			return array(
+				'is_winmail' => $is_winmail == "null" || !$is_winmail?false:$is_winmail,
+				'user' => $user,
+				'name' => $name,
+				'part' => $part,
+				'uid' => $hA['msgUID'],
+				'mailbox' => $hA['folder'],
+				'icServer' => $hA['profileID']
+			);
+		};
+		
+		//Examine the first attachment to see if attachment
+		//is winmail.dat embedded attachments.
+		$p = $getParams($ids[0]);
+		if ($p['is_winmail'])
+		{
+			if ($p['icServer'] && $p['icServer'] != $this->mail_bo->profileID)
+			{
+				$this->changeProfile($p['icServer']);
+			}
+			$this->mail_bo->reopen($p['mailbox']);
+			// Retrive all embedded attachments at once
+			// avoids to fetch heavy winmail.dat content
+			// for each file.
+			$attachments = $this->mail_bo->getTnefAttachments($p['uid'],$p['part']);
+		}
+		
+		foreach((array)$ids as $id)
+		{
+			$params = $getParams($id);
+			if ($params['icServer'] && $params['icServer'] != $this->mail_bo->profileID)
 			{
 				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
-				$this->changeProfile($icServerID);
+				$this->changeProfile($params['icServer']);
 			}
 			//error_log(__METHOD__.__LINE__.array2string($hA));
-			$this->mail_bo->reopen($mailbox);
-			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
+			$this->mail_bo->reopen($params['mailbox']);
+			
+			if ($params['is_winmail'])
+			{
+				// Try to find the right content for file id
+				foreach ($attachments as $key => $val)
+				{
+					if ($key == $params['is_winmail']) $attachment = $val;
+				}
+			}
+			else
+			{
+				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
+			}
 
-			$file = $name;
+			$file = $params['name'];
 			while(egw_vfs::file_exists($path.($file ? '/'.$file : '')))
 			{
-				$dupe_count[$name]++;
-				$file = pathinfo($name, PATHINFO_FILENAME) .
-					' ('.($dupe_count[$name] + 1).')' . '.' .
-					pathinfo($name, PATHINFO_EXTENSION);
+				$dupe_count[$params['name']]++;
+				$file = pathinfo($params['name'], PATHINFO_FILENAME) .
+					' ('.($dupe_count[$params['name']] + 1).')' . '.' .
+					pathinfo($params['name'], PATHINFO_EXTENSION);
 			}
-			$name = $file;
+			$params['name'] = $file;
 			//error_log(__METHOD__.__LINE__.array2string($attachment));
-			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
+			if (!($fp = egw_vfs::fopen($file=$path.($params['name'] ? '/'.$params['name'] : ''),'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
 				$err .= lang('Error saving %1!',$file);
@@ -2534,7 +2579,6 @@ class mail_ui
 			if ($fp)
 			{
 				fclose($fp);
-				$file_list[] = $name;
 			}
 		}
 		$this->mail_bo->closeConnection();
@@ -2593,9 +2637,25 @@ class mail_ui
 
 		$file_list = array();
 		$this->mail_bo->reopen($mailbox);
+		if ($attachments[0]['is_winmail'] && $attachments[0]['is_winmail']!='null')
+		{
+			$tnefAttachments = $this->mail_bo->getTnefAttachments($message_id, $attachments[0]['partID'],true);
+		}
 		foreach($attachments as $file)
 		{
-			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false,true);
+			if ($file['is_winmail'])
+			{
+				// Try to find the right content for file id
+				foreach ($tnefAttachments as $key => $val)
+				{
+					error_log(__METHOD__.' winmail = '.$key);
+					if ($key == $file['is_winmail']) $attachment = $val;
+				}
+			}
+			else
+			{
+				$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false,true);
+			}
 			$success=true;
 			if (empty($file['filename'])) $file['filename'] = $file['name'];
 			if (!($fp = egw_vfs::fopen($path.$file['filename'],'wb')) ||
@@ -3650,7 +3710,7 @@ class mail_ui
 	
 	/**
 	 * ResolveWinmail fetches the encoded attachments
-	 * from winmail.data and will response expected structure back
+	 * from winmail.dat and will response expected structure back
 	 * to client in order to display them.
 	 *
 	 * Note: this ajax function should only be called via
@@ -3676,7 +3736,7 @@ class mail_ui
 		}
 		else
 		{
-			$response->call('egw.message', lang('Can not resolve the winmail.data attachment!'));
+			$response->call('egw.message', lang('Can not resolve the winmail.dat attachment!'));
 		}
 	}
 	

@@ -5405,7 +5405,45 @@ class emailadmin_imapbase
 
 		return $attachment['attachment'];
 	}
-
+	
+	/**
+	 * Retrieve tnef attachments
+	 *
+	 * @param int $_uid the uid of the message
+	 * @param string $_partID the id of the part, which holds the attachment
+	 * @param boolean $_stream =false flag to indicate if the attachment is to be fetched or returned as filepointer
+	 *
+	 * @return array returns an array of all resolved embeded attachments from winmail.dat
+	 */
+	function getTnefAttachments ($_uid, $_partID, $_stream=false)
+	{
+		$tnef_data = $this->getAttachment($_uid, $_partID,0,false);
+		$tnef_parts = $this->tnef_decoder($tnef_data['attachment']);
+		$attachments = array();
+		if ($tnef_parts)
+		{
+			foreach($tnef_parts->getParts() as $mime_id => $part)
+			{
+				
+				$attachment = $part->getAllDispositionParameters();
+				$attachment['mimeType'] = $part->getType();
+				if (!isset($attachment['filename'])||empty($attachment['filename'])) $attachment['filename'] = $part->getName();
+				if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
+				if (empty($attachment['filename']))
+				{
+					$attachment['filename'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?
+						$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.mime_magic::mime2ext($attachment['mimeType']);
+				}
+				
+				$attachment['attachment'] = $part->getContents(array('stream'=>$_stream));
+				
+				$attachments[$_uid.'@'.$_partID.'@'.$mime_id] = $attachment;
+			}
+		}
+		if (!is_array($attachments)) return false;
+		return $attachments;
+	}
+	
 	/**
 	 * Retrieve a attachment
 	 *
@@ -5476,7 +5514,7 @@ class emailadmin_imapbase
 			//'attachment'	=> $part->getContents(array('stream'=>$_stream))
 			'attachment'	=> ($part?$part->getContents(array('stream'=>$_stream)):'Error: Could not fetch attachment for:'." Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr in $_folder:".array2string(function_backtrace()))
 			);
-
+		
 		// try guessing the mimetype, if we get the application/octet-stream
 		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
 		# if the attachment holds a winmail number and is a winmail.dat then we have to handle that.
