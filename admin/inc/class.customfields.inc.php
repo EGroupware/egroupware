@@ -586,6 +586,7 @@ class customfields
 	function delete_content_type(&$content)
 	{
 		unset($this->content_types[$content['content_types']['types']]);
+		unset($this->status[$content['content_types']['types']]);
 		// save changes to repository
 		$this->save_repository();
 	}
