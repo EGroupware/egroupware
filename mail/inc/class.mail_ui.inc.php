@@ -2640,9 +2640,25 @@ class mail_ui
 		$file_list = array();
 		$dupe_count = array();
 		$this->mail_bo->reopen($mailbox);
+		if ($attachments[0]['is_winmail'] && $attachments[0]['is_winmail']!='null')
+		{
+			$tnefAttachments = $this->mail_bo->getTnefAttachments($message_id, $attachments[0]['partID'],true);
+		}
 		foreach($attachments as $file)
 		{
-			$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false,true);
+			if ($file['is_winmail'])
+			{
+				// Try to find the right content for file id
+				foreach ($tnefAttachments as $key => $val)
+				{
+					error_log(__METHOD__.' winmail = '.$key);
+					if ($key == $file['is_winmail']) $attachment = $val;
+				}
+			}
+			else
+			{
+				$attachment = $this->mail_bo->getAttachment($message_id,$file['partID'],$file['is_winmail'],false,true);
+			}
 			$success=true;
 			if (empty($file['filename'])) $file['filename'] = $file['name'];
 			if(in_array($path.$file['filename'], $file_list))
