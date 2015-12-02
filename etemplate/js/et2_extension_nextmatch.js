@@ -994,7 +994,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		this.egw().set_preference(app, pref, colDisplay.join(","),
 			// Use callback after the preference gets set to trigger refresh, in case app
 			// isn't looking at selectcols and just uses preference
-			cf_added ? jQuery.proxy(function() {this.controller.update(true);}, this):null
+			cf_added ? jQuery.proxy(function() {if(this.controller) this.controller.update(true);}, this):null
 		);
 
 		// Save adjusted column sizes

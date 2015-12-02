@@ -59,6 +59,8 @@ app.classes.infolog = AppJS.extend(
 				var nm = this.et2.getWidgetById('nm');
 				var filter2 = nm.getWidgetById('filter2');
 				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
+				// Remove the rule added by show_details() if the template is removed
+				$j(_et2.DOMContainer).on('clear', function() {egw.css('#infolog-index_nm .et2_box.infoDes');});
 
 				// Enable decrypt on hover
 				if(this.egw.user('apps').stylite)
