@@ -136,7 +136,16 @@ app.classes.infolog = AppJS.extend(
 		// call parent
 		var state = this._super.apply(this, arguments);
 
-		var nm = this.et2 ? this.et2.getArrayMgr('content').data.nm : {};
+		var nm = {};
+
+		// Get index etemplate
+		var et2 = etemplate2.getById('infolog-index');
+		if(et2)
+		{
+			var content = this.et2.getArrayMgr('content');
+			nm = content? content.data.nm: {};
+		}
+
 		state.action = nm.action || null;
 		state.action_id = nm.action_id || null;
 
