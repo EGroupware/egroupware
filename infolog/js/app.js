@@ -59,6 +59,8 @@ app.classes.infolog = AppJS.extend(
 				var nm = this.et2.getWidgetById('nm');
 				var filter2 = nm.getWidgetById('filter2');
 				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
+				// Remove the rule added by show_details() if the template is removed
+				$j(_et2.DOMContainer).on('clear', function() {egw.css('#infolog-index_nm .et2_box.infoDes');});
 				break;
 			case 'infolog.edit.print':
 				// Trigger print command if the infolog oppend for printing porpuse
