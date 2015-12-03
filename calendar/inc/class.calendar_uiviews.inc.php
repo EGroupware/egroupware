@@ -234,7 +234,6 @@ class calendar_uiviews extends calendar_ui
 			$this->merge();
 			return;
 		}
-		if (!$this->view) $this->view = 'week';
 
 		// handle views in other files
 		if (!isset($this->public_functions[$this->view]) && $this->view !== 'listview')

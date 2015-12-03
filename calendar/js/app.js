@@ -59,7 +59,7 @@ app.classes.calendar = AppJS.extend(
 	 */
 	state: {
 		date: new Date(),
-		view: egw.preference('defaultcalendar','calendar') || 'day',
+		view: egw.preference('saved_states','calendar').view || egw.preference('defaultcalendar','calendar') || 'day',
 		owner: egw.user('account_id')
 	},
 
@@ -2302,14 +2302,20 @@ app.classes.calendar = AppJS.extend(
 			// Some data is missing for the current owner, go get it
 			if(need_data && seperate_owners)
 			{
-				this._fetch_data(jQuery.extend({}, state, {owner: value[i].owner}));
+				this._fetch_data(
+					jQuery.extend({}, state, {owner: value[i].owner}),
+					this.sidebox_et2 ? null : this.et2.getInstanceManager()
+				);
 			}
 		}
 
 		// Some data was missing, go get it
 		if(need_data && !seperate_owners)
 		{
-			this._fetch_data(state);
+			this._fetch_data(
+				state,
+				this.sidebox_et2 ? null : this.et2.getInstanceManager()
+			);
 		}
 	},
 
@@ -2327,7 +2333,10 @@ app.classes.calendar = AppJS.extend(
 	 */
 	_fetch_data: function(state, instance, start)
 	{
-		if(!this.sidebox_et2 && !instance) return;
+		if(!this.sidebox_et2 && !instance)
+		{
+			return;
+		}
 
 		if(typeof start === 'undefined')
 		{
@@ -3139,12 +3148,12 @@ jQuery.extend(app.classes.calendar,{
 					app.calendar.date.long_date(state.first, state.last)
 			},
 			start_date: function(state) {
-				return app.calendar.date.start_of_week(state.date || new Date());
+				return app.calendar.date.start_of_week(app.calendar.View.start_date.call(this,state));
 			},
 			end_date: function(state) {
 				state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview','calendar') || 7);
 
-				var d = app.calendar.date.start_of_week(state.date || new Date());
+				var d = app.calendar.date.start_of_week(app.calendar.View.start_date.call(this,state));
 				// Always 7 days, we just turn weekends on or off
 				d.setUTCHours(24*7-1);
 				return d;
