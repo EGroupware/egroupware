@@ -58,6 +58,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		var popup; 
 		// Get open compose windows
 		var compose = egw.getOpenWindows("mail", /(^compose_)||(^mail.compose)/);
+		
+		// Encode html entities in the URI, otheerwise server XSS protection wont
+		// allow it to pass, because it may get mistaken for some forbiden tags,
+		// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
+		// including "<" would get mistaken for <math> tag, and server will cut it off.
+		uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+		
 		if(compose.length == 0)
 		{
 			// No compose windows, might be no mail app.js
