@@ -1018,7 +1018,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			}
 		}
 		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id,...) start=$event[start]=".date('Y-m-d H:i:s',$event['start']).", recurrence=$event[recurrence]=".date('Y-m-d H:i:s',$event['recurrence']));
-		foreach($event['recur_exception'] as $ex)
+		foreach((array)$event['recur_exception'] as $ex)
 		{
 			ZLog::Write(LOGLEVEL_DEBUG, "exception=$ex=".date('Y-m-d H:i:s',$ex));
 		}
@@ -1210,7 +1210,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 					if (!empty($exception_time))
 					{
 						if (empty($event['uid'])) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." BEWARE no UID given for this event:".$event['id'].' but exception is set for '.$exception_time);
-						$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
+						$exception = new SyncAppointmentException();	// exceptions seems to be full SyncAppointments, with only starttime required
 						$exception->deleted = 1;
 						$exception->exceptionstarttime = $exception_time;
 						ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added deleted exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
