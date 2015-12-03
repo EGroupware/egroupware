@@ -738,7 +738,8 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 						
 						// we edit a existing series event
 						if ($event['start'] != $old_event['start'] ||
-							$event['whole_day'] != $old_event['whole_day'])
+							$event['whole_day'] != $old_event['whole_day'] ||
+							$event['end'] != $old_event['end'])
 						{
 							// calculate offset against old series start or clicked recurrance,
 							// depending on which is smaller
@@ -1103,6 +1104,7 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 		$orig_event = $event;
 
 		$offset = $event['start'] - $old_event['start'];
+		$duration = $event['duration'] ? $event['duration'] : $event['end'] - $event['start'];
 		
 		// base start-date of new series on actual / clicked date
 		$event['start'] = $as_of_date ;
@@ -1144,15 +1146,15 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 
 			//error_log(__METHOD__ ." Series should end at " . egw_time::to($last));
 			//error_log(__METHOD__ ." New series starts at " . egw_time::to($event['start']));
-			if ($content['duration'])
+			if ($duration)
 			{
-				$event['end'] = $event['start'] + $content['duration'];
+				$event['end'] = $event['start'] + $duration;
 			}
 			elseif($event['end'] < $event['start'])
 			{
 				$event['end'] = $old_event['end'] - $old_event['start'] + $event['start'];
 			}
-			//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration={$content['duration']}, event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
+			//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration={$duration}, event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
 
 			$last->setTime(0, 0, 0);
 			$event['participants'] = $old_event['participants'];
@@ -1180,6 +1182,7 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 				$event = $orig_event;
 			}
 		}
+		$event['start'] = egw_time::to($event['start'],'ts');
 		return $msg;
 	}
 
@@ -2764,7 +2767,23 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 				unset($preserv['edit_single']);
 			}
 		}
+
+		$event['start'] = $this->bo->date2ts($targetDateTime);
+		$event['end'] = $event['start']+$duration;
 		
+		if ($event['recur_type'] != MCAL_RECUR_NONE && !$date && $seriesInstance)
+		{
+			// calculate offset against clicked recurrance,
+			// depending on which is smaller
+			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($seriesInstance,'ts');
+			$event['start'] = $old_event['start'] + $offset;
+			$event['duration'] = $duration;
+		
+			// We have a recurring event starting in the past -
+			// stop it & create a new one.
+			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
+		}
+
 		// Drag a whole day to a time
 		if($durationT && $durationT != 'whole_day')
 		{
@@ -2784,21 +2803,6 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			$event['non_blocking'] = true;
 		}
 
-		$event['start'] = $this->bo->date2ts($targetDateTime);
-		
-		if ($event['recur_type'] != MCAL_RECUR_NONE && !$date && $seriesInstance)
-		{
-			// calculate offset against clicked recurrance,
-			// depending on which is smaller
-			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($seriesInstance,'ts');
-			$event['start'] = $old_event['start'] + $offset;
-		
-			// We have a recurring event starting in the past -
-			// stop it & create a new one.
-			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
-		}
-
-		$event['end'] = $event['start']+$duration;
 		$status_reset_to_unknown = false;
 		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
 		foreach((array)$event['participants'] as $uid => $status)
