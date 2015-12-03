@@ -326,7 +326,7 @@
 			if (window.framework === window.top.framework && typeof et2_dialog != 'undefined' &&
 				!egw.preference('egw_tutorial_noautoload', 'common') &&
 				!parseInt(document.getElementById('egw_script_id').getAttribute('data-framework-reload')) &&
-				!egw.config('egw_tutorial_disable', 'phpgwapi') || egw.config('egw_tutorial_disable', 'phpgwapi') == 'sidebox')
+				(!egw.config('egw_tutorial_disable', 'phpgwapi') || egw.config('egw_tutorial_disable', 'phpgwapi') == 'sidebox'))
 			{
 				// we need to wait until common translations are loaded
 				egw.langRequireApp(window, 'common', function()
