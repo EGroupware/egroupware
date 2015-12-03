@@ -239,6 +239,46 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			_wnd.document.title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
 		},
+		
+		/**
+		 * Loading prompt is for building a loading animation and show it to user
+		 * while a request is under progress.
+		 * 
+		 * @param {boolean} _stat true to show the loading and false to hide
+		 * @param {string} _msg a message to show while loading, default is "Please, wait..."
+		 * @param {string|jQuery node} _node DOM selector id or jquery DOM object, default is body
+		 * 
+		 * @returns {jquery dom object|null} returns jQuery DOM object or null in case of hiding
+		 */
+		loading_prompt: function(_stat,_msg,_node)
+		{
+			var $container = '';
+			if (_stat)
+			{
+				var msg = _msg || egw.lang('please wait...');
+				var $node = jQuery(_node) || jQuery ('body');
+
+				var $container = jQuery(document.createElement('div'))
+						.attr('id', 'egw-loading-prompt')
+						.addClass('ui-front');
+
+				var $text = jQuery(document.createElement('span'))
+						.addClass('egw-loading-prompt-msg')
+						.text(msg)
+						.appendTo($container);
+				var $animator = jQuery(document.createElement('div'))
+						.addClass('egw-loading-prompt-animator')
+						.appendTo($container);
+				$container.insertBefore($node);
+				return $container;
+			}
+			else
+			{
+				$container = jQuery('#egw-loading-prompt');
+				if ($container.length > 0) $container.remove();
+				return null;
+			}
+		},
 
 		/**
 		 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
