@@ -765,7 +765,7 @@ app.classes.home = AppJS.extend(
 	
 	/**
 	 * Function calls on discard checkbox and will set
-	 * the egw_tutorial_autoload preference
+	 * the egw_tutorial_noautoload preference
 	 * 
 	 * @param {type} egw
 	 * @param {type} widget
@@ -774,7 +774,7 @@ app.classes.home = AppJS.extend(
 	{
 		if (widget)
 		{
-			this.egw.set_preference('common', 'egw_tutorial_autoload', widget.get_value());
+			this.egw.set_preference('common', 'egw_tutorial_noautoload', widget.get_value());
 		}
 	}
 });
