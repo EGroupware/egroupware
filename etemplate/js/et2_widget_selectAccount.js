@@ -136,7 +136,7 @@ var et2_selectAccount = et2_selectbox.extend(
 					{
 						this.set_multiple(true, this.options.expand_multiple_rows);
 					}
-					
+
 					if(this.options.multiple)
 					{
 						this._open_multi_search(e);
@@ -258,6 +258,11 @@ var et2_selectAccount = et2_selectbox.extend(
 				// Options are not indexed, so we must look
 				for(var i = 0; !found && i < this.options.select_options.length; i++)
 				{
+					if (typeof this.options.select_options[i] != 'object')
+					{
+						egw.debug('warn',this.id + ' wrong option '+i+' this.options.select_options=', this.options.select_options);
+						continue;
+					}
 					if(this.options.select_options[i].value == search[j]) found = true;
 				}
 				if(!found)
