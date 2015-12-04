@@ -2930,18 +2930,21 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 
 			// Create widget by type
 			var widget = null;
-
-			if(field.type == 'select')
+			if(field.type == 'select' || field.type == 'select-account')
 			{
 				if(field.values && typeof field.values[''] !== 'undefined')
 				{
 					delete(field.values['']);
 				}
-				widget = et2_createWidget("nextmatch-filterheader", {
-					id: cf_id,
-					empty_label: field.label,
-					select_options: field.values
-				}, this);
+				widget = et2_createWidget(
+					field.type == 'select-account' ? 'nextmatch-accountfilter' : "nextmatch-filterheader",
+					{
+						id: cf_id,
+						empty_label: field.label,
+						select_options: field.values
+					},
+					this
+				);
 			}
 			else if (apps[field.type])
 			{
@@ -3207,12 +3210,6 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatch
 			event.data.nextmatch.applyFilters({col_filter: col_filter});
 		});
 
-	},
-
-	set_select_options: function(_options) {
-		// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
-		this.attributes.select_options.ignore = true;
-		this._super.apply(this, arguments);
 	},
 
 	/**
