@@ -592,6 +592,16 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	},
 
 	/**
+	 * Show the series split prompt for this event
+	 *
+	 * @param {function} callback
+	 */
+	series_split_prompt: function(callback)
+	{
+		et2_calendar_event.series_split_prompt(this.options.value,this.options.value.recur_date, callback);
+	},
+
+	/**
 	 * Link the actions to the DOM nodes / widget bits.
 	 *
 	 * @param {object} actions {ID: {attributes..}+} map of egw action information
@@ -707,6 +717,46 @@ et2_calendar_event.recur_prompt = function(event_data, callback)
 	else
 	{
 		callback.call(this,'single',event_data);
+	}
+};
+
+/**
+ * Split series prompt
+ *
+ * If the event is recurring and the user adjusts the time or duration, we may need
+ * to split the series, ending the current one and creating a new one with the changes.
+ * This prompts the user if they really want to do that.
+ *
+ * @param {Object} event_data - Event information
+ * @param {string} event_data.id - Unique ID for the event, possibly with a timestamp
+ * @param {string|Date} instance_date - The date of the edited instance of the event
+ * @param {Function} [callback] - Callback is called with the button (ok or cancel) and the event data.
+ *
+ * @augments {et2_calendar_event}
+ */
+et2_calendar_event.series_split_prompt = function(event_data, instance_date, callback)
+{
+	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : (window.opener || window).egw;
+	var that = this;
+
+	if(typeof instance_date == 'string')
+	{
+		instance_date = new Date(instance_date);
+	}
+
+	// Check for modifying a series that started before today
+	var tempDate = new Date();
+	var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),tempDate.getHours(),-tempDate.getTimezoneOffset(),tempDate.getSeconds());
+	var termination_date = instance_date < today ? egw.lang('today') : date(egw.preference('dateformat'),instance_date);
+
+	if(parseInt(event_data.recur_type))
+	{
+		et2_dialog.show_dialog(
+			function(button_id) {callback.call(that, button_id, event_data);},
+			(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
+			egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.", termination_date),
+			egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE
+		);
 	}
 };
 

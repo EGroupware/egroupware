@@ -251,6 +251,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 							event_widget.options.value.duration = e.data.duration;
 						}
 						$j(this).trigger(e);
+						event_widget._update(event_widget.options.value);
 
 						// That cleared the resize handles, so remove for re-creation...
 						if($j(this).resizable('instance'))
@@ -456,24 +457,18 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						};
 
 						// Check for modifying a series that started before today
-						var tempDate = new Date();
-						var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
-						if (event_widget.options.value.recur_type && today >= new Date(event_widget.options.value.start))
+						if (event_widget.options.value.recur_type)
 						{
-							et2_dialog.show_dialog(function(_button_id)
+							event_widget.series_split_prompt(function(_button_id) {
+								if (_button_id === et2_dialog.OK_BUTTON)
 								{
-									if (_button_id == et2_dialog.OK_BUTTON)
-									{
-										_send(event_widget.options.value.recur_date);
-
-									}
-									else
-									{
-										loading.remove();
-									}
-								},
-								egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created."),
-								egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL , et2_dialog.WARNING_MESSAGE);
+									_send(event_widget.options.value.recur_date);
+								}
+								else
+								{
+									loading.remove();
+								}
+							});
 						}
 						else
 						{

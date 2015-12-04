@@ -176,7 +176,7 @@
 				</row>
 				<row height="12">
 					<description for="recur_enddate" value="End date"/>
-					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" onclick="if(window.calendar.params.inputField.value == '') window.calendar.parseDate(document.getElementById(form::name('start')+'[str]').value);"/>
+					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate"/>
 					<description for="tzid" value="Timezone"/>
 					<menulist>
 						<menupopup type="select-timezone" statustext="Timezone in which recurrences have identical time" id="tzid"/>
