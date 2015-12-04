@@ -138,7 +138,7 @@ class calendar_merge extends bo_merge
 			}
 		}
 		// Handle merging a range of events into a document with pagerepeat instead of range
-		else if ((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false) && is_array($ids) && $ids[0] && !$id[0]['id'])
+		else if ((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false) && is_array($ids) && $ids[0] && !$ids[0]['id'])
 		{
 			// Passed a range, needs to be expanded
 			$events = $this->bo->search($this->query + $ids[0] + array(
@@ -152,7 +152,7 @@ class calendar_merge extends bo_merge
 				$ids[] = $event;
 			}
 		}
-		
+
 		return parent::merge_string($content, $ids, $err, $mimetype,$fix);
 	}
 

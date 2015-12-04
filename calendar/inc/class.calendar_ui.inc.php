@@ -623,9 +623,10 @@ class calendar_ui
 			if($content['last'])
 			{
 				$this->last = new egw_time($content['last']);
-				$this->last->setTime(23, 59, 59);
-				$this->last = $this->last->format('ts');
 			}
+			$this->last->setTime(23, 59, 59);
+			$this->last = $this->last->format('ts');
+			
 			$_GET['merge'] = $content['merge'];
 			$this->merge();
 			return;
@@ -841,6 +842,7 @@ class calendar_ui
 				));
 			}
 			$merge = new calendar_merge();
+			//error_log('Timespan: ' . egw_time::to($timespan[0]['start']) . ' - ' . egw_time::to($timespan[0]['end']));
 			$error = $merge->download($_GET['merge'], $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 			// Here?  Doesn't actually give the message
 			egw_framework::refresh_opener($error, 'calendar');
