@@ -130,7 +130,22 @@ var et2_selectAccount = et2_selectbox.extend(
 		{
 			var button = jQuery(document.createElement("span"))
 				.addClass("et2_clickable")
-				.click(this, this.options.multiple ? this._open_multi_search : this._open_search)
+				.click(this, jQuery.proxy(function(e) {
+					// Auto-expand
+					if(this.options.expand_multiple_rows && !this.options.multiple)
+					{
+						this.set_multiple(true, this.options.expand_multiple_rows);
+					}
+
+					if(this.options.multiple)
+					{
+						this._open_multi_search(e);
+					}
+					else
+					{
+						this._open_search(e);
+					}
+				},this))
 				.attr("title", egw.lang("popup with search"))
 				.append('<span class="ui-icon ui-icon-search" style="display:inline-block"/>');
 
@@ -321,6 +336,11 @@ var et2_selectAccount = et2_selectbox.extend(
 				// Options are not indexed, so we must look
 				for(var i = 0; !found && i < this.options.select_options.length; i++)
 				{
+					if (typeof this.options.select_options[i] != 'object')
+					{
+						egw.debug('warn',this.id + ' wrong option '+i+' this.options.select_options=', this.options.select_options);
+						continue;
+					}
 					if(this.options.select_options[i].value == search[j]) found = true;
 				}
 				if(!found)
