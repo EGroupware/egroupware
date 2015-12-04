@@ -1160,7 +1160,7 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			$event['participants'] = $old_event['participants'];
 			foreach ($old_event['recur_exception'] as $key => $exdate)
 			{
-				if ($exdate > $last)
+				if ($exdate > egw_time::to($last,'ts'))
 				{
 					unset($old_event['recur_exception'][$key]);
 					$event['recur_exception'][$key] += $offset;
