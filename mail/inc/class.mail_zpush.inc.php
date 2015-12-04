@@ -891,7 +891,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
 				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
 				if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$body);
-			    if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
+				if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 					// may be html
 					if ($this->debugLevel>0) debugLog("MIME Body".' Type:html (fetched with html_only)');
 					$css = $this->mail->getStyles($bodyStruct);
@@ -944,7 +944,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					if ($this->debugLevel>0) debugLog("HTML Body with requested pref 2");
 					// Send HTML if requested and native type was html
 					$output->asbody->type = 2;
-					$output->nativebodytype = 2;
 					$htmlbody = '<html>'.
 						'<head>'.
 						'<meta name="Generator" content="Z-Push">'.
@@ -970,6 +969,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$htmlbody = Utils::Utf8_truncate($htmlbody,$truncsize);
 						$output->asbody->truncated = 1;
 					}
+					// output->nativebodytype is used as marker that the original message was of type ... but is now converted to, as type 2 is requested.
+					$output->nativebodytype = 2;
 					$output->asbody->data = $htmlbody;
 				}
 				else
