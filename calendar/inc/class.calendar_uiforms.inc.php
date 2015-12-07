@@ -231,7 +231,7 @@ class calendar_uiforms extends calendar_ui
 		// affect more than just one event widget, so require a full refresh.
 		// $update_type is one of the update types
 		// (add, edit, update, delete)
-		$update_type = $event['recur_type'] == MCAL_RECUR_NONE ? 'update' : 'edit';
+		$update_type = $content['id'] ? ($content['recur_type'] == MCAL_RECUR_NONE ? 'update' : 'edit') : 'add';
 
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
