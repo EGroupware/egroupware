@@ -14,6 +14,7 @@
 
 
 @import (reference) "../../../pixelegg/less/definitions.less";
+@import (reference) "../../../pixelegg/less/def_mobile.less";
 @import (less) "../default/app.css";
 
 
@@ -386,3 +387,80 @@ div.addressbook_edit_general_picture img {
 // END DIALOG #############################################################################
 
 } // Ende Media all
+
+
+/* tablets and smartphones  */
+@media only screen and (max-device-width:1024px) {
+	#addressbook-index {
+		table.egwGridView_outer tbody {
+			.addressbookCol3 div.avatar {
+				border: 1px solid silver;
+				border-radius: 50%;
+				overflow: hidden;
+				width: 50px;
+				height: 50px;
+				background-image: url(/egroupware/addressbook/templates/pixelegg/images/photo.png);
+				background-size: 35px 35px;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			span[id^='addressbook-index_'][id$='line1]'] {
+				font-weight: bold;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				padding-bottom: 5px;
+			}
+			span[id^='addressbook-index_'][id$='line2]']{
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			.addressbookCol2 {
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				width:99%;
+			}
+			td[class^="gridCont"]{
+				position:relative;
+				.et2_hbox.et2_box_widget.cellphone {
+					margin-left: -4px;
+					position: absolute;
+					bottom:0;
+				}
+				.workphone {
+					position: absolute;
+					bottom:0;
+				}
+			}
+			
+			span[id^='addressbook-index_'][id$='adr_one_locality]']
+			{
+				.mob-fontsize-s;
+				display: inline-block;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				
+			}
+			a[id^='addressbook-index_'][id$='email]']{
+				.mob-fontsize-s;
+				display:block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				padding-bottom: 5px;
+			}
+			a[id^='addressbook-index_'][id$='tel_cell]'],
+			a[id^='addressbook-index_'][id$='tel_work]']
+			{
+				.mob-fontsize-s;
+				display: inline-block;
+				padding-left: 3px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}
