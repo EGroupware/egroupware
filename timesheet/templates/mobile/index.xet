@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
+		<hbox>
+			<description value="Start"/>
+			<date id="startdate"/>
+			<description value="End"/>
+			<date statustext="Leave it empty for a full week" id="enddate"/>
+		</hbox>
+	</template>
+	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
+		<buttononly label="Add" id="add" onclick="egw.open('timesheet');"/>
+	</template>
+	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="110"/>
+				<column width="90%" />
+				<column width="60"/>
+			</columns>
+			<rows>
+				<row class="th">
+					
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class] timesheetRow">
+					<vbox>
+						<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
+						<menulist class="$cont[ownerClass]">
+							<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
+						</menulist>
+						<menulist class="noWrap">
+							<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
+						</menulist>
+					</vbox>
+					<vbox>
+						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
+						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
+						<link id="${row}[ts_link]" no_lang="1"/>
+					</vbox>
+					<vbox class="timesheet3Col">
+						<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1" align="right"/>
+						<textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
+						<textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>
+						<menulist>
+							<menupopup id="${row}[ts_status]" readonly="true"/>
+						</menulist>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
+		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates"/>
+	</template>
+</overlay>
