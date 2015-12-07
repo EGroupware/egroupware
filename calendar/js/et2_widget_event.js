@@ -184,7 +184,10 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var formatted_start = this._parent.date_helper.getValue();
 
 		this.set_id('event_' + event.app_id);
-		
+		if(this._actionObject)
+		{
+			this._actionObject.id = 'calendar::' + event.app_id;
+		}
 		// Make sure category stuff is there
 		// Fake it to use the cache / call - if already there, these will return
 		// immediately.
@@ -585,10 +588,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * Show the recur prompt for this event
 	 *
 	 * @param {function} callback
+	 * @param {Object} [extra_data]
 	 */
-	recur_prompt: function(callback)
+	recur_prompt: function(callback, extra_data)
 	{
-		et2_calendar_event.recur_prompt(this.options.value,callback);
+		et2_calendar_event.recur_prompt(this.options.value,callback,extra_data);
 	},
 
 	/**
@@ -671,16 +675,19 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
  * @param {string|Date} event_data.start - Start date/time for the event
  * @param {number} event_data.recur_type - Recur type, or 0 for a non-recurring event
  * @param {Function} [callback] - Callback is called with the button (exception, series, single or cancel) and the event data.
+ * @param {Object} [extra_data] - Additional data passed to the callback, used as extra parameters for default callback
  * 
  * @augments {et2_calendar_event}
  */
-et2_calendar_event.recur_prompt = function(event_data, callback)
+et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 {
 	var edit_id = event_data.app_id;
 	var edit_date = event_data.start;
 	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : (window.opener || window).egw;
 	var that = this;
 
+	var extra_params = extra_data && typeof extra_data == 'object' ? extra_data : {};
+	extra_params.date = edit_date;
 	if(typeof callback != 'function')
 	{
 		callback = function(_button_id)
@@ -688,11 +695,12 @@ et2_calendar_event.recur_prompt = function(event_data, callback)
 			switch(_button_id)
 			{
 				case 'exception':
-					egw.open(edit_id, event_data.app||'calendar', 'edit', {date:edit_date,exception: '1'});
+					extra_params.exception = '1';
+					egw.open(edit_id, event_data.app||'calendar', 'edit', extra_params);
 					break;
 				case 'series':
 				case 'single':
-					egw.open(edit_id, event_data.app||'calendar', 'edit', {date:edit_date});
+					egw.open(edit_id, event_data.app||'calendar', 'edit', extra_params);
 					break;
 				case 'cancel':
 				default:

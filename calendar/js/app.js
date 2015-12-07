@@ -1159,6 +1159,7 @@ app.classes.calendar = AppJS.extend(
 	 */
 	action_open: function(_action, _events)
 	{
+		debugger;
 		var id = _events[0].id.split('::');
 		if(_action.data.open)
 		{
@@ -1260,15 +1261,25 @@ app.classes.calendar = AppJS.extend(
 	 */
 	cal_open: function(_action, _senders)
 	{
-		// Check for series
-		var id = _senders[0].id;
-		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
-		if (matches)
+		// Try for easy way - find a widget
+		if(_senders[0].iface.getWidget)
 		{
-			this.edit_series(matches[1],matches[2]);
-			return;
+			var widget = _senders[0].iface.getWidget();
+			return widget.recur_prompt();
 		}
 		
+		// Nextmatch in list view does not have a widget, but we can pull
+		// the data by ID
+		// Check for series
+		var id = _senders[0].id;
+		var data = egw.dataGetUIDdata(id);
+		if (data && data.data)
+		{
+			et2_calendar_event.recur_prompt(data.data);
+			return;
+		}
+		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
+
 		// Check for other app integration data sent from server
 		var backup = _action.data;
 		if(_action.parent.data && _action.parent.data.nextmatch)
@@ -1529,7 +1540,7 @@ app.classes.calendar = AppJS.extend(
 		{
 			for(var s in _set)
 			{
-				if (new_state[s] !== _set[s])
+				if (new_state[s] !== _set[s] && (typeof new_state[s] == 'string' || typeof new_state[s] !== 'string' && new_state[s]+'' !== _set[s]+''))
 				{
 					changed.push(s + ': ' + new_state[s] + ' -> ' + _set[s]);
 					new_state[s] = _set[s];
