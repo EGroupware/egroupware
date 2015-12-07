@@ -457,7 +457,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 						};
 
 						// Check for modifying a series that started before today
-						if (event_widget.options.value.recur_type)
+						if (event_widget.options.value.recur_type && button_id === 'series')
 						{
 							event_widget.series_split_prompt(function(_button_id) {
 								if (_button_id === et2_dialog.OK_BUTTON)
