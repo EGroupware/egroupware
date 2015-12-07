@@ -6355,6 +6355,96 @@ a.textSidebox {
 .pageGenTime > span:last-child:after {
   content: "";
 }
+@keyframes loading-prompt-spinner {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+.egw-loading-prompt-container::before {
+  opacity: .3;
+  content: "";
+  background: #aaaaaa url("images/ui-bg_flat_0_aaaaaa_40x100.png") 50% 50% repeat-x;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+.egw-loading-prompt-container .egw-loading-prompt-spinner-msg {
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  z-index: 999;
+  text-shadow: 4px 4px 7px #679FD2;
+  color: #0B5FA4;
+  margin-left: -10px;
+  margin-top: 52px;
+}
+.egw-loading-prompt-container .egw-loading-prompt-spinner-animator {
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  z-index: 999;
+  background-position: 3px 3px;
+  opacity: 1;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  border: 5px solid;
+  background: #FBC200;
+  border: 6px #679fd2 solid;
+  border-top: 6px #0C5DA5 solid;
+  border-radius: 50%;
+  -webkit-animation: loading-prompt-spinner 1.2s infinite linear;
+  animation: loading-prompt-spinner 1.2s infinite linear;
+}
+@keyframes loading-prompt-horizental {
+  0% {
+    transform: translate(-52.5px, -7.5px);
+  }
+  100% {
+    transform: translate(38.5px, -7.5px);
+  }
+}
+.egw-loading-prompt-container .egw-loading-prompt-horizental-animator::after {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  z-index: 999;
+  border-radius: 30%;
+  background: #FBC200;
+  animation-name: loading-prompt-horizental;
+  animation-duration: 1.5s;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.egw-loading-prompt-container .egw-loading-prompt-horizental-msg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 999;
+  text-shadow: 4px 4px 7px #679FD2;
+  color: #0B5FA4;
+  margin-left: -35px;
+}
+.egw-loading-prompt-container .egw-loading-prompt-horizental-animator::before {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  z-index: 999;
+  width: 100px;
+  border-radius: 5px;
+  border: solid 10px  #679FD2;
+  transform: translate(-50%, -50%);
+}
 /**
  * EGroupware: Pixelegg styles
  *
@@ -6519,6 +6609,66 @@ span.egw_tutorial_title {
   body {
     background-color: transparent;
   }
+  body .pt-page-moveToLeft {
+    -webkit-animation: moveToLeft .6s ease both;
+    animation: moveToLeft .6s ease both;
+  }
+  body .pt-page-moveFromLeft {
+    -webkit-animation: moveFromLeft .6s ease both;
+    animation: moveFromLeft .6s ease both;
+  }
+  body .pt-page-moveToRight {
+    -webkit-animation: moveToRight .6s ease both;
+    animation: moveToRight .6s ease both;
+  }
+  body .pt-page-moveFromRight {
+    -webkit-animation: moveFromRight .6s ease both;
+    animation: moveFromRight .6s ease both;
+  }
+  @-webkit-keyframes moveToLeft {
+    to {
+      -webkit-transform: translateX(-100%);
+    }
+  }
+  @keyframes moveToLeft {
+    to {
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+  }
+  @-webkit-keyframes moveFromLeft {
+    from {
+      -webkit-transform: translateX(-100%);
+    }
+  }
+  @keyframes moveFromLeft {
+    from {
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+  }
+  @-webkit-keyframes moveToRight {
+    to {
+      -webkit-transform: translateX(100%);
+    }
+  }
+  @keyframes moveToRight {
+    to {
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
+  }
+  @-webkit-keyframes moveFromRight {
+    from {
+      -webkit-transform: translateX(100%);
+    }
+  }
+  @keyframes moveFromRight {
+    from {
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
+  }
   body div.egw_fw_mobile_iOS_popup_appHeader {
     padding-top: 15px;
   }
@@ -6544,6 +6694,12 @@ span.egw_tutorial_title {
   body table.egwGridView_outer tbody tr {
     touch-action: initial;
     height: 50px;
+  }
+  body table.egwGridView_outer tbody tr td time,
+  body table.egwGridView_outer tbody tr td.et2_date,
+  body table.egwGridView_outer tbody tr td.et2_date_ro {
+    float: right;
+    font-size: 10px;
   }
   #egw_fw_basecontainer {
     background: white;
@@ -6754,7 +6910,7 @@ span.egw_tutorial_title {
     background-color: none !important;
   }
   .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:active {
-    webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
   }
@@ -7333,16 +7489,24 @@ span.egw_tutorial_title {
 /*mobile etemplate2*/
 /*mobile etemplate2*/
 @media only screen and (min-width: 320px) and (max-width: 1279px) {
-  div.ui-dialog {
+  body div#egw_message {
+    bottom: 0px;
+    top: auto;
+    left: 0px;
+    right: 0px !important;
+    max-width: 100%;
+    border-radius: 0;
+  }
+  body div.ui-dialog {
     width: 100% !important;
     height: 100% !important;
     left: 0 !important;
     top: 0 !important;
   }
-  .et2_nextmatch .nextmatch_header_row {
+  body .et2_nextmatch .nextmatch_header_row {
     background-color: background-color-egw-dark;
   }
-  .et2_nextmatch .nextmatch_header_row select {
+  body .et2_nextmatch .nextmatch_header_row select {
     display: block;
     width: 100%;
     height: 50px;
@@ -7355,13 +7519,13 @@ span.egw_tutorial_title {
     padding-left: 10px;
     max-width: none;
   }
-  .et2_nextmatch .nextmatch_header_row label {
+  body .et2_nextmatch .nextmatch_header_row label {
     display: block;
     width: 100%;
     float: left;
     font-size: large;
   }
-  .et2_nextmatch .nextmatch_header_row label select {
+  body .et2_nextmatch .nextmatch_header_row label select {
     display: inline-block;
     width: 80%;
     float: right;
@@ -7369,33 +7533,33 @@ span.egw_tutorial_title {
     height: 50px;
     font-size: large;
   }
-  .et2_nextmatch .nextmatch_header.nm_header_hide {
+  body .et2_nextmatch .nextmatch_header.nm_header_hide {
     display: none !important;
   }
-  .et2_nextmatch .nextmatch_header {
+  body .et2_nextmatch .nextmatch_header {
     background-color: white;
     padding: 0;
     display: none;
     border: 1px solid silver;
     border-top: none;
   }
-  .et2_nextmatch .nextmatch_header div.et2_box_widget {
+  body .et2_nextmatch .nextmatch_header div.et2_box_widget {
     display: block;
     height: 50px;
   }
-  .et2_nextmatch .nextmatch_header .et2_button {
+  body .et2_nextmatch .nextmatch_header .et2_button {
     width: 50px;
     height: 50px;
   }
-  .et2_nextmatch .egwGridView_outer thead tr {
+  body .et2_nextmatch .egwGridView_outer thead tr {
     visibility: hidden;
   }
-  .et2_nextmatch .search {
+  body .et2_nextmatch .search {
     background: #0c5da5;
     border: 1px solid silver;
     margin-left: 60px;
   }
-  .et2_nextmatch .search button {
+  body .et2_nextmatch .search button {
     height: 50px;
     width: 50px;
     font-size: large;
@@ -7406,16 +7570,16 @@ span.egw_tutorial_title {
     color: white;
     background-image: none;
   }
-  .et2_nextmatch .search button:active,
-  .et2_nextmatch .search button:hover {
+  body .et2_nextmatch .search button:active,
+  body .et2_nextmatch .search button:hover {
     background: transparent;
     color: white;
   }
-  .et2_nextmatch .search button:focus {
+  body .et2_nextmatch .search button:focus {
     color: white;
     box-shadow: none !important;
   }
-  .et2_nextmatch .search button.nm_toggle_header {
+  body .et2_nextmatch .search button.nm_toggle_header {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7427,14 +7591,14 @@ span.egw_tutorial_title {
     display: block;
     float: right;
   }
-  .et2_nextmatch .search button.nm_toggle_header:focus {
+  body .et2_nextmatch .search button.nm_toggle_header:focus {
     outline: none;
   }
-  .et2_nextmatch .search button.nm_toggle_header:after {
+  body .et2_nextmatch .search button.nm_toggle_header:after {
     font-size: xx-large;
     content: "\2630";
   }
-  .et2_nextmatch .search button.nm_action_header {
+  body .et2_nextmatch .search button.nm_action_header {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7446,14 +7610,14 @@ span.egw_tutorial_title {
     display: block;
     float: right;
   }
-  .et2_nextmatch .search button.nm_action_header:focus {
+  body .et2_nextmatch .search button.nm_action_header:focus {
     outline: none;
   }
-  .et2_nextmatch .search button.nm_action_header:after {
+  body .et2_nextmatch .search button.nm_action_header:after {
     font-size: xx-large;
     content: "\205D";
   }
-  .et2_nextmatch .search button.nm_add_button {
+  body .et2_nextmatch .search button.nm_add_button {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7468,10 +7632,10 @@ span.egw_tutorial_title {
     border: 10px solid #0c5da5;
     border-radius: 50px;
   }
-  .et2_nextmatch .search button.nm_add_button:focus {
+  body .et2_nextmatch .search button.nm_add_button:focus {
     outline: none;
   }
-  .et2_nextmatch .search button.nm_add_button:after {
+  body .et2_nextmatch .search button.nm_add_button:after {
     font-size: xx-large;
     content: "+";
     display: inline-block;
@@ -7480,10 +7644,10 @@ span.egw_tutorial_title {
     color: #0c5da5;
     font-weight: bold;
   }
-  .et2_nextmatch .search button.nm_toggle_header_on:after {
+  body .et2_nextmatch .search button.nm_toggle_header_on:after {
     content: "\2715";
   }
-  .et2_nextmatch .search input {
+  body .et2_nextmatch .search input {
     width: 20%;
     height: 50px;
     font-size: large;
@@ -7492,36 +7656,36 @@ span.egw_tutorial_title {
     background-color: #0c5da5;
     color: white;
   }
-  .et2_nextmatch .search input:active {
+  body .et2_nextmatch .search input:active {
     border: none;
     background: #0c5da5;
   }
-  .et2_nextmatch .search input:focus {
+  body .et2_nextmatch .search input:focus {
     border: none;
     backgroun: #0c5da5;
     outline: none;
     position: absolute;
     width: 100%;
   }
-  .et2_nextmatch .header_row_right {
+  body .et2_nextmatch .header_row_right {
     height: 50px;
     width: 100%;
     padding: 0;
   }
-  .et2_nextmatch .header_row_right div[id$=favorite_wrapper] {
+  body .et2_nextmatch .header_row_right div[id$=favorite_wrapper] {
     margin: 0;
     top: 0 !important;
     height: 50px;
   }
-  .et2_nextmatch .header_row_right * {
+  body .et2_nextmatch .header_row_right * {
     display: inline-block;
     float: left;
   }
-  .et2_nextmatch .header_row_right .et2_dropdown button {
+  body .et2_nextmatch .header_row_right .et2_dropdown button {
     height: 50px;
     width: 50px;
   }
-  .et2_nextmatch .header_count {
+  body .et2_nextmatch .header_count {
     margin: 0;
     height: 50px;
     font-size: large;
@@ -7532,37 +7696,37 @@ span.egw_tutorial_title {
     border-radius: 0;
     border-left: 1px solid rgba(0, 0, 0, 0.15);
   }
-  .et2_nextmatch table.egwGridView_grid tr img {
+  body .et2_nextmatch table.egwGridView_grid tr img {
     height: 12px;
   }
-  .et2_nextmatch table.egwGridView_grid tbody tr.focused {
+  body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
     background-image: none;
   }
-  .et2_nextmatch table.egwGridView_grid tbody tr.selected {
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected {
     background: rgba(255, 194, 0, 0.5) !important;
   }
-  .et2_nextmatch table.egwGridView_grid tbody tr:hover {
+  body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
     background: transparent;
   }
-  .et2_nextmatch table.egwGridView_grid tbody tr.swipe {
+  body .et2_nextmatch table.egwGridView_grid tbody tr.swipe {
     background-color: #ffc200;
     border: none;
   }
-  .et2_nextmatch .egwGridView_outer thead tr th {
+  body .et2_nextmatch .egwGridView_outer thead tr th {
     font-size: large;
   }
-  .dtree img {
+  body .dtree img {
     width: 24px !important;
     height: 24px !important;
   }
-  .dtree table,
-  .dtree tr,
-  .dtree td {
+  body .dtree table,
+  body .dtree tr,
+  body .dtree td {
     padding: 2px;
     padding-left: 0;
     padding-right: 0px;
   }
-  .dtree .containerTableStyle {
+  body .dtree .containerTableStyle {
     overflow: auto;
   }
 }

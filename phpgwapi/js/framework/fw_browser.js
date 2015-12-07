@@ -153,7 +153,7 @@ var fw_browser =  Class.extend({
 
 		// Show loader div, start blocking
 		var self = this;
-		this.ajaxLoaderDiv = jQuery('<div class="loading ui-widget-overlay ui-front">'+egw.lang('please wait...')+'</div>').insertBefore(this.baseDiv);
+		this.ajaxLoaderDiv = egw.loading_prompt(this.app.appName,true,egw.lang('please wait...'),this.baseDiv, egwIsMobile()?'horizental':'spinner');
 		this.loadingDeferred = new jQuery.Deferred();
 
 		// Try to escape from infinitive not resolved loadingDeferred
@@ -161,14 +161,14 @@ var fw_browser =  Class.extend({
 		// Define a escape timeout for 5 sec
 		this.ajaxLoaderDivTimeout = setTimeout(function(){
 			(self.ajaxLoaderDiv || jQuery('div.loading')).hide().remove();
-			self.ajaxLoaderDiv = null;
+			self.ajaxLoaderDiv = egw.loading_prompt(self.app.appName,false);
 		},5000);
 
 		this.loadingDeferred.always(function() {
 			if(self.ajaxLoaderDiv)
 			{
-				self.ajaxLoaderDiv.hide().remove();
-				self.ajaxLoaderDiv = null;
+				
+				self.ajaxLoaderDiv = egw.loading_prompt(self.app.appName,false);
 				// Remove escape timeout
 				clearTimeout(self.ajaxLoaderDivTimeout);
 			}

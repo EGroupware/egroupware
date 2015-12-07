@@ -244,37 +244,43 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * Loading prompt is for building a loading animation and show it to user
 		 * while a request is under progress.
 		 * 
-		 * @param {boolean} _stat true to show the loading and false to hide
-		 * @param {string} _msg a message to show while loading, default is "Please, wait..."
+		 * @param {string} _id a unique id to be able to distinguish loading-prompts
+		 * @param {boolean} _stat true to show the loading and false to remove it
+		 * @param {string} _msg a message to show while loading
 		 * @param {string|jQuery node} _node DOM selector id or jquery DOM object, default is body
-		 * 
+		 * @param {string} mode	defines the animation mode, default mode is spinner
+		 *	animation modes: 
+		 *		- spinner: a sphere with a spinning bar inside
+		 *		- horizental: a horizental bar
+		 *		
 		 * @returns {jquery dom object|null} returns jQuery DOM object or null in case of hiding
 		 */
-		loading_prompt: function(_stat,_msg,_node)
+		loading_prompt: function(_id,_stat,_msg,_node, _mode)
 		{
 			var $container = '';
+			var id = 'egw-loadin-prompt_'+_id || 'egw-loading-prompt_1';
+			var mode = _mode || 'spinner';
 			if (_stat)
 			{
-				var msg = _msg || egw.lang('please wait...');
 				var $node = jQuery(_node) || jQuery ('body');
 
 				var $container = jQuery(document.createElement('div'))
-						.attr('id', 'egw-loading-prompt')
-						.addClass('ui-front');
+						.attr('id', id)
+						.addClass('egw-loading-prompt-container ui-front');
 
 				var $text = jQuery(document.createElement('span'))
-						.addClass('egw-loading-prompt-msg')
-						.text(msg)
+						.addClass('egw-loading-prompt-'+mode+'-msg')
+						.text(_msg)
 						.appendTo($container);
 				var $animator = jQuery(document.createElement('div'))
-						.addClass('egw-loading-prompt-animator')
+						.addClass('egw-loading-prompt-'+mode+'-animator')
 						.appendTo($container);
 				$container.insertBefore($node);
 				return $container;
 			}
 			else
 			{
-				$container = jQuery('#egw-loading-prompt');
+				$container = jQuery('#'+id);
 				if ($container.length > 0) $container.remove();
 				return null;
 			}

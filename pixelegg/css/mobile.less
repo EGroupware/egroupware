@@ -37,6 +37,59 @@
 
 @media all {
 	body{
+		
+		
+		.pt-page-moveToLeft {
+			-webkit-animation: moveToLeft .6s ease both;
+			animation: moveToLeft .6s ease both;
+		}
+
+		.pt-page-moveFromLeft {
+			-webkit-animation: moveFromLeft .6s ease both;
+			animation: moveFromLeft .6s ease both;
+		}
+
+		.pt-page-moveToRight {
+			-webkit-animation: moveToRight .6s ease both;
+			animation: moveToRight .6s ease both;
+		}
+
+		.pt-page-moveFromRight {
+			-webkit-animation: moveFromRight .6s ease both;
+			animation: moveFromRight .6s ease both;
+		}
+		@-webkit-keyframes moveToLeft {
+			from { }
+			to { -webkit-transform: translateX(-100%); }
+		}
+		@keyframes moveToLeft {
+			from { }
+			to { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+		}
+
+		@-webkit-keyframes moveFromLeft {
+			from { -webkit-transform: translateX(-100%); }
+		}
+		@keyframes moveFromLeft {
+			from { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+		}
+
+		@-webkit-keyframes moveToRight { 
+			from { }
+			to { -webkit-transform: translateX(100%); }
+		}
+		@keyframes moveToRight { 
+			from { }
+			to { -webkit-transform: translateX(100%); transform: translateX(100%); }
+		}
+
+		@-webkit-keyframes moveFromRight {
+			from { -webkit-transform: translateX(100%); }
+		}
+		@keyframes moveFromRight {
+			from { -webkit-transform: translateX(100%); transform: translateX(100%); }
+		}
+		
 		background-color: transparent;
 		// iOS appHeader class
 		div.egw_fw_mobile_iOS_popup_appHeader{
@@ -83,6 +136,10 @@
 				tr{
 					touch-action:initial;
 					height:@mobile-elem-height;
+					td time, td.et2_date , td.et2_date_ro{
+						float: right;
+						font-size: 10px;
+					}
 				}
 			}
 		}
@@ -339,7 +396,7 @@
 				background-color: none !important;
 			 }
 			 &:active {
-				 webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+				-webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 				-moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 				box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 			 }
@@ -960,266 +1017,277 @@
 @mobile-button-width: 50px;
 @mobile-nm-search-bg: #0c5da5;
 @media only screen and (min-width: 320px)  and (max-width: 1279px) {
-	div.ui-dialog {
-		width:100% !important;
-		height:100% !important;
-		left:0 !important;
-		top:0 !important;
-	}
-	.et2_nextmatch {
-		.nextmatch_header_row 
-		{
-			background-color: background-color-egw-dark;
+	body
+	{
+		div#egw_message {
+			bottom: 0px;
+			top: auto;
+			left: 0px;
+			right: 0px !important;
+			max-width: 100%;
+			border-radius: 0;
+		}
+		div.ui-dialog {
+			width:100% !important;
+			height:100% !important;
+			left:0 !important;
+			top:0 !important;
+		}
+		.et2_nextmatch {
+			.nextmatch_header_row 
+			{
+				background-color: background-color-egw-dark;
 
-			select {
-				display: block;
-				width: 100%;
-				height: @mobile-elem-height;
-				font-size: large;
-				background-size: 32px;
-				border-left: none;
-				border-right: none;
-				border-radius: 0;
-				border-bottom: none;
-				padding-left:10px;
-				max-width:none;
-			}
-			label {
-				display:block;
-				width: 100%;
-				float: left;
-				font-size: large;
 				select {
-					display: inline-block;
-					width: 80%;
-					float: right;
-					margin: 0;
+					display: block;
+					width: 100%;
 					height: @mobile-elem-height;
+					font-size: large;
+					background-size: 32px;
+					border-left: none;
+					border-right: none;
+					border-radius: 0;
+					border-bottom: none;
+					padding-left:10px;
+					max-width:none;
+				}
+				label {
+					display:block;
+					width: 100%;
+					float: left;
+					font-size: large;
+					select {
+						display: inline-block;
+						width: 80%;
+						float: right;
+						margin: 0;
+						height: @mobile-elem-height;
+						font-size: large;
+					}
+				}
+			}
+			.nextmatch_header.nm_header_hide {
+				display:none !important;
+			}
+			.nextmatch_header {
+				background-color: white;
+				padding:0;
+				display:none;
+				border: 1px solid silver;
+				border-top:none;
+				div.et2_box_widget {
+					display:block;
+					height:@mobile-elem-height;
+				}
+				.et2_button {
+					width:@mobile-button-width;
+					height: @mobile-elem-height;
+				}
+
+			}
+			.egwGridView_outer {
+				thead {
+					tr {
+						visibility:hidden;
+						th{
+
+						}
+					}
+				}
+			}
+			.search {
+				background: @mobile-nm-search-bg;
+				border: 1px solid silver;
+				margin-left: 60px;
+				button {
+					height: @mobile-elem-height;
+					width: @mobile-button-width;
+					font-size:large;
+					background-color: @mobile-nm-search-bg;
+					border: none;
+					margin:0;
+					border-right: 1px solid silver;
+					color: white;
+					background-image:none;
+					&:active, &:hover {
+						background: transparent;
+						color: white;
+					}
+					&:focus {
+						color: white;
+						box-shadow:none !important;
+					}
+				}
+				button.nm_toggle_header {
+					background-position: center;
+					background-repeat: no-repeat;
+					margin-right:5px;
+					border-left:1px solid silver;
+					border:0;
+					color: white;
+					width:50px;
+					height:50px;
+					display:block;
+					float:right;
+					&:focus{
+						outline:none;
+					}
+					&:after{
+						font-size:xx-large;
+						content:"\2630";
+					}
+
+				}
+				button.nm_action_header {
+					background-position: center;
+					background-repeat: no-repeat;
+					margin-right:5px;
+					border-left:1px solid silver;
+					border:0;
+					color: white;
+					width:50px;
+					height:50px;
+					display:block;
+					float:right;
+					&:focus{
+						outline:none;
+					}
+					&:after{
+						font-size:xx-large;
+						content:"\205D";
+					}
+				}
+				button.nm_add_button {
+					background-position: center;
+					background-repeat: no-repeat;
+					margin-right:5px;
+					border-left:1px solid silver;
+					border:0;
+					color: white;
+					width:50px;
+					height:50px;
+					display:block;
+					float:right;
+					background: white;
+					border: 10px solid @mobile-nm-search-bg;
+					border-radius: 50px;
+					&:focus{
+						outline:none;
+					}
+					&:after{
+						font-size:xx-large;
+						content:"+";
+						display: inline-block;
+						vertical-align: middle;
+						line-height: 10px;
+						color:@mobile-nm-search-bg;
+						font-weight: bold;
+					}
+				}
+				button.nm_toggle_header_on {
+					&:after {
+						content:"\2715";
+					}
+				}
+				input {
+					width: 20%;
+					height: @mobile-elem-height;
+					font-size: large;
+					margin:0;
+					border:0;
+					background-color:@mobile-nm-search-bg;
+					color: white;
+					&:active{
+						border:none;
+						background: @mobile-nm-search-bg;
+					}
+					&:focus {
+						border:none;
+						backgroun:@mobile-nm-search-bg;
+						outline: none;
+						position: absolute;
+						width:100%;
+					}
+				}
+			}
+			.header_row_right {
+				div[id$=favorite_wrapper] {
+					margin:0;
+					top:0 !important;
+					height:@mobile-elem-height;
+				}
+				height: @mobile-elem-height;
+				width: 100%;
+				padding:0;
+				* {
+					display:inline-block;
+					float:left;
+				}
+				.et2_dropdown {
+					button {
+						height:@mobile-elem-height;
+						width: @mobile-button-width;
+					}
+				}
+			}
+			.header_count {
+				margin:0;
+				height:@mobile-elem-height;
+				font-size: large;
+				margin-top: -3px;
+				margin-right: 0px;
+				float:right;
+				border: none;
+				border-radius:0;
+				border-left:1px solid rgba(0, 0, 0, 0.15);
+			}
+			table.egwGridView_grid {
+				tr {
+					img {
+						height: 12px;
+					}
+				}
+				tbody {
+					tr.focused
+					{
+						background-image: none;
+					}
+					tr.selected {
+						background: rgba(255, 194, 0, 0.5) !important;
+					}
+					tr {
+						&:hover {
+							background: transparent;
+						}
+					}
+					tr.swipe{
+						background-color:rgba(255, 194, 0, 1);
+						border:none;
+
+					}
+				}
+			}
+			.egwGridView_outer {
+				thead tr th {
 					font-size: large;
 				}
 			}
 		}
-		.nextmatch_header.nm_header_hide {
-			display:none !important;
-		}
-		.nextmatch_header {
-			background-color: white;
-			padding:0;
-			display:none;
-			border: 1px solid silver;
-			border-top:none;
-			div.et2_box_widget {
-				display:block;
-				height:@mobile-elem-height;
+
+		.dtree {
+			img {
+				width:24px !important;
+				height:24px !important;
 			}
-			.et2_button {
-				width:@mobile-button-width;
-				height: @mobile-elem-height;
+			table , tr, td
+			{
+				padding: 2px;
+				padding-left: 0;
+				padding-right: 0px;
 			}
-			
-		}
-		.egwGridView_outer {
-			thead {
-				tr {
-					visibility:hidden;
-					th{
-						
-					}
-				}
+			.containerTableStyle {
+				overflow: auto;			
 			}
-		}
-		.search {
-			background: @mobile-nm-search-bg;
-			border: 1px solid silver;
-			margin-left: 60px;
-			button {
-				height: @mobile-elem-height;
-				width: @mobile-button-width;
-				font-size:large;
-				background-color: @mobile-nm-search-bg;
-				border: none;
-				margin:0;
-				border-right: 1px solid silver;
-				color: white;
-				background-image:none;
-				&:active, &:hover {
-					background: transparent;
-					color: white;
-				}
-				&:focus {
-					color: white;
-					box-shadow:none !important;
-				}
-			}
-			button.nm_toggle_header {
-				background-position: center;
-				background-repeat: no-repeat;
-				margin-right:5px;
-				border-left:1px solid silver;
-				border:0;
-				color: white;
-				width:50px;
-				height:50px;
-				display:block;
-				float:right;
-				&:focus{
-					outline:none;
-				}
-				&:after{
-					font-size:xx-large;
-					content:"\2630";
-				}
-				
-			}
-			button.nm_action_header {
-				background-position: center;
-				background-repeat: no-repeat;
-				margin-right:5px;
-				border-left:1px solid silver;
-				border:0;
-				color: white;
-				width:50px;
-				height:50px;
-				display:block;
-				float:right;
-				&:focus{
-					outline:none;
-				}
-				&:after{
-					font-size:xx-large;
-					content:"\205D";
-				}
-			}
-			button.nm_add_button {
-				background-position: center;
-				background-repeat: no-repeat;
-				margin-right:5px;
-				border-left:1px solid silver;
-				border:0;
-				color: white;
-				width:50px;
-				height:50px;
-				display:block;
-				float:right;
-				background: white;
-			    border: 10px solid @mobile-nm-search-bg;
-				border-radius: 50px;
-				&:focus{
-					outline:none;
-				}
-				&:after{
-					font-size:xx-large;
-					content:"+";
-					display: inline-block;
-					vertical-align: middle;
-					line-height: 10px;
-					color:@mobile-nm-search-bg;
-					font-weight: bold;
-				}
-			}
-			button.nm_toggle_header_on {
-				&:after {
-					content:"\2715";
-				}
-			}
-			input {
-				width: 20%;
-				height: @mobile-elem-height;
-				font-size: large;
-				margin:0;
-				border:0;
-				background-color:@mobile-nm-search-bg;
-				color: white;
-				&:active{
-					border:none;
-					background: @mobile-nm-search-bg;
-				}
-				&:focus {
-					border:none;
-					backgroun:@mobile-nm-search-bg;
-					outline: none;
-					position: absolute;
-					width:100%;
-				}
-			}
-		}
-		.header_row_right {
-			div[id$=favorite_wrapper] {
-				margin:0;
-				top:0 !important;
-				height:@mobile-elem-height;
-			}
-			height: @mobile-elem-height;
-			width: 100%;
-			padding:0;
-			* {
-				display:inline-block;
-				float:left;
-			}
-			.et2_dropdown {
-				button {
-					height:@mobile-elem-height;
-					width: @mobile-button-width;
-				}
-			}
-		}
-		.header_count {
-			margin:0;
-			height:@mobile-elem-height;
-			font-size: large;
-			margin-top: -3px;
-			margin-right: 0px;
-			float:right;
-			border: none;
-			border-radius:0;
-			border-left:1px solid rgba(0, 0, 0, 0.15);
-		}
-		table.egwGridView_grid {
-			tr {
-				img {
-					height: 12px;
-				}
-			}
-			tbody {
-				tr.focused
-				{
-					background-image: none;
-				}
-				tr.selected {
-					background: rgba(255, 194, 0, 0.5) !important;
-				}
-				tr {
-					&:hover {
-						background: transparent;
-					}
-				}
-				tr.swipe{
-					background-color:rgba(255, 194, 0, 1);
-					border:none;
-					
-				}
-			}
-		}
-		.egwGridView_outer {
-			thead tr th {
-				font-size: large;
-			}
-		}
-	}
-	
-	.dtree {
-		img {
-			width:24px !important;
-			height:24px !important;
-		}
-		table , tr, td
-		{
-			padding: 2px;
-			padding-left: 0;
-			padding-right: 0px;
-		}
-		.containerTableStyle {
-			overflow: auto;			
 		}
 	}
 }
