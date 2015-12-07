@@ -40,8 +40,8 @@
 							<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] infolog_fixedHeight"/>
 						</hbox>
 						<hbox class="infoSubRow">
-							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="65%"/>
-							<listbox disabled="@no_info_owner_info_responsible" type="select-account" id="${row}[info_responsible]" readonly="true" width ="55%" rows="1" class="infoDetails"/>
+							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="80%"/>
+							<listbox disabled="@no_info_owner_info_responsible" type="select-account" id="${row}[info_responsible]" readonly="true" width ="100%" rows="1" class="infoDetails"/>
 						</hbox>
 						<box class="infoDescRow">
 							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>

@@ -13,7 +13,7 @@
  */
 
 @import (reference) "../../../pixelegg/less/def_buttons.less";
-@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
+@import (reference) "../../../pixelegg/less/def_mobile.less";
 @import (less) "../default/app.css";
 
 /* #############################################################################
@@ -407,38 +407,43 @@ button#infolog-edit_encrypt {
 		content:"#";
 	}
 	span.infolog_infoId {
-		font-size: 10px;
-		position: absolute;
-		padding-top: 9px;
+		.mob-fontsize-s;
+		padding-top: 5px;
 	}
 	div.infoDescRow {
-		height:50px;
-		font-size: 10px;
+		height:45px;
+		.mob-fontsize-s;
 		max-width: 99%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	div.infoLinksRow {
-		font-size: 10px;
+	div.infoLinksRow, div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
+		.mob-fontsize-s;
 		max-width: 99%;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		white-space: nowrap;
+		white-space: nowrap !important;
 	}
 	label[id^='infolog-index_'][id$='info_enddate]'] , label[id^='infolog-index_'][id$='info_startdate]']{
-		font-size: 10px;
+		.mob-fontsize-s;
 		float:right;
 	}
 	ul[id^='infolog-index_'][id$='info_responsible]'] > li{
-		float: right;
-		font-size: 10px;
+		.mob-fontsize-s;
+		text-align: right;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+		padding-right: 8px;
+
 	}
-	.infoSubRow:last-child {
-		float:right;
+	ul[id^='infolog-index_'][id$='filelinks]']
+	{
+		white-space: nowrap !important;
+	}
+	.infoSubRow span:last-child {
+		width:20%;
 	}
 }
 

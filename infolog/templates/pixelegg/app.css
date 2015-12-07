@@ -414,39 +414,43 @@ button#infolog-edit_encrypt {
     content: "#";
   }
   span.infolog_infoId {
-    font-size: 10px;
-    position: absolute;
-    padding-top: 9px;
+    font-size: 8pt;
+    padding-top: 5px;
   }
   div.infoDescRow {
-    height: 50px;
-    font-size: 10px;
+    height: 45px;
+    font-size: 8pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  div.infoLinksRow {
-    font-size: 10px;
+  div.infoLinksRow,
+  div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
+    font-size: 8pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: nowrap !important;
   }
   label[id^='infolog-index_'][id$='info_enddate]'],
   label[id^='infolog-index_'][id$='info_startdate]'] {
-    font-size: 10px;
+    font-size: 8pt;
     float: right;
   }
   ul[id^='infolog-index_'][id$='info_responsible]'] > li {
-    float: right;
-    font-size: 10px;
+    font-size: 8pt;
+    text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    padding-right: 8px;
   }
-  .infoSubRow:last-child {
-    float: right;
+  ul[id^='infolog-index_'][id$='filelinks]'] {
+    white-space: nowrap !important;
+  }
+  .infoSubRow span:last-child {
+    width: 20%;
   }
 }
 /**/
