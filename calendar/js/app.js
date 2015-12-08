@@ -1682,7 +1682,9 @@ app.classes.calendar = AppJS.extend(
 			this.state_update_in_progress = true;
 
 			// Sanitize owner so it's always an array
-			if(state.state.owner === null || !state.state.owner)
+			if(state.state.owner === null || !state.state.owner ||
+				(typeof state.state.owner.length != 'undefined' && state.state.owner.length == 0)
+			)
 			{
 				state.state.owner = undefined;
 			}
