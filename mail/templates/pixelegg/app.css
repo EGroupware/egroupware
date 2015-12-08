@@ -758,7 +758,11 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .td_display pre,
   .mailDisplayHeaders,
   .mailDisplayAttachments * {
-    font-size: 12pt !important;
+    font-size: 10pt !important;
+    font-family: arial;
+  }
+  #mail-display_mail_displaysubject {
+    font-weight: bold;
   }
   .mailDisplayHeaders {
     border-bottom: 0.1em solid #d7d7d7;
@@ -778,16 +782,11 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .tmpPrintDiv td,
   textarea {
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;
   }
   .tmpPrintDiv .td_display {
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 140%;
     color: black;
     background-color: #FFFFFF;
-  }
-  .tmpPrintDiv .td_display span[style] {
-    font-size: 110% !important;
   }
   pre {
     width: 99% !important;
@@ -1318,7 +1317,6 @@ body {
  * ##################################################################################
  */
 #mail-display {
-  width: 870px;
   min-height: 768px;
   padding: 5px;
   /*.mailDisplayHeaderSection{*/
