@@ -147,6 +147,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			window.clearTimeout(this.update_timer);
 		}
 
+		// Stop listening to tab changes
+		$j(framework.getApplicationByName('calendar').tab.contentDiv).off('show.' + this.id);
+
 		this._super.apply(this, arguments);
 
 		// Delete all old objects
@@ -176,7 +179,16 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		
+
+		// Listen to tab show to make sure we scroll to the day start, not top
+		$j(framework.getApplicationByName('calendar').tab.contentDiv)
+			.on('show.' + this.id, jQuery.proxy(
+				function()
+				{
+					this.scrolling.scrollTop(this._top_time);
+				},this)
+			);
+
 		// Need to get the correct internal sizing
 		this.resize();
 
