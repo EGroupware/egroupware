@@ -87,6 +87,36 @@ app.classes.resources = AppJS.extend(
 	},
 
 	/**
+	 * Calendar sidebox hook change handler
+	 *
+	 */
+	sidebox_change: function(ev, widget)
+	{
+		if(ev[0] != 'r') {
+			widget.setSubChecked(ev,widget.getValue()[ev].value || false);
+		}
+		var owner = jQuery.extend([],app.calendar.state.owner) || [];
+		for(var i = owner.length-1; i >= 0; i--)
+		{
+			if(owner[i][0] == 'r')
+			{
+				owner.splice(i,1);
+			}
+		}
+
+		var value = widget.getValue();
+		for(var key in value)
+		{
+			if(key[0] !== 'r') continue;
+			if(value[key].value && owner.indexOf(key) === -1)
+			{
+				owner.push(key);
+			}
+		}
+		app.calendar.update_state({owner: owner});
+	},
+
+	/**
 	 * Book selected resource for calendar
 	 *
 	 * @param {action} _action actions

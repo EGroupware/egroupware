@@ -821,7 +821,7 @@ class resources_bo
 				{
 					$picture = egw::link('/etemplate/thumbnail.php', array(
 						'path' => $picture
-					));
+					),false);
 				}
 				break;
 

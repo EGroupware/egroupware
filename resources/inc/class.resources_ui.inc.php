@@ -586,7 +586,7 @@ class resources_ui
 	{
 		$cats = $this->bo->acl->get_cats(EGW_ACL_CALREAD);
 		if (!$cats) return array();
-
+		
 		if(array_key_exists('return_array', $param))
 		{
 			$return_array = $param['return_array'];
@@ -594,7 +594,6 @@ class resources_ui
 		}
 
 		$owners = explode(',',$param['owner']);
-		unset($param['owner']);
 		$res_cats = $selected = array();
 
 		// this gets the resource-ids of the cats and implodes them to the array-key of the selectbox,
@@ -609,15 +608,7 @@ class resources_ui
 				$keys = array();
 				foreach($resources as $res)
 				{
-					$keys[] = 'r'.$res['res_id'];
 					$allowed_list[] = $res['res_id'];
-				}
-				$res_cats[implode(',',$keys)] = $cat_name;
-
-				if (count(array_intersect($keys,$owners)) == count($keys))
-				{
-					$selected[] = implode(',',$keys);
-					$owners = array_diff($owners,$keys);
 				}
 			}
 		}
@@ -633,30 +624,20 @@ class resources_ui
 			}
 		}
 
-		// Take out resources not allowed by perms, above
-		$res_ids = array_intersect($res_ids,$allowed_list);
-		if (count($res_ids))
-		{
-			foreach($this->bo->so->search(array('res_id' => $res_ids),'res_id,name') as $data)
-			{
-				$resources['r'.$data['res_id']] = $data['name'];
-			}
-		}
+
+		$content = array('owner' => $selected);
+		$sel_options['owner'] = self::tree_data('/',$root,$selected);
+
 		if(!isset($return_array))
 		{
-			$selectbox = html::select(
-				'owner',
-				$selected,
-				$options=array_merge(array('r0' => lang('None')),$resources,$res_cats),
-				true,	// no lang
-				' style="width: 100%;" id="uical_select_resource"',
-				min(4, count($options)),	// multiple
-				false
-			);
+			$et2 = new etemplate_new('resources.calendar_sidebox');
+			
+			$et2->exec('calendar.calendar_ui.sidebox_etemplate', $content, $sel_options);
+
+			$tree = '<span id="calendar-resources-et2_target" />';
 			return array(
 				array(
-					// Add some jQuery to make sure dropdown is displayed
-					'text' => $selectbox,
+					'text' => $tree,
 					'no_lang' => True,
 					'link' => False
 				)
@@ -665,6 +646,159 @@ class resources_ui
 		else
 		{
 			return array_merge($resources,$res_cats);
+		}
+	}
+	
+	/**
+	 * Autoload tree from $_GET['id'] on
+	 */
+	public static function ajax_tree()
+	{
+		etemplate_widget_tree::send_quote_json(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
+	}
+	public static function tree_data($root = '/', &$_parent = null, $open = array())
+	{
+		//error_log(__METHOD__ . "($root,".($_parent ? 'true' : '').')');
+
+		if(!$_parent)
+		{
+			$tree = array('id' => $root === '/' ? 0 : $root, 'item' => array(), 'child' => 1);
+		}
+		else
+		{
+			$tree =& $_parent;
+		}
+
+		$bo = new resources_bo();
+
+		if($root == '/')
+		{
+			// Start with categories
+			$cats = $bo->acl->get_cats(EGW_ACL_CALREAD);
+			foreach($cats as $cat_id => $cat_name)
+			{
+				$data = array();
+				$data[etemplate_widget_tree::ID] = trim(str_replace(' / ','/', $root.categories::id2name( $cat_id ,'path')));
+				$data[etemplate_widget_tree::LABEL] = trim(str_replace('&nbsp;','',$cat_name));
+				$data[etemplate_widget_tree::CHILDREN] = array();
+				
+				$cat_data = categories::id2name($cat_id, 'data');
+				if($cat_data['icon'])
+				{
+					$data['im0'] = $data['im1'] = $data['im2'] = etemplate_widget_tree::imagePath(egw::link('/phpgwapi/images/'.$cat_data['icon'],array(),false));
+				}
+
+				$parent =& $tree[etemplate_widget_tree::CHILDREN];
+				$parts = explode('/', $data[etemplate_widget_tree::ID]);
+				if ($data[etemplate_widget_tree::ID][0] == '/') array_shift($parts);	// remove root
+
+				array_pop($parts);
+				$path = '';
+				foreach($parts as $part)
+				{
+					$path .= ($path == '/' ? '' : '/').$part;
+					if (!isset($parent[$path]))
+					{
+						//$icon = etemplate_widget_tree::imagePath( $cat_data['icon']);
+						$parent[$path] = array(
+							'id' => $path,
+							'text' => lang(trim($part)),
+							//'im0' => 'folderOpen.gif',
+							'im1' => $icon,
+							'im2' => $icon,
+							'item' => array(),
+							'child' => 1,
+						);
+					//	if ($path == '/admin') $parent[$path]['open'] = true;
+					}
+					$parent =& $parent[$path]['item'];
+				}
+
+				// Get resources for this category
+				self::tree_data($data[etemplate_widget_tree::ID],$data,$open);
+				
+				$data[etemplate_widget_tree::TOOLTIP] = lang(categories::id2name($cat_id,'description'));
+
+				$parent[$data[etemplate_widget_tree::ID]] = $data;
+			}
+		}
+		else if ($root[0] == 'r')
+		{
+			// Fetch resources for a given category
+			$list = array();
+			$resources = array();
+			if ($root[0] == 'r')
+			{
+				$tree['id'] = $root;
+				$resource = $bo->read(substr($root,1));
+				$tree['text'] = $resource['name'];
+				$data['im0'] = etemplate_widget_tree::imagePath($bo->get_picture($resource['res_id']));
+				$tree['item'] = array();
+				if(in_array($tree['id'], $open))
+				{
+					$tree[etemplate_widget_tree::OPEN] = true;
+				}
+				$list =& $tree['item'];
+				$query = array('filter2' => substr($root,1),'csv_export' => true);
+				if($bo->get_rows($query,$resources,$readonlys))
+				{
+					foreach($resources as $res)
+					{
+						if(!$res['res_id']) continue;
+						$data = array();
+						$data['id'] = 'r'.$res['res_id'];
+						$data['text'] = $res['name'];
+						$data['im0'] = etemplate_widget_tree::imagePath($bo->get_picture($res['res_id']));
+						$data['child'] = $res['acc_count'];
+						$list[] = $data;
+					}
+				}
+			}
+		}
+		else
+		{
+			$cat_id = $bo->cats->name2id(trim(array_pop(explode('/',$root))));
+			$query = array('filter' => $cat_id,'filter2' => -1,'csv_export' => true);
+			$tree[etemplate_widget_tree::ID] = $root;
+			$list =& $tree['item'];
+			if($bo->get_rows($query,$resources,$readonlys))
+			{
+				foreach($resources as $res)
+				{
+					if(!$res['res_id']) continue;
+					if(in_array('r'.$res['res_id'],$open))
+					{
+						$tree[etemplate_widget_tree::OPEN] = true;
+					}
+					if($res['cat_id'] != $cat_id) continue;
+					$data = array();
+					$data[etemplate_widget_tree::ID] = 'r'.$res['res_id'];
+					$data[etemplate_widget_tree::LABEL] = $res['name'];
+					$data[etemplate_widget_tree::AUTOLOAD_CHILDREN] = $res['acc_count'];
+					$data['im0'] = $data['im1'] = $data['im2'] = etemplate_widget_tree::imagePath($bo->get_picture($res['res_id']));
+					$list[] = $data;
+				}
+			}
+		}
+		if($_parent) return;
+		
+		self::strip_item_keys($tree['item']);
+		return $tree;
+	}
+	/**
+	 * Attribute 'item' has to be an array
+	 *
+	 * @param array $items
+	 */
+	private static function strip_item_keys(array &$items)
+	{
+		$items = array_values($items);
+		foreach($items as &$item)
+		{
+			if (is_array($item) && isset($item['item']))
+			{
+				self::strip_item_keys($item['item']);
+			}
 		}
 	}
 }
