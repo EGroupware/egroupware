@@ -324,13 +324,20 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 			// Make sure the target is visible in the scrollable day
 			var scrollto = element.dropEnd.next() ? element.dropEnd.next() : element.dropEnd;
-			if(scrollto.length && this.scrolling.height() + this.scrolling.scrollTop() < scrollto.position().top+scrollto.height() )
+			if(this.scrolling.find(element.dropEnd).length == element.dropEnd.length)
 			{
-				scrollto.get(0).scrollIntoView(false);
-			}
-			else if(element.dropEnd.position().top < this.scrolling[0].scrollTop)
-			{
-				this.scrolling.scrollTop(element.dropEnd.position().top);
+				if(scrollto.length && this.scrolling.height() + this.scrolling.scrollTop() < scrollto.position().top+scrollto.height() )
+				{
+					scrollto.get(0).scrollIntoView(false);
+				}
+				else if(element.dropEnd.position().top < this.scrolling[0].scrollTop)
+				{
+					this.scrolling.scrollTop(element.dropEnd.position().top);
+				}
+				else if (element.dropEnd.prev() && element.dropEnd.prev().position().top < this.scrolling[0].scrollTop)
+				{
+					this.scrolling.scrollTop(element.dropEnd.prev().position().top);
+				}
 			}
 			var time = '';
 			if(this._drop_data.whole_day)
