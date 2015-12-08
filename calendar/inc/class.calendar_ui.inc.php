@@ -647,7 +647,7 @@ class calendar_ui
 		{
 			if(!is_numeric(substr($owner, 0,1)))
 			{
-				$resource = $this->resources[substr($owner, 0,1)];
+				$resource = $this->bo->resources[substr($owner, 0,1)];
 				$sel_options['owner'][] = array('value' => $owner, 'label' => egw_link::title($resource['app'], substr($owner,1)));
 			}
 		}
