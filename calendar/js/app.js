@@ -1426,7 +1426,9 @@ app.classes.calendar = AppJS.extend(
 		{
 			if (content.start != start_date || 
 				content.whole_day != is_whole_day ||
-				(duration && ''+content.duration != duration || !duration && end_date != content.end_date)
+				(duration && ''+content.duration != duration ||
+				// End date might ignore seconds, and be 59 seconds off for all day events
+				!duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000)
 			)
 			{
 				et2_calendar_event.series_split_prompt(
