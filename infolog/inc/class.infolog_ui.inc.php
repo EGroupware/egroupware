@@ -1409,14 +1409,18 @@ class infolog_ui
 				case 'completion':
 					$action_msg = lang('changed completion to %1%', $settings);
 					$entry['info_percent'] = $settings;
-					// Done entries will get changed right back if we don't change the status too
-					if(in_array($entry['info_status'],array('done','billed','cancelled','archive')))
+					// Done and not-started entries will get changed right back if we don't change the status too
+					if(in_array($entry['info_status'],array('not-started','done','billed','cancelled','archive')))
 					{
 						$entry['info_status'] = 'ongoing';
 					}
 					if($entry['info_percent'] == 0)
 					{
 						$entry['info_status'] = 'not-started';
+					}
+					else if ($entry['info_percent'] == 100)
+					{
+						$entry['info_status'] = 'done';
 					}
 					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
