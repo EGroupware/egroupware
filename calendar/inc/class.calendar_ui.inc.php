@@ -638,20 +638,20 @@ class calendar_ui
 		$content['view'] = $this->view ? $this->view : 'week';
 		$content['date'] = $this->date ? $this->date : egw_time();
 		$owners = $this->owner ? is_array($this->owner) ? array($this->owner) : explode(',',$this->owner) : array($GLOBALS['egw_info']['user']['account_id']);
-/*
+
+		
+		$sel_options = array();
+
+		// Add external owners that a select account widget will not find
 		foreach($owners as $owner)
 		{
-			$app = 'home-accounts';
-			switch(substr($owner, 0,1))
+			if(!is_numeric(substr($owner, 0,1)))
 			{
-				case 'r':
-					$app = 'resources';
-					break;
+				$resource = $this->resources[substr($owner, 0,1)];
+				$sel_options['owner'][] = array('value' => $owner, 'label' => egw_link::title($resource['app'], substr($owner,1)));
 			}
-			$content['owner'][] = array('app' => $app, 'id' => (int)$owner ? $owner : substr($owner,1));
 		}
-*/
-		$sel_options = array();
+
 		$readonlys = array();
 		foreach(array(
 			array(
