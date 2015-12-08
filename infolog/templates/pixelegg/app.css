@@ -452,5 +452,11 @@ button#infolog-edit_encrypt {
   .infoSubRow span:last-child {
     width: 20%;
   }
+  label[id^='infolog-index_'][id$='info_link]'] {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 70%;
+  }
 }
 /**/
