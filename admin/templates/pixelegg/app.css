@@ -1,4 +1,3 @@
-@import "../default/app.css";
 /**
  * EGroupware: CSS with less preprocessor
 
@@ -12,6 +11,7 @@
  * @package addressbook
  * @version $Id$
  */
+@import "../default/app.css";
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
     background-color: #ffdd73;
@@ -73,4 +73,23 @@
 #                                           #
 #                                           #
 ##############################################*/
+}
+/* tablets and smartphones  */
+@media only screen and (max-device-width: 1024px) {
+  #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='status]'] {
+    text-align: right;
+    font-size: 8pt;
+  }
+  #admin-index table.egwGridView_outer tbody .adminCol2 {
+    float: right;
+  }
+  #admin-index table.egwGridView_outer tbody .adminCol2 div {
+    text-align: right;
+  }
+  #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='account_lid]'] {
+    font-weight: bold;
+  }
+  #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='account_lastname]']::after {
+    content: ",";
+  }
 }
