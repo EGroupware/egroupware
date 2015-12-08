@@ -515,58 +515,14 @@ var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 				cats = classes.match(this.cat_regexp) || [];
 				classes = classes.replace(this.cat_regexp, '');
 
-				// Get category info
-				if(!this.categories)
-				{
-					// Nextmatch category filter should put them here
-					var categories = _mgrs["sel_options"].getEntry('cat_id');
-					// Or they are in the global - 1 level up
-					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry('cat_id');
-					// If not using category (tracker, calendar list) look for sel_options in the rows
-					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry(category_location);
-					if(!categories) categories = _mgrs["sel_options"].getEntry("${row}["+category_location + "]");
-
-					// Cache
-					if(categories)
-					{
-						if (!jQuery.isArray(categories))
-						{
-							this.categories = categories;
-						}
-						else
-						{
-							this.categories = {};
-							for(var i=0; i < categories.length; ++i)
-							{
-								var cat = categories[i];
-								this.categories[cat.value] = cat;
-							}
-						}
-					}
-				}
-				for(var i = 0; i < cats.length && this.categories; i++)
+				// Set category class
+				for(var i = 0; i < cats.length; i++)
 				{
 					// Need cat_, classes can't start with a number
 					var cat_id = cats[i].replace(this.cat_cleanup, '');
 					var cat_class = 'cat_'+cat_id;
 
-					// Check for existing class
-					// TODO
-
-					var cat = this.categories[cat_id] || null;
-					for(var j = 0; cat == null && this.categories && j < this.categories.length; j++)
-					{
-						if(this.categories[j] && this.categories[j].value && this.categories[j].value == cat_id)
-						{
-							cat = this.categories[j];
-						}
-					}
-					// Create class
-					if(cat && cat.color)
-					{
-						this._rootWidget.egw().css('.'+cat_class, "background-color: " + cat.color + ";");
-						classes += ' '+cat_class;
-					}
+					classes += ' '+cat_class;
 				}
 				classes += " row_category";
 			}
