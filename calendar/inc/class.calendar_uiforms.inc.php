@@ -2915,28 +2915,11 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
 			$this->bo->set_status($event['id'],$uid,$status,0,true);
 		}
-		$conflicts=$this->bo->update($event);
 
-		$response = egw_json_response::get();
-		if(!is_array($conflicts))
-		{
-			// Directly update stored data.  If event is still visible, it will
-			// be notified & update itself.
-			$this->to_client($event);
-			$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
-		}
-		else
-		{
-			$response->call(
-				'egw_openWindowCentered2',
-				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
-					&cal_id='.$event['id']
-					.'&start='.$event['start']
-					.'&end='.$event['end']
-					.'&non_interactive=true'
-					.'&cancel_needs_refresh=true',
-				'',750,410);
-		}
+		// Directly update stored data.  If event is still visible, it will
+		// be notified & update itself.
+		$this->to_client($event);
+		egw_json_response::get()->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
 	}
 
 	/**
