@@ -762,9 +762,14 @@ class acl
 	{
 		if ((int) $account_id)
 		{
+			// Delete all grants from this account
 			$this->db->delete(acl::TABLE,array(
 				'acl_account' => $account_id
 			),__LINE__,__FILE__);
+			// Delete all grants to this account
+			$this->db->delete(acl::TABLE,array(
+				'acl_location' => $account_id
+			),__LINE__, __FILE__);
 			// delete all memberships in account_id (if it is a group)
 			$this->db->delete(acl::TABLE,array(
 				'acl_appname' => 'phpgw_group',
