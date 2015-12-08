@@ -210,6 +210,11 @@ var et2_tree = et2_inputWidget.extend(
 		// Add in the callback so we can keep the two in sync
 		widget.input.AJAX_callback = function(dxmlObject) {
 			widget._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), widget.input.lastLoadedXMLId);
+			// Call this in case we added some options that were already selected, but missing
+			if(widget.options.multiple)
+			{
+				widget.set_value(widget.value);
+			}
 		};
 
 		if (widget.options.autoloading)
