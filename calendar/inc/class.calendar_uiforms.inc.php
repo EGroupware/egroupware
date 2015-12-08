@@ -1139,13 +1139,12 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 
 			// Make sure as_of_date is still valid, may have to move forward
 			if(egw_time::to($as_of_date,'ts') < egw_time::to($last,'ts') ||
-				egw_time::to($as_of_date, 'Ymd') == egw_time::to($last, 'Ymd')) {
-				//$rriter->next_no_exception();
+				egw_time::to($as_of_date, 'Ymd') == egw_time::to($last, 'Ymd'))
+			{
 				$event['start'] = egw_time::to($rriter->current(),'ts') + $offset;
 			}
 
-			//error_log(__METHOD__ ." Series should end at " . egw_time::to($last));
-			//error_log(__METHOD__ ." New series starts at " . egw_time::to($event['start']));
+			//error_log(__METHOD__ ." Series should end at " . egw_time::to($last) . " New series starts at " . egw_time::to($event['start']));
 			if ($duration)
 			{
 				$event['end'] = $event['start'] + $duration;
@@ -1156,20 +1155,22 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			}
 			//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration={$duration}, event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
 
-			$last->setTime(0, 0, 0);
 			$event['participants'] = $old_event['participants'];
 			foreach ($old_event['recur_exception'] as $key => $exdate)
 			{
 				if ($exdate > egw_time::to($last,'ts'))
 				{
+					//error_log("Moved exception on " . egw_time::to($exdate));
 					unset($old_event['recur_exception'][$key]);
 					$event['recur_exception'][$key] += $offset;
 				}
 				else
 				{
+					//error_log("Kept exception on ". egw_time::to($exdate));
 					unset($event['recur_exception'][$key]);
 				}
 			}
+			$last->setTime(0, 0, 0);
 			$old_event['recur_enddate'] = egw_time::to($last, 'ts');
 			if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$no_notifications))
 			{
