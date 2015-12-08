@@ -693,7 +693,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.scrolling.append(this.days);
 		
 		// If day list is still empty, recalculate it from start & end date
-		if(this.day_list.length === 0)
+		if(this.day_list.length === 0 && this.options.start_date && this.options.end_date)
 		{
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
@@ -1326,6 +1326,9 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	 */
 	set_granularity: function(minutes)
 	{
+		// Avoid 0 or less
+		minutes = Math.max(1,minutes);
+		
 		if(this.options.granularity != minutes)
 		{
 			this.options.granularity = minutes;

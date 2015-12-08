@@ -1680,7 +1680,7 @@ app.classes.calendar = AppJS.extend(
 			this.state_update_in_progress = true;
 
 			// Sanitize owner so it's always an array
-			if(state.state.owner === null)
+			if(state.state.owner === null || !state.state.owner)
 			{
 				state.state.owner = undefined;
 			}
@@ -2387,8 +2387,11 @@ app.classes.calendar = AppJS.extend(
 
 								}
 							}
+							var in_progress = app.calendar.state_update_in_progress;
+							app.calendar.state_update_in_progress = true;
 							widget.set_select_options(widget.options.select_options);
 							widget.set_value(widget.getValue());
+							app.calendar.state_update_in_progress = in_progress;
 						}
 					}
 				}
