@@ -175,6 +175,10 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			window.clearTimeout(this.update_timer);
 		}
+		if(this.resize_timer)
+		{
+			window.clearTimeout(this.resize_timer);
+		}
 	},
 
 	doLoadingFinished: function() {
@@ -683,6 +687,26 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.scrolling.scrollTop(this._top_time);
 	},
 
+	/**
+	 * As window size and number of all day non-blocking events change, we need
+	 * to re-scale the time grid to make sure the full working day is shown.
+	 * 
+	 */
+	resizeTimes: function() {
+		// Wait a bit to see if anything else changes, then re-draw the times
+		if(this.resize_timer === null)
+		{
+			this.resize_timer = window.setTimeout(jQuery.proxy(function() {
+				if(this._resize_times)
+				{
+					this.resize_timer = null;
+
+					this._resizeTimes();
+				}
+			},this),1);
+		}
+	},
+	
 	_resizeTimes: function() {
 
 		var wd_start = 60*this.options.day_start;
@@ -932,6 +956,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 					_data.ui.draggable.on('dragend.et2_timegrid'+widget_object.id, function() {
 						_data.ui.draggable.off('drag.et2_timegrid' + widget_object.id);
 					});
+
+					// Remove formatting for out-of-view events (full day non-blocking)
+					$j('.calendar_calEventHeader',_data.ui.helper).css('top','');
+					$j('.calendar_calEventBody',_data.ui.helper).css('padding-top','');
+					
 					if(time.length)
 					{
 						// The out will trigger after the over, so we count

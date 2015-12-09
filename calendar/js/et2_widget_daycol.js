@@ -686,9 +686,14 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					if(!this.all_day.has(columns[c][i].div).length)
 					{
+						columns[c][i].div.css('top', '');
+						columns[c][i].div.css('height','');
+						columns[c][i].div.css('left', '');
+						columns[c][i].div.css('width', '');
+						columns[c][i].body.css('padding-top','');
 						columns[c][i].div
 							.appendTo(this.all_day);
-						this._parent._resizeTimes();
+						this._parent.resizeTimes();
 					}
 					continue;
 				}
@@ -697,7 +702,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 					if(this.all_day.has(columns[c][i].div).length)
 					{
 						columns[c][i].div.appendTo(this.div);
-						this._parent._resizeTimes();
+						this._parent.resizeTimes();
 					}
 					top = this._time_to_position(columns[c][i].options.value.start_m,whole_day_counter);
 					height = this._time_to_position(columns[c][i].options.value.end_m,whole_day_counter)-top;

@@ -611,7 +611,7 @@ app.classes.calendar = AppJS.extend(
 
 					// Re-scroll to start of day
 					template.widgetContainer.iterateOver(function(w) {
-						w._resizeTimes();
+						w.resizeTimes();
 					},this, et2_calendar_timegrid);
 
 					window.setTimeout(function() {
