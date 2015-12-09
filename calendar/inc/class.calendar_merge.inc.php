@@ -117,10 +117,11 @@ class calendar_merge extends bo_merge
 	 */
 	function merge_string($content,$ids,$err,$mimetype,$fix)
 	{
-		error_log(__METHOD__ . ' IDs: ' . array2string($ids));
+		//error_log(__METHOD__ . ' IDs: ' . array2string($ids));
 		// Handle merging a list of events into a document with range instead of pagerepeat
-		if(strpos($content, '$$pagerepeat') === false && strpos($content, '{{pagerepeat') === false && count($ids) > 1)
+		if((strpos($content, '$$range') !== false || strpos($content, '{{range') !== false) && is_array($ids))
 		{
+			//error_log(__METHOD__ . ' Got list of events(?), no pagerepeat tag');
 			// Merging more than one something will fail without pagerepeat
 			if (is_array($ids) && $ids[0]['id'])
 			{
@@ -138,8 +139,11 @@ class calendar_merge extends bo_merge
 			}
 		}
 		// Handle merging a range of events into a document with pagerepeat instead of range
-		else if ((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false) && is_array($ids) && $ids[0] && !$ids[0]['id'])
+		else if ((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false)
+			&& ((strpos($content, '$$range') === false && strpos($content, '{{range') === false))
+			&& is_array($ids) && $ids[0] && !$ids[0]['id'])
 		{
+			//error_log(__METHOD__ . ' Got range(?), but pagerepeat instead of range tag');
 			// Passed a range, needs to be expanded
 			$events = $this->bo->search($this->query + $ids[0] + array(
 				'offset' => 0,

@@ -626,7 +626,7 @@ class calendar_ui
 			}
 			$this->last->setTime(23, 59, 59);
 			$this->last = $this->last->format('ts');
-			
+
 			$_GET['merge'] = $content['merge'];
 			$this->merge();
 			return;
@@ -836,13 +836,48 @@ class calendar_ui
 		{
 			if(!$timespan)
 			{
-				$timespan = array(array(
-					'start' => is_array($this->first) ? $this->bo->date2ts($this->first) : $this->first,
-					'end' => is_array($this->last) ? $this->bo->date2ts($this->last) : $this->last
-				));
+				// Try to make time span into appropriate ranges to match
+				if(stripos($_GET['merge'],'month') !== false || stripos($_GET['merge'],lang('month')) !== false) $template = 'month';
+				if(stripos($_GET['merge'],'week') !== false || stripos($_GET['merge'],lang('week')) !== false) $template = 'week';
+				//error_log("Detected template $template");
+				switch ($template)
+				{
+					case 'month':
+						// Trim to _only_ the month, do not pad to week start / end
+						$time = new egw_time($this->date);
+						$timespan = array(array(
+							'start' => egw_time::to($time->format('Y-m-01 00:00:00'),'ts'),
+							'end'	=> egw_time::to($time->format('Y-m-t 23:59:59'),'ts')
+						));
+						break;
+					case 'week':
+						$timespan = array();
+						$start = new egw_time($this->first);
+						$t = clone $start;
+						$t->modify('+1 week')->modify('-1 second');
+						if($t->format('ts') < egw_time::to($this->last,'ts'))
+						{
+							do
+							{
+								$timespan[] = array(
+									'start' => $start->format('ts'),
+									'end'	=> $t->format('ts')
+								);
+								$start->modify('+1 week');
+								$t->modify('+1 week');
+							} while( $start->format('ts') < $this->last);
+							break;
+						}
+						// Fall through
+					default:
+						$timespan = array(array(
+							'start' => is_array($this->first) ? $this->bo->date2ts($this->first) : $this->first,
+							'end' => is_array($this->last) ? $this->bo->date2ts($this->last) : $this->last
+						));
+				}
 			}
 			$merge = new calendar_merge();
-			//error_log('Timespan: ' . egw_time::to($timespan[0]['start']) . ' - ' . egw_time::to($timespan[0]['end']));
+			//error_log('Timespan: ');foreach($timespan as $t) error_log(egw_time::to($t['start']) . ' - ' . egw_time::to($t['end']));
 			$error = $merge->download($_GET['merge'], $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 			// Here?  Doesn't actually give the message
 			egw_framework::refresh_opener($error, 'calendar');
