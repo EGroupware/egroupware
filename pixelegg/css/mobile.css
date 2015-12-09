@@ -7690,6 +7690,9 @@ span.egw_tutorial_title {
     border-radius: 0;
     border-left: 1px solid rgba(0, 0, 0, 0.15);
   }
+  body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
+    padding-bottom: 4px;
+  }
   body .et2_nextmatch table.egwGridView_grid tr img {
     height: 12px;
   }
