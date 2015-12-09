@@ -6693,7 +6693,6 @@ span.egw_tutorial_title {
   }
   body table.egwGridView_outer tbody tr {
     touch-action: initial;
-    height: 50px;
   }
   body table.egwGridView_outer tbody tr td time,
   body table.egwGridView_outer tbody tr td.et2_date,
