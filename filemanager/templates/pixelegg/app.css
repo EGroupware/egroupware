@@ -544,3 +544,18 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
+/* tablets and smartphones  */
+@media only screen and (max-device-width: 1024px) {
+  #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='size]'] {
+    font-size: 8pt;
+    text-align: right;
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] span {
+    white-space: nowrap;
+  }
+}

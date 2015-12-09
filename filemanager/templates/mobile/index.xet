@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
+		<grid width="100%">
+			<columns>
+				<column width="10"/>
+				<column width="60"/>
+				<column width="90%"/>
+				<column width="100"/>
+			</columns>
+			<rows>
+				<row class="th">
+				</row>
+				<row class="row $row_cont[class]">
+					<vbox></vbox>
+					<vbox>
+						<vfs-mime align="center" id="$row"/>
+					</vbox>
+					<vbox>
+						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
+						<description id="${row}[comment]"/>
+					</vbox>
+					<vbox>
+						<vfs-size align="right" id="${row}[size]"/>
+						<time_or_date id="${row}[mtime]" readonly="true"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
+		<hbox span="all" class="filemanager_navigation">
+			<image label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"/>
+			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"/>
+			<vfs-name label="Path" id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
+			<hbox id="buttons">
+				<button label="Go to" id="button[go]" image="key_enter"/>
+				<buttononly label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" options="list_tile"/>
+				<image id="tarp" src="buttonseparator"/>
+				<buttononly statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" options="edit"/>
+				<buttononly label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" options="button_createdir,createdir_disabled"/>
+				<buttononly label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" options="link,link_disabled"/>
+				<buttononly label="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" options="editpaste,editpaste_disabled"/>
+				<buttononly label="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
+				<buttononly label="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
+				<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
+				<file statustext="Select file to upload in current directory" id="upload" progress_dropdownlist = "true" drop_target ="divAppbox" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
+			</hbox>
+		</hbox>
+	</template>
+	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
+		<nextmatch id="nm" template="filemanager.index.rows" header_left="filemanager.index.header_left"/>
+	</template>
+</overlay>

@@ -14,6 +14,7 @@
 
 
 @import (reference) "../../../pixelegg/less/definitions.less";
+@import (reference) "../../../pixelegg/less/def_mobile.less";
 @import (less) "../default/app.css";
 
 /*/*****************************************************************
@@ -347,3 +348,24 @@ div#stylite-filemanager-upload{
 
 
 //
+
+/* tablets and smartphones  */
+@media only screen and (max-device-width:1024px) {
+	#filemanager-index_nm {
+		table.egwGridView_outer tbody {
+			span[id^='filemanager-index'][id$='size]']{
+				.mob-fontsize-s;
+				text-align: right;
+			}
+			label[id^='filemanager-index'][id$='name]'] {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 100%;
+				span{
+					white-space: nowrap;
+					
+				}
+			}
+		}
+	}
+}
