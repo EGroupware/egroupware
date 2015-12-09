@@ -596,22 +596,6 @@ class resources_ui
 		$owners = explode(',',$param['owner']);
 		$res_cats = $selected = array();
 
-		// this gets the resource-ids of the cats and implodes them to the array-key of the selectbox,
-		// so it is possible to select all resources of a category
-		$allowed_list = array();
-		foreach($cats as $cat_id => $cat_name)
-		{
-			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id',
-				'','','',False,'AND',false, array('deleted' => null))
-			)
-			{
-				$keys = array();
-				foreach($resources as $res)
-				{
-					$allowed_list[] = $res['res_id'];
-				}
-			}
-		}
 		// add already selected single resources to the selectbox, eg. call of the resource-calendar from the resources app
 		$resources = array();
 		$res_ids = array();
@@ -658,7 +642,7 @@ class resources_ui
 	}
 	public static function tree_data($root = '/', &$_parent = null, $open = array())
 	{
-		//error_log(__METHOD__ . "($root,".($_parent ? 'true' : '').')');
+		//error_log(__METHOD__ . "($root,".($_parent ? 'true,' : ',').array2string($open).')');
 
 		if(!$_parent)
 		{
@@ -677,49 +661,13 @@ class resources_ui
 			$cats = $bo->acl->get_cats(EGW_ACL_CALREAD);
 			foreach($cats as $cat_id => $cat_name)
 			{
-				$data = array();
-				$data[etemplate_widget_tree::ID] = trim(str_replace(' / ','/', $root.categories::id2name( $cat_id ,'path')));
-				$data[etemplate_widget_tree::LABEL] = trim(str_replace('&nbsp;','',$cat_name));
-				$data[etemplate_widget_tree::CHILDREN] = array();
-				
-				$cat_data = categories::id2name($cat_id, 'data');
-				if($cat_data['icon'])
-				{
-					$data['im0'] = $data['im1'] = $data['im2'] = etemplate_widget_tree::imagePath(egw::link('/phpgwapi/images/'.$cat_data['icon'],array(),false));
-				}
-
-				$parent =& $tree[etemplate_widget_tree::CHILDREN];
-				$parts = explode('/', $data[etemplate_widget_tree::ID]);
-				if ($data[etemplate_widget_tree::ID][0] == '/') array_shift($parts);	// remove root
-
-				array_pop($parts);
-				$path = '';
-				foreach($parts as $part)
-				{
-					$path .= ($path == '/' ? '' : '/').$part;
-					if (!isset($parent[$path]))
-					{
-						//$icon = etemplate_widget_tree::imagePath( $cat_data['icon']);
-						$parent[$path] = array(
-							'id' => $path,
-							'text' => lang(trim($part)),
-							//'im0' => 'folderOpen.gif',
-							'im1' => $icon,
-							'im2' => $icon,
-							'item' => array(),
-							'child' => 1,
-						);
-					//	if ($path == '/admin') $parent[$path]['open'] = true;
-					}
-					$parent =& $parent[$path]['item'];
-				}
-
-				// Get resources for this category
-				self::tree_data($data[etemplate_widget_tree::ID],$data,$open);
-				
-				$data[etemplate_widget_tree::TOOLTIP] = lang(categories::id2name($cat_id,'description'));
-
-				$parent[$data[etemplate_widget_tree::ID]] = $data;
+				if(categories::id2name($cat_id, 'parent')) continue;
+				$child = array(
+					etemplate_widget_tree::ID => trim(str_replace(' / ','/', $root.categories::id2name( $cat_id ,'path'))),
+					etemplate_widget_tree::LABEL => trim(str_replace('&nbsp;','',$cat_name))
+				);
+				self::tree_data($child[etemplate_widget_tree::ID],$child,$open);
+				$tree[etemplate_widget_tree::CHILDREN][] = $child;
 			}
 		}
 		else if ($root[0] == 'r')
@@ -732,7 +680,7 @@ class resources_ui
 				$tree['id'] = $root;
 				$resource = $bo->read(substr($root,1));
 				$tree['text'] = $resource['name'];
-				$data['im0'] = etemplate_widget_tree::imagePath($bo->get_picture($resource['res_id']));
+				$tree['im0'] = $tree['im1'] = $tree['im2'] = etemplate_widget_tree::imagePath($bo->get_picture($resource['res_id']));
 				$tree['item'] = array();
 				if(in_array($tree['id'], $open))
 				{
@@ -747,9 +695,7 @@ class resources_ui
 						if(!$res['res_id']) continue;
 						$data = array();
 						$data['id'] = 'r'.$res['res_id'];
-						$data['text'] = $res['name'];
-						$data['im0'] = etemplate_widget_tree::imagePath($bo->get_picture($res['res_id']));
-						$data['child'] = $res['acc_count'];
+						self::tree_data($data[etemplate_widget_tree::ID],$data,$open);
 						$list[] = $data;
 					}
 				}
@@ -758,11 +704,44 @@ class resources_ui
 		else
 		{
 			$cat_id = $bo->cats->name2id(trim(array_pop(explode('/',$root))));
-			$query = array('filter' => $cat_id,'filter2' => -1,'csv_export' => true);
 			$tree[etemplate_widget_tree::ID] = $root;
+			$tree[etemplate_widget_tree::LABEL] = categories::id2name($cat_id,'name');
+			$tree[etemplate_widget_tree::TOOLTIP] = lang(categories::id2name($cat_id,'description'));
+			$tree[etemplate_widget_tree::CHILDREN] = array();
+
+			$cat_data = categories::id2name($cat_id, 'data');
+			if(is_array($cat_data) && $cat_data['icon'])
+			{
+				$tree['im0'] = $tree['im1'] = $tree['im2'] = etemplate_widget_tree::imagePath(egw::link('/phpgwapi/images/'.$cat_data['icon'],array(),false));
+			}
+
+			$query = array('filter' => $cat_id,'filter2' => -1,'csv_export' => true);
 			$list =& $tree['item'];
+			$resources = array();
+
+			// Only continue if the category has resources
+			// The get_rows call considers child categories too
 			if($bo->get_rows($query,$resources,$readonlys))
 			{
+				$tree[etemplate_widget_tree::AUTOLOAD_CHILDREN] = 1;
+				
+				$cats = $bo->acl->get_cats(EGW_ACL_CALREAD, $cat_id);
+				foreach($cats as $sub_cat_id => $sub_cat_name)
+				{
+					$child = array(
+						etemplate_widget_tree::ID => trim(str_replace(' / ','/', categories::id2name( $sub_cat_id ,'path'))),
+						etemplate_widget_tree::LABEL => trim(str_replace('&nbsp;','',$sub_cat_name))
+					);
+					// Give child a chance (it might have a selected resource, but do not add it if it has no children
+					if(!$_parent || $tree[etemplate_widget_tree::OPEN])
+					{
+						self::tree_data($child[etemplate_widget_tree::ID],$child,$open);
+						if($child[etemplate_widget_tree::CHILDREN] || $child[etemplate_widget_tree::AUTOLOAD_CHILDREN])
+						{
+							$list[] = $child;
+						}
+					}
+				}
 				foreach($resources as $res)
 				{
 					if(!$res['res_id']) continue;
@@ -775,8 +754,11 @@ class resources_ui
 					$data[etemplate_widget_tree::ID] = 'r'.$res['res_id'];
 					$data[etemplate_widget_tree::LABEL] = $res['name'];
 					$data[etemplate_widget_tree::AUTOLOAD_CHILDREN] = $res['acc_count'];
-					$data['im0'] = $data['im1'] = $data['im2'] = etemplate_widget_tree::imagePath($bo->get_picture($res['res_id']));
-					$list[] = $data;
+					if(!$_parent)
+					{
+						self::tree_data($data[etemplate_widget_tree::ID],$data,$open);
+						$list[] = $data;
+					}
 				}
 			}
 		}
