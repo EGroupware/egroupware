@@ -2683,6 +2683,8 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 	 */
 	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null,$seriesInstance=null)
 	{
+		list($eventId, $date) = explode(':', $_eventId);
+
 		// we do not allow dragging into another users calendar ATM
 		if($targetOwner < 0)
 		{
@@ -2692,12 +2694,8 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 		{
 			$targetOwner = $calendarOwner;
 		}
-		if($calendarOwner !== $targetOwner && !is_array($targetOwner))
-		{
-			return false;
-		}
 		// But you may be viewing multiple users, or a group calendar and
-		// dragging your event
+		// dragging your event - dragging across calendars does not change owner
 		if(is_array($targetOwner) && !in_array($calendarOwner, $targetOwner))
 		{
 			$return = true;
@@ -2708,10 +2706,14 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 					$return = false;
 					break;
 				}
+				else if ($owner > 0 && $this->bo->check_perms(EGW_ACL_EDIT, $eventId,0,'ts',$date))
+				{
+					$return = false;
+					break;
+				}
 			}
 			if($return) return;
 		}
-		list($eventId, $date) = explode(':', $_eventId);
 		$old_event=$event=$this->bo->read($eventId);
 		if (!$durationT)
 		{
