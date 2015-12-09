@@ -874,7 +874,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		// just a container with no valid actions
 		var objectManager = egw_getObjectManager(this.getInstanceManager().app,true,1);
 		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
-		var parent = objectManager.getObjectById(this.id,3) || objectManager.getObjectById(this._parent.id,3) || objectManager;
+		var parent = objectManager.getObjectById(this.id,3) || objectManager.getObjectById(this._parent.id,1) || objectManager;
 		if(!parent)
 		{
 			debugger;
@@ -1165,6 +1165,11 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 
 		var use_days_sent = true;
 
+		if(events.id)
+		{
+			this.set_id(events.id);
+			delete events.id;
+		}
 		if(events.owner)
 		{
 			this.set_owner(events.owner);
