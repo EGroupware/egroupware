@@ -332,8 +332,12 @@ class calendar_uilist extends calendar_ui
 				unset($this->last['raw']);
 				$this->last = $this->bo->date2ts($this->last);
 				$this->date_filters['week'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
-				$params['startdate'] = $search_params['start'] = $this->first;
-				$params['enddate'] = $search_params['end'] = $this->last;
+				$search_params['start'] = $this->first;
+				$search_params['end'] = $this->last;
+				egw_json_response::get()->apply('app.calendar.update_state', array(array(
+					'first' => egw_time::to($this->first,egw_time::ET2),
+					'last'	=> egw_time::to($this->last,egw_time::ET2)
+				)));
 				break;
 
 			case 'month':
@@ -346,8 +350,12 @@ class calendar_uilist extends calendar_ui
 				$this->first = $this->bo->date2ts($this->first);
 				$this->last = $this->bo->date2ts($this->last);
 				$this->last--;
-				$params['startdate'] = $search_params['start'] = $this->first;
-				$params['enddate'] = $search_params['end'] = $this->last;
+				$search_params['start'] = $this->first;
+				$search_params['end'] = $this->last;
+				egw_json_response::get()->apply('app.calendar.update_state', array(array(
+					'first' => egw_time::to($this->first,egw_time::ET2),
+					'last'	=> egw_time::to($this->last,egw_time::ET2)
+				)));
 				break;
 				
 				// fall through to after given date
@@ -508,8 +516,6 @@ class calendar_uilist extends calendar_ui
 				}
 			}
 		}
-		$params['options-selectcols']['week'] = lang('Week');
-		$params['options-selectcols']['weekday'] = lang('Weekday');
 		if ((substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,4) == 'week' && strlen($this->cal_prefs['nextmatch-calendar.list.rows'])==4) || substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,5) == 'week,')
 		{
 			$rows['format'] = '32';	// prefix date with week-number
@@ -525,10 +531,6 @@ class calendar_uilist extends calendar_ui
 			$rows['format'] = '64';
 		}
 		if ($this->cat_id) $rows['no_cat_id'] = true;
-		if (!$GLOBALS['egw_info']['user']['apps']['projectmanager'])
-		{
-			$params['options-selectcols']['pm_id'] = false;
-		}
 		//_debug_array($rows);
 		return $this->bo->total;
 	}

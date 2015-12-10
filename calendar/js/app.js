@@ -1935,11 +1935,6 @@ app.classes.calendar = AppJS.extend(
 				}
 				nm.applyFilters(state.state);
 
-				// Try to keep last value up to date with what's in nextmatch
-				if(nm.activeFilters.enddate)
-				{
-					this.state.last = nm.activeFilters.enddate;
-				}
 				// Updates the display of start & end date
 				this.filter_change();
 			}
@@ -3305,7 +3300,15 @@ jQuery.extend(app.classes.calendar,{
 					date(egw.preference('dateformat'),startDate) +
 					(start_check == end_check ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
 			},
-			etemplates: ['calendar.list']
+			etemplates: ['calendar.list'],
+			start_date: function(state) {
+				var filter = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').activeFilters.filter || false;
+				return filter && state.first ? state.first : app.calendar.View.start_date.call(this, state);
+			},
+			end_date: function(state) {
+				var filter = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').activeFilters.filter || false;
+				return filter && state.last ? state.last : app.calendar.View.start_date.call(this, state);
+			}
 		})
 	}}
 );
