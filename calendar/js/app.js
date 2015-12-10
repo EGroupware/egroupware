@@ -1142,7 +1142,7 @@ app.classes.calendar = AppJS.extend(
 	filter_change: function()
 	{
 		var view = app.classes.calendar.views['listview'].etemplates[0].widgetContainer || false;
-		var filter = view ? view.getWidgetById('filter') : null;
+		var filter = view ? view.getWidgetById('nm').getWidgetById('filter') : null;
 		var dates = view ? view.getWidgetById('calendar.list.dates') : null;
 
 		if (filter && dates)
@@ -1842,7 +1842,7 @@ app.classes.calendar = AppJS.extend(
 					}
 				}
 				var value = [{start_date: state.state.first, end_date: state.state.last}];
-				this._need_data(value,state.state);
+				if(_view !== 'listview') this._need_data(value,state.state);
 			}
 			// Include first & last dates in state, mostly for server side processing
 			if(state.state.first && state.state.first.toJSON) state.state.first = state.state.first.toJSON();
@@ -1935,6 +1935,11 @@ app.classes.calendar = AppJS.extend(
 				}
 				nm.applyFilters(state.state);
 
+				// Try to keep last value up to date with what's in nextmatch
+				if(nm.activeFilters.enddate)
+				{
+					this.state.last = nm.activeFilters.enddate;
+				}
 				// Updates the display of start & end date
 				this.filter_change();
 			}
@@ -2820,7 +2825,7 @@ app.classes.calendar = AppJS.extend(
 					else if (view == 'listview')
 					{
 						app.calendar.update_state({
-							end_date: app.classes.calendar.views.week.end_date({date:date_widget.getValue()})
+							end_date: app.calendar.date.toString(app.classes.calendar.views.week.end_date({date:date_widget.getValue()}))
 						});
 					}
 				});
@@ -3300,15 +3305,7 @@ jQuery.extend(app.classes.calendar,{
 					date(egw.preference('dateformat'),startDate) +
 					(start_check == end_check ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
 			},
-			etemplates: ['calendar.list'],
-			start_date: function(state) {
-				var filter = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').activeFilters.filter || false;
-				return filter && state.first ? state.first : app.calendar.View.start_date.call(this, state);
-			},
-			end_date: function(state) {
-				var filter = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').activeFilters.filter || false;
-				return filter && state.last ? state.last : app.calendar.View.start_date.call(this, state);
-			}
+			etemplates: ['calendar.list']
 		})
 	}}
 );
