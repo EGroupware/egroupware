@@ -1842,7 +1842,7 @@ app.classes.calendar = AppJS.extend(
 					}
 				}
 				var value = [{start_date: state.state.first, end_date: state.state.last}];
-				if(_view !== 'listview') this._need_data(value,state.state);
+				if(state.state.view !== 'listview') this._need_data(value,state.state);
 			}
 			// Include first & last dates in state, mostly for server side processing
 			if(state.state.first && state.state.first.toJSON) state.state.first = state.state.first.toJSON();
