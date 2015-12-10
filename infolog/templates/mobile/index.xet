@@ -19,6 +19,7 @@
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%" >
 			<columns>
+				<column width="10"/>
 				<column width="70"/>
 				<column width="95%" />
 			</columns>
@@ -26,7 +27,8 @@
 				<row class="th">
 					
 				</row>
-				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
+				<row class="$row_cont[class]" valign="top">
+					<description class=" cat_$row_cont[info_cat] mobile_cat_col"/>
 					<vbox align="center"  class="infolog_CompletedClmn">
 						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8" class="infolog_fixedHeight"/>
 						<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar" class="infoDetails"/>

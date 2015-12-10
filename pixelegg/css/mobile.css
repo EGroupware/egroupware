@@ -6700,6 +6700,17 @@ span.egw_tutorial_title {
     float: right;
     font-size: 10px;
   }
+  body table.egwGridView_outer tbody tr td {
+    position: relative;
+  }
+  body table.egwGridView_outer tbody tr td .mobile_cat_col {
+    position: absolute;
+    min-height: 100%;
+    bottom: 0;
+    top: 0;
+    width: 10px;
+    display: block;
+  }
   #egw_fw_basecontainer {
     background: white;
   }

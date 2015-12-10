@@ -16,6 +16,7 @@
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
+				<column width="10"/>
 				<column width="60%"/>
 				<column width="39%"/>
 				<column width="58"/>
@@ -23,7 +24,8 @@
 			<rows>
 				<row class="th">
 				</row>
-				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
+				<row class="$row_cont[class]" valign="top">
+					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
 					<vbox class="addressbookCol1">
 						<vbox id="${row}[id]">
 							<description id="${row}[line1]" no_lang="1"/>
