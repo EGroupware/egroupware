@@ -687,7 +687,7 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 	var that = this;
 
 	var extra_params = extra_data && typeof extra_data == 'object' ? extra_data : {};
-	extra_params.date = edit_date;
+	extra_params.date = edit_date.toJSON ? edit_date.toJSON() : edit_date;
 	if(typeof callback != 'function')
 	{
 		callback = function(_button_id)
