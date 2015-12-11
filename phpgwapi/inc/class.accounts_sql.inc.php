@@ -447,9 +447,9 @@ class accounts_sql
 			case 'groupmembers':
 			case 'groupmembers+memberships':
 				$members = array();
-				foreach((array)$this->memberships($GLOBALS['egw_info']['user']['account_id'], true) as $grp)
+				foreach((array)$this->memberships($GLOBALS['egw_info']['user']['account_id'], true) as $grp => $name)
 				{
-					$members = array_unique(array_merge($members, (array)$this->members($grp,true)));
+					$members = array_unique(array_merge($members, array_keys((array)$this->members($grp))));
 					if ($param['type'] == 'groupmembers+memberships') $members[] = abs($grp);
 				}
 				$filter['account_id'] = $members;

@@ -1097,7 +1097,7 @@ class egw_session
 	 */
 	public static function link($url, $extravars = '')
 	{
-		//echo '<p>'.__METHOD__."(url='$url',extravars='".array2string($extravars)."')";
+		//error_log(_METHOD__."(url='$url',extravars='".array2string($extravars)."')");
 
 		if ($url[0] != '/')
 		{

@@ -390,11 +390,13 @@ class accounts
 				$type = $only_own ? 'groupmembers' : 'accounts';
 				break;
 			case 'groups':
-				$type = $only_own ? 'memberships' : 'groups';
+				$type = $only_own ? 'owngroups' : 'groups';
+				break;
+			case 'memberships':
+				$type = 'owngroups';
 				break;
 			case 'owngroups':
 			case 'groupmembers':
-			case 'memberships':
 				$type = $options['account_type'];
 				break;
 			case 'both':
