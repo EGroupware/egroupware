@@ -277,13 +277,27 @@ var et2_selectAccount = et2_selectbox.extend(
 					else	// not available: need to call set_value again, after all arrived from server
 					{
 						++num_calls;
+						// Add immediately with value as label, we'll replace later
+						this._appendOptionElement(search[j],search[j]);
 						this.egw().link_title('home-accounts', search[j], function(name)
 						{
 							if (++current_call >= num_calls)	// only run last callback
 							{
-								this.set_value(_value);
+								// Update the label
+								// Options are not indexed, so we must look
+								for(var i = 0; i < this.widget.options.select_options.length; i++)
+								{
+									var opt = this.widget.options.select_options[i];
+									if(opt && opt.value && opt.value == this.unknown)
+									{
+										opt.label = name;
+										this.widget.set_select_options(this.widget.options.select_options);
+										break;
+									}
+								}
+								this.widget.set_value(_value);
 							}
-						}, this);
+						}, {widget: this, unknown: search[j]});
 					}
 				}
 			}
