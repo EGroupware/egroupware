@@ -877,7 +877,7 @@ class calendar_ui
 				}
 			}
 			$merge = new calendar_merge();
-			//error_log('Timespan: ');foreach($timespan as $t) error_log(egw_time::to($t['start']) . ' - ' . egw_time::to($t['end']));
+			//error_log($_GET['merge'] . ' Timespan: ');foreach($timespan as $t) error_log(egw_time::to($t['start']) . ' - ' . egw_time::to($t['end']));
 			$error = $merge->download($_GET['merge'], $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 			// Here?  Doesn't actually give the message
 			egw_framework::refresh_opener($error, 'calendar');

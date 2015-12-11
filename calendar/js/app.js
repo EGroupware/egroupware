@@ -2897,6 +2897,25 @@ app.classes.calendar = AppJS.extend(
 			app.classes.calendar.views[view].etemplates.forEach(function(et) {all_loaded = all_loaded && typeof et !== 'string';});
 		}
 
+		// Add some extras to the nextmatch so it can keep the dates in sync with
+		// those in the sidebox calendar.  Care must be taken to not trigger any
+		// sort of refresh or update, as that may resulte in infinite loops so these
+		// are only used for the 'week' and 'month' filters, and we just update the
+		// date range
+		if(_name == 'calendar.list')
+		{
+			var nm = _et2.widgetContainer.getWidgetById('nm');
+			if(nm)
+			{
+				nm.set_startdate = jQuery.proxy(function(date) {
+					this.state.first = this.date.toString(new Date(date));
+				},this);
+				nm.set_enddate = jQuery.proxy(function(date) {
+					this.state.last = this.date.toString(new Date(date));
+				},this);
+			}
+		}
+
 		// Start hidden, except for current view
 		if(view_et2)
 		{

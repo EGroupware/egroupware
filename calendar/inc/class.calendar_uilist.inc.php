@@ -332,8 +332,10 @@ class calendar_uilist extends calendar_ui
 				unset($this->last['raw']);
 				$this->last = $this->bo->date2ts($this->last);
 				$this->date_filters['week'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
-				$params['startdate'] = $search_params['start'] = $this->first;
-				$params['enddate'] = $search_params['end'] = $this->last;
+				$search_params['start'] = $this->first;
+				$search_params['end'] = $this->last;
+				$params['startdate'] = egw_time::to($this->first, egw_time::ET2);
+				$params['enddate'] = egw_time::to($this->last, egw_time::ET2);
 				break;
 
 			case 'month':
@@ -346,8 +348,10 @@ class calendar_uilist extends calendar_ui
 				$this->first = $this->bo->date2ts($this->first);
 				$this->last = $this->bo->date2ts($this->last);
 				$this->last--;
-				$params['startdate'] = $search_params['start'] = $this->first;
-				$params['enddate'] = $search_params['end'] = $this->last;
+				$search_params['start'] = $this->first;
+				$search_params['end'] = $this->last;
+				$params['startdate'] = egw_time::to($this->first, egw_time::ET2);
+				$params['enddate'] = egw_time::to($this->last, egw_time::ET2);
 				break;
 				
 				// fall through to after given date
