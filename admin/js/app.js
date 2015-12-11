@@ -808,5 +808,44 @@ app.classes.admin = AppJS.extend(
 		jQuery(root.getWidgetById('cf_len').getDOMNode()).toggle(attributes.cf_len && true);
 		jQuery(root.getWidgetById('cf_rows').getDOMNode()).toggle(attributes.cf_rows && true);
 		jQuery(root.getWidgetById('cf_values').getParentDOMNode()).toggle(attributes.cf_values && true);
+	},
+	
+	/**
+	 * Activate none standard SMTP mail accounts for selected users
+	 * 
+	 * @param {type} _selected selected users
+	 * @todo remove under construction message
+	 */
+	emailadminActiveAccounts: function (_action, _selected){
+		
+		et2_dialog.alert('This feature is under construction please come back later, thank you for your patience!');
+		return false;
+		var menuaction = 'emailadmin.emailadmin_wizard.ajax_activeAccounts';
+		var accounts = [];
+		var msg1 = egw.lang('1% accounts being activated');
+		
+		for (var i=0;i< Object.keys(_selected).length;i++)
+		{
+			accounts[i] = {id:_selected[i]['id'].split('::')[1],qouta:"", domain:"", status:_action.id == 'active'?_action.id:''};
+		}
+		var callbackDialog = function (btn){
+			if (btn === et2_dialog.YES_BUTTON)
+			{
+				// long task dialog for de/activation accounts
+				et2_dialog.long_task(function(_val, _resp){
+					if (_val && _resp.type !== 'error')
+					{
+						console.log(_val,_resp);
+					}
+					else
+					{
+
+					}
+				}, msg1, 'Mail Acounts Activation', menuaction, accounts, 'admin');
+			}
+		}
+		// confirmation dialog
+		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to %1 mail for selected accounts?', egw.lang(_action.id)), egw.lang('Active Mail Accounts'), {},
+			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
 });
