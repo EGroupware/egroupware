@@ -33,7 +33,11 @@ class calendar_hooks
 			'view_id'    => 'cal_id',
 			'view_popup' => '750x400',
 			'edit_popup' => '750x400',
-			'view_list'  => 'calendar.calendar_uilist.listview',
+			'list'  => array(
+				'menuaction' => 'calendar.calendar_uiviews.index',
+				'view' => 'listview',
+				'ajax'=>'true'
+			),
 			'add'        => array(
 				'menuaction' => 'calendar.calendar_uiforms.edit',
 			),

@@ -368,7 +368,7 @@ class calendar_uilist extends calendar_ui
 		}
 		if ($params['col_filter']['participant'])
 		{
-			$search_params['users'] = is_array($params['col_filter']['participant']) ? $params['col_filter']['participant'] : array((int) $params['col_filter']['participant']);
+			$search_params['users'] = is_array($params['col_filter']['participant']) ? $params['col_filter']['participant'] : array( $params['col_filter']['participant']);
 		}
 		elseif (!$params['col_filter'] || !array_key_exists('participant',$params['col_filter']))
 		{

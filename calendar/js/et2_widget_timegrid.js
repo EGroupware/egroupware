@@ -1317,6 +1317,10 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			switch(_owner[0])
 			{
+				case 'c':
+					this.owner.options.application = 'addressbook';
+					this.owner.set_value(_owner.substr(1));
+					break;
 				case 'r':
 					this.owner.options.application = 'resources';
 					this.owner.set_value(_owner.substr(1));
