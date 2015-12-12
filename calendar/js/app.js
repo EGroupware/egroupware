@@ -674,55 +674,58 @@ app.classes.calendar = AppJS.extend(
 					return false;
 				}
 			);
-		jQuery(framework.applications.calendar.tab.contentDiv).swipe('destroy')
-			.swipe({
-				//Generic swipe handler for all directions
-				swipe:function(event, direction, distance, duration, fingerCount) {
-					if(direction == "up" || direction == "down")
-					{
-						var at_bottom = direction !== -1;
-						var at_top = direction !== 1;
+		if(framework.applications.calendar && framework.applications.calendar.tab)
+		{
+			jQuery(framework.applications.calendar.tab.contentDiv).swipe('destroy')
+				.swipe({
+					//Generic swipe handler for all directions
+					swipe:function(event, direction, distance, duration, fingerCount) {
+						if(direction == "up" || direction == "down")
+						{
+							var at_bottom = direction !== -1;
+							var at_top = direction !== 1;
 
-						$j(this).children(":not(.calendar_calGridHeader)").each(function() {
-							// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
-							// 2px left to go
-							at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
-						}).each(function() {
-							at_top = at_top && this.scrollTop === 0;
-						});
-						if(!at_bottom && !at_top && fingerCount == 1) return;
-					}
+							$j(this).children(":not(.calendar_calGridHeader)").each(function() {
+								// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
+								// 2px left to go
+								at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
+							}).each(function() {
+								at_top = at_top && this.scrollTop === 0;
+							});
+							if(!at_bottom && !at_top && fingerCount == 1) return;
+						}
 
-					var delta = direction == "down" || direction == "right" ? -1 : 1;
-					// But we animate in the opposite direction to the swipe
-					var opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
-					direction = opposite[direction];
-					scroll_animate.call($j(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta)
-					return false;
-				},
-				allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL,
-				threshold: 100,
-				fallbackToMouseEvents: false,
-				triggerOnTouchEnd: false
+						var delta = direction == "down" || direction == "right" ? -1 : 1;
+						// But we animate in the opposite direction to the swipe
+						var opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
+						direction = opposite[direction];
+						scroll_animate.call($j(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta)
+						return false;
+					},
+					allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL,
+					threshold: 100,
+					fallbackToMouseEvents: false,
+					triggerOnTouchEnd: false
+				});
+
+			// Page up & page down
+			egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false, function() {
+				if(app.calendar.state.view == 'listview')
+				{
+					return false
+				}
+				scroll_animate.call(this,"up", -1);
+				return true;
 			});
-
-		// Page up & page down
-		egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false, function() {
-			if(app.calendar.state.view == 'listview')
-			{
-				return false
-			}
-			scroll_animate.call(this,"up", -1);
-			return true;
-		});
-		egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false, function() {
-			if(app.calendar.state.view == 'listview')
-			{
-				return false
-			}
-			scroll_animate.call(this,"down", 1);
-			return true;
-		});
+			egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false, function() {
+				if(app.calendar.state.view == 'listview')
+				{
+					return false
+				}
+				scroll_animate.call(this,"down", 1);
+				return true;
+			});
+		}
 	},
 
 	/**
