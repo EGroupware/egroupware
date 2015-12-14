@@ -70,6 +70,10 @@ app.classes.calendar = AppJS.extend(
 	// date in the current view.
 	sidebox_changes_views: ['day','week','month'],
 
+	// Calendar allows other apps to hook into the sidebox.  We keep these etemplates
+	// up to date as state is changed.
+	sidebox_hooked_templates: [],
+
 	/**
 	 * Constructor
 	 *
@@ -112,6 +116,7 @@ app.classes.calendar = AppJS.extend(
 			var date = this.sidebox_et2.getWidgetById('date');
 			$j(window).off('resize.calendar'+date.dom_id);
 		}
+		this.sidebox_hooked_templates = null;
 
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false);
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false);
@@ -147,6 +152,7 @@ app.classes.calendar = AppJS.extend(
 		{
 			case 'calendar.sidebox':
 				this.sidebox_et2 = _et2.widgetContainer;
+				this.sidebox_hooked_templates.push(this.sidebox_et2);
 				$j(_et2.DOMContainer).hide();
 				this._setup_sidebox_filters();
 				break;
@@ -1976,51 +1982,61 @@ app.classes.calendar = AppJS.extend(
 			this._sortable();
 
 			/* Update sidebox widgets to show current value*/
-			if(this.sidebox_et2)
+			if(this.sidebox_hooked_templates.length)
 			{
-				this.sidebox_et2.iterateOver(function(widget) {
-					if(widget.id == 'view')
+				for(var j = 0; j < this.sidebox_hooked_templates.length; j++)
+				{
+					var sidebox = this.sidebox_hooked_templates[j];
+					// Remove any destroyed or not valid templates
+					if(!sidebox.getInstanceManager || !sidebox.getInstanceManager())
 					{
-						// View widget has a list of state settings, which require special handling
-						for(var i = 0; i < widget.options.select_options.length; i++)
+						this.sidebox_hooked_templates.splice(j,1,0);
+						continue;
+					}
+					sidebox.iterateOver(function(widget) {
+						if(widget.id == 'view')
 						{
-							var option_state = JSON.parse(widget.options.select_options[i].value) || [];
-							var match = true;
-							for(var os_key in option_state)
+							// View widget has a list of state settings, which require special handling
+							for(var i = 0; i < widget.options.select_options.length; i++)
 							{
-								// Sometimes an optional state variable is not yet defined (sortby, days, etc)
-								match = match && (option_state[os_key] == this.state[os_key] || typeof this.state[os_key] == 'undefined');
-							}
-							if(match)
-							{
-								widget.set_value(widget.options.select_options[i].value);
-								return;
+								var option_state = JSON.parse(widget.options.select_options[i].value) || [];
+								var match = true;
+								for(var os_key in option_state)
+								{
+									// Sometimes an optional state variable is not yet defined (sortby, days, etc)
+									match = match && (option_state[os_key] == this.state[os_key] || typeof this.state[os_key] == 'undefined');
+								}
+								if(match)
+								{
+									widget.set_value(widget.options.select_options[i].value);
+									return;
+								}
 							}
 						}
-					}
-					else if (widget.id == 'keywords')
-					{
-						widget.set_value('');
-					}
-					else if(typeof state.state[widget.id] !== 'undefined' && state.state[widget.id] != widget.getValue())
-					{
-						// Update widget.  This may trigger an infinite loop of
-						// updates, so we do it after changing this.state and set a flag
-						try
-						{
-							widget.set_value(state.state[widget.id]);
-						}
-						catch(e)
+						else if (widget.id == 'keywords')
 						{
 							widget.set_value('');
 						}
-					}
-					else if (widget.instanceOf(et2_inputWidget) && typeof state.state[widget.id] == 'undefined')
-					{
-						// No value, clear it
-						widget.set_value('');
-					}
-				},this,et2_valueWidget);
+						else if(typeof state.state[widget.id] !== 'undefined' && state.state[widget.id] != widget.getValue())
+						{
+							// Update widget.  This may trigger an infinite loop of
+							// updates, so we do it after changing this.state and set a flag
+							try
+							{
+								widget.set_value(state.state[widget.id]);
+							}
+							catch(e)
+							{
+								widget.set_value('');
+							}
+						}
+						else if (widget.instanceOf(et2_inputWidget) && typeof state.state[widget.id] == 'undefined')
+						{
+							// No value, clear it
+							widget.set_value('');
+						}
+					},this,et2_valueWidget);
+				}
 			}
 
 			// If current state matches a favorite, hightlight it
@@ -2902,6 +2918,22 @@ app.classes.calendar = AppJS.extend(
 			if(all_loaded)
 			{
 				this.setState({state:this.state});
+			}
+		}
+		else
+		{
+			var app_name = _name.split('.')[0];
+			if(app_name && app_name != 'calendar' && egw.app(app_name))
+			{
+				// A template from another application?  Keep it up to date as state changes
+				this.sidebox_hooked_templates.push(_et2.widgetContainer);
+				// If it leaves (or reloads) remove it
+				$j(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
+					if(app.calendar)
+					{
+						app.calendar.sidebox_hooked_templates.splice(this,1,0);
+					}
+				},this.sidebox_hooked_templates.length -1));
 			}
 		}
 	},
