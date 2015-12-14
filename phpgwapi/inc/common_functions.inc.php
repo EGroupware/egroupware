@@ -1455,7 +1455,7 @@ function _check_script_tag(&$var,$name='')
 	//old: '/<\/?[^>]*\b(iframe|script|javascript|on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b[^>]*>/i';
 	if (!isset($preg)) $preg =
 		// forbidden tags like iframe or script
-		'/(<(\s*\/)?\s*(iframe|script|object|embed|math|meta)|'.
+		'/(<(\s*\/)?\s*(iframe|script|object|embed|math|meta)[^a-z0-9]|'.
 		// on* attributes
 		'<[^>]*on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mouse[^=]+|reset|select|submit|unload|resize|propertychange|page[^=]*|scroll|readystatechange|start|popstate|form[^=]+|input)\s*=|'.
 		// ="javascript:*" diverse javascript attribute value
@@ -1531,6 +1531,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		'<div>Script and Javascript: not evil ;-)' => false,
 		'<span>style=background-color' => false,
 		'<font face="Script MT Bold" size="4"><span style="font-size:16pt;">Hugo Sonstwas</span></font>' => false,
+		'<mathias@stylite.de>' => false,
 	);
 	foreach($patterns as $pattern => $should_fail)
 	{
