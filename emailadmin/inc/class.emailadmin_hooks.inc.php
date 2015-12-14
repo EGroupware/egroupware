@@ -37,6 +37,29 @@ class emailadmin_hooks
 				'popup'   => '720x530',
 				'icon'    => 'emailadmin/navbar',
 			);
+			
+			$emailadmin = emailadmin_account::get_default();
+			if ($emailadmin->acc_smtp_type && $emailadmin->acc_smtp_type !== 'emailadmin_smtp')
+			{
+				$actions[] = array (
+					'id'       => 'mail_activeAccounts',
+					'caption'  => '(de)activate mail accounts',
+					'children' => array (
+						'active' => array (
+							'caption'		  => 'activate',
+							'onExecute'	  	  => 'javaScript:app.admin.emailadminActiveAccounts',
+							'icon'			  => 'emailadmin/navbar',
+							'allowOnMultiple' => true
+						),
+						'inactive' => array (
+							'caption'		  => 'deactivate',
+							'onExecute'		  => 'javaScript:app.admin.emailadminActiveAccounts',
+							'icon'			  => 'emailadmin/navbar',
+							'allowOnMultiple' => true
+						)
+					)
+				);
+			}
 		}
 		return $actions;
 	}

@@ -74,6 +74,7 @@ class emailadmin_wizard
 	public $public_functions = array(
 		'add' => true,
 		'edit' => true,
+		'ajax_activeAccounts' => true
 	);
 
 	/**
@@ -1444,5 +1445,60 @@ class emailadmin_wizard
 		}
 		//error_log(__METHOD__."('$email') returning ".array2string($hosts));
 		return $hosts;
+	}
+	
+	/**
+	 * Set mail account status wheter to 'active' or '' (inactive)
+	 *
+	 * @param array $_data account an array of data called via long task running dialog
+	 *	$_data:array (
+	 *		id => account_id,
+	 *		qouta => quotaLimit,
+	 *		domain => mailLocalAddress,
+	 *		status => mail activation status('active'|'')
+	 *	)
+	 * @return json response
+	 */
+	public function ajax_activeAccounts($_data)
+	{
+		if (!$this->is_admin) die('no rights to be here!');
+		$response = egw_json_response::get();
+		if (($account = $GLOBALS['egw']->accounts->read($_data['id'])))
+		{
+			if ($_data['quota'] !== '' || $_data['accountStatus'] !== ''
+				|| strpos($_data['domain'], '.'))
+			{
+				$emailadmin = emailadmin_account::get_default();
+				if (!emailadmin_account::is_multiple($emailadmin))
+				{
+					$msg = lang('No default account found!');
+					return $response->data($msg);
+				}
+				if (($userData = $emailadmin->getUserData ($_data['id'])))
+				{
+					$userData = array(
+						'accountStatus' => $_data['status'],
+						'quotaLimit' => $_data['qouta']? $_data['qouta']: $userData['qoutaLimit']
+					);
+					
+					if (strpos($_data['domain'], '.') !== false)
+					{
+						$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$_data['domain'], $userData['mailLocalAddress']);
+
+						foreach($userData['mailAlternateAddress'] as &$alias)
+						{
+							$alias = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$_data['mail']['domain'], $alias);
+						}
+					}
+					$emailadmin->saveUserData($_data['id'], $userData);
+				}
+				else
+				{
+					$msg .= lang('No profile defined for user %1', '#'.$_data['id'].' '.$account['account_fullname']."\n");
+					
+				}
+			}
+		}
+		$response->data($msg);
 	}
 }

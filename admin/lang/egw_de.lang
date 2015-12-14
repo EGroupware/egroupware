@@ -16,6 +16,7 @@
 %1 run rights for applications	admin	de	Ausführungsrechte für Anwendungen von %1
 %1 sessions killed	admin	de	%1 Sitzungen beendet
 %1 user %2	admin	de	%1 Benutzer %2
+(de)activate mail accounts	admin	de	EMail-Konten (de)aktivieren
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benutzt)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
@@ -193,7 +194,6 @@ delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
 delete group	admin	de	Gruppe löschen
-delete including sub-enteries	admin	de	Löschen inklusive Untereinträge
 delete peer server	admin	de	Server von Serververbund löschen
 delete selected entries	admin	de	Ausgewählte Einträge löschen
 delete the category	admin	de	Kategorie löschen
@@ -229,7 +229,6 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
 disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
-disable all	admin	de	Komplett abschalten
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
