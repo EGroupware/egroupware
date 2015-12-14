@@ -1845,7 +1845,7 @@ app.classes.calendar = AppJS.extend(
 					}
 				}
 				var value = [{start_date: state.state.first, end_date: state.state.last}];
-				if(state.state.view !== 'listview') this._need_data(value,state.state);
+				this._need_data(value,state.state);
 			}
 			// Include first & last dates in state, mostly for server side processing
 			if(state.state.first && state.state.first.toJSON) state.state.first = state.state.first.toJSON();
@@ -2383,21 +2383,41 @@ app.classes.calendar = AppJS.extend(
 							// Merge in new, update label of existing
 							for(var i in data.rows.sel_options[field])
 							{
+								var found = false;
 								var option = data.rows.sel_options[field][i];
 								for(var j in widget.options.select_options)
 								{
 									if(option.value == widget.options.select_options[j].value)
 									{
 										widget.options.select_options[j].label = option.label;
+										found = true;
 										break;
 									}
-
+								}
+								if(!found)
+								{
+									widget.options.select_options.push(option);
 								}
 							}
 							var in_progress = app.calendar.state_update_in_progress;
 							app.calendar.state_update_in_progress = true;
 							widget.set_select_options(widget.options.select_options);
 							widget.set_value(widget.getValue());
+
+							// If updating owner, update listview participants as well
+							// This lets us _add_ to the options, normal nm behaviour will replace.
+							if(field == 'owner')
+							{
+								try {
+									var participant = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').getWidgetById('participant');
+									if(participant)
+									{
+										participant.options.select_options = widget.options.select_options;
+										participant.set_select_options(widget.options.select_options);
+									}
+								} catch(e) {debugger;}
+							}
+							
 							app.calendar.state_update_in_progress = in_progress;
 						}
 					}
