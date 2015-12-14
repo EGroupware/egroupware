@@ -818,8 +818,6 @@ app.classes.admin = AppJS.extend(
 	 */
 	emailadminActiveAccounts: function (_action, _selected){
 		
-		et2_dialog.alert('This feature is under construction please come back later, thank you for your patience!');
-		return false;
 		var menuaction = 'emailadmin.emailadmin_wizard.ajax_activeAccounts';
 		var accounts = [];
 		var msg1 = egw.lang('1% accounts being activated');
