@@ -1587,6 +1587,19 @@ app.classes.calendar = AppJS.extend(
 			// it will work for other users too.
 			state.owner = 0;
 		}
+		
+		// Keywords are only for list view
+		if(state.view == 'listview')
+		{
+			var listview = app.classes.calendar.views.listview.etemplates[0] &&
+				app.classes.calendar.views.listview.etemplates[0].widgetContainer &&
+				app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+			if(listview && listview.activeFilters && listview.activeFilters.search)
+			{
+				state.keywords = listview.activeFilters.search;
+			}
+		}
+
 		// Don't store date or first and last
 		delete state.date;
 		delete state.first;
@@ -1899,7 +1912,6 @@ app.classes.calendar = AppJS.extend(
 			{
 				view.etemplates[i].resize();
 			}
-			this.state = jQuery.extend({},state.state);
 
 			// List view (nextmatch) has slightly different fields
 			if(state.state.view === 'listview')
@@ -1957,6 +1969,8 @@ app.classes.calendar = AppJS.extend(
 					nm.controller._grid.doInvalidate = false;
 				} catch (e) {}
 			}
+			delete state.state.keywords;
+			this.state = jQuery.extend({},state.state);
 
 			/* Update re-orderable calendars */
 			this._sortable();
@@ -1983,6 +1997,10 @@ app.classes.calendar = AppJS.extend(
 								return;
 							}
 						}
+					}
+					else if (widget.id == 'keywords')
+					{
+						widget.set_value('');
 					}
 					else if(typeof state.state[widget.id] !== 'undefined' && state.state[widget.id] != widget.getValue())
 					{
@@ -2358,7 +2376,6 @@ app.classes.calendar = AppJS.extend(
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.filter,
 			cat_id: cat_id,
-			search: state.keywords,
 			csv_export: false
 		});
 		// Show ajax loader
@@ -2692,70 +2709,6 @@ app.classes.calendar = AppJS.extend(
 			var d = app.calendar.date.start_of_week(date);
 			d.setUTCDate(d.getUTCDate() + 6);
 			return d;
-		}
-	},
-
-	/**
-	 * Initializes actions and handlers on sidebox (delete)
-	 * Extended from parent to automatically add change handlers for resource
-	 * menu items.
-	 *
-	 * @param {jQuery} sidebox jQuery of DOM node
-	 */
-	_init_sidebox: function(sidebox)
-	{
-		if( this._super.apply(this, arguments) )
-		{
-			sidebox.parentsUntil('#calendar_sidebox_content')
-				.find('.egw_fw_ui_category_content').not(sidebox.parent())
-				.on('change.sidebox', 'select:not(.et2_selectbox),input[type!="checkbox"]', this, function(event) {
-					var state = {};
-					var name = this.name.replace('[]','');
-					var value = $j(this).val();
-
-					// Handle special value like r0, which removes all r
-					if(typeof value == 'string' && parseInt(value.substring(1)==0) ||
-						value[0] && typeof value[0] == 'string' && parseInt(value[0].substring(1))==0) 
-					{
-						value = typeof value == 'string' ? value : value[0];
-						var type = value.substring(0,1);
-						state[name] = [];
-						for(var key in app.calendar.state[name])
-						{
-							var cur_item = app.calendar.state[name][key];
-							if(cur_item && (cur_item+'').substring(0,1) != type)
-							{
-								state[name].push(cur_item);
-							}
-						}
-						$j('option', this).removeAttr('selected');
-						return app.calendar.update_state(state);
-					}
-					// Here we look for things like owner: ['r1,r2'] and change them
-					// to owner: ['r1','r2']
-					state[name] = value;
-					for(var key in state)
-					{
-						if(state[key] && typeof state[key].length !== 'undefined')
-						{
-							for(var sub_key in state[key])
-							{
-								if(typeof state[key][sub_key] == 'string' && state[key][sub_key].indexOf(',') !== -1)
-								{
-									var explode_me = state[key][sub_key];
-									delete state[key][sub_key];
-									jQuery.extend(state[key], explode_me.split(','));
-								}
-							}
-							// Add to, not replace, current value
-							if(typeof state[key] == 'object' && typeof app.calendar.state[key] == 'object')
-							{
-								jQuery.merge(state[key],app.calendar.state[key]);
-							}
-						}
-					}
-					app.calendar.update_state(state);
-				});
 		}
 	},
 

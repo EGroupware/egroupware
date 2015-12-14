@@ -38,7 +38,7 @@ Egroupware
 				</rows>
 			</grid>
 			<select id="view" class="et2_fullWidth" onchange="app.calendar.update_state(JSON.parse(widget.getValue()));"/>
-			<textbox id="keywords" class="et2_fullWidth" blur="Search" onchange="app.calendar.update_state({view: 'listview',keywords: widget.getValue()});window.setTimeout(function() {widget.set_value('');},100);return false;"/>
+			<textbox id="keywords" class="et2_fullWidth" blur="Search" onchange="app.calendar.update_state({view: 'listview',keywords: widget.getValue()});return false;"/>
 			<hbox id="date_header" class="et2_fullWidth">
 				<buttononly id="header_today" label="Today" onclick="var tempDate = new Date();
 					var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
