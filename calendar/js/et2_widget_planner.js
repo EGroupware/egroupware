@@ -883,6 +883,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var content = '<div class="calendar_plannerScale" data-planner_days="0" data-last="">';
 		var days_in_month = 0;
 		var day_width = 100 / days;
+		var end = new Date(start);
+		end.setUTCDate(end.getUTCDate()+days);
 		var t = new Date(start.valueOf());
 		for(var left = 0,i = 0; i < days;t.setUTCDate(1),t.setUTCMonth(t.getUTCMonth()+1),left += days_in_month*day_width,i += days_in_month)
 		{
@@ -918,11 +920,9 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					title = this._scroll_button('first',full) + this._scroll_button('left',half) + title;
 				}
 			
-				// show next scales, if there are more then 10 days in the next month or there is no next month
-				var end = new Date(start);
-				end.setUTCDate(end.getUTCDate()+days);
-				var days_in_next_month = end.getUTCDate();
-				if (days_in_next_month <= 10 || end.getUTCMonth() == t.getUTCMonth())
+				// show next scales, if there are less then 10 days in the next month or there is no next month
+				var days_until_end = (end - t) / (1000 * 3600 * 24);
+				if (days_until_end - days_in_month <= 10 || end.getUTCMonth() === t.getUTCMonth() && end.getUTCFullYear() === t.getUTCFullYear())
 				{
 					// next links
 					var next = new Date(t);
