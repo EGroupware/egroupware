@@ -288,7 +288,7 @@ var et2_selectAccount = et2_selectbox.extend(
 								for(var i = 0; i < this.widget.options.select_options.length; i++)
 								{
 									var opt = this.widget.options.select_options[i];
-									if(opt && opt.value && opt.value == this.unknown)
+									if(opt && opt.value && opt.value == this.unknown && opt.label == this.unknown)
 									{
 										opt.label = name;
 										this.widget.set_select_options(this.widget.options.select_options);
