@@ -16,6 +16,7 @@
 %1 run rights for applications	admin	en	%1 run rights for applications
 %1 sessions killed	admin	en	%1 sessions killed.
 %1 user %2	admin	en	%1 user %2
+(de)activate mail accounts	admin	en	(de)activate mail accounts
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
 (stored password will not be shown here)	admin	en	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
@@ -108,7 +109,6 @@ are you sure you want to delete this global category ?	admin	en	Are you sure you
 are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group?
 are you sure you want to delete this server?	admin	en	Are you sure you want to delete this server?
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session?
-do not offer introduction video	admin	en	Do not offer introduction video
 async services last executed	admin	en	Async services last executed
 asynchronous timed services	admin	en	Asynchronous timed services
 asyncservices not yet installed or other error (%1) !!!	admin	en	Async services not yet installed or other error (%1) !
@@ -229,13 +229,13 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	en	Determines the order the fields are displayed
 disable	admin	en	Disable
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
-egroupware tutorial	admin	en	EGroupware Tutorial
 disable minifying of javascript and css files	admin	en	Disable minifying of javascript and CSS files
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled (not recomended)	admin	en	Disabled (not recommended)
 display	admin	en	Display
 displayed length of input field (set rows=1 to limit length)	admin	en	displayed length of input field (set rows=1 to limit length)
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
+do not offer introduction video	admin	en	Do not offer introduction video
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global sub categories?
 do you want to delete all global subcategories ?	admin	en	Do you want to delete all global sub categories?
 do you want to move all global subcategories one level down ?	admin	en	Do you want to move all global sub categories one level down?
@@ -262,6 +262,7 @@ edit user	admin	en	Edit user
 edit user account	admin	en	Edit user account
 educational: universities, schools, ...	admin	en	Educational: Universities, Schools, ...
 egroupware directory	admin	en	EGroupware directory
+egroupware tutorial	admin	en	EGroupware Tutorial
 egroupware version	admin	en	EGroupware version
 either install id and config password needed or the remote hash!	admin	en	Either install ID AND config password needed OR the remote hash!
 email account active	admin	en	Email account active
@@ -352,6 +353,7 @@ group manager	admin	en	Group manager
 group name	admin	en	Group name
 hash	admin	en	Hash
 hide php information	admin	en	Hide php information
+hide sidebox video tutorials	admin	en	Hide sidebox video tutorials
 home directory	admin	en	Home directory
 host information	admin	en	Host information
 hour<br>(0-23)	admin	en	Hour<br>(0-23)
@@ -578,7 +580,6 @@ show error log	admin	en	Show error log
 show members	admin	en	Show members
 show phpinfo()	admin	en	Show phpinfo()
 show session ip address	admin	en	Show session IP address
-hide sidebox video tutorials	admin	en	Hide sidebox video tutorials
 site	admin	en	Site
 soap	admin	en	SOAP
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
