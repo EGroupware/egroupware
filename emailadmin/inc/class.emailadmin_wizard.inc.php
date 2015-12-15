@@ -1492,9 +1492,11 @@ $msg = 'The response is empty';
 
 						foreach($userData['mailAlternateAddress'] as &$alias)
 						{
-							$alias = preg_replace('/@'.preg_quote($ea_account->acc_domain).'$/', '@'.$_data['mail']['domain'], $alias);
+							$alias = preg_replace('/@'.preg_quote($ea_account->acc_domain).'$/', '@'.$_data['domain'], $alias);
 						}
 					}
+					// fullfill the saveUserData requirements
+					$userData += $ea_account->params;
 					$ea_account->saveUserData($_data['id'], $userData);
 					$msg = '#'.$_data['id'].' '.$account['account_fullname']. ' '.($userData['accountStatus'] == 'active'? lang('activated'):lang('deactivated'));
 				}
