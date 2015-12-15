@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="resources.show.nm_right" template="" lang="" group="0" version="1.9.002">
+		<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
+	</template>
+	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
+		<grid width="100%">
+			<columns>
+				<column width="10"/>
+				<column width="90%"/>
+				<column width="130"/>
+				<column width="70"/>
+			</columns>
+			<rows>
+				<row class="th">
+				
+				</row>
+				<row class="$row_cont[class]">
+					<description class="cat_$row_cont[cat_id] mobile_cat_col"/>
+					<vbox>
+						<description id="${row}[name]" no_lang="1"/>
+						<description id="${row}[short_description]" no_lang="1"/>
+						<hbox>
+							<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" no_lang="1"/>
+							<grid width="100%" id="${row}[accessories]">
+								<columns>
+									<column/>
+								</columns>
+								<rows>
+									<row>
+										<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" no_lang="1"/>
+									</row>
+								</rows>
+							</grid>
+						</hbox>
+					</vbox>
+					<vbox class="resourcesCol2">
+						<hbox>
+							<label value="Usable"/>
+							<description align="left" id="${row}[useable]" no_lang="1"/>
+						</hbox>
+						<hbox>
+							<label value="Quantity"/>
+							<description align="left" id="${row}[quantity]" no_lang="1"/>
+						</hbox>
+						<menulist>
+							<menupopup type="select-cat" id="{$row}[cat_id]" no_lang="1" readonly="true"/>
+						</menulist>
+					</vbox>
+					<vbox>
+						<image id="${row}[picture_thumb]" width="100%" expose_view="true" height="auto" href="$row_cont[picture_original]" src="${row}[picture_thumb]" />
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.show" template="" lang="" group="0" version="1.9.003">
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description align="center" id="msg" span="all" class="message"/>
+				</row>
+				<row>
+					<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
+				</row>
+				<row>
+					<box id="delete_popup" class="action_popup prompt">
+						<vbox class="prompt">
+							<description value="Delete" class="promptheader"/>
+							<description value="Delete accessories of selected resources too?"/>
+							<hbox>
+								<button label="Yes - Delete accessories too" id="delete" onclick="nm_submit_popup(this); return false;"/>
+								<button label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"/>
+								<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+							</hbox>
+						</vbox>
+					</box>
+				</row>
+				<row>
+					<box id="restore_popup" class="action_popup prompt">
+						<vbox class="prompt">
+							<description value="Un-delete" class="promptheader"/>
+							<description value="Un-delete accessories of selected resources too?"/>
+							<hbox>
+								<button label="Yes - Un-delete accessories too" id="restore_accessories" onclick="nm_popup_action.id = 'restore_accessories';nm_submit_popup(this); return false;"/>
+								<button label="No - Leave them" id="restore" onclick="nm_popup_action.id = 'restore'; nm_submit_popup(this); return false;"/>
+								<buttononly label="Cancel" onclick="nm_hide_popup(this,'restore_popup');"/>
+							</hbox>
+						</vbox>
+					</box>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			
+div.action_popup[id] {
+	position: fixed;
+	top: 200px;
+	left: 450px;
+	width: 76ex;
+	z-index: 20000;
+	display: none;
+	border-collapse:collapse;
+	border-spacing:0px
+}
+		</styles>
+	</template>
+</overlay>

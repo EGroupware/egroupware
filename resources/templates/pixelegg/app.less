@@ -13,6 +13,7 @@
  */
 
 @import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/def_mobile.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 
 
@@ -64,4 +65,31 @@ div.resources_pictureFile div.progress{
 		width:848px;
 	}
     margin: 0.5em;
+}
+
+/* tablets and smartphones  */
+@media only screen and (max-device-width:1024px) {
+	#resources-show {
+		table.egwGridView_outer tbody {
+			img[id^="resources-show_"][id$="picture_thumb]"]{
+				border: 1px solid silver;
+				border-radius: 50%;
+			}
+			div.resourcesCol2 {
+				.mob-fontsize-s;
+			}
+			span[id^="resources-show_"][id$="name]"]{
+				font-weight: bold;
+				
+			}
+			span[id^="resources-show_"][id$="name]"],
+			span[id^="resources-show_"][id$="short_description]"],
+			span[id^="resources-show_"][id$="accessory_of_label]"],
+			span[id^="resources-show_"][id$="accessories]"]{
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+		}
+	}
 }
