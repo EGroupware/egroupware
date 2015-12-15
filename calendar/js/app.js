@@ -1506,6 +1506,49 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Sidebox merge
+	 *
+	 * Manage the state and pass the request to the correct place.  Since the nextmatch
+	 * and the sidebox have different ideas of the 'current' timespan (sidebox
+	 * always has a start and end date) we need to call merge on the nextmatch
+	 * if the current view is listview, so the user gets the results they expect.
+	 *
+	 * @param Event event UI event
+	 * @param et2_widget widget Should be the merge selectbox
+	 */
+	sidebox_merge: function(event, widget)
+	{
+		if(!widget || !widget.getValue()) return false;
+
+		if(this.state.view == 'listview')
+		{
+			// If user is looking at the list, pretend they used the context
+			// menu and process it through the nextmatch
+			var nm = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm') || false;
+			var selected = nm ? nm.controller._objectManager.getSelectedLinks() : [];
+			var action = nm.controller._actionManager.getActionById('document_'+widget.getValue())
+			if(nm && (!selected || !selected.length))
+			{
+				nm.controller._selectionMgr.selectAll(true);
+			}
+			if(action && selected)
+			{
+				action.execute(selected);
+			}
+		}
+		else
+		{
+			// Set the hidden inputs to the current time span & submit
+			widget.getRoot().getWidgetById('first').set_value(app.calendar.state.first);
+			widget.getRoot().getWidgetById('last').set_value(app.calendar.state.last);
+			widget.getInstanceManager().postSubmit();
+		}
+		window.setTimeout(function() {widget.set_value('');},100);
+
+		return false;
+	},
+
+	/**
 	 * Method to set state for JSON requests (jdots ajax_exec or et2 submits can NOT use egw.js script tag)
 	 *
 	 * @param {object} _state
