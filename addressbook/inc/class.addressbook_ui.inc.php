@@ -1219,7 +1219,7 @@ window.egw_LAB.wait(function() {
 						$action_msg = lang('moved');
 						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
 						{
-							if (!$contact['owner'])		// no mass-change of accounts
+							if (!$contact['owner'])		// no (mass-)move of accounts
 							{
 								$Ok = false;
 							}
@@ -1234,20 +1234,19 @@ window.egw_LAB.wait(function() {
 					else
 					{
 						$action_msg = lang('copied');
-						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
+						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_READ,$contact)))
 						{
-							if (!$contact['owner'])		// no mass-change of accounts
+							if ($contact['owner'] != (int)$action || $contact['private'] != (int)(substr($action,-1) == 'p'))
 							{
-								$Ok = false;
-							}
-							elseif ($contact['owner'] != (int)$action || $contact['private'] != (int)(substr($action,-1) == 'p'))
-							{
-								unset($contact['id']);
-								unset($contact['uid']);
-								unset($contact['etag']);
+								$this->copy_contact($contact, false);	// do NOT use self::$copy_fields, copy everything but uid etc.
+								$links = $contact['link_to']['to_id'];
 								$contact['owner'] = (int) $action;
 								$contact['private'] = (int)(substr($action,-1) == 'p');
 								$Ok = $this->save($contact);
+								if ($Ok && is_array($links))
+								{
+									egw_link::link('addressbook', $contact['id'], $links);
+								}
 							}
 						}
 					}
@@ -1263,6 +1262,38 @@ window.egw_LAB.wait(function() {
 			}
 		}
 		return !$failed;
+	}
+
+	/**
+	 * Copy a given contact (not storing it!)
+	 *
+	 * Taken care only configured fields get copied and certain fields never to copy (uid etc.).
+	 *
+	 * @param array& $content
+	 * @param boolean $only_copy_fields =true true: only copy fields configured for copying (eg. no name),
+	 *		false: copy everything, but never to copy fields
+	 */
+	function copy_contact(array &$content, $only_copy_fields=true)
+	{
+		$content['link_to']['to_id'] = 0;
+		egw_link::link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
+			lang('Copied by %1, from record #%2.',common::display_fullname('',
+			$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
+			$content['id']));
+		// create a new contact with the content of the old
+		foreach(array_keys($content) as $key)
+		{
+			if($only_copy_fields && !in_array($key, self::$copy_fields) || in_array($key, array('id','etag','carddav_name','uid')))
+			{
+				unset($content[$key]);
+			}
+		}
+		if(!isset($content['owner']))
+		{
+			$content['owner'] = $this->default_private ? $this->user.'p' : $this->default_addressbook;
+		}
+		$content['creator'] = $this->user;
+		$content['created'] = $this->now_su;
 	}
 
 	/**
@@ -2088,25 +2119,7 @@ window.egw_LAB.wait(function() {
 
 			if($content && $_GET['makecp'])	// copy the contact
 			{
-				$content['link_to']['to_id'] = 0;
-				egw_link::link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
-					lang('Copied by %1, from record #%2.',common::display_fullname('',
-					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
-					$content['id']));
-				// create a new contact with the content of the old
-				foreach($content as $key => $value)
-				{
-					if(!in_array($key, self::$copy_fields) || in_array($key, array('etag','carddav_name','uid')))
-					{
-						unset($content[$key]);
-					}
-				}
-				if(!isset($content['owner']))
-				{
-					$content['owner'] = $this->default_private ? $this->user.'p' : $this->default_addressbook;
-				}
-				$content['creator'] = $this->user;
-				$content['created'] = $this->now_su;
+				$this->copy_contact($content);
 				$content['msg'] = lang('Contact copied');
 				$view = false;
 			}
