@@ -475,7 +475,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			var docViewTop = timegrid.scrolling.scrollTop(),
 			docViewBottom = docViewTop + timegrid.scrolling.height(),
 			elemTop = elem.position().top,
-			elemBottom = elemTop + elem.outerHeight();
+			elemBottom = elemTop + elem.outerHeight(true);
 			if((elemBottom <= docViewBottom) && (elemTop >= docViewTop))
 			{
 				// Entirely visible
@@ -718,6 +718,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					columns[c][i].div.css('top', top+'%');
 					columns[c][i].div.css('height', height+'%');
+					// Remove spacing from border
+					var border_diff = columns[c][i].div.outerHeight() - columns[c][i].div.height();
+					columns[c][i].div.css('height',columns[c][i].div.height() - border_diff);
+					// This gives the wrong height
+					//columns[c][i].div.outerHeight(height+'%');
 					columns[c][i].div.css('left', left.toFixed(1)+'%');
 					columns[c][i].div.css('width', width.toFixed(1)+'%');
 					columns[c][i].div.css('z-index',parseInt(20)+c);
