@@ -820,7 +820,7 @@ app.classes.admin = AppJS.extend(
 		
 		var menuaction = 'emailadmin.emailadmin_wizard.ajax_activeAccounts';
 		var accounts = [];
-		var msg1 = egw.lang('1% accounts being activated');
+		var msg1 = egw.lang('%1 accounts being activated',Object.keys(_selected).length);
 		
 		for (var i=0;i< Object.keys(_selected).length;i++)
 		{
