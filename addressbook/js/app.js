@@ -166,6 +166,7 @@ app.classes.addressbook = AppJS.extend(
 	{
 		var extras = {
 			filter: 'all',
+			cat_id: '',
 			owner: []
 		};
 		var orgs = [];
