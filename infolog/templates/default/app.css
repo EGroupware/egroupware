@@ -75,3 +75,6 @@ button#infolog-edit_encrypt {
 div#infolog-edit_infolog-edit-description {
 	height: 250px;
 }
+#infolog-edit_info_responsible + .chzn-container .chzn-results {
+	max-height: 150px;
+}

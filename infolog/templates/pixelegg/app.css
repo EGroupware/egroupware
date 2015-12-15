@@ -148,6 +148,9 @@ button#infolog-edit_encrypt {
 div#infolog-edit_infolog-edit-description {
   height: 250px;
 }
+#infolog-edit_info_responsible + .chzn-container .chzn-results {
+  max-height: 150px;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
@@ -403,6 +406,9 @@ input#infolog-edit_info_subject {
 /*Delegation ************************************/
 #infolog-edit_infolog-edit-delegation .inputFullWidth input {
   width: 96%;
+}
+#infolog-edit_infolog-edit-responsible .chzn-container .chzn-results {
+  max-height: 150px;
 }
 /*Historie*/
 button#infolog-edit_encrypt {
