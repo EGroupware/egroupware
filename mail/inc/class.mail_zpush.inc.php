@@ -1062,6 +1062,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						($attachment = $this->mail->getAttachment($id, $attach['partID'],0,false,false,$_folderName)) &&
 						($output->meetingrequest = calendar_zpush::meetingRequest($attachment['attachment'])))
 					{
+						//overwrite the globalobjId from calendar object, as: if you delete the mail, that is
+						//the meeting-request its using the globalobjid as reference and deletes both:
+						//mail AND meeting. we dont want this. accepting meeting requests with the mobile does nothing
+						$output->meetingrequest->globalobjid = activesync_backend::uid2globalObjId($id);
 						$output->messageclass = "IPM.Schedule.Meeting.Request";
 						unset($attachment);
 						continue;	// do NOT add attachment as attachment
