@@ -629,7 +629,7 @@ class egw_time extends DateTime
 			list($continent,$rest) = explode('/',$name,2);
 			if (!isset($tzs[$continent])) continue;	// old depricated timezones
 			$datetime = new egw_time('now',new DateTimeZone($name));
-			$tzs[$continent][$name] = str_replace(array('_','/'),array(' ',' / '),$name).' &nbsp; '.$datetime->format();
+			$tzs[$continent][$name] = str_replace(array('_','/'),array(' ',' / '),$name)."  ".$datetime->format();
 			unset($datetime);
 		}
 		foreach($tzs as $continent => &$data)
