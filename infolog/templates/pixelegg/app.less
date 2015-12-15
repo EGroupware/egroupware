@@ -432,15 +432,19 @@ button#infolog-edit_encrypt {
 		.mob-fontsize-s;
 		float:right;
 	}
-	ul[id^='infolog-index_'][id$='info_responsible]'] > li{
-		.mob-fontsize-s;
-		text-align: right;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-		padding-right: 8px;
-
-	}
+	ul[id^='infolog-index_'][id$='info_responsible]'] {
+		overflow:hidden;
+		white-space:nowrap;
+		max-height: 15px;
+		li{
+			.mob-fontsize-s;
+			text-align: right;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			padding-right: 8px;
+		}
+	} 
 	ul[id^='infolog-index_'][id$='filelinks]']
 	{
 		white-space: nowrap !important;
