@@ -558,13 +558,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 					indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.height());
 				}
 				// Match color to the event
-				if(indicator !== '' &&
-					// Avoid white, which is hard to see
-					jQuery.Color(event.div.css('border-top-color')).toString() !== jQuery.Color('white').toString()
-				)
+				if(indicator !== '')
 				{
+
+					// Avoid white, which is hard to see
+					var color = jQuery.Color(event.div.css('border-top-color')).toString() !== jQuery.Color('white').toString() ?
+						event.div.css('border-top-color') : event.div.css('background-color');
+				
 					// Use border-top-color, Firefox doesn't give a value with border-color
-					indicator.css('border-color', event.div.css('border-top-color'));
+					indicator.css('border-color', color);
 				}
 			}
 		}, this, et2_calendar_event);
