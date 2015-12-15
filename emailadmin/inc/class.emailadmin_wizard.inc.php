@@ -1463,6 +1463,7 @@ class emailadmin_wizard
 	{
 		if (!$this->is_admin) die('no rights to be here!');
 		$response = egw_json_response::get();
+$msg = 'The response is empty';
 		if (($account = $GLOBALS['egw']->accounts->read($_data['id'])))
 		{
 			if ($_data['quota'] !== '' || $_data['accountStatus'] !== ''
@@ -1474,23 +1475,28 @@ class emailadmin_wizard
 					$msg = lang('No default account found!');
 					return $response->data($msg);
 				}
-				if (($userData = $emailadmin->getUserData ($_data['id'])))
+
+				$ea_account = emailadmin_account::read($emailadmin->acc_id, $_data['id']);				
+				if (($userData = $ea_account->getUserData ()))
 				{
 					$userData = array(
+						'acc_smtp_type' => $ea_account->acc_smtp_type,
 						'accountStatus' => $_data['status'],
-						'quotaLimit' => $_data['qouta']? $_data['qouta']: $userData['qoutaLimit']
+						'quotaLimit' => $_data['qouta']? $_data['qouta']: $userData['qoutaLimit'],
+						'mailLocalAddress' => $userData['mailLocalAddress']
 					);
 					
 					if (strpos($_data['domain'], '.') !== false)
 					{
-						$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$_data['domain'], $userData['mailLocalAddress']);
+						$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($ea_account->acc_domain).'$/', '@'.$_data['domain'], $userData['mailLocalAddress']);
 
 						foreach($userData['mailAlternateAddress'] as &$alias)
 						{
-							$alias = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$_data['mail']['domain'], $alias);
+							$alias = preg_replace('/@'.preg_quote($ea_account->acc_domain).'$/', '@'.$_data['mail']['domain'], $alias);
 						}
 					}
-					$emailadmin->saveUserData($_data['id'], $userData);
+					$ea_account->saveUserData($_data['id'], $userData);
+					$msg = '#'.$_data['id'].' '.$account['account_fullname']. ' '.($userData['accountStatus'] == 'active'? lang('activated'):lang('deactivated'));
 				}
 				else
 				{
