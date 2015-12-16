@@ -1154,6 +1154,15 @@ app.classes.calendar = AppJS.extend(
 		var filter = view ? view.getWidgetById('nm').getWidgetById('filter') : null;
 		var dates = view ? view.getWidgetById('calendar.list.dates') : null;
 
+		// Update state when user changes it
+		if(filter)
+		{
+			app.calendar.state.filter = filter.getValue();
+		}
+		else
+		{
+			delete app.calendar.state.filter;
+		}
 		if (filter && dates)
 		{
 			dates.set_disabled(filter.value !== "custom");
@@ -2857,7 +2866,8 @@ app.classes.calendar = AppJS.extend(
 					else if (view == 'listview')
 					{
 						app.calendar.update_state({
-							end_date: app.calendar.date.toString(app.classes.calendar.views.week.end_date({date:date_widget.getValue()}))
+							end_date: app.calendar.date.toString(app.classes.calendar.views.week.end_date({date:date_widget.getValue()})),
+							filter: 'week'
 						});
 					}
 				});
