@@ -72,6 +72,14 @@ button#infolog-edit_encrypt {
 	right: -2px;
 	top: 3px;
 }
+td.infologTimestamp {
+	position: relative;
+}
+button#infolog-edit_timestamp {
+	position: absolute;
+	right: 19px;
+	top: 3px;
+}
 div#infolog-edit_infolog-edit-description {
 	height: 250px;
 }

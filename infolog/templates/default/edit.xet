@@ -214,7 +214,9 @@
 					<description/>
 				</row>
 				<row class="et2_toolbar">
-					<buttononly label="Encrypt" id="encrypt" span="all" class="infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
+					<description id="spacer" span="6"/>
+					<buttononly statustext="Insert timestamp" id="timestamp" class="infologTimestamp" background_image="1" image="timestamp" onclick="app.infolog.insert_text('info_des');"/>
+					<buttononly label="Encrypt" id="encrypt" class="infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
 				</row>
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">

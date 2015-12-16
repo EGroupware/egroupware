@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: black;
+  color: #000000;
 }
 .high {
   color: #cc0000;
@@ -143,6 +143,14 @@ td.infologEncrypt {
 button#infolog-edit_encrypt {
   position: absolute;
   right: -2px;
+  top: 3px;
+}
+td.infologTimestamp {
+  position: relative;
+}
+button#infolog-edit_timestamp {
+  position: absolute;
+  right: 19px;
   top: 3px;
 }
 div#infolog-edit_infolog-edit-description {
@@ -412,6 +420,9 @@ input#infolog-edit_info_subject {
 }
 /*Historie*/
 button#infolog-edit_encrypt {
+  top: 13px;
+}
+button#infolog-edit_timestamp {
   top: 13px;
 }
 /* tablets and smartphones  */
