@@ -63,7 +63,7 @@ app.classes.calendar = AppJS.extend(
 		owner: egw.user('account_id')
 	},
 
-	states_to_save: ['owner','filter','cat_id','view','sortby','planner_days','weekend'],
+	states_to_save: ['owner','status_filter','filter','cat_id','view','sortby','planner_days','weekend'],
 
 	// If you are in one of these views and select a date in the sidebox, the view
 	// will change as needed to show the date.  Other views will only change the
@@ -1982,9 +1982,6 @@ app.classes.calendar = AppJS.extend(
 				state.state.col_filter = {participant: state.state.owner};
 				state.state.search = state.state.keywords;
 
-				// Pass status filter in as status filter, avoids conflicts with nm filter
-				state.state.status_filter = state.state.filter;
-				delete state.state.filter;
 
 				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
 
@@ -2433,7 +2430,7 @@ app.classes.calendar = AppJS.extend(
 			// Participant must be an array or it won't work
 			col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
 			filter:'custom', // Must be custom to get start & end dates
-			status_filter: state.filter,
+			status_filter: state.status_filter,
 			cat_id: cat_id,
 			csv_export: false
 		});
@@ -2870,8 +2867,13 @@ app.classes.calendar = AppJS.extend(
 			if(month_button)
 			{
 				var temp_date = new Date(date_widget.get_value());
+				temp_date.setUTCDate(1);
 				temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
 				month_button.set_label(egw.lang(date('F',temp_date)));
+
+				// Store current _displayed_ date in date button for clicking
+				temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
+				month_button.btn.attr('data-date', temp_date.toJSON());
 			}
 			
 			// Dynamic resize to fill sidebox

@@ -91,9 +91,9 @@ class calendar_ui
 	 */
 	var $cat_id;
 	/**
-	 * @var int $filter session-state: selected filter, at the moment all or hideprivate
+	 * @var int $status_filter session-state: selected filter, at the moment all or hideprivate
 	 */
-	var $filter;
+	var $status_filter;
 	/**
 	 * @var int/array $owner session-state: selected owner(s) of shown calendar(s)
 	 */
@@ -127,7 +127,7 @@ class calendar_ui
 	/**
 	 * @var array $states_to_save all states that will be saved to the user prefs
 	 */
-	var $states_to_save = array('owner','filter','cat_id','view','sortby','planner_days','weekend');
+	var $states_to_save = array('owner','status_filter','filter','cat_id','view','sortby','planner_days','weekend');
 
 	/**
 	 * Constructor
@@ -248,7 +248,7 @@ class calendar_ui
 	 *	- cat_id: the selected category
 	 *	- owner: the owner of the displayed calendar
 	 *	- save_owner: the overriden owner of the planner
-	 *	- filter: the used filter: all or hideprivate
+	 *	- status_filter: the used filter: all or hideprivate
 	 *	- sortby: category or user of planner
 	 *	- view: the actual view, where dialogs should return to or which they refresh
 	 * @param array $set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
@@ -289,7 +289,7 @@ class calendar_ui
 		foreach(array(
 			'date'       => $this->bo->date2string($this->bo->now_su),
 			'cat_id'     => 0,
-			'filter'     => 'default',
+			'status_filter'     => 'default',
 			'owner'      => $this->user,
 			'save_owner' => 0,
 			'sortby'     => 'category',
@@ -710,7 +710,7 @@ class calendar_ui
 				'value' => $data['value']
 			);
 		}
-		$sel_options['filter'] = array(
+		$sel_options['status_filter'] = array(
 			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),
 			array('value' => 'accepted',    'label' => lang('Accepted'), 'title' => lang('Show only accepted events')),
 			array('value' => 'unknown',     'label' => lang('Invitations'), 'title' => lang('Show only invitations, not yet accepted or rejected')),
@@ -726,7 +726,7 @@ class calendar_ui
 		);
 		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
 		{
-			$sel_options['filter'][] = array('value' => 'deleted', 'label' => lang('Deleted'), 'title' => lang('Show events that have been deleted'));
+			$sel_options['status_filter'][] = array('value' => 'deleted', 'label' => lang('Deleted'), 'title' => lang('Show events that have been deleted'));
 		}
 
 		// Merge print
