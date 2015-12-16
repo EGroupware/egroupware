@@ -468,7 +468,10 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			},
 			// Draw a single row
 			draw_row: function(sort_key, label, events) {
-				return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+				if(['user','both'].indexOf(egw.preference('planner_show_empty_rows','calendar')) !== -1 || events.length)
+				{
+					return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+				}
 			}
 		},
 
@@ -583,7 +586,56 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				}
 			},
 			row_labels: function() {
-				return [{id:'',label: egw.lang('none'), data: {}}];
+				var im = this.getInstanceManager();
+				var categories = et2_selectbox.cat_options({
+						_type:'select-cat',
+						getInstanceManager: function() {return im;}
+					},{application: 'calendar'});
+
+				var labels = [];
+				if(!app.calendar.state.cat_id)
+				{
+					labels.push({id:'',value:'',label: egw.lang('none'), data: {}});
+					labels = labels.concat(categories);
+				}
+				else
+				{
+					var cat_id = app.calendar.state.cat_id;
+					if(typeof cat_id == 'string')
+					{
+						cat_id = cat_id.split(',');
+					}
+					for(var i = 0; i < cat_id.length; i++)
+					{
+						// Find label for that category
+						for(var j = 0; j < categories.length; j++)
+						{
+							if(categories[j].value == cat_id[i])
+							{
+								categories[j].id = categories[j].value;
+								labels.push(categories[j]);
+								break;
+							}
+						}
+						// Get its children
+						labels = labels.concat(et2_selectbox.cat_options({
+							_type:'select-cat',
+							getInstanceManager: function() {return im;}
+						},{other:[,,,'calendar',cat_id[i]]}));
+					}
+				}
+
+				for(var i = labels.length -1; i >= 0; i--)
+				{
+					labels[i].id = labels[i].value;
+					if(!app.calendar.state.cat_id && labels[i].id != labels[i].main)
+					{
+						labels.splice(i,1);
+						continue;
+					}
+					labels[i].data = {cat_id: labels[i].id};
+				}
+				return labels;
 			},
 			group: function(labels, rows, event) {
 				var cats = event.category;
@@ -594,51 +646,44 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				for(var cat = 0; cat < cats.length; cat++)
 				{
 					var label_index = false;
-					var category = cats[cat];
-					if(category == '0' || !category) category = '';
+					var category = cats[cat] ? parseInt(cats[cat],10) : false;
+					if(category == 0 || !category) category = '';
 					for(var i = 0; i < labels.length; i++)
 					{
 						if(labels[i].id == category)
 						{
-							label_index = i;
-							break;
-						}
-					}
-					if(label_index === false)
-					{
-						label_index = labels.length;
-						labels.push({id: category, label: '', data: {cat_id:category}});
-						var im = this.getInstanceManager();
-						// Fake it to use the cache / call
-						var categories = et2_selectbox.cat_options({
-							_type:'select-cat',
-							getInstanceManager: function() {return im;}
-						}, {application:event.app||'calendar'});
-						if(categories && !categories.length)
-						{
-							// Categories not loaded.  They've started, but it's too late now
-							// Try again once they're all loaded
-							this.invalidate();
-							return;
-						}
-						for(var i in categories )
-						{
-							if(parseInt(categories[i].value) === parseInt(category))
+							// If there's no cat filter, only show the top level
+							if(!app.calendar.state.cat_id)
 							{
-								labels[labels.length-1].label = categories[i].label;
+								for(var j = 0; j < labels.length; j++)
+								{
+									if(labels[j].id == labels[i].main)
+									{
+										label_index = j;
+										break;
+									}
+								}
 								break;
 							}
+							label_index = i;
+							break;
 						}
 					}
 					if(typeof rows[label_index] === 'undefined')
 					{
 						rows[label_index] = [];
 					}
-					rows[label_index].push(event);
+					if(rows[label_index].indexOf(event) === -1)
+					{
+						rows[label_index].push(event);
+					}
 				}
 			},
 			draw_row: function(sort_key, label, events) {
-				return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+				if(['cat','both'].indexOf(egw.preference('planner_show_empty_rows','calendar')) !== -1 || events.length)
+				{
+					return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+				}
 			}
 		}
 	},
@@ -781,9 +826,12 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			var row = grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
 
 			// Add extra data for clicking on row
-			for(var extra in labels[key].data)
+			if(row)
 			{
-				row.getDOMNode().dataset[extra] = labels[key].data[extra];
+				for(var extra in labels[key].data)
+				{
+					row.getDOMNode().dataset[extra] = labels[key].data[extra];
+				}
 			}
 		}
 

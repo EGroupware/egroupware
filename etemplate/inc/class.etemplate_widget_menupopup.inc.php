@@ -570,6 +570,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					$options[$cat['id']] = array(
 						'label' => $s,
 						'title' => $cat['description'],
+						'main'  => (int)$cat['main']
 					);
 					// Send data too
 					if(is_array($cat['data']))
