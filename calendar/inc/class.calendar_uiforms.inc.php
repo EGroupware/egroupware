@@ -2683,7 +2683,7 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 	 */
 	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null,$seriesInstance=null)
 	{
-		list($eventId, $date) = explode(':', $_eventId);
+		list($eventId, $date) = explode(':', $_eventId,2);
 
 		// we do not allow dragging into another users calendar ATM
 		if($targetOwner < 0)
@@ -2744,7 +2744,7 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			{
 				// now we need to add the original start as recur-execption to the series
 				$recur_event = $this->bo->read($event['reference']);
-				$recur_event['recur_exception'][] = $date;
+				$recur_event['recur_exception'][] = $d->format('ts');
 				// check if we need to move the alarms, because they are next on that exception
 				foreach($recur_event['alarm'] as $id => $alarm)
 				{

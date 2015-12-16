@@ -867,7 +867,7 @@ class calendar_bo
 			}
 			else
 			{
-				$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
+				$timestamps = array('start','end','modified','created','recur_enddate','recurrence','recur_date');
 			}
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
 			foreach ($timestamps as $ts)
