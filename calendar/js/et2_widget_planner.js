@@ -1059,7 +1059,9 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		for(var left = 0,i = 0; i < days; t.setDate(t.getDate()+1),left += day_width,++i)
 		{
 			var holidays = [];
-			var day_class = this.day_class_holiday(t,holidays);
+			var tempDate = new Date(t);
+			tempDate.setMinutes(tempDate.getMinutes()-start.getTimezoneOffset());
+			var day_class = this.day_class_holiday(tempDate,holidays);
 			var title = '';
 			var state = '';
 
