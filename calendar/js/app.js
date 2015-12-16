@@ -59,7 +59,7 @@ app.classes.calendar = AppJS.extend(
 	 */
 	state: {
 		date: new Date(),
-		view: egw.preference('saved_states','calendar').view || egw.preference('defaultcalendar','calendar') || 'day',
+		view: egw.preference('saved_states','calendar') ? egw.preference('saved_states','calendar').view : egw.preference('defaultcalendar','calendar') || 'day',
 		owner: egw.user('account_id')
 	},
 
