@@ -137,6 +137,9 @@ tr.dialogOperators td,
 #infolog-index .egwGridView_grid .et2_hbox.et2_box_widget.infolog_CompletedClmn {
   white-space: normal;
 }
+#infolog-edit_info_responsible + .chzn-container .chzn-results {
+  max-height: 150px;
+}
 /* #############################################################################
 // iframe
 // Rahmen + padding**/
@@ -392,6 +395,9 @@ input#infolog-edit_info_subject {
 /*Delegation ************************************/
 #infolog-edit_infolog-edit-delegation .inputFullWidth input {
   width: 96%;
+}
+#infolog-edit_infolog-edit-responsible .chzn-container .chzn-results {
+  max-height: 150px;
 }
 /*Historie*/
 /**/

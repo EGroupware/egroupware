@@ -100,6 +100,9 @@ input.et2_radiobox {
 #addressbook-edit_tel_prefer-tel_cell {
   left: -13px;
 }
+#addressbook-edit_memberships + .chzn-container .chzn-results {
+  max-height: 85px;
+}
 /**
  * Index page
  */
