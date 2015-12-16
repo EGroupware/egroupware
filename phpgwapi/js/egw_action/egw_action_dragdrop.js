@@ -385,7 +385,8 @@ function egwDragActionImplementation()
 					"refreshPositions": true,
 					"scroll": false,
 					//"containment": "document",
-					"iframeFix": true
+					"iframeFix": true,
+					"delay": 300
 				}
 			);
 
