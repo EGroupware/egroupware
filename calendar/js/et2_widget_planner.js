@@ -928,7 +928,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	 */
 	_header_months: function(start, days)
 	{
-		var content = '<div class="calendar_plannerScale" data-planner_days="0" data-last="">';
+		var content = '<div class="calendar_plannerScale">';
 		var days_in_month = 0;
 		var day_width = 100 / days;
 		var end = new Date(start);
@@ -942,6 +942,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			this.date_helper.set_date(0);
 			days_in_month = this.date_helper.get_date() - (t.getUTCDate()-1);
 
+			var first = new Date(t.getUTCFullYear(),t.getUTCMonth(),1,-t.getTimezoneOffset()/60);
 			if(days_in_month <= 0) break;
 			
 			if (i + days_in_month > days)
@@ -963,7 +964,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				{
 					var full = prev.toJSON();
 					prev.setUTCDate(prev.getUTCDate() + 15);
-					prev.setUTCDate(start.getUTCDate() < 15 ? 1 : 15);
+					//prev.setUTCDate(start.getUTCDate() < 15 ? 1 : 15);
 					var half = prev.toJSON();
 					title = this._scroll_button('first',full) + this._scroll_button('left',half) + title;
 				}
@@ -977,7 +978,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					next.setUTCMonth(next.getUTCMonth()+1);
 					full = next.toJSON();
 					next.setUTCDate(next.getUTCDate() - 15);
-					next.setUTCDate(next.getUTCDate() < 15 ? 1 : 15);
+					//next.setUTCDate(next.getUTCDate() < 15 ? 1 : 15);
 					half = next.toJSON();
 
 					title += this._scroll_button('right',half) + this._scroll_button('last',full);
@@ -987,8 +988,8 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			{
 				title = '&nbsp;';
 			}
-			content += '<div class="calendar_plannerMonthScale et2_clickable et2_link" data-date="'+t.toJSON()+ '"'+// data-planner_days='+days_in_month+
-				' style="left: '+left+'%; width: '+(day_width*days_in_month)+'%;">'+
+			content += '<div class="calendar_plannerMonthScale et2_clickable et2_link" data-date="'+first.toJSON()+ '" data-planner_days="'+u.getUTCDate()+
+				'" style="left: '+left+'%; width: '+(day_width*days_in_month)+'%;">'+
 				title+"</div>";
 		}
 		content += "</div>";		// end of plannerScale
@@ -1914,33 +1915,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					delete _ev.data[key];
 				}
 			}
-
-			// Handle it locally
-			var old_start = this.options.start_date;
-			if(_ev.data.date)
-			{
-				this.set_start_date(_ev.data.date);
-			}
-			if(_ev.data.planner_days)
-			{
-				_ev.data.planner_days = parseInt(_ev.data.planner_days);
-				if(_ev.data.planner_days)
-				{
-					var d = new Date(this.options.start_date);
-					d.setUTCDate(d.getUTCDate() +_ev.data.planner_days-1);
-					this.set_end_date(d);
-				}
-			}
-			else if (old_start !== this.options.start_date)
-			{
-				var diff = Math.round((new Date(this.options.start_date) - new Date(old_start)) / (1000 * 3600 * 24));
-				var end = new Date(this.options.end_date);
-				end.setUTCDate(end.getUTCDate() + diff)
-				this.set_end_date(end);
-			}
-
-			// Notify anyone who's interested
-			this.change(_ev);
+			app.calendar.update_state(_ev.data);
 		}
 		else
 		{

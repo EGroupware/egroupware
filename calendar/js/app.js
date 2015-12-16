@@ -3323,11 +3323,13 @@ jQuery.extend(app.classes.calendar,{
 				else if (state.planner_days)
 				{
 					d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
+					delete state.planner_days;
 				}
 				// Avoid killing the view by not showing more than 100 days
 				else if (state.last && (new Date(state.last) - new Date(state.first)) < (100 * 24 * 3600 * 1000) )
 				{
 					d = new Date(state.last);
+					d = app.calendar.date.end_of_week(d);
 				}
 				else if (!state.planner_days)
 				{
