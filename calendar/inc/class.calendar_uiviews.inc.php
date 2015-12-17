@@ -282,8 +282,7 @@ class calendar_uiviews extends calendar_ui
 			'date'       => $this->bo->date2string($this->bo->now_su),
 			'cat_id'     => 0,
 			'filter'     => 'default',
-			'owner'      => substr($this->cal_prefs['mainscreen_showevents'],0,7) == 'planner' && $this->cal_prefs['planner_start_with_group'] ?
-				$this->cal_prefs['planner_start_with_group'] : $this->user,
+			'owner'      => $this->user,
 			'multiple'   => 0,
 			'view'       => $this->bo->cal_prefs['mainscreen_showevents'],
 		));

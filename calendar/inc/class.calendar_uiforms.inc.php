@@ -85,8 +85,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$owner = $_GET['owner'];
 		}
-		// dont set the planner start group as owner/participants if called from planner
-		elseif ($this->view != 'planner' || $this->owner != $this->cal_prefs['planner_start_with_group'])
+		else
 		{
 			$owner = $this->owner;
 		}

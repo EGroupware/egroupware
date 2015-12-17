@@ -391,26 +391,6 @@ class calendar_ui
 		}
 		if ($class == 'calendar_uiviews' || $class == 'calendar_uilist')
 		{
-			// if planner_start_with_group is set in the users prefs: switch owner for planner to planner_start_with_group and back
-			if ($this->cal_prefs['planner_start_with_group'])
-			{
-				if ($this->cal_prefs['planner_start_with_group'] > 0) $this->cal_prefs['planner_start_with_group'] *= -1;	// fix old 1.0 pref
-
-				if (!$states_session && !$_GET['menuaction']) $this->view = '';		// first call to calendar
-
-				if ($func == 'planner' && $this->view != 'planner' && $this->owner == $this->user)
-				{
-					//echo "<p>switched for planner to {$this->cal_prefs['planner_start_with_group']}, view was $this->view, func=$func, owner was $this->owner</p>\n";
-					$states['save_owner'] = $this->save_owner = $this->owner;
-					$states['owner'] = $this->owner = $this->cal_prefs['planner_start_with_group'];
-				}
-				elseif ($func != 'planner' && $this->view == 'planner' && $this->owner == $this->cal_prefs['planner_start_with_group'] && $this->save_owner)
-				{
-					//echo "<p>switched back to $this->save_owner, view was $this->view, func=$func, owner was $this->owner</p>\n";
-					$states['owner'] = $this->owner = $this->save_owner;
-					$states['save_owner'] = $this->save_owner = 0;
-				}
-			}
 			$this->view = $states['view'] = $func;
 		}
 		$this->view_menuaction = $this->view == 'listview' ? 'calendar.calendar_uilist.listview' : 'calendar.calendar_uiviews.index';

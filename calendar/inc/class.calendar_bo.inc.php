@@ -1965,10 +1965,6 @@ class calendar_bo
 		$default_prefs =& $GLOBALS['egw']->preferences->default['calendar'];
 		$forced_prefs  =& $GLOBALS['egw']->preferences->forced['calendar'];
 
-		if (!($planner_start_with_group = $GLOBALS['egw']->accounts->name2id('Default')))
-		{
-			$planner_start_with_group = '0';
-		}
 		$subject = lang('Calendar Event') . ' - $$action$$: $$startdate$$ $$title$$'."\n";
 		$values = array(
 			'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
@@ -1977,7 +1973,6 @@ class calendar_bo
 			'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
 			'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
 			'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
-			'planner_start_with_group' => $planner_start_with_group,
 			'interval'        => 30,
 		);
 		foreach($values as $var => $default)

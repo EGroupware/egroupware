@@ -307,15 +307,6 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False
 			),
-			'planner_start_with_group' => array(
-				'type'   => 'select',
-				'label'  => 'Preselected group for entering the planner',
-				'name'   => 'planner_start_with_group',
-				'values' => $options,
-				'help'   => 'This group that is preselected when you enter the planner. You can change it in the planner anytime you want.',
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
 			'planner_show_empty_rows' => array(
 				'type'   => 'select',
 				'label'  => 'Show empty rows in Planner',
