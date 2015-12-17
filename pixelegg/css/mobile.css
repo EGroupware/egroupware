@@ -7507,6 +7507,18 @@ span.egw_tutorial_title {
     left: 0 !important;
     top: 0 !important;
   }
+  body button.plus_button {
+    position: absolute !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    z-index: 1000 !important;
+    border: 1px solid white !important;
+    border-radius: 50% !important;
+    display: inline !important;
+    width: 60px !important;
+    height: 60px !important;
+    background-image: none !important;
+  }
   body .et2_nextmatch .nextmatch_header_row {
     background-color: background-color-egw-dark;
   }
@@ -7560,7 +7572,7 @@ span.egw_tutorial_title {
   }
   body .et2_nextmatch .search {
     background: #0c5da5;
-    border: 1px solid silver;
+    margin-top: 0;
     margin-left: 60px;
   }
   body .et2_nextmatch .search button {
@@ -7600,7 +7612,7 @@ span.egw_tutorial_title {
   }
   body .et2_nextmatch .search button.nm_toggle_header:after {
     font-size: xx-large;
-    content: "\2630";
+    content: "\21E9";
   }
   body .et2_nextmatch .search button.nm_action_header {
     background-position: center;
@@ -7621,7 +7633,7 @@ span.egw_tutorial_title {
     font-size: xx-large;
     content: "\205D";
   }
-  body .et2_nextmatch .search button.nm_add_button {
+  body .et2_nextmatch .search button.nm_fvorites_button {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7632,24 +7644,17 @@ span.egw_tutorial_title {
     height: 50px;
     display: block;
     float: right;
-    background: white;
-    border: 10px solid #0c5da5;
-    border-radius: 50px;
   }
-  body .et2_nextmatch .search button.nm_add_button:focus {
+  body .et2_nextmatch .search button.nm_fvorites_button:focus {
     outline: none;
   }
-  body .et2_nextmatch .search button.nm_add_button:after {
+  body .et2_nextmatch .search button.nm_fvorites_button:after {
     font-size: xx-large;
-    content: "+";
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 10px;
-    color: #0c5da5;
+    content: "\2606";
     font-weight: bold;
   }
   body .et2_nextmatch .search button.nm_toggle_header_on:after {
-    content: "\2715";
+    content: "\21E7";
   }
   body .et2_nextmatch .search input {
     width: 20%;

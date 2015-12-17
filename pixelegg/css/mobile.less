@@ -1037,6 +1037,18 @@
 			left:0 !important;
 			top:0 !important;
 		}
+		button.plus_button {
+			position: absolute !important;
+			bottom: 30px !important;
+			right: 30px !important;
+			z-index: 1000 !important;
+			border: 1px solid white !important;
+			border-radius: 50% !important;
+			display: inline !important;
+			width: 60px !important;
+			height: 60px !important;
+			background-image: none !important;
+		}
 		.et2_nextmatch {
 			.nextmatch_header_row 
 			{
@@ -1101,7 +1113,7 @@
 			}
 			.search {
 				background: @mobile-nm-search-bg;
-				border: 1px solid silver;
+				margin-top: 0;
 				margin-left: 60px;
 				button {
 					height: @mobile-elem-height;
@@ -1138,7 +1150,7 @@
 					}
 					&:after{
 						font-size:xx-large;
-						content:"\2630";
+						content:"\21E9";
 					}
 
 				}
@@ -1161,7 +1173,7 @@
 						content:"\205D";
 					}
 				}
-				button.nm_add_button {
+				button.nm_fvorites_button {
 					background-position: center;
 					background-repeat: no-repeat;
 					margin-right:5px;
@@ -1172,25 +1184,18 @@
 					height:50px;
 					display:block;
 					float:right;
-					background: white;
-					border: 10px solid @mobile-nm-search-bg;
-					border-radius: 50px;
 					&:focus{
 						outline:none;
 					}
 					&:after{
-						font-size:xx-large;
-						content:"+";
-						display: inline-block;
-						vertical-align: middle;
-						line-height: 10px;
-						color:@mobile-nm-search-bg;
+						font-size: xx-large;
+						content: "\2606";
 						font-weight: bold;
 					}
 				}
 				button.nm_toggle_header_on {
 					&:after {
-						content:"\2715";
+						content:"\21E7";
 					}
 				}
 				input {

@@ -823,45 +823,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
-@media only screen and (max-device-width: 1024px) {
-  div.mailDisplayContainer {
-    margin-top: 30px;
-    margin-left: 0;
-    height: auto;
-  }
-  #mail-display.et2_container {
-    min-height: initial;
-  }
-  table.egwGridView_grid tbody td {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-  table.egwGridView_grid span.et2_date_ro.et2_label {
-    font-size: 9px;
-  }
-  /*Make Font size readable in mobile theme*/
-  #mail-compose .mailComposeHeaders span,
-  #mail-compose .mailComposeHeadersSection span,
-  div.mailDisplayHeaders > span:first-child,
-  div.mailComposeHeaders > span:first-child,
-  div.mailComposeBody,
-  div.mailPreviewHeaders > * {
-    font-size: small !important;
-  }
-  .mailDisplayHeaders,
-  .mailDisplayAttachments > * {
-    font-size: large !important;
-  }
-  span.status_img {
-    background-image: none !important;
-    padding-left: 3px;
-    float: right;
-  }
-  #mail-index div#mail-index_nm tr.mail td img,
-  span[id^='mail-index_'][id$='attachments]'] {
-    float: right;
-  }
-}
 /* tablets and smartphones (portrait) ----------- */
 /* Smartphones (landscape) ----------- */
 /* Mobile (landscape) Tablet----------- */
@@ -2627,4 +2588,49 @@ div.mailComposeHeaderSection > table {
   -moz-transition: all 0.1s ease-out;
   -o-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
+}
+/* tablets and smartphones  */
+@media only screen and (max-device-width: 1024px) {
+  div.mailDisplayContainer {
+    margin-top: 30px;
+    margin-left: 0;
+    height: auto;
+  }
+  #mail-display.et2_container {
+    min-height: initial;
+  }
+  /*Make Font size readable in mobile theme*/
+  #mail-compose .mailComposeHeaders span,
+  #mail-compose .mailComposeHeadersSection span,
+  div.mailDisplayHeaders > span:first-child,
+  div.mailComposeHeaders > span:first-child,
+  div.mailComposeBody,
+  div.mailPreviewHeaders > * {
+    font-size: small !important;
+  }
+  .mailDisplayHeaders,
+  .mailDisplayAttachments > * {
+    font-size: large !important;
+  }
+  #mail-index table.egwGridView_outer tbody span.et2_date_ro.et2_label {
+    font-size: 9px;
+  }
+  #mail-index table.egwGridView_outer tbody td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='attachments]'] {
+    float: right;
+  }
+  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='subject]'] {
+    font-weight: bold;
+  }
+  #mail-index table.egwGridView_outer tbody tr {
+    height: 55px;
+  }
+  #mail-index table.egwGridView_outer tbody span.status_img {
+    background-image: none !important;
+    padding-left: 3px;
+    float: right;
+  }
 }
