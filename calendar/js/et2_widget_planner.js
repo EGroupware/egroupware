@@ -1029,7 +1029,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			// Avoid overflow at the end
 			if(days - i < 7)
 			{
-				days_in_week = days-i+1;
+				days_in_week = days-i;
 			}
 			
 			week_width = 100 / days * Math.min(days, days_in_week);
@@ -1054,7 +1054,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					title +
 					this._scroll_button('right',app.calendar.date.start_of_week(right).toJSON());
 			}
-			if(days_in_week > 2)
+			if(days_in_week > 1)
 			{
 				content += '<div class="calendar_plannerWeekScale et2_clickable et2_link" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
 			}
