@@ -629,7 +629,10 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				for(var i = labels.length -1; i >= 0; i--)
 				{
 					labels[i].id = labels[i].value;
-					labels[i].data = {cat_id: labels[i].id};
+					labels[i].data = {
+						cat_id: labels[i].id,
+						main: labels[i].value==labels[i].main
+					};
 				}
 				return labels;
 			},
@@ -802,7 +805,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		this.headers.empty();
 		this.headerTitle.text(grouper.title.apply(this));
 		grouper.headers.apply(this);
-
+		
 		// Get the rows / labels
 		var labels = grouper.row_labels.call(this);
 		
@@ -819,9 +822,12 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		// Draw the rows
 		for(var key in labels)
 		{
-			if((!app.calendar.state.cat_id || app.calendar.state.cat_id == '') && labels[key].id != labels[key].main)
+			// Skip sub-categories (events are merged into top level)
+			if(this.options.group_by == 'category' &&
+				(!app.calendar.state.cat_id || app.calendar.state.cat_id == '') &&
+				labels[key].id != labels[key].main
+			)
 			{
-				// Skip sub-categories (events are merged into top level)
 				continue;
 			}
 			var row = grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
