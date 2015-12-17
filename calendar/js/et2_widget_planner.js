@@ -819,6 +819,11 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		// Draw the rows
 		for(var key in labels)
 		{
+			if((!app.calendar.state.cat_id || app.calendar.state.cat_id == '') && labels[key].id != labels[key].main)
+			{
+				// Skip sub-categories (events are merged into top level)
+				continue;
+			}
 			var row = grouper.draw_row.call(this,labels[key].id, labels[key].label, events[key] || []);
 
 			// Add extra data for clicking on row
