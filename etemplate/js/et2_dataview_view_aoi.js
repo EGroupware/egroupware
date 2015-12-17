@@ -80,6 +80,9 @@ function et2_dataview_rowAOI(_node)
 							// Hide context menu on swip actions
 							if(_egw_active_menu) _egw_active_menu.hide();
 							break;
+						case "up":
+						case "down":
+							return;
 					}
 				}
 			}
