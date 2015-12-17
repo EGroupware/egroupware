@@ -944,10 +944,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		for(var left = 0,i = 0; i < days;t.setUTCDate(1),t.setUTCMonth(t.getUTCMonth()+1),left += days_in_month*day_width,i += days_in_month)
 		{
 			var u = new Date(t.getUTCFullYear(),t.getUTCMonth()+1,0,-t.getTimezoneOffset()/60);
-			this.date_helper.set_year(t.getUTCFullYear());
-			this.date_helper.set_month(t.getUTCMonth()+2);
-			this.date_helper.set_date(0);
-			days_in_month = this.date_helper.get_date() - (t.getUTCDate()-1);
+			days_in_month =  1+ ((u-t) / (24*3600*1000))
 
 			var first = new Date(t.getUTCFullYear(),t.getUTCMonth(),1,-t.getTimezoneOffset()/60);
 			if(days_in_month <= 0) break;
