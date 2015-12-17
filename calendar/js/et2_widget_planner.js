@@ -593,9 +593,10 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 					},{application: 'calendar'});
 
 				var labels = [];
-				if(!app.calendar.state.cat_id)
+				if(!app.calendar.state.cat_id || app.calendar.state.cat_id.toString() === '')
 				{
-					labels.push({id:'',value:'',label: egw.lang('none'), data: {}});
+					app.calendar.state.cat_id = '';
+					labels.push({id:'',value:'',label: egw.lang('none'), main: '', data: {}});
 					labels = labels.concat(categories);
 				}
 				else
@@ -628,11 +629,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				for(var i = labels.length -1; i >= 0; i--)
 				{
 					labels[i].id = labels[i].value;
-					if(!app.calendar.state.cat_id && labels[i].id != labels[i].main)
-					{
-						labels.splice(i,1);
-						continue;
-					}
 					labels[i].data = {cat_id: labels[i].id};
 				}
 				return labels;
@@ -1006,19 +1002,29 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	 */
 	_header_weeks: function(start, days)
 	{
-		var week_width = 100 / days * (days <= 7 ? days : 7);
 
 		var content = '<div class="calendar_plannerScale" data-planner_days=7>';
 		var state = ''
 
 		// we're not using UTC so date() formatting function works
-		//var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
-		var t = new Date(start);
+		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
+
+		// Make sure we're lining up on the week
+		var week_end = app.calendar.date.end_of_week(start);
+		var days_in_week = ((week_end-start ) / (24*3600*1000))+1;
+		var week_width = 100 / days * (days <= 7 ? days : days_in_week);
 		for(var left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + 7),left += week_width,i += 7)
 		{
+			// Avoid overflow at the end
+			if(days - i < 7)
+			{
+				days_in_week = days-i+1;
+			}
+			
+			week_width = 100 / days * Math.min(days, days_in_week);
 			var title = app.calendar.egw.lang('Week')+' '+app.calendar.date.week_number(t);
 
-			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
+			state = app.calendar.date.start_of_week(new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000)).toJSON();
 			if (days  <= 7)
 			{
 				// prev. week
@@ -1033,10 +1039,19 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				right.setUTCMinutes(0);
 				right.setUTCDate(right.getUTCDate() + 7);
 
-				title = this._scroll_button('left',left.toJSON()) + title + this._scroll_button('right',right.toJSON());
+				title = this._scroll_button('left',app.calendar.date.start_of_week(left).toJSON()) +
+					title +
+					this._scroll_button('right',app.calendar.date.start_of_week(right).toJSON());
 			}
-			
-			content += '<div class="calendar_plannerWeekScale et2_clickable et2_link" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
+			if(days_in_week > 2)
+			{
+				content += '<div class="calendar_plannerWeekScale et2_clickable et2_link" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
+			}
+			if(days_in_week != 7)
+			{
+				t.setUTCDate(t.getUTCDate() - days_in_week);
+				days_in_week = 7;
+			}
 		}
 		content += "</div>";		// end of plannerScale
 
