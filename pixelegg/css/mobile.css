@@ -6682,12 +6682,6 @@ span.egw_tutorial_title {
     width: 100%;
     line-height: 32px !important;
   }
-  body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
-    font-size: medium;
-    top: 50px !important;
-    right: 0px;
-    left: auto !important;
-  }
   body table.egwGridView_outer thead tr th {
     font-size: small !important;
   }
@@ -7493,6 +7487,12 @@ span.egw_tutorial_title {
 /*mobile etemplate2*/
 /*mobile etemplate2*/
 @media only screen and (min-width: 320px) and (max-width: 1279px) {
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
+    font-size: medium;
+    top: 50px !important;
+    right: 0px;
+    left: auto !important;
+  }
   body div#egw_message {
     bottom: 0px;
     top: auto;
