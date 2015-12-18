@@ -435,7 +435,9 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 */
 		availHeight: function()
 		{
-			return screen.availHeight < screen.height ? screen.availHeight : screen.height - 100;
+			return screen.availHeight < screen.height ? 
+				(navigator.userAgent.match(/windows/ig)? screen.availHeight -100:screen.availHeight) // Seems chrome not counting taskbar in available height
+				: screen.height - 100;
 		},
 
 		/**
