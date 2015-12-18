@@ -1389,9 +1389,6 @@ abstract class egw_framework
 			// eTemplate2 - load in top so sidebox has styles too
 			self::includeCSS('/etemplate/templates/default/etemplate2.css');
 
-			// Category styles
-			self::includeCSS('/phpgwapi/categories.php');
-
 			// For mobile user-agent we prefer mobile theme over selected one with a final fallback to theme named as template
 			$themes_to_check = array();
 			if (html::$ua_mobile) $themes_to_check[] = $this->template_dir.'/css/mobile.css';
@@ -1425,13 +1422,11 @@ abstract class egw_framework
 		{
 			foreach(self::resolve_css_includes($path) as $path)
 			{
-				list($file,$query) = explode('?',$path,2);
-				if (($mod = filemtime(EGW_SERVER_ROOT.$file)) > $max_modified) $max_modified = $mod;
+				if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
 
-				// do NOT include app.css or categories.php, as it changes from app to app
-				if ($debug_minify || substr($path, -8) == '/app.css' || substr($file,-14) == 'categories.php')
+				if ($debug_minify || substr($path, -8) == '/app.css')	// do NOT include app.css, as it changes from app to app
 				{
-					$css_files .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].$path.($query ? '&' : '?').$mod.'" type="text/css" rel="StyleSheet" />'."\n";
+					$css_files .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].$path.'?'.$mod.'" type="text/css" rel="StyleSheet" />'."\n";
 				}
 				else
 				{
@@ -1463,9 +1458,7 @@ abstract class egw_framework
 	protected static function resolve_css_includes($path, &$pathes=array())
 	{
 		$matches = null;
-
-		list($file,$query) = explode('?',$path,2);
-		if (($to_check = file_get_contents (EGW_SERVER_ROOT.$file, false, null, -1, 1024)) &&
+		if (($to_check = file_get_contents (EGW_SERVER_ROOT.$path, false, null, -1, 1024)) &&
 			stripos($to_check, '/*@import') !== false && preg_match_all('|/\*@import url\("([^"]+)"|i', $to_check, $matches))
 		{
 			foreach($matches[1] as $import_path)
@@ -2259,7 +2252,7 @@ abstract class egw_framework
 		{
 			$path = $app;
 		}
-		if (!file_exists(EGW_SERVER_ROOT.$path) && !file_exists(EGW_SERVER_ROOT . parse_url($path,PHP_URL_PATH)))
+		if (!file_exists(EGW_SERVER_ROOT.$path))
 		{
 			//error_log(__METHOD__."($app,$name) $path NOT found!");
 			return false;
