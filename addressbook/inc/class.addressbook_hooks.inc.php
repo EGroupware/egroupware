@@ -293,20 +293,6 @@ class addressbook_hooks
 				'admin'  => False,
 				'default'=> isset($options[$default_def]) ? $default_def : false,
 			);
-			$settings['csv_fields'] = array(
-				'type'   => 'select',
-				'label'  => 'Fields for the CSV export',
-				'name'   => 'csv_fields',
-				'values' => array(
-					'all'      => lang('All'),
-					'business' => lang('Business address'),
-					'home'     => lang('Home address'),
-				),
-				'help'   => 'Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.',
-				'xmlrpc' => True,
-				'admin'  => false,
-				'default'=> 'business',
-			);
 
 			$settings['vcard_charset'] = array(
 				'type'   => 'select',
