@@ -2849,24 +2849,29 @@ app.classes.calendar = AppJS.extend(
 				.on('click', '.ui-datepicker-week-col', function() {
 					var view = app.calendar.state.view;
 					var days = app.calendar.state.days;
-
-					// Fake a click event on the first day to get the updated date
-					$j(this).next().click();
+					
+					// Avoid a full state update, we just want the calendar to update
+					// Directly update to avoid change event from the sidebox calendar
+					var date = new Date(this.nextSibling.dataset.year,this.nextSibling.dataset.month,this.nextSibling.firstChild.textContent,0,0,0);
+					date.setUTCHours(0);
+					date.setUTCMinutes(0);
+					date = app.calendar.date.toString(date);
 
 					// Set to week view, if in one of the views where we change view
 					if(app.calendar.sidebox_changes_views.indexOf(view) >= 0)
 					{
-						app.calendar.update_state({view: 'week', date: date_widget.getValue(), days: days});
+						app.calendar.update_state({view: 'week', date: date, days: days});
 					}
 					else if (view == 'planner')
 					{
 						// Clicked a week, show just a week
-						app.calendar.update_state({planner_days: 7});
+						app.calendar.update_state({date: date, planner_days: 7});
 					}
 					else if (view == 'listview')
 					{
 						app.calendar.update_state({
-							end_date: app.calendar.date.toString(app.classes.calendar.views.week.end_date({date:date_widget.getValue()})),
+							date: date,
+							end_date: app.calendar.date.toString(app.classes.calendar.views.week.end_date({date:date})),
 							filter: 'week'
 						});
 					}
