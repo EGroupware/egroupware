@@ -1691,9 +1691,11 @@ app.classes.calendar = AppJS.extend(
 		{
 			state.state = {view: 'week'};
 		}
+		// States with no name (favorites other than No filters) default to
+		// today.  Applying a favorite should keep the current date.
 		if(!state.state.date)
 		{
-			state.state.date = new Date();
+			state.state.date = state.name ? this.state.date : new Date();
 		}
 		if(typeof state.state.weekend == 'undefined')
 		{
