@@ -710,10 +710,6 @@ app.classes.infolog = AppJS.extend(
 		{
 			pos = input.selectionStart
 		};
-		if(pos === 0 && input.value.length > 0)
-		{
-			pos = input.value.length;
-		}
 
 		// Insert the text
 		var front = (input.value).substring(0, pos);
