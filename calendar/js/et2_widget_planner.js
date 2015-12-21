@@ -1015,11 +1015,11 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		var state = ''
 
 		// we're not using UTC so date() formatting function works
-		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
+		var t = new Date(start.valueOf());
 
 		// Make sure we're lining up on the week
 		var week_end = app.calendar.date.end_of_week(start);
-		var days_in_week = ((week_end-start ) / (24*3600*1000))+1;
+		var days_in_week = Math.floor(((week_end-start ) / (24*3600*1000))+1);
 		var week_width = 100 / days * (days <= 7 ? days : days_in_week);
 		for(var left = 0,i = 0; i < days; t.setUTCDate(t.getUTCDate() + 7),left += week_width)
 		{
@@ -1028,11 +1028,26 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			{
 				days_in_week = days-i;
 			}
+			var usertime = new Date(t.valueOf());
+			if(start.getTimezoneOffset() < 0)
+			{
+				// Gets the right week # east of GMT.  West does not need it(?)
+				usertime.setUTCMinutes(usertime.getUTCMinutes() - start.getTimezoneOffset());
+			}
 			
 			week_width = 100 / days * Math.min(days, days_in_week);
-			var title = app.calendar.egw.lang('Week')+' '+app.calendar.date.week_number(t);
 
-			state = app.calendar.date.start_of_week(new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000)).toJSON();
+			var title = app.calendar.egw.lang('Week')+' '+app.calendar.date.week_number(usertime);
+
+			if(start.getTimezoneOffset() > 0)
+			{
+				// Gets the right week start west of GMT
+				usertime.setUTCMinutes(usertime.getUTCMinutes() +start.getTimezoneOffset())
+			}
+			state = app.calendar.date.start_of_week(usertime);
+			state.setUTCHours(0);
+			state.setUTCMinutes(0);
+			state = state.toJSON();
 			if (days  <= 7)
 			{
 				// prev. week
@@ -1058,7 +1073,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			i+= days_in_week;
 			if(days_in_week != 7)
 			{
-				t.setUTCDate(t.getUTCDate() - days_in_week);
+				t.setUTCDate(t.getUTCDate() - (7 - days_in_week));
 				days_in_week = 7;
 			}
 		}

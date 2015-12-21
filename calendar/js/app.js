@@ -571,7 +571,7 @@ app.classes.calendar = AppJS.extend(
 						"transform": direction == "up" ? "translateY(-50%)" : "translateX(-50%)"
 					});
 					// Stop browser from caching style by forcing reflow
-					wrapper[0].offsetHeight;
+					if(wrapper[0]) wrapper[0].offsetHeight;
 
 					wrapper.css({
 						"transition-duration": "",
@@ -2853,8 +2853,7 @@ app.classes.calendar = AppJS.extend(
 					// Avoid a full state update, we just want the calendar to update
 					// Directly update to avoid change event from the sidebox calendar
 					var date = new Date(this.nextSibling.dataset.year,this.nextSibling.dataset.month,this.nextSibling.firstChild.textContent,0,0,0);
-					date.setUTCHours(0);
-					date.setUTCMinutes(0);
+					date.setUTCMinutes(date.getUTCMinutes() - date.getTimezoneOffset());
 					date = app.calendar.date.toString(date);
 
 					// Set to week view, if in one of the views where we change view
@@ -3305,12 +3304,13 @@ jQuery.extend(app.classes.calendar,{
 					if(d.getUTCDate() < 15)
 					{
 						d.setUTCDate(1);
-						return app.calendar.date.start_of_week(d);
 					}
-					else
-					{
-						return app.calendar.date.start_of_week(d);
-					}
+					d = app.calendar.date.start_of_week(d);
+					d.setUTCHours(0);
+					d.setUTCMinutes(0);
+					d.setUTCSeconds(0);
+					d.setUTCMilliseconds(0);
+					return d;
 				}
 				return d;
 			},
