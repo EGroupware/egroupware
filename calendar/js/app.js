@@ -2874,6 +2874,10 @@ app.classes.calendar = AppJS.extend(
 							filter: 'week'
 						});
 					}
+					else
+					{
+						app.calendar.update_state({date: date});
+					}
 				});
 				
 			// Set month button label
