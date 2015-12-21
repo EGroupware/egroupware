@@ -7633,7 +7633,7 @@ span.egw_tutorial_title {
     font-size: xx-large;
     content: "\205D";
   }
-  body .et2_nextmatch .search button.nm_fvorites_button {
+  body .et2_nextmatch .search button.nm_favorites_button {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7645,10 +7645,10 @@ span.egw_tutorial_title {
     display: block;
     float: right;
   }
-  body .et2_nextmatch .search button.nm_fvorites_button:focus {
+  body .et2_nextmatch .search button.nm_favorites_button:focus {
     outline: none;
   }
-  body .et2_nextmatch .search button.nm_fvorites_button:after {
+  body .et2_nextmatch .search button.nm_favorites_button:after {
     font-size: xx-large;
     content: "\2606";
     font-weight: bold;
