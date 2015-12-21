@@ -403,18 +403,24 @@ div.addressbook_edit_general_picture img {
 				background-size: 35px 35px;
 				background-repeat: no-repeat;
 				background-position: center;
+				position: absolute;
+				bottom:25%;
+				top:25%;
+				img{
+					padding-top:0;
+				}
 			}
 			span[id^='addressbook-index_'][id$='line1]'] {
-				font-weight: bold;
+				.mob-fontsize-s;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				padding-bottom: 5px;
 			}
 			span[id^='addressbook-index_'][id$='line2]']{
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
+				font-weight: bold;
 			}
 			.addressbookCol2 {
 				text-overflow: ellipsis;
@@ -422,19 +428,7 @@ div.addressbook_edit_general_picture img {
 				white-space: nowrap;
 				width:99%;
 			}
-			td[class^="gridCont"]{
-				position:relative;
-				.et2_hbox.et2_box_widget.cellphone {
-					margin-left: -4px;
-					position: absolute;
-					bottom:0;
-				}
-				.workphone {
-					position: absolute;
-					bottom:0;
-				}
-			}
-			
+						
 			span[id^='addressbook-index_'][id$='adr_one_locality]']
 			{
 				.mob-fontsize-s;
@@ -446,10 +440,13 @@ div.addressbook_edit_general_picture img {
 			}
 			a[id^='addressbook-index_'][id$='email]']{
 				.mob-fontsize-s;
-				display:block;
+				padding-left: 4px;
+				padding-bottom:2px;
+				display: inline;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				padding-bottom: 5px;
+				color: #2C6398;
 			}
 			a[id^='addressbook-index_'][id$='tel_cell]'],
 			a[id^='addressbook-index_'][id$='tel_work]']

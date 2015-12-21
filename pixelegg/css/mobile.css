@@ -6709,7 +6709,7 @@ span.egw_tutorial_title {
     background: white;
   }
   #egw_fw_basecontainer #egw_fw_main #egw_fw_tabs {
-    margin-top: 0;
+    margin-top: -3px;
   }
   #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header {
     max-height: 60px;
@@ -7316,6 +7316,7 @@ span.egw_tutorial_title {
   }
   .egw_fw_content_browser_div {
     padding: 0;
+    background-color: white;
   }
   .egw_fw_mobile_popup_container {
     width: 100%;
@@ -7447,6 +7448,9 @@ span.egw_tutorial_title {
 @media only screen and (max-device-width: 700px) and (min-width: 321px) {
   body #egw_fw_basecontainer.sidebar-toggle div#egw_fw_top_toolbar {
     z-index: 0;
+  }
+  body #egw_fw_basecontainer.sidebar-toggle #egw_fw_main {
+    margin-left: 0 !important ;
   }
   body #egw_fw_basecontainer.sidebar-toggle #egw_fw_main #egw_fw_tabs {
     -webkit-filter: none;
@@ -7719,6 +7723,23 @@ span.egw_tutorial_title {
   }
   body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
     background: transparent;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td {
+    padding: 10px 0px 10px 0px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_label,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_button,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_link,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td img,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td span {
+    padding: 8px 0px 0px 0px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col {
+    padding: 0;
   }
   body .et2_nextmatch table.egwGridView_grid tbody tr.swipe {
     background-color: #ffc200;

@@ -496,18 +496,24 @@ input.et2_radiobox {
     background-size: 35px 35px;
     background-repeat: no-repeat;
     background-position: center;
+    position: absolute;
+    bottom: 25%;
+    top: 25%;
+  }
+  #addressbook-index table.egwGridView_outer tbody .addressbookCol3 div.avatar img {
+    padding-top: 0;
   }
   #addressbook-index table.egwGridView_outer tbody span[id^='addressbook-index_'][id$='line1]'] {
-    font-weight: bold;
+    font-size: 9pt;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding-bottom: 5px;
   }
   #addressbook-index table.egwGridView_outer tbody span[id^='addressbook-index_'][id$='line2]'] {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-weight: bold;
   }
   #addressbook-index table.egwGridView_outer tbody .addressbookCol2 {
     text-overflow: ellipsis;
@@ -515,35 +521,26 @@ input.et2_radiobox {
     white-space: nowrap;
     width: 99%;
   }
-  #addressbook-index table.egwGridView_outer tbody td[class^="gridCont"] {
-    position: relative;
-  }
-  #addressbook-index table.egwGridView_outer tbody td[class^="gridCont"] .et2_hbox.et2_box_widget.cellphone {
-    margin-left: -4px;
-    position: absolute;
-    bottom: 0;
-  }
-  #addressbook-index table.egwGridView_outer tbody td[class^="gridCont"] .workphone {
-    position: absolute;
-    bottom: 0;
-  }
   #addressbook-index table.egwGridView_outer tbody span[id^='addressbook-index_'][id$='adr_one_locality]'] {
-    font-size: 8pt;
+    font-size: 9pt;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
   #addressbook-index table.egwGridView_outer tbody a[id^='addressbook-index_'][id$='email]'] {
-    font-size: 8pt;
-    display: block;
+    font-size: 9pt;
+    padding-left: 4px;
+    padding-bottom: 2px;
+    display: inline;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-bottom: 5px;
+    color: #2C6398;
   }
   #addressbook-index table.egwGridView_outer tbody a[id^='addressbook-index_'][id$='tel_cell]'],
   #addressbook-index table.egwGridView_outer tbody a[id^='addressbook-index_'][id$='tel_work]'] {
-    font-size: 8pt;
+    font-size: 9pt;
     display: inline-block;
     padding-left: 3px;
     overflow: hidden;

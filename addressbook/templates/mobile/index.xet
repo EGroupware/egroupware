@@ -17,8 +17,8 @@
 		<grid width="100%">
 			<columns>
 				<column width="10"/>
-				<column width="60%"/>
-				<column width="39%"/>
+				<column width="40%"/>
+				<column width="40%"/>
 				<column width="58"/>
 			</columns>
 			<rows>
@@ -28,18 +28,21 @@
 					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
 					<vbox class="addressbookCol1">
 						<vbox id="${row}[id]">
-							<description id="${row}[line1]" no_lang="1"/>
 							<description id="${row}[line2]" no_lang="1"/>
+							<description id="${row}[line1]" no_lang="1"/>
 						</vbox>
-						<hbox class="workphone">
+						<description value=" " id="${row}[adr_one_locality]" no_lang="1"/>
+					</vbox>
+					<vbox class="addressbookCol2">
+						<hbox>
+							<image src="email.png"/>
+							<url-email id="${row}[email]" readonly="true" class="telNumbers"/>
+						</hbox>
+						<hbox>
 							<image src="phone.png"/>
 							<url-phone id="${row}[tel_work]" readonly="true" class="telNumbers"/>
 						</hbox>
-					</vbox>
-					<vbox class="addressbookCol2">
-						<url-email id="${row}[email]" readonly="true" />
-						<description value=" " id="${row}[adr_one_locality]" no_lang="1"/>
-						<hbox class="cellphone">
+						<hbox>
 							<image src="cellphone.png"/>
 							<url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers"/>
 						</hbox>
