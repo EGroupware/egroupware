@@ -64,6 +64,16 @@ tr.dialogOperators td,.dialogFooterToolbar {
 	white-space: normal;
 }
 
+button.infologExtraButton {
+	background-position: center;
+	background-size: 16px;
+	padding: 0px;
+	width: 24px;
+	height: 24px;
+}
+button.infologExtraButton:hover {
+	background-size: 16px;
+}
 td.infologEncrypt {
 	position: relative;
 }
@@ -77,7 +87,7 @@ td.infologTimestamp {
 }
 button#infolog-edit_timestamp {
 	position: absolute;
-	right: 19px;
+	right: -35px;
 	top: 3px;
 }
 div#infolog-edit_infolog-edit-description {

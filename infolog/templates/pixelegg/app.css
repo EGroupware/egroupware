@@ -137,6 +137,16 @@ tr.dialogOperators td,
 #infolog-index .egwGridView_grid .et2_hbox.et2_box_widget.infolog_CompletedClmn {
   white-space: normal;
 }
+button.infologExtraButton {
+  background-position: center;
+  background-size: 16px;
+  padding: 0px;
+  width: 24px;
+  height: 24px;
+}
+button.infologExtraButton:hover {
+  background-size: 16px;
+}
 td.infologEncrypt {
   position: relative;
 }
@@ -150,7 +160,7 @@ td.infologTimestamp {
 }
 button#infolog-edit_timestamp {
   position: absolute;
-  right: 19px;
+  right: -35px;
   top: 3px;
 }
 div#infolog-edit_infolog-edit-description {
@@ -444,7 +454,7 @@ button#infolog-edit_timestamp {
     white-space: nowrap !important;
   }
   label[id^='infolog-index_'][id$='info_enddate]'] {
-    font-size: 8pt;
+    font-size: 9pt;
     float: right;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] {
