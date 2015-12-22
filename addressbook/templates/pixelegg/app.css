@@ -515,7 +515,7 @@ input.et2_radiobox {
     text-overflow: ellipsis;
     font-weight: bold;
   }
-  #addressbook-index table.egwGridView_outer tbody .addressbookCol2 {
+  #addressbook-index table.egwGridView_outer tbody .addressbookCol2 .et2_box_widget {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
