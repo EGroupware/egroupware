@@ -20,7 +20,7 @@
 		<grid width="100%" >
 			<columns>
 				<column width="10"/>
-				<column width="70"/>
+				<column width="80"/>
 				<column width="95%" />
 			</columns>
 			<rows>
@@ -29,27 +29,22 @@
 				</row>
 				<row class="$row_cont[class]" valign="top">
 					<description class=" cat_$row_cont[info_cat] mobile_cat_col"/>
-					<vbox align="center"  class="infolog_CompletedClmn">
-						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8" class="infolog_fixedHeight"/>
+					<vbox align="center" class="infolog_CompletedClmn">
+						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8"/>
 						<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar" class="infoDetails"/>
-						<image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" class="infoDetails" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_status_label]" default_src="status"/>
 						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
-						<description align="right" id="{$row}[info_number]" no_lang="1" class="infolog_infoId"/>
 					</vbox>
 					<vbox class="infolog_fullWidth">
-						<hbox>
-							<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b" class="infoDetails"/>
-							<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] infolog_fixedHeight"/>
-						</hbox>
 						<hbox class="infoSubRow">
-							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="80%"/>
-							<listbox disabled="@no_info_owner_info_responsible" type="select-account" id="${row}[info_responsible]" readonly="true" width ="100%" rows="1" class="infoDetails"/>
+							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="60%"/>
+							<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]"/>
 						</hbox>
 						<box class="infoDescRow">
 							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
 						</box>
+						
 						<hbox class ="infoLinksRow infoDetails" overflow="hidden">
-							<link-string id="${row}[filelinks]"/>
+							<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b" class="infoDetails"/>
 						</hbox>
 						
 					</vbox>

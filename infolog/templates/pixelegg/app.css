@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: #000000;
+  color: black;
 }
 .high {
   color: #cc0000;
@@ -339,9 +339,6 @@ div#infolog-edit_infolog-edit-description {
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid img {
   height: 16px;
 }
-#infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid span.et2_link {
-  font-weight: bold;
-}
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid ul.et2_link_string li.et2_link {
   font-weight: normal;
 }
@@ -430,16 +427,9 @@ button#infolog-edit_timestamp {
   #infolog-index_nm .gridCont_0_div_col_0.innerContainer {
     min-width: auto;
   }
-  span.infolog_infoId:before {
-    content: "#";
-  }
-  span.infolog_infoId {
-    font-size: 8pt;
-    padding-top: 5px;
-  }
   div.infoDescRow {
-    height: 45px;
-    font-size: 8pt;
+    height: 15px;
+    font-size: 9pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -447,16 +437,19 @@ button#infolog-edit_timestamp {
   }
   div.infoLinksRow,
   div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
-    font-size: 8pt;
+    font-size: 9pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap !important;
   }
-  label[id^='infolog-index_'][id$='info_enddate]'],
-  label[id^='infolog-index_'][id$='info_startdate]'] {
+  label[id^='infolog-index_'][id$='info_enddate]'] {
     font-size: 8pt;
     float: right;
+  }
+  label[id^='infolog-index_'][id$='info_startdate]'] {
+    float: left;
+    font-size: 8pt;
   }
   ul[id^='infolog-index_'][id$='info_responsible]'] {
     overflow: hidden;
@@ -464,7 +457,7 @@ button#infolog-edit_timestamp {
     max-height: 15px;
   }
   ul[id^='infolog-index_'][id$='info_responsible]'] li {
-    font-size: 8pt;
+    font-size: 9pt;
     text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -485,6 +478,15 @@ button#infolog-edit_timestamp {
     text-overflow: ellipsis;
     overflow: hidden;
     width: 70%;
+    font-size: 9pt;
+    font-weight: normal;
+  }
+  infolog_rowHasSubs span.arrow,
+  table.egwGridView_grid span.arrow.closed {
+    display: none !important;
+  }
+  tr.infolog_rowHasParent > td:first-child {
+    background: none !important;
   }
 }
 /**/

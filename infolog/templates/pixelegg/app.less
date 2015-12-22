@@ -226,7 +226,7 @@ div.et2_box_widget{
 
                 img{height: 16px;}
 
-                span.et2_link {font-weight: bold;}
+                span.et2_link {}
 
                 ul.et2_link_string {
                    li.et2_link {font-weight: normal;}
@@ -410,16 +410,8 @@ button#infolog-edit_timestamp {
 	#infolog-index_nm .gridCont_0_div_col_0.innerContainer {
 		min-width: auto;
 	}
-	
-	span.infolog_infoId:before {
-		content:"#";
-	}
-	span.infolog_infoId {
-		.mob-fontsize-s;
-		padding-top: 5px;
-	}
 	div.infoDescRow {
-		height:45px;
+		height:15px;
 		.mob-fontsize-s;
 		max-width: 99%;
 		overflow: hidden;
@@ -433,9 +425,13 @@ button#infolog-edit_timestamp {
 		text-overflow: ellipsis;
 		white-space: nowrap !important;
 	}
-	label[id^='infolog-index_'][id$='info_enddate]'] , label[id^='infolog-index_'][id$='info_startdate]']{
-		.mob-fontsize-s;
+	label[id^='infolog-index_'][id$='info_enddate]'] {
+		.mob-fontsize-xs;
 		float:right;
+	}
+	label[id^='infolog-index_'][id$='info_startdate]']{
+		float: left;
+		.mob-fontsize-xs;
 	}
 	ul[id^='infolog-index_'][id$='info_responsible]'] {
 		overflow:hidden;
@@ -468,6 +464,15 @@ button#infolog-edit_timestamp {
 		text-overflow: ellipsis;
 		overflow: hidden;
 		width: 70%;
+		.mob-fontsize-s;
+		font-weight: normal;
+	}
+	infolog_rowHasSubs span.arrow, 
+	table.egwGridView_grid span.arrow.closed{
+		display: none !important;
+	}
+	tr.infolog_rowHasParent > td:first-child {
+		background: none !important;
 	}
 }
 
