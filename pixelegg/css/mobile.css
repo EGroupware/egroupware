@@ -1699,10 +1699,10 @@ span.ui-icon-search {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
@@ -2194,6 +2194,7 @@ body {
  * @package pixelegg
  * @version $Id$
  */
+@import-once "def_colors.less";
 #socialMedia {
   position: relative;
   bottom: 20px;
@@ -2637,9 +2638,9 @@ button.et2_button_with_image {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
   background-repeat: no-repeat !important;
@@ -2694,10 +2695,10 @@ button.et2_button_delete {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
   /*background-color: @color-negative-action !important;*/
@@ -2733,10 +2734,10 @@ button.et2_button_delete:hover {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
   color: #ffffff !important;
@@ -2771,10 +2772,10 @@ button.et2_button_delete:active {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
   color: #ffffff;
@@ -2841,10 +2842,10 @@ button#filemanager-select_button[ok]:active {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
@@ -2906,10 +2907,10 @@ button#cancel {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
   content: "ID missing";
@@ -2950,10 +2951,10 @@ button#cancel:active {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
@@ -3013,10 +3014,10 @@ button[id="add"] {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
@@ -4271,7 +4272,7 @@ td.message span.message {
   text-decoration: none;
   height: 32px;
   /*font-size: 1.1em;*/
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
@@ -4295,7 +4296,7 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
   padding-right: 20px;
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
@@ -4691,7 +4692,7 @@ td.message span.message {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
@@ -4863,7 +4864,7 @@ td.message span.message {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 15px;
   line-height: 1em;
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   background-image: url(../images/arrow_left.png);
   background-repeat: no-repeat;
   background-position: left center;
@@ -7178,7 +7179,7 @@ span.egw_tutorial_title {
     margin: 5px 0px 3px 5px;
     padding: 0px 0px 0px 15px;
     line-height: 1em;
-    font-size: 12.1px;
+    font-size: 12.100000000000001px;
     background-image: url(../images/arrow_left.png);
     background-repeat: no-repeat;
     background-position: left center;
