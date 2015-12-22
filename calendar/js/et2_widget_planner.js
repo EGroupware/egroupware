@@ -843,7 +843,10 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		}
 
 		// Adjust header if there's a scrollbar
-		this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().first().width()) + 'px')
+		if(this.rows.children().first().length)
+		{
+			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().first().width()) + 'px');
+		}
 		this.value = [];
 	},
 
@@ -892,23 +895,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 
 		var title = app.calendar.egw.lang(date('F',start))+' '+date('Y',start)+' - '+
 			app.calendar.egw.lang(date('F',end))+' '+date('Y',end);
-
-		// calculate date for navigation links
-		var time = new Date(start);
-		time.setUTCFullYear(time.getUTCFullYear()-1);
-		var last_year = time.toJSON();
-		time.setUTCMonth(time.getUTCMonth()+11);
-		var last_month = time.toJSON();
-		time.setUTCMonth(time.getUTCMonth()+2);
-		var next_month = time.toJSON();
-		time.setUTCMonth(time.getUTCMonth()+11);
-		var next_year = time.toJSON();
-
-		title = this._scroll_button('first',last_year) +
-			this._scroll_button('left', last_month) +
-			title +
-			this._scroll_button('right', next_month) +
-			this._scroll_button('last', next_year);
 
 		content += '<div class="calendar_plannerMonthScale th et2_link" style="left: 0; width: 100%;">'+
 				title+"</div>";
@@ -960,33 +946,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			if (days_in_month > 10)
 			{
 				title += ' '+t.getUTCFullYear();
-			
-				// previous links
-				var prev = new Date(t);
-				prev.setUTCMonth(prev.getUTCMonth()-1);
-				if(prev.valueOf() < start.valueOf() - (20 * 1000*3600*24))
-				{
-					var full = prev.toJSON();
-					prev.setUTCDate(prev.getUTCDate() + 15);
-					//prev.setUTCDate(start.getUTCDate() < 15 ? 1 : 15);
-					var half = prev.toJSON();
-					title = this._scroll_button('first',full) + this._scroll_button('left',half) + title;
-				}
-			
-				// show next scales, if there are less then 10 days in the next month or there is no next month
-				var days_until_end = (end - t) / (1000 * 3600 * 24);
-				if (days_until_end - days_in_month <= 10 || end.getUTCMonth() === t.getUTCMonth() && end.getUTCFullYear() === t.getUTCFullYear())
-				{
-					// next links
-					var next = new Date(t);
-					next.setUTCMonth(next.getUTCMonth()+1);
-					full = next.toJSON();
-					next.setUTCDate(next.getUTCDate() - 15);
-					//next.setUTCDate(next.getUTCDate() < 15 ? 1 : 15);
-					half = next.toJSON();
-
-					title += this._scroll_button('right',half) + this._scroll_button('last',full);
-				}
 			}
 			else
 			{
@@ -1048,24 +1007,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			state.setUTCHours(0);
 			state.setUTCMinutes(0);
 			state = state.toJSON();
-			if (days  <= 7)
-			{
-				// prev. week
-				var left = new Date(t);
-				left.setUTCHours(0);
-				left.setUTCMinutes(0);
-				left.setUTCDate(left.getUTCDate() - 7);
 
-				// next week
-				var right = new Date(t);
-				right.setUTCHours(0);
-				right.setUTCMinutes(0);
-				right.setUTCDate(right.getUTCDate() + 7);
-
-				title = this._scroll_button('left',app.calendar.date.start_of_week(left).toJSON()) +
-					title +
-					this._scroll_button('right',app.calendar.date.start_of_week(right).toJSON());
-			}
 			if(days_in_week > 1)
 			{
 				content += '<div class="calendar_plannerWeekScale et2_clickable et2_link" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
@@ -1118,25 +1060,7 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 				title = app.calendar.egw.lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
 			}
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
-			if (days < 5)
-			{
-				if (!i)	// prev. day only for the first day
-				{
-					var prev = new Date(t);
-					prev.setUTCDate(prev.getUTCDate() - 1);
-					prev.setUTCHours(0);
-					prev.setUTCMinutes(0);
-					title = this._scroll_button('left',prev.toJSON()) + title;
-				}
-				if (i == days-1)	// next day only for the last day
-				{
-					var next = new Date(t);
-					next.setUTCDate(next.getUTCDate() + 1);
-					next.setUTCHours(0);
-					next.setUTCMinutes(0);
-					title += this._scroll_button('right',next.toJSON());
-				}
-			}
+
 			content += '<div class="calendar_plannerDayScale et2_clickable et2_link '+ day_class+
 				'" data-date=\'' + state +'\' style="left: '+left+'%; width: '+day_width+'%;"'+
 				(holidays ? ' title="'+holidays.join(',')+'"' : '')+'>'+title+"</div>\n";
@@ -1188,15 +1112,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		content += "</div>";		// end of plannerScale
 
 		return content;
-	},
-
-	/**
-	 * Create a pagination button, and inserts it
-	 * 
-	 */
-	_scroll_button: function(image, date)
-	{
-		return '<img class="et2_clickable" src="' + egw.image(image)+ '" data-date="' + (date.toJSON ? date.toJSON():date) + '"/>';
 	},
 
 	/**

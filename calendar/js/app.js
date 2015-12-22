@@ -609,7 +609,10 @@ app.classes.calendar = AppJS.extend(
 						.css({"transform": '',height: '', width:'',overflow:''});
 					wrapper.parent().css({overflow: '', width: original_size.width, height: original_size.height});
 					original.css("display","");
-					wrapper[0].offsetHeight;
+					if(wrapper.length)
+					{
+						wrapper[0].offsetHeight;
+					}
 					wrapper.css({
 						"transition-duration": "",
 						"transition-delay": ""
@@ -3300,6 +3303,13 @@ jQuery.extend(app.classes.calendar,{
 				return state.sortby ? state.sortby : 0;
 			},
 			start_date: function(state) {
+				// If there is no planner_days and a start date, just keep it
+				if(!state.planner_days && state.first && (
+					!state.date || state.first < state.date && state.last > state.date
+				))
+				{
+					return state.first;
+				}
 				var d = app.calendar.View.start_date.call(this, state);
 				if(state.sortby && state.sortby === 'month')
 				{
@@ -3307,10 +3317,6 @@ jQuery.extend(app.classes.calendar,{
 				}
 				else if (!state.planner_days)
 				{
-					if(d.getUTCDate() < 15)
-					{
-						d.setUTCDate(1);
-					}
 					d = app.calendar.date.start_of_week(d);
 					d.setUTCHours(0);
 					d.setUTCMinutes(0);
@@ -3321,6 +3327,26 @@ jQuery.extend(app.classes.calendar,{
 				return d;
 			},
 			end_date: function(state) {
+				// If no planner days and an end date, just keep it
+				if(!state.planner_days && state.last && state.last > state.first)
+				{
+					// Handle listview before / after a little more nicely
+					if(app.calendar.state.view == 'listview' && (
+						state.filter == 'before' || state.filter == 'after'
+					))
+					{
+						var d = app.calendar.View.end_date.call(this, state);
+						d.setUTCDate(d.getUTCDate() + 30);
+						d = app.calendar.date.end_of_week(d);
+						return d;
+					}
+					return state.last;
+				}
+				// Avoid end date before start date
+				if(state.last && state.first && state.last <= state.first && !state.planner_days)
+				{
+					state.planner_days = 30;
+				}
 				var d = app.calendar.View.end_date.call(this, state);
 				if(state.planner_days)
 				{
@@ -3337,24 +3363,14 @@ jQuery.extend(app.classes.calendar,{
 					delete state.planner_days;
 				}
 				// Avoid killing the view by not showing more than 100 days
-				else if (state.last && (new Date(state.last) - new Date(state.first)) < (100 * 24 * 3600 * 1000) )
+				else if (state.last && state.last > state.first && (new Date(state.last) - new Date(state.first)) < (100 * 24 * 3600 * 1000) )
 				{
 					d = new Date(state.last);
 					d = app.calendar.date.end_of_week(d);
 				}
 				else if (!state.planner_days)
 				{
-					if (d.getUTCDate() < 15)
-					{
-						d.setUTCDate(0);
-						d.setUTCMonth(d.getUTCMonth()+1);
-						d = app.calendar.date.end_of_week(d);
-					}
-					else
-					{
-						d.setUTCMonth(d.getUTCMonth()+1);
-						d = app.calendar.date.end_of_week(d);
-					}
+					d = app.calendar.date.end_of_week(d);
 				}
 				return d;
 			},
