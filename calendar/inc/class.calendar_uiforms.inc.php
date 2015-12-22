@@ -714,7 +714,7 @@ class calendar_uiforms extends calendar_ui
 					unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
 					unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 					$this->bo->update($recur_event,true);	// no conflict check here
-foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
+					
 					unset($recur_event);
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
 					unset($preserv['edit_single']);
@@ -2770,9 +2770,10 @@ foreach($recur_event as $_k => $_v) error_log($_k . ': ' . array2string($_v));
 			}
 		}
 
-		$event['start'] = $this->bo->date2ts($targetDateTime);
+		$d = new egw_time($targetDateTime, egw_time::$user_timezone);
+		$event['start'] = $d->format('ts');
 		$event['end'] = $event['start']+$duration;
-		
+
 		if ($event['recur_type'] != MCAL_RECUR_NONE && !$date && $seriesInstance)
 		{
 			// calculate offset against clicked recurrance,
