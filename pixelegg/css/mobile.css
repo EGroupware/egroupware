@@ -6705,6 +6705,9 @@ span.egw_tutorial_title {
     width: 10px;
     display: block;
   }
+  body table.egwGridView_outer tbody tr td span.cat_.mobile_cat_col {
+    background: #F5F5F5;
+  }
   #egw_fw_basecontainer {
     background: white;
   }
@@ -7747,6 +7750,9 @@ span.egw_tutorial_title {
   }
   body .et2_nextmatch .egwGridView_outer thead tr th {
     font-size: large;
+  }
+  body .et2_nextmatch .egwGridView_outer td img {
+    border: none;
   }
   body .dtree img {
     width: 24px !important;
