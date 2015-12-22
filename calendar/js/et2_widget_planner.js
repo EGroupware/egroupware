@@ -618,11 +618,13 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 								break;
 							}
 						}
-						// Get its children
-						labels = labels.concat(et2_selectbox.cat_options({
-							_type:'select-cat',
-							getInstanceManager: function() {return im;}
-						},{other:[,,,'calendar',cat_id[i]]}));
+						
+						// Get its children immediately
+						egw.json(
+							this.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
+							['select-cat',',,,calendar,'+cat_id[i]],
+							function(data) {labels = labels.concat(data);}
+						).sendRequest(false);
 					}
 				}
 
