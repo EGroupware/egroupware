@@ -51,10 +51,6 @@
      </select>
     </td>
    </tr>
-   <tr class="row_off">
-    <td>&nbsp;{lang_While_selecting_up_to_X_users_day-_and_weekview_is_not_consolidated_(5_is_used_when_not_set)}:</td>
-    <td><input name="newsettings[calview_no_consolidate]" value="{value_calview_no_consolidate}" size="10"></td>
-   </tr>
    <tr class="row_on">
     <td>&nbsp;{lang_Allow_users_to_prevent_change_notifications_('Do_not_notify')}:</td>
     <td>

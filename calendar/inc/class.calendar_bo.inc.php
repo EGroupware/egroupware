@@ -208,12 +208,6 @@ class calendar_bo
 	public $require_acl_invite = null;
 
 	/**
-	 * if the number of selected users for a view exeeds this number a view is consolidated (5 is set as default)
-	 * @var int
-	 */
-	public $calview_no_consolidate = 5;
-
-	/**
 	 * Warnings to show in regular UI
 	 *
 	 * @var array
@@ -264,7 +258,6 @@ class calendar_bo
 		//echo "registered resources="; _debug_array($this->resources);
 
 		$this->config = config::read('calendar');	// only used for horizont, regular calendar config is under phpgwapi
-		$this->calview_no_consolidate = ($GLOBALS['egw_info']['server']['calview_no_consolidate']?$GLOBALS['egw_info']['server']['calview_no_consolidate']:5);
 		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
 
 		$this->categories = new categories($this->user,'calendar');

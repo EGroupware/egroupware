@@ -394,7 +394,7 @@ div.calendar {
   height: 16px;
   background-size: 12px auto !important;
   margin-left: 32px;
-  padding: 0px;
+  padding-top: 0px;
 }
 #calendar-edit #calendar-edit_id {
   float: right;
@@ -1202,10 +1202,10 @@ button#series {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
@@ -1259,10 +1259,10 @@ button#exception {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
 }

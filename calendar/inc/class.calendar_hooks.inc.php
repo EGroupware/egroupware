@@ -171,6 +171,10 @@ class calendar_hooks
 			$muliple_weeks[$i] = lang('%1 weeks',$i);
 		}
 
+		for ($i = 2; $i <= 9; $i++)
+		{
+			$consolidated[$i] = $i;
+		}
 		$intervals = array(
 			5	=> '5',
 			10	=> '10',
@@ -282,6 +286,22 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 30,
+			),
+			'day_consolidate' => array(
+				'type'  => 'select',
+				'label' => 'Minimum number of users for showing day view as consolidated.',
+				'name'  => 'day_consolidate',
+				'values'=> $consolidated,
+				'help'  => 'How many seperate calendars to show before merging them together',
+				'default'=> 5
+			),
+			'week_consolidate' => array(
+				'type'  => 'select',
+				'label' => 'Minimum number of users for showing week view as consolidated.',
+				'name'  => 'week_consolidate',
+				'values'=> $consolidated,
+				'help'  => 'How many seperate calendars to show before merging them together',
+				'default'=> 3
 			),
 			'display_holidays_event' => array(
 				'type'   => 'select',

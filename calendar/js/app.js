@@ -272,7 +272,8 @@ app.classes.calendar = AppJS.extend(
 				{
 					var multiple_owner = typeof this.state.owner != 'string' &&
 						this.state.owner.length > 1 &&
-						this.state.owner.length < parseInt(this.egw.config('calview_no_consolidate','phpgwapi') || 5);
+						(this.state.view == 'day' && this.state.owner.length <= parseInt(this.egw.preference('day_consolidate','calendar')) ||
+						this.state.view == 'week' && this.state.owner.length <= parseInt(this.egw.preference('week_consolidate','calendar')));
 					
 					// Make sure it's a string
 					if(_id) _id = ''+_id;
@@ -453,8 +454,10 @@ app.classes.calendar = AppJS.extend(
 		}
 
 		// Enable or disable
-		if((state.view == 'day' || state.view == 'week') &&
-			state.owner.length > 1 && state.owner.length < egw.config('calview_no_consolidate','phpgwapi'))
+		if(state.owner.length > 1 && (
+			state.view == 'day' && state.owner.length <= parseInt(egw.preference('day_consolidate','calendar')) ||
+			state.view == 'week' && state.owner.length <= parseInt(egw.preference('week_consolidate','calendar'))
+		))
 		{
 			sortable.sortable('enable')
 				.sortable("refresh")
@@ -1816,10 +1819,21 @@ app.classes.calendar = AppJS.extend(
 
 
 			// Show the correct number of grids
-			var grid_count = state.state.view === 'weekN' ? parseInt(this.egw.preference('multiple_weeks','calendar')) || 3 :
-				state.state.view === 'month' ? 0 : // Calculate based on weeks in the month
-				state.state.owner.length > (this.egw.config('calview_no_consolidate','phpgwapi') || 5) ? 1 : state.state.owner.length;
-
+			var grid_count = 0;
+			switch(state.state.view)
+			{
+				case 'day':
+					grid_count = state.state.owner.length > parseInt(this.egw.preference('day_consolidate','calendar')) ? 1 : state.state.owner.length;
+					break;
+				case 'week':
+					grid_count = state.state.owner.length > parseInt(this.egw.preference('week_consolidate','calendar')) ? 1 : state.state.owner.length;
+					break;
+				case 'weekN':
+					grid_count = parseInt(this.egw.preference('multiple_weeks','calendar')) || 3;
+					break;
+				// Month is calculated individually for the month
+			}
+			
 			var grid = view.etemplates[0].widgetContainer.getWidgetById('view');
 
 			/*

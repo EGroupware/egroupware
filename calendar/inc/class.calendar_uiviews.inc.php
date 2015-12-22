@@ -663,7 +663,7 @@ class calendar_uiviews extends calendar_ui
 
 		// Always do 7 days for a week so scrolling works properly
 		$this->last = ($days == 4 ? $this->last : $search_params['end'] = strtotime("+$days days",$this->first) - 1);
-		if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)	// for more then X users, show all in one row
+		if (count($users) == 1 || count($users) > $this->cal_prefs['week_consolidate'])	// for more then X users, show all in one row
 		{
 			$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params)) +
 				array('owner' => $users);
@@ -719,7 +719,7 @@ class calendar_uiviews extends calendar_ui
 			if (!is_array($users)) $users = array($users);
 
 			// for more then X users, show all in one row
-			if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)
+			if (count($users) == 1 || count($users) > $this->cal_prefs['day_consolidate'])
 			{
 				$dayEvents =& $this->bo->search($this->search_params);
 				$owner = 0;
