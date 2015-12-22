@@ -795,7 +795,7 @@ ul.et2_link_string {
   background-color: #FDF9DB;
   max-width: 300px;
   color: black;
-  z-index: 999;
+  z-index: 100;
   -webkit-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
   box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
@@ -1906,7 +1906,7 @@ div.et2_image_tooltipPopup {
 
 /*egw_action_ddHelper*/
 div.et2_egw_action_ddHelper {
-	z-index: 999;
+	z-index: 100;
 }
 /* The last div which shows Ctrl tip to user*/
 div.et2_egw_action_ddHelper_tip {
