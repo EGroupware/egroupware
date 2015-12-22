@@ -28,8 +28,8 @@
 					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
 					<vbox class="addressbookCol1">
 						<vbox id="${row}[id]">
-							<description id="${row}[line2]" no_lang="1"/>
-							<description id="${row}[line1]" no_lang="1"/>
+							<description id="${row}[line2]" no_lang="1" height="15"/>
+							<description id="${row}[line1]" no_lang="1" height="15"/>
 						</vbox>
 						<description value=" " id="${row}[adr_one_locality]" no_lang="1"/>
 					</vbox>
