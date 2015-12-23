@@ -22,7 +22,6 @@
 				<column width="10"/>
 				<column width="80"/>
 				<column width="95%" />
-				<column width="75"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -36,6 +35,7 @@
 						<hbox>
 							<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
 						</hbox>
+						<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]" width="64"/>
 					</vbox>
 					<vbox class="infolog_fullWidth">
 						<hbox class="infoSubRow">
@@ -50,9 +50,6 @@
 							<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b" class="infoDetails"/>
 						</hbox>
 						
-					</vbox>
-					<vbox>
-						<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]" width="64"/>
 					</vbox>
 				</row>
 			</rows>

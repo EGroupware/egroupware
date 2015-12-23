@@ -438,7 +438,7 @@ button#infolog-edit_timestamp {
     min-width: auto;
   }
   div.infoDescRow {
-    height: 15px;
+    height: 40px;
     font-size: 9pt;
     max-width: 99%;
     overflow: hidden;
