@@ -2943,7 +2943,7 @@ app.classes.calendar = AppJS.extend(
 	_et2_view_init: function(_et2, _name)
 	{
 		var hidden = typeof this.state.view !== 'undefined';
-		var all_loaded = true;
+		var all_loaded = this.sidebox_et2 !== null;
 
 		// Avoid home portlets using our templates, and get them right
 		if(_et2.uniqueId.indexOf('portlet') === 0) return;
