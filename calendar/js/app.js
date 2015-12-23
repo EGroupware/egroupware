@@ -1823,6 +1823,7 @@ app.classes.calendar = AppJS.extend(
 			switch(state.state.view)
 			{
 				case 'day':
+				case 'day4':
 					grid_count = state.state.owner.length > parseInt(this.egw.preference('day_consolidate','calendar')) ? 1 : state.state.owner.length;
 					break;
 				case 'week':
@@ -3316,6 +3317,11 @@ jQuery.extend(app.classes.calendar,{
 			group_by: function(state) {
 				return state.sortby ? state.sortby : 0;
 			},
+			// Note: Planner has no inherent timespan as day or week does, so
+			// it's a little more messy to determine what timespan to show.  For
+			// best results, we either leave the dates as set (planner_days = 0)
+			// to inherit from the previous view, or set either planner_days or
+			// start & end date.
 			start_date: function(state) {
 				// If there is no planner_days and a start date, just keep it
 				if(!state.planner_days && state.first && (
@@ -3328,6 +3334,11 @@ jQuery.extend(app.classes.calendar,{
 				if(state.sortby && state.sortby === 'month')
 				{
 					d.setUTCDate(1);
+				}
+				else if (state.days)
+				{
+					// Don't jump to start of week, coming from day or day4
+					return d;
 				}
 				else if (!state.planner_days)
 				{
@@ -3375,6 +3386,12 @@ jQuery.extend(app.classes.calendar,{
 				{
 					d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
 					delete state.planner_days;
+				}
+				else if (state.days)
+				{
+					// This one comes from a grid view, but we'll use it
+					d.setUTCDate(d.getUTCDate() + parseInt(state.days)-1);
+					delete state.days;
 				}
 				// Avoid killing the view by not showing more than 100 days
 				else if (state.last && state.last > state.first && (new Date(state.last) - new Date(state.first)) < (100 * 24 * 3600 * 1000) )
