@@ -5,6 +5,7 @@
 	<template id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
+				<column width="20"/>
 				<column/>
 				<column width="80"/>
 			</columns>
@@ -12,16 +13,21 @@
 				<row class="th">
 					
 				</row>
-				<row class="$row_cont[class]">
+				<row>
+					<description class="$row_cont[class] mobile_cat_col"/>
 					<vbox>
-						<url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>
-						<description id="${row}[subject]" no_lang="1"/>
+						<url-email id="${row}[fromaddress]" contact_plus = "true"  class="$row_cont[class]" readonly="true"/>
+						<hbox>
+							<description  class="status_img $row_cont[class]"/>
+							<description id="${row}[subject]" no_lang="1" class="$row_cont[class]" />
+						</hbox>
 					</vbox>
 					<vbox>
-						<time_or_date align="center" id="${row}[date]" readonly="true"/>
+						<hbox>
+							<time_or_date align="center"  class="$row_cont[class]" id="${row}[date]" readonly="true"/>
+						</hbox>
 						<hbox>
 							<html id="${row}[attachments]"/>
-							<description class="status_img"/>
 						</hbox>
 					</vbox>	
 				</row>
