@@ -2997,10 +2997,6 @@ app.classes.calendar = AppJS.extend(
 			{
 				$j(_et2.DOMContainer).hide();
 			}
-			if(all_loaded)
-			{
-				this.setState({state:this.state});
-			}
 		}
 		else
 		{
@@ -3017,6 +3013,10 @@ app.classes.calendar = AppJS.extend(
 					}
 				},this.sidebox_hooked_templates.length -1));
 			}
+		}
+		if(all_loaded)
+		{
+			this.setState({state:this.state});
 		}
 	},
 
