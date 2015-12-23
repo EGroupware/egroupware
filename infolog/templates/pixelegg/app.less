@@ -429,6 +429,9 @@ button#infolog-edit_timestamp {
 	label[id^='infolog-index_'][id$='info_enddate]'] {
 		.mob-fontsize-xs;
 		float:right;
+		time {
+			font-weight: normal;
+		}
 	}
 	label[id^='infolog-index_'][id$='info_startdate]']{
 		float: left;
@@ -452,9 +455,6 @@ button#infolog-edit_timestamp {
 		white-space: nowrap !important;
 	}
 	.infoSubRow {
-		span:last-child {
-			width:20%;
-		}
 		span[id^='infolog-index_'][id$='info_subject]'] {
 			white-space: nowrap;
 		}
@@ -464,7 +464,7 @@ button#infolog-edit_timestamp {
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		width: 70%;
+		width: 100%;
 		.mob-fontsize-s;
 		font-weight: normal;
 	}
@@ -474,6 +474,9 @@ button#infolog-edit_timestamp {
 	}
 	tr.infolog_rowHasParent > td:first-child {
 		background: none !important;
+	}
+	div.et2_vbox.infolog_CompletedClmn {
+		display: table-caption;
 	}
 }
 

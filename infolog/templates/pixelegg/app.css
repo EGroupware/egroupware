@@ -454,8 +454,11 @@ button#infolog-edit_timestamp {
     white-space: nowrap !important;
   }
   label[id^='infolog-index_'][id$='info_enddate]'] {
-    font-size: 9pt;
+    font-size: 8pt;
     float: right;
+  }
+  label[id^='infolog-index_'][id$='info_enddate]'] time {
+    font-weight: normal;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] {
     float: left;
@@ -477,9 +480,6 @@ button#infolog-edit_timestamp {
   ul[id^='infolog-index_'][id$='filelinks]'] {
     white-space: nowrap !important;
   }
-  .infoSubRow span:last-child {
-    width: 20%;
-  }
   .infoSubRow span[id^='infolog-index_'][id$='info_subject]'] {
     white-space: nowrap;
   }
@@ -487,7 +487,7 @@ button#infolog-edit_timestamp {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 70%;
+    width: 100%;
     font-size: 9pt;
     font-weight: normal;
   }
@@ -497,6 +497,9 @@ button#infolog-edit_timestamp {
   }
   tr.infolog_rowHasParent > td:first-child {
     background: none !important;
+  }
+  div.et2_vbox.infolog_CompletedClmn {
+    display: table-caption;
   }
 }
 /**/

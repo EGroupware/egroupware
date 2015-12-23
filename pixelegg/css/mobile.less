@@ -11,7 +11,7 @@
  */
 
 @import "pixelegg.less";
-
+@import (reference) "../less/def_mobile.less";
 /********************************/
 /*								*/
 /*		MEDIA DEFINITION		*/
@@ -126,7 +126,7 @@
 					touch-action:initial;
 					td time, td.et2_date , td.et2_date_ro{
 						float: right;
-						font-size: 10px;
+						.mob-fontsize-s;
 					}
 					td {
 						position: relative;
@@ -1286,6 +1286,9 @@
 							}
 							time.et2_label, span.mobile_cat_col {
 								padding: 0;
+							}
+							div.et2_progress {
+								margin:0;
 							}
 						}
 					}
