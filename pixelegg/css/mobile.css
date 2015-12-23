@@ -1680,7 +1680,16 @@ span.ui-icon-search {
 .ui-dialog-buttonpane {
   background-color: #679fd2;
 }
-.ui-dialog-buttonset button {
+.ui-dialog-buttonset button.ui-button-text-only {
+  background-color: #cdcdcd;
+  background: inherit;
+  color: #000000 !important;
+  font-weight: normal !important;
+}
+.ui-dialog-buttonset button.ui-button-text-only:hover {
+  background-color: #b4b4b4;
+}
+.ui-dialog-buttonset button.ui-button {
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -1706,18 +1715,9 @@ span.ui-icon-search {
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
-.ui-dialog-buttonset button:hover {
+.ui-dialog-buttonset button.ui-button:hover {
   background-color: #b4b4b4;
   color: #1e1e1e;
-}
-.ui-dialog-buttonset button.ui-button-text-only {
-  background-color: #cdcdcd;
-  background: inherit;
-  color: #000000 !important;
-  font-weight: normal !important;
-}
-.ui-dialog-buttonset button.ui-button-text-only:hover {
-  background-color: #b4b4b4;
 }
 /*###########################################*/
 /*Dialog: calendar edit series*/
@@ -2194,6 +2194,7 @@ body {
  * @package pixelegg
  * @version $Id$
  */
+@import-once "def_colors.less";
 #socialMedia {
   position: relative;
   bottom: 20px;
@@ -4271,7 +4272,7 @@ td.message span.message {
   text-decoration: none;
   height: 32px;
   /*font-size: 1.1em;*/
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
@@ -4295,7 +4296,7 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
   padding-right: 20px;
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
@@ -4691,7 +4692,7 @@ td.message span.message {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
@@ -4863,7 +4864,7 @@ td.message span.message {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 15px;
   line-height: 1em;
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   background-image: url(../images/arrow_left.png);
   background-repeat: no-repeat;
   background-position: left center;
@@ -7178,7 +7179,7 @@ span.egw_tutorial_title {
     margin: 5px 0px 3px 5px;
     padding: 0px 0px 0px 15px;
     line-height: 1em;
-    font-size: 12.1px;
+    font-size: 12.100000000000001px;
     background-image: url(../images/arrow_left.png);
     background-repeat: no-repeat;
     background-position: left center;

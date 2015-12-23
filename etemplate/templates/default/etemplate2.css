@@ -247,8 +247,8 @@ button#cancel {
 	background-position: left;
 }
 .ui-dialog-buttonset button {
-	padding-left: 6px !important;
-	background-position: left !important;
+	padding-left: 6px;
+	background-position: left;
 	background-repeat: no-repeat !important;
 }
 /**

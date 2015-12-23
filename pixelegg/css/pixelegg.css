@@ -1669,7 +1669,16 @@ span.ui-icon-search {
 .ui-dialog-buttonpane {
   background-color: #679fd2;
 }
-.ui-dialog-buttonset button {
+.ui-dialog-buttonset button.ui-button-text-only {
+  background-color: #cdcdcd;
+  background: inherit;
+  color: #000000 !important;
+  font-weight: normal !important;
+}
+.ui-dialog-buttonset button.ui-button-text-only:hover {
+  background-color: #b4b4b4;
+}
+.ui-dialog-buttonset button.ui-button {
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -1695,18 +1704,9 @@ span.ui-icon-search {
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
-.ui-dialog-buttonset button:hover {
+.ui-dialog-buttonset button.ui-button:hover {
   background-color: #b4b4b4;
   color: #1e1e1e;
-}
-.ui-dialog-buttonset button.ui-button-text-only {
-  background-color: #cdcdcd;
-  background: inherit;
-  color: #000000 !important;
-  font-weight: normal !important;
-}
-.ui-dialog-buttonset button.ui-button-text-only:hover {
-  background-color: #b4b4b4;
 }
 /*###########################################*/
 /*Dialog: calendar edit series*/

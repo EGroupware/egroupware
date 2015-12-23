@@ -314,11 +314,6 @@ span.ui-icon-search{
 
 .ui-dialog-buttonset{
 
-    button{
-        .Complete_Button_text_icon_before;
-
-        &:hover{ background-color: @gray_30; color: @gray_90;}
-    }
 
     button.ui-button-text-only {background-color: @gray_20;
                                 background: inherit;
@@ -326,6 +321,11 @@ span.ui-icon-search{
                                 font-weight: normal !important;
 
                                 &:hover{ background-color: @gray_30;}
+    }
+    button.ui-button{
+        .Complete_Button_text_icon_before;
+
+        &:hover{ background-color: @gray_30; color: @gray_90;}
     }
 }
 
