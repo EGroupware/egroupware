@@ -455,9 +455,10 @@ button#infolog-edit_timestamp {
   }
   label[id^='infolog-index_'][id$='info_enddate]'] {
     font-size: 8pt;
-    float: right;
+    float: left;
   }
   label[id^='infolog-index_'][id$='info_enddate]'] time {
+    float: left;
     font-weight: normal;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] {
