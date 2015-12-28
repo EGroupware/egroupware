@@ -227,12 +227,16 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			sprintf("%02d",this._parent.date_helper.get_date());
 
 		// Set label
-		// Add timezone offset back in, or formatDate will lose those hours
-		var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
-		var date_string = this._parent._children.length === 1 ?
-			app.calendar.date.long_date(formatDate,false, false, true) :
-			jQuery.datepicker.formatDate('DD dd',formatDate);
-		this.title.text(date_string)
+		if(!this.options.label)
+		{
+			// Add timezone offset back in, or formatDate will lose those hours
+			var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
+			var date_string = this._parent._children.length === 1 ?
+				app.calendar.date.long_date(formatDate,false, false, true) :
+				jQuery.datepicker.formatDate('DD dd',formatDate);
+			this.title.text(date_string);
+		}
+		this.title
 			.attr("data-date", new_date);
 		this.header
 			.attr('data-date',new_date)
@@ -294,7 +298,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
 
 		this.options.owner = _owner;
-		this.div.attr('data-sortable-id', this.options.owner);
+		this.title
+			.attr("data-owner", this.options.owner);
 
 		// Register for updates on events for this day
 		egw.dataRegisterUID(
@@ -328,6 +333,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		this._update_events(events);
 	},
 
+	set_label: function(label) {
+		this.options.label = label;
+		this.title.text(label);
+	},
 	set_left: function(left) {
 		// Maybe?
 		window.setTimeout(jQuery.proxy(function() {

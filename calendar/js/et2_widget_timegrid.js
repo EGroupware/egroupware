@@ -12,7 +12,7 @@
 "use strict";
 
 /*egw:uses
-	/etemplate/js/et2_core_valueWidget;
+	/calendar/js/et2_widget_view.js;
 	/calendar/js/et2_widget_daycol.js;
 	/calendar/js/et2_widget_event.js;
 */
@@ -24,19 +24,11 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
 {
 	createNamespace: true,
 	
 	attributes: {
-		start_date: {
-			name: "Start date",
-			type: "any"
-		},
-		end_date: {
-			name: "End date",
-			type: "any"
-		},
 		value: {
 			type: "any",
 			description: "An array of events, indexed by date (Ymd format)."
@@ -65,13 +57,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			default: parseInt(egw.preference('interval','calendar')) || 30,
 			description: "How many minutes per row"
 		},
-		owner: {
-			name: "Owner",
-			type: "any", // Integer, or array of integers
-			default: 0,
-			description: "Account ID number of the calendar owner, if not the current user"
-		},
-
 		"onchange": {
 			"name": "onchange",
 			"type": "js",
@@ -118,10 +103,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 			.addClass("calendar_calDayCols")
 			.appendTo(this.scrolling);
 
-		// Used for its date calculations
-		this.date_helper = et2_createWidget('date',{},null);
-		this.date_helper.loadingFinished();
-
 		// Used for owners
 		this.owner = et2_createWidget('select-account_ro',{},this);
 
@@ -165,10 +146,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		this.days = null;
 		this.scrolling = null;
 		this._labelContainer = null;
-
-		// date_helper has no parent, so we must explicitly remove it
-		this.date_helper.destroy();
-		this.date_helper = null;
 
 		// Stop the invalidate timer
 		if(this.update_timer)
@@ -510,7 +487,7 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	 * The whole grid is not regenerated because times aren't expected to change,
 	 * just the days.
 	 *
-	 * @param {boolean} trigger=false Trigger an event once things are done.
+	 * @param {boolean} [trigger=false] Trigger an event once things are done.
 	 *	Waiting until invalidate completes prevents 2 updates when changing the date range.
 	 * @returns {undefined}
 	 */
@@ -740,21 +717,25 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		{
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
-		var day_width = ( this.days.width()/this.day_list.length);
+		// For a single day, we show each owner in their own daycol
+		var daily_owner = this.day_list.length === 1 && this.options.owner.length < parseInt(egw.preference('day_consolidate','calendar'));
+		var daycols_needed = daily_owner ? this.options.owner.length : this.day_list.length;
+		var day_width = ( Math.min( $j(this.getInstanceManager().DOMContainer).width(),this.days.width())/daycols_needed);
 		if(!day_width || !this.day_list)
 		{
 			// Hidden on another tab, or no days for some reason
 			var dim = egw.getHiddenDimensions(this.days, false);
-			day_width = ( dim.w /Math.max(this.day_list.length,1));
+			day_width = ( dim.w /Math.max(daycols_needed,1));
 		}
 
 		// Create any needed widgets - otherwise, we'll just recycle
 		// Add any needed day widgets (now showing more days)
 		var add_index = 0;
 		var before = true;
-		while(this.day_list.length > this.day_widgets.length)
+
+		while(daycols_needed > this.day_widgets.length)
 		{
-			var existing_index = this.day_widgets[add_index] ? this.day_list.indexOf(this.day_widgets[add_index].options.date) : -1;
+			var existing_index = this.day_widgets[add_index] && !daily_owner ? this.day_list.indexOf(this.day_widgets[add_index].options.date) : -1;
 			before = existing_index > add_index;
 			
 			var day = et2_createWidget('calendar-daycol',{
@@ -779,16 +760,19 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		// Remove any extra day widgets (now showing less)
 		var delete_index = this.day_widgets.length - 1;
 		before = false;
-		while(this.day_widgets.length > this.day_list.length)
+		while(this.day_widgets.length > daycols_needed)
 		{
 			// If we're going down to an existing one, just keep it for cool CSS animation
-			while(this.day_list.indexOf(this.day_widgets[delete_index].options.date) > -1)
+			while(delete_index > 1 && this.day_list.indexOf(this.day_widgets[delete_index].options.date) > -1)
 			{
 				delete_index--;
 				before = true;
 			}
+			if(delete_index < 0) delete_index = 0;
 			// Wait until any animations or other timeouts are done
 			window.setTimeout(jQuery.proxy(function() {
+				this.div.hide();
+				this.header.hide();
 				this.free();
 			},this.day_widgets[delete_index]),1000);
 
@@ -801,16 +785,27 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		}
 
 		// Create / update day widgets with dates and data
-		for(var i = 0; i < this.day_list.length; i++)
+		for(var i = 0; i < this.day_widgets.length; i++)
 		{
 			day = this.day_widgets[i];
 			
 			// Position
 			day.set_left((day_width * i) + 'px');
-			
-			day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
-			day.set_owner(this.options.owner);
-			day.set_id(this.day_list[i]);
+			if(daily_owner)
+			{
+				day.set_date(this.day_list[0], false);
+				day.set_owner(this.options.owner[i]);
+				day.set_id(this.day_list[0]+'-'+this.options.owner[i]);
+				day.set_label(this._get_owner_name(this.options.owner[i]));
+			}
+			else
+			{
+				// Go back to self-calculated date
+				day.set_label('');
+				day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
+				day.set_owner(this.options.owner);
+				day.set_id(this.day_list[i]);
+			}
 			day.set_width(day_width + 'px');
 		}
 		
@@ -1234,73 +1229,6 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 	},
 
 	/**
-	 * Change the start date
-	 * 
-	 * @param {string|number|Date} new_date New starting date
-	 * @returns {undefined}
-	 */
-	set_start_date: function(new_date)
-	{
-		if(!new_date || new_date === null)
-		{
-			throw exception('Invalid start date. ' + new_date.toString());
-		}
-
-		// Use date widget's existing functions to deal
-		if(typeof new_date === "object" || typeof new_date === "string" && new_date.length > 8)
-		{
-			this.date_helper.set_value(new_date);
-		}
-		else if(typeof new_date === "string")
-		{
-			this.date_helper.set_year(new_date.substring(0,4));
-			this.date_helper.set_month(new_date.substring(4,6));
-			this.date_helper.set_date(new_date.substring(6,8));
-		}
-
-		var old_date = this.options.start_date;
-		this.options.start_date = this.date_helper.getValue();
-
-		if(old_date !== this.options.start_date && this.isAttached())
-		{
-			this.invalidate(true);
-		}
-	},
-
-	/**
-	 * Change the end date
-	 *
-	 * @param {string|number|Date} new_date New end date
-	 * @returns {undefined}
-	 */
-	set_end_date: function(new_date)
-	{
-		if(!new_date || new_date === null)
-		{
-			throw exception('Invalid end date. ' + new_date.toString());
-		}
-		// Use date widget's existing functions to deal
-		if(typeof new_date === "object" || typeof new_date === "string" && new_date.length > 8)
-		{
-			this.date_helper.set_value(new_date);
-		}
-		else if(typeof new_date === "string")
-		{
-			this.date_helper.set_year(new_date.substring(0,4));
-			this.date_helper.set_month(new_date.substring(4,6));
-			this.date_helper.set_date(new_date.substring(6,8));
-		}
-
-		var old_date = this.options.end_date;
-		this.options.end_date = this.date_helper.getValue();
-
-		if(old_date !== this.options.end_date && this.isAttached())
-		{
-			this.invalidate(true);
-		}
-	},
-
-	/**
 	 * Set which user owns this.  Owner is passed along to the individual
 	 * days.
 	 *
@@ -1640,9 +1568,14 @@ var et2_calendar_timegrid = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResiz
 		}
 
 		// Try to resize width, though animations cause problems
-		var day_width = ( $j(this.getInstanceManager().DOMContainer).width() - (this.div.innerWidth() - this.days.innerWidth()))/this.day_list.length;
+		var total_width = ( $j(this.getInstanceManager().DOMContainer).width() - (
+			this.days.innerWidth() ? this.div.innerWidth() - this.days.innerWidth() : 0
+		));
+		// Set the max width to avoid animations screwing up the width
+		this.div.css('max-width',$j(this.getInstanceManager().DOMContainer).width());
+		var day_width = (total_width > 0 ? total_width : $j(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
 		// update day widgets
-		for(var i = 0; i < this.day_list.length; i++)
+		for(var i = 0; i < this.day_widgets.length; i++)
 		{
 			var day = this.day_widgets[i];
 

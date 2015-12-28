@@ -1824,7 +1824,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				case 'day':
 				case 'day4':
-					grid_count = state.state.owner.length >= parseInt(this.egw.preference('day_consolidate','calendar')) ? 1 : state.state.owner.length;
+					grid_count = 1
 					break;
 				case 'week':
 					grid_count = state.state.owner.length >= parseInt(this.egw.preference('week_consolidate','calendar')) ? 1 : state.state.owner.length;
@@ -1900,7 +1900,7 @@ app.classes.calendar = AppJS.extend(
 						{
 							widget.set_show_weekend(view.show_weekend(state.state));
 						}
-					},this, et2_valueWidget);
+					},this, et2_calendar_view);
 
 					// Granularity needs to be done seperately
 					grid.iterateOver(function(widget) {
@@ -1908,7 +1908,7 @@ app.classes.calendar = AppJS.extend(
 						{
 							widget.set_granularity(view.granularity(state.state));
 						}
-					},this, et2_valueWidget);
+					},this, et2_calendar_view);
 				}
 			}
 			else
@@ -1931,11 +1931,24 @@ app.classes.calendar = AppJS.extend(
 								{
 									widget['set_'+updater](value);
 								}
-							}, this, et2_valueWidget);
+							}, this, et2_calendar_view);
 						}
 					}
 				}
 				var value = [{start_date: state.state.first, end_date: state.state.last}];
+				// Single day with multiple owners still needs owners split
+				if(state.state.view == 'day' && state.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')))
+				{
+					value = [];
+					for(var i = 0; i < state.state.owner.length; i++)
+					{
+						value.push({
+							start_date: state.state.first,
+							end_date: state.state.last,
+							owner: state.state.owner[i]
+						});
+					}
+				}
 				this._need_data(value,state.state);
 			}
 			// Include first & last dates in state, mostly for server side processing
@@ -1946,7 +1959,6 @@ app.classes.calendar = AppJS.extend(
 			for(var i = 0; i < view.etemplates.length; i++)
 			{
 				$j(view.etemplates[i].DOMContainer).show();
-				view.etemplates[i].resize();
 			}
 			// Toggle todos
 			if(state.state.view == 'day' || this.state.view == 'day')
@@ -2343,7 +2355,8 @@ app.classes.calendar = AppJS.extend(
 	 * Take the date range(s) in the value and decide if we need to fetch data
 	 * for the date ranges, or if they're already cached fill them in.
 	 *
-	 * @param {
+	 * @param {Object} value
+	 * @param {Object} state
 	 */
 	_need_data: function(value, state)
 	{
@@ -2522,7 +2535,7 @@ app.classes.calendar = AppJS.extend(
 									}
 								} catch(e) {debugger;}
 							}
-							
+
 							app.calendar.state_update_in_progress = in_progress;
 						}
 					}

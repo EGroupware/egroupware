@@ -12,7 +12,7 @@
 "use strict";
 
 /*egw:uses
-	/etemplate/js/et2_core_valueWidget;
+	/calendar/js/et2_widget_view.js;
 	/calendar/js/et2_widget_planner_row.js;
 	/calendar/js/et2_widget_event.js;
 */
@@ -24,30 +24,16 @@
  * @augments et2_valueWidget
  * @class
  */
-var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
 {
 	createNamespace: true,
 	
 	attributes: {
-		start_date: {
-			name: "Start date",
-			type: "any"
-		},
-		end_date: {
-			name: "End date",
-			type: "any"
-		},
 		group_by: {
 			name: "Group by",
 			type: "string", // or category ID
 			default: "0",
 			description: "Display planner by 'user', 'month', or the given category"
-		},
-		owner: {
-			name: "Owner",
-			type: "any", // Integer, or array of integers
-			default: 0,
-			description: "Account ID number of the calendar owner, if not the current user"
 		},
 		filter: {
 			name: "Filter",
@@ -103,10 +89,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 		this.vertical_bar = $j(document.createElement("div"))
 			.addClass('verticalBar')
 			.appendTo(this.div);
-		
-		// Used for its date calculations
-		this.date_helper = et2_createWidget('date-time',{},null);
-		this.date_helper.loadingFinished();
 
 		this.value = [];
 
@@ -128,10 +110,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			egw.dataUnregisterUID(this.registeredCallbacks[i],false,this);
 		}
 
-		// date_helper has no parent, so we must explicitly remove it
-		this.date_helper.destroy();
-		this.date_helper = null;
-		
 		// Stop the invalidate timer
 		if(this.update_timer)
 		{
@@ -1632,76 +1610,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 	},
 
 	/**
-	 * Change the start date
-	 * 
-	 * @param {string|number|Date} new_date New starting date
-	 * @returns {undefined}
-	 */
-	set_start_date: function(new_date)
-	{
-		if(!new_date || new_date === null)
-		{
-			throw new Error('Invalid start date. ' + new_date.toString());
-		}
-
-		// Use date widget's existing functions to deal
-		if(typeof new_date === "object" || typeof new_date === "string" && new_date.length > 8)
-		{
-			this.date_helper.set_value(new_date);
-		}
-		else if(typeof new_date === "string")
-		{
-			this.date_helper.set_year(new_date.substring(0,4));
-			this.date_helper.set_month(new_date.substring(4,6));
-			this.date_helper.set_date(new_date.substring(6,8));
-		}
-
-		var old_date = this.options.start_date;
-		this.options.start_date = new Date(this.date_helper.getValue());
-
-		if(old_date !== this.options.start_date && this.isAttached())
-		{
-			this.invalidate(true);
-		}
-	},
-
-	/**
-	 * Change the end date
-	 *
-	 * @param {string|number|Date} new_date New end date
-	 * @returns {undefined}
-	 */
-	set_end_date: function(new_date)
-	{
-		if(!new_date || new_date === null)
-		{
-			throw new Error('Invalid end date. ' + new_date.toString());
-		}
-		// Use date widget's existing functions to deal
-		if(typeof new_date === "object" || typeof new_date === "string" && new_date.length > 8)
-		{
-			this.date_helper.set_value(new_date);
-		}
-		else if(typeof new_date === "string")
-		{
-			this.date_helper.set_year(new_date.substring(0,4));
-			this.date_helper.set_month(new_date.substring(4,6));
-			this.date_helper.set_date(new_date.substring(6,8));
-		}
-
-		this.date_helper.set_hours(23);
-		this.date_helper.set_minutes(59);
-		this.date_helper.date.setSeconds(59);
-		var old_date = this.options.end_date;
-		this.options.end_date = new Date(this.date_helper.getValue());
-
-		if(old_date !== this.options.end_date && this.isAttached())
-		{
-			this.invalidate(true);
-		}
-	},
-
-	/**
 	 * Change how the planner is grouped
 	 * 
 	 * @param {string|number} group_by 'user', 'month', or an integer category ID
@@ -1721,37 +1629,6 @@ var et2_calendar_planner = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResize
 			this.invalidate(true);
 		}
 	},
-
-	/**
-	 * Set which users to display when filtering, and for rows when grouping by user.
-	 *
-	 * @param {number|number[]} _owner Account ID
-	 */
-	set_owner: function(_owner)
-	{
-		var old = this.options.owner;
-		if(!jQuery.isArray(_owner))
-		{
-			if(typeof _owner === "string")
-			{
-				_owner = _owner.split(',');
-			}
-			else
-			{
-				_owner = [_owner];
-			}
-		}
-		else
-		{
-			_owner = jQuery.extend([],_owner);
-		}
-		this.options.owner = _owner;
-		if(old !== this.options.owner && this.isAttached())
-		{
-			this.invalidate(true);
-		}
-	},
-
 
 	/**
 	 * Call change handler, if set
