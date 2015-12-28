@@ -1041,6 +1041,8 @@ class infolog_ui
 		// Types
 		$types = $this->get_validtypes();
 		$types_add = array();
+		// Do not add deleted type to add or change menus
+		unset($types['delete']);
 		foreach($types as $type => &$data)
 		{
 			if ($type=='email') continue;//requirement by sales that it should not be shown in right - click - action dialog
