@@ -272,8 +272,8 @@ app.classes.calendar = AppJS.extend(
 				{
 					var multiple_owner = typeof this.state.owner != 'string' &&
 						this.state.owner.length > 1 &&
-						(this.state.view == 'day' && this.state.owner.length <= parseInt(this.egw.preference('day_consolidate','calendar')) ||
-						this.state.view == 'week' && this.state.owner.length <= parseInt(this.egw.preference('week_consolidate','calendar')));
+						(this.state.view == 'day' && this.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')) ||
+						this.state.view == 'week' && this.state.owner.length < parseInt(this.egw.preference('week_consolidate','calendar')));
 					
 					// Make sure it's a string
 					if(_id) _id = ''+_id;
@@ -455,8 +455,8 @@ app.classes.calendar = AppJS.extend(
 
 		// Enable or disable
 		if(state.owner.length > 1 && (
-			state.view == 'day' && state.owner.length <= parseInt(egw.preference('day_consolidate','calendar')) ||
-			state.view == 'week' && state.owner.length <= parseInt(egw.preference('week_consolidate','calendar'))
+			state.view == 'day' && state.owner.length < parseInt(egw.preference('day_consolidate','calendar')) ||
+			state.view == 'week' && state.owner.length < parseInt(egw.preference('week_consolidate','calendar'))
 		))
 		{
 			sortable.sortable('enable')
@@ -1824,10 +1824,10 @@ app.classes.calendar = AppJS.extend(
 			{
 				case 'day':
 				case 'day4':
-					grid_count = state.state.owner.length > parseInt(this.egw.preference('day_consolidate','calendar')) ? 1 : state.state.owner.length;
+					grid_count = state.state.owner.length >= parseInt(this.egw.preference('day_consolidate','calendar')) ? 1 : state.state.owner.length;
 					break;
 				case 'week':
-					grid_count = state.state.owner.length > parseInt(this.egw.preference('week_consolidate','calendar')) ? 1 : state.state.owner.length;
+					grid_count = state.state.owner.length >= parseInt(this.egw.preference('week_consolidate','calendar')) ? 1 : state.state.owner.length;
 					break;
 				case 'weekN':
 					grid_count = parseInt(this.egw.preference('multiple_weeks','calendar')) || 3;
@@ -3109,11 +3109,9 @@ app.classes.calendar = AppJS.extend(
 		},
 		/**
 		 * How big or small are the displayed time chunks?
-		 * We automatically scale the user's preference based on how many rows / calendars are shown.
 		 */
 		granularity: function(state) {
-			return Math.min(240,(state.owner.length <= (egw.config('calview_no_consolidate','phpgwapi') || 5) ? state.owner.length : 1)
-				* (parseInt(egw.preference('interval','calendar')) || 30));
+			return parseInt(egw.preference('interval','calendar')) || 30;
 		},
 		extend: function(sub)
 		{
