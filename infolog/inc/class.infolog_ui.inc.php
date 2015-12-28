@@ -1044,9 +1044,11 @@ class infolog_ui
 		foreach($types as $type => &$data)
 		{
 			if ($type=='email') continue;//requirement by sales that it should not be shown in right - click - action dialog
+
+			$image_exists = common::image('infolog',$type);
 			$data = array(
 				'caption' => $data,
-				'icon' => $type,
+				'icon' => $image_exists ? $type : 'infolog/navbar',
 			);
 			$types_add[$type] = $data + array(
 				'onExecute' => "javaScript:app.infolog.add_action_handler"
@@ -1057,9 +1059,10 @@ class infolog_ui
 		$statis = $this->bo->get_status($query['col_filter']['info_type'], $icons);
 		foreach($statis as $type => &$data)
 		{
+			$image_exists = common::image('infolog',$icons[$type]);
 			$data = array(
 				'caption' => $data,
-				'icon' => $icons[$type],
+				'icon' => $image_exists ? $icons[$type] : 'infolog/status',
 			);
 		}
 
