@@ -842,7 +842,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	_drawRow: function(key, label, events, start, end)
 	{
 		var row = et2_createWidget('calendar-planner_row',{
-				id: key,
+				id: 'planner_row_'+key,
 				label: label,
 				start_date: start,
 				end_date: end,
@@ -1607,6 +1607,32 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		{
 			this.value = events || [];
 		}
+	},
+
+	/**
+	 * Change the start date
+	 * Planner view uses a date object internally
+	 *
+	 * @param {string|number|Date} new_date New starting date
+	 * @returns {undefined}
+	 */
+	set_start_date: function set_start_date(new_date)
+	{
+		this._super.apply(this, arguments);
+		this.options.start_date = new Date(this.options.start_date);
+	},
+
+	/**
+	 * Change the end date
+	 * Planner view uses a date object internally
+	 *
+	 * @param {string|number|Date} new_date New end date
+	 * @returns {undefined}
+	 */
+	set_end_date: function set_end_date(new_date)
+	{
+		this._super.apply(this, arguments);
+		this.options.end_date = new Date(this.options.end_date);
 	},
 
 	/**
