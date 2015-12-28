@@ -718,8 +718,12 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					columns[c][i].div.css('top', top+'%');
 					columns[c][i].div.css('height', height+'%');
-					// Remove spacing from border
-					var border_diff = columns[c][i].div.outerHeight() - columns[c][i].div.height();
+					// Remove spacing from border, but only if visible or the height will be wrong
+					var border_diff = 0;
+					if(columns[c][i].div.is(':visible'))
+					{
+						border_diff = columns[c][i].div.outerHeight() - columns[c][i].div.height();
+					}
 					columns[c][i].div.css('height',columns[c][i].div.height() - border_diff);
 					// This gives the wrong height
 					//columns[c][i].div.outerHeight(height+'%');
