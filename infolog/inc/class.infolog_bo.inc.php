@@ -1363,12 +1363,14 @@ class infolog_bo
 				$edit = egw_link::edit('infolog',$info['info_id'], $size);
 				$edit['size'] = $size;
 				$content=array();
-				foreach ($icons = array(
-					$info['info_type']   => 'infolog',
-					$this->status[$info['info_type']][$info['info_status']] => 'infolog',
-				) as $name => $app)
+				$status = $this->status[$info['info_type']][$info['info_status']];
+				$icons = array();
+				foreach(array(
+					$info['info_type'] => 'navbar',
+					$status => 'status'
+				) as $icon => $default)
 				{
-					$content[] = html::image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
+					$icons[common::image('infolog',$icon) ? $icon : $default] = $icon;
 				}
 				$content[] = html::a_href($title,$view);
 				$html = html::table(array(1 => $content));

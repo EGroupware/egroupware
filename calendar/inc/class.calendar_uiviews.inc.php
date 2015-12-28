@@ -878,9 +878,9 @@ class calendar_uiviews extends calendar_ui
 							break;
 						}
 						$icons = '';
-						foreach($todo['icons'] as $name => $app)
+						foreach($todo['icons'] as $name => $alt)
 						{
-							$icons .= ($icons?' ':'').$GLOBALS['egw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"');
+							$icons .= ($icons?' ':'').$GLOBALS['egw']->html->image('infolog',$name,lang($alt),'border="0" width="15" height="15"');
 						}
 						$todo['icons'] = $icons;
 						$class = $class == 'row_on' ? 'row_off' : 'row_on';
