@@ -601,7 +601,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 						egw.json(
 							this.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
 							['select-cat',',,,calendar,'+cat_id[i]],
-							function(data) {labels = labels.concat(data);}
+							function(data) {
+								labels = labels.concat(data);
+							}
 						).sendRequest(false);
 					}
 				}
@@ -613,6 +615,10 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 						cat_id: labels[i].id,
 						main: labels[i].value==labels[i].main
 					};
+					if(labels[i].children && labels[i].children.length)
+					{
+						labels[i].data.has_children = true;
+					}
 				}
 				return labels;
 			},

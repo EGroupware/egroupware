@@ -47,7 +47,6 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			.css('width',this.options.width);
 		this.title = $j(document.createElement('div'))
 			.addClass("calendar_plannerRowHeader")
-			.css('width', '15%')
 			.appendTo(this.div);
 		this.rows = $j(document.createElement('div'))
 			.addClass("calendar_eventRows")

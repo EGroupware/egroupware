@@ -570,7 +570,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 					$options[$cat['id']] = array(
 						'label' => $s,
 						'title' => $cat['description'],
-						'main'  => (int)$cat['main']
+						// These are extra info for easy dealing with categories
+						// client side, without extra loading
+						'main'  => (int)$cat['main'],
+						'children'	=> $cat['children']
 					);
 					// Send data too
 					if(is_array($cat['data']))
