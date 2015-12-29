@@ -297,7 +297,7 @@ class calendar_hooks
 				'name'  => 'day_consolidate',
 				'values'=> $consolidated,
 				'help'  => 'How many seperate calendars to show before merging them together',
-				'default'=> 5
+				'default'=> 6
 			),
 			'week_consolidate' => array(
 				'type'  => 'select',
@@ -305,7 +305,7 @@ class calendar_hooks
 				'name'  => 'week_consolidate',
 				'values'=> $consolidated,
 				'help'  => 'How many seperate calendars to show before merging them together',
-				'default'=> 3
+				'default'=> 4
 			),
 			'display_holidays_event' => array(
 				'type'   => 'select',
