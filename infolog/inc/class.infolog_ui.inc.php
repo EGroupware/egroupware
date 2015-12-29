@@ -1045,8 +1045,6 @@ class infolog_ui
 		unset($types['delete']);
 		foreach($types as $type => &$data)
 		{
-			if ($type=='email') continue;//requirement by sales that it should not be shown in right - click - action dialog
-
 			$image_exists = common::image('infolog',$type);
 			$data = array(
 				'caption' => $data,
