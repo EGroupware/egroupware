@@ -2654,7 +2654,8 @@ class calendar_uiviews extends calendar_ui
 				$action['enabled'] = 'javaScript:app.calendar.is_event';
 			}
 		}
-
+		$actions['add']['open'] = '{"app":"calendar","type":"add"}';
+		$actions['add']['onExecute'] =  'javaScript:app.calendar.action_open';
 		$actions['copy']['open'] = '{"app": "calendar", "type": "add", "extra": "cal_id=$id&action=copy"}';
 		$actions['copy']['onExecute'] = 'javaScript:app.calendar.action_open';
 
