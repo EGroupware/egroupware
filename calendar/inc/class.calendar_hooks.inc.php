@@ -184,6 +184,10 @@ class calendar_hooks
 			45	=> '45',
 			60	=> '60'
 		);
+		$default_participants = array(
+			0 => lang('Just me'),
+			'selected' => lang('Selected users/groups')
+		);
 		$defaultresource_sel = array(
 			'resources_conflict'    => lang('resources with conflict detection'),
 			'resources_without_conflict'    => lang('resources except conflicting ones'),
@@ -382,6 +386,16 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 60,
+			),
+			'default_participant' => array(
+				'type'	=> 'select',
+				'label'	=> 'New event participants',
+				'name'	=> 'default_participant',
+				'values'=>	$default_participants,
+				'help'	=> 'Participants automatically added to new events',
+				'default'	=> 0,
+				'xmlrpc' => False,
+				'admin'  => False
 			),
 			'default-alarm' => array(
 				'type'   => 'date-duration',//'select',

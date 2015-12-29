@@ -87,7 +87,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		else
 		{
-			$owner = $this->owner;
+			$owner = !$this->cal_prefs['default_participant'] ? $this->user : $this->owner;
 		}
 
 		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' ||
@@ -115,9 +115,6 @@ class calendar_uiforms extends calendar_ui
 			$owner = $this->user;
 		}
 		//error_log("this->owner=$this->owner, _GET[owner]=$_GET[owner], user=$this->user => owner=$owner, extra_participants=".implode(',',$extra_participants).")");
-
-		// by default include the owner as participant (the user can remove him)
-		$extra_participants[] = $owner;
 
 		if(isset($_GET['start']))
 		{
@@ -168,8 +165,8 @@ class calendar_uiforms extends calendar_ui
 		}
 		if (!$participants)	// if all participants got removed, include current user
 		{
-			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
-		}
+				$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
+			}
 		if(isset($_GET['cat_id']))
 		{
 			$cat_id = explode(',',$_GET['cat_id']);
