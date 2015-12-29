@@ -118,6 +118,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		// Update timer, to avoid redrawing twice when changing start & end date
 		this.update_timer = null;
 
+		// Timer to re-scale time to fit
+		this.resize_timer = null;
+
 		this.setDOMNode(this.div[0]);
 	},
 	destroy: function() {
@@ -671,17 +674,18 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 */
 	resizeTimes: function() {
 		// Wait a bit to see if anything else changes, then re-draw the times
-		if(this.resize_timer === null)
+		if(this.resize_timer)
 		{
-			this.resize_timer = window.setTimeout(jQuery.proxy(function() {
-				if(this._resize_times)
-				{
-					this.resize_timer = null;
-
-					this._resizeTimes();
-				}
-			},this),1);
+			window.clearTimeout(this.resize_timer);
 		}
+		this.resize_timer = window.setTimeout(jQuery.proxy(function() {
+			if(this._resizeTimes)
+			{
+				this.resize_timer = null;
+
+				this._resizeTimes();
+			}
+		},this),1);
 	},
 	
 	_resizeTimes: function() {
