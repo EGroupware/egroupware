@@ -137,14 +137,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.options.value = _value;
 
 		// Register for updates
-		var app_id = this.options.value.id + (this.options.value.recur_type ? ':'+
-			(this.options.value.recur_date ? this.options.value.recur_date : this.options.value.start) : '');
-		egw.dataRegisterUID('calendar::'+app_id, function(event) {
+		var app_id = this.options.value.app_id;
+		egw.dataRegisterUID('calendar::'+app_id, function _UID_callback(event) {
 			// Make sure id is a string
-			if(event.id)
-			{
-				event.id = ''+event.id;
-			}
+			this._values_check(event);
+			
 			// Check for changing days in the grid view
 			if(!this._sameday_check(event))
 			{
@@ -155,7 +152,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			
 			// Copy to avoid changes, which may cause nm problems
 			this.options.value = jQuery.extend({},event);
-			this.options.value.date = this._parent.options.date;
+			
+			if(this._parent.options.date)
+			{
+				this.options.value.date = this._parent.options.date;
+			}
 
 			// Let parent position
 			this._parent.position_event(this);
@@ -487,7 +488,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		else
 		{
-			var duration = event.end_m - event.start_m;
+			var duration = event.multiday ? 
+				(event.end - event.start) / 60000 :
+				(event.end_m - event.start_m);
 			if (event.end_m === 24*60-1) ++duration;
 			duration = Math.floor(duration/60) + this.egw().lang('h')+(duration%60 ? duration%60 : '');
 
@@ -507,6 +510,47 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		return timespan;
 	},
 	
+	/**
+	 * Make sure event data has all proper values, and format them as expected
+	 * @param {Object} event
+	 */
+	_values_check: function _values_check(event)
+	{
+		// Make sure ID is a string
+		if(event.id)
+		{
+			event.id = ''+event.id;
+		}
+
+		// Use dates as objects
+		if(typeof event.start !== 'object')
+		{
+			this._parent.date_helper.set_value(event.start);
+			event.start = new Date(this._parent.date_helper.getValue());
+		}
+		if(typeof event.end !== 'object')
+		{
+			this._parent.date_helper.set_value(event.end);
+			event.end = new Date(this._parent.date_helper.getValue());
+		}
+		
+		// We need minutes for durations
+		if(typeof event.start_m === 'undefined')
+		{
+			event.start_m = event.start.getUTCHours() * 60 + event.start.getUTCMinutes();
+			event.end_m = event.end.getUTCHours() * 60 + event.end.getUTCMinutes();
+		}
+		if(typeof event.multiday === 'undefined')
+		{
+			event.multiday = (event.start.getUTCFullYear() !== event.end.getUTCFullYear() ||
+				event.start.getUTCMonth() !== event.end.getUTCMonth() ||
+				event.start.getUTCDate() != event.end.getUTCDate());
+		}
+		if(!event.start.getUTCHours() && !event.start.getUTCMinutes() && event.end.getUTCHours() == 23 && event.end.getUTCMinutes() == 59)
+		{
+			event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
+		}
+	},
 	_sameday_check: function(event)
 	{
 		// Event somehow got orphaned, or deleted
@@ -536,17 +580,21 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		// Update daywise caches
 		var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this._parent.options.owner);
-		var old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
 		var new_daywise = egw.dataGetUIDdata(new_cache_id);
-		var old_daywise = egw.dataGetUIDdata(old_cache_id);
 		new_daywise = new_daywise ? new_daywise.data : [];
-		old_daywise = old_daywise ? old_daywise.data : [];
+		var old_cache_id = false;
+		if(this.options.value && this.options.value.date)
+		{
+			old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
+			var old_daywise = egw.dataGetUIDdata(old_cache_id);
+			old_daywise = old_daywise ? old_daywise.data : [];
+			old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
+			egw.dataStoreUID(old_cache_id,old_daywise);
+		}
 		if (new_daywise.indexOf(event.id) < 0)
 		{
 			new_daywise.push(event.id);
 		}
-		old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
-		egw.dataStoreUID(old_cache_id,old_daywise);
 		egw.dataStoreUID(new_cache_id,new_daywise);
 
 		return false;

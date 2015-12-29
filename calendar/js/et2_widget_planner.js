@@ -684,7 +684,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	invalidate: function(trigger) {
 
 		// Busy
-		if(!this.doInvalidate || this.update_timer) return;
+		if(!this.doInvalidate) return;
 
 		// Wait a bit to see if anything else changes, then re-draw the days
 		if(this.update_timer !== null)

@@ -291,7 +291,9 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 	_spread_events: function()
 	{
 		// Keep it so we don't have to re-do it when the next event asks
-		if(this._cached_rows.length == this._children.length)
+		var cached_length = 0;
+		this._cached_rows.map(function(row) {cached_length+=row.length;});
+		if(cached_length === this._children.length)
 		{
 			return this._cached_rows;
 		}
@@ -300,9 +302,13 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		var rows = [];
 		var row_end = [0];
 
-		var start = this.options.start_date;
-		var end = this.options.end_date;
-
+		// Sort in chronological order, so earliest ones are at the top
+		this._children.sort(function(a,b) {
+			var start = new Date(a.options.value.start) - new Date(b.options.value.start);
+			var end = new Date(a.options.value.end) - new Date(b.options.value.end);
+			return start ? start : end;
+		});
+		
 		for(var n = 0; n < this._children.length; n++)
 		{
 			var event = this._children[n].options.value || false;
@@ -318,7 +324,6 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 			if(typeof event['start_m'] === 'undefined')
 			{
-
 				var day_start = event.start.valueOf() / 1000;
 				var dst_check = new Date(event.start);
 				dst_check.setUTCHours(12);
@@ -342,6 +347,10 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					event['end_m'] = 24*60-1;
 					event['multiday'] = true;
+				}
+				if(!event.start.getUTCHours() && !event.start.getUTCMinutes() && event.end.getUTCHours() == 23 && event.end.getUTCMinutes() == 59)
+				{
+					event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
 				}
 			}
 

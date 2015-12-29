@@ -2998,6 +2998,9 @@ app.classes.calendar = AppJS.extend(
 			var nm = _et2.widgetContainer.getWidgetById('nm');
 			if(nm)
 			{
+				// Avoid unwanted refresh immediately after load
+				nm.controller._grid.doInvalidate = false;
+				
 				nm.set_startdate = jQuery.proxy(function(date) {
 					this.state.first = this.date.toString(new Date(date));
 				},this);
