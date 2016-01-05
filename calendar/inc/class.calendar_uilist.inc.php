@@ -462,9 +462,6 @@ class calendar_uilist extends calendar_ui
 				$event['edit_link'] = $this->popup($view_link).'; return false;';
 			}
 
-			// set id for grid
-			$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.egw_time::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts') : '');
-
 			// Format start and end with timezone
 			foreach(array('start','end') as $time)
 			{

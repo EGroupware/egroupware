@@ -93,6 +93,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			// Percentage; not yet available
 			titleHeight: 2.0
 		}
+
+		this.registeredUID = null;
 	},
 
 	doLoadingFinished: function() {
@@ -122,7 +124,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.date_helper.destroy();
 		this.date_helper = null;
 
-		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
+		egw.dataUnregisterUID(this.registeredUID,false,this);
 	},
 
 	/**
@@ -248,9 +250,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			return;
 		}
 
-		if(this.options.date)
+		var cache_id = app.classes.calendar._daywise_cache_id(new_date,this.options.owner);
+		if(this.options.date && this.registeredUID && 
+			cache_id !== this.registeredUID)
 		{
-			egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
+			egw.dataUnregisterUID(this.registeredUID,false,this);
 
 			// Remove existing events
 			while(this._children.length > 0)
@@ -271,11 +275,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 
 
 		// Register for updates on events for this day
-		var cache_id = app.classes.calendar._daywise_cache_id(new_date,this.options.owner);
-		egw.dataRegisterUID(cache_id, this._data_callback,this,this.getInstanceManager().execId,this.id);
-
-		if(events) {
-			this._update_events(events);
+		if(this.registeredUID !== cache_id)
+		{
+			this.registeredUID = cache_id;
+			egw.dataRegisterUID(this.registeredUID, this._data_callback,this,this.getInstanceManager().execId,this.id);
 		}
 	},
 
@@ -295,17 +298,22 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			return;
 		}
 
-		egw.dataUnregisterUID(app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),false,this);
+		var cache_id = app.classes.calendar._daywise_cache_id(this.options.date,_owner)
+		if(this.options.date && this.registeredUID &&
+			cache_id !== this.registeredUID)
+		{
+			egw.dataUnregisterUID(this.registeredUID,false,this);
+		}
 
 		this.options.owner = _owner;
 		this.title
 			.attr("data-owner", this.options.owner);
 
-		// Register for updates on events for this day
-		egw.dataRegisterUID(
-			app.classes.calendar._daywise_cache_id(this.options.date,this.options.owner),
-			this._data_callback,this,this.getInstanceManager().execId,this.id
-		);
+		if(this.registeredUID !== cache_id)
+		{
+			this.registeredUID = cache_id;
+			egw.dataRegisterUID(this.registeredUID, this._data_callback,this,this.getInstanceManager().execId,this.id);
+		}
 	},
 
 	/**
@@ -445,22 +453,20 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			// Create event
 			var event = et2_createWidget('calendar-event',{
-				id:events[c].id,
+				id:'event_'+events[c].id,
 				value: events[c]
 			},this);
-			if(this.isInTree())
-			{
-				event.doLoadingFinished();
-			}
-
-			// Copy actions set in parent
-			event._link_actions(this._parent._parent.options.actions||{});
 		}
 
 		// Seperate loop so column sorting finds all children in the right place
 		for(var c = 0; c < events.length && c < this._children.length; c++)
 		{
-			this.getWidgetById(events[c].id).set_value(events[c]);
+			var event = this.getWidgetById('event_'+events[c].id);
+			if(!event) continue;
+			if(this.isInTree())
+			{
+				event.doLoadingFinished();
+			}
 		}
 
 		// Apply styles to hidden events

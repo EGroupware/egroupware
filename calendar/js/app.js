@@ -1594,7 +1594,7 @@ app.classes.calendar = AppJS.extend(
 	 *
 	 * @param {Object} _set New settings
 	 */
-	update_state: function(_set)
+	update_state: function update_state(_set)
 	{
 		// Make sure we're running in top window
 		if(window !== window.top)
@@ -1632,7 +1632,7 @@ app.classes.calendar = AppJS.extend(
 	 *
 	 * @return {object} description
 	 */
-	getState: function()
+	getState: function getState()
 	{
 		var state = jQuery.extend({},this.state);
 
@@ -1683,7 +1683,7 @@ app.classes.calendar = AppJS.extend(
 	 *
 	 * @param {object} state containing "name" attribute to be used as "favorite" GET parameter to a nextmatch
 	 */
-	setState: function(state)
+	setState: function setState(state)
 	{
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
@@ -1730,7 +1730,7 @@ app.classes.calendar = AppJS.extend(
 		}
 
 		// Check for valid cache
-		var cachable_changes = ['date','view','days','planner_days','sortby'];
+		var cachable_changes = ['date','weekend','view','days','planner_days','sortby'];
 		var keys = jQuery.unique(Object.keys(this.state).concat(Object.keys(state.state)));
 		for(var i = 0; i < keys.length; i++)
 		{
@@ -1838,19 +1838,18 @@ app.classes.calendar = AppJS.extend(
 			var grid = view.etemplates[0].widgetContainer.getWidgetById('view');
 
 			/*
-			If the count is different, we need to have the correct number (just remove all & re-create)
+			If the count is different, we need to have the correct number
 			If the count is > 1, it's either because there are multiple date spans (weekN, month) and we need the correct span
 			per row, or there are multiple owners and we need the correct owner per row.
 			*/
-			if(grid && (grid_count !== grid._children.length || grid_count > 1))
+			if(grid)
 			{
-				// Need to redo the number of grids
 				var value = [];
 				state.state.first = view.start_date(state.state).toJSON();
 				// We'll modify this one, so it needs to be a new object
 				var date = new Date(state.state.first);
 
-				// Determine the different end date
+				// Determine the different end date & varying values
 				switch(state.state.view)
 				{
 					case 'month':
@@ -1861,59 +1860,147 @@ app.classes.calendar = AppJS.extend(
 						for(var week = 0; week < grid_count; week++)
 						{
 							var val = {
-								id: ""+date.getUTCFullYear() + sprintf("%02d",date.getUTCMonth()) + sprintf("%02d",date.getUTCDate()),
+								id: app.classes.calendar._daywise_cache_id(date,state.state.owner),
 								start_date: date.toJSON(),
 								end_date: new Date(date.toJSON()),
 								owner: state.state.owner
 							};
 							val.end_date.setUTCHours(24*7-1);
+							val.end_date.setUTCMinutes(59);
+							val.end_date.setUTCSeconds(59);
 							val.end_date = val.end_date.toJSON();
 							value.push(val);
 							date.setUTCHours(24*7);
 						}
 						state.state.last=val.end_date;
 						break;
+					case 'day':
+						var end = state.state.last = view.end_date(state.state).toJSON();
+						value.push({
+							id: app.classes.calendar._daywise_cache_id(date,state.state.owner),
+							start_date: state.state.first,
+							end_date: state.state.last,
+							owner: view.owner(state.state)
+						});
+						break;
 					default:
 						var end = state.state.last = view.end_date(state.state).toJSON();
 						for(var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++)
 						{
+							var _owner = grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner
 							value.push({
-								id: ""+date.getUTCFullYear() + sprintf("%02d",date.getUTCMonth()) + sprintf("%02d",date.getUTCDate()),
+								id: app.classes.calendar._daywise_cache_id(date,_owner),
 								start_date: date,
 								end_date: end,
-								owner: grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner
+								owner: _owner
 							});
 						}
 						break;
 				}
 				// If we have cached data for the timespan, pass it along
 				this._need_data(value,state.state);
-				if(grid)
+
+				var row_index = 0;
+				
+				// Find any matching, existing rows - they can be kept
+				grid.iterateOver(function(widget) {
+					for(var i = 0; i < value.length; i++)
+					{
+						if(widget.id == value[i].id)
+						{
+							// Keep it, but move it
+							if(i > row_index)
+							{
+								for(var j = i-row_index; j > 0; j--)
+								{
+									// Move from the end to the start
+									grid._children.unshift(grid._children.pop());
+
+									// Swap DOM nodes
+									var a = grid._children[0].getDOMNode().parentNode.parentNode;
+									var b = grid._children[1].getDOMNode().parentNode.parentNode;
+									a.parentNode.insertBefore(a,b);
+								}
+							}
+							else if (row_index > i)
+							{
+								for(var j = row_index - i; j > 0; j--)
+								{
+									// Move from the start to the end
+									grid._children.push(grid._children.shift());
+
+									// Swap DOM nodes
+									var a = grid._children[grid._children.length - 1].getDOMNode().parentNode.parentNode;
+									a.parentNode.insertBefore(a,null);
+								}
+							}
+							break;
+						}
+					}
+					row_index++;
+				},this,et2_calendar_view);
+				row_index = 0;
+
+				// Set rows that need it
+				grid.iterateOver(function(widget) {
+					if(row_index < value.length)
+					{
+						widget.set_disabled(false);
+					}
+					else
+					{
+						widget.set_disabled(true);
+						return;
+					}
+					if(widget.set_show_weekend)
+					{
+						widget.set_show_weekend(view.show_weekend(state.state));
+					}
+					if(widget.id == value[row_index].id &&
+						widget.get_end_date().toJSON() == value[row_index].end_date
+					)
+					{
+						// Do not need to re-set this row, but we do need to re-do
+						// the times, as they may have changed
+						widget.invalidate();
+						row_index++;
+						return;
+					}
+					if(widget.set_value)
+					{
+						widget.set_value(value[row_index++]);
+					}
+				},this, et2_calendar_view);
+				grid.iterateOver(function(widget) {
+					if(widget.set_granularity)
+					{
+						widget.set_granularity(view.granularity(state.state));
+					}
+					if(widget.resize)
+					{
+						widget.resize();
+					}
+				},this,et2_calendar_view);
+
+				// Single day with multiple owners still needs owners split to satisfy
+				// caching keys, otherwise they'll cache consolidated
+				if(state.state.view == 'day' && state.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')))
 				{
-					grid.set_value(
-						{content: value}
-					);
-
-					// Weekend needs to be done seperately
-					grid.iterateOver(function(widget) {
-						if(widget.set_show_weekend)
-						{
-							widget.set_show_weekend(view.show_weekend(state.state));
-						}
-					},this, et2_calendar_view);
-
-					// Granularity needs to be done seperately
-					grid.iterateOver(function(widget) {
-						if(widget.set_granularity)
-						{
-							widget.set_granularity(view.granularity(state.state));
-						}
-					},this, et2_calendar_view);
+					value = [];
+					for(var i = 0; i < state.state.owner.length; i++)
+					{
+						value.push({
+							start_date: state.state.first,
+							end_date: state.state.last,
+							owner: state.state.owner[i]
+						});
+					}
+					this._need_data(value,state.state);
 				}
 			}
 			else
 			{
-				// Simple, easy case - just one widget for the selected time span.
+				// Simple, easy case - just one widget for the selected time span. (planner)
 				// Update existing view's special attribute filters, defined in the view list
 				for(var updater in view)
 				{
@@ -1929,26 +2016,13 @@ app.classes.calendar = AppJS.extend(
 							view.etemplates[i].widgetContainer.iterateOver(function(widget) {
 								if(typeof widget['set_'+updater] === 'function')
 								{
-									widget['set_'+updater](value);
+										widget['set_'+updater](value);
 								}
 							}, this, et2_calendar_view);
 						}
 					}
 				}
 				var value = [{start_date: state.state.first, end_date: state.state.last}];
-				// Single day with multiple owners still needs owners split
-				if(state.state.view == 'day' && state.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')))
-				{
-					value = [];
-					for(var i = 0; i < state.state.owner.length; i++)
-					{
-						value.push({
-							start_date: state.state.first,
-							end_date: state.state.last,
-							owner: state.state.owner[i]
-						});
-					}
-				}
 				this._need_data(value,state.state);
 			}
 			// Include first & last dates in state, mostly for server side processing
@@ -2488,7 +2562,7 @@ app.classes.calendar = AppJS.extend(
 			{start: start, num_rows:200},
 			query,
 			this.id,
-			function(data) {
+			function calendar_handleResponse(data) {
 				console.log(data);
 				// Look for any updated select options
 				if(data.rows && data.rows.sel_options && this.sidebox_et2)
@@ -3282,10 +3356,6 @@ jQuery.extend(app.classes.calendar,{
 				// Always 7 days, we just turn weekends on or off
 				d.setUTCHours(24*7-1);
 				return d;
-			},
-			granularity: function(state) {
-				// Does not care how many users you select
-				return parseInt(egw.preference('interval','calendar')) || 30;
 			}
 		}),
 		month: app.classes.calendar.prototype.View.extend({

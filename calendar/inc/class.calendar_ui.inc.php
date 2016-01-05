@@ -796,6 +796,9 @@ class calendar_ui
 		{
 			$event['app_id'] .= ':'.egw_time::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
 		}
+		// set id for grid
+		$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.egw_time::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts') : '');
+
 		$event['parts'] = implode(",\n",$this->bo->participants($event,false));
 		$event['date'] = $this->bo->date2string($event['start']);
 

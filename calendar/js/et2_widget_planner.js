@@ -692,30 +692,29 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			window.clearTimeout(this.update_timer);
 		}
 		this.update_timer = window.setTimeout(jQuery.proxy(function() {
-			this.doInvalidate = false;
-
-			this.widget.value = this.widget._fetch_data();
+			this.widget.doInvalidate = false;
 
 			// Show AJAX loader
-			framework.applications.calendar.sidemenuEntry.showAjaxLoader();
+			this.widget.loader.show();
+
+			this.widget.value = this.widget._fetch_data();
 
 			this.widget._drawGrid();
 
 			// Update actions
-			if(this._actionManager)
+			if(this.widget._actionManager)
 			{
-				this._link_actions(this._actionManager.children);
+				this.widget._link_actions(this.widget._actionManager.children);
 			}
-
-			// Hide AJAX loader
-			framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
 
 			if(this.trigger)
 			{
 				this.widget.change();
 			}
 			this.widget.update_timer = null;
-			this.doInvalidate = true;
+			this.widget.doInvalidate = true;
+
+			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this.widget),100);
 		},{widget:this,"trigger":trigger}),ET2_GRID_INVALIDATE_TIMEOUT);
 	},
 

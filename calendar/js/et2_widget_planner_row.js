@@ -227,22 +227,20 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			// Create event
 			var event = et2_createWidget('calendar-event',{
-				id:events[c].id,
+				id:'event_'+events[c].row_id,
 				value: events[c]
 			},this);
+		}
+		
+		// Seperate loop so column sorting finds all children in the right place
+		for(var c = 0; c < events.length && c < this._children.length; c++)
+		{
+			var event = this.getWidgetById('event_'+events[c].row_id);
+			if(!event) continue;
 			if(this.isInTree())
 			{
 				event.doLoadingFinished();
 			}
-
-			// Copy actions set in parent
-			event._link_actions(this._parent._parent.options.actions||this._parent.options.actions||{});
-		}
-
-		// Seperate loop so column sorting finds all children in the right place
-		for(var c = 0; c < events.length && c < this._children.length; c++)
-		{
-			this.getWidgetById(events[c].id).set_value(events[c]);
 		}
 	},
 

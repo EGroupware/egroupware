@@ -43,7 +43,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 	/**
 	 * Constructor
 	 *
-	 * @memberOf et2_calendar_planner
+	 * @memberOf et2_calendar_view
 	 * @constructor
 	 */
 	init: function init() {
@@ -52,6 +52,8 @@ var et2_calendar_view = et2_valueWidget.extend(
 		// Used for its date calculations
 		this.date_helper = et2_createWidget('date-time',{},null);
 		this.date_helper.loadingFinished();
+
+		this.loader = $j('<div class="egw-loading-prompt-container ui-front loading"></div>');
 	},
 
 	destroy: function destroy() {
@@ -62,22 +64,53 @@ var et2_calendar_view = et2_valueWidget.extend(
 		this.date_helper = null;
 	},
 
+	doLoadingFinished: function() {
+		this._super.apply(this, arguments);
+		this.loader.hide(0).prependTo(this.div);
+	},
+
 	/**
 	 * Something changed, and the view need to be re-drawn.  We wait a bit to
 	 * avoid re-drawing twice if start and end date both changed, then recreate
 	 * as needed.
 	 *
-	 * @param {boolean} [trigger=false] Trigger an event once things are done.
+	 * @param {boolean} [trigger_event=false] Trigger an event once things are done.
 	 *	Waiting until invalidate completes prevents 2 updates when changing the date range.
 	 * @returns {undefined}
+	 * 
+	 * @memberOf et2_calendar_view
 	 */
-	invalidate: function invalidate(trigger) {},
+	invalidate: function invalidate(trigger_event) {},
+
+	/**
+	 * Returns the current start date
+	 *
+	 * @returns {Date}
+	 *
+	 * @memberOf et2_calendar_view
+	 */
+	get_start_date: function get_start_date() {
+		return new Date(this.options.start_date);
+	},
+
+	/**
+	 * Returns the current start date
+	 *
+	 * @returns {Date}
+	 *
+	 * @memberOf et2_calendar_view
+	 */
+	get_end_date: function get_end_date() {
+		return new Date(this.options.end_date);
+	},
 
 	/**
 	 * Change the start date
 	 *
 	 * @param {string|number|Date} new_date New starting date
 	 * @returns {undefined}
+	 *
+	 * @memberOf et2_calendar_view
 	 */
 	set_start_date: function set_start_date(new_date)
 	{
@@ -112,6 +145,8 @@ var et2_calendar_view = et2_valueWidget.extend(
 	 *
 	 * @param {string|number|Date} new_date New end date
 	 * @returns {undefined}
+	 *
+	 * @memberOf et2_calendar_view
 	 */
 	set_end_date: function set_end_date(new_date)
 	{
@@ -144,6 +179,8 @@ var et2_calendar_view = et2_valueWidget.extend(
 	 * Set which users to display
 	 *
 	 * @param {number|number[]|string|string[]} _owner Account ID
+	 *
+	 * @memberOf et2_calendar_view
 	 */
 	set_owner: function set_owner(_owner)
 	{
@@ -176,6 +213,8 @@ var et2_calendar_view = et2_valueWidget.extend(
 	 *
 	 * @param {string} user
 	 * @returns {string}
+	 *
+	 * @memberOf et2_calendar_view
 	 */
 	_get_owner_name: function _get_owner_name(user) {
 		if(parseInt(user) === 0)

@@ -661,20 +661,36 @@ class calendar_uiviews extends calendar_ui
 
 		$content = array('view' => array());
 
-		// Always do 7 days for a week so scrolling works properly
-		$this->last = ($days == 4 ? $this->last : $search_params['end'] = strtotime("+$days days",$this->first) - 1);
-		if (count($users) == 1 || count($users) >= $this->cal_prefs['week_consolidate'])	// for more then X users, show all in one row
+		if(!$home)
 		{
-			$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params)) +
-				array('owner' => $users);
+			// Fill with the minimum needed 'weeks'
+			$min = max(
+				6, // Some months need 6 weeks for full display
+				$this->cal_prefs['multiple_weeks'],  // WeekN view
+				$this->cal_prefs['week_consolidate'] // We collapse after this many users
+			);
+			for($i = 0; $i < $min; $i++)
+			{
+				$content['view'][] = array();
+			}
 		}
 		else
 		{
-			foreach($this->_get_planner_users(false) as $uid => $label)
+			// Always do 7 days for a week so scrolling works properly
+			$this->last = ($days == 4 ? $this->last : $search_params['end'] = strtotime("+$days days",$this->first) - 1);
+			if (count($users) == 1 || count($users) >= $this->cal_prefs['week_consolidate'])	// for more then X users, show all in one row
 			{
-				$search_params['users'] = $uid;
-				$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params))
-					 + array('owner' => $uid);
+				$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params)) +
+					array('owner' => $users);
+			}
+			else
+			{
+				foreach($this->_get_planner_users(false) as $uid => $label)
+				{
+					$search_params['users'] = $uid;
+					$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params))
+						 + array('owner' => $uid);
+				}
 			}
 		}
 		$tmpl = $home ? $home :new etemplate_new('calendar.view');

@@ -97,6 +97,16 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.options.date = '';
 			this.set_date(date);
 		}
+		if(this.options.value && this.options.value.row_id)
+		{
+			egw.dataRegisterUID(
+				'calendar::'+this.options.value.row_id,
+				this._UID_callback ,
+				this,
+				this.getInstanceManager().execId,
+				this.id
+			);
+		}
 	},
 
 	destroy: function() {
@@ -131,47 +141,60 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Un-register for updates
 		if(this.options.value)
 		{
-			var old_app_id = this.options.value.app_id;
-			egw.dataUnregisterUID('calendar::'+old_app_id,false,this);
+			var old_id = this.options.value.row_id;
+			if(!_value || !_value.row_id || old_id !== _value.row_id)
+			{
+				egw.dataUnregisterUID('calendar::'+old_id,false,this);
+			}
 		}
 		this.options.value = _value;
 
 		// Register for updates
-		var app_id = this.options.value.app_id;
-		egw.dataRegisterUID('calendar::'+app_id, function _UID_callback(event) {
-			// Make sure id is a string
-			this._values_check(event);
-			
-			// Check for changing days in the grid view
-			if(!this._sameday_check(event))
-			{
-				// This should now cease to exist, as new events have been created
-				this.free();
-				return;
-			}
-			
-			// Copy to avoid changes, which may cause nm problems
-			this.options.value = jQuery.extend({},event);
-			
-			if(this._parent.options.date)
-			{
-				this.options.value.date = this._parent.options.date;
-			}
-
-			// Let parent position
-			this._parent.position_event(this);
-
-			// Parent may remove this if the date isn't the same
-			if(this._parent)
-			{
-				this._update(this.options.value);
-			}
-
-		},this,this.getInstanceManager().execId,this.id);
-
-		if(_value && !egw.dataHasUID('calendar::'+app_id))
+		var id = this.options.value.row_id;
+		if(!old_id || old_id !== id)
 		{
-			egw.dataStoreUID('calendar::'+app_id, _value);
+			egw.dataRegisterUID('calendar::'+id, this._UID_callback ,this,this.getInstanceManager().execId,this.id);
+		}
+		if(_value && !egw.dataHasUID('calendar::'+id))
+		{
+			egw.dataStoreUID('calendar::'+id, _value);
+		}
+	},
+	
+	_UID_callback: function _UID_callback(event) {
+		// Make sure id is a string
+		this._values_check(event);
+
+		// Check for changing days in the grid view
+		if(!this._sameday_check(event))
+		{
+			// This should now cease to exist, as new events have been created
+			this.free();
+			return;
+		}
+
+		// Copy to avoid changes, which may cause nm problems
+		this.options.value = jQuery.extend({},event);
+
+		if(this._parent.options.date)
+		{
+			this.options.value.date = this._parent.options.date;
+		}
+
+		// Let parent position
+		this._parent.position_event(this);
+
+		// Parent may remove this if the date isn't the same
+		if(this._parent)
+		{
+			// This gives some slight speed enhancements over doing it immediately,
+			// but it looks weird
+			/*
+			window.setTimeout(jQuery.proxy(function() {
+				if(this.options) this._update(this.options.value);
+			},this),100);
+			*/
+			this._update(this.options.value);
 		}
 	},
 
@@ -180,15 +203,19 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Copy new information
 		this.options.value = event;
 
-		var app_id = event.app_id ? event.app_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
+		var id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
 		this._parent.date_helper.set_value(event.start.valueOf ? new Date(event.start) : event.start);
 		var formatted_start = this._parent.date_helper.getValue();
 
-		this.set_id('event_' + event.app_id);
+		this.set_id('event_' + id);
 		if(this._actionObject)
 		{
-			this._actionObject.id = 'calendar::' + event.app_id;
+			this._actionObject.id = 'calendar::' + id;
 		}
+
+		// Copy actions set in parent
+		this._link_actions(this._parent._parent._parent.options.actions||{});
+
 		// Make sure category stuff is there
 		// Fake it to use the cache / call - if already there, these will return
 		// immediately.
@@ -217,7 +244,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			// Put everything we need for basic interaction here, so it's available immediately
 			.attr('data-id', event.id)
 			.attr('data-app', event.app || 'calendar')
-			.attr('data-app_id', app_id)
+			.attr('data-app_id', event.app_id)
 			.attr('data-start', formatted_start)
 			.attr('data-owner', event.owner)
 			.attr('data-recur_type', event.recur_type)
