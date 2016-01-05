@@ -84,6 +84,15 @@ class calendar_uiforms extends calendar_ui
 		if (isset($_GET['owner']))
 		{
 			$owner = $_GET['owner'];
+			if(is_array($owner))
+			{
+				$extra_participants += $owner;
+				$owner = count($owner) > 1 ? $this->user : $owner[0];
+			}
+			else
+			{
+				$extra_participants[] = $owner;
+			}
 		}
 		else
 		{
@@ -165,8 +174,8 @@ class calendar_uiforms extends calendar_ui
 		}
 		if (!$participants)	// if all participants got removed, include current user
 		{
-				$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
-			}
+			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
+		}
 		if(isset($_GET['cat_id']))
 		{
 			$cat_id = explode(',',$_GET['cat_id']);

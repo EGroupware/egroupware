@@ -393,7 +393,7 @@ class calendar_hooks
 				'name'	=> 'default_participant',
 				'values'=>	$default_participants,
 				'help'	=> 'Participants automatically added to new events',
-				'default'	=> 0,
+				'default'	=> 'selected',
 				'xmlrpc' => False,
 				'admin'  => False
 			),
