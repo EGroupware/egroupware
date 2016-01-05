@@ -222,7 +222,7 @@ class etemplate_new extends etemplate_widget_template
 				egw_framework::validate_file('.','app',$app,false);
 			}
 			// Category styles
-			egw_framework::includeCSS('/phpgwapi/categories.php?app='.$app);
+			categories::css($app);
 
 			// set action attribute for autocomplete form tag
 			// as firefox complains on about:balnk action, thus we have to literaly submit the form to a blank html

@@ -153,7 +153,39 @@ class admin_categories
 						// to reload the whole nextmatch instead of just the row
 						$data = $cats->id2name($content['id'],'data');
 						$change_color = ($data['color'] != $content['data']['color']);
-
+						// Nicely reload just the category window / iframe
+						if($change_color)
+						{
+							if(egw_json_response::isJSONResponse())
+							{
+								// Update category styles
+								egw_json_response::get()->apply('opener.egw.includeCSS',array(categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app)));
+								if($this->appname != 'admin')
+								{
+									egw_json_response::get()->apply('opener.egw.show_preferences',array(
+										'cats',
+										$this->appname == 'admin' ? categories::GLOBAL_APPNAME : array($refresh_app)
+									));
+									$change_color = false;
+								}
+								else
+								{
+									categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
+									egw_json_response::get()->apply('opener.app.admin.load',array(
+										egw_framework::link('/index.php', array(
+											'menuaction' => $this->list_link,
+											'appname' => $appname
+										)
+									)));
+								}
+							}
+							else
+							{
+								categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
+								egw_framework::refresh_opener('', null, null);
+								return;
+							}
+						}
 						try {
 							$cats->edit($content);
 							$msg = lang('Category saved.');
@@ -177,7 +209,7 @@ class admin_categories
 					}
 					if ($button == 'save')
 					{
-						egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', $this->appname);
+						egw_framework::refresh_opener($msg, $change_color ? null : $refresh_app, $change_color ? null : $content['id'], $change_color ? null : 'update', $this->appname);
 						egw_framework::window_close();
 					}
 					break;
@@ -199,8 +231,7 @@ class admin_categories
 					}
 					break;
 			}
-
-			egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? 'edit' : 'update', $this->appname);
+			egw_framework::refresh_opener($msg, $change_color ? null : $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -396,11 +427,6 @@ class admin_categories
 		$rows['appname'] = $query['appname'];
 		$rows['edit_link'] = $this->edit_link;
 
-		// Send categories to make sure row colors stay up to date
-		// We use update types to prevent nm from doing unneeded calls to get_rows()
-		// TODO: figure out how to only send this if a category color has changed
-		$rows['sel_options']['cat_id'] = etemplate_widget_menupopup::typeOptions('select-cat', ',,,'.$query['appname'].',0');
-
 		// disable access column for global categories
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'admin') $rows['no_access'] = true;
 
@@ -574,7 +600,7 @@ class admin_categories
 		if($tmpl instanceof etemplate_widget_template)
 		{
 			// Category styles
-			egw_framework::includeCSS('/phpgwapi/categories.php?app='.$appname);
+			categories::css($appname);
 		}
 
 		$tmpl->exec($this->list_link,$content,$sel_options,$readonlys,array(
