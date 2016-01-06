@@ -1271,14 +1271,6 @@
   .ui-toolbar-menulist > h {
     padding-bottom: 7px;
   }
-  .ui-toolbar-menulist > button {
-    padding: 0 !important;
-    margin: 0 !important;
-    text-align: left;
-    border-radius: 0 !important;
-    width: 100% !important;
-    white-space: nowrap;
-  }
   .ui-toolbar-menulistHeader {
     font-size: xx-small;
     height: 100%;
