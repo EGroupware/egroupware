@@ -447,7 +447,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					// cache locally
 					title_cache[app][id] = title;
 					// call callbacks waiting for title of app/id
-					if(typeof title_queue[app][id] != "undefined")
+					if(typeof title_queue[app] != 'undefined' && 
+						typeof title_queue[app][id] != "undefined"
+					)
 					{
 						for(var i=0; i < title_queue[app][id].length; ++i)
 						{
