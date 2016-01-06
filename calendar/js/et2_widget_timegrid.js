@@ -1602,8 +1602,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		},this, et2_calendar_timegrid);
 
 		// Take the whole tab height
-		this.options.height = Math.floor(Math.min($j(this.getInstanceManager().DOMContainer).height(),$j(this.getInstanceManager().DOMContainer).parent().innerHeight()) / rowCount);
-		this.options.height = Math.floor((egw.getHiddenDimensions(this.getInstanceManager().DOMContainer).h ) / rowCount);
+		var height = Math.min($j(this.getInstanceManager().DOMContainer).height(),$j(this.getInstanceManager().DOMContainer).parent().innerHeight());
+
+		// Allow for toolbar
+		height -= $j('#calendar-toolbar').outerHeight(true);
+		
+		this.options.height = Math.floor(height / rowCount);
+
+		// Allow for borders & padding
 		this.options.height -= 2*((this.div.outerWidth(true) - this.div.innerWidth()) + parseInt(this.div.parent().css('padding-top')));
 		if(this.options.height+"px" !== this.div.css('height'))
 		{

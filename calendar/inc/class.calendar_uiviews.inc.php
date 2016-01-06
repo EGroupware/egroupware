@@ -148,19 +148,7 @@ class calendar_uiviews extends calendar_ui
 		$this->extraRowsOriginal = $this->extraRows; //save original extraRows value
 
 		$GLOBALS['egw_info']['flags']['nonavbar'] = False;
-		$app_header = array(
-			'day'   => lang('Dayview'),
-			'4day'  => lang('Four days view'),
-			'week'  => lang('Weekview'),
-			'month' => lang('Monthview'),
-			'year' => lang('yearview'),
-			'planner' => lang('Group planner'),
-		);
-		$GLOBALS['egw_info']['flags']['app_header'] =
-			(isset($app_header[$this->view]) ? $app_header[$this->view] : '').
-			// for a single owner we add it's name to the app-header
-			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
-
+		
 		// Check for GET message (from merge)
 		if($_GET['msg'])
 		{
@@ -252,6 +240,11 @@ class calendar_uiviews extends calendar_ui
 			return;
 		}
 
+		// Toolbar
+		$tmpl = new etemplate_new('calendar.toolbar');
+		$tmpl->setElementAttribute('toolbar', 'actions', $this->getToolbarActions($content));
+		$tmpl->exec('calendar_uiviews::index',array());
+
 		// Load the different views once, we'll switch between them on the client side
 		$tmpl = new etemplate_new('calendar.todo');
 		$label = '';
@@ -268,6 +261,135 @@ class calendar_uiviews extends calendar_ui
 		// List view in a separate file
 		$list_ui = new calendar_uilist();
 		$list_ui->listview();
+	}
+
+	/**
+	 * Generate the calendar toolbar actions
+	 *
+	 * @param Array $content
+	 */
+	protected function getToolbarActions($content = array())
+	{
+		$group = 0;
+		$actions = array(
+			'add' => array(
+				'caption' => 'Add',
+				'icon'	=> 'add',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:egw.open(null,"calendar","add");',
+				'hint' => 'Add',
+				'toolbarDefault' => true,
+			),
+			'day_view' => array(
+				'caption' => 'Day view',
+				'icon'	=> 'day',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Day view',
+				'toolbarDefault' => true,
+				'data' => array('state' => array('view' => 'day'))
+			),
+			'4day_view' => array(
+				'caption' => 'Four days view',
+				'icon'	=> 'day4',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Four days view',
+				'toolbarDefault' => false,
+				'data' => array('state' => array('view' => 'day4'))
+			),
+			'week_view' => array(
+				'caption' => 'Week view',
+				'icon'	=> 'week',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Week view',
+				'toolbarDefault' => true,
+				'data' => array('state' => array('view' => 'week'))
+			),
+			'weekN_view' => array(
+				'caption' => 'Multiple week view',
+				'icon'	=> 'multiweek',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Multiple week view',
+				'toolbarDefault' => true,
+				'data' => array('state' => array('view' => 'weekN'))
+			),
+			'month_view' => array(
+				'caption' => 'Month view',
+				'icon'	=> 'month',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Month view',
+				'toolbarDefault' => false,
+				'data' => array('state' => array('view' => 'month'))
+			),
+			'planner_category' => array(
+				'caption' => 'Planner by category',
+				'icon'	=> 'planner',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Planner by category',
+				'toolbarDefault' => false,
+				'data' => array('state' => array('view' => 'planner', 'sortby' => 'category')),
+			),
+			'planner_user' => array(
+				'caption' => 'Planner by user',
+				'icon'	=> 'planner',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Planner by user',
+				'toolbarDefault' => false,
+				'data' => array('state' => array('view' => 'planner', 'sortby' => 'user')),
+			),
+			'planner_month' => array(
+				'caption' => 'Yearly planner',
+				'icon'	=> 'year',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Yearly planner',
+				'toolbarDefault' => false,
+				'data' => array('state' => array('view' => 'planner', 'sortby' => 'month')),
+			),
+			'list' => array(
+				'caption' => 'Listview',
+				'icon'	=> 'list',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Listview',
+				'toolbarDefault' => true,
+				'data' => array('state' => array('view' => 'listview')),
+			),
+			'weekend' => array(
+				'caption' => 'Weekend',
+				'icon' => 'weekend',
+				'checkbox'	=> true,
+				'checked' => $this->cal_prefs['saved_states']['weekend'],
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Toggle weekend',
+				'toolbarDefault' => false,
+			),
+			'previous' => array(
+				'caption' => 'Previous',
+				'icon'	=> 'previous',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Previous',
+				'toolbarDefault' => true,
+			),
+			'next' => array(
+				'caption' => 'Next',
+				'icon'	=> 'next',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Next',
+				'toolbarDefault' => true,
+			),
+		);
+
+		return $actions;
 	}
 
 	/**
@@ -648,7 +770,6 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 			$this->last = strtotime("+$days days",$this->first) - 1;
-			$GLOBALS['egw_info']['flags']['app_header'] .=': ' .lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 
 		$search_params = array(

@@ -405,6 +405,61 @@ app.classes.calendar = AppJS.extend(
 	},
 
 	/**
+	 * Handle actions from the toolbar
+	 *
+	 * @param {egwAction} action Action from the toolbar
+	 */
+	toolbar_action: function toolbar_action(action)
+	{
+		debugger;
+		// Most can just provide state change data
+		if(action.data && action.data.state)
+		{
+			this.update_state(action.data.state);
+		}
+		// Special handling
+		switch(action.id)
+		{
+			case 'weekend':
+				this.update_state({weekend: action.checked});
+				break;
+			case 'next':
+			case 'previous':
+				var delta = action.id == 'previous' ? -1 : 1;
+				var view = app.classes.calendar.views[app.calendar.state.view] || false;
+				var start = new Date(app.calendar.state.date);
+				if (view)
+				{
+					start = view.scroll(delta);
+					app.calendar.update_state({date:app.calendar.date.toString(start)});
+				}
+				break;
+		}
+	},
+
+	/**
+	 * Set the app header
+	 * 
+	 * Because the toolbar takes some vertical space and has some horizontal space,
+	 * we don't use the system app header, but our own that is in the toolbar
+	 * 
+	 * @param {string} header Text to display
+	 */
+	set_app_header: function(header) {
+		var template = etemplate2.getById('calendar-toolbar');
+		var widget = template ? template.widgetContainer.getWidgetById('app_header') : false;
+		if(widget)
+		{
+			widget.set_value(header);
+			egw_app_header('','calendar');
+		}
+		else
+		{
+			egw_app_header(header,'calendar');
+		}
+	},
+
+	/**
 	 * Setup and handle sortable calendars.
 	 *
 	 * You can only sort calendars if there is more than one owner, and the calendars
@@ -2201,7 +2256,7 @@ app.classes.calendar = AppJS.extend(
 			this.highlight_favorite();
 
 			// Update app header
-			egw_app_header(view.header(state.state),'calendar');
+			this.set_app_header(view.header(state.state));
 
 			// Sidebox is updated, we can clear the flag
 			this.state_update_in_progress = false;

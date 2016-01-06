@@ -49,6 +49,25 @@
 	background-color: #dac0c0;
 }
 
+/* Toolbar */
+#calendar-toolbar {
+	height: 30px;
+}
+#calendar-toolbar .egw_fw_ui_app_header_container {
+	border: none;
+}
+
+/* Space for toolbar */
+#calendar-view, #calendar-todo, #calendar-planner {
+	margin-top: -30px;
+}
+#calendar-list {
+	margin-top: -50px;
+}
+#calendar-planner .calendar_plannerWidget {
+	top: 30px;
+}
+
 #calendar-todo {
 	position: absolute;
 	width: 30%;

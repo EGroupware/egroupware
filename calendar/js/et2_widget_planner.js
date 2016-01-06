@@ -802,7 +802,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		}
 
 		// Set height for rows
-		this.rows.height(this.div.parent().height() - this.headers.outerHeight());
+		this.rows.height(this.div.height() - this.headers.outerHeight());
 
 		// Draw the rows
 		for(var key in labels)
@@ -1890,9 +1890,15 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	},
 
 	// Resizable interface
-	resize: function (_height)
+	resize: function ()
 	{
-		this.options.height = _height;
+		// Take the whole tab height
+		var height = Math.min($j(this.getInstanceManager().DOMContainer).height(),$j(this.getInstanceManager().DOMContainer).parent().innerHeight());
+
+		// Allow for toolbar
+		height -= $j('#calendar-toolbar').outerHeight(true);
+		
+		this.options.height = height;
 		this.div.css('height', this.options.height);
 	}
 });

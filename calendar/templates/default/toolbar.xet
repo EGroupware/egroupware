@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Egroupware
+@license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+@package
+@subpackage
+@link http://www.egroupware.org
+@author Nathan Gray
+@version $Id$
+-->
+
+<!DOCTYPE overlay PUBLIC '-//Stylite AG//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+
+<overlay>
+	<template id="calendar.toolbar">
+		<toolbar id="toolbar" width="100%" flat_list="false"/>
+		<!-- Fake an app header inside the toolbar -->
+		<box class="egw_fw_ui_app_header_container">
+			<description id="app_header" class="egw_fw_ui_app_header"/>
+		</box>
+	</template>
+</overlay>

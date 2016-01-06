@@ -613,7 +613,6 @@ class calendar_ui
 		}
 		$sidebox = new etemplate_new('calendar.sidebox');
 
-
 		$content = $this->cal_prefs['saved_states'];
 		$content['view'] = $this->view ? $this->view : 'week';
 		$content['date'] = $this->date ? $this->date : egw_time();
@@ -633,63 +632,6 @@ class calendar_ui
 		}
 
 		$readonlys = array();
-		foreach(array(
-			array(
-				'text' => lang('dayview'),
-				'value' => '{"view":"day"}',
-				'selected' => $this->view == 'day',
-			),
-			array(
-				'text' => lang('four days view'),
-				'value' => '{"view":"day4","days":4}',
-				'selected' => $this->view == 'day4',
-			),
-			array(
-				'text' => lang('weekview'),
-				'value' => '{"view":"week"}',
-				'selected' => $this->view == 'week',
-			),
-			array(
-				'text' => lang('Multiple week view'),
-				'value' => '{"view":"weekN"}',
-				'selected' => $this->view == 'weekN',
-			),
-			array(
-				'text' => lang('monthview'),
-				'value' => '{"view":"month"}',
-				'selected' => $this->view == 'month',
-			),
-			array(
-				'text' => lang('planner by category'),
-				'value' => '{"view":"planner", "sortby":"category"}',
-				'selected' => $this->view == 'planner' && $this->sortby != 'user',
-			),
-			array(
-				'text' => lang('planner by user'),
-				'value' => '{"view":"planner","sortby":"user"}',
-				'selected' => $this->view == 'planner' && $this->sortby == 'user',
-			),
-			array(
-				'text' => lang('yearly planner'),
-				'value' => '{"view":"planner","sortby":"month"}',
-				'selected' => $this->view == 'planner' && $this->sortby == 'month',
-			),
-			array(
-				'text' => lang('listview'),
-				'value' => '{"view":"listview"}',
-				'selected' => $this->view == 'listview',
-			),
-		)as $data)
-		{
-			if($data['selected'])
-			{
-				$content['view'] = $data['value'];
-			}
-			$sel_options['view'][] = array(
-				'label' => $data['text'],
-				'value' => $data['value']
-			);
-		}
 		$sel_options['status_filter'] = array(
 			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),
 			array('value' => 'accepted',    'label' => lang('Accepted'), 'title' => lang('Show only accepted events')),
