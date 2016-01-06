@@ -926,7 +926,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		// just a container with no valid actions
 		var objectManager = egw_getObjectManager(this.getInstanceManager().app,true,1);
 		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
-		var parent = objectManager.getObjectById(this.id,3) || objectManager.getObjectById(this._parent.id,1) || objectManager;
+		var parent = objectManager.getObjectById(this.id,1) || objectManager.getObjectById(this._parent.id,1) || objectManager;
 		if(!parent)
 		{
 			debugger;
