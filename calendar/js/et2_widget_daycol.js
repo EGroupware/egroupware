@@ -344,6 +344,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	set_label: function(label) {
 		this.options.label = label;
 		this.title.text(label);
+		this.title.toggleClass('et2_clickable et2_link',label === '');
 	},
 	set_left: function(left) {
 		// Maybe?

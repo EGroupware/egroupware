@@ -232,16 +232,16 @@ var et2_calendar_view = et2_valueWidget.extend(
 					break;
 				case 'r':
 					application = 'resources';
-					this.owner.set_value(_owner.substr(1));
 					break;
 			}
 			// This might not have a value right away
-			user = egw.link_title(application,user.match(/\d+/)[0]);
+			// send an empty function or it won't ask the server
+			user = egw.link_title(application,user.match(/\d+/)[0], function() {}, this);
 		}
 		else	// users
 		{
 			user = parseInt(user)
-			var accounts = egw.accounts();
+			var accounts = egw.accounts('both');
 			for(var j = 0; j < accounts.length; j++)
 			{
 				if(accounts[j].value === user)

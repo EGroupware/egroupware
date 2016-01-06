@@ -622,13 +622,21 @@ class calendar_ui
 		$sel_options = array();
 
 		// Add external owners that a select account widget will not find
+		$linked_owners = array();
 		foreach($owners as $owner)
 		{
-			if(!is_numeric(substr($owner, 0,1)))
+			if(!is_numeric($owner))
 			{
 				$resource = $this->bo->resources[substr($owner, 0,1)];
-				$sel_options['owner'][] = array('value' => $owner, 'label' => egw_link::title($resource['app'], substr($owner,1)));
+				$label = egw_link::title($resource['app'], substr($owner,1));
+				$linked_owners[$resource['app']][substr($owner,1)] = $label;
+				$sel_options['owner'][] = array('value' => $owner, 'label' => $label);
 			}
+		}
+		if($linked_owners)
+		{
+			// Send them to link registry too
+			egw_json_response::get()->call('egw.link_title_callback',$linked_owners);
 		}
 
 		$readonlys = array();

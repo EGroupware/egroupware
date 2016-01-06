@@ -411,7 +411,6 @@ app.classes.calendar = AppJS.extend(
 	 */
 	toolbar_action: function toolbar_action(action)
 	{
-		debugger;
 		// Most can just provide state change data
 		if(action.data && action.data.state)
 		{
@@ -420,6 +419,8 @@ app.classes.calendar = AppJS.extend(
 		// Special handling
 		switch(action.id)
 		{
+			case 'add':
+				return egw.open(null,"calendar","add");
 			case 'weekend':
 				this.update_state({weekend: action.checked});
 				break;

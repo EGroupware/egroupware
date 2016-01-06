@@ -276,7 +276,7 @@ class calendar_uiviews extends calendar_ui
 				'caption' => 'Add',
 				'icon'	=> 'add',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:egw.open(null,"calendar","add");',
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Add',
 				'toolbarDefault' => true,
 			),
