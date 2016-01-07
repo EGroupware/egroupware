@@ -197,7 +197,7 @@
 						{
 							"size": _sideboxStartSize,
 							"minsize": _sideboxMinSize,
-							"maxsize": 0
+							"maxsize": screen.availWidth - 50
 						}
 					], this);
 
