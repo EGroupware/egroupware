@@ -3870,14 +3870,14 @@ class emailadmin_imapbase
 						$date = new Horde_Imap_Client_DateTime($headerForPrio['DATE']);
 						//error_log(__METHOD__.__LINE__.'#'.array2string($date).'#'.array2string($currentDate).'#');
 					}
-					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($id));
+					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_headerObject)));
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($flags));
 					$body = $_headerObject->getFullMsg();
 					$dataNflags[] = array('data'=>$body, 'flags'=>$flags, 'internaldate'=>$date);
 					if ($c==1)
 					{
 						$target = emailadmin_account::read($_targetProfileID)->imapServer();
-						//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($foldername));
+						//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' TargetServer:'.$_targetProfileID.' TargetFolderObject:'.array2string($_foldername));
 						$foldername = $target->getMailbox($_foldername);
 						// make sure the target folder is open and ready
 						$target->openMailbox($foldername);
@@ -4861,7 +4861,15 @@ class emailadmin_imapbase
 			$envelope = array_change_key_case($envelope,CASE_UPPER);
 			//if ($decode) _debug_array($envelope);
 			//error_log(__METHOD__.' ('.__LINE__.') '.array2string($envelope));
-			return ($decode ? self::decode_header($envelope,true): $envelope);
+			if ($decode)
+			{
+				foreach ($envelope as $key => $rvV)
+				{
+					//try idn conversion only on 'FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'
+					$envelope[$key]=self::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
+				}
+			}
+			return $envelope;
 		} else {
 
 			$headers = $this->getMessageHeader($_uid, $_partID, true,true,$_folder);
@@ -4883,6 +4891,7 @@ class emailadmin_imapbase
 			foreach($recepientList as $recepientType) {
 				if(isset($headers[$recepientType])) {
 					if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType],true);
+					//error_log(__METHOD__.__LINE__." ".$recepientType."->".array2string($headers[$recepientType]));
 					foreach(self::parseAddressList($headers[$recepientType]) as $singleAddress) {
 						$addressData = array(
 							'PERSONAL_NAME'		=> $singleAddress->personal ? $singleAddress->personal : 'NIL',
@@ -4975,7 +4984,15 @@ class emailadmin_imapbase
 			$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.':'.array2string($decode ? self::decode_header($retValue,true):$retValue));
-		return ($decode ? self::decode_header($retValue,true):$retValue);
+		if ($decode)
+		{
+			foreach ($retValue as $key => $rvV)
+			{
+				//try idn conversion only on 'FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'
+				$retValue[$key]=self::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
+			}
+		}
+		return $retValue;
 	}
 
 	/**
@@ -6636,7 +6653,7 @@ class emailadmin_imapbase
 	{
 		$rfc822 = new Horde_Mail_Rfc822();
 		$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
-		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count);
+		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count.function_backtrace());
 		if ((empty($ret) || $ret->count()==0)&& is_string($addresses) && strlen($addresses)>0)
 		{
 			$matches = array();
@@ -6648,8 +6665,36 @@ class emailadmin_imapbase
 			$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
 			//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count);
 		}
-		//foreach($ret as $i => $adr) error_log(__METHOD__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal --> ".$adr);
-		return $ret;
+		$previousFailed=false;
+		$ret2 = new Horde_Mail_Rfc822_List();
+		// handle known problems on emailaddresses
+		foreach($ret as $i => $adr)
+		{
+			//mailaddresses enclosed in single quotes like 'me@you.com' show up as 'me as mailbox and you.com' as host
+			if ($adr->mailbox && stripos($adr->mailbox,"'")!==false) $adr->mailbox = str_replace("'","",$adr->mailbox);
+			if ($adr->host && stripos($adr->host,"'")!==false) $adr->host = str_replace("'","",$adr->host);
+			// no mailbox or host part as 'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>' is parsed as 2 addresses separated by ','
+			//#'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>'
+			//#Horde_Mail_Rfc822_List Object([_data:protected] => Array(
+			//[0] => Horde_Mail_Rfc822_Address Object([comment] => Array()[mailbox] => Xr\xc3\xa4hlyz[_host:protected] => [_personal:protected] => )
+			//[1] => Horde_Mail_Rfc822_Address Object([comment] => Array()[mailbox] => mailboxpart1.mailboxpart2[_host:protected] => youthost.com[_personal:protected] => User))[_filter:protected] => Array()[_ptr:protected] => )#2#,
+			if (strlen($adr->mailbox)==0||strlen($adr->host)==0)
+			{
+				$remember = ($adr->mailbox?$adr->mailbox:($adr->host?$adr->host:''));
+				$previousFailed=true;
+				//error_log(__METHOD__.__LINE__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal");
+			}
+			else
+			{
+				if ($previousFailed && $remember) $adr->personal = $remember. ' ' . $adr->personal;
+				$remember = '';
+				$previousFailed=false;
+				//error_log(__METHOD__.__LINE__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal");
+				$ret2->add($adr);
+			}			
+		}
+		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret2).'#'.$ret2->count().'#'.$ret2->count);
+		return $ret2;
 	}
 
 	/**
