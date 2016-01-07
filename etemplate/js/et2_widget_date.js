@@ -1092,39 +1092,6 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	}
 });
-et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date"]);
+et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date", "date-timeonly_ro"]);
 
-/**
- * @augments et2_date_ro
- */
-var et2_date_timeonly_ro = et2_date_ro.extend(
-{
-	attributes: {
-		"value": {
-			"type": "string"
-		}
-	},
-	/**
-	 * Construtor
-	 *
-	 * @param _value
-	 * @memberOf et2_date_timeonly_ro
-	 */
-	set_value: function(_value) {
-		if(this.egw().preference("timeformat") == "12" && _value.indexOf(":") > 0) {
-			var parts = _value.split(":");
-			if(parts[0] >= 12) {
-				this.span.text((parts[0] == "12" ? "12" : parseInt(parts[0])-12)+":"+parts[1]+" pm");
-			}
-			else
-			{
-				this.span.text(_value + " am");
-			}
-		}
-		else
-		{
-			this.span.text(_value);
-		}
-	}
-});
-et2_register_widget(et2_date_timeonly_ro, ["date-timeonly_ro"]);
+
