@@ -754,7 +754,7 @@ ul.et2_link_string {
   display: inline;
 }
 .et2_link_string li:not(:last-child):after {
-  content: ', ';
+  content: '\002C\00A0';
 }
 .et2_link_list {
   border-collapse: collapse;
