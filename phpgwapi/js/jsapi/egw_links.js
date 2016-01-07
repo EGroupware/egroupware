@@ -447,8 +447,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					// cache locally
 					title_cache[app][id] = title;
 					// call callbacks waiting for title of app/id
-					if(typeof title_queue[app] != 'undefined' && 
-						typeof title_queue[app][id] != "undefined"
+					if(typeof title_queue[app] !== 'undefined' &&
+						typeof title_queue[app][id] !== "undefined"
 					)
 					{
 						for(var i=0; i < title_queue[app][id].length; ++i)
@@ -456,8 +456,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 							var callback = title_queue[app][id][i];
 							callback.callback.call(callback.context, title);
 						}
+						delete title_queue[app][id];
 					}
-					delete title_queue[app][id];
 				}
 			}
 		},
