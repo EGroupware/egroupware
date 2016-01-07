@@ -1141,9 +1141,9 @@ class mail_compose
 
 		// get identities of all accounts as "$acc_id:$ident_id" => $identity
 		$sel_options['mailaccount'] = $identities = array();
-		foreach(emailadmin_account::search() as $acc_id => $account)
+		foreach(emailadmin_account::search(true,false) as $acc_id => $account)
 		{
-			foreach(emailadmin_account::identities($acc_id) as $ident_id => $identity)
+			foreach($account->identities($acc_id) as $ident_id => $identity)
 			{
 				$sel_options['mailaccount'][$acc_id.':'.$ident_id] = $identity;
 				$identities[$ident_id] = $identity;
