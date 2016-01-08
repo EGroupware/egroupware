@@ -45,7 +45,7 @@ class etemplate_widget_file extends etemplate_widget
 	 */
 	public static function ajax_upload() {
 		$response = egw_json_response::get();
-		$request_id = urldecode($_REQUEST['request_id']);
+		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
 		$widget_id = $_REQUEST['widget_id'];
 		if(!self::$request = etemplate_request::read($request_id)) {
 			$response->error("Could not read session");
