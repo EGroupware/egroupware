@@ -470,10 +470,22 @@ app.classes.calendar = AppJS.extend(
 	_sortable: function() {
 		// Calender current state
 		var state = this.getState();
-		var sortable = jQuery('#calendar-view_view tbody');
+		// Day / month sortables
+		var daily = jQuery('#calendar-view_view .calendar_calGridHeader > div:first');
+		var weekly = jQuery('#calendar-view_view tbody');
+		if(state.view == 'day')
+		{
+			var sortable = daily;
+			if(weekly.sortable('instance')) weekly.sortable('disable');
+		}
+		else
+		{
+			var sortable = weekly
+			if(daily.sortable('instance')) daily.sortable('disable');
+		}
 		if(!sortable.sortable('instance'))
 		{
-			jQuery('#calendar-view_view tbody').sortable({
+			sortable.sortable({
 				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_plannerHeader",
 				handle: '.calendar_calGridHeader',
 				//placeholder: "srotable_cal_wk_ph",
@@ -489,7 +501,14 @@ app.classes.calendar = AppJS.extend(
 					$j('.calendar_calTimeGrid',ui.helper).css('position', 'absolute');
 					// Put owners into row IDs
 					app.classes.calendar.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
-						widget.div.parents('tr').attr('data-owner',widget.options.owner);
+						if(widget.options.owner && !widget.disabled)
+						{
+							widget.div.parents('tr').attr('data-owner',widget.options.owner);
+						}
+						else
+						{
+							widget.div.parents('tr').removeAttr('data-owner');
+						}
 					},this,et2_calendar_timegrid);
 				},
 				stop: function ()
@@ -501,6 +520,38 @@ app.classes.calendar = AppJS.extend(
 					if (state && typeof state.owner !== 'undefined')
 					{
 						var sortedArr = sortable.sortable('toArray', {attribute:"data-owner"});
+						// No duplicates, no empties
+						sortedArr = sortedArr.filter(function(value, index, self) {
+							return value !== '' && self.indexOf(value) === index;
+						})
+
+						var parent = null;
+						var children = [];
+						if(state.view == 'day')
+						{
+							// If in day view, the days need to be re-ordered, avoiding
+							// the current sort order
+							app.classes.calendar.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
+								var idx = sortedArr.indexOf(widget.options.owner);
+								// Move the event holding div
+								widget.set_left((parseInt(widget.options.width) * idx) + 'px');
+								// Re-order the children, or it won't stay
+								parent = widget._parent;
+								children.splice(idx,0,widget);
+							},this,et2_calendar_daycol);
+						}
+						else
+						{
+							// Re-order the children, or it won't stay
+							app.classes.calendar.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
+								parent = widget._parent;
+								var idx = sortedArr.indexOf(widget.options.owner);
+								children.splice(idx,0,widget);
+							},this,et2_calendar_timegrid);
+						}
+						parent._children.sort(function(a,b) {
+							return children.indexOf(a) - children.indexOf(b);
+						});
 						// Directly update, since there is no other changes needed,
 						// and we don't want the current sort order applied
 						app.calendar.state.owner = sortedArr;
@@ -524,14 +575,26 @@ app.classes.calendar = AppJS.extend(
 				case "day":
 					options = {
 						placeholder:"srotable_cal_day_ph",
-						axis:"x"
+						axis:"x",
+						handle: '> div:first',
+						helper: function(event, element) {
+							var scroll = element.parentsUntil('.calendar_calTimeGrid').last().next();
+							var helper = $j(document.createElement('div'))
+								.append(element.clone())
+								.css('height',scroll.parent().css('height'))
+								.css('background-color','white')
+								.css('width', element.css('width'));
+							return helper;
+						}
 					};
 					sortable.sortable('option', options);
 					break;
 				case "week":
 					options = {
 						placeholder:"srotable_cal_wk_ph",
-						axis:"y"
+						axis:"y",
+						handle: '.calendar_calGridHeader',
+						helper: 'clone'
 					};
 					sortable.sortable('option', options);
 					break;
@@ -1844,6 +1907,10 @@ app.classes.calendar = AppJS.extend(
 						state.state.owner = jQuery.map(state.state.owner, function(owner) {return owner;});
 					}
 			}
+			// Remove duplicates
+			state.state.owner = state.state.owner.filter(function(value, index, self) {
+				return self.indexOf(value) === index;
+			})
 			// Keep sort order
 			if(typeof this.state.owner === 'object')
 			{
@@ -1862,9 +1929,9 @@ app.classes.calendar = AppJS.extend(
 				// Add in any new owners
 				state.state.owner = owner.concat(state.state.owner);
 			}
-			if (state.state.owner.indexOf(0) >= 0)
+			if (state.state.owner.indexOf('0') >= 0)
 			{
-				state.state.owner[state.state.owner.indexOf(0)] = this.egw.user('account_id');
+				state.state.owner[state.state.owner.indexOf('0')] = this.egw.user('account_id');
 			}
 			if(state.state.owner.length === 1 && this.sidebox_et2)
 			{
@@ -1980,15 +2047,12 @@ app.classes.calendar = AppJS.extend(
 							}
 							else if (row_index > i)
 							{
-								for(var j = row_index - i; j > 0; j--)
-								{
-									// Move from the start to the end
-									grid._children.push(grid._children.shift());
-
-									// Swap DOM nodes
-									var a = grid._children[grid._children.length - 1].getDOMNode().parentNode.parentNode;
-									a.parentNode.insertBefore(a,null);
-								}
+								// Swap DOM nodes
+								var a = grid._children[row_index].getDOMNode().parentNode.parentNode;
+								var b = grid._children[i].getDOMNode().parentNode.parentNode;
+								a.parentNode.insertBefore(a,b);
+								grid._children.splice(i,0,widget);
+								grid._children.splice(row_index+1,1);
 							}
 							break;
 						}

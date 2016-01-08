@@ -370,6 +370,7 @@ class calendar_uiviews extends calendar_ui
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Toggle weekend',
 				'toolbarDefault' => false,
+				'data' => array()
 			),
 			'previous' => array(
 				'caption' => 'Previous',

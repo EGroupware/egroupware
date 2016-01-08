@@ -288,6 +288,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * @param {number|number[]} _owner Account ID
 	 */
 	set_owner: function(_owner) {
+		
+		this.title
+			.attr("data-owner", _owner);
+		this.header.attr('data-owner',_owner);
+
 		// Simple comparison, both numbers
 		if(_owner === this.options.owner) return;
 
@@ -298,16 +303,13 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 			return;
 		}
 
+		this.options.owner = _owner;
 		var cache_id = app.classes.calendar._daywise_cache_id(this.options.date,_owner)
 		if(this.options.date && this.registeredUID &&
 			cache_id !== this.registeredUID)
 		{
 			egw.dataUnregisterUID(this.registeredUID,false,this);
 		}
-
-		this.options.owner = _owner;
-		this.title
-			.attr("data-owner", this.options.owner);
 
 		if(this.registeredUID !== cache_id)
 		{
@@ -373,8 +375,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * Applies class for today, and any holidays for current day
 	 */
 	day_class_holiday: function() {
-		// Remove all classes
-		this.title.removeClass()
+		this.title
+			// Remove all special day classes
+			.removeClass('calendar_calToday calendar_calBirthday calendar_calHoliday')
 			// Except this one...
 			.addClass("et2_clickable et2_link");
 		this.title.attr('data-holiday','');

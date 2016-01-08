@@ -607,7 +607,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/granularity);
 		
 		this.gridHeader
-			.empty()
 			.attr('data-date', this.options.start_date)
 			.attr('data-owner', this.options.owner)
 			.append(this._labelContainer)
