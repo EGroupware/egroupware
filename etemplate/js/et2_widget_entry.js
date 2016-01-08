@@ -49,6 +49,12 @@ var et2_entry = et2_valueWidget.extend(
 			type: 'string',
 			default: et2_no_init
 		},
+		precision: {
+			name: 'Decimals to be shown',
+			description: 'Specifies the number of decimals on a float value, the default is 2',
+			type: 'string',
+			default: '2'
+		},
 		value: {
 			type: 'any'
 		},
@@ -148,6 +154,7 @@ var et2_entry = et2_valueWidget.extend(
 				widget.options.value = sum;
 			}
 		}
+		if (this.options.precision) widget.options.value = parseFloat(widget.options.value).toFixed(this.options.precision);
 	}
 });
 
