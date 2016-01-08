@@ -45,7 +45,7 @@ var et2_entry = et2_valueWidget.extend(
 		},
 		alternate_fields: {
 			name: 'Alternate fields',
-			description: 'colon (:) separated list of alternative fields.  The first non-empty one is used if the selected field is empty',
+			description: 'colon (:) separated list of alternative fields.  The first non-empty one is used if the selected field is empty, (-) used for subtraction',
 			type: 'string',
 			default: et2_no_init
 		},
@@ -134,7 +134,8 @@ var et2_entry = et2_valueWidget.extend(
 			var fields = this.options.alternate_fields.split(':');
 			for(var i = 0; i < fields.length; i++)
 			{
-				var value = this.getArrayMgr('content').getEntry(fields[i]);
+				var value =  (fields[i][0] == "-")? this.getArrayMgr('content').getEntry(fields[i].replace('-',''))*-1:
+								this.getArrayMgr('content').getEntry(fields[i]);
 				sum += parseFloat(value);
 				if(value && this.options.field !== 'sum')
 				{
