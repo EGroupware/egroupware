@@ -199,30 +199,47 @@ class html
 
 		// spamsaver emailaddress
 		$result = preg_replace('/'.$NotAnchor.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
-			'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
+//			'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
+			"<a href=\"mailto:$1@$2.$3\" target=\"_blank\">$1 AT $2 DOT $3</a>",
 			$content);
 
 		//  First match things beginning with http:// (or other protocols)
+		$optBracket0 = '(<|&lt;)';
 		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
 		$Domain = '([\w-]+\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$optBracket = '';
-		//$optBracket = '(>|&gt;)';
-		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
+		$optBracket = '(>|&gt;)';
+		$Expr = '/' .$optBracket0. $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
 
-		$result2 = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
+		$result2 = preg_replace( $Expr, "$1<a href=\"$2$3$4$5\" target=\"_blank\">$4$5</a>$6", $result );
 		//$result = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$2$3$4</a>$5 ", $result );
+//error_log(__METHOD__.__LINE__.array2string($Expr));
+//error_log(__METHOD__.__LINE__.array2string($result2));
+		//  First match things beginning with http:// (or other protocols)
+		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
+		$Domain = '([\w-]+\.[\w-.]+)';
+		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
+		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
 
+		$result3 = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$3$4</a>", $result2 );
+		//$result = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$2$3$4</a>$5 ", $result );
+//error_log(__METHOD__.__LINE__.array2string($Expr));
+//error_log(__METHOD__.__LINE__.array2string($result3));
 		//  Now match things beginning with www.
+		$optBracket0 = '(<|&lt;)?';
 		$NotHTTP = '(?<!:\/\/|" target=\"_blank\">)';	//	avoid running again on http://www links already handled above
 		$Domain2 = 'www(\.[\w-.]+)';
 		$Subdir2 = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
-		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain2 . $Subdir2 . '/i';
-		//$optBracket = '(>|&gt;)';
+		$optBracket = '(>|&gt;)?';
+		$Expr = '/' .$optBracket0. $NotAnchor . $NotHTTP . $Domain2 . $Subdir2 .$optBracket. '/i';
 		//$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . $optBracket . '/i';
 
-		return preg_replace( $Expr, "<a href=\"http://$0\" target=\"_blank\">$0</a>", $result2 );
+		$result4 = preg_replace( $Expr, "$1<a href=\"http://www$2$3$4$5\" target=\"_blank\">www$2$3$4$5</a>$6", $result3 );
 		//return preg_replace( $Expr, "<a href=\"http://www$1$2\" target=\"_blank\">www$1$2</a>$3 ", $result );
+//error_log(__METHOD__.__LINE__.array2string($Expr));
+//error_log(__METHOD__.__LINE__.array2string($result4));
+		return $result4;
 	}
 
 	/**
