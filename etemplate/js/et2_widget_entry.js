@@ -51,7 +51,7 @@ var et2_entry = et2_valueWidget.extend(
 		},
 		precision: {
 			name: 'Decimals to be shown',
-			description: 'Specifies the number of decimals on a float value, the default is 2',
+			description: 'Specifies the number of decimals for sum of alternates, the default is 2',
 			type: 'string',
 			default: '2'
 		},
@@ -151,10 +151,11 @@ var et2_entry = et2_valueWidget.extend(
 			}
 			if(this.options.field == 'sum')
 			{
+				if (this.options.precision && jQuery.isNumeric(sum)) sum = parseFloat(sum).toFixed(this.options.precision);
 				widget.options.value = sum;
 			}
 		}
-		if (this.options.precision) widget.options.value = parseFloat(widget.options.value).toFixed(this.options.precision);
+		
 	}
 });
 
