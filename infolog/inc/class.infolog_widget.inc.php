@@ -11,6 +11,17 @@
  */
 
 /**
+ * Infolog widget et2 representation:
+ * Both infolog-value and infolog-fields widgets are using client-side et2_widget_entry
+ * and the format to address them in template is as follows:
+ *
+ * <infolog-value id="fieldname" or value="@fieldname"
+ *   options="[field(e.g. sum), compare, alternate_fields(e.g. (-)#customfileds, use '-' if we need subtraction)]"
+ * />
+ *
+ */	
+	
+/**
  * eTemplate extension: InfoLog widget
  *
  * This widget can be used to display data from an InfoLog specified by it's id
