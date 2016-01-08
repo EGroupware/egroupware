@@ -1839,12 +1839,15 @@ class mail_ui
 		}
 		$this->mail_bo->reopen($mailbox);
 		// retrieve the flags of the message, before touching it.
-		$headers	= $this->mail_bo->getMessageHeader($uid, $partID,true,true,$mailbox);
-		if (PEAR::isError($headers)) {
+		try
+		{
+			$headers	= $this->mail_bo->getMessageHeader($uid, $partID,true,true,$mailbox);
+		}
+		catch (egw_exception $e)
+		{
 			$error_msg[] = lang("ERROR: Message could not be displayed.");
 			$error_msg[] = lang("In Mailbox: %1, with ID: %2, and PartID: %3",$mailbox,$uid,$partID);
-			$error_msg[] = $headers->message;
-			$error_msg[] = array2string($headers->backtrace[0]);
+			egw_framework::message($e->getMessage(), 'error');
 		}
 		if (!empty($uid)) $this->mail_bo->getFlags($uid);
 		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true,$mailbox);
