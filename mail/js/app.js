@@ -3143,12 +3143,15 @@ app.classes.mail = AppJS.extend(
 			return;
 		}
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var src_label = _senders[0].id.replace(/^[0-9]::/,'');
+		var dest_label = destination.id.replace(/^[0-9]::/,'');
 		
 		var callback = function (_button)
 		{
 			if (_button == et2_dialog.YES_BUTTON)
 			{
-				egw.message (egw.lang('Folder %1 is moving to folder %2',_senders[0].id, destination.id));
+				
+				egw.message (egw.lang('Folder %1 is moving to folder %2',src_label,dest_label ));
 				egw.loading_prompt('mail_moveFolder', true,'','#egw_fw_basecontainer');
 				for(var i = 0; i < _senders.length; i++)
 				{
@@ -3165,7 +3168,7 @@ app.classes.mail = AppJS.extend(
 			}
 		};
 		et2_dialog.show_dialog(callback, egw.lang('Are you sure you want to move folder %1 to folder %2?',
-			_senders[0].id, destination.id), 'Move folder', {},et2_dialog.BUTTONS_YES_NO,  et2_dialog.WARNING_MESSAGE);
+			src_label, dest_label), 'Move folder', {},et2_dialog.BUTTONS_YES_NO,  et2_dialog.WARNING_MESSAGE);
 	},
 
 	/**
