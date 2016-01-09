@@ -310,7 +310,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 				var dropdown = et2_createWidget("dropdown_button", {
 					id: action.id
 				},this);
-				
+
 				dropdown.set_select_options(children);
 				dropdown.set_label (action.caption);
 				//Set default selected action
@@ -358,14 +358,14 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		}
 
 		// ************** Drag and Drop feature for toolbar *****
-		this.actionlist.find('span').sort( function (lg,g){
+		this.actionlist.find('span[data-group]').sort( function (lg,g){
 			return +lg.getAttribute('data-group') - +g.getAttribute('data-group');
 			}).appendTo(this.actionlist);
 
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
 
-		var toolbar = this.actionlist.find('span').children(),
+		var toolbar = this.actionlist.find('span[data-group]').children(),
 			toolbox = this.actionbox,
 			menulist = jQuery(this.actionbox.children()[1]);
 
@@ -476,15 +476,41 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		
 		if (action && action.checkbox)
 		{
-			if (this.checkbox(action.id)) button.addClass('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
-		}	
+			if (action.data.toggle_on || action.data.toggle_off)
+			{
+				var toggle = et2_createWidget('checkbox', {
+					id: this.id+'-'+action.id,
+					toggle_on: action.data.toggle_on,
+					toggle_off: action.data.toggle_off
+				}, this);
+				toggle.doLoadingFinished();
+				toggle.set_value(action.checked);
+				action.data.widget = toggle;
+				toggle =toggle.toggle;
+				toggle.appendTo(button.parent())
+					.attr('id', this.id+'-'+action.id);
+				button.remove();
+				button = toggle;
+
+			}
+			else
+			{
+				if (this.checkbox(action.id)) button.addClass('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
+			}
+		}
 		if ( action.iconUrl)
 		{
 			button.attr('style','background-image:url(' + action.iconUrl + ')');
 		}
 		if (action.caption)
 		{
-			if ((this.countActions <= parseInt(this.options.view_range) ||
+			// Set label for checkboxes inside the dropdown
+			if(this.preference[action.id] &&
+				action.data && action.data.widget && action.data.widget.instanceOf(et2_checkbox))
+			{
+				button.prepend(action.caption);
+			}
+			else if ((this.countActions <= parseInt(this.options.view_range) ||
 					this.preference[action.id])	&&
 					typeof button[0] !== 'undefined')
 			{
@@ -543,13 +569,17 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	{
 		if (!_action || typeof this._actionManager == 'undefined') return undefined;
 		var action_event = this._actionManager.getActionById(_action);
-		
+
 		if (action_event && typeof _value !='undefined')
 		{
+			action_event.set_checked(_value);
 			var btn = jQuery('#'+this.id+'-'+_action);
-			if (btn.length > 0)
+			if(action_event.data && action_event.data.widget)
 			{
-				action_event.set_checked(_value);
+				action_event.data.widget.set_value(_value);
+			}
+			else if (btn.length > 0)
+			{
 				btn.toggleClass('toolbar_toggled'+ (typeof action_event.data.toggledClass != 'undefined'?" "+action_event.data.toggledClass:''));
 			}
 		}

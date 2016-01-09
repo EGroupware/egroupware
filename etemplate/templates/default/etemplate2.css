@@ -1738,6 +1738,26 @@ span.et2_checkbox_slideSwitch > input {
 span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 	right:50%;
 }
+/* Slide switch in a toolbar */
+.et2_toolbar_actionlist span.et2_checkbox_slideSwitch {
+	padding-right: 12px;
+	padding-bottom: 2px;
+	vertical-align: bottom;
+}
+.et2_toolbar_activeList span.et2_checkbox_slideSwitch {
+	text-align: left;
+	color: black;
+	font-size: 11px;
+	font-weight: normal;
+	width: 100%;
+}
+.et2_toolbar_activeList span.et2_checkbox_slideSwitch > span.slideSwitch_container {
+	width: 40px;
+	float: left;
+}
+.et2_toolbar_activeList span.et2_checkbox_slideSwitch > input {
+	display: none;
+}
 
 .et2_radiobox {
 	margin-right: 5px;
