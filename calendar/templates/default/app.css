@@ -71,7 +71,7 @@
 #calendar-todo {
 	position: absolute;
 	width: 30%;
-	
+	margin-top: 0px;
 	/* Nice transition when changing days in a week */
 	transition: 1s ease-in-out;
 }
