@@ -61,6 +61,7 @@
  *													// boolean file_access(string $id,int $check,string $rel_path=null,int $user=null)
  * 			'file_access_user' => false,			// true if file_access method supports 4th parameter $user, if app is NOT supporting it
  *                                                  // egw_link::file_access() returns false for $user != current user!
+ *			'file_dir'	=> 'app/sub',				// sub file dir for uploaded files/links
  *			'find_extra'  => array('name_preg' => '/^(?!.picture.jpg)$/')	// extra options to egw_vfs::find, to eg. remove some files from the list of attachments
  *			'edit' => array(
  *				'menuaction' => 'app.class.method',
@@ -1157,6 +1158,14 @@ class egw_link extends solink
 
 		if ($app)
 		{
+			if( isset(self::$app_register[$app]) ) {
+				$reg = self::$app_register[$app];
+
+				if( isset($reg['file_dir']) ) {
+					$app = $reg['file_dir'];
+				}
+			}
+
 			$path .= '/'.$app;
 
 			if ($id)
@@ -1328,7 +1337,47 @@ class egw_link extends solink
 				return false;
 			}
 		}
-		list(,,$app,$id) = explode('/',$url[0] == '/' ? $url : parse_url($url,PHP_URL_PATH));	// /apps/$app/$id
+
+		$up = explode('/',$url[0] == '/' ? $url : parse_url($url,PHP_URL_PATH));	// /apps/$app/$id
+		$app = null;
+
+		foreach( self::$app_register as $tapp => $reg ) {
+			if( isset($reg['file_dir']) ) {
+				$lup = $up;
+
+				unset($lup[0]);
+				unset($lup[1]);
+				reset($lup);
+
+				$fdp = explode('/',$reg['file_dir'][0] == '/' ?
+					$reg['file_dir'] : parse_url($reg['file_dir'],PHP_URL_PATH));
+
+				$found = true;
+
+				foreach( $fdp as $part ) {
+					if( current($lup) == $part ) {
+						if( next($lup) === false ) {
+							$found = false;
+							break;
+						}
+					}
+					else {
+						$found = false;
+						break;
+					}
+				}
+
+				if( $found ) {
+					$id	= current($lup);
+					$app = $tapp;
+					break;
+				}
+			}
+		}
+
+		if( $app === null ) {
+			list(,,$app,$id) = $up;
+		}
 
 		return array(
 			'app'       => self::VFS_APPNAME,
