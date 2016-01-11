@@ -23,7 +23,7 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
 {
 
 	attributes: {
@@ -863,7 +863,24 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM],
 	setDetachedAttributes: function(_nodes, _values) {
 		
 	},
+	
+	// Resizable interface
+	/**
+	 * Resize
+	 *
+	 * Parent takes care of setting proper width & height for the containing div
+	 * here we just need to adjust the events to fit the new size.
+	 */
+	resize: function ()
+	{
+		if(this.disabled || !this.div.is(':visible') || this._parent.disabled)
+		{
+			return;
+		}
 
+		// Resize & position all events
+		this.position_event();
+	}
 });
 
 et2_register_widget(et2_calendar_daycol, ["calendar-daycol"]);
