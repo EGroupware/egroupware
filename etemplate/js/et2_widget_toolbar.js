@@ -69,7 +69,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		
 		//actionbox is the div for stored actions
 		this.actionbox = $j(document.createElement('div'))
-				.addClass("et2_toolbar_activeList")
+				.addClass("et2_toolbar_more")
 				.attr('id',this.id +'-'+ 'actionbox');
 		//actionlist is div for active actions
 		this.actionlist = $j(document.createElement('div'))
