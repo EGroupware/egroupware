@@ -237,12 +237,18 @@ app.classes.calendar = AppJS.extend(
 							if (match[1]== _id)	do_refresh = true;
 						}
 					});
-				if (jQuery('div [data-app="infolog"][data-app_id="'+_id+'"]').length > 0) do_refresh = true;
-				switch (_type)
+
+				// Unfortunately we do not know what type this infolog is here,
+				// but we can tell if it's turned off entirely
+				if(egw.preference('calendar_integration','infolog') !== '0')
 				{
-					case 'add':
-						do_refresh = true;
-						break;
+					if (jQuery('div [data-app="infolog"][data-app_id="'+_id+'"]').length > 0) do_refresh = true;
+					switch (_type)
+					{
+						case 'add':
+							do_refresh = true;
+							break;
+					}
 				}
 				if (do_refresh)
 				{
