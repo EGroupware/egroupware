@@ -713,6 +713,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	
 	_resizeTimes: function() {
 
+		if(!this.div.is(':visible'))
+		{
+			return;
+		}
 		var wd_start = 60*this.options.day_start;
 		var wd_end = 60*this.options.day_end;
 		var totalDisplayMinutes	= wd_end - wd_start;
@@ -1362,7 +1366,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 		else
 		{
-			this._resizeTimes();
+			this.resizeTimes();
 		}
 	},
 
