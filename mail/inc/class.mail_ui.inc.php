@@ -2526,7 +2526,8 @@ class mail_ui
 		
 		//Examine the first attachment to see if attachment
 		//is winmail.dat embedded attachments.
-		$p = $getParams($ids[0]);
+		$isMultipleDownload=is_array($ids);
+		$p = $getParams((is_array($ids)?$ids[0]:$ids));
 		if ($p['is_winmail'])
 		{
 			if ($p['icServer'] && $p['icServer'] != $this->mail_bo->profileID)
@@ -2539,10 +2540,12 @@ class mail_ui
 			// for each file.
 			$attachments = $this->mail_bo->getTnefAttachments($p['uid'],$p['part']);
 		}
-		
+
 		foreach((array)$ids as $id)
 		{
 			$params = $getParams($id);
+			// when downloading a single file, name is not set
+			if (!$params['name']&&isset($_GET['name'])&&!$isMultipleDownload) $params['name'] = $_GET['name'];
 			if ($params['icServer'] && $params['icServer'] != $this->mail_bo->profileID)
 			{
 				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
@@ -2550,7 +2553,6 @@ class mail_ui
 			}
 			//error_log(__METHOD__.__LINE__.array2string($hA));
 			$this->mail_bo->reopen($params['mailbox']);
-			
 			if ($params['is_winmail'])
 			{
 				// Try to find the right content for file id
@@ -2565,7 +2567,8 @@ class mail_ui
 			}
 
 			$file = $params['name'];
-			while(egw_vfs::file_exists($path.($file ? '/'.$file : '')))
+			// when $isMultipleDownload the path holds no filename
+			while(egw_vfs::file_exists($path.($file && $isMultipleDownload ? '/'.$file : '')))
 			{
 				$dupe_count[$params['name']]++;
 				$file = pathinfo($params['name'], PATHINFO_FILENAME) .
@@ -2574,7 +2577,8 @@ class mail_ui
 			}
 			$params['name'] = $file;
 			//error_log(__METHOD__.__LINE__.array2string($attachment));
-			if (!($fp = egw_vfs::fopen($file=$path.($params['name'] ? '/'.$params['name'] : ''),'wb')) ||
+			// when $isMultipleDownload the path holds no filename
+			if (!($fp = egw_vfs::fopen($file=$path.($params['name'] && $isMultipleDownload ? '/'.$params['name'] : ''),'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
 				$err .= lang('Error saving %1!',$file);
