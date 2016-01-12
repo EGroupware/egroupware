@@ -2715,7 +2715,8 @@ class calendar_uiforms extends calendar_ui
 					'to_id' => 0,
 				),
 				'start' => $mailContent['date'],
-				'duration' => 60 * $this->cal_prefs['interval']
+				'duration' => 60 * $this->cal_prefs['interval'],
+				'owner' => $GLOBALS['egw_info']['user']['account_id']
 			);
 
 			if (is_array($mailContent['attachments']))
