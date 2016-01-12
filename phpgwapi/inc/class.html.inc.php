@@ -211,9 +211,11 @@ class html
 		$optBracket = '';
 		$optBracket = '(>|&gt;)';
 		$Expr = '/' .$optBracket0. $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
-
-		$result2 = preg_replace( $Expr, "$1<a href=\"$2$3$4$5\" target=\"_blank\">$4$5</a>$6", $result );
-		//$result = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$2$3$4</a>$5 ", $result );
+		// use preg_replace_callback as we experienced problems with https links
+		$result2 = preg_replace_callback( $Expr, function ($match) {
+				//error_log(__METHOD__.__LINE__.array2string($match));
+				return $match[1]."<a href=\"".($match[2]&&!$match[3]?$match[2]:'').($match[3]?$match[3]:'').$match[4].$match[5]."\" target=\"_blank\">".$match[4].$match[5]."</a>".$match[6];
+			}, $result );
 //error_log(__METHOD__.__LINE__.array2string($Expr));
 //error_log(__METHOD__.__LINE__.array2string($result2));
 		//  First match things beginning with http:// (or other protocols)
@@ -221,9 +223,11 @@ class html
 		$Domain = '([\w-]+\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
-
-		$result3 = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$3$4</a>", $result2 );
-		//$result = preg_replace( $Expr, "<a href=\"$1$2$3$4\" target=\"_blank\">$2$3$4</a>$5 ", $result );
+		// use preg_replace_callback as we experienced problems with https links
+		$result3 = preg_replace_callback( $Expr, function ($match) {
+				//error_log(__METHOD__.__LINE__.array2string($match));
+				return "<a href=\"".($match[1]&&!$match[2]?$match[1]:'').($match[2]?$match[2]:'').$match[3].$match[4]."\" target=\"_blank\">".$match[3].$match[4]."</a>";
+			}, $result2 );
 //error_log(__METHOD__.__LINE__.array2string($Expr));
 //error_log(__METHOD__.__LINE__.array2string($result3));
 		//  Now match things beginning with www.
