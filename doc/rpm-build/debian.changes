@@ -1,3 +1,20 @@
+egroupware-epl (14.3.20160112) hardy; urgency=low
+
+  * Mail: Fix browser crashes when try to save all winmail.dat attachments into filemanager
+  * Addressbook: Fix email action in context menu does not send a valid email to compose dialog for certain email addresses
+  * All applications/ Tutorials:
+   -Fix discarding tutorials prompt not working if the configuration is set to sidebox
+   -Rephrase tutorials siteconfiguration labels for ease of comprehension	
+  * Fix mail printing style
+  * Admin: Add (de)activating mail accounts into admin contextmenu
+  * Addressbook/CardDAV: fix contacts created with "Copy instead of move" checked in "Move to addressbook" context menu sync not correctly (already created ones need to be deleted!)
+  * Mail: Fix compose dialog goes under window's taskbar and attachments are not visible
+  * Infolog: Fix not working subtraction option for infolog-value widget
+  * Filemanager: Fix not being able to upload files in filemanager if user id includes space
+  * Calendar/ mail integration: Fix created event out of mail has no delete button available in participants list
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 12 Jan 2016 12:33:25 +0100
+
 egroupware-epl (14.3.20151130) hardy; urgency=low
 
   * PostgreSQL/Calendar: fix SQL error on update, caused by using reserved word "user" as alias
