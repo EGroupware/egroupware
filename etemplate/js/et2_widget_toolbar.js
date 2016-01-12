@@ -504,16 +504,12 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		}
 		if (action.caption)
 		{
-			// Set label for checkboxes inside the dropdown
-			if(this.preference[action.id] &&
-				action.data && action.data.widget && action.data.widget.instanceOf(et2_checkbox))
-			{
-				button.prepend(action.caption);
-			}
-			else if ((this.countActions <= parseInt(this.options.view_range) ||
+			if ((this.countActions <= parseInt(this.options.view_range) ||
 					this.preference[action.id])	&&
-					typeof button[0] !== 'undefined')
+					typeof button[0] !== 'undefined' &&
+					!(action.checkbox && action.data && (action.data.toggle_on || action.data.toggle_off))) // no caption for slideswitch checkboxes 
 			{
+				button.addClass('et2_toolbar_hasCaption');
 				button[0].textContent = action.caption;
 			}
 		}
