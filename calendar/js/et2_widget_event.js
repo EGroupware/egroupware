@@ -238,8 +238,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			// Let timegrid always get the drag
 			.droppable('option','greedy',false)
 		
-			// ?
-			.attr('data-draggable-id',event['id']+'_O'+event.owner+'_C'+(event.owner<0?'group'+Math.abs(event.owner):event.owner))
+			// Set full day flag
+			.attr('data-full_day', event.whole_day_on_top)
 		
 			// Put everything we need for basic interaction here, so it's available immediately
 			.attr('data-id', event.id)
@@ -312,6 +312,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			this.body
 				.html('<span class="calendar_calEventTitle">'+title+'</span>')
+				.append('<span class="calendar_calTimespan">'+this._get_timespan(event) + '</span>')
 				.append('<p>'+this.options.value.description+'</p>');
 		}
 		this.body

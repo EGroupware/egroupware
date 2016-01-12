@@ -2683,3 +2683,23 @@ function calendar_upgrade14_3_901()
 	});
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.902';
 }
+
+/**
+ * Change grid/list preference values to list each view
+ */
+function calendar_upgrade14_3_902()
+{
+	preferences::change_preference('calendar', 'use_time_grid', function($attr, $old_value, $owner) {
+		switch($old_value)
+		{
+			case 'all':
+				return 0;
+			case 'day_week':
+				return ['day','day4','week'];
+			case 'day4':
+				return ['day','day4'];
+		}
+		return null;
+	});
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.903';
+}

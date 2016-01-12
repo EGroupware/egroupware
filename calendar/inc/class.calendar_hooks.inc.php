@@ -117,10 +117,11 @@ class calendar_hooks
 			'1' => lang('Yes'),
 			'0' => lang('No'),
 		);
-		$grid_views = array(
-			'all' => lang('all'),
-			'day_week' => lang('Dayview').', '.lang('Four days view').' &amp; '.lang('Weekview'),
-			'day4' => lang('Dayview').' &amp; '.lang('Four days view'),
+		$list_views = array(
+			0 => lang('None'),
+			'weekN' => lang('Multiple week view'),
+			'week' => lang('Weekview'),
+			'day4' => lang('Four days view'),
 			'day' => lang('Dayview'),
 		);
 		$updates = array(
@@ -346,19 +347,16 @@ class calendar_hooks
 				'admin'  => False,
 				'forced' => 'user',
 			),
-			//ATM:Disable the use_time_grid preference
-			//@TODO: the whole use_time_grid preference should be removed
-			// after we decided that is not neccessary to have it at all
-			/*'use_time_grid' => array(
-				'type'   => 'select',
-				'label'  => 'Views with fixed time intervals',
+			'use_time_grid' => array(
+				'type'   => 'multiselect',
+				'label'  => 'Views showing a list of events',
 				'name'   => 'use_time_grid',
-				'values' => $grid_views,
-				'help'   => 'For which views should calendar show distinct lines with a fixed time interval.',
+				'values' => $list_views,
+				'help'   => 'For which views should calendar just a list of events instead of distinct lines with a fixed time interval.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'all',
-			),*/
+				'default' => ['weekN'],
+			),
 			'link_title' => array(
 				'type'   => 'multiselect',
 				'label'  => 'Link title for events to show',

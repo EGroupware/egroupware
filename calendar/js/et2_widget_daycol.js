@@ -160,29 +160,36 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 		}
 
-		this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity);
-		this.display_settings.rowHeight= (100/this.display_settings.rowsToDisplay).toFixed(1);
-		this.display_settings.titleHeight = (this.title.height()/this.div.height())*100;
-
-		// adding divs to click on for each row / time-span
-		for(var t = 0,i = 1; t < 1440; t += this.display_settings.granularity,++i)
+		if(this.display_settings.granularity === 0)
 		{
-			var linkData = {
-				'menuaction':'calendar.calendar_uiforms.edit',
-				'date'		: this.options.date,
-				'hour'		: sprintf("%02d",Math.floor(t / 60)),
-				'minute'	: sprintf("%02d",Math.floor(t % 60))
-			};
-			if (this.options.owner) linkData['owner'] = this.options.owner;
+			this.div.attr('data-date', this.options.date);
+		}
+		else
+		{
+			this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity);
+			this.display_settings.rowHeight= (100/this.display_settings.rowsToDisplay).toFixed(1);
+			this.display_settings.titleHeight = (this.title.height()/this.div.height())*100;
 
-			var droppableDateTime = linkData['date'] + "T" + linkData['hour'] + linkData['minute'];
-			var droppableID='drop_'+droppableDateTime+'_O'+(this.options.owner<0?'group'+Math.abs(this.options.owner):this.options.owner);
+			// adding divs to click on for each row / time-span
+			for(var t = 0,i = 1; t < 1440; t += this.display_settings.granularity,++i)
+			{
+				var linkData = {
+					'menuaction':'calendar.calendar_uiforms.edit',
+					'date'		: this.options.date,
+					'hour'		: sprintf("%02d",Math.floor(t / 60)),
+					'minute'	: sprintf("%02d",Math.floor(t % 60))
+				};
+				if (this.options.owner) linkData['owner'] = this.options.owner;
 
-			var hour = jQuery('<div id="' + droppableID + '" style="height:'+ this._parent.rowHeight+'px; " class="calendar_calAddEvent">')
-				.attr('data-date',linkData.date)
-				.attr('data-hour',linkData.hour)
-				.attr('data-minute',linkData.minute)
-				.appendTo(this.div);
+				var droppableDateTime = linkData['date'] + "T" + linkData['hour'] + linkData['minute'];
+				var droppableID='drop_'+droppableDateTime+'_O'+(this.options.owner<0?'group'+Math.abs(this.options.owner):this.options.owner);
+
+				var hour = jQuery('<div id="' + droppableID + '" style="height:'+ this._parent.rowHeight+'px; " class="calendar_calAddEvent">')
+					.attr('data-date',linkData.date)
+					.attr('data-hour',linkData.hour)
+					.attr('data-minute',linkData.minute)
+					.appendTo(this.div);
+			}
 		}
 	},
 
@@ -245,7 +252,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			.attr('data-whole_day',true);
 
 		// Avoid redrawing if date is the same
-		if(new_date === this.options.date && !force_redraw)
+		if(new_date === this.options.date &&
+			this.display_settings.granularity === this._parent.options.granularity &&
+			!force_redraw
+		)
 		{
 			return;
 		}
@@ -361,13 +371,18 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 	},
 	set_width: function(width) {
-		this.options.width = width;
-		window.setTimeout(jQuery.proxy(function() {
-		if(this.div)
+		if(this.width_timeout)
 		{
-			this.div.outerWidth(this.options.width);
-			this.header.outerWidth(this.options.width);
+			window.clearTimeout(this.width_timeout);
 		}
+		this.options.width = width;
+		this.width_timeout = window.setTimeout(jQuery.proxy(function() {
+			this.width_timeout = null;
+			if(this.div)
+			{
+				this.div.outerWidth(this.options.width);
+				this.header.outerWidth(this.options.width);
+			}
 		},this),1);
 	},
 
@@ -487,7 +502,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.div.children('.hiddenEventAfter').remove();
 
 		var timegrid = this._parent;
-		var day = this;
 
 		// elem is jquery div of event
 		function isHidden(elem) {
@@ -511,12 +525,16 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Check each event
 		this.iterateOver(function(event) {
 			// Skip whole day events and events missing value
-			if(!event.options || !event.options.value || event.options.value.whole_day_on_top) return;
+			if(this.display_settings.granularity && (
+				(!event.options || !event.options.value || event.options.value.whole_day_on_top))
+			)
+			{
+				return;
+			}
 
 			// Reset
 			event.title.css('top','');
 			event.body.css('padding-top','');
-
 			var hidden = isHidden.call(this,event.div);
 			if(!hidden)
 			{
@@ -529,66 +547,97 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				event.title.css('top',timegrid.scrolling.scrollTop() - event.div.position().top);
 				event.body.css('padding-top',timegrid.scrolling.scrollTop() - event.div.position().top);
 			}
+			// Too many in list view, show indicator
+			else if (this.display_settings.granularity === 0 && hidden.completely)
+			{
+				var day = this;
+				this._hidden_indicator(event, false, function() {
+					app.calendar.update_state({view: 'day', date: day.date});
+				});
+			}
 			// Completely out of view, show indicator
 			else if (hidden.completely)
 			{
-				var indicator = '';
-				if(hidden.hidden === 'top')
-				{
-					if($j('.hiddenEventBefore',this.header).length == 0)
-					{
-						indicator = $j('<div class="hiddenEventBefore"></div>')
-							.appendTo(this.header)
-							.text(event.options.value.title)
-							.attr('data-hidden_count', 1)
-							.on('click', function() {
-								$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
-								return false;
-							});
-					}
-					else
-					{
-						indicator = $j('.hiddenEventBefore',this.header);
-						indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
-						indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
-					}
-				}
-				else if(hidden.hidden === 'bottom')
-				{
-					indicator = $j('.hiddenEventAfter',this.div);
-					if(indicator.length == 0)
-					{
-						indicator = $j('<div class="hiddenEventAfter"></div>')
-							.text(event.options.value.title)
-							.attr('data-hidden_count', 1)
-							.appendTo(this.div)
-							.on('click', function() {
-								$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
-								// Better re-run this to clean up
-								day._out_of_view();
-								return false;
-							});
-					}
-					else
-					{
-						indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
-						indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
-					}
-					indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.height());
-				}
-				// Match color to the event
-				if(indicator !== '')
-				{
-
-					// Avoid white, which is hard to see
-					var color = jQuery.Color(event.div.css('border-top-color')).toString() !== jQuery.Color('white').toString() ?
-						event.div.css('border-top-color') : event.div.css('background-color');
-				
-					// Use border-top-color, Firefox doesn't give a value with border-color
-					indicator.css('border-color', color);
-				}
+				this._hidden_indicator(event, hidden.hidden == 'top');
 			}
 		}, this, et2_calendar_event);
+	},
+
+	/**
+	 * Show an indicator that there are hidden events
+	 *
+	 * @param {et2_calendar_event} event Event we're creating the indicator for
+	 * @param {boolean} top Events hidden at the top (true) or bottom (false)
+	 * @param {function} [onclick] Callback for when user clicks on the indicator
+	 */
+	_hidden_indicator: function _hidden_indicator(event, top, onclick)
+	{
+		var indicator = '';
+		var day = this;
+		var timegrid = this._parent;
+		if(top)
+		{
+			if($j('.hiddenEventBefore',this.header).length === 0)
+			{
+				indicator = $j('<div class="hiddenEventBefore"></div>')
+					.appendTo(this.header)
+					.text(event.options.value.title)
+					.attr('data-hidden_count', 1)
+					.on('click', typeof onclick === 'function' ? onclick : function() {
+						$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
+						return false;
+					});
+			}
+			else
+			{
+				indicator = $j('.hiddenEventBefore',this.header);
+				indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
+				indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+			}
+		}
+		else
+		{
+			indicator = $j('.hiddenEventAfter',this.div);
+			if(indicator.length === 0)
+			{
+				indicator = $j('<div class="hiddenEventAfter"></div>')
+					.text(event.options.value.title)
+					.attr('data-hidden_count', 1)
+					.appendTo(this.div)
+					.on('click', typeof onclick === 'function' ? onclick : function() {
+						$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
+						// Better re-run this to clean up
+						day._out_of_view();
+						return false;
+					});
+			}
+			else
+			{
+				var count = parseInt(indicator.attr('data-hidden_count')) + 1
+				indicator.attr('data-hidden_count', count);
+				if(this.display_settings.granularity === 0)
+				{
+					indicator.text(indicator.text() + "\n" + event.options.value.title);
+				}
+				else
+				{
+					indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+				}
+				indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.height());
+			}
+		}
+		// Match color to the event
+		if(indicator !== '')
+		{
+			// Avoid white, which is hard to see
+			// Use border-bottom-color, Firefox doesn't give a value with border-color
+			var color = jQuery.Color(event.div.css('border-bottom-color')).toString() !== jQuery.Color('white').toString() ?
+				event.div.css('border-bottom-color') : event.div.css('background-color');
+			if(color !== 'rgba(0, 0, 0, 0)')
+			{
+				indicator.css('border-color', color);
+			}
+		}
 	},
 
 	/**
@@ -598,6 +647,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 */
 	_spread_events: function()
 	{
+		if(!this.date) return [];
+		
 		var day_start = this.date.valueOf() / 1000;
 		var dst_check = new Date(this.date);
 		dst_check.setUTCHours(12);
@@ -706,6 +757,21 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				// Calculate vertical positioning
 				var top = 0;
 				var height = 0;
+				// Position the event
+				if(this.display_settings.granularity === 0)
+				{
+					if(this.all_day.has(columns[c][i].div).length)
+					{
+						columns[c][i].div.prependTo(this.div);
+					}
+					columns[c][i].div.css('top', '');
+					columns[c][i].div.css('height', '');
+					columns[c][i].div.css('left', '');
+					columns[c][i].div.css('width', '');
+					// Strip out of view padding
+					columns[c][i].body.css('padding-top','');
+					continue;
+				}
 				if(columns[c][i].options.value.whole_day_on_top)
 				{
 					if(!this.all_day.has(columns[c][i].div).length)
@@ -878,8 +944,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			return;
 		}
 
+		if(this.display_settings.granularity !== this._parent.options.granularity)
+		{
+			// Layout has changed
+			this._draw();
+		}
 		// Resize & position all events
 		this.position_event();
+
+		this._out_of_view();
 	}
 });
 

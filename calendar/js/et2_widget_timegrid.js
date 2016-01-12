@@ -55,7 +55,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			name: "Granularity",
 			type: "integer",
 			default: parseInt(egw.preference('interval','calendar')) || 30,
-			description: "How many minutes per row"
+			description: "How many minutes per row, or 0 to display events as a list"
 		},
 		"onchange": {
 			"name": "onchange",
@@ -194,6 +194,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		 * for planner view to resize horizontally.
 		 */
 		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function() {
+			// Only resize in timegrid
+			if(timegrid.options.granularity === 0) return;
+			
 			// Load the event
 			timegrid._get_event_info(this);
 			var that = this;
@@ -331,7 +334,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				{
 					this.scrolling.scrollTop(element.dropEnd.position().top);
 				}
-				else if (element.dropEnd.prev() && element.dropEnd.prev().position().top < this.scrolling[0].scrollTop)
+				else if (element.dropEnd.prev().length && element.dropEnd.prev().position().top < this.scrolling[0].scrollTop)
 				{
 					this.scrolling.scrollTop(element.dropEnd.prev().position().top);
 				}
@@ -340,6 +343,12 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			if(this._drop_data.whole_day)
 			{
 				time = this.egw().lang('Whole day');
+			}
+			else if (this.options.granularity === 0)
+			{
+				// No times, keep what's in the event
+				// Add class to helper to keep formatting
+				$j(helper).addClass('calendar_calTimeGridList');
 			}
 			else
 			{
@@ -392,7 +401,13 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				if(event_data.app == 'calendar' && event_widget.options.value.whole_day)
 				{
 					event_widget._parent.date_helper.set_hours(0);
-					event_widget._parent.date_helper.set_minutes(0)
+					event_widget._parent.date_helper.set_minutes(0);
+				}
+				else if (timegrid.options.granularity === 0)
+				{
+					// List, not time grid - keep time
+					event_widget._parent.date_helper.set_hours(event_widget.options.value.start.getUTCHours());
+					event_widget._parent.date_helper.set_minutes(event_widget.options.value.start.getUTCMinutes());
 				}
 				else
 				{
@@ -507,6 +522,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 		this.update_timer = window.setTimeout(jQuery.proxy(function() {
 			this.widget.update_timer = null;
+			window.clearTimeout(this.resize_timer);
 			this.widget.loader.hide().show();
 			
 			// Update actions
@@ -600,12 +616,8 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	_drawTimes: function() {
 		$j('.calendar_calTimeRow',this.div).remove();
 
-		var wd_start = 60*this.options.day_start;
-		var wd_end = 60*this.options.day_end;
-		var granularity = this.options.granularity;
-		var totalDisplayMinutes	= wd_end - wd_start;
-		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/granularity);
-		
+		this.div.toggleClass('calendar_calTimeGridList', this.options.granularity === 0);
+
 		this.gridHeader
 			.attr('data-date', this.options.start_date)
 			.attr('data-owner', this.options.owner)
@@ -613,14 +625,35 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			.append(this.owner.getDOMNode())
 			.append(this.dayHeader)
 			.appendTo(this.div);
+		
+		// Max with 18 avoids problems when it's not shown
+		var header_height = Math.max(this.gridHeader.outerHeight(true), 18);
+		
+		this.scrolling
+			.appendTo(this.div)
+			.off()
 
-		// Max with 45 avoids problems when it's not shown
-		var header_height = Math.max(this.gridHeader.outerHeight(true), 45);
+		// No time grid - list
+		if(this.options.granularity === 0)
+		{
+			this.scrolling.css('height','100%');
+			this.days.css('height', '100%');
+			this.iterateOver(function(day) {
+				day.resize();
+			},this,et2_calendar_daycol);
+			return;
+		}
+
+		var wd_start = 60*this.options.day_start;
+		var wd_end = 60*this.options.day_end;
+		var granularity = this.options.granularity;
+		var totalDisplayMinutes	= wd_end - wd_start;
+		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/granularity);
+
 		
 		this.scrolling
 			.css('height', (this.div.innerHeight() - header_height)+'px')
-			.appendTo(this.div)
-			.off().on('scroll', jQuery.proxy(this._scroll, this));
+			.on('scroll', jQuery.proxy(this._scroll, this));
 
 		// Percent
 		var rowHeight = (100/rowsToDisplay).toFixed(1);
@@ -701,6 +734,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		{
 			window.clearTimeout(this.resize_timer);
 		}
+		// No point if it is just going to be redone completely
+		if(this.upate_timer) return;
+		
 		this.resize_timer = window.setTimeout(jQuery.proxy(function() {
 			if(this._resizeTimes)
 			{
@@ -727,12 +763,23 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var new_height = this.scrolling.height() / rowsToDisplay;
 		this.rowHeight = new_height;
 		var rows = $j('.calendar_calTimeRow',this.scrolling).height(this.rowHeight);
-		this.days.css('height', (this.rowHeight*rows.length)+'px');
+		if(!rows.length && this.options.granularity)
+		{
+			return this._drawTimes();
+		}
+		this.days.css('height', this.options.granularity === 0 ?
+			'100%' :
+			(this.rowHeight*rows.length)+'px'
+		);
 		$j('.calendar_calAddEvent',this.scrolling).height(this.rowHeight);
 		
 		// Scroll to start of day
 		this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
 		this.scrolling.scrollTop(this._top_time);
+
+		this.iterateOver(function(child) {
+			child.resize();
+		},this, et2_IResizeable);
 	},
 
 	/**
@@ -749,7 +796,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
 		// For a single day, we show each owner in their own daycol
-		var daily_owner = this.day_list.length === 1 && this.options.owner.length < parseInt(egw.preference('day_consolidate','calendar'));
+		var daily_owner = this.day_list.length === 1 && 
+			this.options.owner.length > 1 &&
+			this.options.owner.length < parseInt(egw.preference('day_consolidate','calendar'));
 		var daycols_needed = daily_owner ? this.options.owner.length : this.day_list.length;
 		var day_width = ( Math.min( $j(this.getInstanceManager().DOMContainer).width(),this.days.width())/daycols_needed);
 		if(!day_width || !this.day_list)
@@ -815,6 +864,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			this.day_widgets.splice(delete_index--,1);
 		}
 
+		// Adjust and scroll to start of day
+		this.resizeTimes();
+		
 		// Create / update day widgets with dates and data
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{
@@ -847,9 +899,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		{
 			this.set_label('');
 		}
-
-		// Adjust and scroll to start of day
-		this._resizeTimes();
 
 		// Handle not fully visible elements
 		this._scroll();
@@ -1356,15 +1405,24 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 */
 	set_granularity: function(minutes)
 	{
-		// Avoid 0 or less
-		minutes = Math.max(1,minutes);
+		// Avoid  < 0
+		minutes = Math.max(0,minutes);
 		
 		if(this.options.granularity !== minutes)
 		{
-			this.options.granularity = minutes;
-			this._drawTimes();
+			if(this.options.granularity === 0 || minutes === 0)
+			{
+				this.options.granularity = minutes;
+				// Need to re-do a bunch to make sure this is propagated
+				this.invalidate();
+			}
+			else
+			{
+				this.options.granularity = minutes;
+				this._drawTimes();
+			}
 		}
-		else
+		else if (!this.update_timer)
 		{
 			this.resizeTimes();
 		}
@@ -1545,13 +1603,20 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		
 		x = Math.round(x);
 		y = Math.round(y);
-		var nodes = $j('.calendar_calAddEvent[data-hour],.calendar_calDayColHeader',this.div).removeClass('drop-hover').filter(function() {
-			var offset = $j(this).offset();
-			var range={x:[offset.left,offset.left+$j(this).outerWidth()],y:[offset.top,offset.top+$j(this).outerHeight()]};
-			
-			var i = (x >=range.x[0]  && x <= range.x[1]) && (y >= range.y[0] && y <= range.y[1]);
-			return i;
-		}).addClass("drop-hover");
+		var nodes = this.options.granularity === 0 ?
+			$j('.calendar_calDayCol',this.div) :
+			$j('.calendar_calAddEvent[data-hour],.calendar_calDayColHeader',this.div);
+		
+		nodes = nodes
+			.removeClass('drop-hover')
+			.filter(function() {
+				var offset = $j(this).offset();
+				var range={x:[offset.left,offset.left+$j(this).outerWidth()],y:[offset.top,offset.top+$j(this).outerHeight()]};
+
+				var i = (x >=range.x[0]  && x <= range.x[1]) && (y >= range.y[0] && y <= range.y[1]);
+				return i;
+			})
+		nodes.addClass("drop-hover");
 		
 		return nodes;
 	},
@@ -1611,7 +1676,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		height -= $j('#calendar-toolbar').outerHeight(true);
 		
 		this.options.height = Math.floor(height / rowCount);
-
+		
 		// Allow for borders & padding
 		this.options.height -= 2*((this.div.outerWidth(true) - this.div.innerWidth()) + parseInt(this.div.parent().css('padding-top')));
 		if(this.options.height+"px" !== this.div.css('height'))
@@ -1626,9 +1691,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 
 		// Try to resize width, though animations cause problems
-		var total_width = ( $j(this.getInstanceManager().DOMContainer).width() - (
+		var total_width = Math.min(this.div.width(),( $j(this.getInstanceManager().DOMContainer).width() - (
 			this.days.innerWidth() ? this.div.innerWidth() - this.days.innerWidth() : 0
-		));
+		)));
 		var day_width = (total_width > 0 ? total_width : $j(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)

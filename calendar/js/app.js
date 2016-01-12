@@ -2082,6 +2082,10 @@ app.classes.calendar = AppJS.extend(
 					{
 						widget.set_show_weekend(view.show_weekend(state.state));
 					}
+					if(widget.set_granularity)
+					{
+						widget.set_granularity(view.granularity(state.state));
+					}
 					if(widget.id == value[row_index].id &&
 						widget.get_end_date().toJSON() == value[row_index].end_date
 					)
@@ -2097,16 +2101,6 @@ app.classes.calendar = AppJS.extend(
 						widget.set_value(value[row_index++]);
 					}
 				},this, et2_calendar_view);
-				grid.iterateOver(function(widget) {
-					if(widget.set_granularity)
-					{
-						widget.set_granularity(view.granularity(state.state));
-					}
-					if(widget.resize)
-					{
-						widget.resize();
-					}
-				},this,et2_calendar_view);
 
 				// Single day with multiple owners still needs owners split to satisfy
 				// caching keys, otherwise they'll cache consolidated
@@ -3327,7 +3321,10 @@ app.classes.calendar = AppJS.extend(
 		 * How big or small are the displayed time chunks?
 		 */
 		granularity: function(state) {
-			return parseInt(egw.preference('interval','calendar')) || 30;
+			var list = egw.preference('use_time_grid','calendar').split(',');
+			return list.indexOf(state.view) >= 0 ?
+				0 :
+				parseInt(egw.preference('interval','calendar')) || 30;
 		},
 		extend: function(sub)
 		{
@@ -3505,7 +3502,8 @@ jQuery.extend(app.classes.calendar,{
 				return week_start;
 			},
 			granularity: function(state) {
-				return 120;
+				// Always a list, not a grid
+				return 0;
 			},
 			scroll: function(delta)
 			{
