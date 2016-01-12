@@ -1696,13 +1696,12 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container {
     background-color: #FFFFFF;
     box-shadow: inset 0 2px 6px rgb(71, 71, 71), 0 1px 0 rgba(255, 255, 255, 0.2);
     margin: 0;
-	min-width:44px;
+    min-width:44px;
     display: block;
     position: relative;
     border-radius: 3px;
-    padding: 3px;
-	font-size: 12 px;
-	top: -1px;
+    padding: 3px 0px 3px 0px;
+    font-size: 12 px;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container > span:first-child {
 	width: 50%;
