@@ -2512,7 +2512,7 @@ class mail_ui
 		$getParams = function ($id) {
 			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
 			$lId = implode('::',array($app,$user,$serverID,$mailbox,$uid));
-			$hA = self::splitRowID($lId);
+			$hA = mail_ui::splitRowID($lId);
 			return array(
 				'is_winmail' => $is_winmail == "null" || !$is_winmail?false:$is_winmail,
 				'user' => $user,
