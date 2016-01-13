@@ -2599,18 +2599,64 @@ div.mailComposeHeaderSection > table {
   #mail-display.et2_container {
     min-height: initial;
   }
-  /*Make Font size readable in mobile theme*/
-  #mail-compose .mailComposeHeaders span,
-  #mail-compose .mailComposeHeadersSection span,
-  div.mailDisplayHeaders > span:first-child,
-  div.mailComposeHeaders > span:first-child,
-  div.mailComposeBody,
-  div.mailPreviewHeaders > * {
-    font-size: small !important;
-  }
   .mailDisplayHeaders,
   .mailDisplayAttachments > * {
     font-size: large !important;
+  }
+  /*compose dialog*/
+  body #popupMainDiv {
+    padding: 8px 8px 0 0;
+    background: none;
+  }
+  body #mail-compose .cke_chrome {
+    border: none;
+    box-shadow: none;
+  }
+  body #mail-compose span#cke_1_top {
+    display: none;
+  }
+  body #mail-compose .mailComposeHeaderSection > table {
+    padding: 0;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders.subjectContainer td:first-child::after {
+    content: '';
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders {
+    border-bottom: 1px solid silver;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span {
+    font-size: 10pt;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders .subjectContainer:first-child::after {
+    content: ':';
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders:first-child {
+    border-top: 1px solid silver;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_cc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_cc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_bcc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_bcc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_folder_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_folder_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_replyto_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_replyto_expander {
+    background: transparent;
+    border: none;
+    color: #26537c;
+    text-decoration: underline;
+    font-size: 10pt;
+    width: 65px;
+  }
+  body #mail-compose .mailComposeHeaderSection > table div.et2_taglist > *,
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject,
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_mailaccount {
+    border: none;
+    box-shadow: none;
+    font-size: 10pt;
+  }
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject:focus {
+    outline-color: transparent;
   }
   #mail-index table.egwGridView_outer tbody span.et2_date_ro.et2_label {
     font-size: 9px;

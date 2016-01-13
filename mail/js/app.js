@@ -251,7 +251,10 @@ app.classes.mail = AppJS.extend(
 				jQuery('#mail-compose').on ('load',function() {
 					if (textAreaWidget && textAreaWidget.ckeditor)
 					{
-						textAreaWidget.ckeditor.on('instanceReady', function(){that.compose_fieldExpander();});
+						textAreaWidget.ckeditor.on('instanceReady', function(){
+							that.compose_fieldExpander();
+							if (egwIsMobile()) jQuery(jQuery('iframe.cke_wysiwyg_frame')[0].contentWindow.document.body).css({margin:'0'})
+						});
 					}
 					else
 					{
