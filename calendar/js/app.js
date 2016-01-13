@@ -1788,6 +1788,13 @@ app.classes.calendar = AppJS.extend(
 				state.keywords = listview.activeFilters.search;
 			}
 		}
+		else if (state.view == 'planner')
+		{
+			// Normally we don't use the planner days, but we'll set it so
+			// favorites can come back to the current view
+			var timeDiff = Math.abs(new Date(state.last).getTime() - new Date(state.first).getTime());
+			state.planner_days  = Math.ceil(timeDiff / (1000 * 3600 * 24));
+		}
 
 		// Don't store date or first and last
 		delete state.date;
@@ -3547,7 +3554,8 @@ jQuery.extend(app.classes.calendar,{
 					return state.first;
 				}
 				var d = app.calendar.View.start_date.call(this, state);
-				if(state.sortby && state.sortby === 'month')
+				if(state.sortby && state.sortby === 'month' ||
+					[28,30,31].indexOf(state.planner_days||0) >= 0)
 				{
 					d.setUTCDate(1);
 				}
@@ -3600,7 +3608,15 @@ jQuery.extend(app.classes.calendar,{
 				}
 				else if (state.planner_days)
 				{
-					d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
+					if([28,30,31].indexOf(state.planner_days||0) >= 0)
+					{
+						// Month view
+						d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
+					}
+					else
+					{
+						d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
+					}
 					delete state.planner_days;
 				}
 				else if (state.days)
