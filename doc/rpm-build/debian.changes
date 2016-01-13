@@ -1,3 +1,10 @@
+egroupware-epl (14.3.20160113) hardy; urgency=low
+
+  * All Applications: Fix missing Ckeditor in previous packages
+  * Addressbook: Fix some styling issue
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 13 Jan 2016 12:08:14 +0100
+
 egroupware-epl (14.3.20160112) hardy; urgency=low
 
   * Mail: Fix browser crashes when try to save all winmail.dat attachments into filemanager
