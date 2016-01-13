@@ -699,15 +699,15 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			// Get the top level element - timegrid or so
 			var objectManager = this.getParent().getParent()._actionObject ||
 			   egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
-			this._actionObject = objectManager.getObjectById('calendar::'+this.id);
+			this._actionObject = objectManager.getObjectById('calendar::'+this.options.value.id);
 		}
 
 		if (this._actionObject == null) {
 			// Add a new container to the object manager which will hold the widget
 			// objects
 			this._actionObject = objectManager.insertObject(false, new egwActionObject(
-				'calendar::'+this.id, objectManager, new et2_event_action_object_impl(this,this.getDOMNode()),
-				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
+				'calendar::'+this.options.value.id, objectManager, new et2_event_action_object_impl(this,this.getDOMNode()),
+				this._actionManager || objectManager.manager.getActionById(this.options.value.id) || objectManager.manager
 			));
 		}
 		else
