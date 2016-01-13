@@ -284,6 +284,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var title = !event.is_private ? event['title'] : egw.lang('private');
 		// If there isn't enough height for header + 1 line in the body, it's small
 		var small_height = this.div.innerHeight() <= this.title.height() * 2;
+		if(!this.title.height())
+		{
+			// Handle sizing while hidden, such as when calendar is not the active tab
+			small_height = egw.getHiddenDimensions(this.div).h < egw.getHiddenDimensions(this.title).h * 2
+		}
 
 		this.div.attr('data-title', title);
 		this.title.text(small_height ? title : this._get_timespan(event));
@@ -359,6 +364,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var border = this.div.css('borderTopColor');
 		var bg_color = this.div.css('background-color');
 		var header_color = this.title.css('color');
+		var timespan = this._get_timespan(this.options.value);
 
 		this._parent.date_helper.set_value(this.options.value.start.valueOf ? new Date(this.options.value.start) : this.options.value.start);
 		var start = this._parent.date_helper.input_date.val();
@@ -366,7 +372,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var end = this._parent.date_helper.input_date.val();
 
 		var times = !this.options.value.multiday ?
-			'<span class="calendar_calEventLabel">'+this.egw().lang('Time')+'</span>:' + this._get_timespan(this.options.value) :
+			'<span class="calendar_calEventLabel">'+this.egw().lang('Time')+'</span>:' + timespan :
 			'<span class="calendar_calEventLabel">'+this.egw().lang('Start') + '</span>:' +start+
 			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end
 		var cat = et2_createWidget('select-cat',{'readonly':true},this);
@@ -383,7 +389,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		
 		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background: '+bg_color+';">'+
 			'<div class="calendar_calEventHeaderSmall" style="background-color: '+this.title.css('background-color')+';">'+
-				'<font style="color:'+header_color+'">'+this._get_timespan(this.options.value)+'</font>'+
+				'<font style="color:'+header_color+'">'+timespan+'</font>'+
 				this.icons[0].outerHTML+
 			'</div>'+
 			'<div class="calendar_calEventBodySmall" style="background-color: '+
