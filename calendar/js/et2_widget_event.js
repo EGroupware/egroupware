@@ -16,7 +16,28 @@
 */
 
 /**
- * Class for a single event, displayed in a timegrid
+ * Class for a single event, displayed in either the timegrid or planner view
+ *
+ * It is possible to directly provide all information directly, but calendar
+ * uses egw.data for caching, so ID is all that is needed.
+ *
+ * Note that there are several pieces of information that have 'ID' in them:
+ * - row_id - used by both et2_calendar_event and the nextmatch to uniquely
+ *	identify a particular entry or entry ocurrence
+ * - id - Recurring events may have their recurrence as a timestamp after their ID,
+ *	such as '194:1453318200', or not.  It's usually (always?) the same as row ID.
+ * - app_id - the ID according to the source application.  For calendar, this
+ *	is the same as ID (but always with the recurrence), for other apps this is
+ *	usually just an integer.  With app_id and app, you should be able to call
+ *	egw.open() and get the specific entry.
+ * - Events from other apps will have their app name prepended to their ID, such
+ *	as 'infolog123', so app_id and id will be different for these events
+ * - Cache ID is the same as other apps, and looks like 'calendar::<row_id>'
+ * - The DOM ID for the containing div is event_<row_id>
+ *
+ * Events are expected to be added to either et2_calendar_daycol or
+ * et2_calendar_planner_row rather than either et2_calendar_timegrid or
+ * et2_calendar_planner directly.
  *
  *
  * @augments et2_valueWidget
@@ -88,20 +109,12 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 
-		// Parent will have everything we need, just load it from there
-		if(this.title.text() == '' && this.options.date &&
-			this._parent && this._parent.instanceOf(et2_calendar_timegrid))
-		{
-			// Forces an update
-			var date = this.options.date;
-			this.options.date = '';
-			this.set_date(date);
-		}
+		// Already know what is needed to hook to cache
 		if(this.options.value && this.options.value.row_id)
 		{
 			egw.dataRegisterUID(
 				'calendar::'+this.options.value.row_id,
-				this._UID_callback ,
+				this._UID_callback,
 				this,
 				this.getInstanceManager().execId,
 				this.id
@@ -132,7 +145,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Unregister, or we'll continue to be notified...
 		if(this.options.value)
 		{
-			var old_app_id = this.options.value.app_id;
+			var old_app_id = this.options.value.row_id;
 			egw.dataUnregisterUID('calendar::'+old_app_id,false,this);
 		}
 	},
@@ -160,9 +173,12 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			egw.dataStoreUID('calendar::'+id, _value);
 		}
 	},
-	
+
+	/**
+	 * Callback for changes in cached data
+	 */
 	_UID_callback: function _UID_callback(event) {
-		// Make sure id is a string
+		// Make sure id is a string, check values
 		if(event)
 		{
 			this._values_check(event);
@@ -201,6 +217,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	},
 
+	/**
+	 * Draw the event
+	 */
 	_update: function(event) {
 
 		// Copy new information
@@ -329,6 +348,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				Math.max(0.8, parseFloat(jQuery.Color(this.title.css('background-color')).lightness()))
 			));
 
+		// Tooltip
 		this.set_statustext(this._tooltip());
 	},
 
@@ -361,6 +381,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		return status_class;
 	},
 
+	/**
+	 * Create tooltip shown on hover
+	 *
+	 * @return {String}
+	 */
 	_tooltip: function() {
 		if(!this.div) return '';
 		
@@ -588,6 +613,22 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
 		}
 	},
+
+	/**
+	 * Check to see if the provided event information is for the same date as
+	 * what we're currently expecting, and that it has not been changed.
+	 *
+	 * If the date has changed, we adjust the associated daywise caches to move
+	 * the event's ID to where it should be.
+	 *
+	 * @param {Object} event Map of event data from cache
+	 * @param {string} event.date For non-recurring, single day events, this is
+	 *	the date the event is on.
+	 * @param {string} event.start Start of the event (used for multi-day events)
+	 * @param {string} event.end End of the event (used for multi-day events)
+	 *
+	 * @return {Boolean} Provided event data is for the same date
+	 */
 	_sameday_check: function(event)
 	{
 		// Event somehow got orphaned, or deleted
@@ -672,7 +713,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Show the recur prompt for this event
 	 *
-	 * @param {function} callback
+	 * Calls et2_calendar_event.recur_prompt with this event's value.
+	 *
+	 * @param {et2_calendar_event~prompt_callback} callback
 	 * @param {Object} [extra_data]
 	 */
 	recur_prompt: function(callback, extra_data)
@@ -683,7 +726,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	/**
 	 * Show the series split prompt for this event
 	 *
-	 * @param {function} callback
+	 * Calls et2_calendar_event.series_split_prompt with this event's value.
+	 *
+	 * @param {et2_calendar_event~prompt_callback} callback
 	 */
 	series_split_prompt: function(callback)
 	{
@@ -751,16 +796,32 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
 
 // Static class stuff
 /**
+ * @callback et2_calendar_event~prompt_callback
+ * @param {string} button_id - One of ok, exception, series, single or cancel
+ *	depending on which buttons are on the prompt
+ * @param {Object} event_data - Event information - whatever you passed in to
+ *	the prompt.
+ */
+/**
  * Recur prompt
  * If the event is recurring, asks the user if they want to edit the event as 
  * an exception, or change the whole series.  Then the callback is called.
  *
+ * If callback is not provided, egw.open() will be used to open an edit dialog.
+ *
+ * If you call this on a single (non-recurring) event, the callback will be
+ * executed immediately, with the passed button_id as 'single'.
+ *
  * @param {Object} event_data - Event information
- * @param {string} event_data.id - Unique ID for the event, possibly with a timestamp
+ * @param {string} event_data.id - Unique ID for the event, possibly with a
+ *	timestamp
  * @param {string|Date} event_data.start - Start date/time for the event
  * @param {number} event_data.recur_type - Recur type, or 0 for a non-recurring event
- * @param {Function} [callback] - Callback is called with the button (exception, series, single or cancel) and the event data.
- * @param {Object} [extra_data] - Additional data passed to the callback, used as extra parameters for default callback
+ * @param {et2_calendar_event~prompt_callback} [callback] - Callback is
+ *	called with the button (exception, series, single or cancel) and the event
+ *	data.
+ * @param {Object} [extra_data] - Additional data passed to the callback, used
+ *	as extra parameters for default callback
  * 
  * @augments {et2_calendar_event}
  */
@@ -820,11 +881,14 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
  * to split the series, ending the current one and creating a new one with the changes.
  * This prompts the user if they really want to do that.
  *
+ * There is no default callback, and nothing happens if you call this on a
+ * single (non-recurring) event
+ *
  * @param {Object} event_data - Event information
  * @param {string} event_data.id - Unique ID for the event, possibly with a timestamp
  * @param {string|Date} instance_date - The date of the edited instance of the event
- * @param {Function} [callback] - Callback is called with the button (ok or cancel) and the event data.
- *
+ * @param {et2_calendar_event~prompt_callback} callback - Callback is
+ *	called with the button (ok or cancel) and the event data.
  * @augments {et2_calendar_event}
  */
 et2_calendar_event.series_split_prompt = function(event_data, instance_date, callback)
@@ -889,7 +953,7 @@ et2_calendar_event.split_status = function(status,quantity,role)
 
 /**
  * The egw_action system requires an egwActionObjectInterface Interface implementation
- * to tie actions to DOM nodes.  This one can be used by any widget.
+ * to tie actions to DOM nodes.  I'm not sure if we need this.
  *
  * The class extension is different than the widgets
  *

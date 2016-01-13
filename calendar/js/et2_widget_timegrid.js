@@ -20,9 +20,16 @@
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
  *
- * This widget is responsible for the times on the side
+ * This widget is responsible for the times on the side, and it is also the
+ * controller for both positioning and setting the day columns.  Day columns are
+ * recycled rather than removed and re-created to reduce reloading.  Similarly,
+ * the horizontal time grid (when used - see granularity attribute) is only
+ * redrawn or resized when needed.  Unfortunately resizing is needed every time
+ * the all day section has an event added or removed so the full work day from
+ * start time to end time is properly displayed.
  *
- * @augments et2_DOMWidget
+ *
+ * @augments et2_calendar_view
  */
 var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
 {
@@ -126,12 +133,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	},
 	destroy: function() {
 		
-		// Stop the invalidate timer
-		if(this.update_timer)
-		{
-			window.clearTimeout(this.update_timer);
-		}
-
 		// Stop listening to tab changes
 		$j(framework.getApplicationByName('calendar').tab.contentDiv).off('show.' + this.id);
 
@@ -151,11 +152,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this.scrolling = null;
 		this._labelContainer = null;
 
-		// Stop the invalidate timer
-		if(this.update_timer)
-		{
-			window.clearTimeout(this.update_timer);
-		}
+		// Stop the resize timer
 		if(this.resize_timer)
 		{
 			window.clearTimeout(this.resize_timer);
@@ -386,11 +383,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			var drop_date = dropEnd.date||false;
 
 			var event_data = timegrid._get_event_info(ui.draggable);
-			var event_widget = timegrid.getWidgetById('event_'+event_data.id);
+			var event_widget = timegrid.getWidgetById(event_data.widget_id);
 			if(!event_widget)
 			{
 				// Widget was moved across weeks / owners
-				event_widget = timegrid.getParent().getWidgetById('event_'+event_data.id);
+				event_widget = timegrid.getParent().getWidgetById(event_data.widget_id);
 			}
 			if(event_widget)
 			{
@@ -611,7 +608,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 	/**
 	 * Creates the DOM nodes for the times in the left column, and the horizontal
-	 * lines (mostly via CSS) that span the whole time span.
+	 * lines (mostly via CSS) that span the whole date range.
 	 */
 	_drawTimes: function() {
 		$j('.calendar_calTimeRow',this.div).remove();
@@ -726,7 +723,8 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	/**
 	 * As window size and number of all day non-blocking events change, we need
 	 * to re-scale the time grid to make sure the full working day is shown.
-	 * 
+	 *
+	 * We use a timeout to avoid doing it multiple times if redrawing or resizing.
 	 */
 	resizeTimes: function() {
 		// Wait a bit to see if anything else changes, then re-draw the times
@@ -746,7 +744,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			}
 		},this),1);
 	},
-	
+
+	/**
+	 * Re-scale the time grid to make sure the full working day is shown.
+	 * This is the timeout callback that does the actual re-size immediately.
+	 */
 	_resizeTimes: function() {
 
 		if(!this.div.is(':visible'))
@@ -876,6 +878,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			day.set_left((day_width * i) + 'px');
 			if(daily_owner)
 			{
+				// Each 'day' is the same date, different user
 				day.set_id(this.day_list[0]+'-'+this.options.owner[i]);
 				day.set_date(this.day_list[0], false);
 				day.set_owner(this.options.owner[i]);
@@ -883,7 +886,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			}
 			else
 			{
-				// Go back to self-calculated date
+				// Go back to self-calculated date by clearing the label
 				day.set_label('');
 				day.set_id(this.day_list[i]);
 				day.set_date(this.day_list[i], this.value[this.day_list[i]] || false);
@@ -1258,50 +1261,41 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 	/**
 	 * Provide specific data to be displayed.
-	 * This is a way to set start and end dates, owner and event data in once call.
+	 * This is a way to set start and end dates, owner and event data in one call.
 	 *
+	 * Events will be retrieved automatically from the egw.data cache, so there
+	 * is no great need to provide them.
+	 * 
 	 * @param {Object[]} events Array of events, indexed by date in Ymd format:
 	 *	{
 	 *		20150501: [...],
 	 *		20150502: [...]
 	 *	}
 	 *	Days should be in order.
-	 *
+	 * @param {string|number|Date} events.start_date - New start date
+	 * @param {string|number|Date} events.end_date - New end date
+	 * @param {number|number[]|string|string[]} event.owner - Owner ID, which can
+	 *	be an account ID, a resource ID (as defined in calendar_bo, not
+	 *	necessarily an entry from the resource app), or a list containing a
+	 *	combination of both.
 	 */
 	set_value: function(events)
 	{
 		if(typeof events !== 'object') return false;
 	
-		this.loader.show();
 		var use_days_sent = true;
 
-		if(events.id)
-		{
-			this.set_id(events.id);
-			delete events.id;
-		}
 		if(events.start_date)
 		{
-			this.set_start_date(events.start_date);
-			delete events.start_date;
 			use_days_sent = false;
 		}
 		if(events.end_date)
 		{
-			this.set_end_date(events.end_date);
-			delete events.end_date;
 			use_days_sent = false;
 		}
-		// set_owner() wants start_date set to get the correct week number
-		// for the corner label
-		if(events.owner)
-		{
-			this.set_owner(events.owner);
-			delete events.owner;
-		}
 
-		this.value = events || {};
-
+		this._super.apply(this,arguments);
+		
 		if(use_days_sent)
 		{
 			var day_list = Object.keys(events);
@@ -1400,6 +1394,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	
 	/**
 	 * Set how big the time divisions are
+	 *
+	 * Setting granularity to 0 will remove the time divisions and display
+	 * each days events in a list style.  This 'gridlist' is not to be confused
+	 * with the list view, which uses a nextmatch.
 	 * 
 	 * @param {number} minutes
 	 */
@@ -1514,7 +1512,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 * onclick function.
 	 *
 	 * @param {Event} _ev
-	 * @returns {boolean}
+	 * @returns {boolean} Continue processing event (true) or stop (false)
 	 */
 	click: function(_ev)
 	{
@@ -1577,23 +1575,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 	},
 
-	_get_event_info: function(dom_node)
-	{
-		// Determine as much relevant info as can be found
-		var event_node = $j(dom_node).closest('[data-id]',this.div)[0];
-		var day_node = $j(event_node).closest('[data-date]',this.div)[0];
-		
-		return jQuery.extend({
-				event_node: event_node,
-				day_node: day_node,
-			},
-			event_node ? event_node.dataset : {},
-			day_node ? day_node.dataset : {}
-		);
-	},
-
 	/**
-	 * Get time from position
+	 * Get time from position for drag and drop
+	 *
+	 * This does not return an actual time on a clock, but finds the closest
+	 * time node (.calendar_calAddEvent or day column) to the given position.
 	 * 
 	 * @param {number} x
 	 * @param {number} y

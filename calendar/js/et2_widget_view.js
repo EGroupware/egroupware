@@ -17,6 +17,10 @@
 /**
  * Parent class for the various calendar views to reduce copied code
  *
+ *
+ * et2_calendar_view is responsible for its own loader div, which is displayed while
+ * the times & days are redrawn.
+ * 
  * @augments et2_valueWidget
  */
 var et2_calendar_view = et2_valueWidget.extend(
@@ -54,6 +58,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 		this.date_helper.loadingFinished();
 
 		this.loader = $j('<div class="egw-loading-prompt-container ui-front loading"></div>');
+		this.update_timer = null;
 	},
 
 	destroy: function destroy() {
@@ -62,6 +67,12 @@ var et2_calendar_view = et2_valueWidget.extend(
 		// date_helper has no parent, so we must explicitly remove it
 		this.date_helper.destroy();
 		this.date_helper = null;
+		
+		// Stop the invalidate timer
+		if(this.update_timer)
+		{
+			window.clearTimeout(this.update_timer);
+		}
 	},
 
 	doLoadingFinished: function() {
@@ -80,7 +91,9 @@ var et2_calendar_view = et2_valueWidget.extend(
 	 * 
 	 * @memberOf et2_calendar_view
 	 */
-	invalidate: function invalidate(trigger_event) {},
+	invalidate: function invalidate(trigger_event) {
+		// If this wasn't a stub, we'd set this.update_timer
+	},
 
 	/**
 	 * Returns the current start date
@@ -107,7 +120,11 @@ var et2_calendar_view = et2_valueWidget.extend(
 	/**
 	 * Change the start date
 	 *
-	 * @param {string|number|Date} new_date New starting date
+	 * Changing the start date will invalidate the display, and it will be redrawn
+	 * after a timeout.
+	 *
+	 * @param {string|number|Date} new_date New starting date.  Strings can be in
+	 *	any format understood by et2_widget_date, or Ymd (eg: 20160101).
 	 * @returns {undefined}
 	 *
 	 * @memberOf et2_calendar_view
@@ -143,7 +160,11 @@ var et2_calendar_view = et2_valueWidget.extend(
 	/**
 	 * Change the end date
 	 *
-	 * @param {string|number|Date} new_date New end date
+	 * Changing the end date will invalidate the display, and it will be redrawn
+	 * after a timeout.
+	 *
+	 * @param {string|number|Date} new_date - New end date.  Strings can be in
+	 *	any format understood by et2_widget_date, or Ymd (eg: 20160101).
 	 * @returns {undefined}
 	 *
 	 * @memberOf et2_calendar_view
@@ -178,7 +199,13 @@ var et2_calendar_view = et2_valueWidget.extend(
 	/**
 	 * Set which users to display
 	 *
-	 * @param {number|number[]|string|string[]} _owner Account ID
+	 * Changing the owner will invalidate the display, and it will be redrawn
+	 * after a timeout.
+	 *
+	 * @param {number|number[]|string|string[]} _owner - Owner ID, which can
+	 *	be an account ID, a resource ID (as defined in calendar_bo, not
+	 *	necessarily an entry from the resource app), or a list containing a
+	 *	combination of both.
 	 *
 	 * @memberOf et2_calendar_view
 	 */
@@ -204,6 +231,60 @@ var et2_calendar_view = et2_valueWidget.extend(
 		if(old !== this.options.owner && this.isAttached())
 		{
 			this.invalidate(true);
+		}
+	},
+
+	/**
+	 * Provide specific data to be displayed.
+	 * This is a way to set start and end dates, owner and event data in one call.
+	 *
+	 * If events are not provided in the array,
+	 * @param {Object[]} events Array of events, indexed by date in Ymd format:
+	 *	{
+	 *		20150501: [...],
+	 *		20150502: [...]
+	 *	}
+	 *	Days should be in order.
+	 * @param {string|number|Date} events.start_date - New start date
+	 * @param {string|number|Date} events.end_date - New end date
+	 * @param {number|number[]|string|string[]} event.owner - Owner ID, which can
+	 *	be an account ID, a resource ID (as defined in calendar_bo, not
+	 *	necessarily an entry from the resource app), or a list containing a
+	 *	combination of both.
+	 */
+	set_value: function set_value(events)
+	{
+		if(typeof events !== 'object') return false;
+
+		if(events.id)
+		{
+			this.set_id(events.id);
+			delete events.id;
+		}
+		if(events.start_date)
+		{
+			this.set_start_date(events.start_date);
+			delete events.start_date;
+		}
+		if(events.end_date)
+		{
+			this.set_end_date(events.end_date);
+			delete events.end_date;
+		}
+		// set_owner() wants start_date set to get the correct week number
+		// for the corner label
+		if(events.owner)
+		{
+			this.set_owner(events.owner);
+			delete events.owner;
+		}
+
+		this.value = events || {};
+
+		// None of the above changed anything, hide the loader
+		if(!this.update_timer)
+		{
+			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this),100);
 		}
 	},
 
@@ -252,5 +333,84 @@ var et2_calendar_view = et2_valueWidget.extend(
 			}
 		}
 		return user;
+	},
+
+	/**
+	 * Find the event information linked to a given DOM node
+	 *
+	 * @param {HTMLElement} dom_node - It should have something to do with an event
+	 * @returns {Object}
+	 */
+	_get_event_info: function _get_event_info(dom_node)
+	{
+		// Determine as much relevant info as can be found
+		var event_node = $j(dom_node).closest('[data-id]',this.div)[0];
+		var day_node = $j(event_node).closest('[data-date]',this.div)[0];
+
+		// Widget ID should be the DOM node ID without the event_ prefix
+		var widget_id = event_node.id || '';
+		widget_id = widget_id.split('event_');
+		widget_id.shift();
+
+		return jQuery.extend({
+				event_node: event_node,
+				day_node: day_node,
+				widget_id: 'event_' + widget_id.join('')
+			},
+			event_node ? event_node.dataset : {},
+			day_node ? day_node.dataset : {}
+		);
+	},
+
+});
+
+// Static class stuff
+jQuery.extend(et2_calendar_view,
+{
+	holiday_cache: {},
+	/**
+	 * Fetch and cache a list of the year's holidays
+	 *
+	 * @param {et2_calendar_timegrid} widget
+	 * @param {string|numeric} year
+	 * @returns {Array}
+	 */
+	get_holidays: function(widget,year)
+	{
+		// Loaded in an iframe or something
+		if(!egw.window.et2_calendar_view) return {};
+
+		var cache = egw.window.et2_calendar_view.holiday_cache[year];
+		if (typeof cache == 'undefined')
+		{
+			// Fetch with json instead of jsonq because there may be more than
+			// one widget listening for the response by the time it gets back,
+			// and we can't do that when it's queued.
+			egw.window.et2_calendar_view.holiday_cache[year] = egw.json(
+				'calendar_timegrid_etemplate_widget::ajax_get_holidays',
+				[year]
+			).sendRequest(true);
+		}
+		cache = egw.window.et2_calendar_view.holiday_cache[year];
+		if(typeof cache.done == 'function')
+		{
+			// pending, wait for it
+			cache.done(jQuery.proxy(function(response) {
+				egw.window.et2_calendar_view.holiday_cache[this.year] = response.response[0].data||undefined;
+
+				egw.window.setTimeout(jQuery.proxy(function() {
+					// Make sure widget hasn't been destroyed while we wait
+					if(typeof this.widget.free == 'undefined')
+					{
+						this.widget.day_class_holiday();
+					}
+				},this),1);
+			},{widget:widget,year:year}));
+			return {};
+		}
+		else
+		{
+			return cache;
+		}
 	}
 });

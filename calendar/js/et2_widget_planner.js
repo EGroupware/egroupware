@@ -19,10 +19,11 @@
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
- * ( > 10 days) span of time
+ * ( > 10 days) span of time.  Events can be grouped into rows by either user,
+ * category, or month.  Their horizontal position and size in the row is determined
+ * by their start date and duration relative to the displayed date range.
  *
- * @augments et2_valueWidget
- * @class
+ * @augments et2_calendar_view
  */
 var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
 {
@@ -108,12 +109,6 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		for(var i = 0; i < this.registeredCallbacks.length; i++)
 		{
 			egw.dataUnregisterUID(this.registeredCallbacks[i],false,this);
-		}
-
-		// Stop the invalidate timer
-		if(this.update_timer)
-		{
-			window.clearTimeout(this.update_timer);
 		}
 	},
 
@@ -1114,7 +1109,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		var day_class = '';
 		
 		// Holidays and birthdays
-		var holidays = et2_calendar_daycol.get_holidays(this,date.getUTCFullYear());
+		var holidays = et2_calendar_view.get_holidays(this,date.getUTCFullYear());
 
 		// Pass a string rather than the date object, to make sure it doesn't get changed
 		this.date_helper.set_value(date.toJSON());
@@ -1434,7 +1429,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			var drop_date = this.dropEnd.toJSON() ||false;
 
 			var event_data = planner._get_event_info(ui.draggable);
-			var event_widget = planner.getWidgetById('event_'+event_data.id);
+			var event_widget = planner.getWidgetById(event_data.widget_id);
 			if(event_widget)
 			{
 				event_widget._parent.date_helper.set_value(drop_date);
@@ -1582,21 +1577,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	{
 		if(typeof events !== 'object') return false;
 
-		if(events.owner)
-		{
-			this.set_owner(events.owner);
-			delete events.owner;
-		}
-		if(events.start_date)
-		{
-			this.set_start_date(events.start_date);
-			delete events.start_date;
-		}
-		if(events.end_date)
-		{
-			this.set_end_date(events.end_date);
-			delete events.end_date;
-		}
+		this._super.apply(this, arguments);
 
 		if(typeof events.length === "undefined" && events)
 		{
@@ -1719,7 +1700,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	 * onclick function.
 	 *
 	 * @param {Event} _ev
-	 * @returns {boolean}
+	 * @returns {boolean} Continue processing event (true) or stop (false)
 	 */
 	click: function(_ev)
 	{
@@ -1793,29 +1774,14 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			return false;
 		}
 	},
-
-	_get_event_info: function(dom_node)
-	{
-		// Determine as much relevant info as can be found
-		var event_node = $j(dom_node).closest('[data-id]',this.div)[0];
-		var day_node = $j(event_node).closest('[data-date]',this.div)[0];
-		
-		return jQuery.extend({
-				event_node: event_node,
-				day_node: day_node,
-			},
-			event_node ? event_node.dataset : {},
-			day_node ? day_node.dataset : {}
-		);
-	},
-
 	
 	/**
 	 * Get time from position
 	 * 
 	 * @param {number} x
 	 * @param {number} y
-	 * @returns {DOMNode[]} time node(s) for the given position
+	 * @returns {Date|Boolean} A time for the given position, or false if one
+	 *	could not be determined.
 	 */
 	_get_time_from_position: function(x,y) {
 		

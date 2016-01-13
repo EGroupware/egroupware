@@ -17,11 +17,11 @@
 */
 
 /**
- * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
+ * Class which implements the "calendar-timegrid" XET-Tag for displaying a single days
  *
- * This widget is responsible for the times on the side
+ * This widget is responsible mostly for positioning its events
  *
- * @augments et2_DOMWidget
+ * @augments et2_valueWidget
  */
 var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
 {
@@ -35,7 +35,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		},
 		owner: {
 			name: "Owner",
-			type: "any", // Integer, or array of integers
+			type: "any", // Integer, string, or array of either
 			default: 0,
 			description: "Account ID number of the calendar owner, if not the current user"
 		},
@@ -83,7 +83,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.date_helper = et2_createWidget('date-time',{},null);
 		this.date_helper.loadingFinished();
 
-		// Init to defaults, just in case
+		// Init to defaults, just in case - they will be updated from parent
 		this.display_settings = {
 			wd_start:	60*9,
 			wd_end:		60*17,
@@ -128,7 +128,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	},
 
 	/**
-	 * Draw the individual divs for clicking
+	 * Draw the individual divs for clicking to add an event
 	 */
 	_draw: function() {
 		// Remove any existing
@@ -197,7 +197,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 * Set the date
 	 *
 	 * @param {string|Date} _date New date
-	 * @param {Object[]} events=false List of events to be displayed, or false to
+	 * @param {Object[]} events=false List of event data to be displayed, or false to
 	 *	automatically fetch data from content array
 	 * @param {boolean} force_redraw=false Redraw even if the date is the same.
 	 *	Used for when new data is available.
@@ -295,7 +295,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	/**
 	 * Set the owner of this day
 	 *
-	 * @param {number|number[]} _owner Account ID
+	 * @param {number|number[]|string|string[]} _owner - Owner ID, which can
+	 *	be an account ID, a resource ID (as defined in calendar_bo, not
+	 *	necessarily an entry from the resource app), or a list containing a
+	 *	combination of both.
 	 */
 	set_owner: function(_owner) {
 		
@@ -330,6 +333,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 	/**
 	 * Callback used when the daywise data changes
+	 *
+	 * Events should update themselves when their data changes, here we are
+	 * dealing with a change in which events are displayed on this day.
 	 * 
 	 * @param {String[]} event_ids
 	 * @returns {undefined}
@@ -406,7 +412,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		);
 
 		// Holidays and birthdays
-		var holidays = et2_calendar_daycol.get_holidays(this,this.options.date.substring(0,4));
+		var holidays = et2_calendar_view.get_holidays(this,this.options.date.substring(0,4));
 		var holiday_list = [];
 		if(holidays && holidays[this.options.date])
 		{
@@ -457,8 +463,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			var node = this._children[this._children.length-1];
 			this.removeChild(node);
-				node.free();
-			}
+			node.free();
+		}
 		
 		// Make sure children are in cronological order, or columns are backwards
 		events.sort(function(a,b) {
@@ -547,7 +553,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				event.title.css('top',timegrid.scrolling.scrollTop() - event.div.position().top);
 				event.body.css('padding-top',timegrid.scrolling.scrollTop() - event.div.position().top);
 			}
-			// Too many in list view, show indicator
+			// Too many in gridlist view, show indicator
 			else if (this.display_settings.granularity === 0 && hidden.completely)
 			{
 				var day = this;
@@ -728,10 +734,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	},
 
 	/**
-	 * Position the event according to it's time and how this widget is laid
+	 * Position the event according to its time and how this widget is laid
 	 * out.
 	 *
-	 * @param {undefined|Object|et2_calendar_event} event
+	 * @param {et2_calendar_event} [event] - Event to be updated
+	 *	If a single event is not provided, all events are repositioned.
 	 */
 	position_event: function(event)
 	{
@@ -749,8 +756,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				left += c * (100.0-left) / columns.length;
 			}
 			if (left + width > 100.0) width = 98.0 - left;
-
-			var whole_day_counter = 0;
 
 			for(var i = 0; (columns[c].indexOf(event) >= 0 || !event) && i < columns[c].length; i++)
 			{
@@ -794,8 +799,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 						columns[c][i].div.appendTo(this.div);
 						this._parent.resizeTimes();
 					}
-					top = this._time_to_position(columns[c][i].options.value.start_m,whole_day_counter);
-					height = this._time_to_position(columns[c][i].options.value.end_m,whole_day_counter)-top;
+					top = this._time_to_position(columns[c][i].options.value.start_m);
+					height = this._time_to_position(columns[c][i].options.value.end_m)-top;
 				}
 
 				// Position the event
@@ -831,21 +836,16 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 * This calculation is a percentage from 00:00 to 23:59
 	 *
 	 * @param {int} time in minutes from midnight
-	 * @param {int} [row_offset=0] Add extra spacing for additional rows
 	 * @return {float} position in percent
 	 */
-	_time_to_position: function(time,row_offset)
+	_time_to_position: function(time)
 	{
 		var pos = 0.0;
-		if(typeof row_offset === 'undefined')
-		{
-			row_offset = 0;
-		}
 		
 		// 24h
-		pos = ((time / 60) / 24) * 100
+		pos = ((time / 60) / 24) * 100;
 		
-		pos = pos.toFixed(1)
+		pos = pos.toFixed(1);
 
 		return pos;
 	},
@@ -957,54 +957,3 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 });
 
 et2_register_widget(et2_calendar_daycol, ["calendar-daycol"]);
-
-// Static class stuff
-jQuery.extend(et2_calendar_daycol,
-{
-	holiday_cache: {},
-	/**
-	 * Fetch and cache a list of the year's holidays
-	 *
-	 * @param {et2_calendar_timegrid} widget
-	 * @param {string|numeric} year
-	 * @returns {Array}
-	 */
-	get_holidays: function(widget,year)
-	{
-		// Loaded in an iframe or something
-		if(!egw.window.et2_calendar_daycol) return {};
-
-		var cache = egw.window.et2_calendar_daycol.holiday_cache[year];
-		if (typeof cache == 'undefined')
-		{
-			// Fetch with json instead of jsonq because there may be more than
-			// one widget listening for the response by the time it gets back,
-			// and we can't do that when it's queued.
-			egw.window.et2_calendar_daycol.holiday_cache[year] = egw.json(
-				'calendar_timegrid_etemplate_widget::ajax_get_holidays',
-				[year]
-			).sendRequest(true);
-		}
-		cache = egw.window.et2_calendar_daycol.holiday_cache[year];
-		if(typeof cache.done == 'function')
-		{
-			// pending, wait for it
-			cache.done(jQuery.proxy(function(response) {
-				egw.window.et2_calendar_daycol.holiday_cache[this.year] = response.response[0].data||undefined;
-
-				egw.window.setTimeout(jQuery.proxy(function() {
-					// Make sure widget hasn't been destroyed while we wait
-					if(typeof this.widget.free == 'undefined')
-					{
-						this.widget.day_class_holiday();
-					}
-				},this),1);
-			},{widget:widget,year:year}));
-			return {};
-		}
-		else
-		{
-			return cache;
-		}
-	}
-});

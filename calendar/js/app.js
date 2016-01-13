@@ -3040,7 +3040,7 @@ app.classes.calendar = AppJS.extend(
 				{
 					var tempDate = new Date();
 					var today = new Date(tempDate.getFullYear(), tempDate.getUTCMonth(), tempDate.getUTCDate());
-					var holidays = et2_calendar_daycol.get_holidays({day_class_holiday: function() {}}, date.getFullYear());
+					var holidays = et2_calendar_view.get_holidays({day_class_holiday: function() {}}, date.getFullYear());
 					var day_holidays = holidays[''+date.getFullYear() +
 						sprintf("%02d",date.getMonth()+1) +
 						sprintf("%02d",date.getDate())];
