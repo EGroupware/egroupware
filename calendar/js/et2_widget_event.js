@@ -163,7 +163,10 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	
 	_UID_callback: function _UID_callback(event) {
 		// Make sure id is a string
-		this._values_check(event);
+		if(event)
+		{
+			this._values_check(event);
+		}
 
 		// Check for changing days in the grid view
 		if(!this._sameday_check(event))
