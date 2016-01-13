@@ -3321,7 +3321,12 @@ app.classes.calendar = AppJS.extend(
 		 * How big or small are the displayed time chunks?
 		 */
 		granularity: function(state) {
-			var list = egw.preference('use_time_grid','calendar').split(',');
+			var list = egw.preference('use_time_grid','calendar') || 'weekN';
+			if(typeof list == 'string') list = string.split(',');
+			if(!list.indexOf && jQuery.isPlainObject(list))
+			{
+				list = jQuery.map(list, function(el) { return el });
+			}
 			return list.indexOf(state.view) >= 0 ?
 				0 :
 				parseInt(egw.preference('interval','calendar')) || 30;
