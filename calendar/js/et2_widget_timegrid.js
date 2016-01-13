@@ -798,7 +798,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		// For a single day, we show each owner in their own daycol
 		var daily_owner = this.day_list.length === 1 && 
 			this.options.owner.length > 1 &&
-			this.options.owner.length < parseInt(egw.preference('day_consolidate','calendar'));
+			this.options.owner.length < (parseInt(egw.preference('day_consolidate','calendar')) || 6);
 		var daycols_needed = daily_owner ? this.options.owner.length : this.day_list.length;
 		var day_width = ( Math.min( $j(this.getInstanceManager().DOMContainer).width(),this.days.width())/daycols_needed);
 		if(!day_width || !this.day_list)
