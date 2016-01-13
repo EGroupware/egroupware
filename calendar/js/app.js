@@ -3322,7 +3322,7 @@ app.classes.calendar = AppJS.extend(
 		 */
 		granularity: function(state) {
 			var list = egw.preference('use_time_grid','calendar') || 'weekN';
-			if(typeof list == 'string') list = string.split(',');
+			if(typeof list == 'string') list = list.split(',');
 			if(!list.indexOf && jQuery.isPlainObject(list))
 			{
 				list = jQuery.map(list, function(el) { return el });
