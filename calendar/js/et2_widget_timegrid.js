@@ -386,11 +386,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			var drop_date = dropEnd.date||false;
 
 			var event_data = timegrid._get_event_info(ui.draggable);
-			var event_widget = timegrid.getWidgetById('event_'+event_data.app_id);
+			var event_widget = timegrid.getWidgetById('event_'+event_data.id);
 			if(!event_widget)
 			{
 				// Widget was moved across weeks / owners
-				event_widget = timegrid.getParent().getWidgetById('event_'+event_data.app_id);
+				event_widget = timegrid.getParent().getWidgetById('event_'+event_data.id);
 			}
 			if(event_widget)
 			{
