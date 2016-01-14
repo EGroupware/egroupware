@@ -378,7 +378,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 					}
 				}
 
-				return labels;
+				return labels.sort(function(a,b) {
+					return a.label.localeCompare(b.label);
+				});
 			},
 			// Group the events into the rows
 			group: function(labels, rows, event) {
