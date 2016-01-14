@@ -152,6 +152,16 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{
 	background-color: $color_hex_darker !important;
 }
+
+/*nextmatch header and plus_button in mobile theme*/
+body div.et2_nextmatch .search,
+body div.et2_nextmatch .search button,
+body button.plus_button,
+body div.et2_nextmatch .search .nm_action_header,
+body div.et2_nextmatch .search .nm_toggle_header,
+body div.et2_nextmatch .search .nm_favorites_button {
+	background-color: $color;
+}
 ";
 		}
 		return $ret;
