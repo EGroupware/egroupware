@@ -282,6 +282,11 @@ app.classes.infolog = AppJS.extend(
 	{
 		// Show / hide descriptions
         egw.css((dom_node && dom_node.id ? "#"+dom_node.id+' ' : '') + ".et2_box.infoDes","display:" + (show ? "block;" : "none;"));
+		if (egwIsMobile())
+		{
+			var $select = jQuery('.infoDetails');
+			(show)? $select.each(function(i,e){jQuery(e).hide();}): $select.each(function(i,e){jQuery(e).show();});
+		}
 	},
 
 	confirm_delete_2: function (_action, _senders)
@@ -805,35 +810,15 @@ app.classes.infolog = AppJS.extend(
 		//this.mailvelopeAvailable(this.toggleEncrypt);
 		var info_desc = this.et2.getWidgetById('info_des');
 
-		var options = { predefinedText: info_desc.value};
 		var self = this;
-		// check if we have some sort of reply to an encrypted message
-		// --> parse header, encrypted mail to quote and signature so Mailvelope understands it
-		var start_pgp = options.predefinedText.indexOf(this.begin_pgp_message);
-		if (start_pgp != -1)
-		{
-			var end_pgp = options.predefinedText.indexOf(this.end_pgp_message);
-			if (end_pgp != -1)
-			{
-				options = {
-					quotedMailHeader: start_pgp ? options.predefinedText.slice(0, start_pgp).replace(/> /mg, '').trim()+"\n" : "",
-					quotedMail: options.predefinedText.slice(start_pgp, end_pgp+this.end_pgp_message.length+1).replace(/> /mg, ''),
-					quotedMailIndent: start_pgp != 0,
-					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,''),
-					keepAttachments:true
-				};
-			}
-		}
-
-		mailvelope.createEditorContainer('#infolog-edit-print_info_des', _keyring, options).then(function(_editor)
+		mailvelope.createDisplayContainer('#infolog-edit-print_info_des', info_desc.value, _keyring).then(function(_container)
 		{
 			var $info_des_dom = jQuery(self.et2.getWidgetById('info_des').getDOMNode());
-			$info_des_dom.children('iframe').height($info_des_dom.height());
-					$info_des_dom.children('span').hide();
-
-					//Trigger print action
+//			$info_des_dom.children('iframe').height($info_des_dom.height());
+			$info_des_dom.children('span').hide();
+			//Trigger print action
 			self.infolog_print_preview();
-				},
+		},
 		function(_err)
 		{
 			self.egw.message(_err, 'error');

@@ -1046,15 +1046,28 @@
 		}
 		button.plus_button {
 			position: absolute !important;
-			bottom: 30px !important;
-			right: 30px !important;
-			z-index: 1000 !important;
-			border: 1px solid white !important;
-			border-radius: 50% !important;
-			display: inline !important;
-			width: 60px !important;
-			height: 60px !important;
+			right: 15px;
+			bottom: 15px;
+			border-radius: 50%;
+			width: 60px;
+			height: 60px;
+			background-position: center;
+			z-index: 100;
+			background-color: #0c5da5;
+			border: none;
+			box-shadow: 0px 1px 5px 3px silver;
 			background-image: none !important;
+			margin: 0;
+			padding: 0;
+			&:after {
+				content: '+';
+				font-weight: bold;
+				font-size: 34pt;
+				color: #fafafa;
+			}
+			&:hover, &:active {
+				background-color: #0c5da5;
+			}
 		}
 		.et2_nextmatch {
 			.nextmatch_header_row 
@@ -1118,6 +1131,17 @@
 					}
 				}
 			}
+			.search.searchOn {
+				input {
+					border:none;
+					backgroun:@mobile-nm-search-bg;
+					outline: none;
+					position: absolute;
+					left: 110px;
+					width:80%;
+					height:@mobile-elem-height;
+				}
+			}
 			.search {
 				background: @mobile-nm-search-bg;
 				margin-top: 0;
@@ -1125,22 +1149,14 @@
 				button {
 					height: @mobile-elem-height;
 					width: @mobile-button-width;
+					background-repeat: no-repeat;
 					font-size:large;
 					background-color: @mobile-nm-search-bg;
 					border: none;
 					margin:0;
-					border-right: 1px solid silver;
 					color: white;
-					background-image:none;
-					&:active, &:hover {
-						background: transparent;
-						color: white;
-					}
-					&:focus {
-						color: white;
-						box-shadow:none !important;
-					}
 				}
+				
 				button.nm_toggle_header {
 					background-position: center;
 					background-repeat: no-repeat;
@@ -1206,13 +1222,15 @@
 					}
 				}
 				input {
-					width: 20%;
+					width: 50px;
 					height: @mobile-elem-height;
 					font-size: large;
 					margin:0;
 					border:0;
+					opacity: 0;
 					background-color:@mobile-nm-search-bg;
 					color: white;
+					position: absolute;
 					&:active{
 						border:none;
 						background: @mobile-nm-search-bg;
@@ -1221,8 +1239,11 @@
 						border:none;
 						backgroun:@mobile-nm-search-bg;
 						outline: none;
+						opacity: 1;
+						left:110px;
 						position: absolute;
 						width:100%;
+						height:@mobile-elem-height;
 					}
 				}
 			}
@@ -1300,6 +1321,9 @@
 				}
 			}
 			.egwGridView_outer {
+				thead{
+					max-height: 1px;
+				}
 				thead tr th {
 					font-size: large;
 				}

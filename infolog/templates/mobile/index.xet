@@ -5,9 +5,7 @@
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.9.001">
 		<hbox>
 			<description value="Add:" class="infolog_headertext"/>
-			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');" image="task"/>
-			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="app.infolog.add_with_extras(widget,'phone','$cont[action]','$cont[action_id]');" image="phone"/>
-			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="app.infolog.add_with_extras(widget,'note','$cont[action]','$cont[action_id]');" image="note"/>
+			<button class="plus_button" parent_node="infolog-index_plus_button_container" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
@@ -73,6 +71,7 @@
 					<template id="header_right"/>
 				</row>
 				<row>
+					<description id="plus_button_container"/>
 					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.dates" span="all"/>
 				</row>
 				<row>

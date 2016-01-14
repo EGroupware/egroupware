@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.index.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly label="Add" id="add" onclick='app.admin.account({id:"add"})'/>
+		<buttononly class="plus_button" id="add" parent_node="admin-index_plus_button_container" onclick='app.admin.account({id:"add"})'/>
 	</template>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -41,6 +41,7 @@
 	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
+		<description id="plus_button_container"/>
 		<nextmatch id="nm" template="admin.index.rows"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
 	</template>

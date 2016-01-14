@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="resources.show.nm_right" template="" lang="" group="0" version="1.9.002">
-		<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
+		<buttononly class="plus_button" parent_node="resources-show_plus_button_container" id="add_button" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
 	</template>
 	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
@@ -63,7 +63,10 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description align="center" id="msg" span="all" class="message"/>
+						<description align="center" id="msg" span="all" class="message"/>
+				</row>
+				<row>
+					<description id="plus_button_container"/>
 				</row>
 				<row>
 					<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>

@@ -11,7 +11,7 @@
 		</hbox>
 	</template>
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
-		<buttononly label="Add" id="add" onclick="egw.open('timesheet');"/>
+		<buttononly id="add"  class="plus_button" onclick="egw.open('timesheet');" parent_node="timesheet-index_plus_button_container"/>
 	</template>
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -54,6 +54,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
+		<description id="plus_button_container"/>
 		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates"/>
 	</template>
 </overlay>

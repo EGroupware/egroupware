@@ -10,7 +10,7 @@
 			<menulist>
 				<menupopup align="right" label="Type" id="col_filter[tid]" empty_label="All"/>
 			</menulist>
-			<buttononly align="right" statustext="Add a new contact" label="Add" id="add" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
+			<buttononly class="plus_button" align="right" parent_node="addressbook-index_plus_button_container" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
 		</hbox>
 	</template>
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
@@ -86,6 +86,7 @@
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
 				<row>
+					<description id="plus_button_container" />
 					<nextmatch id="nm" template="addressbook.index.rows" span="all"/>
 				</row>
 				<row class="noPrint dialogFooterToolbar" disabled="!@nm[selectcols]=/legacy_actions/">
