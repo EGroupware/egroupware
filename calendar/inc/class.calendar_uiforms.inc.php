@@ -895,7 +895,7 @@ class calendar_uiforms extends calendar_ui
 				}
 
 				$response = egw_json_response::get();
-				if($response && $update_type == 'update')
+				if($response && $update_type != 'delete')
 				{
 					// Directly update stored data.  If event is still visible, it will
 					// be notified & update itself.
@@ -1006,6 +1006,19 @@ class calendar_uiforms extends calendar_ui
 		if (($notification_errors = notifications::errors(true)))
 		{
 			$msg .= ($msg ? "\n" : '').implode("\n", $notification_errors);
+		}
+		// New event, send data before updating so it's there
+		$response = egw_json_response::get();
+		if($response && !$content['id'])
+		{
+			// Directly update stored data.
+			// Make sure we have the whole event, not just form data
+			$event = $this->bo->read($event['id']);
+
+			// Copy, so as to not change things for subsequent processing
+			$converted = $event;
+			$this->to_client($converted);
+			$response->call('egw.dataStoreUID','calendar::'.$converted['row_id'],$converted);
 		}
 		if (in_array($button,array('cancel','save','delete','delete_exceptions','delete_keep_exceptions')) && $noerror)
 		{
@@ -2851,6 +2864,7 @@ class calendar_uiforms extends calendar_ui
 				// Directly update stored data.  If event is still visible, it will
 				// be notified & update itself.
 				$this->to_client($event);
+					error_log(__METHOD__ . ':' . __LINE__ . ' updated calendar::'.$converted['id']);
 				$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
 			}
 			else

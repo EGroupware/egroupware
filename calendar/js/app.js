@@ -271,42 +271,17 @@ app.classes.calendar = AppJS.extend(
 				{
 					event = egw.dataGetUIDdata('calendar::'+_id);
 				}
-				if(_type != 'edit' && event && event.data && event.data.date && 
-					// Cannot handle adding recurring events easily
-					!(_type == 'add' && event.data.recur_type)
-				)
+				if(event && event.data && event.data.date || _type === 'delete')
 				{
-					var multiple_owner = typeof this.state.owner != 'string' &&
-						this.state.owner.length > 1 &&
-						(this.state.view == 'day' && this.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')) ||
-						this.state.view == 'week' && this.state.owner.length < parseInt(this.egw.preference('week_consolidate','calendar')));
-					
-					// Make sure it's a string
-					if(_id) _id = ''+_id;
-					
-					for(var i = 0; i < this.state.owner.length; i++)
+					// Intelligent refresh without reloading everything
+					if(_type === 'delete')
 					{
-						var owner = multiple_owner ? this.state.owner[i] : this.state.owner
-						var new_cache_id = app.classes.calendar._daywise_cache_id(event.data.date, owner)
-						var daywise = egw.dataGetUIDdata(new_cache_id);
-						daywise = daywise && daywise.data != null ? daywise.data : [];
-						if(daywise.indexOf(_id) >= 0 && (_type === 'delete' ||
-							// Make sure we only update the calendars of those actually in the event
-							multiple_owner && typeof event.data.participants[owner] == 'undefined'))
-						{
-							daywise.splice(daywise.indexOf(_id),1);
-						}
-						else if (daywise.indexOf(_id) < 0 && (
-							!multiple_owner || typeof event.data.participants[owner] !== 'undefined'))
-						{
-							daywise.push(_id);
-						}
-						if(_type === 'delete')
-						{
-							egw.dataStoreUID('calendar::'+_id, null);
-						}
-						egw.dataStoreUID(new_cache_id,daywise);
-						if(!multiple_owner) break;
+						egw.dataStoreUID('calendar::'+_id, null);
+					}
+					// Updates are handled by events themselves through egw.data
+					else if (_type !== 'update')
+					{
+						this._update_events(this.state, ['calendar::'+_id]);
 					}
 					return false;
 				}
@@ -2741,73 +2716,10 @@ app.classes.calendar = AppJS.extend(
 						}
 					}
 				}
-				var updated_days = {};
-				var first = new Date(state.first);
-				var last = new Date(state.last);
-				var bounds = {
-					first: ''+first.getUTCFullYear() + sprintf('%02d',first.getUTCMonth()+1) + sprintf('%02d',first.getUTCDate()),
-					last: ''+last.getUTCFullYear() + sprintf('%02d',last.getUTCMonth()+1) + sprintf('%02d',last.getUTCDate())
-				};
 
-				for(var i = 0; i < data.order.length && data.total; i++)
+				if(data.order && data.total)
 				{
-					var record = this.egw.dataGetUIDdata(data.order[i]);
-					if(record && record.data)
-					{
-						if(typeof updated_days[record.data.date] === 'undefined')
-						{
-							// Check to make sure it's in range first, record.data.date is start date
-							// and could be before our start
-							if(record.data.date >= bounds.first && record.data.date <= bounds.last)
-							{
-								updated_days[record.data.date] = [];
-							}
-						}
-						if(typeof updated_days[record.data.date] != 'undefined')
-						{
-							// Copy, to avoid unwanted changes by reference
-							updated_days[record.data.date].push(record.data.row_id);
-						}
-
-						// Check for multi-day events listed once
-						// Date must stay a string or we might cause problems with nextmatch
-						var dates = {
-							start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
-							end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON(),
-						};
-						if(dates.start.substr(0,10) !== dates.end.substr(0,10))
-						{
-							var end = new Date(Math.min(new Date(record.data.end), new Date(state.last)));
-							end.setUTCHours(23);
-							end.setUTCMinutes(59);
-							end.setUTCSeconds(59);
-							var t = new Date(Math.max(new Date(record.data.start), new Date(state.first)));
-
-							do
-							{
-								var expanded_date = ''+t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
-								if(typeof(updated_days[expanded_date]) === 'undefined')
-								{
-									// Check to make sure it's in range first, expanded_date could be after our end
-									if(expanded_date >= bounds.first && expanded_date <= bounds.last)
-									{
-										updated_days[expanded_date] = [];
-									}
-								}
-								if(record.data.date !== expanded_date && typeof updated_days[expanded_date] !== 'undefined')
-								{
-									// Copy, to avoid unwanted changes by reference
-									updated_days[expanded_date].push(record.data.row_id);
-								}
-								t.setUTCDate(t.getUTCDate() + 1);
-							}
-							while(end >= t)
-						}
-					}
-				}
-				for(var day in updated_days)
-				{
-					this.egw.dataStoreUID(app.classes.calendar._daywise_cache_id(day, state.owner), updated_days[day]);
+					this._update_events(state, data.order);
 				}
 
 				// More rows?
@@ -2823,6 +2735,122 @@ app.classes.calendar = AppJS.extend(
 				framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
 			}, this,null
 		);
+	},
+
+	/**
+	 * We have a list of calendar UIDs of events that need updating.
+	 *
+	 * The event data should already be in the egw.data cache, we just need to
+	 * figure out where they need to go, and update the needed parent objects.
+	 *
+	 * Already existing events will have already been updated by egw.data
+	 * callbacks.
+	 *
+	 * @param {Object} state Current state for update, used to determine what to update
+	 * 
+	 */
+	_update_events: function(state, data) {
+		var updated_days = {};
+
+		// Events can span for longer than we are showing
+		var first = new Date(state.first);
+		var last = new Date(state.last);
+		var bounds = {
+			first: ''+first.getUTCFullYear() + sprintf('%02d',first.getUTCMonth()+1) + sprintf('%02d',first.getUTCDate()),
+			last: ''+last.getUTCFullYear() + sprintf('%02d',last.getUTCMonth()+1) + sprintf('%02d',last.getUTCDate())
+		};
+		// Seperate owners, or consolidated?
+		var multiple_owner = typeof state.owner != 'string' &&
+			state.owner.length > 1 &&
+			(state.view == 'day' && state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')) ||
+			state.view == 'week' && state.owner.length < parseInt(this.egw.preference('week_consolidate','calendar')));
+
+
+		for(var i = 0; i < data.length; i++)
+		{
+			var record = this.egw.dataGetUIDdata(data[i]);
+			if(record && record.data)
+			{
+				if(typeof updated_days[record.data.date] === 'undefined')
+				{
+					// Check to make sure it's in range first, record.data.date is start date
+					// and could be before our start
+					if(record.data.date >= bounds.first && record.data.date <= bounds.last)
+					{
+						updated_days[record.data.date] = [];
+					}
+				}
+				if(typeof updated_days[record.data.date] != 'undefined')
+				{
+					// Copy, to avoid unwanted changes by reference
+					updated_days[record.data.date].push(record.data.row_id);
+				}
+
+				// Check for multi-day events listed once
+				// Date must stay a string or we might cause problems with nextmatch
+				var dates = {
+					start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
+					end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON(),
+				};
+				if(dates.start.substr(0,10) !== dates.end.substr(0,10))
+				{
+					var end = new Date(Math.min(new Date(record.data.end), new Date(state.last)));
+					end.setUTCHours(23);
+					end.setUTCMinutes(59);
+					end.setUTCSeconds(59);
+					var t = new Date(Math.max(new Date(record.data.start), new Date(state.first)));
+
+					do
+					{
+						var expanded_date = ''+t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
+						if(typeof(updated_days[expanded_date]) === 'undefined')
+						{
+							// Check to make sure it's in range first, expanded_date could be after our end
+							if(expanded_date >= bounds.first && expanded_date <= bounds.last)
+							{
+								updated_days[expanded_date] = [];
+							}
+						}
+						if(record.data.date !== expanded_date && typeof updated_days[expanded_date] !== 'undefined')
+						{
+							// Copy, to avoid unwanted changes by reference
+							updated_days[expanded_date].push(record.data.row_id);
+						}
+						t.setUTCDate(t.getUTCDate() + 1);
+					}
+					while(end >= t)
+				}
+			}
+		}
+
+		// Now we know which days changed, so we pass it on
+		for(var day in updated_days)
+		{
+			// Might be split by user, so we have to check that too
+			for(var i = 0; i < state.owner.length; i++)
+			{
+				var owner = multiple_owner ? state.owner[i] : state.owner;
+				var cache_id = app.classes.calendar._daywise_cache_id(day, owner);
+				if(egw.dataHasUID(cache_id))
+				{
+					// Don't lose any existing data, just append
+					var c = egw.dataGetUIDdata(cache_id);
+					if(c.data && c.data !== null)
+					{
+						// Avoid duplicates
+						var data = c.data.concat(updated_days[day]).filter(function(value, index, self) {
+							return self.indexOf(value) === index;
+						});
+						this.egw.dataStoreUID(cache_id,data);
+					}
+				}
+				else
+				{
+					this.egw.dataStoreUID(cache_id, updated_days[day]);
+				}
+				if(!multiple_owner) break;
+			}
+		}
 	},
 
 	/**

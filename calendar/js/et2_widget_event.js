@@ -637,6 +637,22 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			return false;
 		}
 
+		// Also check participants against owner
+		if(event.participants && this._parent.options.owner)
+		{
+			var match = false;
+			for(var id in event.participants)
+			{
+				if(this._parent.options.owner == id ||
+					this._parent.options.owner.indexOf &&
+					this._parent.options.owner.indexOf(id) >= 0)
+				{
+					match = true;
+				}
+			}
+			if(!match) return false;
+		}
+
 		// Simple, same day
 		if(this.options.value.date && event.date == this.options.value.date)
 		{
