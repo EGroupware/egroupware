@@ -7486,6 +7486,12 @@ span.egw_tutorial_title {
 /*mobile etemplate2*/
 /*mobile etemplate2*/
 @media only screen and (min-width: 320px) and (max-width: 1279px) {
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_menu {
+    top: 8px;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
+    padding-top: 8px;
+  }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
     font-size: medium;
     top: 50px !important;
