@@ -274,7 +274,7 @@ class calendar_uiviews extends calendar_ui
 		$actions = array(
 			'add' => array(
 				'caption' => 'Add',
-				'icon'	=> 'add',
+				'icon'	=> 'new',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Add',
