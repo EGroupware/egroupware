@@ -2234,8 +2234,9 @@ app.classes.calendar = AppJS.extend(
 					var nm = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 					nm.controller._grid.doInvalidate = false;
 				} catch (e) {}
+				// Other views do not search
+				delete state.state.keywords;
 			}
-			delete state.state.keywords;
 			this.state = jQuery.extend({},state.state);
 
 			/* Update re-orderable calendars */
