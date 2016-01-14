@@ -471,7 +471,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			var start = new Date(a.start) - new Date(b.start);
 			var end = new Date(a.end) - new Date(b.end);
 			// Whole day events sorted by ID, normal events by start / end time
-			return a.whole_day ? (a.app_id - b.app_id) : (start ? start : end);
+			if(a.whole_day && b.whole_day)
+			{
+				return (a.app_id - b.app_id);
+			}
+			else if (a.whole_day || b.whole_day)
+			{
+				return a.whole_day ? -1 : 1;
+			}
+			return start ? start : end;
 		});
 		
 		for(var c = 0; c < events.length; c++)
@@ -554,12 +562,18 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				event.body.css('padding-top',timegrid.scrolling.scrollTop() - event.div.position().top);
 			}
 			// Too many in gridlist view, show indicator
-			else if (this.display_settings.granularity === 0 && hidden.completely)
+			else if (this.display_settings.granularity === 0 && hidden)
 			{
 				var day = this;
-				this._hidden_indicator(event, false, function() {
-					app.calendar.update_state({view: 'day', date: day.date});
-				});
+				// Do the previous one too
+				if($j('.hiddenEventAfter',this.div).length == 0)
+				{
+					var prev_event = this._children[this._children.indexOf(event)-1];
+					this._hidden_indicator(prev_event, false, function() {
+						app.calendar.update_state({view: 'day', date: day.date});
+					});
+				}
+				this._hidden_indicator(event, false, false);
 			}
 			// Completely out of view, show indicator
 			else if (hidden.completely)
@@ -607,8 +621,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			if(indicator.length === 0)
 			{
 				indicator = $j('<div class="hiddenEventAfter"></div>')
-					.text(event.options.value.title)
-					.attr('data-hidden_count', 1)
+					.attr('data-hidden_count', 0)
 					.appendTo(this.div)
 					.on('click', typeof onclick === 'function' ? onclick : function() {
 						$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
@@ -617,20 +630,19 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 						return false;
 					});
 			}
+			var count = parseInt(indicator.attr('data-hidden_count')) + 1
+			indicator.attr('data-hidden_count', count);
+			if(this.display_settings.granularity === 0)
+			{
+				indicator.append(event.div.clone());
+				indicator.attr('data-hidden_label', day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+				debugger;
+			}
 			else
 			{
-				var count = parseInt(indicator.attr('data-hidden_count')) + 1
-				indicator.attr('data-hidden_count', count);
-				if(this.display_settings.granularity === 0)
-				{
-					indicator.text(indicator.text() + "\n" + event.options.value.title);
-				}
-				else
-				{
-					indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
-				}
-				indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.height());
+				indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
 			}
+			indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.innerHeight());
 		}
 		// Match color to the event
 		if(indicator !== '')
@@ -673,7 +685,17 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this._children.sort(function(a,b) {
 			var start = new Date(a.options.value.start) - new Date(b.options.value.start);
 			var end = new Date(a.options.value.end) - new Date(b.options.value.end);
-			return a.options.value.whole_day ? -1 : (start ? start : end);
+			
+			// Whole day events sorted by ID, normal events by start / end time
+			if(a.options.value.whole_day && b.options.value.whole_day)
+			{
+				return (a.options.value.app_id - b.options.value.app_id);
+			}
+			else if (a.options.value.whole_day || b.options.value.whole_day)
+			{
+				return a.options.value.whole_day ? -1 : 1;
+			}
+			return start ? start : end;
 		});
 		
 		for(var i = 0; i < this._children.length; i++)

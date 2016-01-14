@@ -337,9 +337,20 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		else
 		{
+			var start_time = jQuery.datepicker.formatTime(
+				egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
+				{
+					hour: event.start_m / 60,
+					minute: event.start_m % 60,
+					seconds: 0,
+					timezone: 0
+				},
+				{"ampm": (egw.preference("timeformat") === "12")}
+			).trim();
+
 			this.body
 				.html('<span class="calendar_calEventTitle">'+title+'</span>')
-				.append('<span class="calendar_calTimespan">'+this._get_timespan(event) + '</span>')
+				.append('<span class="calendar_calTimespan">'+start_time + '</span>')
 				.append('<p>'+this.options.value.description+'</p>');
 		}
 		this.body
@@ -402,18 +413,22 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var times = !this.options.value.multiday ?
 			'<span class="calendar_calEventLabel">'+this.egw().lang('Time')+'</span>:' + timespan :
 			'<span class="calendar_calEventLabel">'+this.egw().lang('Start') + '</span>:' +start+
-			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end
-		var cat = et2_createWidget('select-cat',{'readonly':true},this);
-		cat.set_value(this.options.value.category);
-		var cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
-		if(typeof cat_label != 'string')
+			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end;
+		var cat_label = '';
+		if(this.options.value.category)
 		{
-			cat.span.children().each(function() {
-				cat_label.push($j(this).text());
-			});
-			cat_label = cat_label.join(', ');
+			var cat = et2_createWidget('select-cat',{'readonly':true},this);
+			cat.set_value(this.options.value.category);
+			cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
+			if(typeof cat_label != 'string')
+			{
+				cat.span.children().each(function() {
+					cat_label.push($j(this).text());
+				});
+				cat_label = cat_label.join(', ');
+			}
+			cat.destroy();
 		}
-		cat.destroy();
 		
 		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background: '+bg_color+';">'+
 			'<div class="calendar_calEventHeaderSmall" style="background-color: '+this.title.css('background-color')+';">'+
