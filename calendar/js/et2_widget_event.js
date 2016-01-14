@@ -208,23 +208,24 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			// This gives some slight speed enhancements over doing it immediately,
 			// but it looks weird
-			/*
-			window.setTimeout(jQuery.proxy(function() {
-				if(this.options) this._update(this.options.value);
+			if(this.update_timeout)
+			{
+				window.clearTimeout(this.update_timeout);
+			}
+			this.update_timeout = window.setTimeout(jQuery.proxy(function() {
+				if(this.options) this._update();
 			},this),100);
-			*/
-			this._update(this.options.value);
 		}
 	},
 
 	/**
 	 * Draw the event
 	 */
-	_update: function(event) {
+	_update: function() {
 
-		// Copy new information
-		this.options.value = event;
-
+		// Update to reflect new information
+		var event = this.options.value;
+		
 		var id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
 		this._parent.date_helper.set_value(event.start.valueOf ? new Date(event.start) : event.start);
 		var formatted_start = this._parent.date_helper.getValue();

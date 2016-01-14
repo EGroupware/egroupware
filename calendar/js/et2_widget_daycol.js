@@ -636,7 +636,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			{
 				indicator.append(event.div.clone());
 				indicator.attr('data-hidden_label', day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
-				debugger;
 			}
 			else
 			{
