@@ -347,19 +347,23 @@ var et2_calendar_view = et2_valueWidget.extend(
 		var event_node = $j(dom_node).closest('[data-id]',this.div)[0];
 		var day_node = $j(event_node).closest('[data-date]',this.div)[0];
 
-		// Widget ID should be the DOM node ID without the event_ prefix
-		var widget_id = event_node.id || '';
-		widget_id = widget_id.split('event_');
-		widget_id.shift();
-
-		return jQuery.extend({
+		var result = jQuery.extend({
 				event_node: event_node,
-				day_node: day_node,
-				widget_id: 'event_' + widget_id.join('')
+				day_node: day_node
 			},
 			event_node ? event_node.dataset : {},
 			day_node ? day_node.dataset : {}
 		);
+
+		// Widget ID should be the DOM node ID without the event_ prefix
+		if(event_node && event_node.id)
+		{
+			var widget_id = event_node.id || '';
+			widget_id = widget_id.split('event_');
+			widget_id.shift();
+			result.widget_id = 'event_' + widget_id.join('');
+		}
+		return result;
 	},
 
 });
