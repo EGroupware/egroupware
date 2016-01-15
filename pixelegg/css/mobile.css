@@ -6795,7 +6795,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 30px 30px;
+    background-size: 24px 24px;
     display: inline-block;
     background-position: center;
   }
@@ -6805,7 +6805,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     /*display:inline-block;*/
     display: none;
   }
@@ -6815,7 +6815,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     display: inline-block;
     background-position: center;
   }
@@ -6824,7 +6824,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     background-image: url(../images/topmenu_items/mobile/access.png);
     display: inline-block;
     background-position: center;
@@ -6835,7 +6835,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     display: inline-block;
     background-position: center;
   }
@@ -6845,7 +6845,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     display: inline-block;
     background-position: center;
   }
@@ -6855,7 +6855,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     display: inline-block;
   }
   #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_search:before {
@@ -6864,7 +6864,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     display: inline-block;
     background-position: center;
   }
@@ -7489,11 +7489,15 @@ span.egw_tutorial_title {
     background-color: transparent;
     top: -3px;
     background-position: 15px center;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     left: 0;
   }
+  body #egw_fw_basecontainer .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
+    width: 18px;
+    height: 18px;
+  }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_menu {
-    top: 8px;
+    background-size: 24px 24px;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
     padding-top: 8px;
