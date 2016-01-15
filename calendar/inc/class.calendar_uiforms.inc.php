@@ -1009,7 +1009,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		// New event, send data before updating so it's there
 		$response = egw_json_response::get();
-		if($response && !$content['id'])
+		if($response && !$content['id'] && $event['id'])
 		{
 			// Directly update stored data.
 			// Make sure we have the whole event, not just form data
