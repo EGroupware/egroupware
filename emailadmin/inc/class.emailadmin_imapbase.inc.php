@@ -4733,7 +4733,9 @@ class emailadmin_imapbase
 				continue;
 			}
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body(after specialchars):'.$newBody);
-			$newBody = strip_tags($newBody); //we need to fix broken tags (or just stuff like "<800 USD/p" )
+			//use translation::convertHTMLToText instead of strip_tags, (even message is plain text) as strip_tags eats away too much
+			//$newBody = strip_tags($newBody); //we need to fix broken tags (or just stuff like "<800 USD/p" )
+			$newBody = translation::convertHTMLToText($newBody,self::$displayCharset,false,false);
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body(after strip tags):'.$newBody);
 			$newBody = htmlspecialchars_decode($newBody,ENT_QUOTES);
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body (after hmlspc_decode):'.$newBody);
@@ -4753,7 +4755,8 @@ class emailadmin_imapbase
 			//$line = str_replace("\t","        ",$line);
 			//$newStr .= wordwrap($line, $cols, $cut);
 			$allowedLength = $cols-strlen($cut);
-			if (strlen($line) > $allowedLength &&
+			//dont try to break lines with links, chance is we mess up the text is way too big
+			if (strlen($line) > $allowedLength && stripos($line,'href=')===false &&
 				($dontbreaklinesstartingwith==false ||
 				 ($dontbreaklinesstartingwith &&
 				  strlen($dontbreaklinesstartingwith)>=1 &&
@@ -6307,7 +6310,11 @@ class emailadmin_imapbase
 					{
 						$attachment_file = $basedir.urldecode($myUrl);
 					}
-					$cid = 'cid:' . md5($filename);
+					// we use $attachment_file as base for cid instead of filename, as it may be image.png
+					// (or similar) in all cases (when cut&paste). This may lead to more attached files, in case
+					// we use the same image multiple times, but, if we do this, we should try to detect that
+					// on upload. filename itself is not sufficient to determine the sameness of images
+					$cid = 'cid:' . md5($attachment_file);
 					if ($_mailObject->AddEmbeddedImage($attachment_file, substr($cid, 4), $filename, $mimeType) !== null)
 					{
 						//$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
