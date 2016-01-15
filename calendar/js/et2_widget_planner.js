@@ -1868,6 +1868,8 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		
 		this.options.height = height;
 		this.div.css('height', this.options.height);
+		// Set height for rows
+		this.rows.height(this.div.height() - this.headers.outerHeight());
 	}
 });
 et2_register_widget(et2_calendar_planner, ["calendar-planner"]);
