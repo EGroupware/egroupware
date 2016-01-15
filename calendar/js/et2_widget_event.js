@@ -206,15 +206,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Parent may remove this if the date isn't the same
 		if(this._parent)
 		{
-			// This gives some slight speed enhancements over doing it immediately,
-			// but it looks weird
-			if(this.update_timeout)
-			{
-				window.clearTimeout(this.update_timeout);
-			}
-			this.update_timeout = window.setTimeout(jQuery.proxy(function() {
-				if(this.options) this._update();
-			},this),100);
+			this._update();
 		}
 	},
 
@@ -635,7 +627,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * what we're currently expecting, and that it has not been changed.
 	 *
 	 * If the date has changed, we adjust the associated daywise caches to move
-	 * the event's ID to where it should be.
+	 * the event's ID to where it should be.  This check allows us to be more
+	 * directly reliant on the data cache, and less on any other control logic
+	 * elsewhere first.
 	 *
 	 * @param {Object} event Map of event data from cache
 	 * @param {string} event.date For non-recurring, single day events, this is
@@ -657,16 +651,31 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(event.participants && this._parent.options.owner)
 		{
 			var match = false;
+			var parent_owner = this._parent.options.owner;
+			for(var i = 0; i < this._parent.options.owner.length; i++ )
+			{
+				if (parseInt(this._parent.options.owner[i]) < 0)
+				{
+					// Add in groups, if we can get them (this is syncronous)
+					egw.accountData(this._parent.options.owner[i],'account_id',true,function(members) {
+						parent_owner = parent_owner.concat(Object.keys(members));
+					});
+				}
+			}
 			for(var id in event.participants)
 			{
 				if(this._parent.options.owner == id ||
-					this._parent.options.owner.indexOf &&
-					this._parent.options.owner.indexOf(id) >= 0)
+					parent_owner.indexOf &&
+					parent_owner.indexOf(id) >= 0)
 				{
 					match = true;
+					break;
 				}
 			}
-			if(!match) return false;
+			if(!match)
+			{
+				return false;
+			}
 		}
 
 		// Simple, same day
