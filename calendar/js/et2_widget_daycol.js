@@ -75,6 +75,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.all_day = $j(document.createElement('div'))
 			.addClass("calendar_calDayColAllDay")
 			.appendTo(this.header);
+		this.event_wrapper = $j(document.createElement('div'))
+			.appendTo(this.div);
 		
 		this.setDOMNode(this.div[0]);
 
@@ -125,6 +127,24 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.date_helper = null;
 
 		egw.dataUnregisterUID(this.registeredUID,false,this);
+	},
+
+	getDOMNode: function(sender)
+	{
+		if(!sender || sender === this) return this.div[0];
+		if(sender.instanceOf && sender.instanceOf(et2_calendar_event))
+		{
+			if(this.display_settings.granularity === 0)
+			{
+				return this.event_wrapper[0];
+			}
+			if(sender.options.value.whole_day_on_top ||
+				sender.options.value.whole_day && sender.options.value.non_blocking === true)
+			{
+				return this.all_day[0];
+			}
+			return this.event_wrapper[0];
+		}
 	},
 
 	/**
@@ -481,7 +501,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 			return start ? start : end;
 		});
-		
+
 		for(var c = 0; c < events.length; c++)
 		{
 			// Create event
@@ -514,13 +534,18 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Reset
 		this.header.children('.hiddenEventBefore').remove();
 		this.div.children('.hiddenEventAfter').remove();
+		this.event_wrapper.css('overflow','visible');
 
 		var timegrid = this._parent;
 
 		// elem is jquery div of event
 		function isHidden(elem) {
 			var docViewTop = timegrid.scrolling.scrollTop(),
-			docViewBottom = docViewTop + timegrid.scrolling.height(),
+			docViewBottom = docViewTop + ( 
+				this.display_settings.granularity === 0 ?
+				this.event_wrapper.height() :
+				timegrid.scrolling.height()
+			),
 			elemTop = elem.position().top,
 			elemBottom = elemTop + elem.outerHeight(true);
 			if((elemBottom <= docViewBottom) && (elemTop >= docViewTop))
@@ -536,6 +561,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			return visible;
 		}
 
+		// In gridlist view, we can quickly check if we need it at all
+		if(this.display_settings.granularity === 0 && this._children.length)
+		{
+			$j('div.calendar_calEvent',this.div).show(0);
+			if(Math.ceil(this.div.height() / this._children[0].div.height()) > this._children.length)
+			{
+				return;
+			}
+		}
 		// Check each event
 		this.iterateOver(function(event) {
 			// Skip whole day events and events missing value
@@ -565,15 +599,16 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			else if (this.display_settings.granularity === 0 && hidden)
 			{
 				var day = this;
-				// Do the previous one too
 				if($j('.hiddenEventAfter',this.div).length == 0)
 				{
-					var prev_event = this._children[this._children.indexOf(event)-1];
-					this._hidden_indicator(prev_event, false, function() {
-						app.calendar.update_state({view: 'day', date: day.date});
-					});
+					this.event_wrapper.css('overflow','hidden');
 				}
-				this._hidden_indicator(event, false, false);
+				this._hidden_indicator(event, false, function() {
+					app.calendar.update_state({view: 'day', date: day.date});
+				});
+				// Avoid partially visible events
+				// We need to hide all, or the next row will be visible
+				event.div.hide(0);
 			}
 			// Completely out of view, show indicator
 			else if (hidden.completely)
@@ -788,7 +823,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				{
 					if(this.all_day.has(columns[c][i].div).length)
 					{
-						columns[c][i].div.prependTo(this.div);
+						columns[c][i].div.prependTo(this.event_wrapper);
 					}
 					columns[c][i].div.css('top', '');
 					columns[c][i].div.css('height', '');
@@ -817,7 +852,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				{
 					if(this.all_day.has(columns[c][i].div).length)
 					{
-						columns[c][i].div.appendTo(this.div);
+						columns[c][i].div.appendTo(this.event_wrapper);
 						this._parent.resizeTimes();
 					}
 					top = this._time_to_position(columns[c][i].options.value.start_m);

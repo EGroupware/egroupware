@@ -120,6 +120,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				this.id
 			);
 		}
+		return true;
 	},
 
 	destroy: function() {
@@ -650,9 +651,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Also check participants against owner
 		if(event.participants && this._parent.options.owner)
 		{
-			var match = false;
 			var parent_owner = this._parent.options.owner;
-			for(var i = 0; i < this._parent.options.owner.length; i++ )
+			var match = false;
+			for(var i = 0; !match && i < this._parent.options.owner.length; i++ )
 			{
 				if (parseInt(this._parent.options.owner[i]) < 0)
 				{
@@ -674,7 +675,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 			if(!match)
 			{
-				return false;
+				return(this._parent.options.owner == event.owner ||
+					parent_owner.indexOf &&
+					parent_owner.indexOf(event.owner) >= 0);
 			}
 		}
 
