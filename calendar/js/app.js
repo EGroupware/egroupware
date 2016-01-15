@@ -3582,11 +3582,18 @@ jQuery.extend(app.classes.calendar,{
 				{
 					return state.first;
 				}
+				// Start here, in case we can't find anything better
 				var d = app.calendar.View.start_date.call(this, state);
+
 				if(state.sortby && state.sortby === 'month' ||
 					[28,30,31].indexOf(state.planner_days||0) >= 0)
 				{
-					d.setUTCDate(1);
+					d = app.classes.calendar.views.month.start_date.call(this,state);
+				}
+				else if (state.planner_days % 7 == 0)
+				{
+					// Week
+					d = app.classes.calendar.views.week.start_date.call(this,state);
 				}
 				else if (state.days)
 				{
@@ -3640,11 +3647,17 @@ jQuery.extend(app.classes.calendar,{
 					if([28,30,31].indexOf(state.planner_days||0) >= 0)
 					{
 						// Month view
-						d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
+						d = app.classes.calendar.views.month.end_date.call(this,state);
 					}
 					else
 					{
+						d = new Date(state.first);
 						d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
+						if (state.planner_days % 7 == 0)
+						{
+							// Week
+							d = app.calendar.date.end_of_week(d);
+						}
 					}
 					delete state.planner_days;
 				}
