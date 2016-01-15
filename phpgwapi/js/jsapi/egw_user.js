@@ -142,9 +142,19 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 					data[account_id] = userData[_field];
 				}
 				else if (typeof accountData[account_id] != 'undefined' && typeof accountData[account_id][_field] != 'undefined' &&
-					(!_resolve_groups || account_id > 0))	// groups are only resolved on server for now
+					(!_resolve_groups || account_id > 0))
 				{
 					data[account_id] = accountData[account_id][_field];
+				}
+				else if (typeof accountData[account_id] != 'undefined' && typeof accountData[account_id][_field] != 'undefined' &&
+					(_resolve_groups && account_id < 0))
+				{
+					// Groups are resolved on the server, but then the response
+					// is cached so we ca re-resolve it locally
+					for(var id in accountData[account_id][_field])
+					{
+						data[id] = accountData[account_id][_field][id];
+					}
 				}
 				else
 				{
@@ -162,6 +172,14 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						{
 							if (typeof accountData[account_id] == 'undefined') accountData[account_id] = {};
 							data[account_id] = accountData[account_id][_field] = _data[account_id];
+						}
+						// If resolving for 1 group, cache the whole answer too
+						// (More than 1 group, we can't split to each group)
+						if(_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
+						{
+							var group_id = _account_ids[0];
+							if (typeof accountData[group_id] === 'undefined') accountData[group_id] = {};
+							accountData[group_id][_field] = _data;
 						}
 						_callback.call(_context, data);
 					}
