@@ -1098,7 +1098,7 @@
 			}
 		}
 		.et2_nextmatch {
-			.nextmatch_header_row 
+			.nextmatch_header_row, .nextmatch_header 
 			{
 				background-color: background-color-egw-dark;
 
@@ -1106,7 +1106,7 @@
 					display: block;
 					width: 100%;
 					height: @mobile-elem-height;
-					font-size: large;
+					.mob-fontsize-l;
 					background-size: 32px;
 					border-left: none;
 					border-right: none;
@@ -1119,14 +1119,13 @@
 					display:block;
 					width: 100%;
 					float: left;
-					font-size: large;
+					.mob-fontsize-l;
 					select {
 						display: inline-block;
-						width: 80%;
 						float: right;
 						margin: 0;
 						height: @mobile-elem-height;
-						font-size: large;
+						.mob-fontsize-l;
 					}
 				}
 			}
@@ -1136,9 +1135,13 @@
 			.nextmatch_header {
 				background-color: white;
 				padding:0;
-				display:none;
-				border: 1px solid silver;
-				border-top:none;
+				display:inline-block;
+				width:100%;
+				border-bottom: 1px solid silver;
+				border-top: none;
+				box-shadow: 0px 1px 1px 1px silver;
+				z-index: 1;
+				position: relative;
 				div.et2_box_widget {
 					display:block;
 					height:@mobile-elem-height;
@@ -1162,12 +1165,20 @@
 			.search.searchOn {
 				input {
 					border:none;
-					backgroun:@mobile-nm-search-bg;
+					background: white;
 					outline: none;
 					position: absolute;
 					left: 110px;
 					width:80%;
 					height:@mobile-elem-height;
+				}
+				button[id$="search_button"] {
+					background-image: none !important;
+					&:after{
+						content:"\2613";
+						font-weight: bold;
+						font-size:18pt;
+					}
 				}
 			}
 			.search {
@@ -1186,6 +1197,9 @@
 					border: none;
 					margin:0;
 					color: white;
+					background-size: 18px 18px;
+					box-shadow: none;
+					outline: none;
 				}
 				
 				button.nm_toggle_header {
@@ -1203,8 +1217,9 @@
 						outline:none;
 					}
 					&:after{
-						font-size:xx-large;
-						content:"\21E9";
+						font-size: 18pt;
+						content:"\2261";
+						
 					}
 
 				}
@@ -1223,11 +1238,12 @@
 						outline:none;
 					}
 					&:after{
-						font-size:xx-large;
+						font-size:18pt;
 						content:"\205D";
+						font-weight: bold;
 					}
 				}
-				button.nm_favorites_button {
+				div.nm_favorites_div {
 					background-position: center;
 					background-repeat: no-repeat;
 					margin-right:5px;
@@ -1241,18 +1257,56 @@
 					&:focus{
 						outline:none;
 					}
-					&:after{
-						font-size: xx-large;
-						content: "\2606";
-						font-weight: bold;
+					div[name="favorite"] {
+						position:relative !important;
+						top:0 !important;
+						outline:none;
+						.et2_dropdown {
+							button:first-child {
+								display: none;
+							}
+							button:nth-child(2) {
+								div:first-child {
+									display: none;
+								}
+								&:after{
+									font-size: 17pt;
+									content: "\2606";
+									font-weight: bold;
+									vertical-align: super;
+								}
+							}
+						}
+						ul.favorites {
+							width:160px;
+							box-shadow: 0px 4px 5px 2px silver;
+							border: 1px solid silver;
+							li.ui-menu-item {
+								white-space: nowrap;
+								text-overflow: ellipsis;
+								overflow: hidden;
+								border-bottom: 1px solid silver;
+								
+								a {
+									width: 100%;
+									line-height: 30px;
+									input{
+										display: none;
+									}
+									div.ui-icon-trash {
+										display: block;
+									}
+								}	
+							}
+						}
 					}
 				}
 				button.nm_toggle_header_on {
 					&:after {
-						content:"\21E7";
+						content:"\2613";
 					}
 				}
-				input {
+				input[type="search"] {
 					width: 50px;
 					height: @mobile-elem-height;
 					font-size: large;
@@ -1260,7 +1314,7 @@
 					border:0;
 					opacity: 0;
 					background-color:@mobile-nm-search-bg;
-					color: white;
+					color: black;
 					position: absolute;
 					&:active{
 						border:none;
@@ -1268,13 +1322,14 @@
 					}
 					&:focus {
 						border:none;
-						backgroun:@mobile-nm-search-bg;
+						background:white;
 						outline: none;
 						opacity: 1;
 						left:110px;
 						position: absolute;
 						width:100%;
 						height:@mobile-elem-height;
+						z-index: 2;
 					}
 				}
 			}

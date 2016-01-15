@@ -7548,14 +7548,16 @@ span.egw_tutorial_title {
   body button.plus_button:active {
     background-color: #0c5da5;
   }
-  body .et2_nextmatch .nextmatch_header_row {
+  body .et2_nextmatch .nextmatch_header_row,
+  body .et2_nextmatch .nextmatch_header {
     background-color: background-color-egw-dark;
   }
-  body .et2_nextmatch .nextmatch_header_row select {
+  body .et2_nextmatch .nextmatch_header_row select,
+  body .et2_nextmatch .nextmatch_header select {
     display: block;
     width: 100%;
     height: 50px;
-    font-size: large;
+    font-size: 12pt;
     background-size: 32px;
     border-left: none;
     border-right: none;
@@ -7564,19 +7566,20 @@ span.egw_tutorial_title {
     padding-left: 10px;
     max-width: none;
   }
-  body .et2_nextmatch .nextmatch_header_row label {
+  body .et2_nextmatch .nextmatch_header_row label,
+  body .et2_nextmatch .nextmatch_header label {
     display: block;
     width: 100%;
     float: left;
-    font-size: large;
+    font-size: 12pt;
   }
-  body .et2_nextmatch .nextmatch_header_row label select {
+  body .et2_nextmatch .nextmatch_header_row label select,
+  body .et2_nextmatch .nextmatch_header label select {
     display: inline-block;
-    width: 80%;
     float: right;
     margin: 0;
     height: 50px;
-    font-size: large;
+    font-size: 12pt;
   }
   body .et2_nextmatch .nextmatch_header.nm_header_hide {
     display: none !important;
@@ -7584,9 +7587,13 @@ span.egw_tutorial_title {
   body .et2_nextmatch .nextmatch_header {
     background-color: white;
     padding: 0;
-    display: none;
-    border: 1px solid silver;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid silver;
     border-top: none;
+    box-shadow: 0px 1px 1px 1px silver;
+    z-index: 1;
+    position: relative;
   }
   body .et2_nextmatch .nextmatch_header div.et2_box_widget {
     display: block;
@@ -7601,12 +7608,20 @@ span.egw_tutorial_title {
   }
   body .et2_nextmatch .search.searchOn input {
     border: none;
-    backgroun: #0c5da5;
+    background: white;
     outline: none;
     position: absolute;
     left: 110px;
     width: 80%;
     height: 50px;
+  }
+  body .et2_nextmatch .search.searchOn button[id$="search_button"] {
+    background-image: none !important;
+  }
+  body .et2_nextmatch .search.searchOn button[id$="search_button"]:after {
+    content: "\2613";
+    font-weight: bold;
+    font-size: 18pt;
   }
   body .et2_nextmatch .search {
     background: #0c5da5;
@@ -7625,6 +7640,9 @@ span.egw_tutorial_title {
     border: none;
     margin: 0;
     color: white;
+    background-size: 18px 18px;
+    box-shadow: none;
+    outline: none;
   }
   body .et2_nextmatch .search button.nm_toggle_header {
     background-position: center;
@@ -7642,8 +7660,8 @@ span.egw_tutorial_title {
     outline: none;
   }
   body .et2_nextmatch .search button.nm_toggle_header:after {
-    font-size: xx-large;
-    content: "\21E9";
+    font-size: 18pt;
+    content: "\2261";
   }
   body .et2_nextmatch .search button.nm_action_header {
     background-position: center;
@@ -7661,10 +7679,11 @@ span.egw_tutorial_title {
     outline: none;
   }
   body .et2_nextmatch .search button.nm_action_header:after {
-    font-size: xx-large;
+    font-size: 18pt;
     content: "\205D";
+    font-weight: bold;
   }
-  body .et2_nextmatch .search button.nm_favorites_button {
+  body .et2_nextmatch .search div.nm_favorites_div {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7676,18 +7695,51 @@ span.egw_tutorial_title {
     display: block;
     float: right;
   }
-  body .et2_nextmatch .search button.nm_favorites_button:focus {
+  body .et2_nextmatch .search div.nm_favorites_div:focus {
     outline: none;
   }
-  body .et2_nextmatch .search button.nm_favorites_button:after {
-    font-size: xx-large;
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] {
+    position: relative !important;
+    top: 0 !important;
+    outline: none;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
+    display: none;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
+    display: none;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2):after {
+    font-size: 17pt;
     content: "\2606";
     font-weight: bold;
+    vertical-align: super;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites {
+    width: 160px;
+    box-shadow: 0px 4px 5px 2px silver;
+    border: 1px solid silver;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-bottom: 1px solid silver;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a {
+    width: 100%;
+    line-height: 30px;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input {
+    display: none;
+  }
+  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
+    display: block;
   }
   body .et2_nextmatch .search button.nm_toggle_header_on:after {
-    content: "\21E7";
+    content: "\2613";
   }
-  body .et2_nextmatch .search input {
+  body .et2_nextmatch .search input[type="search"] {
     width: 50px;
     height: 50px;
     font-size: large;
@@ -7695,22 +7747,23 @@ span.egw_tutorial_title {
     border: 0;
     opacity: 0;
     background-color: #0c5da5;
-    color: white;
+    color: black;
     position: absolute;
   }
-  body .et2_nextmatch .search input:active {
+  body .et2_nextmatch .search input[type="search"]:active {
     border: none;
     background: #0c5da5;
   }
-  body .et2_nextmatch .search input:focus {
+  body .et2_nextmatch .search input[type="search"]:focus {
     border: none;
-    backgroun: #0c5da5;
+    background: white;
     outline: none;
     opacity: 1;
     left: 110px;
     position: absolute;
     width: 100%;
     height: 50px;
+    z-index: 2;
   }
   body .et2_nextmatch .header_row_right {
     height: 50px;

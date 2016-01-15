@@ -2252,9 +2252,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var self = this;
 		var nm_div = this.nextmatch.div;
 		var settings = this.nextmatch.options.settings;
-
+		
 		this.div.prependTo(nm_div);
-
+		
 		// Left & Right (& row) headers
 		this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
 		this.headers = [
@@ -2262,7 +2262,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			{id:this.nextmatch.options.header_right},
 			{id:this.nextmatch.options.header_row}
 		];
-
+		
 		// The rest of the header
 		this.row_div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header_row")
@@ -2270,7 +2270,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
-			.appendTo(this.row_div)
+			.prependTo(egwIsMobile()?this.nextmatch.div:this.row_div)
 			.addClass("search");
 		this.search = et2_createWidget("textbox", {"id":"search","blur":egw.lang("search")}, this);
 		this.search.input.attr("type", "search");
@@ -2311,7 +2311,55 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				}
 			);
 		}
-
+		
+		// Set activeFilters to current value
+		this.nextmatch.activeFilters.search = settings.search;
+		
+		/**
+		 *  Mobile theme specific part for nm header 
+		 *  nm header has very different behaivior for mobile theme and basically
+		 *  it has its own markup separately from nm header in normal templates.
+		 */
+		if (egwIsMobile())
+		{
+			jQuery(this.div).css({display:'inline-block'}).addClass('nm_header_hide');
+			// toggle header 
+			// add new button
+			this.fav_span = jQuery(document.createElement('div'))
+					.addClass('nm_favorites_div')
+					.prependTo(this.search_box);
+			// toggle header menu
+			this.toggle_header = jQuery(document.createElement('button'))
+					.addClass('nm_toggle_header')
+					.click(function(){
+						jQuery(self.div).slideToggle('fast');
+						jQuery(self.div).removeClass('nm_header_hide');
+						jQuery(this).toggleClass('nm_toggle_header_on');
+						window.setTimeout(function(){self.nextmatch.resize()},800);
+					})
+					.prependTo(this.search_box);
+			// Context menu 
+			this.action_header = jQuery(document.createElement('button'))
+					.addClass('nm_action_header')
+					.click (function(e){
+						jQuery('tr.selected').trigger({type:'taphold',which:3,originalEvent:e});
+					})
+					.prependTo(this.search_box);
+			
+			
+			this.search_button = et2_createWidget("button", {id: "search_button","background":"pixelegg/images/topmenu_items/mobile/search_white.png"}, this);
+			this.search.input.on ('focus blur', function (e){
+				self.search_box.toggleClass('searchOn');
+			});
+		}
+		else
+		{
+			this.search_button = et2_createWidget("button", {id: "search_button","label":">"}, this);
+			this.search_button.onclick = function(event) {
+				self.nextmatch.applyFilters({search: self.search.getValue()});
+			};
+		}
+	
 		// Add category
 		if(!settings.no_cat) {
 			settings.cat_id_label = egw.lang("Category");
@@ -2364,14 +2412,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					}), '_blank', 850, 440, 'yes');
 				});
 		}
-
-		// Set activeFilters to current value
-		this.nextmatch.activeFilters.search = settings.search;
-
-		this.search_button = et2_createWidget("button", {id: "search_button","label":">"}, this);
-		this.search_button.onclick = function(event) {
-			self.nextmatch.applyFilters({search: self.search.getValue()});
-		};
 
 		// Another place to customize nextmatch
 		this.header_row = jQuery(document.createElement("div"))
@@ -2584,7 +2624,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.favorites = et2_createWidget('favorites', widget_options, this);
 
 		// Add into header
-		$j(this.favorites.getDOMNode(this.favorites)).prependTo(this.right_div);
+		$j(this.favorites.getDOMNode(this.favorites)).prependTo(egwIsMobile()?this.search_box.find('.nm_favorites_div'):this.right_div);
 	},
 
 	/**
