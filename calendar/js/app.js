@@ -1987,12 +1987,12 @@ app.classes.calendar = AppJS.extend(
 						break;
 					case 'day':
 						var end = state.state.last = view.end_date(state.state).toJSON();
-						value.push({
+							value.push({
 							id: app.classes.calendar._daywise_cache_id(date,state.state.owner),
-							start_date: state.state.first,
-							end_date: state.state.last,
-							owner: view.owner(state.state)
-						});
+								start_date: state.state.first,
+								end_date: state.state.last,
+								owner: view.owner(state.state)
+							});
 						break;
 					default:
 						var end = state.state.last = view.end_date(state.state).toJSON();
@@ -2009,7 +2009,25 @@ app.classes.calendar = AppJS.extend(
 						break;
 				}
 				// If we have cached data for the timespan, pass it along
-				this._need_data(value,state.state);
+				// Single day with multiple owners still needs owners split to satisfy
+				// caching keys, otherwise they'll fetch & cache consolidated
+				if(state.state.view == 'day' && state.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')))
+				{
+					day_value = [];
+					for(var i = 0; i < state.state.owner.length; i++)
+					{
+						day_value.push({
+							start_date: state.state.first,
+							end_date: state.state.last,
+							owner: state.state.owner[i]
+						});
+					}
+					this._need_data(day_value,state.state);
+				}
+				else
+				{
+					this._need_data(value,state.state);
+				}
 
 				var row_index = 0;
 				
@@ -2083,22 +2101,6 @@ app.classes.calendar = AppJS.extend(
 						widget.set_value(value[row_index++]);
 					}
 				},this, et2_calendar_view);
-
-				// Single day with multiple owners still needs owners split to satisfy
-				// caching keys, otherwise they'll cache consolidated
-				if(state.state.view == 'day' && state.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')))
-				{
-					value = [];
-					for(var i = 0; i < state.state.owner.length; i++)
-					{
-						value.push({
-							start_date: state.state.first,
-							end_date: state.state.last,
-							owner: state.state.owner[i]
-						});
-					}
-					this._need_data(value,state.state);
-				}
 			}
 			else
 			{

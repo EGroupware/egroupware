@@ -649,7 +649,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		
 		this.scrolling
-			.css('height', (this.div.innerHeight() - header_height)+'px')
 			.on('scroll', jQuery.proxy(this._scroll, this));
 
 		// Percent
@@ -684,7 +683,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this._top_time = 0
 		for(var t = 0,i = 0; t < 1440; t += granularity,++i)
 		{
-			html += '<div class="calendar_calTimeRow" style="height: '+this.rowHeight+'px;">';
+			html += '<div class="calendar_calTimeRow" style="height: '+rowHeight+'%;">';
 			// show time for full hours, always for 45min interval and at least on every 3 row
 			var time = jQuery.datepicker.formatTime(
 					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
@@ -759,8 +758,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var wd_end = 60*this.options.day_end;
 		var totalDisplayMinutes	= wd_end - wd_start;
 		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/this.options.granularity);
-		this.scrolling
-			.css('height', (this.options.height - this.gridHeader.outerHeight(true))+'px');
 
 		var new_height = this.scrolling.height() / rowsToDisplay;
 		this.rowHeight = new_height;
@@ -773,7 +770,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			'100%' :
 			(this.rowHeight*rows.length)+'px'
 		);
-		$j('.calendar_calAddEvent',this.scrolling).height(this.rowHeight);
 		
 		// Scroll to start of day
 		this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
@@ -1670,7 +1666,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			this.div.css('height', this.options.height);
 			
 			// Re-do time grid
-			this._drawTimes();
+			if(!this.update_timer) this._drawTimes();
 
 			// Just re-did everything, no need to do more
 			return;

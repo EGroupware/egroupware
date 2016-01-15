@@ -652,8 +652,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(event.participants && this._parent.options.owner)
 		{
 			var parent_owner = this._parent.options.owner;
-			var match = false;
-			for(var i = 0; !match && i < this._parent.options.owner.length; i++ )
+			var owner_match = false;
+			for(var i = 0; i < this._parent.options.owner.length; i++ )
 			{
 				if (parseInt(this._parent.options.owner[i]) < 0)
 				{
@@ -669,20 +669,20 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 					parent_owner.indexOf &&
 					parent_owner.indexOf(id) >= 0)
 				{
-					match = true;
+					owner_match = true;
 					break;
 				}
 			}
-			if(!match)
+			if(!owner_match)
 			{
-				return(this._parent.options.owner == event.owner ||
+				owner_match = (this._parent.options.owner == event.owner ||
 					parent_owner.indexOf &&
 					parent_owner.indexOf(event.owner) >= 0);
 			}
 		}
 
 		// Simple, same day
-		if(this.options.value.date && event.date == this.options.value.date)
+		if(owner_match && this.options.value.date && event.date == this.options.value.date)
 		{
 			return true;
 		}
@@ -690,15 +690,18 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Multi-day non-recurring event spans days - date does not match
 		var event_start = new Date(event.start);
 		var event_end = new Date(event.end);
-		if(this._parent.date >= event_start && this._parent.date <= event_end)
+		if(owner_match && this._parent.date >= event_start && this._parent.date <= event_end)
 		{
 			return true;
 		}
 
 		// Delete all old actions
-		this._actionObject.clear();
-		this._actionObject.unregisterActions();
-		this._actionObject = null;
+		if(this._actionObject)
+		{
+			this._actionObject.clear();
+			this._actionObject.unregisterActions();
+			this._actionObject = null;
+		}
 
 		// Update daywise caches
 		var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this._parent.options.owner);
