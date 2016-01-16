@@ -376,7 +376,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				events.push(event);
 			}
 		}
-		this._update_events(events);
+		if(!this._parent.disabled)
+			this._update_events(events);
 	},
 
 	set_label: function(label) {
@@ -751,13 +752,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			event['multiday'] = false;
 			if(typeof event.start !== 'object')
 			{
-				this.date_helper.set_value(event.start);
-				event.start = new Date(this.date_helper.getValue());
+				event.start = new Date(event.start);
 			}
 			if(typeof event.end !== 'object')
 			{
-				this.date_helper.set_value(event.end);
-				event.end = new Date(this.date_helper.getValue());
+				event.end = new Date(event.end);
 			}
 			event['start_m'] = parseInt((event.start.valueOf()/1000 - day_start) / 60);
 			if (event['start_m'] < 0)
