@@ -73,6 +73,12 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.addClass(this.options.class)
 			.css('width',this.options.width)
 			.on('mouseenter', function() {
+				// Tooltip
+				if(!event._tooltipElem)
+				{
+					event.set_statustext(event._tooltip());
+					return event.div.trigger('mouseenter');
+				}
 				// Hacky to remove egw's tooltip border and let the mouse in
 				window.setTimeout(function() {
 					$j('body .egw_tooltip')
@@ -220,8 +226,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var event = this.options.value;
 		
 		var id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
-		this._parent.date_helper.set_value(event.start.valueOf ? new Date(event.start) : event.start);
-		var formatted_start = this._parent.date_helper.getValue();
+		var formatted_start = event.start.toJSON();
 
 		this.set_id('event_' + id);
 		if(this._actionObject)
@@ -246,11 +251,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		// DOM nodes
 		this.div
-			// Empty & re-append to make sure dnd helpers are gone
-			.empty()
-			.append(this.title)
-			.append(this.body)
-
 			// Let timegrid always get the drag
 			.droppable('option','greedy',false)
 		
@@ -273,8 +273,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.removeClass(function(index, css) {
 				return (css.match(/calendar_calEvent\S+/g) || []).join(' ');
 			})
-			// Remove any resize classes, the handles are gone due to empty()
-			.removeClass('ui-resizable')
 			.addClass(event.class)
 			.toggleClass('calendar_calEventPrivate', typeof event.private !== 'undefined' && event.private);
 		this.options.class = event.class;
@@ -352,9 +350,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.css('background-color',jQuery.Color(this.title.css('background-color')).lightness(
 				Math.max(0.8, parseFloat(jQuery.Color(this.title.css('background-color')).lightness()))
 			));
-
-		// Tooltip
-		this.set_statustext(this._tooltip());
 	},
 
 	/**
