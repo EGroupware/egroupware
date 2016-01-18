@@ -1291,7 +1291,28 @@ app.classes.calendar = AppJS.extend(
 			var extra = open.extra || '';
 
 			extra = extra.replace(/(\$|%24)app/,id[0]).replace(/(\$|%24)id/,id[1]);
-			this.egw.open(open.id_data||'',open.app,open.type,extra);
+
+			// Get a little smarter with the context
+			var context = {}
+			if(egw.dataGetUIDdata(_events[0].id) && egw.dataGetUIDdata(_events[0].id).data)
+			{
+				// Found data in global cache
+				context = egw.dataGetUIDdata(_events[0].id).data;
+				extra = {};
+			}
+			else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget))
+			{
+				// Able to extract something from the widget
+				context = _events[0].iface.getWidget().getValue ? 
+					_events[0].iface.getWidget().getValue() :
+					_events[0].iface.getWidget().options.value || {}
+				extra = {};
+			}
+			if(context.date) extra.date = context.date;
+			if(context.app) extra.app = context.app;
+			if(context.app_id) extra.app_id = context.app_id;
+
+			this.egw.open(open.id_data||'',open.app,open.type,extra ? extra : context);
 		}
 		else if (_action.data.url)
 		{
