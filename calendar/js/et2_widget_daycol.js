@@ -804,13 +804,12 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			// Calculate horizontal positioning
 			var left = Math.ceil(5 + (1.5 * 100 / (parseFloat(this.options.width) || 100)));
-			var width = 98 - left;
+			var right = 2;
 			if (columns.length !== 1)
 			{
-				width = !c ? 70 : 50;
+				right = !c ? 30 : 2;
 				left += c * (100.0-left) / columns.length;
 			}
-			if (left + width > 100.0) width = 98.0 - left;
 
 			for(var i = 0; (columns[c].indexOf(event) >= 0 || !event) && i < columns[c].length; i++)
 			{
@@ -827,7 +826,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 					columns[c][i].div.css('top', '');
 					columns[c][i].div.css('height', '');
 					columns[c][i].div.css('left', '');
-					columns[c][i].div.css('width', '');
+					columns[c][i].div.css('right', '');
 					// Strip out of view padding
 					columns[c][i].body.css('padding-top','');
 					continue;
@@ -839,7 +838,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 						columns[c][i].div.css('top', '');
 						columns[c][i].div.css('height','');
 						columns[c][i].div.css('left', '');
-						columns[c][i].div.css('width', '');
+						columns[c][i].div.css('right', '');
 						columns[c][i].body.css('padding-top','');
 						columns[c][i].div
 							.appendTo(this.all_day);
@@ -872,7 +871,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 					// This gives the wrong height
 					//columns[c][i].div.outerHeight(height+'%');
 					columns[c][i].div.css('left', left.toFixed(1)+'%');
-					columns[c][i].div.css('width', width.toFixed(1)+'%');
+					columns[c][i].div.css('right', right.toFixed(1)+'%');
 					columns[c][i].div.css('z-index',parseInt(20)+c);
 
 				}

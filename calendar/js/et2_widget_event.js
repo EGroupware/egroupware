@@ -312,11 +312,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			// Most statuses use colored borders
 			this.div.css('border-color',status_class === 'calendar_calEventAllAccepted' ? this.div.css('background-color') : '');
-
-			// Set title color based on background brightness
-			this.title
-				.css('background-color', this.div.css('background-color'))
-				.css('color', jQuery.Color(this.div.css('background-color')).lightness() > 0.45 ? 'black':'white');
 		}
 
 		this.icons.appendTo(this.title)
@@ -345,11 +340,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				.append('<span class="calendar_calTimespan">'+start_time + '</span>')
 				.append('<p>'+this.options.value.description+'</p>');
 		}
-		this.body
-			// Set background color to a lighter version of the header color
-			.css('background-color',jQuery.Color(this.title.css('background-color')).lightness(
-				Math.max(0.8, parseFloat(jQuery.Color(this.title.css('background-color')).lightness()))
-			));
 	},
 
 	/**
@@ -420,12 +410,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		
 		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background: '+bg_color+';">'+
-			'<div class="calendar_calEventHeaderSmall" style="background-color: '+this.title.css('background-color')+';">'+
+			'<div class="calendar_calEventHeaderSmall">'+
 				'<font style="color:'+header_color+'">'+timespan+'</font>'+
 				this.icons[0].outerHTML+
 			'</div>'+
-			'<div class="calendar_calEventBodySmall" style="background-color: '+
-				jQuery.Color(this.title.css('background-color')).lightness("0.9") + '">'+
+			'<div class="calendar_calEventBody">'+
 				'<p style="margin: 0px;">'+
 				'<span class="calendar_calEventTitle">'+this.div.attr('data-title')+'</span><br>'+
 				this.options.value.description+'</p>'+
