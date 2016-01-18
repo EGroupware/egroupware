@@ -3608,8 +3608,11 @@ jQuery.extend(app.classes.calendar,{
 				// Start here, in case we can't find anything better
 				var d = app.calendar.View.start_date.call(this, state);
 
-				if(state.sortby && state.sortby === 'month' ||
-					[28,30,31].indexOf(state.planner_days||0) >= 0)
+				if(state.sortby && state.sortby === 'month')
+				{
+					d.setUTCDate(1);
+				}
+				else if (state.planner_days && [28,30,31].indexOf(state.planner_days||0) >= 0)
 				{
 					d = app.classes.calendar.views.month.start_date.call(this,state);
 				}
