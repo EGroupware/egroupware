@@ -1668,7 +1668,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		// If too small, switch to list view automatically
 		// Set rather arbitrarily at 180 px.
-		if(this.options.granularity && this.options.height < 180)
+		if(this.options.granularity && rowCount > 1 && this.options.height < 180)
 		{
 			this._parent.iterateOver(function(widget) {
 				if(!widget.disabled) widget.set_granularity(0);
