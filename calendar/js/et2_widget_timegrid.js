@@ -1558,13 +1558,22 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				}
 			}
 		}
-		else if (_ev.target.dataset.date)
+		else
 		{
+			var dataset = {};
+			var parent = _ev.target;
+			do
+			{
+				dataset = parent.dataset;
+				parent = parent.parentNode;
+			} while (jQuery.isEmptyObject(dataset) && parent !== this.node);
+			if(parent === this.node) return;
+			
 			// Default handler to open a new event at the selected time
 			var options = {
-				date: _ev.target.dataset.date || this.day_list[0],
-				hour: _ev.target.dataset.hour || this.options.day_start,
-				minute: _ev.target.dataset.minute || 0
+				date: dataset.date || this.day_list[0],
+				hour: dataset.hour || this.options.day_start,
+				minute: dataset.minute || 0
 			};
 			if (this.options.owner != app.calendar.state.owner)
 			{
