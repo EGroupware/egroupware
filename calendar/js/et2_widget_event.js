@@ -633,10 +633,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 		// Also check participants against owner
+		var owner_match = true;
 		if(event.participants && this._parent.options.owner)
 		{
 			var parent_owner = this._parent.options.owner;
-			var owner_match = false;
+			owner_match = false;
 			for(var i = 0; i < this._parent.options.owner.length; i++ )
 			{
 				if (parseInt(this._parent.options.owner[i]) < 0)
@@ -690,13 +691,13 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Update daywise caches
 		var new_cache_id = app.classes.calendar._daywise_cache_id(event.date,this._parent.options.owner);
 		var new_daywise = egw.dataGetUIDdata(new_cache_id);
-		new_daywise = new_daywise ? new_daywise.data : [];
+		new_daywise = new_daywise && new_daywise.data ? new_daywise.data : [];
 		var old_cache_id = false;
 		if(this.options.value && this.options.value.date)
 		{
 			old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
 			var old_daywise = egw.dataGetUIDdata(old_cache_id);
-			old_daywise = old_daywise ? old_daywise.data : [];
+			old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
 			old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
 			egw.dataStoreUID(old_cache_id,old_daywise);
 		}
@@ -704,7 +705,10 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			new_daywise.push(event.id);
 		}
-		egw.dataStoreUID(new_cache_id,new_daywise);
+		if(new_daywise.data !== null)
+		{
+			egw.dataStoreUID(new_cache_id,new_daywise);
+		}
 
 		return false;
 	},
