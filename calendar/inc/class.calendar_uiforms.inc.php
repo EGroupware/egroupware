@@ -788,6 +788,8 @@ class calendar_uiforms extends calendar_ui
 									}
 								}
 							}
+							// check if we need to move the alarms, because they are relative
+							$this->bo->check_move_alarms($event, $old_event);
 						}
 					}
 				}
@@ -2764,22 +2766,7 @@ class calendar_uiforms extends calendar_ui
 				$recur_event = $this->bo->read($event['reference']);
 				$recur_event['recur_exception'][] = $d->format('ts');
 				// check if we need to move the alarms, because they are next on that exception
-				foreach($recur_event['alarm'] as $id => $alarm)
-				{
-					if ($alarm['time'] == $content['edit_single'] - $alarm['offset'])
-					{
-						$rrule = calendar_rrule::event2rrule($recur_event, true);
-						foreach ($rrule as $time)
-						{
-							if ($content['edit_single'] < $time->format('ts'))
-							{
-								$alarm['time'] = $time->format('ts') - $alarm['offset'];
-								$this->bo->save_alarm($event['reference'], $alarm);
-								break;
-							}
-						}
-					}
-				}
+				$this->bo->check_move_alarms($recur_event, null, $d);
 				unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
 				unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 				$this->bo->update($recur_event,true);	// no conflict check here
@@ -2804,6 +2791,10 @@ class calendar_uiforms extends calendar_ui
 			// We have a recurring event starting in the past -
 			// stop it & create a new one.
 			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
+		}
+		if(!$event['recur_type'])
+		{
+			$this->bo->check_move_alarms($event, $old_event);
 		}
 
 		// Drag a whole day to a time
