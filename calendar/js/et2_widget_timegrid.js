@@ -1665,6 +1665,15 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		
 		// Allow for borders & padding
 		this.options.height -= 2*((this.div.outerWidth(true) - this.div.innerWidth()) + parseInt(this.div.parent().css('padding-top')));
+
+		// If too small, switch to list view automatically
+		// Set rather arbitrarily at 180 px.
+		if(this.options.granularity && this.options.height < 180)
+		{
+			this._parent.iterateOver(function(widget) {
+				if(!widget.disabled) widget.set_granularity(0);
+			},this, et2_calendar_timegrid);
+		}
 		if(this.options.height+"px" !== this.div.css('height'))
 		{
 			this.div.css('height', this.options.height);
