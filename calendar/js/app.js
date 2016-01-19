@@ -1293,24 +1293,27 @@ app.classes.calendar = AppJS.extend(
 			extra = extra.replace(/(\$|%24)app/,id[0]).replace(/(\$|%24)id/,id[1]);
 
 			// Get a little smarter with the context
-			var context = {}
-			if(egw.dataGetUIDdata(_events[0].id) && egw.dataGetUIDdata(_events[0].id).data)
+			if(!extra)
 			{
-				// Found data in global cache
-				context = egw.dataGetUIDdata(_events[0].id).data;
-				extra = {};
+				var context = {}
+				if(egw.dataGetUIDdata(_events[0].id) && egw.dataGetUIDdata(_events[0].id).data)
+				{
+					// Found data in global cache
+					context = egw.dataGetUIDdata(_events[0].id).data;
+					extra = {};
+				}
+				else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget))
+				{
+					// Able to extract something from the widget
+					context = _events[0].iface.getWidget().getValue ?
+						_events[0].iface.getWidget().getValue() :
+						_events[0].iface.getWidget().options.value || {}
+					extra = {};
+				}
+				if(context.date) extra.date = context.date;
+				if(context.app) extra.app = context.app;
+				if(context.app_id) extra.app_id = context.app_id;
 			}
-			else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget))
-			{
-				// Able to extract something from the widget
-				context = _events[0].iface.getWidget().getValue ? 
-					_events[0].iface.getWidget().getValue() :
-					_events[0].iface.getWidget().options.value || {}
-				extra = {};
-			}
-			if(context.date) extra.date = context.date;
-			if(context.app) extra.app = context.app;
-			if(context.app_id) extra.app_id = context.app_id;
 
 			this.egw.open(open.id_data||'',open.app,open.type,extra ? extra : context);
 		}
@@ -3559,10 +3562,10 @@ jQuery.extend(app.classes.calendar,{
 			},
 			end_date: function(state) {
 				var d = app.calendar.View.end_date.call(this,state);
-				d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);
+				d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0,0,0,0);
 				var week_start = app.calendar.date.start_of_week(d);
 				if(week_start < d) week_start.setUTCHours(24*7);
-				week_start.setUTCHours(week_start.getUTCHours()-1);
+				week_start.setUTCSeconds(week_start.getUTCSeconds()-1);
 				return week_start;
 			},
 			granularity: function(state) {
