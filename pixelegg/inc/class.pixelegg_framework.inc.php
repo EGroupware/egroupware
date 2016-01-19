@@ -55,7 +55,8 @@ class pixelegg_framework extends jdots_framework
 	function header(array $extra=array())
 	{
 		// load our slider.js, but only if framework requested
-		if (!self::$header_done && $_GET['cd'] === 'yes')
+		if (!self::$header_done && $_GET['cd'] === 'yes' &&
+			!(html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile'))
 		{
 			self::validate_file('/pixelegg/js/slider.js');
 		}
