@@ -65,7 +65,7 @@
 							<description align="right" value="#%s" id="${row}[id]" font_style="b"/>
 						</hbox>
 						<box no_lang="1" class="listDescription">
-							<description id="${row}[description]" no_lang="1"/>
+							<description id="${row}[description]" no_lang="1" activate_links="1"/>
 						</box>
 						<description id="${row}[recure]" no_lang="1"/>
 					</vbox>
@@ -73,7 +73,7 @@
 						<description id="${row}[title]"/>
 						<description align="right" value="#%s" id="${row}[id]" font_style="b"/>
 					</hbox>
-					<description id="${row}[description]" no_lang="1"/>
+					<description id="${row}[description]" no_lang="1" activate_links="1"/>
 					<description id="${row}[recure]"/>
 					<menulist>
 						<menupopup type="select-cat" id="${row}[category]" readonly="true"/>
@@ -82,12 +82,12 @@
 						<menulist>
 							<menupopup type="select-account" class="noWrap" id="${row}[owner]" readonly="true"/>
 						</menulist>
-						<description id="${row}[location]" no_lang="1"/>
+						<description id="${row}[location]" no_lang="1" activate_links="1"/>
 					</vbox>
 					<menulist>
 						<menupopup type="select-account" class="noWrap" id="${row}[owner]" readonly="true"/>
 					</menulist>
-					<description id="${row}[location]" no_lang="1"/>
+					<description id="${row}[location]" no_lang="1" activate_links="1"/>
 					<html id="${row}[parts]" no_lang="1" readonly="true"/>
 					<vbox>
 						<date-time id="${row}[created]" readonly="true"/>
