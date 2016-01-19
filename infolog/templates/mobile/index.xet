@@ -72,6 +72,8 @@
 				</row>
 				<row>
 					<description id="plus_button_container"/>
+				</row>
+				<row>
 					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.dates" span="all"/>
 				</row>
 				<row>

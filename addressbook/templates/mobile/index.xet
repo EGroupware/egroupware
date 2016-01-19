@@ -86,7 +86,9 @@
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
 				<row>
-					<description id="plus_button_container" />
+					<description width="0" id="plus_button_container" />
+				</row>
+				<row>
 					<nextmatch id="nm" template="addressbook.index.rows" span="all"/>
 				</row>
 				<row class="noPrint dialogFooterToolbar" disabled="!@nm[selectcols]=/legacy_actions/">
