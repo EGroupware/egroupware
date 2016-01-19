@@ -1365,9 +1365,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 
 		if(this.isAttached() && (
-			typeof old == "number" && typeof _owner == "number" && old !== this.options.owner ||
+			typeof old === "number" && typeof _owner === "number" && old !== this.options.owner ||
 			// Array of ids will not compare as equal
-			((typeof old === 'object' || typeof _owner === 'object') && old.toString() !== _owner.toString())
+			((typeof old === 'object' || typeof _owner === 'object') && old.toString() !== _owner.toString()) ||
+			// Strings
+			typeof old === 'string' && ''+old !== ''+this.options.owner
 		))
 		{
 			this.invalidate(true);

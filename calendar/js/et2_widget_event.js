@@ -636,14 +636,17 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		var owner_match = true;
 		if(event.participants && this._parent.options.owner)
 		{
-			var parent_owner = this._parent.options.owner;
+			var parent_owner = typeof this._parent.options.owner !== 'object' ?
+				[this._parent.options.owner] :
+				this._parent.options.owner;
 			owner_match = false;
-			for(var i = 0; i < this._parent.options.owner.length; i++ )
+			var length = parent_owner.length;
+			for(var i = 0; i < length; i++ )
 			{
-				if (parseInt(this._parent.options.owner[i]) < 0)
+				if (parseInt(parent_owner[i]) < 0)
 				{
 					// Add in groups, if we can get them (this is syncronous)
-					egw.accountData(this._parent.options.owner[i],'account_id',true,function(members) {
+					egw.accountData(parent_owner[i],'account_id',true,function(members) {
 						parent_owner = parent_owner.concat(Object.keys(members));
 					});
 				}
