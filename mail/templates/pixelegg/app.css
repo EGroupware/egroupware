@@ -897,9 +897,6 @@ iframe#mail-display_mailDisplayBodySrc {
 body {
   background-color: white;
 }
-#mail-index {
-  margin: 0 1% 0 0 !important;
-}
 #mail-index div#mail-index_nm div.nextmatch_header div.filters select {
   margin-top: 9px;
 }
@@ -2607,6 +2604,9 @@ div.mailComposeHeaderSection > table {
   body #popupMainDiv {
     padding: 8px 8px 0 0;
     background: none;
+  }
+  body .dtree div.containerTableStyle {
+    overflow: hidden;
   }
   body #mail-compose .cke_chrome {
     border: none;
