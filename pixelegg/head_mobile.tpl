@@ -10,7 +10,7 @@
 		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="Stylite AG www.stylite.de" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 		<link rel="apple-touch-icon" href="{webserver_url}/phpgwapi/templates/default/images/logo64x64.png" />
 		{pngfix}
 		{meta_robots}
