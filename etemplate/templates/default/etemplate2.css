@@ -2103,3 +2103,36 @@ body:last-child .blueimp-gallery>.play-pause, .blueimp-gallery>.play-pause{
 	overflow: hidden;
 }
 
+.et2_details {
+	width:100%;
+	position: relative;
+	color: black;
+	background-color: transparent;
+}
+.et2_details .et2_details_wrapper{
+	display: none;
+}
+.et2_details .et2_details_toggle {
+	background-color: gray;
+	border: 1px solid silver;
+	border-radius: 3px;
+	float: right;
+}
+.et2_details .et2_details_toggle:hover {
+	background-color:  silver;
+}
+.et2_details .et2_details_toggle:after{
+	content: "+";
+	color: white;
+	font-size: 12pt;
+	font-weight: bold;
+}
+.et2_details.et2_details_expanded .et2_details_wrapper{
+	display: block;
+}
+.et2_details.et2_details_expanded .et2_details_toggle:after {
+	content: "\2212";
+}
+.et2_details.et2_details_expanded .et2_details_title {
+	display: none;
+}

@@ -153,3 +153,90 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 });
 et2_register_widget(et2_box, ["vbox", "box"]);
 
+/**
+ * Details widget implementation
+ * widget name is "details" and can be use as a wrapping container
+ * in order to make its children collapsible.
+ * 
+ * Note: details widget does not represent html5 "details" tag in DOM
+ * 
+ * <details>
+ *		<widgets>
+ *		....
+ * <details/>
+ * 
+ */
+var et2_details = et2_box.extend(
+{
+	attributes:{
+		"toggle_align": {
+			name: "Toggle button alignment",
+			description:" Defines where to align the toggle button, default is right alignment",
+			type:"string",
+			default: "right"
+		},
+		title: {
+			name: "title",
+			description:"Set a header title for box and shows it next to toggle button, default is no title",
+			type:"string",
+			default: ""
+		}
+	},
+	
+	init: function() {
+		this._super.apply(this, arguments);
+		
+		this.div = jQuery(document.createElement('div')).addClass('et2_details');
+		this.title = jQuery(document.createElement('span'))
+				.addClass('et2_label et2_details_title')
+				.appendTo(this.div);
+		this.span = jQuery(document.createElement('span'))
+				.addClass('et2_details_toggle')
+				.appendTo(this.div);
+		this.wrapper = jQuery(document.createElement('div'))
+				.addClass('et2_details_wrapper')
+				.appendTo(this.div);
+		
+		
+		this._createWidget();
+	},
+	
+	/**
+	 * Function happens on toggle action
+	 */
+	_toggle: function (){
+		this.div.toggleClass('et2_details_expanded');
+	},
+	
+	/**
+	 * Create widget, set contents, and binds handlers
+	 */
+	_createWidget: function () {
+		var self = this;
+		
+		this.span.on('click', function (e){
+			self._toggle();
+		});
+		
+		//Set header title
+		if (this.options.title)
+		{
+			this.title.text(this.options.title);
+		}
+		
+		// Align toggle button left/right
+		if (this.options.toggle_dir === "left") this.span.css({float:'left'});
+	},
+	
+	getDOMNode: function(_sender) {
+		if (!_sender || _sender === this)
+		{
+			return this.div[0];
+		}
+		else
+		{
+			return this.wrapper[0];
+		}
+	}
+});
+et2_register_widget(et2_details, ["details"]);
