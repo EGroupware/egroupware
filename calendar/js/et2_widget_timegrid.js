@@ -235,7 +235,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					e.originalEvent = event;
 					e.data = {duration: 0};
 					var event_data = timegrid._get_event_info(this);
-					var event_widget = timegrid.getWidgetById('event_'+event_data.app_id);
+					var event_widget = timegrid.getWidgetById(event_data.widget_id);
 					var sT = event_widget.options.value.start_m;
 					if (typeof this.dropEnd != 'undefined' && this.dropEnd.length == 1)
 					{
@@ -562,9 +562,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		// Add the binding for the change handler
 		$j(this.div).on("change.et2_calendar_timegrid", '*:not(.calendar_calEvent)', this, function(e) {
-				return e.data.change.call(e.data, e, this);
-			});
+			return e.data.change.call(e.data, e, this);
+		});
 
+		// Catch resize and prevent it from bubbling further, triggering
+		// etemplate's resize
+		this.div.on('resize', this, function(e) {
+			e.stopPropagation();
+		});
 	},
 
 	getDOMNode: function(_sender) {
@@ -865,9 +870,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			}
 			this.day_widgets.splice(delete_index--,1);
 		}
-
-		// Adjust and scroll to start of day
-		this.resizeTimes();
 		
 		// Create / update day widgets with dates and data
 		for(var i = 0; i < this.day_widgets.length; i++)
@@ -894,6 +896,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			}
 			day.set_width(day_width + 'px');
 		}
+
+		// Adjust and scroll to start of day
+		this.resizeTimes();
 		
 		// Don't hold on to value any longer, use the data cache for best info
 		this.value = {};
@@ -1472,7 +1477,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		if (this.onevent_change)
 		{
 			var event_data = this._get_event_info(dom_node);
-			var event_widget = this.getWidgetById('event_'+event_data.app_id);
+			var event_widget = this.getWidgetById(event_data.widget_id);
 			et2_calendar_event.recur_prompt(event_data, jQuery.proxy(function(button_id, event_data) {
 				// No need to continue
 				if(button_id === 'cancel') return false;
@@ -1697,9 +1702,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 
 		// Try to resize width, though animations cause problems
-		var total_width = Math.min(this.div.width(),( $j(this.getInstanceManager().DOMContainer).width() - (
-			this.days.innerWidth() ? this.div.innerWidth() - this.days.innerWidth() : 0
-		)));
+		var total_width = this.days.width();
 		var day_width = (total_width > 0 ? total_width : $j(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)

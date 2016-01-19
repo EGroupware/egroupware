@@ -249,6 +249,14 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Get CSS too
 		egw.includeCSS('/phpgwapi/categories.php?app='+event.app);
 
+		// Need cleaning? (DnD helper removes content)
+		if(!this.div.has(this.title).length)
+		{
+			this.div
+				.empty()
+				.append(this.title)
+				.append(this.body);
+		}
 		// DOM nodes
 		this.div
 			// Let timegrid always get the drag

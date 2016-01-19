@@ -143,7 +143,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			{
 				return this.all_day[0];
 			}
-			return this.event_wrapper[0];
+			return this.div[0];
 		}
 	},
 

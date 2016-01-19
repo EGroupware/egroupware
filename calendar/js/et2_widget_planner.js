@@ -175,7 +175,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 						e.originalEvent = event;
 						e.data = {duration: 0};
 						var event_data = planner._get_event_info(this);
-						var event_widget = planner.getWidgetById('event_'+event_data.id);
+						var event_widget = planner.getWidgetById(event_data.widget_id);
 						var sT = event_widget.options.value.start_m;
 						if (typeof this.dropEnd != 'undefined')
 						{
@@ -1670,7 +1670,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		if (this.onevent_change)
 		{
 			var event_data = this._get_event_info(dom_node);
-			var event_widget = this.getWidgetById('event_'+event_data.id);
+			var event_widget = this.getWidgetById(event_data.widget_id);
 			et2_calendar_event.recur_prompt(event_data, jQuery.proxy(function(button_id, event_data) {
 				// No need to continue
 				if(button_id === 'cancel') return false;
