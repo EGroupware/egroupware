@@ -597,13 +597,13 @@ class calendar_uiforms extends calendar_ui
 			// Clear participant stati
 			foreach($event['participant_types'] as $type => &$participants)
 			{
-				foreach($participants as $id => &$response)
+				foreach($participants as $id => &$p_response)
 				{
 					if($type == 'u' && $id == $event['owner']) continue;
-					calendar_so::split_status($response, $quantity, $role);
+					calendar_so::split_status($p_response, $quantity, $role);
 					// if resource defines callback for status of new status (eg. Resources app acknowledges direct booking acl), call it
 					$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
-					$response = calendar_so::combine_status($status,$quantity,$role);
+					$p_response = calendar_so::combine_status($status,$quantity,$role);
 				}
 			}
 
