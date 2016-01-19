@@ -1819,6 +1819,40 @@ class calendar_boupdate extends calendar_bo
 	}
 
 	/**
+	 * Check alarms and move them if needed
+	 *
+	 * Used when the start time has changed, and alarms need to be updated
+	 *
+	 * @param array $event
+	 * @param array $old_event
+	 * @param egw_time $instance_date For recurring events, this is the date we
+	 *	are dealing with
+	 */
+	function check_move_alarms(Array &$event, Array $old_event = null, egw_time $instance_date = null)
+	{
+		if ($old_event !== null && $event['start'] == $old_event['start']) return;
+
+		$time = new egw_time($event['start']);
+		if(!is_array($event['alarm']))
+		{
+			$event['alarm'] = $this->so->read_alarms($event['id']);
+		}
+
+		foreach($event['alarm'] as $id => &$alarm)
+		{
+			if($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				calendar_so::shift_alarm($event, $alarm, $instance_date->format('ts'));
+			}
+			else if ($alarm['time'] !== $time->format('ts') - $alarm['offset'])
+			{
+				$alarm['time'] = $time->format('ts') - $alarm['offset'];
+				$this->save_alarm($event['id'], $alarm);
+			}
+		}
+	}
+
+	/**
 	 * saves a new or updated alarm
 	 *
 	 * @param int $cal_id Id of the calendar-entry

@@ -1688,15 +1688,17 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param array $_event event with optional 'cal_' prefix in keys
 	 * @param array &$alarm
+	 * @param int $timestamp For recurring events, this is the date we
+	 *	are dealing with, default is now.
 	 * @return boolean true if alarm could be shifted, false if not
 	 */
-	public static function shift_alarm(array $_event, array &$alarm)
+	public static function shift_alarm(array $_event, array &$alarm, $timestamp)
 	{
 		if ($_event['recur_type'] == MCAL_RECUR_NONE)
 		{
 			return false;
 		}
-		$start = (int)time() + $alarm['offset'];
+		$start = $timestamp ? $timestamp : (int)time() + $alarm['offset'];
 		$event = egw_db::strip_array_keys($_event, 'cal_');
 		$rrule = calendar_rrule::event2rrule($event, false);
 		foreach ($rrule as $time)

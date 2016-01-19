@@ -811,6 +811,8 @@ class calendar_uiforms extends calendar_ui
 									}
 								}
 							}
+							// check if we need to move the alarms, because they are relative
+							$this->bo->check_move_alarms($event, $old_event);
 						}
 					}
 				}
@@ -2584,8 +2586,78 @@ class calendar_uiforms extends calendar_ui
 			$duration = $durationT;
 		}
 
-		$event['start'] = $this->bo->date2ts($targetDateTime);
+		// If we have a recuring event for a particular day, make an exception
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
+		{
+			$d = new egw_time($date, egw_time::$user_timezone);
+			if (!empty($event['whole_day']))
+			{
+				$d =& $this->bo->so->startOfDay($d);
+				$d->setUser();
+			}
+			$event = $this->bo->read($eventId, $d, true);
+
+			// For DnD, create an exception if they gave the date
+			$this->_create_exception($event,$preserv);
+			unset($event['id']);
+			
+			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
+			if (!is_array($conflicts) && $conflicts)
+			{
+				// now we need to add the original start as recur-execption to the series
+				$recur_event = $this->bo->read($event['reference']);
+				$recur_event['recur_exception'][] = $d->format('ts');
+				// check if we need to move the alarms, because they are next on that exception
+				$this->bo->check_move_alarms($recur_event, null, $d);
+				unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
+				unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
+				$this->bo->update($recur_event,true);	// no conflict check here
+				unset($recur_event);
+				unset($event['edit_single']);			// if we further edit it, it's just a single event
+				unset($preserv['edit_single']);
+			}
+		}
+
+		$d = new egw_time($targetDateTime, egw_time::$user_timezone);
+		$event['start'] = $d->format('ts');
 		$event['end'] = $event['start']+$duration;
+
+		if ($event['recur_type'] != MCAL_RECUR_NONE && !$date && $seriesInstance)
+		{
+			// calculate offset against clicked recurrance,
+			// depending on which is smaller
+			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($seriesInstance,'ts');
+			$event['start'] = $old_event['start'] + $offset;
+			$event['duration'] = $duration;
+		
+			// We have a recurring event starting in the past -
+			// stop it & create a new one.
+			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
+		}
+		if(!$event['recur_type'])
+		{
+			$this->bo->check_move_alarms($event, $old_event);
+		}
+
+		// Drag a whole day to a time
+		if($durationT && $durationT != 'whole_day')
+		{
+			$event['whole_day'] = ($duration == DAY_s);
+			$event['non_blocking'] = false;
+			// If there's a conflict, it won't save the change and the conflict popup will be blank
+			// so save the change now, and then let the conflict check happen.
+			$this->bo->update($event,true, true, false, true, $message,true);
+
+			// Whole day non blocking with DAY_s would add a day
+			if($duration==DAY_s) $duration=0;
+		}
+		// Drag a normal event to whole day non-blocking
+		else if ($durationT == 'whole_day')
+		{
+			$event['whole_day'] = true;
+			$event['non_blocking'] = true;
+		}
+
 		$status_reset_to_unknown = false;
 		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
 		foreach((array)$event['participants'] as $uid => $status)
