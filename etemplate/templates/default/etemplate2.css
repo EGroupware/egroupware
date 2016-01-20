@@ -1711,16 +1711,18 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container > span:first-child {
 	text-align: -moz-center;
 	position: absolute;
 	left:0;
-	z-index: 6;
+	
 	font-weight: bold;
 	color:#C0C0C0;
 	top: 5px;
 }
 span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container > span:first-child {
 	color:#FAFAFA;
+	z-index: 1;
 }
 span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container> span:nth-child(2) {
 	color:#C0C0C0;
+	z-index: 0;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container> span:nth-child(2) {
 	width: 50%;
@@ -1729,7 +1731,7 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container> span:nth-child(2) {
     text-align: -webkit-center;
 	text-align: -moz-center;
 	position: absolute;
-	z-index: 6;
+	z-index:1;
 	left:50%;
 	font-weight: bold;
 	color:#FAFAFA;
@@ -1739,7 +1741,7 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container a {
 	position: absolute;
     right: 0px;
     top: 0px;
-    z-index: 4;
+    z-index: 0;
     display: block;
     width: 50%;
     height: 100%;
