@@ -193,14 +193,15 @@ abstract class bo_merge
 	 * Return replacements for a contact
 	 *
 	 * @param int|string|array $contact contact-array or id
-	 * @param string $prefix='' prefix like eg. 'user'
+	 * @param string $prefix ='' prefix like eg. 'user'
+	 * @param boolean $ignore_acl =false true: no acl check
 	 * @return array
 	 */
-	public function contact_replacements($contact,$prefix='')
+	public function contact_replacements($contact,$prefix='',$ignore_acl=false)
 	{
 		if (!is_array($contact))
 		{
-			$contact = $this->contacts->read($contact);
+			$contact = $this->contacts->read($contact, $ignore_acl);
 		}
 		if (!is_array($contact)) return array();
 

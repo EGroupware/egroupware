@@ -1055,15 +1055,16 @@ class addressbook_bo extends addressbook_so
 	* reads contacts matched by key and puts all cols in the data array
 	*
 	* @param int|string $contact_id
+	* @param boolean $ignore_acl =false true: no acl check
 	* @return array|boolean array with contact data, null if not found or false on no view perms
 	*/
-	function read($contact_id)
+	function read($contact_id, $ignore_acl=false)
 	{
 		if (!($data = parent::read($contact_id)))
 		{
 			$data = null;	// not found
 		}
-		elseif (!$this->check_perms(EGW_ACL_READ,$data))
+		elseif (!$ignore_acl && !$this->check_perms(EGW_ACL_READ,$data))
 		{
 			$data = false;	// no view perms
 		}
