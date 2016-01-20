@@ -1013,14 +1013,7 @@ class calendar_uiforms extends calendar_ui
 		$response = egw_json_response::get();
 		if($response && !$content['id'] && $event['id'])
 		{
-			// Directly update stored data.
-			// Make sure we have the whole event, not just form data
-			$event = $this->bo->read($event['id']);
-
-			// Copy, so as to not change things for subsequent processing
-			$converted = $event;
-			$this->to_client($converted);
-			$response->call('egw.dataStoreUID','calendar::'.$converted['row_id'],$converted);
+			$this->update_client($event['id']);
 		}
 		if (in_array($button,array('cancel','save','delete','delete_exceptions','delete_keep_exceptions')) && $noerror)
 		{
@@ -2843,24 +2836,14 @@ class calendar_uiforms extends calendar_ui
 		$message = false;
 		$conflicts=$this->bo->update($event,false, true, false, true, $message);
 
+		$this->update_client($event['id'],$d);
 		$response = egw_json_response::get();
 		if(!is_array($conflicts) && $conflicts)
 		{
 			if(is_int($conflicts))
 			{
 				$event['id'] = $conflicts;
-			}
-			if(!$event['recur_type'] && !$old_event['recur_type'])
-			{
-				// Directly update stored data.  If event is still visible, it will
-				// be notified & update itself.
-				$this->to_client($event);
-					error_log(__METHOD__ . ':' . __LINE__ . ' updated calendar::'.$converted['id']);
-				$response->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
-			}
-			else
-			{
-				$response->call('egw.refresh', '','calendar',$event['id'],'edit');
+				$response->call('egw.refresh', '','calendar',$event['id'],'add');
 			}
 		}
 		else if ($conflicts)
@@ -2879,6 +2862,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$response->call('egw.message',  implode('<br />', $message));
 		}
+		if($event['id'] != $eventId ) $this->update_client($_eventId);
 		if ($status_reset_to_unknown)
 		{
 			foreach((array)$event['participants'] as $uid => $status)
@@ -2931,8 +2915,7 @@ class calendar_uiforms extends calendar_ui
 
 		// Directly update stored data.  If event is still visible, it will
 		// be notified & update itself.
-		$this->to_client($event);
-		egw_json_response::get()->call('egw.dataStoreUID','calendar::'.$event['id'].($date?':'.$date:''),$event);
+		$this->update_client($_eventId);
 	}
 
 	/**
@@ -2940,8 +2923,8 @@ class calendar_uiforms extends calendar_ui
 	 */
 	public function ajax_delete($eventId)
 	{
-		list($eventId, $date) = explode(':',$eventId);
-		$event=$this->bo->read($eventId);
+		list($id, $date) = explode(':',$eventId);
+		$event=$this->bo->read($id);
 		$response = egw_json_response::get();
 
 		if ($this->bo->delete($event['id'], (int)$date))
@@ -2958,7 +2941,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		else
 		{
-			$response->apply('egw.message', lang('Error'),'error');
+			$response->apply('egw.message', Array(lang('Error')),'error');
 		}
 	}
 

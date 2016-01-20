@@ -274,14 +274,22 @@ app.classes.calendar = AppJS.extend(
 				if(event && event.data && event.data.date || _type === 'delete')
 				{
 					// Intelligent refresh without reloading everything
+					var recurrences = Object.keys(egw.dataSearchUIDs(new RegExp('^calendar::'+_id+':')))
+					var ids = event && event.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
+						recurrences :
+						['calendar::'+_id];
+
 					if(_type === 'delete')
 					{
-						egw.dataStoreUID('calendar::'+_id, null);
+						for(var i in ids)
+						{
+							egw.dataStoreUID(ids[i], null);
+						}
 					}
 					// Updates are handled by events themselves through egw.data
 					else if (_type !== 'update')
 					{
-						this._update_events(this.state, ['calendar::'+_id]);
+						this._update_events(this.state, ids);
 					}
 					return false;
 				}

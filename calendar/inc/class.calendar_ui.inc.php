@@ -674,9 +674,61 @@ class calendar_ui
 	}
 
 	/**
+	 * Send updated event information to the client via ajax
+	 *
+	 * This allows to pass only changed information for a single (recurring) event
+	 * and update the UI without a refreshing any more than needed.  If adding,
+	 * a notification via egw_framework::refresh_opener() is still needed but
+	 * edits, updates and deletes will be automatic.
+	 * If the event is recurring, we send the next month's worth of recurrences
+	 * for lack of a better way to determine how much to send.
+	 *
+	 * @param int $event_id
+	 * @param egw_time $recurrence_date
+	 */
+	public function update_client($event_id, egw_time $recurrence_date = null)
+	{
+		// Directly update stored data.
+		// Make sure we have the whole event
+		$event = $this->bo->read($event_id, $recurrence_date);
+		$response = egw_json_response::get();
+
+		if(!$event)
+		{
+			// Sending null will trigger a removal
+			$response->call('egw.dataStoreUID','calendar::'.$event_id,null);
+			return false;
+		}
+
+		if(!$event['recur_type'] || $recurrence_date)
+		{
+			$this->to_client($event);
+			$response->call('egw.dataStoreUID','calendar::'.$event['row_id'],$event);
+		}
+		// If it's recurring, try to send the next month or so
+		else if($event['recur_type'] )
+		{
+			$this_month = new egw_time('next month');
+			$rrule = calendar_rrule::event2rrule($event, true);
+			$rrule->rewind();
+			do
+			{
+				$occurrence = $rrule->current();
+				$converted = $this->bo->read($event['id'], $occurrence);
+				$this->to_client($converted);
+				$response->call('egw.dataStoreUID','calendar::'.$converted['row_id'],$converted);
+				$rrule->next();
+			}
+			while ($rrule->valid() && $occurrence <= $this_month );
+		}
+	}
+	
+	/**
 	 * Prepare an array of event information for sending to the client
 	 *
-	 * This involves changing timestamps into strings with timezone
+	 * This involves changing timestamps into strings with timezone so javascript
+	 * does not change them, and making sure we have everything the client needs
+	 * for proper display.
 	 *
 	 * @param type $event
 	 */
