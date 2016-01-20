@@ -263,7 +263,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.droppable('option','greedy',false)
 		
 			// Set full day flag
-			.attr('data-full_day', event.whole_day_on_top)
+			.attr('data-full_day', event.whole_day)
 		
 			// Put everything we need for basic interaction here, so it's available immediately
 			.attr('data-id', event.id)
