@@ -225,7 +225,7 @@ var et2_details = et2_box.extend(
 		}
 		
 		// Align toggle button left/right
-		if (this.options.toggle_dir === "left") this.span.css({float:'left'});
+		if (this.options.toggle_align === "left") this.span.css({float:'left'});
 	},
 	
 	getDOMNode: function(_sender) {
