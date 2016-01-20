@@ -2135,6 +2135,9 @@ body:last-child .blueimp-gallery>.play-pause, .blueimp-gallery>.play-pause{
 .et2_details.et2_details_expanded .et2_details_toggle:after {
 	content: "\2212";
 }
+.et2_details .et2_details_title {
+	cursor: pointer;
+}
 .et2_details.et2_details_expanded .et2_details_title {
 	display: none;
 }

@@ -221,7 +221,9 @@ var et2_details = et2_box.extend(
 		//Set header title
 		if (this.options.title)
 		{
-			this.title.text(this.options.title);
+			this.title
+					.click (function(){self._toggle();})
+					.text(this.options.title);
 		}
 		
 		// Align toggle button left/right
