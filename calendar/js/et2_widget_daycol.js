@@ -664,6 +664,13 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 						// Better re-run this to clean up
 						day._out_of_view();
 						return false;
+					})
+					.on('wheel', function(e)
+					{
+						// Avoid bubbling & triggering change in date span
+						e.stopPropagation();
+						// IE?
+						e.cancelBubble;
 					});
 			}
 			var count = parseInt(indicator.attr('data-hidden_count')) + 1
