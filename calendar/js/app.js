@@ -3570,11 +3570,9 @@ jQuery.extend(app.classes.calendar,{
 			},
 			end_date: function(state) {
 				var d = app.calendar.View.end_date.call(this,state);
-				d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0,0,0,0);
-				var week_start = app.calendar.date.start_of_week(d);
-				if(week_start < d) week_start.setUTCHours(24*7);
-				week_start.setUTCSeconds(week_start.getUTCSeconds()-1);
-				return week_start;
+				d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 1,0,-d.getTimezoneOffset(),0);
+				d.setUTCSeconds(d.getUTCSeconds()-1);
+				return app.calendar.date.end_of_week(d);
 			},
 			granularity: function(state) {
 				// Always a list, not a grid
