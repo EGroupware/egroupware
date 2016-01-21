@@ -2629,6 +2629,14 @@ div.mailComposeHeaderSection > table {
     padding-top: 15px;
     font-size: 9.5;
   }
+  body #popupMainDiv #mail-display .et2_details {
+    width: 50%;
+    display: inline-block;
+  }
+  body #popupMainDiv #mail-display .et2_details.et2_details_expanded {
+    width: 100%;
+    display: block;
+  }
   body #popupMainDiv #mail-display span.et2_details_title {
     color: #26537c;
     font-size: 10pt;
