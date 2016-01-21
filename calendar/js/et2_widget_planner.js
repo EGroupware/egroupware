@@ -85,6 +85,10 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			.appendTo(this.gridHeader);
 
 		this.rows = $j(document.createElement("div"))
+			.addClass("calendar_plannerRows")
+			.appendTo(this.div);
+		this.grid = $j(document.createElement("div"))
+			.addClass("calendar_plannerGrid")
 			.appendTo(this.div);
 
 		this.vertical_bar = $j(document.createElement("div"))
@@ -296,21 +300,27 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 				var start_date = new Date(start.getUTCFullYear(), start.getUTCMonth(),start.getUTCDate());
 				var end_date = new Date(end.getUTCFullYear(), end.getUTCMonth(),end.getUTCDate());
 				var day_count = Math.round((end_date - start_date) /(1000*3600*24))+1;
-				if(day_count >= 28)
+				if(day_count >= 6)
 				{
 					this.headers.append(this._header_months(start, day_count));
 				}
-				if(day_count >= 5 && day_count < 120)
+				if(day_count < 120)
 				{
-					this.headers.append(this._header_weeks(start, day_count));
+					var weeks = this._header_weeks(start, day_count);
+					this.headers.append(weeks);
+					this.grid.append(weeks);
 				}
 				if(day_count < 60)
 				{
-					this.headers.append(this._header_days(start, day_count));
+					var days = this._header_days(start, day_count);
+					this.headers.append(days);
+					this.grid.append(days);
 				}
 				if(day_count <= 7)
 				{
-					this.headers.append(this._header_hours(start, day_count));
+					var hours = this._header_hours(start, day_count);
+					this.headers.append(hours);
+					this.grid.append(hours);
 				}
 			},
 			// Labels for the rows
@@ -542,22 +552,27 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 				var end_date = new Date(end.getUTCFullYear(), end.getUTCMonth(),end.getUTCDate());
 				var day_count = Math.round((end_date - start_date) /(1000*3600*24))+1;
 
-				if(day_count >= 28)
+				if(day_count >= 6)
 				{
 					this.headers.append(this._header_months(start, day_count));
 				}
-				
-				if(day_count >= 5 && day_count < 120)
+				if(day_count < 120)
 				{
-					this.headers.append(this._header_weeks(start, day_count));
+					var weeks = this._header_weeks(start, day_count);
+					this.headers.append(weeks);
+					this.grid.append(weeks);
 				}
 				if(day_count < 60)
 				{
-					this.headers.append(this._header_days(start, day_count));
+					var days = this._header_days(start, day_count);
+					this.headers.append(days);
+					this.grid.append(days);
 				}
 				if(day_count <= 7)
 				{
-					this.headers.append(this._header_hours(start, day_count));
+					var hours = this._header_hours(start, day_count);
+					this.headers.append(hours);
+					this.grid.append(hours);
 				}
 			},
 			row_labels: function() {
@@ -778,7 +793,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		}
 		
 		// Clear old rows
-		this.rows.empty();
+		this.rows.empty()
+			.append(this.grid);
+		this.grid.empty();
 
 		var grouper = this.groupers[isNaN(this.options.group_by) ? this.options.group_by : 'category'];
 		if(!grouper) return;
@@ -787,6 +804,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		this.headers.empty();
 		this.headerTitle.text(grouper.title.apply(this));
 		grouper.headers.apply(this);
+		this.grid.find('*').contents().filter(function(){
+			return this.nodeType === 3;
+		}).remove();
 		
 		// Get the rows / labels
 		var labels = grouper.row_labels.call(this);
@@ -825,9 +845,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		}
 
 		// Adjust header if there's a scrollbar
-		if(this.rows.children().first().length)
+		if(this.rows.children().last().length)
 		{
-			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().first().width()) + 'px');
+			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().last().width()) + 'px');
 		}
 		this.value = [];
 	},
@@ -921,15 +941,12 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			{
 				days_in_month = days - i;
 			}
-			if (days_in_month > 5)
-			{
-				var title = app.calendar.egw.lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)))
-			}
+			var title = app.calendar.egw.lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)))
 			if (days_in_month > 10)
 			{
 				title += ' '+t.getUTCFullYear();
 			}
-			else
+			else if (days_in_month < 5)
 			{
 				title = '&nbsp;';
 			}
@@ -990,7 +1007,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			state.setUTCMinutes(0);
 			state = state.toJSON();
 
-			if(days_in_week > 1)
+			if(days_in_week > 1 || days == 1)
 			{
 				content += '<div class="calendar_plannerWeekScale et2_clickable et2_link" data-date=\'' + state + '\' style="left: '+left+'%; width: '+week_width+'%;">'+title+"</div>";
 			}

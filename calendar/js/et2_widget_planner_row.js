@@ -272,7 +272,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 				rows[c][i].div.css('top', top+'%');
 				rows[c][i].div.css('height', (100/rows.length)+'%');
 				rows[c][i].div.css('left', left.toFixed(1)+'%');
-				rows[c][i].div.css('width', width.toFixed(1)+'%');
+				rows[c][i].div.outerWidth(width/100 *this.rows.width() +'px');
 			}
 		}
 		if(height)
