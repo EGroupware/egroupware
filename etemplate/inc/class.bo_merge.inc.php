@@ -206,7 +206,9 @@ abstract class bo_merge
 		if (!is_array($contact)) return array();
 
 		$replacements = array();
-		foreach(array_keys($this->contacts->contact_fields) as $name)
+		$fields = $this->contacts->contact_fields;
+		if ($ignore_acl) $fields = array_unique(array_merge($fields, array_keys(egw_customfields::get('addressbook', true))));
+		foreach($fields as $name)
 		{
 			$value = $contact[$name];
 			switch($name)
