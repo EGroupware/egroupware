@@ -158,7 +158,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		var that = this;
 		
-		var pref = egw.preference(this.dom_id,this.egw().getAppName());
+		var pref = (!egwIsMobile())? egw.preference(this.dom_id,this.egw().getAppName()): undefined;
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 			
 		//Set the default actions for the first time
@@ -455,6 +455,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	set_prefered: function(_action,_state)
 	{
 		this.preference[_action] = _state;
+		if (egwIsMobile()) return;
 		egw.set_preference(this.egw().getAppName(),this.dom_id,this.preference);
 	},
 
