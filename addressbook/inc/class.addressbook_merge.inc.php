@@ -46,17 +46,18 @@ class addressbook_merge extends bo_merge
 	 *
 	 * @param int $id id of entry
 	 * @param string &$content=null content to create some replacements only if they are use
+	 * @param boolean $ignore_acl =false true: no acl check
 	 * @return array|boolean
 	 */
-	protected function get_replacements($id,&$content=null)
+	protected function get_replacements($id,&$content=null,$ignore_acl=false)
 	{
-		if (!($replacements = $this->contact_replacements($id)))
+		if (!($replacements = $this->contact_replacements($id,'',$ignore_acl)))
 		{
 			return false;
 		}
 		if($content && strpos($content, '$$#') !== 0)
 		{
-			$this->cf_link_to_expand($this->contacts->read($id), $content, $replacements,'addressbook');
+			$this->cf_link_to_expand($this->contacts->read($id, $ignore_acl), $content, $replacements,'addressbook');
 		}
 
 		// Links
