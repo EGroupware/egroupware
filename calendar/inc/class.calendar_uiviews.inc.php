@@ -274,7 +274,7 @@ class calendar_uiviews extends calendar_ui
 		$actions = array(
 			'add' => array(
 				'caption' => 'Add',
-				'icon'	=> 'new',
+				'icon'	=> 'add',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Add',
@@ -378,6 +378,14 @@ class calendar_uiviews extends calendar_ui
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Previous',
+				'toolbarDefault' => true,
+			),
+			'today' => array(
+				'caption' => 'Today',
+				'icon'	=> 'today',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.calendar.toolbar_action',
+				'hint' => 'Today',
 				'toolbarDefault' => true,
 			),
 			'next' => array(

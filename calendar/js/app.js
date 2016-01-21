@@ -413,6 +413,13 @@ app.classes.calendar = AppJS.extend(
 			case 'weekend':
 				this.update_state({weekend: action.checked});
 				break;
+			case 'today':
+				var tempDate = new Date();
+				var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
+				var change = {date: today.toJSON()};
+				if(app.calendar.state.view == 'planner') { change.planner_days = Math.ceil((new Date(app.calendar.state.last) - new Date(app.calendar.state.first)) / (24*3600000));}
+				app.calendar.update_state(change);
+				break;
 			case 'next':
 			case 'previous':
 				var delta = action.id == 'previous' ? -1 : 1;
