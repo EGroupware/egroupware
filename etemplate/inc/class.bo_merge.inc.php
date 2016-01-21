@@ -206,9 +206,7 @@ abstract class bo_merge
 		if (!is_array($contact)) return array();
 
 		$replacements = array();
-		$fields = $this->contacts->contact_fields;
-		if ($ignore_acl) $fields = array_unique(array_merge($fields, array_keys(egw_customfields::get('addressbook', true))));
-		foreach($fields as $name)
+		foreach(array_keys($this->contacts->contact_fields) as $name)
 		{
 			$value = $contact[$name];
 			switch($name)
@@ -263,7 +261,8 @@ abstract class bo_merge
 			if ($name != 'photo') $replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
 		}
 		// set custom fields, should probably go to a general method all apps can use
-		foreach($this->contacts->customfields as $name => $field)
+		// need to load all cfs for $ignore_acl=true
+		foreach($ignore_acl ? egw_customfields::get('addressbook', true) : $this->contacts->customfields as $name => $field)
 		{
 			$name = '#'.$name;
 			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] =
