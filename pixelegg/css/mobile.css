@@ -7326,16 +7326,35 @@ span.egw_tutorial_title {
   .egw_fw_mobile_popup_container span.egw_fw_mobile_popup_close {
     width: 50px;
     height: 50px;
-    float: right;
+    float: left;
     background-image: url('../images/cancelled.png');
     /*url(../images/topmenu_items/mobile/menu_active.png);*/
     -webkit-filter: contrast(2);
     background-repeat: no-repeat;
     z-index: 1000;
     padding-right: 5px;
-    top: 0;
-    right: 2px;
+    top: 2px;
+    left: 10px;
+    background-position: 3px 7px;
     position: absolute;
+  }
+  .egw_fw_mobile_popup_container span.egw_fw_mobile_popup_close.loaded {
+    background-image: none;
+  }
+  .egw_fw_mobile_popup_container span.egw_fw_mobile_popup_close.loaded:after {
+    content: "\2190";
+    font-size: 24pt;
+    color: white;
+    padding-left: 5px;
+  }
+  .dialogHeadbar {
+    height: 50px;
+    box-shadow: 0px 1px 1px 1px silver;
+    position: fixed;
+    width: 100%;
+    background: #0c5da5;
+    top: 0;
+    right: 0;
   }
   #mail-display {
     min-height: initial !important;
@@ -7856,5 +7875,10 @@ span.egw_tutorial_title {
   }
   body .dtree .containerTableStyle {
     overflow: auto;
+  }
+  body .et2_details .et2_details_toggle:after {
+    width: 24px;
+    height: 24px;
+    font-size: 18pt;
   }
 }

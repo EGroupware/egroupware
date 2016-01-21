@@ -1946,6 +1946,13 @@ class mail_ui
 		);
 		$actions['tracker']['toolbarDefault'] = true;
 		$actions['forward']['toolbarDefault'] = true;
+		if (html::$ua_mobile) {
+			foreach($actions as $key => $action)
+			{
+				if (in_array($key,array('calendar', 'infolog' ,'tracker' ))) $actions[$key]['toolbarDefault'] = false;
+				$actions['save']['children']['save2disk']['toolbarDefault'] = $actions['print']['toolbarDefault'] = false;
+			}
+		}
 		$compose = $actions['composeasnew'];
 		unset($actions['composeasnew']);
 		$actions = array_reverse($actions,true);

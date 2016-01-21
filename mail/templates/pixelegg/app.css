@@ -2595,6 +2595,7 @@ div.mailComposeHeaderSection > table {
   }
   #mail-display.et2_container {
     min-height: initial;
+    padding: 0;
   }
   .mailDisplayHeaders,
   .mailDisplayAttachments > * {
@@ -2602,8 +2603,107 @@ div.mailComposeHeaderSection > table {
   }
   /*compose dialog*/
   body #popupMainDiv {
-    padding: 8px 8px 0 0;
+    padding: 1px 8px 0 8px;
     background: none;
+  }
+  body #popupMainDiv #mail-display .mail-d-h1 {
+    padding-bottom: 15px;
+    border-bottom: 1px solid silver;
+    font-size: 12pt;
+    padding-top: 10px;
+    font-weight: bold;
+  }
+  body #popupMainDiv #mail-display .mail-d-h2 {
+    padding-top: 5px;
+    font-size: 9pt;
+    color: grey;
+  }
+  body #popupMainDiv #mail-display .mail-d-h2 a,
+  body #popupMainDiv #mail-display .mail-d-h2 span,
+  body #popupMainDiv #mail-display .mail-d-h2 .et2_label {
+    color: grey;
+    font-size: 10pt;
+  }
+  body #popupMainDiv #mail-display .mail-d-h2 a#mail-display_FROM > * {
+    color: black;
+    padding-top: 15px;
+    font-size: 9.5;
+  }
+  body #popupMainDiv #mail-display span.et2_details_title {
+    color: #26537c;
+    font-size: 10pt;
+  }
+  body #popupMainDiv #mail-display div#mail-display_mailDisplayHeadersFrom > * {
+    color: black;
+    padding-top: 15px;
+  }
+  body #popupMainDiv #mail-display .mailDisplayAttachments {
+    position: initial;
+    padding: 0;
+    margin-top: 10px;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar,
+  body #popupMainDiv #mail-display #mail-display_toolbar {
+    padding: 1px 5px 5px 10px !important;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar button,
+  body #popupMainDiv #mail-display #mail-display_toolbar button {
+    width: 46px;
+    height: 46px;
+    background-size: 18px 18px;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar button[id="displayToolbar-delete"],
+  body #popupMainDiv #mail-display #mail-display_toolbar button[id="displayToolbar-delete"] {
+    margin-left: 0;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar div.et2_toolbar_actionlist,
+  body #popupMainDiv #mail-display #mail-display_toolbar div.et2_toolbar_actionlist {
+    margin-left: 50px;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox h.ui-state-hover,
+  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox h.ui-state-hover {
+    background: none;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader,
+  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader {
+    color: transparent;
+    border: none;
+    height: 46px;
+    width: 35px;
+    padding: 0 !important;
+    margin-right: 15px;
+    margin-top: -7px;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader:after,
+  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader:after {
+    font-size: 18pt;
+    content: "\205D";
+    font-weight: bold;
+    color: white;
+  }
+  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox span,
+  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox span {
+    display: none;
+  }
+  body #popupMainDiv #mail-display .mailDisplay {
+    position: initial;
+    margin-top: 20px;
+  }
+  body #popupMainDiv #mail-display #mail-display_mailDisplayBodySrc {
+    display: none;
+  }
+  body #popupMainDiv #mail-display #tempPrintDiv div:first-child {
+    height: auto !important;
+  }
+  body #popupMainDiv #mail-display #tempPrintDiv td,
+  body #popupMainDiv #mail-display #tempPrintDiv textarea {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+  body #popupMainDiv #mail-display #tempPrintDiv .td_display {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    color: black;
+    background-color: #FFFFFF;
   }
   body .dtree div.containerTableStyle {
     overflow: hidden;
