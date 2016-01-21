@@ -582,7 +582,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 
 			// Reset
-			event.title.css('top','');
+			event.title.css({'top':'','background-color':''});
 			event.body.css('padding-top','');
 			var hidden = isHidden.call(this,event.div);
 			if(!hidden)
@@ -593,7 +593,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			// Bottom hidden is fine
 			if(hidden.hidden === 'top' && !hidden.completely)
 			{
-				event.title.css('top',timegrid.scrolling.scrollTop() - event.div.position().top);
+				event.title.css({
+					'top': timegrid.scrolling.scrollTop() - event.div.position().top,
+					'background-color': 'transparent'
+				});
 				event.body.css('padding-top',timegrid.scrolling.scrollTop() - event.div.position().top);
 			}
 			// Too many in gridlist view, show indicator
