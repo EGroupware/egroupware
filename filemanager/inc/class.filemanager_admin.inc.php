@@ -166,35 +166,38 @@ class filemanager_admin extends filemanager_ui
 				{
 					$msg = lang('Permission denied')."\n\n".lang('You are NOT allowed to finally delete older versions and deleted files!');
 				}
-				// we need to be root to delete files independent of permissions and ownership
-				Vfs::$is_root = true;
-				if (!Vfs::file_exists($content['versionedpath']) || !Vfs::is_dir($content['versionedpath']))
-				{
-					$msg = lang('Directory "%1" NOT found!', $content['versionedpath']);
-				}
 				else
 				{
-					$deleted = $errors = 0;
-					Vfs::find($content['versionedpath'], array(
-						'show-deleted' => true,
-						'hidden' => true,
-						'path_preg' => '#/\.versions/#',
-					)+(!(int)$content['ctime'] ? array() : array(
-						'ctime' => ($content['ctime']<0?'-':'+').(int)$content['ctime'],
-					)), function($path) use (&$deleted, &$errors)
+					// we need to be root to delete files independent of permissions and ownership
+					Vfs::$is_root = true;
+					if (!Vfs::file_exists($content['versionedpath']) || !Vfs::is_dir($content['versionedpath']))
 					{
-						if (Vfs::unlink($path))
+						$msg = lang('Directory "%1" NOT found!', $content['versionedpath']);
+					}
+					else
+					{
+						$deleted = $errors = 0;
+						Vfs::find($content['versionedpath'], array(
+							'show-deleted' => true,
+							'hidden' => true,
+							'path_preg' => '#/\.versions/#',
+						)+(!(int)$content['ctime'] ? array() : array(
+							'ctime' => ($content['ctime']<0?'-':'+').(int)$content['ctime'],
+						)), function($path) use (&$deleted, &$errors)
 						{
-							++$deleted;
-						}
-						else
-						{
-							++$errors;
-						}
-					});
-					$msg = $errors ? lang('%1 files deleted with %2 errors!', $deleted, $errors) : lang('%1 files deleted.', $deleted);
+							if (Vfs::unlink($path))
+							{
+								++$deleted;
+							}
+							else
+							{
+								++$errors;
+							}
+						});
+						$msg = $errors ? lang('%1 files deleted with %2 errors!', $deleted, $errors) : lang('%1 files deleted.', $deleted);
+					}
+					Vfs::$is_root = false;
 				}
-				Vfs::$is_root = false;
 			}
 		}
 		if (true) $content = array(
