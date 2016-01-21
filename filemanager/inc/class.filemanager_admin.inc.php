@@ -174,8 +174,14 @@ class filemanager_admin extends filemanager_ui
 					{
 						$msg = lang('Directory "%1" NOT found!', $content['versionedpath']);
 					}
+					// shortcut to efficently delete every old version and deleted file
+					elseif ($content['versionedpath'] == '/' && $content['ctime'])
+					{
+						$msg = lang('%1 files deleted.', Versioning\StreamWrapper::purge_all_versioning());
+					}
 					else
 					{
+						@set_time_limit(0);
 						$deleted = $errors = 0;
 						Vfs::find($content['versionedpath'], array(
 							'show-deleted' => true,
