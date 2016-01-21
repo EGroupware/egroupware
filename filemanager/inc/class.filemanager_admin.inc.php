@@ -180,12 +180,17 @@ class filemanager_admin extends filemanager_ui
 						Vfs::find($content['versionedpath'], array(
 							'show-deleted' => true,
 							'hidden' => true,
-							'path_preg' => '#/\.versions/#',
+							'depth' => true,
+							'path_preg' => '#/\.(attic|versions)/#',
 						)+(!(int)$content['ctime'] ? array() : array(
 							'ctime' => ($content['ctime']<0?'-':'+').(int)$content['ctime'],
 						)), function($path) use (&$deleted, &$errors)
 						{
-							if (Vfs::unlink($path))
+							if (Vfs::is_dir($path))
+							{
+								Vfs::rmdir($path);
+							}
+							elseif (Vfs::unlink($path))
 							{
 								++$deleted;
 							}

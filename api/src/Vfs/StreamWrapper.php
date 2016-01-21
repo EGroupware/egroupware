@@ -245,8 +245,10 @@ class StreamWrapper implements StreamWrapperIface
 				{
 					self::load_wrapper($scheme);
 				}
-				$url = Vfs::concat($url,substr($parts['path'],strlen($mounted)));
-
+				if (($relative = substr($parts['path'],strlen($mounted))))
+				{
+					$url = Vfs::concat($url,$relative);
+				}
 				// if url contains url parameter, eg. from filesystem streamwrapper, we need to append relative path here too
 				$matches = null;
 				if ($fix_url_query && preg_match('|([?&]url=)([^&]+)|', $url, $matches))
