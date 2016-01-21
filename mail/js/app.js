@@ -1877,21 +1877,30 @@ app.classes.mail = AppJS.extend(
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
 				var messageToDisplay = '';
+				var actionlabel =_action.id;
 				switch (_action.id)
 				{
 					case "readall":
 						messageToDisplay = this.egw.lang("Do you really want to mark ALL messages as read in the current folder?")+" ";
 						break;
 					case "unlabel":
+						messageToDisplay = this.egw.lang("Do you really want to remove ALL labels from ALL messages in the current folder?")+" ";
+						break;
 					case "label1":
+						if (_action.id=="label1") actionlabel="important";
 					case "label2":
+						if (_action.id=="label2") actionlabel="job";
 					case "label3":
+						if (_action.id=="label3") actionlabel="personal";
 					case "label4":
+						if (_action.id=="label4") actionlabel="to do";
 					case "label5":
+						if (_action.id=="label5") actionlabel="later";
 					case "flagged":
 					case "read":
 					case "undelete":
-						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current view?",this.egw.lang(_action.id))+" ";
+						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current view?",this.egw.lang(actionlabel))+" ";
+						if (_action.id.substr(0,5)=='label') messageToDisplay = this.egw.lang("Do you really want to toggle label %1 for ALL messages in the current view?",this.egw.lang(actionlabel))+" ";
 						break;
 					default:
 						var type = null;

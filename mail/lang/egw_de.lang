@@ -55,11 +55,13 @@ but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterha
 by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
 canceled deletion due to userinteraction	mail	de	Löschen abgebrochen durch Benutzer
+change editor type	mail	de	Als HTML-Mail verfassen
 changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
-check to save as infolog on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Infolog erstellt wird.
-check to save as trackerentry on send	mail	de	Markieren Sie diese Option, damit beim Versenden ein Ticket erstell werden kann.
+check to save as calendar event on send	mail	de	Nach dem Versenden als Termin erstellen
+check to save as infolog on send	mail	de	Nach dem Versenden als Infolog erstellen	
+check to save as trackerentry on send	mail	de	Nach dem Versenden als Ticket erstellen
 choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
 compose	mail	de	Verfassen
@@ -115,9 +117,10 @@ do you really want to apply %1 to all messages in the current view?	mail	de	Woll
 do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirklich löschen?
 do you really want to delete this rule	mail	de	Wollen Sie diese Regel wirklich löschen?
 do you really want to mark all messages as read in the current folder?	mail	de	Wollen Sie wirklich alle eMails im aktuellen Ordner als gelesen markieren?
+do you really want to remove all labels from all messages in the current folder?	mail	de	Wollen Sie wirklich alle Schlagworte von allen Nachrichten in dieser Ansicht entfernen?
 do you really want to remove all rights from this account	mail	de	Wollen Sie wirklich alle Rechte von diesem Benutzer löschen
-do you really want to toggle flag %1 for all messages in current view?	mail	de	Wollen Sie wirklich den Wert für %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you really want to toggle flag %1 for all messages in the current view?	mail	de	Wollen Sie wirklich den Wert für %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
+do you really want to toggle label %1 for all messages in the current view?	mail	de	Wollen Sie wirklich den Wert für das Schlagwort %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	de	Möchten Sie vor dem Anhängen von einer oder mehreren (ausgewählten) E-Mails an eine neue E-Mail gefragt werden?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	de	Möchten Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden?
@@ -391,10 +394,10 @@ save into vfs	mail	de	In das virtuelle Dateisystem (VFS) speichern
 save message to disk	mail	de	Nachricht auf Ihrer Festplatte speichern
 save message to filemanager	mail	de	Im EGroupware Dateimanager speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
-save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf in das VFS als .eml Datei ab.
+save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
 save to disk	mail	de	Speichern
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
-save to vfs	mail	de	Im VFS speichern
+save to vfs	mail	de	Dateimanager
 save:	mail	de	Speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
@@ -492,7 +495,7 @@ unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
 unsubscribe folder	mail	de	Ordner abbestellen
 unsubscribe from folder %1	mail	de	Ordner %1 abbestellen
-upload files...	mail	de	Dateien anhängen
+upload files...	mail	de	Anhang
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
@@ -535,6 +538,6 @@ yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als Infolog ODER als Verfolgungsqueue Eintrag speichern, nicht beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	de	Sie müssen das Mailvelope Plugin für Chrome oder Firefox von %1 installieren.
-you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail in das VFS speichern können.
+you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail im EGroupware Dateimanager speichern können.
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails

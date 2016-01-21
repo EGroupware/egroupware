@@ -55,9 +55,11 @@ but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 can not open imap connection	mail	en	Can not open IMAP connection
 canceled deletion due to userinteraction	mail	en	canceled deletion due to userinteraction
+change editor type	mail	en	switch editor to HTML mode
 changed profile	mail	en	changed profile
 check message against next rule also	mail	en	Check message against next rule also
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	en	check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)
+check to save as calendar event on send	mail	en	check to save as event on send
 check to save as infolog on send	mail	en	check to save as infolog on send
 check to save as trackerentry on send	mail	en	check to save as trackerentry on send
 choose file	mail	en	Choose file
@@ -115,9 +117,10 @@ do you really want to apply %1 to all messages in the current view?	mail	en	Do y
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Folder %1 ?
 do you really want to delete this rule	mail	en	Do you really want to DELETE this Rule
 do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
+do you really want to remove all labels from all messages in the current folder?	mail	en	Do you really want to remove ALL labels from ALL messages in the current folder?
 do you really want to remove all rights from this account	mail	en	Do you really want to remove all rights from this account
-do you really want to toggle flag %1 for all messages in current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in current view?
 do you really want to toggle flag %1 for all messages in the current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in the current view?
+do you really want to toggle label %1 for all messages in the current view?	mail	en	Do you really want to toggle the label %1 for ALL messages in the current view?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	en	Do you want to prevent the editing/setup of filter rules (, even if SIEVE is enabled)?
