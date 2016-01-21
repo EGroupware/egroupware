@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  *
@@ -42,11 +42,8 @@ function user_pass_from_argv(&$account)
 
 /**
  * Give a usage message and exit
- *
- * @param string $action=null
- * @param int $ret=0 exit-code
  */
-function usage($action=null,$ret=0)
+function usage()
 {
 	$cmd = basename(__FILE__);
 	echo "Usage:\t$cmd ls [-r|--recursive|-l|--long|-i|--inode] URL [URL2 ...]\n";
@@ -60,7 +57,7 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd chmod [-r|--recursive] [ugoa]*[+-=][rwx]+,... URL [URL2 ...]\n";
 	echo "\t$cmd chown [-r|--recursive] user URL [URL2 ...]\n";
 	echo "\t$cmd chgrp [-r|--recursive] group URL [URL2 ...]\n";
-	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n) [-limit N[,n]][-order (name|size|...)][-sort (ASC|DESC)]\n";
+	echo "\t$cmd find URL [URL2 ...] [-type (d|f)][-depth][-mindepth n][-maxdepth n][-mime type[/sub]][-name pattern][-path pattern][-uid id][-user name][-nouser][-gid id][-group name][-nogroup][-size N][-cmin N][-ctime N][-mmin N][-mtime N] (N: +n --> >n, -n --> <n, n --> =n) [-limit N[,n]][-order (name|size|...)][-sort (ASC|DESC)][-hidden][-show-deleted][-(name|name-preg|path|path-preg) S]\n";
 	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
 	echo "\t$cmd umount [-a|--all (restores default mounts)] URL|path\n";
 	echo "\t$cmd eacl URL [rwx-] [user or group]\n";
@@ -75,21 +72,21 @@ function usage($action=null,$ret=0)
 	exit;
 }
 $long = $numeric = $recursive = $perms = $all = $inode = false;
-$argv = $_SERVER['argv'];
-$cmd = basename(array_shift($argv),'.php');
-if ($argv[0][0] != '-' && $argv[0][0] != '/' && strpos($argv[0],'://') === false)
+$args = $_SERVER['argv'];
+$cmd = basename(array_shift($args),'.php');
+if ($args[0][0] != '-' && $args[0][0] != '/' && strpos($args[0],'://') === false)
 {
-	$cmd = array_shift($argv);
+	$cmd = array_shift($args);
 }
 
-if (!$argv) $argv = array('-h');
+if (!$args) $args = array('-h');
 
-$args = $find_options = array();
-while(!is_null($option = array_shift($argv)))
+$argv = $find_options = array();
+while(!is_null($option = array_shift($args)))
 {
 	if ($option == '-' || $option[0] != '-')	// no option --> argument
 	{
-		$args[] = $option;
+		$argv[] = $option;
 		continue;
 	}
 
@@ -100,17 +97,18 @@ while(!is_null($option = array_shift($argv)))
 			{
 				if (!in_array($option,array('-type','-depth','-mindepth','-maxdepth','-name','-path',
 					'-uid','-user','-nouser','-gid','-group','-nogroup','-mime',
-					'-empty','-size','-cmin','-ctime','-mmin','-mtime','-limit','-order','-sort')))
+					'-empty','-size','-cmin','-ctime','-mmin','-mtime','-limit','-order','-sort',
+					'-hidden','-show-deleted','-name-preg','-path','-path-preg')))
 				{
 					usage();
 				}
-				if (in_array($option,array('-empty','-depth','-nouser','-nogroup')))
+				if (in_array($option,array('-empty','-depth','-nouser','-nogroup','-hidden','-show-deleted')))
 				{
 					$find_options[substr($option,1)] = true;
 				}
 				else
 				{
-					$find_options[substr($option,1)] = array_shift($argv);
+					$find_options[str_replace('-','_',substr($option,1))] = array_shift($args);
 				}
 				break;
 			}
@@ -119,7 +117,7 @@ while(!is_null($option = array_shift($argv)))
 			{
 				for($i = 1; $i < strlen($option); ++$i)
 				{
-					array_unshift($argv,'-'.$option[$i]);
+					array_unshift($args,'-'.$option[$i]);
 				}
 				break;
 			}
@@ -154,7 +152,7 @@ while(!is_null($option = array_shift($argv)))
 			break;
 
 		case '-d': case '--date':
-			$time = strtotime(array_shift($argv));
+			$time = strtotime(array_shift($args));
 			break;
 
 		case '-a': case '--all':
@@ -162,14 +160,14 @@ while(!is_null($option = array_shift($argv)))
 			break;
 
 		case '--user':
-			$user = array_shift($argv);
+			$user = array_shift($args);
 			break;
 		case '--password':
 		case '--passwd':
-			$passwd = array_shift($argv);
+			$passwd = array_shift($args);
 			break;
 		case '--domain':
-			$domain = array_shift($argv);
+			$domain = array_shift($args);
 			break;
 	}
 }
@@ -177,7 +175,6 @@ if ($user && $passwd)
 {
 	load_egw($user,$passwd,$domain ? $domain : 'default');
 }
-$argv = $args;
 $argc = count($argv);
 
 switch($cmd)
@@ -252,7 +249,7 @@ switch($cmd)
 		break;
 
 	case 'rename':
-		if (count($argv) != 2) usage(null,3);
+		if (count($argv) != 2) usage();
 		load_wrapper($argv[0]);
 		load_wrapper($argv[1]);
 		rename($argv[0],$argv[1]);
@@ -422,7 +419,7 @@ switch($cmd)
 							echo "\n$name:\n";
 						}
 						// separate evtl. query part, to re-add it after the file-name
-						$query = '';
+						unset($query);
 						list($url,$query) = explode('?',$url,2);
 						if ($query) $query = '?'.$query;
 
@@ -634,10 +631,10 @@ function do_eacl(array $argv)
  * Give the stats for one file
  *
  * @param string $url
- * @param boolean $long=false true=long listing with owner,group,size,perms, default false only filename
- * @param boolean $numeric=false true=give numeric uid&gid, else resolve the id to a name
- * @param boolean $full_path=false true=give full path instead of just filename
- * @param boolean $inode=false true=display inode (sqlfs id)
+ * @param boolean $long =false true=long listing with owner,group,size,perms, default false only filename
+ * @param boolean $numeric =false true=give numeric uid&gid, else resolve the id to a name
+ * @param boolean $full_path =false true=give full path instead of just filename
+ * @param boolean $inode =false true=display inode (sqlfs id)
  */
 function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 {
@@ -724,8 +721,9 @@ function do_cp($argv,$recursive=false,$perms=false)
 
 	if (count($argv) > 1 && $to_exists && !is_dir($to))
 	{
-		usage(null,4);
+		usage();
 	}
+	$anz_dirs = $anz_files = 0;
 	foreach($argv as $from)
 	{
 		if (is_dir($from) && (!file_exists($to) || is_dir($to)) && $recursive && class_exists('egw_vfs'))
@@ -755,11 +753,11 @@ function do_cp($argv,$recursive=false,$perms=false)
 	}
 }
 
-function _cp($from,$to,$verbose=false,$perms=false)
+function _cp($from,$to,$verbose=false)
 {
 	load_wrapper($from);
 
-	if (is_dir($to) || !file_exists($to) && is_dir($from) && $mkdir)
+	if (is_dir($to))
 	{
 		$path = egw_vfs::parse_url($from,PHP_URL_PATH);
 		if (is_dir($to))
@@ -831,7 +829,7 @@ function do_lntree($from,$to)
 
 	if (!file_exists($from) || $to[0] != '/' || file_exists($to) || !is_writable(dirname($to)))
 	{
-		usage(null,4);
+		usage();
 	}
 	egw_vfs::find($from, array(
 		'url' => true,

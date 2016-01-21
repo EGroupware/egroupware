@@ -10,6 +10,7 @@
 %1 failed, %2 succeded	filemanager	de	%1 fehlgeschlagen, %2 erfolgreich
 %1 files	common	de	%1 Dateien
 %1 files copied.	filemanager	de	%1 Dateien kopiert.
+%1 files deleted with %2 errors!	filemanager	de	%1 Dateien gelöscht mit %2 Fehlern!
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht.
 %1 files moved.	filemanager	de	%1 Dateien verschoben.
 %1 shares deleted.	filemanager	de	%1 Freigaben gelöscht.
@@ -24,6 +25,7 @@
 %d erros while moving, %d files successfully moved.	filemanager	de	%d Fehler beim Verschieben (%d Dateien erfolgreich verschoben)!
 %d files successfully copied.	filemanager	de	%d Dateien erfolgreich kopiert
 %d files successfully moved.	filemanager	de	%d Dateien erfolgreich verschoben
+0 means all, -n newer then n days	filemanager	de	0 für alle, -N für neuer als N Tage
 accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
@@ -50,6 +52,7 @@ clear search	filemanager	de	Suchfelder zurücksetzen
 clipboard is empty!	filemanager	de	Zwischenablage ist leer!
 comment	filemanager	de	Kommentar
 configuration changed.	filemanager	de	Konfiguration geändert.
+confirm final delete	filemanager	de	Endgültiges Löschen bestätigen
 copied	filemanager	de	kopiert
 copied %1 to %2	filemanager	de	%1 nach %2 kopiert
 copy	filemanager	de	Kopieren
@@ -74,12 +77,14 @@ cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
+delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelösche Dateien älter als %s Tage
 delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
 delete these shares?	filemanager	de	Diese Freigaben löschen?
 delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
 deleted %1	filemanager	de	%1 gelöscht
 directories sorted in	filemanager	de	Verzeichnisse einsortiert
 directory	filemanager	de	Verzeichnis
+directory "%1" not found!	filemanager	de	Verzeichnis "%1" NICHT gefunden!
 directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
 directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
 directory not found or no permission to access it!	filemanager	de	Verzeichnis wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
@@ -137,6 +142,8 @@ files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.
+finally delete	filemanager	de	Endgültig löschen
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Verzeichnis endgültig löschen.\n\nDas kann NICHT rückgängig gemacht werden!
 finally delete this version	filemanager	de	Diese Version endgültig löschen
 fix reported problems	filemanager	de	Gefundene Probleme beheben
 folder up	filemanager	de	Übergeordnetes Verzeichnis
@@ -171,6 +178,7 @@ modified	filemanager	de	verändert
 modified between	filemanager	de	verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterverzeichnisse und ihre Inhalte anwenden
 mount	filemanager	de	Mount
+mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplate anpassen zu können
 mountpoints	filemanager	de	Mountpoints
 move	filemanager	de	verschieben
 move into folder	filemanager	de	Verschieben in Ordner
@@ -264,10 +272,12 @@ upload files	filemanager	de	Dateien hochladen
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	de	Benutzen Sie dieses Symbol für Adressetiketten. Stellen Sie den Inhalt der wiederholt werden soll zwischen 2 Symbole.
 used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
+versioned directory	filemanager	de	Versioniertes Verzeichnis
 versioning	filemanager	de	Versionierung
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
+you are not allowed to finally delete older versions and deleted files!	filemanager	de	Sie haben nicht die Berechtigung ältere Versionen oder gelöschte Dateien endgültig zu löschen!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
 you can only grant additional rights, you can not take rights away!	filemanager	de	Sie können nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1

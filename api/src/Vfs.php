@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -423,13 +423,14 @@ class Vfs extends Vfs\StreamWrapper
 	 * Check if file is hidden: name starts with a '.' or is Thumbs.db
 	 *
 	 * @param string $path
+	 * @param boolean $allow_versions =false allow .versions or .attic
 	 * @return boolean
 	 */
-	public static function is_hidden($path)
+	public static function is_hidden($path, $allow_versions=false)
 	{
 		$file = self::basename($path);
 
-		return $file[0] == '.' || $file == 'Thumbs.db';
+		return $file[0] == '.' && (!$allow_versions || !in_array($file, array('.versions', '.attic'))) || $file == 'Thumbs.db';
 	}
 
 	/**
@@ -455,6 +456,7 @@ class Vfs extends Vfs\StreamWrapper
 	 * - limit => N,[n=0] return N entries from position n on, which defaults to 0
 	 * - follow => {true|false(default)} follow symlinks
 	 * - hidden => {true|false(default)} include hidden files (name starts with a '.' or is Thumbs.db)
+	 * - show-deleted => {true|false(default)} get also set by hidden, if not explicitly set otherwise (requires versioning!)
 	 * @param string|array/true $exec =null function to call with each found file/dir as first param and stat array as last param or
 	 * 	true to return file => stat pairs
 	 * @param array $exec_params =null further params for exec as array, path is always the first param and stat the last!
@@ -505,6 +507,15 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			$options['need_mime'] = true;	// we need to return the mime colum
 		}
+		// implicit show deleted files, if hidden is enabled (requires versioning!)
+		if (!empty($options['hidden']) && !isset($options['show-deleted']))
+		{
+			$options['show-deleted'] = true;
+		}
+
+		// make all find options available as stream context option "find", to allow plugins to use them
+		$context = stream_context_create(array(self::SCHEME => array('find' => $options)));
+
 		$url = $options['url'];
 
 		if (!is_array($base))
@@ -528,13 +539,15 @@ class Vfs extends Vfs\StreamWrapper
 			{
 				self::_check_add($options,$path,$result);
 			}
-			if ($is_dir && (!isset($options['maxdepth']) || ($options['maxdepth'] > 0 && $options['depth'] < $options['maxdepth'])) && ($dir = @opendir($path)))
+			if ($is_dir && (!isset($options['maxdepth']) || ($options['maxdepth'] > 0 &&
+				$options['depth'] < $options['maxdepth'])) &&
+				($dir = @opendir($path, $context)))
 			{
 				while(($fname = readdir($dir)) !== false)
 				{
 					if ($fname == '.' || $fname == '..') continue;	// ignore current and parent dir!
 
-					if (self::is_hidden($fname) && !$options['hidden']) continue;	// ignore hidden files
+					if (self::is_hidden($fname, $options['show-deleted']) && !$options['hidden']) continue;	// ignore hidden files
 
 					$file = self::concat($path, $fname);
 

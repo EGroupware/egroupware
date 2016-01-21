@@ -10,6 +10,7 @@
 %1 failed, %2 succeded	filemanager	en	%1 failed, %2 succeeded.
 %1 files	common	en	%1 files
 %1 files copied.	filemanager	en	%1 files copied.
+%1 files deleted with %2 errors!	filemanager	en	%1 files deleted with %2 errors!
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
 %1 shares deleted.	filemanager	en	%1 shares deleted.
@@ -24,6 +25,7 @@
 %d erros while moving, %d files successfully moved.	filemanager	en	%d errors while moving, %d files successfully moved.
 %d files successfully copied.	filemanager	en	%d files successfully copied.
 %d files successfully moved.	filemanager	en	%d files successfully moved.
+0 means all, -n newer then n days	filemanager	en	0 means all, -N newer then N days
 accessrights	filemanager	en	Access rights
 acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
@@ -50,6 +52,7 @@ clear search	filemanager	en	Clear search
 clipboard is empty!	filemanager	en	Clipboard is empty!
 comment	filemanager	en	Comment
 configuration changed.	filemanager	en	Configuration changed.
+confirm final delete	filemanager	en	Confirm final delete
 copied	filemanager	en	Copied
 copied %1 to %2	filemanager	en	Copied %1 to %2
 copy	filemanager	en	Copy
@@ -74,12 +77,14 @@ cut	filemanager	en	Cut
 cut to clipboard	filemanager	en	Cut to clipboard
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
+delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older then %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete these shares?	filemanager	en	Delete these shares?
 delete this file or directory	filemanager	en	Delete this file or directory
 deleted %1	filemanager	en	Deleted %1
 directories sorted in	filemanager	en	Directories sorted in
 directory	filemanager	en	Directory
+directory "%1" not found!	filemanager	en	Directory "%1" NOT found!
 directory %1 already exists	filemanager	en	Directory %1 already exists.
 directory %1 does not exist	filemanager	en	Directory %1 does not exist.
 directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
@@ -137,6 +142,8 @@ files from links	filemanager	en	Files from links
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
+finally delete	filemanager	en	Finally delete
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!
 finally delete this version	filemanager	en	Finally delete this version
 fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
@@ -171,6 +178,7 @@ modified	filemanager	en	Modified
 modified between	filemanager	en	Modified between
 modify all subdirectories and their content	filemanager	en	Modify all sub directories and their content
 mount	filemanager	en	Mount
+mount /etemplates to allow customizing of etemplates	filemanager	en	Mount /etemplates to allow customizing of eTemplates
 mountpoints	filemanager	en	Mountpoints
 move	filemanager	en	Move
 move into folder	filemanager	en	Move into folder
@@ -264,10 +272,12 @@ upload files	filemanager	en	Upload files
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
+versioned directory	filemanager	en	Versioned directory
 versioning	filemanager	en	Versioning
 vfs mounts and versioning	common	en	VFS mounts and versioning
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
 wrong username or password!	filemanager	en	Wrong username or password!
+you are not allowed to finally delete older versions and deleted files!	filemanager	en	You are NOT allowed to finally delete older versions and deleted files!
 you are not allowed to upload a script!	filemanager	en	You are NOT allowed to upload a script!
 you can only grant additional rights, you can not take rights away!	filemanager	en	You can only grant additional rights, you can NOT take rights away!
 you do not have access to %1	filemanager	en	You do not have access to %1
