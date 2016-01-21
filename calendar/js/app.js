@@ -3468,7 +3468,7 @@ jQuery.extend(app.classes.calendar,{
 	views: {
 		day: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				return app.calendar.egw.lang('Dayview') + ': ' + app.calendar.View.header.call(this, state);
+				return app.calendar.View.header.call(this, state);
 			},
 			etemplates: ['calendar.view','calendar.todo'],
 			start_date: function(state) {
@@ -3490,7 +3490,7 @@ jQuery.extend(app.classes.calendar,{
 		}),
 		day4: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				return app.calendar.egw.lang('Four days view') + ': ' + app.calendar.View.header.call(this, state);
+				return app.calendar.View.header.call(this, state);
 			},
 			end_date: function(state) {
 				var d = app.calendar.View.end_date.call(this,state);
@@ -3520,7 +3520,7 @@ jQuery.extend(app.classes.calendar,{
 					end_date = new Date(state.last);
 					end_date.setUTCDate(end_date.getUTCDate() - 2);
 				}
-				return app.calendar.egw.lang('Weekview') + ': ' + app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
+				return app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
 					app.calendar.date.week_number(state.first) + ': ' +
 					app.calendar.date.long_date(state.first, end_date)
 			},
@@ -3539,7 +3539,7 @@ jQuery.extend(app.classes.calendar,{
 		}),
 		weekN: app.classes.calendar.prototype.View.extend({
 			header: function(state) {
-				return  app.calendar.egw.lang('Multiple week view') + ': ' + app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
+				return  app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
 					app.calendar.date.week_number(state.first) + ' - ' +
 					app.calendar.date.week_number(state.last) + ': ' +
 					app.calendar.date.long_date(state.first, state.last)
@@ -3561,7 +3561,7 @@ jQuery.extend(app.classes.calendar,{
 			{
 				var formatDate = new Date(state.date);
 				formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
-				return app.calendar.egw.lang('Monthview') + ': ' +app.calendar.View._owner(state) + app.calendar.egw.lang(date('F',formatDate)) + ' ' + date('Y',formatDate);
+				return app.calendar.View._owner(state) + app.calendar.egw.lang(date('F',formatDate)) + ' ' + date('Y',formatDate);
 			},
 			start_date: function(state) {
 				var d = app.calendar.View.start_date.call(this,state);
@@ -3593,8 +3593,7 @@ jQuery.extend(app.classes.calendar,{
 
 				var endDate = new Date(state.last);
 				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
-				var title = state.sortby == 'user' ? 'planner by user' : state.sortby=='month' ? 'yearly planner' : 'planner by category';
-				return app.calendar.egw.lang(title) + ': ' + app.calendar.View._owner(state) + date(egw.preference('dateformat'),startDate) +
+				return app.calendar.View._owner(state) + date(egw.preference('dateformat'),startDate) +
 					(startDate == endDate ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
 			},
 			etemplates: ['calendar.planner'],
@@ -3753,7 +3752,7 @@ jQuery.extend(app.classes.calendar,{
 				var endDate = new Date(state.last);
 				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
 				var end_check = ''+endDate.getFullYear() + endDate.getMonth() + endDate.getDate();
-				return  app.calendar.egw.lang('Listview') + ': ' + app.calendar.View._owner(state) +
+				return app.calendar.View._owner(state) +
 					date(egw.preference('dateformat'),startDate) +
 					(start_check == end_check ? '' : ' - ' + date(egw.preference('dateformat'),endDate));
 			},

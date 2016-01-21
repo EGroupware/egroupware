@@ -391,7 +391,7 @@ class calendar_uilist extends calendar_ui
 		// it to match changing list filters
 		if($params['view'] && $params['view'] == 'listview')
 		{
-			egw_json_response::get()->call('app.calendar.set_app_header', lang('listview') . ': '.
+			egw_json_response::get()->call('app.calendar.set_app_header',
 				(count($search_params['users']) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
 				$label);
 		}
