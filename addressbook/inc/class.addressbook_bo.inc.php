@@ -1062,6 +1062,12 @@ class addressbook_bo extends addressbook_so
 	*/
 	function read($contact_id, $ignore_acl=false)
 	{
+		// get so_sql_cf to read private customfields too, if we ignore acl
+		if ($ignore_acl && is_a($this->somain, 'addressbook_sql'))
+		{
+			$cf_backup = (array)$this->somain->customfields;
+			$this->somain->customfields = egw_customfields::get('addressbook', true);
+		}
 		if (!($data = parent::read($contact_id)))
 		{
 			$data = null;	// not found
@@ -1082,6 +1088,10 @@ class addressbook_bo extends addressbook_so
 			if($data['adr_two_countrycode'] != null) {
 				$data['adr_two_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_two_countrycode'], true);
 			}
+		}
+		if (isset($cf_backup))
+		{
+			$this->somain->customfields = $cf_backup;
 		}
 		//error_log(__METHOD__.'('.array2string($contact_id).') returning '.array2string($data));
 		return $data;
