@@ -431,6 +431,30 @@ span.et2_date span {
 span.et2_date_duration input.et2_date_duration{
 	width: 5em;
 }
+/* customize calendar layout */
+.ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+	margin-left: 2px;
+	margin-right: 4.6em;
+	text-align: left;
+}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
+	left: initial;
+	right: 4em;
+}
+.ui-datepicker .ui-datepicker-buttonpane button[data-handler="today"] {
+    position: absolute;
+    top: -2px;
+    right: 24px;
+    width: 23px;
+    height: 23px;
+    overflow: hidden;
+    background-color: white;
+    margin-left: 3px;
+    text-indent: 20px;
+    background-size: contain;
+    background-image: url(images/today.png);
+}
+
 /**
  * Dialog widget
  * It uses jQueryUI, so this is just our little bits - icon on left
