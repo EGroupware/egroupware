@@ -96,7 +96,7 @@
 			padding-top:15px;
 		}
 		div.egw_fw_mobile_popup_appHeader {
-			display: block !important;
+			display: none !important;
 			height: 32px !important;
 			background-size	: 2px;
 			font-size: 150% !important;
@@ -841,12 +841,22 @@
 	//###################################
 	.dialogHeadbar {
 		height: 50px;
-		box-shadow: 0px 1px 1px 1px silver;
+		box-shadow: 0px 4px 5px 2px silver;
 		position: fixed;
 		width: 100%;
 		background: #0c5da5;
 		top:0;
 		right:0;
+		z-index:1;
+		.et2_button_with_image, .et2_button_text {
+			height: 46px;
+			margin: 1px;
+			margin-left: 3px;
+		}
+		td {
+			margin-left:70px;
+			display: block;
+		}
 	}
 	
 	//###################################
@@ -1431,6 +1441,7 @@
 				}
 			}
 			.egwGridView_outer {
+				width: 100%;
 				thead{
 					max-height: 1px;
 					display: none;
@@ -1468,6 +1479,61 @@
 					height: 24px;
 					font-size:	18pt;
 				}
+			}
+		}
+		input {
+			border:none;
+			border-bottom: 1px solid #e6e6e6;
+		}
+		#popupMainDiv {
+			* {
+				.mob-fontsize-n;
+				font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+			}
+			.et2_textbox, .et2_date, .et2_dropdown, .et2_link, .et2_label, input{
+				height:25px;
+			}
+			.et2_button_with_image, .et2_button_text {
+				height: 46px;
+				margin: 1px;
+				margin-left: 3px;
+			}
+			form {
+				margin-top: 50px;
+			}
+			.et2_details.et2_details_expanded {
+				background-color: transparent;
+				.et2_details_title {
+					display: inline-block;
+					background-color: #F0F0F0;
+					width:100%;
+					padding-top: 12px;
+				}
+				.et2_details_toggle {
+					
+				}
+			}
+			.et2_details {
+				position: relative;
+				background-color: #F0F0F0;
+				.et2_details_toggle {
+					position: absolute;
+					right: 2px;
+					top:4px;
+					margin: 0px;
+				}
+				.et2_details_title {
+					padding-top: 12px;
+					margin-top:0;
+				}
+			}
+		}
+		.rowHeader {
+			.mob-fontsize-l;
+		}
+		.et2_fullWidth {
+			input[type="radio"] {
+				width: auto;
 			}
 		}
 	}

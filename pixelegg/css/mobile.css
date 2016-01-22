@@ -6665,7 +6665,7 @@ span.egw_tutorial_title {
     padding-top: 15px;
   }
   body div.egw_fw_mobile_popup_appHeader {
-    display: block !important;
+    display: none !important;
     height: 32px !important;
     background-size: 2px;
     font-size: 150% !important;
@@ -7349,12 +7349,23 @@ span.egw_tutorial_title {
   }
   .dialogHeadbar {
     height: 50px;
-    box-shadow: 0px 1px 1px 1px silver;
+    box-shadow: 0px 4px 5px 2px silver;
     position: fixed;
     width: 100%;
     background: #0c5da5;
     top: 0;
     right: 0;
+    z-index: 1;
+  }
+  .dialogHeadbar .et2_button_with_image,
+  .dialogHeadbar .et2_button_text {
+    height: 46px;
+    margin: 1px;
+    margin-left: 3px;
+  }
+  .dialogHeadbar td {
+    margin-left: 70px;
+    display: block;
   }
   #mail-display {
     min-height: initial !important;
@@ -7852,6 +7863,9 @@ span.egw_tutorial_title {
     background-color: #ffc200;
     border: none;
   }
+  body .et2_nextmatch .egwGridView_outer {
+    width: 100%;
+  }
   body .et2_nextmatch .egwGridView_outer thead {
     max-height: 1px;
     display: none;
@@ -7880,5 +7894,59 @@ span.egw_tutorial_title {
     width: 24px;
     height: 24px;
     font-size: 18pt;
+  }
+  body input {
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  body #popupMainDiv * {
+    font-size: 10pt;
+    font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+  }
+  body #popupMainDiv .et2_textbox,
+  body #popupMainDiv .et2_date,
+  body #popupMainDiv .et2_dropdown,
+  body #popupMainDiv .et2_link,
+  body #popupMainDiv .et2_label,
+  body #popupMainDiv input {
+    height: 25px;
+  }
+  body #popupMainDiv .et2_button_with_image,
+  body #popupMainDiv .et2_button_text {
+    height: 46px;
+    margin: 1px;
+    margin-left: 3px;
+  }
+  body #popupMainDiv form {
+    margin-top: 50px;
+  }
+  body #popupMainDiv .et2_details.et2_details_expanded {
+    background-color: transparent;
+  }
+  body #popupMainDiv .et2_details.et2_details_expanded .et2_details_title {
+    display: inline-block;
+    background-color: #F0F0F0;
+    width: 100%;
+    padding-top: 12px;
+  }
+  body #popupMainDiv .et2_details {
+    position: relative;
+    background-color: #F0F0F0;
+  }
+  body #popupMainDiv .et2_details .et2_details_toggle {
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    margin: 0px;
+  }
+  body #popupMainDiv .et2_details .et2_details_title {
+    padding-top: 12px;
+    margin-top: 0;
+  }
+  body .rowHeader {
+    font-size: 12pt;
+  }
+  body .et2_fullWidth input[type="radio"] {
+    width: auto;
   }
 }

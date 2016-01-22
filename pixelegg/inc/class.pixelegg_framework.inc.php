@@ -166,7 +166,7 @@ body button.plus_button,
 body div.et2_nextmatch .search .nm_action_header,
 body div.et2_nextmatch .search .nm_toggle_header,
 body div.et2_nextmatch .search .nm_favorites_button ,
-body div.dialogHeadbar{
+body .dialogHeadbar{
 	background-color: $color;
 }";
 		}
