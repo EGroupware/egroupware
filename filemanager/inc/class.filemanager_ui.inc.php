@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -737,7 +737,8 @@ class filemanager_ui
 			// now we use find to loop through all files and dirs: (selected only contains dirs now)
 			// - depth=true to get first the files and then the dir containing it
 			// - hidden=true to also return hidden files (eg. Thumbs.db), as we cant delete non-empty dirs
-			foreach(egw_vfs::find($selected,array('depth'=>true,'hidden'=>true)) as $path)
+			// - show-deleted=false to not (finally) deleted versioned files
+			foreach(egw_vfs::find($selected,array('depth'=>true,'hidden'=>true,'show-deleted'=>false)) as $path)
 			{
 				if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
 				{
