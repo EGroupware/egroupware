@@ -3101,36 +3101,15 @@ app.classes.calendar = AppJS.extend(
 		{
 			var datepicker = date_widget.input_date.datepicker("option", {
 				showButtonPanel:	false,
-				onChangeMonthYear:	function(year, month, inst)
-				{
-					// Update month button label
-					var month_button = date_widget.getRoot().getWidgetById('header_month');
-					if(month_button)
-					{
-						var temp_date = new Date(year, month-1, 1,0,0,0);
-						//temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
-						month_button.set_label(egw.lang(date('F',temp_date)));
-
-						// Store current _displayed_ date in date button for clicking
-						temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
-						month_button.btn.attr('data-date', temp_date.toJSON());
-					}
-				},
 				// Mark holidays
 				beforeShowDay: function (date)
 				{
-					var tempDate = new Date();
-					var today = new Date(tempDate.getFullYear(), tempDate.getUTCMonth(), tempDate.getUTCDate());
 					var holidays = et2_calendar_view.get_holidays({day_class_holiday: function() {}}, date.getFullYear());
 					var day_holidays = holidays[''+date.getFullYear() +
 						sprintf("%02d",date.getMonth()+1) +
 						sprintf("%02d",date.getDate())];
 					var css_class = '';
 					var tooltip = '';
-					if(date.getTime() == today.getTime())
-					{
-						css_class += 'calendar_calToday ';
-					}
 					if(typeof day_holidays !== 'undefined' && day_holidays.length)
 					{
 						for(var i = 0; i < day_holidays.length; i++)
@@ -3190,24 +3169,10 @@ app.classes.calendar = AppJS.extend(
 						app.calendar.update_state({date: date});
 					}
 				});
-				
-			// Set month button label
-			var month_button = date_widget.getRoot().getWidgetById('header_month');
-			if(month_button)
-			{
-				var temp_date = new Date(date_widget.get_value());
-				temp_date.setUTCDate(1);
-				temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
-				month_button.set_label(egw.lang(date('F',temp_date)));
-
-				// Store current _displayed_ date in date button for clicking
-				temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
-				month_button.btn.attr('data-date', temp_date.toJSON());
-			}
-			
+							
 			// Dynamic resize to fill sidebox
 			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
-			var font_ratio = parseFloat(month_button.btn.css('font-size')) / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
+			var font_ratio = parseFloat($j(this.sidebox_et2.getDOMNode()).css('font-size')) / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
 
 			$j(window).on('resize.calendar'+date.dom_id, function() {
 				var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);

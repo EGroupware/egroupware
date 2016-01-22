@@ -1302,6 +1302,26 @@ div#calendar-container div.calendar table tbody tr.daysrow:hover {
 div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: #ffc200;
 }
+/* Sidebox calendar */
+#calendar-sidebox_date .ui-widget-header {
+  background: transparent;
+}
+#calendar-sidebox_date .ui-widget-content,
+#calendar-sidebox_date .ui-state-default,
+#calendar-sidebox_date #calendar-sidebox_date .ui-state-hover {
+  border: none;
+  padding: 2px;
+  text-align: center;
+}
+#calendar-sidebox_date .ui-datepicker td {
+  padding: 0px;
+}
+#calendar-sidebox_date .ui-datepicker-today {
+  background-color: #ffc200;
+}
+#calendar-sidebox_date .ui-widget-content .ui-state-hover {
+  background-color: rgba(103, 159, 210, 0.2);
+}
 #calendar_cat_id,
 #calendar_filter,
 #uical_select_owner,

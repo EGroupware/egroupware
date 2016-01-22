@@ -1337,7 +1337,27 @@ div#calendar-container {
 
 }
 
+/* Sidebox calendar */
+#calendar-sidebox_date {
 
+	.ui-widget-header {
+		background: transparent;
+	}
+	.ui-widget-content, .ui-state-default, #calendar-sidebox_date .ui-state-hover {
+		border: none;
+		padding: 2px;
+		text-align: center;
+	}
+	.ui-datepicker td {
+		padding: 0px
+	}
+	.ui-datepicker-today {
+		background-color: @egw_color_1;
+	}
+	.ui-widget-content .ui-state-hover {
+		background-color: @color_hover_row;
+	}
+}
 // Select Fields in Sidemenu
 #calendar_cat_id,
 #calendar_filter,

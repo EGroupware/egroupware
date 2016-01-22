@@ -426,6 +426,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 		// Set today class - note +1 when dealing with today, as months in JS are 0-11
 		var today = new Date();
+		today.setUTCMinutes(today.getUTCMinutes() - today.getTimezoneOffset());
 		
 		this.title.toggleClass("calendar_calToday", this.options.date === ''+today.getUTCFullYear()+
 			sprintf("%02d",today.getUTCMonth()+1)+
