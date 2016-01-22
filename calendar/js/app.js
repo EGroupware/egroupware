@@ -3177,7 +3177,19 @@ app.classes.calendar = AppJS.extend(
 			$j(window).on('resize.calendar'+date.dom_id, function() {
 				var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
 				percent *= font_ratio;
-				$j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size',(percent*100)+'%');
+				$j('#calendar-sidebox_date .ui-datepicker-inline,#calendar-sidebox_header_today')
+					.css('font-size',(percent*100)+'%');
+				// Position today
+				var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a');
+				var left = Infinity;
+				var total = 0;
+				buttons.each(function()	{
+					total += $j(this).position().left;
+				});
+				// Why doesn't this work properly?
+				var today = $j('#calendar-sidebox_header_today')
+					.position({my: 'center left', at: 'center right',of: buttons});
+				today.css('left',(total/buttons.length)/*+(today.width()/2)*/)
 			}).trigger('resize');
 			
 		}

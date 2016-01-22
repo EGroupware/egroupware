@@ -1322,6 +1322,9 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar-sidebox_date .ui-widget-content .ui-state-hover {
   background-color: rgba(103, 159, 210, 0.2);
 }
+#calendar-sidebox_header_today {
+  background-image: url(images/today.png);
+}
 #calendar_cat_id,
 #calendar_filter,
 #uical_select_owner,

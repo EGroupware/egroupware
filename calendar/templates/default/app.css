@@ -36,6 +36,19 @@
 #calendar-sidebox_date_header > button {
 	width: 45%;
 }
+#calendar-sidebox_header_today {
+	position: absolute;
+	width: 2.4em;
+	height: 1.8em;
+	z-index: 1;
+	text-indent: 3em;
+	overflow: hidden;
+	border: none;
+    background-size: contain;
+	background-color: transparent;
+    background-image: url(images/today.png);
+	background-repeat: no-repeat;
+}
 #calendar-sidebox_weekend {
 	/* Special css styling goes here */
 }
