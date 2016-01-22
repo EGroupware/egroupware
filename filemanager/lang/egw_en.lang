@@ -5,14 +5,15 @@
 %1 elements linked.	filemanager	en	%1 elements linked.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	en	%1 errors copying, %2 directories and %3 files copied!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	en	%1 errors deleting, %2 directories and %3 files deleted!
+%1 errors deleting!	filemanager	en	%1 errors deleting!
 %1 errors linking (%2)!	filemanager	en	%1 errors linking (%2)!
 %1 errors moving (%2 files moved)!	filemanager	en	%1 errors moving. %2 files moved!
 %1 failed, %2 succeded	filemanager	en	%1 failed, %2 succeeded.
 %1 files	common	en	%1 files
 %1 files copied.	filemanager	en	%1 files copied.
-%1 files deleted with %2 errors!	filemanager	en	%1 files deleted with %2 errors!
 %1 files deleted.	filemanager	en	%1 files deleted.
 %1 files moved.	filemanager	en	%1 files moved.
+%1 files or directories deleted in %2 seconds.	filemanager	en	%1 files or directories deleted in %2 seconds.
 %1 shares deleted.	filemanager	en	%1 shares deleted.
 %1 starts with '%2'	filemanager	en	%1 starts with '%2'
 %1 successful unmounted.	filemanager	en	%1 successful unmounted.

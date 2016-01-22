@@ -165,6 +165,7 @@ class filemanager_admin extends filemanager_ui
 				if (!Versioning\StreamWrapper::check_delete_version(null))
 				{
 					$msg = lang('Permission denied')."\n\n".lang('You are NOT allowed to finally delete older versions and deleted files!');
+					$msg_type = 'error';
 				}
 				else
 				{
@@ -173,39 +174,45 @@ class filemanager_admin extends filemanager_ui
 					if (!Vfs::file_exists($content['versionedpath']) || !Vfs::is_dir($content['versionedpath']))
 					{
 						$msg = lang('Directory "%1" NOT found!', $content['versionedpath']);
-					}
-					// shortcut to efficently delete every old version and deleted file
-					elseif ($content['versionedpath'] == '/' && !$content['ctime'])
-					{
-						$msg = lang('%1 files deleted.', Versioning\StreamWrapper::purge_all_versioning());
+						$msg_type = 'error';
 					}
 					else
 					{
 						@set_time_limit(0);
+						$starttime = microtime(true);
 						$deleted = $errors = 0;
-						Vfs::find($content['versionedpath'], array(
-							'show-deleted' => true,
-							'hidden' => true,
-							'depth' => true,
-							'path_preg' => '#/\.(attic|versions)/#',
-						)+(!(int)$content['ctime'] ? array() : array(
-							'ctime' => ($content['ctime']<0?'-':'+').(int)$content['ctime'],
-						)), function($path) use (&$deleted, &$errors)
+
+						// shortcut to efficently delete every old version and deleted file
+						if ($content['versionedpath'] == '/' && !$content['ctime'])
 						{
-							if (Vfs::is_dir($path))
+							$deleted = Versioning\StreamWrapper::purge_all_versioning();
+						}
+						else
+						{
+							Vfs::find($content['versionedpath'], array(
+								'show-deleted' => true,
+								'hidden' => true,
+								'depth' => true,
+								'path_preg' => '#/\.(attic|versions)/#',
+							)+(!(int)$content['ctime'] ? array() : array(
+								'ctime' => ($content['ctime']<0?'-':'+').(int)$content['ctime'],
+							)), function($path) use (&$deleted, &$errors)
 							{
-								Vfs::rmdir($path);
-							}
-							elseif (Vfs::unlink($path))
-							{
-								++$deleted;
-							}
-							else
-							{
-								++$errors;
-							}
-						});
-						$msg = $errors ? lang('%1 files deleted with %2 errors!', $deleted, $errors) : lang('%1 files deleted.', $deleted);
+								if (($is_dir = Vfs::is_dir($path)) && Vfs::rmdir($path) ||
+									!$is_dir && Vfs::unlink($path))
+								{
+									++$deleted;
+								}
+								else
+								{
+									++$errors;
+								}
+							});
+						}
+						$time = number_format(microtime(true)-$starttime, 1);
+						$msg = ($errors ? lang('%1 errors deleting!', $errors)."\n\n" : '').
+							lang('%1 files or directories deleted in %2 seconds.', $deleted, $time);
+						$msg_type = $errors ? 'error' : 'info';
 					}
 					Vfs::$is_root = false;
 				}
