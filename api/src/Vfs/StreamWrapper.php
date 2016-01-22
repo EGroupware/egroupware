@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -245,8 +245,10 @@ class StreamWrapper implements StreamWrapperIface
 				{
 					self::load_wrapper($scheme);
 				}
-				$url = Vfs::concat($url,substr($parts['path'],strlen($mounted)));
-
+				if (($relative = substr($parts['path'],strlen($mounted))))
+				{
+					$url = Vfs::concat($url,$relative);
+				}
 				// if url contains url parameter, eg. from filesystem streamwrapper, we need to append relative path here too
 				$matches = null;
 				if ($fix_url_query && preg_match('|([?&]url=)([^&]+)|', $url, $matches))
@@ -313,7 +315,7 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	function stream_open ( $path, $mode, $options, &$opened_path )
 	{
-		unset($opened_path);	// not used but required by function signature
+		unset($options,$opened_path);	// not used but required by function signature
 		$this->opened_stream = null;
 
 		$stat = null;
@@ -325,7 +327,8 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
-		if (!($this->opened_stream = fopen($url,$mode,$options)))
+		if (!($this->opened_stream = $this->context ?
+			fopen($url, $mode, false, $this->context) : fopen($url, $mode, false)))
 		{
 			return false;
 		}
@@ -869,7 +872,8 @@ class StreamWrapper implements StreamWrapperIface
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) resolve_url_symlinks() failed!");
 			return false;
 		}
-		if (!($this->opened_dir = opendir($this->opened_dir_url)))
+		if (!($this->opened_dir = $this->context ?
+			opendir($this->opened_dir_url, $this->context) : opendir($this->opened_dir_url)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
