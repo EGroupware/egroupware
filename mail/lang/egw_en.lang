@@ -204,7 +204,7 @@ forward inline	mail	en	forward inline
 forward messages to:	mail	en	Forward messages to:
 forward messages:	mail	en	Forward messages:
 forward to	mail	en	forward to
-forward to address:	mail	en	Forward to address:
+forward to address (*):	mail	en	Forward to address (*):
 forwards	mail	en	Forwards
 from	mail	en	From
 from(a->z)	mail	en	from(A->Z)
@@ -273,6 +273,7 @@ mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (click ok)?\nIf not, please try to empty your trashfolder before continuing. (click cancel)
 mark all as read	mail	en	mark all as read
+mark all messages in folder as read	mail	en	mark all messages in folder as read
 mark as deleted	mail	en	mark as deleted
 match:	mail	en	Match:
 matches	mail	en	matches
@@ -357,6 +358,7 @@ refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder INBOX
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders
 reject with	mail	en	reject with
+reloaded account %1	mail	en	Reloaded Account %1
 reloaded folder %1	mail	en	Reloaded Folder %1
 remove all	mail	en	Remove All
 remove immediately	mail	en	remove immediately

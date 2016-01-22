@@ -307,7 +307,7 @@ app.classes.mail = AppJS.extend(
 				}
 				break;
 			case 'mail.folder_management':
-				this.egw.message('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.','info',true);
+				this.egw.message(this.egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'),'info',true);
 		}
 	},
 
@@ -1434,7 +1434,12 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-				this.egw.message(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
+				if (typeof _status[i].parent !== 'undefined')
+				{
+					this.egw.message(this.egw.lang("Reloaded Folder %1",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
+				} else {
+					this.egw.message(this.egw.lang("Reloaded Account %1",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
+				}
 			}
 			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
 			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
