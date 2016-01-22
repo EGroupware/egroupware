@@ -2140,3 +2140,24 @@ body:last-child .blueimp-gallery>.play-pause, .blueimp-gallery>.play-pause{
 .et2_details.et2_details_expanded .et2_details_title {
 	display: none;
 }
+td.avatar {
+	border:none;
+}
+.avatar {
+	border: 1px solid silver;
+	border-radius: 50%;
+	overflow: hidden;
+	width: 50px;
+	height: 50px;
+	background-image: url(/egroupware/addressbook/templates/pixelegg/images/photo.png);
+	background-size: 35px 35px;
+	background-repeat: no-repeat;
+	background-position: center;
+	
+	bottom:25%;
+	top:25%;
+}
+.avatar img{
+	padding-top:0 !important;
+	width:50px;
+}

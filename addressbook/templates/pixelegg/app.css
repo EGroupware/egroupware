@@ -493,22 +493,22 @@ input.et2_radiobox {
 }
 /* tablets and smartphones  */
 @media only screen and (max-device-width: 1024px) {
-  #addressbook-index table.egwGridView_outer tbody .addressbookCol3 div.avatar {
-    border: 1px solid silver;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 50px;
-    height: 50px;
-    background-image: url(/egroupware/addressbook/templates/pixelegg/images/photo.png);
-    background-size: 35px 35px;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: absolute;
-    bottom: 25%;
-    top: 25%;
+  #addressbook-edit div.et2_hbox.avatar {
+    width: 70px;
+    display: block;
+    height: 70px;
+    margin: auto;
   }
-  #addressbook-index table.egwGridView_outer tbody .addressbookCol3 div.avatar img {
-    padding-top: 0;
+  #addressbook-edit div.et2_hbox.avatar img {
+    width: 70px;
+  }
+  #addressbook-edit #addressbook-edit_n_fn {
+    border: none;
+    text-align: center;
+    font-size: 12pt;
+  }
+  #addressbook-index table.egwGridView_outer tbody .addressbookCol3 div.avatar {
+    position: absolute;
   }
   #addressbook-index table.egwGridView_outer tbody span[id^='addressbook-index_'][id$='line1]'] {
     font-size: 9pt;
