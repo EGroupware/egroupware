@@ -284,7 +284,7 @@ app.classes.mail = AppJS.extend(
 				}
 				break;
 			case 'mail.folder_management':
-				this.egw.message('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.','info',true);
+				this.egw.message(this.egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'),'info',true);
 		}
 	},
 
@@ -1407,7 +1407,12 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-				this.egw.message(this.egw.lang("Reloaded Folder %1 ",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
+				if (typeof _status[i].parent !== 'undefined')
+				{
+					this.egw.message(this.egw.lang("Reloaded Folder %1",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
+				} else {
+					this.egw.message(this.egw.lang("Reloaded Account %1",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
+				}
 			}
 			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
 			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
@@ -1850,21 +1855,30 @@ app.classes.mail = AppJS.extend(
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
 				var messageToDisplay = '';
+				var actionlabel =_action.id;
 				switch (_action.id)
 				{
 					case "readall":
 						messageToDisplay = this.egw.lang("Do you really want to mark ALL messages as read in the current folder?")+" ";
 						break;
 					case "unlabel":
+						messageToDisplay = this.egw.lang("Do you really want to remove ALL labels from ALL messages in the current folder?")+" ";
+						break;
 					case "label1":
+						if (_action.id=="label1") actionlabel="important";
 					case "label2":
+						if (_action.id=="label2") actionlabel="job";
 					case "label3":
+						if (_action.id=="label3") actionlabel="personal";
 					case "label4":
+						if (_action.id=="label4") actionlabel="to do";
 					case "label5":
+						if (_action.id=="label5") actionlabel="later";
 					case "flagged":
 					case "read":
 					case "undelete":
-						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current view?",this.egw.lang(_action.id))+" ";
+						messageToDisplay = this.egw.lang("Do you really want to toggle flag %1 for ALL messages in the current view?",this.egw.lang(actionlabel))+" ";
+						if (_action.id.substr(0,5)=='label') messageToDisplay = this.egw.lang("Do you really want to toggle label %1 for ALL messages in the current view?",this.egw.lang(actionlabel))+" ";
 						break;
 					default:
 						var type = null;
