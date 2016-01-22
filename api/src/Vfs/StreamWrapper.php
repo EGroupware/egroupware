@@ -327,7 +327,8 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
-		if (!($this->opened_stream = fopen($url,$mode,false,$this->context)))
+		if (!($this->opened_stream = $this->context ?
+			fopen($url, $mode, false, $this->context) : fopen($url, $mode, false)))
 		{
 			return false;
 		}
@@ -871,7 +872,8 @@ class StreamWrapper implements StreamWrapperIface
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) resolve_url_symlinks() failed!");
 			return false;
 		}
-		if (!($this->opened_dir = opendir($this->opened_dir_url, $this->context)))
+		if (!($this->opened_dir = $this->context ?
+			opendir($this->opened_dir_url, $this->context) : opendir($this->opened_dir_url)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
