@@ -1690,15 +1690,12 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				if(!widget.disabled) widget.set_granularity(0);
 			},this, et2_calendar_timegrid);
 		}
-		if(this.options.height+"px" !== this.div.css('height'))
-		{
-			this.div.css('height', this.options.height);
+		this.div.css('height', this.options.height);
 			
-			// Re-do time grid
-			if(!this.update_timer) this._drawTimes();
-
-			// Just re-did everything, no need to do more
-			return;
+		// Re-do time grid
+		if(!this.update_timer)
+		{
+			this._drawTimes();
 		}
 
 		// Try to resize width, though animations cause problems

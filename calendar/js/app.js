@@ -543,6 +543,7 @@ app.classes.calendar = AppJS.extend(
 								parent = widget._parent;
 								var idx = sortedArr.indexOf(widget.options.owner);
 								children.splice(idx,0,widget);
+								widget.resize();
 							},this,et2_calendar_timegrid);
 						}
 						parent._children.sort(function(a,b) {
@@ -1999,6 +2000,9 @@ app.classes.calendar = AppJS.extend(
 				// We'll modify this one, so it needs to be a new object
 				var date = new Date(state.state.first);
 
+				// Hide all but the first day header
+				$j(grid.getDOMNode()).toggleClass('hideDayColHeader',state.state.view == 'week');
+				
 				// Determine the different end date & varying values
 				switch(state.state.view)
 				{
