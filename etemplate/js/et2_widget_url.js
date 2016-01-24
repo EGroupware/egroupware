@@ -154,6 +154,8 @@ var et2_url = et2_textbox.extend(
 				value = value.replace('&#9829;','').replace('(0)','');
 				value = value.replace(/[abc]/gi,2).replace(/[def]/gi,3).replace(/[ghi]/gi,4).replace(/[jkl]/gi,5).replace(/[mno]/gi,6);
 				value = value.replace(/[pqrs]/gi,7).replace(/[tuv]/gi,8).replace(/[wxyz]/gi,9);
+				// remove everything but numbers and plus, as telephon software might not like it
+				value = value.replace(/[^0-9+]/g, '');
 
 				// movile Webkit (iPhone, Android) have precedence over server configuration!
 				if (navigator.userAgent.indexOf('AppleWebKit') !== -1 &&
