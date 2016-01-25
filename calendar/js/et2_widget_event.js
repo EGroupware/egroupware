@@ -707,13 +707,15 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(this.options.value && this.options.value.date)
 		{
 			old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
+		}
+		
+		if(new_cache_id != old_cache_id)
+		{
 			var old_daywise = egw.dataGetUIDdata(old_cache_id);
 			old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
 			old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
 			egw.dataStoreUID(old_cache_id,old_daywise);
-		}
-		if(new_cache_id != old_cache_id)
-		{
+			
 			if (new_daywise.indexOf(event.id) < 0)
 			{
 				new_daywise.push(event.id);

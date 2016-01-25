@@ -412,7 +412,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					event_widget._parent.date_helper.set_hours(dropEnd.whole_day ? 0 : dropEnd.hour||0);
 					event_widget._parent.date_helper.set_minutes(dropEnd.whole_day ? 0 : dropEnd.minute||0);
 				}
-
+								
 				// Leave the helper there until the update is done
 				var loading = ui.helper.clone(true).appendTo($j('body'));
 				// and add a loading icon so user knows something is happening
@@ -1331,9 +1331,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	set_owner: function(_owner)
 	{
 		var old = this.options.owner || 0;
+		this._super.apply(this, arguments);
+		
 		this.owner.set_label('');
 		this.div.removeClass('calendar_TimeGridNoLabel');
-		this.options.owner = _owner;
 
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
@@ -1675,7 +1676,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var height = Math.min($j(this.getInstanceManager().DOMContainer).height(),$j(this.getInstanceManager().DOMContainer).parent().innerHeight());
 
 		// Allow for toolbar
-		height -= $j('#calendar-toolbar').outerHeight(true);
+		height -= $j('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
 		
 		this.options.height = Math.floor(height / rowCount);
 		

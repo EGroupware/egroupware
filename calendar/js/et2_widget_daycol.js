@@ -36,7 +36,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		owner: {
 			name: "Owner",
 			type: "any", // Integer, string, or array of either
-			default: 0,
+			default: et2_no_init,
 			description: "Account ID number of the calendar owner, if not the current user"
 		},
 		display_birthday_as_event: {
@@ -103,6 +103,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this._super.apply(this, arguments);
 		
 		// Parent will have everything we need, just load it from there
+
+		if(this._parent && this._parent.options.owner)
+		{
+			this.set_owner(this._parent.options.owner);
+		}
 		if(this.title.text() === '' && this.options.date &&
 			this._parent && this._parent.instanceOf(et2_calendar_timegrid))
 		{
@@ -335,8 +340,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			return;
 		}
+		
+		this.options.owner = typeof _owner !== 'object' ? [_owner] : _owner;
 
-		this.options.owner = _owner;
 		var cache_id = app.classes.calendar._daywise_cache_id(this.options.date,_owner)
 		if(this.options.date && this.registeredUID &&
 			cache_id !== this.registeredUID)

@@ -31,7 +31,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 		owner: {
 			name: "Owner",
 			type: "any", // Integer, or array of integers, or string like r13 (resources, addressbook)
-			default: 0,
+			default: [egw.user('account_id')],
 			description: "Account ID number of the calendar owner, if not the current user"
 		},
 		start_date: {
@@ -78,6 +78,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 		this.loader.hide(0).prependTo(this.div);
+		if(this.options.owner) this.set_owner(this.options.owner);
 	},
 
 	/**
@@ -212,6 +213,13 @@ var et2_calendar_view = et2_valueWidget.extend(
 	set_owner: function set_owner(_owner)
 	{
 		var old = this.options.owner;
+
+		// 0 means current user, but that causes problems for comparison,
+		// so we'll just switch to the actual ID
+		if(_owner == '0')
+		{
+			_owner = [egw.user('account_id')];
+		}
 		if(!jQuery.isArray(_owner))
 		{
 			if(typeof _owner === "string")
@@ -256,6 +264,10 @@ var et2_calendar_view = et2_valueWidget.extend(
 	{
 		if(typeof events !== 'object') return false;
 
+		if(events.length && events.length > 0 || !jQuery.isEmptyObject(events))
+		{
+			this.set_disabled(false);
+		}
 		if(events.id)
 		{
 			this.set_id(events.id);

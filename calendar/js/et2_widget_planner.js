@@ -1598,20 +1598,13 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 		this._super.apply(this, arguments);
 
-		if(typeof events.length === "undefined" && events)
-		{
-			for(var key in events)
-			{
-				if(typeof events[key] === 'object' && events[key] !== null)
-				{
-					this.value.push(events[key]);
-				}
-			}
-		}
-		else
-		{
-			this.value = events || [];
-		}
+		// Planner uses an array, not map
+		var val = this.value;
+		var array = [];
+		Object.keys(this.value).forEach(function (key) {
+			array.push(val[key]);
+		});
+		this.value = array;
 	},
 
 	/**
@@ -1881,7 +1874,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		var height = Math.min($j(this.getInstanceManager().DOMContainer).height(),$j(this.getInstanceManager().DOMContainer).parent().innerHeight());
 
 		// Allow for toolbar
-		height -= $j('#calendar-toolbar').outerHeight(true);
+		height -= $j('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
 		
 		this.options.height = height;
 		this.div.css('height', this.options.height);
