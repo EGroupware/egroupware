@@ -755,7 +755,7 @@ egw_LAB.wait(function() {
 		}
 		else
 		{
-			$classes[] = 'et_button_text';
+			$classes[] = 'et2_button_text';
 		}
 		if (!$no_lang)
 		{
