@@ -146,43 +146,38 @@
 		</details>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" overflow="auto">
-			<columns>
-				<column disabled="!@cat_tab=Tree" width="40%"/>
-				<column disabled="@cat_tab=Tree" width="40%"/>
-				<column width="60%"/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
-					<listbox type="select-cat" id="cat_id" rows="11"/>
-					<grid width="100%">
-						<columns>
-							<column width="80"/>
-							<column/>
-						</columns>
-						<rows>
-							<row valign="top">
-								<description value="Notes"/>
-								<textbox multiline="true" id="note" rows="10" class="et2_fullWidth" height="100"/>
-							</row>
-							<row disabled="@hidebuttons">
-								<description value="Last date"/>
-								<link id="last_link"/>
-							</row>
-							<row disabled="@hidebuttons">
-								<description value="Next date"/>
-								<link id="next_link"/>
-							</row>
-							<row valign="top">
-								<description for="pubkey" value="Public key"/>
-								<textbox multiline="true" id="pubkey" rows="4" resize_ratio="0" class="et2_fullWidth"/>
-							</row>
-						</rows>
-					</grid>
-				</row>
-			</rows>
-		</grid>
+		<details title="Details">
+			<grid width="100%">
+				<columns>
+					<column width = "120"/>
+					<column width="600"/>
+				</columns>
+				<rows>
+					<row>
+						<description value="Notes"/>
+						<textbox multiline="true" id="note" rows="10" resize_ratio="0" class="et2_fullWidth" height="200"/>
+					</row>
+					<row disabled="@hidebuttons">
+						<description value="Last date"/>
+						<link id="last_link"/>
+					</row>
+					<row disabled="@hidebuttons">
+						<description value="Next date"/>
+						<link id="next_link"/>
+					</row>
+					<row>
+						<description for="pubkey" value="Public key"/>
+						<textbox multiline="true" id="pubkey" rows="4" resize_ratio="0" class="et2_fullWidth"/>
+					</row>
+					<row disabled="!@cat_tab=Tree">
+						<tree-cat id="cat_id_tree" options="13,,width:99%"/>
+					</row>	
+					<row disabled="@cat_tab=Tree">
+						<listbox type="select-cat" id="cat_id" rows="11"/>
+					</row>
+				</rows>
+			</grid>
+		</details>
 	</template>
 	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
 		<details title="Private">
@@ -284,44 +279,76 @@
 		</details>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th" disabled="@view">
-					<description value="Create new links"/>
-				</row>
-				<row>
-					<link-to id="link_to"/>
-				</row>
-				<row class="th">
-					<description value="Existing links"/>
-				</row>
-				<row>
-					<link-list id="link_to"/>
-				</row>
-			</rows>
-		</grid>
+		<details title="Links">
+			<grid width="100%">
+				<columns>
+					<column width = "120"/>
+					<column width="600"/>
+				</columns>
+				<rows>
+					<row disabled="@view">
+						<link-to id="link_to"/>
+					</row>
+					<row>
+						<description value="Existing links"/>
+						<link-list id="link_to"/>
+					</row>
+				</rows>
+			</grid>
+		</details>
 	</template>
 	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
-		<box width="100%" overflow="auto">
-			<description id="distrib_lists" span="all"/>
-		</box>
+		<details title="Distribution list">
+			<grid width="100%">
+				<columns>
+					<column width = "120"/>
+					<column width="600"/>
+				</columns>
+				<rows>
+					<row>
+						<box width="100%" overflow="auto">
+							<description id="distrib_lists" span="all"/>
+						</box>
+					</row>
+				</rows>
+			</grid>
+		</details>
 	</template>
 	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
-		<box width="100%" overflow="auto">
-			<customfields options="$cont[tid],$cont[no_private_cfs]"/>
-		</box>
+		<details title="Customfields">
+			<grid width="100%">
+				<columns>
+					<column width = "120"/>
+					<column width="600"/>
+				</columns>
+				<rows>
+					<row>
+						<box width="100%" overflow="auto">
+							<customfields options="$cont[tid],$cont[no_private_cfs]"/>
+						</box>
+					</row>
+				</rows>
+			</grid>
+		</details>
 	</template>
 	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
-		<box width="100%" overflow="auto">
-			<customfields id="private_cfs" options="$cont[tid],1"/>
-		</box>
+		<details title="Private customfields">
+			<grid width="100%">
+				<columns>
+					<column width = "120"/>
+					<column width="600"/>
+				</columns>
+				<rows>
+					<row>
+						<box width="100%" overflow="auto">
+							<customfields id="private_cfs" options="$cont[tid],1"/>
+						</box>
+					</row>
+				</rows>
+			</grid>
+		</details>
 	</template>
-	<template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
-		<historylog id="history" width="100%"/>
-	</template>
+	
 	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
 		<template id="addressbook.editname"/>
 		<grid class="addressbook_edit" border="1" width="100%">
@@ -387,37 +414,27 @@
 					<description for="url" value="url"/>
 					<url id="url" class="et2_fullWidth" autocomplete="url" />
 				</row>
-				
-				
 				<row>
 					<template id="addressbook.edit.general"/>
-					
-				<!--	<tabbox id="tabs" span="all" width="100%" tab_height="250">
-						<tabs>
-							<tab id="general" label="Organisation"/>
-							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
-							<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
-							<tab id="links" label="Links" statustext="Links"/>
-							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
-							<tab id="custom" label="Extra" statustext="Custom fields"/>
-							<tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
-							<tab id="history" label="History"/>
-						</tabs>
-						<tabpanels>
-							<template id="addressbook.edit.general"/>
-							<template id="addressbook.edit.home"/>
-							<template id="addressbook.edit.details"/>
-							<template id="addressbook.edit.links"/>
-							<template id="addressbook.edit.distribution_list"/>
-							<template id="addressbook.edit.custom"/>
-							<template id="addressbook.edit.custom_private"/>
-							<template id="addressbook.edit.history"/>
-						</tabpanels>
-					</tabbox> !-->
 				</row>
 				<row>
 					<template id="addressbook.edit.home"/>
+				</row>
+				<row>
+					<template id="addressbook.edit.details"/>
+				</row>
+				<row>
+					<template id="addressbook.edit.links"/>
+				</row>
+				<row>
+					<template id="addressbook.edit.distribution_list"/>
 				</row> 
+				<row>
+					<template id="addressbook.edit.custom"/>
+				</row>
+				<row>
+					<template id="addressbook.edit.custom_private"/>
+				</row>
 				<row>
 					<details title="Ownership">
 						<grid width="100%">
