@@ -899,17 +899,7 @@ class calendar_uiforms extends calendar_ui
 				$response = egw_json_response::get();
 				if($response && $update_type != 'delete')
 				{
-					// Directly update stored data.  If event is still visible, it will
-					// be notified & update itself.
-					if(!$old_event)
-					{
-						// For new events, make sure we have the whole event, not just form data
-						$event = $this->bo->read($event['id']);
-					}
-					// Copy, so as to not change things for subsequent processing
-					$converted = $event;
-					$this->to_client($converted);
-					$response->call('egw.dataStoreUID','calendar::'.$converted['id'],$converted);
+					$this->update_client($event['id']);
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
@@ -2843,7 +2833,7 @@ class calendar_uiforms extends calendar_ui
 			if(is_int($conflicts))
 			{
 				$event['id'] = $conflicts;
-				$response->call('egw.refresh', '','calendar',$event['id'],'add');
+				$response->call('egw.refresh', '','calendar',$event['id'],'edit');
 			}
 		}
 		else if ($conflicts)
