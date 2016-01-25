@@ -431,6 +431,8 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 					$j('html').on('click.outsideOfMenu', function (event){
 						$j(menubox).accordion( "option", "active", 2);
 						$j(this).unbind(event);
+						// Remove the focus class, user clicked elsewhere
+						$j(menubox).children().removeClass('ui-state-focus');
 					});
 				}
 			},
