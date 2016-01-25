@@ -927,7 +927,7 @@ jQuery.extend(et2_selectbox,
 				// Override any existing
 				for(var j in type_options)
 				{
-					if(type_options[j].value === value)
+					if(''+type_options[j].value === ''+value)
 					{
 						added = true;
 						type_options[j] = content_options[i];
