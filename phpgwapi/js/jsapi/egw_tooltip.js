@@ -46,7 +46,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 */
 	function show()
 	{
-		if (tooltip_div)
+		if (tooltip_div && typeof x !== 'undefined' && typeof y !== 'undefined')
 		{
 			//Calculate the cursor_rectangle - this is a space the tooltip might
 			//not overlap with
