@@ -148,7 +148,7 @@ class calendar_uiviews extends calendar_ui
 		$this->extraRowsOriginal = $this->extraRows; //save original extraRows value
 
 		$GLOBALS['egw_info']['flags']['nonavbar'] = False;
-		
+
 		// Check for GET message (from merge)
 		if($_GET['msg'])
 		{
@@ -291,7 +291,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'4day_view' => array(
 				'caption' => 'Four days view',
-				'icon'	=> 'day4',
+				'icon'	=> 'cal4',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Four days view',
