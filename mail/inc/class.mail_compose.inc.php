@@ -2901,7 +2901,7 @@ class mail_compose
 			}
 			catch(Exception $e) {
 				_egw_log_exception($e);
-				$this->errorInfo = $e->getMessage();
+				$this->errorInfo = $e->getMessage().($e->details?'<br/>'.$e->details:'');
 				return false;
 			}
 		} else {
