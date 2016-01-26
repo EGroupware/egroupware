@@ -1397,7 +1397,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		// If it's a short label (eg week number), don't give it an extra line
 		// but is empty, but give extra space for a single owner name
-		this.div.toggleClass('calendar_TimeGridNoLabel', label.trim().length < 6 && typeof this.options.owner === 'object');
+		this.div.toggleClass(
+			'calendar_TimeGridNoLabel',
+			label.trim().length > 0 && label.trim().length < 6 ||
+			this.options.owner.length > 1
+		);
 	},
 	
 	/**

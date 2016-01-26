@@ -698,6 +698,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		// Busy
 		if(!this.doInvalidate) return;
 
+		// Not yet ready
+		if(!this.options.start_date || !this.options.end_date) return;
+		
 		// Wait a bit to see if anything else changes, then re-draw the days
 		if(this.update_timer !== null)
 		{
@@ -1875,7 +1878,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 		// Allow for toolbar
 		height -= $j('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
-		
+
 		this.options.height = height;
 		this.div.css('height', this.options.height);
 		// Set height for rows

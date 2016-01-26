@@ -71,22 +71,18 @@
 }
 
 /* Space for toolbar */
-#calendar-view, #calendar-todo, #calendar-planner {
-	margin-top: -30px;
-}
-#calendar-list {
-	margin-top: -55px;
-}
-#calendar-planner .calendar_plannerWidget {
-	top: 30px;
+#calendar-view, #calendar-todo, #calendar-planner, #calendar-list {
+	position: absolute;
+	left: 0px;
+	right: 0px;
 }
 
 #calendar-todo {
 	position: absolute;
 	width: 30%;
-	margin-top: 0px;
-	/* Nice transition when changing days in a week */
+	margin-top: 0px;/* Nice transition when changing days in a week */
 	transition: 1s ease-in-out;
+	z-index: 10;
 }
 
 #calendar-view {

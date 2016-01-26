@@ -134,7 +134,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 	{
 		if(!new_date || new_date === null)
 		{
-			throw exception('Invalid start date. ' + new_date.toString());
+			new_date = new Date();
 		}
 
 		// Use date widget's existing functions to deal
@@ -174,7 +174,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 	{
 		if(!new_date || new_date === null)
 		{
-			throw exception('Invalid end date. ' + new_date.toString());
+			new_date = new Date();
 		}
 		// Use date widget's existing functions to deal
 		if(typeof new_date === "object" || typeof new_date === "string" && new_date.length > 8)
