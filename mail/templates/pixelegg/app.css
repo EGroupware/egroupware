@@ -2670,9 +2670,12 @@ div.mailComposeHeaderSection > table {
     padding-top: 10px;
     font-weight: bold;
   }
+  body #popupMainDiv #mail-display .mail-d-h1 span {
+    font-size: 12pt;
+  }
   body #popupMainDiv #mail-display .mail-d-h2 {
     padding-top: 5px;
-    font-size: 9pt;
+    font-size: 10pt;
     color: grey;
   }
   body #popupMainDiv #mail-display .mail-d-h2 a,
@@ -2684,7 +2687,7 @@ div.mailComposeHeaderSection > table {
   body #popupMainDiv #mail-display .mail-d-h2 a#mail-display_FROM > * {
     color: black;
     padding-top: 15px;
-    font-size: 9.5;
+    font-size: 12pt;
   }
   body #popupMainDiv #mail-display .et2_details {
     width: 50%;
@@ -2791,8 +2794,8 @@ div.mailComposeHeaderSection > table {
     padding-bottom: 8px;
   }
   #mail-index table.egwGridView_outer tbody td a[id^='mail-index_'][id$='fromaddress]'] {
-    color: #26537c;
-    font-size: 10pt;
+    color: #373737;
+    font-size: 12pt;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -2810,6 +2813,9 @@ div.mailComposeHeaderSection > table {
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 98%;
+    font-size: 10pt;
+    color: #828282 !important;
+    font-weight: normal !important;
   }
   #mail-index table.egwGridView_outer tbody td label[id^='mail-index_'][id$='date]'] {
     padding-top: 0;

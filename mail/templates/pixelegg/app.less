@@ -1822,13 +1822,16 @@ div.mailComposeHeaderSection > table {
 				.mail-d-h1{
 					padding-bottom: 15px;
 					border-bottom: 1px solid silver;
-					font-size: 12pt;
+					span {
+						.mob-fontsize-l;
+					}
+					.mob-fontsize-l;
 					padding-top: 10px;
 					font-weight: bold;
 				}
 				.mail-d-h2{
 					padding-top: 5px;
-					font-size: 9pt;
+					.mob-fontsize-n;
 					color: grey;
 					a,span,.et2_label {
 						color: grey;
@@ -1837,7 +1840,7 @@ div.mailComposeHeaderSection > table {
 					a#mail-display_FROM>* {
 						color:black;
 						padding-top: 15px;
-						font-size: 9.5;
+						.mob-fontsize-l;
 					}
 					
 				}
@@ -1956,8 +1959,8 @@ div.mailComposeHeaderSection > table {
 				padding-top: 8px;
 				padding-bottom: 8px;
 				a[id^='mail-index_'][id$='fromaddress]']{
-					color:#26537c;
-					.mob-fontsize-n;
+					color:@gray_80;
+					.mob-fontsize-l;
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
@@ -1975,6 +1978,9 @@ div.mailComposeHeaderSection > table {
 					white-space: nowrap;
 					text-overflow: ellipsis;
 					width: 98%;
+					.mob-fontsize-n;
+					color: @gray_50 !important;
+					font-weight: normal !important;
 				}
 				label[id^='mail-index_'][id$='date]']{
 					padding-top: 0;

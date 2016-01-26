@@ -235,7 +235,7 @@ class mail_compose
 		{
 			foreach ($actions as $key => $action)
 			{
-				if (!in_array($key, array('send','button[saveAsDraft]'))) {
+				if (!in_array($key, array('send','button[saveAsDraft]','uploadForCompose' ))) {
 					$actions[$key]['toolbarDefault'] = false;
 				}
 			}
