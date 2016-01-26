@@ -214,8 +214,8 @@ class emailadmin_sieve extends Net_Sieve
 		{
 			$this->supportedAuthMethods = $sieveAuthMethods[$_icServerID];
 		}
-
-		if(self::isError($this->error = $this->login($username, $password, 'LOGIN', $euser) ) )
+		// pear net_sieve _authLOGIN does not support euser. so use plain, when trying to act on behalf of another user (effective user = euser)
+		if(self::isError($this->error = $this->login($username, $password, ($euser?'PLAIN':'LOGIN'), $euser) ) )
 		{
 			if ($this->debug)
 			{
