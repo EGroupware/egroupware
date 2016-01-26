@@ -43,6 +43,7 @@ $config = array(
 	'editor' => trim(`which vi`),
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
 	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs' : '',
+	'after-checkout' => 'rm -rf */source */templates/*/source pixelegg/content-element-library',
 	'packager' => 'build@stylite.de',
 	'obs' => './obs',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
@@ -50,8 +51,9 @@ $config = array(
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editsvnchangelog' => '* ',
 	'svntag' => 'tags/$version.$packaging',
-	'release' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
-	'copychangelog' => '$sourcedir/README', //'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
+	'sfuser' => 'ralfbecker',
+	'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
+	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
 	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs','copychangelog'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
@@ -733,6 +735,8 @@ function do_checkout()
 	{
 		run_cmd($config['composer']);
 	}
+	// run after-checkout command(s), eg. to purge source directories
+	run_cmd($config['after-checkout']);
 }
 
 /**
