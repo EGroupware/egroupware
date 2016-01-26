@@ -219,7 +219,8 @@ app.classes.mail = AppJS.extend(
 				);
 				break;
 			case 'mail.compose':
-				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked ||
+				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp') &&
+					this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
 						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
 				{

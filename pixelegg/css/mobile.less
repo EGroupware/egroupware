@@ -1048,7 +1048,7 @@
 @mobile-elem-height: 50px;
 @mobile-button-width: 50px;
 @mobile-nm-search-bg: #0c5da5;
-@media only screen and (min-width: 320px)  and (max-width: 1279px) {
+@media only screen and (min-width: 320px)  and (max-width: 1290px) {
 	body
 	{
 		#egw_fw_basecontainer.sidebar-toggle {
@@ -1536,5 +1536,58 @@
 				width: auto;
 			}
 		}
+		
+		//###########################################
+		//#											#
+		//#	 et2_toolbar styles used in headbar		#
+		//#											#
+		//###########################################
+		
+		div.et2_toolbar.et2_head_toolbar {
+				background-color: transparent;
+				padding: 1px 5px 5px 10px !important;
+				button {
+					width:46px;
+					height:46px;
+					background-size: 18px 18px;
+				}
+				div.ui-toolbar-menulist
+				{
+					min-width: 200px;
+				}
+				button.et2_toolbar_hasCaption {
+					width:auto;
+				}
+				div.et2_toolbar_actionlist {
+					margin-left: 50px;
+				}
+				div.et2_toolbar_more {
+
+					h.ui-state-hover {
+						background:none;
+					}
+					h.ui-toolbar-menulistHeader {
+						color:transparent;
+						border: none;
+						height: 46px;
+						width: 35px;
+						padding: 0 !important;
+						margin-right: 15px;
+						margin-top: -7px;
+						&:hover {
+
+						}
+						&:after {
+							font-size:18pt;
+							content:"\205D";
+							font-weight: bold;
+							color:white;
+						}
+					}
+					span {
+						display: none;
+					}
+				}
+			}
 	}
 }

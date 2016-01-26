@@ -1755,6 +1755,69 @@ div.mailComposeHeaderSection > table {
 			padding: 1px 8px 0 8px;
 			background: none;
 			
+			div.et2_toolbar.et2_head_toolbar {
+				padding: 1px 5px 5px 10px !important;
+				button {
+					width:46px;
+					height:46px;
+					background-size: 18px 18px;
+				}
+				button.et2_toolbar_hasCaption {
+					width:auto;
+				}
+				div.et2_toolbar_actionlist {
+					margin-left: 50px;
+				}
+				div.et2_toolbar_more {
+
+					h.ui-state-hover {
+						background:none;
+					}
+					h.ui-toolbar-menulistHeader {
+						color:transparent;
+						border: none;
+						height: 46px;
+						width: 35px;
+						padding: 0 !important;
+						margin-right: 15px;
+						margin-top: -7px;
+						&:hover {
+
+						}
+						&:after {
+							font-size:18pt;
+							content:"\205D";
+							font-weight: bold;
+							color:white;
+						}
+					}
+					span {
+						display: none;
+					}
+				}
+			}
+			#mail-compose_composeToolbar{
+				// Senden Button
+				button#composeToolbar-send{
+					height: 46px;
+					width: auto;
+					margin-top: 0.7px !important;
+					padding: 0 3px 0 0;
+					text-align: left;
+					font-weight: normal;
+					padding-left: 20px;
+					background-image: url(images/mail_send.png);
+					background-position: left;
+					background-repeat: no-repeat;
+					background-size: 16px 16px;
+					background-color: #fafafa;
+					color: black;
+					&:hover {box-shadow: none; background-color:none;}
+					&:disabled {background-color: none;}
+				}
+			}
+			
+				
 			#mail-display{
 				.mail-d-h1{
 					padding-bottom: 15px;
@@ -1799,48 +1862,10 @@ div.mailComposeHeaderSection > table {
 					padding: 0;
 					margin-top: 10px;
 				}
-				.et2_toolbar,#mail-display_toolbar {
-					padding: 1px 5px 5px 10px !important;
-					button {
-						width:46px;
-						height:46px;
-						background-size: 18px 18px;
-					}
-					button[id="displayToolbar-delete"] {
-						margin-left: 0;
-					}
-					div.et2_toolbar_actionlist {
-						margin-left: 50px;
-					}
-					#displayToolbar-actionbox {
-						
-						h.ui-state-hover {
-							background:none;
-						}
-						h.ui-toolbar-menulistHeader {
-							color:transparent;
-							border: none;
-							height: 46px;
-							width: 35px;
-							padding: 0 !important;
-							margin-right: 15px;
-							margin-top: -7px;
-							&:hover {
-								
-							}
-							&:after {
-								font-size:18pt;
-								content:"\205D";
-								font-weight: bold;
-								color:white;
-							}
-						}
-						span {
-							display: none;
-							
-						}
-					}
+				button[id="displayToolbar-delete"] {
+					margin-left: 0;
 				}
+
 				.mailDisplay {
 					position: initial;
 					margin-top: 20px;

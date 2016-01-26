@@ -2189,7 +2189,6 @@ body {
  * @package pixelegg
  * @version $Id$
  */
-@import-once "def_colors.less";
 #socialMedia {
   position: relative;
   bottom: 20px;
@@ -4267,7 +4266,7 @@ td.message span.message {
   text-decoration: none;
   height: 32px;
   /*font-size: 1.1em;*/
-  font-size: 12.100000000000001px;
+  font-size: 12.1px;
   line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
@@ -4291,7 +4290,7 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
   padding-right: 20px;
-  font-size: 12.100000000000001px;
+  font-size: 12.1px;
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
@@ -4687,7 +4686,7 @@ td.message span.message {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12.100000000000001px;
+  font-size: 12.1px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
@@ -4859,7 +4858,7 @@ td.message span.message {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 15px;
   line-height: 1em;
-  font-size: 12.100000000000001px;
+  font-size: 12.1px;
   background-image: url(../images/arrow_left.png);
   background-repeat: no-repeat;
   background-position: left center;
@@ -7175,7 +7174,7 @@ span.egw_tutorial_title {
     margin: 5px 0px 3px 5px;
     padding: 0px 0px 0px 15px;
     line-height: 1em;
-    font-size: 12.100000000000001px;
+    font-size: 12.1px;
     background-image: url(../images/arrow_left.png);
     background-repeat: no-repeat;
     background-position: left center;
@@ -7515,7 +7514,7 @@ span.egw_tutorial_title {
 }
 /*mobile etemplate2*/
 /*mobile etemplate2*/
-@media only screen and (min-width: 320px) and (max-width: 1279px) {
+@media only screen and (min-width: 320px) and (max-width: 1290px) {
   body #egw_fw_basecontainer.sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_white.png);
     width: 65px;
@@ -7952,5 +7951,44 @@ span.egw_tutorial_title {
   }
   body .et2_fullWidth input[type="radio"] {
     width: auto;
+  }
+  body div.et2_toolbar.et2_head_toolbar {
+    background-color: transparent;
+    padding: 1px 5px 5px 10px !important;
+  }
+  body div.et2_toolbar.et2_head_toolbar button {
+    width: 46px;
+    height: 46px;
+    background-size: 18px 18px;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.ui-toolbar-menulist {
+    min-width: 200px;
+  }
+  body div.et2_toolbar.et2_head_toolbar button.et2_toolbar_hasCaption {
+    width: auto;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
+    margin-left: 50px;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
+    background: none;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader {
+    color: transparent;
+    border: none;
+    height: 46px;
+    width: 35px;
+    padding: 0 !important;
+    margin-right: 15px;
+    margin-top: -7px;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader:after {
+    font-size: 18pt;
+    content: "\205D";
+    font-weight: bold;
+    color: white;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more span {
+    display: none;
   }
 }

@@ -231,7 +231,16 @@ class mail_compose
 		{
 			$actions['prty']['children'][$content['priority']]['default'] = true;
 		}
-
+		if (html::$ua_mobile)
+		{
+			foreach ($actions as $key => $action)
+			{
+				if (!in_array($key, array('send','button[saveAsDraft]'))) {
+					$actions[$key]['toolbarDefault'] = false;
+				}
+			}
+			unset($actions['pgp']);
+		}
 		return $actions;
 	}
 

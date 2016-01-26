@@ -8,7 +8,7 @@
 		<vbox class="mailDisplay">
 			<hbox class="dialogHeadbar">
 				<hbox>
-					<toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
+					<toolbar class="et2_head_toolbar" id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
 					<description/>
 				</hbox>
 			</hbox>

@@ -2606,6 +2606,63 @@ div.mailComposeHeaderSection > table {
     padding: 1px 8px 0 8px;
     background: none;
   }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar {
+    padding: 1px 5px 5px 10px !important;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar button {
+    width: 46px;
+    height: 46px;
+    background-size: 18px 18px;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar button.et2_toolbar_hasCaption {
+    width: auto;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
+    margin-left: 50px;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
+    background: none;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader {
+    color: transparent;
+    border: none;
+    height: 46px;
+    width: 35px;
+    padding: 0 !important;
+    margin-right: 15px;
+    margin-top: -7px;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader:after {
+    font-size: 18pt;
+    content: "\205D";
+    font-weight: bold;
+    color: white;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more span {
+    display: none;
+  }
+  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send {
+    height: 46px;
+    width: auto;
+    margin-top: 0.7px !important;
+    padding: 0 3px 0 0;
+    text-align: left;
+    font-weight: normal;
+    padding-left: 20px;
+    background-image: url(images/mail_send.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-color: #fafafa;
+    color: black;
+  }
+  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send:hover {
+    box-shadow: none;
+    background-color: none;
+  }
+  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send:disabled {
+    background-color: none;
+  }
   body #popupMainDiv #mail-display .mail-d-h1 {
     padding-bottom: 15px;
     border-bottom: 1px solid silver;
@@ -2650,48 +2707,8 @@ div.mailComposeHeaderSection > table {
     padding: 0;
     margin-top: 10px;
   }
-  body #popupMainDiv #mail-display .et2_toolbar,
-  body #popupMainDiv #mail-display #mail-display_toolbar {
-    padding: 1px 5px 5px 10px !important;
-  }
-  body #popupMainDiv #mail-display .et2_toolbar button,
-  body #popupMainDiv #mail-display #mail-display_toolbar button {
-    width: 46px;
-    height: 46px;
-    background-size: 18px 18px;
-  }
-  body #popupMainDiv #mail-display .et2_toolbar button[id="displayToolbar-delete"],
-  body #popupMainDiv #mail-display #mail-display_toolbar button[id="displayToolbar-delete"] {
+  body #popupMainDiv #mail-display button[id="displayToolbar-delete"] {
     margin-left: 0;
-  }
-  body #popupMainDiv #mail-display .et2_toolbar div.et2_toolbar_actionlist,
-  body #popupMainDiv #mail-display #mail-display_toolbar div.et2_toolbar_actionlist {
-    margin-left: 50px;
-  }
-  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox h.ui-state-hover,
-  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox h.ui-state-hover {
-    background: none;
-  }
-  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader,
-  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader {
-    color: transparent;
-    border: none;
-    height: 46px;
-    width: 35px;
-    padding: 0 !important;
-    margin-right: 15px;
-    margin-top: -7px;
-  }
-  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader:after,
-  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox h.ui-toolbar-menulistHeader:after {
-    font-size: 18pt;
-    content: "\205D";
-    font-weight: bold;
-    color: white;
-  }
-  body #popupMainDiv #mail-display .et2_toolbar #displayToolbar-actionbox span,
-  body #popupMainDiv #mail-display #mail-display_toolbar #displayToolbar-actionbox span {
-    display: none;
   }
   body #popupMainDiv #mail-display .mailDisplay {
     position: initial;
