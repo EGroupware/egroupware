@@ -629,6 +629,10 @@ class accounts_ads
 			{
 				switch($egw)
 				{
+					case 'account_description':
+						$ldap[$adldap] = !empty($data[$egw]) ? $data[$egw] : array();
+						break;
+
 					default:
 						$ldap[$adldap] = $data[$egw];
 						break;
@@ -1590,7 +1594,6 @@ class adLDAPGroups_egw extends adLDAPGroups
 		if (!is_array($attributes)){ return "Attributes must be an array"; }
 		if (!array_key_exists("group_name", $attributes)){ return "Missing compulsory field [group_name]"; }
 		if (!array_key_exists("container", $attributes)){ return "Missing compulsory field [container]"; }
-		if (!array_key_exists("description", $attributes)){ return "Missing compulsory field [description]"; }
 		if (empty($attributes["container"])){ return "Container attribute must be an array or string."; }
 
 		//$member_array = array();
@@ -1601,7 +1604,7 @@ class adLDAPGroups_egw extends adLDAPGroups
 		$add["cn"] = $attributes["group_name"];
 		$add["samaccountname"] = $attributes["group_name"];
 		$add["objectClass"] = "Group";
-		$add["description"] = $attributes["description"];
+		if (!empty($attributes["description"])) $add["description"] = $attributes["description"];
 		//$add["member"] = $member_array; UNTESTED
 
 		// Determine the container
