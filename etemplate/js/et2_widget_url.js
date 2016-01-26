@@ -310,6 +310,20 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 					    this.span.attr("target", "_blank");
 					}
 				}
+				// Remove email address if there's a name
+				if (this.span.text() && this.span.text().split("<"))
+				{
+					var val = this.span.text().split("<");
+					val = val[0] != ""? val[0]: val[2];
+					
+					// need to preserve the original value somehow
+					// as it's been used for add contact plus feature
+					this.span.attr('title',_value);
+					
+					this.span.text(val.replace(/"/g,''));
+					
+				}
+				
 				// Add contact_plus button
 				if (this.options.contact_plus)
 				{
@@ -330,7 +344,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 								{
 									// Here we could do all sorts of things
 									var extra = {
-										'presets[email]': jQuery(this).text()
+										'presets[email]': jQuery(this).attr('title')
 									};
 
 									return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Add a new contact')+'"><img src="'
