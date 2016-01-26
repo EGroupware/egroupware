@@ -1556,6 +1556,11 @@ div.ms-sel-ctn .ms-sel-item {
 	background-position: 6px center;
 	padding-left: 30px;
 }
+.et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_onlyCaption {
+	vertical-align: top;
+	width:auto;
+	padding-left: 3px;
+}
 .et2_toolbar button {
 	margin:1px;
 	margin-right: 3px;

@@ -508,11 +508,11 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		if (action.caption)
 		{
 			if ((this.countActions <= parseInt(this.options.view_range) ||
-					this.preference[action.id])	&&
+					this.preference[action.id] || !action.iconUrl)	&&
 					typeof button[0] !== 'undefined' &&
 					!(action.checkbox && action.data && (action.data.toggle_on || action.data.toggle_off))) // no caption for slideswitch checkboxes 
 			{
-				button.addClass('et2_toolbar_hasCaption');
+				button.addClass(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
 				button[0].textContent = action.caption;
 			}
 		}

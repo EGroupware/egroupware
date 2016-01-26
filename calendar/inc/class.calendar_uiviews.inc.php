@@ -382,7 +382,6 @@ class calendar_uiviews extends calendar_ui
 			),
 			'today' => array(
 				'caption' => 'Today',
-				'icon'	=> 'today',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Today',
