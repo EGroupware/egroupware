@@ -438,7 +438,7 @@ span.et2_date_duration input.et2_date_duration{
 	text-align: left;
 }
 .ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
-	left: initial;
+	left: auto;
 	right: 4em;
 }
 .ui-datepicker .ui-datepicker-buttonpane button[data-handler="today"] {
