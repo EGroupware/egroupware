@@ -1176,3 +1176,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 #calendar-toolbar_toolbar .et2_toolbar_more {
 	margin-top: 0;
 }
+#calendar-toolbar button#toolbar-today {
+	color: #616161;
+	font-weight: 500;
+}
