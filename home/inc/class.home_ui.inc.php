@@ -472,7 +472,7 @@ class home_ui
 						}
 						$actions['remove_default_'.$location] = array(
 							'type'		=> 'popup',
-							'caption'	=> lang('Remove default %1',is_numeric($location) ? accounts::id2name($location) : $location),
+							'caption'	=> lang('Remove as default for %1',is_numeric($location) ? accounts::id2name($location,'account_fullname') : $location),
 							'onExecute'	=> 'javaScript:app.home.set_default',
 							'group'		=> 'Admins',
 							'portlet_group' => $location
