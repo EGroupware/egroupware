@@ -1309,6 +1309,27 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				this.set_start_date(day_list[0]);
 				this.set_end_date(day_list[day_list.length-1]);
 			}
+
+			// Sub widgets actually get their own data from egw.data, so we'll
+			// stick it there
+			var consolidated = et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
+			for(var day in events)
+			{
+				var day_list = [];
+				for(var i = 0; i < events[day].length; i++)
+				{
+					day_list.push(events[day][i].row_id);
+					egw.dataStoreUID('calendar::'+events[day][i].row_id, events[day][i]);
+				}
+				// Might be split by user, so we have to check that too
+				for(var i = 0; i < this.options.owner.length; i++)
+				{
+					var owner = consolidated ? this.options.owner : this.options.owner[i];
+					var day_id = app.classes.calendar._daywise_cache_id(day,owner);
+					egw.dataStoreUID(day_id, day_list);
+					if(consolidated) break;
+				}
+			}
 		}
 
 		// Reset and calculate instead of just use the keys so we can get the weekend preference

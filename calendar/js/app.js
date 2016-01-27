@@ -155,6 +155,7 @@ app.classes.calendar = AppJS.extend(
 				this.sidebox_hooked_templates.push(this.sidebox_et2);
 				$j(_et2.DOMContainer).hide();
 				this._setup_sidebox_filters();
+				this.state = content.data;
 				break;
 
 			case 'calendar.edit':
@@ -1832,6 +1833,11 @@ app.classes.calendar = AppJS.extend(
 	 */
 	setState: function setState(state)
 	{
+		if(framework && framework.applications.calendar && framework.applications.calendar.hasSideboxMenuContent)
+		{
+			framework.setActiveApp(framework.applications.calendar);
+		}
+
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
 		{
@@ -3423,7 +3429,7 @@ jQuery.extend(app.classes.calendar,{
 	/**
 	 * Create a cache ID for the daywise cache
 	 *
-	 * @param {String|Date} date
+	 * @param {String|Date} date If a string, date should be in Ymd format
 	 * @param {String|integer|String[]} owner
 	 * @returns {String} Cache ID
 	 */

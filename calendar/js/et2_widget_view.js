@@ -383,6 +383,25 @@ var et2_calendar_view = et2_valueWidget.extend(
 // Static class stuff
 jQuery.extend(et2_calendar_view,
 {
+	/**
+	 * Check if the view should be consolidated into one, or listed seperately
+	 * based on the user's preferences
+	 * 
+	 * @param {string[]} owners List of owners
+	 * @param {string} view Name of current view (day, week)
+	 * @returns {boolean} True of only one is needed, false if each owner needs
+	 *	to be listed seperately.
+	 */
+	is_consolidated: function is_consolidated(owners, view)
+	{
+		// Seperate owners, or consolidated?
+		return !(
+			owners.length > 1 &&
+			(view === 'day' && owners.length < parseInt(egw.preference('day_consolidate','calendar')) ||
+			view === 'week' && owners.length < parseInt(egw.preference('week_consolidate','calendar')))
+		);
+	},
+
 	holiday_cache: {},
 	/**
 	 * Fetch and cache a list of the year's holidays

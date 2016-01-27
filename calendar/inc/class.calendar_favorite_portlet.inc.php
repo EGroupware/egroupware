@@ -74,7 +74,11 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				if($this->favorite['state']['start']) $ui->search_params['start'] = $this->favorite['state']['start'];
 				if($this->favorite['state']['cat_id']) $ui->search_params['cat_id'] = $this->favorite['state']['cat_id'];
 				// Owner can be 0 for current user
-				if(array_key_exists('owner',$this->favorite['state'])) $ui->search_params['users'] = explode(',',$this->favorite['state']['owner']);
+				if(array_key_exists('owner',$this->favorite['state'])) $ui->search_params['users'] = $this->favorite['state']['owner'];
+				if($ui->search_params['users'] && !is_array($ui->search_params['users']))
+				{
+					$ui->search_params['users'] = explode(',',$ui->search_params['users']);
+				}
 				if($this->favorite['state']['filter']) $ui->search_params['filter'] = $this->favorite['state']['filter'];
 				if($this->favorite['state']['sortby']) $ui->search_params['sortby'] = $this->favorite['state']['sortby'];
 			}
@@ -134,7 +138,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 					$this->favorite['state']['view'] == 'day' ? 1 : 4
 				);
 				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
-				$ui->week($days, $etemplate);
+					$ui->week($days, $etemplate);
 				return;
 		}
 
