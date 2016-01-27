@@ -100,7 +100,7 @@ input.et2_radiobox {
 	margin-left: 7px;
 }
 #addressbook-edit_adr_one_locality,#addressbook-edit_adr_two_locality  {
-	float: right;
+	margin-left:11px;
 }
 
 #addressbook-edit_role {
