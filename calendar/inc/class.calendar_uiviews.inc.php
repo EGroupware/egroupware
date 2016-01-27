@@ -756,11 +756,10 @@ class calendar_uiviews extends calendar_ui
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::week(days=%1) date=%2',True,$days,$this->date);
 
-		if ($days == 4)		// next 4 days view
+		if ($days <= 4)		// next 4 days view
 		{
 			$wd_start = $this->first = $this->bo->date2ts($this->date);
 			$this->last = strtotime("+$days days",$this->first) - 1;
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
 		}
 		else
 		{
