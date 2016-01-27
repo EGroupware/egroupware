@@ -707,6 +707,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			}
 
 			var time_label = (typeof show[granularity] === 'undefined' ? t % 60 === 0 : show[granularity].indexOf(t % 60) !== -1) ? time : '';
+			if(time_label && egw.preference("timeformat") == "12" && time_label.split(':')[0] < 10)
+			{
+				time_label ='&nbsp;&nbsp;' + time_label;
+			}
 			if(this.rowHeight < line_height)
 			{
 				// Rows too small for regular label frequency, use automatic calculation
