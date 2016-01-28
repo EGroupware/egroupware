@@ -36,10 +36,16 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			'default': false,
 			'description': 'Set to true if tabs should be added to tabs from read from template, default false if not'
 		},
-		tab_height: {
+		'tab_height': {
 			name: 'Tabs innerHeight',
 			default: '',
 			description: 'Set the innerHeight for the tab content'
+		},
+		'align_tabs': {
+			name: 'Tabs alignment',
+			type: 'string',
+			default: 'h',
+			description: 'Set tabs and their headers arrangment either horizental (h) or vertical (v). Default value is horizental.'
 		}
 	},
 
@@ -57,7 +63,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 		// Create the outer tabbox container
 		this.container = $j(document.createElement("div"))
 			.addClass("et2_tabbox");
-
+		
 		// Create the upper container for the tab flags
 		this.flagContainer = $j(document.createElement("div"))
 			.addClass("et2_tabheader")
@@ -340,8 +346,25 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			entry.contentDiv = $j(document.createElement("div"))
 				.addClass("et2_tabcntr")
 				.appendTo(this.tabContainer);
+			if (this.options.align_tabs == 'v') {
+				entry.flagDiv.unbind('click');
+				entry.flagDiv.text("");
+				$j(document.createElement('div'))
+						.addClass('et2_tabtitle')
+						.text(entry.label || "Tab")
+						.click({"tabs": this, "idx": i}, function(e) {
+							e.data.tabs.flagContainer.children(":eq(" + e.data.idx + ")").toggleClass('active');
+						})
+						.appendTo(entry.flagDiv);
+				entry.contentDiv.appendTo(entry.flagDiv);
+			}
 		}
-
+		
+		if (this.options.align_tabs == 'v'){ 
+			
+			this.container.addClass('vertical');
+			this.tabContainer.hide();
+		}
 		// Check for a passed in value
 		if(this.options.value)
 		{

@@ -869,6 +869,37 @@ ul.et2_link_string {
   background-repeat: repeat-x;
   white-space: nowrap;
 }
+
+.et2_tabbox.vertical .et2_tabflag {
+	display: block;
+	padding: 0;
+}
+.et2_tabbox.vertical .et2_tabflag .et2_tabcntr{
+	display: none;
+}
+.et2_tabbox.vertical .et2_tabflag.active .et2_tabcntr {
+	display: block;
+	
+}
+.et2_tabbox.vertical .et2_tabflag div.et2_tabtitle {
+	background-color: #C4C4C4;
+    padding: 6px 0 6px 0;
+}
+.et2_tabbox.vertical .et2_tabflag div.et2_tabtitle:before {
+	content: "+";
+    color: white;
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 3px;
+    float: right;
+    background-color: #636363;
+    border-radius: 3px;
+	margin-top: -6px;
+}
+.et2_tabbox.vertical .et2_tabflag.active div.et2_tabtitle:before {
+	content: "\2212";
+}
+
 .et2_taglist_ro ul {
   margin: 0px;
   padding: 0px;
