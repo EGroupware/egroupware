@@ -3178,8 +3178,7 @@ app.classes.calendar = AppJS.extend(
 							
 			// Dynamic resize of sidebox calendar to fill sidebox
 			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
-			var font_ratio = parseFloat($j(this.sidebox_et2.getDOMNode()).css('font-size')) / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
-
+			var font_ratio = 12 / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
 			$j(window).on('resize.calendar'+date.dom_id, function() {
 				var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
 				percent *= font_ratio;

@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 54853 2016-01-26 22:17:51Z nathangray $ */
+/* $Id: app.css 54875 2016-01-28 21:35:22Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -29,6 +29,9 @@
 /**
  * Sidebox
  */
+#calendar-et2_target {
+  position: relative;
+}
 #calendar-sidebox_owner {
   width: 90%;
 }
