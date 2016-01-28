@@ -281,6 +281,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			.removeClass(function(index, css) {
 				return (css.match(/calendar_calEvent\S+/g) || []).join(' ');
 			})
+			.removeClass('calendar_calEventSmall')
 			.addClass(event.class)
 			.toggleClass('calendar_calEventPrivate', typeof event.private !== 'undefined' && event.private);
 		this.options.class = event.class;
@@ -304,16 +305,13 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		
 		// Header
 		var title = !event.is_private ? event['title'] : egw.lang('private');
-		// If there isn't enough height for header + 1 line in the body, it's small
-		var small_height = this.div.innerHeight() <= this.title.height() * 2;
-		if(!this.title.height())
-		{
-			// Handle sizing while hidden, such as when calendar is not the active tab
-			small_height = egw.getHiddenDimensions(this.div).h < egw.getHiddenDimensions(this.title).h * 2
-		}
 
-		this.div.attr('data-title', title);
-		this.title.text(small_height ? title : this._get_timespan(event));
+		// Height specific section
+		this._small_size();
+		
+		this.title
+			.html('<span class="calendar_calTimespan">'+this._get_timespan(event) + '<br /></span>')
+			.append('<span class="calendar_calEventTitle">'+title+'</span>')
 		
 		// Colors - don't make them transparent if there is no color
 		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
@@ -348,6 +346,31 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 				.append('<span class="calendar_calTimespan">'+start_time + '</span>')
 				.append('<p>'+this.options.value.description+'</p>');
 		}
+	},
+
+	/**
+	 * Calculate display variants for when event is too short for full display
+	 * 
+	 * Display is based on the number of visible lines, calculated off the header
+	 * height:
+	 * 1 - show just the event title, with ellipsis
+	 * 2 - Show timespan and title, with ellipsis
+	 * > 4 - Show description as well, truncated to fit
+	 */
+	_small_size: function() {
+		this.div.removeClass('calendar_calEventSmall');
+		if(this.options.value.whole_day_on_top) return;
+		var visible_lines = Math.floor(this.div.innerHeight() / this.title.height());
+
+		if(!this.title.height())
+		{
+			// Handle sizing while hidden, such as when calendar is not the active tab
+			visible_lines = Math.floor(egw.getHiddenDimensions(this.div).h / egw.getHiddenDimensions(this.title).h);
+		}
+
+		this.div.toggleClass('calendar_calEventSmall',visible_lines < 4);
+		this.div
+			.attr('data-visible_lines', visible_lines < 4 ? Math.max(1,visible_lines) : '');
 	},
 
 	/**
@@ -424,7 +447,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			'</div>'+
 			'<div class="calendar_calEventBody">'+
 				'<p style="margin: 0px;">'+
-				'<span class="calendar_calEventTitle">'+this.div.attr('data-title')+'</span><br>'+
+				'<span class="calendar_calEventTitle">'+this.options.value.title+'</span><br>'+
 				this.options.value.description+'</p>'+
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
 				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + this.options.value.location+'</p>' : '')+

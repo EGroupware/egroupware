@@ -618,6 +618,9 @@ Hide subsequent headers in week view with non-consolidated owners
  */
   background-color: rgba(255, 255, 255, 0.9);
 }
+.calendar_calEventHeader .calendar_calEventTitle {
+  display: none;
+}
 .calendar_calEventHeaderSmall {
   font-size: 8pt;
   line-height: 10pt;
@@ -662,6 +665,22 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calEventTitle {
   font-weight: bold;
+}
+/* Event is too small for full display */
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall[data-visible_lines='1'] .calendar_calTimespan {
+  display: none;
+}
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall[data-visible_lines='2'] .calendar_calTimespan,
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall[data-visible_lines='3'] .calendar_calTimespan {
+  display: inline;
+}
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall[data-visible_lines='1'] .calendar_calEventTitle,
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall[data-visible_lines='2'] .calendar_calEventTitle,
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall[data-visible_lines='3'] .calendar_calEventTitle {
+  display: inline;
+}
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall .calendar_calEventBody {
+  padding-top: 2em;
 }
 /* Events as displayed in a list, not sized by time */
 .calendar_calTimeGridList .calendar_calTimeGridScroll {

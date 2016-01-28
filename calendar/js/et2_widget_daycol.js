@@ -737,11 +737,15 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this._children.sort(function(a,b) {
 			var start = new Date(a.options.value.start) - new Date(b.options.value.start);
 			var end = new Date(a.options.value.end) - new Date(b.options.value.end);
-			
 			// Whole day events sorted by ID, normal events by start / end time
 			if(a.options.value.whole_day && b.options.value.whole_day)
 			{
-				return (a.options.value.app_id - b.options.value.app_id);
+				// Longer duration comes first so we have nicer bars across the top
+				var duration = 
+					(new Date(b.options.value.end) - new Date(b.options.value.start)) -
+					(new Date(a.options.value.end) - new Date(a.options.value.start));
+
+				return duration ? duration : (a.options.value.app_id - b.options.value.app_id);
 			}
 			else if (a.options.value.whole_day || b.options.value.whole_day)
 			{
@@ -890,7 +894,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 					columns[c][i].div.css('left', left.toFixed(1)+'%');
 					columns[c][i].div.css('right', right.toFixed(1)+'%');
 					columns[c][i].div.css('z-index',parseInt(20)+c);
-
+					columns[c][i]._small_size();
 				}
 			}
 			// Only wanted to position this event, leave the other columns alone

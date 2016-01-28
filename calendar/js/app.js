@@ -2713,7 +2713,7 @@ app.classes.calendar = AppJS.extend(
 		this.egw.dataFetch(
 			instance ? instance.etemplate_exec_id :
 				this.sidebox_et2.getInstanceManager().etemplate_exec_id,
-			{start: start, num_rows:200},
+			{start: start, num_rows:400},
 			query,
 			this.id,
 			function calendar_handleResponse(data) {
