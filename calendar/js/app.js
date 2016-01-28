@@ -3176,7 +3176,7 @@ app.classes.calendar = AppJS.extend(
 					}
 				});
 							
-			// Dynamic resize to fill sidebox
+			// Dynamic resize of sidebox calendar to fill sidebox
 			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
 			var font_ratio = parseFloat($j(this.sidebox_et2.getDOMNode()).css('font-size')) / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
 
@@ -3187,15 +3187,17 @@ app.classes.calendar = AppJS.extend(
 					.css('font-size',(percent*100)+'%');
 				// Position today
 				var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a');
-				var left = Infinity;
 				var total = 0;
 				buttons.each(function()	{
 					total += $j(this).position().left;
 				});
 				// Why doesn't this work properly?
-				var today = $j('#calendar-sidebox_header_today')
-					.position({my: 'center left', at: 'center right',of: buttons});
-				today.css('left',(total/buttons.length)/*+(today.width()/2)*/)
+				var today = $j('#calendar-sidebox_header_today');
+				if(today.length)
+				{
+					today.position({my: 'center left', at: 'center right',of: buttons});
+					today.css('left',(total/buttons.length));
+				}
 			}).trigger('resize');
 			
 		}
