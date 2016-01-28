@@ -397,17 +397,13 @@ class mail_sieve
 			throw new egw_exception_no_permission();
 		}
 
-		if(PEAR::isError($error = $this->account->imapServer()->retrieveRules()) )
-		{
-			$rules    = array();
-			$emailNotification = array();
-		}
-		else
-		{
-			$rules    = $this->account->imapServer()->getRules();
+		try {
 			$emailNotification = $this->account->imapServer()->getEmailNotification();
 		}
-
+		catch(Exception $e) {
+			unset($e);
+			$emailNotification = array();
+		}
 		return $emailNotification;
 	}
 
@@ -1160,18 +1156,18 @@ class mail_sieve
 	 */
 	function getRules($ruleID = null)
 	{
-		if(PEAR::isError($error = $this->account->imapServer()->retrieveRules()) )
-		{
-			error_log(__METHOD__.__LINE__.$error->message);
-			$this->rules	= array();
-			$this->rulesByID = array();
-			$this->vacation	= array();
-		}
-		else
-		{
+		try {
+			$this->account->imapServer()->retrieveRules();
 			$this->rules	= $this->account->imapServer()->getRules();
 			$this->rulesByID = $this->rules[$ruleID];
 			$this->vacation	= $this->account->imapServer()->getVacation();
+		}
+		catch(Exception $e) {
+			error_log(__METHOD__.__LINE__.$e->getMessage().': '.$e->details);
+			$this->rules	= array();
+			$this->rulesByID = array();
+			$this->vacation	= array();
+			return false;
 		}
 		return true;
 	}
