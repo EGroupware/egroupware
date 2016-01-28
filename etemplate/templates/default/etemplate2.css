@@ -1580,7 +1580,7 @@ div.ms-sel-ctn .ms-sel-item {
 	background-size: 16px 16px;
 	border-radius: 3px;
 	padding-left: 0;
-	background-color: #fafafa;
+	background-color: #f0f0f0;
 }
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption {
 	width:auto;
@@ -1771,7 +1771,7 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container > span:first-child {
 	text-align: -moz-center;
 	position: absolute;
 	left:0;
-	
+
 	font-weight: bold;
 	color:#C0C0C0;
 	top: 5px;
@@ -2213,7 +2213,7 @@ td.avatar {
 	background-size: 35px 35px;
 	background-repeat: no-repeat;
 	background-position: center;
-	
+
 	bottom:25%;
 	top:25%;
 }

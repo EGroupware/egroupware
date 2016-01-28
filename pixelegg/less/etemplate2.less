@@ -522,7 +522,7 @@ div.header_row_right{
 
 // AREA AROUND CONTENT
 .et2_nextmatch {
-    .background_color_10_gray;
+    background-color: transparent;
 }
 
 // complete nextmatch....Background color!
@@ -530,7 +530,7 @@ div.header_row_right{
     padding: 5px;
     border: none;
     background-image: none;
-    background-color: @gray_20;
+    background-color: transparent;
 }
 
 // complete nextmatch....Background color!
@@ -546,7 +546,7 @@ div.header_row_right{
 
 
 // area width left and right boxes
-.ui-helper-clearfix{ background-color: @gray_20;}
+.ui-helper-clearfix{}
 
 /*################################################################
 *
@@ -647,11 +647,12 @@ div.header_row_right{
     input {
         /*.background_color_search;*/
         /*background-color: @gray_0;*/
-        border: none;
         .fontsize_normal;
         color: @gray_100;
         padding: 3px;
         width: 150px;
+		border-color:@gray_60;
+		border-right: none;
     }
 
     input::-webkit-input-placeholder {
@@ -725,7 +726,7 @@ div.header_row_right{
     .et2_label {
 
         // distance to label
-        select { margin-left: 3px; }
+        select { margin-left: 3px; border-color:@gray_20;}
     }
 }
 

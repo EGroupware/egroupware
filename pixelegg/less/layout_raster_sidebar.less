@@ -38,7 +38,7 @@
         top: 0px;
         bottom: 4px;
         left: 4px;
-        right: 5px;
+        right: 8px;
         overflow: hidden;
         z-index: 0;
         padding-top: 0.6em;
@@ -47,7 +47,7 @@
         // SIDE AREA
         .egw_fw_ui_scrollarea_outerdiv{
             .background_color_5_gray;
-
+			border-radius: 5px;
 
             //####################################################
             // AREA for
@@ -109,8 +109,8 @@
                 background-position: 95% -3000px;
                 background-repeat: no-repeat;
 
-                .background_color_10_gray;
-                .border_radius ( 5px, 0px, 0px, 27px );
+                .background_color_0_gray;
+                .border_radius ( 0px, 0px, 0px, 27px );
                 .bordered (@gray_30, @gray_30, @gray_30, @gray_30);
 
                 margin: 0 0 0 0;
@@ -181,20 +181,22 @@
                 .border_radius (0, 0, 27px, 0);
                 border-color: @gray_30;
                 border-style: solid;
-                border-width: 0px;
+                border-width: 1px;
                 margin: 0 0 2em 0;
 
 
                 // rounded Corner on bottom
                 &:nth-last-of-type(-n+3)   {
-                    padding:  5px 0.3em 1.5em 0.3em;
-                    margin: 0 0 10px 0;
-                    .background_color_30_gray;
+                    .background_color_0_gray;
                     .border_radius (0, 0, 24px, 0);
                     border-color: @gray_30;
+					border-right: 0px;
+					margin-bottom: 10px;
+					border-top-color: white;
+					padding-top: 8px;
                 }
 
-               & > div {.background_color_30_gray;}
+               & > div {}
 
                 //###################################################
                 // *letztes Element   */
@@ -320,12 +322,13 @@
     // Trenner (Splitter)
     #egw_fw_splitter {
         position: absolute;
-        .background_color_30_gray;
-        width: 5px;
+        width: 8px;
         top: 40px;
         bottom: 3px;
         right: 0px;
-
+		border-top:1px solid;
+		border-left: 1px solid;
+		border-color:@gray_30;
         &:hover {background-color: @egw_color_1;}
     }
 
@@ -453,7 +456,7 @@
 	background-image: url(../images/splitter_vert.png);
 	background-position: center;
 	background-repeat: no-repeat;
-	.background_color_30_gray;
+	.background_color_0_gray;
 	position: absolute;
 	width: 5px;
 	height: 100%;
@@ -504,6 +507,7 @@
                     &:last-of-type{
                     .border_radius (0, 0, 10px, 0);
                     border-color: @gray_30;
+					margin-bottom: 5px;
                 }
 
                 img { .dimension_height_s; vertical-align: middle;}
