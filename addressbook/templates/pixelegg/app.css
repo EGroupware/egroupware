@@ -507,6 +507,14 @@ input.et2_radiobox {
     text-align: center;
     font-size: 12pt;
   }
+  #addressbook-edit #addressbook-edit_adr_one_locality,
+  #addressbook-edit #addressbook-edit_adr_two_locality,
+  #addressbook-edit #addressbook-edit_room {
+    margin-left: 0;
+  }
+  #addressbook-edit a.et2_url.email {
+    display: none;
+  }
   #addressbook-index table.egwGridView_outer tbody .addressbookCol3 div.avatar {
     position: absolute;
   }

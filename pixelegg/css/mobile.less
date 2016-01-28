@@ -830,6 +830,7 @@
 				font-size: 24pt;
 				color: white;
 				padding-left: 5px;
+				font-weight: bold;
 			}
 			background-image: none;
 		}
@@ -1091,6 +1092,7 @@
 			top:50px !important;
 			right:0px;
 			left:auto !important;
+			background-color: white;
 		}
 		div#egw_message {
 			bottom: 0px;
@@ -1475,9 +1477,10 @@
 		.et2_details {
 			.et2_details_toggle {
 				&:after{
-					width:24px;
-					height: 24px;
+					width:25px;
+					height: 25px;
 					font-size:	18pt;
+					text-align: center;
 				}
 			}
 		}
@@ -1507,7 +1510,7 @@
 					display: inline-block;
 					background-color: #F0F0F0;
 					width:100%;
-					padding-top: 12px;
+					padding-top: 6px;
 				}
 				.et2_details_toggle {
 					
@@ -1519,11 +1522,11 @@
 				.et2_details_toggle {
 					position: absolute;
 					right: 2px;
-					top:4px;
+					top:0px;
 					margin: 0px;
 				}
 				.et2_details_title {
-					padding-top: 12px;
+					padding-top: 6px;
 					margin-top:0;
 				}
 			}
@@ -1586,6 +1589,40 @@
 					}
 					span {
 						display: none;
+					}
+				}
+			}
+			//###########################################
+			//#											#
+			//#		et2_tabbox styles					#
+			//#											#
+			//###########################################
+			.et2_tabbox.vertical {
+				.et2_tabflag {
+					border:none;
+					div.et2_tabtitle {
+						background-color: #f0f0f0;
+						&:before {
+							padding: 0;
+							width:30px;
+							height:30px;
+							text-align: center;
+							font-size: 18pt;
+						}
+					}
+				}
+			}
+			.et2_link_to {
+				div {
+					height:40px;
+					padding-bottom: 3px;
+					width: 99% !important;
+				}
+				.et2_file {
+					margin: 0;
+					padding:0;
+					.et2_file_span, .et2_file_spanHover, .et2_file_upload {
+						height:25px !important;
 					}
 				}
 			}
