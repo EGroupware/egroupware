@@ -4346,6 +4346,7 @@ class mail_ui
 	function ajax_flagMessages($_flag, $_messageList, $_sendJsonResponse=true)
 	{
 		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
+		translation::add_app('mail');
 		$alreadyFlagged=false;
 		$flag2check='';
 		$filter2toggle = $query = array();
@@ -4479,18 +4480,25 @@ class mail_ui
 
 		if ($_sendJsonResponse)
 		{
+			$flag=array(
+				'label1'	=> 'important',//lang('important'),
+				'label2'	=> 'job',	//lang('job'),
+				'label3'	=> 'personal',//lang('personal'),
+				'label4'	=> 'to do',	//lang('to do'),
+				'label5'	=> 'later',	//lang('later'),
+			);
 			$response = egw_json_response::get();
 			if (isset($_messageList['msg']) && $_messageList['popup'])
 			{
-				$response->call('egw.refresh',lang('flagged %1 message as %2 in %3',$_messageList['msg'],lang($_flag),$folder),'mail', $_messageList['msg'], 'update');
+				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',$_messageList['msg'],lang(($flag[$_flag]?$flag[$_flag]:$_flag)),$folder),'mail', $_messageList['msg'], 'update');
 			}
 			else if ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false)))
 			{
-				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder),'mail');
+				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),$folder),'mail');
 			}
 			else
 			{
-				$response->call('egw.message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang($_flag),$folder));
+				$response->call('egw.message',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),$folder));
 			}
 		}
 	}
@@ -4608,6 +4616,7 @@ class mail_ui
 	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy')
 	{
 		if(mail_bo::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove);
+		translation::add_app('mail');
 		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 		// only copy or move are supported as method
 		if (!($_copyOrMove=='copy' || $_copyOrMove=='move')) $_copyOrMove='copy';
