@@ -1126,25 +1126,13 @@ class setup
 	{
 		if (!$this->setup_account_object()) return false;
 
-		$accounts = $this->accounts->search(array(
+		$this->accounts->search(array(
 			'type'   => 'accounts',
 			'start'  => 0,
 			'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
 		));
 
-		if (!$accounts || !is_array($accounts) || !count($accounts))
-		{
-			return false;
-		}
-		foreach($accounts as $account)
-		{
-			if ($account['account_lid'] != 'anonymous')
-			{
-				// we might add further checks, eg. if the account really has admin rights here
-				return true;
-			}
-		}
-		return false;
+		return $this->accounts->total > 1;
 	}
 
 	/**
