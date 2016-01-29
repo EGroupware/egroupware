@@ -67,36 +67,34 @@ table.et2_grid {
 // Spalten mit Border
 
 table.egwGridView_outer{
-    .background_color_5_gray;
+    background-color:transparent;
     //	max-width: 100%;
     border-spacing: 0px;
     font-size: 0.9em;
 
     thead {
-        .gradient_thead;
-
-           max-height: 118px;
+			max-height: 118px;
             overflow-y: auto;
-
+			background: rgb(224, 224, 224);
+			border-radius: 5px;
         tr {
 
             th {
 
-                background: transparent;
-                /*.gradient();*/
                 background-position: -200px;
 
-                font-weight: normal;
+                font-weight: bold;
                 padding: 3px 0 3px 4px;
                 border-color: @gray_30;
                 border-left: 0px solid transparent;
                 border-top: 0px solid transparent;
-                border-right: 0px solid transparent;
+                border-right: 2px solid white;
                 border-bottom: 0px solid transparent;
 
-                vertical-align: top;
+                vertical-align: middle;
                 overflow: auto;
-
+				border-radius:3px;
+				border-top-right-radius: 23px;
 
                 &:hover {
                     .background_color_25_gray;
@@ -128,7 +126,8 @@ table.egwGridView_outer{
                 text-align: center;
                 background-image: none;
                 /*width: 32px !important;*/
-
+				vertical-align: bottom;
+				.background_color_0_gray;
                 &:hover{
                     background-color: @color_hint;
                 }
