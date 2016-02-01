@@ -76,6 +76,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			.addClass("calendar_calDayColAllDay")
 			.appendTo(this.header);
 		this.event_wrapper = $j(document.createElement('div'))
+			.addClass("event_wrapper")
 			.appendTo(this.div);
 		
 		this.setDOMNode(this.div[0]);

@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 54876 2016-01-28 22:08:15Z nathangray $ */
+/* $Id: app.css 54892 2016-02-01 20:52:53Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -559,6 +559,20 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calEvent:hover {
   cursor: pointer;
 }
+/** Multi-line ellipsis */
+.calendar_calEvent .calendar_calEventBody {
+  overflow: hidden;
+}
+.calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEvent::after {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  height: 0.9em;
+  content: "\02026";
+  left: 0px;
+  float: right;
+  padding-bottom: 2em;
+  text-indent: 5px;
+}
 /**
  * User has not accepted the invitation
  */
@@ -732,7 +746,7 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calTimeGridList .calendar_calDayColHeader > div[data-date] {
   border: none;
 }
-.calendar_calTimeGridList .calendar_calDayCol > div:first-child {
+.calendar_calTimeGridList .calendar_calDayCol > div.event_wrapper {
   position: absolute;
   top: 0px;
   bottom: 3em;
