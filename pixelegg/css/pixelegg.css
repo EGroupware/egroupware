@@ -2193,9 +2193,9 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  border-bottom: 0px solid #7E7E7E;
+  border: none;
   margin: 0;
-  background-color: #408dd2;
+  background-color: white;
 }
 #loginMainDiv #divAppIconBar {
   margin-left: auto;
@@ -2207,31 +2207,20 @@ body {
 #loginMainDiv #divAppIconBar #divLogo {
   position: relative;
   top: 1px;
-  background-color: #408dd2;
 }
 #loginMainDiv #divAppIconBar #divLogo img {
-  /*width: 70%;*/
-  /*margin-left: 15%;*/
   margin: 0 auto;
   max-width: 400px;
 }
 #loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
   width: 70%;
   max-width: 2560px;
-  background-color: #408dd2;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNDA4ZGQyIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNDA4ZGQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #408dd2, #408dd2);
-  background-image: -ms-linear-gradient(top, #408dd2, #408dd2);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#408dd2), to(#408dd2));
-  background-image: -webkit-linear-gradient(top, #408dd2, #408dd2);
-  background-image: -o-linear-gradient(top, #408dd2, #408dd2);
-  background-image: linear-gradient(top, #408dd2, #408dd2);
-  background-repeat: repeat-x;
 }
 #loginMainDiv div#centerBox {
   margin: 0% auto;
   width: 57em;
-  background-color: #ffffff;
+  background-color: #cdcdcd;
+  border: none;
   z-index: 100;
   padding: 25px 10px 10px;
   -webkit-border-top-right-radius: 5px;
@@ -2247,20 +2236,6 @@ body {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 50px;
   /*.background-clip(padding-box);*/
-  background-color: #4385c0;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: -ms-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#679fd2), to(#0c5da5));
-  background-image: -webkit-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: -o-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: linear-gradient(top, #679fd2, #0c5da5);
-  background-repeat: repeat-x;
-  border-top: solid 1px #0c5da5;
-  border-left: solid 1px #0c5da5;
-  border-right: solid 1px #0c5da5;
-  border-bottom: solid 1px #679fd2;
-  border-width: 1px;
 }
 #loginMainDiv div#centerBox #loginScreenMessage {
   margin: 1em;
@@ -4176,7 +4151,6 @@ td.message span.message {
 #egw_fw_header {
   width: 100%;
   float: left;
-  background-color: #679fd2;
   /* Logo EGW or Company - left top*/
   /*  ###########################################################################################################################################
     Topmenu / Home / Einstellungen / Zugriff / Kategorien usw..
@@ -4253,11 +4227,11 @@ td.message span.message {
   text-decoration: none;
   height: 32px;
   /*font-size: 1.1em;*/
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
-  color: #e6e6e6;
+  /*color: @gray_10;*/
   border-color: #828282;
   text-decoration: none !important;
 }
@@ -4277,7 +4251,7 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
   padding-right: 20px;
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
@@ -4675,7 +4649,7 @@ td.message span.message {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
@@ -4846,7 +4820,7 @@ td.message span.message {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 15px;
   line-height: 1em;
-  font-size: 12.1px;
+  font-size: 12.100000000000001px;
   background-image: url(../images/arrow_left.png);
   background-repeat: no-repeat;
   background-position: left center;

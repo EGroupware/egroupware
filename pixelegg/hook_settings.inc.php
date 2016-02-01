@@ -104,6 +104,24 @@ $GLOBALS['settings'] = array(
 		'xmlrpc' => True,
 		'admin'  => False,
 	),
+	'sidebox_custom_color' => array(
+		'type' => 'color',
+		'label' => 'Custom sidebar menu active color, defaults to above color darkened',
+		'no_lang' => true,
+		'name' => 'sidebox_custom_color',
+		'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
+		'xmlrpc' => True,
+		'admin'  => False,
+	),
+	'loginbox_custom_color' => array(
+		'type' => 'color',
+		'label' => 'Custom login box color, defaults to above color darkened',
+		'no_lang' => true,
+		'name' => 'loginbox_custom_color',
+		'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
+		'xmlrpc' => True,
+		'admin'  => False,
+	),
 	'navbar_format' => false,	// not used in JDots (defined in common prefs)
 	'default_app' => false,		// not used in JDots, as we can have multiple tabs open ...
 );

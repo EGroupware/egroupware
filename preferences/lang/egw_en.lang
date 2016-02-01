@@ -10,6 +10,7 @@ acl grants have been updated	preferences	en	ACL grants have been updated.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
 audio effect	preferences	en	Audio effect
+audio effect enables|disables sound effects used in the theme	preferences	en	Audio effect enables|disables sound effects used in the theme
 automatically start with this font	preferences	en	Automatically start with this font
 automatically start with this font size	preferences	en	Automatically start with this font size
 bootstrap theme for ckeditor	preferences	en	Bootstrap Theme for CKEditor
@@ -24,6 +25,8 @@ charset for the csv export/import	preferences	en	Character set
 click to select a color	preferences	en	Click to select a color
 color	preferences	en	Color
 country	preferences	en	Country
+custom login box color, defaults to above color darkened	preferences	en	Custom login box color, defaults to above color darkened
+custom sidebar menu active color, defaults to above color darkened	preferences	en	Custom sidebar menu active color, defaults to above color darkened
 dark moono theme	preferences	en	Dark Moono Theme
 data exchange settings	preferences	en	Data exchange settings
 date format	preferences	en	Date format

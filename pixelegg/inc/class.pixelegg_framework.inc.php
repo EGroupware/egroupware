@@ -37,7 +37,7 @@ class pixelegg_framework extends jdots_framework
 	 *
 	 * Overwritten to set own app/template name (parent can NOT use static::APP!)
 	 *
-	 * @param string $template='pixelegg' name of the template
+	 * @param string $template ='pixelegg' name of the template
 	 */
 	function __construct($template=self::APP)
 	{
@@ -70,25 +70,23 @@ class pixelegg_framework extends jdots_framework
 	 * @param int $percent int
 	 * @return string returns color hex format (for instance: #2b2b2b)
 	 */
-	function _color_shader($color, $percent) {
+	function _color_shader($color, $percent)
+	{
+		if ($color[0] == '#') $color = ltrim($color, '#');
 
 		$R = hexdec(substr($color,0,2));
 		$G = hexdec(substr($color,2,2));
 		$B = hexdec(substr($color,4,2));
 
-		$R = round($R * (100 + $percent) / 100);
-		$G = round($G * (100 + $percent) / 100);
-		$B = round($B * (100 + $percent) / 100);
+		$Rs = round($R * (100 + $percent) / 100);
+		$Gs = round($G * (100 + $percent) / 100);
+		$Bs = round($B * (100 + $percent) / 100);
 
-		$R = ($R<255)?$R:255;
-		$G = ($G<255)?$G:255;
-		$B = ($B<255)?$B:255;
+		if ($Rs > 255) $Rs = 255;
+		if ($Gs > 255) $Gs = 255;
+		if ($Bs > 255) $Bs = 255;
 
-		$RR = (strlen(dechex($R))==1?"0".dechex($R):dechex($R));
-		$GG = (strlen(dechex($G))==1?"0".dechex($G):dechex($G));
-		$BB = (strlen(dechex($B))==1?"0".dechex($B):dechex($B));
-
-		return '#'.$RR.$GG.$BB;
+		return '#'.sprintf('%02X%02X%02X', $Rs, $Gs, $Bs);
 	}
 
 	/**
@@ -103,13 +101,28 @@ class pixelegg_framework extends jdots_framework
 		// color to use
 		$color = str_replace('custom',$GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'],
 			$GLOBALS['egw_info']['user']['preferences']['common']['template_color']);
-		//The hex value of the color
-		$color_hex = ltrim($color, '#');
 
-		// Create a drak variant of the color
-		$color_hex_dark = $this->_color_shader($color_hex, 15);
-		// Create a draker variant of the color
-		$color_hex_darker = $this->_color_shader($color_hex, -30);
+		// Create a dark variant of the color
+		$color_darker = $this->_color_shader($color, -30);
+
+		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i', $GLOBALS['egw_info']['user']['preferences']['common']['sidebox_custom_color']))
+		{
+			$sidebox_color_hover = $GLOBALS['egw_info']['user']['preferences']['common']['sidebox_custom_color'];
+			$sidebox_color = $this->_color_shader($sidebox_color_hover, -30);
+		}
+		else
+		{
+			$sidebox_color_hover = $color;
+			$sidebox_color = $color_darker;
+		}
+		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i', $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color']))
+		{
+			$loginbox_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'];
+		}
+		else
+		{
+			$loginbox_color = $color_darker;
+		}
 
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color))	// a little xss check
 		{
@@ -124,34 +137,26 @@ class pixelegg_framework extends jdots_framework
 -popup toolbar
 */
 div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #divAppIconBar #divLogo,
-#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active:hover,
 .dialogFooterToolbar, .et2_portlet .ui-widget-header{
 	background-color: $color !important;
 }
 
 /*Login background*/
 #loginMainDiv #divAppIconBar #divLogo img[src$='svg'] {
-	background-image: -webkit-linear-gradient(top, $color, $color);
-	background-image: -moz-linear-gradient(top, $color, $color);
-	background-image: -o-linear-gradient(top,$color, $color);
-	background-image: linear-gradient(to bottom, $color, $color);
+	background-color: $color;
 }
 
 /*Center box in login page*/
 #loginMainDiv div#centerBox {
-	background-image: -webkit-linear-gradient(top,$color_hex_dark,$color_hex_darker);
-	background-image: -moz-linear-gradient(top,$color_hex_dark,$color_hex_darker);
-	background-image: -o-linear-gradient(top,$color_hex_dark,$color_hex_darker);
-	background-image: linear-gradient(to bottom, $color_hex_dark,$color_hex_darker);
-	border-top: solid 1px $color_hex_darker;
-	border-left: solid 1px $color_hex_darker;
-	border-right: solid 1px $color_hex_darker;
-	border-bottom: solid 1px $color_hex_dark;
+	background-color: $loginbox_color;
 }
 
 /*Sidebar menu active category*/
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active:hover{
+	background-color: $sidebox_color_hover !important;
+}
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{
-	background-color: $color_hex_darker !important;
+	background-color: $sidebox_color !important;
 }
 
 

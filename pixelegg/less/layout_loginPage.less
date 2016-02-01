@@ -35,9 +35,9 @@
     padding: 0;
     height: 100%;
     width: 100%;
-    border-bottom: 0px solid #7E7E7E;
+    border: none;
     margin: 0;
-    background-color: @egw_color_2_d;
+    background-color: white;
 
     // Logo Leiste
     #divAppIconBar{
@@ -51,12 +51,9 @@
         #divLogo {
             position: relative;
             top: 1px;
-            background-color: @egw_color_2_d;
 
             img {
-                /*width: 70%;*/
-                /*margin-left: 15%;*/
-                margin: 0 auto;
+               margin: 0 auto;
                 max-width: 400px;
             }
 
@@ -64,8 +61,7 @@
             img[src$="svg"]{
                     width: 70%;
                     max-width: 2560px;
-                    .gradient_vertical (@egw_color_2_d, @egw_color_2_d);
-                }
+                 }
         }
     }
 
@@ -74,23 +70,16 @@
     div#centerBox{
         margin: 0% auto;
         width: 57em;
-        background-color: @gray_0;
+        background-color: @gray_20;
+		border: none;
         z-index: 100;
         padding: 25px 10px 10px;
         .border_radius (5px, 5px, 5px, 50px);
-        .gradient_vertical (@egw_color_2_e, @egw_color_2_a);
-
-        .bordered (@egw_color_2_a, @egw_color_2_a, @egw_color_2_e, @egw_color_2_a );
-        border-width: 1px;
-
-
 
         // Meldung
         #loginScreenMessage{
             margin: 1em;
-
         }
-
 
         // Message
         #loginCdMessage{
@@ -105,12 +94,9 @@
 			font-weight: bold;
 		}
 
-
-
         // Formular
         form{
              margin: 1em;
-
 
             // Table
             table.divLoginbox {
@@ -118,11 +104,7 @@
                 background-color: transparent;
                 .border_radius_button_lefttop;
 
-
                 tr.divLoginboxHeader{}
-
-
-
 
                 // Passwort Image
                 div.LoginPasswordImage{
@@ -142,7 +124,6 @@
                                                 .dimension_width_height_xl;
                                             }
                 }
-
 
                 td { padding: 0.5em; font-weight: bold; color: @egw_color_1_a}
 
@@ -176,10 +157,6 @@
                     &:hover{.Complete_Button_select_hover; background-color: @color_positive_action !important;}
                     &:focus {.Complete_Button_input_focus;}
                 }
-
-
-
-
             }
 
         } // Formular
