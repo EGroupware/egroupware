@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 54875 2016-01-28 21:35:22Z nathangray $ */
+/* $Id: app.css 54876 2016-01-28 22:08:15Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -54,19 +54,49 @@
 }
 #calendar-sidebox_header_today {
   position: absolute;
-  width: 2.4em;
   height: 1.8em;
   z-index: 1;
-  text-indent: 3em;
+  text-indent: 125%;
   overflow: hidden;
+  text-overflow: ellipsis;
   border: none;
+  right: 2em;
+  margin: 1px;
+  margin-top: -5px;
+  background-position: center center;
   background-size: contain;
   background-color: transparent;
   background-image: url(images/today.png);
   background-repeat: no-repeat;
 }
+#calendar-sidebox_header_go {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  top: 0.5em;
+  right: 4.7em;
+  z-index: 1;
+  overflow: hidden;
+  margin: 0px;
+  font-size: 10px;
+  line-height: 50%;
+  text-indent: -1px;
+  color: white;
+  background-color: #d8e7f3;
+  border: none;
+  border-radius: 100%;
+}
+#calendar-sidebox_header_go:hover {
+  background-color: #0c5da5;
+}
+#calendar-sidebox_date .ui-datepicker-prev {
+  right: 5em;
+}
 #calendar-sidebox_weekend {
   /* Special css styling goes here */
+}
+#calendar-sidebox_date .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+  max-width: 10em;
 }
 #calendar-sidebox_date td.ui-datepicker-week-col {
   cursor: pointer;
@@ -2477,7 +2507,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }
 /* Sidebox calendar */
 #calendar-sidebox_date .ui-widget-header {
-  background: transparent;
+  background-color: transparent;
 }
 #calendar-sidebox_date .ui-widget-content,
 #calendar-sidebox_date .ui-state-default,
@@ -2489,13 +2519,25 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar-sidebox_date .ui-datepicker td {
   padding: 0px;
 }
+#calendar-sidebox_date .ui-datepicker-header .ui-state-hover {
+  background-color: transparent;
+  border: none;
+  top: 2px;
+  box-shadow: none;
+}
 #calendar-sidebox_date .ui-datepicker-today {
   background-color: #ffc200;
 }
-#calendar-sidebox_date .ui-widget-content .ui-state-hover {
+#calendar-sidebox_date .ui-datepicker-calendar .ui-state-hover {
   background-color: rgba(103, 159, 210, 0.2);
 }
-#calendar-sidebox_header_today {
+#calendar-sidebox_date .ui-datepicker-header .ui-datepicker-next.ui-state-hover {
+  right: 2px;
+}
+#calendar-sidebox_date .ui-datepicker-year {
+  padding-right: 15px !important;
+}
+#calendar-sidebox_date #calendar-sidebox_header_today {
   background-image: url(images/today.png);
 }
 #calendar_cat_id,

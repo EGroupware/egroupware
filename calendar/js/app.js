@@ -3107,6 +3107,21 @@ app.classes.calendar = AppJS.extend(
 		{
 			var datepicker = date_widget.input_date.datepicker("option", {
 				showButtonPanel:	false,
+				onChangeMonthYear: function(year, month, inst)
+				{
+					// Update month button label
+					var go_button = date_widget.getRoot().getWidgetById('header_go');
+					if(go_button)
+					{
+						var temp_date = new Date(year, month-1, 1,0,0,0);
+						//temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
+						go_button.set_statustext(egw.lang(date('F',temp_date)));
+
+						// Store current _displayed_ date in date button for clicking
+						temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
+						go_button.btn.attr('data-date', temp_date.toJSON());
+					}
+				},
 				// Mark holidays
 				beforeShowDay: function (date)
 				{
@@ -3175,27 +3190,49 @@ app.classes.calendar = AppJS.extend(
 						app.calendar.update_state({date: date});
 					}
 				});
-							
+
+
+			// Set today button
+			var today = $j('#calendar-sidebox_header_today');
+
+			// Set go button
+			var go_button = date_widget.getRoot().getWidgetById('header_go');
+			if(go_button && go_button.btn)
+			{
+				go_button = go_button.btn;
+				var temp_date = new Date(date_widget.get_value());
+				temp_date.setUTCDate(1);
+				temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
+
+				// Store current _displayed_ date in date button for clicking
+				temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
+				go_button.attr('data-date', temp_date.toJSON());
+			}
+
 			// Dynamic resize of sidebox calendar to fill sidebox
 			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
 			var font_ratio = 12 / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
-			$j(window).on('resize.calendar'+date.dom_id, function() {
+			$j(window).on('resize.calendar'+date_widget.dom_id, function() {
 				var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
 				percent *= font_ratio;
-				$j('#calendar-sidebox_date .ui-datepicker-inline,#calendar-sidebox_header_today')
+				$j('#calendar-sidebox_date .ui-datepicker-inline')
 					.css('font-size',(percent*100)+'%');
 				// Position today
 				var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a');
-				var total = 0;
-				buttons.each(function()	{
-					total += $j(this).position().left;
-				});
-				// Why doesn't this work properly?
-				var today = $j('#calendar-sidebox_header_today');
 				if(today.length)
 				{
-					today.position({my: 'center left', at: 'center right',of: buttons});
-					today.css('left',(total/buttons.length));
+					// Why doesn't this work properly?
+					go_button.position({my: 'center left', at: 'center right',of: buttons[0]});
+					
+					go_button.css('left', buttons.first().position().left + buttons.first().width());
+
+					var max_width = buttons.last().position().left - (go_button.position().left + go_button.width());
+					today.css({
+						'left': go_button.position().left + go_button.outerWidth(),
+						'top': go_button.css('top'),
+						'max-width': max_width,
+						'right': buttons.last().outerWidth(true)
+					});
 				}
 			}).trigger('resize');
 			

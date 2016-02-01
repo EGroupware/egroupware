@@ -41,19 +41,51 @@
 }
 #calendar-sidebox_header_today {
 	position: absolute;
-	width: 2.4em;
 	height: 1.8em;
 	z-index: 1;
-	text-indent: 3em;
+	text-indent: 125%;
 	overflow: hidden;
+	text-overflow: ellipsis;
 	border: none;
-    background-size: contain;
+	right: 2em;
+	margin: 1px;
+	margin-top: -5px;
+
+	background-position: center center;
+	background-size: contain;
 	background-color: transparent;
     background-image: url(images/today.png);
 	background-repeat: no-repeat;
 }
+#calendar-sidebox_header_go {
+	position: absolute;
+	width: 13px;
+	height: 13px;
+	top: 0.5em;
+	right: 4.7em;
+	z-index: 1;
+	overflow: hidden;
+	margin: 0px;
+	font-size: 10px;
+	line-height: 50%;
+	text-indent: -1px;
+	color: white;
+	background-color: #d8e7f3;
+	border:none;
+	border-radius: 100%;
+}
+#calendar-sidebox_header_go:hover {
+	background-color: #0c5da5;
+}
+
+#calendar-sidebox_date .ui-datepicker-prev {
+	right: 5em;
+}
 #calendar-sidebox_weekend {
 	/* Special css styling goes here */
+}
+#calendar-sidebox_date .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+	max-width: 10em;
 }
 #calendar-sidebox_date td.ui-datepicker-week-col {
 	cursor: pointer;

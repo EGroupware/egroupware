@@ -1341,7 +1341,7 @@ div#calendar-container {
 #calendar-sidebox_date {
 
 	.ui-widget-header {
-		background: transparent;
+		background-color: transparent;
 	}
 	.ui-widget-content, .ui-state-default, #calendar-sidebox_date .ui-state-hover {
 		border: none;
@@ -1351,15 +1351,27 @@ div#calendar-container {
 	.ui-datepicker td {
 		padding: 0px
 	}
+	.ui-datepicker-header .ui-state-hover {
+		background-color: transparent;
+		border: none;
+		top: 2px;
+		box-shadow: none;
+	}
 	.ui-datepicker-today {
 		background-color: @egw_color_1;
 	}
-	.ui-widget-content .ui-state-hover {
+	.ui-datepicker-calendar .ui-state-hover {
 		background-color: @color_hover_row;
 	}
-}
-#calendar-sidebox_header_today {
-    background-image: url(images/today.png);
+	.ui-datepicker-header .ui-datepicker-next.ui-state-hover  {
+		right: 2px;
+	}
+	.ui-datepicker-year {
+		padding-right: 15px !important;
+	}
+	#calendar-sidebox_header_today {
+		background-image: url(images/today.png);
+	}	
 }
 // Select Fields in Sidemenu
 #calendar_cat_id,
