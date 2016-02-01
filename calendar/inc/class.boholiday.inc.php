@@ -264,7 +264,6 @@
 
 				/* get the file that contains the calendar events for your locale */
 				/* "http://www.egroupware.org/cal/holidays.US.csv";                 */
-				$network =& CreateObject('phpgwapi.network');
 				if(isset($GLOBALS['egw_info']['server']['holidays_url_path']) && $GLOBALS['egw_info']['server']['holidays_url_path'] != 'localhost')
 				{
 					$load_from = $GLOBALS['egw_info']['server']['holidays_url_path'];
@@ -284,11 +283,12 @@
 //				echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale).'.csv'."<br>\n";
 				if($GLOBALS['egw_info']['server']['holidays_url_path'] == 'localhost')
 				{
-					$lines = @file(EGW_SERVER_ROOT.'/calendar/egroupware.org/holidays.'.strtoupper($locale).'.csv');
+					$lines = file(EGW_SERVER_ROOT.'/calendar/egroupware.org/holidays.'.strtoupper($locale).'.csv');
 				}
 				else
 				{
-					$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale).'.csv');
+					$lines = file($url=$load_from.'/holidays.'.strtoupper($locale).'.csv', 0, egw_framework::proxy_context());
+					//error_log(__METHOD__."('$locale', $year) file('$url')=".array2string($lines));
 				}
 				if (!$lines)
 				{
