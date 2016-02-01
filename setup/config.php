@@ -57,21 +57,7 @@ if(@get_var('submit',Array('POST')) && @$newsettings)
 	/* Load hook file with functions to validate each config (one/none/all) */
 	$GLOBALS['egw_setup']->hook('config_validate','setup');
 
-	$datetime = CreateObject('phpgwapi.egw_datetime');
-	switch((int)$newsettings['daytime_port'])
-	{
-		case 13:
-			$newsettings['tz_offset'] = $datetime->getntpoffset();
-			break;
-		case 80:
-			$newsettings['tz_offset'] = $datetime->gethttpoffset();
-			break;
-		default:
-			$newsettings['tz_offset'] = $datetime->getbestguess();
-			break;
-	}
-	unset($datetime);
-
+	$newsettings['tz_offset'] = date('Z')/3600;
 	print_debug('TZ_OFFSET',$newsettings['tz_offset']);
 
 	$GLOBALS['egw_setup']->db->transaction_begin();

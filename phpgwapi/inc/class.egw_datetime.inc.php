@@ -39,8 +39,10 @@
 
 	/**
 	* eGroupWare datetime class that contains common date/time functions
-	* 
+	*
 	* renamed to egw_datetime to support php5.2
+	*
+	* @deprecated use egw_time class!!
 	*/
 	class egw_datetime
 	{
@@ -567,26 +569,13 @@
 		var $cv_gmtdate;
 
 		/**
-		 * Calling the constructor of the renamed class
-		 *
-		 * @return egw_datetime
-		 */
-		function datetime()
-		{
-			return $this->egw_datetime();
-		}
-
-		/**
 		 * Constructor of the renamed class
-		 *
-		 * @return egw_datetime
 		 */
-		function egw_datetime()
+		function __construct()
 		{
 			$this->tz_offset = 3600 * @$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 			print_debug('datetime::datetime::gmtnow',$this->gmtnow,'api');
 
-			$error_occured = True;
 			// If we already have a GMT time, no need to do this again.
 			if(!$this->gmtnow)
 			{
@@ -597,98 +586,21 @@
 				}
 				else
 				{
-					$this->gmtnow = time() - ($this->getbestguess() * 3600);
-					print_debug('datetime::datetime::bestguess',"set via bestguess=".$this->getbestguess().": gmtnow=".date('Y/m/d H:i',$this->gmtnow),'api');
+					$this->gmtnow = time() - date('Z');
+					print_debug('datetime::datetime::bestguess',"set via date('Z')=".date('Z').": gmtnow=".date('Y/m/d H:i',$this->gmtnow),'api');
 				}
 			}
 			$this->users_localtime = time() + $this->tz_offset;
 		}
-		
-		function getntpoffset()
+
+		/**
+		 * Calling the constructor of the renamed class
+		 *
+		 * @return egw_datetime
+		 */
+		function datetime()
 		{
-			$error_occured = False;
-			if(!@is_object($GLOBALS['egw']->network))
-			{
-				$GLOBALS['egw']->network = createobject('phpgwapi.network');
-			}
-			$server_time = time();
-
-			if($GLOBALS['egw']->network->open_port('129.6.15.28',13,5))
-			{
-				$line = $GLOBALS['egw']->network->bs_read_port(64);
-				$GLOBALS['egw']->network->close_port();
-
-				$array = explode(' ',$line);
-				// host: 129.6.15.28
-				// Value returned is 52384 02-04-20 13:55:29 50 0 0   9.2 UTC(NIST) *
-				print_debug('Server datetime',time(),'api');
-				print_debug('Temporary NTP datetime',$line,'api');
-				if ($array[5] == 4)
-				{
-					$error_occured = True;
-				}
-				else
-				{
-					$date = explode('-',$array[1]);
-					$time = explode(':',$array[2]);
-					$this->gmtnow = mktime((int)$time[0],(int)$time[1],(int)$time[2],(int)$date[1],(int)$date[2],(int)$date[0] + 2000);
-					print_debug('Temporary RFC epoch',$this->gmtnow,'api');
-					print_debug('GMT',date('Ymd H:i:s',$this->gmtnow),'api');
-				}
-			}
-			else
-			{
-				$error_occured = True;
-			}
-
-			if($error_occured == True)
-			{
-				return $this->getbestguess();
-			}
-			else
-			{
-				return (int)(($server_time - $this->gmtnow) / 3600);
-			}
-		}
-
-		function gethttpoffset()
-		{
-			$error_occured = False;
-			if(!@is_object($GLOBALS['egw']->network))
-			{
-				$GLOBALS['egw']->network = createobject('phpgwapi.network');
-			}
-			$server_time = time();
-
-			$filename = 'http://132.163.4.213/timezone.cgi?GMT';
-			$file = $GLOBALS['egw']->network->gethttpsocketfile($filename);
-			if(!$file)
-			{
-				return $this->getbestguess();
-			}
-			$time = strip_tags($file[55]);
-			$date = strip_tags($file[56]);
-
-			print_debug('GMT DateTime',$date.' '.$time,'api');
-			$dt_array = explode(' ',$date);
-			$temp_datetime = $dt_array[0].' '.substr($dt_array[2],0,-1).' '.substr($dt_array[1],0,3).' '.$dt_array[3].' '.$time.' GMT';
-			print_debug('Reformulated GMT DateTime',$temp_datetime,'api');
-			$this->gmtnow = $this->convert_rfc_to_epoch($temp_datetime);
-			print_debug('this->gmtnow',$this->gmtnow,'api');
-			print_debug('server time',$server_time,'api');
-			print_debug('server DateTime',date('D, d M Y H:i:s',$server_time),'api');
-			return (int)(($server_time - $this->gmtnow) / 3600);
-		}
-
-		function getbestguess()
-		{
-			print_debug('datetime::datetime::debug: Inside getting from local server','api');
-			$server_time = time();
-			// Calculate GMT time...
-			// If DST, add 1 hour...
-			//  - (date('I') == 1?3600:0)
-			$this->gmtnow = $this->convert_rfc_to_epoch(gmdate('D, d M Y H:i:s',$server_time).' GMT');
-			return (int)(($server_time - $this->gmtnow) / 3600);
+			return $this->__construct();
 		}
 
 		function convert_rfc_to_epoch($date_str)
@@ -998,4 +910,3 @@
 			return $this->localdates($localtime - $this->tz_offset);
 		}
 	}
-?>
