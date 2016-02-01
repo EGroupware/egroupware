@@ -62,49 +62,6 @@
 			</columns>
 			<rows>
 				<row>
-					<description for="role" value="Role"/>
-					<textbox id="role" class="et2_fullWidth" maxlength="64" autocomplete="section-one" />
-				</row>
-				<row>
-					<description value="Room"/>
-					<textbox id="room"  width="35%"/>
-				</row>
-				<row>
-					<description for="assistent" value="Assistent"/>
-					<textbox id="assistent" class="et2_fullWidth"/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_assistent" value="Assistent phone"/>
-					<url-phone id="tel_assistent" class="et2_fullWidth"/>
-				</row>
-				<row>
-					<description for="tel_fax" value="fax"/>
-					<url-phone id="tel_fax" class="et2_fullWidth" autocomplete="fax" />
-				</row>
-				<row>
-					<description for="tel_other" value="Other phone"/>
-					<url-phone id="tel_other" class="et2_fullWidth"  autocomplete="tel" />
-				</row>
-
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_fax" value="fax"/>
-					<url-phone id="tel_fax" class="et2_fullWidth" autocomplete="fax" />
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_other" value=" Other Phone"/>
-					<url-phone id="tel_other" class="et2_fullWidth" autocomplete="tel"/>
-				</row>
-				<row>
-					<description for="tel_car" value="car phone"/>
-					<url-phone id="tel_car" class="et2_fullWidth"/>
-				</row>
-				<row>
-					<description disabled="@no_tid" for="tid" value="Type"/>
-					<menulist disabled="@no_tid">
-						<menupopup id="tid" no_lang="1" class="et2_fullWidth" onchange="1"/>
-					</menulist>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
 					<description for="adr_one_street" value="street"/>
 					<textbox id="adr_one_street" class="et2_fullWidth" maxlength="64" autocomplete="address-line1"/>
 				</row>
@@ -132,7 +89,7 @@
 					<description value="Region"/>
 					<textbox statustext="State" id="adr_one_region" maxlength="64" class="et2_fullWidth" autocomplete="address-level1"/>
 				</row>
-				<row disabled="@addr_format=city_state_postcode">
+				<row>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist class="et2_fullWidth">
@@ -140,6 +97,34 @@
 						</menulist>
 						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
 					</vbox>
+				</row>
+				<row>
+					<description for="role" value="Role"/>
+					<textbox id="role" class="et2_fullWidth" maxlength="64" autocomplete="section-one" />
+				</row>
+				<row>
+					<description value="Room"/>
+					<textbox id="room"  width="35%"/>
+				</row>
+				<row>
+					<description for="assistent" value="Assistent"/>
+					<textbox id="assistent" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="tel_assistent" value="Assistent phone"/>
+					<url-phone id="tel_assistent" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="tel_fax" value="fax"/>
+					<url-phone id="tel_fax" class="et2_fullWidth" autocomplete="fax" />
+				</row>
+				<row>
+					<description for="tel_other" value="Other phone"/>
+					<url-phone id="tel_other" class="et2_fullWidth"  autocomplete="tel" />
+				</row>
+				<row>
+					<description for="tel_car" value="car phone"/>
+					<url-phone id="tel_car" class="et2_fullWidth"/>
 				</row>
 			</rows>
 		</grid>
@@ -191,21 +176,13 @@
 					<description for="tel_cell_private" value="mobile phone"/>
 					<url-phone id="tel_cell_private" class="et2_fullWidth" autocomplete="section-two mobile tel" />
 				</row>
-				<row disabled="@addr_format=city_state_postcode">
+				<row>
 					<description for="tel_pager" value="pager" autocomplete="section-two pager tel" />
 					<url-phone id="tel_pager" class="et2_fullWidth"/>
 				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_pager" value="pager"/>
-					<url-phone id="tel_pager" class="et2_fullWidth"/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
+				<row >
 					<description for="tel_fax_home" value="fax"/>
 					<url-phone id="tel_fax_home" class="et2_fullWidth" autocomplete="section-two fax tel" />
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_fax_home" value="fax"/>
-					<url-phone id="tel_fax_home" class="et2_fullWidth" autocomplete="fax tel" />
 				</row>
 				<row>
 					<description for="email_home" value="EMail"/>
@@ -215,7 +192,7 @@
 					<description for="url_home" value="URL"/>
 					<url id="url_home" class="et2_fullWidth" autocomplete="section-two url" />
 				</row>
-				<row disabled="@addr_format=city_state_postcode">
+				<row>
 					<description for="bday" value="Birthday"/>
 					<date id="bday" options="Y-m-d"  year_range="c-90:c+2" class="et2_fullWidth"/>
 				</row>
@@ -235,15 +212,6 @@
 					</hbox>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
-					<description for="adr_two_countryname" value="country"/>
-					<vbox width="100%">
-						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
-						</menulist>
-						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
-					</vbox>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
 					<description value="Region"/>
 					<textbox statustext="State" id="adr_two_region" maxlength="64" class="et2_fullWidth" autocomplete="section-two address-level1" />
 				</row>
@@ -255,8 +223,7 @@
 						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64" autocomplete="section-two postal-code" />
 					</hbox>
 				</row>
-
-				<row disabled="!@addr_format=city_state_postcode">
+				<row>
 					<description for="adr_two_countryname" value="country"/>
 					<vbox width="100%">
 						<menulist>
@@ -265,27 +232,22 @@
 						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
 					</vbox>
 				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="bday" value="Birthday"/>
-					<date id="bday" options="Y-m-d" class="et2_fullWidth"/>
-				</row>
-
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width = "120"/>
 				<column width="600"/>
 			</columns>
 			<rows>
 				<row disabled="@view">
-					<description/>
 					<link-to id="link_to"/>
 				</row>
-				<row>
+				<row class="th">
 					<description value="Existing links"/>
+				</row>
+				<row>
 					<link-list id="link_to"/>
 				</row>
 			</rows>
@@ -336,9 +298,9 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004">
 		<template id="addressbook.editname"/>
-		<grid class="addressbook_edit" border="1" width="100%">
+		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
 				<column width="600"/>
@@ -431,6 +393,12 @@
 								<column width="600"/>
 							</columns>
 							<rows>
+								<row>
+									<description disabled="@no_tid" for="tid" value="Type"/>
+									<menulist disabled="@no_tid">
+										<menupopup id="tid" no_lang="1" class="et2_fullWidth" onchange="1"/>
+									</menulist>
+								</row>
 								<row>
 									<description value="Addressbook"/>
 									<menulist span="2" class="et2_fullWidth">

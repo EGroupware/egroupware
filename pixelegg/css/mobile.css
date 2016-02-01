@@ -2204,9 +2204,9 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  border-bottom: 0px solid #7E7E7E;
+  border: none;
   margin: 0;
-  background-color: #408dd2;
+  background-color: white;
 }
 #loginMainDiv #divAppIconBar {
   margin-left: auto;
@@ -2218,31 +2218,20 @@ body {
 #loginMainDiv #divAppIconBar #divLogo {
   position: relative;
   top: 1px;
-  background-color: #408dd2;
 }
 #loginMainDiv #divAppIconBar #divLogo img {
-  /*width: 70%;*/
-  /*margin-left: 15%;*/
   margin: 0 auto;
   max-width: 400px;
 }
 #loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
   width: 70%;
   max-width: 2560px;
-  background-color: #408dd2;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNDA4ZGQyIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNDA4ZGQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #408dd2, #408dd2);
-  background-image: -ms-linear-gradient(top, #408dd2, #408dd2);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#408dd2), to(#408dd2));
-  background-image: -webkit-linear-gradient(top, #408dd2, #408dd2);
-  background-image: -o-linear-gradient(top, #408dd2, #408dd2);
-  background-image: linear-gradient(top, #408dd2, #408dd2);
-  background-repeat: repeat-x;
 }
 #loginMainDiv div#centerBox {
   margin: 0% auto;
   width: 57em;
-  background-color: #ffffff;
+  background-color: #cdcdcd;
+  border: none;
   z-index: 100;
   padding: 25px 10px 10px;
   -webkit-border-top-right-radius: 5px;
@@ -2258,20 +2247,6 @@ body {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 50px;
   /*.background-clip(padding-box);*/
-  background-color: #4385c0;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjc5ZmQyIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMGM1ZGE1IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: -ms-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#679fd2), to(#0c5da5));
-  background-image: -webkit-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: -o-linear-gradient(top, #679fd2, #0c5da5);
-  background-image: linear-gradient(top, #679fd2, #0c5da5);
-  background-repeat: repeat-x;
-  border-top: solid 1px #0c5da5;
-  border-left: solid 1px #0c5da5;
-  border-right: solid 1px #0c5da5;
-  border-bottom: solid 1px #679fd2;
-  border-width: 1px;
 }
 #loginMainDiv div#centerBox #loginScreenMessage {
   margin: 1em;
@@ -4187,7 +4162,6 @@ td.message span.message {
 #egw_fw_header {
   width: 100%;
   float: left;
-  background-color: #679fd2;
   /* Logo EGW or Company - left top*/
   /*  ###########################################################################################################################################
     Topmenu / Home / Einstellungen / Zugriff / Kategorien usw..
@@ -4268,7 +4242,7 @@ td.message span.message {
   line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
-  color: #e6e6e6;
+  /*color: @gray_10;*/
   border-color: #828282;
   text-decoration: none !important;
 }
@@ -6595,6 +6569,8 @@ span.egw_tutorial_title {
 @media all {
   body {
     background-color: transparent;
+    /*BOF close/back button styling*/
+    /*EOF close/back button styling*/
   }
   body .pt-page-moveToLeft {
     -webkit-animation: moveToLeft .6s ease both;
@@ -6694,6 +6670,31 @@ span.egw_tutorial_title {
   }
   body table.egwGridView_outer tbody tr td span.cat_.mobile_cat_col {
     background: #F5F5F5;
+  }
+  body span.egw_fw_mobile_popup_close {
+    width: 50px;
+    height: 50px;
+    float: left;
+    background-image: url('../images/cancelled.png');
+    /*url(../images/topmenu_items/mobile/menu_active.png);*/
+    -webkit-filter: contrast(2);
+    background-repeat: no-repeat;
+    z-index: 1000;
+    padding-right: 5px;
+    top: 2px;
+    left: 10px;
+    background-position: 3px 7px;
+    position: fixed;
+  }
+  body span.egw_fw_mobile_popup_close.loaded {
+    background-image: none;
+  }
+  body span.egw_fw_mobile_popup_close.loaded:after {
+    content: "\2190";
+    font-size: 24pt;
+    color: white;
+    padding-left: 5px;
+    font-weight: bold;
   }
   #egw_fw_basecontainer {
     background: white;
@@ -7318,31 +7319,6 @@ span.egw_tutorial_title {
     height: 100%;
     visibility: hidden;
   }
-  .egw_fw_mobile_popup_container span.egw_fw_mobile_popup_close {
-    width: 50px;
-    height: 50px;
-    float: left;
-    background-image: url('../images/cancelled.png');
-    /*url(../images/topmenu_items/mobile/menu_active.png);*/
-    -webkit-filter: contrast(2);
-    background-repeat: no-repeat;
-    z-index: 1000;
-    padding-right: 5px;
-    top: 2px;
-    left: 10px;
-    background-position: 3px 7px;
-    position: absolute;
-  }
-  .egw_fw_mobile_popup_container span.egw_fw_mobile_popup_close.loaded {
-    background-image: none;
-  }
-  .egw_fw_mobile_popup_container span.egw_fw_mobile_popup_close.loaded:after {
-    content: "\2190";
-    font-size: 24pt;
-    color: white;
-    padding-left: 5px;
-    font-weight: bold;
-  }
   .dialogHeadbar {
     height: 50px;
     box-shadow: 0px 4px 5px 2px silver;
@@ -7508,6 +7484,9 @@ span.egw_tutorial_title {
 /*mobile etemplate2*/
 /*mobile etemplate2*/
 @media only screen and (min-width: 320px) and (max-width: 1290px) {
+  body {
+    /*Chosen*/
+  }
   body #egw_fw_basecontainer.sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_white.png);
     width: 65px;
@@ -7548,6 +7527,26 @@ span.egw_tutorial_title {
     height: 100% !important;
     left: 0 !important;
     top: 0 !important;
+  }
+  body div.ui-dialog-content {
+    height: 87% !important;
+    margin-top: 60px !important;
+    padding: 0 !important;
+  }
+  body .ui-dialog .ui-dialog-buttonpane {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 50px;
+    box-shadow: 0px 4px 5px 2px silver;
+    width: 100%;
+    z-index: 1;
+  }
+  body .ui-dialog-titlebar {
+    display: none;
   }
   body button.plus_button {
     position: absolute !important;
@@ -8012,5 +8011,22 @@ span.egw_tutorial_title {
   body .et2_link_to .et2_file .et2_file_spanHover,
   body .et2_link_to .et2_file .et2_file_upload {
     height: 25px !important;
+  }
+  body .chzn-container ul.chzn-choices {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  body .chzn-container-multi .chzn-choices li.search-field .default {
+    color: #666;
+  }
+  body .et2_taglist .ms-ctn {
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
+    border-radius: 0;
+    margin-right: 5px;
+  }
+  body .et2_taglist .ms-sel-ctn {
+    background: white;
   }
 }

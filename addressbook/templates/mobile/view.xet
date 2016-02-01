@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.view" template="" lang="" group="0" version="1.9.004" class="addressbook_view">
+		<grid class="addressbook_view" border="1" width="100%">
+			<columns>
+				<column width = "120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row class="dialogHeadbar" >
+					<buttononly  id="edit" label="edit" class="button_edit"/>
+				</row>
+				<row>
+					<hbox  disabled="@hidebuttons" class="avatar">
+						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;"/>
+					</hbox>
+				</row>
+				<row>
+					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" />
+				</row>
+				<row>
+					<description for="org_name" value="Organisation"/>
+					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" class="et2_fullWidth" autocomplete="organization" />
+				</row>
+				<row>
+					<description for="title" value="Title"/>
+					<textbox id="title" size="36" maxlength="64" class="et2_fullWidth" autocomplete="organization-title" placeholder="title"/>
+				</row>
+				<row>
+					<description for="org_unit" value="department"/>
+					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
+				</row>
+				
+				<row>
+					<description for="tel_work" value="Business phone"/>
+					<url-phone id="tel_work" class="et2_fullWidth" autocomplete="work tel" />
+				</row>
+				<row>
+					<description for="tel_cell" value="mobile phone"/>
+					<url-phone id="tel_cell" class="et2_fullWidth" autocomplete="mobile tel" />
+				</row>
+				<row>
+					<description for="email" value="email"/>
+					<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" autocomplete="work email" />
+				</row>
+				<row>
+					<description for="url" value="url"/>
+					<url id="url" class="et2_fullWidth" autocomplete="url" />
+				</row>
+				<row>
+					<details title="Organisation">
+						<grid width="100%">
+							<columns>
+								<column width = "120"/>
+								<column width="600"/>
+							</columns>
+							<rows>
+								<row disabled="@addr_format=city_state_postcode">
+									<description for="adr_one_street" value="street"/>
+									<textbox id="adr_one_street" class="et2_fullWidth" maxlength="64" autocomplete="address-line1"/>
+								</row>
+								<row>
+									<description/>
+									<textbox statustext="address line 2" id="adr_one_street2" class="et2_fullWidth" maxlength="64" autocomplete="address-line2"/>
+								</row>
+								<row disabled="@addr_format=city_state_postcode">
+									<description for="adr_one_locality" value="city" />
+									<textbox statustext="City" id="adr_one_locality" maxlength="64"  class="et2_fullWidth" autocomplete="address-level2"/>
+								</row>
+								<row disabled="@addr_format=city_state_postcode">
+									<description value="ZIP Code"/>
+									<textbox statustext="ZIP Code" id="adr_one_postalcode" width="35%" maxlength="64" autocomplete="postal-code"/>
+								</row>
+								<row disabled="!@addr_format=city_state_postcode">
+									<description value="City"/>
+									<hbox>
+										<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" autocomplete="address-level2"/>
+										<textbox statustext="State" id="adr_one_region" size="3" maxlength="64" autocomplete="address-level1"/>
+										<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" autocomplete="postal-code"/>
+									</hbox>
+								</row>
+								<row disabled="@addr_format=city_state_postcode">
+									<description value="Region"/>
+									<textbox statustext="State" id="adr_one_region" maxlength="64" class="et2_fullWidth" autocomplete="address-level1"/>
+								</row>
+								<row disabled="@addr_format=city_state_postcode">
+									<description for="adr_one_countryname" value="country"/>
+									<vbox width="100%">
+										<menulist class="et2_fullWidth">
+											<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
+										</menulist>
+										<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
+									</vbox>
+								</row>
+							</rows>
+						</grid>
+					</details>
+				</row>
+				<row>
+					<details title="Private">
+						<grid width="100%">
+							<columns>
+								<column width = "120"/>
+								<column width="600"/>
+							</columns>
+							<rows>
+								<row>
+									<description for="tel_home" value="Home phone"/>
+									<url-phone id="tel_home" class="et2_fullWidth" autocomplete="section-two home tel" />
+								</row>
+								<row>
+									<description for="tel_cell_private" value="mobile phone"/>
+									<url-phone id="tel_cell_private" class="et2_fullWidth" autocomplete="section-two mobile tel" />
+								</row>
+								<row >
+									<description for="tel_fax_home" value="fax"/>
+									<url-phone id="tel_fax_home" class="et2_fullWidth" autocomplete="section-two fax tel" />
+								</row>
+								<row>
+									<description for="email_home" value="EMail"/>
+									<url-email id="email_home" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" autocomplete="section-two home email" />
+								</row>
+								<row>
+									<description for="url_home" value="URL"/>
+									<url id="url_home" class="et2_fullWidth" autocomplete="section-two url" />
+								</row>
+								<row>
+									<description for="bday" value="Birthday"/>
+									<date id="bday" options="Y-m-d"  year_range="c-90:c+2" class="et2_fullWidth"/>
+								</row>
+								<row>
+									<description for="adr_two_street" value="street"/>
+									<textbox id="adr_two_street" class="et2_fullWidth" maxlength="64" autocomplete="section-two address-line1" />
+								</row>
+								<row>
+									<description/>
+									<textbox statustext="address line 2" id="adr_two_street2" class="et2_fullWidth" maxlength="64" autocomplete="section-two address-line2" />
+								</row>
+								<row disabled="@addr_format=city_state_postcode">
+									<description for="adr_two_locality" value="city"/>
+									<hbox>
+										<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64" autocomplete="section-two postal-code" />
+										<textbox statustext="City" id="adr_two_locality" maxlength="64" width="242" autocomplete="section-two address-level2" />
+									</hbox>
+								</row>
+								<row disabled="@addr_format=city_state_postcode">
+									<description value="Region"/>
+									<textbox statustext="State" id="adr_two_region" maxlength="64" class="et2_fullWidth" autocomplete="section-two address-level1" />
+								</row>
+								<row disabled="!@addr_format=city_state_postcode">
+									<description value="City"/>
+									<hbox>
+										<textbox statustext="City" id="adr_two_locality" size="30" maxlength="64" autocomplete="section-two address-level2" />
+										<textbox statustext="State" id="adr_two_region" size="3" maxlength="64" autocomplete="section-two address-level1"/>
+										<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64" autocomplete="section-two postal-code" />
+									</hbox>
+								</row>
+								<row>
+									<description for="adr_two_countryname" value="country"/>
+									<vbox width="100%">
+										<menulist>
+											<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
+										</menulist>
+										<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
+									</vbox>
+								</row>
+							</rows>
+						</grid>
+					</details>
+				</row>
+				<row>
+					<description value="Notes"/>
+					<textbox multiline="true" id="note" rows="10" resize_ratio="0" class="et2_fullWidth" height="200"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

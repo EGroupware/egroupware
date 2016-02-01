@@ -391,7 +391,7 @@ div.addressbook_edit_general_picture img {
 
 /* tablets and smartphones  */
 @media only screen and (max-device-width:1024px) {
-	#addressbook-edit {
+	#addressbook-edit, .addressbook_view {
 		div.et2_hbox.avatar {
 			width: 70px;
 			display: block;
@@ -402,7 +402,7 @@ div.addressbook_edit_general_picture img {
 				width: 70px;
 			}
 		}
-		#addressbook-edit_n_fn {
+		#addressbook-edit_n_fn, #_n_fn {
 			border: none;
 			text-align: center;
 			.mob-fontsize-l;
@@ -417,16 +417,15 @@ div.addressbook_edit_general_picture img {
 	
 	#addressbook-index {
 		table.egwGridView_outer tbody {
-			.addressbookCol3 div.avatar {
-				position: absolute;
-			}
+			
 			span[id^='addressbook-index_'][id$='line1]'] {
-				.mob-fontsize-s;
+				.mob-fontsize-l;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
 			}
 			span[id^='addressbook-index_'][id$='line2]']{
+				.mob-fontsize-l;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;

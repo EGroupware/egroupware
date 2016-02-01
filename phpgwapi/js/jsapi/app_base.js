@@ -383,7 +383,74 @@ var AppJS = Class.extend(
 
 		return state;
 	},
-
+	
+	/**
+	 * Function to load selected row from nm into a template view
+	 * 
+	 * @param {object} _action
+	 * @param {object} _senders 
+	 */
+	viewEntry: function(_action, _senders) 
+	{
+		// app id in nm
+		var id = _senders[0].id;
+		// entry id
+		var id_app = '';
+		var content = {};
+		var self = this;
+		
+		
+		if (id){
+			id_app = id.split('::');
+			content = egw.dataGetUIDdata(id);
+			if (content.data) content = content.data;
+		}
+		// view container
+		this.viewContainer = jQuery(document.createElement('div'))
+				.addClass('et2_mobile_view')
+				.appendTo('body');
+		
+		// close button
+		var close = jQuery(document.createElement('span'))
+				.addClass('egw_fw_mobile_popup_close loaded')
+				.click(function(){
+							self.viewContainer.remove();
+							delete self.viewTemplate;
+							delete self.viewContainer;
+						})
+				.appendTo(this.viewContainer);
+		
+		// view template main container (content)
+		this.viewTemplate = jQuery(document.createElement('div'))
+				.attr('id', this.appname+'_view')
+				.css({"z-index":102,
+					width:"100%",
+					height:"100%",
+					background:"white",
+					display:'block',
+					position:'absolute',
+					top:0,
+					left:0,
+					overflow:'auto',
+					"padding-top":'60px'})
+				.appendTo(this.viewContainer);
+		
+		var etemplate = new etemplate2 (this.viewTemplate[0], false);
+		var template = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/view.xet?1';
+		var data = {content:content, readonlys:{'__ALL__':true,'edit':false}};
+		
+		if(template.indexOf('.xet') > 0)
+		{
+			// File name provided, fetch from server
+			etemplate.load("",template, data, function() {});
+		}
+		else
+		{
+			// Just template name, it better be loaded already
+			etemplate.load(template,'',data);
+		}	
+	},
+	
 	/**
 	 * Initializes actions and handlers on sidebox (delete)
 	 *
