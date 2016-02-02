@@ -3217,21 +3217,15 @@ app.classes.calendar = AppJS.extend(
 				percent *= font_ratio;
 				$j('#calendar-sidebox_date .ui-datepicker-inline')
 					.css('font-size',(percent*100)+'%');
-				// Position today
-				var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a');
-				if(today.length)
-				{
-					// Why doesn't this work properly?
-					go_button.position({my: 'center left', at: 'center right',of: buttons[0]});
-					
-					go_button.css('left', buttons.first().position().left + buttons.first().width());
 
-					var max_width = buttons.last().position().left - (go_button.position().left + go_button.width());
+				// Position go and today
+				var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a span');
+				if(today.length && go_button.length)
+				{
+					go_button.position({my: 'left+15px center', at: 'right center-1',of: $j('#calendar-sidebox_date .ui-datepicker-year')});
 					today.css({
-						'left': go_button.position().left + go_button.outerWidth(),
-						'top': go_button.css('top'),
-						'max-width': max_width,
-						'right': buttons.last().outerWidth(true)
+						'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
+						'top': go_button.css('top')
 					});
 				}
 			}).trigger('resize');
