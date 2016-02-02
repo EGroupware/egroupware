@@ -343,12 +343,8 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 			this.body
 				.html('<span class="calendar_calEventTitle">'+title+'</span>')
-				.append('<span class="calendar_calTimespan">'+start_time + '</span>');
-			if(this.options.value.description.trim())
-			{
-				this.body
-					.append('<p>'+this.options.value.description+'</p>');
-			}
+				.append('<span class="calendar_calTimespan">'+start_time + '</span>')
+				.append('<p>'+this.options.value.description+'</p>');
 		}
 	},
 
@@ -362,34 +358,19 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * > 4 - Show description as well, truncated to fit
 	 */
 	_small_size: function() {
-		// Pre-calculation reset
 		this.div.removeClass('calendar_calEventSmall');
-		this.body.css('height', 'auto');
-
 		if(this.options.value.whole_day_on_top) return;
-		var line_height = parseFloat(this.div.css('line-height'));
-		var visible_lines = Math.floor(this.div.innerHeight() / line_height);
+		var visible_lines = Math.floor(this.div.innerHeight() / this.title.height());
 
 		if(!this.title.height())
 		{
 			// Handle sizing while hidden, such as when calendar is not the active tab
 			visible_lines = Math.floor(egw.getHiddenDimensions(this.div).h / egw.getHiddenDimensions(this.title).h);
 		}
-		visible_lines = Math.max(1,visible_lines);
 
 		this.div.toggleClass('calendar_calEventSmall',visible_lines < 4);
 		this.div
-			.attr('data-visible_lines', visible_lines);
-
-
-		if(this.body.height() > this.div.height() - this.title.height() && visible_lines >= 4)
-		{
-			this.body.css('height', Math.floor((visible_lines-1)*line_height - this.title.height()) + 'px');
-		}
-		else
-		{
-			this.body.css('height', '');
-		}
+			.attr('data-visible_lines', visible_lines < 4 ? Math.max(1,visible_lines) : '');
 	},
 
 	/**
