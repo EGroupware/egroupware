@@ -1394,6 +1394,10 @@ class translation
 			11 => '/<blockquote>/',
 			12 => '~</blockquote>~si',
 			13 => '~<blockquote[^>]*>~si',
+			14 => '/<=([1234567890])/',
+			15 => '/>=([1234567890])/',
+			16 => '/<([1234567890])/',
+			17 => '/>([1234567890])/',
 		);
 		$Replace = array (
 			0 => "\r\n",
@@ -1410,6 +1414,10 @@ class translation
 			11 => '#blockquote#type#cite#',
 			12 => '#blockquote#end#cite#',
 			13 => '#blockquote#type#cite#',
+			14 => '#lowerorequal#than#$1',
+			15 => '#greaterorequal#than#$1',
+			16 => '#lower#than#$1',
+			17 => '#greater#than#$1',
 		);
 		$_html = preg_replace($tags,$Replace,$_html);
 		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
@@ -1463,6 +1471,11 @@ class translation
 		if ($isHTML) $_html = preg_replace('~ +~s',' ',$_html);
 		// restoring ampersands
 		$_html = str_replace('#amper#sand#','&',$_html);
+		// restoring lower|greater[or equal] than
+		$_html = str_replace('#lowerorequal#than#','<=',$_html);
+		$_html = str_replace('#greaterorequal#than#','>=',$_html);
+		$_html = str_replace('#lower#than#','<',$_html);
+		$_html = str_replace('#greater#than#','>',$_html);
 		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' -> '.$_html);
 		$_html = html_entity_decode($_html, ENT_COMPAT, $displayCharset);
 		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' After html_entity_decode: -> '.$_html);
