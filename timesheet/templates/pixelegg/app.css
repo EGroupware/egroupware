@@ -185,6 +185,9 @@ tr.dialogOperators td,
 }
 /* tablets and smartphones  */
 @media only screen and (max-device-width: 1024px) {
+  #timesheet-edit_button\[save_new\] {
+    vertical-align: bottom;
+  }
   #timesheet-index table.egwGridView_outer tbody label[id^='timesheet-index'][id$='ts_start]'] > time {
     font-weight: bold;
     float: left;
@@ -194,7 +197,7 @@ tr.dialogOperators td,
     width: 90px;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 8pt;
+    font-size: 9pt;
   }
   #timesheet-index table.egwGridView_outer tbody tr.timesheetRow td {
     position: relative;
@@ -202,7 +205,7 @@ tr.dialogOperators td,
   #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='cat_id]'] {
     position: absolute;
     bottom: 5px;
-    font-size: 8pt;
+    font-size: 9pt;
   }
   #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='ts_description]'] {
     height: 30px;
@@ -211,7 +214,7 @@ tr.dialogOperators td,
     text-overflow: ellipsis;
   }
   #timesheet-index table.egwGridView_outer tbody div.timesheet3Col {
-    font-size: 8pt;
+    font-size: 9pt;
   }
   #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='ts_duration]'] {
     font-weight: bold;
