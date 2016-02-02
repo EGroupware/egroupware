@@ -391,7 +391,30 @@ div.addressbook_edit_general_picture img {
 
 /* tablets and smartphones  */
 @media only screen and (max-device-width:1024px) {
-	#addressbook-edit, .addressbook_view {
+	.et2_mobile_view {
+		div.et2_hbox.avatar {
+			width: 100px;
+			display: block;
+			height: 100px;
+			margin: auto;
+
+			img {
+				width: 100px;
+			}
+		}
+		.et2_email {
+			color:#26537c;
+		}
+		#addressbook-view_n_fn {
+			border: none;
+			text-align: center;
+			span {
+				.mob-fontsize-xl;
+			}
+			.mob-fontsize-xl;
+		}
+	}
+	#addressbook-edit {
 		div.et2_hbox.avatar {
 			width: 70px;
 			display: block;
@@ -402,7 +425,7 @@ div.addressbook_edit_general_picture img {
 				width: 70px;
 			}
 		}
-		#addressbook-edit_n_fn, #_n_fn {
+		#addressbook-edit_n_fn {
 			border: none;
 			text-align: center;
 			.mob-fontsize-l;

@@ -405,24 +405,17 @@ var AppJS = Class.extend(
 			content = egw.dataGetUIDdata(id);
 			if (content.data) content = content.data;
 		}
+		
+		/* destroy generated etemplate for view mode in DOM*/
+		var destroy = function(){
+			self.viewContainer.remove();
+			delete self.viewTemplate;
+			delete self.viewContainer;
+		};
+		
 		// view container
 		this.viewContainer = jQuery(document.createElement('div'))
 				.addClass('et2_mobile_view')
-				.appendTo('body');
-		
-		// close button
-		var close = jQuery(document.createElement('span'))
-				.addClass('egw_fw_mobile_popup_close loaded')
-				.click(function(){
-							self.viewContainer.remove();
-							delete self.viewTemplate;
-							delete self.viewContainer;
-						})
-				.appendTo(this.viewContainer);
-		
-		// view template main container (content)
-		this.viewTemplate = jQuery(document.createElement('div'))
-				.attr('id', this.appname+'_view')
 				.css({"z-index":102,
 					width:"100%",
 					height:"100%",
@@ -433,6 +426,29 @@ var AppJS = Class.extend(
 					left:0,
 					overflow:'auto',
 					"padding-top":'60px'})
+				.attr('id','popupMainDiv')
+				.appendTo('body');
+		
+		// close button
+		var close = jQuery(document.createElement('span'))
+				.addClass('egw_fw_mobile_popup_close loaded')
+				.click(function(){destroy();})
+				.appendTo(this.viewContainer);
+		
+		// edit button
+		var edit = jQuery(document.createElement('span'))
+				.addClass('mobile-view-editBtn')
+				.click(function(){
+					egw.open(id_app[1], self.appname);
+					destroy();
+				})
+				.text(egw.lang('Edit'))
+				.appendTo(this.viewContainer);
+		
+		// view template main container (content)
+		this.viewTemplate = jQuery(document.createElement('div'))
+				.attr('id', this.appname+'-view')
+				.addClass('et2_mobile-view-container')
 				.appendTo(this.viewContainer);
 		
 		var etemplate = new etemplate2 (this.viewTemplate[0], false);

@@ -10,7 +10,6 @@
 			</columns>
 			<rows>
 				<row class="dialogHeadbar" >
-					<buttononly  id="edit" label="edit" class="button_edit"/>
 				</row>
 				<row>
 					<hbox  disabled="@hidebuttons" class="avatar">
@@ -18,7 +17,9 @@
 					</hbox>
 				</row>
 				<row>
-					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" />
+					<hbox>
+						<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" />
+					</hbox>
 				</row>
 				<row>
 					<description for="org_name" value="Organisation"/>

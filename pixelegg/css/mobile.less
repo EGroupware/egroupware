@@ -1679,5 +1679,38 @@
 					background: white;
 				}
 			}
+			
+			/* View mode styles*/
+			.et2_mobile_view {
+				.et2_mobile-view-container {
+					padding:0 14px 0 7px;
+				}
+				table.et2_grid{
+					tr {
+						td {
+							padding: 10px 5px 10px 0;
+						}
+					}
+				}
+			}
+			.mobile-view-editBtn {
+				position: fixed;
+				top:2px;
+				left: 70px;
+				width: 50px;
+				height: 50px;
+				float:left;
+				z-index:104;
+				font-size:18pt !important;
+				color: white;
+				&:before {
+					content: "";
+					font-size: 24pt;
+					color: white;
+					padding-left: 5px;
+					font-weight: bold;
+				}
+				display: block;
+			}
 	}
 }

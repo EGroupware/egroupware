@@ -493,35 +493,46 @@ input.et2_radiobox {
 }
 /* tablets and smartphones  */
 @media only screen and (max-device-width: 1024px) {
-  #addressbook-edit div.et2_hbox.avatar,
-  .addressbook_view div.et2_hbox.avatar {
+  .et2_mobile_view div.et2_hbox.avatar {
+    width: 100px;
+    display: block;
+    height: 100px;
+    margin: auto;
+  }
+  .et2_mobile_view div.et2_hbox.avatar img {
+    width: 100px;
+  }
+  .et2_mobile_view .et2_email {
+    color: #26537c;
+  }
+  .et2_mobile_view #addressbook-view_n_fn {
+    border: none;
+    text-align: center;
+    font-size: 15pt;
+  }
+  .et2_mobile_view #addressbook-view_n_fn span {
+    font-size: 15pt;
+  }
+  #addressbook-edit div.et2_hbox.avatar {
     width: 70px;
     display: block;
     height: 70px;
     margin: auto;
   }
-  #addressbook-edit div.et2_hbox.avatar img,
-  .addressbook_view div.et2_hbox.avatar img {
+  #addressbook-edit div.et2_hbox.avatar img {
     width: 70px;
   }
-  #addressbook-edit #addressbook-edit_n_fn,
-  .addressbook_view #addressbook-edit_n_fn,
-  #addressbook-edit #_n_fn,
-  .addressbook_view #_n_fn {
+  #addressbook-edit #addressbook-edit_n_fn {
     border: none;
     text-align: center;
     font-size: 12pt;
   }
   #addressbook-edit #addressbook-edit_adr_one_locality,
-  .addressbook_view #addressbook-edit_adr_one_locality,
   #addressbook-edit #addressbook-edit_adr_two_locality,
-  .addressbook_view #addressbook-edit_adr_two_locality,
-  #addressbook-edit #addressbook-edit_room,
-  .addressbook_view #addressbook-edit_room {
+  #addressbook-edit #addressbook-edit_room {
     margin-left: 0;
   }
-  #addressbook-edit a.et2_url.email,
-  .addressbook_view a.et2_url.email {
+  #addressbook-edit a.et2_url.email {
     display: none;
   }
   #addressbook-index table.egwGridView_outer tbody span[id^='addressbook-index_'][id$='line1]'] {

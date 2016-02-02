@@ -7486,6 +7486,7 @@ span.egw_tutorial_title {
 @media only screen and (min-width: 320px) and (max-width: 1290px) {
   body {
     /*Chosen*/
+    /* View mode styles*/
   }
   body #egw_fw_basecontainer.sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_white.png);
@@ -8028,5 +8029,30 @@ span.egw_tutorial_title {
   }
   body .et2_taglist .ms-sel-ctn {
     background: white;
+  }
+  body .et2_mobile_view .et2_mobile-view-container {
+    padding: 0 14px 0 7px;
+  }
+  body .et2_mobile_view table.et2_grid tr td {
+    padding: 10px 5px 10px 0;
+  }
+  body .mobile-view-editBtn {
+    position: fixed;
+    top: 2px;
+    left: 70px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    z-index: 104;
+    font-size: 18pt !important;
+    color: white;
+    display: block;
+  }
+  body .mobile-view-editBtn:before {
+    content: "";
+    font-size: 24pt;
+    color: white;
+    padding-left: 5px;
+    font-weight: bold;
   }
 }

@@ -739,7 +739,9 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 		if (isset($actions['export']['children']['csv']) && !importexport_helper_functions::has_definitions('addressbook','export')) unset($actions['export']['children']['csv']);
-
+		
+		// Intercept open action in order to open entry into view mode instead of edit
+		if (html::$ua_mobile) $actions['open']['onExecute'] = 'javaScript:app.addressbook.viewEntry';
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
 
 		// Allow contacts to be dragged
