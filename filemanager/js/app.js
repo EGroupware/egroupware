@@ -71,9 +71,10 @@ app.classes.filemanager = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 
-		this.path_widget[et2.DOMContainer.id] = this.et2.getWidgetById('path') || null;
-		if(this.path_widget[et2.DOMContainer.id])
+		var path_widget = this.et2.getWidgetById('path');
+		if(path_widget)	// do NOT set not found path-widgets, as uploads works on first one only!
 		{
+			this.path_widget[et2.DOMContainer.id] = path_widget;
 			// Bind to removal to remove from list
 			$j(et2.DOMContainer).on('clear', function(e) {
 				if (app.filemanager && app.filemanager.path_widget) delete app.filemanager.path_widget[e.target.id];
