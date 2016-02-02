@@ -759,6 +759,36 @@ abstract class bo_merge
 			return false;
 		}
 		if ($this->report_memory_usage) error_log(__METHOD__."(count(ids)=".count($ids).") strlen(contentrepeat)=".strlen($contentrepeat).', strlen(labelrepeat)='.strlen($Labelrepeat));
+
+		if ($contentrepeat)
+		{
+			$content_stream = fopen('php://temp','r+');
+			fwrite($content_stream, $contentstart);
+			$joiner = '';
+			switch($mimetype)
+			{
+				case 'application/rtf':
+				case 'text/rtf':
+					$joiner = '\\par \\page\\pard\\plain';
+					break;
+				case 'application/vnd.oasis.opendocument.text':
+				case 'application/vnd.oasis.opendocument.spreadsheet':
+				case 'application/xml':
+				case 'text/html':
+					$joiner = '';
+					break;
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+					$joiner = '<w:br w:type="page" />';
+					break;
+				case 'text/plain':
+					$joiner = "\r\n";
+					break;
+				default:
+					$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
+					return false;
+			}
+		}
 		foreach ((array)$ids as $n => $id)
 		{
 			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
@@ -820,7 +850,7 @@ abstract class bo_merge
 			{
 				$content = preg_replace('/\$\$[a-z0-9_\/]+\$\$/i','',$content);
 			}
-			if ($contentrepeat) $contentrep[is_array($id) ? implode(':',$id) : $id] = $content;
+			if ($contentrepeat) fwrite($content_stream, ($n == 0 ? '' : $joiner) . $content);
 		}
 		if ($Labelrepeat)
 		{
@@ -861,24 +891,9 @@ abstract class bo_merge
 
 		if ($contentrepeat)
 		{
-			switch($mimetype)
-			{
-				case 'application/rtf':
-				case 'text/rtf':
-					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
-				case 'application/vnd.oasis.opendocument.text':
-				case 'application/vnd.oasis.opendocument.spreadsheet':
-				case 'application/xml':
-				case 'text/html':
-					return $contentstart.implode('',$contentrep).$contentend;
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
-				case 'text/plain':
-					return $contentstart.implode("\r\n",$contentrep).$contentend;
-			}
-			$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
-			return false;
+			fwrite($content_stream, $contentend);
+			rewind($content_stream);
+			return stream_get_contents($content_stream);
 		}
 		if ($this->report_memory_usage) error_log(__METHOD__."() returning ".egw_vfs::hsize(memory_get_peak_usage(true)));
 
