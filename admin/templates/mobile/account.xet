@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.account" template="" lang="" group="0" version="1.9.003">
+		<grid width="100%">
+			<columns>
+				<column width = "120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Login ID" for="account_lid"/>
+					<textbox id="account_lid" class="et2_fullWidth" onchange="app.addressbook.account_change" needed="true"/>
+				</row>
+				<row>
+					<description value="Expires" for="account_expires"/>
+					<hbox>
+						<date id="account_expires"/>
+						<checkbox id="account_status" selected_value="A" label="Account active"/>
+					</hbox>
+				</row>
+				<row>
+					<description value="Password" for="account_passwd"/>
+					<passwd id="account_passwd" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description value="Re-enter password" for="account_passwd_2"/>
+					<passwd id="account_passwd_2" class="et2_fullWidth" onchange="app.addressbook.account_change"/>
+				</row>
+				<row valign="top">
+					<description/>
+					<hbox>
+						<vbox span="3">
+							<checkbox id="mustchangepassword" label="Must change password upon next login"/>
+							<checkbox id="changepassword" label="Can change password"/>
+						</vbox>
+						<checkbox id="anonymous" label="Anonymous user. Not shown in list sessions."/>
+					</hbox>
+				</row>
+				<row disabled="!@ldap_extra_attributes">
+					<description value="Home directory" for="homedirectory"/>
+					<textbox id="homedirectory" class="et2_fullWidth"/>
+				</row>
+				<row disabled="!@ldap_extra_attributes">
+					<description value="Login shell" for="loginshell"/>
+					<textbox id="loginshell" class="et2_fullWidth"/>
+				</row>
+				
+				<row>
+					<description value="Primary group" for="account_primary_group"/>
+					<select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description value="Groups" for="groups"/>
+					<select-account account_type="groups" id="memberships" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row disabled="!@account_id">
+					<description value="Last login"/>
+					<hbox>
+						<date-time id="account_lastlogin" readonly="true"/>
+						<description id="account_lastloginfrom" readonly="true" align="right"/>
+					</hbox>
+				</row>
+				<row disabled="!@account_id">
+					<description value="Last password change"/>
+					<date-time id="account_lastpwd_change" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
