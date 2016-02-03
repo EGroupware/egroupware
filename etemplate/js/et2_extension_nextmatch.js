@@ -2342,7 +2342,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			this.action_header = jQuery(document.createElement('button'))
 					.addClass('nm_action_header')
 					.click (function(e){
-						jQuery('tr.selected').trigger({type:'taphold',which:3,originalEvent:e});
+						jQuery('tr.selected',self.nextmatch.div).trigger({type:'taphold',which:3,originalEvent:e});
 					})
 					.prependTo(this.search_box);
 			
