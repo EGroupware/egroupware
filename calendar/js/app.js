@@ -63,7 +63,7 @@ app.classes.calendar = AppJS.extend(
 		owner: egw.user('account_id')
 	},
 
-	states_to_save: ['owner','status_filter','filter','cat_id','view','sortby','planner_days','weekend'],
+	states_to_save: ['owner','status_filter','filter','cat_id','view','sortby','planner_view','weekend'],
 
 	// If you are in one of these views and select a date in the sidebox, the view
 	// will change as needed to show the date.  Other views will only change the
@@ -404,7 +404,11 @@ app.classes.calendar = AppJS.extend(
 		// Most can just provide state change data
 		if(action.data && action.data.state)
 		{
-			this.update_state(action.data.state);
+			var state = jQuery.extend({},action.data.state);
+			if(state.view == 'planner' && app.calendar.state.view != 'planner') {
+				state.planner_view = app.calendar.state.view;
+			}
+			this.update_state(state);
 		}
 		// Special handling
 		switch(action.id)
@@ -418,7 +422,6 @@ app.classes.calendar = AppJS.extend(
 				var tempDate = new Date();
 				var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
 				var change = {date: today.toJSON()};
-				if(app.calendar.state.view == 'planner') { change.planner_days = Math.ceil((new Date(app.calendar.state.last) - new Date(app.calendar.state.first)) / (24*3600000));}
 				app.calendar.update_state(change);
 				break;
 			case 'next':
@@ -1804,13 +1807,6 @@ app.classes.calendar = AppJS.extend(
 				state.keywords = listview.activeFilters.search;
 			}
 		}
-		else if (state.view == 'planner')
-		{
-			// Normally we don't use the planner days, but we'll set it so
-			// favorites can come back to the current view
-			var timeDiff = Math.abs(new Date(state.last).getTime() - new Date(state.first).getTime());
-			state.planner_days  = Math.ceil(timeDiff / (1000 * 3600 * 24));
-		}
 
 		// Don't store date or first and last
 		delete state.date;
@@ -1883,7 +1879,7 @@ app.classes.calendar = AppJS.extend(
 		}
 
 		// Check for valid cache
-		var cachable_changes = ['date','weekend','view','days','planner_days','sortby'];
+		var cachable_changes = ['date','weekend','view','days','planner_view','sortby'];
 		var keys = jQuery.unique(Object.keys(this.state).concat(Object.keys(state.state)));
 		for(var i = 0; i < keys.length; i++)
 		{
@@ -3175,7 +3171,7 @@ app.classes.calendar = AppJS.extend(
 					else if (view == 'planner')
 					{
 						// Clicked a week, show just a week
-						app.calendar.update_state({date: date, planner_days: 7});
+						app.calendar.update_state({date: date, planner_view: 'week'});
 					}
 					else if (view == 'listview')
 					{
@@ -3581,7 +3577,7 @@ jQuery.extend(app.classes.calendar,{
 
 				var d = app.calendar.date.start_of_week(app.calendar.View.start_date.call(this,state));
 				// Always 7 days, we just turn weekends on or off
-				d.setUTCHours(24*7-1);
+				d.setUTCHours(24*7*(parseInt(this.egw.preference('multiple_weeks','calendar')) || 3)-1);
 				return d;
 			}
 		}),
@@ -3629,19 +3625,9 @@ jQuery.extend(app.classes.calendar,{
 			group_by: function(state) {
 				return state.sortby ? state.sortby : 0;
 			},
-			// Note: Planner has no inherent timespan as day or week does, so
-			// it's a little more messy to determine what timespan to show.  For
-			// best results, we either leave the dates as set (planner_days = 0)
-			// to inherit from the previous view, or set either planner_days or
-			// start & end date.
+			// Note: Planner uses the additional value of planner_view to determine
+			// the start & end dates using other view's functions
 			start_date: function(state) {
-				// If there is no planner_days and a start date, just keep it
-				if(!state.planner_days && state.first && (
-					!state.date || state.first < state.date && state.last > state.date
-				))
-				{
-					return state.first;
-				}
 				// Start here, in case we can't find anything better
 				var d = app.calendar.View.start_date.call(this, state);
 
@@ -3649,21 +3635,11 @@ jQuery.extend(app.classes.calendar,{
 				{
 					d.setUTCDate(1);
 				}
-				else if (state.planner_days && [28,30,31].indexOf(state.planner_days||0) >= 0)
+				else if (state.planner_view && app.classes.calendar.views[state.planner_view])
 				{
-					d = app.classes.calendar.views.month.start_date.call(this,state);
+					d = app.classes.calendar.views[state.planner_view].start_date.call(this,state);
 				}
-				else if (state.planner_days % 7 == 0)
-				{
-					// Week
-					d = app.classes.calendar.views.week.start_date.call(this,state);
-				}
-				else if (state.days)
-				{
-					// Don't jump to start of week, coming from day or day4
-					return d;
-				}
-				else if (!state.planner_days)
+				else
 				{
 					d = app.calendar.date.start_of_week(d);
 					d.setUTCHours(0);
@@ -3675,54 +3651,16 @@ jQuery.extend(app.classes.calendar,{
 				return d;
 			},
 			end_date: function(state) {
-				// If no planner days and an end date, just keep it
-				if(!state.planner_days && state.last && state.last > state.first)
-				{
-					// Handle listview before / after a little more nicely
-					if(app.calendar.state.view == 'listview' && (
-						state.filter == 'before' || state.filter == 'after'
-					))
-					{
-						var d = app.calendar.View.end_date.call(this, state);
-						d.setUTCDate(d.getUTCDate() + 30);
-						d = app.calendar.date.end_of_week(d);
-						return d;
-					}
-					return state.last;
-				}
-				// Avoid end date before start date
-				if(state.last && state.first && state.last <= state.first && !state.planner_days)
-				{
-					state.planner_days = 30;
-				}
+				
 				var d = app.calendar.View.end_date.call(this, state);
-				if(state.planner_days)
-				{
-					state.planner_days = parseInt(state.planner_days);
-				}
 				if(state.sortby && state.sortby === 'month')
 				{
 					d.setUTCDate(0);
 					d.setUTCFullYear(d.getUTCFullYear() + 1);
 				}
-				else if (state.planner_days)
+				else if (state.planner_view && app.classes.calendar.views[state.planner_view])
 				{
-					if([28,30,31].indexOf(state.planner_days||0) >= 0)
-					{
-						// Month view
-						d = app.classes.calendar.views.month.end_date.call(this,state);
-					}
-					else
-					{
-						d = new Date(state.first);
-						d.setUTCDate(d.getUTCDate() + parseInt(state.planner_days)-1);
-						if (state.planner_days % 7 == 0)
-						{
-							// Week
-							d = app.calendar.date.end_of_week(d);
-						}
-					}
-					delete state.planner_days;
+					d = app.classes.calendar.views[state.planner_view].end_date.call(this,state);
 				}
 				else if (state.days)
 				{
@@ -3730,13 +3668,7 @@ jQuery.extend(app.classes.calendar,{
 					d.setUTCDate(d.getUTCDate() + parseInt(state.days)-1);
 					delete state.days;
 				}
-				// Avoid killing the view by not showing more than 100 days
-				else if (state.last && state.last > state.first && (new Date(state.last) - new Date(state.first)) < (100 * 24 * 3600 * 1000) )
-				{
-					d = new Date(state.last);
-					d = app.calendar.date.end_of_week(d);
-				}
-				else if (!state.planner_days)
+				else
 				{
 					d = app.calendar.date.end_of_week(d);
 				}
@@ -3744,6 +3676,10 @@ jQuery.extend(app.classes.calendar,{
 			},
 			scroll: function(delta)
 			{
+				if(app.calendar.state.planner_view)
+				{
+					return app.classes.calendar.views[app.calendar.state.planner_view].scroll.call(this,delta);
+				}
 				var d = new Date(app.calendar.state.date);
 
 				// Yearly view, grouped by month - scroll 1 month
@@ -3760,10 +3696,10 @@ jQuery.extend(app.classes.calendar,{
 				if(app.calendar.state.first && app.calendar.state.last)
 				{
 					var diff = new Date(app.calendar.state.last)  - new Date(app.calendar.state.first);
-					app.calendar.state.planner_days = Math.round(diff / (1000*3600*24));
+					var days = Math.round(diff / (1000*3600*24));
 				}
-				d.setUTCDate(d.getUTCDate() + (app.calendar.state.planner_days*delta));
-				if(app.calendar.state.planner_days > 8)
+				d.setUTCDate(d.getUTCDate() + (days*delta));
+				if(days > 8)
 				{
 					d = app.calendar.date.start_of_week(d);
 				}

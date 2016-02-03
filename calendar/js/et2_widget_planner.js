@@ -953,7 +953,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			{
 				title = '&nbsp;';
 			}
-			content += '<div class="calendar_plannerMonthScale et2_clickable et2_link" data-date="'+first.toJSON()+ '" data-planner_days="'+u.getUTCDate()+
+			content += '<div class="calendar_plannerMonthScale et2_clickable et2_link" data-date="'+first.toJSON()+ '" data-planner_view="month' +
 				'" style="left: '+left+'%; width: '+(day_width*days_in_month)+'%;">'+
 				title+"</div>";
 		}
@@ -972,7 +972,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	_header_weeks: function(start, days)
 	{
 
-		var content = '<div class="calendar_plannerScale" data-planner_days=7>';
+		var content = '<div class="calendar_plannerScale" data-planner_view="week">';
 		var state = ''
 
 		// we're not using UTC so date() formatting function works
@@ -1036,7 +1036,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	_header_days: function(start, days)
 	{
 		var day_width = 100 / days;
-		var content = '<div class="calendar_plannerScale'+(days > 3 ? 'Day' : '')+'" data-planner_days="1" >';
+		var content = '<div class="calendar_plannerScale'+(days > 3 ? 'Day' : '')+'" data-planner_view="day" >';
 
 		// we're not using UTC so date() formatting function works
 		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
@@ -1100,7 +1100,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		}
 		var cell_width = 100 / hours * decr;
 
-		var content = '<div class="calendar_plannerScale">';
+		var content = '<div class="calendar_plannerScale" data-planner_view="day">';
 		
 		// we're not using UTC so date() formatting function works
 		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);

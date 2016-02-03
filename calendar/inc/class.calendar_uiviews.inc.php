@@ -468,43 +468,35 @@ class calendar_uiviews extends calendar_ui
 			$this->last = $this->first;
 			$this->last['year']++;
 			$this->last = $this->bo->date2ts($this->last)-1;
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('yearly planner').' '.
-				lang(egw_time::to($this->first,'F')).' '.egw_time::to($this->first,'Y').' - '.
-				lang(egw_time::to($this->last,'F')).' '.egw_time::to($this->last,'Y');
 		}
-		elseif (!$this->planner_days)	// planner monthview
+		elseif (!$this->planner_view || $this->planner_view == 'month')	// planner monthview
 		{
 			if ($this->day < 15)	// show one complete month
 			{
 				$this->_week_align_month($this->first,$this->last);
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
 			}
 			else	// show 2 half month
 			{
 				$this->_week_align_month($this->first,$this->last,15);
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang(adodb_date('F',$this->first)).' / '.lang(adodb_date('F',$this->last)).' '.$this->year;
 			}
 		}
-		elseif ($this->planner_days >= 5)	// weeekview
+		elseif ($this->planner_view == 'week' || $this->planner_view == 'weekN')	// weeekview
 		{
 			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
 			$this->last = $this->bo->date2array($this->first);
-			$this->last['day'] += (int) $this->planner_days - 1;
+			$this->last['day'] += ($this->planner_view == 'week' ? 7 : 7 * $this->cal_prefs['multiple_weeks'])-1;
 			$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
 			unset($this->last['raw']);
 			$this->last = $this->bo->date2ts($this->last);
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 		else // dayview
 		{
 			$this->first = $this->bo->date2ts($this->date);
 			$this->last = $this->bo->date2array($this->first);
-			$this->last['day'] += (int) $this->planner_days - 1;
+			$this->last['day'] += 0;
 			$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
 			unset($this->last['raw']);
 			$this->last = $this->bo->date2ts($this->last);
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.($this->planner_days == 1 ? lang(date('l',$this->first)).', ' : '').
-				$this->bo->long_date($this->first,$this->planner_days > 1 ? $this->last : 0);
 		}
 
 		$merge = $this->merge();

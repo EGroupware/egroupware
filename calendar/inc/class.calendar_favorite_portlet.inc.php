@@ -111,6 +111,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				$this->actions =& $etemplate->getElementAttribute('planner', 'actions');
 				// Don't notify the calendar app of date changes
 				$etemplate->setElementAttribute('planner','onchange',false);
+				$ui->planner_view = $this->favorite['state']['planner_view'];
 				$ui->planner(array(), $etemplate);
 				return;
 			case 'year':

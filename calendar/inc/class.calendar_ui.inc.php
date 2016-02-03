@@ -127,7 +127,7 @@ class calendar_ui
 	/**
 	 * @var array $states_to_save all states that will be saved to the user prefs
 	 */
-	var $states_to_save = array('owner','status_filter','filter','cat_id','view','sortby','planner_days','weekend');
+	var $states_to_save = array('owner','status_filter','filter','cat_id','view','sortby','planner_view','weekend');
 
 	/**
 	 * Constructor
@@ -293,7 +293,7 @@ class calendar_ui
 			'owner'      => $this->user,
 			'save_owner' => 0,
 			'sortby'     => 'category',
-			'planner_days'=> 0,	// full month
+			'planner_view'=> 'month',	// full month
 			'view'       => ($this->bo->cal_prefs['defaultcalendar']?$this->bo->cal_prefs['defaultcalendar']:'day'), // use pref, if exists else use the dayview
 			'listview_days'=> '',	// no range
 			'test'       => 'false',
