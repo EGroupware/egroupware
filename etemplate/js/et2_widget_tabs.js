@@ -63,7 +63,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 		// Create the outer tabbox container
 		this.container = $j(document.createElement("div"))
 			.addClass("et2_tabbox");
-		
+
 		// Create the upper container for the tab flags
 		this.flagContainer = $j(document.createElement("div"))
 			.addClass("et2_tabheader")
@@ -212,7 +212,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			{
 				var tab = this.options.tabs[i];
 				var tab_id = tab.id || tab.template;
-				var tab_options = {id: tab_id, template:tab.template};
+				var tab_options = {id: tab_id, template:tab.template, url: tab.url};
 				if(tab.id)
 				{
 					tab_options.content = tab.id;
@@ -359,9 +359,9 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 				entry.contentDiv.appendTo(entry.flagDiv);
 			}
 		}
-		
-		if (this.options.align_tabs == 'v'){ 
-			
+
+		if (this.options.align_tabs == 'v'){
+
 			this.container.addClass('vertical');
 			this.tabContainer.hide();
 		}

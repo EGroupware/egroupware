@@ -36,6 +36,13 @@ class etemplate_widget_template extends etemplate_widget
 	protected static $cache = array();
 
 	/**
+	 * Path of template relative to EGW_SERVER_ROOT
+	 *
+	 * @var string
+	 */
+	public $rel_path;
+
+	/**
 	 * Get instance of template specified by name, template(-set) and version
 	 *
 	 * @param string $_name
@@ -47,6 +54,11 @@ class etemplate_widget_template extends etemplate_widget
 	 */
 	public static function instance($_name, $template_set=null, $version='', $load_via='')
 	{
+		if (html::$ua_mobile)
+		{
+			$template_set = "mobile";
+		}
+
 		//$start = microtime(true);
 		list($name) = explode('?', $_name);	// remove optional cache-buster
 		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version)))
@@ -96,6 +108,7 @@ class etemplate_widget_template extends etemplate_widget
 			if ($reader->nodeType == XMLReader::ELEMENT && $reader->name == 'template')
 			{
 				$template = new etemplate_widget_template($reader);
+				$template->rel_path = $path;
 				//echo $template->id; _debug_array($template);
 
 				self::$cache[$template->id] = $template;

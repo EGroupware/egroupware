@@ -101,7 +101,7 @@ class admin_account
 				$readonlys['account_passwd'] = $readonlys['account_passwd2'] = true;
 			}
 			return array(
-				'name' => 'admin.account?'.filemtime(EGW_SERVER_ROOT.'/admin/templates/default/account.xet'),
+				'name' => 'admin.account',
 				'prepend' => true,
 				'label' => 'Account',
 				'data' => $account,

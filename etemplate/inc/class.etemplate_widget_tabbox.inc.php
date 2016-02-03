@@ -34,12 +34,11 @@ class etemplate_widget_tabbox extends etemplate_widget
 	 * content.  This prevents running the method on disabled tabs.
 	 *
 	 * @param string $method_name
-	 * @param array $params=array('') parameter(s) first parameter has to be the cname, second $expand!
-	 * @param boolean $respect_disabled=false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 * @param array $params =array('') parameter(s) first parameter has to be the cname, second $expand!
+	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
-
 		// Make sure additional tabs are processed for any method
 		if($this->attrs['tabs'] && !$this->tabs_attr_evaluated)
 		{
@@ -51,11 +50,14 @@ class etemplate_widget_tabbox extends etemplate_widget
 				$this->children[1]->children = array();
 			}
 
+			$this->tabs = array();
 			foreach($this->attrs['tabs'] as $tab)
 			{
 				$template= clone etemplate_widget_template::instance($tab['template']);
 				if($tab['id']) $template->attrs['content'] = $tab['id'];
 				$this->children[1]->children[] = $template;
+				$tab['url'] = etemplate_widget_template::rel2url($template->rel_path);
+				$this->tabs[] = $tab;
 				unset($template);
 			}
 		}
@@ -67,8 +69,8 @@ class etemplate_widget_tabbox extends etemplate_widget
 		{
 			foreach($this->children[1]->children as $tab)
 			{
-				$ro_id = explode('.',$tab->template ? $tab->template : $tab->id);
-				$ro_id = $ro_id[count($ro_id)-1];
+				$parts = explode('.',$tab->template ? $tab->template : $tab->id);
+				$ro_id = array_pop($parts);
 				if($readonlys[$ro_id])
 				{
 					$tab->attrs['disabled'] = $readonlys[$ro_id];
@@ -78,6 +80,23 @@ class etemplate_widget_tabbox extends etemplate_widget
 
 		// Tabs are set up now, continue as normal
 		parent::run($method_name, $params, $respect_disabled);
+	}
+
+	/**
+	 * Implemented to send tab-urls incl. cache-buster and mobile template switch to client-side
+	 *
+	 * They are send as tab_urls object via modifications.
+	 *
+	 * @param string $cname
+	 */
+	public function beforeSendToClient($cname)
+	{
+		$form_name = self::form_name($cname, $this->id);
+
+		if (!empty($this->tabs))
+		{
+			self::setElementAttribute($form_name, 'tabs', $this->tabs);
+		}
 	}
 
 	/**

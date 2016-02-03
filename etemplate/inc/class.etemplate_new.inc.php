@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-13 by RalfBecker@outdoor-training.de
+ * @copyright 2002-16 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -109,19 +109,24 @@ class etemplate_new extends etemplate_widget_template
 			$content
 		);
 
-		foreach($hook_data as $extras) {
+		foreach($hook_data as $extras)
+		{
 			if (!$extras) continue;
 
-			foreach(isset($extras[0]) ? $extras : array($extras) as $extra) {
-				if ($extra['data'] && is_array($extra['data'])) {
+			foreach(isset($extras[0]) ? $extras : array($extras) as $extra)
+			{
+				if ($extra['data'] && is_array($extra['data']))
+				{
 					$content = array_merge($content, $extra['data']);
 				}
 
-				if ($extra['preserve'] && is_array($extra['preserve'])) {
+				if ($extra['preserve'] && is_array($extra['preserve']))
+				{
 					$preserv = array_merge($preserv, $extra['preserve']);
 				}
 
-				if ($extra['readonlys'] && is_array($extra['readonlys'])) {
+				if ($extra['readonlys'] && is_array($extra['readonlys']))
+				{
 					$readonlys = array_merge($readonlys, $extra['readonlys']);
 				}
 			}
@@ -306,13 +311,13 @@ class etemplate_new extends etemplate_widget_template
 	 * Process via Ajax submitted content
 	 *
 	 * @param string $etemplate_exec_id
-	 * @param array $content
+	 * @param array $_content
 	 * @param boolean $no_validation
 	 * @throws egw_exception_wrong_parameter
 	 */
-	static public function ajax_process_content($etemplate_exec_id, array $content, $no_validation)
+	static public function ajax_process_content($etemplate_exec_id, array $_content, $no_validation)
 	{
-		//error_log(__METHOD__."(".array2string($etemplate_exec_id).', '.array2string($content).")");
+		//error_log(__METHOD__."(".array2string($etemplate_exec_id).', '.array2string($_content).")");
 
 		self::$request = etemplate_request::read($etemplate_exec_id);
 		//error_log('request='.array2string(self::$request));
@@ -337,7 +342,7 @@ class etemplate_new extends etemplate_widget_template
 		$expand = array(
 			'cont' => &self::$request->content,
 		);
-		$template->run('validate', array('', $expand, $content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
+		$template->run('validate', array('', $expand, $_content, &$validated), true);	// $respect_disabled=true: do NOT validate disabled widgets and children
 
 		if ($no_validation)
 		{
@@ -345,7 +350,7 @@ class etemplate_new extends etemplate_widget_template
 		}
 		elseif (self::validation_errors(self::$request->ignore_validation))
 		{
-			error_log(__METHOD__."(,".array2string($content).') validation_errors='.array2string(self::$validation_errors));
+			error_log(__METHOD__."(,".array2string($_content).') validation_errors='.array2string(self::$validation_errors));
 			self::$response->generic('et2_validation_error', self::$validation_errors);
 			exit;
 		}
@@ -353,50 +358,41 @@ class etemplate_new extends etemplate_widget_template
 		// tell request call to remove request, if it is not modified eg. by call to exec in callback
 		self::$request->remove_if_not_modified();
 
-		$hook_data = $GLOBALS['egw']->hooks->process(
-			array(
-				'hook_location'   => 'etemplate2_before_process',
-				'location_name'   => $template->id) +
-				self::complete_array_merge(self::$request->preserv, $validated)
-			);
-
-		foreach($hook_data as $extras) {
+		foreach($GLOBALS['egw']->hooks->process(array(
+			'hook_location'   => 'etemplate2_before_process',
+			'location_name'   => $template->id,
+		) + self::complete_array_merge(self::$request->preserv, $validated)) as $extras)
+		{
 			if (!$extras) continue;
 
-			foreach(isset($extras[0]) ? $extras : array($extras) as $extra) {
-				if ($extra['data'] && is_array($extra['data'])) {
+			foreach(isset($extras[0]) ? $extras : array($extras) as $extra)
+			{
+				if ($extra['data'] && is_array($extra['data']))
+				{
 					$validated = array_merge($validated, $extra['data']);
 				}
 			}
 		}
-		unset($hook_data);
 
 		//error_log(__METHOD__."(,".array2string($content).')');
 		//error_log(' validated='.array2string($validated));
 		$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 
-		$tcontent = array();
-
-		if( is_array($content) ) {
-			$tcontent = $content;
-		}
-		else {
-			$tcontent = self::complete_array_merge(
-				self::$request->preserv,
-				$validated
-				);
-		}
+		$tcontent = is_array($content) ? $content :
+			self::complete_array_merge(self::$request->preserv, $validated);
 
 		$hook_data = $GLOBALS['egw']->hooks->process(
 			array(
 				'hook_location'   => 'etemplate2_after_process',
-				'location_name'   => $template->id) +
-				$tcontent
-			);
+				'location_name'   => $template->id
+			) + $tcontent);
+
 		unset($tcontent);
 
-		if( is_array($content) ) {
-			foreach($hook_data as $extras) {
+		if (is_array($content))
+		{
+			foreach($hook_data as $extras)
+			{
 				if (!$extras) continue;
 
 				foreach(isset($extras[0]) ? $extras : array($extras) as $extra) {
@@ -472,13 +468,6 @@ class etemplate_new extends etemplate_widget_template
 		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 	}
 
-	/**
-	 * Path of template relative to EGW_SERVER_ROOT
-	 *
-	 * @var string
-	 */
-	public $rel_path;
-
 	public $name;
 	public $template_set;
 	public $version;
@@ -494,7 +483,7 @@ class etemplate_new extends etemplate_widget_template
 	 * Reads an eTemplate from filesystem or DB (not yet supported)
 	 *
 	 * @param string $name name of the eTemplate or array with the values for all keys
-	 * @param string $template_set=null default try template-set from user and if not found "default"
+	 * @param string $template_set =null default try template-set from user and if not found "default"
 	 * @param string $lang language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
 	 * @param int $group id of the (primary) group of the user or 0 for none, not used at the moment !!!
 	 * @param string $version version of the eTemplate
@@ -505,13 +494,13 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	public function read($name,$template_set=null,$lang='default',$group=0,$version='',$load_via='')
 	{
-		
+
 		// For mobile experience try to load custom mobile templates
 		if (html::$ua_mobile)
 		{
 			$template_set = "mobile";
 		}
-		
+
 		unset($lang); unset($group);	// not used, but in old signature
 		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
 			$this->version=$version, $this->laod_via = $load_via);
@@ -580,7 +569,7 @@ class etemplate_new extends etemplate_widget_template
 	 *  disables all cells with name == $name
 	 *
 	 * @param sting $name cell-name
-	 * @param boolean $disabled=true disable or enable a cell, default true=disable
+	 * @param boolean $disabled =true disable or enable a cell, default true=disable
 	 * @return reference to attribute
 	 * @deprecated use disableElement($name, $disabled=true)
 	 */
@@ -626,7 +615,7 @@ class etemplate_new extends etemplate_widget_template
 	/**
 	 * Debug callback just outputting content
 	 *
-	 * @param array $content=null
+	 * @param array $content =null
 	 */
 	public function debug(array $content=null)
 	{
@@ -658,8 +647,8 @@ class etemplate_new extends etemplate_widget_template
 	 * Format a number according to user prefs with decimal and thousands separator (later only for readonly)
 	 *
 	 * @param int|float|string $number
-	 * @param int $num_decimal_places=2
-	 * @param boolean $readonly=true
+	 * @param int $num_decimal_places =2
+	 * @param boolean $readonly =true
 	 * @return string
 	 */
 	static public function number_format($number,$num_decimal_places=2,$readonly=true)

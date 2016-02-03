@@ -55,6 +55,11 @@ var et2_template = et2_DOMWidget.extend(
 			"name": "Content index",
 			"default": et2_no_init,
 			"description": "Used for passing in specific content to the template other than what it would get by ID."
+		},
+		url: {
+			name: "URL of template",
+			type: "string",
+			description: "full URL to load template incl. cache-buster"
 		}
 	},
 
@@ -102,16 +107,20 @@ var et2_template = et2_DOMWidget.extend(
 				if(!xml)
 				{
 					// Ask server
-					var splitted = template_name.split('.');
-					// use template base url from initial template, to continue using webdav, if that was loaded via webdav
-					var path = this.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
-						splitted.join('.')+ ".xet" + (cache_buster ? '?download='+cache_buster :
-						// if server did not give a cache-buster, fall back to current time
-						'?download='+(new Date).valueOf());
-
-					if(splitted.length)
+					var url = this.options.url;
+					if (!this.options.url)
 					{
-						et2_loadXMLFromURL(path, function(_xmldoc) {
+						var splitted = template_name.split('.');
+						// use template base url from initial template, to continue using webdav, if that was loaded via webdav
+						url = this.getRoot()._inst.template_base_url + splitted.shift() + "/templates/default/" +
+							splitted.join('.')+ ".xet" + (cache_buster ? '?download='+cache_buster : '');
+					}
+					// if server did not give a cache-buster, fall back to current time
+					if (url.indexOf('?') == -1) url += '?download='+(new Date).valueOf();
+
+					if(this.options.url || splitted.length)
+					{
+						et2_loadXMLFromURL(url, function(_xmldoc) {
 							// Scan for templates and store them
 							for(var i = 0; i < _xmldoc.childNodes.length; i++) {
 								var template = _xmldoc.childNodes[i];
