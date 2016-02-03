@@ -3115,7 +3115,7 @@ app.classes.calendar = AppJS.extend(
 					{
 						var temp_date = new Date(year, month-1, 1,0,0,0);
 						//temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
-						go_button.set_statustext(egw.lang(date('F',temp_date)));
+						go_button.btn.attr('title',egw.lang(date('F',temp_date)));
 
 						// Store current _displayed_ date in date button for clicking
 						temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
@@ -3194,6 +3194,7 @@ app.classes.calendar = AppJS.extend(
 
 			// Set today button
 			var today = $j('#calendar-sidebox_header_today');
+			today.attr('title',egw.lang('today'));
 
 			// Set go button
 			var go_button = date_widget.getRoot().getWidgetById('header_go');
@@ -3204,9 +3205,11 @@ app.classes.calendar = AppJS.extend(
 				temp_date.setUTCDate(1);
 				temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
 
+				go_button.attr('title', egw.lang(date('F',temp_date)));
 				// Store current _displayed_ date in date button for clicking
 				temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
 				go_button.attr('data-date', temp_date.toJSON());
+
 			}
 
 			// Dynamic resize of sidebox calendar to fill sidebox

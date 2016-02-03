@@ -306,9 +306,6 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Header
 		var title = !event.is_private ? event['title'] : egw.lang('private');
 
-		// Height specific section
-		this._small_size();
-		
 		this.title
 			.html('<span class="calendar_calTimespan">'+this._get_timespan(event) + '<br /></span>')
 			.append('<span class="calendar_calEventTitle">'+title+'</span>')
@@ -350,6 +347,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 					.append('<p>'+this.options.value.description+'</p>');
 			}
 		}
+
+		// Height specific section
+		this._small_size();
 	},
 
 	/**

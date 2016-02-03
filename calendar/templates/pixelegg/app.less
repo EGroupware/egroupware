@@ -13,6 +13,7 @@
  */
 
 
+
 @import (reference) "../../../pixelegg/less/definitions.less";
 @import (less) "../default/app.css";
 
@@ -1369,9 +1370,21 @@ div#calendar-container {
 	.ui-datepicker-year {
 		padding-right: 15px !important;
 	}
-	#calendar-sidebox_header_today {
-		background-image: url(images/today.png);
-	}	
+	.ui-datepicker-header a span {
+		background-image: url('../../../phpgwapi/js/jquery/jquery-ui/redmond/images/ui-icons_217bc0_256x240.png')
+	}
+	.ui-datepicker-header a.ui-state-hover {
+		top: 3px;
+		span {
+			background-image: url('../../../pixelegg/images/ui-icons_egw_color_2_256x240_0C5DA5.png');
+			transition: none;
+		}
+	}
+}
+
+#calendar-sidebox_header_go,
+#calendar-sidebox_header_today {
+	background-color: #0c5da5;
 }
 // Select Fields in Sidemenu
 #calendar_cat_id,

@@ -15,13 +15,13 @@ Egroupware
     <template id="calendar.sidebox">
 		<vbox parent_node="calendar-et2_target">
 			<textbox id="keywords" class="et2_fullWidth" blur="Search" onchange="app.calendar.update_state({view: 'listview',keywords: widget.getValue()});return false;"/>
-			<buttononly id="header_today" label="•" icon="nope" statustext="Today" onclick="
+			<buttononly id="header_today" label="•" icon="nope" onclick="
 var tempDate = new Date();
 var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
 var change = {date: today.toJSON()};
 if(app.calendar.state.view == 'planner') { change.planner_days = Math.ceil((new Date(app.calendar.state.last) - new Date(app.calendar.state.first)) / (24*3600000));}
 app.calendar.update_state(change);return false;"/>
-			<buttononly id="header_go" label="&#8629;" icon="nope" statustext="Go" class="ui-corner-all" onclick="var change = {date: widget.btn.attr('data-date')}; if(app.calendar.state.view == 'planner') { change.planner_days = 0;change.first=change.date;var d = new Date(change.date);d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);change.last=d.toJSON();} else if ( app.calendar.state.view == 'listview') {change.filter='month';} else {change.view = 'month';}app.calendar.update_state(change);" />
+			<buttononly id="header_go" label="&#8629;" icon="nope" class="ui-corner-all" onclick="var change = {date: widget.btn.attr('data-date')}; if(app.calendar.state.view == 'planner') { change.planner_days = 0;change.first=change.date;var d = new Date(change.date);d = new Date(d.getFullYear(),d.getUTCMonth() + 1, 0);change.last=d.toJSON();} else if ( app.calendar.state.view == 'listview') {change.filter='month';} else {change.view = 'month';}app.calendar.update_state(change);" />
 			<date id="date" class="et2_fullWidth" inline="true" onchange="var view_change = app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view);
 var update = {date:widget.getValue()};
 if(view_change >= 0) {update.view = app.calendar.sidebox_changes_views[view_change ? view_change - 1 : view_change];} else if (app.calendar.state.view == 'listview') {update.filter = 'after';} else if (app.calendar.state.view =='planner') { update.planner_days = 1; } app.calendar.update_state(update);"/>
