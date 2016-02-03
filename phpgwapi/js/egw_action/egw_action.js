@@ -197,6 +197,7 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 	{
 		this.set_onExecute(_onExecute);
 	}
+	this.hideOnMobile = false;
 }
 
 /**
@@ -641,6 +642,11 @@ egwAction.prototype.set_allowOnMultiple = function(_value)
 egwAction.prototype.set_hideOnDisabled = function(_value)
 {
 	this.hideOnDisabled = _value;
+};
+
+egwAction.prototype.set_hideOnMobile = function(_value)
+{
+	this.hideOnMobile = _value;
 };
 
 egwAction.prototype.set_data = function(_value)
@@ -2075,7 +2081,8 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 				(actionLinks[k].actionObj.allowOnMultiple == "only" && actionLinks[k].cnt > 1) ||
 				(actionLinks[k].actionObj.allowOnMultiple == false && actionLinks[k].cnt == 1)
 			);
-		actionLinks[k].visible = actionLinks[k].visible &&
+		if (!egwIsMobile()) actionLinks[k].actionObj.hideOnMobile = false;
+		actionLinks[k].visible = actionLinks[k].visible && !actionLinks[k].actionObj.hideOnMobile &&
 			(actionLinks[k].enabled || !actionLinks[k].actionObj.hideOnDisabled);
 	}
 
