@@ -362,11 +362,13 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * > 4 - Show description as well, truncated to fit
 	 */
 	_small_size: function() {
+
+		if(this.options.value.whole_day_on_top) return;
+
 		// Pre-calculation reset
 		this.div.removeClass('calendar_calEventSmall');
 		this.body.css('height', 'auto');
 
-		if(this.options.value.whole_day_on_top) return;
 		var line_height = parseFloat(this.div.css('line-height'));
 		var visible_lines = Math.floor(this.div.innerHeight() / line_height);
 
