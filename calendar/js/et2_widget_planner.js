@@ -583,7 +583,10 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 					},{application: 'calendar'});
 
 				var labels = [];
-				if(!app.calendar.state.cat_id || app.calendar.state.cat_id.toString() === '')
+				if(!app.calendar.state.cat_id ||
+					app.calendar.state.cat_id.toString() === '' ||
+					app.calendar.state.cat_id.toString() == '0'
+				)
 				{
 					app.calendar.state.cat_id = '';
 					labels.push({id:'',value:'',label: egw.lang('none'), main: '', data: {}});
