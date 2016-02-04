@@ -3132,18 +3132,33 @@ app.classes.mail = AppJS.extend(
 			egw.debug('warn', "Move folder, but no target");
 			return;
 		}
-		// Some UI feedback while the folder is moved - using just the iface DOMNode would
-		// put the load image in every row
-		var load_node = $j(destination.iface.getDOMNode()).closest('td').prev()
-			.addClass('loading');
-
-		for(var i = 0; i < _senders.length; i++)
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var src_label = _senders[0].id.replace(/^[0-9]::/,'');
+		var dest_label = destination.id.replace(/^[0-9]::/,'');
+		
+		var callback = function (_button)
 		{
-			egw.jsonq('mail.mail_ui.ajax_MoveFolder',[_senders[i].id, destination.id],
-				// Move is done (successfully or not), remove loading
-				function() {load_node.removeClass('loading');}
-			);
-		}
+			if (_button == et2_dialog.YES_BUTTON)
+			{
+				
+				egw.message (egw.lang('Folder %1 is moving to folder %2',src_label,dest_label ));
+				jQuery('<div class="loading ui-widget-overlay ui-front">'+egw.lang('please wait...')+'</div>').insertBefore('body');
+				for(var i = 0; i < _senders.length; i++)
+				{
+					egw.jsonq('mail.mail_ui.ajax_MoveFolder',[_senders[i].id, destination.id],
+						// Move is done (successfully or not), remove loading
+						function() {
+							var id = destination.id.split('::');
+							//refersh the top parent
+							ftree.refreshItem(id[0],null);
+							jQuery('.loading').remove();
+						}
+					);
+				}
+			}
+		};
+		et2_dialog.show_dialog(callback, egw.lang('Are you sure you want to move folder %1 to folder %2?',
+			src_label, dest_label), 'Move folder', {},et2_dialog.BUTTONS_YES_NO,  et2_dialog.WARNING_MESSAGE);
 	},
 
 	/**
