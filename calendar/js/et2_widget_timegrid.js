@@ -885,7 +885,17 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{
 			day = this.day_widgets[i];
-			
+
+			// Classes
+			if(this.day_list[i] && parseInt(this.day_list[i].substr(4,2)) !== new Date(app.calendar.state.date).getUTCMonth()+1)
+			{
+				day.set_class('calendar_differentMonth');
+			}
+			else
+			{
+				day.set_class('');
+			}
+
 			// Position
 			day.set_left((day_width * i) + 'px');
 			if(daily_owner)
@@ -968,7 +978,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this.date_helper.set_value(end_date);
 		var end = this.date_helper.date.getTime();
 		var i = 1;
-		this.date_helper.set_value(start_date);
+		this.date_helper.set_value(new Date(start_date));
 
 		do
 		{

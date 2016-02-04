@@ -150,7 +150,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 		}
 
 		var old_date = this.options.start_date;
-		this.options.start_date = this.date_helper.getValue();
+		this.options.start_date = new Date(this.date_helper.getValue());
 
 		if(old_date !== this.options.start_date && this.isAttached())
 		{
@@ -189,7 +189,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 		}
 
 		var old_date = this.options.end_date;
-		this.options.end_date = this.date_helper.getValue();
+		this.options.end_date = new Date(this.date_helper.getValue());
 
 		if(old_date !== this.options.end_date && this.isAttached())
 		{

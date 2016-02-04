@@ -358,6 +358,12 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		}
 	},
 
+	set_class: function(classnames) {
+		this.header.removeClass(this.class);
+		this._super.apply(this, arguments);
+		this.header.addClass(classnames);
+	},
+
 	/**
 	 * Callback used when the daywise data changes
 	 *
