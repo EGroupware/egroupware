@@ -427,7 +427,7 @@ var AppJS = Class.extend(
 					bottom:0,
 					right:0,
 					overflow:'auto',
-					"padding-top":'60px'})
+					"padding":'60px 0 10px 0'})
 				.attr('id','popupMainDiv')
 				.appendTo('body');
 		
@@ -452,9 +452,10 @@ var AppJS = Class.extend(
 				.addClass('et2_mobile-view-container')
 				.appendTo(this.viewContainer);
 		
+		var templateName = _action.data.mobileViewTemplate || 'edit.xet';
 		var etemplate = new etemplate2 (this.viewTemplate[0], false);
-		var template = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/view.xet?1';
-		var data = {content:content, readonlys:{'__ALL__':true,'edit':false}};
+		var template = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'?1';
+		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}};
 		
 		if(template.indexOf('.xet') > 0)
 		{
