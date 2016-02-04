@@ -6572,66 +6572,6 @@ span.egw_tutorial_title {
     /*BOF close/back button styling*/
     /*EOF close/back button styling*/
   }
-  body .pt-page-moveToLeft {
-    -webkit-animation: moveToLeft .6s ease both;
-    animation: moveToLeft .6s ease both;
-  }
-  body .pt-page-moveFromLeft {
-    -webkit-animation: moveFromLeft .6s ease both;
-    animation: moveFromLeft .6s ease both;
-  }
-  body .pt-page-moveToRight {
-    -webkit-animation: moveToRight .6s ease both;
-    animation: moveToRight .6s ease both;
-  }
-  body .pt-page-moveFromRight {
-    -webkit-animation: moveFromRight .6s ease both;
-    animation: moveFromRight .6s ease both;
-  }
-  @-webkit-keyframes moveToLeft {
-    to {
-      -webkit-transform: translateX(-100%);
-    }
-  }
-  @keyframes moveToLeft {
-    to {
-      -webkit-transform: translateX(-100%);
-      transform: translateX(-100%);
-    }
-  }
-  @-webkit-keyframes moveFromLeft {
-    from {
-      -webkit-transform: translateX(-100%);
-    }
-  }
-  @keyframes moveFromLeft {
-    from {
-      -webkit-transform: translateX(-100%);
-      transform: translateX(-100%);
-    }
-  }
-  @-webkit-keyframes moveToRight {
-    to {
-      -webkit-transform: translateX(100%);
-    }
-  }
-  @keyframes moveToRight {
-    to {
-      -webkit-transform: translateX(100%);
-      transform: translateX(100%);
-    }
-  }
-  @-webkit-keyframes moveFromRight {
-    from {
-      -webkit-transform: translateX(100%);
-    }
-  }
-  @keyframes moveFromRight {
-    from {
-      -webkit-transform: translateX(100%);
-      transform: translateX(100%);
-    }
-  }
   body div.egw_fw_mobile_iOS_popup_appHeader {
     padding-top: 15px;
   }
@@ -6696,13 +6636,13 @@ span.egw_tutorial_title {
     padding-left: 5px;
     font-weight: bold;
   }
-  #egw_fw_basecontainer {
+  body #egw_fw_basecontainer {
     background: white;
   }
-  #egw_fw_basecontainer #egw_fw_main #egw_fw_tabs {
+  body #egw_fw_basecontainer #egw_fw_main #egw_fw_tabs {
     margin-top: -3px;
   }
-  #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header {
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header {
     max-height: 60px;
     width: 60%;
     margin-left: 0;
@@ -6714,7 +6654,7 @@ span.egw_tutorial_title {
     top: 15px;
     height: 50px;
   }
-  #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header span {
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header span {
     margin: 0;
     overflow: visible;
     height: 38px;
@@ -6723,19 +6663,19 @@ span.egw_tutorial_title {
     border: none;
     border-radius: 10px;
   }
-  #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header span img {
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header span img {
     height: 32px !important;
     width: 32px !important;
   }
-  #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header span h1 {
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header span h1 {
     display: none;
   }
-  #egw_fw_basecontainer .egw_fw_top_toolbar > div:hover {
+  body #egw_fw_basecontainer .egw_fw_top_toolbar > div:hover {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
   }
-  #egw_fw_basecontainer div#egw_fw_menu {
+  body #egw_fw_basecontainer div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_active.png);
     cursor: pointer;
     position: fixed;
@@ -6747,20 +6687,20 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     z-index: 999;
   }
-  #egw_fw_basecontainer div#egw_fw_menu:hover {
+  body #egw_fw_basecontainer div#egw_fw_menu:hover {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
   }
-  #egw_fw_basecontainer div#egw_fw_menu:focus {
+  body #egw_fw_basecontainer div#egw_fw_menu:focus {
     outline: none;
   }
-  #egw_fw_basecontainer div#egw_fw_menu:active {
+  body #egw_fw_basecontainer div#egw_fw_menu:active {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items {
     width: 280px;
     display: inline;
     float: left;
@@ -6768,24 +6708,24 @@ span.egw_tutorial_title {
     padding-left: 55px;
     padding-top: 13px;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul {
     display: inline;
     padding: 0;
     margin: 0;
     list-style-type: none;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul li {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul li {
     display: -webkit-inline-box;
     display: -moz-inline-box;
     display: inline-block;
     padding: 2px;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul li:hover {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul li:hover {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_logout:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_logout:before {
     content: "";
     background-image: url(../images/logout.png);
     background-repeat: no-repeat;
@@ -6795,7 +6735,7 @@ span.egw_tutorial_title {
     display: inline-block;
     background-position: center;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home:before {
     content: " ";
     background-image: url(../images/topmenu_items/mobile/home.png);
     background-repeat: no-repeat;
@@ -6805,7 +6745,7 @@ span.egw_tutorial_title {
     /*display:inline-block;*/
     display: none;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs:before {
     content: "";
     background-image: url(../images/topmenu_items/mobile/setup.png);
     background-repeat: no-repeat;
@@ -6815,7 +6755,7 @@ span.egw_tutorial_title {
     display: inline-block;
     background-position: center;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl:before {
     content: "";
     background-repeat: no-repeat;
     width: 32px;
@@ -6825,7 +6765,7 @@ span.egw_tutorial_title {
     display: inline-block;
     background-position: center;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_cats:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_cats:before {
     background-image: url(../images/topmenu_items/mobile/category.png);
     content: "";
     background-repeat: no-repeat;
@@ -6835,7 +6775,7 @@ span.egw_tutorial_title {
     display: inline-block;
     background-position: center;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_password:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_password:before {
     background-image: url(../images/topmenu_items/mobile/password.png);
     content: "";
     background-repeat: no-repeat;
@@ -6845,7 +6785,7 @@ span.egw_tutorial_title {
     display: inline-block;
     background-position: center;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_manual:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_manual:before {
     background-image: url(../images/topmenu_items/mobile/help.png);
     content: "";
     background-repeat: no-repeat;
@@ -6854,7 +6794,7 @@ span.egw_tutorial_title {
     background-size: 24px 24px;
     display: inline-block;
   }
-  #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_search:before {
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_search:before {
     background-image: url(../images/topmenu_items/mobile/search.png);
     content: "";
     background-repeat: no-repeat;
@@ -6864,7 +6804,7 @@ span.egw_tutorial_title {
     display: inline-block;
     background-position: center;
   }
-  .egw_fw_ui_tabs_header {
+  body .egw_fw_ui_tabs_header {
     margin: 0px 0 0 0;
     padding: 1px 1px 0px 0px;
     background-position: bottom;
@@ -6873,21 +6813,21 @@ span.egw_tutorial_title {
     height: 34px;
     /*Active Tabs*/
   }
-  .egw_fw_ui_tabs_header h1 {
+  body .egw_fw_ui_tabs_header h1 {
     display: inline;
     width: 100%;
     text-align: center;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
   }
-  .egw_fw_ui_tabs_header img {
+  body .egw_fw_ui_tabs_header img {
     text-align: center;
     float: none;
     margin: 0 auto;
     width: 32px;
     height: 32px;
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header {
     padding-left: 0;
     position: relative;
     background: transparent;
@@ -6902,22 +6842,22 @@ span.egw_tutorial_title {
     height: 38px;
     width: 97%;
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
     background-color: none !important;
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:active {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:active {
     -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
     font-size: 14.3px;
     line-height: 1em;
     margin: 0 15px 2px 2px;
     vertical-align: super;
     padding-left: 25px;
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
     display: inline-block;
     width: 32px;
     height: 32px;
@@ -6933,7 +6873,7 @@ span.egw_tutorial_title {
     filter: gray;
     /* IE 6-9 */
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header object {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header object {
     width: 32px;
     height: 32px;
     margin: 8px 1px 0 5px;
@@ -6951,15 +6891,15 @@ span.egw_tutorial_title {
     border-top-left-radius: 5px;
     /*.background-clip(padding-box);*/
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
     border-width: 1px 1px 0px 1px !important;
     background-color: #ffd140;
     /*Active object*/
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover {
     background-color: #ffd140;
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active img.egw_fw_ui_tab_icon {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active img.egw_fw_ui_tab_icon {
     display: inline-block;
     width: 32px;
     height: 32px;
@@ -6968,7 +6908,7 @@ span.egw_tutorial_title {
     -moz-filter: contrast(2);
     -o-filter: contrast(2);
   }
-  .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active object {
+  body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active object {
     width: 32px;
     height: 32px;
     margin: 0px 1px 0 5px;
@@ -6987,11 +6927,11 @@ span.egw_tutorial_title {
     /*.background-clip(padding-box);*/
     background-color: #b4b4b4;
   }
-  #egw_fw_sidebar {
+  body #egw_fw_sidebar {
     top: 76px;
     bottom: 5px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu {
+  body #egw_fw_sidebar #egw_fw_sidemenu {
     position: absolute;
     top: 0px;
     bottom: 4px;
@@ -7002,22 +6942,30 @@ span.egw_tutorial_title {
     padding-top: 0.6em;
     font-size: 0.9em;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header {
+    margin: 0px 5px 0px 2px;
+    padding: 4px 10px 0 16px;
+    overflow: visible;
+    height: 38px;
+    border: none;
     display: block;
-    margin: 0 0;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header:hover {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header img {
+    height: 32px !important;
+    width: 32px !important;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header:hover {
     background-color: #d9d9d9;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header:active {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header:active {
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header h1 {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header h1 {
     margin: 0 0 10px 0;
     padding-top: 0.31em;
     padding-left: 3em;
@@ -7025,12 +6973,12 @@ span.egw_tutorial_title {
     font-size: 14.3px;
     line-height: 17px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header object {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header object {
     background-color: #ffffff;
     width: 24px;
     height: 24px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active {
     cursor: pointer;
     background-image: url("../images/clear.png");
     background-position: 95% -3000px;
@@ -7044,18 +6992,18 @@ span.egw_tutorial_title {
     border-bottom: none;
     height: 33px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active img {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active img {
     padding-left: 9px;
     padding-top: 6px;
     height: 18px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active h1 {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active h1 {
     text-transform: uppercase;
     font-size: 1.4em;
     color: #000000;
     padding-top: .8em;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -7073,7 +7021,7 @@ span.egw_tutorial_title {
     border-top-left-radius: 27px;
     /*.background-clip(padding-box);*/
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:active {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:active {
     -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -7091,7 +7039,7 @@ span.egw_tutorial_title {
     border-top-left-radius: 27px;
     /*.background-clip(padding-box);*/
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:focus {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:focus {
     background-image: url("../images/ajax-loader.gif");
     background-repeat: no-repeat;
     background-position: 90% 50%;
@@ -7100,7 +7048,7 @@ span.egw_tutorial_title {
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     background-color: #bfbfbf;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active object {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active object {
     margin-left: 14px;
     margin-top: 8px;
     -webkit-border-radius: 3px;
@@ -7109,10 +7057,10 @@ span.egw_tutorial_title {
     width: 16px;
     height: 16px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active .egw_fw_ui_ajaxloader {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active .egw_fw_ui_ajaxloader {
     margin-top: -26px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content {
     display: block;
     background-image: none;
     -webkit-border-top-right-radius: 0;
@@ -7134,16 +7082,16 @@ span.egw_tutorial_title {
     margin: 0 0 2em 0;
     /*######################*/
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content:nth-last-of-type(-n+3) {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content:nth-last-of-type(-n+3) {
     padding: 5px 0.3em 1.5em 0.3em;
     margin: 0 0 10px 0;
     background-color: #b3b3b3 !important;
     border-color: #b4b4b4;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content > div {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content > div {
     background-color: #b3b3b3 !important;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category {
     margin: 4px 5px 5px 5px;
     padding: 0.5em 1em 0.5em 0;
     cursor: pointer;
@@ -7163,7 +7111,7 @@ span.egw_tutorial_title {
     border-top-left-radius: 3px;
     /*.background-clip(padding-box);*/
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category h1 {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category h1 {
     margin: 5px 0px 3px 5px;
     padding: 0px 0px 0px 15px;
     line-height: 1em;
@@ -7172,17 +7120,17 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     background-position: left center;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category div.egw_fw_ui_category:nth-last-of-type(-n+3) img.egw_fw_ui_sidemenu_listitem_icon {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category div.egw_fw_ui_category:nth-last-of-type(-n+3) img.egw_fw_ui_sidemenu_listitem_icon {
     display: block;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category_content {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category_content {
     border-radius: 0;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category:hover {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category:hover {
     background-color: #999999;
     padding: 0.5em 1em 0.5em 0;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active {
     border-bottom-width: 0px;
     margin-top: 4px;
     background-color: #0c5da5;
@@ -7201,19 +7149,19 @@ span.egw_tutorial_title {
     border-top-left-radius: 3px !important;
     /*.background-clip(padding-box);*/
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 {
     background-image: url(../images/arrow_down.png);
     line-height: 1em;
     font-size: 12px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a {
     color: #FFF;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a img {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a img {
     width: 16px;
     height: 16px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a:hover {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 a:hover {
     padding: 5px 30px 5px 0px;
     width: 200px;
     background-color: #f0f0f0;
@@ -7223,21 +7171,21 @@ span.egw_tutorial_title {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     background-color: inherit;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active:hover {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active:hover {
     background-color: #408dd2;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     -o-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content_bottom {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content_bottom {
     border-width: 0px 1px 1px 1px;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_bottom {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_bottom {
     border-width: 0px;
     border-color: #ffffff;
   }
-  #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_icon {
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_icon {
     display: inline-block;
     height: 24px;
     padding-left: 0;
@@ -7255,57 +7203,48 @@ span.egw_tutorial_title {
     filter: gray;
     /* IE 6-9 */
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu {
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu {
     width: 82px !important;
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content,
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header {
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content {
     display: none !important;
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header {
-    height: 38px;
-    width: 54px;
-    text-overflow: ellipsis;
-    border-radius: 0px 15px 15px 0px;
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
+    border-radius: 0;
+    background-image: url("../images/ajax-loader.gif");
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header img {
-    src: url(../images/topmenu_items/setup.png) !important;
-    height: 32px !important;
-    width: 32px !important;
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active img {
+    padding: 0;
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_tabs_header span {
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header {
     margin: 0px 5px 0px 2px;
+    padding: 4px 10px 0 16px;
     overflow: visible;
     height: 38px;
     width: 50px;
     border: none;
-    border-radius: 10px;
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_tabs_header span img {
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header img {
     height: 32px !important;
     width: 32px !important;
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_tabs_header span h1 {
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header h1 {
     display: none;
   }
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu #egw_fw_splitter,
-  .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active h1 {
-    display: none;
-  }
-  .sidebar-toggle #egw_fw_topmenu_items {
+  body .sidebar-toggle #egw_fw_topmenu_items {
     display: none !important;
   }
-  #egw_fw_footer {
+  body #egw_fw_footer {
     display: none;
   }
-  .egw_fw_ui_app_header_container {
+  body .egw_fw_ui_app_header_container {
     display: none;
   }
-  .egw_fw_content_browser_div {
+  body .egw_fw_content_browser_div {
     padding: 0;
     background-color: white;
   }
-  .egw_fw_mobile_popup_container {
+  body .egw_fw_mobile_popup_container {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -7314,12 +7253,14 @@ span.egw_tutorial_title {
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
   }
-  .egw_fw_mobile_popup_container .egw_fw_mobile_popupFrame {
+  body .egw_fw_mobile_popup_container .egw_fw_mobile_popupFrame {
     width: 100%;
     height: 100%;
     visibility: hidden;
+    display: block;
+    background: white;
   }
-  .dialogHeadbar {
+  body .dialogHeadbar {
     height: 50px;
     box-shadow: 0px 4px 5px 2px silver;
     position: fixed;
@@ -7329,20 +7270,20 @@ span.egw_tutorial_title {
     right: 0;
     z-index: 1;
   }
-  .dialogHeadbar .et2_button_with_image,
-  .dialogHeadbar .et2_button_text {
+  body .dialogHeadbar .et2_button_with_image,
+  body .dialogHeadbar .et2_button_text {
     height: 46px;
     margin: 1px;
     margin-left: 3px;
   }
-  .dialogHeadbar td {
+  body .dialogHeadbar td {
     margin-left: 70px;
     display: block;
   }
-  #mail-display {
+  body #mail-display {
     min-height: initial !important;
   }
-  #mail-display .mailDisplayContainer {
+  body #mail-display .mailDisplayContainer {
     top: 140px;
   }
 }
@@ -8029,6 +7970,9 @@ span.egw_tutorial_title {
   }
   body .et2_taglist .ms-sel-ctn {
     background: white;
+  }
+  body .et2_mobile_view {
+    display: block;
   }
   body .et2_mobile_view .et2_mobile-view-container {
     padding: 0 14px 0 7px;

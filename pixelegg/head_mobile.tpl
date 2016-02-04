@@ -37,8 +37,7 @@
 				</div>
 				</div>
 			<div id="egw_fw_sidebar">
-				<div id="egw_fw_sidemenu">
-				</div>
+				<div id="egw_fw_sidemenu"></div>
 			</div>
 			<div id="egw_fw_main">
 

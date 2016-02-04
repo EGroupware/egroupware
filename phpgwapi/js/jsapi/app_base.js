@@ -421,9 +421,11 @@ var AppJS = Class.extend(
 					height:"100%",
 					background:"white",
 					display:'block',
-					position:'absolute',
+					position:'fixed',
 					top:0,
 					left:0,
+					bottom:0,
+					right:0,
 					overflow:'auto',
 					"padding-top":'60px'})
 				.attr('id','popupMainDiv')
