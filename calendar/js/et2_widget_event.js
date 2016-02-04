@@ -348,6 +348,9 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 		}
 
+		// Clear tooltip for regeneration
+		this.set_statustext('');
+
 		// Height specific section
 		this._small_size();
 	},

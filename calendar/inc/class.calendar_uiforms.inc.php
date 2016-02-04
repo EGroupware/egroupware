@@ -793,6 +793,12 @@ class calendar_uiforms extends calendar_ui
 						}
 					}
 				}
+				// Adding participants needs to be done as an edit, in case we
+				// have participants visible in seperate calendars
+				if(count(array_diff_key($event['participants'], $old_event['participants'])))
+				{
+					$update_type = 'edit';
+				}
 				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']);
 				unset($event['ignore']);
 			}

@@ -696,14 +696,14 @@ class calendar_ui
 		if(!$event)
 		{
 			// Sending null will trigger a removal
-			$response->call('egw.dataStoreUID','calendar::'.$event_id,null);
+			$response->generic('data', array('uid' => 'calendar::'.$event['row_id'], 'data' => null));
 			return false;
 		}
 
 		if(!$event['recur_type'] || $recurrence_date)
 		{
 			$this->to_client($event);
-			$response->call('egw.dataStoreUID','calendar::'.$event['row_id'],$event);
+			$response->generic('data', array('uid' => 'calendar::'.$event['row_id'], 'data' => $event));
 		}
 		// If it's recurring, try to send the next month or so
 		else if($event['recur_type'] )
@@ -716,7 +716,7 @@ class calendar_ui
 				$occurrence = $rrule->current();
 				$converted = $this->bo->read($event['id'], $occurrence);
 				$this->to_client($converted);
-				$response->call('egw.dataStoreUID','calendar::'.$converted['row_id'],$converted);
+				$response->generic('data', array('uid' => 'calendar::'.$converted['row_id'], 'data' => $converted));
 				$rrule->next();
 			}
 			while ($rrule->valid() && $occurrence <= $this_month );
