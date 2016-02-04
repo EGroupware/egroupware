@@ -402,8 +402,30 @@ Hide subsequent headers in week view with non-consolidated owners
 	flex-direction: row;
 	align-items:flex-start;
 	width: 100%;
-}
 
+	/* Set max height of all day section */
+	max-height: 4.2em;
+	overflow: hidden;
+}
+/* If more all day events than shown, show ellipsis & show all on hover */
+.calendar_calDayColHeader .calendar_calDayColAllDay.overflown:hover {
+    max-height: none;
+    overflow: visible;
+    position: absolute;
+    background-color: #f0f0f0;
+    z-index: 50;
+	padding-bottom: 2ex;
+}
+.calendar_calDayColHeader .calendar_calDayColAllDay.overflown:not(:hover)::after {
+    content: "\02026";
+    line-height: 0.5em;
+    height: 1em;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+}
 .calendar_calDayColAllDay > .calendar_calEventBodySmall {
 	white-space: nowrap;
 }

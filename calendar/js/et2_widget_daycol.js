@@ -532,6 +532,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.header.children('.hiddenEventBefore').remove();
 		this.div.children('.hiddenEventAfter').remove();
 		this.event_wrapper.css('overflow','visible');
+		this.all_day.removeClass('overflown');
+		$j('.calendar_calEventBody', this.div).css('padding-top','');
 
 		var timegrid = this._parent;
 
@@ -567,6 +569,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				return;
 			}
 		}
+		// Check all day overflow
+		this.all_day.toggleClass('overflown', 
+			this.all_day[0].scrollHeight - this.all_day.height() > 5
+		);
+		
 		// Check each event
 		this.iterateOver(function(event) {
 			// Skip whole day events and events missing value
@@ -576,7 +583,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			{
 				return;
 			}
-
 			// Reset
 			event.title.css({'top':'','background-color':''});
 			event.body.css('padding-top','');
