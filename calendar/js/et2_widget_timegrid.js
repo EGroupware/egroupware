@@ -869,18 +869,15 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				before = true;
 			}
 			if(delete_index < 0) delete_index = 0;
-			// Wait until any animations or other timeouts are done
-			window.setTimeout(jQuery.proxy(function() {
-				this.div.hide();
-				this.header.hide();
-				this.free();
-			},this.day_widgets[delete_index]),1000);
 
 			// Widgets that are before our date shrink, after just get pushed out
 			if(before)
 			{
 				this.day_widgets[delete_index].set_width('0px');
 			}
+			this.day_widgets[delete_index].div.hide();
+			this.day_widgets[delete_index].header.hide();
+			this.day_widgets[delete_index].destroy();
 			this.day_widgets.splice(delete_index--,1);
 		}
 		

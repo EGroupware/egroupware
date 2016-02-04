@@ -650,7 +650,8 @@ app.classes.calendar = AppJS.extend(
 				},this, et2_calendar_timegrid);
 				if(widget == null) return;
 			}
-
+			/* Disabled
+			 * 
 			// We clone the nodes so we can animate the transition
 			var original = $j(widget.getDOMNode()).closest('.et2_grid');
 			var cloned = original.clone(true).attr("id","CLONE");
@@ -756,7 +757,13 @@ app.classes.calendar = AppJS.extend(
 			}
 			// If detecting the transition end worked, we wouldn't need to use a timeout.
 			window.setTimeout(remove,100);
-
+			*/
+		   window.setTimeout(function() {
+				if(app.calendar)
+				{
+					app.calendar._scroll_disabled = false;
+				}
+			}, 2000);
 			// Get the view to calculate - this actually loads the new data
 			// Using a timeout make it a little faster (in Chrome)
 			window.setTimeout(function() {
@@ -777,6 +784,7 @@ app.classes.calendar = AppJS.extend(
 		};
 		
 		// Bind only once, to the whole thing
+		/* Disabled
 		jQuery('body').off('.calendar')
 			//.on('wheel','.et2_container:#calendar-list,#calendar-sidebox)',
 			.on('wheel.calendar','.et2_container .calendar_calTimeGrid, .et2_container .calendar_plannerWidget',
@@ -806,6 +814,7 @@ app.classes.calendar = AppJS.extend(
 					return false;
 				}
 			);
+		*/
 		if(framework.applications.calendar && framework.applications.calendar.tab)
 		{
 			jQuery(framework.applications.calendar.tab.contentDiv).swipe('destroy')

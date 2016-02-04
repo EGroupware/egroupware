@@ -393,31 +393,19 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.title.toggleClass('et2_clickable et2_link',label === '');
 	},
 	set_left: function(left) {
-		// Maybe?
-		window.setTimeout(jQuery.proxy(function() {
 		if(this.div)
 		{
 			this.div.css('left',left);
-			// Headers are positioned relative
-			//this.header.css('left',left);
 		}
-		},this),1);
-
 	},
 	set_width: function(width) {
-		if(this.width_timeout)
-		{
-			window.clearTimeout(this.width_timeout);
-		}
 		this.options.width = width;
-		this.width_timeout = window.setTimeout(jQuery.proxy(function() {
-			this.width_timeout = null;
-			if(this.div)
-			{
-				this.div.outerWidth(this.options.width);
-				this.header.outerWidth(this.options.width);
-			}
-		},this),1);
+	
+		if(this.div)
+		{
+			this.div.outerWidth(this.options.width);
+			this.header.outerWidth(this.options.width);
+		}
 	},
 
 	/**

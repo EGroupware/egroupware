@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 54905 2016-02-02 22:59:13Z nathangray $ */
+/* $Id: app.css 54911 2016-02-03 16:52:28Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -121,13 +121,10 @@
   position: absolute;
   width: 30%;
   margin-top: 0px;
-  /* Nice transition when changing days in a week */
-  transition: 1s ease-in-out;
   z-index: 10;
 }
 #calendar-view {
   width: 100%;
-  transition: width 1s ease-in-out;
 }
 #calendar-view_view td {
   padding: 0px;
@@ -333,8 +330,7 @@ Hide subsequent headers in week view with non-consolidated owners
  *  width:
  */
   border-left: 1px solid silver;
-  /* Nice transition when changing days in a week */
-  -webkit-transition: 0.1s ease-in-out;
+  transition: none;
 }
 /* Calendar Id #
 */
@@ -356,8 +352,7 @@ Hide subsequent headers in week view with non-consolidated owners
   border-right: 1px solid silver;
   height: initial;
   min-height: 2em;
-  /* Nice transition when changing days in a week */
-  transition: width 1s ease-in-out;
+  transition: none;
   z-index: 30;
   white-space: initial;
   padding-bottom: 2ex;
@@ -1186,7 +1181,8 @@ img.calendar_print_appicon {
  */
 .calendar_slide {
   /* There is a cleanup timeout in calendar app.js line 563 that must match */
-  transition-duration: 2s;
+  transition-duration: 0s;
+  /* was 2s */
   transition-delay: 50ms;
 }
 /**
