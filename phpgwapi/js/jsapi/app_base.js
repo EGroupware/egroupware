@@ -440,7 +440,6 @@ var AppJS = Class.extend(
 				.addClass('mobile-view-editBtn')
 				.click(function(){
 					egw.open(id_app[1], self.appname);
-					destroy();
 				})
 				.text(egw.lang('Edit'))
 				.appendTo(this.viewContainer);
