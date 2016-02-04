@@ -519,6 +519,25 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 	 */
 	var registeredCallbacks = {};
 
+
+
+	/**
+	 * Register the "data" plugin globally for single uids
+	 * Multiple UIDs such as nextmatch results are still handled by egw.data
+	 * using dataFetch() && parseServerResponse(), above.  Both update the
+	 * GLOBAL data cache though this one is registered globally, and the above
+	 * is registered app local.
+	 */
+	egw.registerJSONPlugin(function(type, res, req) {
+		if ((typeof res.data.uid != 'undefined') &&
+			(typeof res.data.data != 'undefined'))
+		{
+			// Store it, which will call all registered listeners
+			this.dataStoreUID(res.data.uid, res.data.data);
+			return true;
+		}
+	}, egw, 'data',true);
+	
 	/**
 	 * Uids and timers used for querying data uids, hashed by the first few
 	 * bytes of the _execId, stored as an object of the form

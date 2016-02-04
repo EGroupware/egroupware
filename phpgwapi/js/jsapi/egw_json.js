@@ -32,6 +32,15 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	var plugins = {};
 
 	/**
+	 * Global json handlers are from global modules, not window level
+	 */
+	if(typeof egw._global_json_handlers == 'undefined')
+	{
+		egw._global_json_handlers = {}
+	}
+	var global_plugins = egw._global_json_handlers;
+
+	/**
 	 * Internal implementation of the JSON request object.
 	 *
 	 * @param {string} _menuaction
@@ -165,24 +174,29 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				if(typeof res.type == 'string' && res.type != 'data') only_data = false;
 
 				// Check whether a plugin for the given type exists
-				if (typeof plugins[res.type] !== 'undefined')
+				var handlers = [plugins, global_plugins];
+				for(var handler_idx = 0; handler_idx < handlers.length; handler_idx++)
 				{
-					for (var j = 0; j < plugins[res.type].length; j++) {
-						try {
-							// Get a reference to the plugin
-							var plugin = plugins[res.type][j];
+					var handler_level = handlers[handler_idx];
+					if (typeof handler_level[res.type] !== 'undefined')
+					{
+						for (var j = 0; j < handler_level[res.type].length; j++) {
+							try {
+								// Get a reference to the plugin
+								var plugin = handler_level[res.type][j];
 
-							// Call the plugin callback
-							plugin.callback.call(
-								plugin.context ? plugin.context : this.context,
-								res.type, res, this
-							);
-						} catch(e) {
-							var msg = e.message ? e.message : e + '';
-							var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : "";
-							this.egw.debug('error', 'Exception "' + msg + '" while handling JSON response from ' +
-								this.url + ' [' + JSON.stringify(this.parameters) + '] type "' + res.type +
-								'", plugin', plugin, 'response', res, stack);
+								// Call the plugin callback
+								plugin.callback.call(
+									plugin.context ? plugin.context : this.context,
+									res.type, res, this
+								);
+							} catch(e) {
+								var msg = e.message ? e.message : e + '';
+								var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : "";
+								this.egw.debug('error', 'Exception "' + msg + '" while handling JSON response from ' +
+									this.url + ' [' + JSON.stringify(this.parameters) + '] type "' + res.type +
+									'", plugin', plugin, 'response', res, stack);
+							}
 						}
 					}
 				}
@@ -229,23 +243,32 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * @param _type is an optional parameter defaulting to 'global'.
 		 * 	it describes the response type which this plugin should be
 		 * 	handling.
+		 * @param {boolean} [_global=false] Register the handler globally or
+		 *	locally.  Global handlers must stay around, so should be used
+		 *	for global modules.
 		 */
-		registerJSONPlugin: function(_callback, _context, _type)
+		registerJSONPlugin: function(_callback, _context, _type, _global)
 		{
 			// _type defaults to 'global'
 			if (typeof _type === 'undefined')
 			{
 				_type = 'global';
 			}
+			// _global defaults to false
+			if (typeof _global === 'undefined')
+			{
+				_global = false;
+			}
+			var scoped = _global ? global_plugins : plugins;
 
 			// Create an array for the given category inside the plugins object
-			if (typeof plugins[_type] === 'undefined')
+			if (typeof scoped[_type] === 'undefined')
 			{
-				plugins[_type] = [];
+				scoped[_type] = [];
 			}
 
 			// Add the entry
-			plugins[_type].push({
+			scoped[_type].push({
 				'callback': _callback,
 				'context': _context
 			});
@@ -261,22 +284,28 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * @param _type is an optional parameter defaulting to 'global'.
 		 * 	it describes the response type which this plugin should be
 		 * 	handling.
+		 * @param {boolean} [_global=false] Remove a global or local handler.
 		 */
-		unregisterJSONPlugin: function(_callback, _context, _type)
+		unregisterJSONPlugin: function(_callback, _context, _type, _global)
 		{
 			// _type defaults to 'global'
 			if (typeof _type === 'undefined')
 			{
 				_type = 'global';
 			}
-
-			if (typeof plugins[_type] !== 'undefined') {
-				for (var i = 0; i < plugins[_type].length; i++)
+			// _global defaults to false
+			if (typeof _global === 'undefined')
+			{
+				_global = false;
+			}
+			var scoped = _global ? global_plugins : plugins;
+			if (typeof scoped[_type] !== 'undefined') {
+				for (var i = 0; i < scoped[_type].length; i++)
 				{
-					if (plugins[_type][i].callback == _callback &&
-						plugins[_type][i].context == _context)
+					if (scoped[_type][i].callback == _callback &&
+						scoped[_type][i].context == _context)
 					{
-						plugins[_type].slice(i, 1);
+						scoped[_type].slice(i, 1);
 						break;
 					}
 				}
