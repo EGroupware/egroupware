@@ -42,6 +42,7 @@ append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application mail expected but got: %1
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
+are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
 arrival	mail	en	Recieved
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
@@ -190,6 +191,7 @@ flagged %1 messages as unflagged in %2	mail	en	flagged %1 message(s) as unflagge
 flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
+folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
 folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
@@ -283,10 +285,12 @@ message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
 message send successfully.	mail	en	Message send successfully.
 miscellaneous	mail	en	Miscellaneous
+move folder	mail	en	Move Folder
 move selected to	mail	en	Move selected to
 move to	mail	en	Move to
 move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
+moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one Mailaccount to another is not supported
 name of account	mail	en	Name of account
 never display html emails	mail	en	never display html emails
 new mail notification	mail	en	New mail notification

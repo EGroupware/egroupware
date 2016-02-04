@@ -3132,9 +3132,17 @@ app.classes.mail = AppJS.extend(
 			egw.debug('warn', "Move folder, but no target");
 			return;
 		}
+
+		var sourceProfile = _senders[0].id.split('::');
+		var targetProfile = destination.id.split('::');
+		if (sourceProfile[0]!=targetProfile[0])
+		{
+			egw.message(this.egw.lang('Moving Folders from one Mailaccount to another is not supported'),'error');
+			return;
+		}
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var src_label = _senders[0].id.replace(/^[0-9]::/,'');
-		var dest_label = destination.id.replace(/^[0-9]::/,'');
+		var src_label = _senders[0].id.replace(/^[0-9]+::/,'');
+		var dest_label = destination.id.replace(/^[0-9]+::/,'');
 		
 		var callback = function (_button)
 		{
@@ -3157,8 +3165,8 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		};
-		et2_dialog.show_dialog(callback, egw.lang('Are you sure you want to move folder %1 to folder %2?',
-			src_label, dest_label), 'Move folder', {},et2_dialog.BUTTONS_YES_NO,  et2_dialog.WARNING_MESSAGE);
+		et2_dialog.show_dialog(callback, this.egw.lang('Are you sure you want to move folder %1 to folder %2?',
+			src_label, dest_label), this.egw.lang('Move folder'), {},et2_dialog.BUTTONS_YES_NO,  et2_dialog.WARNING_MESSAGE);
 	},
 
 	/**
