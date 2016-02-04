@@ -43,6 +43,7 @@ append	mail	de	hinzufügen
 appended after reply before sending	mail	de	Einfügen nach dem zitierten Text im Zuge des Versendens
 application mail expected but got: %1	mail	de	Anwendung Mail erwarted, aber %1 erhalten!
 are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
+are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1 in den Ordner %2 verschoben werden?
 arrival	mail	de	Empfangsdatum
 attach users vcard at compose to every new mail	mail	de	Füge die VCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
@@ -193,6 +194,7 @@ flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Ma
 flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
+folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
 folder management ...	mail	de	Ordner Verwaltung ...
 folder settings	mail	de	Ordner Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
@@ -286,10 +288,12 @@ message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
 miscellaneous	mail	de	Verschiedenes
+move folder	mail	de	Ordner verschieben
 move selected to	mail	de	Verschiebe ausgewählte nach
 move to	mail	de	verschieben
 move to trash	mail	de	in den Papierkorb verschieben
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
+moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
 name of account	mail	de	Konten-Bezeichnung
 never display html emails	mail	de	niemals anzeigen
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
