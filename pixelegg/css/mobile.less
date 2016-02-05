@@ -454,6 +454,7 @@
 				left: 0;
 				right: 0;
 				overflow-y: auto;
+				-webkit-overflow-scrolling:touch;
 				z-index: 0;
 				padding-top: 0.6em;
 				font-size: 0.9em;
@@ -965,6 +966,7 @@
 @mobile-button-width: 50px;
 @mobile-nm-search-bg: #0c5da5;
 @media only screen and (min-width: 320px)  and (max-width: 1290px) {
+	html *{touch-action:auto;}
 	body
 	{
 		#egw_fw_basecontainer.sidebar-toggle {
@@ -1004,10 +1006,23 @@
 		div.dhtmlxMenu_egw_SubLevelArea_Polygon
 		{
 			font-size:medium;
-			top:50px !important;
+			top:0px !important;
 			right:0px;
 			left:auto !important;
 			background-color: white;
+			width: 100%;
+			table.dhtmlxMebu_SubLevelArea_Tbl::before{
+				content: "\2190";
+				height: 46px;
+				padding-left: 8px;
+				font-size: 24pt;
+			}
+			table.dhtmlxMebu_SubLevelArea_Tbl{
+				width:100%;
+				tr.sub_item_selected {height:46px;}
+				tr.sub_item {width:100%;height:46px !important;}
+				td.sub_item_hk {width:100%;}
+			} 
 		}
 		div#egw_message {
 			bottom: 0px;
@@ -1346,12 +1361,24 @@
 					}
 				}
 				tbody {
-					tr.focused
-					{
-						background-image: none;
-					}
+					tr.focused{background-image: none;}
 					tr.selected {
-						background: rgba(255, 194, 0, 0.5) !important;
+						background: #696969 !important;
+						* {color:white !important;}
+						td:last-child:before {
+							content: " ";
+							position: absolute;
+							background: rgb(255, 255, 255);
+							top: 0px;
+							left: 0px;
+							bottom: 0px;
+							right: 0;
+							color: white;
+							background-image: url(../images/agt_action_success.png);
+							background-repeat: no-repeat;
+							background-position: center;
+							height: auto;
+						}
 					}
 					tr {
 						&:hover {
@@ -1489,10 +1516,13 @@
 					width:46px;
 					height:46px;
 					background-size: 18px 18px;
+					touch-action: auto;
 				}
 				div.ui-toolbar-menulist
 				{
 					min-width: 200px;
+					height: 322px !important;
+					overflow-y: auto !important;
 				}
 				button.et2_toolbar_hasCaption {
 					width:auto;
