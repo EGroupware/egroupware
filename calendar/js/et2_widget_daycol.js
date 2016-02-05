@@ -556,7 +556,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.div.children('.hiddenEventAfter').remove();
 		this.event_wrapper.css('overflow','visible');
 		this.all_day.removeClass('overflown');
-		$j('.calendar_calEventBody', this.div).css('padding-top','');
+		$j('.calendar_calEventBody', this.div).css({'padding-top': '','margin-top':''});
 
 		var timegrid = this._parent;
 
