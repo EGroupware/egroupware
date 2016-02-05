@@ -928,6 +928,7 @@ class timesheet_ui extends timesheet_bo
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 				'group' => $group=1,
 				'disableClass' => 'th',
+				'onExecute' => html::$ua_mobile?'javaScript:app.timesheet.viewEntry':''
 			),
 /*
 			'view' => array(
