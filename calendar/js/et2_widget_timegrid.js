@@ -1706,11 +1706,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		// Set the max width to avoid animations screwing up the width
 		this.div.css('max-width',$j(this.getInstanceManager().DOMContainer).width());
 		
-		// We expect the timegrid to be in a table with 0 or more other timegrids,
-		// 1 per row.  We want each timegrid to be as large as possible, but space
-		// shared equally.  Height can't be set to a percentage on the rows, because
-		// that doesn't work.
-
+		/*
+		We expect the timegrid to be in a table with 0 or more other timegrids,
+		1 per row.  We want each timegrid to be as large as possible, but space
+		shared equally.  Height can't be set to a percentage on the rows, because
+		that doesn't work.  However, if the timegrid is too small (1/2 hour < 1 line
+		height), we change to showing only the working hours with no vertical
+		scrollbar.  Each week gets as much space as it needs.
+		*/
 		// How many rows?
 		var rowCount = 0;
 		this._parent.iterateOver(function(widget) {
@@ -1718,7 +1721,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		},this, et2_calendar_timegrid);
 
 		// Take the whole tab height
-		var height = Math.min($j(this.getInstanceManager().DOMContainer).height(),$j(this.getInstanceManager().DOMContainer).parent().innerHeight());
+		var height = $j(this.getInstanceManager().DOMContainer).parent().innerHeight();
 
 		// Allow for toolbar
 		height -= $j('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
@@ -1728,13 +1731,35 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		// Allow for borders & padding
 		this.options.height -= 2*((this.div.outerWidth(true) - this.div.innerWidth()) + parseInt(this.div.parent().css('padding-top')));
 
-		// If too small, switch to list view automatically
-		// Set rather arbitrarily at 180 px.
-		if(this.options.granularity && rowCount > 1 && this.options.height < 180)
+		// Calculate how much space is needed, and
+		// if too small be bigger
+		var needed = ((this.day_end - this.day_start) /
+			(this.options.granularity / 60) * parseInt(this.div.css('line-height'))) +
+			this.gridHeader.outerHeight();
+		var too_small = needed > this.options.height && this.options.granularity != 0;
+
+		$j(this.getInstanceManager().DOMContainer)
+			.css({
+				'overflow-y': too_small ? 'auto' : 'hidden',
+				'overflow-x': 'hidden',
+				'height': too_small ? height : '100%'
+			});
+		if(too_small)
 		{
-			this._parent.iterateOver(function(widget) {
-				if(!widget.disabled) widget.set_granularity(0);
-			},this, et2_calendar_timegrid);
+			this.options.height = needed;
+			if(!this.div.hasClass('calendar_calTimeGridFixed'))
+			{
+				window.setTimeout(jQuery.proxy(function() {
+					this._parent.iterateOver(function(widget) {
+						if(!widget.disabled) widget.resize();
+					},this, et2_calendar_timegrid);
+				},this),1);
+			}
+			this.div.addClass('calendar_calTimeGridFixed');
+		}
+		else
+		{
+			this.div.removeClass('calendar_calTimeGridFixed');
 		}
 		this.div.css('height', this.options.height);
 			

@@ -531,6 +531,23 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 	/**
 	 * Apply styles for out-of-view and partially hidden events
+	 *
+	 * There are 3 different states or modes of display:
+	 * 
+	 * - 'Normal' - When showing events positioned by time, the indicator is just
+	 *	a bar colored by the last category color.  On hover it shows either the
+	 *	title of a single event or "x event(s)" if more than one are hidden.
+	 *	Clicking adjusts the current view to show the earliest / latest hidden
+	 *	event
+	 *
+	 * - Fixed - When showing events positioned by time but in a fixed-height
+	 *  week (not auto-sized to fit screen) the indicator is the same as sized.
+	 *  On hover it shows the titles of the hidden events, clicking changes
+	 *  the view to the selected day.
+	 *  
+	 * - GridList - When showing just a list, the indicator shows "x event(s)",
+	 *	and on hover shows the category color, title & time.  Clicking changes
+	 *	the view to the selected day, and opens the event for editing.
 	 */
 	_out_of_view: function()
 	{
@@ -591,8 +608,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 			// Reset
 			event.title.css({'top':'','background-color':''});
-			event.body.css('padding-top','');
+			event.body.css({'padding-top':'','margin-top':''});
 			var hidden = isHidden.call(this,event.div);
+			var day = this;
 			if(!hidden)
 			{
 				return;
@@ -601,16 +619,19 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			// Bottom hidden is fine
 			if(hidden.hidden === 'top' && !hidden.completely)
 			{
+				var title_height = event.title.outerHeight();
 				event.title.css({
 					'top': timegrid.scrolling.scrollTop() - event.div.position().top,
 					'background-color': 'transparent'
 				});
-				event.body.css('padding-top',timegrid.scrolling.scrollTop() - event.div.position().top);
+				event.body.css({
+					'padding-top': timegrid.scrolling.scrollTop() - event.div.position().top + title_height,
+					'margin-top' : -title_height
+				});
 			}
 			// Too many in gridlist view, show indicator
 			else if (this.display_settings.granularity === 0 && hidden)
 			{
-				var day = this;
 				if($j('.hiddenEventAfter',this.div).length == 0)
 				{
 					this.event_wrapper.css('overflow','hidden');
@@ -625,7 +646,12 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			// Completely out of view, show indicator
 			else if (hidden.completely)
 			{
-				this._hidden_indicator(event, hidden.hidden == 'top');
+				this._hidden_indicator(event, hidden.hidden == 'top',
+					timegrid.div.hasClass('calendar_calTimeGridFixed') ? function() {
+						app.calendar.update_state({view: 'day', date: day.date});
+						return false;
+					} : false
+				);
 			}
 		}, this, et2_calendar_event);
 	},
@@ -642,24 +668,42 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		var indicator = '';
 		var day = this;
 		var timegrid = this._parent;
+		var fixed_height = timegrid.div.hasClass('calendar_calTimeGridFixed');
 		if(top)
 		{
 			if($j('.hiddenEventBefore',this.header).length === 0)
 			{
 				indicator = $j('<div class="hiddenEventBefore"></div>')
 					.appendTo(this.header)
-					.text(event.options.value.title)
-					.attr('data-hidden_count', 1)
-					.on('click', typeof onclick === 'function' ? onclick : function() {
-						$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
-						return false;
-					});
+					.attr('data-hidden_count', 1);
+				if(!fixed_height)
+				{
+					indicator
+						.text(event.options.value.title)
+						.on('click', typeof onclick === 'function' ? onclick : function() {
+								$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
+							return false;
+						});
+				}
+				else
+				{
+					indicator
+						.append("<div>"+event.options.value.title+"</div>");
+				}
 			}
 			else
 			{
 				indicator = $j('.hiddenEventBefore',this.header);
 				indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
-				indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+
+				if (fixed_height)
+				{
+					indicator.append("<div>"+event.options.value.title+"</div>");
+				}
+				else
+				{
+					indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+				}
 			}
 		}
 		else
@@ -675,14 +719,23 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 						// Better re-run this to clean up
 						day._out_of_view();
 						return false;
-					})
-					.on('wheel', function(e)
-					{
-						// Avoid bubbling & triggering change in date span
-						e.stopPropagation();
-						// IE?
-						e.cancelBubble;
 					});
+				if(fixed_height)
+				{
+					indicator
+						.on('mouseover', function() {
+							indicator.css({
+								'height': (indicator.attr('data-hidden_count')*1.2) + 'em',
+								'margin-top': -(indicator.attr('data-hidden_count')*1.2) + 'em'
+							});
+						})
+						.on('mouseout', function() {
+							indicator.css({
+								'height': '',
+								'margin-top': ''
+							});
+						});
+				}
 			}
 			var count = parseInt(indicator.attr('data-hidden_count')) + 1
 			indicator.attr('data-hidden_count', count);
@@ -690,6 +743,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			{
 				indicator.append(event.div.clone());
 				indicator.attr('data-hidden_label', day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
+			}
+			else if (fixed_height)
+			{
+				indicator.append("<div>"+event.options.value.title+"</div>");
 			}
 			else
 			{
@@ -702,8 +759,8 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			// Avoid white, which is hard to see
 			// Use border-bottom-color, Firefox doesn't give a value with border-color
-			var color = jQuery.Color(event.div.css('border-bottom-color')).toString() !== jQuery.Color('white').toString() ?
-				event.div.css('border-bottom-color') : event.div.css('background-color');
+			var color = jQuery.Color(event.div.css('background-color')).toString() !== jQuery.Color('white').toString() ?
+				event.div.css('background-color') : event.div.css('border-bottom-color');
 			if(color !== 'rgba(0, 0, 0, 0)')
 			{
 				indicator.css('border-color', color);
