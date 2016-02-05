@@ -97,6 +97,7 @@ deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
 deleting %1 folders in progress ...	mail	en	Deleting %1 folders in progress ...
+deleting folders	mail	en	Deleting folders
 deny certain groups access to following features	mail	en	Deny certain groups access to following features
 directories have to be shared.	mail	en	Directories have to be shared.
 disable	mail	en	Disable
