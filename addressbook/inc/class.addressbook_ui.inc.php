@@ -745,6 +745,8 @@ class addressbook_ui extends addressbook_bo
 		{
 			$actions['open']['onExecute'] = 'javaScript:app.addressbook.viewEntry';
 			$actions['open']['mobileViewTemplate'] = 'view.xet';
+			$actions['view']['default'] = false;
+			$actions['open']['default'] = true;
 		}
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
 
