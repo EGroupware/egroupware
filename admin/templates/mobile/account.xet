@@ -35,8 +35,11 @@
 							<checkbox id="mustchangepassword" label="Must change password upon next login"/>
 							<checkbox id="changepassword" label="Can change password"/>
 						</vbox>
-						<checkbox id="anonymous" label="Anonymous user. Not shown in list sessions."/>
 					</hbox>
+				</row>
+				<row>
+					<description/>
+					<checkbox id="anonymous" label="Anonymous user. Not shown in list sessions."/>
 				</row>
 				<row disabled="!@ldap_extra_attributes">
 					<description value="Home directory" for="homedirectory"/>
