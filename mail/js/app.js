@@ -3175,7 +3175,7 @@ app.classes.mail = AppJS.extend(
 		{
 			if (_button == et2_dialog.YES_BUTTON)
 			{
-				
+				egw.appName='mail';
 				egw.message (egw.lang('Folder %1 is moving to folder %2',src_label,dest_label ));
 				egw.loading_prompt('mail_moveFolder', true,'','#egw_fw_basecontainer');
 				for(var i = 0; i < _senders.length; i++)
@@ -5077,6 +5077,7 @@ app.classes.mail = AppJS.extend(
 
 		var callbackDialog = function(_btn)
 		{
+			egw.appName='mail';
 			if (_btn === et2_dialog.YES_BUTTON)
 			{
 				if (tree)
@@ -5105,13 +5106,13 @@ app.classes.mail = AppJS.extend(
 								// submit
 								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
 							}
-						}, msg, 'Deleting folders', menuaction, selFldArr, 'mail');
+						}, msg, egw.lang('Deleting folders'), menuaction, selFldArr, 'mail');
 						return true;
 					}
 				}
 			}
 		};
-		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to delete all selected folders?'), egw.lang('Delete folder'), {},
+		et2_dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
 			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
 
