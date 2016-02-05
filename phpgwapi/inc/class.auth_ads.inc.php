@@ -124,7 +124,8 @@ class auth_ads implements auth_backend
 	 * Required by EGroupware to force user to change password.
 	 *
 	 * @param string $username username of account to authenticate
-	 * @return mixed false on error, 0 if user must change on next login, or timestamp of last change
+	 * @return mixed false on error, 0 if user must change on next login,
+	 *	or NULL if user never changed his password or timestamp of last change
 	 */
 	static function getLastPwdChange($username)
 	{
@@ -132,10 +133,10 @@ class auth_ads implements auth_backend
 		if (($adldap = accounts_ads::get_adldap()) &&
 			($data = $adldap->user()->info($username, array('pwdlastset'))))
 		{
-			$ret = !$data[0]['pwdlastset'][0] ? 0 :
+			$ret = !$data[0]['pwdlastset'][0] ? $data[0]['pwdlastset'][0] :
 				$adldap->utilities()->convertWindowsTimeToUnixTime($data[0]['pwdlastset'][0]);
 		}
-		//error_log(__METHOD__."('$username') returned ".array2string($ret));
+		//error_log(__METHOD__."('$username') pwdlastset=".array2string($data[0]['pwdlastset'][0])." returned ".array2string($ret));
 		return $ret;
 	}
 
