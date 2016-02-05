@@ -1071,6 +1071,7 @@ class infolog_ui
 				'caption' => 'Open',
 				'default' => true,
 				'allowOnMultiple' => false,
+				'onExecute' => html::$ua_mobile?'javaScript:app.infolog.viewEntry':'',
 				'url' => 'menuaction=infolog.infolog_ui.edit&info_id=$id',
 				'popup' => egw_link::get_registry('infolog', 'add_popup'),
 				'group' => $group=1,

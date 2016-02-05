@@ -510,5 +510,9 @@ button#infolog-edit_timestamp {
     width: 52%;
     margin-left: 5px;
   }
+  /*Disable notification label in view mode*/
+  #infolog-view tr.dialogHeadbar div.et2_hbox {
+    display: none;
+  }
 }
 /**/
