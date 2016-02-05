@@ -723,7 +723,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			if(this.rowHeight < line_height)
 			{
 				// Rows too small for regular label frequency, use automatic calculation
-				time_label = ( i % Math.ceil(line_height / this.rowHeight) ) === 0 ? time : '';
+				time_label = ( i % Math.ceil(line_height / this.rowHeight) ) === 0 ? time_label : '';
 			}
 			html += '<div class="calendar_calTimeRowTime et2_clickable" data-time="'+time.trim()+'" data-hour="'+Math.floor(t/60)+'" data-minute="'+(t%60)+'">'+time_label+"</div></div>\n";
 		}
