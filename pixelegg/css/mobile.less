@@ -1039,6 +1039,7 @@
 			box-shadow: 0px 4px 5px 2px silver;
 			width: 100%;
 			z-index:1;
+			.ui-dialog-buttonset {float:right;}
 		}
 		.ui-dialog-titlebar {
 			display: none;
@@ -1598,6 +1599,8 @@
 				
 				.et2_mobile-view-container {
 					padding:0 14px 0 7px;
+					/*Disable et2_link_to as it does not make sense in view mode*/
+					div.et2_link_to {display: none;}
 				}
 				table.et2_grid{
 					tr {

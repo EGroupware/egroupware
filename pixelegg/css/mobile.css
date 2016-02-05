@@ -7487,6 +7487,9 @@ span.egw_tutorial_title {
     width: 100%;
     z-index: 1;
   }
+  body .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: right;
+  }
   body .ui-dialog-titlebar {
     display: none;
   }
@@ -7976,6 +7979,10 @@ span.egw_tutorial_title {
   }
   body .et2_mobile_view .et2_mobile-view-container {
     padding: 0 14px 0 7px;
+    /*Disable et2_link_to as it does not make sense in view mode*/
+  }
+  body .et2_mobile_view .et2_mobile-view-container div.et2_link_to {
+    display: none;
   }
   body .et2_mobile_view table.et2_grid tr td {
     padding: 10px 5px 10px 0;

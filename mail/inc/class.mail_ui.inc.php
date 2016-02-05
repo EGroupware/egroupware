@@ -607,6 +607,7 @@ class mail_ui
 						'group'	=> ++$group,	// new group for filter
 						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
 						'icon' => 'etemplate/fav_filter',	// funnel
+						'hideOnMobile' => true
 					),
 					'vacation' => array(
 						'caption' => 'Vacation notice',

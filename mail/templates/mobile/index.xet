@@ -47,6 +47,5 @@
 			<description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/></vbox>
 		</hbox>
 		<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" right_header="mail.index.header_right"/>
-		<iframe frameborder="1" id="extra_iframe" scrolling="auto" disabled="true"/>
 	</template>
 </overlay>
