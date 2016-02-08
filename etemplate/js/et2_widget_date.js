@@ -26,6 +26,9 @@
  * Dates are passed to the server in ISO8601 format ("Y-m-d\TH:i:sP"), and data_format is
  * handled server-side.
  *
+ * Widgets uses jQuery date- and time-picker for desktop browsers and
+ * HTML5 input fields for mobile devices to get their native UI for date/time entry.
+ *
  * @augments et2_inputWidget
  */
 var et2_date = et2_inputWidget.extend(
@@ -87,7 +90,8 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 *
 	 * @memberOf et2_date
 	 */
-	init: function() {
+	init: function()
+	{
 		this._super.apply(this, arguments);
 
 		this.date = new Date();
@@ -95,12 +99,15 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		this.date.setMinutes(0);
 		this.date.setSeconds(0);
 		this.input = null;
+		this.is_mobile = egwIsMobile();
+		this.dateFormat = this.is_mobile ? 'yy-mm-dd' : this.egw().dateTimeFormat(this.egw().preference("dateformat"));
+		this.timeFormat = this.is_mobile ? 'HH:mm' : this.egw().preference("timeformat") == 12 ? "h:mmtt" : "HH:mm";
 
 		this.createInputWidget();
 	},
 
-	createInputWidget: function() {
-
+	createInputWidget: function()
+	{
 		this.span = $j(document.createElement(this.options.inline ? 'div' : "span")).addClass("et2_date");
 
 		this.input_date = $j(document.createElement(this.options.inline ? "div" : "input"));
@@ -111,38 +118,57 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 
 		this.setDOMNode(this.span[0]);
 
-		// jQuery-UI date picker
-		if(this._type != 'date-timeonly')
+		if (this.is_mobile)
 		{
-			this.egw().calendar(this.input_date, this._type == "date-time");
+			switch(this._type)
+			{
+				case 'date':
+					this.input_date.attr('type', 'date');
+					break;
+				case 'date-time':
+					this.input_date.attr('type', 'datetime-local');
+					break;
+				case 'date-timeonly':
+					this.input_date.addClass("et2_time");
+					this.input_date.attr('type', 'time');
+					break;
+			}
 		}
 		else
 		{
-			this.input_date.addClass("et2_time");
-			this.egw().time(this.input_date);
+			// jQuery-UI date picker
+			if(this._type != 'date-timeonly')
+			{
+				this.egw().calendar(this.input_date, this._type == "date-time");
+			}
+			else
+			{
+				this.input_date.addClass("et2_time");
+				this.egw().time(this.input_date);
+			}
+
+			// Avoid collision of datepicker dialog with input field
+			this.input_date.datepicker('option', 'beforeShow', function(input, inst){
+				var cal = inst.dpDiv;
+				setTimeout(function () {
+					var $input = jQuery(input);
+					var inputOffset = $input.offset();
+					// position the datepicker in freespace zone
+					// avoid datepicker calendar collision with input field
+					if (cal.height() + inputOffset.top > window.innerHeight)
+					{
+						cal.position({
+							my: "left center",
+							at: 'right bottom',
+							collision: 'flip fit',
+							of: input
+						});
+					}
+
+				},0);
+			});
 		}
 
-		// Avoid collision of datepicker dialog with input field
-		this.input_date.datepicker('option', 'beforeShow', function(input, inst){
-			var cal = inst.dpDiv;
-			setTimeout(function () {
-				var $input = jQuery(input);
-				var inputOffset = $input.offset();
-				// position the datepicker in freespace zone
-				// avoid datepicker calendar collision with input field
-				if (cal.height() + inputOffset.top > window.innerHeight)
-				{
-					cal.position({
-						my: "left center",
-						at: 'right bottom',
-						collision: 'flip fit',
-						of: input,
-					});
-				}
-				
-			},0);
-		});
-		
 		// Update internal value when changed
 		var self = this;
 		this.input_date.bind('change', function(e){
@@ -297,7 +323,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 */
 	set_year_range: function(_value)
 	{
-		if(this.input_date && this._type == 'date')
+		if(this.input_date && this._type == 'date' && !this.is_mobile)
 		{
 			this.input_date.datepicker('option','yearRange',_value);
 		}
@@ -319,10 +345,18 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 *		days from today.
 	 * @param {Date|Number|String} _value
 	 */
-	set_min: function(_value) {
+	set_min: function(_value)
+	{
 		if(this.input_date)
 		{
-			this.input_date.datepicker('option','minDate',_value);
+			if (this.is_mobile)
+			{
+				this.input_date.attr('min', _value);
+			}
+			else
+			{
+				this.input_date.datepicker('option','minDate',_value);
+			}
 		}
 		this.options.min = _value;
 	},
@@ -342,14 +376,22 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 *		days from today.
 	 * @param {Date|Number|String} _value
 	 */
-	set_max: function(_value) {
+	set_max: function(_value)
+	{
 		if(this.input_date)
 		{
-			this.input_date.datepicker('option','maxDate',_value);
+			if (this.is_mobile)
+			{
+				this.input_date.attr('max', _value);
+			}
+			else
+			{
+				this.input_date.datepicker('option','maxDate',_value);
+			}
 		}
 		this.options.max = _value;
 	},
-	
+
 	/**
 	 * Setting date
 	 *
@@ -359,7 +401,8 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 * - string or number with timestamp in usertime like server-side uses it
 	 * - string starting with + or - to add/substract given number of seconds from current value, "+600" to add 10 minutes
 	 */
-	set_value: function(_value) {
+	set_value: function(_value)
+	{
 		var old_value = this._oldValue;
 		if(_value === null || _value === "" || _value === undefined ||
 			// allow 0 as empty-value for date and date-time widgets, as that is used a lot eg. in InfoLog
@@ -406,7 +449,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 				switch(this._type)
 				{
 					case "date-timeonly":
-						var parsed = jQuery.datepicker.parseTime(this.input_date.datepicker('option', 'timeFormat'), _value);
+						var parsed = jQuery.datepicker.parseTime(this.timeFormat, _value);
 						if (!parsed)	// parseTime returns false
 						{
 							this.set_validation_error(this.egw().lang("'%1' has an invalid format !!!",_value));
@@ -448,8 +491,8 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 						}
 						else  // Parse other date widgets date with timepicker date/time format to date onject
 						{
-							var parsed = jQuery.datepicker.parseDateTime(this.input_date.datepicker('option', 'dateFormat'),
-									this.input_date.datepicker('option', 'timeFormat'), _value);
+							var parsed = jQuery.datepicker.parseDateTime(this.dateFormat,
+									this.timeFormat, _value.replace('T', ' '));
 							if(!parsed)
 							{
 								this.set_validation_error(this.egw().lang("%1' han an invalid format !!!",_value));
@@ -486,15 +529,13 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 		if(this._type != 'date-timeonly')
 		{
-			_value = jQuery.datepicker.formatDate(this.input_date.datepicker("option","dateFormat"),
-				formatDate
-			);
+			_value = jQuery.datepicker.formatDate(this.dateFormat, formatDate);
 		}
 		if(this._type != 'date')
 		{
-			if(this._type != 'date-timeonly') _value += ' ';
+			if(this._type != 'date-timeonly') _value += this.is_mobile ? 'T' : ' ';
 
-			_value += jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
+			_value += jQuery.datepicker.formatTime(this.timeFormat, {
 				hour: formatDate.getHours(),
 				minute: formatDate.getMinutes(),
 				seconds: 0,
@@ -786,7 +827,7 @@ var et2_date_duration = et2_date.extend(
 		}
 		// Minutes should be an integer.  Floating point math.
 		value = Math.round(value);
-		
+
 		switch(this.options.data_format)
 		{
 			case 'd':
