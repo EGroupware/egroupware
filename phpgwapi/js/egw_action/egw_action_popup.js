@@ -257,6 +257,7 @@ function egwPopupActionImplementation()
 	ai._registerContext = function(_node, _callback, _context)
 	{
 		var contextHandler = function(e) {
+			if(egwIsMobile() && e.originalEvent.which == 3) return;
 			//Obtain the event object
 			if (!e)
 			{
@@ -281,12 +282,8 @@ function egwPopupActionImplementation()
 			}
 			return !e.cancelBubble;
 		};
-
-		if (egwIsMobile()) {
-			$j(_node).bind('taphold', contextHandler);
-		} else {
-			$j(_node).on('contextmenu', contextHandler);
-		}
+		
+		$j(_node).on('contextmenu', contextHandler);
 	};
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
