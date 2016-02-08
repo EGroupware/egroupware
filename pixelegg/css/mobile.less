@@ -35,6 +35,25 @@
 /*Smartphones*/
 @smartphones: ~"only screen and (max-device-width: @{smartphone-max}) and (min-width: @{smartphone-min})";
 
+
+@keyframes fw-firstload {
+	0%, 20%, 50%, 80%, 100% {
+		transform:translateY(0);
+		-webkit-transform: translateY(0);
+		-moz-transform:translateY(0);
+	}
+	40% {
+		transform: translateY(-30px);
+		-webkit-transform: translateY(-30px);
+		-moz-transform: translateY(-30px);
+	}
+	60% {
+		transform: translateY(-15px);
+		-webkit-transform: translateY(-15px);
+		-moz-transform: translateY(-15px);
+	}
+}
+
 @media all {
 	body{
 		
@@ -55,7 +74,32 @@
 
 		}
 		
-
+		#egw_fw_firstload {
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			.background_color_egw_normal;
+			height: 100%;
+			width: 100%;
+			&:before{
+				content:"";
+				display: inline-block;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-image: url(/egroupware/phpgwapi/templates/default/images/logo64x64.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: 64px;
+				-webkit-animation: fw-firstload 1s infinite;
+				animation: fw-firstload 1s infinite;
+				-moz-animation: fw-firstload 1s infinite;
+			
+			}
+			
+		}
+		
 		//###################
 		//#					#
 		//#	 Grid & NM		#

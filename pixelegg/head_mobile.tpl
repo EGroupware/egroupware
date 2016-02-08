@@ -46,5 +46,6 @@
 				</div>
 			</div>
 		</div>
+		<div id="egw_fw_firstload"></div>
 		<div id="egw_fw_footer">{powered_by}</div>
 <!-- END framework -->
