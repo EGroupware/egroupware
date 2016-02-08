@@ -2327,7 +2327,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			//indicates appname in header
 			jQuery(document.createElement('div'))
 					.addClass('nm_appname_header')
-					.text(egw.app_name())
+					.text(egw.lang(egw.app_name()))
 					.appendTo(this.search_box);
 			
 			// toggle header 
