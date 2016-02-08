@@ -6723,13 +6723,12 @@ span.egw_tutorial_title {
     background-image: url(../images/topmenu_items/mobile/menu_active.png);
     cursor: pointer;
     position: fixed;
-    left: 13px;
-    top: 13px;
-    width: 65px;
+    width: 50px;
     height: 50px;
-    background-size: 32px 32px;
+    background-size: 24px 24px;
     background-repeat: no-repeat;
     z-index: 999;
+    background-position: center;
   }
   body #egw_fw_basecontainer div#egw_fw_menu:hover {
     -webkit-box-shadow: none;
@@ -6749,8 +6748,7 @@ span.egw_tutorial_title {
     display: inline;
     float: left;
     position: fixed;
-    padding-left: 55px;
-    padding-top: 13px;
+    padding: 8px 5px 0 50px;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul {
     display: inline;
@@ -6847,6 +6845,30 @@ span.egw_tutorial_title {
     background-size: 24px 24px;
     display: inline-block;
     background-position: center;
+  }
+  body #egw_fw_basecontainer #egw_fw_userinfo {
+    position: fixed;
+    top: 60px;
+    margin-left: 8px;
+    width: 300px;
+    height: 60px;
+    z-index: 1000;
+    text-align: left;
+  }
+  body #egw_fw_basecontainer #egw_fw_userinfo span.avatar {
+    display: inline-block;
+    float: left;
+  }
+  body #egw_fw_basecontainer #egw_fw_userinfo span.user {
+    display: inline-block;
+    height: 50px;
+    margin-left: 8px;
+    font-size: 12pt;
+    overflow: hidden;
+    max-width: 225px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 17px;
   }
   body .egw_fw_ui_tabs_header {
     margin: 0px 0 0 0;
@@ -6972,7 +6994,7 @@ span.egw_tutorial_title {
     background-color: #b4b4b4;
   }
   body #egw_fw_sidebar {
-    top: 76px;
+    top: 120px;
     bottom: 5px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu {
@@ -7248,6 +7270,15 @@ span.egw_tutorial_title {
     filter: gray;
     /* IE 6-9 */
   }
+  body .sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
+    background-image: url(../images/topmenu_items/mobile/menu.png);
+  }
+  body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_userinfo {
+    display: none;
+  }
+  body .sidebar-toggle #egw_fw_sidebar {
+    top: 70px;
+  }
   body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu {
     width: 82px !important;
   }
@@ -7448,8 +7479,8 @@ span.egw_tutorial_title {
     display: inline;
     float: left;
     position: fixed;
-    padding-left: 55px;
-    padding-top: 13px;
+    padding-left: 50px;
+    padding-right: 5px;
     background: white;
     height: 100%;
     z-index: 998;
@@ -7479,20 +7510,15 @@ span.egw_tutorial_title {
   }
   body #egw_fw_basecontainer.sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_white.png);
-    width: 65px;
+    width: 50px;
     height: 50px;
     background-color: transparent;
-    top: -3px;
     background-position: 15px center;
-    background-size: 24px 24px;
-    left: 0;
+    margin-left: 8px;
   }
   body #egw_fw_basecontainer .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
     width: 18px;
     height: 18px;
-  }
-  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_menu {
-    background-size: 24px 24px;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
     padding-top: 8px;

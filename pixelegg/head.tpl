@@ -39,8 +39,8 @@
 
 			<div id="egw_fw_topmenu_addons">
 					<div id="egw_fw_topmenu_info_items">{topmenu_info_items}</div>
-						<div id="egw_fw_logout" title="{title_logout}" data-logout-url="{link_logout}"></div>
-						<div id="egw_fw_print" title="{title_print}"></div>
+					<div id="egw_fw_logout" title="{title_logout}" data-logout-url="{link_logout}"></div>
+					<div id="egw_fw_print" title="{title_print}"></div>
 			</div>
 			<div id="egw_fw_sidebar">
 				<div id="egw_fw_sidemenu"></div>

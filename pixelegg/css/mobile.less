@@ -223,13 +223,12 @@
 				background-image: url(../images/topmenu_items/mobile/menu_active.png);
 				cursor: pointer;
 				position: fixed;
-				left: 13px;
-				top: 13px;
-				width: 65px;
+				width: 50px;
 				height: 50px;
-				background-size: 32px 32px;
+				background-size: 24px 24px;
 				background-repeat: no-repeat;
 				z-index: 999;
+				background-position:center;
 				&:hover {
 					-webkit-box-shadow: none;
 					-moz-box-shadow: none;
@@ -249,8 +248,7 @@
 				display: inline;
 				float: left;
 				position: fixed;
-				padding-left: 55px;
-				padding-top: 13px;
+				padding:8px 5px 0 50px;
 				ul{
 					display:inline;
 					padding:0;
@@ -358,6 +356,31 @@
 					}
 				}
 			}
+			#egw_fw_userinfo {
+				position: fixed;
+				top:60px;
+				margin-left:8px;
+				width:300px;
+				height:60px;
+				z-index:1000;
+				text-align : left;
+				span.avatar {
+					display: inline-block;
+					float:left;
+				}
+				span.user {
+					display: inline-block;
+					height: 50px;
+					margin-left: 8px;
+					font-size: 12pt;
+					overflow: hidden;
+					max-width: 225px;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					margin-top:17px;
+				}
+			}
+			
 		}//End of toolbar
 
 		// ######################tabs header ##########################
@@ -488,7 +511,7 @@
 		//#					#
 		//###################
 		#egw_fw_sidebar{
-			top: 76px;
+			top: 120px;
 			bottom: 5px;
 			//SIDE AREA
 			#egw_fw_sidemenu {
@@ -710,9 +733,13 @@
 
 		.sidebar-toggle{
 			#egw_fw_top_toolbar div#egw_fw_menu{
-
+				background-image:  url(../images/topmenu_items/mobile/menu.png);
+			}
+			#egw_fw_top_toolbar #egw_fw_userinfo{
+				display: none;
 			}
 			#egw_fw_sidebar{
+				top: 70px;
 				#egw_fw_sidemenu{
 					width:82px !important;
 					.egw_fw_ui_sidemenu_entry_content{
@@ -978,8 +1005,8 @@
 					display: inline;
 					float: left;
 					position: fixed;
-					padding-left: 55px;
-					padding-top: 13px;
+					padding-left: 50px;
+					padding-right:5px;
 					background:white;
 					height:100%;
 					z-index:998;
@@ -1017,13 +1044,11 @@
 			#egw_fw_top_toolbar {
 				div#egw_fw_menu {
 					background-image: url(../images/topmenu_items/mobile/menu_white.png);
-					width: 65px;
+					width: 50px;
 					height: 50px;
 					background-color: transparent;
-					top: -3px;
 					background-position: 15px center;
-					background-size: 24px 24px;
-					left: 0;
+					margin-left:8px;
 				}
 			}
 		}
@@ -1033,9 +1058,6 @@
 				height:18px;
 			}
 			#egw_fw_top_toolbar {
-				div#egw_fw_menu {
-					background-size: 24px 24px;
-				}
 				div#egw_fw_topmenu_items {
 					padding-top: 8px;
 				}
