@@ -2323,6 +2323,13 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		if (egwIsMobile())
 		{
 			jQuery(this.div).css({display:'inline-block'}).addClass('nm_header_hide');
+			
+			//indicates appname in header
+			jQuery(document.createElement('div'))
+					.addClass('nm_appname_header')
+					.text(egw.app_name())
+					.appendTo(this.search_box);
+			
 			// toggle header 
 			// add new button
 			this.fav_span = jQuery(document.createElement('div'))
@@ -2342,7 +2349,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			this.action_header = jQuery(document.createElement('button'))
 					.addClass('nm_action_header')
 					.click (function(e){
-						jQuery('tr.selected',self.nextmatch.div).trigger({type:'taphold',which:3,originalEvent:e});
+						jQuery('tr.selected',self.nextmatch.div).trigger({type:'contextmenu',which:3,originalEvent:e});
 					})
 					.prependTo(this.search_box);
 			
