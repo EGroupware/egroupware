@@ -208,7 +208,9 @@ var et2_taglist = et2_selectbox.extend(
 		// Display / hide a loading icon while fetching
 		$j(this.taglist)
 			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>');})
-			.on("load", function() {$j('.loading',this.container).remove();});
+			.on("load", function() {$j('.loading',this.container).remove();})
+		// Keep focus when selecting from the list
+			.on("selectionchange", function() { $j('input',this.container).focus();});
 
 		// Unbind change handler of widget's ancestor to stop it from bubbling
 		// taglist has its own onchange
