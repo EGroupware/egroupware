@@ -506,6 +506,21 @@ which caused click on free space infront of a tag stops nm row selection*/
 .et2_nextmatch .egwGridView_grid tr td div.et2_vbox a  {
 	display: table-row;
 }
+
+.et2_nextmatch .egwGridView_grid tr td {
+	position: relative;
+}
+.et2_nextmatch .egwGridView_grid tr td .nm_cat_col {
+	position: absolute;
+	min-height: 100%;
+	bottom:0;
+	top:0;
+	width:10px;
+	display: block;
+}
+span.cat_.nm_cat_col {
+	background: #F5F5F5;
+}
 /*
 These are set via javascript before printing to help tame nextmatch's layout
 for printing
