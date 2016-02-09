@@ -171,8 +171,8 @@ var et2_taglist = et2_selectbox.extend(
 		var options = jQuery.extend( {
 			// magisuggest can NOT work setting an empty autocomplete url, it will then call page url!
 			// --> setting an empty options list instead
-			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) || !this.options.autocomplete_url ?
-				this._options2data(this.options.select_options || {}) : this.options.autocomplete_url,
+			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ?
+				this.options.select_options || {} : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
 			method: 'GET',
 			displayField: "label",
@@ -191,11 +191,19 @@ var et2_taglist = et2_selectbox.extend(
 			maxSelection: this.options.maxSelection,
 			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
 			width: this.options.width,	// propagate width
-			highlight: false	// otherwise renderer have to return strings
+			highlight: false,	// otherwise renderer have to return strings,
+			value: this.options.value
 		}, this.lib_options);
 		this.taglist = this.taglist.magicSuggest(options);
 
-		this.set_value(this.options.value);
+		// AJAX _and_ select options - use custom function
+		if(this.options.autocomplete_url && !jQuery.isEmptyObject(this.options.select_options))
+		{
+			var widget = this;
+			this.taglist.setData(function(query) {
+				return widget._data.call(widget,query)
+			});
+		}
 
 		// Display / hide a loading icon while fetching
 		$j(this.taglist)
@@ -207,9 +215,9 @@ var et2_taglist = et2_selectbox.extend(
 		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
 
 		// onChange
-		if(this.options.onchange && typeof this.options.onchange == 'function')
+		if(this.options.onchange && typeof this.onchange === 'function')
 		{
-			$j(this.taglist).on("selectionchange", this.options.onchange);
+			$j(this.taglist).on("selectionchange", this.onchange);
 		}
 
 		// onClick - pass more than baseWidget, so unbind it to avoid double callback
@@ -248,6 +256,7 @@ var et2_taglist = et2_selectbox.extend(
 			if (typeof options[id] == 'object')
 			{
 				jQuery.extend(option, options[id]);
+				if(option.value) option.id = option.value
 			}
 			else
 			{
@@ -256,6 +265,23 @@ var et2_taglist = et2_selectbox.extend(
 			data.push(option);
 		}
 		return data;
+	},
+
+	/**
+	 * Custom data function to return local options if there is nothing
+	 * typed, or query via AJAX if user typed something
+	 *
+	 * @returns {Array}
+	 */
+	_data: function(query) {
+		if(query.trim() ==='' || !this.options.autocomplete_url)
+		{
+			return this.options.select_options;
+		}
+		else
+		{
+			return this.options.autocomplete_url;
+		}
 	},
 
 	/**
@@ -294,7 +320,11 @@ var et2_taglist = et2_selectbox.extend(
 
 			// do NOT set an empty autocomplete_url, magicsuggest would use page url instead!
 			if(this.taglist == null || !source) return;
-			this.taglist.setData(source);
+
+			var widget = this;
+			this.taglist.setData(function(query) {
+				return widget._data.call(widget,query)
+			});
 		}
 	},
 
@@ -305,10 +335,13 @@ var et2_taglist = et2_selectbox.extend(
 	 */
 	set_select_options: function(_options)
 	{
-		this.options.select_options = _options;
-
+		this.options.select_options = this._options2data(_options);
+		
 		if(this.taglist == null) return;
-		this.taglist.setData(this._options2data(this.options.select_options));
+		var widget = this;
+		this.taglist.setData(function(query) {
+			return widget._data.call(widget,query)
+		});
 	},
 
 	set_disabled: function(disabled)
@@ -332,7 +365,8 @@ var et2_taglist = et2_selectbox.extend(
 		this.taglist.clear(true);
 		if(!value) return;
 
-		var values = jQuery.isArray(value) ? value : [value];
+		var values = jQuery.isArray(value) ? jQuery.extend([],value) : [value];
+		var result = [];
 		for(var i=0; i < values.length; ++i)
 		{
 			var v = values[i];
@@ -340,26 +374,30 @@ var et2_taglist = et2_selectbox.extend(
 			{
 				// alread in correct format
 			}
-			else if (this.options.select_options && typeof this.options.select_options[v] == 'undefined' || typeof v == 'string')
+			else if (this.options.select_options &&
+				(result = $j.grep(this.options.select_options, function(e) {
+					return e.id == v;
+				}))
+			)
 			{
 				// Options should have been provided, but they weren't
 				// This can happen for ajax source with an existing value
 				if(this.options.select_options == null)
 				{
-					this.options.select_options = {};
+					this.options.select_options = [];
 				}
-				values[i] = {
+				values[i] = result[0] ? result[0] : {
 					id: v,
 					label: v
 				};
 			}
-			else(this.options.select_options)
+			else
 			{
 				if (typeof values[i].id == 'undefined')
 				{
 					values[i] = {
 						id: v,
-						label: this.options.select_options[v]
+						label: v
 					};
 				}
 			}
@@ -423,12 +461,64 @@ var et2_taglist_account = et2_taglist.extend(
 	 */
 	set_account_type: function(value)
 	{
+		if(value != this.options.account_type)
+		{
+			this.options.select_options = [];
+		}
 		this.options.autocomplete_params.account_type = this.options.account_type = value;
+
+		this.options.select_options = this._get_accounts();
+
 		if(this.taglist != null)
 		{
 			// Update taglist too, since it already copied the params
 			this.taglist.setDataUrlParams(this.options.autocomplete_params);
 		}
+	},
+
+	/**
+	 * Get account info for select options from common client-side account cache
+	 *
+	 * @return {Array} select options
+	 */
+	_get_accounts: function()
+	{
+		if (!jQuery.isArray(this.options.select_options))
+		{
+			var options = jQuery.extend({}, this.options.select_options);
+			this.options.select_options = [];
+			for(var key in options)
+			{
+				if (typeof options[key] == 'object')
+				{
+					if (typeof(options[key].key) == 'undefined')
+					{
+						options[key].value = key;
+					}
+					this.options.select_options.push(options[key]);
+				}
+				else
+				{
+					this.options.select_options.push({value: key, label: options[key]});
+				}
+			}
+		}
+		var type = this.egw().preference('account_selection', 'common');
+		var accounts = [];
+		// for primary_group we only display owngroups == own memberships, not other groups
+		if (type == 'primary_group' && this.options.account_type != 'accounts')
+		{
+			if (this.options.account_type == 'both')
+			{
+				accounts = this.egw().accounts('accounts');
+			}
+			accounts = accounts.concat(this.egw().accounts('owngroups'));
+		}
+		else
+		{
+			accounts = this.egw().accounts(this.options.account_type);
+		}
+		return this.options.select_options.concat(accounts);
 	},
 
 	int_reg_exp: /^-?[0-9]+$/,
@@ -442,7 +532,7 @@ var et2_taglist_account = et2_taglist.extend(
 	{
 		if(!value) return this._super.call(this, value);
 
-		var values = jQuery.isArray(value) ? value : [value];
+		var values = jQuery.isArray(value) ? jQuery.extend([], value) : [value];
 		for(var i=0; i < values.length; ++i)
 		{
 			var v = values[i];

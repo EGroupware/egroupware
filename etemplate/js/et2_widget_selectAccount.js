@@ -126,7 +126,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		this._super.apply(this, arguments);
 
 		// Add search button
-		if(type == 'primary_group' && !this.options.tags)
+		if(type == 'primary_group')
 		{
 			var button = jQuery(document.createElement("span"))
 				.addClass("et2_clickable")
@@ -165,7 +165,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 		this.options.select_options = this._get_accounts();
 
-		if(type == 'primary_group' && !this.options.tags)
+		if(type == 'primary_group')
 		{
 			// Allow search 'inside' this widget
 			this.supportedWidgetClasses = [et2_link_entry];
