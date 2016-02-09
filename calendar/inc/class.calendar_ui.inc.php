@@ -618,20 +618,45 @@ class calendar_ui
 		$content['date'] = $this->date ? $this->date : egw_time();
 		$owners = $this->owner ? is_array($this->owner) ? array($this->owner) : explode(',',$this->owner) : array($GLOBALS['egw_info']['user']['account_id']);
 
-		
+
 		$sel_options = array();
+
+		// Get user accounts, formatted nicely for grouping and matching
+		// the ajax call calendar_uiforms->ajax_owner()
+		$account_options = array('account_type' => 'both');
+		$accounts = accounts::link_query('',$account_options);
+		$sel_options['owner'] = array_map(
+			function($account_id, $account_name) {
+				return array(
+					'value' => $account_id,
+					'label' => $account_name,
+					'app' => lang('home-accounts')
+				);
+			},
+			array_keys($accounts), $accounts
+		);
 
 		// Add external owners that a select account widget will not find
 		$linked_owners = array();
-		foreach($owners as $owner)
+		foreach($owners as &$owner)
 		{
+			$owner = ''.$owner;
 			if(!is_numeric($owner))
 			{
 				$resource = $this->bo->resources[substr($owner, 0,1)];
 				$label = egw_link::title($resource['app'], substr($owner,1));
 				$linked_owners[$resource['app']][substr($owner,1)] = $label;
-				$sel_options['owner'][] = array('value' => $owner, 'label' => $label);
 			}
+			else if (!in_array($owner, array_keys($accounts)))
+			{
+				$label = egw_link::title('home-accounts',$owner);
+				$resource = array('app'=> 'home-accounts');
+			}
+			else
+			{
+				continue;
+			}
+			$sel_options['owner'][] = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app']));
 		}
 		if($linked_owners)
 		{

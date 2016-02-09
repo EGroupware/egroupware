@@ -2942,6 +2942,59 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 * Handle ajax searches for owner across all supported resources
+	 *
+	 * @return Array List of matching results
+	 */
+	public function ajax_owner()
+	{
+		$query = $_REQUEST['query'];
+		$options = ['num_rows' => 100];
+		$results = [];
+		if($query)
+		{
+			foreach($this->bo->resources as $type => $data)
+			{
+				$mapped = array();
+				if ($data['app'] && egw_link::get_registry($data['app'], 'query'))
+				{
+					$_results = egw_link::query($data['app'], $query,$options);
+					if(!$_results) continue;
+					$r_results = array_unique($_results);
+					foreach($_results as $id => $title)
+					{
+						if($id && $title)
+						{
+							// Magicsuggest uses id, not value.
+							$value = [
+								'id' => $type.$id,
+								'value'=> $type.$id,
+								'label' => $title,
+								'app'	=> lang($data['app'])
+							];
+							if(is_array($value['label']))
+							{
+								$value = array_merge($value, $value['label']);
+							}
+							$mapped[] = $value;
+						}
+					}
+					if(count($mapped))
+					{
+						$results = array_merge($results, $mapped);
+					}
+				}
+			}
+		}
+		// switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($results);
+		common::egw_exit();
+	}
+
+	/**
 	 * imports a mail as Calendar
 	 *
 	 * @param array $mailContent = null mail content

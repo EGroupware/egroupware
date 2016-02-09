@@ -12,6 +12,7 @@
 
 /*egw:uses
 	/etemplate/js/etemplate2.js;
+	/calendar/js/et2_widget_owner.js;
 	/calendar/js/et2_widget_timegrid.js;
 	/calendar/js/et2_widget_planner.js;
 */
@@ -1972,13 +1973,6 @@ app.classes.calendar = AppJS.extend(
 			{
 				state.state.owner[state.state.owner.indexOf('0')] = this.egw.user('account_id');
 			}
-			if(state.state.owner.length === 1 && this.sidebox_et2)
-			{
-				// If only one owner selected, go back to single select
-				var owner = this.sidebox_et2.getWidgetById('owner');
-				owner.set_multiple(false);
-			}
-
 
 			// Show the correct number of grids
 			var grid_count = 0;
@@ -2747,6 +2741,10 @@ app.classes.calendar = AppJS.extend(
 								}
 								if(!found)
 								{
+									if(!widget.options.select_options.push)
+									{
+										widget.options.select_options = [];
+									}
 									widget.options.select_options.push(option);
 								}
 							}
@@ -2884,7 +2882,7 @@ app.classes.calendar = AppJS.extend(
 		for(var day in updated_days)
 		{
 			// Might be split by user, so we have to check that too
-			for(var i = 0; i < state.owner.length; i++)
+			for(var i = 0; i < typeof state.owner == 'object' ? state.owner.length : 1; i++)
 			{
 				var owner = multiple_owner ? state.owner[i] : state.owner;
 				var cache_id = app.classes.calendar._daywise_cache_id(day, owner);
@@ -3247,6 +3245,14 @@ app.classes.calendar = AppJS.extend(
 			button.parent().css('margin-right',button.outerWidth(true)+2);
 			button.parent().parent().css('white-space','nowrap');
 		}
+		$j(window).on('resize.calendar-owner', function() {
+			var preferred_width = $j('#calendar-et2_target').children().first().outerWidth()||0;
+			var owner = app.calendar.sidebox_et2.getWidgetById('owner');
+			if(preferred_width && owner.input.hasClass("chzn-done"))
+			{
+				owner.input.next().css('width',preferred_width);
+			}
+		});
 	},
 
 	/**
