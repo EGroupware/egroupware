@@ -19,6 +19,7 @@
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
+				<column width="10"/>
 				<column width="20"/>
 				<column width="40%"/>
 				<column width="70"/>
@@ -40,6 +41,7 @@
 			</columns>
 			<rows>
 				<row class="th">
+					<nextmatch-cat-header/>
 					<nextmatch-header label="Type" id="type"/>
 					<grid spacing="0" padding="0">
 						<columns>
@@ -110,7 +112,8 @@
 						<nextmatch-sortheader label="Last modified" id="contact_modified" sortmode="DESC"/>
 					</vbox>
 				</row>
-				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
+				<row class="$row_cont[class]" valign="top">
+					<description class=" cat_$row_cont[cat_id] nm_cat_col"/>
 					<image align="center" label="$row_cont[type_label]" src="${row}[type]" no_lang="1"/>
 					<vbox id="${row}[id]">
 						<description id="${row}[line1]" no_lang="1"/>
