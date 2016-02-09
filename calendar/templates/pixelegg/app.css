@@ -64,7 +64,8 @@
   font-size: 10px;
   line-height: 50%;
   color: white;
-  background-color: #d8e7f3;
+  background-color: #217bc0;
+  background-image: none;
   border: none;
   border-radius: 100%;
 }
@@ -2580,10 +2581,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar-sidebox_date .ui-datepicker-header a.ui-state-hover span {
   background-image: url('../../../pixelegg/images/ui-icons_egw_color_2_256x240_0C5DA5.png');
   transition: none;
-}
-#calendar-sidebox_header_go,
-#calendar-sidebox_header_today {
-  background-color: #0c5da5;
 }
 #calendar_cat_id,
 #calendar_filter,
