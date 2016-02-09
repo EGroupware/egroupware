@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 54941 2016-02-05 18:17:47Z nathangray $ */
+/* $Id: app.css 54966 2016-02-09 21:45:51Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -2570,7 +2570,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   right: 2px;
 }
 #calendar-sidebox_date .ui-datepicker-year {
-  padding-right: 15px !important;
+  padding-right: 5px !important;
 }
 #calendar-sidebox_date .ui-datepicker-header a span {
   background-image: url('../../../phpgwapi/js/jquery/jquery-ui/redmond/images/ui-icons_217bc0_256x240.png');
