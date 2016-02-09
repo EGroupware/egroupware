@@ -80,6 +80,12 @@ var et2_selectbox = et2_inputWidget.extend(
 			"default": false,
 			"description": "For multi-selects, displays selected as a list of tags instead of a big list"
 		},
+		"source": {
+			"name": "AJAX data source",
+			"type": "any",
+			"default": et2_no_init,
+			"description": "Fetch options as needed from the server"
+		},
 
 		// Value can be string or integer
 		"value": {
@@ -408,6 +414,10 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		this.set_tags(this.options.tags, this.options.width);
 
+		if(this.options.source)
+		{
+			this.set_source(this.options.source);
+		}
 		return true;
 	},
 
@@ -740,6 +750,85 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		// Sometimes value gets set before options
 		if(this.value || this.options.empty_label) this.set_value(this.value);
+	},
+
+	/**
+	 * Set a ajax source for options.  Works best with search or tags options
+	 * to enable Chosen.
+	 */
+	set_source: function(_url) {
+
+		if(!this.input) return false;
+		
+		// Can't actually do this until attached, loadingFinished should call again
+		if(!this.isAttached()) return;
+
+
+		var widget = this;
+		var search = this.input.next()
+			.find('.search-field > input, .chzn-search > input');
+		var timeout = null;
+		
+		if(!_url || !search || search && search.autocomplete('instance'))
+		{
+			search.autocomplete('destroy');
+			return;
+		}
+
+		this.options.source = _url;
+		
+		search.on('keyup', function(e) {
+			var term = search.val().trim() || '';
+			if(term.length < 2)
+			{
+				return false;
+			}
+			if(timeout)
+			{
+				window.clearTimeout(timeout);
+			}
+			timeout = window.setTimeout(function()
+			{
+				timeout = null;
+				search.parent().addClass('loading');
+				widget.egw().json(widget.options.source,term, widget._ajax_fetch,widget, false,widget).sendRequest();
+			},200);
+		});
+		
+	},
+	
+	/*
+	 * Fetch options via AJAX for use in tag lists
+	 * @param {type} data
+	 * @returns {undefined}
+	 */
+	_ajax_fetch: function _ajax_fetch(data) {
+		var found = false;
+		var search = this.input.next()
+			.find('.search-field > input, .chzn-search > input');
+		
+		for(var i = 0; i < data.length; i++)
+		{
+			if(data[i] && typeof data[i].value === 'string' && typeof data[i].label === 'string')
+			{
+				var option = data[i];
+				if(jQuery("option[value='"+option.value+"']", this.input).length === 0)
+				{
+					found = true;
+					this._appendOptionElement(option.value, option.label,option.title);
+				}
+			}
+		}
+		search.parent()
+			.removeClass('loading');
+		if(found)
+		{
+			var term = search.val();
+			this.input.trigger('liszt:close');
+			this.input.trigger("liszt:updated");
+			// Updating clears the search term, restore it
+			search.val(term);
+		}
 	},
 
 	getValue: function() {
