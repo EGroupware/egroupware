@@ -1696,13 +1696,16 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	},
 
 	// Resizable interface
-	resize: function ()
+	/**
+	 * @param {boolean} [too_small=null] Force the widget to act as if it was too small
+	 */
+	resize: function (_too_small)
 	{
 		if(this.disabled || !this.div.is(':visible'))
 		{
 			return;
 		}
-
+		
 		// Set the max width to avoid animations screwing up the width
 		this.div.css('max-width',$j(this.getInstanceManager().DOMContainer).width());
 		
@@ -1740,20 +1743,22 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		$j(this.getInstanceManager().DOMContainer)
 			.css({
-				'overflow-y': too_small ? 'auto' : 'hidden',
+				'overflow-y': too_small || _too_small ? 'auto' : 'hidden',
 				'overflow-x': 'hidden',
-				'height': too_small ? height : '100%'
+				'height': too_small || _too_small ? height : '100%'
 			});
-		if(too_small)
+		if(too_small || _too_small)
 		{
 			this.options.height = needed;
-			if(!this.div.hasClass('calendar_calTimeGridFixed'))
+			// Set all others to match
+			if(!_too_small)
 			{
 				window.setTimeout(jQuery.proxy(function() {
 					this._parent.iterateOver(function(widget) {
-						if(!widget.disabled) widget.resize();
+						if(!widget.disabled) widget.resize(true);
 					},this, et2_calendar_timegrid);
 				},this),1);
+				return;
 			}
 			this.div.addClass('calendar_calTimeGridFixed');
 		}
