@@ -534,7 +534,7 @@ class asyncservice
 	{
 		if (!is_a($this->db, 'egw_db')) return 0;
 
-		if (isset($job['data']['next']) && isset($job['next'])) $job['data']['next'] = $job['next'];
+		if (is_array($job['data']) && isset($job['data']['next']) && isset($job['next'])) $job['data']['next'] = $job['next'];
 		$data = array(
 			'async_next'      => $job['next'],
 			'async_times'     => json_encode($job['times']),
