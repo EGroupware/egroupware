@@ -2775,6 +2775,7 @@ div.mailComposeHeaderSection > table {
     text-decoration: underline;
     font-size: 10pt;
     width: 65px;
+    height: 25px;
   }
   body #mail-compose .mailComposeHeaderSection > table div.et2_taglist > *,
   body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject,
