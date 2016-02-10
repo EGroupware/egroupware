@@ -6611,7 +6611,7 @@ span.egw_tutorial_title {
     top: 0;
     left: 0;
     bottom: 0;
-    background-color: #ffc200;
+    background-color: #0c5da5;
     height: 100%;
     width: 100%;
   }
@@ -6848,10 +6848,10 @@ span.egw_tutorial_title {
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
     position: fixed;
-    top: 60px;
+    top: 50px;
     margin-left: 8px;
     width: 300px;
-    height: 60px;
+    height: 50px;
     z-index: 1000;
     text-align: left;
   }
@@ -6994,7 +6994,7 @@ span.egw_tutorial_title {
     background-color: #b4b4b4;
   }
   body #egw_fw_sidebar {
-    top: 120px;
+    top: 110px;
     bottom: 5px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu {
@@ -7066,9 +7066,10 @@ span.egw_tutorial_title {
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active h1 {
     text-transform: uppercase;
-    font-size: 1.4em;
+    font-size: 12px;
     color: #000000;
-    padding-top: .8em;
+    padding-top: 4px;
+    padding-left: 32px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -7150,13 +7151,13 @@ span.egw_tutorial_title {
     /*######################*/
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content:nth-last-of-type(-n+3) {
-    padding: 5px 0.3em 1.5em 0.3em;
-    margin: 0 0 10px 0;
-    background-color: #b3b3b3 !important;
-    border-color: #b4b4b4;
+    border-bottom: 1px solid #b4b4b4;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content > div {
-    background-color: #b3b3b3 !important;
+    background: none !important;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category:nth-last-of-type(-n+3) {
+    border-bottom: 1px solid #b4b4b4;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category {
     margin: 4px 5px 5px 5px;
@@ -7192,6 +7193,24 @@ span.egw_tutorial_title {
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category_content {
     border-radius: 0;
+    font-size: 12px;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category_content .sidebox-favorites ul.favorites li.ui-menu-item {
+    min-height: 18px;
+    padding-top: 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category_content .sidebox-favorites ul.favorites li.ui-menu-item a div.sideboxstar {
+    padding-right: 13px;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category_content .sidebox-favorites ul.favorites li.ui-menu-item a div.ui-icon-heart {
+    padding-right: 10px;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content div.egw_fw_ui_category_content .sidebox-favorites ul.favorites li.ui-menu-item a img {
+    padding-right: 5px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category:hover {
     background-color: #999999;
@@ -7367,13 +7386,22 @@ span.egw_tutorial_title {
   #egw_fw_print {
     display: none;
   }
+  div#loginMainDiv {
+    background-color: #486F93;
+    width: 101%;
+  }
+  div#loginMainDiv #divAppIconBar {
+    background: white;
+  }
   div#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
     width: 40%;
     margin-top: 5px;
+    background: white;
   }
   div#loginMainDiv div#centerBox {
     position: absolute;
     margin: 0;
+    bottom: 0;
     width: 100%;
     padding: 0;
     -webkit-border-top-right-radius: 0;
@@ -7388,14 +7416,14 @@ span.egw_tutorial_title {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
-    background-color: none;
+    background-color: transparent;
     background-image: none;
-    background-repeat: none;
+    background-repeat: no-repeat;
     border: none;
-    border-radius: none;
+    border-radius: 0;
   }
   div#loginMainDiv div#centerBox form {
-    margin-top: -2em;
+    margin-top: 3em;
   }
   div#loginMainDiv div#centerBox form table.divLoginbox {
     width: 100%;
@@ -7423,8 +7451,11 @@ span.egw_tutorial_title {
     background-size: 48px auto;
   }
   div#loginMainDiv div#centerBox #loginCdMessage {
-    font-size: large;
+    font-size: 10pt !important;
+    color: white;
     padding: 0;
+    border: 0;
+    background: none;
   }
 }
 @media only screen and (max-device-width : 1024px) and (orientation : portrait) {

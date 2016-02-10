@@ -161,7 +161,10 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 
 
 ";
-			if (html::$ua_mobile) $ret['app_css'] .= "
+			/* Mobile theme custom colors*/
+			if (html::$ua_mobile)
+			{
+				$ret['app_css'] = "
 /* Mobile theme specific color changes */
 
 /*nextmatch header and plus_button in mobile theme*/
@@ -171,10 +174,14 @@ body button.plus_button,
 body div.et2_nextmatch .search .nm_action_header,
 body div.et2_nextmatch .search .nm_toggle_header,
 body div.et2_nextmatch .search .nm_favorites_button,
-body .dialogHeadbar,
-body #egw_fw_firstload{
+body #loginMainDiv,
+body #egw_fw_firstload,
+body .dialogHeadbar{
 	background-color: $color;
-}";
+}
+body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{background-color: $sidebox_color !important};
+";
+			}	
 		}
 		return $ret;
 	}
