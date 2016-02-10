@@ -994,6 +994,11 @@ class calendar_boupdate extends calendar_bo
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 			//echo "<p>".__METHOD__."() restored enviroment of #$temp_user[account_id] $temp_user[account_fullname]: tz={$GLOBALS['egw_info']['user']['preferences']['common']['tz']}</p>\n";
 		}
+		else
+		{
+			// Loading other user's preferences can change current user's tz
+			$GLOBALS['egw']->preferences->check_set_tz_offset();
+		}
 		if ($lang !== $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 		{
 			translation::init();
