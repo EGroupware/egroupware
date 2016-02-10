@@ -3458,22 +3458,3 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 	}
 });
 et2_register_widget(et2_nextmatch_customfilter, ['nextmatch-customfilter']);
-
-/**
- * Define a nextmatch header for category colors
- * @type type
- */
-var et2_nextmatch_cat_header = et2_baseWidget.extend(et2_INextmatchHeader,
-{
-	
-	/**
-	 * Unbind resize handler for category color header
-	 * add class to th
-	 */
-	setNextmatch: function() {
-		jQuery(this.parentNode.parentNode)
-				.addClass('cat-header')
-				.unbind('.resize');
-	}
-});
-et2_register_widget(et2_nextmatch_cat_header, ['nextmatch-cat-header']);
