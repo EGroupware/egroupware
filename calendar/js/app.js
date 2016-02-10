@@ -2882,7 +2882,7 @@ app.classes.calendar = AppJS.extend(
 		for(var day in updated_days)
 		{
 			// Might be split by user, so we have to check that too
-			for(var i = 0; i < typeof state.owner == 'object' ? state.owner.length : 1; i++)
+			for(var i = 0; i < (typeof state.owner == 'object' ? state.owner.length : 1); i++)
 			{
 				var owner = multiple_owner ? state.owner[i] : state.owner;
 				var cache_id = app.classes.calendar._daywise_cache_id(day, owner);
