@@ -3219,23 +3219,27 @@ app.classes.calendar = AppJS.extend(
 			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
 			var font_ratio = 12 / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
 			$j(window).on('resize.calendar'+date_widget.dom_id, function() {
-				var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
-				percent *= font_ratio;
-				$j('#calendar-sidebox_date .ui-datepicker-inline')
-					.css('font-size',(percent*100)+'%');
+				try {
+					var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
+					percent *= font_ratio;
+					$j('#calendar-sidebox_date .ui-datepicker-inline')
+						.css('font-size',(percent*100)+'%');
 
-				// Position go and today
-				var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a span');
-				if(today.length && go_button.length)
-				{
-					go_button.position({my: 'left+15px center', at: 'right center-1',of: $j('#calendar-sidebox_date .ui-datepicker-year')});
-					today.css({
-						'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
-						'top': go_button.css('top')
-					});
+					// Position go and today
+					var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a span');
+					if(today.length && go_button.length)
+					{
+						go_button.position({my: 'left+15px center', at: 'right center-1',of: $j('#calendar-sidebox_date .ui-datepicker-year')});
+						today.css({
+							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
+							'top': go_button.css('top')
+						});
+					}
+				} catch (e){
+					// Resize didn't work
 				}
 			}).trigger('resize');
-			
+
 		}
 
 		// Avoid wrapping owner icons if user has group + search

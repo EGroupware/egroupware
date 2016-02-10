@@ -1706,9 +1706,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			return;
 		}
 		
-		// Set the max width to avoid animations screwing up the width
-		this.div.css('max-width',$j(this.getInstanceManager().DOMContainer).width());
-		
 		/*
 		We expect the timegrid to be in a table with 0 or more other timegrids,
 		1 per row.  We want each timegrid to be as large as possible, but space
@@ -1775,7 +1772,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 
 		// Try to resize width, though animations cause problems
-		var total_width = this.days.width();
+		var total_width = $j(this.getInstanceManager().DOMContainer).parent().innerWidth() - this.days.position().left;
 		var day_width = (total_width > 0 ? total_width : $j(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)

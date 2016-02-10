@@ -148,19 +148,18 @@ etemplate2.prototype.resize = function(e)
 				var appHeader = $j('#divAppboxHeader');
 
 				//Calculate the excess height
-				excess_height = egw(window).is_popup()? $j(window).height() - $j('.et2_container').height() - appHeader.outerHeight()+11: false;
+				excess_height = egw(window).is_popup()? $j(window).height() - $j(self.DOMContainer).height() - appHeader.outerHeight()+11: false;
 				// Recalculate excess height if the appheader is shown
 				if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.outerHeight()-9;
 
 				// Do not resize if the template height is bigger than screen available height
 				// For templates which have sub templates and they are bigger than screenHeight
-				if(screen.availHeight < $j('.et2_container').height()) excess_height = 0;
+				if(screen.availHeight < $j(self.DOMContainer).height()) excess_height = 0;
 
 				// Call the "resize" event of all functions which implement the
 				// "IResizeable" interface
 				self.widgetContainer.iterateOver(function(_widget) {
-
-					if (excess_height != 0 || excess_height === false) _widget.resize(excess_height);
+					_widget.resize(excess_height);
 				}, self, et2_IResizeable);
 			}
 		},100);
