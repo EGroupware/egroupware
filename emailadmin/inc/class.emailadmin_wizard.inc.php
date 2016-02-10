@@ -1085,6 +1085,14 @@ class emailadmin_wizard
 									$msg = lang('Notification folders updated.');
 								}
 							}
+							if ($content['acc_user_forward'] && !empty($content['acc_smtp_type']) && $content['acc_smtp_type'] != 'emailadmin_smtp')
+							{
+								$account = new emailadmin_account($content);
+								$account->smtpServer()->saveSMTPForwarding($content['called_for'] ?
+									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
+									$content['mailForwardingAddress'],
+									$content['forwardOnly'] ? null : 'yes');
+							}
 						}
 					}
 					catch (Horde_Imap_Client_Exception $e)
@@ -1247,7 +1255,16 @@ class emailadmin_wizard
 			is_a($content['acc_smtp_type'], 'emailadmin_smtp_ldap', true))
 		{
 			$content['no_forward_available'] = !constant($content['acc_smtp_type'].'::FORWARD_ATTR');
-			$readonlys['deliveryMode'] = !constant($content['acc_smtp_type'].'::FORWARD_ONLY_ATTR');
+			if (!constant($content['acc_smtp_type'].'::FORWARD_ONLY_ATTR'))
+			{
+				$readonlys['deliveryMode'] = true;
+			}
+		}
+
+		// account allows users to change forwards
+		if (!$edit_access && !$readonlys['tabs']['emailadmin.account.aliases'] && $content['acc_user_forward'])
+		{
+			$readonlys['mailForwardingAddress'] = false;
 		}
 
 		// allow imap classes to disable certain tabs or fields

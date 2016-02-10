@@ -5,7 +5,7 @@
  * @link http://www.stylite.de
  * @package emailadmin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -683,7 +683,6 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 					}
 					if (static::FORWARD_ONLY_ATTR)
 					{
-						self::getAttributePrefix($newData[static::FORWARD_ONLY_ATTR], static::FORWARD_ONLY);
 						self::setAttributePrefix($newData[static::FORWARD_ONLY_ATTR],
 							$_keepLocalCopy == 'yes' ? array() : static::FORWARD_ONLY);
 					}
@@ -693,7 +692,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 					$forwards = array();
 				}
 				// merge in again all new set forwards incl. opt. prefix
-				self::getAttributePrefix($newData[static::FORWARD_ATTR], $forwards, static::FORWARD_PREFIX);
+				self::setAttributePrefix($newData[static::FORWARD_ATTR], $forwards, static::FORWARD_PREFIX);
 			}
 			if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'{$allValues[0]['dn']}',".array2string($newData).')');
 
@@ -758,8 +757,8 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	protected static function setAttributePrefix(&$attribute, $values, $prefix='')
 	{
 		//$attribute_in = $attribute;
-		if (!isset($attribute)) $attribute = array();
-		if (!is_array($attribute)) $attribute = array($attribute);
+		if (empty($attribute)) $attribute = array();
+		if (!is_array($attribute)) $attribute = (array)$attribute;
 
 		foreach((array)$values as $value)
 		{

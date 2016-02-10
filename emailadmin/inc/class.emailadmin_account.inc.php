@@ -6,7 +6,7 @@
  * @package emailadmin
  * @author Ralf Becker <rb@stylite.de>
  * @author Stylite AG <info@stylite.de>
- * @copyright (c) 2013-14 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2013-16 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -59,6 +59,7 @@
  * @property-read string $acc_imap_admin_password
  * @property-read boolean $acc_further_identities are non-admin users allowed to create further identities
  * @property-read boolean $acc_user_editable are non-admin users allowed to edit this account, if it is for them
+ * @property-read boolean $acc_user_forward are non-admin users allowed change forwards
  * @property-read int $acc_modified timestamp of last modification
  * @property-read int $acc_modifier account_id of last modifier
  * @property-read int $ident_id standard identity
@@ -1069,7 +1070,7 @@ class emailadmin_account implements ArrayAccess
 	 */
 	protected static function db2data(array $data)
 	{
-		foreach(array('acc_sieve_enabled','acc_further_identities','acc_user_editable','acc_smtp_auth_session') as $name)
+		foreach(array('acc_sieve_enabled','acc_further_identities','acc_user_editable','acc_smtp_auth_session','acc_user_forward') as $name)
 		{
 			if (isset($data[$name]))
 			{

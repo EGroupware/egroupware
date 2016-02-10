@@ -12,6 +12,7 @@ admin dn	emailadmin	en	Admin dn
 admin password	emailadmin	en	Admin password
 admin username	emailadmin	en	Admin user name
 advanced options	emailadmin	en	Advanced options
+allow users to change forwards	emailadmin	en	Allow users to change forwards
 alternate email address	emailadmin	en	Alternate email address
 and logged in	emailadmin	en	and logged in
 any application	emailadmin	en	Any application

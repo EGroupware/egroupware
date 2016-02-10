@@ -946,3 +946,19 @@ function emailadmin_upgrade14_2_001()
 
 	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '14.3';
 }
+
+/**
+ * New flag to allow non-emailadmins (users) to define (add, edit or remove) forwards
+ *
+ * @return string
+ */
+function emailadmin_upgrade14_3()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_user_forward',array(
+		'type' => 'bool',
+		'default' => '0',
+		'comment' => 'allow user to define forwards'
+	));
+
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '14.3.001';
+}

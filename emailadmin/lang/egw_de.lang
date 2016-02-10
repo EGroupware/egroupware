@@ -12,6 +12,7 @@ admin dn	emailadmin	de	Admin DN
 admin password	emailadmin	de	Admin Passwort
 admin username	emailadmin	de	Administrator Benutzername
 advanced options	emailadmin	de	erweiterte Einstellungen
+allow users to change forwards	emailadmin	de	Anwender dürfen Weiterleitung bearbeiten
 alternate email address	emailadmin	de	zusätzliche E-Mail-Adressen
 and logged in	emailadmin	de	und eingeloggt
 any application	emailadmin	de	jede Anwendung
