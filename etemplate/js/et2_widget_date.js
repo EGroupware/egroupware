@@ -99,9 +99,6 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		this.date.setMinutes(0);
 		this.date.setSeconds(0);
 		this.input = null;
-		this.is_mobile = egwIsMobile();
-		this.dateFormat = this.is_mobile ? 'yy-mm-dd' : this.egw().dateTimeFormat(this.egw().preference("dateformat"));
-		this.timeFormat = this.is_mobile ? 'HH:mm' : this.egw().preference("timeformat") == 12 ? "h:mmtt" : "HH:mm";
 
 		this.createInputWidget();
 	},
@@ -118,8 +115,13 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 
 		this.setDOMNode(this.span[0]);
 
+		// inline calendar is not existing in html5, so allways use datepicker instead
+		this.is_mobile = egwIsMobile() && !this.options.inline;
+
 		if (this.is_mobile)
 		{
+			this.dateFormat = 'yy-mm-dd';
+			this.timeFormat = 'HH:mm';
 			switch(this._type)
 			{
 				case 'date':
@@ -136,6 +138,8 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		}
 		else
 		{
+			this.dateFormat = this.egw().dateTimeFormat(this.egw().preference("dateformat"));
+			this.timeFormat = this.egw().preference("timeformat") == 12 ? "h:mmtt" : "HH:mm";
 			// jQuery-UI date picker
 			if(this._type != 'date-timeonly')
 			{
