@@ -355,7 +355,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		{
 			if (this.is_mobile)
 			{
-				this.input_date.attr('min', _value);
+				this.input_date.attr('min', this._relativeDate(_value));
 			}
 			else
 			{
@@ -363,6 +363,16 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 			}
 		}
 		this.options.min = _value;
+	},
+
+	/**
+	 * Convert non html5 min or max attributes described above to timestamps
+	 */
+	_relativeDate: function(_value)
+	{
+		if (typeof _value == 'string' && _value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)) return _value;
+
+		return jQuery.datepicker._determineDate(jQuery.datepicker, _value, this.date).toJSON();
 	},
 
 	/**
@@ -386,7 +396,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		{
 			if (this.is_mobile)
 			{
-				this.input_date.attr('max', _value);
+				this.input_date.attr('max', this._relativeDate(_value));
 			}
 			else
 			{
