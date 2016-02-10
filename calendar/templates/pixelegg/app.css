@@ -2609,3 +2609,19 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }*/
 /* ########################################################################################
 /* * Calendar END */
+/* tablets and smartphones  */
+@media only screen and (max-device-width: 1024px) {
+  #calendar-toolbar {
+    height: 50px;
+    box-shadow: 0px 4px 5px 2px silver;
+    width: 100%;
+    background: #0c5da5;
+    z-index: 1;
+  }
+  #calendar-toolbar #calendar-toolbar_toolbar .et2_toolbar_more > h.ui-toolbar-menulistHeader {
+    background: transparent;
+  }
+  #calendar-toolbar #toolbar-actionlist {
+    margin-left: 70px;
+  }
+}

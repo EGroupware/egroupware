@@ -243,6 +243,11 @@ class calendar_uiviews extends calendar_ui
 		// Toolbar
 		$tmpl = new etemplate_new('calendar.toolbar');
 		$tmpl->setElementAttribute('toolbar', 'actions', $this->getToolbarActions($content));
+		// Adjust toolbar for mobile
+		if(html::$ua_mobile){
+			$tmpl->setElementAttribute('toolbar','class', 'et2_head_toolbar');
+			$tmpl->setElementAttribute('toolbar','view_range', '3');
+		}
 		$tmpl->exec('calendar_uiviews::index',array());
 
 		// Load the different views once, we'll switch between them on the client side
