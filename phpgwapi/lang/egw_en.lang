@@ -379,7 +379,7 @@ group has been deleted	common	en	Group has been deleted.
 group has been updated	common	en	Group has been updated.
 group name	common	en	Group name
 group public	common	en	Group public
-groupdav	common	en	CalDAV, CardCAV and GroupDAV server
+groupdav	common	en	CalDAV / CardCAV sync
 groups	common	en	Groups
 groups with permission for %1	common	en	Groups with permission for %1
 groups without permission for %1	common	en	Groups without permission for %1
