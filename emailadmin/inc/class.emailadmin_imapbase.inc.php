@@ -1552,11 +1552,11 @@ class emailadmin_imapbase
 				}
 				//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
 				if(is_array($headerObject['FROM']) && $headerObject['FROM'][0]) {
-					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]);
+					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0],true);
 				}
 
 				if(is_array($headerObject['TO']) && $headerObject['TO'][0]) {
-					$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]);
+					$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0],true);
 					if (count($headerObject['TO'])>1)
 					{
 						$ki=0;
@@ -1564,7 +1564,7 @@ class emailadmin_imapbase
 						{
 							if ($k==0) continue;
 							//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki] = self::decode_header($add);
+							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki] = self::decode_header($add,true);
 							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 							$ki++;
 						}
@@ -1575,7 +1575,7 @@ class emailadmin_imapbase
 					foreach($headerObject['CC'] as $k => $add)
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = self::decode_header($add);
+						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = self::decode_header($add,true);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 						$ki++;
 					}
