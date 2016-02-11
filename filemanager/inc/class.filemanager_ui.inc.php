@@ -142,7 +142,8 @@ class filemanager_ui
 				'caption' => lang('Edit settings'),
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'onExecute' => 'javaScript:app.filemanager.editprefs',
+				'onExecute' => html::$ua_mobile?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
+				'mobileViewTemplate' => 'file.xet'
 			),
 			'mkdir' => array(
 				'caption' => lang('Create directory'),

@@ -523,10 +523,10 @@ div#stylite-filemanager-upload .dialogFooterToolbar button {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   background-color: #b4b4b4;
-  padding-left: 30px !important;
-  background-position: 6px center !important;
-  background-repeat: no-repeat !important;
-  background-size: 20px auto !important;
+  padding-left: 30px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
 }
@@ -547,7 +547,7 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
 /* tablets and smartphones  */
 @media only screen and (max-device-width: 1024px) {
   #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='size]'] {
-    font-size: 8pt;
+    font-size: 9pt;
     text-align: right;
   }
   #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] {
@@ -557,5 +557,12 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   }
   #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] span {
     white-space: nowrap;
+  }
+  .previewImage img {
+    max-width: 100%;
+  }
+  div#filemanager-file_tabs td.eaclAccount,
+  td.eaclRights {
+    display: block;
   }
 }
