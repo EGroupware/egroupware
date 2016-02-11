@@ -399,6 +399,7 @@ function expose (widget)
 					jQuery(this.node).on('click', function(event){
 						// Do not trigger expose view if one of the operator keys are held
 						if (!event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey) self._init_blueimp_gallery(event, _value);
+						event.stopImmediatePropagation();
 					}).addClass('et2_clickable');
 				}
 			},
