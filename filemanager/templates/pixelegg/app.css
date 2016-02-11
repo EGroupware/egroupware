@@ -558,6 +558,44 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] span {
     white-space: nowrap;
   }
+  #filemanager-index_nm #filemanager-index_buttons {
+    position: initial;
+    display: inline-block;
+  }
+  #filemanager-index_nm #filemanager-index_tarp {
+    display: none !important;
+  }
+  .et2_file.plus_button {
+    position: absolute !important;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-position: center;
+    z-index: 100;
+    background-color: #0c5da5;
+    border: none;
+    box-shadow: 0px 1px 5px 3px silver;
+    background-image: none !important;
+    margin: 0;
+    padding: 0;
+  }
+  .et2_file.plus_button .et2_file_span {
+    display: none;
+  }
+  .et2_file.plus_button .et2_file_upload {
+    width: 60px;
+    height: 60px;
+    top: 0;
+  }
+  .et2_file.plus_button:after {
+    content: '+';
+    font-weight: bold;
+    font-size: 34pt;
+    color: #fafafa;
+    margin-left: 10px;
+  }
   .previewImage img {
     max-width: 100%;
   }
