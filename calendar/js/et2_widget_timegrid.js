@@ -1799,7 +1799,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this.div.css('height', this.options.height);
 			
 		// Re-do time grid
-		if(!this.update_timer)// && this.options.height != old_height)
+		if(!this.update_timer)
 		{
 			this.resizeTimes();
 		}

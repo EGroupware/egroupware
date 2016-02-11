@@ -278,10 +278,27 @@ var et2_taglist = et2_selectbox.extend(
 	_data: function(query) {
 		if(query.trim() ==='' || !this.options.autocomplete_url)
 		{
+			// No server - let magicsuggest handle options
 			return this.options.select_options;
+		}
+		if (!jQuery.isEmptyObject(this.options.select_options))
+		{
+			// Check options, if there's a match there (that is not already
+			// selected), do not ask server
+			var filtered = []
+			var selected = this.taglist.getSelection();
+			$j.each(this.options.select_options, function(index, obj) {
+				var name = obj.label;
+				if(selected.indexOf(obj) < 0 && name.toLowerCase().indexOf(query.toLowerCase()) > -1)
+				{
+					filtered.push(obj);
+				}
+			});
+			return filtered.length > 0 ? filtered : this.options.autocomplete_url
 		}
 		else
 		{
+			// No options - ask server
 			return this.options.autocomplete_url;
 		}
 	},
@@ -364,8 +381,11 @@ var et2_taglist = et2_selectbox.extend(
 		this.options.value = value;
 		if(this.taglist == null) return;
 
-		this.taglist.clear(true);
-		if(!value) return;
+		if(!value)
+		{
+			this.taglist.clear(true);
+			return;
+		}
 
 		var values = jQuery.isArray(value) ? jQuery.extend([],value) : [value];
 		var result = [];
@@ -374,10 +394,15 @@ var et2_taglist = et2_selectbox.extend(
 			var v = values[i];
 			if (v && typeof v == 'object' && typeof v.id != 'undefined' && typeof v.label != 'undefined')
 			{
-				// alread in correct format
+				// already in correct format
 			}
 			else if (this.options.select_options &&
+				// Check options
 				(result = $j.grep(this.options.select_options, function(e) {
+					return e.id == v;
+				})) ||
+				// Check current selection to avoid going back to server
+				(result = $j.grep(this.taglist.getSelection(), function(e) {
 					return e.id == v;
 				}))
 			)
@@ -405,7 +430,7 @@ var et2_taglist = et2_selectbox.extend(
 			}
 		}
 
-		this.taglist.addToSelection(values);
+		this.taglist.setSelection(values);
 	},
 
 	getValue: function()

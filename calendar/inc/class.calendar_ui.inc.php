@@ -619,22 +619,29 @@ class calendar_ui
 		$owners = $this->owner ? is_array($this->owner) ? array($this->owner) : explode(',',$this->owner) : array($GLOBALS['egw_info']['user']['account_id']);
 
 
-		$sel_options = array();
+		$sel_options = array('owner' => array());
 
 		// Get user accounts, formatted nicely for grouping and matching
-		// the ajax call calendar_uiforms->ajax_owner()
-		$account_options = array('account_type' => 'both');
-		$accounts = accounts::link_query('',$account_options);
+		// the ajax call calendar_uiforms->ajax_owner() - users first
+		$accounts = array();
+		$list = array('accounts', 'owngroups');
+		foreach($list as $type)
+		{
+			$account_options = array('account_type' => $type);
+			$accounts += accounts::link_query('',$account_options);
+		}
+		$accounts = array_intersect_key($accounts, $GLOBALS['egw']->acl->get_grants('calendar'));
 		$sel_options['owner'] = array_map(
 			function($account_id, $account_name) {
 				return array(
-					'value' => $account_id,
+					'value' => ''.$account_id,
 					'label' => $account_name,
 					'app' => lang('home-accounts')
 				);
 			},
 			array_keys($accounts), $accounts
 		);
+		
 
 		// Add external owners that a select account widget will not find
 		$linked_owners = array();

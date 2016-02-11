@@ -2949,40 +2949,56 @@ class calendar_uiforms extends calendar_ui
 	public function ajax_owner()
 	{
 		$query = $_REQUEST['query'];
-		$options = ['num_rows' => 100];
+		// Arbitrarily limited to 50 / resource
+		$options = ['start' => 0, 'num_rows' => 50];
 		$results = [];
 		if($query)
 		{
-			foreach($this->bo->resources as $type => $data)
+			$resources = array_merge(array('' => $this->bo->resources['']),$this->bo->resources);
+			foreach($resources as $type => $data)
 			{
 				$mapped = array();
-				if ($data['app'] && egw_link::get_registry($data['app'], 'query'))
+				$_results = array();
+
+				// Handle accounts seperately
+				if($type == '')
+				{
+					$list = array('accounts', 'owngroups');
+					foreach($list as $a_type)
+					{
+						$account_options = $options + array('account_type' => $a_type);
+						$_results += accounts::link_query('',$account_options);
+					}
+					$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
+				}
+				else if ($data['app'] && egw_link::get_registry($data['app'], 'query'))
 				{
 					$_results = egw_link::query($data['app'], $query,$options);
-					if(!$_results) continue;
-					$r_results = array_unique($_results);
-					foreach($_results as $id => $title)
+				}
+				if(!$_results) continue;
+				$_results = array_unique($_results);
+
+				foreach($_results as $id => $title)
+				{
+					if($id && $title)
 					{
-						if($id && $title)
+						// Magicsuggest uses id, not value.
+						$value = [
+							'id' => $type.$id,
+							'value'=> $type.$id,
+							'label' => $title,
+							'app'	=> lang($data['app'])
+						];
+						if(is_array($value['label']))
 						{
-							// Magicsuggest uses id, not value.
-							$value = [
-								'id' => $type.$id,
-								'value'=> $type.$id,
-								'label' => $title,
-								'app'	=> lang($data['app'])
-							];
-							if(is_array($value['label']))
-							{
-								$value = array_merge($value, $value['label']);
-							}
-							$mapped[] = $value;
+							$value = array_merge($value, $value['label']);
 						}
+						$mapped[] = $value;
 					}
-					if(count($mapped))
-					{
-						$results = array_merge($results, $mapped);
-					}
+				}
+				if(count($mapped))
+				{
+					$results = array_merge($results, $mapped);
 				}
 			}
 		}

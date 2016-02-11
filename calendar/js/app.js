@@ -824,6 +824,7 @@ app.classes.calendar = AppJS.extend(
 					swipe:function(event, direction, distance, duration, fingerCount) {
 						if(direction == "up" || direction == "down")
 						{
+							if(fingerCount <= 1) return;
 							var at_bottom = direction !== -1;
 							var at_top = direction !== 1;
 
@@ -834,7 +835,6 @@ app.classes.calendar = AppJS.extend(
 							}).each(function() {
 								at_top = at_top && this.scrollTop === 0;
 							});
-							if(!at_bottom && !at_top && fingerCount == 1) return;
 						}
 
 						var delta = direction == "down" || direction == "right" ? -1 : 1;

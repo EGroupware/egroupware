@@ -53,7 +53,41 @@ var et2_calendar_owner = et2_taglist_email.extend(
 	// Allows sub-widgets to override options to the library
 	lib_options: {
 		groupBy: 'app',
-		expandOnFocus: true
+		minChars: 2,
+		// This option will also expand when the selection is changed
+		// via code, which we do not want
+		//expandOnFocus: true
+		toggleOnClick: true
+	},
+
+
+	doLoadingFinished: function() {
+		this._super.apply(this, arguments);
+
+		var widget = this;
+		// onChange fired when losing focus, which is different from normal
+		this._oldValue = this.taglist.getValue();
+		$j(this.taglist)
+			.off("selectionchange");
+		//	.on('focus', function() {debugger; widget.taglist.expand();});
+		
+		if(this.options.onchange && typeof this.onchange === 'function')
+		{
+			$j(this.taglist).on("blur", function() {
+				if(widget._oldValue.toString() !== widget.taglist.getValue().toString())
+				{
+					widget.onchange.call(widget, arguments);
+				}
+				widget._oldValue = widget.taglist.getValue();
+			});
+		}
+		return true;
+	},
+
+	getValue: function()
+	{
+		if(this.taglist == null) return null;
+		return this.taglist.getValue();
 	}
 });
 et2_register_widget(et2_calendar_owner, ["calendar_owner"]);
