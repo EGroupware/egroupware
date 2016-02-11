@@ -142,7 +142,12 @@ etemplate2.prototype.resize = function(e)
 	//@TODO implement getaccess height for other framework and remove
 	if (typeof event != 'undefined' && event.type == 'resize')
 	{
-		setTimeout(function(){
+		if(this.resize_timeout)
+		{
+			clearTimeout(this.resize_timeout);
+		}
+		this.resize_timeout = setTimeout(function(){
+			self.resize_timeout = false;
 			if (self.widgetContainer)
 			{
 				var appHeader = $j('#divAppboxHeader');
