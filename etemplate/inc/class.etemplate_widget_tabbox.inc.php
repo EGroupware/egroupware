@@ -23,6 +23,7 @@
  *   + prepend:  true prepend tab to existing ones, false (default) append tabs
  *   + hidden:
  *   + id:       optinal namespace (content attribute of template)
+ *   + add_tabs: true(default) add to given tabs to template, false replace tabs in template
  */
 class etemplate_widget_tabbox extends etemplate_widget
 {
@@ -39,8 +40,14 @@ class etemplate_widget_tabbox extends etemplate_widget
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
+		$form_name = self::form_name($params[0], $this->id, $params[1]);
+
 		// Make sure additional tabs are processed for any method
-		if($this->attrs['tabs'] && !$this->tabs_attr_evaluated)
+		if (!($tabs =& self::getElementAttribute($form_name, 'tabs')))
+		{
+			$tabs = $this->attrs['tabs'];
+		}
+		if($tabs && !$this->tabs_attr_evaluated)
 		{
 			$this->tabs_attr_evaluated = true;	// we must not evaluate tabs attribte more then once!
 
@@ -50,20 +57,22 @@ class etemplate_widget_tabbox extends etemplate_widget
 				$this->children[1]->children = array();
 			}
 
-			$this->tabs = array();
-			foreach($this->attrs['tabs'] as $tab)
+			//$this->tabs = array();
+			foreach($tabs as &$tab)
 			{
 				$template= clone etemplate_widget_template::instance($tab['template']);
 				if($tab['id']) $template->attrs['content'] = $tab['id'];
 				$this->children[1]->children[] = $template;
 				$tab['url'] = etemplate_widget_template::rel2url($template->rel_path);
-				$this->tabs[] = $tab;
+				//$this->tabs[] = $tab;
 				unset($template);
 			}
+			unset($tab);
+			//error_log(__METHOD__."('$method_name', ...) this->id='$this->id' calling setElementAttribute('$form_name', 'tabs', ".array2string($tabs).")");
+			self::setElementAttribute($form_name, 'tabs', $tabs);
 		}
 
 		// Check for disabled tabs set via readonly, and set them as disabled
-		$form_name = self::form_name($params[0], $this->id, $params[1]);
 		$readonlys = self::get_array(self::$request->readonlys, $form_name);
 		if($respect_disabled && $readonlys)
 		{
@@ -80,23 +89,6 @@ class etemplate_widget_tabbox extends etemplate_widget
 
 		// Tabs are set up now, continue as normal
 		parent::run($method_name, $params, $respect_disabled);
-	}
-
-	/**
-	 * Implemented to send tab-urls incl. cache-buster and mobile template switch to client-side
-	 *
-	 * They are send as tab_urls object via modifications.
-	 *
-	 * @param string $cname
-	 */
-	public function beforeSendToClient($cname)
-	{
-		$form_name = self::form_name($cname, $this->id);
-
-		if (!empty($this->tabs))
-		{
-			self::setElementAttribute($form_name, 'tabs', $this->tabs);
-		}
 	}
 
 	/**
