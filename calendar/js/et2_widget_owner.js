@@ -46,7 +46,7 @@ var et2_calendar_owner = et2_taglist_email.extend(
 			"name": "Select options",
 			// Set to empty object to use selectbox's option finding
 			"default": {},
-			"description": "Internaly used to hold the select options."
+			"description": "Internally used to hold the select options."
 		},
 	},
 

@@ -1951,6 +1951,8 @@ app.classes.calendar = AppJS.extend(
 			state.state.owner = state.state.owner.filter(function(value, index, self) {
 				return self.indexOf(value) === index;
 			})
+			// Make sure they're all strings
+			state.state.owner = state.state.owner.map(function(owner) { return ''+owner;});
 			// Keep sort order
 			if(typeof this.state.owner === 'object')
 			{
@@ -2168,7 +2170,7 @@ app.classes.calendar = AppJS.extend(
 							view.etemplates[i].widgetContainer.iterateOver(function(widget) {
 								if(typeof widget['set_'+updater] === 'function')
 								{
-										widget['set_'+updater](value);
+									widget['set_'+updater](value);
 								}
 							}, this, et2_calendar_view);
 						}

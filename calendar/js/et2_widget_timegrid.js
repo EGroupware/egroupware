@@ -117,6 +117,8 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this._labelContainer = $j(document.createElement("label"))
 			.addClass("et2_label")
 			.appendTo(this.gridHeader);
+
+		this.gridHover = jQuery('<div style="height:5px;" class="calendar_calAddEvent drop-hover">');
 		
 		// List of dates in Ymd
 		// The first one should be start_date, last should be end_date
@@ -281,8 +283,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				 */
 				resize:function(event, ui)
 				{
-					// Add 5px to make sure it doesn't land right on the edge of a div
-					var drop = timegrid._drag_helper(this,ui.element[0],ui.helper.outerHeight()+5);
+					// Add a bit for better understanding - it will show _to_ the start,
+					// covering the 'actual' target
+					timegrid._get_time_from_position(ui.helper[0].getBoundingClientRect().left, ui.helper[0].getBoundingClientRect().bottom+5);
+					timegrid.gridHover.hide();
+					var drop = timegrid._drag_helper(this,ui.element[0]);
 					if(drop && !drop.is(':visible'))
 					{
 						drop.get(0).scrollIntoView(false);
@@ -296,7 +301,8 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			.on('dragcreate','.calendar_calEvent', function(event, ui) {
 				$j(this).draggable('option','cancel','.rowNoEdit');
 				// Act like you clicked the header, makes it easier to position
-				$j(this).draggable('option','cursorAt', {top: 5, left: 5});
+				// but put it to the side (-5) so we can still do the hover
+				$j(this).draggable('option','cursorAt', {top: 5, left: -5});
 			})
 			.on('dragstart', '.calendar_calEvent', function(event,ui) {
 				$j('.calendar_calEvent',ui.helper).width($j(this).width())
@@ -304,6 +310,12 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					.css('top', '').css('left','')
 					.appendTo(ui.helper);
 				ui.helper.width($j(this).width());
+			})
+			.on('mousemove', function(event) {
+				timegrid._get_time_from_position(event.clientX, event.clientY);
+			})
+			.on('mouseout', function() {
+				timegrid.gridHover.hide();
 			});
 		return true;
 	},
@@ -316,8 +328,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	{
 		if(!element) return;
 		
-		element.dropEnd = this._get_time_from_position(helper.getBoundingClientRect().left,
-			helper.getBoundingClientRect().top+parseInt(height));
+		element.dropEnd = this.gridHover;
 
 		if(element.dropEnd.length)
 		{
@@ -326,23 +337,16 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		if (typeof element.dropEnd != 'undefined' && element.dropEnd.length)
 		{
-			element.dropEnd.addClass("drop-hover");
-
 			// Make sure the target is visible in the scrollable day
-			var scrollto = element.dropEnd.next() ? element.dropEnd.next() : element.dropEnd;
-			if(this.scrolling.find(element.dropEnd).length == element.dropEnd.length)
+			if(this.gridHover.is(':visible'))
 			{
-				if(scrollto.length && this.scrolling.height() + this.scrolling.scrollTop() < scrollto.position().top+scrollto.height() )
+				if(this.scrolling.scrollTop() > 0 && this.scrolling.scrollTop() >= this.gridHover.position().top - this.rowHeight)
 				{
-					scrollto.get(0).scrollIntoView(false);
+					this.scrolling.scrollTop(this.gridHover.position().top-this.rowHeight);
 				}
-				else if(element.dropEnd.position().top < this.scrolling[0].scrollTop)
+				else if (this.scrolling.scrollTop() + this.scrolling.height() <= this.gridHover.position().top + (2*this.rowHeight))
 				{
-					this.scrolling.scrollTop(element.dropEnd.position().top);
-				}
-				else if (element.dropEnd.prev().length && element.dropEnd.prev().position().top < this.scrolling[0].scrollTop)
-				{
-					this.scrolling.scrollTop(element.dropEnd.prev().position().top);
+					this.scrolling.scrollTop(this.scrolling.scrollTop() + this.rowHeight);
 				}
 			}
 			var time = '';
@@ -660,10 +664,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var granularity = this.options.granularity;
 		var totalDisplayMinutes	= wd_end - wd_start;
 		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/granularity);
+		var row_count = (1440 / this.options.granularity);
 
 		
 		this.scrolling
-			.css('height', (this.div.innerHeight() - header_height)+'px')
 			.on('scroll', jQuery.proxy(this._scroll, this));
 
 		// Percent
@@ -671,18 +675,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		// Pixels
 		this.rowHeight = this.scrolling.height() / rowsToDisplay;
 
-		// We need a reasonable bottom limit here...
+		// We need a reasonable bottom limit here, but resize will handle it
+		// if we get too small
 		if(this.rowHeight < 5 && this.div.is(':visible'))
 		{
 			if(this.rowHeight === 0)
 			{
 				// Something is not right...
 				this.rowHeight = 5;
-			}
-			else
-			{
-				this.options.granularity *= 2;
-				return this._drawTimes();
 			}
 		}
 
@@ -698,7 +698,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this._top_time = 0
 		for(var t = 0,i = 0; t < 1440; t += granularity,++i)
 		{
-			html += '<div class="calendar_calTimeRow" style="height: '+this.rowHeight+'px;">';
+			html += '<div class="calendar_calTimeRow" style="height: '+(100/row_count)+'%;">';
 			// show time for full hours, always for 45min interval and at least on every 3 row
 			var time = jQuery.datepicker.formatTime(
 					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
@@ -720,19 +720,16 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			{
 				time_label ='&nbsp;&nbsp;' + time_label;
 			}
-			if(this.rowHeight < line_height)
-			{
-				// Rows too small for regular label frequency, use automatic calculation
-				time_label = ( i % Math.ceil(line_height / this.rowHeight) ) === 0 ? time_label : '';
-			}
 			html += '<div class="calendar_calTimeRowTime et2_clickable" data-time="'+time.trim()+'" data-hour="'+Math.floor(t/60)+'" data-minute="'+(t%60)+'">'+time_label+"</div></div>\n";
 		}
 
 		// Set heights in pixels for scrolling
 		$j('.calendar_calTimeLabels',this.scrolling)
 			.empty()
+			.height(this.rowHeight*i)
 			.append(html);
 		this.days.css('height', (this.rowHeight*i)+'px');
+		this.gridHover.css('height', this.rowHeight);
 
 		// Scroll to start of day
 		this.scrolling.scrollTop(this._top_time);
@@ -777,29 +774,29 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var wd_end = 60*this.options.day_end;
 		var totalDisplayMinutes	= wd_end - wd_start;
 		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/this.options.granularity);
-		this.scrolling
-			.css('height', (this.options.height - this.gridHeader.outerHeight(true))+'px');
-
+		var row_count = (1440 / this.options.granularity);
+	
 		var new_height = this.scrolling.height() / rowsToDisplay;
+		var old_height = this.rowHeight;
 		this.rowHeight = new_height;
-		var rows = $j('.calendar_calTimeRow',this.scrolling).height(this.rowHeight);
-		if(!rows.length && this.options.granularity)
-		{
-			return this._drawTimes();
-		}
+
+		$j('.calendar_calTimeLabels', this.scrolling).height(this.rowHeight*row_count);
 		this.days.css('height', this.options.granularity === 0 ?
 			'100%' :
-			(this.rowHeight*rows.length)+'px'
+			(this.rowHeight*row_count)+'px'
 		);
-		$j('.calendar_calAddEvent',this.scrolling).height(this.rowHeight);
 		
 		// Scroll to start of day
 		this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
 		this.scrolling.scrollTop(this._top_time);
 
-		this.iterateOver(function(child) {
-			child.resize();
-		},this, et2_IResizeable);
+		if(this.rowHeight != old_height)
+		{
+			this.iterateOver(function(child) {
+				if(child === this) return;
+				child.resize();
+			},this, et2_IResizeable);
+		}
 	},
 
 	/**
@@ -1085,8 +1082,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				case EGW_AI_DRAG_OUT:
 					// Stop listening
 					_data.ui.draggable.off('drag.et2_timegrid'+widget_object.id);
-					// Remove any highlighted time squares
-					$j('[data-date]',this.doGetDOMNode()).removeClass("ui-state-active");
+					// Remove highlighted time square
+					var timegrid = aoi.getWidget();
+					timegrid.gridHover.hide();
+					timegrid.scrolling.scrollTop(timegrid._top_time);
 
 					// Out triggers after the over, count to not accidentally remove
 					time.data('count',time.data('count')-1);
@@ -1572,7 +1571,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var result = true;
 		
 		// Is this click in the event stuff, or in the header?
-		if($j(_ev.target).hasClass('.calendar_calEvent') || $j(_ev.target).parents('.calendar_calEvent').length)
+		if(_ev.target.dataset.id || $j(_ev.target).parents('.calendar_calEvent').length)
 		{
 			// Event came from inside, maybe a calendar event
 			var event = this._get_event_info(_ev.originalEvent.target);
@@ -1587,7 +1586,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 			if(event.id && result && !this.disabled && !this.options.readonly)
 			{
-				et2_calendar_event.recur_prompt(event);
+				if(event.widget_id && this.getWidgetById(event.widget_id))
+				{
+					this.getWidgetById(event.widget_id).recur_prompt();
+				}
+				else
+				{
+					et2_calendar_event.recur_prompt(event);
+				}
 
 				return false;
 			}
@@ -1611,30 +1617,6 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				}
 			}
 		}
-		else
-		{
-			var dataset = {};
-			var parent = _ev.target;
-			do
-			{
-				dataset = parent.dataset;
-				parent = parent.parentNode;
-			} while (jQuery.isEmptyObject(dataset) && parent !== this.node);
-			if(parent === this.node) return;
-			
-			// Default handler to open a new event at the selected time
-			var options = {
-				date: dataset.date || this.day_list[0],
-				hour: dataset.hour || this.options.day_start,
-				minute: dataset.minute || 0
-			};
-			if (this.options.owner != app.calendar.state.owner)
-			{
-				options.owner = this.options.owner;
-			}
-			this.egw().open(null, 'calendar', 'add', options , '_blank');
-			return false;
-		}
 	},
 
 	/**
@@ -1651,22 +1633,73 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		
 		x = Math.round(x);
 		y = Math.round(y);
-		var nodes = this.options.granularity === 0 ?
-			$j('.calendar_calDayCol',this.div) :
-			$j('.calendar_calAddEvent[data-hour],.calendar_calDayColHeader',this.div);
-		
-		nodes = nodes
-			.removeClass('drop-hover')
-			.filter(function() {
-				var offset = $j(this).offset();
-				var range={x:[offset.left,offset.left+$j(this).outerWidth()],y:[offset.top,offset.top+$j(this).outerHeight()]};
+		if(this.options.granularity === 0)
+		{
+			return $j('.calendar_calDayCol',this.div);
+		}
+		var path = [];
+		var day = null;
+		var time = null;
 
-				var i = (x >=range.x[0]  && x <= range.x[1]) && (y >= range.y[0] && y <= range.y[1]);
-				return i;
-			})
-		nodes.addClass("drop-hover");
+		for(var id in this.gridHover[0].dataset) {
+			delete this.gridHover[0].dataset[id];
+		}
+		var node = document.elementFromPoint(x,y);
 		
-		return nodes;
+		while(node && node != this.node && node.tagName != 'BODY' && path.length < 10)
+		{
+			path.push(node);
+			node.style.display = 'none';
+			var $node = $j(node);
+			if($node.hasClass('calendar_calDayColHeader')) {
+				for(var id in node.dataset) {
+					this.gridHover[0].dataset[id] = node.dataset[id];
+				}
+				this.gridHover.css({
+					position: 'absolute',
+					top: '',
+					bottom: '0px',
+					height: $node.css('padding-bottom')
+				});
+				day = node;
+				break;
+			}
+			if($node.hasClass('calendar_calDayCol'))
+			{
+				day = node;
+				this.gridHover
+					.attr('data-date',day.dataset.date);
+			}
+			if($node.hasClass('calendar_calTimeRowTime'))
+			{
+				time = node;
+				this.gridHover
+					.attr('data-hour',time.dataset.hour)
+					.attr('data-minute',time.dataset.minute);
+				break;
+			}
+			node = document.elementFromPoint(x,y);
+		}
+		for(var i = 0; i < path.length; i++)
+		{
+			path[i].style.display = '';
+		}
+
+		if(!day)
+		{
+			return [];
+		}
+		this.gridHover
+			.show()
+			.appendTo(day);
+		if(time)
+		{
+			this.gridHover
+				.height(this.rowHeight)
+				.position({my:'left top', at: 'left top', of: time});
+		}
+		this.gridHover.css('left','');
+		return this.gridHover;
 	},
 	
 	/**
@@ -1705,14 +1738,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		{
 			return;
 		}
-		
+
 		/*
 		We expect the timegrid to be in a table with 0 or more other timegrids,
 		1 per row.  We want each timegrid to be as large as possible, but space
 		shared equally.  Height can't be set to a percentage on the rows, because
-		that doesn't work.  However, if the timegrid is too small (1/2 hour < 1 line
+		that doesn't work.  However, if any timegrid is too small (1/2 hour < 1 line
 		height), we change to showing only the working hours with no vertical
-		scrollbar.  Each week gets as much space as it needs.
+		scrollbar.  Each week gets as much space as it needs, and all scroll together.
 		*/
 		// How many rows?
 		var rowCount = 0;
@@ -1746,7 +1779,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			});
 		if(too_small || _too_small)
 		{
-			this.options.height = needed;
+			this.options.height = Math.max(this.options.height, needed);
 			// Set all others to match
 			if(!_too_small)
 			{
@@ -1766,9 +1799,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this.div.css('height', this.options.height);
 			
 		// Re-do time grid
-		if(!this.update_timer)
+		if(!this.update_timer)// && this.options.height != old_height)
 		{
-			this._drawTimes();
+			this.resizeTimes();
 		}
 
 		// Try to resize width, though animations cause problems

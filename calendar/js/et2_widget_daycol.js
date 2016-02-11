@@ -186,37 +186,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 		}
 
-		if(this.display_settings.granularity === 0)
-		{
-			this.div.attr('data-date', this.options.date);
-		}
-		else
-		{
-			this.display_settings.rowsToDisplay	= ((this.display_settings.wd_end - this.display_settings.wd_start)/this.display_settings.granularity);
-			this.display_settings.rowHeight= (100/this.display_settings.rowsToDisplay).toFixed(1);
-			this.display_settings.titleHeight = (this.title.height()/this.div.height())*100;
-
-			// adding divs to click on for each row / time-span
-			for(var t = 0,i = 1; t < 1440; t += this.display_settings.granularity,++i)
-			{
-				var linkData = {
-					'menuaction':'calendar.calendar_uiforms.edit',
-					'date'		: this.options.date,
-					'hour'		: sprintf("%02d",Math.floor(t / 60)),
-					'minute'	: sprintf("%02d",Math.floor(t % 60))
-				};
-				if (this.options.owner) linkData['owner'] = this.options.owner;
-
-				var droppableDateTime = linkData['date'] + "T" + linkData['hour'] + linkData['minute'];
-				var droppableID='drop_'+droppableDateTime+'_O'+(this.options.owner<0?'group'+Math.abs(this.options.owner):this.options.owner);
-
-				var hour = jQuery('<div id="' + droppableID + '" style="height:'+ this._parent.rowHeight+'px; " class="calendar_calAddEvent">')
-					.attr('data-date',linkData.date)
-					.attr('data-hour',linkData.hour)
-					.attr('data-minute',linkData.minute)
-					.appendTo(this.div);
-			}
-		}
+		this.div.attr('data-date', this.options.date);
 	},
 
 	/**
@@ -646,18 +616,18 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			// Completely out of view, show indicator
 			else if (hidden.completely)
 			{
-				this._hidden_indicator(event, hidden.hidden == 'top',
-					timegrid.div.hasClass('calendar_calTimeGridFixed') ? function() {
-						app.calendar.update_state({view: 'day', date: day.date});
-						return false;
-					} : false
-				);
+				this._hidden_indicator(event, hidden.hidden == 'top',false);
 			}
 		}, this, et2_calendar_event);
 	},
 
 	/**
 	 * Show an indicator that there are hidden events
+	 *
+	 * The indicator works 3 different ways, depending on if the day can be
+	 * scrolled, is fixed, or if in gridview.
+	 *
+	 * @see _out_of_view()
 	 *
 	 * @param {et2_calendar_event} event Event we're creating the indicator for
 	 * @param {boolean} top Events hidden at the top (true) or bottom (false)
@@ -669,8 +639,11 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		var day = this;
 		var timegrid = this._parent;
 		var fixed_height = timegrid.div.hasClass('calendar_calTimeGridFixed');
+
+		// Event is before the displayed times
 		if(top)
 		{
+			// Create if not already there
 			if($j('.hiddenEventBefore',this.header).length === 0)
 			{
 				indicator = $j('<div class="hiddenEventBefore"></div>')
@@ -685,42 +658,39 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 							return false;
 						});
 				}
-				else
-				{
-					indicator
-						.append("<div>"+event.options.value.title+"</div>");
-				}
 			}
 			else
 			{
 				indicator = $j('.hiddenEventBefore',this.header);
 				indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
 
-				if (fixed_height)
-				{
-					indicator.append("<div>"+event.options.value.title+"</div>");
-				}
-				else
+				if (!fixed_height)
 				{
 					indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
 				}
 			}
 		}
+		// Event is after displayed times
 		else
 		{
 			indicator = $j('.hiddenEventAfter',this.div);
+			// Create if not already there
 			if(indicator.length === 0)
 			{
 				indicator = $j('<div class="hiddenEventAfter"></div>')
 					.attr('data-hidden_count', 0)
-					.appendTo(this.div)
-					.on('click', typeof onclick === 'function' ? onclick : function() {
-						$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
-						// Better re-run this to clean up
-						day._out_of_view();
-						return false;
-					});
-				if(fixed_height)
+					.appendTo(this.div);
+				if(!fixed_height)
+				{
+					indicator
+						.on('click', typeof onclick === 'function' ? onclick : function() {
+							$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
+							// Better re-run this to clean up
+							day._out_of_view();
+							return false;
+						});
+				}
+				else
 				{
 					indicator
 						.on('mouseover', function() {
@@ -744,15 +714,21 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 				indicator.append(event.div.clone());
 				indicator.attr('data-hidden_label', day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
 			}
-			else if (fixed_height)
-			{
-				indicator.append("<div>"+event.options.value.title+"</div>");
-			}
-			else
+			else if (!fixed_height)
 			{
 				indicator.text(day.egw().lang('%1 event(s) %2',indicator.attr('data-hidden_count'),''));
 			}
 			indicator.css('top',timegrid.scrolling.height() + timegrid.scrolling.scrollTop()-indicator.innerHeight());
+		}
+		// Show different stuff for fixed height
+		if(fixed_height)
+		{
+			indicator
+				.append("<div id='"+event.dom_id +
+					"' data-id='"+event.options.value.id+"'>"+
+						event.options.value.title+
+					"</div>"
+				);
 		}
 		// Match color to the event
 		if(indicator !== '')
@@ -1018,7 +994,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;
 		}
-		else if ($j(_ev.target).hasClass('calendar_calAddEvent'))
+		else if ($j(_ev.target).hasClass('calendar_calAddEvent') && !_ev.target.dataset.whole_day)
 		{
 			// Default handler to open a new event at the selected time
 			var options = {
@@ -1033,7 +1009,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			this.egw().open(null, 'calendar', 'add', options, '_blank');
 			return false;
 		}
-		else if (this.header.has(_ev.target).length || this.header.is(_ev.target))
+		// Header, but not the hidden event indicators that are in there
+		else if (this.header.has(_ev.target).length && !$j('.hiddenEventBefore',this.header).has(_ev.target) ||
+			this.header.is(_ev.target)
+		)
 		{
 			// Click on the header, but not the title.  That's an all-day non-blocking
 			var end = this.date.getFullYear() + '-' + (this.date.getUTCMonth()+1) + '-' + this.date.getUTCDate() + 'T23:59';
