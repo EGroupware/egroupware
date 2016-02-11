@@ -3370,6 +3370,8 @@ class mail_ui
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
 		$icServerID = $uidA['profileID'];
+		//something went wrong. there is a $_messageID but no $messageID: means $_messageID is crippeled
+		if (empty($messageID)) return "";
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
