@@ -559,7 +559,7 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     white-space: nowrap;
   }
   #filemanager-index_nm #filemanager-index_buttons {
-    position: initial;
+    position: relative;
     display: inline-block;
   }
   #filemanager-index_nm #filemanager-index_tarp {
