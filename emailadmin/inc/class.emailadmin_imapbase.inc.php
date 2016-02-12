@@ -1459,6 +1459,8 @@ class emailadmin_imapbase
 					$remember=null;
 					foreach ($headerObject[$key] as $k => $ad)
 					{
+						//the commented section below IS a simplified version of the section "make sure ..."
+						/*
 						if (stripos($ad,'@')===false)
 						{
 							$remember=$k;
@@ -1468,9 +1470,16 @@ class emailadmin_imapbase
 							$address[] = (!is_null($remember)?$headerObject[$key][$remember].' ':'').$ad;
 							$remember=null;
 						}
+						*/
+						// make sure addresses are real emailaddresses one by one in the array as expected
+						$rfcAddr = self::parseAddressList($ad); // does some fixing of known problems too
+						foreach ($rfcAddr as $_rfcAddr)
+						{
+							if (!$_rfcAddr->valid)	continue; // skip. not a valid address
+							$address[] = imap_rfc822_write_address($_rfcAddr->mailbox,$_rfcAddr->host,$_rfcAddr->personal);
+						}
 					}
 					$headerObject[$key] = $address;
-
 				}
 				$headerObject['FLAGS'] = $_headerObject->getFlags();
 				$mailStructureObject = $_headerObject->getStructure();
@@ -1554,7 +1563,6 @@ class emailadmin_imapbase
 				if(is_array($headerObject['FROM']) && $headerObject['FROM'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0],true);
 				}
-
 				if(is_array($headerObject['TO']) && $headerObject['TO'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0],true);
 					if (count($headerObject['TO'])>1)
