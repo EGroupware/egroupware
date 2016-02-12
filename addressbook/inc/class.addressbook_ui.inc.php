@@ -306,7 +306,6 @@ class addressbook_ui extends addressbook_bo
 
 		// dont show tid-selection if we have only one content_type
 		// be a bit more sophisticated about it
-		$content['nm']['header_right'] = 'addressbook.index.right_add';
 		$availabletypes = array_keys($this->content_types);
 		if ($content['nm']['col_filter']['tid'] && !in_array($content['nm']['col_filter']['tid'],$availabletypes))
 		{
@@ -739,7 +738,7 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 		if (isset($actions['export']['children']['csv']) && !importexport_helper_functions::has_definitions('addressbook','export')) unset($actions['export']['children']['csv']);
-		
+
 		// Intercept open action in order to open entry into view mode instead of edit
 		if (html::$ua_mobile)
 		{

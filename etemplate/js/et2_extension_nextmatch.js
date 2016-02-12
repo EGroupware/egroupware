@@ -66,6 +66,20 @@ var et2_INextmatchSortable = new Interface({
 /**
  * Class which implements the "nextmatch" XET-Tag
  *
+ * NM header is build like this in DOM
+ *
+ * +- nextmatch_header -----+------------+----------+--------+---------+--------------+-----------+-------+
+ * + header_left | search.. | header_row | category | filter | filter2 | header_right | favorites | count |
+ * +-------------+----------+------------+----------+--------+---------+--------------+-----------+-------+
+ *
+ * everything left incl. standard filters is floated left:
+ * +- nextmatch_header -----+------------+----------+--------+---------+
+ * + header_left | search.. | header_row | category | filter | filter2 |
+ * +-------------+----------+------------+----------+--------+---------+
+ * everything from header_right on is floated right:
+ *                                          +--------------+-----------+-------+
+ *                                          | header_right | favorites | count |
+ *                                          +--------------+-----------+-------+
  * @augments et2_DOMWidget
  */
 var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrint],
@@ -539,7 +553,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 				}
 			}
 		}
-		
+
 		this.update_in_progress = false;
 	},
 
@@ -1427,7 +1441,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 					self.activeFilters.selectcols.push('lettersearch');
 				}
 				self.getInstanceManager().submit();
-				
+
 				self.selectPopup = null;
 			};
 
@@ -1467,7 +1481,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 	/**
 	 * Set the currently displayed columns, without updating user's preference
-	 * 
+	 *
 	 * @param {string[]} column_list List of column names
 	 * @param {boolean} trigger_update=false - explicitly trigger an update
 	 */
@@ -1506,7 +1520,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 				var cf = this.columns[i].widget.options.customfields;
 				var visible = this.columns[i].widget.options.fields;
-				
+
 				// Turn off all custom fields
 				for(var field_name in cf)
 				{
@@ -2035,7 +2049,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 						var nm = this;
 						var dialog = et2_dialog.show_dialog(
 							// Abort the long task if they canceled the data load
-							function() {count = total; cancel=true;window.setTimeout(function() {defer.reject();},0)},
+							function() {count = total; cancel=true;window.setTimeout(function() {defer.reject();},0);},
 							egw.lang('Loading'), egw.lang('please wait...'),{},[
 								{"button_id": et2_dialog.CANCEL_BUTTON,"text": 'cancel',id: 'dialog[cancel]',image: 'cancel'}
 							]
@@ -2119,7 +2133,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 					{"button_id": 1,"text": egw.lang('Ok'), id: 'dialog[ok]', image: 'check', "default":true},
 					// Nice for small lists, kills server for large lists
 					//{"button_id": 2,"text": egw.lang('All'), id: 'dialog[all]', image: ''},
-					{"button_id": 0,"text": egw.lang('Cancel'), id: 'dialog[cancel]', image: 'cancel'},
+					{"button_id": 0,"text": egw.lang('Cancel'), id: 'dialog[cancel]', image: 'cancel'}
 				]
 			);
 			return defer;
@@ -2252,19 +2266,18 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var self = this;
 		var nm_div = this.nextmatch.div;
 		var settings = this.nextmatch.options.settings;
-		
+
 		this.div.prependTo(nm_div);
-		
+
 		// Left & Right (& row) headers
-		this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
 		this.headers = [
 			{id:this.nextmatch.options.header_left},
 			{id:this.nextmatch.options.header_right},
 			{id:this.nextmatch.options.header_row}
 		];
-		
+
 		// The rest of the header
-		this.row_div = jQuery(document.createElement("div"))
+		this.header_div = this.row_div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header_row")
 			.appendTo(this.div);
 
@@ -2311,26 +2324,26 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				}
 			);
 		}
-		
+
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
-		
+
 		/**
-		 *  Mobile theme specific part for nm header 
+		 *  Mobile theme specific part for nm header
 		 *  nm header has very different behaivior for mobile theme and basically
 		 *  it has its own markup separately from nm header in normal templates.
 		 */
 		if (egwIsMobile())
 		{
 			jQuery(this.div).css({display:'inline-block'}).addClass('nm_header_hide');
-			
+
 			//indicates appname in header
 			jQuery(document.createElement('div'))
 					.addClass('nm_appname_header')
 					.text(egw.lang(egw.app_name()))
 					.appendTo(this.search_box);
-			
-			// toggle header 
+
+			// toggle header
 			// add new button
 			this.fav_span = jQuery(document.createElement('div'))
 					.addClass('nm_favorites_div')
@@ -2342,18 +2355,18 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 						jQuery(self.div).slideToggle('fast');
 						jQuery(self.div).removeClass('nm_header_hide');
 						jQuery(this).toggleClass('nm_toggle_header_on');
-						window.setTimeout(function(){self.nextmatch.resize()},800);
+						window.setTimeout(function(){self.nextmatch.resize();},800);
 					})
 					.prependTo(this.search_box);
-			// Context menu 
+			// Context menu
 			this.action_header = jQuery(document.createElement('button'))
 					.addClass('nm_action_header')
 					.click (function(e){
 						jQuery('tr.selected',self.nextmatch.div).trigger({type:'contextmenu',which:3,originalEvent:e});
 					})
 					.prependTo(this.search_box);
-			
-			
+
+
 			this.search_button = et2_createWidget("button", {id: "search_button","background":"pixelegg/images/topmenu_items/mobile/search_white.png"}, this);
 			this.search.input.on ('focus blur', function (e){
 				self.search_box.toggleClass('searchOn');
@@ -2366,7 +2379,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				self.nextmatch.applyFilters({search: self.search.getValue()});
 			};
 		}
-	
+
 		// Add category
 		if(!settings.no_cat) {
 			settings.cat_id_label = egw.lang("Category");
@@ -2490,13 +2503,26 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Load the template
 		var self = this;
 		var header = et2_createWidget("template", {"id": template_name}, this);
-		jQuery(header.getDOMNode()).addClass(location == "left" ? "et2_hbox_left": location=="right" ?"et2_hbox_right":'').addClass("nm_header");
 		this.headers[id] = header;
 		var deferred = [];
 		header.loadingFinished(deferred);
 
 		// Wait until all child widgets are loaded, then bind
 		jQuery.when.apply(jQuery,deferred).then(function() {
+			// fix order in DOM by reattaching templates in correct position
+			switch (id) {
+				case 0:	// header_left: prepend
+					jQuery(header.getDOMNode()).prependTo(self.header_div);
+					break;
+				case 1:	// header_right: before favorites and count
+					jQuery(header.getDOMNode()).prependTo(self.header_div.find('div.header_row_right'));
+					break;
+				case 2:	// header_row: after search
+					window.setTimeout(function(){	// otherwise we might end up after filters
+						jQuery(header.getDOMNode()).insertAfter(self.header_div.find('div.search'));
+					}, 1);
+					break;
+			}
 			self._bindHeaderInput(header);
 		});
 	},
