@@ -1777,10 +1777,10 @@ function json_php_unserialize($str, $allow_not_serialized=false)
 /**
  * Clasify exception for a headline and log it to error_log, if not running as cli
  *
- * @param Exception $e
+ * @param Exception|Error $e
  * @param string &$headline
  */
-function _egw_log_exception(Exception $e,&$headline=null)
+function _egw_log_exception($e,&$headline=null)
 {
 	$trace = explode("\n", $e->getTraceAsString());
 	if ($e instanceof egw_exception_no_permission)
@@ -1824,9 +1824,9 @@ function _egw_log_exception(Exception $e,&$headline=null)
  *
  * Does NOT return
  *
- * @param Exception $e
+ * @param Exception|Error $e
  */
-function egw_exception_handler(Exception $e)
+function egw_exception_handler($e)
 {
 	// handle redirects without logging
 	if (is_a($e, 'egw_exception_redirect'))
