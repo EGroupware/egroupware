@@ -10,7 +10,8 @@
         }
     ],
 	"require": {
-		"php": ">=5.3.2,<=6.0.0alpha1",
+		"php": ">=5.3.2,<=8.0.0alpha1",
+		"pear-pear.php.net/PEAR": "*",
 		"pear-pear.php.net/Net_Sieve": "*",
 		"pear-pear.horde.org/Horde_Imap_Client": ">=2.24.2",
 		"pear-pear.horde.org/Horde_Nls": ">=2.0.3",
