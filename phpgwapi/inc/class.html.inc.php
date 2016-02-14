@@ -753,10 +753,6 @@ egw_LAB.wait(function() {
 			$image = ' src="'.$path.'"';
 			$classes[] = 'image_button';
 		}
-		else
-		{
-			$classes[] = 'et_button_text';
-		}
 		if (!$no_lang)
 		{
 			$label = lang($label);
