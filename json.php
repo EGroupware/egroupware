@@ -31,9 +31,9 @@ function login_redirect(&$anon_account)
  *
  * Does NOT return!
  *
- * @param Exception $e
+ * @param Exception|Error $e
  */
-function ajax_exception_handler(Exception $e)
+function ajax_exception_handler($e)
 {
 	// handle redirects without logging
 	if (is_a($e, 'egw_exception_redirect'))
