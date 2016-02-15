@@ -75,7 +75,7 @@ class setup
 	 */
 	var $recommended_php_version = '5.6';
 
-	function setup($html=False, $translation=False)
+	function __construct($html=False, $translation=False)
 	{
 		// setup us as $GLOBALS['egw_setup'], as this gets used in our sub-objects
 		$GLOBALS['egw_setup'] =& $this;
@@ -362,7 +362,7 @@ class setup
     * @param string $hash hash to check password agains (no {prefix} for plain and md5!)
     * @returns bool true on success
     */
-	function check_auth($user, $pw, $conf_user, $hash)
+	static function check_auth($user, $pw, $conf_user, $hash)
 	{
 		if ($user !== $conf_user)
 		{
