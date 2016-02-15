@@ -165,18 +165,6 @@ class preferences
 	}
 
 	/**
-	 * Old PHP4 contstructor
-	 *
-	 * @param int|string $account_id =''
-	 * @return preferences
-	 * @deprecated
-	 */
-	function preferences($account_id = '')
-	{
-		self::__construct($account_id);
-	}
-
-	/**
 	 * Magic function to avoid storing perferences in session, as they get re-read on each request by egw_session::verify()
 	 *
 	 * @return array with class vars to store

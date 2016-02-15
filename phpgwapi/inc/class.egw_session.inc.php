@@ -530,7 +530,8 @@ class egw_session
 			}
 
 			$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
-			$GLOBALS['egw']->accounts->accounts($this->account_id);
+			$GLOBALS['egw']->accounts->__construct();
+			$GLOBALS['egw']->accounts->setAccountId($this->account_id);
 
 			// for *DAV and eSync we use a pseudo sessionid created from md5(user:passwd)
 			// --> allows this stateless protocolls which use basic auth to use sessions!
@@ -989,9 +990,9 @@ class egw_session
 
 		if ($fill_egw_info_and_repositories)
 		{
-			$GLOBALS['egw']->acl->acl($this->account_id);
-			$GLOBALS['egw']->preferences->preferences($this->account_id);
-			$GLOBALS['egw']->applications->applications($this->account_id);
+			$GLOBALS['egw']->acl->__construct($this->account_id);
+			$GLOBALS['egw']->preferences->__construct($this->account_id);
+			$GLOBALS['egw']->applications->__construct($this->account_id);
 		}
 		if (!$this->account_lid)
 		{
@@ -1489,9 +1490,9 @@ class egw_session
 	 */
 	public function read_repositories()
 	{
-		$GLOBALS['egw']->acl->acl($this->account_id);
-		$GLOBALS['egw']->preferences->preferences($this->account_id);
-		$GLOBALS['egw']->applications->applications($this->account_id);
+		$GLOBALS['egw']->acl->__construct($this->account_id);
+		$GLOBALS['egw']->preferences->__construct($this->account_id);
+		$GLOBALS['egw']->applications->__construct($this->account_id);
 
 		$user = $GLOBALS['egw']->accounts->read($this->account_id);
 		// set homedirectory from auth_ldap or auth_ads, to be able to use it in vfs
@@ -1512,7 +1513,7 @@ class egw_session
 		$user['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		if (is_object($GLOBALS['egw']->datetime))
 		{
-			$GLOBALS['egw']->datetime->datetime();		// to set tz_offset from the now read prefs
+			$GLOBALS['egw']->datetime->__construct();		// to set tz_offset from the now read prefs
 		}
 		$user['apps']        = $GLOBALS['egw']->applications->read_repository();
 		$user['domain']      = $this->account_domain;

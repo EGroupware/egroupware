@@ -84,17 +84,6 @@ class acl
 		}
 	}
 
-	/**
-	 * PHP4 constructor
-	 *
-	 * @deprecated use __construct
-	 * @param int $account_id = null
-	 */
-	function acl($account_id = null)
-	{
-		$this->__construct($account_id);
-	}
-
 	function DONTlist_methods($_type='xmlrpc')
 	{
 		/*

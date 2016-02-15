@@ -41,7 +41,7 @@ class applications
 	 *
 	 * @param $account_id account id
 	 */
-	function applications($account_id = '')
+	function __construct($account_id = '')
 	{
 		if (is_object($GLOBALS['egw_setup']) && is_object($GLOBALS['egw_setup']->db))
 		{

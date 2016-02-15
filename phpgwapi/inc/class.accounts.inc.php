@@ -207,19 +207,6 @@ class accounts
 	}
 
 	/**
-	 * Old constructor name
-	 *
-	 * @param int $account_id =0 depricated param to instanciate for the given account_id
-	 * @deprecated use __construct
-	 */
-	function accounts($account_id=0)
-	{
-		$this->account_id = (int) $account_id;
-
-		$this->__construct();
-	}
-
-	/**
 	 * set the accountId
 	 *
 	 * @param int $accountId
