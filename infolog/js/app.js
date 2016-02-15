@@ -214,6 +214,7 @@ app.classes.infolog = AppJS.extend(
 					if (filter && dates)
 					{
 						dates.set_disabled(false);
+						jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
 					}
 					break;
 				default:
@@ -591,7 +592,7 @@ app.classes.infolog = AppJS.extend(
 			}
 		}
 		var extras = {
-			type: _type || nm_value.filter || "",
+			type: _type || nm_value.col_filter.info_type || "task",
 			cat_id: nm_value.cat_id || "",
 			action: nm_value.action || _action || "",
 			// egw_link can handle arrays, but server is expecting CSV
@@ -660,7 +661,7 @@ app.classes.infolog = AppJS.extend(
 	 * Insert text at the cursor position (or end) of a text field
 	 *
 	 * @param {et2_inputWidget|string} widget Either a widget object or it's ID
-	 * @param {string} [text=timestamp username] Text to insert
+	 * @param {string} text [text=timestamp username] Text to insert
 	 */
 	insert_text: function(widget, text)
 	{
@@ -681,7 +682,7 @@ app.classes.infolog = AppJS.extend(
 		{
 			var now = new Date();
 			text = date(egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i")+' ',now);
-			
+
 			// Get properly formatted user name
 			var user = parseInt(egw.user('account_id'));
 			var accounts = egw.accounts('accounts');
@@ -701,7 +702,7 @@ app.classes.infolog = AppJS.extend(
 		var browser = ((input.selectionStart || input.selectionStart == "0") ?
 			"standards" : (document.selection ? "ie" : false ) );
 
-		var pos = 0
+		var pos = 0;
 
 		// Find cursor or selection
 		if (browser == "ie")
@@ -713,7 +714,7 @@ app.classes.infolog = AppJS.extend(
 		}
 		else if (browser == "standards")
 		{
-			pos = input.selectionStart
+			pos = input.selectionStart;
 		};
 
 		// Insert the text
@@ -758,10 +759,10 @@ app.classes.infolog = AppJS.extend(
 
 	/**
 	 * Make sure stylite javascript is loaded, and call the given callback when it is
-	 * 
+	 *
 	 * @param {function} callback
 	 * @param {object} attrs
-	 * 
+	 *
 	 */
 	_get_stylite: function(callback,attrs)
 	{

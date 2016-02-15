@@ -948,7 +948,6 @@ class infolog_ui
 				}
 			}
 		}
-		$values['nm']['header_row'] = 'infolog.index.header_right';
 		if ($values['nm']['filter']=='bydate')
 		{
 			foreach (array_keys($values['nm']['col_filter']) as $colfk)

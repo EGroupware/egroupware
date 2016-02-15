@@ -100,3 +100,9 @@ div#infolog-edit_infolog-edit-description {
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid ul.et2_link_string li.et2_link {
 	display: inline-block;
 }
+
+div#infolog-index_infolog-index-dates {
+	position: absolute;
+	right: 12px;
+	top: 41px;
+}
