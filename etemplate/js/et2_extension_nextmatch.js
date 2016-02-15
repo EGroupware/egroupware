@@ -2280,54 +2280,20 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.header_div = this.row_div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header_row")
 			.appendTo(this.div);
-
+		
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
-			.prependTo(egwIsMobile()?this.nextmatch.div:this.row_div)
-			.addClass("search");
-		this.search = et2_createWidget("textbox", {"id":"search","blur":egw.lang("search")}, this);
-		this.search.input.attr("type", "search");
-		this.search.input.val(settings.search)
-			.on("keypress", function(event) {
-				if(event.which == 13)
-				{
-					event.preventDefault();
-					self.getInstanceManager().autocomplete_fixer();
-					// Use a timeout to make sure we get the autocomplete value,
-					// if one was chosen, instead of what was actually typed.
-					// Chrome doesn't need this, but FF does.
-					window.setTimeout(function() {
-						self.nextmatch.applyFilters({search: self.search.getValue()});
-					},0);
-				}
-			});
-		// Firefox treats search differently.  Add in the clear button.
-		if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
-		{
-			this.search.input.on("keyup",
-				function(event) {
-					// Insert the button, if needed
-					if(self.search.input.next('span').length == 0)
-					{
-						self.search.input.after(
-							$j('<span class="ui-icon"></span>').click(
-								function() {self.search.input.val('');self.search.input.focus();}
-							)
-						);
-					}
-					if(event.which == 27) // Escape
-					{
-						// Excape clears search
-						self.search.input.val('');
-					}
-					self.search.input.next('span').toggle(self.search.input.val() != '');
-				}
-			);
-		}
-
+			.prependTo(egwIsMobile()?this.nextmatch.div:this.row_div);
+		// searchbox widget	
+		this.et2_searchbox = et2_createWidget('searchbox', {id:"search",onchange:function(){
+				self.nextmatch.applyFilters({search: this.get_value()});
+			}
+		},this);
+		
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
-
+		
+		this.et2_searchbox.set_value(settings.search);
 		/**
 		 *  Mobile theme specific part for nm header
 		 *  nm header has very different behaivior for mobile theme and basically
@@ -2367,18 +2333,12 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 					.prependTo(this.search_box);
 
 
-			this.search_button = et2_createWidget("button", {id: "search_button","background":"pixelegg/images/topmenu_items/mobile/search_white.png"}, this);
+			this.search_button = et2_createWidget("button", {id: "search_button"}, this);
 			this.search.input.on ('focus blur', function (e){
 				self.search_box.toggleClass('searchOn');
 			});
 		}
-		else
-		{
-			this.search_button = et2_createWidget("button", {id: "search_button","label":">"}, this);
-			this.search_button.onclick = function(event) {
-				self.nextmatch.applyFilters({search: self.search.getValue()});
-			};
-		}
+		
 
 		// Add category
 		if(!settings.no_cat) {
@@ -2772,7 +2732,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				return this.row_div[0];
 			}
 		}
-		if(_sender == this.search || _sender == this.search_button) return this.search_box[0];
+		if(_sender == this.et2_searchbox) return this.search_box[0];
 		if(_sender.id == 'export') return this.right_div[0];
 
 		if(_sender && _sender._type == "template")
@@ -3397,7 +3357,6 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 		}
 		var self = this;
 		// Fire on lost focus, clear filter if user emptied box
-		this.search.focusout(this, function(event) {if(!self.search.val()) { self.select(event, {item:{value:null}});}});
 	}
 });
 et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
