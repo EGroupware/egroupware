@@ -15,7 +15,7 @@
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
-error_reporting(error_reporting() & ~E_NOTICE);
+error_reporting(error_reporting() & ~E_NOTICE & ~E_DEPRECATED);
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling filemanager/cli.php as web-page
 {
@@ -34,17 +34,22 @@ function user_pass_from_argv(&$account)
 	//print_r($account);
 	if (!($sessionid = $GLOBALS['egw']->session->create($account)))
 	{
-		echo "Wrong user-account or -password !!!\n\n";
-		usage('',1);
+		usage("Wrong username or -password!");
 	}
 	return $sessionid;
 }
 
 /**
  * Give a usage message and exit
+ *
+ * @param string $error_msg ='' error-message to be printed in front of usage
  */
-function usage()
+function usage($error_msg='')
 {
+	if ($error_msg)
+	{
+		echo "$error_msg\n\n";
+	}
 	$cmd = basename(__FILE__);
 	echo "Usage:\t$cmd ls [-r|--recursive|-l|--long|-i|--inode] URL [URL2 ...]\n";
 	echo "\t$cmd cat URL [URL2 ...]\n";
@@ -100,7 +105,7 @@ while(!is_null($option = array_shift($args)))
 					'-empty','-size','-cmin','-ctime','-mmin','-mtime','-limit','-order','-sort',
 					'-hidden','-show-deleted','-name-preg','-path','-path-preg')))
 				{
-					usage();
+					usage("Unknown find option '$option'!");
 				}
 				if (in_array($option,array('-empty','-depth','-nouser','-nogroup','-hidden','-show-deleted')))
 				{
@@ -182,7 +187,7 @@ switch($cmd)
 	case 'umount':
 		if ($argc != 1 && !$all)
 		{
-			usage();
+			usage('Wrong number of parameters!');
 		}
 		if (($url = $argv[0])) load_wrapper($url);
 		if(!egw_vfs::$is_root)
@@ -206,7 +211,7 @@ switch($cmd)
 	case 'mount':
 		if ($argc > 2)
 		{
-			usage();
+			usage('Wrong number of parameters!');
 		}
 		load_wrapper($url=$argv[0]);
 
@@ -249,7 +254,7 @@ switch($cmd)
 		break;
 
 	case 'rename':
-		if (count($argv) != 2) usage();
+		if (count($argv) != 2) usage('Wrong number of parameters!');
 		load_wrapper($argv[0]);
 		load_wrapper($argv[1]);
 		rename($argv[0],$argv[1]);
@@ -535,10 +540,12 @@ function load_egw($user,$passwd,$domain='default')
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
 		include('../header.inc.php');
 
-		if ($user == 'root_'.$GLOBALS['egw_info']['server']['header_admin_user'] &&
-			_check_pw($GLOBALS['egw_info']['server']['header_admin_password'],$passwd) ||
-			$user == 'root_'.$GLOBALS['egw_domain'][$domain]['config_user'] &&
-			_check_pw($GLOBALS['egw_domain'][$domain]['config_passwd'],$passwd))
+		if (setup::check_auth($user, $passwd,
+				'root_'.$GLOBALS['egw_info']['server']['header_admin_user'],
+				$GLOBALS['egw_info']['server']['header_admin_password']) ||
+			setup::check_auth($user, $passwd,
+				'root_'.$GLOBALS['egw_domain'][$domain]['config_user'],
+				$GLOBALS['egw_domain'][$domain]['config_passwd']))
 		{
 			echo "\nRoot access granted!\n";
 			egw_vfs::$is_root = true;
@@ -558,23 +565,6 @@ function load_egw($user,$passwd,$domain='default')
 }
 
 /**
- * Check password against a md5 hash or cleartext password
- *
- * @param string $hash_or_cleartext
- * @param string $pw
- * @return boolean
- */
-function _check_pw($hash_or_cleartext,$pw)
-{
-	//echo "_check_pw($hash_or_cleartext,$pw) md5=".md5($pw)."\n";
-	if (preg_match('/^[0-9a-f]{32}$/',$hash_or_cleartext))
-	{
-		return $hash_or_cleartext == md5($pw);
-	}
-	return $hash_or_cleartext == $pw;
-}
-
-/**
  * Set, delete or show the extended acl for a given path
  *
  * @param array $argv
@@ -585,7 +575,7 @@ function do_eacl(array $argv)
 
 	if ($argc < 1 || $argc > 3)
 	{
-		usage();
+		usage('Wrong number of parameters!');
 	}
 	load_wrapper($url = $argv[0]);
 	if (!class_exists('egw_vfs'))
@@ -721,7 +711,7 @@ function do_cp($argv,$recursive=false,$perms=false)
 
 	if (count($argv) > 1 && $to_exists && !is_dir($to))
 	{
-		usage();
+		usage("No such directory '$to'!");
 	}
 	$anz_dirs = $anz_files = 0;
 	foreach($argv as $from)
@@ -827,9 +817,17 @@ function do_lntree($from,$to)
 	if ($from[0] == '/') $from = 'sqlfs://default'.$from;
 	load_wrapper($from);
 
-	if (!file_exists($from) || $to[0] != '/' || file_exists($to) || !is_writable(dirname($to)))
+	if (!file_exists($from))
 	{
-		usage();
+		usage("Directory '$from' does NOT exist!");
+	}
+	elseif ($to[0] != '/' || file_exists($to))
+	{
+		usage("Directory '$to' does not exist!");
+	}
+	elseif (!is_writable(dirname($to)))
+	{
+		usage("Directory '$to' is not writable!");
 	}
 	egw_vfs::find($from, array(
 		'url' => true,
