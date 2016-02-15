@@ -406,3 +406,156 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 });
 et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
 
+/**
+ * et2_searchbox is a widget which provides a collapsable input search
+ * with on searching indicator and clear handler regardless of any browser limitation.
+ * 
+ * @type type
+ */
+var et2_searchbox = et2_textbox.extend(
+{
+	/**
+	 * Ignore all more advanced attributes.
+	 */
+	attributes: {},
+
+	/**
+	 * Constructor
+	 *
+	 * @memberOf et2_searchbox
+	 */
+	init: function() {
+		this.value = "";
+		this.div = jQuery(document.createElement('div'))
+				.addClass('et2_searchbox');
+		
+		this._super.apply(this, arguments);
+		this.setDOMNode(this.div[0]);
+		this._createWidget();
+	},
+	
+	_createWidget:function()
+	{
+		var self = this;
+		// search button indicator
+		this.button = et2_createWidget('button',{class:"et2_button_with_image"},this);
+		this.button.onclick= function(){
+			self._show_hide(true);
+			self.search.input.focus()
+		};
+		this.div.prepend(this.button.getDOMNode());
+		
+		// input field
+		this.search = et2_createWidget('textbox',{"blur":egw.lang("search"),
+			onkeypress:function(event) {
+				if(event.which == 13)
+				{
+					event.preventDefault();
+					self.getInstanceManager().autocomplete_fixer();
+					// Use a timeout to make sure we get the autocomplete value,
+					// if one was chosen, instead of what was actually typed.
+					// Chrome doesn't need this, but FF does.
+					window.setTimeout(function() {
+						self.set_value(self.search.input.val());
+						self.change();
+					},0);
+				}
+			}},this);
+		this.search.input.on({
+			keyup:function(event)
+			{
+				if(event.which == 27) // Escape
+				{
+					// Excape clears search
+					self.set_value('');
+				}
+			},
+			
+			blur: function(event){
+				self._show_hide(false);
+				if (self._oldValue != self.get_value()) {
+					self.change();
+				}
+			},
+			mousedown:function(event){
+				if (event.target.type == 'span') event.stopImmidatePropagation();
+			}
+		});
+		this.div.append(this.search.getDOMNode());
+		
+		// clear button implementation
+		this.clear = jQuery(document.createElement('span'))
+				.addClass('ui-icon clear')
+				.on('mousedown',function(event){
+					event.preventDefault();
+				})
+				.on('click',function(event) {
+					if (self.get_value()){
+						self.search.input.val('');
+						self.search.input.focus();
+						self._show_hide(true);
+						if (self._oldValue) self.change();
+					}
+					else
+					{
+						self._show_hide(false);
+					}
+				})
+				.appendTo(this.div);
+	},
+	
+	/**
+	 * Show/hide search field 
+	 * @param {boolean} _stat true means show and false means hide
+	 */
+	_show_hide: function(_stat)
+	{
+			jQuery(this.search.getDOMNode()).toggleClass('hide',!_stat);
+			jQuery('span.clear',this.div).toggleClass('hide',!_stat);
+	},
+	
+	/**
+	 * toggle search button status based on value
+	 */
+	_searchToggleState:function()
+	{
+		if (!this.get_value())
+		{
+			jQuery(this.button.getDOMNode()).removeClass('searched');
+		}
+		else
+		{
+			jQuery(this.button.getDOMNode()).addClass('searched');
+		}
+	},
+
+	/**
+	 * override change function in order to preset the toggle state
+	 */
+	change:function()
+	{
+		this._searchToggleState();
+		
+		this._super.apply(this,arguments);
+	},
+	
+	
+	get_value:function(){
+		return  this.search.input.val();
+	},
+	
+	/**
+	 * override doLoadingFinished in order to set initial state 
+	 */
+	doLoadingFinished: function()
+	{
+		this._super.apply(this,arguments);
+		if (!this.get_value()) {
+			this._show_hide(false);
+		}
+		else{
+			this._searchToggleState();
+		}
+	}
+});
+et2_register_widget(et2_searchbox, ["searchbox"]);
