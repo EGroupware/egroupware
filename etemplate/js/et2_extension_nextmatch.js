@@ -2301,6 +2301,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		 */
 		if (egwIsMobile())
 		{
+			this.search_box.addClass('nm-mob-header');
 			jQuery(this.div).css({display:'inline-block'}).addClass('nm_header_hide');
 
 			//indicates appname in header
@@ -2331,14 +2332,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 						jQuery('tr.selected',self.nextmatch.div).trigger({type:'contextmenu',which:3,originalEvent:e});
 					})
 					.prependTo(this.search_box);
-
-
-			this.search_button = et2_createWidget("button", {id: "search_button"}, this);
-			this.search.input.on ('focus blur', function (e){
-				self.search_box.toggleClass('searchOn');
-			});
 		}
-		
 
 		// Add category
 		if(!settings.no_cat) {

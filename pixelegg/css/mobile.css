@@ -7725,7 +7725,7 @@ span.egw_tutorial_title {
     font-weight: bold;
     font-size: 18pt;
   }
-  body .et2_nextmatch .search {
+  body .et2_nextmatch .nm-mob-header {
     background: #0c5da5;
     margin-top: 0;
     padding-left: 60px;
@@ -7733,7 +7733,7 @@ span.egw_tutorial_title {
     position: relative;
     z-index: 1;
   }
-  body .et2_nextmatch .search button {
+  body .et2_nextmatch .nm-mob-header button {
     height: 50px;
     width: 50px;
     background-repeat: no-repeat;
@@ -7746,7 +7746,11 @@ span.egw_tutorial_title {
     box-shadow: none;
     outline: none;
   }
-  body .et2_nextmatch .search button.nm_toggle_header {
+  body .et2_nextmatch .nm-mob-header div.et2_searchbox {
+    display: inline-block;
+    width: 50px;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7758,14 +7762,14 @@ span.egw_tutorial_title {
     display: block;
     float: right;
   }
-  body .et2_nextmatch .search button.nm_toggle_header:focus {
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus {
     outline: none;
   }
-  body .et2_nextmatch .search button.nm_toggle_header:after {
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header:after {
     font-size: 18pt;
     content: "\2261";
   }
-  body .et2_nextmatch .search button.nm_action_header {
+  body .et2_nextmatch .nm-mob-header button.nm_action_header {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7777,15 +7781,15 @@ span.egw_tutorial_title {
     display: block;
     float: right;
   }
-  body .et2_nextmatch .search button.nm_action_header:focus {
+  body .et2_nextmatch .nm-mob-header button.nm_action_header:focus {
     outline: none;
   }
-  body .et2_nextmatch .search button.nm_action_header:after {
+  body .et2_nextmatch .nm-mob-header button.nm_action_header:after {
     font-size: 18pt;
     content: "\205D";
     font-weight: bold;
   }
-  body .et2_nextmatch .search div.nm_favorites_div {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7797,51 +7801,51 @@ span.egw_tutorial_title {
     display: block;
     float: right;
   }
-  body .et2_nextmatch .search div.nm_favorites_div:focus {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus {
     outline: none;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] {
     position: relative !important;
     top: 0 !important;
     outline: none;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
     display: none;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
     display: none;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2):after {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2):after {
     font-size: 17pt;
     content: "\2606";
     font-weight: bold;
     vertical-align: super;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
     width: 160px;
     box-shadow: 0px 4px 5px 2px silver;
     border: 1px solid silver;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     border-bottom: 1px solid silver;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a {
     width: 100%;
     line-height: 30px;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input {
     display: none;
   }
-  body .et2_nextmatch .search div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
     display: block;
   }
-  body .et2_nextmatch .search button.nm_toggle_header_on:after {
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on:after {
     content: "\2613";
   }
-  body .et2_nextmatch .search input[type="search"] {
+  body .et2_nextmatch .nm-mob-header input[type="search"] {
     width: 50px;
     height: 50px;
     font-size: large;
@@ -7852,11 +7856,11 @@ span.egw_tutorial_title {
     color: black;
     position: absolute;
   }
-  body .et2_nextmatch .search input[type="search"]:active {
+  body .et2_nextmatch .nm-mob-header input[type="search"]:active {
     border: none;
     background: #0c5da5;
   }
-  body .et2_nextmatch .search input[type="search"]:focus {
+  body .et2_nextmatch .nm-mob-header input[type="search"]:focus {
     border: none;
     background: white;
     outline: none;
@@ -7867,7 +7871,7 @@ span.egw_tutorial_title {
     height: 50px;
     z-index: 2;
   }
-  body .et2_nextmatch .search div.nm_appname_header {
+  body .et2_nextmatch .nm-mob-header div.nm_appname_header {
     width: 100%;
     position: absolute;
     top: 0;
