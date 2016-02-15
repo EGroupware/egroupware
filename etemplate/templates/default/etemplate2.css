@@ -2227,3 +2227,40 @@ td.avatar {
 	padding-top:0 !important;
 	width:50px;
 }
+
+.et2_searchbox {
+	position: relative;
+	padding: 0 0 0 0px;
+    margin-right: 15px;
+    margin-left: 15px;
+    width: 200px;
+    z-index: 100;
+    white-space: nowrap;
+}
+.et2_searchbox button.et2_button {
+	height:24px;
+	background-image: url(images/search.png);
+	width:35px;
+	background-repeat: no-repeat;
+}
+.et2_searchbox button.et2_button.searched {
+	background-color: white;
+	box-shadow: inset 1px 1px 1px 1px gray !important;
+}
+.et2_searchbox input {
+	position: absolute;
+	top: 5px;
+	height: 18px;
+	width: 80%;
+}
+.et2_searchbox span.ui-icon.clear{
+	display: inline-block;
+    background-position: -95px -126px;
+    position: absolute;
+    float: right;
+    right: 5px;
+    top: 6px;
+}
+.et2_searchbox .hide {
+	display: none !important;
+}
