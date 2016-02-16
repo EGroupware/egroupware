@@ -440,7 +440,7 @@ var et2_searchbox = et2_textbox.extend(
 	{
 		var self = this;
 		// search button indicator
-		this.button = et2_createWidget('button',{class:"et2_button_with_image"},this);
+		this.button = et2_createWidget('button',{image:"search","background_image":"1"},this);
 		this.button.onclick= function(){
 			self._show_hide(true);
 			self.search.input.focus()
@@ -523,11 +523,11 @@ var et2_searchbox = et2_textbox.extend(
 	{
 		if (!this.get_value())
 		{
-			jQuery(this.button.getDOMNode()).removeClass('searched');
+			jQuery(this.button.getDOMNode()).removeClass('toolbar_toggled');
 		}
 		else
 		{
-			jQuery(this.button.getDOMNode()).addClass('searched');
+			jQuery(this.button.getDOMNode()).addClass('toolbar_toggled');
 		}
 	},
 

@@ -103,6 +103,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 				.attr({type:"button"});
 			this.setDOMNode(this.btn[0]);
 		}
+		if (this.options.image) this.set_image(this.options.image);
 	},
 
 	/**
