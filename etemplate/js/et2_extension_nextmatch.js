@@ -2280,6 +2280,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.header_div = this.row_div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header_row")
 			.appendTo(this.div);
+		this.filter_div = jQuery(document.createElement("div"))
+			.appendTo(this.row_div);
 		
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
@@ -2722,8 +2724,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		{
 			if(_sender == filters[i])
 			{
-				// Give them the row div
-				return this.row_div[0];
+				// Give them the filter div
+				return this.filter_div[0];
 			}
 		}
 		if(_sender == this.et2_searchbox) return this.search_box[0];
