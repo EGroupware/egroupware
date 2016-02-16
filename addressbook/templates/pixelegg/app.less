@@ -91,130 +91,12 @@ div#addressbook_view_sidebox{
  * Give space to both contact view & infolog list
  */
 
-
-
-#addressbook-index {
-  /*height: 99%;*/
-}
 #addressbook-edit {
   height: auto;
   min-height: 390px;
   overflow:    auto;
 }
 
-
-
-#addressbook-index{
-//    min-height: 700px;
-//    height: auto !important;
-
-    // ###########################
-    // linke Box
-    // ##########################
-    div.et2_hbox_left{
-
-        padding: 0px 17px 0 13px;
-        // Org View
-        select#addressbook-index_org_view{
-            .Complete_Button_select;
-            .dimension_height_m;
-            margin-top: 0;
-            margin-left: 2px;
-            .box_shadow_none;
-            &:hover{
-                .Complete_Button_select_hover;
-            }
-        }
-
-
-    }	// linke Box
-
-
-
-    // ###########################
-    // rechte Box
-    // ###########################
-
-    // filter
-    div.header_row_right div[id$=favorite_wrapper] {margin-top: 0px; top: 6px;}
-
-
-
-    div.et2_hbox_right {
-        padding: 0px 11px 0px 0px;
-
-        width: auto;
-        margin-right: 0em;
-        margin-top: -5px;
-
-
-        // Typ
-        select.et2_selectbox{
-            .Complete_Button_select;
-            .dimension_height_m;
-            margin-left: 5px;
-
-            &:hover{.Complete_Button_select_hover;}
-            &:focus{.Complete_Button_select_focus;}
-        }
-
-        // hinzufügen
-        button#addressbook-index_add,button#addressbook-index_search{
-
-            .Complete_Button_add_only_plus;
-            .dimension_height_m;
-
-            &:hover {.Complete_Button_add_only_plus_hover;}
-            &:active {background-color: @color_positive_action_active !important;}
-
-        }
-		button#addressbook-index_add {
-            margin-right: 0px;
-		}
-
-
-
-    } // rechte Box
-
-
-
-            div.filters {
-
-                // 1 Filter
-                select#infolog-index_cat_id {width: 10%; margin-left: 1em;}
-
-                // 2 Filter
-                select#infolog-index_filter {width: 10%;}
-
-                // 3 Filter
-                select#infolog-index_filter2 {width: 10%;}
-
-                // Suchfeld
-                input#infolog-index_search {
-                  }
-
-
-                // Suchen Button
-                button.et2_button {}
-            }
-
-
-
-    // Filter
-    .filters{
-//        #addressbook-index_cat_id{width: 7%;}
-//        #addressbook-index_filter{width:7%;}
-//        #addressbook-index_filter2{width: 10%;}
-
-
-    }// Filter
-
-
-/*#############################################################*/
-
-
-
-} // iframe
 
 
 /*##################################################################*/
@@ -437,10 +319,10 @@ div.addressbook_edit_general_picture img {
 			display: none !important;
 		}
 	}
-	
+
 	#addressbook-index {
 		table.egwGridView_outer tbody {
-			
+
 			span[id^='addressbook-index_'][id$='line1]'] {
 				.mob-fontsize-l;
 				overflow: hidden;
@@ -461,9 +343,9 @@ div.addressbook_edit_general_picture img {
 					white-space: nowrap;
 					width:99%;
 				}
-				
+
 			}
-						
+
 			span[id^='addressbook-index_'][id$='adr_one_locality]']
 			{
 				.mob-fontsize-s;
@@ -471,7 +353,7 @@ div.addressbook_edit_general_picture img {
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				
+
 			}
 			a[id^='addressbook-index_'][id$='email]']{
 				.mob-fontsize-s;

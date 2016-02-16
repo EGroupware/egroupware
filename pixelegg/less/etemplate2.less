@@ -515,7 +515,7 @@ hr {
 div.header_row_right{
 
     //favoriten
-    div[id$=favorite_wrapper]{margin-top: 0px; top: 6px;}
+    div[id$=favorite_wrapper]{margin-top: 0px;}
 
 }
 
@@ -527,17 +527,17 @@ div.header_row_right{
 
 // complete nextmatch....Background color!
 .et2_nextmatch .nextmatch_header {
-    padding: 5px;
+    padding: 0;
     border: none;
     background-image: none;
     background-color: transparent;
 }
 
 // complete nextmatch....Background color!
-.et2_nextmatch .nextmatch_header_row {
-
+.et2_nextmatch .nextmatch_header_row
+{
     padding-bottom: 6px;
-
+	width: 100%;
 }
 
 
@@ -625,96 +625,6 @@ div.header_row_right{
 /*######################################################*/
 
 
-
-
-/*################################################################
-*
-* Search Field
-*
-################################################################*/
-.nextmatch_header_row > .search{
-
-    padding: 0 0 0 0px;
-    margin-right: 15px;
-    margin-left: 15px;
-    width: 200px;
-    z-index: 100;
-    white-space: nowrap;
-
-    /*.background_color_search;*/
-    /*.border_radius_button_righttop;*/
-
-    input {
-        /*.background_color_search;*/
-        /*background-color: @gray_0;*/
-        .fontsize_normal;
-        color: @gray_100;
-        padding: 3px;
-        width: 150px;
-		border-color:@gray_60;
-		border-right: none;
-    }
-
-    input::-webkit-input-placeholder {
-            /* WebKit browsers */
-            color: @gray_60;
-        }
-    input:-moz-placeholder {
-            /* Mozilla Firefox 4 to 18 */
-           color:   @gray_60;
-        }
-   input::-moz-placeholder {
-            /* Mozilla Firefox 19+ */
-            color:   @gray_60;
-        }
-   input:-ms-input-placeholder {
-            /* Internet Explorer 10+ */
-            color:  @gray_60;
-        }
-
-    // SEARCH BUTTON
-    button.et2_button {
-            .border_normal;
-
-            border-color: @gray_30;
-            -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-            -moz-box-shadow:  1px 1px 1px rgba(0, 0, 0, 0.9);
-            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-
-            width: 45px;
-            .border_radius_button_righttop;
-            /*cursor: pointer; 14022014 entfernt*/
-            padding: 0px;
-            margin: 8px 10px;
-            margin-left: 0px;
-            background-image: url("../images/search.png");
-            background-position: center 0;
-            background-size: contain;
-            background-repeat: no-repeat;
-            text-indent: 110%;
-            white-space: nowrap;
-            overflow: hidden;
-
-            &:hover{
-                .box_shadow_standard_light_hover;
-                background-color: @egw_color_2_e !important;
-                /*hide arrow*/
-                color: @egw_color_2_e !important;
-            }
-
-            &:active {
-                /*.background_verlauf_diagonal_gray;*/
-                background-color: @color_positive_action_active !important;
-            }
-
-            &:focus {
-                .Complete_Button_input_focus;
-                /*background-color: @color_positive_action_active !important;*/
-            }
-
-    }
-
-}
 
 
 /*################################################################
@@ -831,13 +741,12 @@ div.header_row_right{
 .nextmatch_header .header_count {
 
     position: relative;
-    top: 1px;
+    top: 0;
     height: 22px;
     .dimension_height_m;
     border: 1px solid #E0E0E0;
     float: right;
-    margin: 6px 5px 0 10px;
-    padding: 0 20px;
+    padding: 0 10px;
     text-align: center;
 
     .fontsize_normal;

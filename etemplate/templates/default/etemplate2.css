@@ -885,7 +885,7 @@ ul.et2_link_string {
 }
 .et2_tabbox.vertical .et2_tabflag.active .et2_tabcntr {
 	display: block;
-	
+
 }
 .et2_tabbox.vertical .et2_tabflag div.et2_tabtitle {
 	background-color: #C4C4C4;
@@ -1109,9 +1109,6 @@ div.message.floating {
   border: 1px solid #E0E0E0;
   font-size: 150%;
   text-align: center;
-}
-.nextmatch_header .search {
-	padding-left: 1ex;
 }
 .nextmatch_header_row > select,.nextmatch_header_row > label > select {
 	max-width: 14%;
@@ -1580,13 +1577,13 @@ div.ms-sel-ctn .ms-sel-item {
 	margin: 0 !important;
 	padding: 0 !important;
 }
-.et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image {
+.et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image, .nextmatch_header_row button.et2_button {
 	width: 24px;
 	background-position: center;
 	background-size: 16px 16px;
 	border-radius: 3px;
 	padding-left: 0;
-	background-color: #f0f0f0;
+	background-color: #fafafa;
 }
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption {
 	width:auto;
@@ -1598,12 +1595,18 @@ div.ms-sel-ctn .ms-sel-item {
 	width:auto;
 	padding-left: 3px;
 }
-.et2_toolbar button {
-	margin:1px;
-	margin-right: 3px;
+.et2_toolbar button, .nextmatch_header_row button {
+	margin: 1px 4px 1px 0;
 	height: 24px;
 }
-.et2_toolbar button.toolbar_toggled {
+.et2_toolbar select, .nextmatch_header_row select {
+	height: 24px;
+	margin: 1px 4px 1px 0;
+	background-color: #fafafa;
+	border: 1px solid silver;
+	border-radius: 3px;
+}
+.et2_toolbar button.toolbar_toggled, .et2_searchbox button.et2_button.toolbar_toggled {
 	background-color: white;
 	box-shadow: inset 1px 1px 1px 1px gray !important;
 }
@@ -2231,35 +2234,25 @@ td.avatar {
 .et2_searchbox {
 	position: relative;
 	padding: 0 0 0 0px;
-    z-index: 100;
-    white-space: nowrap;
-}
-.et2_searchbox button.et2_button {
-	height:24px;
-	background-image: url(images/search.png);
-	width:35px;
-	background-repeat: no-repeat;
-}
-.et2_searchbox button.et2_button.searched {
-	background-color: white;
-	box-shadow: inset 1px 1px 1px 1px gray !important;
+	z-index: 500;
+	white-space: nowrap;
 }
 .et2_searchbox input {
 	position: absolute;
-	top: 5px;
+	/* top: 1px; */
 	height: 18px;
 	width: 100%;
 }
 .et2_searchbox span.ui-icon.clear{
 	display: inline-block;
-    background-position: -95px -126px;
-    position: absolute;
-    float: right;
-    right: 5px;
-    top: 6px;
+	background-position: -95px -126px;
+	position: absolute;
+	float: right;
+	right: 3px;
+	top: 3px;
 }
 .et2_searchbox .flex {
-	width:200px;
+	width: 150px;
 	position: absolute;
 	display: inline-block;
 }

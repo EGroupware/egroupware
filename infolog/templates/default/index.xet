@@ -152,13 +152,6 @@
 					<html id="css" span="all"/>
 				</row>
 				<row>
-					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
-				</row>
-				<row disabled="1">
-					<template id="dates"/>
-					<template id="header_right"/>
-				</row>
-				<row>
 					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.add" header_right="infolog.index.dates" span="all"/>
 				</row>
 				<row>

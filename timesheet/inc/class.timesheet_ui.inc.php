@@ -864,8 +864,6 @@ class timesheet_ui extends timesheet_bo
 				'options-filter2' => array('No details','Details'),
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
-				'header_left'    => 'timesheet.index.dates',
-				'header_row'     => 'timesheet.index.add',
 				'filter_onchange' => "app.timesheet.filter_change();",
 				'filter2_onchange' => "app.timesheet.filter2_change();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],

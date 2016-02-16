@@ -2285,16 +2285,17 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
+			.addClass('search')
 			.prependTo(egwIsMobile()?this.nextmatch.div:this.row_div);
-		// searchbox widget	
+		// searchbox widget
 		this.et2_searchbox = et2_createWidget('searchbox', {id:"search",onchange:function(){
 				self.nextmatch.applyFilters({search: this.get_value()});
 			}
 		},this);
-		
+
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
-		
+
 		this.et2_searchbox.set_value(settings.search);
 		/**
 		 *  Mobile theme specific part for nm header
