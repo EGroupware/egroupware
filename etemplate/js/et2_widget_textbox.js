@@ -512,6 +512,7 @@ var et2_searchbox = et2_textbox.extend(
 	{
 			jQuery(this.search.getDOMNode()).toggleClass('hide',!_stat);
 			jQuery('span.clear',this.div).toggleClass('hide',!_stat);
+			jQuery(this.getDOMNode()).toggleClass('expanded', _stat);
 	},
 	
 	/**

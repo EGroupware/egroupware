@@ -7562,17 +7562,11 @@ span.egw_tutorial_title {
   }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
     font-size: medium;
-    top: 0px !important;
+    top: 50px !important;
     right: 0px;
     left: auto !important;
     background-color: white;
     width: 100%;
-  }
-  body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl::before {
-    content: "\2190";
-    height: 46px;
-    padding-left: 8px;
-    font-size: 24pt;
   }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl {
     width: 100%;
@@ -7731,6 +7725,7 @@ span.egw_tutorial_title {
     padding-left: 60px;
     box-shadow: 0px 4px 5px 2px silver;
     position: relative;
+    height: 50px;
     z-index: 1;
   }
   body .et2_nextmatch .nm-mob-header button {
@@ -7787,6 +7782,11 @@ span.egw_tutorial_title {
   body .et2_nextmatch .nm-mob-header button.nm_action_header:after {
     font-size: 18pt;
     content: "\205D";
+    font-weight: bold;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header.back:after {
+    font-size: 18pt;
+    content: "\2190";
     font-weight: bold;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
@@ -8177,5 +8177,34 @@ span.egw_tutorial_title {
     color: white;
     padding-left: 5px;
     font-weight: bold;
+  }
+  body .et2_searchbox button.et2_button.searched {
+    background-image: url(../images/topmenu_items/mobile/search.png);
+  }
+  body .et2_searchbox button.et2_button {
+    background-image: url(../images/topmenu_items/mobile/search_white.png);
+  }
+  body .et2_searchbox input {
+    font-size: 10pt;
+  }
+  body .et2_searchbox.expanded {
+    position: absolute;
+    width: 100% !important;
+    height: 50px;
+    margin-left: 0;
+  }
+  body .et2_searchbox.expanded button.et2_button {
+    display: none;
+  }
+  body .et2_searchbox.expanded input {
+    width: 100%;
+    height: 45px;
+    margin: 0;
+    top: 0;
+    outline: none;
+  }
+  body .et2_searchbox.expanded span.ui-icon.clear {
+    right: 80px;
+    top: 14px;
   }
 }

@@ -257,7 +257,16 @@ function egwPopupActionImplementation()
 	ai._registerContext = function(_node, _callback, _context)
 	{
 		var contextHandler = function(e) {
-			if(egwIsMobile() && e.originalEvent.which == 3) return;
+			if(egwIsMobile())
+			{
+				if (e.originalEvent.which == 3)
+				{
+					// Enable onhold trigger till we define a better handler for tree contextmenu
+				//	return;
+				}
+				jQuery('.nm-mob-header .nm_action_header').toggleClass('back', _egw_active_menu);
+			}
+			
 			//Obtain the event object
 			if (!e)
 			{
