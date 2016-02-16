@@ -1388,7 +1388,7 @@ var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			.appendTo(this.list)
 			.addClass("et2_link loading")
 			.click( function(e){
-				if (self.options.expose_view && typeof _link_data.type !='undefined'
+				if (self.options.expose_view && typeof _link_data.type !='undefined' 
 					&& _link_data.type.match(self.mime_regexp,'ig'))
 				{
 					self._init_blueimp_gallery(e, _link_data);
@@ -1602,7 +1602,7 @@ var et2_link_list = et2_link_string.extend(
 					window.location = url+"?download";
 					return false;
 				}
-
+				
 				// Multiple file download for those that support it
 				a = $j(a)
 					.prop('href', url)
@@ -1615,7 +1615,7 @@ var et2_link_list = et2_link_string.extend(
 				a.remove();
 				return false;
 			}
-
+			
 			self.egw().open(link_data, "", "view",'download',link_data.target ? link_data.target : link_data.app,link_data.app);
 		});
 		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item) {
@@ -1767,7 +1767,7 @@ var et2_link_list = et2_link_string.extend(
 			{
 				this._format_vfs($td, dirs, _link_data);
 			}
-			//Bind the click handler if there is download_url
+			//Bind the click handler if there is download_url	
 			if (_link_data && (typeof _link_data.download_url != 'undefined' || _link_data.app !='egw-data'))
 			{
 				$td.click( function(){
@@ -1781,7 +1781,7 @@ var et2_link_list = et2_link_string.extend(
 					{
 						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);
 					}
-				});
+				});	
 			}
 		}
 
@@ -1841,7 +1841,7 @@ var et2_link_list = et2_link_string.extend(
 			self.context.getItem("zip").set_enabled($j('[id^="link_-"]',this.list).length >= 2);
 			// Show delete item only if the widget is not readonly
 			self.context.getItem("delete").set_enabled(!self.options.readonly);
-
+			
 			self.context.data = _link_data;
 			self.context.showAt(e.pageX, e.pageY, true);
 			e.preventDefault();
