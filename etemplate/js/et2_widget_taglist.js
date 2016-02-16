@@ -168,7 +168,7 @@ var et2_taglist = et2_selectbox.extend(
 		// MagicSuggest would replaces our div, so add a wrapper instead
 		this.taglist = $j('<div/>').appendTo(this.div);
 
-		var options = jQuery.extend( {
+		this.taglist_options = jQuery.extend( {
 			// magisuggest can NOT work setting an empty autocomplete url, it will then call page url!
 			// --> setting an empty options list instead
 			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ?
@@ -194,7 +194,8 @@ var et2_taglist = et2_selectbox.extend(
 			highlight: false,	// otherwise renderer have to return strings,
 			value: this.options.value
 		}, this.lib_options);
-		this.taglist = this.taglist.magicSuggest(options);
+		this.taglist = this.taglist.magicSuggest(this.taglist_options);
+		this.$taglist = $j(this.taglist);
 
 		// AJAX _and_ select options - use custom function
 		if(this.options.autocomplete_url && !jQuery.isEmptyObject(this.options.select_options))
@@ -206,11 +207,13 @@ var et2_taglist = et2_selectbox.extend(
 		}
 
 		// Display / hide a loading icon while fetching
-		$j(this.taglist)
+		this.$taglist
 			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>');})
 			.on("load", function() {$j('.loading',this.container).remove();})
 		// Keep focus when selecting from the list
-			.on("selectionchange", function() { $j('input',this.container).focus();});
+			.on("selectionchange", function() { $j('input',this.container).focus();})
+		// Bind keyup so we can start ajax search when we like
+			.on('keyup.start_search', jQuery.proxy(this._keyup, this));
 
 		// Unbind change handler of widget's ancestor to stop it from bubbling
 		// taglist has its own onchange
@@ -219,7 +222,7 @@ var et2_taglist = et2_selectbox.extend(
 		// onChange
 		if(this.options.onchange && typeof this.onchange === 'function')
 		{
-			$j(this.taglist).on("selectionchange", this.onchange);
+			this.$taglist.on("selectionchange", this.onchange);
 		}
 
 		// onClick - pass more than baseWidget, so unbind it to avoid double callback
@@ -236,7 +239,7 @@ var et2_taglist = et2_selectbox.extend(
 		if (typeof this.onfocus == 'function')
 		{
 			var widget = this;
-			$j(this.taglist).focus(function(e) {
+			this.$taglist.focus(function(e) {
 				widget.onfocus.call(widget.taglist, e, widget);
 			});
 		}
@@ -276,12 +279,12 @@ var et2_taglist = et2_selectbox.extend(
 	 * @returns {Array}
 	 */
 	_data: function(query) {
-		if(query.trim() ==='' || !this.options.autocomplete_url)
-		{
-			// No server - let magicsuggest handle options
-			return this.options.select_options;
-		}
-		if (!jQuery.isEmptyObject(this.options.select_options))
+
+		var return_value = this.options.select_options || {};
+
+		if (!jQuery.isEmptyObject(this.options.select_options) && !this._query_server
+			|| query.trim().length < this.taglist_options.minChars
+			|| !this.options.autocomplete_url)
 		{
 			// Check options, if there's a match there (that is not already
 			// selected), do not ask server
@@ -294,12 +297,34 @@ var et2_taglist = et2_selectbox.extend(
 					filtered.push(obj);
 				}
 			});
-			return filtered.length > 0 ? filtered : this.options.autocomplete_url
+			return_value = filtered.length > 0 ? filtered : this.options.autocomplete_url
 		}
-		else
+		else if (query.trim().length >= this.taglist_options.minChars || this._query_server)
 		{
 			// No options - ask server
 			return this.options.autocomplete_url;
+		}
+		this._query_server = false;
+
+		return return_value;
+	},
+
+	/**
+	* Handler for keyup, used to start ajax search when we like
+	*/
+	_keyup: function(e, taglist, event) {
+		if(event.which === jQuery.ui.keyCode.ENTER)
+		{
+			this._query_server = true;
+			this.taglist.collapse();
+			this.taglist.expand();
+			this._query_server = false;
+
+			this.div.find('.ms-res-item-active')
+				.removeClass('ms-res-item-active');
+
+			event.preventDefault();
+			return false;
 		}
 	},
 

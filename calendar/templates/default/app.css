@@ -89,6 +89,10 @@
 #calendar-sidebox_date .calendar_calHoliday a {
 	background-color: rgba(103, 159, 210, 0.5);
 }
+#calendar-sidebox_owner .ms-helper {
+	padding: 2px;
+	background-color: white;
+}
 
 /* Toolbar */
 #calendar-toolbar {

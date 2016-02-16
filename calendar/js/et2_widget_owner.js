@@ -52,8 +52,10 @@ var et2_calendar_owner = et2_taglist_email.extend(
 
 	// Allows sub-widgets to override options to the library
 	lib_options: {
+		autoSelect: false,
 		groupBy: 'app',
 		minChars: 2,
+		selectFirst: true,
 		// This option will also expand when the selection is changed
 		// via code, which we do not want
 		//expandOnFocus: true
@@ -67,20 +69,18 @@ var et2_calendar_owner = et2_taglist_email.extend(
 		var widget = this;
 		// onChange fired when losing focus, which is different from normal
 		this._oldValue = this.taglist.getValue();
-		$j(this.taglist)
-			.off("selectionchange");
-		//	.on('focus', function() {debugger; widget.taglist.expand();});
+		this.$taglist
+			.on('focus', function() {widget.taglist.expand();})
+			// Since not using autoSelect, avoid some errors with selection starting
+			// with the group
+			.on('load expand', function() {
+				window.setTimeout(function() {
+					widget.div.find('.ms-res-item-active')
+						.removeClass('ms-res-item-active');
+				},1);
+			})
 		
-		if(this.options.onchange && typeof this.onchange === 'function')
-		{
-			$j(this.taglist).on("blur", function() {
-				if(widget._oldValue.toString() !== widget.taglist.getValue().toString())
-				{
-					widget.onchange.call(widget, arguments);
-				}
-				widget._oldValue = widget.taglist.getValue();
-			});
-		}
+		
 		return true;
 	},
 
