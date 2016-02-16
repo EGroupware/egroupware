@@ -6628,8 +6628,9 @@ class emailadmin_imapbase
 			$start = is_string($message) ? substr($message, 0, 8192) :
 				(fseek($message, 0, SEEK_SET) == -1 ? '' : fread($message, 8192));
 
-			$headers = Horde_Mime_Headers::parseHeaders(substr($start, 0,
-				strpos($start, Horde_Mime_Part::RFC_EOL.Horde_Mime_Part::RFC_EOL)));
+			$length = strpos($start, Horde_Mime_Part::RFC_EOL.Horde_Mime_Part::RFC_EOL);
+			if ($length===false) $length = strlen($start);
+			$headers = Horde_Mime_Headers::parseHeaders(substr($start, 0,$length));
 
 			foreach($headers->toArray(array('nowrap' => true)) as $header => $value)
 			{
