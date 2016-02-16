@@ -1636,6 +1636,11 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	float: left;
 	padding-bottom: 6px;
 }
+.nextmatch_header_row:after {
+    clear: both;
+    display: block;
+    content: "";
+}
 .et2_toolbar select, .nextmatch_header_row select {
 	height: 24px;
 	margin: 1px 4px 1px 0;
