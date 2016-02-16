@@ -154,10 +154,10 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 			});
 		}
 	},
-	
+
 	/**
 	 * Override the parent set_id method to manuipulate the input DOM node
-	 * 
+	 *
 	 * @param {type} _value
 	 * @returns {undefined}
 	 */
@@ -165,12 +165,12 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 	{
 		this._super.apply(this,arguments);
 		// Remove the name attribute inorder to affect autocomplete="off"
-		// for no password save. ATM seems all browsers ignore autocomplete for 
+		// for no password save. ATM seems all browsers ignore autocomplete for
 		// input field inside the form
 		if (this.options.type === "passwd"
 				&& this.options.autocomplete === "off") this.input.removeAttr('name');
 	},
-	
+
 	destroy: function() {
 		var node = this.getInputNode();
 		if (node) $j(node).unbind("keypress");
@@ -276,7 +276,7 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 		this.options.autocomplete = _value;
 		this.input.attr('autocomplete', _value);
 	},
-	
+
 	resize: function (_height)
 	{
 		if (_height && this.options.multiline)
@@ -409,7 +409,7 @@ et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
 /**
  * et2_searchbox is a widget which provides a collapsable input search
  * with on searching indicator and clear handler regardless of any browser limitation.
- * 
+ *
  * @type type
  */
 var et2_searchbox = et2_textbox.extend(
@@ -428,23 +428,23 @@ var et2_searchbox = et2_textbox.extend(
 		this.value = "";
 		this.div = jQuery(document.createElement('div'))
 				.addClass('et2_searchbox');
-		
+
 		this._super.apply(this, arguments);
 		this.setDOMNode(this.div[0]);
 		this._createWidget();
 	},
-	
+
 	_createWidget:function()
 	{
 		var self = this;
 		// search button indicator
-		this.button = et2_createWidget('button',{class:"et2_button_with_image"},this);
-		this.button.onclick= function(){
+		this.button = et2_createWidget('button',{image: 'search', background_image: true/*class:"et2_button_with_image"*/},this);
+		this.button.onclick = function(){
 			self._show_hide(true);
-			self.search.input.focus()
+			self.search.input.focus();
 		};
 		this.div.prepend(this.button.getDOMNode());
-		
+
 		// input field
 		this.search = et2_createWidget('textbox',{"blur":egw.lang("search"),
 			onkeypress:function(event) {
@@ -470,7 +470,7 @@ var et2_searchbox = et2_textbox.extend(
 					self.set_value('');
 				}
 			},
-			
+
 			blur: function(event){
 				self._show_hide(false);
 				if (self._oldValue != self.get_value()) {
@@ -482,7 +482,7 @@ var et2_searchbox = et2_textbox.extend(
 			}
 		});
 		this.div.append(this.search.getDOMNode());
-		
+
 		// clear button implementation
 		this.clear = jQuery(document.createElement('span'))
 				.addClass('ui-icon clear')
@@ -503,9 +503,9 @@ var et2_searchbox = et2_textbox.extend(
 				})
 				.appendTo(this.div);
 	},
-	
+
 	/**
-	 * Show/hide search field 
+	 * Show/hide search field
 	 * @param {boolean} _stat true means show and false means hide
 	 */
 	_show_hide: function(_stat)
@@ -513,7 +513,7 @@ var et2_searchbox = et2_textbox.extend(
 			jQuery(this.search.getDOMNode()).toggleClass('hide',!_stat);
 			jQuery('span.clear',this.div).toggleClass('hide',!_stat);
 	},
-	
+
 	/**
 	 * toggle search button status based on value
 	 */
@@ -535,17 +535,17 @@ var et2_searchbox = et2_textbox.extend(
 	change:function()
 	{
 		this._searchToggleState();
-		
+
 		this._super.apply(this,arguments);
 	},
-	
-	
+
+
 	get_value:function(){
 		return  this.search.input.val();
 	},
-	
+
 	/**
-	 * override doLoadingFinished in order to set initial state 
+	 * override doLoadingFinished in order to set initial state
 	 */
 	doLoadingFinished: function()
 	{

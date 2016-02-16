@@ -2268,6 +2268,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var settings = this.nextmatch.options.settings;
 
 		this.div.prependTo(nm_div);
+		this.div.addClass('et2_toolbar');	// get toolbar styling
 
 		// Left & Right (& row) headers
 		this.headers = [
@@ -2279,20 +2280,21 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// The rest of the header
 		this.header_div = this.row_div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header_row")
+			.addClass('et2_toolbar_actionlist')	// get toolbar styling
 			.appendTo(this.div);
-		
+
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
 			.prependTo(egwIsMobile()?this.nextmatch.div:this.row_div);
-		// searchbox widget	
+		// searchbox widget
 		this.et2_searchbox = et2_createWidget('searchbox', {id:"search",onchange:function(){
 				self.nextmatch.applyFilters({search: this.get_value()});
 			}
 		},this);
-		
+
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search;
-		
+
 		this.et2_searchbox.set_value(settings.search);
 		/**
 		 *  Mobile theme specific part for nm header

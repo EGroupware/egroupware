@@ -710,15 +710,18 @@ foreach($files as $filename)
 $widgets = $GLOBALS['egw']->hooks->process('etemplate2_register_widgets');
 foreach($widgets as $app => $list)
 {
-	foreach($list as $class)
+	if (is_array($list))
 	{
-		try
+		foreach($list as $class)
 		{
-			class_exists($class);	// trigger autoloader
-		}
-		catch(Exception $e)
-		{
-			error_log($e->getMessage());
+			try
+			{
+				class_exists($class);	// trigger autoloader
+			}
+			catch(Exception $e)
+			{
+				error_log($e->getMessage());
+			}
 		}
 	}
 }
