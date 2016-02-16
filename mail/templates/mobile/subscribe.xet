@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="20%"/>
+			</columns>
+			<rows>
+				<row disabled="@hidebuttons" class="dialogHeadbar" >
+					<hbox  span="all" width="100%">
+						<button statustext="Saves this entry" id="button[save]" image="save" background_image="1"/>
+						<button statustext="Apply the changes" id="button[apply]" image="apply" background_image="1"/>	
+					</hbox>
+				</row>
+				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
+					<hbox span="all" width="100%">
+						<button label="Search" id="button[search]" image="search" background_image="1"/>
+						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
+					</hbox>
+				</row>	
+				<row>
+					<description value="Subscription folders" class="mail_subscription_header"/>
+				</row>
+				<row>
+					<box scrolling="auto">
+						<tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"/>
+					</box>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

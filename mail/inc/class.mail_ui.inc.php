@@ -526,7 +526,7 @@ class mail_ui
 				$etpl = new etemplate_new('mail.index');
 				// Start at 2 so auto-added copy+paste actions show up as second group
 				// Needed because there's no 'select all' action to push things down
-				$group=2;
+				$group=1;
 				// Set tree actions
 				$tree_actions = array(
 					'drop_move_mail' => array(
@@ -600,11 +600,12 @@ class mail_ui
 						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 						'onExecute' => 'javaScript:app.mail.folderManagement',
 						'group'		=> $group,
+						'hideOnMobile' => true
 					),
 					'sieve' => array(
 						'caption' => 'Mail filter',
 						'onExecute' => 'javaScript:app.mail.edit_sieve',
-						'group'	=> ++$group,	// new group for filter
+						
 						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
 						'icon' => 'etemplate/fav_filter',	// funnel
 						'hideOnMobile' => true
@@ -613,21 +614,18 @@ class mail_ui
 						'caption' => 'Vacation notice',
 						'icon' => 'mail/navbar',	// mail as in admin
 						'onExecute' => 'javaScript:app.mail.edit_vacation',
-						'group'	=> $group,
 						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
 					),
 					'edit_account' => array(
 						'caption' => 'Edit account ...',
 						'icon' => 'configure',
 						'onExecute' => 'javaScript:app.mail.edit_account',
-						'group'	=> ++$group,	// new groups for account & acl
 					),
 					'edit_acl'	=> array(
 						'caption' => 'Edit folder ACL ...',
 						'icon'	=> 'lock',
 						'enabled'	=> 'javaScript:app.mail.acl_enabled',
 						'onExecute' => 'javaScript:app.mail.edit_acl',
-						'group'	=> $group,
 					),
 				);
 				// the preference prefaskformove controls actually if there is a popup on target or not
@@ -675,7 +673,7 @@ class mail_ui
 						);
 						break;
 				}
-				++$group;	// put empty spam immediately in own group
+				
 				$junkFolder = $this->mail_bo->getJunkFolder();
 				//error_log(__METHOD__.__LINE__.$junkFolder);
 				if ($junkFolder && !empty($junkFolder))
@@ -688,7 +686,10 @@ class mail_ui
 						'group'	=> $group,
 					);
 				}
-
+				$tree_actions['sieve']['group']	= $tree_actions['vacation']['group'] = ++$group;	// new group for filter
+				$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	= ++$group;	
+				
+				
 				// enforce global (group-specific) ACL
 				if (!mail_hooks::access('aclmanagement'))
 				{
@@ -1028,6 +1029,7 @@ class mail_ui
 					'group' => ++$group,
 					'onExecute' => 'javaScript:app.mail.mail_print',
 					'allowOnMultiple' => false,
+					'hideOnMobile' => true
 				),
 				'save' => array(
 					'caption' => 'Save',
@@ -1041,6 +1043,7 @@ class mail_ui
 							'icon' => 'fileexport',
 							'onExecute' => 'javaScript:app.mail.mail_save',
 							'allowOnMultiple' => false,
+							'hideOnMobile' => true
 						),
 						'save2filemanager' => array(
 							'caption' => 'Filemanager',
