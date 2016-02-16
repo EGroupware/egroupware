@@ -8099,7 +8099,7 @@ span.egw_tutorial_title {
     font-weight: bold;
     color: white;
   }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more span {
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader span {
     display: none;
   }
   body .et2_tabbox.vertical .et2_tabflag {
