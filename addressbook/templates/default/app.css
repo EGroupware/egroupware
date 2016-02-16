@@ -109,3 +109,9 @@ input.et2_radiobox {
 .addressbookHooked .egwGridView_grid label>span.et2_link {
 	display: none;
 }
+#addressbook-index_addressbook-index-row select{
+	float:right;
+}
+#addressbook-index_favorite_wrapper {
+	top:-1px;
+}

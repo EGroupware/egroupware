@@ -1599,6 +1599,10 @@ div.ms-sel-ctn .ms-sel-item {
 	margin: 1px 4px 1px 0;
 	height: 24px;
 }
+.nextmatch_header_row > div{
+	float: left;
+	padding-bottom: 6px;
+}
 .et2_toolbar select, .nextmatch_header_row select {
 	height: 24px;
 	margin: 1px 4px 1px 0;
