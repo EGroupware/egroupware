@@ -1164,6 +1164,15 @@
 		.et2_nextmatch {
 			.nextmatch_header_row, .nextmatch_header 
 			{
+				div.header_row_right {
+					position: absolute;
+					display: block;
+					top:0;
+				}
+				div.filtersContainer {
+					width:100%;
+					margin-top:37px;
+				}
 				background-color: background-color-egw-dark;
 
 				select {
@@ -1178,6 +1187,7 @@
 					border-bottom: none;
 					padding-left:10px;
 					max-width:none;
+					background-color: transparent;
 				}
 				label {
 					display:block;
@@ -1446,16 +1456,18 @@
 					}
 				}
 			}
-			.header_count {
+			.header_count{
 				margin:0;
 				height:@mobile-elem-height;
-				font-size: large;
+				.mob-fontsize-l;
 				margin-top: -3px;
 				margin-right: 0px;
 				float:right;
 				border: none;
 				border-radius:0;
-				border-left:1px solid rgba(0, 0, 0, 0.15);
+				span {
+					.mob-fontsize-l;
+				}
 			}
 			table.egwGridView_grid {
 				tr {

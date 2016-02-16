@@ -584,19 +584,19 @@
  * ##################################################################################*/
   div.header_row_right div[id$=favorite_wrapper] {
     margin-top: 0px;
-    top: 6px;
   }
   .et2_nextmatch {
     background-color: transparent;
   }
   .et2_nextmatch .nextmatch_header {
-    padding: 5px;
+    padding: 0;
     border: none;
     background-image: none;
     background-color: transparent;
   }
   .et2_nextmatch .nextmatch_header_row {
     padding-bottom: 6px;
+    width: 100%;
   }
   .et2_nextmatch > img {
     width: 16px;
@@ -705,94 +705,6 @@
     margin-right: 5px;
   }
   /*######################################################*/
-  /*################################################################
-*
-* Search Field
-*
-################################################################*/
-  .nextmatch_header_row > .search {
-    padding: 0 0 0 0px;
-    margin-right: 15px;
-    margin-left: 15px;
-    width: 200px;
-    z-index: 100;
-    white-space: nowrap;
-    /*.background_color_search;*/
-    /*.border_radius_button_righttop;*/
-  }
-  .nextmatch_header_row > .search input {
-    /*.background_color_search;*/
-    /*background-color: @gray_0;*/
-    font-size: 11px;
-    color: #000000;
-    padding: 3px;
-    width: 150px;
-    border-color: #696969;
-    border-right: none;
-  }
-  .nextmatch_header_row > .search input::-webkit-input-placeholder {
-    /* WebKit browsers */
-    color: #696969;
-  }
-  .nextmatch_header_row > .search input:-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: #696969;
-  }
-  .nextmatch_header_row > .search input::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: #696969;
-  }
-  .nextmatch_header_row > .search input:-ms-input-placeholder {
-    /* Internet Explorer 10+ */
-    color: #696969;
-  }
-  .nextmatch_header_row > .search button.et2_button {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-color: #b4b4b4;
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-    width: 45px;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-right-radius: 20px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topright: 20px;
-    border-radius: 3px;
-    border-top-right-radius: 20px;
-    /*cursor: pointer; 14022014 entfernt*/
-    padding: 0px;
-    margin: 8px 10px;
-    margin-left: 0px;
-    background-image: url("../images/search.png");
-    background-position: center 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    text-indent: 110%;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .nextmatch_header_row > .search button.et2_button:hover {
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    background-color: #679fd2 !important;
-    /*hide arrow*/
-    color: #679fd2 !important;
-  }
-  .nextmatch_header_row > .search button.et2_button:active {
-    /*.background_verlauf_diagonal_gray;*/
-    background-color: #1aa200 !important;
-  }
-  .nextmatch_header_row > .search button.et2_button:focus {
-    outline: 0;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #b4b4b4;
-    -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-    /*background-color: @color_positive_action_active !important;*/
-  }
   /*################################################################
 *
 * Filters
@@ -931,13 +843,12 @@
 ################################################################*/
   .nextmatch_header .header_count {
     position: relative;
-    top: 1px;
+    top: 0;
     height: 22px;
     height: 24px;
     border: 1px solid #E0E0E0;
     float: right;
-    margin: 6px 5px 0 10px;
-    padding: 0 20px;
+    padding: 0 10px;
     text-align: center;
     font-size: 11px;
     border: 1px solid rgba(0, 0, 0, 0.15);
@@ -5829,7 +5740,7 @@ table.egwGridView_outer thead {
 }
 table.egwGridView_outer thead tr th {
   background-position: -200px;
-  font-weight: bold;
+  font-weight: normal;
   padding: 3px 0 3px 4px;
   border-color: #b4b4b4;
   border-left: 0px solid transparent;
@@ -5838,8 +5749,7 @@ table.egwGridView_outer thead tr th {
   border-bottom: 0px solid transparent;
   vertical-align: middle;
   overflow: auto;
-  border-radius: 3px;
-  border-top-right-radius: 23px;
+  border-radius: 5px;
 }
 table.egwGridView_outer thead tr th:hover {
   background-color: #bfbfbf;
@@ -5875,7 +5785,7 @@ table.egwGridView_outer thead tr th.optcol {
   background-color: #ffffff;
 }
 table.egwGridView_outer thead tr th.optcol:hover {
-  background-color: #189800;
+  cursor: pointer;
 }
 table.egwGridView_outer thead tr th.optcol span.selectcols {
   height: 9px;
@@ -5885,9 +5795,6 @@ table.egwGridView_outer thead tr th.optcol span.selectcols {
   background-repeat: no-repeat;
   background-size: 10px 10px;
   display: inline-block;
-}
-table.egwGridView_outer thead tr th.optcol span.selectcols:hover {
-  background-color: #189800;
 }
 table.egwGridView_outer > tbody > tr {
   /*Elements inside td*/
@@ -7648,6 +7555,17 @@ span.egw_tutorial_title {
   body .et2_nextmatch .nextmatch_header {
     background-color: background-color-egw-dark;
   }
+  body .et2_nextmatch .nextmatch_header_row div.header_row_right,
+  body .et2_nextmatch .nextmatch_header div.header_row_right {
+    position: absolute;
+    display: block;
+    top: 0;
+  }
+  body .et2_nextmatch .nextmatch_header_row div.filtersContainer,
+  body .et2_nextmatch .nextmatch_header div.filtersContainer {
+    width: 100%;
+    margin-top: 37px;
+  }
   body .et2_nextmatch .nextmatch_header_row select,
   body .et2_nextmatch .nextmatch_header select {
     display: block;
@@ -7661,6 +7579,7 @@ span.egw_tutorial_title {
     border-bottom: none;
     padding-left: 10px;
     max-width: none;
+    background-color: transparent;
   }
   body .et2_nextmatch .nextmatch_header_row label,
   body .et2_nextmatch .nextmatch_header label {
@@ -7909,13 +7828,15 @@ span.egw_tutorial_title {
   body .et2_nextmatch .header_count {
     margin: 0;
     height: 50px;
-    font-size: large;
+    font-size: 12pt;
     margin-top: -3px;
     margin-right: 0px;
     float: right;
     border: none;
     border-radius: 0;
-    border-left: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  body .et2_nextmatch .header_count span {
+    font-size: 12pt;
   }
   body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
     padding-bottom: 4px;
