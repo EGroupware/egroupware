@@ -43,10 +43,15 @@
 					</vbox>
 					<vbox class="infolog_CompletedClmn">
 						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8"/>
-						<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar" class="infoDetails"/>
-						<hbox>
-							<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
-						</hbox>
+						<vbox>
+							<hbox class="infoType">
+								<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar"/>
+							</hbox>
+							
+							<hbox class="infoPercent">
+								<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
+							</hbox>
+						</vbox>
 						<time_or_date id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]" width="64"/>
 					</vbox>
 				</row>

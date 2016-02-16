@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: #000000;
+  color: black;
 }
 .high {
   color: #cc0000;
@@ -251,6 +251,9 @@ button#infolog-edit_encrypt {
 button#infolog-edit_timestamp {
   top: 13px;
 }
+#infolog-index table.egwGridView_grid img {
+  height: 16px;
+}
 /* tablets and smartphones  */
 @media only screen and (max-device-width: 1024px) {
   #infolog-index_nm .gridCont_0_div_col_0.innerContainer {
@@ -275,15 +278,16 @@ button#infolog-edit_timestamp {
   }
   label[id^='infolog-index_'][id$='info_enddate]'] {
     font-size: 8pt;
-    float: left;
   }
   label[id^='infolog-index_'][id$='info_enddate]'] time {
-    float: left;
+    float: none;
     font-weight: normal;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] {
-    float: left;
     font-size: 8pt;
+  }
+  label[id^='infolog-index_'][id$='info_startdate]'] time {
+    float: none;
   }
   ul[id^='infolog-index_'][id$='info_responsible]'] {
     overflow: hidden;
@@ -329,6 +333,18 @@ button#infolog-edit_timestamp {
   /*Disable notification label in view mode*/
   #infolog-view tr.dialogHeadbar div.et2_hbox {
     display: none;
+  }
+  .infolog_CompletedClmn .infoPercent {
+    height: 23px;
+    float: right;
+  }
+  .infolog_CompletedClmn .infoType {
+    position: relative;
+    height: 30px;
+  }
+  .infolog_CompletedClmn .infoType img {
+    position: absolute;
+    right: 0;
   }
 }
 /**/
