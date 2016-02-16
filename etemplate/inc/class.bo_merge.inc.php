@@ -1280,6 +1280,9 @@ abstract class bo_merge
 		switch($mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+				// Removing these forces calc to respect our set value-type
+				$content = str_ireplace('calcext:value-type="string"','',$content);
+
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>\$\$('.implode('|',$names).')\$\$<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="date" office:date-value="\$\$$4\$\$"$2><$3>\$\$$4\$\$</$3></table:table-cell>';
 				break;
