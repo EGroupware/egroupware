@@ -428,7 +428,9 @@ var et2_searchbox = et2_textbox.extend(
 		this.value = "";
 		this.div = jQuery(document.createElement('div'))
 				.addClass('et2_searchbox');
-		
+		this.flex = jQuery(document.createElement('div'))
+				.addClass('flex')
+				.appendTo(this.div);
 		this._super.apply(this, arguments);
 		this.setDOMNode(this.div[0]);
 		this._createWidget();
@@ -481,7 +483,7 @@ var et2_searchbox = et2_textbox.extend(
 				if (event.target.type == 'span') event.stopImmidatePropagation();
 			}
 		});
-		this.div.append(this.search.getDOMNode());
+		this.flex.append(this.search.getDOMNode());
 		
 		// clear button implementation
 		this.clear = jQuery(document.createElement('span'))
@@ -501,7 +503,7 @@ var et2_searchbox = et2_textbox.extend(
 						self._show_hide(false);
 					}
 				})
-				.appendTo(this.div);
+				.appendTo(this.flex);
 	},
 	
 	/**
@@ -510,8 +512,7 @@ var et2_searchbox = et2_textbox.extend(
 	 */
 	_show_hide: function(_stat)
 	{
-			jQuery(this.search.getDOMNode()).toggleClass('hide',!_stat);
-			jQuery('span.clear',this.div).toggleClass('hide',!_stat);
+			jQuery(this.flex).toggleClass('hide',!_stat);
 			jQuery(this.getDOMNode()).toggleClass('expanded', _stat);
 	},
 	

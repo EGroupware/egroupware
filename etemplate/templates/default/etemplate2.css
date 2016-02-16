@@ -2231,9 +2231,6 @@ td.avatar {
 .et2_searchbox {
 	position: relative;
 	padding: 0 0 0 0px;
-    margin-right: 15px;
-    margin-left: 15px;
-    width: 200px;
     z-index: 100;
     white-space: nowrap;
 }
@@ -2251,7 +2248,7 @@ td.avatar {
 	position: absolute;
 	top: 5px;
 	height: 18px;
-	width: 80%;
+	width: 100%;
 }
 .et2_searchbox span.ui-icon.clear{
 	display: inline-block;
@@ -2260,6 +2257,11 @@ td.avatar {
     float: right;
     right: 5px;
     top: 6px;
+}
+.et2_searchbox .flex {
+	width:200px;
+	position: absolute;
+	display: inline-block;
 }
 .et2_searchbox .hide {
 	display: none !important;

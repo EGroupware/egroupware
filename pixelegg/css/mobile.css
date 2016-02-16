@@ -8207,4 +8207,7 @@ span.egw_tutorial_title {
     right: 80px;
     top: 14px;
   }
+  body .et2_searchbox.expanded .flex {
+    width: 100%;
+  }
 }
