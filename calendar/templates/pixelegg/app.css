@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 54966 2016-02-09 21:45:51Z nathangray $ */
+/* $Id: app.css 55035 2016-02-16 21:37:19Z nathangray $ */
 /*Media print classes*/
 @media print {
   .th td,
@@ -2631,5 +2631,27 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   #calendar-edit #calendar-edit_calendar-edit-details {
     float: none;
     display: initial;
+  }
+  span[id^="calendar-list_"][id$="title]"] {
+    font-size: 12pt;
+    white-space: nowrap;
+  }
+  div.calDescRow {
+    height: 30px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  label[id^="calendar-list_"][id$="start]"] > time,
+  label[id^="calendar-list_"][id$="end]"] > time {
+    float: none;
+    color: #828282;
+  }
+  .calDates .dash {
+    text-align: center;
+    padding: 0px 5px 0 5px !important;
+  }
+  body button.plus_button {
+    bottom: 65px;
   }
 }

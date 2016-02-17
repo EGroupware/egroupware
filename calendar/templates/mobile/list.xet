@@ -2,6 +2,9 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id: list.xet 54765 2016-01-19 00:48:21Z nathangray $ -->
 <overlay>
+	<template id="calendar.list.add" template="" lang="" group="0" version="16.1.001">
+		<button id="add" parent_node="calendar-list_plus_button_container"  class="plus_button"  onclick="egw.open('calendar');"/>
+	</template>
 	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
 		<hbox>
 			<description value="Start"/>
@@ -15,7 +18,7 @@
 			<columns>
 				<column width="10"/>
 				<column width="95%" />
-				<column width="80"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -27,13 +30,11 @@
 						<hbox class="calTitleRow">
 							<description id="${row}[title]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" />
 						</hbox>
-						<box class="calDescRow">
-							<description id="${row}[description]" no_lang="1" activate_links="1"/>	
-						</box>	
-					</vbox>
-					<vbox class="calDates">
-						<date-time id="${row}[start]" readonly="true" options=",$cont[format]" class="noWrap"/>
-						<date-time id="${row}[end]" readonly="true" options=",$cont[format]" class="noWrap"/>
+						<hbox class="calDates">
+							<time_or_date id="${row}[start]" readonly="true" options=",$cont[format]" class="noWrap"/>
+							<description class="dash" value="-"/>
+							<time_or_date id="${row}[end]" readonly="true" options=",$cont[format]" class="noWrap"/>
+						</hbox>
 					</vbox>
 				</row>
 			</rows>
@@ -52,14 +53,11 @@
 				<row>
 					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
 				</row>
-				<row disabled="1">
-					<template id="dates"/>
-				</row>
 				<row>
 					<description id="plus_button_container"/>
 				</row>
 				<row>
-					<nextmatch id="nm" template="calendar.list.rows"  header_left="calendar.list.dates" span="all"/>
+					<nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.add" header_left="calendar.list.dates" span="all"/>
 				</row>
 				<row>
 					<hbox>
