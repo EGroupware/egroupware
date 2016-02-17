@@ -42,7 +42,7 @@
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
 		<description id="plus_button_container"/>
-		<nextmatch id="nm" template="admin.index.rows"/>
+		<nextmatch id="nm" template="admin.index.rows" header_right="admin.index.add"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
 	</template>
 </overlay>

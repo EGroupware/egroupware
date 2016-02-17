@@ -55,6 +55,6 @@
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
 		<description id="plus_button_container"/>
-		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates"/>
+		<nextmatch id="nm" options="timesheet.index.rows" header_right="timesheet.index.add" header_left="timesheet.index.dates"/>
 	</template>
 </overlay>

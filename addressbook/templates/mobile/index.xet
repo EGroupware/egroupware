@@ -73,7 +73,7 @@
 					<description width="0" id="plus_button_container" />
 				</row>
 				<row>
-					<nextmatch id="nm" template="addressbook.index.rows" span="all"/>
+					<nextmatch id="nm" template="addressbook.index.rows" header_right="addressbook.index.right_add" span="all"/>
 				</row>
 				<row class="noPrint dialogFooterToolbar" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>

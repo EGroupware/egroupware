@@ -3,10 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.9.001">
-		<hbox>
-			<description value="Add:" class="infolog_headertext"/>
-			<button class="plus_button" parent_node="infolog-index_plus_button_container" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"/>
-		</hbox>
+		<button class="plus_button" parent_node="infolog-index_plus_button_container" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"/>
 	</template>
 	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
 		<hbox>
@@ -79,7 +76,7 @@
 					<description id="plus_button_container"/>
 				</row>
 				<row>
-					<nextmatch id="nm" template="infolog.index.rows"  header_left="infolog.index.dates" span="all"/>
+					<nextmatch id="nm" template="infolog.index.rows" header_right='infolog.index.header_right' header_left="infolog.index.dates" span="all"/>
 				</row>
 				<row>
 					<hbox class=" ">
