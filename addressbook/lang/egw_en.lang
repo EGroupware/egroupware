@@ -404,7 +404,6 @@ replacements for inserting contacts into documents	addressbook	en	Replacements f
 required fields *	addressbook	en	Required fields *
 role	addressbook	en	Occupation
 room	addressbook	en	Room
-search for '%1'	addressbook	en	Search for '%1'
 search letter	addressbook	en	Search letter
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be re-sized to 60 pixel width.
 select a view	addressbook	en	Select a view

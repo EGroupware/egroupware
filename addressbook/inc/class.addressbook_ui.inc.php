@@ -1737,10 +1737,10 @@ window.egw_LAB.wait(function() {
 		$rows['customfields'] = array_values($this->customfields);
 
 		// full app-header with all search criteria specially for the print
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('addressbook');
+		$header = array();
 		if ($query['filter'] !== '' && !isset($this->org_views[$query['org_view']]))
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ' '.($query['filter'] == '0' ? lang('accounts') :
+			$header[] = ($query['filter'] == '0' ? lang('accounts') :
 				($GLOBALS['egw']->accounts->get_type($query['filter']) == 'g' ?
 					lang('Group %1',$GLOBALS['egw']->accounts->id2name($query['filter'])) :
 					common::grab_owner_name((int)$query['filter']).
@@ -1748,7 +1748,7 @@ window.egw_LAB.wait(function() {
 		}
 		if ($query['org_view'])
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$query['org_view_label'];
+			$header[] = $query['org_view_label'];
 			// Make sure option is there
 			if(!array_key_exists($query['org_view'], $this->org_views))
 			{
@@ -1758,21 +1758,23 @@ window.egw_LAB.wait(function() {
 		}
 		if($query['advanced_search'])
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Advanced search');
+			$header[] = lang('Advanced search');
 		}
 		if ($query['cat_id'])
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Category').' '.$GLOBALS['egw']->categories->id2name($query['cat_id']);
+			$header[] = lang('Category').' '.$GLOBALS['egw']->categories->id2name($query['cat_id']);
 		}
 		if ($query['searchletter'])
 		{
 			$order = $order == 'n_given' ? lang('first name') : ($order == 'n_family' ? lang('last name') : lang('Organisation'));
-			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("%1 starts with '%2'",$order,$query['searchletter']);
+			$header[] = lang("%1 starts with '%2'",$order,$query['searchletter']);
 		}
 		if ($query['search'] && !$query['advanced_search']) // do not add that, if we have advanced search active
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Search for '%1'",$query['search']);
+			$header[] = lang("Search for '%1'",$query['search']);
 		}
+		$GLOBALS['egw_info']['flags']['app_header'] = implode(': ', $header);
+
 		return $this->total;
 	}
 

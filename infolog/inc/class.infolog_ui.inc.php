@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -548,16 +548,21 @@ class infolog_ui
 
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog' && !$this->called_by)
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog');
+			$headers = array();
 			if ($query['filter'] != '' && !empty($this->filters[$query['filter']]))
 			{
-				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
+				$headers[] = lang($this->filters[$query['filter']]);
 			}
 			if ($query['action'] && ($title = $query['action_title'] || is_array($query['action_id']) ?
 				$query['action_title'] : egw_link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
 			{
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
+				$headers[] = $title;
 			}
+			if ($query['search'])
+			{
+				 $headers[] = lang("Search for '%1'", $query['search']);
+			}
+			$GLOBALS['egw_info']['flags']['app_header'] = implode(': ', $headers);
 		}
 
 		if (isset($linked)) $query['col_filter']['linked'] = $linked;  // add linked back to the colfilter

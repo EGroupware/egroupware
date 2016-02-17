@@ -5,7 +5,7 @@
  * @package calendar
  * @author Hadi Nategh	<hn-AT-stylite.de>
  * @author Nathan Gray
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -208,7 +208,7 @@ app.classes.calendar = AppJS.extend(
 	 * App is responsible for only reacting to "messages" it is interested in!
 	 *
 	 * Calendar binds listeners to the data cache, so if the data is updated, the widget
-	 * will automatically update itself.  
+	 * will automatically update itself.
 	 *
 	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
 	 * @param {string} _app application name
@@ -441,10 +441,10 @@ app.classes.calendar = AppJS.extend(
 
 	/**
 	 * Set the app header
-	 * 
+	 *
 	 * Because the toolbar takes some vertical space and has some horizontal space,
 	 * we don't use the system app header, but our own that is in the toolbar
-	 * 
+	 *
 	 * @param {string} header Text to display
 	 */
 	set_app_header: function(header) {
@@ -652,7 +652,7 @@ app.classes.calendar = AppJS.extend(
 				if(widget == null) return;
 			}
 			/* Disabled
-			 * 
+			 *
 			// We clone the nodes so we can animate the transition
 			var original = $j(widget.getDOMNode()).closest('.et2_grid');
 			var cloned = original.clone(true).attr("id","CLONE");
@@ -721,13 +721,13 @@ app.classes.calendar = AppJS.extend(
 				window.setTimeout(function() {
 
 					cloned.remove();
-					
+
 					// Makes it jump to destination
 					wrapper.css({
 						"transition-duration": "0s",
 						"transition-delay": "0s"
 					});
-					
+
 					// Clean up from animation
 					wrapper
 						.removeClass("calendar_slide")
@@ -783,7 +783,7 @@ app.classes.calendar = AppJS.extend(
 				}
 			},0);
 		};
-		
+
 		// Bind only once, to the whole thing
 		/* Disabled
 		jQuery('body').off('.calendar')
@@ -793,12 +793,12 @@ app.classes.calendar = AppJS.extend(
 				{
 					// Consume scroll if in the middle of something
 					if(app.calendar._scroll_disabled) return false;
-					
+
 					// Ignore if they're going the other way
 					var direction = e.originalEvent.deltaY > 0 ? 1 : -1;
 					var at_bottom = direction !== -1;
 					var at_top = direction !== 1;
-					
+
 					$j(this).children(":not(.calendar_calGridHeader)").each(function() {
 						// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
 						// 2px left to go
@@ -1046,7 +1046,7 @@ app.classes.calendar = AppJS.extend(
 		if (typeof duration != 'undefined' && typeof end != 'undefined')
 		{
 			end.set_disabled(duration.get_value()!=='');
-			
+
 			// Only set end date if not provided, adding seconds fails with DST
 			if (!end.disabled && !content.end)
 			{
@@ -1302,6 +1302,10 @@ app.classes.calendar = AppJS.extend(
 		if (filter && dates)
 		{
 			dates.set_disabled(filter.value !== "custom");
+			if (filter.value == "custom")
+			{
+				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
+			}
 		}
 	},
 
@@ -1445,7 +1449,7 @@ app.classes.calendar = AppJS.extend(
 			var widget = _senders[0].iface.getWidget();
 			return widget.recur_prompt();
 		}
-		
+
 		// Nextmatch in list view does not have a widget, but we can pull
 		// the data by ID
 		// Check for series
@@ -1602,7 +1606,7 @@ app.classes.calendar = AppJS.extend(
 			typeof content.recur_type != 'undefined' && content.recur_type != null && content.recur_type != 0
 		)
 		{
-			if (content.start != start_date || 
+			if (content.start != start_date ||
 				content.whole_day != is_whole_day ||
 				(duration && ''+content.duration != duration ||
 				// End date might ignore seconds, and be 59 seconds off for all day events
@@ -1805,7 +1809,7 @@ app.classes.calendar = AppJS.extend(
 			// it will work for other users too.
 			state.owner = 0;
 		}
-		
+
 		// Keywords are only for list view
 		if(state.view == 'listview')
 		{
@@ -1826,7 +1830,7 @@ app.classes.calendar = AppJS.extend(
 		delete state.enddate;
 		delete state.start_date;
 		delete state.end_date;
-		
+
 		return state;
 	},
 
@@ -1992,7 +1996,7 @@ app.classes.calendar = AppJS.extend(
 					break;
 				// Month is calculated individually for the month
 			}
-			
+
 			var grid = view.etemplates[0].widgetContainer.getWidgetById('view');
 
 			/*
@@ -2009,7 +2013,7 @@ app.classes.calendar = AppJS.extend(
 
 				// Hide all but the first day header
 				$j(grid.getDOMNode()).toggleClass('hideDayColHeader',state.state.view == 'week');
-				
+
 				// Determine the different end date & varying values
 				switch(state.state.view)
 				{
@@ -2080,7 +2084,7 @@ app.classes.calendar = AppJS.extend(
 				}
 
 				var row_index = 0;
-				
+
 				// Find any matching, existing rows - they can be kept
 				grid.iterateOver(function(widget) {
 					for(var i = 0; i < value.length; i++)
@@ -2197,7 +2201,7 @@ app.classes.calendar = AppJS.extend(
 					view.etemplates[0].widgetContainer.iterateOver(function(w) {
 						w.set_width($j(view.etemplates[0].DOMContainer).width() * 0.69);
 					},this,et2_calendar_timegrid);
-								
+
 					$j(view.etemplates[1].DOMContainer).css({"left":"69%", "height":($j(framework.tabsUi.activeTab.contentDiv).height()-30)+'px'});
 					// TODO: Maybe some caching here
 					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
@@ -2804,7 +2808,7 @@ app.classes.calendar = AppJS.extend(
 	 * callbacks.
 	 *
 	 * @param {Object} state Current state for update, used to determine what to update
-	 * 
+	 *
 	 */
 	_update_events: function(state, data) {
 		var updated_days = {};
@@ -3165,7 +3169,7 @@ app.classes.calendar = AppJS.extend(
 				.on('click', '.ui-datepicker-week-col', function() {
 					var view = app.calendar.state.view;
 					var days = app.calendar.state.days;
-					
+
 					// Avoid a full state update, we just want the calendar to update
 					// Directly update to avoid change event from the sidebox calendar
 					var date = new Date(this.nextSibling.dataset.year,this.nextSibling.dataset.month,this.nextSibling.firstChild.textContent,0,0,0);
@@ -3312,7 +3316,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				// Avoid unwanted refresh immediately after load
 				nm.controller._grid.doInvalidate = false;
-				
+
 				nm.set_startdate = jQuery.proxy(function(date) {
 					this.state.first = this.date.toString(new Date(date));
 				},this);
@@ -3675,7 +3679,7 @@ jQuery.extend(app.classes.calendar,{
 				return d;
 			},
 			end_date: function(state) {
-				
+
 				var d = app.calendar.View.end_date.call(this, state);
 				if(state.sortby && state.sortby === 'month')
 				{

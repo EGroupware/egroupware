@@ -386,7 +386,6 @@ replacements for inserting contacts into documents	addressbook	es-es	Sustitucion
 required fields *	addressbook	es-es	Campos requeridos *
 role	addressbook	es-es	Rol
 room	addressbook	es-es	Habitación
-search for '%1'	addressbook	es-es	Buscar '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	es-es	Seleccione una foto jpeg en formato vertical. Se redimensionará a un ancho de 60 pixels.
 select a view	addressbook	es-es	Seleccionar una vista
 select addressbook type	addressbook	es-es	Seleccionar el tipo de libreta de direcciones

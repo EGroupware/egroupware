@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: black;
+  color: #000000;
 }
 .high {
   color: #cc0000;
@@ -172,10 +172,11 @@ div#infolog-edit_infolog-edit-description {
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid ul.et2_link_string li.et2_link {
   display: inline-block;
 }
-div#infolog-index_infolog-index-dates {
-  position: absolute;
-  right: 12px;
-  top: 41px;
+#infolog-index select#infolog-index_cat_id {
+  width: 200px;
+}
+#infolog-index select#infolog-index_filter {
+  width: 150px;
 }
 /*###########################################
 #                                           #

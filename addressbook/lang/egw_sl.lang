@@ -345,7 +345,6 @@ replacements for inserting contacts into documents	addressbook	sl	Zamenjave za v
 required fields *	addressbook	sl	Zahtevana polja *
 role	addressbook	sl	Vloga
 room	addressbook	sl	Soba
-search for '%1'	addressbook	sl	Išči '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sl	Izberite pokončno sliko JPEG. Njena velikost bo spremenjena na širino 60 pikslov.
 select a view	addressbook	sl	Izberite pogled
 select addressbook type	addressbook	sl	Izberite vrsto adresarja

@@ -242,7 +242,6 @@ record owner	addressbook	sv	Postens ägare
 repetition	addressbook	sv	Återkommande
 role	addressbook	sv	Roll
 room	addressbook	sv	Rum
-search for '%1'	addressbook	sv	Sök efter '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sv	Välj ett jpeg porträtt foto. Bilden skalas om till 60 pixel.
 select a view	addressbook	sv	Välj vy
 select addressbook type	addressbook	sv	Välj adressbok typ

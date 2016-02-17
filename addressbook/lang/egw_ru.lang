@@ -369,7 +369,6 @@ replacements for inserting contacts into documents	addressbook	ru	Подстан
 required fields *	addressbook	ru	Требуемые поля
 role	addressbook	ru	Должность
 room	addressbook	ru	Комната
-search for '%1'	addressbook	ru	Искать '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	ru	Выбрать фотографию jpeg портретного формата. Она будет масштабирована до 60 пикселей в ширину
 select a view	addressbook	ru	Выбрать вид
 select addressbook type	addressbook	ru	Выбрать тип адресной книги

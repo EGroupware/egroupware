@@ -395,7 +395,6 @@ replacements for inserting contacts into documents	addressbook	nl	Samenvoegvelde
 required fields *	addressbook	nl	verplichte velden *
 role	addressbook	nl	Rol
 room	addressbook	nl	Kamer
-search for '%1'	addressbook	nl	Zoek naar '%1'
 search letter	addressbook	nl	Zoek letter
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	nl	Kies een portretformaat jpeg foto. Het wordt aangepast tot 60 pixels breedte.
 select a view	addressbook	nl	Kies een weergave

@@ -36,7 +36,6 @@ participants	addressbook	lo	ຜູ້ເຂົ້າຮ່ວມ
 permission denied !!!	addressbook	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ !!!
 repetition	addressbook	lo	ການເຮັດຊໍ້າ
 role	addressbook	lo	ບົດບາດ
-search for '%1'	addressbook	lo	ຄົ້ນຫາ '% 1'
 select multiple contacts for a further action	addressbook	lo	ເລືອກເອົາການຕິດຕໍ່ຫຼາຍຮູບແບບ ເພື່ອການດໍາເນີນການຕໍ່ໄປ
 show	addressbook	lo	ສະແດງ
 start	admin	lo	ເລີ່ມ

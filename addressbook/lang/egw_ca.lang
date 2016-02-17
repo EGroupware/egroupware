@@ -262,7 +262,6 @@ removed from distribution list	addressbook	ca	trets de la llista de distribució
 repetition	addressbook	ca	Repetició
 role	addressbook	ca	Càrrec
 room	addressbook	ca	Despatx
-search for '%1'	addressbook	ca	Busceu per '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	ca	Seleccioneu una fotografia en format jpeg. Serà redimensionada a una amplada de 60 píxels.
 select a view	addressbook	ca	Seleccioneu una vista
 select addressbook type	addressbook	ca	Seleccioneu un tipus de llibreta d'adreces

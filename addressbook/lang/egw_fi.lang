@@ -358,7 +358,6 @@ replacements for inserting contacts into documents	addressbook	fi	Komennot (repl
 required fields *	addressbook	fi	Vaaditut kentät *
 role	addressbook	fi	Ammatti
 room	addressbook	fi	Huone
-search for '%1'	addressbook	fi	Haku '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	fi	Valitse jpeg muodossa oleva kuva. Se muokkautuu 60 pikseliä leveäksi kuvaksi.
 select a view	addressbook	fi	Valitse näkymä
 select addressbook type	addressbook	fi	Valitse osoitekirjan tyyppi

@@ -137,7 +137,7 @@ input.et2_radiobox {
   right: 215px;
 }
 #addressbook-index .filtersContainer select {
-  width: 32%;
+  width: 31.5%;
 }
 select#addressbook-index_col_filter\[tid\] {
   width: 82px;
@@ -145,9 +145,6 @@ select#addressbook-index_col_filter\[tid\] {
 #addressbook-index_addressbook-index-row select {
   float: right;
   width: 200px;
-}
-#addressbook-index_favorite_wrapper {
-  top: -1px;
 }
 @media all {
   /* #############################################################################

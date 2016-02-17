@@ -273,7 +273,6 @@ repetition	addressbook	el	Επανάληψη
 required fields *	addressbook	el	απαιτούμενα πεδία *
 role	addressbook	el	Ρόλος
 room	addressbook	el	Γραφείο
-search for '%1'	addressbook	el	Αναζήτηση για '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	el	Επιλέξτε μια jpeg φωτογραφία σε μορφή πορτραίτου. Θα επαναπροσδιοριστεί σε 60 pixel πλάτος.
 select a view	addressbook	el	Επιλέξτε μία προβολή
 select addressbook type	addressbook	el	Επιλέξτε τύπο βιβλίου διευθύνσεων

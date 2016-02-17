@@ -112,12 +112,8 @@
 					<description/>
 					<html id="css" span="all"/>
 				</row>
-				<row disabled="!@msg">
-					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
-					<description align="center" id="msg" no_lang="1" class="message"/>
-				</row>
 				<row>
-					<nextmatch id="nm" template="calendar.list.rows" span="all"/>
+					<nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.dates" span="all"/>
 				</row>
 				<row>
 					<hbox>

@@ -398,7 +398,6 @@ replacements for inserting contacts into documents	addressbook	sk	Náhrady pre v
 required fields *	addressbook	sk	Požadované polia *
 role	addressbook	sk	Pozícia
 room	addressbook	sk	Miestnosť
-search for '%1'	addressbook	sk	Hľadať '%1'
 search letter	addressbook	sk	Hľadať podľa písmena
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sk	Vyberte obrázok jpeg orientovaný na výšku. Bude prispôsobený na výškový rozmer 60 pixlov.
 select a view	addressbook	sk	Vyberte pohľad

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -786,6 +786,11 @@ class timesheet_ui extends timesheet_bo
 		}
 		$rows['no_ts_status'] = strpos($query['selectcols'], 'ts_status') === false && !$this->config_data['history'] ||
 			$query['no_status'];
+
+		if ($query['search'])
+		{
+			$GLOBALS['egw_info']['flags']['app_header'] = lang("Search for '%1'", $query['search']);
+		}
 
 		return $total;
 	}

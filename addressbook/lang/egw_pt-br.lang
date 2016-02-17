@@ -316,7 +316,6 @@ replacements for inserting contacts into documents	addressbook	pt-br	Substituiç
 required fields *	addressbook	pt-br	campos requeridos *
 role	addressbook	pt-br	Função
 room	addressbook	pt-br	Sala
-search for '%1'	addressbook	pt-br	Procurar por '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pt-br	Selecione uma foto no formato jpeg. Ela será alterada para o tamanho de 60 pixels de largura
 select a view	addressbook	pt-br	Selecionar uma exibição
 select addressbook type	addressbook	pt-br	Selecionar tipo de Livro de Contatos

@@ -4,7 +4,7 @@
  * @link http://www.egroupware.org
  * @package timesheet
  * @author Hadi Nategh	<hn-AT-stylite.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -76,6 +76,10 @@ app.classes.timesheet = AppJS.extend(
 		if (filter && dates)
 		{
 			dates.set_disabled(filter.value !== "custom");
+			if (filter.value == "custom")
+			{
+				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
+			}
 		}
 	},
 
@@ -118,7 +122,7 @@ app.classes.timesheet = AppJS.extend(
 			ts_project.set_blur(_widget.getValue() ? _widget.search.val() : '');
 		}
 	},
-	
+
 	/**
 	 * Get title in order to set it as document title
 	 * @returns {string}

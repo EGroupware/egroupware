@@ -393,7 +393,6 @@ replacements for inserting contacts into documents	addressbook	fr	Remplacements 
 required fields *	addressbook	fr	Champs nécessaires *
 role	addressbook	fr	Rôle
 room	addressbook	fr	Salle
-search for '%1'	addressbook	fr	Recherche de '%1'
 search letter	addressbook	fr	Chercher sur une lettre
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	fr	Sélectionner une photo jpeg en mode portrait. Elle sera reformatée en 60 pixels de largeur.
 select a view	addressbook	fr	Sélectionnez une vue

@@ -292,7 +292,6 @@ replacements for inserting contacts into documents	addressbook	zh	替换插入�
 required fields *	addressbook	zh	必要字段*
 role	addressbook	zh	职务
 room	addressbook	zh	房间
-search for '%1'	addressbook	zh	搜索'%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	zh	选择一个 jpeg 格式的照片，它将被重新调整宽度为60px。
 select a view	addressbook	zh	选择一个查看
 select addressbook type	addressbook	zh	选择通讯簿类型

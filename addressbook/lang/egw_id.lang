@@ -246,7 +246,6 @@ repetition	addressbook	id	Pengulangan
 required fields *	addressbook	id	Field diperlukan *
 role	addressbook	id	Peran
 room	addressbook	id	Ruang
-search for '%1'	addressbook	id	Mencari '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	id	Select a portrait format jpeg photo. It will be resized to 60 pixel width.
 select a view	addressbook	id	Pilih tampilan
 select addressbook type	addressbook	id	Pilih tipe buku alamat

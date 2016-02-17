@@ -322,7 +322,6 @@ replacements for inserting contacts into documents	addressbook	cs	Náhrady pro v
 required fields *	addressbook	cs	povinné položky *
 role	addressbook	cs	Role
 room	addressbook	cs	Místnost
-search for '%1'	addressbook	cs	Hledat '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	cs	Vyberte portrét ve formátu jpeg. Bude upraven na šířku 60 pixelů.
 select a view	addressbook	cs	Vybrat pohled
 select addressbook type	addressbook	cs	Vybrat typ adresáře

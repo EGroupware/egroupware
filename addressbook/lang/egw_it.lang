@@ -398,7 +398,6 @@ replacements for inserting contacts into documents	addressbook	it	Sostituzioni p
 required fields *	addressbook	it	Campi obbligatori *
 role	addressbook	it	Ruolo
 room	addressbook	it	Stanza
-search for '%1'	addressbook	it	Cerca '%1'
 search letter	addressbook	it	Cerca per lettera
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	it	Seleziona una foto jpeg in formato ritratto. Sarà ridimensionata ad una larghezza di 60 pixel.
 select a view	addressbook	it	Seleziona una vista

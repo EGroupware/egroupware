@@ -287,7 +287,6 @@ replacements for inserting contacts into documents	addressbook	zh-tw	將聯絡�
 required fields *	addressbook	zh-tw	必填欄位
 role	addressbook	zh-tw	角色
 room	addressbook	zh-tw	辦公室
-search for '%1'	addressbook	zh-tw	搜尋 '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	zh-tw	選擇一個 jpeg 格式的照片，它會被重新調整為寬度 60 畫素。
 select a view	addressbook	zh-tw	選擇一個檢視
 select addressbook type	addressbook	zh-tw	選擇通訊錄類型

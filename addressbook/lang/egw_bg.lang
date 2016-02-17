@@ -295,7 +295,6 @@ repetition	addressbook	bg	Повторение
 required fields *	addressbook	bg	Задължителни полета *
 role	addressbook	bg	Роля
 room	addressbook	bg	Стая
-search for '%1'	addressbook	bg	Търсене на '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	bg	Изберете снимка във формат "портрет". Тя ще бъде преоразмерена на 60 пиксела ширина.
 select a view	addressbook	bg	Избор на изглед
 select addressbook type	addressbook	bg	Избор на тип адресен указател

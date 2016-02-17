@@ -277,7 +277,6 @@ repetition	addressbook	hu	Ismétlődés
 required fields *	addressbook	hu	kötelező mezők
 role	addressbook	hu	Szerep
 room	addressbook	hu	Szoba
-search for '%1'	addressbook	hu	'%1' keresése
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	hu	Válasszon ki egy arcképes fotót. Át lesz méretezve 60 pixel szélességűre.
 select a view	addressbook	hu	Nézet választása
 select addressbook type	addressbook	hu	Válassza ki a Címjegyzék típusát

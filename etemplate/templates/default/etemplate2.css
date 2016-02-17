@@ -1106,6 +1106,7 @@ div.message.floating {
 .nextmatch_header_row {
 	width: 100%;
 	padding-bottom: 5px;
+	position: relative;
 }
 .nextmatch_header .header_count {
 	padding: 0px 10px;
@@ -1136,6 +1137,7 @@ div.message.floating {
 }
 .nextmatch_header_row > .header_row_right > * {
 	display: inline-block;
+	float: left;
 }
 .et2_nextmatch .nextmatch_header {
   border: none;
@@ -1157,8 +1159,8 @@ div.message.floating {
 
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
-	margin-top: 6px;
 	position: relative;
+	float: left;
 }
 #nm_favorites_popup_filters .filter_id,
 #nm_favorites_popup_filters .filter_value {
@@ -1650,7 +1652,24 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	margin: 1px 4px 1px 0;
 	height: 24px;
 }
-.nextmatch_header_row > div{
+/**
+ * Daterange selection in NM header
+ */
+.nextmatch_header_row span.et2_date[name$=date] {
+	min-width: 14ex;
+	padding: 0;
+}
+.nextmatch_header_row span.et2_date[name$=date] > input.et2_date {
+	margin: 1px 4px 1px 0;
+	height: 22px;
+	min-width: 14ex;
+	padding: 0;
+	background-color: #fafafa;
+	border: 1px solid silver;
+	border-radius: 3px;
+	padding-left: 5px;
+}
+.nextmatch_header_row > div {
 	float: left;
 }
 .nextmatch_header_row:after {
@@ -1667,7 +1686,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	padding-left: 5px;
 }
 .et2_toolbar button.toolbar_toggled, .et2_searchbox button.et2_button.toolbar_toggled {
-	background-color: white;
+	background-color: lightgray;
 	box-shadow: inset 1px 1px 1px 1px gray !important;
 }
 .et2_toolbar-dropdown{

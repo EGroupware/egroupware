@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-13 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -155,7 +155,6 @@ class calendar_uilist extends calendar_ui
 				'sort'            => 'ASC',// IO direction of the sort: 'ASC' or 'DESC'
 				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id',
 				'filter_onchange' => "app.calendar.filter_change",
-				'header_left'     => 'calendar.list.dates',
 				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
 				'row_modified'    => 'modified',
 				'favorites'       => true
@@ -353,7 +352,7 @@ class calendar_uilist extends calendar_ui
 				$params['startdate'] = egw_time::to($this->first, egw_time::ET2);
 				$params['enddate'] = egw_time::to($this->last, egw_time::ET2);
 				break;
-				
+
 				// fall through to after given date
 			case 'after':
 			default:

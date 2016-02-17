@@ -330,7 +330,6 @@ replacements for inserting contacts into documents	addressbook	pl	Zamienniki do 
 required fields *	addressbook	pl	pola wymagane *
 role	addressbook	pl	Pozycja
 room	addressbook	pl	Pokój
-search for '%1'	addressbook	pl	Szukaj '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pl	Wybierz zdjęcie w formacie JPEG. Będzie zmniejszone do szerokości 60 pikseli.
 select a view	addressbook	pl	Wybierz wygląd
 select addressbook type	addressbook	pl	Wybierz typ książki adresowej

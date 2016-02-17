@@ -404,7 +404,6 @@ replacements for inserting contacts into documents	addressbook	de	Platzhalter f�
 required fields *	addressbook	de	unbedingt auszufüllende Felder *
 role	addressbook	de	Beruf
 room	addressbook	de	Raum
-search for '%1'	addressbook	de	Suche nach '%1'
 search letter	addressbook	de	Suche nach Buchstaben
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	Wählen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
 select a view	addressbook	de	Eine Ansicht auswählen
