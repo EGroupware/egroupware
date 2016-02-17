@@ -2281,7 +2281,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			.addClass("nextmatch_header_row")
 			.appendTo(this.div);
 		this.filter_div = jQuery(document.createElement("div"))
-			.addClass(egwIsMobile()?'filtersContainer':'')
+			.addClass('filtersContainer')
 			.appendTo(this.row_div);
 		
 		// Search
