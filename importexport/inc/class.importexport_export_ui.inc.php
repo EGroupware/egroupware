@@ -211,7 +211,6 @@ class importexport_export_ui {
 			$content['filter']['fields'] = importexport_helper_functions::get_filter_fields($_appname, $selected_plugin);
 			if(!$content['filter']['fields'])
 			{
-				$this->js->set_onload("\$j('input[value=\"filter\"]').parent().hide();");
 				$content['no_filter'] = true;
 			}
 			else
@@ -241,13 +240,7 @@ class importexport_export_ui {
 			$content['selection'] = 'search';
 		}
 
-		// Disable / hide definition filter if not selected
-		if($content['selection'] != 'filter')
-		{
-			$this->js->set_onload("
-				\$j('div.filters').hide();
-			");
-		}
+
 		unset ($plugin_object);
 		$apps = importexport_helper_functions::get_apps('export');
 		//error_log(__METHOD__.__LINE__.array2string($apps));

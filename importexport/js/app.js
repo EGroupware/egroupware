@@ -50,11 +50,24 @@ app.classes.importexport = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 
-		if(this.et2.getWidgetById('export') && !this.et2.getArrayMgr("content").getEntry("definition"))
+		if(this.et2.getWidgetById('export'))
 		{
-			// et2 doesn't understand a disabled button in the normal sense
-			$j(this.et2.getWidgetById('export').getDOMNode()).attr('disabled','disabled');
-			$j(this.et2.getWidgetById('preview').getDOMNode()).attr('disabled','disabled');
+			if(!this.et2.getArrayMgr("content").getEntry("definition"))
+			{
+				// et2 doesn't understand a disabled button in the normal sense
+				$j(this.et2.getWidgetById('export').getDOMNode()).attr('disabled','disabled');
+				$j(this.et2.getWidgetById('preview').getDOMNode()).attr('disabled','disabled');
+			}
+			if(!this.et2.getArrayMgr("content").getEntry("filter"))
+			{
+				$j('input[value="filter"]').parent().hide();
+			}
+
+			// Disable / hide definition filter if not selected
+			if(this.et2.getArrayMgr("content").getEntry("selection") != 'filter')
+			{
+				$j('div.filters').hide();
+			}
 		}
 	},
 
