@@ -159,13 +159,13 @@ class etemplate_new extends etemplate_widget_template
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
 		$template = etemplate_widget_template::instance($this->name, $this->template_set, $this->version, $this->laod_via);
 		if (!$template) throw new egw_exception_assertion_failed("Template $this->name not instanciable! Maybe you forgot to rename template id.");
+		translation::add_app('etemplate');
 		$template->run('beforeSendToClient', array('', array('cont'=>$content)));
 
 		// some apps (eg. InfoLog) set app_header only in get_rows depending on filter settings
 		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
 
 		// compile required translations translations
-		translation::add_app('etemplate');
 		$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 		$langRequire = array('common' => array(), 'etemplate' => array());	// keep that order
 		foreach(translation::$loaded_apps as $l_app => $lang)

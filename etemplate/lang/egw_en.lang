@@ -7,7 +7,6 @@
 %1 more...	etemplate	en	%1 more...
 %1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for application '%2'
 %1 not implemented for %2!	etemplate	en	%1 not implemented for %2!
-%1' han an invalid format !!!	etemplate	en	%1' han an invalid format !!!
 %1, duplicate id	etemplate	en	%1, duplicate ID
 %s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
@@ -45,6 +44,7 @@ advanced search	etemplate	en	Advanced search
 align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	Alignment of label and input field in table cell
 alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table cell
+all categories	etemplate	en	All categories
 all days	etemplate	en	All days
 all operations save the template!	etemplate	en	All operations save the template!
 all users	etemplate	en	All users
@@ -294,7 +294,6 @@ linkto	etemplate	en	Link to
 list of files linked to the current record	preferences	en	List of files linked to the current record
 load this template into the editor	etemplate	en	Load template to the editor
 loading	etemplate	en	Loading
-m	etemplate	en	m
 maximum size for uploads	filemanager	en	Maximum upload size
 maybe	etemplate	en	Maybe
 message ...	etemplate	en	Message ...

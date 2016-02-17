@@ -16,7 +16,9 @@
  *
  * $content[$id] = array(	// I = value set by the app, 0 = value on return / output
  * 	'get_rows'       =>		// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
+ * 	'cat_id_label'   =>		// I  label for category  (optional)
  * 	'filter_label'   =>		// I  label for filter    (optional)
+ * 	'filter2_label'   =>	// I  label for filter2   (optional)
  * 	'filter_help'    =>		// I  help-msg for filter (optional)
  * 	'no_filter'      => True// I  disable the 1. filter
  * 	'no_filter2'     => True// I  disable the 2. filter (params are the same as for filter)
@@ -194,7 +196,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			// Add 'All', if not already there
 			if(!$value['options-cat_id'][''] && !$value['options-cat_id'][0])
 			{
-				$value['options-cat_id'][''] = lang('all');
+				$value['options-cat_id'][''] = lang('All categories');
 			}
 			$value['options-cat_id'] += etemplate_widget_menupopup::typeOptions('select-cat', ',,'.$cat_app,$no_lang=true,false,$value['cat_id']);
 			etemplate_widget_menupopup::fix_encoded_options($value['options-cat_id']);

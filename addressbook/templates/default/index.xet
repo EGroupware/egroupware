@@ -184,7 +184,7 @@
 	</template>
 	<template id="addressbook.index.right" template="" lang="" group="0" version="1.7.001">
 		<menulist>
-			<menupopup align="right" label="Type" id="col_filter[tid]" empty_label="All"/>
+			<menupopup align="right" id="col_filter[tid]" empty_label="All types"/>
 		</menulist>
 	</template>
 	<template id="addressbook.index" template="" lang="" group="0" version="1.9.002">

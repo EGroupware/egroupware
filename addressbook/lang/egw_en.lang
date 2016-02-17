@@ -60,8 +60,10 @@ addressbook vcard import	addressbook	en	Addressbook vCard import
 addressbook-fieldname	addressbook	en	Address book field name
 addvcard	addressbook	en	Add vCard
 advanced search	addressbook	en	Advanced search
+all addressbooks	addressbook	en	All addressbooks
 all contacts	addressbook	en	All contacts
 all in one field	addressbook	en	All in one field
+all types	addressbook	en	All types
 allow members of following groups to edit contact-data of accounts	addressbook	en	Allow members of following groups to edit contact-data of accounts
 allow users to maintain their own account-data	admin	en	Allow users to maintain their own account data
 alt. csv import	addressbook	en	Alt. CSV Import
@@ -348,6 +350,7 @@ new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at 
 new window opened to edit infolog for your selection	addressbook	en	New window opened to edit InfoLog.
 next date	addressbook	en	Next date
 no categories selected	addressbook	en	No categories selected
+no distribution list	addressbook	en	No distribution list
 no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No vCard
 number	addressbook	en	Number

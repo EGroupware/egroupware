@@ -128,8 +128,23 @@ input.et2_radiobox {
 .addressbookHooked .egwGridView_grid label > span.et2_link {
   display: none;
 }
+/**
+ * adjust width of select-boxes in nextmatch
+ */
+#addressbook-index .filtersContainer {
+  position: absolute;
+  left: 288px;
+  right: 215px;
+}
+#addressbook-index .filtersContainer select {
+  width: 32%;
+}
+select#addressbook-index_col_filter\[tid\] {
+  width: 82px;
+}
 #addressbook-index_addressbook-index-row select {
   float: right;
+  width: 200px;
 }
 #addressbook-index_favorite_wrapper {
   top: -1px;

@@ -5,7 +5,7 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -215,11 +215,12 @@ class addressbook_ui extends addressbook_bo
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'
 				'col_filter'     =>	array(),	// IO array of column-name value pairs (optional for the filterheaders)
-				'filter_label'   =>	lang('Addressbook'),	// I  label for filter    (optional)
+				//'cat_id_label' => lang('Categories'),
+				//'filter_label' => lang('Addressbook'),	// I  label for filter    (optional)
 				'filter'         =>	'',	// =All	// IO filter, if not 'no_filter' => True
 				'filter_no_lang' => True,		// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'     => True,		// I  disable the 2. filter (params are the same as for filter)
-				'filter2_label'  =>	lang('Distribution lists'),			// IO filter2, if not 'no_filter2' => True
+				//'filter2_label'=>	lang('Distribution lists'),			// IO filter2, if not 'no_filter2' => True
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
@@ -251,7 +252,7 @@ class addressbook_ui extends addressbook_bo
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
-		$sel_options['cat_id'] = array('' => lang('all'), '0' => lang('None'));
+		$sel_options['cat_id'] = array('' => lang('All categories'), '0' => lang('None'));
 
 		// Edit and delete list actions depends on permissions
 		if($this->get_lists(EGW_ACL_EDIT))
@@ -270,7 +271,7 @@ class addressbook_ui extends addressbook_bo
 		egw_cache::setSession('addressbook','active_tid',$content['nm']['col_filter']['tid']);
 		if ($this->lists_available())
 		{
-			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array('' => lang('none')));
+			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array('' => lang('No distribution list')));
 			$sel_options['filter2']['add'] = lang('Add a new list').'...';	// put it at the end
 		}
 		if ($do_email)
@@ -293,7 +294,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['nm']['header_left'] = 'addressbook.index.left';
 		}
-		$sel_options['filter'] = $sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ,lang('All'));
+		$sel_options['filter'] = $sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ, lang('All addressbooks'));
 		$sel_options['to'] = array(
 			'to'  => 'To',
 			'cc'  => 'Cc',

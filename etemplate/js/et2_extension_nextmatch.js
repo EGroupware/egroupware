@@ -1483,7 +1483,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 	 * Set the currently displayed columns, without updating user's preference
 	 *
 	 * @param {string[]} column_list List of column names
-	 * @param {boolean} trigger_update=false - explicitly trigger an update
+	 * @param {boolean} trigger_update =false - explicitly trigger an update
 	 */
 	set_columns: function(column_list, trigger_update)
 	{
@@ -2283,7 +2283,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.filter_div = jQuery(document.createElement("div"))
 			.addClass('filtersContainer')
 			.appendTo(this.row_div);
-		
+
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
 			.addClass('search')
@@ -2340,7 +2340,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		// Add category
 		if(!settings.no_cat) {
-			settings.cat_id_label = egw.lang("Category");
+			if (typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
 			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, true);
 		}
 
@@ -2539,7 +2539,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Legacy: Add in 'All' option for cat_id, if not provided.
 		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))
 		{
-			widget_options.empty_label = this.egw().lang('All');
+			widget_options.empty_label = this.egw().lang('All categories');
 		}
 
 		// Create widget

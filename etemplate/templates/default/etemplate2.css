@@ -1103,12 +1103,28 @@ div.message.floating {
   margin-top: -20px;
   border: none;
 }
+.nextmatch_header_row {
+	width: 100%;
+	padding-bottom: 5px;
+}
 .nextmatch_header .header_count {
-  padding: 0px 20px;
-  margin: 0px 6px 0px;
-  border: 1px solid #E0E0E0;
-  font-size: 150%;
-  text-align: center;
+	padding: 0px 10px;
+	margin: 1px 6px 1px;
+	height: 22px;
+	border: 1px solid silver;
+	text-align: center;
+	border-radius: 3px;
+	float: right;
+	position: relative;
+}
+.nextmatch_header .header_count span {
+	position: relative;
+	top: 4px;
+	font-size: 11px;
+	color: gray;
+}
+.nextmatch_header .et2_dropdown button {
+	border: 1px solid silver;
 }
 .nextmatch_header_row > select,.nextmatch_header_row > label > select {
 	max-width: 14%;
@@ -1141,16 +1157,18 @@ div.message.floating {
 
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
-  margin-top: 6px;
-  position: relative;
+	margin-top: 6px;
+	position: relative;
 }
 #nm_favorites_popup_filters .filter_id,
 #nm_favorites_popup_filters .filter_value {
-  width: 45%;
-  display: inline-block;
+	width: 45%;
+	display: inline-block;
 }
 .nextmatch_header ul.favorites {
-  min-width: 20ex;
+	min-width: 30ex;
+	border: 1px solid silver;
+	box-shadow: 6px 6px 9px gray;
 }
 .ui-fav-sortable-placeholder {
 	height: 24px;
@@ -1646,6 +1664,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	background-color: #fafafa;
 	border: 1px solid silver;
 	border-radius: 3px;
+	padding-left: 5px;
 }
 .et2_toolbar button.toolbar_toggled, .et2_searchbox button.et2_button.toolbar_toggled {
 	background-color: white;

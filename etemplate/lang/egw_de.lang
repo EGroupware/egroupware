@@ -44,6 +44,7 @@ advanced search	etemplate	de	Erweiterte Suche
 align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
+all categories	etemplate	de	Alle Kategorien
 all days	etemplate	de	alle Tage
 all operations save the template!	etemplate	de	alle Operation speichern das Template!
 all users	etemplate	de	Alle Benutzer
@@ -61,6 +62,7 @@ applies the changes to the given version of the template	etemplate	de	übernimmt
 as default	etemplate	de	als Vorgabe
 attach	etemplate	de	Anhängen
 attach file	etemplate	de	Datei anhängen
+automatically refresh list	etemplate	de	Liste automatisch aktualisieren
 baseline	etemplate	de	Grundlinie
 blurtext	etemplate	de	blurText
 border	etemplate	de	Rand
@@ -108,6 +110,7 @@ contains	etemplate	de	enthalten
 copy "%1"	etemplate	de	"%1" kopieren
 copy to clipboard	etemplate	de	In die Zwischenablage kopieren
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
+create link	etemplate	de	Verkünpfung erstellen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
 creator	preferences	de	Ersteller
 css class for the table-tag	etemplate	de	CSS class der Tabelle
@@ -119,6 +122,7 @@ custom	etemplate	de	Benutzerdefiniert
 custom fields	etemplate	de	Benutzerdefinierte Felder
 custom javascript for onchange	etemplate	de	Benutzerdefiniertes Javascript für onChange
 cut	etemplate	de	Ausschneiden
+data type	etemplate	de	Datentyp
 date	etemplate	de	Datum
 date+time	etemplate	de	Datum+Uhrzeit
 day	etemplate	de	Tag
@@ -133,6 +137,8 @@ delete all selected etemplates, without further inquiry	etemplate	de	löscht ALL
 delete and cut save the template!	etemplate	de	Löschen und Ausschneiden speichern das Template!
 delete column	etemplate	de	Spalte löschen
 delete index	etemplate	de	Index löschen
+delete link	etemplate	de	Verknüpfung löschen
+delete link?	etemplate	de	Verknüpfung löschen?
 delete the spezified etemplate	etemplate	de	löscht das angegebene eTemplate
 delete this column	etemplate	de	diese Spalte löschen
 delete this etemplate	etemplate	de	dieses eTemplate löschen
@@ -202,7 +208,9 @@ field must not be empty !!!	etemplate	de	Das Feld darf nicht leer sein !!!
 file	etemplate	de	Datei
 file '%1' not found!	etemplate	de	Datei '%1' nicht gefunden!
 file contains more than one etemplate, last one is shown !!!	etemplate	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
+file information	etemplate	de	Datei Information
 file is of wrong type (%1 != %2)!	etemplate	de	Datei hat ungültigen Typ (%1 != %2)!
+file too large.  maximum %1	etemplate	de	Datei ist zu gross. Maximal %1
 file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
@@ -273,6 +281,7 @@ length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	L�
 link	etemplate	de	Verknüpfung
 link target %1 not found!	etemplate	de	Keine Verknüpfung zu %1 gefunden!
 linkapps	etemplate	de	VerknüpfungAnwendungen
+linked	etemplate	de	Verknüptf
 linkentry	etemplate	de	VerknüpfungEintrag
 linklist	etemplate	de	VerknüpfungListe
 links and attached files	preferences	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
@@ -283,6 +292,7 @@ list of files linked to the current record	preferences	de	Liste der Dokumente, d
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
 loading	etemplate	de	lade
 maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
+maybe	etemplate	de	Vieleicht
 message ...	etemplate	de	Nachricht ...
 message prepared for sending.	etemplate	de	Nachricht zum Versand vorbereitet.
 message(s) send failed!	etemplate	de	Senden der Nachricht(en) fehlgeschlagen!
@@ -315,12 +325,14 @@ nextmatch filterheader	etemplate	de	Nextmatch Filterkopf
 nextmatch header	etemplate	de	Nextmatch Spaltenkopf
 nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
 no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
+no default set	etemplate	de	Keine Vorgabe gesetzt
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 no filters	etemplate	de	Keine Filter
 no matches found	etemplate	de	Keine Treffer gefunden
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	etemplate	de	Keine Zeile um damit zu tauschen !!!
+no suggestions	etemplate	de	Keine Vorschläge
 not null	etemplate	de	NOT NULL
 nothing	etemplate	de	nichts
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
@@ -353,6 +365,7 @@ precision	etemplate	de	Genauigkeit
 preference	etemplate	de	Einstellung
 primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
+protocol is required	etemplate	de	Protokoll wird benötigt
 radiobutton	etemplate	de	Radioknopf
 read	etemplate	de	Lesen
 read a list of entries.	etemplate	de	Liest eine Liste von Einträgen.
@@ -396,6 +409,7 @@ select an table of the application	etemplate	de	Tabelle der Anwendung auswählen
 select application	etemplate	de	Anwendung auswählen
 select application to search	etemplate	de	Anwendung zum Suchen auswählen
 select category	etemplate	de	Kategorie auswählen
+select color	etemplate	de	Farbe auswählen
 select columns	etemplate	de	Spalten auswählen
 select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
@@ -420,6 +434,7 @@ select which accounts to show	etemplate	de	Benutzer zum Anzeigen auswählen
 select which values to show	etemplate	de	auswählen welche Werte angezeigt werden
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
+server error	etemplate	de	Serverfehler
 set as default	etemplate	de	Als Vorgabe setzen
 set these columns as the default	etemplate	de	Speichern Sie diese Spaltenauswahl als Vorgabe
 sets today as date	etemplate	de	setzt heutiges Datum
@@ -440,6 +455,7 @@ start new search for the above pattern	etemplate	de	neue Suche für das obige Mu
 su	etemplate	de	So
 submit form	etemplate	de	Formular abschicken
 submitbutton	etemplate	de	Schaltfläche
+sure	etemplate	de	Sicher
 swap	etemplate	de	tauschen
 swap widget with next one	etemplate	de	tauscht das Widget mit dem nächsten
 swap with next column	etemplate	de	tauscht Spalte mit der nächsten
@@ -510,6 +526,7 @@ xml-file to import	etemplate	de	XML Datei zum Importieren
 xslt template	etemplate	de	XSLT Template
 year	etemplate	de	Jahr
 you are not allowed to export more than %1 entries!	common	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
+you can not choose more then %1 item(s)!	etemplate	de	Sie dürfen nicht mehr als %1 Einträge auswählen!
 you can respond by visiting:	etemplate	de	Sie können unter dem folgenden Verweis antworten:
 you need to select a file first!	etemplate	de	Sie müssen zuerst eine Datei auswählen!
 your code is incorrect !!!	etemplate	de	Ihr Code ist nicht richtig!!!
