@@ -1634,7 +1634,6 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 }
 .nextmatch_header_row > div{
 	float: left;
-	padding-bottom: 6px;
 }
 .nextmatch_header_row:after {
     clear: both;
