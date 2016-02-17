@@ -1,0 +1,104 @@
+/**
+ *
+ * INFOLOG - Mobile
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ * Pixleegg Template app.css
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package infolog
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+@media all {
+  #infolog-index_nm .gridCont_0_div_col_0.innerContainer {
+    min-width: auto;
+  }
+  div.infoDescRow {
+    height: 32px;
+    font-size: 9pt;
+    max-width: 99%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 8px;
+  }
+  div.infoLinksRow,
+  div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
+    font-size: 9pt;
+    max-width: 99%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+  }
+  label[id^='infolog-index_'][id$='info_enddate]'] {
+    font-size: 8pt;
+  }
+  label[id^='infolog-index_'][id$='info_enddate]'] time {
+    float: none;
+    font-weight: normal;
+  }
+  label[id^='infolog-index_'][id$='info_startdate]'] {
+    font-size: 8pt;
+  }
+  label[id^='infolog-index_'][id$='info_startdate]'] time {
+    float: none;
+  }
+  ul[id^='infolog-index_'][id$='info_responsible]'] {
+    overflow: hidden;
+    white-space: nowrap;
+    max-height: 15px;
+  }
+  ul[id^='infolog-index_'][id$='info_responsible]'] li {
+    font-size: 9pt;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 8px;
+  }
+  ul[id^='infolog-index_'][id$='filelinks]'] {
+    white-space: nowrap !important;
+  }
+  .infoSubRow span[id^='infolog-index_'][id$='info_subject]'] {
+    white-space: nowrap;
+  }
+  label[id^='infolog-index_'][id$='info_link]'] {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    font-size: 9pt;
+    font-weight: normal;
+  }
+  infolog_rowHasSubs span.arrow,
+  table.egwGridView_grid span.arrow.closed {
+    display: none !important;
+  }
+  tr.infolog_rowHasParent > td:first-child {
+    background: none !important;
+  }
+  div.et2_vbox.infolog_CompletedClmn {
+    display: table-caption;
+  }
+  select#infolog-edit_pl_id {
+    width: 52%;
+    margin-left: 5px;
+  }
+  /*Disable notification label in view mode*/
+  #infolog-view tr.dialogHeadbar div.et2_hbox {
+    display: none;
+  }
+  .infolog_CompletedClmn .infoPercent {
+    height: 23px;
+    float: right;
+  }
+  .infolog_CompletedClmn .infoType {
+    position: relative;
+    height: 30px;
+  }
+  .infolog_CompletedClmn .infoType img {
+    position: absolute;
+    right: 0;
+  }
+}

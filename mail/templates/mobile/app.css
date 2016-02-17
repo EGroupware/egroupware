@@ -1,4 +1,16 @@
 /**
+ *
+ * Mail - Mobile
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ * Pixleegg Template app.css
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package Mail
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+/**
  * EGroupware: CSS with less preprocessor
  *
  * Mail
@@ -2585,4 +2597,306 @@ div.mailComposeHeaderSection > table {
   -moz-transition: all 0.1s ease-out;
   -o-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
+}
+/* tablets and smartphones  */
+@media only screen and (max-device-width: 1024px) {
+  div.mailDisplayContainer {
+    margin-top: 30px;
+    margin-left: 0;
+    height: auto;
+  }
+  #mail-display.et2_container {
+    min-height: initial;
+    padding: 0;
+  }
+  .mailDisplayHeaders,
+  .mailDisplayAttachments > * {
+    font-size: large !important;
+  }
+  /*compose dialog*/
+  body #popupMainDiv {
+    padding: 1px 8px 0 8px;
+    background: none;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar {
+    padding: 1px 5px 5px 10px !important;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar button {
+    width: 46px;
+    height: 46px;
+    background-size: 18px 18px;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar button.et2_toolbar_hasCaption {
+    width: auto;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
+    margin-left: 50px;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
+    background: none;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader {
+    color: transparent;
+    border: none;
+    height: 46px;
+    width: 35px;
+    padding: 0 !important;
+    margin-right: 15px;
+    margin-top: -7px;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader:after {
+    font-size: 18pt;
+    content: "\205D";
+    font-weight: bold;
+    color: white;
+  }
+  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more span {
+    display: none;
+  }
+  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send {
+    height: 46px;
+    width: auto;
+    margin-top: 0.7px !important;
+    padding: 0 3px 0 0;
+    text-align: left;
+    font-weight: normal;
+    padding-left: 20px;
+    background-image: url(images/mail_send.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-color: #fafafa;
+    color: black;
+  }
+  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send:hover {
+    box-shadow: none;
+    background-color: none;
+  }
+  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send:disabled {
+    background-color: none;
+  }
+  body #popupMainDiv #mail-display .mail-d-h1 {
+    padding-bottom: 15px;
+    border-bottom: 1px solid silver;
+    font-size: 12pt;
+    padding-top: 10px;
+    font-weight: bold;
+  }
+  body #popupMainDiv #mail-display .mail-d-h1 span {
+    font-size: 12pt;
+  }
+  body #popupMainDiv #mail-display .mail-d-h2 {
+    padding-top: 5px;
+    font-size: 10pt;
+    color: grey;
+  }
+  body #popupMainDiv #mail-display .mail-d-h2 a,
+  body #popupMainDiv #mail-display .mail-d-h2 span,
+  body #popupMainDiv #mail-display .mail-d-h2 .et2_label {
+    color: grey;
+    font-size: 10pt;
+  }
+  body #popupMainDiv #mail-display .mail-d-h2 a#mail-display_FROM > * {
+    color: black;
+    padding-top: 15px;
+    font-size: 12pt;
+  }
+  body #popupMainDiv #mail-display .et2_details {
+    width: 50%;
+    display: inline-block;
+  }
+  body #popupMainDiv #mail-display .et2_details.et2_details_expanded {
+    width: 100%;
+    display: block;
+  }
+  body #popupMainDiv #mail-display span.et2_details_title {
+    color: #26537c;
+    font-size: 10pt;
+  }
+  body #popupMainDiv #mail-display div#mail-display_mailDisplayHeadersFrom > * {
+    color: black;
+    padding-top: 15px;
+  }
+  body #popupMainDiv #mail-display .mailDisplayAttachments {
+    position: initial;
+    padding: 0;
+    margin-top: 10px;
+  }
+  body #popupMainDiv #mail-display button[id="displayToolbar-delete"] {
+    margin-left: 0;
+  }
+  body #popupMainDiv #mail-display .mailDisplay {
+    position: initial;
+    margin-top: 20px;
+  }
+  body #popupMainDiv #mail-display #mail-display_mailDisplayBodySrc {
+    display: none;
+  }
+  body #popupMainDiv #mail-display #tempPrintDiv div:first-child {
+    height: auto !important;
+  }
+  body #popupMainDiv #mail-display #tempPrintDiv td,
+  body #popupMainDiv #mail-display #tempPrintDiv textarea {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+  body #popupMainDiv #mail-display #tempPrintDiv .td_display {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    color: black;
+    background-color: #FFFFFF;
+  }
+  body .dtree div.containerTableStyle {
+    overflow: hidden;
+  }
+  body #mail-compose .cke_chrome {
+    border: none;
+    box-shadow: none;
+  }
+  body #mail-compose span#cke_1_top {
+    display: none;
+  }
+  body #mail-compose .mailComposeHeaderSection > table {
+    padding: 0;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders.subjectContainer td:first-child::after {
+    content: '';
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders {
+    border-bottom: 1px solid silver;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span {
+    font-size: 10pt;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders .subjectContainer:first-child::after {
+    content: ':';
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders:first-child {
+    border-top: 1px solid silver;
+  }
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_cc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_cc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_bcc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_bcc_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_folder_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_folder_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_replyto_expander,
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_replyto_expander {
+    background: transparent;
+    border: none;
+    color: #26537c;
+    text-decoration: underline;
+    font-size: 10pt;
+    width: 65px;
+    height: 25px;
+  }
+  body #mail-compose .mailComposeHeaderSection > table div.et2_taglist > *,
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject,
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_mailaccount {
+    border: none;
+    box-shadow: none;
+    font-size: 10pt;
+  }
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject:focus {
+    outline-color: transparent;
+  }
+  #mail-index table.egwGridView_outer tbody span.et2_date_ro.et2_label {
+    font-size: 9px;
+  }
+  #mail-index table.egwGridView_outer tbody td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  #mail-index table.egwGridView_outer tbody td a[id^='mail-index_'][id$='fromaddress]'] {
+    color: #373737;
+    font-size: 12pt;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 98%;
+  }
+  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='attachments]'] {
+    float: right;
+  }
+  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='attachments]'] img {
+    width: 16px;
+    height: 16px;
+  }
+  #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='subject]'] {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 98%;
+    font-size: 10pt;
+    color: #828282 !important;
+    font-weight: normal !important;
+  }
+  #mail-index table.egwGridView_outer tbody td label[id^='mail-index_'][id$='date]'] {
+    padding-top: 0;
+  }
+  #mail-index table.egwGridView_outer tbody tr {
+    height: 55px;
+  }
+  #mail-index table.egwGridView_outer tbody tr div.recent,
+  #mail-index table.egwGridView_outer tbody tr span.recent,
+  #mail-index table.egwGridView_outer tbody tr time.recent,
+  #mail-index table.egwGridView_outer tbody tr a.recent,
+  #mail-index table.egwGridView_outer tbody tr div.unseen,
+  #mail-index table.egwGridView_outer tbody tr span.unseen,
+  #mail-index table.egwGridView_outer tbody tr time.unseen,
+  #mail-index table.egwGridView_outer tbody tr a.unseen {
+    color: black !important;
+    font-weight: bold;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.mobile_cat_col {
+    background: #F5F5F5;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.labelone.mobile_cat_col {
+    background: #ff0080;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.labeltwo.mobile_cat_col {
+    background: #ff8000;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.labelthree.mobile_cat_col {
+    background: #008000;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.labelfour.mobile_cat_col {
+    background: #0000ff;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.labelfive.mobile_cat_col {
+    background: #8000ff;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.flagged.mobile_cat_col {
+    background: #ff0000;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.prio_high.mobile_cat_col {
+    background: #ac0000;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.mail.deleted.mobile_cat_col {
+    background: silver;
+    text-decoration: line-through;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.status_img {
+    padding: 0 2px 2px 0;
+  }
+  #mail-index table.egwGridView_outer tbody tr span.deleted.status_img {
+    background-image: url(images/kmmsgdel.png);
+  }
+  #mail-index table.egwGridView_outer tbody tr span.unseen.status_img {
+    background-image: url(images/kmmsgunseen.png);
+  }
+  #mail-index table.egwGridView_outer tbody tr span.flagged_seen.status_img {
+    background-image: url(images/read_flagged_small.png);
+  }
+  #mail-index table.egwGridView_outer tbody tr span.flagged_unseen.status_img {
+    background-image: url(images/unread_flagged_small.png);
+  }
+  #mail-index table.egwGridView_outer tbody tr span.recent.status_img {
+    background-image: url(images/kmmsgnew.png);
+  }
+  #mail-index table.egwGridView_outer tbody tr span.replied.status_img {
+    background-image: url(images/kmmsgreplied.png);
+  }
+  #mail-index table.egwGridView_outer tbody tr span.forwarded.status_img {
+    background-image: url(images/kmmsgforwarded.png);
+  }
 }
