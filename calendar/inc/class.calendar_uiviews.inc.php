@@ -791,7 +791,7 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function week($days=0,$home=false)
 	{
-		$this->use_time_grid = $days != 4 && !in_array($this->use_time_grid_pref,array('day','day4')) ||
+		$this->use_time_grid = $days != 4 && !in_array($this->cal_prefs['use_time_grid'],array('day','day4')) ||
 			$days == 4 && $this->cal_prefs['use_time_grid'] != 'day';
 
 		if (!$days)
