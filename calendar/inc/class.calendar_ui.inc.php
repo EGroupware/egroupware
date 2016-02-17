@@ -720,6 +720,8 @@ class calendar_ui
 	 */
 	public function update_client($event_id, egw_time $recurrence_date = null)
 	{
+		if(!$event_id) return;
+
 		// Directly update stored data.
 		// Make sure we have the whole event
 		$event = $this->bo->read($event_id, $recurrence_date);
@@ -728,7 +730,7 @@ class calendar_ui
 		if(!$event)
 		{
 			// Sending null will trigger a removal
-			$response->generic('data', array('uid' => 'calendar::'.$event['row_id'], 'data' => null));
+			$response->generic('data', array('uid' => 'calendar::'.$event_id, 'data' => null));
 			return false;
 		}
 
