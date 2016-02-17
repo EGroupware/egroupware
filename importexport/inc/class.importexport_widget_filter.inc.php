@@ -78,21 +78,10 @@ class importexport_widget_filter extends etemplate_widget_transformer
 				case 'date':
 				case 'date-time':
 					// Need a range here
+					$type = $field['type'] = 'date-range';
 					$options = '';
-					if($relative_dates)
-					{
-						$type = 'select';
-						$field['values'] = array('', lang('all'));
-						foreach(importexport_helper_functions::$relative_dates as $label => $values)
-						{
-							$field['values'][$label] = lang($label);
-						}
-						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'tags', TRUE);
-					}
-					else
-					{
-						$input = self::do_absolute_date($lname, $value, $options, $readonly);
-					}
+					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'relative', $relative_dates);
+					$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'empty_label', lang('All...'));
 					break;
 				case 'ajax_select' :
 					// Set some reasonable defaults for the widget

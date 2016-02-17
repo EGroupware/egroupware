@@ -1150,3 +1150,290 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date", "date-timeonly_ro"]);
 
 
+/**
+ * Widget for selecting a date range
+ *
+ * @augments et2_inputWidget
+ */
+var et2_date_range = et2_inputWidget.extend({
+	attributes: {
+		value: {
+			"type": "any",
+			"description": "An object with keys 'from' and 'to' for absolute ranges, or a relative range string"
+		},
+		relative: {
+			name: 'Relative',
+			type: 'boolean',
+			description: 'Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.'
+		}
+	},
+
+	/**
+	 * Constructor
+	 *
+	 * @memberOf et2_number
+	 */
+	init: function init() {
+		this._super.apply(this, arguments);
+
+		this.div = jQuery(document.createElement('div'))
+			.attr({	class:'et2_date_range'});
+
+		this.from = null;
+		this.to = null;
+		this.select = null;
+
+		// Set domid
+		this.set_id(this.id);
+
+		this.setDOMNode(this.div[0]);
+		this._createWidget();
+
+		this.set_relative(this.options.relative || false)
+	},
+
+	_createWidget: function createInputWidget() {
+		var widget = this;
+
+		this.from = et2_createWidget('date',{
+			id: this.id+'[from]',
+			blur: egw.lang('From'),
+			onchange: function() { widget.to.set_min(widget.from.getValue()); }
+		},this);
+		this.to = et2_createWidget('date',{
+			id: this.id+'[to]',
+			blur: egw.lang('To'),
+			onchange: function() {widget.from.set_max(widget.to.getValue()); }
+		},this);
+		this.select = et2_createWidget('select',{
+			id: this.id+'[relative]',
+			select_options: et2_date_range.relative_dates,
+			empty_label: this.options.blur || 'All'
+		},this);
+		this.select.loadingFinished();
+	},
+
+	/**
+	 * Function which allows iterating over the complete widget tree.
+	 * Overridden here to avoid problems with children when getting value
+	 *
+	 * @param _callback is the function which should be called for each widget
+	 * @param _context is the context in which the function should be executed
+	 * @param _type is an optional parameter which specifies a class/interface
+	 * 	the elements have to be instanceOf.
+	 */
+	iterateOver: function(_callback, _context, _type) {
+		if (typeof _type == "undefined")
+		{
+			_type = et2_widget;
+		}
+
+		if (this.isInTree() && this.instanceOf(_type))
+		{
+			_callback.call(_context, this);
+		}
+	},
+
+	/**
+	 * Toggles relative or absolute dates
+	 * 
+	 * @param {boolean} _value
+	 */
+	set_relative: function set_relative(_value)
+	{
+		this.options.relative = _value;
+		if(this.options.relative)
+		{
+			$j(this.from.getDOMNode()).hide();
+			$j(this.to.getDOMNode()).hide();
+		}
+		else
+		{
+			$j(this.select.getDOMNode()).hide();
+		}
+	},
+
+	set_value: function set_value(value)
+	{
+		if(!value || typeof value == 'null')
+		{
+			this.select.set_value('');
+			this.from.set_value(null);
+			this.to.set_value(null);
+		}
+
+		// Relative
+		if(value && typeof value === 'string')
+		{
+			this._set_relative_value(value);
+
+		}
+		else if(value && typeof value.from === 'undefined' && value[0])
+		{
+			value = {
+				from: value[0],
+				to: value[1] || new Date().valueOf()/1000
+			}
+		}
+		else if (value && value.from && value.to)
+		{
+			this.from.set_value(value.from);
+			this.to.set_value(value.to);
+		}
+	},
+
+	getValue: function getValue()
+	{
+		return this.options.relative ?
+			this.select.getValue() :
+			{ from: this.from.getValue(), to: this.to.getValue() }
+	},
+
+	_set_relative_value: function(_value)
+	{
+		if(this.options.relative)
+		{
+			$j(this.select.getDOMNode()).show();
+		}
+		// Show description
+		this.select.set_value(_value);
+
+		var now = new Date();
+		now.setUTCMinutes(-now.getTimezoneOffset());
+		now.setUTCHours(0);
+		now.setUTCSeconds(0);
+
+
+		// Use strings to avoid references
+		this.from.set_value(now.toJSON());
+		this.to.set_value(now.toJSON());
+
+		var relative = null;
+		for(var index in et2_date_range.relative_dates)
+		{
+			if(et2_date_range.relative_dates[index].value === _value)
+			{
+				relative = et2_date_range.relative_dates[index];
+				break;
+			}
+		}
+		if(relative)
+		{
+			var dates = ["from","to"]
+			var value = now.toJSON();
+			for(var i = 0; i < dates.length; i++)
+			{
+				var date = dates[i];
+				if(typeof relative[date] == "function")
+				{
+					value = relative[date](new Date(value))
+				}
+				else
+				{
+					value = this[date]._relativeDate(relative[date]);
+				}
+				this[date].set_value(value);
+			}
+		}
+	}
+});
+et2_register_widget(et2_date_range, ["date-range"]);
+// Static part of the date range class
+jQuery.extend(et2_date_range,
+{
+	// Class Constants
+	relative_dates: [
+		// Start and end are relative offsets, see et2_date.set_min()
+		// or Date objects
+		{
+			value: 'Today',
+			label: 'Today',
+			from: '',
+			to: '+1d'
+		},
+		{
+			label: 'Yesterday',
+			value: 'Yesterday',
+			from: '-1d',
+			to: ''
+		},
+		{
+			label: 'This week',
+			value: 'This week',
+			from: function(date) {return egw.week_start(date);},
+			to: function(date) {
+				date.setUTCDate(date.getUTCDate() + 6);
+				return date;
+			}
+		},
+		{
+			label: 'Last week',
+			value: 'Last week',
+			from: function(date) {
+				var d = egw.week_start(date);
+				d.setUTCDate(d.getUTCDate() - 7);
+				return d;
+			},
+			to: function(date) {
+				date.setUTCDate(date.getUTCDate() + 6);
+				return date;
+			}
+		},
+		{
+			label: 'This month',
+			value: 'This month',
+			from: '',
+			to: '+1m'
+		},
+		{
+			label: 'Last month',
+			value: 'Last month',
+			from: '-1m',
+			to: ''
+		},
+		{
+			label: 'Last 3 months',
+			value: 'Last 3 months',
+			from: '-3m',
+			to: ''
+		},
+		/*
+		'This quarter'=> array(0,0,0,0,  0,0,0,0),      // Just a marker, needs special handling
+		'Last quarter'=> array(0,-4,0,0, 0,-4,0,0),     // Just a marker
+		*/
+		{
+			label: 'This year',
+			value: 'This year',
+			from: function(d) {
+				d.setUTCMonth(0);
+				d.setUTCDate(1);
+				return d;
+			},
+			to: function(d) {
+				d.setUTCMonth(11);
+				d.setUTCDate(31);
+				return d
+			}
+		},
+		{
+			label: 'Last year',
+			value: 'Last year',
+			from: function(d) {
+				d.setUTCMonth(0);
+				d.setUTCDate(1);
+				d.setUTCYear(d.getUTCYear() - 1)
+				return d;
+			},
+			to: function(d) {
+				d.setUTCMonth(11);
+				d.setUTCDate(31);
+				d.setUTCYear(d.getUTCYear() - 1)
+				return d
+			}
+		},
+		/* Still needed?
+		'2 years ago' => array(-2,0,0,0, -1,0,0,0),
+		'3 years ago' => array(-3,0,0,0, -2,0,0,0),
+		*/
+	]
+});

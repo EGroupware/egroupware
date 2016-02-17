@@ -215,14 +215,6 @@ class importexport_export_ui {
 			}
 			else
 			{
-				// Process relative dates into the current absolute date
-				foreach($content['filter']['fields'] as $field => $settings)
-				{
-					if($content['filter'][$field] && strpos($settings['type'],'date') === 0)
-					{
-						$content['filter'][$field] = importexport_helper_functions::date_rel2abs($content['filter'][$field]);
-					}
-				}
 				// Filter is used twice in template, but can't have the same ID
 				$content['filter_html'] = $content['filter_tpl'] = $content['filter'];
 			}
@@ -296,11 +288,17 @@ class importexport_export_ui {
 					{
 						unset($filter[$key]);
 					}
+					if(is_array($value) && array_key_exists('from', $value) && $value['from'])
+					{
+						$filter[$key]['from'] = egw_time::to($value['from'],'ts');
+					}
 					// If user selects an end date, they most likely want entries including that date
 					if(is_array($value) && array_key_exists('to',$value) && $value['to'] )
 					{
 						// Adjust time to 23:59:59
-						$filter[$key]['to'] = mktime(23,59,59,date('n',$value['to']),date('j',$value['to']),date('Y',$value['to']));
+						$filter[$key]['to'] = new egw_time($value['to']);
+						$filter[$key]['to']->setTime(23,59,59);
+						$filter[$key]['to'] = $filter[$key]['to']->format('ts');
 					}
 				}
 			}

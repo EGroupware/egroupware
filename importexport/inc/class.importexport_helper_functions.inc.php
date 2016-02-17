@@ -658,7 +658,7 @@ class importexport_helper_functions {
 					$settings['tags'] = true;
 					break;
 				case 'select-account':
-					$settings['rows'] = '5,both';
+					$settings['account_type'] = 'both';
 					$settings['tags'] = true;
 					break;
 				case 'select':

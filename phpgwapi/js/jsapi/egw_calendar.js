@@ -271,6 +271,29 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		dateTimeFormat: function(_php_format)
 		{
 			return dateTimeFormat(_php_format);
+		},
+		
+		/**
+		 * Calculate the start of the week, according to user's preference
+		 */
+		week_start: function(date) {
+			var d = new Date(date);
+			var day = d.getUTCDay();
+			var diff = 0;
+			switch(egw.preference('weekdaystarts','calendar'))
+			{
+				case 'Saturday':
+					diff = day === 6 ? 0 : day === 0 ? -1 : -(day + 1);
+					break;
+				case 'Monday':
+					diff = day === 0 ? -6 : 1-day;
+					break;
+				case 'Sunday':
+				default:
+					diff = -day;
+			}
+			d.setUTCDate(d.getUTCDate() + diff);
+			return d;
 		}
 	};
 });
