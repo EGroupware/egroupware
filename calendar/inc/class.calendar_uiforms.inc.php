@@ -2718,6 +2718,75 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 * Handle ajax searches for owner across all supported resources
+	 *
+	 * @return Array List of matching results
+	 */
+	public function ajax_owner()
+	{
+		$query = $_REQUEST['query'];
+		// Arbitrarily limited to 50 / resource
+		$options = ['start' => 0, 'num_rows' => 50];
+		$results = [];
+		if($query)
+		{
+			$resources = array_merge(array('' => $this->bo->resources['']),$this->bo->resources);
+			foreach($resources as $type => $data)
+			{
+				$mapped = array();
+				$_results = array();
+
+				// Handle accounts seperately
+				if($type == '')
+				{
+					$list = array('accounts', 'owngroups');
+					foreach($list as $a_type)
+					{
+						$account_options = $options + array('account_type' => $a_type);
+						$_results += accounts::link_query('',$account_options);
+					}
+					$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
+				}
+				else if ($data['app'] && egw_link::get_registry($data['app'], 'query'))
+				{
+					$_results = egw_link::query($data['app'], $query,$options);
+				}
+				if(!$_results) continue;
+				$_results = array_unique($_results);
+
+				foreach($_results as $id => $title)
+				{
+					if($id && $title)
+					{
+						// Magicsuggest uses id, not value.
+						$value = [
+							'id' => $type.$id,
+							'value'=> $type.$id,
+							'label' => $title,
+							'app'	=> lang($data['app'])
+						];
+						if(is_array($value['label']))
+						{
+							$value = array_merge($value, $value['label']);
+						}
+						$mapped[] = $value;
+					}
+				}
+				if(count($mapped))
+				{
+					$results = array_merge($results, $mapped);
+				}
+			}
+		}
+		// switch regular JSON response handling off
+		egw_json_request::isJSONRequest(false);
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($results);
+		common::egw_exit();
+	}
+	
+	/**
 	 * imports a mail as Calendar
 	 *
 	 * @param array $mailContent = null mail content

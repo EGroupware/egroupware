@@ -38,7 +38,7 @@
 								<date statustext="Enddate of the export" id="end"/>
 							</row>
 							<row>
-								<listbox type="select-account" id="owner" rows="5" options="both" span="2" class="shorter"/>
+								<taglist id="owner" empty_label="Owner" span="2" class="shorter" autocomplete_url="calendar.calendar_uiforms.ajax_owner.etemplate" allowFreeEntries="false"/>
 							</row>
 						</rows>
 					</grid>
