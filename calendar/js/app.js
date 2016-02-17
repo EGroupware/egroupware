@@ -3236,6 +3236,8 @@ app.classes.calendar = AppJS.extend(
 							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
 							'top': go_button.css('top')
 						});
+						buttons.position({my: 'center', at: 'center', of: go_button})
+							.css('left', '');
 					}
 				} catch (e){
 					// Resize didn't work
