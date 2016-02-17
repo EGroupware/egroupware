@@ -594,10 +594,6 @@
     background-image: none;
     background-color: transparent;
   }
-  .et2_nextmatch .nextmatch_header_row {
-    padding-bottom: 6px;
-    width: 100%;
-  }
   .et2_nextmatch > img {
     width: 16px;
     height: 16px;
@@ -827,40 +823,6 @@
     -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
     background-color: #1aa200;
-  }
-  /*.et2_nextmatch .nextmatch_header > .filters {
-    border: 1px solid @gray_10;
-    background-color: @gray_20;
-    background-image: url(../images/header_overlay.png);
-    background-position: center;
-    background-repeat: repeat-x;
-    margin-bottom: 3px;
-}*/
-  /*################################################################
-*
-* count
-*
-################################################################*/
-  .nextmatch_header .header_count {
-    position: relative;
-    top: 0;
-    height: 22px;
-    height: 24px;
-    border: 1px solid #E0E0E0;
-    float: right;
-    padding: 0 10px;
-    text-align: center;
-    font-size: 11px;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    color: #000000;
-  }
-  .nextmatch_header .header_count span {
-    font-size: 11px;
-    top: 4px;
-    position: relative;
   }
   /*################################################################
 *
@@ -3722,11 +3684,11 @@ div#egwpopup_message {
   height: auto;
 }
 .egw_fw_ui_app_header_container .egw_fw_ui_app_header {
-  padding: 7px 2px 6px 20px;
+  padding: 1px 0 0 0;
   font-weight: normal;
-  color: #408dd2;
+  color: silver;
   overflow: hidden;
-  line-height: 2em;
+  height: 15px;
 }
 .colselection.ui-widget-content {
   width: 33%;
@@ -7682,10 +7644,11 @@ span.egw_tutorial_title {
     overflow: auto;
   }
   body .et2_details .et2_details_toggle:after {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     font-size: 18pt;
     text-align: center;
+    padding: 9px;
   }
   body input {
     border: none;
