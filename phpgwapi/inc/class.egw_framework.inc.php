@@ -53,6 +53,13 @@ abstract class egw_framework
 	var $template_dir;
 
 	/**
+	 * Application specific template directories to try in given order for CSS
+	 *
+	 * @var string
+	 */
+	var $template_dirs = array();
+
+	/**
 	* true if $this->header() was called
 	*
 	* @var boolean
@@ -81,6 +88,9 @@ abstract class egw_framework
 			$GLOBALS['egw']->framework = $this;
 		}
 		$this->template_dir = '/phpgwapi/templates/'.$template;
+
+		$this->template_dirs[] = $template;
+		$this->template_dirs[] = 'default';
 	}
 
 	/**
@@ -2252,10 +2262,12 @@ abstract class egw_framework
 
 		if (!is_null($name))
 		{
-			$path = '/'.$app.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/'.$name.'.css';
-			if (!file_exists(EGW_SERVER_ROOT.$path))
+			foreach($GLOBALS['egw']->framework->template_dirs as $dir)
 			{
-				$path = '/'.$app.'/templates/default/'.$name.'.css';
+				if (file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/templates/'.$dir.'/'.$name.'.css')))
+				{
+					break;
+				}
 			}
 		}
 		else

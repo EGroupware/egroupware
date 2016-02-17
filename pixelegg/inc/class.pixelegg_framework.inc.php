@@ -27,6 +27,8 @@ class pixelegg_framework extends jdots_framework
 	 */
 	const JS_INCLUDE_APP = 'pixelegg';
 
+
+
 	/**
 	 * Enable to use this template sets login.tpl for login page
 	 */
@@ -42,6 +44,9 @@ class pixelegg_framework extends jdots_framework
 	function __construct($template=self::APP)
 	{
 		parent::__construct($template);		// call the constructor of the extended class
+
+		// search 'mobile' dirs first
+		if (html::$ua_mobile) array_unshift ($this->template_dirs, 'mobile');
 	}
 
 	/**
@@ -181,7 +186,7 @@ body .dialogHeadbar{
 }
 body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{background-color: $sidebox_color !important};
 ";
-			}	
+			}
 		}
 		return $ret;
 	}
