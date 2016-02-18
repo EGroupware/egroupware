@@ -39,7 +39,7 @@ var et2_taglist = et2_selectbox.extend(
 		"select_options": {
 			"type": "any",
 			"name": "Select options",
-			"default": null, //[{id: "a", label: "Alpha"},{id:"b", label: "Beta"}],
+			"default": {}, //[{id: "a", label: "Alpha"},{id:"b", label: "Beta"}],
 			"description": "Internaly used to hold the select options."
 		},
 
@@ -171,8 +171,8 @@ var et2_taglist = et2_selectbox.extend(
 		this.taglist_options = jQuery.extend( {
 			// magisuggest can NOT work setting an empty autocomplete url, it will then call page url!
 			// --> setting an empty options list instead
-			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ?
-				this.options.select_options || {} : this.options.autocomplete_url,
+			data: this.options.autocomplete_url ? this.options.autocomplete_url :
+				this.options.select_options || {},
 			dataUrlParams: this.options.autocomplete_params,
 			method: 'GET',
 			displayField: "label",
@@ -214,16 +214,6 @@ var et2_taglist = et2_selectbox.extend(
 			.on("selectionchange", function() { $j('input',this.container).focus();})
 		// Bind keyup so we can start ajax search when we like
 			.on('keyup.start_search', jQuery.proxy(this._keyup, this));
-
-		// Unbind change handler of widget's ancestor to stop it from bubbling
-		// taglist has its own onchange
-		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
-
-		// onChange
-		if(this.options.onchange && typeof this.onchange === 'function')
-		{
-			this.$taglist.on("selectionchange", this.onchange);
-		}
 
 		// onClick - pass more than baseWidget, so unbind it to avoid double callback
 		if(typeof this.onclick == 'function')
@@ -403,7 +393,9 @@ var et2_taglist = et2_selectbox.extend(
 	 */
 	set_value: function(value)
 	{
-		this.options.value = value;
+		var values = jQuery.isArray(value) ? jQuery.extend([],value) : [value];
+		this.options.value = values;
+		
 		if(this.taglist == null) return;
 
 		if(!value)
@@ -412,7 +404,6 @@ var et2_taglist = et2_selectbox.extend(
 			return;
 		}
 
-		var values = jQuery.isArray(value) ? jQuery.extend([],value) : [value];
 		var result = [];
 		for(var i=0; i < values.length; ++i)
 		{
