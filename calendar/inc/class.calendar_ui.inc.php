@@ -616,61 +616,7 @@ class calendar_ui
 		$content = $this->cal_prefs['saved_states'];
 		$content['view'] = $this->view ? $this->view : 'week';
 		$content['date'] = $this->date ? $this->date : egw_time();
-		$owners = $this->owner ? is_array($this->owner) ? array($this->owner) : explode(',',$this->owner) : array($GLOBALS['egw_info']['user']['account_id']);
-
-
-		$sel_options = array('owner' => array());
-
-		// Get user accounts, formatted nicely for grouping and matching
-		// the ajax call calendar_uiforms->ajax_owner() - users first
-		$accounts = array();
-		$list = array('accounts', 'owngroups');
-		foreach($list as $type)
-		{
-			$account_options = array('account_type' => $type);
-			$accounts += accounts::link_query('',$account_options);
-		}
-		$accounts = array_intersect_key($accounts, $GLOBALS['egw']->acl->get_grants('calendar'));
-		$sel_options['owner'] = array_map(
-			function($account_id, $account_name) {
-				return array(
-					'value' => ''.$account_id,
-					'label' => $account_name,
-					'app' => lang('home-accounts')
-				);
-			},
-			array_keys($accounts), $accounts
-		);
 		
-
-		// Add external owners that a select account widget will not find
-		$linked_owners = array();
-		foreach($owners as &$owner)
-		{
-			$owner = ''.$owner;
-			if(!is_numeric($owner))
-			{
-				$resource = $this->bo->resources[substr($owner, 0,1)];
-				$label = egw_link::title($resource['app'], substr($owner,1));
-				$linked_owners[$resource['app']][substr($owner,1)] = $label;
-			}
-			else if (!in_array($owner, array_keys($accounts)))
-			{
-				$label = egw_link::title('home-accounts',$owner);
-				$resource = array('app'=> 'home-accounts');
-			}
-			else
-			{
-				continue;
-			}
-			$sel_options['owner'][] = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app']));
-		}
-		if($linked_owners)
-		{
-			// Send them to link registry too
-			egw_json_response::get()->call('egw.link_title_callback',$linked_owners);
-		}
-
 		$readonlys = array();
 		$sel_options['status_filter'] = array(
 			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),

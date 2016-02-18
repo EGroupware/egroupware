@@ -29,7 +29,7 @@ var et2_calendar_owner = et2_taglist_email.extend(
 {
 	attributes: {
 		"autocomplete_url": {
-			"default": "calendar.calendar_uiforms.ajax_owner.etemplate"
+			"default": "calendar_owner_etemplate_widget::ajax_owner"
 		},
 		"autocomplete_params": {
 			"name": "Autocomplete parameters",
@@ -90,4 +90,4 @@ var et2_calendar_owner = et2_taglist_email.extend(
 		return this.taglist.getValue();
 	}
 });
-et2_register_widget(et2_calendar_owner, ["calendar_owner"]);
+et2_register_widget(et2_calendar_owner, ["calendar-owner"]);

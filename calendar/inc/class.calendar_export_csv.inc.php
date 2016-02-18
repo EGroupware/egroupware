@@ -237,21 +237,30 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 *
 	 */
 	public function get_selectors_etpl($definition = null) {
-		$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
-		switch($states['view']) {
-			case 'month':
-				$query = $this->get_query_month($states);
-				break;
-			case 'week':
-			case 'weekN':
-				$query = $this->get_query_week($states);
-				break;
-			case 'day':
-				$query = $this->get_query_day($states);
-				break;
+		$states = $this->bo->cal_prefs['saved_states'];
+		$list = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+		if(!$list['startdate'])
+		{
+			switch($states['view']) {
+				case 'month':
+					$query = $this->get_query_month($states);
+					break;
+				case 'week':
+				case 'weekN':
+					$query = $this->get_query_week($states);
+					break;
+				case 'day':
+					$query = $this->get_query_day($states);
+					break;
+			}
+			$start= new egw_time($query['start']);
+			$end = new egw_time($query['end']);
 		}
-		$start= new egw_time($query['start']);
-		$end = new egw_time($query['end']);
+		else
+		{
+			$start= new egw_time($list['startdate']);
+			$end = new egw_time($list['enddate']);
+		}
 		if ($states['view'] == 'listview')
 		{
 			$list = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
@@ -375,6 +384,9 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			'no-enum-groups' => lang('only group-events'),
 			'not-unknown' => lang('No meeting requests'),
 		);
+
+
+		$states = $this->bo->cal_prefs['saved_states'];
 	}
 
 	/**
