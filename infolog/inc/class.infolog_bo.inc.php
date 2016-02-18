@@ -766,7 +766,7 @@ class infolog_bo
 		if ($status_only && !$undelete)	// make sure only status gets writen
 		{
 			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set
-				(in_array($values['info_status'],array('done','billed','cancelled')) || (int)$values['info_percent'] == 100);
+				in_array($values['info_status'],array('done','billed','cancelled'));
 
 			$values = $old;
 			// only overwrite explicitly allowed fields
@@ -802,7 +802,7 @@ class infolog_bo
 		if ($check_defaults)
 		{
 			if (!$values['info_datecompleted'] &&
-				(in_array($values['info_status'],array('done','billed')) || (int)$values['info_percent'] == 100))
+				(in_array($values['info_status'],array('done','billed'))))
 			{
 				$values['info_datecompleted'] = $user2server ? $this->user_time_now : $this->now;	// set date completed to today if status == done
 			}
@@ -815,7 +815,9 @@ class infolog_bo
 			{
 				$values['info_percent'] = 0;
 			}
-			else if ((int)$values['info_percent'] == 100 || $values['info_percent'] == 0)
+			else if (
+				($values['info_status'] != 'archive' && in_array($values['info_status'], $this->stock_status[$values['info_type']])) &&
+				((int)$values['info_percent'] == 100 || $values['info_percent'] == 0))
 			{
 				// We change percent to match status, not status to match percent
 				$values['info_percent'] = 10;
