@@ -1038,8 +1038,9 @@ class translation
 		// Check cache, since most things aren't in the DB anymore
 		if(!$id)
 		{
-			$ids = array_filter(array_keys(self::$lang_arr), function($haystack) use($translation) {
-				return stripos(self::$lang_arr[$haystack],$translation) !== false;
+			$lang_arr = self::$lang_arr;	// PHP 5.3 does NOT allow to use class scope / self in closure
+			$ids = array_filter(array_keys(self::$lang_arr), function($haystack) use($translation, $lang_arr) {
+				return stripos($lang_arr[$haystack],$translation) !== false;
 			});
 			$id = array_shift($ids);
 			if(!$id && ($lang && $lang !== 'en' || self::$userlang != 'en'))
