@@ -2322,20 +2322,25 @@ td.avatar {
 .et2_searchbox .flex input{
 	height: 18px;
 	width: 100%;
+	padding-left: 5px;
+}
+.et2_searchbox button.et2_button.toolbar_toggled {
+	background-color: rgba(70, 155, 221, 0.16);
+    box-shadow: inset 1px 1px 1px 0px #656769 !important;
 }
 .et2_searchbox span.ui-icon.clear{
 	display: inline-block;
 	background-position: -95px -126px;
 	position: absolute;
 	float: right;
-	right: 3px;
+	right: 12px;
 	top: 3px;
 }
 .et2_searchbox .flex {
-	width: 200px;
+	width: 150px;
 	position:relative;
 	display: inline-block;
-	padding-right: 7px;
+	padding-right: 14px;
 	float: right;
 }
 .et2_searchbox .flex.overlay {
