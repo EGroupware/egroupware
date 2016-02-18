@@ -415,9 +415,16 @@ et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
 var et2_searchbox = et2_textbox.extend(
 {
 	/**
-	 * Ignore all more advanced attributes.
+	 * Advanced attributes
 	 */
-	attributes: {},
+	attributes: {
+		overlay:{
+			name:"Overlay searchbox",
+			type:"boolean",
+			default:true,
+			description:"Define wheter the searchbox overlays while it's open (true) or stay as solid box infront of the search button (false). Default is true."
+		}
+	},
 
 	/**
 	 * Constructor
@@ -439,10 +446,11 @@ var et2_searchbox = et2_textbox.extend(
 	_createWidget:function()
 	{
 		var self = this;
+		if (this.options.overlay) this.flex.addClass('overlay');
 		// search button indicator
 		this.button = et2_createWidget('button',{image:"search","background_image":"1"},this);
 		this.button.onclick= function(){
-			self._show_hide(true);
+			self._show_hide(jQuery(self.flex).hasClass('hide'));
 			self.search.input.focus();
 		};
 		this.div.prepend(this.button.getDOMNode());
@@ -474,8 +482,11 @@ var et2_searchbox = et2_textbox.extend(
 			},
 
 			blur: function(event){
-				self._show_hide(false);
-				if (self._oldValue != self.get_value()) {
+				if (!event.relatedTarget || !jQuery(event.relatedTarget.parentNode).hasClass('et2_searchbox')) 
+				{
+					self._show_hide((!self.options.overlay && self.get_value()));
+				}
+				if (typeof self.oldValue !='undefined' && self._oldValue != self.get_value()) {
 					self.change();
 				}
 			},
@@ -524,10 +535,12 @@ var et2_searchbox = et2_textbox.extend(
 		if (!this.get_value())
 		{
 			jQuery(this.button.getDOMNode()).removeClass('toolbar_toggled');
+			this.button.set_statustext('');
 		}
 		else
 		{
 			jQuery(this.button.getDOMNode()).addClass('toolbar_toggled');
+			this.button.set_statustext(egw.lang('search for ')+this.get_value());
 		}
 	},
 

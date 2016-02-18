@@ -2316,9 +2316,10 @@ td.avatar {
 	z-index: 500;
 	white-space: nowrap;
 }
-.et2_searchbox input {
+.et2_searchbox .flex.overlay input {
 	position: absolute;
-	/* top: 1px; */
+}
+.et2_searchbox .flex input{
 	height: 18px;
 	width: 100%;
 }
@@ -2331,9 +2332,15 @@ td.avatar {
 	top: 3px;
 }
 .et2_searchbox .flex {
-	width: 150px;
-	position: absolute;
+	width: 200px;
+	position:relative;
 	display: inline-block;
+	padding-right: 7px;
+	float: right;
+}
+.et2_searchbox .flex.overlay {
+	width: 150px;
+    position: absolute;
 }
 .et2_searchbox .hide {
 	display: none !important;
