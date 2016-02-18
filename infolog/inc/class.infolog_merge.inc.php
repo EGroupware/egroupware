@@ -122,11 +122,17 @@ class infolog_merge extends bo_merge
 
 		// Set any missing custom fields, or the marker will stay
 		$array = $record->get_record_array();
-		foreach(array_keys($this->bo->customfields) as $name)
+		foreach($this->bo->customfields as $name => $field)
 		{
 			if(!$array['#'.$name])
 			{
 				$array['#'.$name] = '';
+			}
+			// Format date cfs per user preferences
+			if($field['type'] == 'date' || $field['type'] == 'date-time')
+			{
+				$this->date_fields[] = '#'.$name;
+				$array['#'.$name] = egw_time::to($array['#'.$name], $field['type'] == 'date' ? true : '');
 			}
 		}
 
