@@ -2288,7 +2288,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this.search_box = jQuery(document.createElement("div"))
 			.addClass('search')
 			.prependTo(egwIsMobile()?this.nextmatch.div:this.row_div);
-		
+
 		// searchbox widget options
 		var searchbox_options = {
 			id:"search",
@@ -2348,7 +2348,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Add category
 		if(!settings.no_cat) {
 			if (typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
-			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, true);
+			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, settings.cat_is_select !== true);
 		}
 
 		// Filter 1
