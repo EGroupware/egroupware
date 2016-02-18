@@ -36,6 +36,7 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 		$form_name = self::form_name($cname, $this->id, $expand);
 
 		$value =& self::get_array(self::$request->content, $form_name);
+		if(!is_array($value)) $value = array();
 		if (!is_array(self::$request->sel_options[$form_name]))
 		{
 			self::$request->sel_options[$form_name] = array();
@@ -88,6 +89,30 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 		}
 	}
 
+	/**
+	 * Validate input
+	 *
+	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 */
+	public function validate($cname, array $expand, array $content, &$validated=array())
+	{
+		$form_name = self::form_name($cname, $this->id, $expand);
+
+		if (!$this->is_readonly($cname, $form_name))
+		{
+			$value = $value_in =& self::get_array($content, $form_name);
+			if(!is_array($value))
+			{
+				$value = Array($value);
+			}
+			
+			$valid =& self::get_array($validated, $form_name, true);
+			$valid = $value;
+		}
+	}
 	/**
 	 * Handle ajax searches for owner across all supported resources
 	 *

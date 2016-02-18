@@ -107,20 +107,12 @@
 					<description value="Add new participants or resource" span="all"/>
 				</row>
 				<row class="row optional" disabled="@no_add">
-					<vbox span="2">
-						<menulist>
-							<menupopup type="select-account" statustext="User or group" id="account" multiple="true" no_lang="true" tags="true" account_type="both" empty_label="User or group" class="et2_fullWidth" width="99%"/>
-						</menulist>
-						<link-entry id="resource" options="@cal_resources" query="app.calendar.edit_participant_search"/>
-					</vbox>
-					<vbox span="2">
-						<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
-						<menulist>
-							<menupopup class="selectRole" id="role"/>
-						</menulist>
-					</vbox>
+					<calendar-owner id="participant" allowFreeEntries="true" span="2"/>
+					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
+					<menulist>
+						<menupopup class="selectRole" id="role"/>
+					</menulist>
 					<button align="center" label="Add" id="add" image="add" background_image="1" novalidate="1"/>
-					<description/>
 				</row>
 				<row class="th gray">
 					<description value="Type"/>

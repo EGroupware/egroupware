@@ -1747,68 +1747,12 @@ div.calendar {
   vertical-align: top;
   padding-top: 3px;
 }
-#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-search {
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-size: 16px 16px;
-  width: 16px;
-  height: 16px;
-  margin-left: 3px;
-  position: relative;
-  top: 4px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-search:hover {
-  /*.background_color_20_gray;*/
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody span.ui-icon-searchactive {
-  /*.background_color_30_gray;*/
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #1aa200;
-}
 #calendar-edit #calendar-edit_calendar-edit-participants tbody input#calendar-edit_quantity {
   width: 30px;
   /*                position: relative;
                 top: 34px;
                 left: 40px;*/
   margin: 6px 0px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody div#calendar-edit_resource {
-  margin: 5px 0 10px 0;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody div#calendar-edit_resource select {
-  margin-right: 3px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody select#calendar-edit_role {
-  /*width: 30px;*/
-  /*                position: relative;
-                top: 6px;
-                left: -168px;*/
-  width: 120px;
-  margin-top: 2px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody #calendar-edit_add {
-  position: relative;
-  /*left: -145px;*/
-  top: 31px;
 }
 #calendar-edit #calendar-edit_calendar-edit-recurrence tbody {
   display: table;

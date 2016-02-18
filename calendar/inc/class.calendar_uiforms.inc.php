@@ -361,66 +361,58 @@ class calendar_uiforms extends calendar_ui
 						case 'cal_resources':
 						case 'status_date':
 							break;
-
-						case 'add':
-							// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
-							$matches = array();
-							if (($email = $content['participants']['resource']['search']) &&
-									(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
-							{
-								$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
-								// check if email belongs to account or contact --> prefer them over just emails (if we are allowed to invite him)
-								if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')) && $this->bo->check_acl_invite($data))
+						case 'participant':
+							foreach($data as $participant)
+							{								// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>")
+								$email = array();
+								if(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$participant,$email))
 								{
-									$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
-								}
-								elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
-									'email' => $matches[2],
-									'email_home' => $matches[2],
-								),true,'','','',false,'OR')))
-								{
-									$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
+									$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
+									if (($data = $GLOBALS['egw']->accounts->name2id($email[2],'account_email')) && $this->bo->check_acl_invite($data))
+									{
+										$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
+									}
+									elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
+										'email' => $email[2],
+										'email_home' => $email[2],
+									),true,'','','',false,'OR')))
+									{
+										$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
+									}
+									else
+									{
+										$event['participants']['e'.$participant] = $event['participant_types']['e'][$participant] = $status;
+									}
 								}
 								else
 								{
-									$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = $status;
-								}
-							}
-							elseif (!$content['participants']['account'] && !$content['participants']['resource'])
-							{
-								$msg = lang('You need to select an account, contact or resource first!');
-							}
-							break;
+									if(is_numeric($participant))
+									{
+										$uid = 'u'.$participant;
+										$id = $participant;
+										$resource = $this->bo->resources[''];
+									}
+									else
+									{
+										$uid = $participant;
+										$id = substr($participant,1);
+										$resource = $this->bo->resources[$participant[0]];
+									}
+									if(!$this->bo->check_acl_invite($uid))
+									{
+										if(!$msg_permission_denied_added)
+										{
+											$msg .= lang('Permission denied!');
+											$msg_permission_denied_added = true;
+										}
+										continue;
+									}
 
-						case 'resource':
-							if (is_array($data))	// if $data['current'] is NOT set --> $app==''
-							{
-								list($app,$id) = explode(':',$data['current']);
-								if(!$app && !$id)
-								{
-									$app = $data['app'];
-									$id = $data['id'];
-								}
-							}
-							else
-							{
-								list($app,$id) = explode(':',$data);
-							}
-							foreach($this->bo->resources as $type => $data)
-							{
-								if ($data['app'] == $app) break;
-							}
-							$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
-							if ($app == 'home-accounts')
-							{
-								$data = $id;
-							}
-							// check if new entry is no account (or contact entry of an account)
-							elseif ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')) || !$this->bo->check_acl_invite($data))
-							{
-								if ($uid && $id)
-								{
-									$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
+									$type = $resource['type'];
+									$status = isset($this->bo->resources[$type]['new_status']) ?
+										ExecMethod($this->bo->resources[$type]['new_status'],$id) :
+										($uid == $this->bo->user ? 'A' : 'U');
+
 									if ($status)
 									{
 										$res_info = $this->bo->resource_info($uid);
@@ -432,6 +424,7 @@ class calendar_uiforms extends calendar_ui
 											{
 												$event['participants'][$n] = $content['participants'][$n];
 											}
+											continue;
 										}
 										else
 										{
@@ -439,33 +432,13 @@ class calendar_uiforms extends calendar_ui
 												calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
 										}
 									}
-									elseif(!$msg_permission_denied_added)
-									{
-										$msg .= lang('Permission denied!');
-										$msg_permission_denied_added = true;
-									}
 								}
-								// if participant is a contact and no title yet, add its link title as title
-								if ($app == 'addressbook' && empty($event['title']))
-								{
-									$event['title'] = egw_link::title($app, substr($uid, 1));
-								}
-								break;
 							}
-							// fall-through for accounts entered as contact
-						case 'account':
-							foreach(is_array($data) ? $data : explode(',',$data) as $uid)
+							break;
+						case 'add':
+							if (!$content['participants']['participant'])
 							{
-								if ($uid && $this->bo->check_acl_invite($uid))
-								{
-									$event['participants'][$uid] = $event['participant_types']['u'][$uid] =
-										calendar_so::combine_status($uid == $this->bo->user ? 'A' : 'U',1,$content['participants']['role']);
-								}
-								elseif($uid && !$msg_permission_denied_added)
-								{
-									$msg .= lang('Permission denied!');
-									$msg_permission_denied_added = true;
-								}
+								$msg = lang('You need to select an account, contact or resource first!');
 							}
 							break;
 

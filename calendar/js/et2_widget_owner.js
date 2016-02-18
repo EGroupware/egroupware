@@ -75,8 +75,11 @@ var et2_calendar_owner = et2_taglist_email.extend(
 			// with the group
 			.on('load expand', function() {
 				window.setTimeout(function() {
-					widget.div.find('.ms-res-item-active')
-						.removeClass('ms-res-item-active');
+					if(widget && widget.div)
+					{
+						widget.div.find('.ms-res-item-active')
+							.removeClass('ms-res-item-active');
+					}
 				},1);
 			})
 		
