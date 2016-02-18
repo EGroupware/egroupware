@@ -215,6 +215,17 @@ var et2_taglist = et2_selectbox.extend(
 		// Bind keyup so we can start ajax search when we like
 			.on('keyup.start_search', jQuery.proxy(this._keyup, this));
 
+		// Unbind change handler of widget's ancestor to stop it from bubbling
+		// taglist has its own onchange
+		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
+
+		// This handles clicking on a suggestion from the list in an et2 friendly way
+		// onChange
+		if(this.options.onchange && typeof this.onchange === 'function')
+		{
+			this.$taglist.on("selectionchange", jQuery.proxy(this.change,this));
+		}
+
 		// onClick - pass more than baseWidget, so unbind it to avoid double callback
 		if(typeof this.onclick == 'function')
 		{
