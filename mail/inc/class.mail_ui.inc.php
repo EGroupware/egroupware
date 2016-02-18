@@ -422,8 +422,8 @@ class mail_ui
 						$content[self::$nm_index] = array(
 							'filter'         => 'any',	// filter is used to choose the mailbox
 							'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
-							'no_cat'         => true,	// I  disable the cat-selectbox
-							//'cat_is_select'	 => 'no_lang', // true or no_lang
+							'no_cat'         => false,	// I  disable the cat-selectbox
+							'cat_is_select'	 => true, // true or no_lang
 							'lettersearch'   => false,	// I  show a lettersearch
 							'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 							'start'          =>	0,		// IO position in list
@@ -520,8 +520,9 @@ class mail_ui
 					if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 				}
 				if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]) unset($this->searchTypes['quick']);
-				$sel_options['filter2'] = $this->searchTypes;
+				$sel_options['cat_id'] = $this->searchTypes;
 				$sel_options['filter'] = $this->statusTypes;
+				$sel_options['filter2'] = array(''=>'No details',1=>'Details');
 
 				$etpl = new etemplate_new('mail.index');
 				// Start at 2 so auto-added copy+paste actions show up as second group
@@ -718,7 +719,7 @@ class mail_ui
 				// sending preview toolbar actions
 				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
 
-				if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
+				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['cat_id']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
 				$readonlys = $preserv = array();
 				if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
@@ -1306,7 +1307,7 @@ class mail_ui
 			}
 			$filter = array(
 				'filterName' => (emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-				'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+				'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
 				'string' => $query['search'],
 				'status' => 'any');
 		}
@@ -1353,8 +1354,8 @@ class mail_ui
 						$reverse,
 						$filter,
 						$sRToFetch,
-						true//, //cacheResult
-						//true // fetchPreview
+						true, //cacheResult
+						($query['filter2']?true:false) // fetchPreview
 					);
 				}
 			}
@@ -1370,8 +1371,8 @@ class mail_ui
 					$reverse,
 					$filter,
 					null, // this uids only
-					true//, // cacheResult
-					//true // fetchPreview
+					true, // cacheResult
+					($query['filter2']?true:false) // fetchPreview
 				);
 				$rowsFetched['messages'] = $sortResultwH['info']['total'];
 			}
@@ -4374,7 +4375,7 @@ class mail_ui
 							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
-						$filter = $filter2toggle = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+						$filter = $filter2toggle = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
 					}
 					else
 					{
@@ -4540,7 +4541,7 @@ class mail_ui
 							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
 						$filtered =  true;
-						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
+						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
 					{
@@ -4666,7 +4667,7 @@ class mail_ui
 							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
 						$filtered = true;
-						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['filter2']?$query['filter2']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
+						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
 					{

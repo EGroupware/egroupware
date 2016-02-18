@@ -103,7 +103,10 @@
 					<description id="${row}[uid]" no_lang="1" readonly="true"/>
 					<description span="1" class="status_img"/>
 					<html id="${row}[attachments]"/>
-					<description id="${row}[subject]" no_lang="1"/>
+					<vbox>
+						<description id="${row}[subject]" no_lang="1"/>
+						<description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
+					</vbox>
 					<date-time_today align="center" id="${row}[date]" readonly="true"/>
 					<date-time_today align="center" id="${row}[modified]" readonly="true"/>
 					<url-email id="${row}[address]" contact_plus = "true" readonly="true"/>
