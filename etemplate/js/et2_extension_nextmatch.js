@@ -539,7 +539,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 				}
 			}
 		}
-		
+
 		this.update_in_progress = false;
 	},
 
@@ -1427,7 +1427,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 					self.activeFilters.selectcols.push('lettersearch');
 				}
 				self.getInstanceManager().submit();
-				
+
 				self.selectPopup = null;
 			};
 
@@ -1467,7 +1467,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 	/**
 	 * Set the currently displayed columns, without updating user's preference
-	 * 
+	 *
 	 * @param {string[]} column_list List of column names
 	 * @param {boolean} trigger_update=false - explicitly trigger an update
 	 */
@@ -1506,7 +1506,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 
 				var cf = this.columns[i].widget.options.customfields;
 				var visible = this.columns[i].widget.options.fields;
-				
+
 				// Turn off all custom fields
 				for(var field_name in cf)
 				{
@@ -2315,7 +2315,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Add category
 		if(!settings.no_cat) {
 			settings.cat_id_label = egw.lang("Category");
-			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, true);
+			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, settings.cat_is_select !== true);
 		}
 
 		// Filter 1
