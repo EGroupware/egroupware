@@ -2292,7 +2292,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// searchbox widget options
 		var searchbox_options = {
 			id:"search",
-			overlay:(typeof settings.searchbox != 'undefined' && typeof settings.searchbox.overlay != 'undefined')?settings.searchbox.overlay:true,
+			overlay:(typeof settings.searchbox != 'undefined' && typeof settings.searchbox.overlay != 'undefined')?settings.searchbox.overlay:false,
 			onchange:function(){
 				self.nextmatch.applyFilters({search: this.get_value()});
 			},

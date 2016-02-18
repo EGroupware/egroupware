@@ -421,8 +421,8 @@ var et2_searchbox = et2_textbox.extend(
 		overlay:{
 			name:"Overlay searchbox",
 			type:"boolean",
-			default:true,
-			description:"Define wheter the searchbox overlays while it's open (true) or stay as solid box infront of the search button (false). Default is true."
+			default:false,
+			description:"Define wheter the searchbox overlays while it's open (true) or stay as solid box infront of the search button (false). Default is false."
 		}
 	},
 
