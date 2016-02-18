@@ -558,6 +558,11 @@ var et2_searchbox = et2_textbox.extend(
 	get_value:function(){
 		return  this.search.input.val();
 	},
+	
+	set_value: function (_value){
+		this._super.apply(this,arguments);
+		if (this.search) this.search.input.val(_value);
+	},
 
 	/**
 	 * override doLoadingFinished in order to set initial state
