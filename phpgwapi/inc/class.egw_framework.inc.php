@@ -1407,7 +1407,7 @@ abstract class egw_framework
 
 			// For mobile user-agent we prefer mobile theme over selected one with a final fallback to theme named as template
 			$themes_to_check = array();
-			if (html::$ua_mobile) $themes_to_check[] = $this->template_dir.'/css/mobile.css';
+			if (html::$ua_mobile) $themes_to_check[] = $this->template_dir.'/mobile/fw_mobile.css';
 			$themes_to_check[] = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
 			$themes_to_check[] = $this->template_dir.'/css/'.$this->template.'.css';
 			foreach($themes_to_check as $theme_css)

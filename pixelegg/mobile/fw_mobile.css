@@ -1,4 +1,15 @@
 /**
+ * EGroupware: Stylite Pixelegg template - mobile fw
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/**
  * EGroupware: Stylite Pixelegg template - mobile theme
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
@@ -18,7 +29,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: pixelegg.less 50920 2014-11-26 16:54:04Z ralfbecker $
  */
 /**
  * addapted from orginal styles.php
@@ -1136,7 +1147,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: jquery-ui.less 54623 2015-12-23 18:37:23Z nathangray $
  */
 #uical_select_resource {
   background-color: #ffdd73;
@@ -1557,7 +1568,7 @@ div#ui-datepicker-div {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: magicsuggest.less 55035 2016-02-16 21:37:19Z nathangray $
  */
 /**
  * EGroupware: CSS with less preprocessor
@@ -1573,7 +1584,7 @@ div#ui-datepicker-div {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package phpgwapi
- * @version $Id$
+ * @version $Id: traditional.less 50764 2014-03-17 14:10:27Z pixelegg $
  */
 /*
 	font styling
@@ -1591,7 +1602,7 @@ div#ui-datepicker-div {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: pixelegg.less 3017 2014-04-15 08:35:38Z ralfbecker $
 
 
 ## Important ###########
@@ -1610,7 +1621,7 @@ div#ui-datepicker-div {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 /**
     * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
@@ -1722,7 +1733,7 @@ body {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_loginPage.less 54890 2016-02-01 15:08:13Z ralfbecker $
  */
 #socialMedia {
   position: relative;
@@ -2024,7 +2035,7 @@ body {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 .egw_fw_ui_ajaxloader {
   display: inline-block;
@@ -2052,7 +2063,7 @@ body {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 /*##########################################
 #      Content Element                     #
@@ -2540,7 +2551,7 @@ button[id="add"]:active {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_chosen.less 50840 2014-07-16 11:24:38Z pixelegg $
  */
 /* @group Base */
 .chzn-container {
@@ -2618,7 +2629,7 @@ button[id="add"]:active {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 /**
 * Clientside Javascript error-log
@@ -2662,7 +2673,7 @@ div.client_error_log tr td.stack > div {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package phpgwapi
- * @version $Id$
+ * @version $Id: layout_content_elements.less 54870 2016-01-28 18:17:40Z hnategh $
  */
 /* #######################################################################################
 *
@@ -2855,7 +2866,7 @@ table.table_passord_change td:first-child {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 /*dhtml Submenu ##########################################################*/
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
@@ -2900,7 +2911,7 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_dialog.less 53382 2015-08-14 09:49:57Z hnategh $
  */
 /*body {
     background-color: @gray_0;
@@ -3381,7 +3392,7 @@ body > div#egw_message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 h1 {
   font-size: 200%;
@@ -3461,7 +3472,7 @@ h6 {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_lettersearch.less 50840 2014-07-16 11:24:38Z pixelegg $
  */
 .lettersearch {
   -webkit-border-radius: 3px;
@@ -3509,7 +3520,7 @@ td.lettersearch {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package phpgwapi
- * @version $Id$
+ * @version $Id: layout_messages.less 55047 2016-02-17 13:23:27Z ralfbecker $
  */
 #egwpopup {
   background-color: #fafafa;
@@ -3615,7 +3626,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 /*z.b. Dateimanager overlay*/
 .egwGridView_grid span.iconOverlayContainer {
@@ -3659,7 +3670,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_raster.less 50846 2014-07-24 08:27:05Z pixelegg $
  */
 /* #################################################
  * Basecontainer
@@ -3689,7 +3700,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
  */
 /*
     Created on : 23.07.2014, 13:25:11
@@ -3919,7 +3930,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
  */
 /*
     Created on : 23.07.2014, 13:25:11
@@ -4136,7 +4147,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
  */
 /*
     Created on : 23.07.2014, 13:25:11
@@ -4734,7 +4745,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
  */
 /*
     Created on : 23.07.2014, 13:25:11
@@ -4805,7 +4816,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
  */
 /*
     Created on : 23.07.2014, 13:25:11
@@ -5095,7 +5106,7 @@ div#topmenu_info_update img {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_raster.less 3170 2014-07-16 11:24:38Z pixelegg $
  */
 /*
     Created on : 23.07.2014, 13:25:11
@@ -5134,7 +5145,7 @@ button.image_button {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 .sbHolder {
   /*.box_shadow_standard_light;*/
@@ -5273,7 +5284,7 @@ button.image_button {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 /*SVG Filter / not for Logo */
 #egw_fw_sidebar img[src$="svg"] {
@@ -5315,7 +5326,7 @@ button.image_button {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_table.less 55030 2016-02-16 17:18:02Z ralfbecker $
  */
 /** #####################################################################################
  * et2
@@ -5612,7 +5623,7 @@ table.nextmatch_header img {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
+ * @version $Id: layout_traditional.less 54473 2015-12-07 09:08:09Z hnategh $
  */
 /* traditional */
 form {
@@ -6899,5 +6910,855 @@ span.egw_tutorial_title {
   }
   body #mail-display .mailDisplayContainer {
     top: 140px;
+  }
+}
+/********************************/
+/*								*/
+/*		MEDIA DEFINITION		*/
+/*								*/
+/********************************/
+/*Tablets Max-Width*/
+/*Smartphones Max-Width*/
+/*Smartphones Min-Width*/
+/*All devices portrait mode*/
+/*All devices landscape mode*/
+/*Tablets landscape mode*/
+/*Tablets Portrait*/
+/*Smartphones*/
+@media only screen and (max-device-width : 1024px) {
+  #egw_fw_print {
+    display: none;
+  }
+  div#loginMainDiv {
+    background-color: #486F93;
+    width: 101%;
+  }
+  div#loginMainDiv #divAppIconBar {
+    background: white;
+  }
+  div#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
+    width: 40%;
+    margin-top: 5px;
+    background: white;
+  }
+  div#loginMainDiv div#centerBox {
+    position: absolute;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-topleft: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background-color: transparent;
+    background-image: none;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 0;
+  }
+  div#loginMainDiv div#centerBox form {
+    margin-top: 3em;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox {
+    width: 100%;
+    float: left;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox tr.hiddenCredential {
+    display: none;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
+    font-size: large;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox input,
+  div#loginMainDiv div#centerBox form table.divLoginbox select {
+    width: 100%;
+    height: 50px;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox td {
+    font-size: large;
+    padding: 0.8%;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox td.registration {
+    font-size: 180%;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox td select {
+    background-size: 48px auto;
+  }
+  div#loginMainDiv div#centerBox #loginCdMessage {
+    font-size: 10pt !important;
+    color: white;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+}
+@media only screen and (max-device-width : 1024px) and (orientation : portrait) {
+  body div#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
+    width: 70%;
+  }
+  body div#loginMainDiv div#centerBox form table.divLoginbox {
+    width: 100%;
+    float: left;
+  }
+  body div#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
+    font-size: large;
+  }
+  body div#loginMainDiv div#centerBox form table.divLoginbox input,
+  body div#loginMainDiv div#centerBox form table.divLoginbox select {
+    width: 100%;
+    height: 50px;
+  }
+  body div#loginMainDiv div#centerBox form table.divLoginbox td {
+    font-size: large;
+    padding: 0.8%;
+  }
+  body div#loginMainDiv div#centerBox form table.divLoginbox td.registration {
+    font-size: 250%;
+  }
+  body div#loginMainDiv div#centerBox #loginCdMessage {
+    font-size: large;
+    padding: 0;
+  }
+}
+@media only screen and (max-device-width: 700px) and (min-width: 321px) {
+  body #egw_fw_basecontainer.sidebar-toggle div#egw_fw_top_toolbar {
+    z-index: 0;
+  }
+  body #egw_fw_basecontainer.sidebar-toggle #egw_fw_main {
+    margin-left: 0 !important ;
+  }
+  body #egw_fw_basecontainer.sidebar-toggle #egw_fw_main #egw_fw_tabs {
+    -webkit-filter: none;
+    -moz-filter: none;
+    -ms-filter: none;
+    -o-filter: none;
+    filter: none;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar {
+    z-index: 998;
+    width: 300px;
+    background: white;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
+    width: 245px;
+    display: inline;
+    float: left;
+    position: fixed;
+    padding-left: 50px;
+    padding-right: 5px;
+    background: white;
+    height: 100%;
+    z-index: 998;
+    border-right: 2px solid silver;
+  }
+  body #egw_fw_basecontainer #egw_fw_sidebar {
+    z-index: 999;
+    background: white;
+  }
+  body #egw_fw_basecontainer #egw_fw_main #egw_fw_tabs {
+    -webkit-filter: brightness(20%);
+    -moz-filter: brightness(20%);
+    -ms-filter: brightness(20%);
+    -o-filter: brightness(20%);
+    filter: brightness(20%);
+  }
+}
+/*mobile etemplate2*/
+@media all {
+  html * {
+    touch-action: auto;
+  }
+  body {
+    /*Chosen*/
+    /* View mode styles*/
+  }
+  body #egw_fw_basecontainer.sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
+    background-image: url(../images/topmenu_items/mobile/menu_white.png);
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    background-position: 15px center;
+    margin-left: 8px;
+  }
+  body #egw_fw_basecontainer .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
+    width: 18px;
+    height: 18px;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
+    padding-top: 8px;
+  }
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
+    font-size: medium;
+    top: 50px !important;
+    right: 0px;
+    left: auto !important;
+    background-color: white;
+    width: 100%;
+  }
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl {
+    width: 100%;
+  }
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
+    height: 46px;
+  }
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item {
+    width: 100%;
+    height: 46px !important;
+  }
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_hk {
+    width: 100%;
+  }
+  body div#egw_message {
+    bottom: 0px;
+    top: auto;
+    left: 0px;
+    right: 0px !important;
+    max-width: 100%;
+    border-radius: 0;
+  }
+  body div.ui-dialog {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+  }
+  body div.ui-dialog-content {
+    height: 87% !important;
+    margin-top: 60px !important;
+    padding: 0 !important;
+  }
+  body .ui-dialog .ui-dialog-buttonpane {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 50px;
+    box-shadow: 0px 4px 5px 2px silver;
+    width: 100%;
+    z-index: 1;
+  }
+  body .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: right;
+  }
+  body .ui-dialog-titlebar {
+    display: none;
+  }
+  body button.plus_button {
+    position: absolute !important;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-position: center;
+    z-index: 100;
+    background-color: #0c5da5;
+    border: none;
+    box-shadow: 0px 1px 5px 3px silver;
+    background-image: none !important;
+    margin: 0;
+    padding: 0;
+  }
+  body button.plus_button:after {
+    content: '+';
+    font-weight: bold;
+    font-size: 34pt;
+    color: #fafafa;
+  }
+  body button.plus_button:hover,
+  body button.plus_button:active {
+    background-color: #0c5da5;
+  }
+  body .et2_nextmatch .nextmatch_header_row,
+  body .et2_nextmatch .nextmatch_header {
+    background-color: background-color-egw-dark;
+  }
+  body .et2_nextmatch .nextmatch_header_row div.header_row_right,
+  body .et2_nextmatch .nextmatch_header div.header_row_right {
+    position: absolute;
+    display: block;
+    top: 0;
+  }
+  body .et2_nextmatch .nextmatch_header_row div.filtersContainer,
+  body .et2_nextmatch .nextmatch_header div.filtersContainer {
+    width: 100%;
+    margin-top: 37px;
+  }
+  body .et2_nextmatch .nextmatch_header_row select,
+  body .et2_nextmatch .nextmatch_header select {
+    display: block;
+    width: 100%;
+    height: 50px;
+    font-size: 12pt;
+    background-size: 32px;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    border-bottom: none;
+    padding-left: 10px;
+    max-width: none;
+    background-color: transparent;
+  }
+  body .et2_nextmatch .nextmatch_header_row label,
+  body .et2_nextmatch .nextmatch_header label {
+    display: block;
+    width: 100%;
+    float: left;
+    font-size: 12pt;
+  }
+  body .et2_nextmatch .nextmatch_header_row label select,
+  body .et2_nextmatch .nextmatch_header label select {
+    display: inline-block;
+    float: right;
+    margin: 0;
+    height: 50px;
+    font-size: 12pt;
+  }
+  body .et2_nextmatch .nextmatch_header.nm_header_hide {
+    display: none !important;
+  }
+  body .et2_nextmatch .nextmatch_header {
+    background-color: white;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid silver;
+    border-top: none;
+    box-shadow: 0px 1px 1px 1px silver;
+    z-index: 1;
+    position: relative;
+  }
+  body .et2_nextmatch .nextmatch_header div.et2_box_widget {
+    display: block;
+    height: 50px;
+  }
+  body .et2_nextmatch .nextmatch_header .et2_button {
+    width: 50px;
+    height: 50px;
+  }
+  body .et2_nextmatch .egwGridView_outer thead tr {
+    visibility: hidden;
+  }
+  body .et2_nextmatch .search.searchOn input {
+    border: none;
+    background: white;
+    outline: none;
+    position: absolute;
+    left: 110px;
+    width: 80%;
+    height: 50px;
+  }
+  body .et2_nextmatch .search.searchOn button[id$="search_button"] {
+    background-image: none !important;
+  }
+  body .et2_nextmatch .search.searchOn button[id$="search_button"]:after {
+    content: "\2613";
+    font-weight: bold;
+    font-size: 18pt;
+  }
+  body .et2_nextmatch .nm-mob-header {
+    background: #0c5da5;
+    margin-top: 0;
+    padding-left: 60px;
+    box-shadow: 0px 4px 5px 2px silver;
+    position: relative;
+    height: 50px;
+    z-index: 1;
+  }
+  body .et2_nextmatch .nm-mob-header button {
+    height: 50px;
+    width: 50px;
+    background-repeat: no-repeat;
+    font-size: large;
+    background-color: #0c5da5;
+    border: none;
+    margin: 0;
+    color: white;
+    background-size: 18px 18px;
+    box-shadow: none;
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.et2_searchbox {
+    display: inline-block;
+    width: 50px;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header {
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    border-left: 1px solid silver;
+    border: 0;
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: block;
+    float: right;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus {
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header:after {
+    font-size: 18pt;
+    content: "\2261";
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header {
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    border-left: 1px solid silver;
+    border: 0;
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: block;
+    float: right;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header:focus {
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header:after {
+    font-size: 18pt;
+    content: "\205D";
+    font-weight: bold;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header.back:after {
+    font-size: 18pt;
+    content: "\2190";
+    font-weight: bold;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    border-left: 1px solid silver;
+    border: 0;
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: block;
+    float: right;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus {
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] {
+    position: relative !important;
+    top: 0 !important;
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
+    display: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
+    display: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2):after {
+    font-size: 17pt;
+    content: "\2606";
+    font-weight: bold;
+    vertical-align: super;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
+    width: 160px;
+    box-shadow: 0px 4px 5px 2px silver;
+    border: 1px solid silver;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-bottom: 1px solid silver;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a {
+    width: 100%;
+    line-height: 30px;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input {
+    display: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
+    display: block;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on:after {
+    content: "\2613";
+  }
+  body .et2_nextmatch .nm-mob-header input[type="search"] {
+    width: 50px;
+    height: 50px;
+    font-size: large;
+    margin: 0;
+    border: 0;
+    opacity: 0;
+    background-color: #0c5da5;
+    color: black;
+    position: absolute;
+  }
+  body .et2_nextmatch .nm-mob-header input[type="search"]:active {
+    border: none;
+    background: #0c5da5;
+  }
+  body .et2_nextmatch .nm-mob-header input[type="search"]:focus {
+    border: none;
+    background: white;
+    outline: none;
+    opacity: 1;
+    left: 110px;
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    z-index: 2;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_appname_header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: white;
+    font-size: 14pt;
+    font-weight: bold;
+    opacity: 0.2;
+    text-align: center;
+    display: inline;
+    padding-top: 13px;
+    z-index: -1;
+  }
+  body .et2_nextmatch .header_row_right {
+    height: 50px;
+    width: 100%;
+    padding: 0;
+  }
+  body .et2_nextmatch .header_row_right div[id$=favorite_wrapper] {
+    margin: 0;
+    top: 0 !important;
+    height: 50px;
+  }
+  body .et2_nextmatch .header_row_right * {
+    display: inline-block;
+    float: left;
+  }
+  body .et2_nextmatch .header_row_right .et2_dropdown button {
+    height: 50px;
+    width: 50px;
+  }
+  body .et2_nextmatch .header_count {
+    margin: 0;
+    height: 50px;
+    font-size: 12pt;
+    margin-top: -3px;
+    margin-right: 0px;
+    float: right;
+    border: none;
+    border-radius: 0;
+  }
+  body .et2_nextmatch .header_count span {
+    font-size: 12pt;
+  }
+  body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
+    padding-bottom: 4px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tr img {
+    height: 12px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
+    background-image: none;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected {
+    background: #696969 !important;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected * {
+    color: white !important;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected td:last-child:before {
+    content: " ";
+    position: absolute;
+    background: #ffffff;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0;
+    color: white;
+    background-image: url(../images/agt_action_success.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    height: auto;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
+    background: transparent;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td {
+    padding: 10px 0px 10px 0px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_label,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_button,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_link,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td img,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td span {
+    padding: 8px 0px 0px 0px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col {
+    padding: 0;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress {
+    margin: 0;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.swipe {
+    background-color: #ffc200;
+    border: none;
+  }
+  body .et2_nextmatch .egwGridView_outer {
+    width: 100%;
+  }
+  body .et2_nextmatch .egwGridView_outer thead {
+    max-height: 1px;
+    display: none;
+  }
+  body .et2_nextmatch .egwGridView_outer thead tr th {
+    font-size: large;
+  }
+  body .et2_nextmatch .egwGridView_outer td img {
+    border: none;
+  }
+  body .dtree img {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  body .dtree table,
+  body .dtree tr,
+  body .dtree td {
+    padding: 2px;
+    padding-left: 0;
+    padding-right: 0px;
+  }
+  body .dtree .containerTableStyle {
+    overflow: auto;
+  }
+  body .et2_details .et2_details_toggle:after {
+    width: 30px;
+    height: 30px;
+    font-size: 18pt;
+    text-align: center;
+    padding: 9px;
+  }
+  body input {
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  body #popupMainDiv * {
+    font-size: 10pt;
+    font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+  }
+  body #popupMainDiv .et2_textbox,
+  body #popupMainDiv .et2_date,
+  body #popupMainDiv .et2_dropdown,
+  body #popupMainDiv .et2_link,
+  body #popupMainDiv .et2_label,
+  body #popupMainDiv input {
+    height: 25px;
+  }
+  body #popupMainDiv .et2_button_with_image,
+  body #popupMainDiv .et2_button_text {
+    height: 46px;
+    margin: 1px;
+    margin-left: 3px;
+  }
+  body #popupMainDiv form {
+    margin-top: 50px;
+  }
+  body #popupMainDiv .et2_details.et2_details_expanded {
+    background-color: transparent;
+  }
+  body #popupMainDiv .et2_details.et2_details_expanded .et2_details_title {
+    display: inline-block;
+    background-color: #F0F0F0;
+    width: 100%;
+    padding-top: 6px;
+  }
+  body #popupMainDiv .et2_details {
+    position: relative;
+    background-color: #F0F0F0;
+  }
+  body #popupMainDiv .et2_details .et2_details_toggle {
+    position: absolute;
+    right: 2px;
+    top: 0px;
+    margin: 0px;
+  }
+  body #popupMainDiv .et2_details .et2_details_title {
+    padding-top: 6px;
+    margin-top: 0;
+  }
+  body .rowHeader {
+    font-size: 12pt;
+  }
+  body .et2_fullWidth input[type="radio"] {
+    width: auto;
+  }
+  body div.et2_toolbar.et2_head_toolbar {
+    background-color: transparent;
+    padding: 1px 5px 5px 10px !important;
+  }
+  body div.et2_toolbar.et2_head_toolbar button {
+    width: 46px;
+    height: 46px;
+    background-size: 18px 18px;
+    touch-action: auto;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.ui-toolbar-menulist {
+    min-width: 200px;
+    height: 322px !important;
+    overflow-y: auto !important;
+  }
+  body div.et2_toolbar.et2_head_toolbar button.et2_toolbar_hasCaption {
+    width: auto;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
+    margin-left: 50px;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
+    background: none;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader {
+    color: transparent;
+    border: none;
+    height: 46px;
+    width: 35px;
+    padding: 0 !important;
+    margin-right: 15px;
+    margin-top: -7px;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader:after {
+    font-size: 18pt;
+    content: "\205D";
+    font-weight: bold;
+    color: white;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader span {
+    display: none;
+  }
+  body .et2_tabbox.vertical .et2_tabflag {
+    border: none;
+  }
+  body .et2_tabbox.vertical .et2_tabflag div.et2_tabtitle {
+    background-color: #f0f0f0;
+  }
+  body .et2_tabbox.vertical .et2_tabflag div.et2_tabtitle:before {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 18pt;
+  }
+  body .et2_link_to div {
+    height: 40px;
+    padding-bottom: 3px;
+    width: 99% !important;
+  }
+  body .et2_link_to .et2_file {
+    margin: 0;
+    padding: 0;
+  }
+  body .et2_link_to .et2_file .et2_file_span,
+  body .et2_link_to .et2_file .et2_file_spanHover,
+  body .et2_link_to .et2_file .et2_file_upload {
+    height: 25px !important;
+  }
+  body .chzn-container ul.chzn-choices {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  body .chzn-container-multi .chzn-choices li.search-field .default {
+    color: #666;
+  }
+  body .et2_taglist .ms-ctn {
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
+    border-radius: 0;
+    margin-right: 5px;
+  }
+  body .et2_taglist .ms-sel-ctn {
+    background: white;
+  }
+  body .et2_mobile_view {
+    display: block;
+  }
+  body .et2_mobile_view .et2_mobile-view-container {
+    padding: 0 14px 0 7px;
+    /*Disable et2_link_to as it does not make sense in view mode*/
+  }
+  body .et2_mobile_view .et2_mobile-view-container div.et2_link_to {
+    display: none;
+  }
+  body .et2_mobile_view table.et2_grid tr td {
+    padding: 10px 5px 10px 0;
+  }
+  body .mobile-view-editBtn {
+    position: fixed;
+    top: 2px;
+    left: 70px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    z-index: 104;
+    font-size: 18pt !important;
+    color: white;
+    display: block;
+  }
+  body .mobile-view-editBtn:before {
+    content: "";
+    font-size: 24pt;
+    color: white;
+    padding-left: 5px;
+    font-weight: bold;
+  }
+  body .et2_searchbox button.et2_button.searched {
+    background-image: url(../images/topmenu_items/mobile/search.png);
+  }
+  body .et2_searchbox button.et2_button {
+    background-image: url(../images/topmenu_items/mobile/search_white.png) !important;
+  }
+  body .et2_searchbox input {
+    font-size: 10pt;
+  }
+  body .et2_searchbox.expanded {
+    position: absolute;
+    width: 100% !important;
+    height: 50px;
+    margin-left: 0;
+  }
+  body .et2_searchbox.expanded button.et2_button {
+    display: none;
+  }
+  body .et2_searchbox.expanded input {
+    width: 100%;
+    height: 45px;
+    margin: 0;
+    top: 0;
+    outline: none;
+  }
+  body .et2_searchbox.expanded span.ui-icon.clear {
+    right: 80px;
+    top: 14px;
+  }
+  body .et2_searchbox.expanded .flex {
+    width: 100%;
   }
 }
