@@ -2346,6 +2346,9 @@ td.avatar {
 	width: 150px;
     position: absolute;
 }
+.et2_searchbox .flex.overlay span.ui-icon.clear {
+	right: 0;
+}
 .et2_searchbox .hide {
 	display: none !important;
 }

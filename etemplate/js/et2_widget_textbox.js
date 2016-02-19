@@ -540,7 +540,7 @@ var et2_searchbox = et2_textbox.extend(
 		else
 		{
 			jQuery(this.button.getDOMNode()).addClass('toolbar_toggled');
-			this.button.set_statustext(egw.lang('search for ')+this.get_value());
+			this.button.set_statustext(egw.lang("search for '%1'", this.get_value()));
 		}
 	},
 
@@ -574,6 +574,7 @@ var et2_searchbox = et2_textbox.extend(
 			this._show_hide(false);
 		}
 		else{
+			this._show_hide(!this.options.overlay);
 			this._searchToggleState();
 		}
 	}
