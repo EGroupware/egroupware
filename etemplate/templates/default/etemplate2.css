@@ -2314,7 +2314,6 @@ td.avatar {
 	position: relative;
 	padding: 0 0 0 0px;
 	z-index: 500;
-	white-space: nowrap;
 }
 .et2_searchbox .flex.overlay input {
 	position: absolute;
