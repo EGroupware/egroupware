@@ -16,21 +16,6 @@
 class send extends egw_mailer
 {
 	/**
-	 * eGW specific initialisation of the PHPMailer: charset, language, smtp-host, ...
-	 *
-	 * To be able to call PHPMailer's Send function, we check if a subject, body or address is set and call it in that case,
-	 * else we do our constructors work.
-	 */
-	function send()
-	{
-		if ($this->Subject || $this->Body || count($this->to))
-		{
-			return parent::send();
-		}
-		parent::__construct();	// calling parent constructor
-	}
-
-	/**
 	* Reset all Settings to send multiple Messages
 	*/
 	function ClearAll()

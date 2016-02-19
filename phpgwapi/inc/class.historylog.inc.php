@@ -57,7 +57,7 @@ class historylog
 	 * @param string $appname app name this instance operates on
 	 * @return historylog
 	 */
-	function historylog($appname='',$user=null)
+	function __construct($appname='',$user=null)
 	{
 		$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];

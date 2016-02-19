@@ -24,10 +24,6 @@
 
 	class arrayfunctions
 	{
-		function arrayfunctions($vars='')
-		{
-		}
-
 		/*
 		* arfsort() - (AR)ray (F)ield Sort.
 		* Sort a multi-dimensional array according
@@ -35,11 +31,11 @@
 		* @param $a The array to sort
 		* @param $fl Field list (in order of importance)
 		*/
-		
+
 		function arfsort( $a, $fl, $_sort='ASC' )
 		{
 			$GLOBALS['__ARFSORT_LIST__'] = $fl;
-			
+
 			$this->sort=$_sort;
 
 			if (is_array($a))
@@ -74,4 +70,3 @@
 		}
 
 	} // end class arrayfunctions
-?>

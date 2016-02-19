@@ -36,11 +36,11 @@
 		var $template;
 		var $extra_filters = array();
 
-		function nextmatchs($website=False)
+		function __construct($website=False)
 		{
 			if(!$website)
 			{
-				$this->template = createobject('phpgwapi.Template',EGW_TEMPLATE_DIR);
+				$this->template = new Template(EGW_TEMPLATE_DIR);
 				$this->template->set_file(array(
 					'_nextmatchs' => 'nextmatchs.tpl'
 				));

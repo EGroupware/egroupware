@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
- * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -752,7 +752,7 @@ class infolog_bo
 		{
 			return false;
 		}
-		
+
 		// Make sure status is still valid if the type changes
 		if($old['info_type'] != $values['info_type'] && $values['info_status'])
 		{
@@ -1558,9 +1558,9 @@ class infolog_bo
 			if (!($email = $GLOBALS['egw']->accounts->id2name($user,'account_email'))) continue;
 			// create the enviroment for $user
 			$this->user = $GLOBALS['egw_info']['user']['account_id'] = $user;
-			$GLOBALS['egw']->preferences->preferences($user);
+			$GLOBALS['egw']->preferences->__construct($user);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-			$GLOBALS['egw']->acl->acl($user);
+			$GLOBALS['egw']->acl->__construct($user);
 			$GLOBALS['egw']->acl->read_repository();
 			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
 			$this->so = new infolog_so($this->grants);	// so caches it's filters

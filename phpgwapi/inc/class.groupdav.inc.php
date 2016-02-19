@@ -256,7 +256,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
 			$this->dav_powered_by);
 
-		parent::HTTP_WebDAV_Server();
+		parent::__Construct();
 		// hack to allow to use query parameters in WebDAV, which HTTP_WebDAV_Server interprets as part of the path
 		list($this->_SERVER['REQUEST_URI']) = explode('?',$this->_SERVER['REQUEST_URI']);
 		/*if (substr($this->_SERVER['REQUEST_URI'],-13) == '/;add-member/')

@@ -121,7 +121,6 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
     {
         $path   = $this->_unslashify($this->base .$options["path"]);
         $parent = egw_vfs::dirname($path);
-        $name   = egw_vfs::basename($path);
 
         if (!file_exists($parent)) {
             return "409 Conflict";
@@ -631,7 +630,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		{
 			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,$this->force_download);
 		}
-		parent::HTTP_WebDAV_Server();
+		parent::__construct();
 	}
 
 	/**

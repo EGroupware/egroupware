@@ -44,7 +44,7 @@ class about
 	 *
 	 * @since	1.4
 	 */
-	function about()
+	function __construct()
 	{
 		translation::add_app('admin');
 

@@ -66,17 +66,6 @@ class hooks
 	}
 
 	/**
-	 * php4 constructor
-	 *
-	 * @param egw_db $db
-	 * @deprecated use __construct()
-	 */
-	function hooks($db=null)
-	{
-		self::__construct($db);
-	}
-
-	/**
 	 * Executes all the hooks (the user has rights to) for a given location
 	 *
 	 * If no $order given, hooks are executed in the order of the applications!

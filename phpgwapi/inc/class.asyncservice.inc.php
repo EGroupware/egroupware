@@ -39,7 +39,7 @@ class asyncservice
 	/**
 	 * constructor of the class
 	 */
-	function asyncservice()
+	function __construct()
 	{
 		if (is_object($GLOBALS['egw']->db))
 		{

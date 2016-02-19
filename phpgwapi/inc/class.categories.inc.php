@@ -147,16 +147,6 @@ class categories
 	}
 
 	/**
-	 * php4 constructor
-	 *
-	 * @deprecated
-	 */
-	function categories($accountid='',$app_name='')
-	{
-		self::__construct($accountid,$app_name);
-	}
-
-	/**
 	 * returns array with id's of all children from $cat_id and $cat_id itself!
 	 *
 	 * @param int|array $cat_id (array of) integer cat-id to search for

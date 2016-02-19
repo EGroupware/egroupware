@@ -172,7 +172,7 @@ class solink
 		return is_array($id) ? $links : ($links[$id] ? $links[$id] : array());
 	}
 
-	private function _add2links($row,$left,$only_app,$not_only,array &$links)
+	private static function _add2links($row,$left,$only_app,$not_only,array &$links)
 	{
 		$linked_app = $left ? $row['link_app2'] : $row['link_app1'];
 		$linked_id  = $left ? $row['link_id2'] : $row['link_id1'];
