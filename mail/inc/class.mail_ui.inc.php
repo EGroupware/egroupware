@@ -89,7 +89,7 @@ class mail_ui
 		'from'		=> 'from',			// lang('from')
 		'to'		=> 'to',			// lang('to')
 		'cc'		=> 'cc',			// lang('cc')
-		'text'		=> 'whole message'	// lang('whole message')
+		'text'		=> 'whole message',	// lang('whole message')
 	);
 
 	/**
@@ -523,6 +523,7 @@ class mail_ui
 				$sel_options['cat_id'] = $this->searchTypes;
 				$sel_options['filter'] = $this->statusTypes;
 				$sel_options['filter2'] = array(''=>'No details',1=>'Details');
+				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
 
 				$etpl = new etemplate_new('mail.index');
 				// Start at 2 so auto-added copy+paste actions show up as second group
@@ -718,7 +719,7 @@ class mail_ui
 
 				// sending preview toolbar actions
 				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
-
+				//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
 				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['cat_id']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
 				$readonlys = $preserv = array();
 				if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
@@ -1320,6 +1321,12 @@ class mail_ui
 			$filter['status'] = $query['filter'];
 		}
 		$reverse = ($query['sort']=='ASC'?false:true);
+		if (!isset($GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails']) || ($query['filter2'] !=$GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails']))
+		{
+			$GLOBALS['egw']->preferences->add('mail','ShowDetails',$query['filter2'],'user');
+			// save prefs
+			$GLOBALS['egw']->preferences->save_repository(true);
+		}
 		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($mail_ui->sessionData['messageFilter']));
 		try
 		{
