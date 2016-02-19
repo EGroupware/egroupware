@@ -18,7 +18,7 @@
 @import (less) "../pixelegg/app.css";
 
 /* tablets and smartphones  */
-@media only screen and (max-device-width:1024px) {
+@media all {
 	div.mailDisplayContainer{
 		margin-top: 30px;
 		margin-left:0;
@@ -316,7 +316,8 @@
 					text-decoration : line-through;
 				}
 				span.status_img {
-				padding:0 2px 2px 0;
+					padding:0 2px 2px 0;
+					display:inline;
 				}
 				span.deleted.status_img {
 					background-image: url(images/kmmsgdel.png);
@@ -338,6 +339,16 @@
 				}
 				span.forwarded.status_img {
 					background-image: url(images/kmmsgforwarded.png);
+				}
+				span.bodypreview {
+					max-height: 12px;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					padding-left: 2px;
+					font-style: normal;
+					font-size: 8pt;
+					padding-top: 5px;
 				}
 			}
 		}

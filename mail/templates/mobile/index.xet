@@ -21,6 +21,7 @@
 							<description  class="status_img $row_cont[class]"/>
 							<description id="${row}[subject]" no_lang="1" class="$row_cont[class]" />
 						</hbox>
+						<description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
 					</vbox>
 					<vbox>
 						<hbox>

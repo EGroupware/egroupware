@@ -916,7 +916,7 @@ body {
   /*height: 20px !important;*/
 }
 #mail-index div#mail-index_nm tr.mail td img {
-  height: 12px;
+  max-height: 50px;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -1891,6 +1891,13 @@ tr.forwarded span.status_img {
   font-size: 12px;
   font-family: Arial;
 }
+.bodypreview {
+  font-size: 10px;
+  font-style: italic;
+  font-weight: normal;
+  font-family: Arial;
+  color: grey;
+}
 TR.sieveRowActive {
   font-size: 11px;
   height: 20px;
@@ -2599,7 +2606,7 @@ div.mailComposeHeaderSection > table {
   transition: all 0.1s ease-out;
 }
 /* tablets and smartphones  */
-@media only screen and (max-device-width: 1024px) {
+@media all {
   div.mailDisplayContainer {
     margin-top: 30px;
     margin-left: 0;
@@ -2877,6 +2884,7 @@ div.mailComposeHeaderSection > table {
   }
   #mail-index table.egwGridView_outer tbody tr span.status_img {
     padding: 0 2px 2px 0;
+    display: inline;
   }
   #mail-index table.egwGridView_outer tbody tr span.deleted.status_img {
     background-image: url(images/kmmsgdel.png);
@@ -2898,5 +2906,15 @@ div.mailComposeHeaderSection > table {
   }
   #mail-index table.egwGridView_outer tbody tr span.forwarded.status_img {
     background-image: url(images/kmmsgforwarded.png);
+  }
+  #mail-index table.egwGridView_outer tbody tr span.bodypreview {
+    max-height: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 2px;
+    font-style: normal;
+    font-size: 8pt;
+    padding-top: 5px;
   }
 }

@@ -904,7 +904,7 @@ body {
   /*height: 20px !important;*/
 }
 #mail-index div#mail-index_nm tr.mail td img {
-  height: 12px;
+  max-height: 50px;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -922,7 +922,7 @@ body {
   background-repeat: repeat-x;
 }
 #mail-index div#mail-index_nm tr.mail div span {
-  max-height: 50px;
+  height: 12px;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -1880,13 +1880,11 @@ tr.forwarded span.status_img {
   font-family: Arial;
 }
 .bodypreview {
-  white-space: normal !important;
-  max-height: 25px !important;
-  font-size: 11px;
+  font-size: 10px;
   font-style: italic;
-  font-weight : normal !important;
+  font-weight: normal;
   font-family: Arial;
-  color: grey  !important; 
+  color: grey;
 }
 TR.sieveRowActive {
   font-size: 11px;
