@@ -7,16 +7,25 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\Db;
+
+use EGroupware\Api;
+use egw_exception_db_invalid_sql;
+use egw_cache;
+use config;
+use translation;
+use html;
 
 /**
  * DB independent backup and restore of EGroupware database
  *
  * Backing up bool columns now for all databases as 1 or 0, but understanding PostgreSQL 't' or 'f' too.
  */
-class db_backup
+class Backup
 {
 	/**
 	 * Configuration table.
@@ -25,7 +34,7 @@ class db_backup
 	/**
 	 * Reference to schema_proc
 	 *
-	 * @var schema_proc
+	 * @var Api\Db\Schema
 	 */
 	var $schema_proc;
 	/**
@@ -84,7 +93,7 @@ class db_backup
 	/**
 	 * Reference to schema_proc's egw_db object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	var $db;
 
@@ -103,7 +112,7 @@ class db_backup
 		}
 		else
 		{
-			$this->schema_proc = new schema_proc();
+			$this->schema_proc = new Api\Db\Schema();
 		}
 
 		$this->db = $this->schema_proc->m_odb;
@@ -151,7 +160,6 @@ class db_backup
 		}
 		else	// called from eGW
 		{
-			$this->schema_proc = new schema_proc();
 			if (!($this->backup_dir = $GLOBALS['egw_info']['server']['backup_dir']))
 			{
 				$this->backup_dir = $GLOBALS['egw_info']['server']['files_dir'].'/db_backup';
@@ -801,7 +809,7 @@ class db_backup
 				// decode bool columns, they might be 't'/'f' for old PostgreSQL backups
 				foreach($bools as $key)
 				{
-					$fields[$key] = egw_db::from_bool($fields[$key]);
+					$fields[$key] = Api\Db::from_bool($fields[$key]);
 				}
 			}
 			return $fields;
@@ -835,7 +843,7 @@ class db_backup
 			}
 			elseif (in_array($key, $bools))
 			{
-				$arr[$key] = egw_db::from_bool($field);
+				$arr[$key] = Api\Db::from_bool($field);
 			}
 			else
 			{
@@ -869,7 +877,7 @@ class db_backup
 					$data = base64_encode($data);
 					break;
 				case 'bool':	// we use MySQL 0, 1 in csv, not PostgreSQL 't', 'f'
-					$data = (int)egw_db::from_bool($data);
+					$data = (int)Api\Db::from_bool($data);
 					break;
 				default:
 					$data = '"'.str_replace(array('\\',"\n","\r",'"'),array('\\\\','\\n','\\r','\\"'),$data).'"';

@@ -9,6 +9,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 class admin_db_backup
 {
 	var $public_functions = array(
@@ -21,7 +23,7 @@ class admin_db_backup
 	 */
 	function do_backup()
 	{
-		$this->db_backup = new db_backup();
+		$this->db_backup = new Api\Db\Backup();
 
  		if (($f = $this->db_backup->fopen_backup()))
  		{

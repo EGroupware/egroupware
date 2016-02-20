@@ -12,6 +12,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Update / install an EGroupware instance
  *
@@ -44,7 +46,7 @@ class setup_process
 	 */
 	function init_process()
 	{
-		$GLOBALS['egw_setup']->oProc = new schema_proc();
+		$GLOBALS['egw_setup']->oProc = new Api\Db\Schema();
 	}
 
 	/**

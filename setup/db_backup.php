@@ -9,6 +9,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
 {
 	include ('./inc/functions.inc.php');
@@ -29,7 +31,7 @@ if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
 	$self = 'db_backup.php';
 	$is_setup = true;
 }
-$db_backup = new db_backup();
+$db_backup = new Api\Db\Backup();
 $asyncservice = new asyncservice();
 
 // download a backup, has to be before any output !!!
@@ -37,7 +39,7 @@ if ($_POST['download'])
 {
 	list($file) = each($_POST['download']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
-	while (@ob_end_clean()) ;       // end all active output buffering
+	while (@ob_end_clean()) {}      // end all active output buffering
 	ini_set('zlib.output_compression',0);   // switch off zlib.output_compression, as this would limit downloads in size to memory_limit
 	html::content_header(basename($file));
 	readfile($file);

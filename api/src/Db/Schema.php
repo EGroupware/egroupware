@@ -15,19 +15,24 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Db;
+
+use EGroupware\Api;
+use egw_exception_assertion_failed;
+
 /**
  * eGW's ADOdb based schema-processor
  */
-class schema_proc
+class Schema
 {
 	/**
 	 * @deprecated formerly used translator class, now a reference to ourself
 	 */
 	var $m_oTranslator;
 	/**
-	 * egw_db-object
+	 * db-object
 	 *
-	 * @var egw_db
+	 * @var EGroupware\Api\Db\Deprecated
 	 */
 	var $m_odb;
 	/**
@@ -92,10 +97,10 @@ class schema_proc
 	 * Constructor of schema-processor
 	 *
 	 * @param string $dbms type of the database: 'mysql','pgsql','mssql','maxdb'
-	 * @param egw_db $db =null database class, if null we use $GLOBALS['egw']->db
+	 * @param Db $db =null database class, if null we use $GLOBALS['egw']->db
 	 * @return schema_proc
 	 */
-	function __construct($dbms=False, egw_db $db=null)
+	function __construct($dbms=False, Api\Db $db=null)
 	{
 	    if(is_object($db))
 		{
@@ -105,9 +110,9 @@ class schema_proc
 	    {
 			$this->m_odb = isset($GLOBALS['egw']->db) && is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 	    }
-	    if (!($this->m_odb instanceof egw_db))
+	    if (!($this->m_odb instanceof Api\Db))
 	    {
-	    	throw new egw_exception_assertion_failed('no egw_db object!');
+	    	throw new egw_exception_assertion_failed('no EGroupware\Api\Db object!');
 	    }
 	    $this->m_odb->connect();
 		$this->capabilities =& $this->m_odb->capabilities;
@@ -828,30 +833,45 @@ class schema_proc
 	*
 	* @param string|integer $value name of field or positional index starting from 0
 	* @param bool $strip_slashes string escape chars from field(optional), default false
+	* @deprecated use result-set returned by query/select
 	* @return string the field value
 	*/
 	function f($value,$strip_slashes=False)
 	{
+		if (!($this->m_odb instanceof Deprecated))
+		{
+	    	throw new egw_exception_assertion_failed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
+		}
 		return $this->m_odb->f($value,$strip_slashes);
 	}
 
 	/**
 	* Number of rows in current result set
 	*
+	* @deprecated use result-set returned by query/select
 	* @return int number of rows
 	*/
 	function num_rows()
 	{
+		if (!($this->m_odb instanceof Deprecated))
+		{
+	    	throw new egw_exception_assertion_failed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
+		}
 		return $this->m_odb->num_rows();
 	}
 
 	/**
 	* Move to the next row in the results set
 	*
+	* @deprecated use result-set returned by query/select
 	* @return bool was another row found?
 	*/
 	function next_record()
 	{
+		if (!($this->m_odb instanceof Deprecated))
+		{
+	    	throw new egw_exception_assertion_failed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
+		}
 		return $this->m_odb->next_record();
 	}
 
