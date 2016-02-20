@@ -511,7 +511,8 @@ class asyncservice
 			}
 			else
 			{
-				$row['async_data'] = json_php_unserialize($row['async_data'], true);	// allow non-serialized data
+				$row['async_data'] = !empty($row['async_data']) ?
+					json_php_unserialize($row['async_data'], true) : null;	// allow non-serialized data
 			}
 			$jobs[$row['async_id']] = egw_db::strip_array_keys($row,'async_');
 		}
@@ -539,7 +540,7 @@ class asyncservice
 			'async_next'      => $job['next'],
 			'async_times'     => json_encode($job['times']),
 			'async_method'    => $job['method'],
-			'async_data'      => $job['data'] ? json_encode($job['data']) : null,
+			'async_data'      => $job['data'] ? json_encode($job['data']) : '',
 			'async_account_id'=> $job['account_id'],
 		);
 		$where['async_id'] = $job['id'];
