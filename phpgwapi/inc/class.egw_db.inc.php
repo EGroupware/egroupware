@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -487,7 +487,16 @@ class egw_db
 					break;
 
 				case 'mysqlt':
-					$php_extension = 'mysql';	// you can use $this->setupType to determine if it's mysqlt or mysql
+				case 'mysql':
+					// if mysqli is available silently switch to it, mysql extension is deprecated and no longer available in php7+
+					if (check_load_extension('mysqli'))
+					{
+						$php_extension = $Type = 'mysqli';
+					}
+					else
+					{
+						$php_extension = 'mysql';	// you can use $this->setupType to determine if it's mysqlt or mysql
+					}
 					// fall through
 				case 'mysqli':
 					$this->Type = 'mysql';		// need to be "mysql", so apps can check just for "mysql"!
@@ -521,6 +530,11 @@ class egw_db
 				{
 					throw new egw_exception_db_connection("No ADOdb support for '$Type' ($this->Type) !!!");
 				}
+				if ($Type == 'mysqli')
+				{
+					// set a connection timeout of 1 second, to allow quicker failover to other db-nodes (default is 20s)
+					$this->Link_ID->setConnectionParameter(MYSQLI_OPT_CONNECT_TIMEOUT, 1);
+				}
 				$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
 				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
 				{
@@ -549,7 +563,7 @@ class egw_db
 					ini_set('mssql.sizelimit',2147483647);
 				}
 				// set our default charset
-				$this->Link_ID->SetCharSet('utf-8');
+				$this->Link_ID->SetCharSet($this->Type == 'mysql' ? 'utf8' : 'utf-8');
 
 				$new_connection = true;
 			}

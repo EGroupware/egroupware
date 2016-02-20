@@ -1685,6 +1685,16 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			}
 			$pdo_available = true;
 		}
+		// set client charset of the connection
+		switch(self::$pdo_type)
+		{
+			case 'mysql':
+				$dsn .= ';charset=utf8';
+				break;
+			case 'pgsql':
+				$query = "SET NAMES 'utf-8'";
+				break;
+		}
 		try {
 			self::$pdo = new \PDO($dsn,$egw_db->User,$egw_db->Password,array(
 				\PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION,
@@ -1695,17 +1705,6 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			unset($e);
 			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
 			self::$pdo = new \PDO($dsn,$egw_db->User,'$egw_db->Password');
-		}
-		// set client charset of the connection
-		$charset = translation::charset();
-		switch(self::$pdo_type)
-		{
-			case 'mysql':
-				if (isset($egw_db->Link_ID->charset2mysql[$charset])) $charset = $egw_db->Link_ID->charset2mysql[$charset];
-				// fall throught
-			case 'pgsql':
-				$query = "SET NAMES '$charset'";
-				break;
 		}
 		if ($query)
 		{
