@@ -498,7 +498,7 @@ class setup
 					'app_name'		=> $appname,
 					'app_enabled'	=> $enable,
 					'app_order'		=> $setup_info[$appname]['app_order'],
-					'app_tables'	=> $tables,
+					'app_tables'	=> (string)$tables,	// app_tables is NOT NULL
 					'app_version'	=> $setup_info[$appname]['version'],
 					'app_index'     => $setup_info[$appname]['index'],
 					'app_icon'      => $setup_info[$appname]['icon'],
@@ -580,7 +580,7 @@ class setup
 			$this->db->update($this->applications_table,array(
 					'app_enabled'	=> $setup_info[$appname]['enable'],
 					'app_order'		=> $setup_info[$appname]['app_order'],
-					'app_tables'	=> $tables,
+					'app_tables'	=> (string)$tables,	// app_tables is NOT NULL
 					'app_version'	=> $setup_info[$appname]['version'],
 					'app_index'     => $setup_info[$appname]['index'],
 					'app_icon'      => $setup_info[$appname]['icon'],
