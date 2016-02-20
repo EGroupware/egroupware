@@ -74,7 +74,7 @@ class schema_proc
 	 *
 	 * @var string
 	 */
-	var $system_charset;
+	var $system_charset = 'utf8';
 	/**
 	 * reference to the capabilities array of the db-class
 	 *
@@ -92,10 +92,10 @@ class schema_proc
 	 * Constructor of schema-processor
 	 *
 	 * @param string $dbms type of the database: 'mysql','pgsql','mssql','maxdb'
-	 * @param object $db=null database class, if null we use $GLOBALS['egw']->db
+	 * @param egw_db $db =null database class, if null we use $GLOBALS['egw']->db
 	 * @return schema_proc
 	 */
-	function __construct($dbms=False,$db=null)
+	function __construct($dbms=False, egw_db $db=null)
 	{
 	    if(is_object($db))
 		{
@@ -191,9 +191,9 @@ class schema_proc
 		}
 		// for mysql 4.0+ we set the charset for the table
 		if ($this->system_charset && substr($this->sType,0,5) == 'mysql' &&
-			(float) $this->m_odb->ServerInfo['version'] >= 4.0 && $this->m_odb->Link_ID->charset2mysql[$this->system_charset])
+			(float) $this->m_odb->ServerInfo['version'] >= 4.0)
 		{
-			$set_table_charset = array($this->sType => 'CHARACTER SET '.$this->m_odb->Link_ID->charset2mysql[$this->system_charset]);
+			$set_table_charset = array($this->sType => 'CHARACTER SET utf8');
 		}
 		// creating the table
 		$aSql = $this->dict->CreateTableSQL($sTableName,$ado_cols = $this->_egw2adodb_columndef($aTableDef),$set_table_charset);
@@ -273,7 +273,7 @@ class schema_proc
 		// preserve last value of an old sequence
 		if ($this->sType == 'pgsql' && $preserveSequence && $this->pgsql_old_seq)
 		{
-			if ($seq = $this->_PostgresHasOldSequence($sTableName))
+			if (($seq = $this->_PostgresHasOldSequence($sTableName)))
 			{
 				$this->pgsql_old_seq = $this->pgsql_old_seq + 1;
 				$this->m_odb->query("ALTER SEQUENCE $seq RESTART WITH " . $this->pgsql_old_seq,__LINE__,__FILE__);
@@ -300,13 +300,13 @@ class schema_proc
 		if ($this->debug) $bOutputHTML = True;
 		if ($bOutputHTML && !$this->debug) $this->debug = 2;
 
-		foreach($aTables as $sTableName => $aTableDef)
+		foreach(array_keys($aTables) as $sTableName)
 		{
 			if($this->DropTable($sTableName))
 			{
 				if($bOutputHTML)
 				{
-					echo '<br>Drop Table <b>' . $sTableSQL . '</b>';
+					echo '<br>Drop Table <b>' . $sTableName . '</b>';
 				}
 			}
 			else
@@ -338,11 +338,12 @@ class schema_proc
 	 * @param string $sTableName table-name
 	 * @param array $aTableDef eGW table-defintion
 	 * @param string $sColumnName column-name
-	 * @param boolean $bCopyData ???
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
-	function DropColumn($sTableName, $aTableDef, $sColumnName, $bCopyData = true)
+	function DropColumn($sTableName, $aTableDef, $sColumnName)
 	{
+		unset($aTableDef);	// not used, but required by function signature
+
 		$table_def = $this->GetTableDefinition($sTableName);
 		unset($table_def['fd'][$sColumnName]);
 
@@ -400,6 +401,7 @@ class schema_proc
 		$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName''::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 		$seq2 = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%$sTableName%_seq''::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 
+		$matches = null;
 		if ($seq && preg_match('/^nextval\(\'(.*)\'/',$seq,$matches))
 		{
 			if ($preserveValue) $this->pgsql_old_seq = $this->adodb->GetOne("SELECT last_value FROM " . $matches[1]);
@@ -417,9 +419,8 @@ class schema_proc
 	 * Check if we have an old, not automaticaly droped sequence and drop it
 	 *
 	 * @param $sTableName
-	 * @param bool $preserveValue
 	 */
-	function _PostgresTestDropOldSequence($sTableName,$preserveValue=False)
+	function _PostgresTestDropOldSequence($sTableName)
 	{
 		$this->pgsql_old_seq = 0;
 		if ($this->sType == 'pgsql' && ($seq = $this->_PostgresHasOldSequence($sTableName)))
@@ -438,10 +439,9 @@ class schema_proc
 	 * @param string $sTableName table-name
 	 * @param string $sColumnName column-name
 	 * @param array $aColumnDef new column-definition
-	 * @param boolean $bCopyData ???
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
-	function AlterColumn($sTableName, $sColumnName, $aColumnDef, $bCopyData=True)
+	function AlterColumn($sTableName, $sColumnName, $aColumnDef)
 	{
 		$table_def = $this->GetTableDefinition($sTableName);
 
@@ -475,10 +475,9 @@ class schema_proc
 	 * @param string $sTableName table-name
 	 * @param string $sOldColumnName old (existing) column-name
 	 * @param string $sNewColumnName new column-name
-	 * @param boolean $bCopyData ???
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
-	function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData=True)
+	function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName)
 	{
 		$table_def = $this->GetTableDefinition($sTableName);
 		$old_def = array();
@@ -529,11 +528,11 @@ class schema_proc
 	/**
 	 * Create an (unique) Index over one or more columns
 	 *
-	 * @param string $sTablename table-name
+	 * @param string $sTableName table-name
 	 * @param array $aColumnNames columns for the index
-	 * @param boolean $bUnique=false true for a unique index, default false
-	 * @param array/string $options='' db-sepecific options, default '' = none
-	 * @param string $sIdxName='' name of the index, if not given (default) its created automaticaly
+	 * @param boolean $bUnique =false true for a unique index, default false
+	 * @param array/string $options ='' db-sepecific options, default '' = none
+	 * @param string $sIdxName ='' name of the index, if not given (default) its created automaticaly
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
 	function CreateIndex($sTableName,$aColumnNames,$bUnique=false,$options='',$sIdxName='')
@@ -612,6 +611,7 @@ class schema_proc
 				// identify the sequence name, ADOdb uses a different name or it might be renamed
 				$columns = $this->dict->MetaColumns($sTableName);
 				$seq_name = 'seq_'.$sTableName;
+				$matches = null;
 				if (preg_match("/nextval\('([^']+)'::(text|regclass)\)/",$columns[strtoupper($sColumnName)]->default_value,$matches))
 				{
 					$seq_name = $matches[1];
@@ -637,7 +637,7 @@ class schema_proc
 	 */
 	function RefreshTable($sTableName, $aTableDef, $aDefaults=False)
 	{
-		if($this->debug) { echo "<p>schema_proc::RefreshTable('$sTableName',"._debug_array($aTableDef,False).")<p>$sTableName="._debug_array($old_table_def,False)."\n"; }
+		if($this->debug) { echo "<p>schema_proc::RefreshTable('$sTableName',"._debug_array($aTableDef,False).")\n"; }
 
 		$old_table_def = $this->GetTableDefinition($sTableName);
 
@@ -727,7 +727,6 @@ class schema_proc
 			$auto_column_included = $auto_column_included || $data['type'] == 'auto';
 			$select[] = $value;
 		}
-		$select = implode(',',$select);
 
 		$extra = '';
 		$distinct = 'DISTINCT';
@@ -757,7 +756,7 @@ class schema_proc
 		$Ok = $Ok && $this->CreateTable($sTableName,$aTableDef) &&
 			$this->m_odb->query($sql_copy_data="$extra INSERT INTO $sTableName (".
 				implode(',',array_keys($aTableDef['fd'])).
-				") SELEcT $distinct $select FROM $tmp_name",__LINE__,__FILE__) &&
+				") SELEcT $distinct ".implode(',',$select)." FROM $tmp_name",__LINE__,__FILE__) &&
 			$this->DropTable($tmp_name);
 		//error_log($sql_copy_data);
 
@@ -780,7 +779,7 @@ class schema_proc
 	 * depricated Function does nothing any more
 	 * @depricated
 	 */
-	function GenerateScripts($aTables, $bOutputHTML=False)
+	function GenerateScripts()
 	{
 		return True;
 	}
@@ -789,7 +788,7 @@ class schema_proc
 	 * Creates all tables for one application
 	 *
 	 * @param array $aTables array of eGW table-definitions
-	 * @param boolean $bOutputHTML=false should we give diagnostics, default False
+	 * @param boolean $bOutputHTML =false should we give diagnostics, default False
 	 * @return boolean True on success, False if an (fatal) error occured
 	 */
 	function ExecuteScripts($aTables, $bOutputHTML=False)
@@ -827,7 +826,7 @@ class schema_proc
 	/**
 	* Return the value of a column
 	*
-	* @param string/integer $Name name of field or positional index starting from 0
+	* @param string|integer $value name of field or positional index starting from 0
 	* @param bool $strip_slashes string escape chars from field(optional), default false
 	* @return string the field value
 	*/
@@ -891,12 +890,12 @@ class schema_proc
 	/**
 	 * Execute the Sql statements in an array and give diagnostics, if any error occures
 	 *
-	 * @param $aSql array of SQL strings to execute
-	 * @param $debug_level int for which debug_level (and higher) should the diagnostics always been printed
-	 * @param $debug string variable number of arguments for the debug_message functions in case of an error
+	 * @param array $aSql array of SQL strings to execute
+	 * @param int $debug_level for which debug_level (and higher) should the diagnostics always been printed
+	 * @param string $debug variable number of arguments for the debug_message functions in case of an error
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
-	function ExecuteSqlArray($aSql,$debug_level,$debug)
+	function ExecuteSqlArray($aSql,$debug_level)
 	{
 		if ($this->m_odb->query_log)	// we use egw_db::query to log the queries
 		{
@@ -975,9 +974,9 @@ class schema_proc
 		{
 			$remove[] = $part.'_';
 		}
-		$aColumnNames = str_replace($remove,'',$aColumnNames);
+		$cols = str_replace($remove,'',$aColumnNames);
 
-		$name = $sTableName.'_'.(is_array($aColumnNames) ? implode('_',$aColumnNames) : $aColumnNames);
+		$name = $sTableName.'_'.(is_array($cols) ? implode('_',$cols) : $cols);
 		// remove length limits from column names
 		$name = preg_replace('/ *\(\d+\)/','',$name);
 
@@ -1184,6 +1183,7 @@ class schema_proc
 			'fd' => array('test' => array('type' => $egw_type)),
 			'pk' => array(),
 		));
+		$matches = null;
 		return preg_match('/test ([A-Z0-9]+)/i',$ado_col,$matches) ? $this->dict->ActualType($matches[1]) : false;
 	}
 
@@ -1308,6 +1308,7 @@ class schema_proc
 					{
 						$definition['fd'][$name]['type'] = 'int';
 						// detect postgres type-spec and remove it
+						$matches = null;
 						if ($this->sType == 'pgsql' && $column->has_default && preg_match('/\(([^)])\)::/',$column->default_value,$matches))
 						{
 							$definition['fd'][$name]['default'] = $matches[1];
@@ -1443,6 +1444,7 @@ class schema_proc
 	 */
 	function _GetColumns($oProc,$sTableName,&$sColumns)
 	{
+		unset($oProc);	// unused, but required by function signature
 		$this->sCol = $this->pk = $this->fk = $this->ix = $this->uc = array();
 
 		$tabledef = $this->GetTableDefinition($sTableName);
