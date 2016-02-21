@@ -379,9 +379,11 @@ class Db
 	 * @param Api\Db $db already connected Api\Db instance to check
 	 * @throws egw_exception_db_connection if node should NOT be used
 	 */
-	static function galera_cluster_health(Api\Db $db)
+	static function galera_cluster_health(Db $db)
 	{
-		if (($state = $db->query("SHOW STATUS WHERE Variable_name in ('wsrep_cluster_size','wsrep_local_state','wsrep_local_state_comment')")->GetAssoc()))
+		if (($state = $db->query("SHOW STATUS WHERE Variable_name in ('wsrep_cluster_size','wsrep_local_state','wsrep_local_state_comment')",
+			// GetAssoc in ADOdb 5.20 does not work with our default self::FETCH_BOTH
+			__LINE__, __FILE__, 0, -1, false, self::FETCH_ASSOC)->GetAssoc()))
 		{
 			if ($state['wsrep_local_state_comment'] == 'Synced' ||
 				// if we have only 2 nodes (2. one starting), we can only use the donor
@@ -1967,7 +1969,7 @@ class Db
 	* @param string $join =null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
-	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_BOTH (default), self::FETCH_ASSOC or self::FETCH_NUM
+	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_ASSOC (default), self::FETCH_BOTH or self::FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=self::FETCH_ASSOC)
@@ -2015,7 +2017,7 @@ class Db
 	* @param string $order_by ORDER BY statement for the union
 	* @param int|bool $offset offset for a limited query or False (default)
 	* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
-	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_BOTH (default), self::FETCH_ASSOC or self::FETCH_NUM
+	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_ASSOC (default), self::FETCH_BOTH or self::FETCH_NUM
 	* @return ADORecordSet or false, if the query fails
 	*/
 	function union($selects,$line,$file,$order_by='',$offset=false,$num_rows=0,$fetchmode=self::FETCH_ASSOC)
