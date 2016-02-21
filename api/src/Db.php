@@ -46,7 +46,7 @@ include_once(__DIR__.'/Db/ADOdb/adodb.inc.php');
  * To fetch a next (single) row, you can use:
  *		$row = $db->query("SELECT COUNT(*) FROM ...")->fetch($fetchmod=null);
  *
- * egw_db allows to use exceptions to catch sql-erros, not existing tables or failure to connect to the database, eg.:
+ * Api\Db allows to use exceptions to catch sql-erros, not existing tables or failure to connect to the database, eg.:
  *		try {
  *			$this->db->connect();
  *			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
@@ -162,7 +162,7 @@ class Db
 	 * Can be used to transparently convert tablenames, eg. 'mytable' => 'otherdb.othertable'
 	 *
 	 * Can be set eg. at the *end* of header.inc.php.
-	 * Only works with new egw_db methods (select, insert, update, delete) not query!
+	 * Only works with new Api\Db methods (select, insert, update, delete) not query!
 	 *
 	 * @var array
 	 */
@@ -373,13 +373,13 @@ class Db
 	 *
 	 * To enable this check add the following to your header.inc.php:
 	 *
-	 * require_once(EGW_API_INC.'/class.egw_db.inc.php');
-	 * self::$health_check = array('egw_db', 'galera_cluster_health');
+	 * require_once(EGW_INCLUDE_ROOT.'/api/src/Db.php');
+	 * EGroupware\Api\Db::$health_check = array('EGroupware\Api\Db', 'galera_cluster_health');
 	 *
-	 * @param egw_db $db already connected egw_db instance to check
+	 * @param Api\Db $db already connected Api\Db instance to check
 	 * @throws egw_exception_db_connection if node should NOT be used
 	 */
-	static function galera_cluster_health(egw_db $db)
+	static function galera_cluster_health(Api\Db $db)
 	{
 		if (($state = $db->query("SHOW STATUS WHERE Variable_name in ('wsrep_cluster_size','wsrep_local_state','wsrep_local_state_comment')")->GetAssoc()))
 		{
