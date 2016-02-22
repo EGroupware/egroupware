@@ -78,7 +78,7 @@ class etemplate_request_cache extends etemplate_request
 	 *
 	 * @return string
 	 */
-	public function id()
+	public function &id()
 	{
 		//error_log(__METHOD__."() id=$this->id");
 		return $this->id;
@@ -87,7 +87,7 @@ class etemplate_request_cache extends etemplate_request
 	/**
 	 * Factory method to get a new request object or the one for an existing request
 	 *
-	 * @param string $id=null
+	 * @param string $id =null
 	 * @return etemplate_request|boolean the object or false if $id is not found
 	 */
 	static function read($id=null)
