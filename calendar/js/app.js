@@ -255,7 +255,7 @@ app.classes.calendar = AppJS.extend(
 				if (do_refresh)
 				{
 					// Discard cache, reload
-					return this.observer('','calendar',_id ? 'infolog'+_id : false, _type);
+					this._clear_cache();
 				}
 				break;
 			case 'calendar':
@@ -297,18 +297,8 @@ app.classes.calendar = AppJS.extend(
 				}
 				else
 				{
-					// Full refresh, clear the caches
-					var events = egw.dataKnownUIDs(_app);
-					for(var i = 0; i < events.length; i++)
-					{
-						egw.dataDeleteUID(_app + '::' + events[i]);
-					}
-					var daywise = egw.dataKnownUIDs(app.classes.calendar.DAYWISE_CACHE_ID);
-					for(var i = 0; i < daywise.length; i++)
-					{
-						// Empty to clear existing widgets
-						egw.dataStoreUID(app.classes.calendar.DAYWISE_CACHE_ID + '::' + daywise[i], null);
-					}
+					this._clear_cache();
+
 					// Force redraw to current state
 					this.setState({state: this.state});
 				}
@@ -2581,6 +2571,25 @@ app.classes.calendar = AppJS.extend(
 				time.set_value('-'+(60 * def_alarm));
 				event.set_value(_secs_to_label(60 * def_alarm));
 			}
+		}
+	},
+
+
+	/**
+	 * Clear all calendar data from egw.data cache
+	 */
+	_clear_cache: function() {
+		// Full refresh, clear the caches
+		var events = egw.dataKnownUIDs('calendar');
+		for(var i = 0; i < events.length; i++)
+		{
+			egw.dataDeleteUID('calendar::' + events[i]);
+		}
+		var daywise = egw.dataKnownUIDs(app.classes.calendar.DAYWISE_CACHE_ID);
+		for(var i = 0; i < daywise.length; i++)
+		{
+			// Empty to clear existing widgets
+			egw.dataStoreUID(app.classes.calendar.DAYWISE_CACHE_ID + '::' + daywise[i], null);
 		}
 	},
 
