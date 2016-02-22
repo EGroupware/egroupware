@@ -210,7 +210,7 @@ class so_sql_cf extends so_sql
 	* saves custom field data
 	*
 	* @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
-	* @param array $extra_cols =array()
+	* @param array $extra_cols =array() extra-data to be saved
 	* @return bool false on success, errornumber on failure
 	*/
 	function save_customfields($data, array $extra_cols=array())
@@ -737,13 +737,5 @@ class so_sql_cf extends so_sql
 	{
 		return $this->allow_multiple_values && in_array($this->customfields[$name]['type'],array('select','select-account')) &&
 			$this->customfields[$name]['rows'] > 1;
-	}
-
-	/**
-	 * Prevent someone calling the old php4 so_sql constructor
-	 */
-	function so_sql()
-	{
-		throw new egw_exception_assertion_failed('use __construct()!');
 	}
 }

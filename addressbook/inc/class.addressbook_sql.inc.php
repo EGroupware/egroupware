@@ -837,11 +837,12 @@ class addressbook_sql extends so_sql_cf
 	 * Re-implemented to deal with extra contact_owner column
 	 *
 	 * @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
+	 * @param array $extra_cols =array() extra-data to be saved
 	 * @return bool false on success, errornumber on failure
 	 */
-	function save_customfields($data)
+	function save_customfields($data, array $extra_cols=array())
 	{
-		return parent::save_customfields($data, array('contact_owner' => $data['owner']));
+		return parent::save_customfields($data, array('contact_owner' => $data['owner'])+$extra_cols);
 	}
 
 	/**

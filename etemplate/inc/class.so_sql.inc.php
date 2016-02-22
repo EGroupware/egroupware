@@ -237,16 +237,6 @@ class so_sql
 	}
 
 	/**
-	 * php4 constructor
-	 *
-	 * @deprecated use __construct
-	 */
-	function so_sql($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
-	{
-		self::__construct($app,$table,$db,$column_prefix,$no_clone);
-	}
-
-	/**
 	 * sets up the class for an app and table (by using the table-definition of $app/setup/tables_current.inc.php
 	 *
 	 * If you need a more complex conversation then just removing the column_prefix, you have to do so in a derifed class !!!
