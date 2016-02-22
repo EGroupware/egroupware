@@ -6926,6 +6926,9 @@ span.egw_tutorial_title {
 /*Tablets Portrait*/
 /*Smartphones*/
 @media only screen and (max-device-width : 1024px) {
+  html * {
+    -webkit-overflow-scrolling: touch;
+  }
   #egw_fw_print {
     display: none;
   }
