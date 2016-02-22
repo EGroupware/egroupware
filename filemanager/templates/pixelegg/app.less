@@ -26,199 +26,12 @@
 /*//******************************************************************
 // iframe*/
 
-#filemanager-index_filemanager-index-header_left {
-    float: left;
-    height: 36px;
-    width: 98%;
-}
-
-
-
-
-// UP / Home / Path _______ / Go / #TARP# / BUTTONS ----- / UPLOAD
-
- /*Up img*/
- img#filemanager-index_up {position: relative; top: 5px; .dimension_width_height_s; padding: 4px; background-color: @gray_10;}
-
-  /*Home img*/
- img#filemanager-index_home {position: relative; top: 5px; .dimension_width_height_s; padding: 4px; background-color: @gray_10;}
-
-#filemanager-index_nm img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
-	height: auto;
-}
-
-// Pfad
-div.filemanager_navigation{
-        position: relative;
-        width: 100%;
-        margin-top: -12px !important;
-        margin-left: 6px !important;
-
-
-        img {
-                .dimension_width_height_s;
-                .Complete_Button_Icon_normal;
-                padding: 0.2em;
-
-                &:hover {.Complete_Button_Icon_hover;}
-            }
-
-        label {
-
-            float: left;
-            left: 74px;
-            right: 421px;
-            font-size: 140%;
-            top: 5px;
-
-        input {width: 99%;}
-
-
-
-
-    }
-
-}
-
-/*div.filemanager_navigation > label > input {
-    width: 95%;
-}*/
-
-
-/*Buttons / Tarp / FileUpload*/
-#filemanager-index_buttons {
-    top: -3px;
-    float: left;
-    position: absolute;
-    right: 0;
-
-    img {.dimension_width_height_s; padding: 4px;}
-
-
-    // choose data area
-    div.et2_file{
-        .Complete_Button_Icon_normal;
-        padding: 0em;
-        margin:0;
-        width: 16.5em;
-        background-color: @gray_10;
-        .dimension_height_m;
-        .rounded(3px);
-
-
-                        &:hover {background-color: @color_positive_action_active !important;}
-                        &:active {background-color: @color_positive_action_active !important;}
-
-        // Text: Datei wählen
-        span.et2_file_span {
-            background-size: 16px 16px;
-            padding: 3px 0px 0px 10px;;
-            width: 14em;
-            border: none;
-            cursor: pointer;
-            margin: 3px 0 0 2px;
-            background-color: @gray_10;
-
-                        &:hover {background-color: @color_positive_action_active !important;}
-                        &:active {background-color: @color_positive_action_active !important;}
-        }
-
-       // Upload Fläche
-       input#filemanager-index_upload {
-                color: @gray_0;
-                cursor: pointer;
-                background-color: transparent;
-
-/*                &:hover {background-color: @color_positive_action_active !important;}
-                &:active {background-color: @color_positive_action_active !important;}*/
-
-        }
-
-
-        // Progress Bar
-        div.progress {z-index: 1;width:auto;overflow: hidden;text-overflow: ellipsis;}
-  }
-
-}
-
-#filemanager-index_buttons > * {
-    padding-left: 3px;
-    vertical-align: middle;
-    margin-right: 0.2em;
-    background-color: @gray_10;
-
-
-
-}
-
-
-
-
-
-
-#filemanager-index{
-    width: auto;
-
-
-
-
-    // Tarp
-    #filemanager-index_tarp {
-        width: 32px !important;
-        height: 32px !important;
-        position: relative;
-        top: 0px;
-        background-color: @gray_20;
-
-        border: none;
-         -webkit-box-shadow: none;
-         -moz-box-shadow: none;
-         box-shadow: none;
-                &:hover {
-                        border: none;
-                        -webkit-box-shadow: none;
-                        -moz-box-shadow: none;
-                        box-shadow: none;
-                        .background_color_20_gray;
-               }
-    }
-
-
-
-
-
-
-
-
-    .filters{
-
-        vertical-align: center;
-
-        #filemanager-index_filter{ margin-top: 0.5em;}
-    }
-
-
-}
-
-
-
 // images .... uploaded files
 table.egwGridView_grid img {
-
     .img_filter_none;
-
 }
 
-
-
-
 // iframe
-
-
-
-
-
-
 
 /*// #####################################################*/
 /*Dialog filemanager*/
@@ -363,7 +176,7 @@ div#stylite-filemanager-upload{
 				max-width: 100%;
 				span{
 					white-space: nowrap;
-					
+
 				}
 			}
 		}

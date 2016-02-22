@@ -51,13 +51,14 @@
  * Get path input to take all remaining width
  */
 #filemanager-index_filemanager-index-header_left {
+  float: left;
   width: 100%;
+  margin-bottom: 1px;
 }
 div.filemanager_navigation {
   position: relative;
   width: 100%;
   white-space: normal;
-  margin: 5px 0 0 5px;
 }
 div.filemanager_navigation > * {
   vertical-align: middle;
@@ -68,16 +69,13 @@ div.filemanager_navigation > img {
 #filemanager-index_buttons {
   float: right;
 }
-#filemanager-index_buttons > * {
-  vertical-align: middle;
-  padding-left: 5px;
-  margin: 0;
+img#filemanager-index_tarp {
+  height: 22px;
 }
 div.filemanager_navigation > label {
   position: absolute;
-  left: 50px;
-  right: 422px;
-  padding-top: 3px;
+  left: 56px;
+  right: 475px;
   font-size: 140%;
   white-space: nowrap;
 }
@@ -85,8 +83,19 @@ div.filemanager_navigation > label > input {
   width: 100%;
 }
 #filemanager-index_buttons div.et2_file {
+  margin: 2px 0 0 0;
+  vertical-align: top;
+  padding-right: 7px;
+}
+#filemanager-index_buttons div.et2_file span,
+#filemanager-index_buttons div.et2_file input {
   width: 130px;
-  margin-top: 2px;
+  height: 16px;
+  top: 0;
+  background-position: 3px 3px;
+  margin: 0;
+  text-indent: 22px;
+  color: #666666;
 }
 #filemanager-index_buttons div.et2_file .progress {
   width: auto;
@@ -199,168 +208,6 @@ input.displayNone {
 */
 /*//******************************************************************
 // iframe*/
-#filemanager-index_filemanager-index-header_left {
-  float: left;
-  height: 36px;
-  width: 98%;
-}
-/*Up img*/
-img#filemanager-index_up {
-  position: relative;
-  top: 5px;
-  width: 16px;
-  height: 16px;
-  padding: 4px;
-  background-color: #e6e6e6;
-}
-/*Home img*/
-img#filemanager-index_home {
-  position: relative;
-  top: 5px;
-  width: 16px;
-  height: 16px;
-  padding: 4px;
-  background-color: #e6e6e6;
-}
-#filemanager-index_nm img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
-  height: auto;
-}
-div.filemanager_navigation {
-  position: relative;
-  width: 100%;
-  margin-top: -12px !important;
-  margin-left: 6px !important;
-}
-div.filemanager_navigation img {
-  width: 16px;
-  height: 16px;
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  padding: 0.2em;
-}
-div.filemanager_navigation img:hover {
-  /*.background_color_20_gray;*/
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-div.filemanager_navigation label {
-  float: left;
-  left: 74px;
-  right: 421px;
-  font-size: 140%;
-  top: 5px;
-}
-div.filemanager_navigation label input {
-  width: 99%;
-}
-/*div.filemanager_navigation > label > input {
-    width: 95%;
-}*/
-/*Buttons / Tarp / FileUpload*/
-#filemanager-index_buttons {
-  top: -3px;
-  float: left;
-  position: absolute;
-  right: 0;
-}
-#filemanager-index_buttons img {
-  width: 16px;
-  height: 16px;
-  padding: 4px;
-}
-#filemanager-index_buttons div.et2_file {
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 0em;
-  margin: 0;
-  width: 16.5em;
-  background-color: #e6e6e6;
-  height: 24px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#filemanager-index_buttons div.et2_file:hover {
-  background-color: #1aa200 !important;
-}
-#filemanager-index_buttons div.et2_file:active {
-  background-color: #1aa200 !important;
-}
-#filemanager-index_buttons div.et2_file span.et2_file_span {
-  background-size: 16px 16px;
-  padding: 3px 0px 0px 10px;
-  width: 14em;
-  border: none;
-  cursor: pointer;
-  margin: 3px 0 0 2px;
-  background-color: #e6e6e6;
-}
-#filemanager-index_buttons div.et2_file span.et2_file_span:hover {
-  background-color: #1aa200 !important;
-}
-#filemanager-index_buttons div.et2_file span.et2_file_span:active {
-  background-color: #1aa200 !important;
-}
-#filemanager-index_buttons div.et2_file input#filemanager-index_upload {
-  color: #ffffff;
-  cursor: pointer;
-  background-color: transparent;
-  /*                &:hover {background-color: @color_positive_action_active !important;}
-                &:active {background-color: @color_positive_action_active !important;}*/
-}
-#filemanager-index_buttons div.et2_file div.progress {
-  z-index: 1;
-  width: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#filemanager-index_buttons > * {
-  padding-left: 3px;
-  vertical-align: middle;
-  margin-right: 0.2em;
-  background-color: #e6e6e6;
-}
-#filemanager-index {
-  width: auto;
-}
-#filemanager-index #filemanager-index_tarp {
-  width: 32px !important;
-  height: 32px !important;
-  position: relative;
-  top: 0px;
-  background-color: #cdcdcd;
-  border: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-#filemanager-index #filemanager-index_tarp:hover {
-  border: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  background-color: #cccccc;
-}
-#filemanager-index .filters {
-  vertical-align: center;
-}
-#filemanager-index .filters #filemanager-index_filter {
-  margin-top: 0.5em;
-}
 table.egwGridView_grid img {
   /*filter grey*/
   filter: none;

@@ -22,13 +22,14 @@
  * Get path input to take all remaining width
  */
 #filemanager-index_filemanager-index-header_left {
+	float: left;
 	width: 100%;
+	margin-bottom: 1px;
 }
 div.filemanager_navigation {
 	position: relative;
 	width: 100%;
 	white-space: normal;
-	margin: 5px 0 0 5px;
 }
 div.filemanager_navigation > * {
 	vertical-align: middle;
@@ -39,16 +40,13 @@ div.filemanager_navigation > img {
 #filemanager-index_buttons {
 	float: right;
 }
-#filemanager-index_buttons > * {
-	vertical-align: middle;
-	padding-left: 5px;
-	margin:0;
+img#filemanager-index_tarp {
+	height: 22px;
 }
 div.filemanager_navigation > label {
 	position: absolute;
-	left: 50px;
-	right: 422px;
-	padding-top: 3px;
+	left: 56px;
+	right: 475px;
 	font-size: 140%;
 	white-space: nowrap;
 }
@@ -56,8 +54,18 @@ div.filemanager_navigation > label > input {
 	width: 100%;
 }
 #filemanager-index_buttons div.et2_file {
+	margin: 2px 0 0 0;
+	vertical-align: top;
+	padding-right: 7px;
+}
+#filemanager-index_buttons div.et2_file span, #filemanager-index_buttons div.et2_file input {
 	width: 130px;
-	margin-top: 2px;
+	height: 16px;
+	top: 0;
+	background-position: 3px 3px;
+	margin: 0;
+	text-indent: 22px;
+	color: #666666;
 }
 #filemanager-index_buttons div.et2_file .progress {
   width:auto;
