@@ -232,7 +232,7 @@ class etemplate_new extends etemplate_widget_template
 			// set action attribute for autocomplete form tag
 			// as firefox complains on about:balnk action, thus we have to literaly submit the form to a blank html
 			$form_action = "about:blank";
-			if (html::$user_agent == 'firefox') $form_action = $GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/empty.html';
+			if (html::$user_agent == 'firefox' || html::$user_agent == 'safari') $form_action = $GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/empty.html';
 
 			// check if we are in an ajax-exec call from jdots template (or future other tabbed templates)
 			if (isset($GLOBALS['egw']->framework->response))
