@@ -55,6 +55,43 @@
   #addressbook-edit a.et2_url.email {
     display: none !important;
   }
+  #addressbook-edit .uploadphoto {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    display: none;
+    border: 2px solid black;
+    background-color: #ffffff;
+    padding: 4px;
+    z-index: 1;
+    width: 100%;
+  }
+  #addressbook-edit .uploadphoto .et2_file {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+  #addressbook-edit .uploadphoto .et2_file .et2_file_span {
+    width: auto;
+    height: 30px;
+  }
+  #addressbook-edit .typeIcon {
+    height: 16px;
+    width: 16px;
+  }
+  #addressbook-edit .editname {
+    position: absolute;
+    display: none;
+    border: 2px solid black;
+    background-color: #ffffff;
+    padding: 4px;
+    top: 55px;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+  }
+  #addressbook-edit .custom_country {
+    display: none;
+  }
   #addressbook-index table.egwGridView_outer tbody span[id^='addressbook-index_'][id$='line1]'] {
     font-size: 12pt;
     overflow: hidden;
