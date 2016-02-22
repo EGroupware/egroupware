@@ -540,7 +540,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays a multiple week-view
 	 *
-	 * @param boolean $home = false if true return content suitable for home-page
+	 * @param boolean|etemplate2 $home = false if not false return content suitable for home-page
 	 */
 	function &weekN($home=false)
 	{
@@ -553,42 +553,36 @@ class calendar_uiviews extends calendar_ui
 	 * Displays the monthview or a multiple week-view
 	 *
 	 * @param int $weeks = 0 number of weeks to show, if 0 (default) all weeks of one month are shown
-	 * @param boolean $home = false if true return content suitable for home-page
+	 * @param boolean|etemplate2 $home = false if not false return content suitable for home-page
 	 */
 	function &month($weeks=0,$home=false)
 	{
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(weeks=%1) date=%2',True,$weeks,$this->date);
 
-		$this->use_time_grid = !$this->use_time_grid_pref || $this->use_time_grid_pref == 'all';	// all views
+		if (!$home)
+		{
+			trigger_error(__METHOD__ .' only used by home app', E_USER_DEPRECATED);
+			return;
+		}
 
-		// Merge print
+		$this->use_time_grid = !$this->use_time_grid_pref || $this->use_time_grid_pref == 'all';	// all views
+		$granularity = 0;
 		if($weeks)
 		{
-			// Split up span into multiple weeks
-			$timespan = array();
-			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
-			for($i = 0; $i < $weeks; $i++)
-			{
-				$timespan[] = array(
-					'start' => strtotime("+$i weeks", $this->first),
-					'end' => strtotime('+' . ($i+1).' weeks', $this->first) -1
-				);
-			}
-		} else {
-			$timespan[] = array(
-				'start' => mktime(0,0,0,$this->month,1,$this->year),
-				'end' => mktime(0,0,0,$this->month+1,1,$this->year)-1
-			);
-		}
-		$merge = $this->merge($timespan);
-		if($merge)
-		{
-			egw::redirect_link('/index.php',array(
-				'menuaction' => 'calendar.calendar_uiviews.index',
-				'msg'        => $merge,
-			));
-		}
+			$granularity = ($this->cal_prefs['interval'] ? (int)$this->cal_prefs['interval'] : 30);
 
+			$list = $this->cal_prefs['use_time_grid'];
+			if(!is_array($list))
+			{
+				$list = explode(',',$list);
+			}
+			if(is_array($list))
+			{
+				$granularity = in_array('weekN',$list) ? 0 : $granularity;
+			}
+		}
+		$content = array('view' => array());
+		
 		if ($weeks)
 		{
 			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
@@ -605,55 +599,27 @@ class calendar_uiviews extends calendar_ui
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(%1) date=%2: first=%3, last=%4',False,$weeks,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
-		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$navHeader;
-
-		$days =& $this->bo->search(array(
-			'start'   => $this->first,
-			'end'     => $this->last,
-		)+$this->search_params);
-
-		// we add DAY_s/2 to $this->first (using 12h), to deal with daylight saving changes
-		for ($week_start = $this->first; $week_start < $this->last; $week_start = strtotime("+1 week",$week_start))
+		// Loop through, using egw_time to handle DST
+		$week = 0;
+		$week_start = new egw_time($this->first);
+		$week_start->setTime(0,0,0);
+		$week_end = new egw_time($week_start);
+		$week_end->add(new DateInterval('P6DT23H59M59S'));
+		$last = new egw_time($this->last);
+		for ($week_start; $week_start < $last; $week_start->add('1 week'), $week_end->add('1 week'))
 		{
-			$week = array();
-			for ($i = 0; $i < 7; ++$i)
-			{
-				$day_ymd = $this->bo->date2string($i ? strtotime("+$i days",$week_start) : $week_start);
-				$week[$day_ymd] = array_shift($days);
-			}
-			$week_view = array(
-				'menuaction' => 'calendar.calendar_uiviews.week',
-				'date' => $this->bo->date2string($week_start),
-			);
-			$title = lang('Wk').' '.$this->week_number($week_start);
-			if ($this->allowEdit)
-			{
-				$title = html::a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
-			}
-
-			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
+			$search_params = $this->search_params;
+			$search_params['start'] = $week_start->format('ts');
+			$search_params['end'] = $week_end->format('ts');
+			
+			$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params));
+			$home->setElementAttribute("view[$week]",'onchange',false);
+			$home->setElementAttribute("view[$week]",'granularity',$granularity);
+			$home->setElementAttribute("view[$week]",'show_weekend', $this->search_params['weekend']);
+			$week++;
 		}
-
-		$navHeader = '<div class="calendar_calMonthNavHeader calendar_calMonth">'
-				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd',strtotime("-".$weekNavH,  $weeks? $this->first: $this->bo->date2ts($this->date))),
-				)). ' <span>'.$navHeader;
-
-		$navHeader = $navHeader.'</span> '.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd',strtotime("+".$weekNavH, $weeks? $this->first: $this->bo->date2ts($this->date))),
-				)).'</div>';
-		$content = $navHeader.$content;
-		if (!$home)
-		{
-			$this->do_header();
-
-			echo $content;
-		}
-
-
-		return $content;
+		
+		$home->exec(__METHOD__, $content);
 	}
 
 	/**
@@ -736,7 +702,7 @@ class calendar_uiviews extends calendar_ui
 	 * Displays the weekview, with 5 or 7 days
 	 *
 	 * @param int $days = 0 number of days to show, if 0 (default) the value from the URL or the prefs is used
-	 * @param boolean $home = false if true return content suitable for home-page
+	 * @param boolean|etemplate2 $home = false if not false return content suitable for home-page
 	 */
 	function week($days=0,$home=false)
 	{
@@ -757,6 +723,7 @@ class calendar_uiviews extends calendar_ui
 		{
 			$wd_start = $this->first = $this->bo->date2ts($this->date);
 			$this->last = strtotime("+$days days",$this->first) - 1;
+			$view = $days == 1 ? 'day' : 'day4';
 		}
 		else
 		{
@@ -774,6 +741,19 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 			$this->last = strtotime("+$days days",$this->first) - 1;
+			$view = 'week';
+		}
+
+		$granularity = ($this->cal_prefs['interval'] ? (int)$this->cal_prefs['interval'] : 30);
+
+		$list = $this->cal_prefs['use_time_grid'];
+		if(!is_array($list))
+		{
+			$list = explode(',',$list);
+		}
+		if(is_array($list))
+		{
+			$granularity = in_array($view,$list) ? 0 : $granularity;
 		}
 
 		$search_params = array(
@@ -821,7 +801,11 @@ class calendar_uiviews extends calendar_ui
 			}
 		}
 		$tmpl = $home ? $home :new etemplate_new('calendar.view');
-		$tmpl->setElementAttribute('view','show_weekend', $days == 7);
+		foreach($content['view'] as $index => $week)
+		{
+			$tmpl->setElementAttribute("view[$index]",'granularity',$granularity);
+			$tmpl->setElementAttribute("view[$index]",'show_weekend',$this->search_params['weekend']);
+		}
 
 		// Get the actions
 		$tmpl->setElementAttribute('view','actions',$this->get_actions());

@@ -714,6 +714,8 @@ class calendar_ui
 	 */
 	public function to_client(&$event)
 	{
+		if(!$event || !is_array($event)) return false;
+		
 		if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
 			$event['class'] .= 'rowNoEdit ';

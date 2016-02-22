@@ -81,6 +81,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				}
 				if($this->favorite['state']['filter']) $ui->search_params['filter'] = $this->favorite['state']['filter'];
 				if($this->favorite['state']['sortby']) $ui->search_params['sortby'] = $this->favorite['state']['sortby'];
+				$ui->search_params['weekend'] = $this->favorite['state']['weekend'];
 			}
 			$etemplate->read('home.legacy');
 
@@ -114,15 +115,18 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				$ui->planner_view = $this->favorite['state']['planner_view'];
 				$ui->planner(array(), $etemplate);
 				return;
-			case 'year':
-				$content = array('legacy' => $ui->year(true));
-				break;
 			case 'month':
-				$content = array('legacy' => $ui->month(0,true));
-				break;
 			case 'weekN':
-				$content = array('legacy' => $ui->weekN(true));
-				break;
+				$etemplate->read('calendar.view');
+				$etemplate->set_dom_id($id);
+				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
+				
+				$ui->month($this->favorite['state']['view'] == 'month' ?
+					0 :
+					(int)$ui->cal_prefs['multiple_weeks'],
+					$etemplate
+				);
+				return;
 			case 'week':
 				$etemplate->read('calendar.view');
 				$etemplate->set_dom_id($id);

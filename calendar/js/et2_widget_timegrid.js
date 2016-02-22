@@ -1781,7 +1781,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		{
 			this.options.height = Math.max(this.options.height, needed);
 			// Set all others to match
-			if(!_too_small)
+			if(!_too_small && rowCount > 1)
 			{
 				window.setTimeout(jQuery.proxy(function() {
 					this._parent.iterateOver(function(widget) {

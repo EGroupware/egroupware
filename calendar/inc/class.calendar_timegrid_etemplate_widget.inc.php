@@ -31,6 +31,7 @@
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, true);
+		if(!is_array($value)) $value = array();
 
 		foreach($value as $day => &$events)
 		{

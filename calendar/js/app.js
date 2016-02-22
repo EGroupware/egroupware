@@ -1294,7 +1294,7 @@ app.classes.calendar = AppJS.extend(
 			dates.set_disabled(filter.value !== "custom");
 			if (filter.value == "custom")
 			{
-				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
+				jQuery(view.getWidgetById('startdate').getDOMNode()).find('input').focus();
 			}
 		}
 	},
