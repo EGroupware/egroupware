@@ -74,6 +74,13 @@ class accounts_sql
 	private $frontend;
 
 	/**
+	 * Instance of contacts object / addressbook_bo, NOT automatic instanciated!
+	 *
+	 * @var addressbook_bo
+	 */
+	private $contacts;
+
+	/**
 	 * does backend allow to change account_lid
 	 */
 	const CHANGE_ACCOUNT_LID = true;
@@ -280,7 +287,8 @@ class accounts_sql
 		}
 		if ($contact_id)
 		{
-			$GLOBALS['egw']->contacts->delete($contact_id,false);	// false = allow to delete accounts (!)
+			if (!isset($this->contacts)) $this->contacts = new addressbook_bo();
+			$this->contacts->delete($contact_id,false);	// false = allow to delete accounts (!)
 		}
 		return true;
 	}
@@ -449,6 +457,7 @@ class accounts_sql
 				$members = array();
 				foreach((array)$this->memberships($GLOBALS['egw_info']['user']['account_id'], true) as $grp => $name)
 				{
+					unset($name);
 					$members = array_unique(array_merge($members, array_keys((array)$this->members($grp))));
 					if ($param['type'] == 'groupmembers+memberships') $members[] = abs($grp);
 				}
@@ -523,10 +532,10 @@ class accounts_sql
 					break;
 			}
 		}
-		if (!is_object($GLOBALS['egw']->contacts)) throw new exception('No $GLOBALS[egw]->contacts!');
+		if (!isset($this->contacts)) $this->contacts = new addressbook_bo();
 
 		$accounts = array();
-		foreach((array) $GLOBALS['egw']->contacts->search($criteria,
+		foreach((array) $this->contacts->search($criteria,
 			array_merge(array(1,'n_given','n_family','id','created','modified',$this->table.'.account_id AS account_id'),$email_cols),
 			$order,"account_lid,account_type,account_status,account_expires,account_primary_group,account_description",
 			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
@@ -554,7 +563,7 @@ class accounts_sql
 				);
 			}
 		}
-		$this->total = $GLOBALS['egw']->contacts->total;
+		$this->total = $this->contacts->total;
 		//error_log(__METHOD__."(".array2string($param).") returning ".count($accounts).'/'.$this->total);
 		return $accounts;
 	}
