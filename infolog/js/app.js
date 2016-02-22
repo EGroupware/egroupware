@@ -161,7 +161,7 @@ app.classes.infolog = AppJS.extend(
 		if(et2)
 		{
 			var content = this.et2.getArrayMgr('content');
-			nm = content? content.data.nm: {};
+			nm = content && content.data && content.data.nm ? content.data.nm: {};
 		}
 
 		state.action = nm.action || null;
