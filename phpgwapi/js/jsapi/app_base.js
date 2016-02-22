@@ -455,7 +455,7 @@ var AppJS = Class.extend(
 		var templateName = _action.data.mobileViewTemplate || 'edit.xet';
 		var etemplate = new etemplate2 (this.viewTemplate[0], false);
 		var template = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'?1';
-		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}};
+		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}, currentapp:id_app[0]};
 		
 		if(template.indexOf('.xet') > 0)
 		{

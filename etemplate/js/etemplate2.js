@@ -350,7 +350,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	this.template_base_url += _url.split(_name.split('.').shift())[0];
 
 	egw().debug("info", "Loaded data", _data);
-	var currentapp = this.app = _data.currentapp || window.egw_appName;
+	var currentapp = this.app = _data.currentapp || egw().app_name();
 
 	// extract $content['msg'] and call egw.message() with it
 	var msg = _data.content.msg;
