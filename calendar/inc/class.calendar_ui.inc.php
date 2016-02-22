@@ -790,6 +790,13 @@ class calendar_ui
 			}
 			// we no longer exclude non-accounts from the account-selection: it shows all types of participants
 			$accounts = explode(',',$this->owner);
+
+			// Remove '0' - it means current user but will show as #0 with some account selection options
+			$zero_index = array_search('0',$accounts);
+			if($zero_index !== FALSE)
+			{
+				$accounts[$zero_index] = $this->user;
+			}
 			$file[] = array(
 				'text' =>
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
