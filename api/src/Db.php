@@ -1418,7 +1418,8 @@ class Db
 		// for boolean types, causing it to return "true" or "false" and not a quoted string like "'1'"!
 		if (is_bool($value)) $value = (string)$value;
 
-		return $this->Link_ID->qstr($value);
+		// need to cast to string, as ADOdb 5.20 would return NULL instead of '' for NULL, causing us to write that into NOT NULL columns
+		return $this->Link_ID->qstr((string)$value);
 	}
 
 	/**
