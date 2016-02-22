@@ -455,7 +455,7 @@ class egw_json_response extends egw_json_msg
 	/**
 	 * Private function used to send the HTTP header of the JSON response
 	 */
-	private function sendHeader()
+	private static function sendHeader()
 	{
 		$file = $line = null;
 		if (headers_sent($file, $line))
