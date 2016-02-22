@@ -122,7 +122,9 @@ class importexport_wizard_basic_import_csv
 			{
 				case 'next':
 					// Process sample file for fields
-					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile',$content['application']), "rb")) !== FALSE) {
+					if ($GLOBALS['egw']->session->appsession('csvfile',$content['application']) &&
+						($handle = fopen($GLOBALS['egw']->session->appsession('csvfile',$content['application']), "rb")) !== FALSE
+					) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
 						//error_log(array2string($data));
 						fclose($handle);
@@ -205,7 +207,7 @@ class importexport_wizard_basic_import_csv
 			}
 			if(!array_key_exists('num_header_lines', $content))
 			{
-				if(array_key_exists('num_header_lines', $content['plugin_options']))
+				if(is_array($content['plugin_options']) && array_key_exists('num_header_lines', $content['plugin_options']))
 				{
 					$content['num_header_lines'] = $content['plugin_options']['num_header_lines'];
 				}
