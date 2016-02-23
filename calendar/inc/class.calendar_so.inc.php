@@ -498,7 +498,7 @@ class calendar_so
 	/**
 	 * Maximum time a ctag get cached, as ActiveSync ping requests can run for a long time
 	 */
-	const MAX_CTAG_CACHE_TIME = 300;
+	const MAX_CTAG_CACHE_TIME = 29;
 
 	/**
 	 * Get maximum modification time of events for given participants and optional owned by them
