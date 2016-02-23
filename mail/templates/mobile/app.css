@@ -119,28 +119,28 @@ span.status_img {
   width: 12px;
   height: 12px;
   background-repeat: no-repeat;
-  background-image: url(images/kmmsgread.png);
+  background-image: url(../default/images/kmmsgread.png);
 }
 tr.deleted span.status_img {
-  background-image: url(images/kmmsgdel.png);
+  background-image: url(../default/images/kmmsgdel.png);
 }
 tr.unseen span.status_img {
-  background-image: url(images/kmmsgunseen.png);
+  background-image: url(../default/images/kmmsgunseen.png);
 }
 tr.flagged_seen span.status_img {
-  background-image: url(images/read_flagged_small.png) !important;
+  background-image: url(../default/images/read_flagged_small.png) !important;
 }
 tr.flagged_unseen span.status_img {
-  background-image: url(images/unread_flagged_small.png) !important;
+  background-image: url(../default/images/unread_flagged_small.png) !important;
 }
 tr.recent span.status_img {
-  background-image: url(images/kmmsgnew.png) !important;
+  background-image: url(../default/images/kmmsgnew.png) !important;
 }
 tr.replied span.status_img {
-  background-image: url(images/kmmsgreplied.png) !important;
+  background-image: url(../default/images/kmmsgreplied.png) !important;
 }
 tr.forwarded span.status_img {
-  background-image: url(images/kmmsgforwarded.png) !important;
+  background-image: url(../default/images/kmmsgforwarded.png) !important;
 }
 .subjectBold {
   font-size: 12px;
@@ -150,6 +150,15 @@ tr.forwarded span.status_img {
 .subject {
   font-size: 12px;
   font-family: Arial;
+}
+.bodypreview {
+  white-space: normal !important;
+  max-height: 25px !important;
+  font-size: 11px;
+  font-style: italic;
+  font-weight: normal !important;
+  font-family: Arial;
+  color: grey  !important;
 }
 TR.sieveRowActive {
   font-size: 11px;
@@ -408,7 +417,7 @@ div.mailUploadSection > div.et2_hbox > label {
   text-align: left;
   font-weight: bold;
   padding-left: 25px;
-  background-image: url(images/write_mail.png) !important;
+  background-image: url(../default/images/write_mail.png) !important;
   background-position: left;
   background-repeat: no-repeat;
 }
@@ -440,7 +449,7 @@ div.mail-compose_fileselector {
 }
 .mail-compose_fileselector span.et2_file_span {
   background-repeat: no-repeat;
-  background-image: url(images/attach.png);
+  background-image: url(../default/images/attach.png);
   background-size: inherit;
   background-position: left;
 }
@@ -452,7 +461,7 @@ div.mail-compose_fileselector {
   font-weight: bold;
   padding-left: 30px;
   width: 80px;
-  background-image: url(images/mail_send.png) !important;
+  background-image: url(../default/images/mail_send.png) !important;
   background-position: left;
   background-repeat: no-repeat;
 }
@@ -1008,7 +1017,7 @@ body {
   -moz-border-radius-topleft: 10px;
   border-radius: 3px;
   border-top-left-radius: 10px;
-  background-image: url("images/write_mail_lighter.png") !important;
+  background-image: url("../pixelegg/images/write_mail_lighter.png") !important;
   background-position: right center !important;
   background-repeat: no-repeat;
   background-size: 20px 20px;
@@ -1118,7 +1127,7 @@ body {
   font-weight: normal;
   padding-left: 20px;
   float: left;
-  background-image: url(images/mail_send.png);
+  background-image: url(../pixelegg/images/mail_send.png);
   background-position: left;
   background-repeat: no-repeat;
   background-size: 16px 16px;
@@ -1383,7 +1392,7 @@ body {
 #mail-display .et2_toolbar #mail-display_save_wrapper button#mail-display_save,
 #mail-display #mail-display_toolbar #mail-display_save_wrapper button#mail-display_save,
 #mail-display mail-display_displayToolbar #mail-display_save_wrapper button#mail-display_save {
-  background-image: url('../images/speichern.png');
+  background-image: url('../pixelegg/images/speichern.png');
   background-position: left center;
   background-repeat: no-repeat;
   background-size: 16px 16px;
@@ -1858,29 +1867,29 @@ span.status_img {
   width: 12px;
   height: 12px;
   background-repeat: no-repeat;
-  background-image: url(images/kmmsgread.png);
+  background-image: url(../pixelegg/images/kmmsgread.png);
   background-size: 12px 12px;
 }
 tr.deleted span.status_img {
-  background-image: url(images/kmmsgdel.png);
+  background-image: url(../pixelegg/images/kmmsgdel.png);
 }
 tr.unseen span.status_img {
-  background-image: url(images/kmmsgunseen.png);
+  background-image: url(../pixelegg/images/kmmsgunseen.png);
 }
 tr.flagged_seen span.status_img {
-  background-image: url(images/read_flagged_small.png) !important;
+  background-image: url(../pixelegg/images/read_flagged_small.png) !important;
 }
 tr.flagged_unseen span.status_img {
-  background-image: url(images/unread_flagged_small.png) !important;
+  background-image: url(../pixelegg/images/unread_flagged_small.png) !important;
 }
 tr.recent span.status_img {
-  background-image: url(images/kmmsgnew.png) !important;
+  background-image: url(../pixelegg/images/kmmsgnew.png) !important;
 }
 tr.replied span.status_img {
-  background-image: url(images/kmmsgreplied.png) !important;
+  background-image: url(../pixelegg/images/kmmsgreplied.png) !important;
 }
 tr.forwarded span.status_img {
-  background-image: url(images/kmmsgforwarded.png) !important;
+  background-image: url(../pixelegg/images/kmmsgforwarded.png) !important;
 }
 .subjectBold {
   font-size: 12px;
@@ -2113,7 +2122,7 @@ input[type=button] {
   text-align: left;
   font-weight: bold;
   padding-left: 25px;
-  background-image: url(images/write_mail.png) !important;
+  background-image: url(../pixelegg/images/write_mail.png) !important;
   background-position: left;
   background-repeat: no-repeat;
 }
@@ -2605,6 +2614,7 @@ div.mailComposeHeaderSection > table {
   -o-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
 }
+/* import */
 /* tablets and smartphones  */
 @media all {
   div.mailDisplayContainer {
@@ -2668,7 +2678,7 @@ div.mailComposeHeaderSection > table {
     text-align: left;
     font-weight: normal;
     padding-left: 20px;
-    background-image: url(images/mail_send.png);
+    background-image: url(../pixelegg/images/mail_send.png);
     background-position: left;
     background-repeat: no-repeat;
     background-size: 16px 16px;
@@ -2884,28 +2894,27 @@ div.mailComposeHeaderSection > table {
   }
   #mail-index table.egwGridView_outer tbody tr span.status_img {
     padding: 0 2px 2px 0;
-    display: inline;
   }
   #mail-index table.egwGridView_outer tbody tr span.deleted.status_img {
-    background-image: url(images/kmmsgdel.png);
+    background-image: url(../pixelegg/images/kmmsgdel.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.unseen.status_img {
-    background-image: url(images/kmmsgunseen.png);
+    background-image: url(../pixelegg/images/kmmsgunseen.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.flagged_seen.status_img {
-    background-image: url(images/read_flagged_small.png);
+    background-image: url(../pixelegg/images/read_flagged_small.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.flagged_unseen.status_img {
-    background-image: url(images/unread_flagged_small.png);
+    background-image: url(../pixelegg/images/unread_flagged_small.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.recent.status_img {
-    background-image: url(images/kmmsgnew.png);
+    background-image: url(../pixelegg/images/kmmsgnew.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.replied.status_img {
-    background-image: url(images/kmmsgreplied.png);
+    background-image: url(../pixelegg/images/kmmsgreplied.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.forwarded.status_img {
-    background-image: url(images/kmmsgforwarded.png);
+    background-image: url(../pixelegg/images/kmmsgforwarded.png);
   }
   #mail-index table.egwGridView_outer tbody tr span.bodypreview {
     max-height: 12px;

@@ -15,8 +15,8 @@
 
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_mobile.less";
-@import (less) "../pixelegg/app.css";
-
+@import "../pixelegg/app.less";
+/* import */
 /* tablets and smartphones  */
 @media all {
 	div.mailDisplayContainer{
@@ -90,7 +90,7 @@
 					text-align: left;
 					font-weight: normal;
 					padding-left: 20px;
-					background-image: url(images/mail_send.png);
+					background-image: url(../pixelegg/images/mail_send.png);
 					background-position: left;
 					background-repeat: no-repeat;
 					background-size: 16px 16px;
@@ -317,28 +317,27 @@
 				}
 				span.status_img {
 					padding:0 2px 2px 0;
-					display:inline;
 				}
 				span.deleted.status_img {
-					background-image: url(images/kmmsgdel.png);
+					background-image: url(../pixelegg/images/kmmsgdel.png);
 				}
 				span.unseen.status_img {
-					background-image: url(images/kmmsgunseen.png);
+					background-image: url(../pixelegg/images/kmmsgunseen.png);
 				}
 				span.flagged_seen.status_img {
-					background-image: url(images/read_flagged_small.png);
+					background-image: url(../pixelegg/images/read_flagged_small.png);
 				}
 				span.flagged_unseen.status_img {
-					background-image: url(images/unread_flagged_small.png);
+					background-image: url(../pixelegg/images/unread_flagged_small.png);
 				}
 				span.recent.status_img {
-					background-image: url(images/kmmsgnew.png);
+					background-image: url(../pixelegg/images/kmmsgnew.png);
 				}
 				span.replied.status_img {
-					background-image: url(images/kmmsgreplied.png);
+					background-image: url(../pixelegg/images/kmmsgreplied.png);
 				}
 				span.forwarded.status_img {
-					background-image: url(images/kmmsgforwarded.png);
+					background-image: url(../pixelegg/images/kmmsgforwarded.png);
 				}
 				span.bodypreview {
 					max-height: 12px;
