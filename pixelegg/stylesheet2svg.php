@@ -16,10 +16,11 @@ $args = $_SERVER['argv'];
 $prog = array_shift($args);
 
 if ($_SERVER['argc'] <= 1 || $prog != 'pixelegg/stylesheet2svg.php') die("
-Usage: pixelegg/stylesheet2svg [-s stylesheet] svg-image(s)
+Usage: pixelegg/stylesheet2svg [-s stylesheet|-c color] svg-image(s)
 Add an external stylesheet to an svg image and sets id of svg tag to app_image
 Examples:
 - pixelegg/stylesheet2svg -s pixelegg/less/svg.css */templates/pixelegg/images/*.svg pixelegg/images/*.svg
+- pixelegg/stylesheet2svg -c '#6e6e6e,#939393' */templates/pixelegg/images/*.svg pixelegg/images/*.svg
 \n");
 
 $stylesheet = 'pixelegg/less/svg.css';
@@ -29,7 +30,12 @@ if ($args[0] == '-s')
 	array_shift($args);
 	array_shift($args);
 }
-
+if ($args[0] == '-c')
+{
+	$color = explode(',',$args[1]);
+	array_shift($args);
+	array_shift($args);
+}
 foreach($args as $path)
 {
 	if (!preg_match('|^([^/]+)/.*/(.*).svg$|', $path, $matches) || !($svg = file_get_contents($path)))
@@ -45,6 +51,13 @@ foreach($args as $path)
 	// change id to app_image
 	$id = $matches[1].'_'.$matches[2];
 	$svg = preg_replace('/(<svg.*) id="[^"]+"/', '\\1 id="'.$id.'"', $svg);
+	
+	// Replace fill color with color[0]
+	$svg = preg_replace('/(<.*) fill="[^"]*"/','\\1 fill="'.$color[0] .'"', $svg);
+	// Replace stroke color with color[1]
+	$svg = preg_replace('/(<.*) stroke="[^"]*"/', '\\1 stroke="'.$color[1] .'"', $svg);
+	
+	error_log(__METHOD__."svg: ". var_dump($svg));
 	// store image again
 	file_put_contents($path, $svg);
 	echo "$path: added $style_url and id=\"$id\"\n";
