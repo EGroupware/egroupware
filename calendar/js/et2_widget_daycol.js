@@ -852,6 +852,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 */
 	position_event: function(event)
 	{
+		// Not visible?  Skip it for speed.
+		// Should be called again as part of resize when shown.
+		if(!this.div.is(':visible')) return;
+
 		// Sort events into minimally-overlapping columns
 		var columns = this._spread_events();
 

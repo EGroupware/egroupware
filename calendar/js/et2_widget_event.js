@@ -364,7 +364,11 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.set_statustext('');
 
 		// Height specific section
-		this._small_size();
+		// This can take an unreasonable amount of time if parent is hidden
+		if(this._parent.div.is(':visible'))
+		{
+			this._small_size();
+		}
 	},
 
 	/**
