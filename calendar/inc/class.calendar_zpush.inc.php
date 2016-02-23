@@ -1297,33 +1297,22 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * if changes occurr default diff engine computes the actual changes
 	 *
 	 * @param string $folderid
-	 * @param string &$syncstate on call old syncstate, on return new syncstate
-	 * @return array|boolean false if $folderid not found, array() if no changes or array(array("type" => "fakeChange"))
+	 * @param string &$syncstate on return new syncstate
 	 */
 	function AlterPingChanges($folderid, &$syncstate)
 	{
 		$type = $owner = null;
 		$this->backend->splitID($folderid, $type, $owner);
-		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid','$syncstate') type='$type', owner=$owner");
 
 		if ($type != 'calendar') return false;
 
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 		//$ctag = $this->calendar->get_ctag($owner,'owner',true);	// true only consider recurrence master
-		$ctag = $this->calendar->get_ctag($owner,false,true); // we only want to fetch the owners events, where he is a participant too
+		$syncstate = $this->calendar->get_ctag($owner,false,true); // we only want to fetch the owners events, where he is a participant too
 		// workaround for syncstate = 0 when calendar is empty causes synctate to not return 0 but array resulting in foldersync loop
-		if ($ctag == 0) $ctag = 1;
-		$changes = array();	// no change
-		$syncstate_was = $syncstate;
+		if ($syncstate == 0) $syncstate = 1;
 
-		if ($ctag !== $syncstate)
-		{
-			$syncstate = $ctag;
-			$changes = array(array('type' => 'fakeChange'));
-		}
-		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
-		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
-		return $changes;
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', ...) type='$type', owner=$owner --> syncstate='$syncstate'");
 	}
 
 	/**
