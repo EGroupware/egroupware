@@ -1141,6 +1141,13 @@ function etemplate2_handle_load(_type, _response)
 			var node = document.getElementById(data.DOMNodeID);
 			if(node)
 			{
+				if(node.children.length)
+				{
+					// Node has children already?  Check for loading over an
+					// existing etemplate
+					var old = etemplate2.getById(node.id);
+					if(old) old.clear();
+				}
 				var et2 = new etemplate2(node);
 				et2.load(data.name, data.url, data.data);
 				return true;
