@@ -406,11 +406,8 @@ var et2_taglist = et2_selectbox.extend(
 	{
 		if (value === '' || value === null) value = [];
 		var values = jQuery.isArray(value) ? jQuery.extend([],value) : [value];
-		this.options.value = values;
 
-		if(this.taglist == null) return;
-
-		if(!value)
+		if(!value && this.taglist)
 		{
 			this.taglist.clear(true);
 			return;
@@ -457,6 +454,10 @@ var et2_taglist = et2_selectbox.extend(
 				}
 			}
 		}
+
+		this.options.value = values;
+		
+		if(this.taglist == null) return;
 
 		this.taglist.setSelection(values);
 	},
