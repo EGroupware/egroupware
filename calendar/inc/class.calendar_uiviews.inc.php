@@ -530,6 +530,7 @@ class calendar_uiviews extends calendar_ui
 
 		$tmpl->setElementAttribute('planner','start_date', egw_time::to($this->first, egw_time::ET2));
 		$tmpl->setElementAttribute('planner','end_date', egw_time::to($this->last, egw_time::ET2));
+		$tmpl->setElementAttribute('planner','owner', $search_params['users']);
 		$tmpl->setElementAttribute('planner','group_by', $this->sortby);
 		// Get the actions
 		$tmpl->setElementAttribute('planner','actions',$this->get_actions());
