@@ -157,13 +157,15 @@ app.classes.home = AppJS.extend(
 			// Check for existing etemplate, this one loaded over it
 			// NOTE: Moving them around like this can cause problems with event handlers
 			var existing = etemplate2.getById(et2.uniqueId);
-			if(portlet && existing && existing.etemplate_exec_id != et2.etemplate_exec_id)
+			if(portlet && existing)
 			{
 				for(var i = 0; i < portlet._children.length; i++)
 				{
-					if(portlet._children[i]._inst) portlet._children[i]._inst.clear();
+					if(typeof portlet._children[i]._init == 'undefined')
+					{
+						portlet.removeChild(portlet._children[i])
+					}
 				}
-				portlet._children = [];
 			}
 			// It's in the right place for original load, but move it into portlet
 			var misplaced = $j(etemplate2.getById('home-index').DOMContainer).siblings('#'+et2.DOMContainer.id);

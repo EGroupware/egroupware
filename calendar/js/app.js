@@ -75,6 +75,9 @@ app.classes.calendar = AppJS.extend(
 	// up to date as state is changed.
 	sidebox_hooked_templates: [],
 
+	// List of queries in progress, to prevent home from requesting the same thing
+	_queries_in_progress: [],
+
 	/**
 	 * Constructor
 	 *
@@ -2724,6 +2727,14 @@ app.classes.calendar = AppJS.extend(
 		// Show ajax loader
 		framework.applications.calendar.sidemenuEntry.showAjaxLoader()
 
+		// Already in progress?
+		var query_string = JSON.stringify(query);
+		if(this._queries_in_progress.indexOf(query_string) != -1)
+		{
+			return;
+		}
+		this._queries_in_progress.push(query_string);
+
 		this.egw.dataFetch(
 			instance ? instance.etemplate_exec_id :
 				this.sidebox_et2.getInstanceManager().etemplate_exec_id,
@@ -2731,7 +2742,13 @@ app.classes.calendar = AppJS.extend(
 			query,
 			this.id,
 			function calendar_handleResponse(data) {
-				console.log(data);
+				var idx = this._queries_in_progress.indexOf(query_string);
+				if(idx >= 0)
+				{
+					this._queries_in_progress.splice(idx,1);
+				}
+				//console.log(data);
+				
 				// Look for any updated select options
 				if(data.rows && data.rows.sel_options && this.sidebox_et2)
 				{

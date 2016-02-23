@@ -235,7 +235,19 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 		// Copy actions set in parent
-		this._link_actions(this._parent._parent._parent.options.actions||{});
+		var action_parent = this;
+		while(action_parent != null && !action_parent.options.actions &&
+			!action_parent.instanceOf(et2_container)
+		)
+		{
+			action_parent = action_parent.getParent();
+		}
+		try {
+			this._link_actions(action_parent.options.actions||{});
+		} catch (e) {
+			// something went wrong, but keep quiet about it
+			debugger;
+		}
 
 		// Make sure category stuff is there
 		// Fake it to use the cache / call - if already there, these will return
@@ -853,7 +865,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			// objects
 			this._actionObject = objectManager.insertObject(false, new egwActionObject(
 				'calendar::'+this.options.value.row_id, objectManager, new et2_event_action_object_impl(this,this.getDOMNode()),
-				this._actionManager || objectManager.manager.getActionById(this.options.value.row_id) || objectManager.manager
+				this._actionManager || objectManager.manager.getActionById('calendar::'+this.options.value.row_id) || objectManager.manager
 			));
 		}
 		else

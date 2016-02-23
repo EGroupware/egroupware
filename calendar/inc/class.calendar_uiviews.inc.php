@@ -612,12 +612,18 @@ class calendar_uiviews extends calendar_ui
 			$search_params['start'] = $week_start->format('ts');
 			$search_params['end'] = $week_end->format('ts');
 			
-			$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params));
+			$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params)) +
+			array(
+				'id' => $week_start->format('Ymd')
+			);
 			$home->setElementAttribute("view[$week]",'onchange',false);
 			$home->setElementAttribute("view[$week]",'granularity',$granularity);
 			$home->setElementAttribute("view[$week]",'show_weekend', $this->search_params['weekend']);
 			$week++;
 		}
+
+		// Get the actions
+		$home->setElementAttribute('view','actions',$this->get_actions());
 		
 		$home->exec(__METHOD__, $content);
 	}

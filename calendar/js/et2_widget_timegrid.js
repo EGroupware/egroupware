@@ -950,6 +950,8 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 */
 	_scroll: function(event)
 	{
+		if(!this.day_widgets) return;
+		
 		// Loop through days, let them deal with it
 		for(var day = 0; day < this.day_widgets.length; day++)
 		{
@@ -1013,7 +1015,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		
 		for(var i = 0; i < parent.children.length; i++)
 		{
-			var parent_finder = jQuery(this.div, parent.children[i].iface.doGetDOMNode());
+			var parent_finder = jQuery(parent.children[i].iface.doGetDOMNode()).find(this.div);
 			if(parent_finder.length > 0)
 			{
 				parent = parent.children[i];
@@ -1303,7 +1305,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 *	necessarily an entry from the resource app), or a list containing a
 	 *	combination of both.
 	 */
-	set_value: function(events)
+	set_value: function set_value(events)
 	{
 		if(typeof events !== 'object') return false;
 	
@@ -1328,26 +1330,35 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				this.set_start_date(day_list[0]);
 				this.set_end_date(day_list[day_list.length-1]);
 			}
-
-			// Sub widgets actually get their own data from egw.data, so we'll
-			// stick it there
-			var consolidated = et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
-			for(var day in events)
+			
+			// We need to check if we're attached already, as the datastore can cause
+			// conflicts across other events (especially home) if we call it too early
+			if(this.isAttached())
 			{
-				var day_list = [];
-				for(var i = 0; i < events[day].length; i++)
+				// Sub widgets actually get their own data from egw.data, so we'll
+				// stick it there
+				var consolidated = et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
+				for(var day in events)
 				{
-					day_list.push(events[day][i].row_id);
-					egw.dataStoreUID('calendar::'+events[day][i].row_id, events[day][i]);
+					var day_list = [];
+					for(var i = 0; i < events[day].length; i++)
+					{
+						day_list.push(events[day][i].row_id);
+						egw.dataStoreUID('calendar::'+events[day][i].row_id, events[day][i]);
+					}
+					// Might be split by user, so we have to check that too
+					for(var i = 0; i < this.options.owner.length; i++)
+					{
+						var owner = consolidated ? this.options.owner : this.options.owner[i];
+						var day_id = app.classes.calendar._daywise_cache_id(day,owner);
+						egw.dataStoreUID(day_id, day_list);
+						if(consolidated) break;
+					}
 				}
-				// Might be split by user, so we have to check that too
-				for(var i = 0; i < this.options.owner.length; i++)
-				{
-					var owner = consolidated ? this.options.owner : this.options.owner[i];
-					var day_id = app.classes.calendar._daywise_cache_id(day,owner);
-					egw.dataStoreUID(day_id, day_list);
-					if(consolidated) break;
-				}
+			}
+			else
+			{
+				this.value = events;
 			}
 		}
 
@@ -1781,9 +1792,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		{
 			this.options.height = Math.max(this.options.height, needed);
 			// Set all others to match
-			if(!_too_small && rowCount > 1)
+			if(!_too_small && rowCount > 1 && this._parent)
 			{
 				window.setTimeout(jQuery.proxy(function() {
+					if(!this._parent) return;
 					this._parent.iterateOver(function(widget) {
 						if(!widget.disabled) widget.resize(true);
 					},this, et2_calendar_timegrid);

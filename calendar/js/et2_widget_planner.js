@@ -732,7 +732,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			this.widget.update_timer = null;
 			this.widget.doInvalidate = true;
 
-			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this.widget),100);
+			window.setTimeout(jQuery.proxy(function() {if(this.loader) this.loader.hide();},this.widget),100);
 		},{widget:this,"trigger":trigger}),ET2_GRID_INVALIDATE_TIMEOUT);
 	},
 

@@ -58,6 +58,9 @@ class calendar_favorite_portlet extends home_favorite_portlet
 	public function exec($id = null, etemplate_new &$etemplate = null)
 	{
 
+		// Always load app's javascript, so most actions have a chance of working
+		egw_framework::validate_file('.','app',$this->context['appname']);
+
 		// Always load app's css
 		egw_framework::includeCSS('calendar', 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
 			egw_framework::includeCSS('calendar','app');
@@ -86,8 +89,6 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			$etemplate->read('home.legacy');
 
 			$etemplate->set_dom_id($id);
-			// Always load app's javascript, so most actions have a chance of working
-			egw_framework::validate_file('','app',$this->context['appname']);
 		}
 
 		$content = array('legacy' => '');
@@ -143,7 +144,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 					$this->favorite['state']['view'] == 'day' ? 1 : 4
 				);
 				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
-					$ui->week($days, $etemplate);
+				$ui->week($days, $etemplate);
 				return;
 		}
 

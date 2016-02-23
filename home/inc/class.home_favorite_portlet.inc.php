@@ -125,7 +125,7 @@ class home_favorite_portlet extends home_portlet
 			egw_framework::includeCSS($this->context['appname'],'app');
 
 		// Always load app's javascript, so most actions have a chance of working
-		egw_framework::validate_file('','app',$this->context['appname']);
+		egw_framework::validate_file('.','app',$this->context['appname']);
 
 		// Set this so app's JS gets initialized
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
