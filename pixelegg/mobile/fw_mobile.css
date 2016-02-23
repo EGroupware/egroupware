@@ -7748,7 +7748,7 @@ span.egw_tutorial_title {
     margin-left: 0;
   }
   body .et2_searchbox.expanded button.et2_button {
-    display: none;
+    background: none;
   }
   body .et2_searchbox.expanded input {
     width: 100%;
@@ -7758,8 +7758,16 @@ span.egw_tutorial_title {
     outline: none;
   }
   body .et2_searchbox.expanded span.ui-icon.clear {
-    right: 80px;
-    top: 14px;
+    top: 0px;
+    left: -50px;
+    background-color: white;
+    height: 49px;
+    width: 50px;
+    background-image: url("../images/cancelled.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #e6e6e6;
+    background-size: 24px 24px;
   }
   body .et2_searchbox.expanded .flex {
     width: 100%;
