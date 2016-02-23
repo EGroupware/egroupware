@@ -1595,7 +1595,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				result = this.onclick.apply(this, args);
 			}
 
-			if(event.id && result && !this.disabled && !this.options.readonly)
+			var event_node = $j(event.event_node);
+			if(event.id && result && !this.disabled && !this.options.readonly &&
+				// Permissions - opening will fail if we try
+				event_node && !(event_node.hasClass('rowNoView'))
+			)
 			{
 				if(event.widget_id && this.getWidgetById(event.widget_id))
 				{
