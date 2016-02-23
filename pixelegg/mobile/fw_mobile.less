@@ -244,6 +244,10 @@
 					padding-top: 8px;
 				}
 			}
+			#egw_fw_sidemenu img[src$=".svg"] {
+				background: none;
+				box-shadow: none;
+			}
 		}
 		
 		//###################
@@ -813,6 +817,14 @@
 				}
 				div.et2_toolbar_actionlist {
 					margin-left: 50px;
+					button.et2_button.ui-draggable {
+						background-color: transparent !important;
+						border: none !important;
+						box-shadow: none !important;
+						background-position: center !important;
+						-webkit-filter: brightness(0) invert(1);
+						filter: brightness(0) invert(1);
+					}
 				}
 				div.et2_toolbar_more {
 
@@ -985,6 +997,11 @@
 				.flex{
 					width:100%;
 				}
+			}
+			
+			img.et2_button_icon[src*="svg"] {
+				background: none;
+				box-shadow: none;
 			}
 	}	
 }

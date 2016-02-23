@@ -7099,6 +7099,10 @@ span.egw_tutorial_title {
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
     padding-top: 8px;
   }
+  body #egw_fw_basecontainer #egw_fw_sidemenu img[src$=".svg"] {
+    background: none;
+    box-shadow: none;
+  }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
     font-size: medium;
     top: 50px !important;
@@ -7635,6 +7639,14 @@ span.egw_tutorial_title {
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
     margin-left: 50px;
   }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist button.et2_button.ui-draggable {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-position: center !important;
+    -webkit-filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1);
+  }
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
     background: none;
   }
@@ -7771,5 +7783,9 @@ span.egw_tutorial_title {
   }
   body .et2_searchbox.expanded .flex {
     width: 100%;
+  }
+  body img.et2_button_icon[src*="svg"] {
+    background: none;
+    box-shadow: none;
   }
 }
