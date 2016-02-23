@@ -302,7 +302,12 @@ var et2_portlet = et2_valueWidget.extend(
 				if(data.attributes.width || data.attributes.height)
 				{
 					// Tell children
-					this.iterateOver(function(widget) {widget.resize();},null,et2_IResizeable);
+					try {
+						this.iterateOver(function(widget) {widget.resize();},null,et2_IResizeable);
+					} catch (e) {
+						// Something went wrong, but do not stop
+						egw.debug('warn',e,this);
+					}
 				}
 			},
 			this, true, this
