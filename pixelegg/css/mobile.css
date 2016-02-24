@@ -6189,16 +6189,6 @@ span.egw_tutorial_title {
     background-position: 3px 7px;
     position: fixed;
   }
-  body span.egw_fw_mobile_popup_close.loaded {
-    background-image: none;
-  }
-  body span.egw_fw_mobile_popup_close.loaded:after {
-    content: "\2190";
-    font-size: 24pt;
-    color: white;
-    padding-left: 5px;
-    font-weight: bold;
-  }
   body #egw_fw_basecontainer {
     background: white;
   }

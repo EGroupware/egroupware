@@ -36,12 +36,17 @@
 /*Smartphones*/
 @smartphones: ~"only screen and (max-device-width: @{smartphone-max}) and (min-width: @{smartphone-min})";
 
+.white-svg {
+	-webkit-filter: brightness(0) invert(1) !important;
+	filter: brightness(0) invert(1) !important;
+	background-color: transparent !important;
+	background-size: 24px 24px !important;
+	border:none;
+}
 
 @media @handheld
 {
-	html * {
-		-webkit-overflow-scrolling: touch;
-	}
+	
 	#egw_fw_print {
 		display:none;
 	}
@@ -219,13 +224,20 @@
 @mobile-button-width: 50px;
 @mobile-nm-search-bg: #0c5da5;
 @media all {
-	html *{touch-action:auto;}
+	html *{touch-action:auto;-webkit-overflow-scrolling: touch;}
 	body
 	{
+		span.egw_fw_mobile_popup_close.loaded {
+			background-image: url(../images/topmenu_items/mobile/back.svg);
+			.white-svg;
+			top: 0;
+			background-position: center;
+			padding: 0;
+		}
 		#egw_fw_basecontainer.sidebar-toggle {
 			#egw_fw_top_toolbar {
 				div#egw_fw_menu {
-					background-image: url(../images/topmenu_items/mobile/menu_white.png);
+					background-image: url(../images/topmenu_items/mobile/menu.svg);
 					width: 50px;
 					height: 50px;
 					background-color: transparent;
@@ -248,7 +260,22 @@
 				background: none;
 				box-shadow: none;
 			}
+			#egw_fw_main img[src$="svg"], #egw_fw_footer img[src$="svg"] {
+				background:none;
+				border:none;
+				filter:none;
+				-webkit-filter:none;
+				box-shadow: none;
+			}
+			.egw_fw_ui_sidemenu_entry_apps> div{
+				display: inline-block;
+				h1 {
+					display: none;
+				}
+				
+			}
 		}
+		
 		
 		//###################
 		//#					#
@@ -450,27 +477,21 @@
 					width:50px;
 				}
 				button.nm_toggle_header {
+					background-image: url(../images/menu_list_round.svg);
 					background-position: center;
 					background-repeat: no-repeat;
 					margin-right:5px;
-					border-left:1px solid silver;
-					border:0;
-					color: white;
 					width:50px;
 					height:50px;
 					display:block;
 					float:right;
+					.white-svg;
 					&:focus{
 						outline:none;
 					}
-					&:after{
-						font-size: 18pt;
-						content:"\2261";
-						
-					}
-
 				}
 				button.nm_action_header {
+					background-image: url(../images/dots.svg);
 					background-position: center;
 					background-repeat: no-repeat;
 					margin-right:5px;
@@ -481,22 +502,13 @@
 					height:50px;
 					display:block;
 					float:right;
+					.white-svg;
 					&:focus{
 						outline:none;
-					}
-					&:after{
-						font-size:18pt;
-						content:"\205D";
-						font-weight: bold;
 					}
 				}
 				button.nm_action_header.back {
-					
-					&:after{
-						font-size:18pt;
-						content: "\2190";
-						font-weight: bold;
-					}
+					background-image: url(../images/cancelled.svg);
 				}
 				div.nm_favorites_div {
 					background-position: center;
@@ -521,14 +533,11 @@
 								display: none;
 							}
 							button:nth-child(2) {
+								background-position: center;
+								background-image: url(../images/topmenu_items/mobile/star.svg) !important;
+								background-size: 24px 24px;
 								div:first-child {
 									display: none;
-								}
-								&:after{
-									font-size: 17pt;
-									content: "\2606";
-									font-weight: bold;
-									vertical-align: super;
 								}
 							}
 						}
@@ -557,9 +566,7 @@
 					}
 				}
 				button.nm_toggle_header_on {
-					&:after {
-						content:"\2613";
-					}
+					background-image: url(../images/cancelled.svg);
 				}
 				input[type="search"] {
 					width: 50px;
@@ -781,6 +788,12 @@
 					margin-top:0;
 				}
 			}
+			.dialogHeadbar {
+				button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
+					.white-svg;
+					padding-right: 15px;
+				}
+			}
 		}
 		.rowHeader {
 			.mob-fontsize-l;
@@ -818,12 +831,11 @@
 				div.et2_toolbar_actionlist {
 					margin-left: 50px;
 					button.et2_button.ui-draggable {
-						background-color: transparent !important;
 						border: none !important;
 						box-shadow: none !important;
 						background-position: center !important;
-						-webkit-filter: brightness(0) invert(1);
-						filter: brightness(0) invert(1);
+						.white-svg;
+						margin-right: 15px;
 					}
 				}
 				div.et2_toolbar_more {
@@ -835,173 +847,173 @@
 						color:transparent;
 						border: none;
 						height: 46px;
-						width: 35px;
+						width: 50px;
 						padding: 0 !important;
-						margin-right: 15px;
-						margin-top: -7px;
-						&:hover {
-
-						}
-						&:after {
-							font-size:18pt;
-							content:"\205D";
-							font-weight: bold;
-							color:white;
-						}
+						background-image: url(../images/dots.svg);
+						background-repeat: no-repeat;
+						background-position: center;
+						.white-svg;
 						span {
 							display: none;
 						}
 					}
 				}
 			}
-			//###########################################
-			//#											#
-			//#		et2_tabbox styles					#
-			//#											#
-			//###########################################
-			.et2_tabbox.vertical {
-				.et2_tabflag {
-					border:none;
-					div.et2_tabtitle {
-						background-color: #f0f0f0;
-						&:before {
-							padding: 0;
-							width:30px;
-							height:30px;
-							text-align: center;
-							font-size: 18pt;
-						}
+		//###########################################
+		//#											#
+		//#		et2_tabbox styles					#
+		//#											#
+		//###########################################
+		.et2_tabbox.vertical {
+			.et2_tabflag {
+				border:none;
+				div.et2_tabtitle {
+					background-color: #f0f0f0;
+					&:before {
+						padding: 0;
+						width:30px;
+						height:30px;
+						text-align: center;
+						font-size: 18pt;
 					}
 				}
 			}
-			.et2_link_to {
-				div {
-					height:40px;
-					padding-bottom: 3px;
-					width: 99% !important;
-				}
-				.et2_file {
-					margin: 0;
-					padding:0;
-					.et2_file_span, .et2_file_spanHover, .et2_file_upload {
-						height:25px !important;
-					}
+		}
+		.et2_link_to {
+			div {
+				height:40px;
+				padding-bottom: 3px;
+				width: 99% !important;
+			}
+			.et2_file {
+				margin: 0;
+				padding:0;
+				.et2_file_span, .et2_file_spanHover, .et2_file_upload {
+					height:25px !important;
 				}
 			}
-			/*Chosen*/
-			.chzn-container {
-				ul.chzn-choices {
-					background: none;
-					border: none;
-					border-bottom: 1px solid @gray_10;
-					
-				}
+		}
+		/*Chosen*/
+		.chzn-container {
+			ul.chzn-choices {
+				background: none;
+				border: none;
+				border-bottom: 1px solid @gray_10;
 
 			}
-			.chzn-container-multi {
-				.chzn-choices {
-					li.search-field {
-						.default {
-							color:#666;
-						}
+
+		}
+		.chzn-container-multi {
+			.chzn-choices {
+				li.search-field {
+					.default {
+						color:#666;
 					}
 				}
 			}
-			.et2_taglist {
-				.ms-ctn {
-					border: none;
-					border-bottom: 1px solid @gray_10;
-					border-radius: 0;
-					margin-right:5px;
-				}
-				.ms-sel-ctn	{
-					background: white;
-				}
+		}
+		.et2_taglist {
+			.ms-ctn {
+				border: none;
+				border-bottom: 1px solid @gray_10;
+				border-radius: 0;
+				margin-right:5px;
 			}
-			
-			/* View mode styles*/
-			.et2_mobile_view {
-				display:block;
-				
-				.et2_mobile-view-container {
-					padding:0 14px 0 7px;
-					/*Disable et2_link_to as it does not make sense in view mode*/
-					div.et2_link_to {display: none;}
-				}
-				table.et2_grid{
-					tr {
-						td {
-							padding: 10px 5px 10px 0;
-						}
+			.ms-sel-ctn	{
+				background: white;
+			}
+		}
+
+		/* View mode styles*/
+		.et2_mobile_view {
+			display:block;
+
+			.et2_mobile-view-container {
+				padding:0 14px 0 7px;
+				/*Disable et2_link_to as it does not make sense in view mode*/
+				div.et2_link_to {display: none;}
+			}
+			table.et2_grid{
+				tr {
+					td {
+						padding: 10px 5px 10px 0;
 					}
 				}
 			}
-			.mobile-view-editBtn {
-				position: fixed;
-				top:2px;
-				left: 70px;
-				width: 50px;
-				height: 50px;
-				float:left;
-				z-index:104;
-				font-size:18pt !important;
+		}
+		.mobile-view-editBtn {
+			position: fixed;
+			top:2px;
+			left: 70px;
+			width: 50px;
+			height: 50px;
+			float:left;
+			z-index:104;
+			font-size:18pt !important;
+			color: white;
+			&:before {
+				content: "";
+				font-size: 24pt;
 				color: white;
-				&:before {
-					content: "";
-					font-size: 24pt;
-					color: white;
-					padding-left: 5px;
-					font-weight: bold;
-				}
-				display: block;
+				padding-left: 5px;
+				font-weight: bold;
 			}
-			
-			.et2_searchbox {
-				button.et2_button.searched {
-					background-image: url(../images/topmenu_items/mobile/search.png);
-				}
-				button.et2_button {
-					background-image: url(../images/topmenu_items/mobile/search_white.png) !important;
-				}
-				input{
-					.mob-fontsize-n;
-				}
+			display: block;
+		}
+
+		.et2_searchbox {
+			button.et2_button.searched {
+				background-image: url(../images/search.svg);
 			}
-			.et2_searchbox.expanded {
-				position: absolute;
-				width:100% !important;
-				height:50px;
-				margin-left:0;
-				button.et2_button{
-					background: none;
-				}
-				input {
-					width:100%;
-					height:45px;
-					margin:0;
-					top:0;
-					outline: none;
-				}
-				span.ui-icon.clear{
-					top: 0px;
-					left: -50px;
-					background-color: white;
-					height: 49px;
-					width: 50px;
-					background-image: url("../images/cancelled.png");
-					background-position: center;
-					background-repeat: no-repeat;
-					border-bottom: 1px solid #e6e6e6;
-					background-size: 24px 24px;
-				}
-				.flex{
-					width:100%;
-				}
+			button.et2_button {
+				background-image: url(../images/search.svg) !important;
+				.white-svg;
 			}
-			
-			img.et2_button_icon[src*="svg"] {
+			input{
+				.mob-fontsize-n;
+			}
+		}
+		.et2_searchbox.expanded {
+			position: absolute;
+			width:100% !important;
+			height:50px;
+			margin-left:0;
+			button.et2_button{
 				background: none;
-				box-shadow: none;
 			}
+			input {
+				width:100%;
+				height:45px;
+				margin:0;
+				top:0;
+				outline: none;
+			}
+			span.ui-icon.clear{
+				top: 0px;
+				left: -50px;
+				background-color: white;
+				height: 49px;
+				width: 50px;
+				background-image: url("../images/cancelled.svg");
+				background-position: center;
+				background-repeat: no-repeat;
+				border-bottom: 1px solid #e6e6e6;
+				background-size: 24px 24px;
+			}
+			.flex{
+				width:100%;
+			}
+		}
+		
+		img.et2_button_icon[src*="svg"] {
+			background: none;
+			box-shadow: none;
+			border:none;
+		}
+		img[src*="svg"] {
+			background:none !important;
+			border:none;
+			box-shado:none;
+		}
 	}	
 }

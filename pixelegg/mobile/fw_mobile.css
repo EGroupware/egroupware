@@ -6200,16 +6200,6 @@ span.egw_tutorial_title {
     background-position: 3px 7px;
     position: fixed;
   }
-  body span.egw_fw_mobile_popup_close.loaded {
-    background-image: none;
-  }
-  body span.egw_fw_mobile_popup_close.loaded:after {
-    content: "\2190";
-    font-size: 24pt;
-    color: white;
-    padding-left: 5px;
-    font-weight: bold;
-  }
   body #egw_fw_basecontainer {
     background: white;
   }
@@ -6925,10 +6915,14 @@ span.egw_tutorial_title {
 /*Tablets landscape mode*/
 /*Tablets Portrait*/
 /*Smartphones*/
+.white-svg {
+  -webkit-filter: brightness(0) invert(1) !important;
+  filter: brightness(0) invert(1) !important;
+  background-color: transparent !important;
+  background-size: 24px 24px !important;
+  border: none;
+}
 @media only screen and (max-device-width : 1024px) {
-  html * {
-    -webkit-overflow-scrolling: touch;
-  }
   #egw_fw_print {
     display: none;
   }
@@ -7079,13 +7073,25 @@ span.egw_tutorial_title {
 @media all {
   html * {
     touch-action: auto;
+    -webkit-overflow-scrolling: touch;
   }
   body {
     /*Chosen*/
     /* View mode styles*/
   }
+  body span.egw_fw_mobile_popup_close.loaded {
+    background-image: url(../images/topmenu_items/mobile/back.svg);
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+    top: 0;
+    background-position: center;
+    padding: 0;
+  }
   body #egw_fw_basecontainer.sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
-    background-image: url(../images/topmenu_items/mobile/menu_white.png);
+    background-image: url(../images/topmenu_items/mobile/menu.svg);
     width: 50px;
     height: 50px;
     background-color: transparent;
@@ -7102,6 +7108,20 @@ span.egw_tutorial_title {
   body #egw_fw_basecontainer #egw_fw_sidemenu img[src$=".svg"] {
     background: none;
     box-shadow: none;
+  }
+  body #egw_fw_basecontainer #egw_fw_main img[src$="svg"],
+  body #egw_fw_basecontainer #egw_fw_footer img[src$="svg"] {
+    background: none;
+    border: none;
+    filter: none;
+    -webkit-filter: none;
+    box-shadow: none;
+  }
+  body #egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_apps > div {
+    display: inline-block;
+  }
+  body #egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_apps > div h1 {
+    display: none;
   }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon {
     font-size: medium;
@@ -7301,25 +7321,25 @@ span.egw_tutorial_title {
     width: 50px;
   }
   body .et2_nextmatch .nm-mob-header button.nm_toggle_header {
+    background-image: url(../images/menu_list_round.svg);
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
-    border-left: 1px solid silver;
-    border: 0;
-    color: white;
     width: 50px;
     height: 50px;
     display: block;
     float: right;
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
   }
   body .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus {
     outline: none;
   }
-  body .et2_nextmatch .nm-mob-header button.nm_toggle_header:after {
-    font-size: 18pt;
-    content: "\2261";
-  }
   body .et2_nextmatch .nm-mob-header button.nm_action_header {
+    background-image: url(../images/dots.svg);
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7330,19 +7350,17 @@ span.egw_tutorial_title {
     height: 50px;
     display: block;
     float: right;
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
   }
   body .et2_nextmatch .nm-mob-header button.nm_action_header:focus {
     outline: none;
   }
-  body .et2_nextmatch .nm-mob-header button.nm_action_header:after {
-    font-size: 18pt;
-    content: "\205D";
-    font-weight: bold;
-  }
-  body .et2_nextmatch .nm-mob-header button.nm_action_header.back:after {
-    font-size: 18pt;
-    content: "\2190";
-    font-weight: bold;
+  body .et2_nextmatch .nm-mob-header button.nm_action_header.back {
+    background-image: url(../images/cancelled.svg);
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     background-position: center;
@@ -7367,14 +7385,13 @@ span.egw_tutorial_title {
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
     display: none;
   }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) {
+    background-position: center;
+    background-image: url(../images/topmenu_items/mobile/star.svg) !important;
+    background-size: 24px 24px;
+  }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
     display: none;
-  }
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2):after {
-    font-size: 17pt;
-    content: "\2606";
-    font-weight: bold;
-    vertical-align: super;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
     width: 160px;
@@ -7397,8 +7414,8 @@ span.egw_tutorial_title {
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
     display: block;
   }
-  body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on:after {
-    content: "\2613";
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on {
+    background-image: url(../images/cancelled.svg);
   }
   body .et2_nextmatch .nm-mob-header input[type="search"] {
     width: 50px;
@@ -7612,6 +7629,14 @@ span.egw_tutorial_title {
     padding-top: 6px;
     margin-top: 0;
   }
+  body #popupMainDiv .dialogHeadbar button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+    padding-right: 15px;
+  }
   body .rowHeader {
     font-size: 12pt;
   }
@@ -7640,30 +7665,32 @@ span.egw_tutorial_title {
     margin-left: 50px;
   }
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist button.et2_button.ui-draggable {
-    background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     background-position: center !important;
-    -webkit-filter: brightness(0) invert(1);
-    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+    margin-right: 15px;
   }
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
     background: none;
   }
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader {
     color: transparent;
-    border: none;
     height: 46px;
-    width: 35px;
+    width: 50px;
     padding: 0 !important;
-    margin-right: 15px;
-    margin-top: -7px;
-  }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader:after {
-    font-size: 18pt;
-    content: "\205D";
-    font-weight: bold;
-    color: white;
+    background-image: url(../images/dots.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
   }
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader span {
     display: none;
@@ -7745,10 +7772,15 @@ span.egw_tutorial_title {
     font-weight: bold;
   }
   body .et2_searchbox button.et2_button.searched {
-    background-image: url(../images/topmenu_items/mobile/search.png);
+    background-image: url(../images/search.svg);
   }
   body .et2_searchbox button.et2_button {
-    background-image: url(../images/topmenu_items/mobile/search_white.png) !important;
+    background-image: url(../images/search.svg) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
   }
   body .et2_searchbox input {
     font-size: 10pt;
@@ -7775,7 +7807,7 @@ span.egw_tutorial_title {
     background-color: white;
     height: 49px;
     width: 50px;
-    background-image: url("../images/cancelled.png");
+    background-image: url("../images/cancelled.svg");
     background-position: center;
     background-repeat: no-repeat;
     border-bottom: 1px solid #e6e6e6;
@@ -7787,5 +7819,11 @@ span.egw_tutorial_title {
   body img.et2_button_icon[src*="svg"] {
     background: none;
     box-shadow: none;
+    border: none;
+  }
+  body img[src*="svg"] {
+    background: none !important;
+    border: none;
+    box-shado: none;
   }
 }
