@@ -314,7 +314,7 @@ var et2_taglist = et2_selectbox.extend(
 	* Handler for keyup, used to start ajax search when we like
 	*/
 	_keyup: function(e, taglist, event) {
-		if(event.which === jQuery.ui.keyCode.ENTER)
+		if(event.which === jQuery.ui.keyCode.ENTER && taglist.combobox.find('.ms-res-item.ms-res-item-active').length==0)
 		{
 			this._query_server = true;
 			this.taglist.collapse();
