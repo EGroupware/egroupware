@@ -1271,8 +1271,12 @@ egw_fw_ui_toggleSidebar.prototype.onToggle = function(_callbackContext)
 	if (this.contDiv.hasClass('egw_fw_sidebar_toggleOn'))
 	{
 		this.contDiv.removeClass('egw_fw_sidebar_toggleOn');
-		_callbackContext.splitterUi.set_disable(false);
+		var splitter = _callbackContext.splitterUi;
+		splitter.set_disable(false);
 		this.toggleCallback.call(_callbackContext,'off');
+		window.setTimeout(function() {
+			$j(window).resize();
+		},500);
 	}
 	else
 	{
