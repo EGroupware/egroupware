@@ -766,6 +766,7 @@ class common
 	 */
 	static function image($app,$image,$extension='',$svg=false)
 	{
+		$svg = html::$ua_mobile?null:$svg; // ATM we use svg icons only for mobile theme
 		static $image_map_no_svg = null, $image_map_svg = null;
 		if (is_null($svg)) $svg = self::svg_usable ();
 		if ($svg)

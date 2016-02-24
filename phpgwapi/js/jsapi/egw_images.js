@@ -172,18 +172,9 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 		image_element: function(_url, _alt)
 		{
 			var icon;
-			if (typeof _url == 'string' && _url.match(/\.svg$/))
-			{
-				icon = document.createElement('object');
-				icon.type = 'image/svg+xml';
-				icon.data = _url;
-			}
-			else
-			{
-				icon = document.createElement('img');
-				if (_url) icon.src = _url;
-				if (_alt) icon.alt = _alt;
-			}
+			icon = document.createElement('img');
+			if (_url) icon.src = _url;
+			if (_alt) icon.alt = _alt;
 			return icon;
 		}
 	};

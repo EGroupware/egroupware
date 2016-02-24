@@ -1531,7 +1531,7 @@ abstract class egw_framework
 			self::validate_file('/phpgwapi/images.php', array(
 				'template' => $GLOBALS['egw_info']['server']['template_set'],
 				'etag' => md5(json_encode(common::image_map($GLOBALS['egw_info']['server']['template_set']))),
-				'svg' => 0,	// always load non-svg image map
+				'svg' => html::$ua_mobile,	// always load non-svg image map, ATM we use svg icons only for mobile theme
 			));
 			self::validate_file('/phpgwapi/user.php', array(
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],
