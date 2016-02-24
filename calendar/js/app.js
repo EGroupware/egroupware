@@ -3269,6 +3269,15 @@ app.classes.calendar = AppJS.extend(
 						buttons.position({my: 'center', at: 'center', of: go_button})
 							.css('left', '');
 					}
+					// Try to fix sidebox's FF+Safari / mac weird position of bottom arrow problem
+					// As far as I can tell, they get the position of the ..._outerdiv wrong
+					// so we force a layout
+					if(window.navigator.userAgent.match('Macintosh'))
+					{
+						window.setTimeout(function() {
+							$j('.egw_fw_ui_scrollarea_outerdiv')[0].scrollIntoView();
+						}, 0);
+					}
 				} catch (e){
 					// Resize didn't work
 				}
