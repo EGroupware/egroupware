@@ -2649,27 +2649,6 @@ div.mailComposeHeaderSection > table {
   body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
     margin-left: 50px;
   }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
-    background: none;
-  }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader {
-    color: transparent;
-    border: none;
-    height: 46px;
-    width: 35px;
-    padding: 0 !important;
-    margin-right: 15px;
-    margin-top: -7px;
-  }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-toolbar-menulistHeader:after {
-    font-size: 18pt;
-    content: "\205D";
-    font-weight: bold;
-    color: white;
-  }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more span {
-    display: none;
-  }
   body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send {
     height: 46px;
     width: auto;
