@@ -720,7 +720,7 @@ app.classes.filemanager = AppJS.extend(
 			// Toggle button icon to the other view
 			button_widget.set_image("list_"+(view == nm.controller.VIEW_ROW ? nm.controller.VIEW_TILE : nm.controller.VIEW_ROW));
 
-			button_widget.set_label(view == nm.controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+			button_widget.set_statustext(view == nm.controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
 		}
 
 		nm.set_view(view);
@@ -737,7 +737,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			template.loading.done(function() {
 				nm.applyFilters({view: view});
-			})
+			});
 		}
 	},
 
@@ -853,7 +853,7 @@ app.classes.filemanager = AppJS.extend(
 		widget.options.onFinish = function() {
 			widget.options.onFinish = old_onfinish;
 			widget.options.onFinishOne = old_onfinishone;
-		}
+		};
 		// This triggers the upload
 		widget.set_value(files);
 
@@ -893,8 +893,14 @@ app.classes.filemanager = AppJS.extend(
 						{
 							widget.set_readonly(_ro);
 						}
-						else
+						// upload
+						else if (widget.disabled != _ro)
 						{
+							// fix width of path-widget to kope with hidden/shown upload
+							var path_parent = jQuery(this.path_widget[id].getDOMNode().parentNode);
+							var width = jQuery(widget.getDOMNode()).outerWidth(true);
+							path_parent.css('right', (parseInt(path_parent.css('right'))+(_ro?-1:1)*width)+'px');
+
 							widget.set_disabled(_ro);
 						}
 					}

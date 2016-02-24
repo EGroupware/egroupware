@@ -24,7 +24,7 @@
 #filemanager-index_filemanager-index-header_left {
 	float: left;
 	width: 100%;
-	margin-bottom: 1px;
+	margin-bottom: 2px;
 }
 div.filemanager_navigation {
 	position: relative;
@@ -40,13 +40,13 @@ div.filemanager_navigation > img {
 #filemanager-index_buttons {
 	float: right;
 }
-img#filemanager-index_tarp {
-	height: 22px;
+button#filemanager-index_button\[change_view\] {
+	margin-right: 20px;
 }
 div.filemanager_navigation > label {
 	position: absolute;
 	left: 56px;
-	right: 475px;
+	right: 456px;
 	font-size: 140%;
 	white-space: nowrap;
 }

@@ -52,7 +52,6 @@
 			<hbox id="buttons">
 				<button statustext="Go to" id="button[go]" image="key_enter" background_image="true"/>
 				<buttononly statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" background_image="true"/>
-				<image id="tarp" src="buttonseparator"/>
 				<buttononly statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" background_image="true"/>
 				<buttononly statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" ro_image="createdir_disabled" background_image="true"/>
 				<buttononly statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" ro_image="link_disabled" background_image="true"/>
