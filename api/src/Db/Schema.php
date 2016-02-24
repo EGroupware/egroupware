@@ -397,7 +397,7 @@ class Schema
 	 *
 	 * @param string $sTableName
 	 * @param bool $preserveValue
-	 * @return boolean/string sequence-name or false
+	 * @return boolean|string sequence-name or false
 	 */
 	function _PostgresHasOldSequence($sTableName,$preserveValue=False)
 	{
@@ -536,7 +536,7 @@ class Schema
 	 * @param string $sTableName table-name
 	 * @param array $aColumnNames columns for the index
 	 * @param boolean $bUnique =false true for a unique index, default false
-	 * @param array/string $options ='' db-sepecific options, default '' = none
+	 * @param array|string $options ='' db-sepecific options, default '' = none
 	 * @param string $sIdxName ='' name of the index, if not given (default) its created automaticaly
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
@@ -563,7 +563,7 @@ class Schema
 	 * Drop an Index
 	 *
 	 * @param string $sTableName table-name
-	 * @param array/string $aColumnNames columns of the index or the name of the index
+	 * @param array|string $aColumnNames columns of the index or the name of the index
 	 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 	 */
 	function DropIndex($sTableName,$aColumnNames)
@@ -638,7 +638,7 @@ class Schema
 	 *
 	 * @param string $sTableName table-name
 	 * @param array $aTableDef eGW table-defintion
-	 * @param array/boolean $aDefaults array with default for the colums during copying, values are either (old) column-names or quoted string-literals
+	 * @param array|boolean $aDefaults array with default for the colums during copying, values are either (old) column-names or quoted string-literals
 	 */
 	function RefreshTable($sTableName, $aTableDef, $aDefaults=False)
 	{
@@ -1195,7 +1195,7 @@ class Schema
 	 * Translates an eGW type into the DB's native type
 	 *
 	 * @param string $egw_type eGW name of type
-	 * @param string/boolean DB's name of the type or false if the type could not be identified (should not happen)
+	 * @param string|boolean DB's name of the type or false if the type could not be identified (should not happen)
 	 */
 	function TranslateType($egw_type)
 	{
@@ -1213,7 +1213,7 @@ class Schema
 	 * The definition might not be as accurate, depending on the DB!
 	 *
 	 * @param string $sTableName table-name
-	 * @return array/boolean table-defition, like $phpgw_baseline[$sTableName] after including tables_current, or false on error
+	 * @return array|boolean table-defition, like $phpgw_baseline[$sTableName] after including tables_current, or false on error
 	 */
 	function GetTableDefinition($sTableName)
 	{
@@ -1396,6 +1396,11 @@ class Schema
 		{
 			foreach($indexes as $index)
 			{
+				// append (optional) length of index in brackets to column
+				foreach((array)$index['length'] as $col => $length)
+				{
+					if (($key = array_search($col, $index['columns']))) $index['columns'][$key] .= '('.$length.')';
+				}
 				if($this->capabilities['name_case'] == 'upper')
 				{
 					array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
