@@ -3294,10 +3294,13 @@ app.classes.calendar = AppJS.extend(
 		}
 		$j(window).on('resize.calendar-owner', function() {
 			var preferred_width = $j('#calendar-et2_target').children().first().outerWidth()||0;
-			var owner = app.calendar.sidebox_et2.getWidgetById('owner');
-			if(preferred_width && owner.input.hasClass("chzn-done"))
+			if(app.calendar && app.calendar.sidebox_et2)
 			{
-				owner.input.next().css('width',preferred_width);
+				var owner = app.calendar.sidebox_et2.getWidgetById('owner');
+				if(preferred_width && owner.input.hasClass("chzn-done"))
+				{
+					owner.input.next().css('width',preferred_width);
+				}
 			}
 		});
 	},
