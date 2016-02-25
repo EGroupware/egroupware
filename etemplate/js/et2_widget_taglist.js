@@ -144,7 +144,7 @@ var et2_taglist = et2_selectbox.extend(
 		{
 			try
 			{
-				_attrs.autocomplete_params = JSON.parse(_attrs.autocomplete_params)
+				_attrs.autocomplete_params = JSON.parse(_attrs.autocomplete_params);
 			}
 			catch (e)
 			{
@@ -191,7 +191,8 @@ var et2_taglist = et2_selectbox.extend(
 			maxSelection: this.options.maxSelection,
 			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
 			width: this.options.width,	// propagate width
-			highlight: false	// otherwise renderer have to return strings
+			highlight: false,	// otherwise renderer have to return strings
+			selectFirst: true
 		}, this.lib_options);
 		this.taglist = this.taglist.magicSuggest(this.taglist_options);
 		this.$taglist = $j(this.taglist);
@@ -202,7 +203,7 @@ var et2_taglist = et2_selectbox.extend(
 		{
 			var widget = this;
 			this.taglist.setData(function(query) {
-				return widget._data.call(widget,query)
+				return widget._data.call(widget,query);
 			});
 		}
 
@@ -262,7 +263,7 @@ var et2_taglist = et2_selectbox.extend(
 			if (typeof options[id] == 'object')
 			{
 				jQuery.extend(option, options[id]);
-				if(option.value) option.id = option.value
+				if(option.value) option.id = option.value;
 			}
 			else
 			{
@@ -277,6 +278,7 @@ var et2_taglist = et2_selectbox.extend(
 	 * Custom data function to return local options if there is nothing
 	 * typed, or query via AJAX if user typed something
 	 *
+	 * @param {string} query
 	 * @returns {Array}
 	 */
 	_data: function(query) {
@@ -289,7 +291,7 @@ var et2_taglist = et2_selectbox.extend(
 		{
 			// Check options, if there's a match there (that is not already
 			// selected), do not ask server
-			var filtered = []
+			var filtered = [];
 			var selected = this.taglist.getSelection();
 			$j.each(this.options.select_options, function(index, obj) {
 				var name = obj.label;
@@ -298,7 +300,7 @@ var et2_taglist = et2_selectbox.extend(
 					filtered.push(obj);
 				}
 			});
-			return_value = filtered.length > 0 ? filtered : this.options.autocomplete_url
+			return_value = filtered.length > 0 ? filtered : this.options.autocomplete_url;
 		}
 		else if (query.trim().length >= this.taglist_options.minChars || this._query_server)
 		{
@@ -312,6 +314,11 @@ var et2_taglist = et2_selectbox.extend(
 
 	/**
 	* Handler for keyup, used to start ajax search when we like
+	*
+	* @param {DOMEvent} e
+	* @param {Object} taglist
+	* @param {jQueryEvent} event
+	* @returns {Boolean}
 	*/
 	_keyup: function(e, taglist, event) {
 		if(event.which === jQuery.ui.keyCode.ENTER && taglist.combobox.find('.ms-res-item.ms-res-item-active').length==0)
@@ -368,7 +375,7 @@ var et2_taglist = et2_selectbox.extend(
 
 			var widget = this;
 			this.taglist.setData(function(query) {
-				return widget._data.call(widget,query)
+				return widget._data.call(widget,query);
 			});
 		}
 	},
@@ -385,7 +392,7 @@ var et2_taglist = et2_selectbox.extend(
 		if(this.taglist == null) return;
 		var widget = this;
 		this.taglist.setData(function(query) {
-			return widget._data.call(widget,query)
+			return widget._data.call(widget,query);
 		});
 	},
 
@@ -456,7 +463,7 @@ var et2_taglist = et2_selectbox.extend(
 		}
 
 		this.options.value = values;
-		
+
 		if(this.taglist == null) return;
 
 		this.taglist.setSelection(values);
