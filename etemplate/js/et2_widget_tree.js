@@ -220,12 +220,12 @@ var et2_tree = et2_inputWidget.extend(
 		if (widget.options.autoloading)
 		{
 			var url = widget.options.autoloading;
-			
-			//Set escaping mode to utf8, as url in 
+
+			//Set escaping mode to utf8, as url in
 			//autoloading needs to be utf8 encoded.
 			//For instance item id with umlaut.
 			widget.input.setEscapingMode('utf8');
-			
+
 			if (url.charAt(0) != '/' && url.substr(0,4) != 'http')
 			{
 				url = '/json.php?menuaction='+url;
@@ -242,6 +242,11 @@ var et2_tree = et2_inputWidget.extend(
 		}
 		// Enable/Disable highlighting
 		widget.input.enableHighlighting(widget.options.highlighting?true:false);
+
+		// show no more lines and left/down triangles instead of plus/minus
+		widget.input.enableTreeLines(false);
+		widget.input.setImageArrays('plus', 'plus.png', 'plus.png', 'plus.png', 'plus.png', 'plus.png');
+		widget.input.setImageArrays('minus', 'minus.png', 'minus.png', 'minus.png', 'minus.png', 'minus.png');
 	},
 
 	/**
@@ -405,7 +410,7 @@ var et2_tree = et2_inputWidget.extend(
 			{
 				this.input.setCheck(this.value[i], true);
 				// autoloading openning needs to be absolutely based on user interaction
-				// or open flag in folder structure, therefore, We should 
+				// or open flag in folder structure, therefore, We should
 				// not force it to open the node
 				if (!this.options.autoloading) this.input.openItem(this.value[i]);
 			}
@@ -478,7 +483,7 @@ var et2_tree = et2_inputWidget.extend(
 			var allUnchecked = this.input.getAllUnchecked().split(this.input.dlmtr);
 			if (this.options.autoloading)
 			{
-				
+
 				var res = {};
 				for (var i=0;i<allChecked.length;i++)
 				{
