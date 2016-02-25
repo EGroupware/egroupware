@@ -99,7 +99,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		if (!this.options.readonly)
 		{
 			this.btn = $j(document.createElement("button"))
-				.addClass("et2_button et2_button_text")
+				.addClass("et2_button")
 				.attr({type:"button"});
 			this.setDOMNode(this.btn[0]);
 		}
@@ -290,6 +290,11 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			this.label = _value;
 
 			this.btn.text(_value);
+
+			if (_value && !this.image)
+				this.btn.addClass('et2_button_text');
+			else
+				this.btn.removeClass('et2_button_text');
 		}
 		if(this.image)
 		{
