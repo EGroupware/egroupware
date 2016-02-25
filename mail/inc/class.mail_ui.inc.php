@@ -90,6 +90,7 @@ class mail_ui
 		'to'		=> 'to',			// lang('to')
 		'cc'		=> 'cc',			// lang('cc')
 		'text'		=> 'whole message',	// lang('whole message')
+//		'custom' 	=> 'Selected range',// lang('Selected range')
 	);
 
 	/**
@@ -398,6 +399,7 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
+		//error_log(__METHOD__.__LINE__.array2string($content));
 		try	{
 				//error_log(__METHOD__.__LINE__.function_backtrace());
 				if (mail_bo::$debugTimes) $starttime = microtime (true);
@@ -1294,7 +1296,7 @@ class mail_ui
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
-		//error_log(__METHOD__.__LINE__.$query['order']);
+		//error_log(__METHOD__.__LINE__.array2string($query));
 		$sort = ($query['order']=='address'?($toSchema?'toaddress':'fromaddress'):$query['order']);
 		if (!empty($query['search']))
 		{
@@ -4147,8 +4149,9 @@ class mail_ui
 		}
 
 		$response = egw_json_response::get();
-		$response->call('app.mail.mail_refreshFilter2Options',$this->searchTypes);
+		$response->call('app.mail.mail_refreshCatIdOptions',$this->searchTypes);
 		$response->call('app.mail.mail_refreshFilterOptions',$this->statusTypes);
+		$response->call('app.mail.mail_refreshFilter2Options',array(''=>'No details',1=>'Details'));
 
 	}
 

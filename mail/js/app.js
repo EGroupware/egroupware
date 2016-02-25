@@ -405,6 +405,7 @@ app.classes.mail = AppJS.extend(
 			// using JSON.stringfy() directly gave a crash in Safari 7.0.4
 			return this.egw.jsonEncode({
 				selectedFolder: query_context.filters.selectedFolder || '',
+				cat_id: query_context.filters.cat_id || '',
 				filter: query_context.filters.filter || '',
 				filter2: query_context.filters.filter2 || '',
 				sort: query_context.filters.sort
@@ -1228,7 +1229,7 @@ app.classes.mail = AppJS.extend(
 		{
 			if (k==current) currentexists=true;
 		}
-		if (!currentexists) filter2.set_value('subject');
+		if (!currentexists) filter2.set_value('');
 		filter2.set_select_options(_data);
 	},
 
@@ -1252,6 +1253,30 @@ app.classes.mail = AppJS.extend(
 			if (k==current) currentexists=true;
 		}
 		if (!currentexists) filter.set_value('any');
+		filter.set_select_options(_data);
+
+	},
+
+	/**
+	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
+	 *
+	 * @param {object} _data
+	 *
+	 */
+	mail_refreshCatIdOptions: function(_data)
+	{
+		//alert('mail_refreshFilterOptions');
+		if (_data == null) return;
+		if (!this.et2 && !this.checkET2()) return;
+
+		var filter = this.et2.getWidgetById('cat_id');
+		var current = filter.value;
+		var currentexists=false;
+		for (var k in _data)
+		{
+			if (k==current) currentexists=true;
+		}
+		if (!currentexists) filter.set_value('quick');
 		filter.set_select_options(_data);
 
 	},
