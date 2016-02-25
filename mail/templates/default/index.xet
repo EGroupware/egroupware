@@ -4,7 +4,7 @@
 <overlay>
 	<template id="mail.index.spliter" height="100%" template="" lang="" group="0" version="1.9.001">
 		<split dock_side="bottomDock" id="mailSplitter" orientation="h">
-			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows"/>
+			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.quota"/>
 			<vbox id="mailPreview" width="100%">
 				<hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
 					<description value="From"/>
@@ -70,7 +70,7 @@
 		</split>
 	</template>
 	<template id="mail.index.nospliter" template="" lang="" group="0" version="1.9.001">
-		<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows"/>
+		<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.quota"/>
 	</template>
 	<template id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -117,15 +117,18 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd" highlighting="true"/>
-		<html id="msg"/>
-		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" parent_node="mail-index_buttonmailcreate"/>
-		<hbox class="mail-index_quotabox"><progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/></hbox>
+	<template id="mail.index.add" template="" lang="" group="0" version="1.9.001">
+		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose"/>
+	</template>
+	<template id="mail.index.quota" template="" lang="" group="0" version="1.9.001">
 		<hbox class="mail-index_vacation"><vbox>
 			<description id="nm[vacationnotice]" class="@nm[vacationclass]"/>
 			<description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/></vbox>
 		</hbox>
+		<hbox class="mail-index_quotabox"><progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/></hbox>
+	</template>
+	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
+		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd" highlighting="true"/>
 		<template id="mail.index.spliter" height="100%" template="mail.index.spliter"/>
 		<iframe frameborder="1" id="extra_iframe" scrolling="auto" disabled="true"/>
 	</template>

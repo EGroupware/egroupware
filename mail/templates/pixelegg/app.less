@@ -76,14 +76,6 @@ body {
     #mail-index_mailPreviewContainer {}
 
 
-    // Message - standdardmäßig ausgeblendet
-    span#mail-index_msg{
-        span {
-            //				background: red;
-            //				height: 30px;
-        }
-    }
-
     // alles
         // Box mit Header und Liste
         div#mail-index_nm{
@@ -230,48 +222,6 @@ body {
 
 .egw_fw_ui_category_content{
 
-    // Create Feld
-    #mail-index_buttonmailcreate{
-        margin-left: 0px;
-
-
-
-                    // #####################################################
-                    // Create Button (mail)
-
-                    button#mail-index_button[mailcreate],
-                    button[id*="mailcreate"]{
-
-                        .Complete_Button_add;
-                                    background-image: url("../pixelegg/images/write_mail_lighter.png") !important;
-                                    background-position: right center !important;
-                                    background-repeat: no-repeat;
-                                    background-size: 20px 20px;
-                                    padding-left: 25px;
-                                    text-align: left;
-                                    width: 93%;
-                                    background-color: @gray_60;
-                                    height: 32px;
-
-                        &:hover {
-                                .Complete_Button_add_hover;
-                                .box_shadow_standard_light_hover;
-                                .border_radius_button_lefttop ;
-                                color: @gray_90;
-                                }
-
-                        &:active {
-                                background-color: @color_positive_action_active !important;
-                                .border_radius_button_lefttop ;
-                                .box_shadow_standard_light_inset;
-
-                                }
-                    }
-
-
-    }
-
-
     // Mail Liste der Postfächer
     span#mail-tree_target {
         max-height: 50%;
@@ -284,7 +234,7 @@ body {
 
     // color - selected tree item
     .selectedTreeRow, .selectedTreeRow_lor {background-color: @egw_color_1_a; color: @gray_90;text-decoration: none;}
-    
+
 	.standartTreeRow_lor {background-color: rgba(103, 159, 210, 0.2); color: @gray_90;text-decoration: none;}
     /*new mail in FOlder
     span.standartTreeRow b {color: @egw_color_2_a;}
@@ -353,23 +303,10 @@ body {
 
         // Senden Button
         button#composeToolbar-send{
-            height: 24px;
-            /*margin-right: 3px !important;*/
-            margin-top: 0.7px !important;
-            padding: 0 3px 0 0;
-            text-align: left;
-            font-weight: normal;
-            padding-left: 20px;
-            float: left;
-            background-image: url(../pixelegg/images/mail_send.png);
-            background-position: left;
-            background-repeat: no-repeat;
-            background-size: 16px 16px;
-            background-color: @egw_color_2_a;
+            background-color: @color_positive_action;
             color: @gray_0;
             &:hover {.box_shadow_standard_light_hover; background-color:@color_positive_action;}
             &:disabled {background-color: @color_disabled !important;}
-
         }
 		button#composeToolbar-to_infolog:hover,
 		button#composeToolbar-to_tracker:hover,
@@ -497,7 +434,7 @@ div.mailUploadSection {
 
 #mail-display{
     //	gesamtbreite
-   
+
 	min-height: 768px;
     padding: 5px;
 
@@ -1109,7 +1046,7 @@ tr.forwarded span.status_img {
   font-style: italic;
   font-weight : normal;
   font-family: Arial;
-  color: grey; 
+  color: grey;
 }
 
 TR.sieveRowActive
@@ -1271,50 +1208,6 @@ pre {
 
 #mail-index {
     position: relative
-}
-.mail-index_quotabox {
-    position: absolute;
-    top:29px;
-    right:-72px;
-    width:200px !important;
-    z-index:99;
-
-    div.et2_progress {background-color: @gray_30 !important;}
-    div.et2_progress > div {min-height: 4px !important;}
-
-}
-.mail-index_quotaDisplayNone {
-    display: none !important;
-}
-.mail-index_QuotaGreen, .mail-index_QuotaYellow, .mail-index_QuotaRed {
-    height:4px !important;
-    width:100px !important;
-}
-.mail-index_QuotaGreen > div {
-    background-color: green !important;
-    height:4px !important;
-}
-.mail-index_QuotaYellow > div {
-    background-color: yellow !important;
-    height:4px !important;
-}
-.mail-index_QuotaRed > div {
-    background-color: red !important;
-    height:4px !important;
-}
-
-.mail-index_vacation {
-	position: absolute;
-	top:3px;
-	right:190px;
-	width:250px !important;
-	z-index:99;
-}
-.mail-index_vacation > div {
-	text-align: center;
-}
-.mail-index_vacation > div > span {
-	color: red;
 }
 
 /*

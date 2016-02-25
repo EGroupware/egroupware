@@ -144,7 +144,7 @@ tr.forwarded span.status_img {
   font-style: italic;
   font-weight : normal !important;
   font-family: Arial;
-  color: grey  !important; 
+  color: grey  !important;
 }
 
 TR.sieveRowActive
@@ -304,21 +304,15 @@ pre {
 	position: relative
 }
 .mail-index_quotabox {
-	position: absolute;
-	top:8px;
-	right:74px;
-	width:200px !important;
-	z-index:99;
+	display: inline-block;
 }
 .mail-index_vacation {
-	position: absolute;
-	top:3px;
-	right:190px;
-	width:250px !important;
-	z-index:99;
+	display: inline-block;
+	vertical-align: top;
 }
 .mail-index_vacation > div {
 	text-align: center;
+	line-height: 110%;
 }
 .mail-index_vacation > div > span {
 	color: red;
@@ -330,20 +324,16 @@ pre {
 	display: none !important;
 }
 .mail-index_QuotaGreen, .mail-index_QuotaYellow, .mail-index_QuotaRed {
-	height:12px !important;
 	width:100px !important;
 }
 .mail-index_QuotaGreen > div {
 	background-color: green !important;
-	height:11px !important;
 }
 .mail-index_QuotaYellow > div {
 	background-color: yellow !important;
-	height:11px !important;
 }
 .mail-index_QuotaRed > div {
 	background-color: red !important;
-	height:11px !important;
 }
 /*
  influence the tree display and scrolling behavior
@@ -404,16 +394,11 @@ div.mailUploadSection > div.et2_hbox > label {
 	background-position: center;
 	border:none;
 }
-#mail-index_button\[mailcreate\] {
-	width: 99%;
-	text-align: left;
-	font-weight: bold;
-	padding-left: 25px;
-	background-image: url(../default/images/write_mail.png) !important;
-	background-position: left;
-	background-repeat: no-repeat;
+#mail-index_button\[mailcreate\], #composeToolbar-send {
+	color: white;
+	background-color: #189800;
 }
-.mail-compose_composeToolbar{
+.mail-compose_composeToolbar {
 	border-left: 1px solid silver;
 	border-top: 1px solid silver;
 	border-right: 1px solid gray;
@@ -790,16 +775,16 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	}
 	.tmpPrintDiv td, textarea {
 		font-family: Verdana, Arial, Helvetica, sans-serif;
-		
+
 	}
 	.tmpPrintDiv .td_display {
 		font-family: Verdana, Arial, Helvetica, sans-serif;
-		
+
 		color: black;
 		background-color: #FFFFFF;
 	}
 	.tmpPrintDiv .td_display span[style] {
-		
+
 	}
 	pre {
 		width:99% !important;
@@ -840,15 +825,15 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
 @media only screen and (max-device-width:1024px) {
-	
-	
+
+
 }
 /* tablets and smartphones (portrait) ----------- */
 @media only screen
 and (max-device-width : 1024px)
 and (orientation : portrait) {
 	#mail-index div#mail-index_nm tr.mail.row {
-		
+
 	}
 }
 
@@ -857,7 +842,7 @@ and (orientation : portrait) {
 and (min-width : 321px)
 and (max-device-width:768){
 	#mail-index div#mail-index_nm tr.mail.row {
-		
+
 	}
 }
 

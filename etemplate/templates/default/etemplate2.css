@@ -1108,7 +1108,7 @@ div.message.floating {
 }
 .nextmatch_header .header_count {
 	padding: 0px 10px;
-	margin: 1px 6px 1px;
+	margin: 1px 6px 1px 0;
 	height: 22px;
 	border: 1px solid silver;
 	text-align: center;
@@ -1632,9 +1632,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	width: 24px;
 	background-position: center;
 	background-size: 16px 16px;
-	border-radius: 3px;
 	padding-left: 0;
-	background-color: #fafafa;
 }
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption, .nextmatch_header_row .et2_button_text  {
 	width:auto;
@@ -1648,9 +1646,21 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	width:auto;
 	padding-left: 3px;
 }
-.et2_toolbar button, .nextmatch_header_row button {
+.et2_toolbar button, .nextmatch_header_row button, .et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
 	margin: 1px 4px 1px 0;
 	height: 24px;
+	border-radius: 3px;
+	background-color: #fafafa;
+	border: 1px solid silver;
+}
+.et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
+	padding: 0;
+	height: 22px;
+}
+.et2_toolbar .et2_progress > div, .nextmatch_header_row .et2_progress > div {
+	margin: 2px;
+	border-radius: 3px;
+	height: 18px;
 }
 /**
  * Daterange selection in NM header
