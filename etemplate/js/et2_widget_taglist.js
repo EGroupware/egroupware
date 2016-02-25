@@ -191,11 +191,11 @@ var et2_taglist = et2_selectbox.extend(
 			maxSelection: this.options.maxSelection,
 			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
 			width: this.options.width,	// propagate width
-			highlight: false,	// otherwise renderer have to return strings,
-			value: this.options.value
+			highlight: false	// otherwise renderer have to return strings
 		}, this.lib_options);
 		this.taglist = this.taglist.magicSuggest(this.taglist_options);
 		this.$taglist = $j(this.taglist);
+		this.taglist.addToSelection(this.options.value,true);
 
 		// AJAX _and_ select options - use custom function
 		if(this.options.autocomplete_url && !jQuery.isEmptyObject(this.options.select_options))
