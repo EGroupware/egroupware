@@ -917,7 +917,6 @@ body {
   background-repeat: repeat-x;
 }
 #mail-index div#mail-index_nm tr.mail div span {
-  height: 12px;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
