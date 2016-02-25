@@ -1065,7 +1065,6 @@ body {
 }
 #mail-compose .mailComposeHeaders span,
 #mail-compose .mailComposeHeadersSection span {
-  font-size: 0.8em;
   text-align: right;
   padding-right: 5px;
 }
