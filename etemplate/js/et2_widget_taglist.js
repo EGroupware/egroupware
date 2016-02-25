@@ -530,13 +530,7 @@ var et2_taglist_account = et2_taglist.extend(
 		}
 		this.options.autocomplete_params.account_type = this.options.account_type = value;
 
-		this.options.select_options = this._get_accounts();
-
-		if(this.taglist != null)
-		{
-			// Update taglist too, since it already copied the params
-			this.taglist.setDataUrlParams(this.options.autocomplete_params);
-		}
+		this.set_select_options(this._get_accounts());
 	},
 
 	/**
@@ -599,8 +593,31 @@ var et2_taglist_account = et2_taglist.extend(
 		for(var i=0; i < values.length; ++i)
 		{
 			var v = values[i];
+			var result = [];
 			if (typeof v == 'object' && v.id === v.label) v = v.id;
-			if (typeof v != 'object'  && !isNaN(v) && (typeof v != 'string' || v.match(this.int_reg_exp)))
+			if (this.options.select_options &&
+				// Check options
+				(result = $j.grep(this.options.select_options, function(e) {
+					return e.id == v;
+				})) ||
+				// Check current selection to avoid going back to server
+				(result = $j.grep(this.taglist.getSelection(), function(e) {
+					return e.id == v;
+				}))
+			)
+			{
+				// Options should have been provided, but they weren't
+				// This can happen for ajax source with an existing value
+				if(this.options.select_options == null)
+				{
+					this.options.select_options = [];
+				}
+				values[i] = result[0] ? result[0] : {
+					id: v,
+					label: v
+				};
+			}
+			else if (typeof v != 'object'  && !isNaN(v) && (typeof v != 'string' || v.match(this.int_reg_exp)))
 			{
 				v = parseInt(v);
 				var label = this.egw().link_title('home-accounts', v);
