@@ -1108,7 +1108,7 @@ div.message.floating {
 }
 .nextmatch_header .header_count {
 	padding: 0px 10px;
-	margin: 1px 6px 1px 0;
+	margin: 1px 6px 1px;
 	height: 22px;
 	border: 1px solid silver;
 	text-align: center;
@@ -1633,6 +1633,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	background-position: center;
 	background-size: 16px 16px;
 	padding-left: 0;
+	background-color: #fafafa;
 }
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption, .nextmatch_header_row .et2_button_text  {
 	width:auto;
