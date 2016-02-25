@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package admin
- * @copyright (c) 2013 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2013-16 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -264,7 +264,7 @@ class admin_acl
 				'location' => 'acl_rights',
 				'owner' => $query['account_id'],
 			), array(), true);
-			foreach($apps as $appname => $rights)
+			foreach(array_keys($apps) as $appname)
 			{
 				$rows['sel_options']['filter2'][] = array(
 					'value' => $appname,
@@ -283,8 +283,8 @@ class admin_acl
 	 * Check if current user has access to ACL setting of a given location
 	 *
 	 * @param int $account_id numeric account-id
-	 * @param int|string $location=null numeric account-id or "run"
-	 * @param boolean $throw=true if true, throw an exception if no access, instead of just returning false
+	 * @param int|string $location =null numeric account-id or "run"
+	 * @param boolean $throw =true if true, throw an exception if no access, instead of just returning false
 	 * @return boolean true if access is granted, false if notification_bo
 	 * @throws egw_exception_no_permission
 	 */
@@ -330,7 +330,7 @@ class admin_acl
 	 * Checks access and throws an exception, if a change is attempted without proper access
 	 *
 	 * @param string|array $ids "$app:$account:$location" string used as row-id in list
-	 * @param int $rights=null null to delete, or new rights
+	 * @param int $rights =null null to delete, or new rights
 	 * @throws egw_exception_no_permission
 	 */
 	public static function ajax_change_acl($ids, $rights=null)
@@ -382,10 +382,12 @@ class admin_acl
 	/**
 	 * New index page
 	 *
-	 * @param array $content
+	 * @param array $_content =null
 	 */
-	public function index(array $content=null)
+	public function index(array $_content=null)
 	{
+		unset($_content);	// not used, required by function signature
+
 		$tpl = new etemplate_new('admin.acl');
 
 		$content = array();
@@ -399,7 +401,6 @@ class admin_acl
 					$GLOBALS['egw_info']['user']['preferences']['admin']['acl_filter']),
 			'filter2' => !empty($_GET['acl_app']) ? $_GET['acl_app'] : '',
 			'lettersearch' => false,
-			'header_row'   => 'admin.acl.add',
 			'order' => 'acl_appname',
 			'sort' => 'ASC',
 			'row_id' => 'id',
@@ -418,8 +419,8 @@ class admin_acl
 				'run'   => lang('%1 run rights for applications', $user),
 			)
 		);
-		
-		$tpl->exec('admin.admin_acl.index', $content, $sel_options);
+
+		$tpl->exec('admin.admin_acl.index', $content, $sel_options, array(), array(), 2);
 	}
 
 	/**

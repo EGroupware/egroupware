@@ -11,7 +11,101 @@
  * @package addressbook
  * @version $Id$
  */
-@import "../default/app.css";
+/**
+ * EGroupware - CSS Styles used by admin app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id: app.css 53026 2015-07-01 18:35:24Z ralfbecker $
+ */
+.admin_tree table,
+.admin_tree tr,
+.admin_tree td {
+  border: none;
+}
+div#divAppbox {
+  padding: 0;
+}
+body {
+  background-image: none;
+  background-color: white;
+}
+/* otherwise it is transparent */
+#admin_iframe {
+  background-color: white;
+}
+tr.adminAccountInactive .adminStatus {
+  color: red;
+}
+.adminOverflowEllipsis {
+  width: 100%;
+  white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+img.admin_aclApp {
+  width: 16px;
+}
+td.admin_userAgent {
+  max-width: 200px;
+}
+td.admin_userAgent span {
+  display: block;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin_account_delete > * {
+  padding: 8px;
+}
+/* Global Category classes*/
+.globalCat_confirmDelete {
+  position: absolute;
+  left: 120px;
+  top: 80px;
+  background-color: white;
+  display: none;
+  border: 2px solid black;
+}
+.globalCat_hiddenCatid {
+  display: none;
+}
+/**
+ * Custom fields list
+ */
+#admin-customfields_nm .values {
+  display: inline-block;
+  max-height: 13em;
+  overflow: auto;
+}
+/* Set a max height for all app type options */
+#admin-customfields_admin-customfields-types + table {
+  max-height: 300px;
+  overflow: auto;
+}
+#admin-customfield_edit tr:not([class]) td {
+  padding: 5px 0px;
+}
+#admin-customfield_edit .attributes .et2_label,
+#admin-customfield_edit .attributes input {
+  margin-right: 1em;
+}
+/**
+ * Bulk password reset
+ */
+#admin-passwordreset_actions > :nth-child(2) {
+  display: block;
+}
+/**
+ * ACL popup
+ */
+#admin-acl_filter {
+  max-width: 100% !important;
+}
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
     background-color: #ffdd73;
@@ -78,7 +172,7 @@
 @media only screen and (max-device-width: 1024px) {
   #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='status]'] {
     text-align: right;
-    font-size: 8pt;
+    font-size: 9pt;
   }
   #admin-index table.egwGridView_outer tbody .adminCol2 {
     float: right;
