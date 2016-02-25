@@ -760,7 +760,15 @@ var et2_taglist_email = et2_taglist.extend(
 		if (item.class) label.addClass(item.class);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
 		if (typeof item.data != 'undefined') label.attr('data', item.data);
-		if (!valid) label.addClass('ui-state-error');
+		if (!valid) {
+			label.addClass('ui-state-error');
+			window.setTimeout(jQuery.proxy(function() {
+				this.taglist.removeFromSelection(item);
+				this.set_validation_error(egw.lang("'%1' has an invalid format",item.label));
+				this.taglist.input.val(item.label).focus();
+			},this),1);
+			return null;
+		}
 
 		return label;
 	}
