@@ -120,17 +120,26 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 		this.options.href = _value;
-		jQuery(this.node).wrapAll('<a href="'+_value+'"></a>"');
-
-		var href = this.options.href;
-		var popup = this.options.extra_link_popup;
-		var target = this.options.extra_link_target;
-		jQuery(this.node).parent().click(function(e)
+		if (_value)
 		{
-			egw.open_link(href,target,popup);
-			e.preventDefault();
-			return false;
-		});
+			jQuery(this.node).addClass('et2_clickable')
+				.wrapAll('<a href="'+_value+'"></a>"');
+
+			var href = this.options.href;
+			var popup = this.options.extra_link_popup;
+			var target = this.options.extra_link_target;
+			jQuery(this.node).parent().click(function(e)
+			{
+				egw.open_link(href,target,popup);
+				e.preventDefault();
+				return false;
+			});
+		}
+		else if (jQuery(this.node).parent('a').length)
+		{
+			jQuery(this.node).removeClass('et2_clickable')
+				.unwrap();
+		}
 
 		return true;
 	},
