@@ -6,7 +6,7 @@
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
 			<hbox class="dialogHeadbar">
 				<hbox>
-					<toolbar class="et2_head_toolbar" id="composeToolbar" width="100%" view_range="3" flat_list="false"/>
+					<toolbar class="et2_head_toolbar" id="composeToolbar" width="100%" view_range="2" flat_list="false"/>
 					<description/>
 				</hbox>
 			</hbox>

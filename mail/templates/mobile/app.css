@@ -311,21 +311,15 @@ pre {
   position: relative;
 }
 .mail-index_quotabox {
-  position: absolute;
-  top: 8px;
-  right: 74px;
-  width: 200px !important;
-  z-index: 99;
+  display: inline-block;
 }
 .mail-index_vacation {
-  position: absolute;
-  top: 3px;
-  right: 190px;
-  width: 250px !important;
-  z-index: 99;
+  display: inline-block;
+  vertical-align: top;
 }
 .mail-index_vacation > div {
   text-align: center;
+  line-height: 110%;
 }
 .mail-index_vacation > div > span {
   color: red;
@@ -339,20 +333,16 @@ pre {
 .mail-index_QuotaGreen,
 .mail-index_QuotaYellow,
 .mail-index_QuotaRed {
-  height: 12px !important;
   width: 100px !important;
 }
 .mail-index_QuotaGreen > div {
   background-color: green !important;
-  height: 11px !important;
 }
 .mail-index_QuotaYellow > div {
   background-color: yellow !important;
-  height: 11px !important;
 }
 .mail-index_QuotaRed > div {
   background-color: red !important;
-  height: 11px !important;
 }
 /*
  influence the tree display and scrolling behavior
@@ -412,14 +402,10 @@ div.mailUploadSection > div.et2_hbox > label {
   background-position: center;
   border: none;
 }
-#mail-index_button\[mailcreate\] {
-  width: 99%;
-  text-align: left;
-  font-weight: bold;
-  padding-left: 25px;
-  background-image: url(../default/images/write_mail.png) !important;
-  background-position: left;
-  background-repeat: no-repeat;
+#mail-index_button\[mailcreate\],
+#composeToolbar-send {
+  color: white;
+  background-color: #189800;
 }
 .mail-compose_composeToolbar {
   border-left: 1px solid silver;
@@ -943,7 +929,6 @@ body {
   background-repeat: repeat-x;
 }
 #mail-index div#mail-index_nm tr.mail div span {
-  height: 12px;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -1000,67 +985,6 @@ body {
   /*    .draggedOver {
         background-color: @color_hint;
     }*/
-}
-.egw_fw_ui_category_content #mail-index_buttonmailcreate {
-  margin-left: 0px;
-}
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate],
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"] {
-  color: #FFF;
-  text-shadow: none;
-  height: 24px;
-  /*    height: auto;*/
-  background-image: none;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 10px;
-  border-radius: 3px;
-  border-top-left-radius: 10px;
-  background-image: url("../pixelegg/images/write_mail_lighter.png") !important;
-  background-position: right center !important;
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  padding-left: 25px;
-  text-align: left;
-  width: 93%;
-  background-color: #696969;
-  height: 32px;
-}
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:before,
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:before {
-  content: "+";
-  font-size: 1.5em;
-  color: #ffc200;
-  line-height: 1.1em;
-}
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:hover,
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:hover {
-  background-color: #1aa200 !important;
-  color: #ffc200;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 10px;
-  border-radius: 3px;
-  border-top-left-radius: 10px;
-  color: #1e1e1e;
-}
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button#mail-index_button[mailcreate]:active,
-.egw_fw_ui_category_content #mail-index_buttonmailcreate button[id*="mailcreate"]:active {
-  background-color: #1aa200 !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 10px;
-  border-radius: 3px;
-  border-top-left-radius: 10px;
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 .egw_fw_ui_category_content span#mail-tree_target {
   max-height: 50%;
@@ -1119,19 +1043,7 @@ body {
   background-color: white !important;
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send {
-  height: 24px;
-  /*margin-right: 3px !important;*/
-  margin-top: 0.7px !important;
-  padding: 0 3px 0 0;
-  text-align: left;
-  font-weight: normal;
-  padding-left: 20px;
-  float: left;
-  background-image: url(../pixelegg/images/mail_send.png);
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  background-color: #0c5da5;
+  background-color: #189800;
   color: #ffffff;
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send:hover {
@@ -1164,7 +1076,6 @@ body {
 }
 #mail-compose .mailComposeHeaders span,
 #mail-compose .mailComposeHeadersSection span {
-  font-size: 0.8em;
   text-align: right;
   padding-right: 5px;
 }
@@ -2045,53 +1956,6 @@ pre {
 #mail-index {
   position: relative;
 }
-.mail-index_quotabox {
-  position: absolute;
-  top: 29px;
-  right: -72px;
-  width: 200px !important;
-  z-index: 99;
-}
-.mail-index_quotabox div.et2_progress {
-  background-color: #b4b4b4 !important;
-}
-.mail-index_quotabox div.et2_progress > div {
-  min-height: 4px !important;
-}
-.mail-index_quotaDisplayNone {
-  display: none !important;
-}
-.mail-index_QuotaGreen,
-.mail-index_QuotaYellow,
-.mail-index_QuotaRed {
-  height: 4px !important;
-  width: 100px !important;
-}
-.mail-index_QuotaGreen > div {
-  background-color: green !important;
-  height: 4px !important;
-}
-.mail-index_QuotaYellow > div {
-  background-color: yellow !important;
-  height: 4px !important;
-}
-.mail-index_QuotaRed > div {
-  background-color: red !important;
-  height: 4px !important;
-}
-.mail-index_vacation {
-  position: absolute;
-  top: 3px;
-  right: 190px;
-  width: 250px !important;
-  z-index: 99;
-}
-.mail-index_vacation > div {
-  text-align: center;
-}
-.mail-index_vacation > div > span {
-  color: red;
-}
 /*
  influence the tree display and scrolling behavior
 */
@@ -2904,5 +2768,25 @@ div.mailComposeHeaderSection > table {
     font-style: normal;
     font-size: 8pt;
     padding-top: 5px;
+  }
+  #mail-index .mail-index_quotabox {
+    position: absolute;
+    top: 8px;
+    right: 74px;
+    width: 200px !important;
+    z-index: 99;
+  }
+  #mail-index .mail-index_vacation {
+    position: absolute;
+    top: 3px;
+    right: 190px;
+    width: 250px !important;
+    z-index: 99;
+  }
+  #mail-index .mail-index_vacation div {
+    text-align: center;
+  }
+  #mail-index_buttonmailcreate {
+    display: none;
   }
 }
