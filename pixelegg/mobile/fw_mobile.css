@@ -7078,6 +7078,10 @@ span.egw_tutorial_title {
   body {
     /*Chosen*/
     /* View mode styles*/
+    /***************CHECKBOX *************/
+    /**************************************/
+    /*************** SLIDESWITCH **********/
+    /***************************************/
   }
   body span.egw_fw_mobile_popup_close.loaded {
     background-image: url(../images/topmenu_items/mobile/back.svg);
@@ -7135,6 +7139,7 @@ span.egw_tutorial_title {
   body #egw_fw_basecontainer #egw_fw_sidemenu img[src$=".svg"] {
     background: none;
     box-shadow: none;
+    border: none;
   }
   body #egw_fw_basecontainer #egw_fw_main img[src$="svg"],
   body #egw_fw_basecontainer #egw_fw_footer img[src$="svg"] {
@@ -7618,7 +7623,7 @@ span.egw_tutorial_title {
   body #popupMainDiv .et2_link,
   body #popupMainDiv .et2_label,
   body #popupMainDiv input {
-    height: 25px;
+    height: 32px;
   }
   body #popupMainDiv .et2_button_with_image,
   body #popupMainDiv .et2_button_text {
@@ -7849,5 +7854,39 @@ span.egw_tutorial_title {
     background: none !important;
     border: none;
     box-shado: none;
+  }
+  body input[type="checkbox"] {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  body input[type="checkbox"]:before {
+    content: "";
+    width: 32px;
+    height: 32px;
+    background-image: url(../images/topmenu_items/mobile/checkbox.svg) !important;
+    display: inline-block;
+  }
+  body input[type="checkbox"]:checked {
+    background-image: url(../images/topmenu_items/mobile/checkbox.svg) !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+  body span.et2_checkbox_slideSwitch {
+    height: 50px;
+    vertical-align: bottom;
+  }
+  body span.et2_checkbox_slideSwitch input {
+    height: 100% !important;
+  }
+  body span.et2_checkbox_slideSwitch span.slideSwitch_container {
+    border-radius: 15px;
+    margin-top: 15px;
+    box-shadow: inset 0 2px 2px #474747, 0 0px 0 rgba(255, 255, 255, 0.2);
+  }
+  body span.et2_checkbox_slideSwitch span.slideSwitch_container a {
+    background-color: #E0E0E0;
+    border-radius: 50%;
+    box-shadow: 0 2px 2px #474747, 0 0px 0 rgba(255, 255, 255, 0.2);
+    z-index: 2;
   }
 }

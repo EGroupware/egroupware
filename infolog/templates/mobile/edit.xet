@@ -171,7 +171,7 @@
 					<hbox  span="all" width="100%">
 						<button statustext="Saves this entry" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" id="button[apply]" image="apply" background_image="1"/>
-						<button align="right" statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
+						<button statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
 						<buttononly statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" background_image="1" image="timestamp" onclick="app.infolog.insert_text('info_des');"/>
 						<checkbox label="notification" id="no_notifications"/>
 					</hbox>
@@ -238,9 +238,6 @@
 							<template id="infolog.edit.ownership"/>
 						</tabpanels>
 					</tabbox>
-				</row>
-				<row>
-					
 				</row>
 			</rows>
 		</grid>
