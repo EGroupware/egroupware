@@ -186,7 +186,6 @@ class mail_compose
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)',
-				'toolbarDefault' => true,
 				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
 			'prty' => array(
@@ -194,9 +193,7 @@ class mail_compose
 				'group' => ++$group,
 				'icon' => 'priority',
 				'children' => array(),
-				'toolbarDefault' => true,
 				'hint' => 'Select the message priority tag',
-
 			),
 			'save2vfs' => array (
 				'caption' => 'Save to VFS',
