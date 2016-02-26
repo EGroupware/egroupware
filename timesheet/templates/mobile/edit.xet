@@ -78,6 +78,32 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="timesheet.edit.ownership" template="" lang="" group="0" version="16.1.00">
+		<grid width="100%">
+			<columns>
+				<column width = "120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="User" for="ts_owner"/>
+					<menulist >
+						<menupopup id="ts_owner" no_lang="1" class="et2_fullWidth"/>
+					</menulist>
+				</row>
+				<row disabled="!@ts_modified">
+					<description value="Last modified"/>
+					<menulist>
+						<menupopup type="select-account" id="ts_modifier" readonly="true"/>
+					</menulist>	
+				</row>
+				<row>
+					<description/>
+					<date-time id="ts_modified" readonly="true" align="left"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid border="1" width="100%">
 			<columns>
@@ -87,7 +113,7 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<hbox  span="all" width="100%">
-						<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new" background_image="1"/>
+						<button statustext="Saves this entry and add a new one" id="button[save_new]" image="save_new" background_image="1"/>
 						<button statustext="Saves the changes made" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Applies the changes made" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="Delete this entry" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete" background_image="1"/>
@@ -135,42 +161,16 @@
 							<tab id="general" label="Details"/>
 							<tab id="links" label="Links"/>
 							<tab id="customfields" label="Custom Fields"/>
+							<tab id="ownership" label="Ownership"/>
 						</tabs>
 						<tabpanels class="dialog-main-timeframe">
 							<template id="timesheet.edit.notes"/>
 							<template id="timesheet.edit.general"/>
 							<template id="timesheet.edit.links"/>
 							<template id="timesheet.edit.customfields"/>
+							<template id="timesheet.edit.ownership"/>
 						</tabpanels>
 					</tabbox>
-				</row>
-				<row>
-					<details title="Ownership">
-						<grid width="100%">
-							<columns>
-								<column width = "120"/>
-								<column width="600"/>
-							</columns>
-							<rows>
-								<row>
-									<description value="User" for="ts_owner"/>
-									<menulist >
-										<menupopup id="ts_owner" no_lang="1" class="et2_fullWidth"/>
-									</menulist>
-								</row>
-								<row disabled="!@ts_modified">
-									<description value="Last modified"/>
-									<menulist>
-										<menupopup type="select-account" id="ts_modifier" readonly="true"/>
-									</menulist>	
-								</row>
-								<row>
-									<description/>
-									<date-time id="ts_modified" readonly="true" align="left"/>
-								</row>
-							</rows>
-						</grid>
-					</details>
 				</row>
 			</rows>
 		</grid>
