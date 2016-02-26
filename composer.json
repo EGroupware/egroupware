@@ -2,13 +2,16 @@
 	"repositories": [
 		{
             "type": "pear",
-            "url": "http://pear.php.net"
+            "url": "https://pear.php.net"
 		},
         {
             "type": "pear",
             "url": "http://pear.horde.org"
         }
     ],
+        "config": {
+            "secure-http": false
+        },
 	"require": {
 		"php": ">=5.4,<=8.0.0alpha1",
 		"pear-pear.horde.org/Horde_Imap_Client": ">=2.24.2",
