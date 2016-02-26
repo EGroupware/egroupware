@@ -225,15 +225,15 @@
                         padding: 0px 0px 0px 15px;
                         line-height: 1em;
                         .fontsize_l;
-                        background-image:url(../images/arrow_left.png);
+                        background-image:url(../images/arrow_right.png);
                         background-repeat:no-repeat;
                         background-position:left center;
                     }
 
                     div.egw_fw_ui_category:nth-last-of-type(-n+3) {
-                                                                    img.egw_fw_ui_sidemenu_listitem_icon {
-                                                                     display: block;
-                                                                     }
+						img.egw_fw_ui_sidemenu_listitem_icon {
+							display: block;
+						}
                     }
 
                 }
@@ -263,34 +263,27 @@
                     .border_radius(3px,3px,3px,3px) !important;
 
                     h1 {
-                        background-image:url(../images/arrow_down.png);
+                        background-image:url(../images/arrow_down_white.png);
                         line-height: 1em;
                         font-size: 12px;
 
-                            a {
-                            color: #FFF;
+						a {
+							color: #FFF;
 
+							img {.dimension_width_height_s;}
 
-                            img {.dimension_width_height_s;}
-
-                            &:hover {
-                                    padding: 5px 30px 5px 0px;
-                                    width: 200px;
-                                    .background_color_10_gray;
-                                    .color_50_gray;
-                                    .Complete_Button_hover;
-                                }
-                            }
-
-                         }
+							&:hover {
+								padding: 5px 30px 5px 0px;
+								width: 200px;
+								.background_color_10_gray;
+								.color_50_gray;
+								.Complete_Button_hover;
+							}
+						}
+					}
 
                     &:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
                 }
-
-
-
-
-
             }
 
             .egw_fw_ui_sidemenu_entry_content_bottom {
