@@ -1308,11 +1308,15 @@ class mail_ui
 					emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]=true;
 				}
 			}
+			//$cutoffdate = egw_time::to('now','ts')-(3600*24*3);//SINCE, enddate
+			//$cutoffdate2 = egw_time::to('now','ts');//-(3600*24*2);//BEFORE, startdate
 			$filter = array(
 				'filterName' => (emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
 				'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
 				'string' => $query['search'],
-				'status' => 'any');
+				'status' => 'any',
+				//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
+			);
 		}
 		else
 		{
@@ -1330,6 +1334,13 @@ class mail_ui
 			$GLOBALS['egw']->preferences->save_repository(true);
 		}
 		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($mail_ui->sessionData['messageFilter']));
+/*
+$cutoffdate = egw_time::to('now','ts')-(3600*24*6);//SINCE, enddate
+$cutoffdate2 = egw_time::to('now','ts')-(3600*24*3);//BEFORE, startdate
+$filter['range'] = "BETWEEN";// we support SINCE, BEFORE, BETWEEN and ON
+$filter['since'] = date("d-M-Y", $cutoffdate);
+$filter['before']= date("d-M-Y", $cutoffdate2);
+*/
 		try
 		{
 			if ($maxMessages > 75)

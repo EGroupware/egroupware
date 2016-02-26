@@ -255,7 +255,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 */
 	private function _disconnect()
 	{
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__);
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__);
 		if ($this->mail) $this->mail->closeConnection();
 
 		unset($this->mail);
@@ -271,24 +271,24 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	public function GetFolderList()
 	{
 		$folderlist = array();
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__);
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__);
 		/*foreach($available_accounts as $account)*/ $account = 0;
 		{
 			$this->_connect($account);
 			if (!isset($this->folders)) $this->folders = $this->mail->getFolderObjects(true,false,$_alwaysGetDefaultFolders=true);
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($this->folders));
+			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($this->folders));
 
 			foreach ($this->folders as $folder => $folderObj) {
-				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' folder='.$folder);
+				if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' folder='.$folder);
 				$folderlist[] = $f = array(
 					'id'     => $this->createID($account,$folder),
 					'mod'    => $folderObj->shortDisplayName,
 					'parent' => $this->getParentID($account,$folder),
 				);
-				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() returning ".array2string($f));
+				if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() returning ".array2string($f));
 			}
 		}
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() returning ".array2string($folderlist));
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() returning ".array2string($folderlist));
 
 		return $folderlist;
 	}
@@ -1067,6 +1067,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						//mail AND meeting. we dont want this. accepting meeting requests with the mobile does nothing
 						$output->meetingrequest->globalobjid = activesync_backend::uid2globalObjId($id);
 						$output->messageclass = "IPM.Schedule.Meeting.Request";
+						//$output->messageclass = "IPM.Schedule.Meeting";
 						unset($attachment);
 						continue;	// do NOT add attachment as attachment
 					}
@@ -1364,7 +1365,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 			$messagelist = $_filter = array();
 			// if not connected, any further action must fail
-			if (!empty($cutoffdate)) $_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
+			if (!empty($cutoffdate)) $_filter = array('status'=>array('UNDELETED'),'range'=>"SINCE",'date'=> date("d-M-Y", $cutoffdate));
 			if ($this->debugLevel>1) $starttime = microtime (true);
 			$account = $_folderName = $id = null;
 			$this->splitID($folderid,$account,$_folderName,$id);
