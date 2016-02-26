@@ -2,24 +2,18 @@
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <?xml-stylesheet type="text/css" href="../less/svg.css" ?>
-<svg version="1.1" id="pixelegg_next_match" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="pixelegg_menu_list" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 <g>
-	
-		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-width="0.75" stroke-miterlimit="10" cx="2.495" cy="3.946" r="1.206"/>
-</g>
-<g>
 	<g>
-		<path fill="#696969" stroke="#E6E6E6" stroke-width="0.75" stroke-miterlimit="10" d="M6.736,1.669v4.554h23.975V1.669H6.736z
-			 M6.736,18.276h23.975v-4.554H6.736V18.276z M6.736,30.331h23.975v-4.554H6.736V30.331z"/>
+		<path fill="#696969" stroke="#e6e6e6" stroke-width="0.75" stroke-miterlimit="10" d="M7.902,1v4.554h22.809V1H7.902z M7.902,18.275
+			h22.809v-4.553H7.902V18.275z M7.902,31h22.809v-4.555H7.902V31z"/>
 	</g>
 </g>
 <g>
-	
-		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-width="0.75" stroke-miterlimit="10" cx="2.495" cy="15.999" r="1.205"/>
-</g>
-<g>
-	
-		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-width="0.75" stroke-miterlimit="10" cx="2.495" cy="28.054" r="1.206"/>
+	<g>
+		<path fill="#696969" stroke="#e6e6e6" stroke-width="0.75" stroke-miterlimit="10" d="M1,1v4.554h4.475V1H1z M1,18.275h4.475v-4.553
+			H1V18.275z M1,31h4.475v-4.555H1V31z"/>
+	</g>
 </g>
 </svg>

@@ -21,9 +21,9 @@
 /*Tablets Max-Width*/
 @tablet-max: 1024px;
 /*Smartphones Max-Width*/
-@smartphone-max: 700px;
+@smartphone-max: 736px;
 /*Smartphones Min-Width*/
-@smartphone-min: 321px;
+@smartphone-min: 300px;
 @handheld: ~"only screen and (max-device-width : @{tablet-max})";
 /*All devices portrait mode*/
 @handheld-portrait: ~"only screen and (max-device-width : @{tablet-max}) and (orientation : portrait)";
@@ -254,6 +254,43 @@
 			#egw_fw_top_toolbar {
 				div#egw_fw_topmenu_items {
 					padding-top: 8px;
+					ul {
+						li{
+							a#topmenu_logout{
+								&:before {
+									background-image: url(../images/logout.svg);
+								}
+							}
+							a#topmenu_home:before {
+								background-image: url(../images/home.svg);
+							}
+							a#topmenu_prefs {
+								&:before {
+									background-image: url(../images/setup.svg);
+								}
+							}
+							a#topmenu_acl:before {
+								background-image: url(../images/access.svg);
+							}
+							a#topmenu_cats:before {
+								background-image: url(../images/tag_message.svg);
+							}
+							a#topmenu_password:before {
+								background-image: url(../images/password.svg);
+							}
+							a#topmenu_manual:before {
+								background-image: url(../images/help.svg);
+							}
+							a#topmenu_search{
+								&:before {
+									background-image: url(../images/topmenu_items/mobile/search.svg);
+								}
+							}
+						}
+					}
+				}
+				div#egw_fw_menu {
+					background-image: url(../images/topmenu_items/mobile/menu_active.svg);
 				}
 			}
 			#egw_fw_sidemenu img[src$=".svg"] {
@@ -344,15 +381,11 @@
 			background-color: #0c5da5;
 			border: none;
 			box-shadow: 0px 1px 5px 3px silver;
-			background-image: none !important;
+			background-image: url(../images/topmenu_items/mobile/plus_white.svg) !important;
+			background-repeat: no-repeat;
+			background-size: 24px 24px;
 			margin: 0;
 			padding: 0;
-			&:after {
-				content: '+';
-				font-weight: bold;
-				font-size: 34pt;
-				color: #fafafa;
-			}
 			&:hover, &:active {
 				background-color: #0c5da5;
 			}
@@ -477,7 +510,7 @@
 					width:50px;
 				}
 				button.nm_toggle_header {
-					background-image: url(../images/menu_list_round.svg);
+					background-image: url(../images/menu_list.svg);
 					background-position: center;
 					background-repeat: no-repeat;
 					margin-right:5px;
@@ -668,7 +701,7 @@
 							bottom: 0px;
 							right: 0;
 							color: white;
-							background-image: url(../images/agt_action_success.png);
+							background-image: url(../images/topmenu_items/mobile/check.svg);
 							background-repeat: no-repeat;
 							background-position: center;
 							height: auto;
@@ -987,6 +1020,7 @@
 				margin:0;
 				top:0;
 				outline: none;
+				z-index: 100;
 			}
 			span.ui-icon.clear{
 				top: 0px;

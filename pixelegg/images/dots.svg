@@ -4,10 +4,8 @@
 <?xml-stylesheet type="text/css" href="../less/svg.css" ?>
 <svg version="1.1" id="pixelegg_dots" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-<g>
-	<g>
-		<polygon fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" points="29.007,9.38 22.886,3.496 16,10.116 9.114,3.496 
-			2.994,9.38 9.879,16 2.994,22.62 9.114,28.504 16,21.884 22.886,28.504 29.007,22.62 22.121,16 		"/>
-	</g>
-</g>
+<circle fill="#696969" stroke="#e6e6e6" stroke-miterlimit="10" cx="16.419" cy="4.306" r="3.458"/>
+<circle fill="#696969" stroke="#e6e6e6" stroke-miterlimit="10" cx="16.419" cy="15.94" r="3.458"/>
+<path fill="#696969" stroke="#e6e6e6" stroke-miterlimit="10" d="M19.864,27.721c0,1.911-1.55,3.459-3.459,3.459
+	c-1.91,0-3.458-1.548-3.458-3.459c0-1.907,1.548-3.457,3.458-3.457C18.314,24.264,19.864,25.813,19.864,27.721z"/>
 </svg>

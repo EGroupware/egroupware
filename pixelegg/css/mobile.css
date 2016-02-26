@@ -2179,7 +2179,7 @@ button[id="timesheet-edit_button[delete]"],
 button[id="displayToolbar-delete"],
 button.et2_button_delete {
   /*background-color: @color_negative_action_hover !important;*/
-  background-image: url('../images/delete.png') !important;
+  background-image: url('../images/delete.png');
   margin-left: 3em;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
@@ -4368,7 +4368,7 @@ td.message span.message {
   padding: 0px 0px 0px 15px;
   line-height: 1em;
   font-size: 12.1px;
-  background-image: url(../images/arrow_left.png);
+  background-image: url(../images/arrow_right.png);
   background-repeat: no-repeat;
   background-position: left center;
 }
@@ -4400,7 +4400,7 @@ td.message span.message {
   /*.background-clip(padding-box);*/
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 {
-  background-image: url(../images/arrow_down.png);
+  background-image: url(../images/arrow_down_white.png);
   line-height: 1em;
   font-size: 12px;
 }

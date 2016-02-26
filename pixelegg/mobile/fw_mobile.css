@@ -2190,7 +2190,7 @@ button[id="timesheet-edit_button[delete]"],
 button[id="displayToolbar-delete"],
 button.et2_button_delete {
   /*background-color: @color_negative_action_hover !important;*/
-  background-image: url('../images/delete.png') !important;
+  background-image: url('../images/delete.png');
   margin-left: 3em;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
@@ -4379,7 +4379,7 @@ td.message span.message {
   padding: 0px 0px 0px 15px;
   line-height: 1em;
   font-size: 12.1px;
-  background-image: url(../images/arrow_left.png);
+  background-image: url(../images/arrow_right.png);
   background-repeat: no-repeat;
   background-position: left center;
 }
@@ -4411,7 +4411,7 @@ td.message span.message {
   /*.background-clip(padding-box);*/
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1 {
-  background-image: url(../images/arrow_down.png);
+  background-image: url(../images/arrow_down_white.png);
   line-height: 1em;
   font-size: 12px;
 }
@@ -7026,7 +7026,7 @@ span.egw_tutorial_title {
     padding: 0;
   }
 }
-@media only screen and (max-device-width: 700px) and (min-width: 321px) {
+@media only screen and (max-device-width: 736px) and (min-width: 300px) {
   body #egw_fw_basecontainer.sidebar-toggle div#egw_fw_top_toolbar {
     z-index: 0;
   }
@@ -7104,6 +7104,33 @@ span.egw_tutorial_title {
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
     padding-top: 8px;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_logout:before {
+    background-image: url(../images/logout.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_home:before {
+    background-image: url(../images/home.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_prefs:before {
+    background-image: url(../images/setup.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_acl:before {
+    background-image: url(../images/access.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_cats:before {
+    background-image: url(../images/tag_message.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_password:before {
+    background-image: url(../images/password.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_manual:before {
+    background-image: url(../images/help.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_search:before {
+    background-image: url(../images/topmenu_items/mobile/search.svg);
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_menu {
+    background-image: url(../images/topmenu_items/mobile/menu_active.svg);
   }
   body #egw_fw_basecontainer #egw_fw_sidemenu img[src$=".svg"] {
     background: none;
@@ -7193,15 +7220,11 @@ span.egw_tutorial_title {
     background-color: #0c5da5;
     border: none;
     box-shadow: 0px 1px 5px 3px silver;
-    background-image: none !important;
+    background-image: url(../images/topmenu_items/mobile/plus_white.svg) !important;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
     margin: 0;
     padding: 0;
-  }
-  body button.plus_button:after {
-    content: '+';
-    font-weight: bold;
-    font-size: 34pt;
-    color: #fafafa;
   }
   body button.plus_button:hover,
   body button.plus_button:active {
@@ -7321,7 +7344,7 @@ span.egw_tutorial_title {
     width: 50px;
   }
   body .et2_nextmatch .nm-mob-header button.nm_toggle_header {
-    background-image: url(../images/menu_list_round.svg);
+    background-image: url(../images/menu_list.svg);
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
@@ -7515,7 +7538,7 @@ span.egw_tutorial_title {
     bottom: 0px;
     right: 0;
     color: white;
-    background-image: url(../images/agt_action_success.png);
+    background-image: url(../images/topmenu_items/mobile/check.svg);
     background-repeat: no-repeat;
     background-position: center;
     height: auto;
@@ -7800,6 +7823,7 @@ span.egw_tutorial_title {
     margin: 0;
     top: 0;
     outline: none;
+    z-index: 100;
   }
   body .et2_searchbox.expanded span.ui-icon.clear {
     top: 0px;

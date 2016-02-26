@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<?xml-stylesheet type="text/css" href="../../../less/svg.css" ?>
-<svg version="1.1" id="pixelegg_back" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 <g>
 	<g>
-		<polygon fill="#FFFFFF" points="-11.008,53.88 -17.128,47.996 -24.014,54.616 -30.9,47.996 -37.021,53.88 -30.135,60.5 
-			-37.021,67.12 -30.9,73.004 -24.014,66.384 -17.128,73.004 -11.008,67.12 -17.894,60.5 		"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path fill="#FFFFFF" d="M-39.014,11.14v6.521h30V11.14H-39.014z M-39.014,29.401h30v-6.522h-30V29.401z M-39.014,41.14h30v-6.521
-			h-30V41.14z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<polygon fill="#FFFFFF" points="29.569,13.938 12.236,13.938 12.236,10.889 1.236,16 12.236,21.111 12.236,18.062 29.569,18.062 
-					"/>
+		<polygon fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" points="30.875,12.857 12.833,12.857 12.833,3.11 1.833,16.096 
+			12.833,29.083 12.833,19.169 30.875,19.169 		"/>
 	</g>
 </g>
 </svg>
