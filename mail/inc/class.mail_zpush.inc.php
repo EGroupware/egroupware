@@ -1512,7 +1512,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$_folderName = ($this->mail->sessionData['mailbox']?$this->mail->sessionData['mailbox']:'INBOX');
 			$folderid = $this->createID($account=0,$_folderName);
 		}
-//$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		$rv = $this->splitID($folderid,$account,$_folderName,$id);
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' FolderID:'.$folderid.' Foldername:'.$_folderName);
 		$this->_connect($account);
@@ -1520,9 +1519,24 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		emailadmin_imapbase::$supportsORinQuery[self::$profileID]=true; // trigger quicksearch (if possible)
 		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[self::$profileID]?'quick':'subject'),
 						 'string'=> $searchText,
-						 'status'=>'any',
+						 'status'=>'any'
 						);
 
+		if (isset($searchquery['searchdatereceivedgreater']) || isset($searchquery['searchdatereceivedless']))
+		{
+		/*
+		 *	We respect only the DATEPART of the RANGE specified
+		 * 		[searchdatereceivedgreater] => 1
+		 * 		[searchvaluegreater] => 2015-07-06T22:00:00.000Z , SINCE
+		 * 		[searchdatereceivedless] => 1
+		 * 		[searchvalueless] => 2015-07-14T15:11:00.000Z , BEFORE
+		 */
+			$_filter['range'] = "BETWEEN";
+			list($sincedate,$crap) = explode('T',$searchquery['searchvaluegreater']);
+			list($beforedate,$crap) = explode('T',$searchquery['searchvalueless']);
+			$_filter['before'] = date("d-M-Y", egw_time::to($beforedate,'ts'));
+			$_filter['since'] = date("d-M-Y", egw_time::to($sincedate,'ts'));
+		}
 		//$_filter[] = array('type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		if ($this->debugLevel>1) debugLog (__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter));
 		$rv_messages = $this->mail->getHeaders($_folderName, $_startMessage=($range?$start:1), $_numberOfMessages=($limit?$limit:9999999), $_sort=0, $_reverse=false, $_filter, $_id=NULL);
