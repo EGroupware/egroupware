@@ -1,0 +1,77 @@
+/**
+ *
+ * Filemanager - Mobile
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ * Pixleegg Template app.css
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package Filemanager
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+/* tablets and smartphones  */
+@media all {
+  #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='size]'] {
+    font-size: 9pt;
+    text-align: right;
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] span {
+    white-space: nowrap;
+  }
+  #filemanager-index_nm #filemanager-index_buttons {
+    position: relative;
+    display: inline-block;
+    overflow: auto;
+    width: 100%;
+  }
+  #filemanager-index_nm #filemanager-index_buttons img {
+    width: 32px;
+    height: 32px;
+    padding-left: 15px;
+  }
+  #filemanager-index_nm #filemanager-index_tarp {
+    display: none !important;
+  }
+  #filemanager-index_nm #filemanager-index_filemanager-index-header_left {
+    height: auto;
+  }
+  .et2_file.plus_button {
+    position: absolute !important;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-position: center;
+    z-index: 100;
+    background-color: #0c5da5;
+    box-shadow: 0px 1px 5px 3px silver;
+    background-image: url(../../../pixelegg/images/topmenu_items/mobile/plus_white.svg) !important;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .et2_file.plus_button .et2_file_span {
+    display: none;
+  }
+  .et2_file.plus_button .et2_file_upload {
+    width: 60px;
+    height: 60px;
+    top: 0;
+  }
+  .previewImage img {
+    max-width: 100%;
+  }
+  div#filemanager-file_tabs td.eaclAccount,
+  td.eaclRights {
+    display: block;
+  }
+}
