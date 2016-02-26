@@ -125,6 +125,41 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="infolog.edit.ownership" template="" lang="" group="0" version="16.1.00">
+		<grid width="100%">
+			<columns>
+				<column width = "120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row disabled="!@info_owner">
+					<description value="Owner"/>
+					<menulist>
+							<menupopup type="select-account" id="info_owner" readonly="true"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Created"/>
+					<date-time id="info_created" readonly="true"/>
+				</row>
+				<row>
+					<description value="Private" for="info_access"/>
+					<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
+				</row>	
+
+				<row>
+					<description value="Last modified"/>
+					<menulist>
+							<menupopup type="select-account" id="info_modifier" readonly="true"/>
+					</menulist>
+				</row>
+				<row>
+					<description/>
+					<date-time id="info_datemodified" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
 		<grid border="1" width="100%">
 			<columns>
@@ -192,6 +227,7 @@
 							<tab id="links" label="Links" statustext="Links of this entry"/>
 							<tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
 							<tab id="customfields" label="Customfields" statustext="Custom fields"/>
+							<tab id="ownership" label="Ownership" statustext="Ownership"/>
 						</tabs>
 						<tabpanels>
 							<template id="infolog.edit.description"/>
@@ -199,45 +235,12 @@
 							<template id="infolog.edit.links"/>
 							<template id="infolog.edit.project"/>
 							<template id="infolog.edit.customfields"/>
+							<template id="infolog.edit.ownership"/>
 						</tabpanels>
 					</tabbox>
 				</row>
 				<row>
-					<details title="Ownership">
-						<grid width="100%">
-							<columns>
-								<column width = "120"/>
-								<column width="600"/>
-							</columns>
-							<rows>
-								<row disabled="!@info_owner">
-									<description value="Owner"/>
-									<menulist>
-											<menupopup type="select-account" id="info_owner" readonly="true"/>
-									</menulist>
-								</row>
-								<row>
-									<description value="Created"/>
-									<date-time id="info_created" readonly="true"/>
-								</row>
-								<row>
-									<description value="Private" for="info_access"/>
-									<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
-								</row>	
-
-								<row>
-									<description value="Last modified"/>
-									<menulist>
-											<menupopup type="select-account" id="info_modifier" readonly="true"/>
-									</menulist>
-								</row>
-								<row>
-									<description/>
-									<date-time id="info_datemodified" readonly="true"/>
-								</row>
-							</rows>
-						</grid>
-					</details>
+					
 				</row>
 			</rows>
 		</grid>
