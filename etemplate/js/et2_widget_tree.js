@@ -78,7 +78,7 @@ var et2_tree = et2_inputWidget.extend(
 			"name": "Image directory",
 			"type": "string",
 			"default": this.egw().webserverUrl + "/phpgwapi/templates/default/images/dhtmlxtree/",
-			"description": "Directory for tree structure images"
+			"description": "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
 		},
 		"value": {
 			"type": "any",
@@ -100,7 +100,7 @@ var et2_tree = et2_inputWidget.extend(
 			"name": "Standard images",
 			"type": "string",
 			"default": "",
-			"description": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.gif,folderClosed.gif,folderOpen.gif), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
+			"description": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.png,folderClosed.png,folderOpen.png), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
 		},
 		"multimarking": {
 			"name": "multimarking",
@@ -207,6 +207,11 @@ var et2_tree = et2_inputWidget.extend(
 		{
 			widget.setImages.apply(widget, widget.options.std_images.split(','));
 		}
+		else
+		{
+			// calling setImages to get our png or svg default images
+			widget.setImages();
+		}
 		// Add in the callback so we can keep the two in sync
 		widget.input.AJAX_callback = function(dxmlObject) {
 			widget._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), widget.input.lastLoadedXMLId);
@@ -243,10 +248,17 @@ var et2_tree = et2_inputWidget.extend(
 		// Enable/Disable highlighting
 		widget.input.enableHighlighting(widget.options.highlighting?true:false);
 
-		// show no more lines and left/down triangles instead of plus/minus
-		widget.input.enableTreeLines(false);
-		widget.input.setImageArrays('plus', 'plus.png', 'plus.png', 'plus.png', 'plus.png', 'plus.png');
-		widget.input.setImageArrays('minus', 'minus.png', 'minus.png', 'minus.png', 'minus.png', 'minus.png');
+		// if templates supplies open/close right/down arrows, show no more lines and use them instead of plus/minus
+		var open = egw.image('dhtmlxtree/open');
+		var close  = egw.image('dhtmlxtree/close');
+		if (open && close)
+		{
+			widget.input.enableTreeLines(false);
+			open = this._rel_url(open);
+			widget.input.setImageArrays('plus', open, open, open, open, open);
+			close = this._rel_url(close);
+			widget.input.setImageArrays('minus', close, close, close, close, close);
+		}
 	},
 
 	/**
@@ -848,18 +860,18 @@ var et2_tree = et2_inputWidget.extend(
 	/**
 	 * Set images for a specific node or all new nodes (default)
 	 *
-	 * If images contain an extension eg. "leaf.gif" they are asumed to be in image path (/phpgwapi/templates/default/images/dhtmlxtree/).
+	 * If images contain an extension eg. "leaf" they are asumed to be in image path (/phpgwapi/templates/default/images/dhtmlxtree/).
 	 * Otherwise they get searched via egw.image() in current app, phpgwapi or can be specified as "app/image".
 	 *
-	 * @param {string} _leaf leaf image, default "leaf.gif"
-	 * @param {string} _closed closed folder image, default "folderClosed.gif"
-	 * @param {string} _open opened folder image, default "folderOpen.gif"
+	 * @param {string} _leaf leaf image, default "leaf"
+	 * @param {string} _closed closed folder image, default "folderClosed"
+	 * @param {string} _open opened folder image, default "folderOpen"
 	 * @param {string} _id if not given, standard images for new nodes are set
 	 */
 	setImages: function(_leaf, _closed, _open, _id)
 	{
-		var images = [_leaf || 'leaf.gif', _closed || 'folderClosed.gif', _open || 'folderOpen.gif'];
-		var image_extensions = /\.(gif|png|jpe?g)/i;
+		var images = [_leaf || 'dhtmlxtree/leaf', _closed || 'dhtmlxtree/folderClosed', _open || 'dhtmlxtree/folderOpen'];
+		var image_extensions = /\.(gif|png|jpe?g|svg)/i;
 		for(var i=0; i < 3; ++i)
 		{
 			var image = images[i];

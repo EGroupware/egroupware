@@ -38,9 +38,9 @@ class mail_tree
 	 * @var array
 	 */
 	static $leafImages = array(
-		'folderNoSelectClosed' => "folderNoSelectClosed.gif",
-		'folderNoSelectOpen' => "folderNoSelectOpen.gif",
-		'folderOpen' => "folderOpen.gif",
+		'folderNoSelectClosed' => "folderNoSelectClosed.png",
+		'folderNoSelectOpen' => "folderNoSelectOpen.png",
+		'folderOpen' => "folderOpen.png",
 		'folderClosed' => "MailFolderClosed.png",
 		'folderLeaf' => "MailFolderPlain.png",
 		'folderHome' => "kfm_home.png",
