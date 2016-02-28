@@ -27,7 +27,6 @@ use egw_exception_wrong_parameter;
 use egw_exception_wrong_userinput;
 use egw_exception;
 use egw_time;
-use egw_cache;
 
 /**
  * Class containing static methods to use the new eGW virtual file system
@@ -987,7 +986,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if ($session_only)
 		{
-			$session_eacls =& egw_cache::getSession(__CLASS__, self::SESSION_EACL);
+			$session_eacls =& Cache::getSession(__CLASS__, self::SESSION_EACL);
 			$session_eacls[] = array(
 				'path'   => $url[0] == '/' ? $url : self::parse_url($url, PHP_URL_PATH),
 				'owner'  => $owner ? $owner : self::$user,
@@ -1010,7 +1009,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		$eacls = self::_call_on_backend('get_eacl',array($path),true);	// true = fail silent (no PHP Warning)
 
-		$session_eacls =& egw_cache::getSession(__CLASS__, self::SESSION_EACL);
+		$session_eacls =& Cache::getSession(__CLASS__, self::SESSION_EACL);
 		if ($session_eacls)
 		{
 			// eacl is recursive, therefore we have to match all parent-dirs too

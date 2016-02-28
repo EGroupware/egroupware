@@ -11,16 +11,18 @@
  * @version $Id$
  */
 
-use EGroupware\Api;
+namespace EGroupware\Api\Cache;
 
 /**
- * Class to manage caching in eGroupware.
- *
- * @deprecated use Api\Cache instead
+ * Interface for a caching provider being able to retrieve multiple entires
  */
-class egw_cache extends Api\Cache {}
-
-class egw_cache_apc extends Api\Cache\Apc {}
-class egw_cache_files extends Api\Cache\Files {}
-class egw_cache_memcache extends Api\Cache\Memcache {}
-class egw_cache_memcached extends Api\Cache\Memcached {}
+interface ProviderMultiple
+{
+	/**
+	 * Get multiple data from the cache
+	 *
+	 * @param array $keys eg. array of array($level,$app,array $locations)
+	 * @return array key => data stored, not found keys are NOT returned
+	 */
+	function mget(array $keys);
+}

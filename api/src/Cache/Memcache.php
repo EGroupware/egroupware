@@ -7,9 +7,11 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\Cache;
 
 /**
  * Caching provider storing data in memcached via PHP's memcache extension
@@ -17,14 +19,14 @@
  * The provider concats all $keys with '::' to get a single string.
  *
  * To use this provider set in your header.inc.php:
- * $GLOBALS['egw_info']['server']['cache_provider_instance'] = array('egw_cache_memcache','localhost'[,'otherhost:port']);
+ * $GLOBALS['egw_info']['server']['cache_provider_instance'] = array('EGroupware\Api\Cache\Memcache','localhost'[,'otherhost:port']);
  * and optional also $GLOBALS['egw_info']['server']['cache_provider_tree'] (defaults to instance)
  *
  * You can set more then one server and specify a port, if it's not the default one 11211.
  *
  * If igbinary extension is available, it is prefered over PHP (un)serialize.
  */
-class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_provider_multiple
+class Memcache extends Base implements ProviderMultiple
 {
 	/**
 	 * Instance of Memcache

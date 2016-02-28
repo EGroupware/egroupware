@@ -7,9 +7,13 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\Cache;
+
+use EGroupware\Api;
 
 /**
  * Caching provider storing data in files
@@ -17,7 +21,7 @@
  * The provider creates subdirs under a given path
  * for each values in $key
  */
-class egw_cache_files extends egw_cache_provider_check implements egw_cache_provider
+class Files extends Base implements Provider
 {
 	/**
 	 * Extension of file used to store expiration > 0
@@ -45,7 +49,7 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 		}
 		else
 		{
-			$this->base_path = egw_cache::get_system_config('temp_dir', false);
+			$this->base_path = Api\Cache::get_system_config('temp_dir', false);
 			if (isset($this->base_path)) $this->base_path .= '/egw_cache';
 		}
 		if (!isset($this->base_path) || !file_exists($this->base_path) && !mkdir($this->base_path,0700,true))

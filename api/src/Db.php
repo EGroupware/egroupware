@@ -13,7 +13,6 @@
 
 namespace EGroupware\Api;
 
-use egw_cache;
 use egw_exception_db_connection;
 use egw_exception_db_invalid_sql;
 use egw_exception_wrong_parameter;
@@ -406,7 +405,7 @@ class Db
 	{
 		$hosts = explode(';', $this->Host[0] == '@' ? getenv(substr($this->Host, 1)) : $this->Host);
 		$num_hosts = count($hosts);
-		$n =& egw_cache::getSession(__CLASS__, $this->Host);
+		$n =& Cache::getSession(__CLASS__, $this->Host);
 		if (!isset($n)) $n = 0;
 
 		if ($next && ++$n >= $num_hosts+2)

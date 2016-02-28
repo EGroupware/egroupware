@@ -14,8 +14,8 @@
 namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
+
 use egw_exception_db_invalid_sql;
-use egw_cache;
 use config;
 use translation;
 use html;
@@ -493,9 +493,9 @@ class Backup
 				return lang('Restore failed');
 			}
 		}
-		// generate an install_id if we dont have one (it breaks egw_cache::flush() stalling the upgrade)
+		// generate an install_id if we dont have one (it breaks Api\Cache::flush() stalling the upgrade)
 		unset($GLOBALS['egw_info']['server']['install_id']);
-		if (!($GLOBALS['egw_info']['server']['install_id'] = egw_cache::get_system_config('install_id', false)))
+		if (!($GLOBALS['egw_info']['server']['install_id'] = Api\Cache::get_system_config('install_id', false)))
 		{
 			$GLOBALS['egw_info']['server']['install_id'] = md5(microtime(true).$_SERVER['HTTP_HOST']);
 			$this->db->insert('egw_config', array(
@@ -506,7 +506,7 @@ class Backup
 			), __LINE__, __FILE__);
 		}
 		// flush instance cache
-		egw_cache::flush(egw_cache::INSTANCE);
+		Api\Cache::flush(Api\Cache::INSTANCE);
 
 		// search-and-register-hooks
 		$GLOBALS['egw']->hooks->register_all_hooks();

@@ -7,9 +7,11 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\Cache;
 
 /**
  * Caching provider storing data in PHP's APC or APCu extension / shared memory.
@@ -17,7 +19,7 @@
  * The provider concats all $keys with '::' to get a single string.
  *
  * This provider is used by default, if it is available or explicit enabled in your header.inc.php:
- * $GLOBALS['egw_info']['server']['cache_provider_instance'] = array('egw_cache_apc');
+ * $GLOBALS['egw_info']['server']['cache_provider_instance'] = array('EGroupware\Api\Cache\Apc');
  * and optional also $GLOBALS['egw_info']['server']['cache_provider_tree'] (defaults to instance)
  *
  * APC(u) and CLI:
@@ -25,14 +27,14 @@
  * APC(u) is not enabled by default for CLI (apc.enable_cli), nor would it access same shared memory!
  * It makes no sense to fall back to files cache, as this is probably quite outdated,
  * if PHP via Webserver uses APC. Better to use no cache at all.
- * egw_cache::get*() will return NULL for not found and egw_cache::[un]set*()
+ * Api\Cache::get*() will return NULL for not found and Api\Cache::[un]set*()
  * false for not being able to (un)set anything.
  * It also does not make sense to report failure by throwing an Exception and filling
  * up cron logs.
  * --> if APC(u) is available for Webserver, we report availability for CLI too,
  *     but use no cache at all!
  */
-class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provider
+class Apc extends Base implements Provider
 {
 	/**
 	 * Constructor, eg. opens the connection to the backend

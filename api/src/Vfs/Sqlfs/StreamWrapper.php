@@ -7,19 +7,18 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 namespace EGroupware\Api\Vfs\Sqlfs;
 
 use EGroupware\Api\Vfs;
+use EGroupware\Api;
 
 // explicitly import old phpgwapi classes used:
-use egw_cache;
 use mime_magic;
 use config;
-use translation;
 use egw_exception_db;
 use egw_exception_wrong_parameter;
 use egw_exception_assertion_failed;
@@ -186,7 +185,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 
 		self::$stat_cache = array();
 
-		egw_cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl = null);
+		Api\Cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl = null);
 	}
 
 	/**
@@ -1377,7 +1376,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 */
 	static protected function _read_extended_acl()
 	{
-		if ((self::$extended_acl = egw_cache::getSession(self::EACL_APPNAME, 'extended_acl')))
+		if ((self::$extended_acl = Api\Cache::getSession(self::EACL_APPNAME, 'extended_acl')))
 		{
 			return;		// ext. ACL read from session.
 		}
@@ -1398,7 +1397,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		uksort(self::$extended_acl, function($a,$b) {
 			return strlen($b)-strlen($a);
 		});
-		egw_cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl);
+		Api\Cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'() '.array2string(self::$extended_acl));
 	}
 
@@ -1464,7 +1463,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		}
 		if ($ret)
 		{
-			egw_cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl);
+			Api\Cache::setSession(self::EACL_APPNAME, 'extended_acl', self::$extended_acl);
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$rights,$owner,$fs_id)=".(int)$ret);
 		return $ret;
