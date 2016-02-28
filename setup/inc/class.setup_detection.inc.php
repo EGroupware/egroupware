@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Class detecting the current installation status of EGroupware
  */
@@ -108,7 +110,7 @@ class setup_detection
 				}
 			}
 		}
-		catch (egw_exception_db $e) {
+		catch (Api\Db\Exception $e) {
 			unset($e);
 			// ignore db errors
 		}
@@ -301,7 +303,7 @@ class setup_detection
 				$GLOBALS['egw_setup']->set_table_names();
 			}
 		}
-		catch(egw_exception_db $e) {
+		catch(Api\Db\Exception $e) {
 			// ignore error
 		}
 
@@ -337,7 +339,7 @@ class setup_detection
 				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (Install Applications)';
 				return 3;
 			}
-			catch (egw_exception_db $e) {
+			catch (Api\Db\Exception $e) {
 				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
 				return 1;
 			}
@@ -363,7 +365,7 @@ class setup_detection
 				$config[$GLOBALS['egw_setup']->db->f(0)] = $GLOBALS['egw_setup']->db->f(1);
 			}
 		}
-		catch (egw_exception_db $e) {
+		catch (Api\Db\Exception $e) {
 			unset($e);
 			// ignore db errors
 		}
@@ -443,7 +445,7 @@ class setup_detection
 		try {
 			$GLOBALS['egw_setup']->db->query($q = "SELECT DISTINCT lang FROM {$GLOBALS['egw_setup']->lang_table}",__LINE__,__FILE__);
 		}
-		catch (egw_exception_db $e) {
+		catch (Api\Db\Exception $e) {
 			// ignore db error
 		}
 		if($e || $GLOBALS['egw_setup']->db->num_rows() == 0)
@@ -490,7 +492,7 @@ class setup_detection
 					$tables[] = $val['table_name'];
 				}
 			}
-			catch (egw_exception_db $e) {
+			catch (Api\Db\Exception $e) {
 				unset($e);
 				// ignore db error
 			}

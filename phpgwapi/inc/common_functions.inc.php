@@ -14,6 +14,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 // this is only neccessary, if header.inc.php is not included, but common_functions.inc.php directly
 if (!defined('EGW_SERVER_ROOT'))
 {
@@ -1013,7 +1015,7 @@ function &CreateObject($class)
 		}
 		if (!file_exists($f=EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
 		{
-			throw new egw_exception_assertion_failed(__FUNCTION__."($classname) file $f not found!");
+			throw new Api\Exception\AssertionFailed(__FUNCTION__."($classname) file $f not found!");
 		}
 		// this will stop php with a 500, if the class does not exist or there are errors in it (syntax error go into the error_log)
 		require_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
@@ -1783,15 +1785,15 @@ function json_php_unserialize($str, $allow_not_serialized=false)
 function _egw_log_exception($e,&$headline=null)
 {
 	$trace = explode("\n", $e->getTraceAsString());
-	if ($e instanceof egw_exception_no_permission)
+	if ($e instanceof Api\Exception\NoPermission)
 	{
 		$headline = try_lang('Permission denied!');
 	}
-	elseif ($e instanceof egw_exception_db)
+	elseif ($e instanceof Api\Db\Exception)
 	{
 		$headline = try_lang('Database error');
 	}
-	elseif ($e instanceof egw_exception_wrong_userinput)
+	elseif ($e instanceof Api\Exception\WrongUserinput)
 	{
 		$headline = '';	// message contains the whole message, it's usually no real error but some input validation
 	}
@@ -1860,7 +1862,7 @@ function egw_exception_handler($e)
 			$message .= html::htmlspecialchars($e->getTraceAsString());
 		}
 		$message .= "</pre>\n";
-		if (is_a($e, 'egw_exception_db_setup'))
+		if (is_a($e, 'EGroupware\Api\Db\Exception\Setup'))
 		{
 			$setup_dir = str_replace(array('home/index.php','index.php'),'setup/',$_SERVER['PHP_SELF']);
 			$message .= '<a href="'.$setup_dir.'">Run setup to install or configure EGroupware.</a>';

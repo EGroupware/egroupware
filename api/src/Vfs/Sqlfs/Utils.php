@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -17,8 +17,6 @@ use EGroupware\Api\Vfs;
 
 // explicitly import old phpgwapi classes used:
 use mime_magic;
-use egw_exception_assertion_failed;
-use schema_proc;
 
 /**
  * sqlfs stream wrapper utilities: migration db-fs, fsck
@@ -69,7 +67,7 @@ class Utils extends StreamWrapper
 				}
 				if (!is_resource($content))
 				{
-					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name, $fs_size bytes) content is NO resource! ".array2string($content));
+					throw new Api\Exception\AssertionFailed(__METHOD__."(): fs_id=$fs_id ($fs_name, $fs_size bytes) content is NO resource! ".array2string($content));
 				}
 				$filename = self::_fs_path($fs_id);
 				if (!file_exists($fs_dir=Vfs::dirname($filename)))
@@ -78,11 +76,11 @@ class Utils extends StreamWrapper
 				}
 				if (!($dest = fopen($filename,'w')))
 				{
-					throw new egw_exception_assertion_failed(__METHOD__."(): fopen($filename,'w') failed!");
+					throw new Api\Exception\AssertionFailed(__METHOD__."(): fopen($filename,'w') failed!");
 				}
 				if (($bytes = stream_copy_to_stream($content,$dest)) != $fs_size)
 				{
-					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name) $bytes bytes copied != size of $fs_size bytes!");
+					throw new Api\Exception\AssertionFailed(__METHOD__."(): fs_id=$fs_id ($fs_name) $bytes bytes copied != size of $fs_size bytes!");
 				}
 				if ($debug) error_log("$fs_id: $fs_name: $bytes bytes copied to fs");
 				fclose($dest);
@@ -235,7 +233,7 @@ class Utils extends StreamWrapper
 		if (!$check_only && $msgs)
 		{
 			global $oProc;
-			if (!isset($oProc)) $oProc = new schema_proc();
+			if (!isset($oProc)) $oProc = new Api\Db\Schema();
 			// PostgreSQL seems to require to update the sequenz, after manually inserting id's
 			$oProc->UpdateSequence('egw_sqlfs', 'fs_id');
 		}

@@ -12,6 +12,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * New written class to create the eGW enviroment AND restore it from a php-session
  *
@@ -92,15 +94,15 @@ class egw extends egw_minimal
 			$this->db->connect();
 			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
 		}
-		catch(egw_exception_db_connection $e) {
+		catch(Api\Db\Exception\Connection $e) {
 			// ignore exception, get handled below
 		}
-		catch(egw_exception_db_invalid_sql $e1) {
+		catch(Api\Db\Exception\InvalidSql $e1) {
 			unset($e1);	// not used
 			try {
 				$phpgw_config = $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
 			}
-			catch (egw_exception_db_invalid_sql $e2) {
+			catch (Api\Db\Exception\InvalidSql $e2) {
 				unset($e2);	// not used
 				// ignor error, get handled below
 			}
@@ -114,10 +116,10 @@ class egw extends egw_minimal
 			}
 			if ($e)
 			{
-				throw new egw_exception_db_setup('Connection with '.$e->getMessage()."\n\n".
+				throw new Api\Db\Exception\Setup('Connection with '.$e->getMessage()."\n\n".
 					'Maybe you not created a database for EGroupware yet.',999);
 			}
-			throw new egw_exception_db_setup('It appears that you have not created the database tables for EGroupware.',999);
+			throw new Api\Db\Exception\Setup('It appears that you have not created the database tables for EGroupware.',999);
 		}
 		// Set the DB's client charset if a system-charset is set and some other values needed by egw_cache (used in config::read)
 		foreach($this->db->select(config::TABLE,'config_name,config_value',array(
@@ -340,9 +342,9 @@ class egw extends egw_minimal
 	 *
 	 * If the user has no rights for the app (eg. called via URL) he get a permission denied page (this function does NOT return)
 	 *
-	 * @throws egw_exception_redirect for anonymous user accessing something he has no rights to
-	 * @throws egw_exception_no_permission_admin
-	 * @throws egw_exception_no_permission_app
+	 * @throws Api\Exception\Redirect for anonymous user accessing something he has no rights to
+	 * @throws Api\Exception\NoPermission\Admin
+	 * @throws Api\Exception\NoPermission\App
 	 */
 	function check_app_rights()
 	{
@@ -362,13 +364,13 @@ class egw extends egw_minimal
 					{
 						$GLOBALS['egw']->session->destroy($sessionid);
 					}
-					throw new egw_exception_redirect(egw::link('/logout.php'));
+					throw new Api\Exception\Redirect(egw::link('/logout.php'));
 				}
 				if ($currentapp == 'admin' || $GLOBALS['egw_info']['flags']['admin_only'])
 				{
-					throw new egw_exception_no_permission_admin();
+					throw new Api\Exception\NoPermission\Admin();
 				}
-				throw new egw_exception_no_permission_app($currentapp);
+				throw new Api\Exception\NoPermission\App($currentapp);
 			}
 		}
 	}
@@ -492,7 +494,7 @@ class egw extends egw_minimal
 			$file = $line = null;
 			if (headers_sent($file,$line))
 			{
-				throw new egw_exception_assertion_failed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
+				throw new Api\Exception\AssertionFailed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
 			}
 			if ($GLOBALS['egw']->framework instanceof jdots_framework && !empty($link_app))
 			{

@@ -18,14 +18,8 @@ use mime_magic;
 use common;
 use config;
 use html;
-use egw_db;
 use translation;
 use HTTP_WebDAV_Server;
-use egw_exception_assertion_failed;
-use egw_exception_db;
-use egw_exception_wrong_parameter;
-use egw_exception_wrong_userinput;
-use egw_exception;
 use egw_time;
 
 /**
@@ -125,7 +119,7 @@ class Vfs extends Vfs\StreamWrapper
 	/**
 	 * Reference to the global db object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	static $db;
 
@@ -140,7 +134,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if ($path[0] != '/')
 		{
-			throw new egw_exception_assertion_failed("Filename '$path' is not an absolute path!");
+			throw new Api\Exception\AssertionFailed("Filename '$path' is not an absolute path!");
 		}
 		return fopen(self::PREFIX.$path,$mode);
 	}
@@ -155,7 +149,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if ($path[0] != '/')
 		{
-			throw new egw_exception_assertion_failed("Directory '$path' is not an absolute path!");
+			throw new Api\Exception\AssertionFailed("Directory '$path' is not an absolute path!");
 		}
 		return opendir(self::PREFIX.$path);
 	}
@@ -170,7 +164,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if ($path[0] != '/')
 		{
-			throw new egw_exception_assertion_failed("Directory '$path' is not an absolute path!");
+			throw new Api\Exception\AssertionFailed("Directory '$path' is not an absolute path!");
 		}
 		return dir(self::PREFIX.$path);
 	}
@@ -186,7 +180,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if ($path[0] != '/')
 		{
-			throw new egw_exception_assertion_failed("Directory '$path' is not an absolute path!");
+			throw new Api\Exception\AssertionFailed("Directory '$path' is not an absolute path!");
 		}
 		return scandir(self::PREFIX.$path,$sorting_order);
 	}
@@ -249,7 +243,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if ($path[0] != '/')
 		{
-			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
+			throw new Api\Exception\AssertionFailed("File '$path' is not an absolute path!");
 		}
 		if (($stat = self::url_stat($path,0,$try_create_home)))
 		{
@@ -269,7 +263,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if ($path[0] != '/')
 		{
-			throw new egw_exception_assertion_failed("File '$path' is not an absolute path!");
+			throw new Api\Exception\AssertionFailed("File '$path' is not an absolute path!");
 		}
 		if (($stat = self::url_stat($path,STREAM_URL_STAT_LINK,$try_create_home)))
 		{
@@ -764,7 +758,7 @@ class Vfs extends Vfs\StreamWrapper
 	 *
 	 * @param string|array $urls url or array of url's
 	 * @param boolean $allow_urls =false allow to use url's, default no only pathes (to stay within the vfs)
-	 * @throws egw_exception_assertion_failed when trainig to remove /, /apps or /home
+	 * @throws Api\Exception\AssertionFailed when trainig to remove /, /apps or /home
 	 * @return array
 	 */
 	static function remove($urls,$allow_urls=false)
@@ -775,7 +769,7 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			if (preg_match('/^\/?(home|apps|)\/*$/',self::parse_url($url,PHP_URL_PATH)))
 			{
-				throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($urls).") Cautiously rejecting to remove folder '$url'!");
+				throw new Api\Exception\AssertionFailed(__METHOD__.'('.array2string($urls).") Cautiously rejecting to remove folder '$url'!");
 			}
 		}
 		return self::find($urls,array('depth'=>true,'url'=>$allow_urls,'hidden'=>true),array(__CLASS__,'_rm_rmdir'));
@@ -875,7 +869,7 @@ class Vfs extends Vfs\StreamWrapper
 		// throw exception if stat array is used insead of path, can be removed soon
 		if (is_array($path))
 		{
-			throw new egw_exception_wrong_parameter('path has to be string, use check_access($path,$check,$stat=null)!');
+			throw new Api\Exception\WrongParameter('path has to be string, use check_access($path,$check,$stat=null)!');
 		}
 		// query stat array, if not given
 		if (is_null($stat))
@@ -1097,7 +1091,7 @@ class Vfs extends Vfs\StreamWrapper
 			if (!preg_match($use='/^([ugoa]*)([+=-]+)([rwx]+)$/',$s,$matches))
 			{
 				$use = str_replace(array('/','^','$','(',')'),'',$use);
-				throw new egw_exception_wrong_userinput("$s is not an allowed mode, use $use !");
+				throw new Api\Exception\WrongUserInput("$s is not an allowed mode, use $use !");
 			}
 			$base = (strpos($matches[3],'r') !== false ? self::READABLE : 0) |
 				(strpos($matches[3],'w') !== false ? self::WRITABLE : 0) |
@@ -1442,7 +1436,7 @@ class Vfs extends Vfs\StreamWrapper
 		$zip = new \ZipArchive();
 		if (!$zip->open($zip_file, \ZipArchive::OVERWRITE))
 		{
-			throw new egw_exception("Cannot open zip file for writing.");
+			throw new Api\Exception("Cannot open zip file for writing.");
 		}
 
 		// Find lowest common directory, to use relative paths
@@ -1654,8 +1648,8 @@ class Vfs extends Vfs\StreamWrapper
 			),__LINE__,__FILE__)->fetch())))
 			{
 				$owner = $row['lock_owner'];
-				$scope = egw_db::from_bool($row['lock_exclusive']) ? 'exclusive' : 'shared';
-				$type  = egw_db::from_bool($row['lock_write']) ? 'write' : 'read';
+				$scope = Api\Db::from_bool($row['lock_exclusive']) ? 'exclusive' : 'shared';
+				$type  = Api\Db::from_bool($row['lock_write']) ? 'write' : 'read';
 
 				self::$db->update(self::LOCK_TABLE,array(
 					'lock_expires' => $timeout,
@@ -1700,7 +1694,7 @@ class Vfs extends Vfs\StreamWrapper
 				),false,__LINE__,__FILE__);
 				$ret = true;
 			}
-			catch(egw_exception_db $e) {
+			catch(Api\Db\Exception $e) {
 				unset($e);
 				$ret = false;	// there's already a lock
 			}
@@ -1755,10 +1749,10 @@ class Vfs extends Vfs\StreamWrapper
 		// ToDo: shared locks can return multiple rows
 		if (($result = self::$db->select(self::LOCK_TABLE,'*',$where,__LINE__,__FILE__)->fetch()))
 		{
-			$result = egw_db::strip_array_keys($result,'lock_');
-			$result['type']  = egw_db::from_bool($result['write']) ? 'write' : 'read';
-			$result['scope'] = egw_db::from_bool($result['exclusive']) ? 'exclusive' : 'shared';
-			$result['depth'] = egw_db::from_bool($result['recursive']) ? 'infinite' : 0;
+			$result = Api\Db::strip_array_keys($result,'lock_');
+			$result['type']  = Api\Db::from_bool($result['write']) ? 'write' : 'read';
+			$result['scope'] = Api\Db::from_bool($result['exclusive']) ? 'exclusive' : 'shared';
+			$result['depth'] = Api\Db::from_bool($result['recursive']) ? 'infinite' : 0;
 		}
 		if ($result && $result['expires'] < time())	// lock is expired --> remove it
 		{

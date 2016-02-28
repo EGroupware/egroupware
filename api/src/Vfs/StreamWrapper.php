@@ -17,7 +17,6 @@ use EGroupware\Api\Vfs;
 
 // explicitly import old phpgwapi classes used:
 use mime_magic;
-use egw_exception_db;
 
 /**
  * eGroupWare API: VFS - stream wrapper interface
@@ -977,7 +976,7 @@ class StreamWrapper implements StreamWrapperIface
 				}
 			}
 		}
-		catch (egw_exception_db $e) {
+		catch (Api\Db\Exception $e) {
 			// some long running operations, eg. merge-print, run into situation that DB closes our separate sqlfs connection
 			// we try now to reconnect Vfs\Sqlfs\StreamWrapper once
 			// it's done here in vfs_stream_wrapper as situation can happen in sqlfs, links, stylite.links or stylite.versioning

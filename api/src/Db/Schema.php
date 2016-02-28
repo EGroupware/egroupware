@@ -18,7 +18,6 @@
 namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
-use egw_exception_assertion_failed;
 
 /**
  * eGW's ADOdb based schema-processor
@@ -112,7 +111,7 @@ class Schema
 	    }
 	    if (!($this->m_odb instanceof Api\Db))
 	    {
-	    	throw new egw_exception_assertion_failed('no EGroupware\Api\Db object!');
+	    	throw new Api\Exception\AssertionFailed('no EGroupware\Api\Db object!');
 	    }
 	    $this->m_odb->connect();
 		$this->capabilities =& $this->m_odb->capabilities;
@@ -840,7 +839,7 @@ class Schema
 	{
 		if (!($this->m_odb instanceof Deprecated))
 		{
-	    	throw new egw_exception_assertion_failed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
+	    	throw new Api\Exception\AssertionFailed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
 		}
 		return $this->m_odb->f($value,$strip_slashes);
 	}
@@ -855,7 +854,7 @@ class Schema
 	{
 		if (!($this->m_odb instanceof Deprecated))
 		{
-	    	throw new egw_exception_assertion_failed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
+	    	throw new Api\Exception\AssertionFailed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
 		}
 		return $this->m_odb->num_rows();
 	}
@@ -870,7 +869,7 @@ class Schema
 	{
 		if (!($this->m_odb instanceof Deprecated))
 		{
-	    	throw new egw_exception_assertion_failed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
+	    	throw new Api\Exception\AssertionFailed(__METHOD__.' requires an EGroupware\Api\Db\Deprecated object!');
 		}
 		return $this->m_odb->next_record();
 	}

@@ -19,9 +19,6 @@ use EGroupware\Api;
 // explicitly import old phpgwapi classes used:
 use mime_magic;
 use config;
-use egw_exception_db;
-use egw_exception_wrong_parameter;
-use egw_exception_assertion_failed;
 
 
 /**
@@ -1184,7 +1181,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			// decrement subquery limit by 1 and try again, if not already smaller then 3
 			if ($max_subquery_depth < 3)
 			{
-				throw new egw_exception_db($e->getMessage());
+				throw new Api\Db\Exception($e->getMessage());
 			}
 			$GLOBALS['egw_info']['server']['max_subquery_depth'] = --$max_subquery_depth;
 			error_log(__METHOD__."() decremented max_subquery_depth to $max_subquery_depth");
@@ -1699,7 +1696,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 				\PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION,
 			));
 		}
-		catch(Exception $e)
+		catch(\PDOException $e)
 		{
 			unset($e);
 			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
@@ -1766,7 +1763,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	{
 		if (!is_numeric($id))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."(id=$id) id has to be an integer!");
+			throw new Api\Exception\WrongParameter(__METHOD__."(id=$id) id has to be an integer!");
 		}
 		if (!isset($GLOBALS['egw_info']['server']['files_dir']))
 		{
@@ -1780,7 +1777,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		}
 		if (!$GLOBALS['egw_info']['server']['files_dir'])
 		{
-			throw  new egw_exception_assertion_failed("\$GLOBALS['egw_info']['server']['files_dir'] not set!");
+			throw  new Api\Exception\AssertionFailed("\$GLOBALS['egw_info']['server']['files_dir'] not set!");
 		}
 		$hash = array();
 		$n = $id;

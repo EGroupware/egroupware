@@ -14,7 +14,6 @@
 namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
-use egw_exception_db;
 
 /**
  * Deprecated functionality we still need to support :-(
@@ -53,7 +52,7 @@ class Deprecated extends Api\Db
 	* @param int $fetchmode =self::FETCH_BOTH self::FETCH_BOTH (default), self::FETCH_ASSOC or self::FETCH_NUM
 	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
 	* @return ADORecordSet or false, if the query fails
-	* @throws egw_exception_db_invalid_sql with $this->Link_ID->ErrorNo() as code
+	* @throws EGroupware\Api\Db\Exception\InvalidSql with $this->Link_ID->ErrorNo() as code
 	*/
 	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=self::FETCH_BOTH, $reconnect=true)
 	{
@@ -120,7 +119,7 @@ class Deprecated extends Api\Db
 	{
 		if (!$this->Query_ID)
 		{
-			throw new egw_exception_db('next_record called with no query pending.');
+			throw new Exception\Db('next_record called with no query pending.');
 		}
 		if ($this->Row)	// first row is already fetched
 		{
@@ -175,7 +174,7 @@ class Deprecated extends Api\Db
 	{
 		if (!$this->Query_ID  || !$this->Query_ID->Move($this->Row = $pos))
 		{
-			throw new egw_exception_db("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
+			throw new Exception\Db("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
 		}
 		return True;
 	}

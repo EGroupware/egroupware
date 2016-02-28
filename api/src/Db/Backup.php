@@ -15,7 +15,6 @@ namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
 
-use egw_exception_db_invalid_sql;
 use config;
 use translation;
 use html;
@@ -667,7 +666,7 @@ class Backup
 							try {
 								$this->db->insert($table,$data,False,__LINE__,__FILE__,false,false,$this->schemas[$table]);
 							}
-							catch(egw_exception_db_invalid_sql $e) {
+							catch(Exception\InvalidSql $e) {
 								echo "<p>".$e->getMessage()."</p>\n";
 							}
 						}
@@ -715,7 +714,7 @@ class Backup
 		try {
 			$this->db->insert($table, $rows, False, __LINE__, __FILE__, false, false, $schema);
 		}
-		catch(egw_exception_db_invalid_sql $e)
+		catch(Exception\InvalidSql $e)
 		{
 			// try inserting them one by one, ignoring doublicates
 			foreach($rows as $data)
@@ -723,7 +722,7 @@ class Backup
 				try {
 					$this->db->insert($table, $data, False, __LINE__, __FILE__, false, false, $schema);
 				}
-				catch(egw_exception_db_invalid_sql $e) {
+				catch(Exception\InvalidSql $e) {
 					echo "<p>".$e->getMessage()."</p>\n";
 				}
 			}

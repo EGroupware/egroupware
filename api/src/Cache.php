@@ -13,9 +13,8 @@
 
 namespace EGroupware\Api;
 
-use egw_exception_db;
-use egw_exception_wrong_parameter;
 use egw_session;
+use config;
 
 /**
  * Class to manage caching in eGroupware.
@@ -119,7 +118,7 @@ class Cache
 		{
 			case self::SESSION:
 			case self::REQUEST:
-				throw new egw_exception_wrong_parameter(__METHOD__."('$level', ...) unsupported level parameter!");
+				throw new Api\Exception\WrongParameter(__METHOD__."('$level', ...) unsupported level parameter!");
 
 			case self::INSTANCE:
 			case self::TREE:
@@ -135,7 +134,7 @@ class Cache
 				}
 				return $provider->add(self::keys($level,$app,$location),$data,$expiration);
 		}
-		throw new egw_exception_wrong_parameter(__METHOD__."() unknown level '$level'!");
+		throw new Api\Exception\WrongParameter(__METHOD__."() unknown level '$level'!");
 	}
 
 	/**
@@ -171,7 +170,7 @@ class Cache
 				}
 				return $provider->set(self::keys($level,$app,$location),$data,$expiration);
 		}
-		throw new egw_exception_wrong_parameter(__METHOD__."() unknown level '$level'!");
+		throw new Api\Exception\WrongParameter(__METHOD__."() unknown level '$level'!");
 	}
 
 	/**
@@ -210,7 +209,7 @@ class Cache
 					{
 						if (!is_null($callback))
 						{
-							throw new egw_exception_wrong_parameter(__METHOD__."() you can NOT use multiple locations (\$location parameter is an array) together with a callback!");
+							throw new Api\Exception\WrongParameter(__METHOD__."() you can NOT use multiple locations (\$location parameter is an array) together with a callback!");
 						}
 						if (is_a($provider, 'EGroupware\Api\Cache\ProviderMultiple'))
 						{
@@ -247,7 +246,7 @@ class Cache
 				}
 				return $data;
 		}
-		throw new egw_exception_wrong_parameter(__METHOD__."() unknown level '$level'!");
+		throw new Api\Exception\WrongParameter(__METHOD__."() unknown level '$level'!");
 	}
 
 	/**
@@ -275,7 +274,7 @@ class Cache
 				}
 				return $provider->delete(self::keys($level,$app,$location));
 		}
-		throw new egw_exception_wrong_parameter(__METHOD__."() unknown level '$level'!");
+		throw new Api\Exception\WrongParameter(__METHOD__."() unknown level '$level'!");
 	}
 
 	/**
@@ -591,7 +590,7 @@ class Cache
 						error_log(__METHOD__."('$name', $throw) config value NOT found!");//.function_backtrace());
 					}
 				}
-				catch(egw_exception_db $e)
+				catch(Api\Db\Exception $e)
 				{
 					if ($throw) error_log(__METHOD__."('$name', $throw) cound NOT query value: ".$e->getMessage());//.function_backtrace());
 				}
@@ -730,7 +729,7 @@ class Cache
 	 */
 	function __construct()
 	{
-		throw new egw_exception_wrong_parameter("All methods of class ".__CLASS__." should be called static!");
+		throw new Api\Exception\WrongParameter("All methods of class ".__CLASS__." should be called static!");
 	}
 }
 
