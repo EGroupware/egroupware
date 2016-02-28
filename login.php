@@ -348,10 +348,6 @@ else
 			if (!$forward)
 			{
 				$extra_vars['cd'] = 'yes';
-				if($GLOBALS['egw']->hooks->single('hasUpdates', 'home'))
-				{
-					$extra_vars['hasupdates'] = 'yes';
-				}
 				$forward = '/index.php';
 			}
 			else
