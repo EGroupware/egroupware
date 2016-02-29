@@ -850,7 +850,14 @@ abstract class bo_merge
 			{
 				$content = preg_replace('/\$\$[a-z0-9_\/]+\$\$/i','',$content);
 			}
-			if ($contentrepeat) fwrite($content_stream, ($n == 0 ? '' : $joiner) . $content);
+			if ($contentrepeat)
+			{
+				fwrite($content_stream, ($n == 0 ? '' : $joiner) . $content);
+			}
+			if($lableprint)
+			{
+				$contentrep[is_array($id) ? implode(':',$id) : $id] = $content;
+			}
 		}
 		if ($Labelrepeat)
 		{
