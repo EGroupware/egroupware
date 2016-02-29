@@ -38,13 +38,13 @@ class mail_tree
 	 * @var array
 	 */
 	static $leafImages = array(
-		'folderNoSelectClosed' => "folderNoSelectClosed.png",
-		'folderNoSelectOpen' => "folderNoSelectOpen.png",
-		'folderOpen' => "folderOpen.png",
-		'folderClosed' => "MailFolderClosed.png",
-		'folderLeaf' => "MailFolderPlain.png",
-		'folderHome' => "kfm_home.png",
-		'folderAccount' => "thunderbird.png",
+		'folderNoSelectClosed' => "folderNoSelectClosed",
+		'folderNoSelectOpen' => "folderNoSelectOpen",
+		'folderOpen' => "folderOpen",
+		'folderClosed' => "MailFolderClosed",
+		'folderLeaf' => "MailFolderPlain",
+		'folderHome' => "kfm_home",
+		'folderAccount' => "thunderbird",
 	);
 
 	/**
@@ -52,8 +52,18 @@ class mail_tree
 	 *
 	 * @param object $mail_ui
 	 */
-	function __construct($mail_ui) {
+	function __construct($mail_ui)
+	{
 		$this->ui = $mail_ui;
+
+		// check images available in png or svg
+		foreach(self::$leafImages as &$image)
+		{
+			if (strpos($image, '.') === false)
+			{
+				$image = basename($img=common::image('mail', 'dhtmlxtree/'.$image));
+			}
+		}
 	}
 
 	/**
@@ -73,7 +83,7 @@ class mail_tree
 			'text' => $_err,
 			'tooltip' => $_err,
 			'im0' => self::$leafImages["folderNoSelectClosed"],
-			'im1' => self::$leafImages["folderNoSelectOpen.gif"],
+			'im1' => self::$leafImages["folderNoSelectOpen"],
 			'im2' => self::$leafImages["folderNoSelectClosed"],
 			'path'=> $_path,
 			'parent' => $_parent
@@ -371,7 +381,14 @@ class mail_tree
 				if ($createMissingParents)
 				{
 					unset($item);
-					$item = array('id' => $parent.$component, 'text' => $component, 'im0' => "folderNoSelectClosed.gif",'im1' => "folderNoSelectOpen.gif",'im2' => "folderNoSelectClosed.gif",'tooltip' => lang('no access'));
+					$item = array(
+						'id' => $parent.$component,
+						'text' => $component,
+						'im0' => self::$leafImages["folderNoSelectClosed"],
+						'im1' => self::$leafImages["folderNoSelectOpen"],
+						'im2' => self::$leafImages["folderNoSelectClosed"],
+						'tooltip' => lang('no access')
+					);
 					$insert['item'][] =& $item;
 					$insert =& $item;
 				}
