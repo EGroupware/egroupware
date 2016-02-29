@@ -85,7 +85,7 @@
 			</grid>
 			<vbox align="right" width="100%" height="240">
 				<description for="category" value="Categories" class="row_on"/>
-				<listbox type="select-cat" id="category" rows="9" tags="true"  />
+				<taglist-cat id="category" height="190" />
 			</vbox>
 		</hbox>
 	</template>

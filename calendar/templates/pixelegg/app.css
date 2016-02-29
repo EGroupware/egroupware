@@ -1674,8 +1674,6 @@ div.calendar {
   text-indent: -20px;
 }
 #calendar-edit #calendar-edit_calendar-edit-details #calendar-edit_category {
-  border: 1px solid;
-  border-color: #b4b4b4;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
