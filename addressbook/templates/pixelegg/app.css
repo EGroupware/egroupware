@@ -133,7 +133,7 @@ input.et2_radiobox {
  */
 #addressbook-index .filtersContainer {
   position: absolute;
-  left: 288px;
+  left: 342px;
   right: 215px;
 }
 #addressbook-index .filtersContainer select {
@@ -144,7 +144,7 @@ select#addressbook-index_col_filter\[tid\] {
 }
 #addressbook-index_addressbook-index-row select {
   float: right;
-  width: 200px;
+  width: 150px;
 }
 @media all {
   /* #############################################################################
