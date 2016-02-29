@@ -90,6 +90,9 @@ var et2_taglist = et2_selectbox.extend(
 		"width": {
 			"default": "100%"
 		},
+		"height": {
+			"description": "Maximum allowed height of the result list in pixels"
+		},
 		"maxSelection": {
 			"name": "max Selection",
 			"type": "integer",
@@ -194,9 +197,18 @@ var et2_taglist = et2_selectbox.extend(
 			highlight: false,	// otherwise renderer have to return strings
 			selectFirst: true
 		}, this.lib_options);
+		
+		if(this.options.height) {
+			this.div.css('height','');
+			this.taglist_options.maxDropHeight = parseInt(this.options.height);
+		}
+		
 		this.taglist = this.taglist.magicSuggest(this.taglist_options);
 		this.$taglist = $j(this.taglist);
-		this.taglist.addToSelection(this.options.value,true);
+		if(this.options.value)
+		{
+			this.taglist.addToSelection(this.options.value,true);
+		}
 
 		// AJAX _and_ select options - use custom function
 		if(this.options.autocomplete_url && !jQuery.isEmptyObject(this.options.select_options))
@@ -802,16 +814,32 @@ var et2_taglist_category = et2_taglist.extend(
 		}
 	},
 	lib_options: {
+		toggleOnClick: true
 	},
 
 	init: function() {
 		this._super.apply(this, arguments);
+		this.div.addClass('et2_taglist_category');
 	},
 
 	/**
-	 * convert _options to taglist data [{id:...,label:...},...] format
+	 * Get options automatically from select option cache
+	 * @param {type} _attrs
+	 */
+	transformAttributes: function(_attrs) {
+		// Pretend to be a select box so it works
+		var type = this._type;
+		this._type = 'select-cat';
+		this._super.apply(this, arguments);
+		this._type = type;
+	},
+
+	/**
+	 * convert selectbox options from the cache to taglist data [{id:...,label:...},...] format
 	 *
 	 * @param {(object|array)} _options id: label or id: {label: ..., title: ...} pairs, or array if id's are 0, 1, ...
+	 *
+	 * @return {Object[]} Returns an array of objects with ID and label
 	 */
 	_options2data: function(_options)
 	{
@@ -845,7 +873,7 @@ var et2_taglist_category = et2_taglist.extend(
 		return label;
 	}
 });
-et2_register_widget(et2_taglist_category, ["taglist-category"]);
+et2_register_widget(et2_taglist_category, ["taglist-cat"]);
 
 
 /**

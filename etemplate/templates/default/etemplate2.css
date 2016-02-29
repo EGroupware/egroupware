@@ -921,6 +921,22 @@ ul.et2_link_string {
 .et2_taglist > div {
 	min-height: 2em;
 }
+
+/* Taglist category */
+.et2_taglist_category span[class*="cat_"] {
+	height: 1.7em;
+	width: 6px;
+	margin: -3px -6px;
+	float: left;
+}
+.et2_taglist_category .ms-res-item > span {
+	margin-left: 3px;
+}
+.et2_taglist_category .ms-sel-item > span:first-child {
+	padding-left: 5px;
+}
+
+
 /**
  * VFS widget(s)
  */
