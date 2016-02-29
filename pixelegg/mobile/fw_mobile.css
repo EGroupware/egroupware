@@ -7871,6 +7871,21 @@ span.egw_tutorial_title {
     width: 32px !important;
     height: 32px !important;
   }
+  body .et2_label.et2_checkbox_label {
+    line-height: 32px;
+    vertical-align: middle;
+    position: relative;
+    padding-left: 40px;
+  }
+  body .et2_label.et2_checkbox_label input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+  }
+  body .dialogHeadbar .et2_label.et2_checkbox_label {
+    vertical-align: top;
+    margin-top: 10px;
+    color: white;
+  }
   body span.et2_checkbox_slideSwitch {
     height: 50px;
     vertical-align: bottom;
