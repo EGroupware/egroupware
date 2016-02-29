@@ -24,7 +24,7 @@
  *
  * @augments Class
  */
-var et2_dataview_rowProvider = Class.extend(
+var et2_dataview_rowProvider = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 *
@@ -125,5 +125,5 @@ var et2_dataview_rowProvider = Class.extend(
 		this._prototypes["loading"] = fullRow;
 	}
 
-});
+});}).call(this);
 

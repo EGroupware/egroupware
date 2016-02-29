@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	lib/tooltip;
@@ -25,7 +23,7 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
+var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_IAligned,
 {
 	attributes: {
 		"statustext": {
@@ -291,14 +289,14 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		return this.align;
 	}
 
-});
+});}).call(this);
 
 /**
  * Simple container object
  *
  * @augments et2_baseWidget
  */
-var et2_container = et2_baseWidget.extend(
+var et2_container = (function(){ "use strict"; return et2_baseWidget.extend(
 {
 	/**
 	 * Constructor
@@ -332,14 +330,14 @@ var et2_container = et2_baseWidget.extend(
 			}
 		}
 	}
-});
+});}).call(this);
 
 /**
  * Container object for not-yet supported widgets
  *
  * @augments et2_baseWidget
  */
-var et2_placeholder = et2_baseWidget.extend([et2_IDetachedDOM],
+var et2_placeholder = (function(){ "use strict"; return et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Constructor
@@ -409,5 +407,5 @@ var et2_placeholder = et2_baseWidget.extend([et2_IDetachedDOM],
 	setDetachedAttributes: function(_nodes, _values) {
 		this.placeDiv = jQuery(_nodes[0]);
 	}
-});
+});}).call(this);
 

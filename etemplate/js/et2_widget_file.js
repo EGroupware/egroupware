@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_inputWidget;
 	phpgwapi.Resumable.resumable;
@@ -22,7 +20,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_file = et2_inputWidget.extend(
+var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"multiple": {
@@ -649,7 +647,7 @@ var et2_file = et2_inputWidget.extend(
 		target.remove();
 		$j(e.target).remove();
 	}
-});
+});}).call(this);
 
 et2_register_widget(et2_file, ["file"]);
 

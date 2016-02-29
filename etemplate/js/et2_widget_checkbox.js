@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_inputWidget;
@@ -23,7 +21,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_checkbox = et2_inputWidget.extend(
+var et2_checkbox = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"selected_value": {
@@ -86,9 +84,9 @@ var et2_checkbox = et2_inputWidget.extend(
 
 	createInputWidget: function() {
 		this.input = $j(document.createElement("input")).attr("type", "checkbox");
-		
+
 		this.input.addClass("et2_checkbox");
-	
+
 		if (this.options.toggle_on || this.options.toggle_off)
 		{
 			var self = this;
@@ -99,7 +97,7 @@ var et2_checkbox = et2_inputWidget.extend(
 			// update switch status on change
 			this.input.change(function(){
 					self.getValue();
-					return true;	
+					return true;
 			});
 			// switch container
 			var area = jQuery(document.createElement('span')).addClass('slideSwitch_container').appendTo(this.toggle);
@@ -109,7 +107,7 @@ var et2_checkbox = et2_inputWidget.extend(
 			var off = jQuery(document.createElement('span')).addClass('off').appendTo(area);
 			on.text(this.options.toggle_on);
 			off.text(this.options.toggle_off);
-			
+
 			// handle a tag
 			var handle = jQuery(document.createElement('a')).appendTo(area);
 			this.setDOMNode(this.toggle[0]);
@@ -118,11 +116,13 @@ var et2_checkbox = et2_inputWidget.extend(
 		{
 			this.setDOMNode(this.input[0]);
 		}
-		
+
 	},
 
 	/**
 	 * Override default to place checkbox before label, if there is no %s in the label
+	 *
+	 * @param {string} label
 	 */
 	set_label: function(label) {
 		if(label.length && label.indexOf('%s') < 0)
@@ -134,6 +134,8 @@ var et2_checkbox = et2_inputWidget.extend(
 	},
 	/**
 	 * Override default to match against set/unset value
+	 *
+	 * @param {string|boolean} _value
 	 */
 	set_value: function(_value) {
 		if(_value != this.value) {
@@ -171,14 +173,14 @@ var et2_checkbox = et2_inputWidget.extend(
 			return this.options.unselected_value;
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_checkbox, ["checkbox"]);
 
 /**
  * et2_checkbox_ro is the dummy readonly implementation of the checkbox
  * @augments et2_checkbox
  */
-var et2_checkbox_ro = et2_checkbox.extend(
+var et2_checkbox_ro = (function(){ "use strict"; return et2_checkbox.extend(
 {
 	/**
 	 * Ignore unset value
@@ -207,6 +209,8 @@ var et2_checkbox_ro = et2_checkbox.extend(
 	/**
 	 * note: checkbox is checked if even there is a value but not only if the _value is only "true"
 	 * it's an exceptional validation for cases that we pass non boolean values as checkbox _value
+	 *
+	 * @param {string|boolean} _value
 	 */
 	set_value: function(_value) {
 		if(_value == this.options.selected_value ||_value && this.options.selected_value == this.attributes.selected_value["default"] &&
@@ -217,5 +221,5 @@ var et2_checkbox_ro = et2_checkbox.extend(
 			this.span.text(this.options.ro_false);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_checkbox_ro, ["checkbox_ro"]);

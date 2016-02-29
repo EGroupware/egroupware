@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_inputWidget;
@@ -24,7 +22,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_color = et2_inputWidget.extend(
+var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"alphaSupport": {
@@ -218,14 +216,14 @@ var et2_color = et2_inputWidget.extend(
 			}
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_color, ["colorpicker"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
  * @augments et2_valueWidget
  */
-var et2_color_ro = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_color_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Constructor
@@ -271,7 +269,7 @@ var et2_color_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.set_value(_values["value"]);
 		}
 	}
-});
+});}).call(this);
 
 et2_register_widget(et2_color_ro, ["colorpicker_ro"]);
 

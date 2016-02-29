@@ -11,8 +11,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	/phpgwapi/js/jquery/chosen/chosen.jquery.js;
@@ -24,7 +22,7 @@
 /**
  * @augments et2_inputWidget
  */
-var et2_selectbox = et2_inputWidget.extend(
+var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"multiple": {
@@ -499,7 +497,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			if(_value && jQuery("option[value='"+_value+"']", this.input).prop("selected", true).length == 0)
 			{
 				if(this.options.select_options[_value] ||
-					this.options.select_options.filter && 
+					this.options.select_options.filter &&
 					this.options.select_options.filter(function(value) {return value == _value;}))
 				{
 					// Options not set yet? Do that now, which will try again.
@@ -770,7 +768,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			return this._super.apply(this, arguments);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
 	"select-percent", 'select-priority',
 	'select-country', 'select-state', 'select-year', 'select-month',
@@ -778,7 +776,7 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-ca
 	'select-lang', 'select-bool', 'select-timezone' ]);
 
 // Static class stuff
-jQuery.extend(et2_selectbox,
+jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 {
 	type_cache: {},
 
@@ -949,6 +947,8 @@ jQuery.extend(et2_selectbox,
 	 * We still need the same thing on the server side to validate, so they
 	 * have to match.  See etemplate_widget_menupopup::typeOptions()
 	 * The type specific legacy options wind up in attrs.other.
+	 *
+	 * @param {type} widget
 	 */
 	priority_options: function(widget) {
 		return [
@@ -1142,7 +1142,7 @@ jQuery.extend(et2_selectbox,
 		else
 		{
 			// Check that the value is in there
-			// Make sure we are not requesting server for an empty value option or 
+			// Make sure we are not requesting server for an empty value option or
 			// other widgets but select-timezone as server won't find anything and
 			// it will fall into an infinitive loop, e.g. select-cat widget.
 			if(attrs.value && attrs.value != "" && attrs.value != "0" && attrs.type == "select-timezone")
@@ -1165,14 +1165,15 @@ jQuery.extend(et2_selectbox,
 			return cache;
 		}
 	}
-});
+}//;}).call(this)
+);
 
 /**
  * et2_selectbox_ro is the readonly implementation of the selectbox.
  *
  * @augments et2_selectbox
  */
-var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
+var et2_selectbox_ro = (function(){ "use strict"; return et2_selectbox.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Constructor
@@ -1329,7 +1330,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 		this.span = jQuery(_nodes[0]);
 		this.set_value(_values["value"]);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro", "select-cat_ro",
 	"select-percent_ro", 'select-priority_ro', 'select-access_ro',
 	'select-country_ro', 'select-state_ro', 'select-year_ro', 'select-month_ro',
@@ -1408,7 +1409,7 @@ et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro"
  *
  * @augments et2_DOMWidget
  */
-var et2_menulist = et2_DOMWidget.extend(
+var et2_menulist = (function(){ "use strict"; return et2_DOMWidget.extend(
 {
 	/**
 	 * Construtor
@@ -1436,6 +1437,6 @@ var et2_menulist = et2_DOMWidget.extend(
 		return this._parent.getChildren();
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_menulist, ["menulist"]);
 

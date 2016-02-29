@@ -13,8 +13,6 @@
  * @version $Id: et2_widget_itempicker.js 38623 2012-03-26 23:27:53Z jaytraxx $
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_inputWidget;
@@ -25,10 +23,10 @@
 
 /**
  * Class which implements the "itempicker" XET-Tag
- * 
+ *
  * @augments et2_inputWidget
- */ 
-var et2_itempicker = et2_inputWidget.extend(
+ */
+var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"action": {
@@ -66,7 +64,7 @@ var et2_itempicker = et2_inputWidget.extend(
 			"type": "any",
 			"default": false,
 			"description": "Callback before query to server.  Must return true, or false to abort query."
-		},
+		}
 	},
 
 	legacyOptions: ["application"],
@@ -78,7 +76,7 @@ var et2_itempicker = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_itempicker
 	 */
 	init: function() {
@@ -92,7 +90,7 @@ var et2_itempicker = et2_inputWidget.extend(
 		this.search = null;
 		this.button_action = null;
 		this.itemlist = null;
-		
+
 		if(this.options.action !== null && typeof this.options.action == "string")
 		{
 			this.action = new egwFnct(this, "javaScript:" + this.options.action);
@@ -104,7 +102,7 @@ var et2_itempicker = et2_inputWidget.extend(
 
 		this.createInputWidget();
 	},
-	
+
 	clearSearchResults: function() {
 		this.search.val("");
 		this.itemlist.html("");
@@ -114,7 +112,7 @@ var et2_itempicker = et2_inputWidget.extend(
 
 	createInputWidget: function() {
 		var _self = this;
-		
+
 		this.div = $j(document.createElement("div"));
 		this.left = $j(document.createElement("div"));
 		this.right = $j(document.createElement("div"));
@@ -123,13 +121,13 @@ var et2_itempicker = et2_inputWidget.extend(
 		this.search = $j(document.createElement("input"));
 		this.clear = $j(document.createElement("span"));
 		this.itemlist = $j(document.createElement("div"));
-			
+
 		// Container elements
 		this.div.addClass("et2_itempicker");
 		this.left.addClass("et2_itempicker_left");
 		this.right.addClass("et2_itempicker_right");
 		this.right_container.addClass("et2_itempicker_right_container");
-		
+
 		// Application select
 		this.app_select.addClass("et2_itempicker_app_select");
 		var item_count = 0;
@@ -140,7 +138,7 @@ var et2_itempicker = et2_inputWidget.extend(
 			}
 			var img = $j(document.createElement("img"));
 			img.attr("src", img_icon);
-			var item = $j(document.createElement("li"))
+			var item = $j(document.createElement("li"));
 			item.attr("id", key)
 				.click(function() {
 					_self.selectApplication($j(this));
@@ -152,7 +150,7 @@ var et2_itempicker = et2_inputWidget.extend(
 			this.app_select.append(item);
 			item_count++;
 		}
-		
+
 		// Search input field
 		this.search.addClass("et2_itempicker_search");
 		this.search.keyup(function() {
@@ -161,7 +159,7 @@ var et2_itempicker = et2_inputWidget.extend(
 			_self.query(request);
 		});
 		this.set_blur(this.options.blur, this.search);
-		
+
 		// Clear button for search
 		this.clear
 			.addClass("et2_itempicker_clear ui-icon ui-icon-close")
@@ -169,17 +167,17 @@ var et2_itempicker = et2_inputWidget.extend(
 				_self.clearSearchResults();
 			})
 			.hide();
-			
+
 		// Action button
 		this.button_action = et2_createWidget("button");
 		$j(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
 		this.button_action.set_label(this.egw().lang(this.options.action_label));
 		this.button_action.click = function() { _self.doAction(); };
-		
+
 		// Itemlist
 		this.itemlist.attr("id", "itempicker_itemlist");
 		this.itemlist.addClass("et2_itempicker_itemlist");
-		
+
 		// Put everything together
 		this.left.append(this.app_select);
 		this.right_container.append(this.search);
@@ -187,12 +185,12 @@ var et2_itempicker = et2_inputWidget.extend(
 		this.right_container.append(this.button_action.getDOMNode());
 		this.right_container.append(this.itemlist);
 		this.right.append(this.right_container);
-		this.div.append(this.right); // right before left to have a natural 
+		this.div.append(this.right); // right before left to have a natural
 		this.div.append(this.left); // z-index for left div over right div
 
 		this.setDOMNode(this.div[0]);
 	},
-	
+
 	doAction: function()
 	{
 		if(this.action !== null)
@@ -203,19 +201,19 @@ var et2_itempicker = et2_inputWidget.extend(
 			data.checked = this.getSelectedItems();
 			return this.action.exec(this, data);
 		}
-		
+
 		return false;
 	},
-	
+
 	getSelectedItems: function()
 	{
 		var items = [];
 		$j(this.itemlist).children("ul").children("li.selected").each(function(index) {
-			items[index] = $j(this).attr("id");	
+			items[index] = $j(this).attr("id");
 		});
 		return items;
 	},
-	
+
 	/**
 	 * Ask server for entries matching selected app/type and filtered by search string
 	 */
@@ -238,13 +236,13 @@ var et2_itempicker = et2_inputWidget.extend(
 
 		this.itemlist.addClass("loading");
 		this.clear.css("display", "inline-block");
-		egw._json("etemplate_widget_itempicker::ajax_item_search::etemplate", 
+		egw._json("etemplate_widget_itempicker::ajax_item_search::etemplate",
 			[this.current_app, '', request.term, request.options],
 			this.queryResults,
 			this,true,this
 		).sendRequest();
 	},
-	
+
 	/**
 	 * Server found some results for query
 	 */
@@ -252,7 +250,7 @@ var et2_itempicker = et2_inputWidget.extend(
 		this.itemlist.removeClass("loading");
 		this.updateItemList(data);
 	},
-	
+
 	selectApplication: function(app) {
 		this.clearSearchResults();
 		$j(".et2_itempicker_app_select li").removeClass("selected");
@@ -260,7 +258,7 @@ var et2_itempicker = et2_inputWidget.extend(
 		this.current_app = app.attr("id");
 		return true;
 	},
-	
+
 	set_blur: function(_value, input) {
 		if(typeof input == 'undefined') input = this.search;
 
@@ -282,7 +280,7 @@ var et2_itempicker = et2_inputWidget.extend(
 			this.search.removeAttr("placeholder");
 		}
 	},
-	
+
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
 
@@ -305,7 +303,7 @@ var et2_itempicker = et2_inputWidget.extend(
 		if (_attrs["select_options"] == null)
 		{
 			_attrs["select_options"] = this.getArrayMgr('content')
-				.getEntry("options-" + this.id)
+				.getEntry("options-" + this.id);
 		}
 
 		// Default to an empty object
@@ -314,7 +312,7 @@ var et2_itempicker = et2_inputWidget.extend(
 			_attrs["select_options"] = {};
 		}
 	},
-	
+
 	updateItemList: function(data) {
 		var list = $j(document.createElement("ul"));
 		var item_count = 0;
@@ -363,7 +361,7 @@ var et2_itempicker = et2_inputWidget.extend(
 		this.itemlist.html(list);
 	}
 
-});
+});}).call(this);
 
 et2_register_widget(et2_itempicker, ["itempicker"]);
 

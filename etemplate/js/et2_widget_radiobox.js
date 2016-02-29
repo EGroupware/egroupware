@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_inputWidget;
@@ -26,7 +24,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_radiobox = et2_inputWidget.extend(
+var et2_radiobox = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"set_value": {
@@ -138,6 +136,9 @@ var et2_radiobox = et2_inputWidget.extend(
 
 	/**
 	 * Overridden from parent so if it's required, only 1 in a group needs a value
+	 *
+	 * @param {array} messages
+	 * @returns {Boolean}
 	 */
 	isValid: function(messages) {
 		var ok = true;
@@ -153,14 +154,14 @@ var et2_radiobox = et2_inputWidget.extend(
 			}
 		}
 		return ok;
-	},
-});
+	}
+});}).call(this);
 et2_register_widget(et2_radiobox, ["radio"]);
 
 /**
  * @augments et2_valueWidget
  */
-var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_radiobox_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"set_value": {
@@ -245,7 +246,7 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.span = jQuery(_nodes[0]);
 		this.set_value(_values["value"]);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
 
 
@@ -254,7 +255,7 @@ et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
  *
  * @augments et2_valueWidget
  */
-var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_radioGroup = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"label": {
@@ -432,6 +433,6 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 	{
 	}
 
-});
+});}).call(this);
 // No such tag as 'radiogroup', but it needs something
 et2_register_widget(et2_radioGroup, ["radiogroup"]);

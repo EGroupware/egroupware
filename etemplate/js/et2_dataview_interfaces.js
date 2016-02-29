@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_inheritance;
 */
@@ -20,7 +18,7 @@ var et2_dataview_IInvalidatable = new Interface({
 
 	invalidate: function() {}
 
-}); 
+});
 
 var et2_dataview_IViewRange = new Interface({
 
@@ -76,7 +74,7 @@ var et2_IDataProvider = new Interface({
 	 *
 	 * @param _uid is the uid for which the callback should be registered.
 	 * @param _callback is the callback which should get called.
-	 * @param _context is an optional parameter which can 
+	 * @param _context is an optional parameter which can
 	 */
 	dataRegisterUID: function (_uid, _callback, _context) {},
 

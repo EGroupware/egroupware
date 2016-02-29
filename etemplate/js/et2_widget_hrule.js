@@ -10,22 +10,20 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_baseWidget;
 */
 
 /**
  * Class which implements the hrule tag
- * 
+ *
  * @augments et2_baseWidget
- */ 
-var et2_hrule = et2_baseWidget.extend(
+ */
+var et2_hrule = (function(){ "use strict"; return et2_baseWidget.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_hrule
 	 */
 	init: function() {
@@ -33,6 +31,6 @@ var et2_hrule = et2_baseWidget.extend(
 
 		this.setDOMNode(document.createElement("hr"));
 	}
-});
+});}).call(this);
 et2_register_widget(et2_hrule, ["hrule"]);
 

@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_interfaces;
@@ -22,7 +20,7 @@
  * Class which implements the "button" XET-Tag
  * @augments et2_baseWidget
  */
-var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
+var et2_button = (function(){ "use strict"; return et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 {
 	attributes: {
 		"label": {
@@ -406,7 +404,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			return e.data.click.call(e.data,e);
 		});
 	}
-});
+});}).call(this);
 et2_register_widget(et2_button, ["button", "buttononly"]);
 
 // Static class stuff

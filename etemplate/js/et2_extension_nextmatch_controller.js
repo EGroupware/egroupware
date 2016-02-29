@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_common;
 	et2_core_inheritance;
@@ -29,7 +27,7 @@
 /**
  * @augments et2_dataview_controller
  */
-var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
+var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_controller.extend(et2_IDataProvider,
 {
 	// Display constants
 	VIEW_ROW: 'row',
@@ -301,7 +299,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 				}
 				return egwActionObject.prototype.handleKeyPress.call(this, _keyCode,_shift,_ctrl,_alt);
 			}
-			
+
 		}
 		this._objectManager.flags = this._objectManager.flags
 				| EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
@@ -333,12 +331,12 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		var drop_action = mgr.getActionById('egw_link_drop');
 		var drag_action = mgr.getActionById('egw_link_drag');
 		var drop_cancel = mgr.getActionById('egw_cancel_drop');
-		
+
 		if(!this._actionLinks)
 		{
 			this._actionLinks = [];
 		}
-		
+
 		if (!drop_cancel)
 		{
 			// Create a generic cancel action in order to cancel drop action
@@ -348,7 +346,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			drop_cancel.acceptedTypes = drop_cancel.acceptedTypes.concat(Object.keys(egw.user('apps')).concat(['link', 'file']));
 			this._actionLinks.push (drop_cancel.id);
 		}
-		
+
 		// Check if this app supports linking
 		if(!egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'query') ||
 			egw.link_get_registry(this.dataStorePrefix || this.egw.appName, 'title'))
@@ -683,6 +681,6 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// Overwritten in the constructor
 	}
 
-});
+});}).call(this);
 
 

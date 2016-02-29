@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_dropdown_button;
 	et2_extension_nextmatch;
@@ -44,7 +42,7 @@
  *
  * @augments et2_dropdown_button
  */
-var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
+var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend([et2_INextmatchHeader],
 {
 	attributes: {
 		"default_pref": {
@@ -101,18 +99,18 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		}
 		// Store array of sorted items
 		this.favSortedList = ['blank'];
-		
+
 		var apps = egw().user('apps');
 		this.is_admin = (typeof apps['admin'] != "undefined");
-		
+
 		this.stored_filters = this.load_favorites(this.options.app);
-		
+
 		this.preferred = egw.preference(this.options.default_pref,this.options.app);
 		if(!this.preferred || typeof this.stored_filters[this.preferred] == "undefined")
 		{
 			this.preferred = "blank";
 		}
-		
+
 		// It helps to have the ID properly set before we get too far
 		this.set_id(this.id);
 
@@ -151,33 +149,33 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				self.button.removeClass("ui-state-active",2000);
 			});
 		});
-		
+
 		//Sort DomNodes of sidebox fav. menu
 		var sideBoxDOMNodeSort = function (_favSList) {
 			var favS = jQuery.isArray(_favSList)?_favSList.slice(0).reverse():[];
-			
+
 			for (var i=0; i < favS.length;i++)
 			{
 				self.sidebox_target.children().find('[data-id$="' + favS[i] + '"]').prependTo(self.sidebox_target.children());
 			}
 		};
-		
+
 		//Add Sortable handler to nm fav. menu
 		$j(this.menu).sortable({
-			
+
 			items:'li:not([data-id$="add"])',
 			placeholder:'ui-fav-sortable-placeholder',
 			delay: 250, //(millisecond) delay before the sorting should start
 			update: function (event, ui)
 			{
 				self.favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
-				
+
 				self.egw().set_preference(self.options.app,'fav_sort_pref',self.favSortedList);
-				
+
 				sideBoxDOMNodeSort(self.favSortedList);
 			}
 		});
-		
+
 		// Add a listener on the delete to remove
 		this.menu.on("click","div.ui-icon-trash", app[self.options.app], function() {
 				// App instance might not be ready yet, so don't bind directly
@@ -195,7 +193,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			this.init_filters(this);
 		}
 	},
-	
+
 	/**
 	 * Load favorites from preferences
 	 *
@@ -210,7 +208,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				state: {}
 			}
 		};
-				
+
 		// Load saved favorites
 		var preferences = egw.preference("*",app);
 		for(var pref_name in preferences)
@@ -403,5 +401,5 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		// Re-generate filter list so we can add 'Add current'
 		this.init_filters(this);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_favorites, ["favorites"]);

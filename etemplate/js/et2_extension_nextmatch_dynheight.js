@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:use
 	jquery.jquery;
 	et2_core_inheritance;
@@ -24,7 +22,7 @@
  *
  * @augments Class
  */
-var et2_dynheight = Class.extend(
+var et2_dynheight = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 * Constructor for the dynheight object
@@ -192,5 +190,5 @@ var et2_dynheight = Class.extend(
 		}
 	}
 
-});
+});}).call(this);
 

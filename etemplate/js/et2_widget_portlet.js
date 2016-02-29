@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
         jquery.jquery;
         et2_core_baseWidget;
@@ -22,13 +20,13 @@
  *
  * This manages the frame and decoration, but also provides the UI for properties.
  *
- * Portlets are only internal to EGroupware.  
+ * Portlets are only internal to EGroupware.
  *
  * Home does not fully implement WSRP, but tries not to conflict, ether.
  * @link http://docs.oasis-open.org/wsrp/v2/wsrp-2.0-spec-os-01.html
  * @augments et2_baseWidget
  */
-var et2_portlet = et2_valueWidget.extend(
+var et2_portlet = (function(){ "use strict"; return et2_valueWidget.extend(
 {
 	attributes: {
 		"title": {
@@ -100,7 +98,7 @@ var et2_portlet = et2_valueWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_portlet
 	 */
 	init: function()
@@ -108,7 +106,7 @@ var et2_portlet = et2_valueWidget.extend(
 		this._super.apply(this, arguments);
 
 		var self = this;
-				
+
 		// Create DOM nodes
 		this.div = $j(document.createElement("div"))
 			.addClass(this.options.class)
@@ -203,7 +201,7 @@ var et2_portlet = et2_valueWidget.extend(
 	 *
 	 * @param Object[ {ID: attributes..}+] as for set_actions
 	 */
-	_link_actions: function(actions) 
+	_link_actions: function(actions)
 	{
 		// Get the top level element
 		var objectManager = egw_getAppObjectManager(true);
@@ -212,7 +210,7 @@ var et2_portlet = et2_valueWidget.extend(
 			// Add a new container to the object manager which will hold the widget
 			// objects
 			widget_object = objectManager.insertObject(false, new egwActionObject(
-				this.id, objectManager, new et2_action_object_impl(this), 
+				this.id, objectManager, new et2_action_object_impl(this),
 				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
 			));
 		}
@@ -266,7 +264,7 @@ var et2_portlet = et2_valueWidget.extend(
 	{
 		if(button_id != et2_dialog.OK_BUTTON) return;
 
-		
+
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't
 		this.div.addClass("loading");
@@ -372,7 +370,7 @@ var et2_portlet = et2_valueWidget.extend(
 
 	/**
 	 * Set the number of grid cells this widget spans
-	 * 
+	 *
 	 * @param value int Number of horizontal grid cells
 	 */
 	set_width: function(value)
@@ -382,10 +380,10 @@ var et2_portlet = et2_valueWidget.extend(
 		// Clear what's there from jQuery, we get width from CSS according to sizex
 		this.div.css('width','');
 	},
-	
+
 	/**
 	 * Set the number of vertical grid cells this widget spans
-	 * 
+	 *
 	 * @param value int Number of vertical grid cells
 	 */
 	set_height: function(value)
@@ -395,6 +393,6 @@ var et2_portlet = et2_valueWidget.extend(
 		// Clear what's there from jQuery, we get width from CSS according to sizey
 		this.div.css('height','');
 	}
-	
-});
+
+});}).call(this);
 et2_register_widget(et2_portlet, ["portlet"]);

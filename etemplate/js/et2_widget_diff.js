@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	jquery.jquery-ui;
@@ -22,20 +20,20 @@
 
 /**
  * Class that displays the diff between two [text] values
- * 
+ *
  * @augments et2_valueWidget
- */ 
-var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM], 
+ */
+var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"value": {
 			"type": "any"
 		}
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_diff
 	 */
 	init: function() {
@@ -103,7 +101,7 @@ var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	set_label: function(_label) {
 		this.options.label = _label;
-		
+
 	},
 
 	/**
@@ -127,7 +125,7 @@ var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM],
 	},
 
 	/**
-         * Code for implementing et2_IDetachedDOM 
+         * Code for implementing et2_IDetachedDOM
          * Fast-clonable read-only widget that only deals with DOM nodes, not the widget tree
          */
 
@@ -169,5 +167,5 @@ var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.set_value(_values['value']);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_diff, ["diff"]);

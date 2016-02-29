@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	jquery.jquery-ui;
@@ -32,7 +30,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_dropdown_button = et2_inputWidget.extend(
+var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"label": {
@@ -398,6 +396,6 @@ var et2_dropdown_button = et2_inputWidget.extend(
 	getValue: function() {
 		return this.value;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_dropdown_button, ["dropdown_button"]);
 

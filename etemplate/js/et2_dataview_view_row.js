@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_action.egw_action;
 
@@ -21,7 +19,7 @@
 /**
  * @augments et2_dataview_container
  */
-var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, 
+var et2_dataview_row = (function(){ "use strict"; return et2_dataview_container.extend(et2_dataview_IViewRange,
 {
 	/**
 	 * Creates the row container. Use the "setRow" function to load the actual
@@ -193,5 +191,5 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange,
 		}
 	}
 
-});
+});}).call(this);
 

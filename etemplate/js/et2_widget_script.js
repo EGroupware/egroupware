@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_widget;
 */
@@ -33,7 +31,7 @@
  *
  * @augments et2_widget
  */
-var et2_script = et2_widget.extend(
+var et2_script = (function(){ "use strict"; return et2_widget.extend(
 {
 	/**
 	 * Constructor
@@ -65,5 +63,5 @@ var et2_script = et2_widget.extend(
 			this.egw.debug('error', 'Error while executing script: ',_content,e);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_script, ["script"]);

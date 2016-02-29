@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_common;
@@ -31,7 +29,7 @@
  *
  * @augments Class
  */
-var et2_dataview = Class.extend({
+var et2_dataview = (function(){ "use strict"; return Class.extend({
 
 	/**
 	 * Constant which regulates the column padding.
@@ -275,7 +273,7 @@ var et2_dataview = Class.extend({
 		this.egw.css(".egwGridView_grid ." + this.uniqueId + "_div_fullRow");
 		this.egw.css(".egwGridView_outer ." + this.uniqueId + "_td_fullRow");
 		this.egw.css(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow");
-		
+
 		// Reset the headerColumns array and empty the table row
 		this.columnNodes = [];
 		this.columns = [];
@@ -404,7 +402,7 @@ var et2_dataview = Class.extend({
 				.attr("align", "left")
 				.append(cont)
 				.appendTo(this.headTr);
-			
+
 			if(this.columnMgr && this.columnMgr.columns[i])
 			{
 				column.addClass(this.columnMgr.columns[i].fixedWidth ? 'fixedWidth' : 'relativeWidth');
@@ -609,6 +607,6 @@ var et2_dataview = Class.extend({
 		return width;
 	}
 
-});
+});}).call(this);
 
 

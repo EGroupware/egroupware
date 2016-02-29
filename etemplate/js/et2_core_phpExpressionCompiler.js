@@ -10,13 +10,13 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_common;
 */
 
-(function() {
+(function()
+{
+	"use strict";
 
 	var STATE_DEFAULT = 0;
 	var STATE_ESCAPED = 1;

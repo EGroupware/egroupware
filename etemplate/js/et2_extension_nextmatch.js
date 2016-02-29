@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 
 	// Include the action system
@@ -82,7 +80,7 @@ var et2_INextmatchSortable = new Interface({
  *                                          +--------------+-----------+-------+
  * @augments et2_DOMWidget
  */
-var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrint],
+var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrint],
 {
 	attributes: {
 		// These normally set in settings, but broken out into attributes to allow run-time changes
@@ -2172,7 +2170,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput, et2_IPrin
 		this.dynheight.outerNode.css('max-width','inherit');
 		this.resize();
 	}
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch, ["nextmatch"]);
 
 /**
@@ -2182,7 +2180,7 @@ et2_register_widget(et2_nextmatch, ["nextmatch"]);
  * actually load templates from the server.
  * @augments et2_DOMWidget
  */
-var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
+var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.extend(et2_INextmatchHeader,
 {
 	attributes: {
 		"filter_label": {
@@ -2811,7 +2809,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			jQuery.extend(true, this.nextmatch.activeFilters,mgr.data);
 		}, this, et2_inputWidget);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
 
 /**
@@ -2819,7 +2817,7 @@ et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
  *
  * @augments et2_baseWidget
  */
-var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader,
+var et2_nextmatch_header = (function(){ "use strict"; return et2_baseWidget.extend(et2_INextmatchHeader,
 {
 	attributes: {
 		"label": {
@@ -2864,7 +2862,7 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader,
 		this.labelNode.text(_value);
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
 
 /**
@@ -2872,7 +2870,7 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
  *
  * @augments et2_customfields_list
  */
-var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHeader,
+var et2_nextmatch_customfields = (function(){ "use strict"; return et2_customfields_list.extend(et2_INextmatchHeader,
 {
 	attributes: {
 		'customfields': {
@@ -3088,13 +3086,13 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 		}
 		return name;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
 
 /**
  * @augments et2_nextmatch_header
  */
-var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable,
+var et2_nextmatch_sortheader = (function(){ "use strict"; return et2_nextmatch_header.extend(et2_INextmatchSortable,
 {
 	attributes: {
 		"sortmode": {
@@ -3156,13 +3154,13 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 		this.sortmode = _mode;
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 
 /**
  * @augments et2_selectbox
  */
-var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable],
+var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable],
 {
 	/**
 	 * Override to add change handler
@@ -3217,13 +3215,13 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 		this.input.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 
 /**
  * @augments et2_selectAccount
  */
-var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable],
+var et2_nextmatch_accountfilterheader = (function(){ "use strict"; return et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable],
 {
 	/**
 	 * Override to add change handler
@@ -3277,13 +3275,13 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatch
 		this.input.css("max-width",max + "px");
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
 
 /**
  * @augments et2_link_entry
  */
-var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
+var et2_nextmatch_entryheader = (function(){ "use strict"; return et2_link_entry.extend(et2_INextmatchHeader,
 {
 	/**
 	 * Override to add change handler
@@ -3364,13 +3362,13 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 		var self = this;
 		// Fire on lost focus, clear filter if user emptied box
 	}
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
 
 /**
  * @augments et2_nextmatch_filterheader
  */
-var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
+var et2_nextmatch_customfilter = (function(){ "use strict"; return et2_nextmatch_filterheader.extend(
 {
 	attributes: {
 		"widget_type": {
@@ -3447,5 +3445,5 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
 			return this.real_node.setNextmatch(_nextmatch);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_nextmatch_customfilter, ['nextmatch-customfilter']);

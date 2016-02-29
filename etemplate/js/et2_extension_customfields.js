@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	lib/tooltip;
 	jquery.jquery;
@@ -23,7 +21,7 @@
 /**
  * @augments et2_dataview
  */
-var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput],
+var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput],
 {
 	attributes: {
 		'customfields': {
@@ -476,7 +474,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		attrs.empty_label = egw.lang('Select');
 		return this._setup_select(field_name, field, attrs);
 	},
-	
+
 	 _setup_date: function(field_name, field, attrs) {
 		attrs.data_format = 'Y-m-d';
 		return true;
@@ -622,7 +620,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
 			$j(widget.getDOMNode(widget)).css('vertical-align','top');
-			
+
 			// Add a link to existing VFS file
 			var select_attrs = jQuery.extend({},
 				attrs,
@@ -640,7 +638,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 			// Do not store in the widgets list, one name for multiple widgets would cause problems
 			widget = et2_createWidget(select_attrs.type, select_attrs, this);
-			$j(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);	
+			$j(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 		}
 		return false;
 	},
@@ -694,7 +692,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			$j(_nodes[i]).toggle(_values.fields[key] && _values.value[this.prefix + key]?true:false);
 		}
 	}
-});
+});}).call(this);
 
 et2_register_widget(et2_customfields_list, ["customfields", "customfields-list"]);
 

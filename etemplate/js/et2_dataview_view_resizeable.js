@@ -10,13 +10,13 @@
  * @version $Id$
  */
 
-"use strict";
-
 /**
  * This set of functions is currently only supporting resizing in ew-direction
  */
 
-(function() {
+(function()
+{
+	"use strict";
 
 	// Define some constants
 	var RESIZE_BORDER = 12;

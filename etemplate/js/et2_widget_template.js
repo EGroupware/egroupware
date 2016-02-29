@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_xml;
 	et2_core_DOMWidget;
@@ -25,7 +23,7 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_template = et2_DOMWidget.extend(
+var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 {
 	attributes: {
 		"template": {
@@ -194,6 +192,6 @@ var et2_template = et2_DOMWidget.extend(
 		// Not done yet, but widget will let you know
 		return this.loading.promise();
 	}
-});
+});}).call(this);
 et2_register_widget(et2_template, ["template"]);
 

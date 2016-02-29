@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jsapi.egw;
 	jquery.jquery;
@@ -23,7 +21,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
+var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 {
 	attributes: {
 		'tabs': {
@@ -505,5 +503,5 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput,et2_IResizeable],
 			this.set_height(this.tabContainer.height());
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_tabbox, ["tabbox"]);

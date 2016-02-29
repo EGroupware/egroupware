@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
         jquery.jquery;
         jquery.jquery-ui;
@@ -31,7 +29,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
+var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 {
 	createNamespace: true,
 	attributes: {
@@ -104,7 +102,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 								e.data.history.dataview.resize(_w, _h);
 							});
 						});
-						
+
 						if (typeof e.data.history.dataview == "undefined") e.data.history.finishInit();
 						e.data.history.dynheight.update(function(_w, _h) {
 							e.data.history.dataview.resize(_w, _h);
@@ -449,6 +447,11 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 	 * The row callback gets called by the gridview controller whenever
 	 * the actual DOM-Nodes for a node with the given data have to be
 	 * created.
+	 *
+	 * @param {type} _data
+	 * @param {type} _row
+	 * @param {type} _idx
+	 * @param {type} _entry
 	 */
 	rowCallback: function(_data, _row, _idx, _entry) {
 		var tr = _row.getDOMNode();
@@ -546,6 +549,10 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 
 	/**
 	 * How to tell if the row needs a diff widget or not
+	 *
+	 * @param {string} columnName
+	 * @param {string} value
+	 * @returns {Boolean}
 	 */
 	_needsDiffWidget: function(columnName, value) {
 		if(typeof value !== "string")
@@ -570,12 +577,12 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider,et2_IResizeable],
 				// then add the default height with excess_height
 				if (this.div.height() == 0) _height += 250;
 				this.div.height(this.div.height() + _height);
-				
+
 				// trigger the history registered resize
 				// in order to update the height with new value
 				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
 			}
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_historylog, ['historylog']);

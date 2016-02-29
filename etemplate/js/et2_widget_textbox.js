@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_inputWidget;
@@ -23,7 +21,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
+var et2_textbox = (function(){ "use strict"; return et2_inputWidget.extend([et2_IResizeable],
 {
 	attributes: {
 		"multiline": {
@@ -291,7 +289,7 @@ var et2_textbox = et2_inputWidget.extend([et2_IResizeable],
 			}
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_textbox, ["textbox", "passwd", "hidden"]);
 
 /**
@@ -299,7 +297,7 @@ et2_register_widget(et2_textbox, ["textbox", "passwd", "hidden"]);
  *
  * @augments et2_valueWidget
  */
-var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_textbox_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Ignore all more advanced attributes.
@@ -403,7 +401,7 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.set_value(_values["value"]);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
 
 /**
@@ -412,7 +410,7 @@ et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
  *
  * @type type
  */
-var et2_searchbox = et2_textbox.extend(
+var et2_searchbox = (function(){ "use strict"; return et2_textbox.extend(
 {
 	/**
 	 * Advanced attributes
@@ -492,7 +490,7 @@ var et2_searchbox = et2_textbox.extend(
 			},
 
 			blur: function(event){
-				if (!event.relatedTarget || !jQuery(event.relatedTarget.parentNode).hasClass('et2_searchbox')) 
+				if (!event.relatedTarget || !jQuery(event.relatedTarget.parentNode).hasClass('et2_searchbox'))
 				{
 					self._show_hide((!self.options.overlay && self.get_value()));
 				}
@@ -537,11 +535,11 @@ var et2_searchbox = et2_textbox.extend(
 	{
 			// Not applied for fix option
 			if (this.options.fix) return;
-			
+
 			jQuery(this.flex).toggleClass('hide',!_stat);
 			jQuery(this.getDOMNode()).toggleClass('expanded', _stat);
 	},
-	
+
 	/**
 	 * toggle search button status based on value
 	 */
@@ -549,7 +547,7 @@ var et2_searchbox = et2_textbox.extend(
 	{
 		// Not applied for fix option
 		if (this.options.fix) return;
-		
+
 		if (!this.get_value())
 		{
 			jQuery(this.button.getDOMNode()).removeClass('toolbar_toggled');
@@ -576,7 +574,7 @@ var et2_searchbox = et2_textbox.extend(
 	get_value:function(){
 		return  this.search.input.val();
 	},
-	
+
 	set_value: function (_value){
 		this._super.apply(this,arguments);
 		if (this.search) this.search.input.val(_value);
@@ -596,7 +594,7 @@ var et2_searchbox = et2_textbox.extend(
 			this._searchToggleState();
 		}
 	},
-	
+
 	/**
 	 * Overrride attachToDOM in order to unbind change handler
 	 */
@@ -608,5 +606,5 @@ var et2_searchbox = et2_textbox.extend(
 			$j(node).off('.et2_inputWidget');
 		}
 	},
-});
+});}).call(this);
 et2_register_widget(et2_searchbox, ["searchbox"]);

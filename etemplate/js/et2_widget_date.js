@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	jquery.jquery-ui;
@@ -31,7 +29,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_date = et2_inputWidget.extend(
+var et2_date = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"value": {
@@ -367,6 +365,8 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 
 	/**
 	 * Convert non html5 min or max attributes described above to timestamps
+	 *
+	 * @param {string|Date} _value
 	 */
 	_relativeDate: function(_value)
 	{
@@ -594,13 +594,13 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		this.date.setSeconds(0,0);
 		return (this.date && typeof this.date.toJSON != 'undefined' && this.date.toJSON())?this.date.toJSON().replace(/\.\d{3}Z$/, 'Z'):this.date;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
 
 /**
  * @augments et2_date
  */
-var et2_date_duration = et2_date.extend(
+var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 {
 	attributes: {
 		"data_format": {
@@ -853,13 +853,13 @@ var et2_date_duration = et2_date.extend(
 		}
 		return value;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_date_duration, ["date-duration"]);
 
 /**
  * @augments et2_date_duration
  */
-var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
+var et2_date_duration_ro = (function(){ "use strict"; return et2_date_duration.extend([et2_IDetachedDOM],
 {
 	/**
 	 * @memberOf et2_date_duration_ro
@@ -926,14 +926,14 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
 		}
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
 
 /**
  * et2_date_ro is the readonly implementation of some date widget.
  * @augments et2_valueWidget
  */
-var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_date_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Ignore all more advanced attributes.
@@ -1146,7 +1146,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.span.addClass(_values["class"]);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date", "date-timeonly_ro"]);
 
 
@@ -1155,7 +1155,7 @@ et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date
  *
  * @augments et2_inputWidget
  */
-var et2_date_range = et2_inputWidget.extend({
+var et2_date_range = (function(){ "use strict"; return et2_inputWidget.extend({
 	attributes: {
 		value: {
 			"type": "any",
@@ -1189,7 +1189,7 @@ var et2_date_range = et2_inputWidget.extend({
 		this.setDOMNode(this.div[0]);
 		this._createWidget();
 
-		this.set_relative(this.options.relative || false)
+		this.set_relative(this.options.relative || false);
 	},
 
 	_createWidget: function createInputWidget() {
@@ -1236,7 +1236,7 @@ var et2_date_range = et2_inputWidget.extend({
 
 	/**
 	 * Toggles relative or absolute dates
-	 * 
+	 *
 	 * @param {boolean} _value
 	 */
 	set_relative: function set_relative(_value)
@@ -1273,7 +1273,7 @@ var et2_date_range = et2_inputWidget.extend({
 			value = {
 				from: value[0],
 				to: value[1] || new Date().valueOf()/1000
-			}
+			};
 		}
 		else if (value && value.from && value.to)
 		{
@@ -1286,7 +1286,7 @@ var et2_date_range = et2_inputWidget.extend({
 	{
 		return this.options.relative ?
 			this.select.getValue() :
-			{ from: this.from.getValue(), to: this.to.getValue() }
+			{ from: this.from.getValue(), to: this.to.getValue() };
 	},
 
 	_set_relative_value: function(_value)
@@ -1319,14 +1319,14 @@ var et2_date_range = et2_inputWidget.extend({
 		}
 		if(relative)
 		{
-			var dates = ["from","to"]
+			var dates = ["from","to"];
 			var value = now.toJSON();
 			for(var i = 0; i < dates.length; i++)
 			{
 				var date = dates[i];
 				if(typeof relative[date] == "function")
 				{
-					value = relative[date](new Date(value))
+					value = relative[date](new Date(value));
 				}
 				else
 				{
@@ -1336,7 +1336,7 @@ var et2_date_range = et2_inputWidget.extend({
 			}
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_date_range, ["date-range"]);
 // Static part of the date range class
 jQuery.extend(et2_date_range,
@@ -1412,7 +1412,7 @@ jQuery.extend(et2_date_range,
 			to: function(d) {
 				d.setUTCMonth(11);
 				d.setUTCDate(31);
-				return d
+				return d;
 			}
 		},
 		{
@@ -1421,16 +1421,16 @@ jQuery.extend(et2_date_range,
 			from: function(d) {
 				d.setUTCMonth(0);
 				d.setUTCDate(1);
-				d.setUTCYear(d.getUTCYear() - 1)
+				d.setUTCYear(d.getUTCYear() - 1);
 				return d;
 			},
 			to: function(d) {
 				d.setUTCMonth(11);
 				d.setUTCDate(31);
-				d.setUTCYear(d.getUTCYear() - 1)
-				return d
+				d.setUTCYear(d.getUTCYear() - 1);
+				return d;
 			}
-		},
+		}
 		/* Still needed?
 		'2 years ago' => array(-2,0,0,0, -1,0,0,0),
 		'3 years ago' => array(-3,0,0,0, -2,0,0,0),

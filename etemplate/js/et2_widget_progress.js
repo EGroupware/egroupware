@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_interfaces;
@@ -22,7 +20,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_progress = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"href": {
@@ -181,5 +179,5 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.set_href(_values["href"]);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_progress, ["progress"]);

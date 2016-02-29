@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /**
  * Loads the given URL asynchronously from the server
  *

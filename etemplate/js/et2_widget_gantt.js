@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jsapi.jsapi;
 	jquery.jquery;
@@ -33,7 +31,7 @@
  * @see http://docs.dhtmlx.com/gantt/index.html
  * @augments et2_valueWidget
  */
-var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
+var et2_gantt = (function(){ "use strict"; return et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 {
 	// Filters are inside gantt namespace
 	createNamespace: true,
@@ -70,13 +68,13 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		onfocus: {ignore: true},
 		tabindex: {ignore: true}
 	},
-	
+
 	// Common configuration for Egroupware/eTemplate
 	gantt_config: {
 		// Gantt takes a different format of date format, all the placeholders are prefixed with '%'
 		api_date: '%Y-%n-%d %H:%i:%s',
 		xml_date: '%Y-%n-%d %H:%i:%s',
-		
+
 		// Duration is a unitless field.  This is the unit.
 		duration_unit: 'minute',
 		duration_step: 1,
@@ -98,7 +96,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		scale_unit: 'day',
 		date_scale: '%d',
 		subscales: [
-			{unit:"month", step:1, date:"%F, %Y"},
+			{unit:"month", step:1, date:"%F, %Y"}
 			//{unit:"hour", step:1, date:"%G"}
 		],
 		columns: [
@@ -123,14 +121,14 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 
 		this.htmlNode.prepend(this.filters);
 		this.htmlNode.append(this.gantt_node);
-		
+
 		// Create the dynheight component which dynamically scales the inner
 		// container.
 		this.dynheight = new et2_dynheight(
 			this.getParent().getDOMNode(this.getParent()) || this.getInstanceManager().DOMContainer,
 			this.gantt_node, 300
 		);
-		
+
 		this.setDOMNode(this.htmlNode[0]);
 	},
 
@@ -142,12 +140,12 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			this.gantt.detachAllEvents();
 			this.gantt.clearAll();
 			this.gantt = null;
-			
+
 		// Destroy dynamic full-height
 		if(this.dynheight) this.dynheight.free();
 
 		this._super.apply(this, arguments);}
-	
+
 		this.htmlNode.remove();
 		this.htmlNode = null;
 	},
@@ -181,7 +179,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		{
 			this.set_zoom(this.options.zoom);
 		}
-		
+
 		if(this.options.value)
 		{
 			this.set_value(this.options.value);
@@ -190,7 +188,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		{
 			this.set_columns(this.options.columns);
 		}
-		
+
 		// Update start & end dates with chart values for consistency
 		if(start_date && this.options.value.data && this.options.value.data.length)
 		{
@@ -261,9 +259,9 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 	 * Set the columns for the grid (left) portion
 	 *
 	 * @param {Object[]} columns - A list of columns
-	 * @param {string} columns[].name The column's ID
-	 * @param {string} columns[].label The title for the column header
-	 * @param {string} columns[].width Width of the column
+	 *	columns[].name The column's ID
+	 *	columns[].label The title for the column header
+	 *	columns[].width Width of the column
 	 *
 	 * @see http://docs.dhtmlx.com/gantt/api__gantt_columns_config.html for full options
 	 */
@@ -356,6 +354,8 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 	 * required data.
 	 *
 	 * @see http://docs.dhtmlx.com/gantt/desktop__loading.html
+	 *
+	 * @param {type} value
 	 */
 	set_value: function(value) {
 		if(this.gantt == null) return false;
@@ -365,7 +365,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 
 		// Clear previous value
 		this.gantt.clearAll();
-		
+
 		// Clear the end date, or previous end date may break time scale
 		this.gantt.config.end_date = null;
 
@@ -392,7 +392,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			this.config.start_date = value.start_date || null;
 			this.config.end_date = value.end_date || null;
 			this.parse(safe_value);
-			
+
 			gantt_widget._apply_sort();
 			gantt_widget.gantt_loading = false;
 			// Once we force the start / end date (below), gantt won't recalculate
@@ -520,8 +520,8 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 					this.gantt.deleteTask(_task_ids[i]);
 					break;
 				case "add":
-					var data = null;
-					if(data = this.egw().dataGetUIDdata(_task_ids[i]) && data.data)
+					var data = this.egw().dataGetUIDdata(_task_ids[i]) && data.data;
+					if(data)
 					{
 						this.gantt.parse(data.data);
 						this._apply_sort();
@@ -572,12 +572,14 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 	 *
 	 * @return {boolean} True if the value is valid (enough), false to fail
 	 */
-	isValid: function(messages) {return true},
+	isValid: function(messages) {return true;},
 
 	/**
 	 * Set a URL to fetch the data from the server.
 	 * Data must be in the specified format.
 	 * @see http://docs.dhtmlx.com/gantt/desktop__loading.html
+	 *
+	 * @param {string} url
 	 */
 	set_autoload: function(url) {
 		if(this.gantt == null) return false;
@@ -683,7 +685,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		this.gantt.config.min_column_width = min_column_width;
 
 		this.options.zoom = level;
-		
+
 		this.gantt.refreshData();
 		return level;
 	},
@@ -735,7 +737,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 					var options = {
 						name: (w.gantt.getTask(w.gantt._order[0]).text||'gantt').replace(/ /g,'_')+'.'+to.toLowerCase(),
 						header: css + egw.config('site_title','phpgwapi'),
-						footer: $j('#egw_fw_footer',w.opener).html(),
+						footer: $j('#egw_fw_footer',w.opener).html()
 						// Doesn't work, export never happens:
 						// callback: function() {w.setTimeout(function() {w.close();}, 5000);}
 					};
@@ -782,7 +784,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 				gantt_widget.resize();
 			},100);
 		});
-	
+
 		// Click on scale to zoom - top zooms out, bottom zooms in
 		this.gantt_node.on('click','.gantt_scale_line', function(e) {
 			var current_position = e.target.offsetLeft / $j(e.target.parentNode).width();
@@ -796,7 +798,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 					gantt_widget.gantt.scrollTo(parseInt($j('.gantt_task_scale',gantt_widget.gantt_node).width() *current_position),0);
 				},100);
 			});
-			
+
 			if(this.parentNode && this.parentNode.firstChild == this && this.parentNode.childElementCount > 1)
 			{
 				// Zoom out
@@ -831,11 +833,11 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			}
 			else if (linkId)
 			{
-				this._delete_link_handler(linkId,e)
+				this._delete_link_handler(linkId,e);
 				e.stopPropagation();
 			}
 			return false;
-		})
+		});
 		// Double click
 		this.gantt.attachEvent("onBeforeLightbox", function(id) {
 			gantt_widget._link_task(id);
@@ -861,7 +863,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			var date_parser = this.date.date_to_str(this.config.api_date);
 			if(task.start_date) task.start_date = date_parser(task.start_date);
 			if(task.end_date) task.end_date = date_parser(task.end_date);
-			
+
 			var value = gantt_widget.getInstanceManager().getValues(gantt_widget.getInstanceManager().widgetContainer);
 
 			var set = true;
@@ -1006,6 +1008,8 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 
 	/**
 	 * Start UI for selecting among defined columns
+	 *
+	 * @param {type} e
 	 */
 	_column_selection: function(e)
 	{
@@ -1018,7 +1022,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			columns.push({
 				value: col.name,
 				label: col.label
-			})
+			});
 			if(!col.hide)
 			{
 				columns_selected.push(col.name);
@@ -1135,7 +1139,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 	 * Bind a single task as needed to the action system.  This is instead of binding
 	 * every single task at the start.
 	 *
-	 * @param {string} taskId 
+	 * @param {string} taskId
 	 */
 	_link_task: function(taskId)
 	{
@@ -1146,15 +1150,19 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		{
 			obj = objectManager.addObject(taskId, this.dhtmlxGanttItemAOI(this.gantt,taskId));
 			obj.data = this.gantt.getTask(taskId);
-			obj.updateActionLinks(objectManager.actionLinks)
+			obj.updateActionLinks(objectManager.actionLinks);
 		}
 		objectManager.setAllSelected(false);
 		obj.setSelected(true);
-		objectManager.updateSelectedChildren(obj,true)
+		objectManager.updateSelectedChildren(obj,true);
 	},
 
 	/**
 	 * ActionObjectInterface for gantt chart
+	 *
+	 * @param {type} gantt
+	 * @param {type} task_id
+	 * @returns {egwActionObjectInterface|et2_widget_gantt_L34.et2_widget_ganttAnonym$1.dhtmlxGanttItemAOI.aoi}
 	 */
 	dhtmlxGanttItemAOI: function(gantt, task_id)
 	{
@@ -1165,7 +1173,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 		aoi.id = task_id;
 		aoi.doGetDOMNode = function() {
 			return aoi.node;
-		}
+		};
 
 		aoi.doTriggerEvent = function(_event) {
 			if (_event == EGW_AI_DRAG_OVER)
@@ -1176,7 +1184,7 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			{
 				$j(this.node).removeClass("draggedOver");
 			}
-		}
+		};
 
 		aoi.doSetState = function(_state) {
 			if(!gantt || !gantt.isTaskExists(this.id)) return;
@@ -1189,12 +1197,12 @@ var et2_gantt = et2_inputWidget.extend([et2_IResizeable,et2_IInput],
 			{
 				gantt.unselectTask(this.id);
 			}
-		}
+		};
 
 		return aoi;
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_gantt, ["gantt"]);
 
 /**
@@ -1203,12 +1211,15 @@ et2_register_widget(et2_gantt, ["gantt"]);
 // Localize to user's language - breaks if file is not there
 //egw.includeJS("/phpgwapi/js/dhtmlxGantt/codebase/locale/locale_" + egw.preference('lang') + ".js");
 
-$j(function() {
+$j(function()
+{
+	"use strict";
+
 	// Set icon to match application
 	gantt.templates.grid_file = function(item) {
 		if(!item.pe_icon || !egw.image(item.pe_icon)) return "<div class='gantt_tree_icon gantt_file'></div>";
 		return "<div class='gantt_tree_icon' style='background-image: url(\"" + egw.image(item.pe_icon) + "\");'/></div>";
-	}
+	};
 
 	// CSS for scale row, turns on clickable
 	gantt.templates.scale_row_class = function(scale) {
@@ -1217,7 +1228,7 @@ $j(function() {
 			return scale.class || 'et2_clickable';
 		}
 		return scale.class;
-	}
+	};
 
 	// Include progress text in the bar
 	gantt.templates.progress_text = function(start, end, task) {
@@ -1232,7 +1243,7 @@ $j(function() {
 	};
 	gantt.templates.task_cell_class = function(item,date){
 		if(date.getDay()==0||date.getDay()==6){
-			return "weekend"
+			return "weekend";
 		}
 	};
 
@@ -1272,7 +1283,7 @@ $j(function() {
 		switch (link.type)
 		{
 			case types.finish_to_start:
-				valid = (source.end_date <= target.start_date)
+				valid = (source.end_date <= target.start_date);
 				break;
 			case types.start_to_start:
 				valid = (source.start_date <= target.start_date);
@@ -1281,12 +1292,12 @@ $j(function() {
 				valid = (source.end_date >= target.end_date);
 				break;
 			case types.start_to_finish:
-				valid = (source.start_date >= target.end_date)
+				valid = (source.start_date >= target.end_date);
 				break;
 		}
 
 		link_class += valid ? '' : 'invalid_constraint';
 
 		return link_class;
-	}
+	};
 });

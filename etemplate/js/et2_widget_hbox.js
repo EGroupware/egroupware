@@ -10,8 +10,6 @@
  * @version $Id: et2_box.js 36147 2011-08-16 13:12:39Z igel457 $
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_baseWidget;
@@ -22,7 +20,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_hbox = et2_baseWidget.extend(
+var et2_hbox = (function(){ "use strict"; return et2_baseWidget.extend(
 {
 	createNamespace: true,
 
@@ -184,6 +182,6 @@ var et2_hbox = et2_baseWidget.extend(
 			jQuery(child.getDOMNode(child)).css("display", "inline-table");
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_hbox, ["hbox"]);
 

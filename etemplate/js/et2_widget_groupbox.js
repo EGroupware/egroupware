@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_baseWidget;
 */
@@ -21,7 +19,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_groupbox = et2_baseWidget.extend(
+var et2_groupbox = (function(){ "use strict"; return et2_baseWidget.extend(
 {
 	/**
 	 * Constructor
@@ -33,13 +31,13 @@ var et2_groupbox = et2_baseWidget.extend(
 
 		this.setDOMNode(document.createElement("fieldset"));
 	}
-});
+});}).call(this);
 et2_register_widget(et2_groupbox, ["groupbox"]);
 
 /**
  * @augments et2_baseWidget
  */
-var et2_groupbox_legend = et2_baseWidget.extend(
+var et2_groupbox_legend = (function(){ "use strict"; return et2_baseWidget.extend(
 {
 	attributes: {
 		"label": {
@@ -62,5 +60,5 @@ var et2_groupbox_legend = et2_baseWidget.extend(
 		var legend = jQuery(document.createElement("legend")).text(this.options.label);
 		this.setDOMNode(legend[0]);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_groupbox_legend, ["caption"]);

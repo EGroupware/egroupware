@@ -10,8 +10,6 @@
  * @version $Id: et2_dataview_view_container_1.js 46338 2014-03-20 09:40:37Z ralfbecker $
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_dataview_interfaces;
@@ -25,7 +23,7 @@
  *
  * @augments et2_dataview_container
  */
-var et2_dataview_tile = et2_dataview_row.extend([],
+var et2_dataview_tile = (function(){ "use strict"; return et2_dataview_row.extend([],
 {
 	columns: 4,
 
@@ -47,7 +45,7 @@ var et2_dataview_tile = et2_dataview_row.extend([],
 	makeExpandable: function (_expandable, _callback, _context) {
 		// Nope.  It mostly works, it's just weird.
 	},
-	
+
 	getAvgHeightData: function() {
 		var res = {
 			"avgHeight": this.getHeight() / this.columns,
@@ -103,4 +101,4 @@ var et2_dataview_tile = et2_dataview_row.extend([],
 			this.columns = Math.max(1,parseInt(this.tr.parent().innerWidth() / this.tr.outerWidth(true)));
 		}
 	}
-});
+});}).call(this);

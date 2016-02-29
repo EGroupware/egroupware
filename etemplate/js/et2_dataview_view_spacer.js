@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_dataview_view_container;
@@ -20,11 +18,11 @@
 /**
  * @augments et2_dataview_container
  */
-var et2_dataview_spacer = et2_dataview_container.extend(
+var et2_dataview_spacer = (function(){ "use strict"; return et2_dataview_container.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param _rowProvider
 	 * @memberOf et2_dataview_spacer
@@ -103,5 +101,5 @@ var et2_dataview_spacer = et2_dataview_container.extend(
 		return tr;
 	}
 
-});
+});}).call(this);
 

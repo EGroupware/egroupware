@@ -13,8 +13,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_widget_link;
 */
@@ -31,7 +29,7 @@
  *
  * @augments et2_selectbox
  */
-var et2_selectAccount = et2_selectbox.extend(
+var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 {
 	attributes: {
 		'account_type': {
@@ -738,7 +736,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			this.set_tags(this.options.tags, this.options.width);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_selectAccount, ["select-account"]);
 
 /**
@@ -748,7 +746,7 @@ et2_register_widget(et2_selectAccount, ["select-account"]);
  *
  * @augments et2_link_string
  */
-var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
+var et2_selectAccount_ro = (function(){ "use strict"; return et2_link_string.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"empty_label": {
@@ -882,5 +880,5 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 			}
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_selectAccount_ro, ["select-account_ro"]);

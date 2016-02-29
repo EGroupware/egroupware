@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_common;
 	egw_inheritance;
@@ -21,7 +19,7 @@
 /**
  * @augments Class
  */
-var et2_arrayMgr = Class.extend(
+var et2_arrayMgr = (function(){ "use strict"; return Class.extend(
 {
 	splitIds: true,
 
@@ -384,12 +382,12 @@ var et2_arrayMgr = Class.extend(
 		return mgr;
 	}
 
-});
+});}).call(this);
 
 /**
  * @augments et2_arrayMgr
  */
-var et2_readonlysArrayMgr = et2_arrayMgr.extend(
+var et2_readonlysArrayMgr = (function(){ "use strict"; return et2_arrayMgr.extend(
 {
 
 	/**
@@ -455,7 +453,7 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend(
 	{
 		return this.perspectiveData.owner.getArrayMgr('content').expandName(ident);
 	}
-});
+});}).call(this);
 
 /**
  * Creates a new set of array managers

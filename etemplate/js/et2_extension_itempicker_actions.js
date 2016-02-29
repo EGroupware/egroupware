@@ -13,9 +13,10 @@
  * @version $Id: et2_widget_itempicker.js 38623 2012-03-26 23:27:53Z jaytraxx $
  */
 
-"use strict";
+function itempickerDocumentAction(context, data)
+{
+	"use strict";
 
-function itempickerDocumentAction(context, data) {
 	var formid = "itempicker_action_form";
 	var form = "<form id='" + formid + "' action='index.php?menuaction=" + data.app + "." + data.app + "_merge.download_by_request' method='POST'>"
 		+ "<input type='hidden' name='data_document_name' value='" + data.value.name + "' />"

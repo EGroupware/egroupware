@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_baseWidget;
@@ -24,7 +22,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_valueWidget = et2_baseWidget.extend(
+var et2_valueWidget = (function(){ "use strict"; return et2_baseWidget.extend(
 {
 	attributes: {
 		"label": {
@@ -127,5 +125,5 @@ var et2_valueWidget = et2_baseWidget.extend(
 		// Copy the given value
 		this.label = _value;
 	}
-});
+});}).call(this);
 

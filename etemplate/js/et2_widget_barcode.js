@@ -10,8 +10,6 @@
  * @version $Id:$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	/phpgwapi/js/jquery/barcode/jquery-barcode.min.js;
@@ -46,7 +44,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_barcode = et2_valueWidget.extend(
+var et2_barcode = (function(){ "use strict"; return et2_valueWidget.extend(
 {
 	attributes : {
 		"code_type": {
@@ -130,7 +128,7 @@ var et2_barcode = et2_valueWidget.extend(
 	{
 		return this.value;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_barcode, ["barcode"]);
 
 // Static part of the class

@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
         jquery.jquery;
 	jquery.splitter;
@@ -28,7 +26,7 @@
  * @see http://methvin.com/splitter/ Uses Splitter
  * @augments et2_DOMWidget
  */
-var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
+var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 {
 	attributes: {
 		"orientation": {
@@ -198,7 +196,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 				pix = size * widget.dynheight.outerNode.height() / 100;
 			}
 			return pix.toFixed(2);
-		}
+		};
 
 		//Convert pixel size to percent
 		var pix2per = function (_size)
@@ -213,7 +211,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 				per = _size * 100 / widget.dynheight.outerNode.height();
 			}
 			return per.toFixed(2) + "%";
-		}
+		};
 
 		// Check for position preference, load it in
 		if(this.id)
@@ -308,9 +306,9 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 						// Extra resize would cause stalling chrome
 						// as resize might confilict with bottom download bar
 						// in chrome which does a window resize, so better to not
-						// trigger second resize and leave that to an application 
+						// trigger second resize and leave that to an application
 						// if it is neccessary.
-						
+
 						// Above forcing is not enough for Firefox, defer
 						window.setTimeout(jQuery.proxy(function() {this.resize();},widget),200);
 				},self,et2_IResizeable);
@@ -451,6 +449,6 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable,et2_IPrint],
 		this.div.removeClass('print');
 		this.stop_resize = false;
 	}
-});
+});}).call(this);
 
 et2_register_widget(et2_split, ["split"]);

@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_baseWidget;
@@ -22,7 +20,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
+var et2_box = (function(){ "use strict"; return et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		// Not needed
@@ -150,23 +148,23 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_box, ["vbox", "box"]);
 
 /**
  * Details widget implementation
  * widget name is "details" and can be use as a wrapping container
  * in order to make its children collapsible.
- * 
+ *
  * Note: details widget does not represent html5 "details" tag in DOM
- * 
+ *
  * <details>
  *		<widgets>
  *		....
  * <details/>
- * 
+ *
  */
-var et2_details = et2_box.extend(
+var et2_details = (function(){ "use strict"; return et2_box.extend(
 {
 	attributes:{
 		"toggle_align": {
@@ -182,10 +180,10 @@ var et2_details = et2_box.extend(
 			default: ""
 		}
 	},
-	
+
 	init: function() {
 		this._super.apply(this, arguments);
-		
+
 		this.div = jQuery(document.createElement('div')).addClass('et2_details');
 		this.title = jQuery(document.createElement('span'))
 				.addClass('et2_label et2_details_title')
@@ -196,28 +194,28 @@ var et2_details = et2_box.extend(
 		this.wrapper = jQuery(document.createElement('div'))
 				.addClass('et2_details_wrapper')
 				.appendTo(this.div);
-		
-		
+
+
 		this._createWidget();
 	},
-	
+
 	/**
 	 * Function happens on toggle action
 	 */
 	_toggle: function (){
 		this.div.toggleClass('et2_details_expanded');
 	},
-	
+
 	/**
 	 * Create widget, set contents, and binds handlers
 	 */
 	_createWidget: function () {
 		var self = this;
-		
+
 		this.span.on('click', function (e){
 			self._toggle();
 		});
-		
+
 		//Set header title
 		if (this.options.title)
 		{
@@ -225,11 +223,11 @@ var et2_details = et2_box.extend(
 					.click (function(){self._toggle();})
 					.text(this.options.title);
 		}
-		
+
 		// Align toggle button left/right
 		if (this.options.toggle_align === "left") this.span.css({float:'left'});
 	},
-	
+
 	getDOMNode: function(_sender) {
 		if (!_sender || _sender === this)
 		{
@@ -240,5 +238,5 @@ var et2_details = et2_box.extend(
 			return this.wrapper[0];
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_details, ["details"]);

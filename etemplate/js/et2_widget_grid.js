@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_DOMWidget;
@@ -26,7 +24,7 @@
  *
  * @augments et2_DOMWidget
  */
-var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResizeable],
+var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResizeable],
 {
 	createNamespace: true,
 
@@ -1070,5 +1068,5 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned, et2_IResize
 			}
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_grid, ["grid"]);

@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_dataview_interfaces;
@@ -33,7 +31,7 @@
  *
  * @augments Class
  */
-var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
+var et2_dataview_container = (function(){ "use strict"; return Class.extend(et2_dataview_IInvalidatable,
 {
 	/**
 	 * Initializes the container object.
@@ -376,4 +374,4 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable,
 	{
 		return _node.offsetHeight;
 	}
-});
+});}).call(this);

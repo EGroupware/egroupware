@@ -12,8 +12,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
         et2_core_inputWidget;
 	/phpgwapi/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
@@ -31,7 +29,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_tree = et2_inputWidget.extend(
+var et2_tree = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"multiple": {
@@ -930,6 +928,6 @@ var et2_tree = et2_inputWidget.extend(
 		}
 		return url_parts.join('/');
 	}
-});
+});}).call(this);
 et2_register_widget(et2_tree, ["tree","tree-cat"]);
 

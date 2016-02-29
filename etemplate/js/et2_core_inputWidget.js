@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_interfaces;
@@ -25,7 +23,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
+var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 {
 	attributes: {
 		"needed": {
@@ -320,5 +318,5 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		this.set_validation_error(valid ? false : messages);
 		return valid;
 	}
-});
+});}).call(this);
 

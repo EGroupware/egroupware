@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_interfaces;
 	et2_core_widget;
@@ -25,7 +23,7 @@
  *
  * @augments et2_widget
  */
-var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
+var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOMNode,
 {
 	attributes: {
 		"disabled": {
@@ -429,7 +427,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			}
 		}
 	},
-	
+
 	set_background: function(_value)
 	{
 		var node = this.getDOMNode(this);
@@ -445,7 +443,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 			});
 		}
 	},
-	
+
 	/**
 	 * Set Actions on the widget
 	 *
@@ -566,8 +564,9 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		// 'allowed' for this widget at this time
 		var action_links = this._get_action_links(actions);
 		widget_object.updateActionLinks(action_links);
-		}
-});
+	}
+
+});}).call(this);
 
 /**
  * The surroundings manager class allows to append or prepend elements around
@@ -575,7 +574,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
  *
  * @augments Class
  */
-var et2_surroundingsMgr = ClassWithAttributes.extend(
+var et2_surroundingsMgr = (function(){ "use strict"; return ClassWithAttributes.extend(
 {
 	/**
 	 * Constructor
@@ -781,7 +780,7 @@ var et2_surroundingsMgr = ClassWithAttributes.extend(
 		return this._widgetContainer;
 	}
 
-});
+});}).call(this);
 
 /**
  * The egw_action system requires an egwActionObjectInterface Interface implementation
@@ -801,7 +800,7 @@ function et2_action_object_impl(widget, node)
 	aoi.getWidget = function() {
 		return widget;
 	};
-	
+
 	aoi.doGetDOMNode = function() {
 		return objectNode?objectNode:widget.getDOMNode();
 	};

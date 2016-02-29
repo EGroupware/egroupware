@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_widget_textbox;
 */
@@ -21,7 +19,7 @@
  *
  * @augments et2_textbox
  */
-var et2_number = et2_textbox.extend(
+var et2_number = (function(){ "use strict"; return et2_textbox.extend(
 {
 	attributes: {
 		"value": {
@@ -142,7 +140,7 @@ var et2_number = et2_textbox.extend(
 			this.input.attr("max",this.max);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_number, ["int", "integer", "float"]);
 
 /**
@@ -151,7 +149,7 @@ et2_register_widget(et2_number, ["int", "integer", "float"]);
  * @augments et2_textbox_ro
  * @class
  */
-var et2_number_ro = et2_textbox_ro.extend(
+var et2_number_ro = (function(){ "use strict"; return et2_textbox_ro.extend(
 {
 	attributes: {
 		min: { ignore: true},
@@ -173,5 +171,5 @@ var et2_number_ro = et2_textbox_ro.extend(
 		}
 		this._super.call(this, _value);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_number_ro, ["int_ro", "integer_ro", "float_ro"]);

@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_inheritance;
 */
@@ -29,7 +27,7 @@ var ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
  *
  * @augments Class
  */
-var et2_dataview_column = ClassWithAttributes.extend({
+var et2_dataview_column = (function(){ "use strict"; return ClassWithAttributes.extend({
 
 	attributes: {
 		"id": {
@@ -146,7 +144,7 @@ var et2_dataview_column = ClassWithAttributes.extend({
 			this.egw().debug("warn", "Invalid visibility option for column: ", _value);
 		}
 	}
-});
+});}).call(this);
 
 /**
  * Contains logic for the columns class. The columns class represents the unique set
@@ -154,7 +152,7 @@ var et2_dataview_column = ClassWithAttributes.extend({
  * do normaly not change.
  */
 
-var et2_dataview_columns = Class.extend({
+var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 
 	init: function(_columnData) {
 		// Initialize some variables
@@ -431,5 +429,5 @@ var et2_dataview_columns = Class.extend({
 		}
 	}
 
-});
+});}).call(this);
 

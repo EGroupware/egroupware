@@ -24,7 +24,7 @@
  *
  * @augments Class
  */
-var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
+var et2_nextmatch_rowProvider = (function(){ "use strict"; return ClassWithAttributes.extend(
 {
 	/**
 	 * Creates the nextmatch row provider.
@@ -536,12 +536,12 @@ var et2_nextmatch_rowProvider = ClassWithAttributes.extend(
 		}
 	}
 
-});
+});}).call(this);
 
 /**
  * @augments et2_widget
  */
-var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
+var et2_nextmatch_rowWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOMNode,
 {
 	/**
 	 * Constructor
@@ -604,12 +604,12 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
 		return null;
 	}
 
-});
+});}).call(this);
 
 /**
  * @augments et2_widget
  */
-var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode,
+var et2_nextmatch_rowTemplateWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOMNode,
 {
 	/**
 	 * Constructor
@@ -670,5 +670,5 @@ var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode,
 		return null;
 	}
 
-});
+});}).call(this);
 

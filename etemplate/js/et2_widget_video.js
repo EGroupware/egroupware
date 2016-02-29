@@ -7,10 +7,8 @@
  * @link http://www.egroupware.org
  * @author Hadi Nategh <hn[at]stylite.de>
  * @copyright Stylite AG
- * @version $Id:$
+ * @version $Id$
  */
-
-"use strict";
 
 /*egw:uses
 	jquery.jquery;
@@ -19,8 +17,8 @@
 */
 
 /**
- * This widget represents the HTML5 video tag with all its optional attributes 
- * 
+ * This widget represents the HTML5 video tag with all its optional attributes
+ *
  * The widget can be created in the following ways:
  * <code>
  * var videoTag = et2_createWidget("video", {
@@ -46,7 +44,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_video = et2_baseWidget.extend(et2_IDOMNode,
+var et2_video = (function(){ "use strict"; return et2_baseWidget.extend(et2_IDOMNode,
 {
 	attributes: {
 		"video_src": {
@@ -90,8 +88,8 @@ var et2_video = et2_baseWidget.extend(et2_IDOMNode,
 			"description": "Defines if the video should be played repeatedly"
 		}
 	},
-	
-	
+
+
 	/**
 	 * Constructor
 	 *
@@ -99,7 +97,7 @@ var et2_video = et2_baseWidget.extend(et2_IDOMNode,
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-		
+
 		//Create Video tag
 		this.video = jQuery(document.createElement("video"));
 		if (this.options.controls)
@@ -131,24 +129,24 @@ var et2_video = et2_baseWidget.extend(et2_IDOMNode,
 	 * @param {string} _value url
 	 */
 	set_src: function(_value) {
-		
+
 		if (_value)
 		{
 			var source  = jQuery(document.createElement('source'))
 					.attr('src',_value)
 					.appendTo(this.video);
-			
+
 			if (this.options.src_type)
 			{
 				source.attr('type',this.options.src_type);
 			}
 		}
 	},
-	
+
 	/**
 	 * Set autoplay option for video
 	 * -If autoplay is set, video would be played automatically after the page is loaded
-	 * 
+	 *
 	 * @param {string} _value true set the autoplay and false not to set
 	 */
 	set_autoplay: function (_value)
@@ -158,7 +156,7 @@ var et2_video = et2_baseWidget.extend(et2_IDOMNode,
 			this.video.attr("autoplay",_value);
 		}
 	},
-	
+
 	/**
 	 * Set controls option for video
 	 *
@@ -171,11 +169,11 @@ var et2_video = et2_baseWidget.extend(et2_IDOMNode,
 			this.video.attr("controls",_value);
 		}
 	},
-	
+
 	/**
-	 * Set poster attribute in order to specify 
+	 * Set poster attribute in order to specify
 	 * an image to be shown while video is loading or before user play it
-	 * 
+	 *
 	 * @param {type} _url
 	 */
 	set_poster: function (_url)
@@ -185,7 +183,7 @@ var et2_video = et2_baseWidget.extend(et2_IDOMNode,
 			this.video.attr("poster", _url);
 		}
 	}
-	
-});
+
+});}).call(this);
 
 et2_register_widget(et2_video, ["video"]);

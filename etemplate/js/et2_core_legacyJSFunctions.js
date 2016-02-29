@@ -10,14 +10,14 @@
  * @version $Id: et2_core_phpExpressionCompiler.js 38256 2012-03-05 13:07:38Z igel457 $
  */
 
-"use strict";
-
 /*egw:uses
 	et2_interfaces;
 	et2_core_common;
 */
 
-(function() {
+(function()
+{
+	"use strict";
 
 	/**
 	* Resolve javascript pseudo functions in onclick or onchange:

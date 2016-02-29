@@ -27,7 +27,7 @@
  *
  * @augments Class
  */
-var et2_dataview_selectionManager = Class.extend(
+var et2_dataview_selectionManager = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 * Constructor
@@ -539,5 +539,5 @@ var et2_dataview_selectionManager = Class.extend(
 		}
 	}
 
-});
+});}).call(this);
 

@@ -10,14 +10,12 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_common;
 	egw_inheritance;
 */
 
-var ClassWithAttributes = Class.extend(
+var ClassWithAttributes = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 * Returns the value of the given attribute. If the property does not
@@ -157,4 +155,4 @@ var ClassWithAttributes = Class.extend(
 			et2_validateAttrib(key, attributes[key]);
 		}
 	}
-});
+});}).call(this);

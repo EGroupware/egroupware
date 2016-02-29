@@ -1,4 +1,4 @@
-/* 
+/*
  * Egroupware etemplate2 JS Entry widget
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -8,8 +8,6 @@
  * @version $Id$
  */
 
-
-"use strict";
 
 /*egw:uses
 	et2_core_valueWidget;
@@ -29,7 +27,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_entry = et2_valueWidget.extend(
+var et2_entry = (function(){ "use strict"; return et2_valueWidget.extend(
 {
 	attributes: {
 		field: {
@@ -115,7 +113,7 @@ var et2_entry = et2_valueWidget.extend(
 		{
 			jQuery.extend(attrs, modifications.getEntry(attrs.id));
 		}
-		
+
 		// Supress labels on templates
 		if(attrs.type == 'template' && this.options.label)
 		{
@@ -155,8 +153,8 @@ var et2_entry = et2_valueWidget.extend(
 				widget.options.value = sum;
 			}
 		}
-		
+
 	}
-});
+});}).call(this);
 
 et2_register_widget(et2_entry, ["entry", 'contact-value', 'contact-account', 'contact-template', 'infolog-value','tracker-value','records-value']);

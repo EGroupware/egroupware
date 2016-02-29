@@ -35,6 +35,8 @@ var et2_IExposable = new Interface(
  */
 function expose (widget)
 {
+	"use strict";
+
 	// Common expose functions
 	var THUMBNAIL_MAX = 100;
 
@@ -49,7 +51,7 @@ function expose (widget)
 
 	// For filtering to only show things we can handle
 	var mime_regex = new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))/);
-	
+
 	// IE only supports video/mp4 mime type
 	if (navigator.userAgent.match(/(MSIE|Trident)/)) mime_regex.compile(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))/);
 
@@ -377,7 +379,7 @@ function expose (widget)
 			set_value:function (_value)
 			{
 				if (typeof this._super == 'undefined') return;
-				
+
 				this._super.apply(this,arguments);
 				// Do not run set value of expose if expose_view is not set
 				// it causes a wired error on nested image widgets which
@@ -386,7 +388,7 @@ function expose (widget)
 				{
 					return;
 				}
-				
+
 
 				var self=this;
 				// If the media type is not supported do not bind the click handler
@@ -442,14 +444,14 @@ function expose (widget)
 				this.expose_options.index = current_index;
 				gallery = blueimp.Gallery(mediaContent, this.expose_options);
 			},
-			
+
 			/**
 			 * Check if clicked target from nm is in depth
-			 * 
+			 *
 			 *  @param nm nextmatch widget
 			 *  @param target selected target dom node
-			 *  
-			 *  @return {boolean} returns false if target is not in depth otherwise True 
+			 *
+			 *  @return {boolean} returns false if target is not in depth otherwise True
 			 */
 			_is_target_indepth: function (nm, target){
 				var res = false;

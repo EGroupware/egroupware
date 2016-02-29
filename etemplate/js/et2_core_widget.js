@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jsapi.egw;
 	et2_core_xml;
@@ -35,6 +33,8 @@ var et2_registry = {};
  */
 function et2_register_widget(_constructor, _types)
 {
+	"use strict";
+
 	// Iterate over all given types and register those
 	for (var i = 0; i < _types.length; i++)
 	{
@@ -67,6 +67,8 @@ function et2_register_widget(_constructor, _types)
  */
 function et2_createWidget(_name, _attrs, _parent)
 {
+	"use strict";
+
 	if (typeof _attrs == "undefined")
 	{
 		_attrs = {};
@@ -104,7 +106,7 @@ function et2_createWidget(_name, _attrs, _parent)
  *
  * @augments ClassWithAttributes
  */
-var et2_widget = ClassWithAttributes.extend(
+var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 {
 	attributes: {
 		"id": {
@@ -1040,5 +1042,5 @@ var et2_widget = ClassWithAttributes.extend(
 
 		return path;
 	}
-});
+});}).call(this);
 

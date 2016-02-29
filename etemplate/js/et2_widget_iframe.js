@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
         et2_core_valueWidget;
 */
@@ -19,7 +17,7 @@
 /**
  * @augments et2_valueWidget
  */
-var et2_iframe = et2_valueWidget.extend(
+var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 {
 	attributes: {
 		'label': {
@@ -56,7 +54,7 @@ var et2_iframe = et2_valueWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_iframe
 	 */
 	init: function() {
@@ -79,7 +77,7 @@ var et2_iframe = et2_valueWidget.extend(
 
 	/**
 	 * Set name of iframe (to be used as target for links)
-	 * 
+	 *
 	 * @param _name
 	 */
 	set_name: function(_name) {
@@ -152,5 +150,5 @@ var et2_iframe = et2_valueWidget.extend(
 	set_srcdoc: function(_value) {
 		this.htmlNode.attr("srcdoc", _value);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_iframe, ["iframe"]);

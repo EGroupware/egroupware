@@ -10,8 +10,6 @@
  * @version $Id$
 */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_inputWidget;
@@ -26,7 +24,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"value": {
@@ -170,7 +168,7 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM],
 	}
 
 
-});
+});}).call(this);
 et2_register_widget(et2_vfs, ["vfs"]);
 
 /**
@@ -179,7 +177,7 @@ et2_register_widget(et2_vfs, ["vfs"]);
  *
  * @augments et2_textbox
  */
-var et2_vfsName = et2_textbox.extend(
+var et2_vfsName = (function(){ "use strict"; return et2_textbox.extend(
 {
 	/**
 	 * Constructor
@@ -201,7 +199,7 @@ var et2_vfsName = et2_textbox.extend(
 	getValue: function() {
 		return egw.encodePath(this._super.apply(this)||'');
 	}
-});
+});}).call(this);
 et2_register_widget(et2_vfsName, ["vfs-name"]);
 
 /**
@@ -210,7 +208,7 @@ et2_register_widget(et2_vfsName, ["vfs-name"]);
  *
  * @augments et2_textbox_ro
  */
-var et2_vfsName_ro = et2_textbox_ro.extend(
+var et2_vfsName_ro = (function(){ "use strict"; return et2_textbox_ro.extend(
 {
 	/**
 	 * Constructor
@@ -231,7 +229,7 @@ var et2_vfsName_ro = et2_textbox_ro.extend(
 	getValue: function() {
 		return egw.encodePath(this._super.apply(this));
 	}
-});
+});}).call(this);
 et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 
 /**
@@ -250,7 +248,7 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
  *
  * @augments et2_valueWidget
  */
-var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_vfsMime = (function(){ "use strict"; return expose(et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"value": {
@@ -431,7 +429,7 @@ var et2_vfsMime = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			this.set_value(_values['value']);
 		}
 	}
-}));
+}));}).call(this);
 et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 
 /**
@@ -440,7 +438,7 @@ et2_register_widget(et2_vfsMime, ["vfs-mime"]);
  *
  * @augments et2_description
  */
-var et2_vfsSize = et2_description.extend({
+var et2_vfsSize = (function(){ "use strict"; return et2_description.extend({
 	attributes: {
 		"value": {
 			"type": "integer"
@@ -489,7 +487,7 @@ var et2_vfsSize = et2_description.extend({
 		}
 		this._super.apply(this, arguments);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_vfsSize, ["vfs-size"]);
 
 
@@ -498,7 +496,7 @@ et2_register_widget(et2_vfsSize, ["vfs-size"]);
  *
  * @augments et2_description
  */
-var et2_vfsMode = et2_description.extend({
+var et2_vfsMode = (function(){ "use strict"; return et2_description.extend({
 	// Masks for file types
 	types: {
 		'l': 0xA000, // link
@@ -603,7 +601,7 @@ var et2_vfsMode = et2_description.extend({
 		}
 		this._super.apply(this, arguments);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_vfsMode, ["vfs-mode"]);
 
 
@@ -613,7 +611,7 @@ et2_register_widget(et2_vfsMode, ["vfs-mode"]);
  *
  * @augments et2_selectAccount_ro
  */
-var et2_vfsUid = et2_selectAccount_ro.extend(
+var et2_vfsUid = (function(){ "use strict"; return et2_selectAccount_ro.extend(
 {
 	/**
 	 * @memberOf et2_vfsUid
@@ -627,7 +625,7 @@ var et2_vfsUid = et2_selectAccount_ro.extend(
 		}
 		this._super.apply(this, arguments);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
 
 
@@ -640,11 +638,11 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
  *
  * @augments et2_file
  */
-var et2_vfsUpload = et2_file.extend(
+var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 {
 	attributes: {
 		"value": {
-			"type": "any",	// Either nothing, or an object with file info
+			"type": "any"	// Either nothing, or an object with file info
 		},
 		"path": {
 			"name": "Path",
@@ -669,7 +667,7 @@ var et2_vfsUpload = et2_file.extend(
 	init: function(_parent, attrs) {
 		this._super.apply(this, arguments);
 		$j(this.node).addClass("et2_vfs");
-		
+
 		if(!this.options.path)
 		{
 			this.options.path = this.options.id;
@@ -740,6 +738,8 @@ var et2_vfsUpload = et2_file.extend(
 
 	/**
 	 * Add in the request id
+	 *
+	 * @param {type} form
 	 */
 	beforeSend: function(form)
 	{
@@ -799,11 +799,11 @@ var et2_vfsUpload = et2_file.extend(
 				});
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_vfsUpload, ["vfs-upload"]);
 
 
-var et2_vfsSelect = et2_inputWidget.extend(
+var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	// Allowed mode options
 	modes: ['open','open-multiple','saveas','select-dir'],
@@ -985,5 +985,5 @@ var et2_vfsSelect = et2_inputWidget.extend(
 	getValue: function() {
 		return this.value;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_vfsSelect, ["vfs-select"]);

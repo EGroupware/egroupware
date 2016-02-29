@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_baseWidget;
@@ -23,7 +21,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
+var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"label": {
@@ -326,6 +324,6 @@ var et2_description = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 			_nodes[0].setAttribute("class", _values["class"]);
 		}
 	}
-}));
+}));}).call(this);
 et2_register_widget(et2_description, ["description", "label"]);
 

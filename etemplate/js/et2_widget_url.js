@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_textbox;
 	et2_valueWidget;
@@ -23,7 +21,7 @@
  *
  * @augments et2_textbox
  */
-var et2_url = et2_textbox.extend(
+var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 {
 	attributes: {
 		"multiline": {
@@ -229,7 +227,7 @@ var et2_url = et2_textbox.extend(
 
 		if (this.input[0].parentNode) jQuery(this.input[0].parentNode).addClass('et2_url_span');
 	}
-});
+});}).call(this);
 et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
 
 /**
@@ -238,7 +236,7 @@ et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
  *
  * @augments et2_valueWidget
  */
-var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"contact_plus": {
@@ -315,15 +313,15 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					var val = this.span.text().split("<");
 					val = val[0] != ""? val[0]: val[2];
-					
+
 					// need to preserve the original value somehow
 					// as it's been used for add contact plus feature
 					this.span.attr('title',_value);
-					
+
 					this.span.text(val.replace(/"/g,''));
-					
+
 				}
-				
+
 				// Add contact_plus button
 				if (this.options.contact_plus)
 				{
@@ -403,5 +401,5 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 
 	}
-});
+});}).call(this);
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);

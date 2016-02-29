@@ -34,7 +34,7 @@ var ET2_DATAVIEW_STEPSIZE = 50;
  * instance and the corresponding data source. It manages updating the grid,
  * as well as inserting and deleting rows.
  */
-var et2_dataview_controller = Class.extend({
+var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 
 	/**
 	 * Constructor of the et2_dataview_controller, connects to the grid
@@ -391,7 +391,7 @@ var et2_dataview_controller = Class.extend({
 
 	/**
 	 * Create a new row.
-	 * 
+	 *
 	 * @param {type} ctx
 	 * @returns {et2_dataview_container}
 	 */
@@ -945,5 +945,5 @@ var et2_dataview_controller = Class.extend({
 		this._grid.makeIndexVisible(_idx);
 	}
 
-});
+});}).call(this);
 

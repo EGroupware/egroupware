@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_action.egw_action_common;
 	egw_action.egw_action;
@@ -27,11 +25,15 @@ var EGW_SELECTMODE_DEFAULT = 0;
 var EGW_SELECTMODE_TOGGLE = 1;
 
 /**
- * An action object interface for each nextmatch widget row - "inherits" from 
+ * An action object interface for each nextmatch widget row - "inherits" from
  * egwActionObjectInterface
+ *
+ * @param {DOMNode} _node
  */
 function et2_dataview_rowAOI(_node)
 {
+	"use strict";
+
 	var aoi = new egwActionObjectInterface();
 
 	aoi.node = _node;
@@ -51,8 +53,10 @@ function et2_dataview_rowAOI(_node)
 
 	/**
 	 * Now append some action code to the node
-	 * 
+	 *
 	 * @memberOf et2_dataview_rowAOI
+	 * @param {DOMEvent} e
+	 * @param {object} _params
 	 */
 	var selectHandler = function(e, _params) {
 		// Reset the focus so that keyboard navigation will work properly
@@ -62,12 +66,12 @@ function et2_dataview_rowAOI(_node)
 		// Reset the prevent selection code (in order to allow wanted
 		// selection of text)
 		_node.onselectstart = null;
-		
+
 		if (e.target != aoi.checkBox)
 		{
 			var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
 			var state = egwGetShiftState(e);
-			
+
 			if (_params)
 			{
 				if (egwIsMobile())
@@ -112,7 +116,7 @@ function et2_dataview_rowAOI(_node)
 				{
 					selectHandler(event);
 				}
-				
+
 		});
 	} else {
 		$j(_node).click(selectHandler);

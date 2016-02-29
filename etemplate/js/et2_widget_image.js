@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_interfaces;
@@ -24,7 +22,7 @@
  *
  * @augments et2_baseWidget
  */
-var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
+var et2_image = (function(){ "use strict"; return expose(et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"src": {
@@ -168,7 +166,7 @@ var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 			{
 				egw.open_link(href,target,popup);
 			}
-			
+
 			e.preventDefault();
 			return false;
 		});
@@ -217,7 +215,7 @@ var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 		return false;
 	},
-	
+
 	/**
 	 * Function to get media content to feed the expose
 	 * @param {type} _value
@@ -238,7 +236,7 @@ var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 		return mediaContent;
 	},
-	
+
 	/**
 	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
 	 *
@@ -272,14 +270,14 @@ var et2_image = expose(et2_baseWidget.extend([et2_IDetachedDOM],
 			this.set_href(_values["href"]);
 		}
 	}
-}));
+}));}).call(this);
 
 et2_register_widget(et2_image, ["image"]);
 
 /**
  * Widget displaying an application icon
  */
-var et2_appicon = et2_image.extend(
+var et2_appicon = (function(){ "use strict"; return et2_image.extend(
 {
 	attributes: {
 		default_src: {
@@ -297,5 +295,5 @@ var et2_appicon = et2_image.extend(
 		this._super.call(this, _app == 'sitemgr-link' ? 'sitemgr/sitemgr-link' :	// got removed from jdots
 			(this.egw().app(_app, 'icon_app') || _app)+'/'+(this.egw().app(_app, 'icon') || 'navbar'));
 	}
-});
+});}).call(this);
 et2_register_widget(et2_appicon, ["appicon"]);

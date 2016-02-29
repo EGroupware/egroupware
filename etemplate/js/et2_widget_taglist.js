@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_inputWidget;
 	/phpgwapi/js/jquery/magicsuggest/magicsuggest.js;
@@ -26,7 +24,7 @@
  * @see http://nicolasbize.github.io/magicsuggest/
  * @augments et2_selectbox
  */
-var et2_taglist = et2_selectbox.extend(
+var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 {
 	attributes: {
 		"empty_label": {
@@ -197,12 +195,12 @@ var et2_taglist = et2_selectbox.extend(
 			highlight: false,	// otherwise renderer have to return strings
 			selectFirst: true
 		}, this.lib_options);
-		
+
 		if(this.options.height) {
 			this.div.css('height','');
 			this.taglist_options.maxDropHeight = parseInt(this.options.height);
 		}
-		
+
 		this.taglist = this.taglist.magicSuggest(this.taglist_options);
 		this.$taglist = $j(this.taglist);
 		if(this.options.value)
@@ -492,7 +490,7 @@ var et2_taglist = et2_selectbox.extend(
 		jQuery(this.taglist.container).trigger('blur');
 		return this.taglist.getValue();
 	}
-});
+});}).call(this);
 et2_register_widget(et2_taglist, ["taglist"]);
 
 /**
@@ -500,7 +498,7 @@ et2_register_widget(et2_taglist, ["taglist"]);
  * free entries are allowed
  *
  */
-var et2_taglist_account = et2_taglist.extend(
+var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 {
 	attributes: {
 		"autocomplete_url": {
@@ -660,7 +658,7 @@ var et2_taglist_account = et2_taglist.extend(
 			this._super.call(this, values);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_taglist_account, ["taglist-account"]);
 
 /**
@@ -670,7 +668,7 @@ et2_register_widget(et2_taglist_account, ["taglist-account"]);
  *
  * @augments et2_taglist
  */
-var et2_taglist_email = et2_taglist.extend(
+var et2_taglist_email = (function(){ "use strict"; return et2_taglist.extend(
 {
 	attributes: {
 		"autocomplete_url": {
@@ -788,18 +786,18 @@ var et2_taglist_email = et2_taglist.extend(
 
 		return label;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_taglist_email, ["taglist-email"]);
 
 
 /**
  * Taglist customized specifically for categories, with colors
- * 
+ *
  * Free entries are not allowed.
  *
  * @augments et2_taglist
  */
-var et2_taglist_category = et2_taglist.extend(
+var et2_taglist_category = (function(){ "use strict"; return et2_taglist.extend(
 {
 	attributes: {
 		"autocomplete_url": {
@@ -864,7 +862,7 @@ var et2_taglist_category = et2_taglist.extend(
 	selectionRenderer: function(item)
 	{
 		var label = jQuery('<span>').text(item.label);
-		
+
 		if (item.class) label.addClass(item.class);
 		jQuery('<span class="cat_'+item.id+'"/>').prependTo(label);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
@@ -872,7 +870,7 @@ var et2_taglist_category = et2_taglist.extend(
 
 		return label;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_taglist_category, ["taglist-cat"]);
 
 
@@ -881,7 +879,7 @@ et2_register_widget(et2_taglist_category, ["taglist-cat"]);
  *
  * @augments et2_selectbox
  */
-var et2_taglist_ro = et2_selectbox_ro.extend(
+var et2_taglist_ro = (function(){ "use strict"; return et2_selectbox_ro.extend(
 {
 	/**
 	 * Constructor
@@ -901,7 +899,7 @@ var et2_taglist_ro = et2_selectbox_ro.extend(
 		this._super.apply(this, arguments);
 		$j('li',this.span).addClass('ms-sel-item');
 	}
-});
+});}).call(this);
 et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro", "taglist_account_ro" ]);
 
 // Require css

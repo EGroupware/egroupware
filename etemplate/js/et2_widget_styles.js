@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	et2_core_widget;
 */
@@ -26,7 +24,7 @@
  *
  * @augments et2_widget
  */
-var et2_styles = et2_widget.extend(
+var et2_styles = (function(){ "use strict"; return et2_widget.extend(
 {
 	/**
 	 * Constructor
@@ -90,6 +88,6 @@ var et2_styles = et2_widget.extend(
 			}
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_styles, ["styles"]);
 

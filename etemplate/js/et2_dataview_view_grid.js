@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	et2_core_common;
@@ -45,7 +43,7 @@ var ET2_GRID_HOLD_COUNT = 50;
 /**
  * @augments et2_dataview_container
  */
-var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
+var et2_dataview_grid = (function(){ "use strict"; return et2_dataview_container.extend(et2_dataview_IViewRange,
 {
 	/**
 	 * Creates the grid.
@@ -1387,5 +1385,5 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 		this.appendNode($j(this.tr[0]));
 	}
 
-});
+});}).call(this);
 

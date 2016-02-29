@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	jquery.jquery-ui;
@@ -27,7 +25,7 @@
  *
  * @augments et2_inputWidget
  */
-var et2_link_to = et2_inputWidget.extend(
+var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"only_app": {
@@ -422,13 +420,13 @@ var et2_link_to = et2_inputWidget.extend(
 		}
 		this.options.no_files = no_files;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_link_to, ["link-to"]);
 
 /**
  * @augments et2_selectbox
  */
-var et2_link_apps = et2_selectbox.extend(
+var et2_link_apps = (function(){ "use strict"; return et2_selectbox.extend(
 {
 	attributes: {
 		"only_app": {
@@ -492,13 +490,13 @@ var et2_link_apps = et2_selectbox.extend(
 		_attrs.select_options = select_options;
 		this._super.apply(this, arguments);
 	}
-});
+});}).call(this);
 et2_register_widget(et2_link_apps, ["link-apps"]);
 
 /**
  * @augments et2_inputWidget
  */
-var et2_link_entry = et2_inputWidget.extend(
+var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"value": {
@@ -890,7 +888,7 @@ var et2_link_entry = et2_inputWidget.extend(
 	/**
 	 * Set the query callback
 	 *
-	 * @param {function} query
+	 * @param {function} f
 	 */
 	set_query: function(f)
 	{
@@ -900,7 +898,7 @@ var et2_link_entry = et2_inputWidget.extend(
 	/**
 	 * Set the select callback
 	 *
-	 * @param {function} query
+	 * @param {function} f
 	 */
 	set_select: function(f)
 	{
@@ -1030,7 +1028,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		if(values.id) {
 			links.push({
 				app: values.app,
-				id: values.id,
+				id: values.id
 			});
 			self.search.val("");
 		}
@@ -1062,7 +1060,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			delete this.options.value.id;
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_link_entry, ["link-entry"]);
 
 /**
@@ -1070,7 +1068,7 @@ et2_register_widget(et2_link_entry, ["link-entry"]);
  *
  * @augments et2_valueWidget
  */
-var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
+var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"only_app": {
@@ -1235,7 +1233,7 @@ var	et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		if(typeof _values["value"] !== "undefined") this.set_value(_values["value"]);
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_link, ["link", "link-entry_ro"]);
 
 /**
@@ -1243,7 +1241,7 @@ et2_register_widget(et2_link, ["link", "link-entry_ro"]);
  *
  * @augments et2_valueWidget
  */
-var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"application": {
@@ -1273,7 +1271,7 @@ var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			type: "boolean",
 			default: true,
 			description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
-		},
+		}
 	},
 
 	/**
@@ -1367,7 +1365,7 @@ var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 					type: _value.type,
 					poster:'', // TODO: Should be changed by correct video thumbnail later
 					href: base_url + egw().mime_open(_value),
-					download_href: base_url + egw().mime_open(_value) + '?download',
+					download_href: base_url + egw().mime_open(_value) + '?download'
 				}];
 		}
 		else if(_value)
@@ -1376,7 +1374,7 @@ var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 				title: _value.id,
 				href: base_url + egw().mime_open(_value).url,
 				download_href: base_url + egw().mime_open(_value).url + '?download',
-				type: _value.type,
+				type: _value.type
 			}];
 		}
 		if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/,'ig')) mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
@@ -1388,7 +1386,7 @@ var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			.appendTo(this.list)
 			.addClass("et2_link loading")
 			.click( function(e){
-				if (self.options.expose_view && typeof _link_data.type !='undefined' 
+				if (self.options.expose_view && typeof _link_data.type !='undefined'
 					&& _link_data.type.match(self.mime_regexp,'ig'))
 				{
 					self._init_blueimp_gallery(e, _link_data);
@@ -1473,7 +1471,7 @@ var et2_link_string = expose(et2_valueWidget.extend([et2_IDetachedDOM],
 			this._labelContainer.contents().not(this.list).remove();
 		}
 	}
-}));
+}));}).call(this);
 et2_register_widget(et2_link_string, ["link-string"]);
 
 /**
@@ -1481,7 +1479,7 @@ et2_register_widget(et2_link_string, ["link-string"]);
  *
  * @augments et2_link_string
  */
-var et2_link_list = et2_link_string.extend(
+var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 {
 	attributes: {
 		"show_deleted": {
@@ -1602,7 +1600,7 @@ var et2_link_list = et2_link_string.extend(
 					window.location = url+"?download";
 					return false;
 				}
-				
+
 				// Multiple file download for those that support it
 				a = $j(a)
 					.prop('href', url)
@@ -1615,7 +1613,7 @@ var et2_link_list = et2_link_string.extend(
 				a.remove();
 				return false;
 			}
-			
+
 			self.egw().open(link_data, "", "view",'download',link_data.target ? link_data.target : link_data.app,link_data.app);
 		});
 		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item) {
@@ -1767,7 +1765,7 @@ var et2_link_list = et2_link_string.extend(
 			{
 				this._format_vfs($td, dirs, _link_data);
 			}
-			//Bind the click handler if there is download_url	
+			//Bind the click handler if there is download_url
 			if (_link_data && (typeof _link_data.download_url != 'undefined' || _link_data.app !='egw-data'))
 			{
 				$td.click( function(){
@@ -1781,7 +1779,7 @@ var et2_link_list = et2_link_string.extend(
 					{
 						self.egw().open(_link_data, "", "view",null,_link_data.target ? _link_data.target : _link_data.app,_link_data.app);
 					}
-				});	
+				});
 			}
 		}
 
@@ -1841,7 +1839,7 @@ var et2_link_list = et2_link_string.extend(
 			self.context.getItem("zip").set_enabled($j('[id^="link_-"]',this.list).length >= 2);
 			// Show delete item only if the widget is not readonly
 			self.context.getItem("delete").set_enabled(!self.options.readonly);
-			
+
 			self.context.data = _link_data;
 			self.context.showAt(e.pageX, e.pageY, true);
 			e.preventDefault();
@@ -1899,7 +1897,7 @@ var et2_link_list = et2_link_string.extend(
 
 				self.list.append(div);
 
-				event.dataTransfer.setDragImage(div.get(0),0,0)
+				event.dataTransfer.setDragImage(div.get(0),0,0);
 			})
 			.on('drag', function() {
 				$j('#drag_helper',self.list).remove();
@@ -2007,7 +2005,7 @@ var et2_link_list = et2_link_string.extend(
 			$td.html('<span style="display: inline-block; width:'+span_size+'ex;">'+dirs.join('/')+':</span> - ' + filename);
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_link_list, ["link-list"]);
 
 
@@ -2016,7 +2014,7 @@ et2_register_widget(et2_link_list, ["link-list"]);
  *
  * @augments et2_inputWidget
  */
-var et2_link_add = et2_inputWidget.extend(
+var et2_link_add = (function(){ "use strict"; return et2_inputWidget.extend(
 {
 	attributes: {
 		"value": {
@@ -2074,5 +2072,5 @@ var et2_link_add = et2_inputWidget.extend(
 	getValue: function() {
 		return null;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_link_add, ["link-add"]);

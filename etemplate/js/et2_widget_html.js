@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
 	jquery.jquery;
@@ -21,7 +19,7 @@
 /**
  * @augments et2_valueWidget
  */
-var et2_html = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_html = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		'label': {
@@ -112,6 +110,6 @@ var et2_html = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	}
 
-});
+});}).call(this);
 et2_register_widget(et2_html, ["html","htmlarea_ro"]);
 

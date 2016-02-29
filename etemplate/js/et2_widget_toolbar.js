@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	jquery.jquery-ui;
@@ -23,7 +21,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
+var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IInput],
 {
 	attributes: {
 		"view_range": {
@@ -63,10 +61,10 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this._super.apply(this, arguments);
 		this.div = $j(document.createElement('div'))
 			.addClass('et2_toolbar ui-widget-header ui-corner-all');
-		
+
 		// Set proper id and dom_id for the widget
 		this.set_id(this.id);
-		
+
 		//actionbox is the div for stored actions
 		this.actionbox = $j(document.createElement('div'))
 				.addClass("et2_toolbar_more")
@@ -79,7 +77,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.countActions = 0;
 		this.dropdowns = {};
 		this.preference = {};
-		
+
 		this._build_menu(this.default_toolbar, true);
 	},
 
@@ -94,7 +92,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.actionbox.empty().remove();
 		this.actionlist.empty().remove();
 	},
-	
+
 	/**
 	 * Fix function in order to fix toolbar preferences with the new preference structure
 	 * @param {action object} _action
@@ -102,7 +100,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	 */
 	_fix_preference: function (_action)
 	{
-		
+
 		// ** IMPORTANT TODO: This switch case should be removed for new release **
 		// This is an ugly hack but we need to add this switch becuase to update and fix
 		// current users toolbar preferences with the new structure which is:
@@ -122,7 +120,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 				case 'label2':
 				case 'label3':
 				case 'label4':
-				case 'label5':	
+				case 'label5':
 					this.set_prefered(_action.id, !_action.toolbarDefault);
 					break;
 				default:
@@ -139,7 +137,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			this.set_prefered(_action.id, false/*!toolbarDefault*/);
 		}
 	},
-	
+
 	/**
 	 * Go through actions and build buttons for the toolbar
 	 *
@@ -157,10 +155,10 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		var that = this;
-		
+
 		var pref = (!egwIsMobile())? egw.preference(this.dom_id,this.egw().getAppName()): undefined;
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
-			
+
 		//Set the default actions for the first time
 		if (typeof pref === 'undefined' && !isDefault)
 		{
@@ -226,7 +224,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		{
 			if (this.preference[key]) menuLen++;
 		}
-	
+
 		this.countActions = countActions(actions) - menuLen;
 
 		var last_group = false;
@@ -323,7 +321,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 							dropdown.set_label(action.children[child].caption);
 						}
 					}
-				}	
+				}
 				dropdown.set_image (action.iconUrl||'');
 				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
 				{
@@ -396,7 +394,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			stop: function()
 			{
 				jQuery(that.actionlist).removeClass('et2_toolbarDropArea');
-			},
+			}
 		});
 		toolbox.children().droppable({
 			accept:toolbar,
@@ -476,7 +474,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			.attr('title', (action.hint ? action.hint : action.caption))
 			.attr('type', 'button')
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
-		
+
 		if (action && action.checkbox)
 		{
 			if (action.data.toggle_on || action.data.toggle_off)
@@ -510,7 +508,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			if ((this.countActions <= parseInt(this.options.view_range) ||
 					this.preference[action.id] || !action.iconUrl)	&&
 					typeof button[0] !== 'undefined' &&
-					!(action.checkbox && action.data && (action.data.toggle_on || action.data.toggle_off))) // no caption for slideswitch checkboxes 
+					!(action.checkbox && action.data && (action.data.toggle_on || action.data.toggle_off))) // no caption for slideswitch checkboxes
 			{
 				button.addClass(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
 				button[0].textContent = action.caption;
@@ -553,14 +551,14 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	{
 		this._build_menu(actions);
 	},
-	
+
 	/**
 	 * Set/Get the checkbox toolbar action
-	 * 
+	 *
 	 * @param {string} _action action name of the selected toolbar
 	 * @param {boolean} _value value that needs to be set for the action true|false
 	 *	- if no value means checkbox value returns the current value
-	 *	
+	 *
 	 * @returns {boolean} returns boolean result of get checkbox value
 	 * or returns undefined as Set result or failure
 	 */
@@ -591,7 +589,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 			return undefined;
 		}
 	},
-	
+
 	getDOMNode: function(asker)
 	{
 		return this.div[0];
@@ -640,7 +638,7 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 	{
 		return true;
 	},
-	
+
 	/**
 	 * Attach the container node of the widget to DOM-Tree
 	 * @returns {Boolean}
@@ -650,5 +648,5 @@ var et2_toolbar = et2_DOMWidget.extend([et2_IInput],
 		this._super.apply(this, arguments);
 		return false;
 	}
-});
+});}).call(this);
 et2_register_widget(et2_toolbar, ["toolbar"]);

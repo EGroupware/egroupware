@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
         et2_core_widget;
 	jquery.jquery-ui;
@@ -89,9 +87,8 @@
  * @augments et2_widget
  * @see http://api.jqueryui.com/dialog/
  */
-var et2_dialog = et2_widget.extend({
-
-
+var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
+{
 	attributes: {
 		callback: {
 			name: "Callback",
@@ -457,11 +454,11 @@ var et2_dialog = et2_widget.extend({
 			close: jQuery.proxy(function() {this.destroy();},this)
 		});
 	}
-});
+});}).call(this);
 et2_register_widget(et2_dialog, ["dialog"]);
 
 // Static class stuff
-jQuery.extend(et2_dialog,
+jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 /** @lends et2_dialog */
 {
 	// Some class constants //
@@ -752,4 +749,5 @@ jQuery.extend(et2_dialog,
 
 		return dialog;
 	}
-});
+}//;}).call(this)
+);
