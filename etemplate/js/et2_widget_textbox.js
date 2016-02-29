@@ -483,7 +483,7 @@ var et2_searchbox = et2_textbox.extend(
 		this.search.input.on({
 			keyup:function(event)
 			{
-				self.clear.toggle(self.get_value() !='' || !this.options.fix);
+				self.clear.toggle(self.get_value() !='' || !self.options.fix);
 				if(event.which == 27) // Escape
 				{
 					// Excape clears search

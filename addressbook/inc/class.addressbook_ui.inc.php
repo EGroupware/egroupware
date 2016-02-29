@@ -239,8 +239,7 @@ class addressbook_ui extends addressbook_bo
 				'is_parent'      => 'org_count',
 				'parent_id'      => 'parent_id',
 				'favorites'      => true,
-				'placeholder_actions' => array('add'),
-				'searchbox' => array('overlay' => true)
+				'placeholder_actions' => array('add')
 			);
 
 			if ($do_email)
