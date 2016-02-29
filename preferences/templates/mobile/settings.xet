@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="preferences.settings.tab1" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" class="prefTable egwGridView_grid">
+			<columns>
+				<column width="50%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="prefRow">
+					<box class="prefName">
+						<description for="@${row}[name]" id="${row}[label]"/>
+						<html id="${row}[help]" class="prefHelp"/>
+					</box>
+					<box>
+						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" size="@${row}[size]"  no_lang="1" class="prefValue"/>
+						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
+					</box>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="preferences.settings" template="" lang="" group="0" version="1.9.002">
+		<grid border="1" width="100%">
+			<columns>
+				<column width = "50%"/>
+				<column width="50%"/>
+			</columns>
+			<rows>
+				<row class="dialogHeadbar" >
+					<hbox width="100%">
+						<button  id="button[save]"/>
+						<button  id="button[apply]"/>
+						<button  id="button[cancel]" onclick="window.close();"/>
+					</hbox>
+					
+				</row>
+				<row>
+					<hbox width="100%">
+						<menulist>
+							<menupopup id="appname" onchange="1" options="Common preferences" class="prefApp"/>
+						</menulist>
+						<menulist>
+							<menupopup id="type" onchange="1" class="prefType"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row>
+					<tabbox id="tabs" align_tabs="v">
+						<tabs>
+							<tab id="tab1" label="Settings"/>
+						</tabs>
+						<tabpanels>
+							<template id="preferences.settings.tab1" content="tab1"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+			</rows>
+		</grid>
+				
+		
+		
+	</template>
+</overlay>
