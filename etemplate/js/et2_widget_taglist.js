@@ -323,6 +323,10 @@ var et2_taglist = et2_selectbox.extend(
 	_keyup: function(e, taglist, event) {
 		if(event.which === jQuery.ui.keyCode.ENTER && taglist.combobox.find('.ms-res-item.ms-res-item-active').length==0)
 		{
+			// Change keycode to abort the validation process
+			// This means enter does not add a tag
+			event.keyCode = jQuery.ui.keyCode.DOWN;
+
 			this._query_server = true;
 			this.taglist.collapse();
 			this.taglist.expand();
@@ -774,6 +778,75 @@ var et2_taglist_email = et2_taglist.extend(
 	}
 });
 et2_register_widget(et2_taglist_email, ["taglist-email"]);
+
+
+/**
+ * Taglist customized specifically for categories, with colors
+ * 
+ * Free entries are not allowed.
+ *
+ * @augments et2_taglist
+ */
+var et2_taglist_category = et2_taglist.extend(
+{
+	attributes: {
+		"autocomplete_url": {
+			"default": ""
+		},
+		"autocomplete_params": {
+			"default": {}
+		},
+		allowFreeEntries: {
+			"default": false,
+			ignore: true
+		}
+	},
+	lib_options: {
+	},
+
+	init: function() {
+		this._super.apply(this, arguments);
+	},
+
+	/**
+	 * convert _options to taglist data [{id:...,label:...},...] format
+	 *
+	 * @param {(object|array)} _options id: label or id: {label: ..., title: ...} pairs, or array if id's are 0, 1, ...
+	 */
+	_options2data: function(_options)
+	{
+		var options = jQuery.isArray(_options) ? jQuery.extend({}, _options) : _options;
+		var data = [];
+		for(var id in options)
+		{
+			var option = {};
+			if (typeof options[id] == 'object')
+			{
+				jQuery.extend(option, options[id]);
+				if(option.value) option.id = option.value;
+			}
+			else
+			{
+				option.label = options[id];
+			}
+			data.push(option);
+		}
+		return data;
+	},
+	selectionRenderer: function(item)
+	{
+		var label = jQuery('<span>').text(item.label);
+		
+		if (item.class) label.addClass(item.class);
+		jQuery('<span class="cat_'+item.id+'"/>').prependTo(label);
+		if (typeof item.title != 'undefined') label.attr('title', item.title);
+		if (typeof item.data != 'undefined') label.attr('data', item.data);
+
+		return label;
+	}
+});
+et2_register_widget(et2_taglist_category, ["taglist-category"]);
+
 
 /**
  * et2_taglist_ro is the readonly implementation of the taglist.
