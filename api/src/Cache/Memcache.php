@@ -54,10 +54,10 @@ class Memcache extends Base implements ProviderMultiple
 	 * @throws Exception if connection to backend could not be established
 	 * @param array $params eg. array('localhost'[,'localhost:11211',...])
 	 */
-	function __construct(array $params)
+	function __construct(array $params=null)
 	{
 		check_load_extension('memcache',true);
-		$this->memcache = new Memcache();
+		$this->memcache = new \Memcache();
 
 		if (!$params) $params = array('localhost');	// some reasonable default
 

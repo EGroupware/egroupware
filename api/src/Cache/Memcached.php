@@ -79,24 +79,24 @@ class Memcached extends Base implements ProviderMultiple
 
 		check_load_extension('memcached',true);
 		// using a persitent connection for identical $params
-		$this->memcache = new Memcached(md5(serialize($params)));
+		$this->memcache = new \Memcached(md5(serialize($params)));
 
 		$this->memcache->setOptions(array(
 			// setting a short timeout, to better kope with failed nodes
-			Memcached::OPT_CONNECT_TIMEOUT => $this->timeout,
-			Memcached::OPT_SEND_TIMEOUT => $this->timeout,
-			Memcached::OPT_RECV_TIMEOUT => $this->timeout,
+			\Memcached::OPT_CONNECT_TIMEOUT => $this->timeout,
+			\Memcached::OPT_SEND_TIMEOUT => $this->timeout,
+			\Memcached::OPT_RECV_TIMEOUT => $this->timeout,
 			// use igbinary, if available
-			Memcached::OPT_SERIALIZER => Memcached::HAVE_IGBINARY ? Memcached::SERIALIZER_IGBINARY : Memcached::SERIALIZER_JSON,
+			\Memcached::OPT_SERIALIZER => \Memcached::HAVE_IGBINARY ? \Memcached::SERIALIZER_IGBINARY : \Memcached::SERIALIZER_JSON,
 			// use more effician binary protocol (also required for consistent hashing
-			Memcached::OPT_BINARY_PROTOCOL => true,
+			\Memcached::OPT_BINARY_PROTOCOL => true,
 			// enable Libketama compatible consistent hashing
-			Memcached::OPT_LIBKETAMA_COMPATIBLE => true,
+			\Memcached::OPT_LIBKETAMA_COMPATIBLE => true,
 			// automatic failover and disabling of failed nodes
-			Memcached::OPT_SERVER_FAILURE_LIMIT => 2,
-			Memcached::OPT_AUTO_EJECT_HOSTS => true,
+			\Memcached::OPT_SERVER_FAILURE_LIMIT => 2,
+			\Memcached::OPT_AUTO_EJECT_HOSTS => true,
 			// setting a prefix for all keys
-			Memcached::OPT_PREFIX_KEY => $prefix,
+			\Memcached::OPT_PREFIX_KEY => $prefix,
 		));
 
 		// with persistent connections, only add servers, if they not already added!
@@ -133,7 +133,7 @@ class Memcached extends Base implements ProviderMultiple
 	{
 		return $this->memcache->add(self::key($keys), $data, $expiration) ||
 			// if we have multiple nodes, retry on error, but not on data exists
-			$this->retry > 0 && $this->memcache->getResultCode() !== Memcached::RES_DATA_EXISTS &&
+			$this->retry > 0 && $this->memcache->getResultCode() !== \Memcached::RES_DATA_EXISTS &&
 				$this->memcache->add(self::key($keys), $data, $expiration);
 	}
 
@@ -161,11 +161,11 @@ class Memcached extends Base implements ProviderMultiple
 	function get(array $keys)
 	{
 		if (($data = $this->memcache->get($key=self::key($keys))) === false &&
-			$this->memcache->getResultCode() !== Memcached::RES_SUCCESS ||
+			$this->memcache->getResultCode() !== \Memcached::RES_SUCCESS ||
 			// if we have multiple nodes, retry on error, but not on not found
-			$this->retry > 1 && $this->memcache->getResultCode() !== Memcached::RES_NOTFOUND &&
+			$this->retry > 1 && $this->memcache->getResultCode() !== \Memcached::RES_NOTFOUND &&
 			($data = $this->memcache->get($key=self::key($keys))) === false &&
-			$this->memcache->getResultCode() !== Memcached::RES_SUCCESS)
+			$this->memcache->getResultCode() !== \Memcached::RES_SUCCESS)
 		{
 			//error_log(__METHOD__."(".array2string($keys).") key='$key' NOT found!".' $this->memcache->getResultCode()='.$this->memcache->getResultCode().')');
 			return null;
@@ -190,7 +190,7 @@ class Memcached extends Base implements ProviderMultiple
 		}
 		if (($multiple = $this->memcache->getMulti($locations)) === false ||
 			// if we have multiple nodes, retry on error, but not on not found
-			$this->retry > 1 && $this->memcache->getResultCode() !== Memcached::RES_NOTFOUND &&
+			$this->retry > 1 && $this->memcache->getResultCode() !== \Memcached::RES_NOTFOUND &&
 			($multiple = $this->memcache->getMulti($locations)) === false)
 		{
 			return array();
@@ -215,7 +215,7 @@ class Memcached extends Base implements ProviderMultiple
 	function delete(array $keys)
 	{
 		return $this->memcache->delete(self::key($keys)) ||
-			$this->retry > 0 && $this->memcache->getResultCode() !== Memcached::RES_NOTFOUND &&
+			$this->retry > 0 && $this->memcache->getResultCode() !== \Memcached::RES_NOTFOUND &&
 			$this->memcache->delete(self::key($keys));
 	}
 
