@@ -130,6 +130,7 @@ var et2_checkbox = et2_inputWidget.extend(
 			label = '%s'+label;
 		}
 		this._super.apply(this, [label]);
+		jQuery(this.getSurroundings()._widgetSurroundings).addClass('et2_checkbox_label');
 	},
 	/**
 	 * Override default to match against set/unset value
