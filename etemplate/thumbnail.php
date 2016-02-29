@@ -300,9 +300,9 @@ function exif_thumbnail_load($file)
 function gd_image_load($file,$maxw,$maxh)
 {
 	// Get mime type
-	list($type, $image_type) = explode('/', egw_vfs::mime_content_type($file));
+	list($type, $image_type) = explode('/', $mime = egw_vfs::mime_content_type($file));
 	// if $file is not from vfs, use mime_magic::filename2mime to get mime-type from extension
-	if (!$type) list($type, $image_type) = explode('/', mime_magic::filename2mime($file));
+	if (!$type) list($type, $image_type) = explode('/', $mime = mime_magic::filename2mime($file));
 
 	// Call the according gd constructor depending on the file type
 	if($type == 'image')
@@ -321,6 +321,10 @@ function gd_image_load($file,$maxw,$maxh)
 				return imagecreatefromgif($file);
 			case 'bmp':
 				return imagecreatefromwbmp($file);
+			case 'svg+xml':
+				html::content_header(egw_vfs::basename($file), $mime);
+				readfile($file);
+				common::egw_exit();
 		}
 	}
 	else if ($type == 'application')

@@ -150,6 +150,11 @@ egw.extend('images', egw.MODULE_GLOBAL, function() {
 				if (_mtime) params.mtime = _mtime;
 				image = this.link('/etemplate/thumbnail.php', params);
 			}
+			// for svg return image itself
+			else if (type[0] == 'image' && type[1] == 'svg+xml')
+			{
+				image = this.webserverUrl+'/webdav.php'+_path;
+			}
 			else
 			{
 				if ((typeof type[1] == 'undefined' || !(image = this.image('mime'+_size+'_'+type[0]+'_'+type[1], 'etemplate')) &&
