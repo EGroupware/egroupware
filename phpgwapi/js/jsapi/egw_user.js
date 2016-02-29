@@ -10,14 +10,14 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
 
 egw.extend('user', egw.MODULE_GLOBAL, function()
 {
+	"use strict";
+
 	/**
 	 * Data about current user
 	 *

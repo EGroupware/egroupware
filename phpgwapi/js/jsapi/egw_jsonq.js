@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 	egw_debug;
@@ -19,6 +17,8 @@
 
 egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 {
+	"use strict";
+
 	/**
 	 * Queued json requests (objects with attributes menuaction, parameters, context, callback, sender and callbeforesend)
 	 *

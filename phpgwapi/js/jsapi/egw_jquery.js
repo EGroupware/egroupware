@@ -9,15 +9,20 @@
  * @version $Id$
  */
 
-"use strict"
-
 /*egw:uses
 	egw_core;
 	egw_files;
 	egw_ready;
 */
 
-egw.extend('jquery', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+/**
+ * NOT USED
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
+ */
+egw.extend('jquery', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+{
+	"use strict";
 
 	// Get the reference to the "files" and the "ready" module for the current
 	// window
@@ -36,10 +41,6 @@ egw.extend('jquery', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	}, this);
 
 	return {
-			'$j': null
-	}
-
+		'$j': null
+	};
 });
-
-
-

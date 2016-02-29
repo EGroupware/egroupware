@@ -10,13 +10,13 @@
  * @version $Id$
  */
 
-"use strict";
-
 /**
  * This code setups the egw namespace and adds the "extend" function, which is
  * used by extension modules to inject their content into the egw object.
  */
-(function() {
+(function()
+{
+	"use strict";
 
 	var instanceUid = 0;
 

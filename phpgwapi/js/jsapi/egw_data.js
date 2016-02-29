@@ -15,9 +15,15 @@
 	egw_debug;
 */
 
-"use strict";
-
-egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
+/**
+ * Module storing and updating row data
+ *
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
+ */
+egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
+{
+	"use strict";
 
 	/**
 	 * How many UIDs we'll tell the server we know about.  No need to pass the whole list around.
@@ -527,6 +533,11 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 	 * using dataFetch() && parseServerResponse(), above.  Both update the
 	 * GLOBAL data cache though this one is registered globally, and the above
 	 * is registered app local.
+	 *
+	 * @param {string} type
+	 * @param {object} res
+	 * @param {object} req
+	 * @returns {Boolean}
 	 */
 	egw.registerJSONPlugin(function(type, res, req) {
 		if ((typeof res.data.uid != 'undefined') &&
@@ -537,7 +548,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			return true;
 		}
 	}, egw, 'data',true);
-	
+
 	/**
 	 * Uids and timers used for querying data uids, hashed by the first few
 	 * bytes of the _execId, stored as an object of the form

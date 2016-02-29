@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
@@ -25,7 +23,9 @@
  * @param {string} _app
  * @param {object} _wnd
  */
-egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
+egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
+{
+	"use strict";
 
 	/**
 	 * DEBUGLEVEL specifies which messages are printed to the console.

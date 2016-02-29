@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 
@@ -21,7 +19,15 @@
 	egw_debug;
 */
 
-egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+/**
+ * Module sending json requests
+ *
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
+ */
+egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+{
+	"use strict";
 
 	/**
 	 * Object which contains all registered handlers for JS responses.
@@ -36,7 +42,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 */
 	if(typeof egw._global_json_handlers == 'undefined')
 	{
-		egw._global_json_handlers = {}
+		egw._global_json_handlers = {};
 	}
 	var global_plugins = egw._global_json_handlers;
 

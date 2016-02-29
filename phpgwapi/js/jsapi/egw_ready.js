@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-"use strict"
-
 /*egw:uses
 	egw_core;
 	egw_utils;
@@ -19,8 +17,12 @@
 
 /**
  * @augments Class
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
  */
-egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+{
+	"use strict";
 
 	var egw = this;
 
@@ -139,7 +141,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * to be marked as "done" before the ready function will call its
 		 * registered callbacks. The function returns an id that has to be
 		 * passed to the "readDone" function once
-		 * 
+		 *
 		 * @memberOf egw
 		 */
 		readyWaitFor: function() {
@@ -181,7 +183,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			else
 			{
 				setTimeout(function() {
-					_callback.call(_context)
+					_callback.call(_context);
 				}, 1);
 			}
 		},

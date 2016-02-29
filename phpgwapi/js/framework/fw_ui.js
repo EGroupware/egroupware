@@ -14,20 +14,13 @@
 */
 
 /**
- * Constants definition
- */
-
-"use strict";
-
-/**
  * ui siemenu entry class
  * Basic sidebar menu implementation
  *
  * @type @exp;Class@call;extend
  */
-var fw_ui_sidemenu_entry = Class.extend({
-
-
+var fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
+{
 	/**
 	 * Framework ui sidemenu entry class constructor
 	 *
@@ -179,13 +172,14 @@ var fw_ui_sidemenu_entry = Class.extend({
 		$j(this.headerDiv).remove();
 		$j(this.contentDiv).remove();
 	}
-});
+});}).call(this);
 
 /**
  *
  * @type @exp;Class@call;extend
  */
-var fw_ui_sidemenu = Class.extend({
+var fw_ui_sidemenu = (function(){ "use strict"; return Class.extend(
+{
 	/**
 	* The constructor of the egw_fw_ui_sidemenu.
 	*
@@ -279,7 +273,7 @@ var fw_ui_sidemenu = Class.extend({
 
 	   this.entries = new Array();
    }
-});
+});}).call(this);
 
 /**
  * Class: egw_fw_ui_tab
@@ -850,12 +844,12 @@ function egw_fw_ui_scrollarea(_contDiv)
 	var self = this;
 	$j(this.scrollDiv).on('mousewheel',function(e, delta) {
 		var noscroll = false;
-		
+
 		// Do not scrolldown/up when we are on selectbox items
 		// seems Firefox does not prevent the mousewheel event over
 		// selectbox items with scrollbars
 		// Do not scroll on video tutorials as well
-		if (e.target.tagName == "OPTION" || e.target.tagName == "SELECT" || 
+		if (e.target.tagName == "OPTION" || e.target.tagName == "SELECT" ||
 				e.target.getAttribute('class') && e.target.getAttribute('class').match(/egw_tutorial/ig))
 		{
 			noscroll = true;

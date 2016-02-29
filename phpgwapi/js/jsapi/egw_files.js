@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 	egw_ready;
@@ -20,9 +18,13 @@
 
 /**
  * @augments Class
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
  */
 egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
+	"use strict";
+
 	var egw = this;
 
 	/**
@@ -128,10 +130,10 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * Load and execute javascript file(s) in order
 		 *
 		 * @memberOf egw
-		 * @param string|array _jsFiles (array of) urls to include
-		 * @param function _callback called after JS files are loaded and executed
-		 * @param object _context
-		 * @param string _prefix prefix for _jsFiles
+		 * @param {string|array} _jsFiles (array of) urls to include
+		 * @param {function} _callback called after JS files are loaded and executed
+		 * @param {object} _context
+		 * @param {string} _prefix prefix for _jsFiles
 		 */
 		includeJS: function(_jsFiles, _callback, _context, _prefix)
 		{

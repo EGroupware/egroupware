@@ -11,8 +11,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_inheritance;
 	/phpgwapi/js/es6-promise.min.js;
@@ -65,7 +63,7 @@ window.app = {classes: {}};
  * @class AppJS
  * @augments Class
  */
-var AppJS = Class.extend(
+var AppJS = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 * Internal application name - override this
@@ -83,7 +81,7 @@ var AppJS = Class.extend(
 	 *
 	 * If you need a reference to a certain template you can either store a local
 	 * reference or access it through etemplate2.
-	 * 
+	 *
 	 * @example <caption>Store a local reference</caption>
 	 *	// in et2_ready()
 	 *	if(name == 'index') this.index_et2 = et2.widgetContainer;
@@ -383,14 +381,14 @@ var AppJS = Class.extend(
 
 		return state;
 	},
-	
+
 	/**
 	 * Function to load selected row from nm into a template view
-	 * 
+	 *
 	 * @param {object} _action
-	 * @param {object} _senders 
+	 * @param {object} _senders
 	 */
-	viewEntry: function(_action, _senders) 
+	viewEntry: function(_action, _senders)
 	{
 		// app id in nm
 		var id = _senders[0].id;
@@ -398,21 +396,21 @@ var AppJS = Class.extend(
 		var id_app = '';
 		var content = {};
 		var self = this;
-		
-		
+
+
 		if (id){
 			id_app = id.split('::');
 			content = egw.dataGetUIDdata(id);
 			if (content.data) content = content.data;
 		}
-		
+
 		/* destroy generated etemplate for view mode in DOM*/
 		var destroy = function(){
 			self.viewContainer.remove();
 			delete self.viewTemplate;
 			delete self.viewContainer;
 		};
-		
+
 		// view container
 		this.viewContainer = jQuery(document.createElement('div'))
 				.addClass('et2_mobile_view')
@@ -430,13 +428,13 @@ var AppJS = Class.extend(
 					"padding":'60px 0 10px 0'})
 				.attr('id','popupMainDiv')
 				.appendTo('body');
-		
+
 		// close button
 		var close = jQuery(document.createElement('span'))
 				.addClass('egw_fw_mobile_popup_close loaded')
 				.click(function(){destroy();})
 				.appendTo(this.viewContainer);
-		
+
 		// edit button
 		var edit = jQuery(document.createElement('span'))
 				.addClass('mobile-view-editBtn')
@@ -445,18 +443,18 @@ var AppJS = Class.extend(
 				})
 				.text(egw.lang('Edit'))
 				.appendTo(this.viewContainer);
-		
+
 		// view template main container (content)
 		this.viewTemplate = jQuery(document.createElement('div'))
 				.attr('id', this.appname+'-view')
 				.addClass('et2_mobile-view-container')
 				.appendTo(this.viewContainer);
-		
+
 		var templateName = _action.data.mobileViewTemplate || 'edit.xet';
 		var etemplate = new etemplate2 (this.viewTemplate[0], false);
 		var template = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'?1';
 		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}, currentapp:id_app[0]};
-		
+
 		if(template.indexOf('.xet') > 0)
 		{
 			// File name provided, fetch from server
@@ -466,9 +464,9 @@ var AppJS = Class.extend(
 		{
 			// Just template name, it better be loaded already
 			etemplate.load(template,'',data);
-		}	
+		}
 	},
-	
+
 	/**
 	 * Initializes actions and handlers on sidebox (delete)
 	 *
@@ -696,7 +694,7 @@ var AppJS = Class.extend(
 			// still running under iframe and that gets into conflict with et2 object created for
 			// video tutorials in sidebox.
 			// TODO: this.appname != 'calendar' should be removed after we released new calendar
-		).appendTo(this.et2 && this.appname != 'calendar' ? this.et2.getDOMNode() : $j('body')); 
+		).appendTo(this.et2 && this.appname != 'calendar' ? this.et2.getDOMNode() : $j('body'));
 
 		$j(".ui-icon-circle-plus",this.favorite_popup).prev().andSelf().click(function() {
 			var details = $j("#"+self.appname+"_favorites_popup_state",self.favorite_popup)
@@ -719,7 +717,7 @@ var AppJS = Class.extend(
 			// Ugly hack to exclude calendar from using this.et2 since calendar in 14.3
 			// still running under iframe and that gets into conflict with et2 object created for
 			// video tutorials in sidebox.
-			// TODO: this.appname != 'calendar' should be removed after we released new calendar	
+			// TODO: this.appname != 'calendar' should be removed after we released new calendar
 			},(this.et2 && this.appname != 'calendar'? this.et2:null));
 			this.favorite_popup.group.loadingFinished();
 		}
@@ -1091,7 +1089,7 @@ var AppJS = Class.extend(
 			}).sendRequest(true);
 		}
 	},
-	
+
 	/**
 	 * Get json data for videos from the given url
 	 *
@@ -1187,7 +1185,7 @@ var AppJS = Class.extend(
 		var url = egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid='+_tuid);
 		egw.open_link(url,'_blank','960x580');
 	},
-	
+
 	/**
 	 * Check if Mailvelope is available, open (or create) "egroupware" keyring and call callback with it
 	 *
@@ -1409,7 +1407,7 @@ var AppJS = Class.extend(
 		var self = this;
 		var restorePassword = _restorePassword;
 		var selector = _selector || 'body';
-		//Clear the 
+		//Clear the
 		jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]').remove();
 		return new Promise(function(_resolve, _reject){
 			var resolve = _resolve;
@@ -1504,7 +1502,7 @@ var AppJS = Class.extend(
 			this.mailvelopeInstallationOffer();
 		}
 	},
-	
+
 	/**
 	 * Create a dialog and offers installation option for installing mailvelope plugin
 	 * plus it offers a video tutorials to get the user morte familiar with mailvelope
@@ -1543,7 +1541,7 @@ var AppJS = Class.extend(
 			{domain:this.egw.lang('Add your domain as "%1" in options to list of email providers and enable API.',
 					'*.'+this._mailvelopeDomain()), video:"test", control:"true"}
 		];
-			
+
 		dialog(content, function(_button){
 			if (_button == 'install')
 			{
@@ -1552,7 +1550,7 @@ var AppJS = Class.extend(
 					// ATM we are not able to trigger mailvelope installation directly
 					// since the installation should be triggered from the extension
 					// owner validate website (mailvelope.com), therefore, we just redirect
-					// user to chrome webstore to install mailvelope from there. 
+					// user to chrome webstore to install mailvelope from there.
 					window.open('https://chrome.google.com/webstore/detail/mailvelope/kajibbejlbohfaggdiogboambcijhkke');
 				}
 				else if (typeof InstallTrigger != 'undefined' && InstallTrigger.enabled())
@@ -1783,4 +1781,4 @@ var AppJS = Class.extend(
 			});
 		});
 	}
-});
+});}).call(this);

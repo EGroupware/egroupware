@@ -10,13 +10,13 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
 
-egw.extend('preferences', egw.MODULE_GLOBAL, function() {
+egw.extend('preferences', egw.MODULE_GLOBAL, function()
+{
+	"use strict";
 
 	/**
 	 * Object holding the prefences as 2-dim. associative array, use

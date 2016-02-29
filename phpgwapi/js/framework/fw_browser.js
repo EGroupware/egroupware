@@ -17,11 +17,9 @@
 EGW_BROWSER_TYPE_NONE = 0;
 EGW_BROWSER_TYPE_IFRAME = 1;
 EGW_BROWSER_TYPE_DIV = 2;
-"use strict";
-var fw_browser =  Class.extend({
 
-
-
+var fw_browser = (function(){ "use strict"; return Class.extend(
+{
 	/**
 	 * @param {string} _app
 	 * @param {function} _heightCallback
@@ -167,13 +165,13 @@ var fw_browser =  Class.extend({
 		this.loadingDeferred.always(function() {
 			if(self.ajaxLoaderDiv)
 			{
-				
+
 				self.ajaxLoaderDiv = egw.loading_prompt(self.app.appName,false);
 				// Remove escape timeout
 				clearTimeout(self.ajaxLoaderDivTimeout);
 			}
-			
-			
+
+
 		});
 
 		// Check whether the given url is a pseudo url which should be executed
@@ -323,7 +321,7 @@ var fw_browser =  Class.extend({
 		if (this.app.sidemenuEntry)
 			this.app.sidemenuEntry.hideAjaxLoader();
 	//	egw_widgetReplace(this.app.appName, this.contentDiv, this.data);
-		content = {
+		var content = {
 			html: this.data,
 			js: ''
 		};
@@ -373,7 +371,4 @@ var fw_browser =  Class.extend({
 	{
 		this.browse('about:blank', this.type == EGW_BROWSER_TYPE_IFRAME);
 	}
-
-
-
-});
+});}).call(this);

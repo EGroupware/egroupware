@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 	egw_files;
@@ -21,7 +19,9 @@
 /**
  * @augments Class
  */
-egw.extend('lang', egw.MODULE_GLOBAL, function() {
+egw.extend('lang', egw.MODULE_GLOBAL, function()
+{
+	"use strict";
 
 	/**
 	 * Translations

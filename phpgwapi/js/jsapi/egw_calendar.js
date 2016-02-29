@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery-ui;
 	jquery.jquery-ui-timepicker-addon;
@@ -31,6 +29,8 @@
  */
 egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
+	"use strict";
+
 	// translate only once
 	var calendar_translated = false,timepicker_translated = false;
 
@@ -272,9 +272,11 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			return dateTimeFormat(_php_format);
 		},
-		
+
 		/**
 		 * Calculate the start of the week, according to user's preference
+		 *
+		 * @param {string} date
 		 */
 		week_start: function(date) {
 			var d = new Date(date);

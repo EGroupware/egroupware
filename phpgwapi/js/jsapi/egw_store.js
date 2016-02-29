@@ -9,15 +9,11 @@
  * @version $Id$
  */
 
-
-"use strict";
-
 /*egw:uses
 	egw_core;
 	egw_ready;
 	egw_debug;
 */
-
 
 /**
  * Store is a wrapper around browser based, persistant storage.
@@ -28,7 +24,9 @@
  * @param {string} _app
  * @param {DOMWindow} _wnd
  */
-egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
+egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd)
+{
+	"use strict";
 
 	var egw = this;
 
@@ -81,12 +79,12 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 			key = uniqueKey(application, key);
 			return _wnd.sessionStorage.removeItem(key);
 		},
-		
+
 		/**
 		 * Set an item to localStorage
-		 * 
+		 *
 		 * @param {string} application an application name or a prefix
-		 * @param {string} item 
+		 * @param {string} item
 		 * @param {any} value
 		 * @returns {undefined} returns undefined
 		 */
@@ -94,10 +92,10 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 			item = mapKey (application, item);
 			return localStorage.setItem(item,value);
 		},
-		
+
 		/**
-		 * Get an item from localStorage 
-		 * 
+		 * Get an item from localStorage
+		 *
 		 * @param {string} application an application name or prefix
 		 * @param {stirng} item an item name stored in localStorage
 		 * @return {string|null} reutrns requested item value otherwise null
@@ -106,13 +104,13 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 			item = mapKey(application, item);
 			return localStorage.getItem(item);
 		},
-		
+
 		/**
 		 * Remove an item from localStorage
-		 * 
+		 *
 		 * @param {string} application application name or prefix
 		 * @param {string} item an item name to remove
-		 * @return {undefined} returns undefined 
+		 * @return {undefined} returns undefined
 		 */
 		removeLocalStorageItem: function (application, item){
 			item = mapKey(application, item);

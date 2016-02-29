@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
@@ -24,6 +22,8 @@
  */
 egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
+	"use strict";
+
 	_app;	// not used, but required by function signature
 	var message_timer;
 	var error_reg_exp;
@@ -96,7 +96,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				// replace p and br-tags with newlines
 				_msg = _msg.replace(new_line_reg, "\n");
-				
+
 				var msg_div = jQuery(_wnd.document.createElement('div'))
 					.attr('id','egw_message')
 					.text(_msg)
@@ -107,7 +107,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 							&& msg_chkbox && msg_chkbox.is(':checked'))
 						{
 							var discarded = egw.getLocalStorageItem(egw.app_name(),'discardedMsgs');
-								
+
 							if (!isDiscarded(_msg))
 							{
 								if (!discarded)
@@ -124,7 +124,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						$j(this).remove();
 					})
 					.css('position', 'absolute');
-				
+
 				// discard checkbox implementation
 				if (_discard && _type === 'info')
 				{
@@ -132,7 +132,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					var isDiscarded = function (_msg)
 					{
 						var discarded = JSON.parse(egw.getLocalStorageItem(egw.app_name(),'discardedMsgs'));
-						
+
 						if (jQuery.isArray(discarded))
 						{
 							for(var i=0; i< discarded.length; i++)
@@ -142,14 +142,14 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						}
 						return false;
 					};
-					
+
 					//discard div container
 					var msg_discard =jQuery(_wnd.document.createElement('div')).addClass('discard');
-													
+
 					// checkbox
 					var msg_chkbox = jQuery(_wnd.document.createElement('input'))
 							.attr({type:"checkbox",name:"msgChkbox"})
-							.click(function(e){e.stopImmediatePropagation();})	
+							.click(function(e){e.stopImmediatePropagation();})
 							.appendTo(msg_discard);
 					// Label
 					jQuery(_wnd.document.createElement('label'))
@@ -157,13 +157,13 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 								.css({"font-weight":"bold"})
 								.attr({for:'msgChkbox'})
 								.appendTo(msg_discard);
-						
-					if (isDiscarded(_msg)) return;		
+
+					if (isDiscarded(_msg)) return;
 					msg_div.append(msg_discard);
 				}
-				
+
 				parent.prepend(msg_div);
-				
+
 				// replace simple a href (NO other attribute, to gard agains XSS!)
 				var matches = a_href_reg.exec(_msg);
 				if (matches)
@@ -239,20 +239,20 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			_wnd.document.title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
 		},
-		
+
 		/**
 		 * Loading prompt is for building a loading animation and show it to user
 		 * while a request is under progress.
-		 * 
+		 *
 		 * @param {string} _id a unique id to be able to distinguish loading-prompts
 		 * @param {boolean} _stat true to show the loading and false to remove it
 		 * @param {string} _msg a message to show while loading
-		 * @param {string|jQuery node} _node DOM selector id or jquery DOM object, default is body
-		 * @param {string} mode	defines the animation mode, default mode is spinner
-		 *	animation modes: 
+		 * @param {string|jQuery _node} _node DOM selector id or jquery DOM object, default is body
+		 * @param {string} _mode	defines the animation mode, default mode is spinner
+		 *	animation modes:
 		 *		- spinner: a sphere with a spinning bar inside
 		 *		- horizental: a horizental bar
-		 *		
+		 *
 		 * @returns {jquery dom object|null} returns jQuery DOM object or null in case of hiding
 		 */
 		loading_prompt: function(_id,_stat,_msg,_node, _mode)

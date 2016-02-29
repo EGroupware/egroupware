@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
@@ -23,7 +21,9 @@
  * @param {string} _app application name object is instanciated for
  * @param {object} _wnd window object is instanciated for
  */
-egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+{
+	"use strict";
 
 	/**
 	 * Assoziative array which stores the current css rule for a given selector.

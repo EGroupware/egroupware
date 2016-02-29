@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /**
  * Usage of the JS inheritance system
  * ----------------------------------
@@ -71,6 +69,8 @@
  */
 (function()
 {
+	"use strict";
+
 	var initializing = false;
 
 	/**

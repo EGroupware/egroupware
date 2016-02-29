@@ -7,11 +7,14 @@
  * @link http://www.egroupware.org
  * @author Hadi Nategh (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: 
+ * @version $Id$ 
  */
 
 
-$j(function(){
+jQuery(function()
+{
+	"use strict";
+
 	var that = this;
 
 	var log_tail_start=0;

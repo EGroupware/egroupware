@@ -7,14 +7,13 @@
  * @description Framework base module which creates fw_base object and includes basic framework functionallity
  */
 
-"use strict";
 /*egw:uses
 	jquery.jquery;
 	egw_inheritance.js;
 */
 
-var fw_base =  Class.extend({
-
+var fw_base = (function(){ "use strict"; return Class.extend(
+{
 	/**
 	 * Framework base class constructor sets up basic initialization
 	 * @param {type} _sidemenuId
@@ -398,7 +397,7 @@ var fw_base =  Class.extend({
 			this.storeTabsStatus();
 		}
 	},
-	
+
 	/**
 	 * Store last status of tabs
 	 * tab status being used in order to open all previous opened
@@ -419,7 +418,7 @@ var fw_base =  Class.extend({
 			egw.jsonq("home.jdots_framework.ajax_tab_changed_state", [data]);
 		}
 	},
-	
+
 	/**
 	 * @param {function} _opened
 	 * Sends sidemenu entry category open/close information to the server using an AJAX request
@@ -1043,4 +1042,4 @@ var fw_base =  Class.extend({
 			}
 		}
 	}
-});
+});}).call(this);

@@ -10,13 +10,13 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
 
-egw.extend('images', egw.MODULE_GLOBAL, function() {
+egw.extend('images', egw.MODULE_GLOBAL, function()
+{
+	"use strict";
 
 	/**
 	 * Map to serverside available images for users template-set

@@ -10,13 +10,13 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
 
-egw.extend('config', egw.MODULE_GLOBAL, function() {
+egw.extend('config', egw.MODULE_GLOBAL, function()
+{
+	"use strict";
 
 	/**
 	 * Clientside config

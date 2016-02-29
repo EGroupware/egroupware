@@ -10,13 +10,13 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 */
 
-egw.extend('utils', egw.MODULE_GLOBAL, function() {
+egw.extend('utils', egw.MODULE_GLOBAL, function()
+{
+	"use strict";
 
 	function json_escape_string(input)
 	{
@@ -166,19 +166,19 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 
 		/**
 		 * Decode encoded vfs special chars
-		 * 
-		 * @param string _path path to decode
-		 * @return string
+		 *
+		 * @param {string} _path path to decode
+		 * @return {string}
 		 */
 		decodePath: function(_path) {
 			return decodeURIComponent(_path);
 		},
-		
+
 		/**
 		 * Encode vfs special chars excluding /
-		 * 
-		 * @param string _path path to decode
-		 * @return string
+		 *
+		 * @param {string} _path path to decode
+		 * @return {string}
 		 */
 		encodePath: function(_path) {
 			var components = _path.split('/');
@@ -188,20 +188,18 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 			}
 			return components.join('/');
 		},
-		
+
 		/**
 		 * Encode vfs special chars removing /
-		 * 
+		 *
 		 * //'%' => '%25',	// % should be encoded, but easily leads to double encoding, therefore better NOT encodig it
 		 * '#' => '%23',
 		 * '?' => '%3F',
 		 * '/' => '',	// better remove it completly
 		 *
-		 * @param string _path path to decode
-		 * @return string
+		 * @param {string} _comp path to decode
+		 * @return {string}
 		 */
-		/*
-		*/
 		encodePathComponent: function(_comp) {
 			return _comp.replace(/#/g,'%23').replace(/\?/g,'%3F').replace(/\//g,'');
 		},
@@ -214,7 +212,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 		 * @param boolOuter Pass true to get outerWidth() / outerHeight() instead of width() / height()
 		 *
 		 * @return Object [w: width, h: height]
-		 * 
+		 *
 		 * @author Ryan Wheale
 		 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
 		 */
@@ -248,11 +246,11 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 			//$.log(”w: ” + dim.w + ”, h:” + dim.h)
 			return dim;
 		},
-			
-			
+
+
 		/**
 		 * Store a window's name in egw.store so we can have a list of open windows
-		 * 
+		 *
 		 * @param {string} appname
 		 * @param {Window} popup
 		 */
@@ -268,20 +266,20 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 			var open_windows = JSON.parse(this.getSessionItem(_target_app, 'windows')) || {};
 			open_windows[popup.name] = Date.now();
 			this.setSessionItem(_target_app, 'windows', JSON.stringify(open_windows));
-			
+
 			// We don't want to start the timer on the popup here, because this is the function that updates the timeout, so it would set a timer each time.  Timer is started in egw.js
 		},
-			
+
 		/**
 		 * Get a list of the names of open popups
-		 * 
+		 *
 		 * Using the name, you can get a reference to the popup using:
 		 * window.open('', name);
 		 * Popups that were not given a name when they were opened are not tracked.
-		 * 
+		 *
 		 * @param {string} appname Application that owns/opened the popup
 		 * @param {string} regex Optionally filter names by the given regular expression
-		 * 
+		 *
 		 * @returns {string[]} List of window names
 		 */
 		getOpenWindows: function(appname, regex) {
@@ -290,7 +288,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 			{
 				return open_windows;
 			}
-			var list = []
+			var list = [];
 			var now = Date.now();
 			for(var i in open_windows)
 			{
@@ -310,7 +308,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 
 		/**
 		 * Notify egw of closing a named window, which removes it from the list
-		 * 
+		 *
 		 * @param {String} appname
 		 * @param {Window|String} closed Window that was closed, or its name
 		 * @returns {undefined}
@@ -320,7 +318,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 			var closed_window = typeof closed == "string" ? null : closed;
 			window.setTimeout(function() {
 				if(closed_window != null && !closed_window.closed) return;
-				
+
 				var open_windows = JSON.parse(egw().getSessionItem(appname, 'windows')) || {};
 				delete open_windows[closed_name];
 				egw.setSessionItem(appname, 'windows', JSON.stringify(open_windows));

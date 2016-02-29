@@ -10,14 +10,19 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	jquery.jquery;
 	egw_core;
 */
 
-egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+/**
+ *
+ * @param {string} _app application name object is instanciated for
+ * @param {object} _wnd window object is instanciated for
+ */
+egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+{
+	"use strict";
 
 	var tooltip_div = null;
 	var current_elem = null;
@@ -96,6 +101,8 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	/**
 	 * Creates the tooltip_div with the given text.
+	 *
+	 * @param {string} _html
 	 */
 	function prepare(_html)
 	{
@@ -141,7 +148,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * Binds a tooltip to the given DOM-Node with the given html.
 		 * It is important to remove all tooltips from all elements which are
 		 * no longer needed, in order to prevent memory leaks.
-		 * 
+		 *
 		 * @param _elem is the element to which the tooltip should get bound. It
 		 * 	has to be a jQuery node.
 		 * @param _html is the html code which should be shown as tooltip.
@@ -198,7 +205,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 		/**
 		 * Unbinds the tooltip from the given DOM-Node.
-		 * 
+		 *
 		 * @param _elem is the element from which the tooltip should get
 		 * removed. _elem has to be a jQuery node.
 		 */
@@ -212,7 +219,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			// Unbind all "tooltip" events from the given element
 			_elem.unbind('.tooltip');
 		}
-	}
+	};
 
 });
 

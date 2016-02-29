@@ -8,7 +8,6 @@
  * @description Create jdots framework
  */
 
-"use strict";
 /*egw:uses
 	jquery.jquery;
 	framework.fw_base;
@@ -17,7 +16,15 @@
 	egw_fw_classes;
 	egw_inheritance.js;
 */
-(function(window){
+
+/**
+ *
+ * @param {DOMWindow} window
+ */
+(function(window)
+{
+	"use strict";
+
 	/**
 	 *
 	 * @type @exp;fw_ui_sidemenu_entry@call;extend
@@ -84,12 +91,8 @@
 	 *
 	 * @type @exp;fw_ui_sidemenu@call;extend
 	 */
-	var desktop_ui_sidemenu = fw_ui_sidemenu.extend({
-
-		/**
-		 *
-		 * @returns {undefined}
-		 */
+	var desktop_ui_sidemenu = fw_ui_sidemenu.extend(
+	{
 		init: function(_baseDiv, _sortCallback)
 		{
 			this._super.apply(this,arguments);
@@ -211,7 +214,7 @@
 
 		/**
 		 *
-		 * @returns {undefined}
+		 * @param {array} apps
 		 */
 		loadApplications: function (apps)
 		{

@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
 	egw_core;
 	egw_debug;
@@ -37,7 +35,10 @@
 	app_base;
 */
 
-(function(){
+(function()
+{
+	"use strict";
+
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
 	var start_time = (new Date).getTime();
