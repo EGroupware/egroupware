@@ -631,6 +631,7 @@ span.et2_file_span{
 }
 div.et2_file input.et2_file_upload{
 	position: absolute;
+	top: 4px;
 	cursor: pointer;
 	width: 98%;
 	opacity: 0;
