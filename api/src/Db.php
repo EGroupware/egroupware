@@ -166,7 +166,7 @@ class Db
 	/**
 	 * Callback to check if selected node is healty / should be used
 	 *
-	 * @var callback throwing Api\Db\Exception\Connection, if connected node should NOT be used
+	 * @var callback throwing Db\Exception\Connection, if connected node should NOT be used
 	 */
 	static $health_check;
 
@@ -295,7 +295,7 @@ class Db
 	 * @param string $User name of database user (optional)
 	 * @param string $Password password for database user (optional)
 	 * @param string $Type type of database (optional)
-	 * @throws Api\Db\Exception\Connection
+	 * @throws Db\Exception\Connection
 	 * @return ADOConnection
 	 */
 	function connect($Database = NULL, $Host = NULL, $Port = NULL, $User = NULL, $Password = NULL,$Type = NULL)
@@ -346,7 +346,7 @@ class Db
 				//error_log(__METHOD__."() host=$host, new_connection=$new_connection, this->Type=$this->Type, this->Host=$this->Host, wsrep_local_state=".array2string($state));
 				return $this->Link_ID;
 			}
-			catch(Api\Db\Exception\Connection $e) {
+			catch(Db\Exception\Connection $e) {
 				_egw_log_exception($e);
 				$this->disconnect();	// force a new connect
 				$this->Type = $this->setupType;	// get set to "mysql" for "mysqli"
@@ -355,7 +355,7 @@ class Db
 		}
 		if (!isset($e))
 		{
-			$e = new Api\Db\Exception\Connection('No DB host set!');
+			$e = new Db\Exception\Connection('No DB host set!');
 		}
 		throw $e;
 	}
@@ -372,7 +372,7 @@ class Db
 	 * EGroupware\Api\Db::$health_check = array('EGroupware\Api\Db', 'galera_cluster_health');
 	 *
 	 * @param Api\Db $db already connected Api\Db instance to check
-	 * @throws Api\Db\Exception\Connection if node should NOT be used
+	 * @throws Db\Exception\Connection if node should NOT be used
 	 */
 	static function galera_cluster_health(Db $db)
 	{
@@ -385,7 +385,7 @@ class Db
 				$state['wsrep_local_state_comment'] == 'Donor/Desynced' &&
 					$state['wsrep_cluster_size'] == 2) return;
 
-			throw new Api\Db\Exception\Connection('Node is NOT Synced! '.array2string($state));
+			throw new Db\Exception\Connection('Node is NOT Synced! '.array2string($state));
 		}
 	}
 
@@ -422,7 +422,7 @@ class Db
 	 *
 	 * @param string $Host host to connect to
 	 * @return ADOConnection
-	 * @throws Api\Db\Exception\Connection
+	 * @throws Db\Exception\Connection
 	 */
 	protected function _connect($Host)
 	{
@@ -499,7 +499,7 @@ class Db
 			{
 				if (!check_load_extension($php_extension))
 				{
-					throw new Api\Db\Exception\Connection("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
+					throw new Db\Exception\Connection("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
 				}
 				if (!isset($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
 				{
@@ -512,7 +512,7 @@ class Db
 				$this->Link_ID = ADONewConnection($Type);
 				if (!$this->Link_ID)
 				{
-					throw new Api\Db\Exception\Connection("No ADOdb support for '$Type' ($this->Type) !!!");
+					throw new Db\Exception\Connection("No ADOdb support for '$Type' ($this->Type) !!!");
 				}
 				if ($Type == 'mysqli')
 				{
@@ -528,7 +528,7 @@ class Db
 				if (!$Ok)
 				{
 					$Host = preg_replace('/password=[^ ]+/','password=$Password',$Host);	// eg. postgres dsn contains password
-					throw new Api\Db\Exception\Connection("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
+					throw new Db\Exception\Connection("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
 				}
 				if ($this->Debug)
 				{
@@ -559,7 +559,7 @@ class Db
 		if (!$this->Link_ID->isConnected() && !$this->Link_ID->Connect())
 		{
 			$Host = preg_replace('/password=[^ ]+/','password=$Password',$Host);	// eg. postgres dsn contains password
-			throw new Api\Db\Exception\Connection("ADOdb::$connect($Host, $User, \$Password, $Database) reconnect failed.");
+			throw new Db\Exception\Connection("ADOdb::$connect($Host, $User, \$Password, $Database) reconnect failed.");
 		}
 		// fix due to caching and reusing of connection not correctly set $this->Type == 'mysql'
 		if ($this->Type == 'mysqli')
@@ -720,7 +720,7 @@ class Db
 	* @param int $fetchmode =self::FETCH_BOTH self::FETCH_BOTH (default), self::FETCH_ASSOC or self::FETCH_NUM
 	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
 	* @return ADORecordSet or false, if the query fails
-	* @throws Api\Db\Exception\InvalidSql with $this->Link_ID->ErrorNo() as code
+	* @throws Db\Exception\InvalidSql with $this->Link_ID->ErrorNo() as code
 	*/
 	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=self::FETCH_BOTH, $reconnect=true)
 	{
@@ -777,7 +777,7 @@ class Db
 				$this->disconnect();
 				return $this->query($Query_String, $line, $file, $offset, $num_rows, $inputarr, $fetchmode, false);
 			}
-			throw new Api\Db\Exception\InvalidSql("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
+			throw new Db\Exception\InvalidSql("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
 				"\n$this->Error ($this->Errno)".
 				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
 		}
@@ -1469,7 +1469,7 @@ class Db
 					if (strpos($key, '.') !== false) list(, $col) = explode('.', $key);
 					if (!isset($column_definitions[$col]))
 					{
-						throw new Api\Db\Exception\InvalidSql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
+						throw new Db\Exception\InvalidSql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
 					}
 				}
 				$column_type = is_array($column_definitions) ? @$column_definitions[$col]['type'] : False;
@@ -1865,7 +1865,7 @@ class Db
 			{
 				$ret = $this->Link_ID->UpdateBlob($table,$col,$val,$where_str,$table_def['fd'][$col]['type'] == 'blob' ? 'BLOB' : 'CLOB');
 				if ($this->Debug) echo "<p>adodb::UpdateBlob('$table','$col','$val','$where_str') = '$ret'</p>\n";
-				if (!$ret) throw new Api\Db\Exception\InvalidSql("Error in UpdateBlob($table,$col,\$val,$where_str)",$line,$file);
+				if (!$ret) throw new Db\Exception\InvalidSql("Error in UpdateBlob($table,$col,\$val,$where_str)",$line,$file);
 			}
 		}
 		return $ret;
