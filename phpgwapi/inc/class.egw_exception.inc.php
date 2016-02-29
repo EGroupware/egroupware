@@ -87,7 +87,7 @@ class egw_exception_wrong_parameter extends Api\Exception\WrongParameter {}
  *
  * @deprecated use Api\Exception\WrongUserInput
  */
-class egw_exception_wrong_userinput extends Api\Exception\WrongUserinput {}
+class egw_exception_wrong_userinput extends Api\Exception\WrongUserInput {}
 
 /**
  * Exception thrown by the egw_db class for everything not covered by extended classed below
