@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-"use strict";
-
 /*egw:uses
         jquery.jquery;
         jquery.jquery-ui;
@@ -27,7 +25,7 @@
  * @see http://gridster.net
  * @augments AppJS
  */
-app.classes.home = AppJS.extend(
+app.classes.home = (function(){ "use strict"; return AppJS.extend(
 {
 	/**
 	 * AppJS requires overwriting this with the actual application name
@@ -98,7 +96,7 @@ app.classes.home = AppJS.extend(
 		{
 			// call parent
 			this._super.apply(this, arguments);
-			
+
 			this.et2.set_id('home.index');
 			this.et2.set_actions(this.et2.getArrayMgr('modifications').getEntry('home.index')['actions']);
 
@@ -350,10 +348,10 @@ app.classes.home = AppJS.extend(
 
 	/**
 	 * Set the current selection as default for other users
-	 * 
+	 *
 	 * Only works (and available) for admins, this shows a dialog to select
 	 * the group, and then sets the default for that group.
-	 * 
+	 *
 	 * @param {egwAction} action
 	 * @param {egwActionObject[]} selected
 	 */
@@ -387,7 +385,7 @@ app.classes.home = AppJS.extend(
 		{
 			// Disable action for feedback
 			action.set_enabled(false);
-			
+
 			// Pass them to server
 			egw.json('home_ui::ajax_set_default', ['delete', portlet_ids, group]).sendRequest(true);
 			return;
@@ -409,7 +407,7 @@ app.classes.home = AppJS.extend(
 
 	/**
 	 * Allow a refresh from anywhere by triggering an update with no changes
-	 * 
+	 *
 	 * @param {string} id
 	 */
 	refresh: function(id) {
@@ -515,7 +513,7 @@ app.classes.home = AppJS.extend(
 
 						// Reset changed, or they keep accumulating
 						this.$changed = $j([]);
-						
+
 						for (var key in changed)
 						{
 							if(!changed[key].id) continue;
@@ -715,12 +713,12 @@ app.classes.home = AppJS.extend(
 		var portlet_dom = $j('[id$='+id+'][data-sizex]',this.portlet_container.getDOMNode());
 		var width = portlet_dom.attr('data-sizex') * this.GRID;
 		var height = portlet_dom.attr('data-sizey') * this.GRID;
-		
+
 		// CKEditor is impossible to use below a certain size
 		// Add 35px for the toolbar, 35px for the buttons
 		var window_width = Math.max(580, width+20);
 		var window_height = Math.max(350, height+70);
-		
+
 		// Open popup, but add 70 to the height for the toolbar
 		egw.open_link(egw.link('/index.php',{
 			menuaction: 'home.home_note_portlet.edit',
@@ -749,11 +747,11 @@ app.classes.home = AppJS.extend(
 		nm.set_hide_header(nm.div.hasClass('header_hidden'));
 		nm.resize();
 	},
-	
+
 	/**
 	 * Function to set video iframe base on selected tutorial from
 	 * tutorials box
-	 * 
+	 *
 	 * @param {type} url
 	 */
 	tutorial_videoOnClick: function (_url)
@@ -764,11 +762,11 @@ app.classes.home = AppJS.extend(
 			frame.set_value(_url);
 		}
 	},
-	
+
 	/**
 	 * Function calls on discard checkbox and will set
 	 * the egw_tutorial_noautoload preference
-	 * 
+	 *
 	 * @param {type} egw
 	 * @param {type} widget
 	 */
@@ -787,7 +785,7 @@ app.classes.home = AppJS.extend(
  * Base class for portlet specific javascript
  *
  * Should this maybe extend et2_portlet?  It would complicate instantiation.
- * 
+ *
  * @type @exp;Class@call;extend
  */
 app.classes.home.home_portlet = Class.extend({
@@ -924,13 +922,13 @@ app.classes.home.home_favorite_portlet = app.classes.home.home_portlet.extend({
 			this.portlet.getWidgetById('nm').refresh(_id,_type);
 		}
 	}
-});
+});}).call(this);
 
 
 /**
  * An example illustrating extending the base code for a application specific code.
  * See also the calendar app, which needs custom handlers
- * 
+ *
  * @type @exp;app@pro;classes@pro;home@pro;home_favorite_portlet@call;extend
  * Note we put it in home, but this code should go in addressbook/js/addressbook_favorite_portlet.js
  *
