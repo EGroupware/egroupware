@@ -1,0 +1,57 @@
+/**
+ *
+ * TIMESHEET - Mobile
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ * Pixleegg Template app.css
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package timesheet
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+
+@import (reference) "../../../pixelegg/less/definitions.less";
+@import (reference) "../../../pixelegg/less/def_mobile.less";
+
+/* tablets and smartphones  */
+@media only screen and (max-device-width:1024px) {
+	#timesheet-index {
+		table.egwGridView_outer tbody {
+			label[id^='timesheet-index'][id$='ts_start]'] > time{
+				font-weight: bold;
+				float: left;
+			}
+			ul[id^='timesheet-index'][id$='ts_owner]'] > li {
+				overflow: hidden;
+				width: 90px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				.mob-fontsize-s;
+			}
+			tr.timesheetRow td {
+				position: relative;
+			}
+			span[id^='timesheet-index'][id$='cat_id]'] {
+				position: absolute;
+				bottom: 5px;
+				.mob-fontsize-s;
+			}
+			span[id^='timesheet-index'][id$='ts_description]'] {
+				height: 30px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			div.timesheet3Col {
+				.mob-fontsize-s;
+			}
+			span[id^='timesheet-index'][id$='ts_duration]'] {
+				font-weight: bold;
+			}
+			label[id^='timesheet-index'][id$='ts_link]'] > span.et2_link {
+				font-weight: normal;
+			}
+		}
+	}
+}
