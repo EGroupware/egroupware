@@ -2296,7 +2296,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			onchange:function(){
 				self.nextmatch.applyFilters({search: this.get_value()});
 			},
-			value:settings.search
+			value:settings.search,
+			fix:!egwIsMobile()
 		};
 		// searchbox widget
 		this.et2_searchbox = et2_createWidget('searchbox', searchbox_options,this);

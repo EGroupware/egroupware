@@ -423,6 +423,12 @@ var et2_searchbox = et2_textbox.extend(
 			type:"boolean",
 			default:false,
 			description:"Define wheter the searchbox overlays while it's open (true) or stay as solid box infront of the search button (false). Default is false."
+		},
+		fix: {
+			name:"Fix searchbox",
+			type:"boolean",
+			default:true,
+			description:"Define wheter the searchbox should be a fix input field or flexible search button. Default is true (fix)."
 		}
 	},
 
@@ -448,13 +454,16 @@ var et2_searchbox = et2_textbox.extend(
 		var self = this;
 		if (this.options.overlay) this.flex.addClass('overlay');
 		// search button indicator
-		this.button = et2_createWidget('button',{image:"search","background_image":"1"},this);
-		this.button.onclick= function(){
-			self._show_hide(jQuery(self.flex).hasClass('hide'));
-			self.search.input.focus();
-		};
-		this.div.prepend(this.button.getDOMNode());
-
+		// no need to create search button if it's a fix search field
+		if (!this.options.fix)
+		{
+			this.button = et2_createWidget('button',{image:"search","background_image":"1"},this);
+			this.button.onclick= function(){
+				self._show_hide(jQuery(self.flex).hasClass('hide'));
+				self.search.input.focus();
+			};
+			this.div.prepend(this.button.getDOMNode());
+		}
 		// input field
 		this.search = et2_createWidget('textbox',{"blur":egw.lang("search"),
 			onkeypress:function(event) {
@@ -474,6 +483,7 @@ var et2_searchbox = et2_textbox.extend(
 		this.search.input.on({
 			keyup:function(event)
 			{
+				self.clear.toggle(self.get_value() !='' || !this.options.fix);
 				if(event.which == 27) // Escape
 				{
 					// Excape clears search
@@ -499,6 +509,7 @@ var et2_searchbox = et2_textbox.extend(
 		// clear button implementation
 		this.clear = jQuery(document.createElement('span'))
 				.addClass('ui-icon clear')
+				.toggle(!this.options.fix || (this._oldValue != '' && !jQuery.isEmptyObject(this._oldValue)))
 				.on('mousedown',function(event){
 					event.preventDefault();
 				})
@@ -513,6 +524,7 @@ var et2_searchbox = et2_textbox.extend(
 					{
 						self._show_hide(false);
 					}
+					if (self.options.fix) self.clear.hide();
 				})
 				.appendTo(this.flex);
 	},
@@ -523,15 +535,21 @@ var et2_searchbox = et2_textbox.extend(
 	 */
 	_show_hide: function(_stat)
 	{
+			// Not applied for fix option
+			if (this.options.fix) return;
+			
 			jQuery(this.flex).toggleClass('hide',!_stat);
 			jQuery(this.getDOMNode()).toggleClass('expanded', _stat);
 	},
-
+	
 	/**
 	 * toggle search button status based on value
 	 */
 	_searchToggleState:function()
 	{
+		// Not applied for fix option
+		if (this.options.fix) return;
+		
 		if (!this.get_value())
 		{
 			jQuery(this.button.getDOMNode()).removeClass('toolbar_toggled');
@@ -577,6 +595,18 @@ var et2_searchbox = et2_textbox.extend(
 			this._show_hide(!this.options.overlay);
 			this._searchToggleState();
 		}
-	}
+	},
+	
+	/**
+	 * Overrride attachToDOM in order to unbind change handler
+	 */
+	attachToDOM: function() {
+		this._super.apply(this,arguments);
+		var node = this.getInputNode();
+		if (node)
+		{
+			$j(node).off('.et2_inputWidget');
+		}
+	},
 });
 et2_register_widget(et2_searchbox, ["searchbox"]);
