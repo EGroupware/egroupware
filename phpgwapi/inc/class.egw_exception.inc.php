@@ -113,5 +113,7 @@ class egw_exception_db_invalid_sql extends Api\Db\Exception {}
  * Allow callbacks to request a redirect
  *
  * Can be caught be applications and is otherwise handled by global exception handler.
+ *
+ * @deprecated use Api\Db\Exception\Redirect
  */
 class egw_exception_redirect extends Api\Exception\Redirect {}
