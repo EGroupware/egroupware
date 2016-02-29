@@ -122,7 +122,7 @@ class Memcache extends Base implements ProviderMultiple
 			return null;
 		}
 		//error_log(__METHOD__."(".array2string($keys).") key='$key' found ".bytes($data)." bytes).");
-		return $this->igbinary_available ? igbinary_unserialize($data) : unserialize($data);
+		return $this->igbinary_available && $data[1] !== ':' ? igbinary_unserialize($data) : unserialize($data);
 	}
 
 	/**
@@ -149,7 +149,7 @@ class Memcache extends Base implements ProviderMultiple
 		{
 			$key = substr($location,$prefix_len);
 			//error_log(__METHOD__."(".array2string($locations).") key='$key' found ".bytes($data)." bytes).");
-			$ret[$key] = $this->igbinary_available ? igbinary_unserialize($data) : unserialize($data);
+			$ret[$key] = $this->igbinary_available && $data[1] !== ':' ? igbinary_unserialize($data) : unserialize($data);
 		}
 		return $ret;
 	}
