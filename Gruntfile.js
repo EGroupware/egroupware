@@ -9,21 +9,26 @@
  */
 
 /**
- * Please use only double quotes, as we parse this file as json, to update it!
- *
  * To install grunt to build minified javascript files you need to run:
+ *
  *		sudo npm install -g grunt-cli
  *		npm install grunt --save-dev
- *		npm install grunt-contrib-uglify
+ *		npm install grunt-contrib-uglify --save-dev
  *
  * Building happens by running in your EGroupware directory:
+ *
  *		grunt
  * or
- *		grunt uglify:<target>	# targets: api, et2, mail, calendar, ...
+ *		grunt uglify:<target>	# targets: api, et2, pixelegg, mobile, mail, calendar, ...
  *
- * app.js files can be added under apps target, api and et2 bundels are already there.
+ * app.js files can be added like mail target or, if you want automatic dependencies,
+ * you need to add them in egw_framework::$bundle2minurl and egw_framework::get_bundles().
+ *
  * To update files in Gruntfile after adding new js files you need to run:
+ *
  *		updateGruntfile.php
+ *
+ * Please use only double quotes, as we parse this file as json to update it!
  *
  * @param {object} grunt
  */
