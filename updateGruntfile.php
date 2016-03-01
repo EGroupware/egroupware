@@ -33,12 +33,7 @@ if (!preg_match('/grunt\.initConfig\(({.+})\);/s', $content, $matches) ||
 }
 //print_r($config); exit;
 
-$bundle2min = array(
-	'api' => 'phpgwapi/js/jsapi.min.js',
-	'et2' => 'etemplate/js/etemplate2.min.js',
-);
-
-$build_files =& $config['uglify']['build']['files'];
+$uglify =& $config['uglify'];
 
 foreach(egw_framework::get_bundles() as $name => $files)
 {
@@ -51,13 +46,14 @@ foreach(egw_framework::get_bundles() as $name => $files)
 	});
 
 	//var_dump($name, $files);
-	if (isset($bundle2min[$name]))
+	if (isset($uglify[$name]))
 	{
-		$build_files[$bundle2min[$name]] = array_values($files);
+		list($target) = each($uglify[$name]['files']);
+		$uglify[$name]['files'][$target] = array_values($files);
 	}
-	elseif (isset($bundle2min[$append = substr($name, 0, -1)]))
+	elseif (isset($uglify[$append = substr($name, 0, -1)]))
 	{
-		$build_files[$bundle2min[$append]] = array_merge($build_files[$bundle2min[$append]], array_values($files));
+		$uglify[$append]['files'][$target] = array_merge($uglify[$append]['files'][$target], array_values($files));
 	}
 	else
 	{

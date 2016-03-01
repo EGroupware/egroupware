@@ -18,6 +18,8 @@
  *
  * Building happens by running in your EGroupware directory:
  *		grunt
+ * or
+ *		grunt uglify:<target>	# targets: api, et2, mail, calendar, ...
  *
  * app.js files can be added under apps target, api and et2 bundels are already there.
  * To update files in Gruntfile after adding new js files you need to run:
@@ -34,7 +36,7 @@ module.exports = function (grunt) {
 				sourceMap: true,
 				screwIE8: true
 			},
-			build: {
+			api: {
 				files: {
 					"phpgwapi\/js\/jsapi.min.js": [
 						"phpgwapi\/js\/jquery\/jquery.js",
@@ -84,7 +86,11 @@ module.exports = function (grunt) {
 						"phpgwapi\/js\/jquery\/chosen\/chosen.jquery.js",
 						"phpgwapi\/js\/ckeditor\/ckeditor.js",
 						"phpgwapi\/js\/ckeditor\/config.js"
-					],
+					]
+				}
+			},
+			et2: {
+				files: {
 					"etemplate\/js\/etemplate2.min.js": [
 						"etemplate\/js\/et2_core_xml.js",
 						"etemplate\/js\/et2_core_common.js",
@@ -177,8 +183,16 @@ module.exports = function (grunt) {
 						"etemplate\/js\/et2_widget_script.js",
 						"etemplate\/js\/et2_core_legacyJSFunctions.js",
 						"etemplate\/js\/etemplate2.js"
-					],
-					"mail\/js\/app.min.js": "mail\/js\/app.js",
+					]
+				}
+			},
+			mail: {
+				files: {
+					"mail\/js\/app.min.js": "mail\/js\/app.js"
+				}
+			},
+			calendar: {
+				files: {
 					"calendar\/js\/app.min.js": "calendar\/js\/app.js"
 				}
 			}
