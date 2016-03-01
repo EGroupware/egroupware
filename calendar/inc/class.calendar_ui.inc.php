@@ -145,9 +145,7 @@ class calendar_ui
 		{
 			$this->bo = new calendar_bo();
 		}
-		$this->jscal = $GLOBALS['egw']->jscalendar;
 		$this->datetime = $GLOBALS['egw']->datetime;
-		$this->accountsel = $GLOBALS['egw']->uiaccountsel;
 
 		$this->categories = new categories($this->user,'calendar');
 
@@ -616,7 +614,7 @@ class calendar_ui
 		$content = $this->cal_prefs['saved_states'];
 		$content['view'] = $this->view ? $this->view : 'week';
 		$content['date'] = $this->date ? $this->date : egw_time();
-		
+
 		$readonlys = array();
 		$sel_options['status_filter'] = array(
 			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),
@@ -702,7 +700,7 @@ class calendar_ui
 			while ($rrule->valid() && $occurrence <= $this_month );
 		}
 	}
-	
+
 	/**
 	 * Prepare an array of event information for sending to the client
 	 *
@@ -715,7 +713,7 @@ class calendar_ui
 	public function to_client(&$event)
 	{
 		if(!$event || !is_array($event)) return false;
-		
+
 		if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
 		{
 			$event['class'] .= 'rowNoEdit ';
