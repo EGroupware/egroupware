@@ -1,4 +1,4 @@
-/* 
+/*
  * Egroupware
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -8,8 +8,6 @@
  * @version $Id$
  */
 
-
-"use strict";
 
 /*egw:uses
 	et2_core_valueWidget;
@@ -23,7 +21,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizeable],
 {
 
 	attributes: {
@@ -78,7 +76,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.event_wrapper = $j(document.createElement('div'))
 			.addClass("event_wrapper")
 			.appendTo(this.div);
-		
+
 		this.setDOMNode(this.div[0]);
 
 		// Used for its date calculations - note this is a datetime, parent
@@ -95,14 +93,14 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			rowHeight:	20,
 			// Percentage; not yet available
 			titleHeight: 2.0
-		}
+		};
 
 		this.registeredUID = null;
 	},
 
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		
+
 		// Parent will have everything we need, just load it from there
 
 		if(this._parent && this._parent.options.owner)
@@ -127,7 +125,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		this.div = null;
 		this.header = null;
 		this.title = null;
-		
+
 		// date_helper has no parent, so we must explicitly remove it
 		this.date_helper.destroy();
 		this.date_helper = null;
@@ -170,7 +168,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 			// Figure out insert index
 			var idx = 0;
-			var siblings = this._parent.getDOMNode(this).childNodes
+			var siblings = this._parent.getDOMNode(this).childNodes;
 			while(idx < siblings.length && siblings[idx] != this.getDOMNode())
 			{
 				idx++;
@@ -193,9 +191,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 * Set the date
 	 *
 	 * @param {string|Date} _date New date
-	 * @param {Object[]} events=false List of event data to be displayed, or false to
+	 * @param {Object[]} events =false List of event data to be displayed, or false to
 	 *	automatically fetch data from content array
-	 * @param {boolean} force_redraw=false Redraw even if the date is the same.
+	 * @param {boolean} force_redraw =false Redraw even if the date is the same.
 	 *	Used for when new data is available.
 	 */
 	set_date: function(_date, events, force_redraw)
@@ -257,7 +255,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		}
 
 		var cache_id = app.classes.calendar._daywise_cache_id(new_date,this.options.owner);
-		if(this.options.date && this.registeredUID && 
+		if(this.options.date && this.registeredUID &&
 			cache_id !== this.registeredUID)
 		{
 			egw.dataUnregisterUID(this.registeredUID,false,this);
@@ -297,7 +295,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 *	combination of both.
 	 */
 	set_owner: function(_owner) {
-		
+
 		this.title
 			.attr("data-owner", _owner);
 		this.header.attr('data-owner',_owner);
@@ -311,10 +309,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		{
 			return;
 		}
-		
+
 		this.options.owner = typeof _owner !== 'object' ? [_owner] : _owner;
 
-		var cache_id = app.classes.calendar._daywise_cache_id(this.options.date,_owner)
+		var cache_id = app.classes.calendar._daywise_cache_id(this.options.date,_owner);
 		if(this.options.date && this.registeredUID &&
 			cache_id !== this.registeredUID)
 		{
@@ -339,7 +337,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 *
 	 * Events should update themselves when their data changes, here we are
 	 * dealing with a change in which events are displayed on this day.
-	 * 
+	 *
 	 * @param {String[]} event_ids
 	 * @returns {undefined}
 	 */
@@ -376,7 +374,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	},
 	set_width: function(width) {
 		this.options.width = width;
-	
+
 		if(this.div)
 		{
 			this.div.outerWidth(this.options.width);
@@ -398,7 +396,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// Set today class - note +1 when dealing with today, as months in JS are 0-11
 		var today = new Date();
 		today.setUTCMinutes(today.getUTCMinutes() - today.getTimezoneOffset());
-		
+
 		this.title.toggleClass("calendar_calToday", this.options.date === ''+today.getUTCFullYear()+
 			sprintf("%02d",today.getUTCMonth()+1)+
 			sprintf("%02d",today.getUTCDate())
@@ -458,7 +456,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			this.removeChild(node);
 			node.free();
 		}
-		
+
 		// Make sure children are in cronological order, or columns are backwards
 		events.sort(function(a,b) {
 			var start = new Date(a.start) - new Date(b.start);
@@ -503,7 +501,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 * Apply styles for out-of-view and partially hidden events
 	 *
 	 * There are 3 different states or modes of display:
-	 * 
+	 *
 	 * - 'Normal' - When showing events positioned by time, the indicator is just
 	 *	a bar colored by the last category color.  On hover it shows either the
 	 *	title of a single event or "x event(s)" if more than one are hidden.
@@ -514,7 +512,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 *  week (not auto-sized to fit screen) the indicator is the same as sized.
 	 *  On hover it shows the titles of the hidden events, clicking changes
 	 *  the view to the selected day.
-	 *  
+	 *
 	 * - GridList - When showing just a list, the indicator shows "x event(s)",
 	 *	and on hover shows the category color, title & time.  Clicking changes
 	 *	the view to the selected day, and opens the event for editing.
@@ -533,7 +531,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 		// elem is jquery div of event
 		function isHidden(elem) {
 			var docViewTop = timegrid.scrolling.scrollTop(),
-			docViewBottom = docViewTop + ( 
+			docViewBottom = docViewTop + (
 				this.display_settings.granularity === 0 ?
 				this.event_wrapper.height() :
 				timegrid.scrolling.height()
@@ -563,10 +561,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 		}
 		// Check all day overflow
-		this.all_day.toggleClass('overflown', 
+		this.all_day.toggleClass('overflown',
 			this.all_day[0].scrollHeight - this.all_day.height() > 5
 		);
-		
+
 		// Check each event
 		this.iterateOver(function(event) {
 			// Skip whole day events and events missing value
@@ -707,7 +705,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 						});
 				}
 			}
-			var count = parseInt(indicator.attr('data-hidden_count')) + 1
+			var count = parseInt(indicator.attr('data-hidden_count')) + 1;
 			indicator.attr('data-hidden_count', count);
 			if(this.display_settings.granularity === 0)
 			{
@@ -746,13 +744,13 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 	/**
 	 * Sort a day's events into minimally overlapping columns
-	 * 
+	 *
 	 * @returns {Array[]} Events sorted into columns
 	 */
 	_spread_events: function()
 	{
 		if(!this.date) return [];
-		
+
 		var day_start = this.date.valueOf() / 1000;
 		var dst_check = new Date(this.date);
 		dst_check.setUTCHours(12);
@@ -775,7 +773,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			if(a.options.value.whole_day && b.options.value.whole_day)
 			{
 				// Longer duration comes first so we have nicer bars across the top
-				var duration = 
+				var duration =
 					(new Date(b.options.value.end) - new Date(b.options.value.start)) -
 					(new Date(a.options.value.end) - new Date(a.options.value.start));
 
@@ -787,12 +785,12 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 			return start ? start : end;
 		});
-		
+
 		for(var i = 0; i < this._children.length; i++)
 		{
 			var event = this._children[i].options.value || false;
 			if(!event) continue;
-			if(event.date && event.date != this.options.date && 
+			if(event.date && event.date != this.options.date &&
 				// Multi-day events date may be different
 				(new Date(event.start) >= this.date || new Date(event.end) <= this.date )
 			)
@@ -942,7 +940,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 			}
 		}
 	},
-	
+
 	/**
 	 * Calculates the vertical position based on the time
 	 *
@@ -954,10 +952,10 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	_time_to_position: function(time)
 	{
 		var pos = 0.0;
-		
+
 		// 24h
 		pos = ((time / 60) / 24) * 100;
-		
+
 		pos = pos.toFixed(1);
 
 		return pos;
@@ -1035,7 +1033,7 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs) {
-		
+
 	},
 
 	getDetachedNodes: function() {
@@ -1043,9 +1041,9 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
-		
+
 	},
-	
+
 	// Resizable interface
 	/**
 	 * Resize
@@ -1070,6 +1068,6 @@ var et2_calendar_daycol = et2_valueWidget.extend([et2_IDetachedDOM, et2_IResizea
 
 		this._out_of_view();
 	}
-});
+});}).call(this);
 
 et2_register_widget(et2_calendar_daycol, ["calendar-daycol"]);

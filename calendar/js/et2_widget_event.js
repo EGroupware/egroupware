@@ -9,8 +9,6 @@
  */
 
 
-"use strict";
-
 /*egw:uses
 	/etemplate/js/et2_core_valueWidget;
 */
@@ -42,7 +40,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 
 	attributes: {
@@ -66,7 +64,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this._super.apply(this, arguments);
 
 		var event = this;
-		
+
 		// Main container
 		this.div = $j(document.createElement("div"))
 			.addClass("calendar_calEvent")
@@ -137,7 +135,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			this._actionObject.remove();
 			this._actionObject = null;
 		}
-		
+
 		this.div.off();
 		this.title.remove();
 		this.title = null;
@@ -148,7 +146,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.div = null;
 
 		$j('body.egw_tooltip').remove();
-		
+
 		// Unregister, or we'll continue to be notified...
 		if(this.options.value)
 		{
@@ -224,7 +222,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		// Update to reflect new information
 		var event = this.options.value;
-		
+
 		var id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':'+event.recur_date : '');
 		var formatted_start = event.start.toJSON();
 
@@ -273,10 +271,10 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.div
 			// Let timegrid always get the drag
 			.droppable('option','greedy',false)
-		
+
 			// Set full day flag
 			.attr('data-full_day', event.whole_day)
-		
+
 			// Put everything we need for basic interaction here, so it's available immediately
 			.attr('data-id', event.id)
 			.attr('data-app', event.app || 'calendar')
@@ -314,14 +312,14 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		this.title.toggle(!event.whole_day_on_top);
 		this.body.toggleClass('calendar_calEventBodySmall', event.whole_day_on_top || false);
-		
+
 		// Header
 		var title = !event.is_private ? event['title'] : egw.lang('private');
 
 		this.title
 			.html('<span class="calendar_calTimespan">'+this._get_timespan(event) + '<br /></span>')
 			.append('<span class="calendar_calEventTitle">'+title+'</span>')
-		
+
 		// Colors - don't make them transparent if there is no color
 		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
 		{
@@ -331,7 +329,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 		this.icons.appendTo(this.title)
 			.html(this._icons());
-		
+
 		// Body
 		if(event.whole_day_on_top)
 		{
@@ -373,7 +371,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Calculate display variants for when event is too short for full display
-	 * 
+	 *
 	 * Display is based on the number of visible lines, calculated off the header
 	 * height:
 	 * 1 - show just the event title, with ellipsis
@@ -415,7 +413,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Examines the participants & returns CSS classname for status
-	 * 
+	 *
 	 * @returns {String}
 	 */
 	_status_class: function() {
@@ -449,7 +447,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	_tooltip: function() {
 		if(!this.div) return '';
-		
+
 		var border = this.div.css('borderTopColor');
 		var bg_color = this.div.css('background-color');
 		var header_color = this.title.css('color');
@@ -479,7 +477,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 			cat.destroy();
 		}
-		
+
 		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background-color: '+bg_color+';">'+
 			'<div class="calendar_calEventHeaderSmall">'+
 				'<font style="color:'+header_color+'">'+timespan+'</font>'+
@@ -614,7 +612,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		else
 		{
-			var duration = event.multiday ? 
+			var duration = event.multiday ?
 				(event.end - event.start) / 60000 :
 				(event.end_m - event.start_m);
 			if (event.end_m === 24*60-1) ++duration;
@@ -635,7 +633,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 		return timespan;
 	},
-	
+
 	/**
 	 * Make sure event data has all proper values, and format them as expected
 	 * @param {Object} event
@@ -659,7 +657,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 			this._parent.date_helper.set_value(event.end);
 			event.end = new Date(this._parent.date_helper.getValue());
 		}
-		
+
 		// We need minutes for durations
 		if(typeof event.start_m === 'undefined')
 		{
@@ -771,14 +769,14 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			old_cache_id = app.classes.calendar._daywise_cache_id(this.options.value.date,this._parent.options.owner);
 		}
-		
+
 		if(new_cache_id != old_cache_id)
 		{
 			var old_daywise = egw.dataGetUIDdata(old_cache_id);
 			old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
 			old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
 			egw.dataStoreUID(old_cache_id,old_daywise);
-			
+
 			if (new_daywise.indexOf(event.id) < 0)
 			{
 				new_daywise.push(event.id);
@@ -888,7 +886,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 		action_links.push('egw_link_drop');
 		this._actionObject.updateActionLinks(action_links);
 	},
-	
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 *
@@ -905,7 +903,7 @@ var et2_calendar_event = et2_valueWidget.extend([et2_IDetachedDOM],
 	setDetachedAttributes: function(_nodes, _values) {
 
 	},
-});
+});}).call(this);
 et2_register_widget(et2_calendar_event, ["calendar-event"]);
 
 // Static class stuff
@@ -918,7 +916,7 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
  */
 /**
  * Recur prompt
- * If the event is recurring, asks the user if they want to edit the event as 
+ * If the event is recurring, asks the user if they want to edit the event as
  * an exception, or change the whole series.  Then the callback is called.
  *
  * If callback is not provided, egw.open() will be used to open an edit dialog.
@@ -936,7 +934,7 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
  *	data.
  * @param {Object} [extra_data] - Additional data passed to the callback, used
  *	as extra parameters for default callback
- * 
+ *
  * @augments {et2_calendar_event}
  */
 et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
@@ -1039,7 +1037,7 @@ et2_calendar_event.drag_helper = function(event,ui) {
 *
 * @param {string} status - combined value, O: status letter: U, T, A, R
 * @param {int} [quantity] - quantity
-* @param {string} [role] 
+* @param {string} [role]
 * @return string status U, T, A or R, same as $status parameter on return
 */
 et2_calendar_event.split_status = function(status,quantity,role)

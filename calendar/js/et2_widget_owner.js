@@ -1,15 +1,13 @@
-/* 
+/*
  * Egroupware
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package 
- * @subpackage 
+ * @package
+ * @subpackage
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @version $Id$
  */
 
-
-"use strict";
 
 /*egw:uses
 	et2_widget_taglist;
@@ -25,7 +23,7 @@
  * @see http://nicolasbize.github.io/magicsuggest/
  * @augments et2_selectbox
  */
-var et2_calendar_owner = et2_taglist_email.extend(
+var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.extend(
 {
 	attributes: {
 		"autocomplete_url": {
@@ -47,7 +45,7 @@ var et2_calendar_owner = et2_taglist_email.extend(
 			// Set to empty object to use selectbox's option finding
 			"default": {},
 			"description": "Internally used to hold the select options."
-		},
+		}
 	},
 
 	// Allows sub-widgets to override options to the library
@@ -81,9 +79,9 @@ var et2_calendar_owner = et2_taglist_email.extend(
 							.removeClass('ms-res-item-active');
 					}
 				},1);
-			})
-		
-		
+			});
+
+
 		return true;
 	},
 
@@ -92,5 +90,5 @@ var et2_calendar_owner = et2_taglist_email.extend(
 		if(this.taglist == null) return null;
 		return this.taglist.getValue();
 	}
-});
+});}).call(this);
 et2_register_widget(et2_calendar_owner, ["calendar-owner"]);

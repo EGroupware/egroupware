@@ -1,14 +1,12 @@
-/* 
+/*
  * Egroupware
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package 
- * @subpackage 
+ * @package
+ * @subpackage
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @version $Id$
  */
-
-"use strict";
 
 /*egw:uses
 	/etemplate/js/et2_core_valueWidget;
@@ -20,13 +18,13 @@
  *
  * et2_calendar_view is responsible for its own loader div, which is displayed while
  * the times & days are redrawn.
- * 
+ *
  * @augments et2_valueWidget
  */
-var et2_calendar_view = et2_valueWidget.extend(
+var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend(
 {
 	createNamespace: true,
-	
+
 	attributes: {
 		owner: {
 			name: "Owner",
@@ -41,7 +39,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 		end_date: {
 			name: "End date",
 			type: "any"
-		},
+		}
 	},
 
 	/**
@@ -67,7 +65,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 		// date_helper has no parent, so we must explicitly remove it
 		this.date_helper.destroy();
 		this.date_helper = null;
-		
+
 		// Stop the invalidate timer
 		if(this.update_timer)
 		{
@@ -89,7 +87,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 	 * @param {boolean} [trigger_event=false] Trigger an event once things are done.
 	 *	Waiting until invalidate completes prevents 2 updates when changing the date range.
 	 * @returns {undefined}
-	 * 
+	 *
 	 * @memberOf et2_calendar_view
 	 */
 	invalidate: function invalidate(trigger_event) {
@@ -253,9 +251,9 @@ var et2_calendar_view = et2_valueWidget.extend(
 	 *		20150502: [...]
 	 *	}
 	 *	Days should be in order.
-	 * @param {string|number|Date} events.start_date - New start date
-	 * @param {string|number|Date} events.end_date - New end date
-	 * @param {number|number[]|string|string[]} event.owner - Owner ID, which can
+	 *  {string|number|Date} events.start_date - New start date
+	 *  {string|number|Date} events.end_date - New end date
+	 *  {number|number[]|string|string[]} event.owner - Owner ID, which can
 	 *	be an account ID, a resource ID (as defined in calendar_bo, not
 	 *	necessarily an entry from the resource app), or a list containing a
 	 *	combination of both.
@@ -333,7 +331,7 @@ var et2_calendar_view = et2_valueWidget.extend(
 		}
 		else	// users
 		{
-			user = parseInt(user)
+			user = parseInt(user);
 			var accounts = egw.accounts('both');
 			for(var j = 0; j < accounts.length; j++)
 			{
@@ -376,9 +374,9 @@ var et2_calendar_view = et2_valueWidget.extend(
 			result.widget_id = 'event_' + widget_id.join('');
 		}
 		return result;
-	},
+	}
 
-});
+});}).call(this);
 
 // Static class stuff
 jQuery.extend(et2_calendar_view,
@@ -386,7 +384,7 @@ jQuery.extend(et2_calendar_view,
 	/**
 	 * Check if the view should be consolidated into one, or listed seperately
 	 * based on the user's preferences
-	 * 
+	 *
 	 * @param {string[]} owners List of owners
 	 * @param {string} view Name of current view (day, week)
 	 * @returns {boolean} True of only one is needed, false if each owner needs

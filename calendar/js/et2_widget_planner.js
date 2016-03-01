@@ -1,4 +1,4 @@
-/* 
+/*
  * Egroupware Calendar timegrid
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -8,8 +8,6 @@
  * @version $Id$
  */
 
-
-"use strict";
 
 /*egw:uses
 	/calendar/js/et2_widget_view.js;
@@ -25,10 +23,10 @@
  *
  * @augments et2_calendar_view
  */
-var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
 {
 	createNamespace: true,
-	
+
 	attributes: {
 		group_by: {
 			name: "Group by",
@@ -118,7 +116,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
-		
+
 		// Don't bother to draw anything if there's no date yet
 		if(this.options.start_date)
 		{
@@ -282,7 +280,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			});
 		return true;
 	},
-	
+
 	/**
 	 * These handle the differences between the different group types.
 	 * They provide the different titles, labels and grouping
@@ -375,7 +373,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 					}
 					else	// users
 					{
-						user = parseInt(user)
+						user = parseInt(user);
 						for(var j = 0; j < accounts.length && already_added.indexOf(''+user) < 0; j++)
 						{
 							if(accounts[j].value === user)
@@ -433,7 +431,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 						}
 						rows[label_index].push(event);
 					}
-				}
+				};
 				for(var user in participants)
 				{
 					var participant = participants[user];
@@ -611,7 +609,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 								break;
 							}
 						}
-						
+
 						// Get its children immediately
 						egw.json(
 							this.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
@@ -692,7 +690,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	 * Something changed, and the planner needs to be re-drawn.  We wait a bit to
 	 * avoid re-drawing twice if start and end date both changed, then recreate.
 	 *
-	 * @param {boolean} trigger=false Trigger an event once things are done.
+	 * @param {boolean} trigger =false Trigger an event once things are done.
 	 *	Waiting until invalidate completes prevents 2 updates when changing the date range.
 	 * @returns {undefined}
 	 */
@@ -703,7 +701,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 		// Not yet ready
 		if(!this.options.start_date || !this.options.end_date) return;
-		
+
 		// Wait a bit to see if anything else changes, then re-draw the days
 		if(this.update_timer !== null)
 		{
@@ -797,7 +795,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			this._children[delete_index].free();
 			this.removeChild(this._children[delete_index--]);
 		}
-		
+
 		// Clear old rows
 		this.rows.empty()
 			.append(this.grid);
@@ -813,10 +811,10 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		this.grid.find('*').contents().filter(function(){
 			return this.nodeType === 3;
 		}).remove();
-		
+
 		// Get the rows / labels
 		var labels = grouper.row_labels.call(this);
-		
+
 		// Group the events
 		var events = {};
 		for(var i = 0; i < this.value.length; i++)
@@ -882,7 +880,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		{
 			row.doLoadingFinished();
 		}
-		
+
 		// Add actual events
 		row._update_events(events);
 
@@ -938,16 +936,16 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		for(var left = 0,i = 0; i < days;t.setUTCDate(1),t.setUTCMonth(t.getUTCMonth()+1),left += days_in_month*day_width,i += days_in_month)
 		{
 			var u = new Date(t.getUTCFullYear(),t.getUTCMonth()+1,0,-t.getTimezoneOffset()/60);
-			days_in_month =  1+ ((u-t) / (24*3600*1000))
+			days_in_month =  1+ ((u-t) / (24*3600*1000));
 
 			var first = new Date(t.getUTCFullYear(),t.getUTCMonth(),1,-t.getTimezoneOffset()/60);
 			if(days_in_month <= 0) break;
-			
+
 			if (i + days_in_month > days)
 			{
 				days_in_month = days - i;
 			}
-			var title = app.calendar.egw.lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)))
+			var title = app.calendar.egw.lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)));
 			if (days_in_month > 10)
 			{
 				title += ' '+t.getUTCFullYear();
@@ -967,7 +965,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 	/**
 	 * Make a header showing the week numbers
-	 * 
+	 *
 	 * @param {Date} start
 	 * @param {number} days
 	 * @returns {string} HTML snippet
@@ -976,7 +974,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	{
 
 		var content = '<div class="calendar_plannerScale" data-planner_view="week">';
-		var state = ''
+		var state = '';
 
 		// we're not using UTC so date() formatting function works
 		var t = new Date(start.valueOf());
@@ -998,7 +996,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 				// Gets the right week # east of GMT.  West does not need it(?)
 				usertime.setUTCMinutes(usertime.getUTCMinutes() - start.getTimezoneOffset());
 			}
-			
+
 			week_width = 100 / days * Math.min(days, days_in_week);
 
 			var title = app.calendar.egw.lang('Week')+' '+app.calendar.date.week_number(usertime);
@@ -1006,7 +1004,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			if(start.getTimezoneOffset() > 0)
 			{
 				// Gets the right week start west of GMT
-				usertime.setUTCMinutes(usertime.getUTCMinutes() +start.getTimezoneOffset())
+				usertime.setUTCMinutes(usertime.getUTCMinutes() +start.getTimezoneOffset());
 			}
 			state = app.calendar.date.start_of_week(usertime);
 			state.setUTCHours(0);
@@ -1077,7 +1075,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 	/**
 	 * Create a header with hours
-	 * 
+	 *
 	 * @param {Date} start
 	 * @param {number} days
 	 * @returns {string} HTML snippet for the header
@@ -1104,7 +1102,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		var cell_width = 100 / hours * decr;
 
 		var content = '<div class="calendar_plannerScale" data-planner_view="day">';
-		
+
 		// we're not using UTC so date() formatting function works
 		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
 		for(var left = 0,i = 0; i < hours; left += cell_width,i += decr)
@@ -1132,7 +1130,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		if(!date) return '';
 
 		var day_class = '';
-		
+
 		// Holidays and birthdays
 		var holidays = et2_calendar_view.get_holidays(this,date.getUTCFullYear());
 
@@ -1192,7 +1190,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			if(!parent)
 			{
 				debugger;
-				egw.debug('error','No parent objectManager found')
+				egw.debug('error','No parent objectManager found');
 				return;
 			}
 
@@ -1214,7 +1212,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		var aoi = new et2_action_object_impl(this,this.getDOMNode());
 
 		aoi.doTriggerEvent = function(_event, _data) {
-			
+
 			// Determine target node
 			var event = _data.event || false;
 			if(!event) return;
@@ -1298,6 +1296,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 	/**
 	 * Automatically add dnd support for linking
+	 *
+	 * @param {type} mgr
+	 * @param {type} actionLinks
 	 */
 	_init_links_dnd: function(mgr,actionLinks) {
 		var self = this;
@@ -1421,6 +1422,10 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	/**
 	 * Show the current time while dragging
 	 * Used for resizing as well as drag & drop
+	 *
+	 * @param {type} element
+	 * @param {type} position
+	 * @param {type} height
 	 */
 	_drag_helper: function(element, position ,height)
 	{
@@ -1441,9 +1446,13 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 		//$j(element).width($j(helper).width());
 	},
-	
+
 	/**
 	 * Handler for dropping an event on the timegrid
+	 *
+	 * @param {type} planner
+	 * @param {type} event
+	 * @param {type} ui
 	 */
 	_event_drop: function(planner, event,ui) {
 		var e = new jQuery.Event('change');
@@ -1495,7 +1504,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	/**
 	 * Use the egw.data system to get data from the calendar list for the
 	 * selected time span.
-	 * 
+	 *
 	 */
 	_fetch_data: function()
 	{
@@ -1563,11 +1572,11 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 							egw.includeCSS('/phpgwapi/categories.php?app='+event.data.app);
 						}
 					}
-					
+
 					this.invalidate(false);
 				}
 			}, this, this.getInstanceManager().execId,this.id);
-			
+
 			t.setUTCDate(t.getUTCDate() + 1);
 		}
 		while(t < end);
@@ -1641,7 +1650,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 	/**
 	 * Change how the planner is grouped
-	 * 
+	 *
 	 * @param {string|number} group_by 'user', 'month', or an integer category ID
 	 * @returns {undefined}
 	 */
@@ -1662,6 +1671,8 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 	/**
 	 * Call change handler, if set
+	 *
+	 * @param {type} event
 	 */
 	change: function(event) {
 		if (this.onchange)
@@ -1681,6 +1692,9 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 
 	/**
 	 * Call event change handler, if set
+	 *
+	 * @param {type} event
+	 * @param {type} dom_node
 	 */
 	event_change: function(event, dom_node) {
 		if (this.onevent_change)
@@ -1723,7 +1737,7 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 	click: function(_ev)
 	{
 		var result = true;
-		
+
 		// Is this click in the event stuff, or in the header?
 		if(this.gridHeader.has(_ev.target).length === 0 && !$j(_ev.target).hasClass('calendar_plannerRowHeader'))
 		{
@@ -1792,17 +1806,17 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			return false;
 		}
 	},
-	
+
 	/**
 	 * Get time from position
-	 * 
+	 *
 	 * @param {number} x
 	 * @param {number} y
 	 * @returns {Date|Boolean} A time for the given position, or false if one
 	 *	could not be determined.
 	 */
 	_get_time_from_position: function(x,y) {
-		
+
 		x = Math.round(x);
 		y = Math.round(y);
 
@@ -1840,13 +1854,13 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 			}
 		}
 		if(rel_time < 0) return false;
-		
+
 		var interval = egw.preference('interval','calendar') || 30;
 		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
 
 		return new Date(this.date_helper.getValue());
 	},
-		
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 *
@@ -1887,5 +1901,5 @@ var et2_calendar_planner = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResi
 		// Set height for rows
 		this.rows.height(this.div.height() - this.headers.outerHeight());
 	}
-});
+});}).call(this);
 et2_register_widget(et2_calendar_planner, ["calendar-planner"]);

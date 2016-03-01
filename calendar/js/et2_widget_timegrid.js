@@ -1,4 +1,4 @@
-/* 
+/*
  * Egroupware Calendar timegrid
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -9,12 +9,8 @@
  */
 
 
-"use strict";
-
 /*egw:uses
 	/calendar/js/et2_widget_view.js;
-	/calendar/js/et2_widget_daycol.js;
-	/calendar/js/et2_widget_event.js;
 */
 
 /**
@@ -31,10 +27,10 @@
  *
  * @augments et2_calendar_view
  */
-var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
 {
 	createNamespace: true,
-	
+
 	attributes: {
 		value: {
 			type: "any",
@@ -99,7 +95,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			.appendTo(this.div);
 		this.dayHeader = $j(document.createElement("div"))
 			.appendTo(this.gridHeader);
-		
+
 		// Contains times / rows
 		this.scrolling = $j(document.createElement('div'))
 			.addClass("calendar_calTimeGridScroll")
@@ -119,7 +115,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			.appendTo(this.gridHeader);
 
 		this.gridHover = jQuery('<div style="height:5px;" class="calendar_calAddEvent drop-hover">');
-		
+
 		// List of dates in Ymd
 		// The first one should be start_date, last should be end_date
 		this.day_list = [];
@@ -134,7 +130,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this.setDOMNode(this.div[0]);
 	},
 	destroy: function() {
-		
+
 		// Stop listening to tab changes
 		if(framework.getApplicationByName('calendar').tab)
 		{
@@ -204,7 +200,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function() {
 			// Only resize in timegrid
 			if(timegrid.options.granularity === 0) return;
-			
+
 			// Load the event
 			timegrid._get_event_info(this);
 			var that = this;
@@ -292,10 +288,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					{
 						drop.get(0).scrollIntoView(false);
 					}
-				}	 
+				}
 			});
 		});
-		
+
 		// Customize and override some draggable settings
 		this.div
 			.on('dragcreate','.calendar_calEvent', function(event, ui) {
@@ -323,11 +319,15 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	/**
 	 * Show the current time while dragging
 	 * Used for resizing as well as drag & drop
+	 *
+	 * @param {type} element
+	 * @param {type} helper
+	 * @param {type} height
 	 */
 	_drag_helper: function(element, helper,height)
 	{
 		if(!element) return;
-		
+
 		element.dropEnd = this.gridHover;
 
 		if(element.dropEnd.length)
@@ -385,6 +385,11 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 	/**
 	 * Handler for dropping an event on the timegrid
+	 *
+	 * @param {type} timegrid
+	 * @param {type} event
+	 * @param {type} ui
+	 * @param {type} dropEnd
 	 */
 	_event_drop: function(timegrid, event,ui, dropEnd) {
 		var e = new jQuery.Event('change');
@@ -425,7 +430,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					event_widget._parent.date_helper.set_hours(dropEnd.whole_day ? 0 : dropEnd.hour||0);
 					event_widget._parent.date_helper.set_minutes(dropEnd.whole_day ? 0 : dropEnd.minute||0);
 				}
-								
+
 				// Leave the helper there until the update is done
 				var loading = ui.helper.clone(true).appendTo($j('body'));
 				// and add a loading icon so user knows something is happening
@@ -437,7 +442,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				{
 					$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
 				}
-				
+
 				event_widget.recur_prompt(function(button_id) {
 					if(button_id === 'cancel' || !button_id)
 					{
@@ -463,12 +468,12 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					else
 					{
 						//Edit calendar event
-						
+
 						// Duration - check for whole day dropped on a time, change it to full day
 						var duration = event_widget.options.value.whole_day && dropEnd.hour ? 86400-1 : false;
 						// Event (whole day or not) dropped on whole day section, change to whole day non blocking
 						if(dropEnd.whole_day) duration = 'whole_day';
-						
+
 						// Send the update
 						var _send = function(series_instance)
 						{
@@ -534,7 +539,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			this.widget.update_timer = null;
 			window.clearTimeout(this.resize_timer);
 			this.widget.loader.hide().show();
-			
+
 			// Update actions
 			if(this.widget._actionManager)
 			{
@@ -640,13 +645,13 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			.append(this.owner.getDOMNode())
 			.append(this.dayHeader)
 			.appendTo(this.div);
-		
+
 		// Max with 18 avoids problems when it's not shown
 		var header_height = Math.max(this.gridHeader.outerHeight(true), 18);
-		
+
 		this.scrolling
 			.appendTo(this.div)
-			.off()
+			.off();
 
 		// No time grid - list
 		if(this.options.granularity === 0)
@@ -666,7 +671,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/granularity);
 		var row_count = (1440 / this.options.granularity);
 
-		
+
 		this.scrolling
 			.on('scroll', jQuery.proxy(this._scroll, this));
 
@@ -695,7 +700,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		};
 		var html = '';
 		var line_height = parseInt(this.div.css('line-height'));
-		this._top_time = 0
+		this._top_time = 0;
 		for(var t = 0,i = 0; t < 1440; t += granularity,++i)
 		{
 			html += '<div class="calendar_calTimeRow" style="height: '+(100/row_count)+'%;">';
@@ -712,7 +717,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				);
 			if(t <= wd_start && t + granularity > wd_start)
 			{
-				this._top_time = this.rowHeight * (i+1+(wd_start - (t+granularity))/granularity)
+				this._top_time = this.rowHeight * (i+1+(wd_start - (t+granularity))/granularity);
 			}
 
 			var time_label = (typeof show[granularity] === 'undefined' ? t % 60 === 0 : show[granularity].indexOf(t % 60) !== -1) ? time : '';
@@ -749,7 +754,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 		// No point if it is just going to be redone completely
 		if(this.upate_timer) return;
-		
+
 		this.resize_timer = window.setTimeout(jQuery.proxy(function() {
 			if(this._resizeTimes)
 			{
@@ -775,7 +780,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var totalDisplayMinutes	= wd_end - wd_start;
 		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/this.options.granularity);
 		var row_count = (1440 / this.options.granularity);
-	
+
 		var new_height = this.scrolling.height() / rowsToDisplay;
 		var old_height = this.rowHeight;
 		this.rowHeight = new_height;
@@ -785,7 +790,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			'100%' :
 			(this.rowHeight*row_count)+'px'
 		);
-		
+
 		// Scroll to start of day
 		this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
 		this.scrolling.scrollTop(this._top_time);
@@ -806,14 +811,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 */
 	_drawDays: function() {
 		this.scrolling.append(this.days);
-		
+
 		// If day list is still empty, recalculate it from start & end date
 		if(this.day_list.length === 0 && this.options.start_date && this.options.end_date)
 		{
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
 		// For a single day, we show each owner in their own daycol
-		var daily_owner = this.day_list.length === 1 && 
+		var daily_owner = this.day_list.length === 1 &&
 			this.options.owner.length > 1 &&
 			this.options.owner.length < (parseInt(egw.preference('day_consolidate','calendar')) || 6);
 		var daycols_needed = daily_owner ? this.options.owner.length : this.day_list.length;
@@ -834,7 +839,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		{
 			var existing_index = this.day_widgets[add_index] && !daily_owner ? this.day_list.indexOf(this.day_widgets[add_index].options.date) : -1;
 			before = existing_index > add_index;
-			
+
 			var day = et2_createWidget('calendar-daycol',{
 				owner: this.options.owner,
 				width: (before ? 0 : day_width) + "px"
@@ -877,7 +882,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			this.day_widgets[delete_index].destroy();
 			this.day_widgets.splice(delete_index--,1);
 		}
-		
+
 		// Create / update day widgets with dates and data
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{
@@ -916,7 +921,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		// Adjust and scroll to start of day
 		this.resizeTimes();
-		
+
 		// Don't hold on to value any longer, use the data cache for best info
 		this.value = {};
 
@@ -927,7 +932,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		// Handle not fully visible elements
 		this._scroll();
-		
+
 		// TODO: Figure out how to do this with detached nodes
 		/*
 		var nodes = this.day_col.getDetachedNodes();
@@ -944,14 +949,14 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 	/**
 	 * Update UI while scrolling within the selected time
-	 * 
+	 *
 	 * Toggles out of view indicators and adjusts not visible headers
 	 * @param {Event} event Scroll event
 	 */
 	_scroll: function(event)
 	{
 		if(!this.day_widgets) return;
-		
+
 		// Loop through days, let them deal with it
 		for(var day = 0; day < this.day_widgets.length; day++)
 		{
@@ -967,13 +972,13 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 * @param {Date|string} end_date Date that et2_date widget can understand
 	 * @param {boolean} show_weekend If not showing weekend, Saturday and Sunday
 	 *	will not be in the returned list.
-	 *	
+	 *
 	 * @returns {string[]} List of days in Ymd format
 	 */
 	_calculate_day_list: function(start_date, end_date, show_weekend) {
-		
+
 		var day_list = [];
-		
+
 		this.date_helper.set_value(end_date);
 		var end = this.date_helper.date.getTime();
 		var i = 1;
@@ -1009,10 +1014,10 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		if(!parent)
 		{
 			debugger;
-			egw.debug('error','No parent objectManager found')
+			egw.debug('error','No parent objectManager found');
 			return;
 		}
-		
+
 		for(var i = 0; i < parent.children.length; i++)
 		{
 			var parent_finder = jQuery(parent.children[i].iface.doGetDOMNode()).find(this.div);
@@ -1027,13 +1032,13 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		// are handled internally using jQuery directly.
 		var widget_object = this._actionObject || parent.getObjectById(this.id);
 		var aoi = new et2_action_object_impl(this,this.getDOMNode());
-		
+
 		aoi.doTriggerEvent = function(_event, _data) {
 			// Determine target node
 			var event = _data.event || false;
 			if(!event) return;
 			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
-			
+
 			/*
 			We have to handle the drop in the normal event stream instead of waiting
 			for the egwAction system so we can get the helper, and destination
@@ -1067,7 +1072,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					// Remove formatting for out-of-view events (full day non-blocking)
 					$j('.calendar_calEventHeader',_data.ui.helper).css('top','');
 					$j('.calendar_calEventBody',_data.ui.helper).css('padding-top','');
-					
+
 					if(time.length)
 					{
 						// The out will trigger after the over, so we count
@@ -1098,7 +1103,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 					break;
 			}
 		};
-		
+
 		if (widget_object == null) {
 			// Add a new container to the object manager which will hold the widget
 			// objects
@@ -1112,7 +1117,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			widget_object.setAOI(aoi);
 		}
 		this._actionObject = widget_object;
-		
+
 		// Delete all old objects
 		widget_object.clear();
 		widget_object.unregisterActions();
@@ -1122,12 +1127,15 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		var action_links = this._get_action_links(actions);
 
 		this._init_links_dnd(widget_object.manager, action_links);
-		
+
 		widget_object.updateActionLinks(action_links);
 	},
 
 	/**
 	 * Automatically add dnd support for linking
+	 *
+	 * @param {type} mgr
+	 * @param {type} actionLinks
 	 */
 	_init_links_dnd: function(mgr,actionLinks) {
 		var self = this;
@@ -1190,7 +1198,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 						// Ok, stop.
 						return false;
 					}
-					
+
 					id = source[i].id.split('::');
 					links.push({app: id[0] == 'filemanager' ? 'link' : id[0], id: id[1]});
 				}
@@ -1214,7 +1222,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				{
 					// Get date and time
 					var params = jQuery.extend({},$j('.drop-hover[data-date]',target.iface.getDOMNode())[0].dataset || {});
-					
+
 					// Add link IDs
 					var app_registry = egw.link_get_registry('calendar');
 					params[app_registry.add_app] = [];
@@ -1291,16 +1299,16 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 *
 	 * Events will be retrieved automatically from the egw.data cache, so there
 	 * is no great need to provide them.
-	 * 
+	 *
 	 * @param {Object[]} events Array of events, indexed by date in Ymd format:
 	 *	{
 	 *		20150501: [...],
 	 *		20150502: [...]
 	 *	}
 	 *	Days should be in order.
-	 * @param {string|number|Date} events.start_date - New start date
-	 * @param {string|number|Date} events.end_date - New end date
-	 * @param {number|number[]|string|string[]} event.owner - Owner ID, which can
+	 *  {string|number|Date} events.start_date - New start date
+	 *  {string|number|Date} events.end_date - New end date
+	 *  {number|number[]|string|string[]} event.owner - Owner ID, which can
 	 *	be an account ID, a resource ID (as defined in calendar_bo, not
 	 *	necessarily an entry from the resource app), or a list containing a
 	 *	combination of both.
@@ -1308,7 +1316,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	set_value: function set_value(events)
 	{
 		if(typeof events !== 'object') return false;
-	
+
 		var use_days_sent = true;
 
 		if(events.start_date)
@@ -1321,7 +1329,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 
 		this._super.apply(this,arguments);
-		
+
 		if(use_days_sent)
 		{
 			var day_list = Object.keys(events);
@@ -1330,7 +1338,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 				this.set_start_date(day_list[0]);
 				this.set_end_date(day_list[day_list.length-1]);
 			}
-			
+
 			// We need to check if we're attached already, as the datastore can cause
 			// conflicts across other events (especially home) if we call it too early
 			if(this.isAttached())
@@ -1383,7 +1391,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	{
 		var old = this.options.owner || 0;
 		this._super.apply(this, arguments);
-		
+
 		this.owner.set_label('');
 		this.div.removeClass('calendar_TimeGridNoLabel');
 
@@ -1415,7 +1423,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		}
 		else
 		{
-			this.owner.options.application = 'home-accounts'
+			this.owner.options.application = 'home-accounts';
 			this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
 			this.set_label('');
 			$j(this.getDOMNode(this.owner)).prepend(this.owner.getDOMNode());
@@ -1454,21 +1462,21 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			this.options.owner.length > 1
 		);
 	},
-	
+
 	/**
 	 * Set how big the time divisions are
 	 *
 	 * Setting granularity to 0 will remove the time divisions and display
 	 * each days events in a list style.  This 'gridlist' is not to be confused
 	 * with the list view, which uses a nextmatch.
-	 * 
+	 *
 	 * @param {number} minutes
 	 */
 	set_granularity: function(minutes)
 	{
 		// Avoid  < 0
 		minutes = Math.max(0,minutes);
-		
+
 		if(this.options.granularity !== minutes)
 		{
 			if(this.options.granularity === 0 || minutes === 0)
@@ -1528,6 +1536,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 	/**
 	 * Call event change handler, if set
+	 *
+	 * @param {type} event
+	 * @param {type} dom_node
 	 */
 	event_change: function(event, dom_node) {
 		if (this.onevent_change)
@@ -1580,7 +1591,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	click: function(_ev)
 	{
 		var result = true;
-		
+
 		// Is this click in the event stuff, or in the header?
 		if(_ev.target.dataset.id || $j(_ev.target).parents('.calendar_calEvent').length)
 		{
@@ -1639,13 +1650,13 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 	 *
 	 * This does not return an actual time on a clock, but finds the closest
 	 * time node (.calendar_calAddEvent or day column) to the given position.
-	 * 
+	 *
 	 * @param {number} x
 	 * @param {number} y
 	 * @returns {DOMNode[]} time node(s) for the given position
 	 */
 	_get_time_from_position: function(x,y) {
-		
+
 		x = Math.round(x);
 		y = Math.round(y);
 		if(this.options.granularity === 0)
@@ -1660,7 +1671,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			delete this.gridHover[0].dataset[id];
 		}
 		var node = document.elementFromPoint(x,y);
-		
+
 		while(node && node != this.node && node.tagName != 'BODY' && path.length < 10)
 		{
 			path.push(node);
@@ -1716,7 +1727,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 		this.gridHover.css('left','');
 		return this.gridHover;
 	},
-	
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 *
@@ -1745,7 +1756,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 	// Resizable interface
 	/**
-	 * @param {boolean} [too_small=null] Force the widget to act as if it was too small
+	 * @param {boolean} [_too_small=null] Force the widget to act as if it was too small
 	 */
 	resize: function (_too_small)
 	{
@@ -1773,9 +1784,9 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 
 		// Allow for toolbar
 		height -= $j('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
-		
+
 		this.options.height = Math.floor(height / rowCount);
-		
+
 		// Allow for borders & padding
 		this.options.height -= 2*((this.div.outerWidth(true) - this.div.innerWidth()) + parseInt(this.div.parent().css('padding-top')));
 
@@ -1813,7 +1824,7 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			this.div.removeClass('calendar_calTimeGridFixed');
 		}
 		this.div.css('height', this.options.height);
-			
+
 		// Re-do time grid
 		if(!this.update_timer)
 		{
@@ -1833,5 +1844,5 @@ var et2_calendar_timegrid = et2_calendar_view.extend([et2_IDetachedDOM, et2_IRes
 			day.set_width(day_width + 'px');
 		}
 	}
-});
+});}).call(this);
 et2_register_widget(et2_calendar_timegrid, ["calendar-timegrid"]);

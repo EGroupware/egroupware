@@ -1,13 +1,18 @@
-/* 
+/*
  * Egroupware
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package 
- * @subpackage 
+ * @package
+ * @subpackage
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @version $Id$
  */
 
+/*egw:uses
+	/calendar/js/et2_widget_view.js;
+	/calendar/js/et2_widget_daycol.js;
+	/calendar/js/et2_widget_event.js;
+*/
 
 
 /**
@@ -17,7 +22,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		start_date: {
@@ -57,7 +62,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Used for its date calculations
 		this.date_helper = et2_createWidget('date-time',{},null);
 		this.date_helper.loadingFinished();
-		
+
 		this.set_start_date(this.options.start_date);
 		this.set_end_date(this.options.end_date);
 
@@ -73,7 +78,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	destroy: function() {
 		this._super.apply(this, arguments);
-		
+
 		// date_helper has no parent, so we must explicitly remove it
 		this.date_helper.destroy();
 		this.date_helper = null;
@@ -90,7 +95,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			return this.rows[0];
 		}
 	},
-	
+
 	/**
 	 * Draw the individual divs for weekends and events
 	 */
@@ -176,7 +181,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.options.end_date.setUTCMinutes(59);
 		this.options.end_date.setUTCSeconds(59);
 	},
-	
+
 	/**
 	 * Mark special days (birthdays, holidays) on the planner
 	 *
@@ -201,7 +206,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 					(holidays ? ' title="'+holidays.join(',')+'"' : '')+
 					' ></div>';
 			}
-			t.setUTCDate(t.getUTCDate()+1)
+			t.setUTCDate(t.getUTCDate()+1);
 		}
 		return content;
 	},
@@ -231,7 +236,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 				value: events[c]
 			},this);
 		}
-		
+
 		// Seperate loop so column sorting finds all children in the right place
 		for(var c = 0; c < events.length && c < this._children.length; c++)
 		{
@@ -306,7 +311,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			var end = new Date(a.options.value.end) - new Date(b.options.value.end);
 			return start ? start : end;
 		});
-		
+
 		for(var n = 0; n < this._children.length; n++)
 		{
 			var event = this._children[n].options.value || false;
@@ -333,7 +338,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 				{
 					day_start -= daylight_diff;
 				}
-				
+
 				event['start_m'] = parseInt((event.start.valueOf()/1000 - day_start) / 60);
 				if (event['start_m'] < 0)
 				{
@@ -378,7 +383,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 		// Handle the different value types
 		start = this.options.start_date;
 		end = this.options.end_date;
-		
+
 		if(typeof start === 'string')
 		{
 			start = new Date(start);
@@ -412,7 +417,7 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 			var start_date = new Date(start.getUTCFullYear(), start.getUTCMonth(),start.getUTCDate());
 			var end_date = new Date(end.getUTCFullYear(), end.getUTCMonth(),end.getUTCDate());
 			var t_date = new Date(t.getUTCFullYear(), t.getUTCMonth(),t.getUTCDate());
-			
+
 			var days = Math.round((end_date - start_date) / (24 * 3600 * 1000))+1;
 			pos = 1 / days * Math.round((t_date - start_date) / (24*3600 * 1000));
 
@@ -460,8 +465,8 @@ var et2_calendar_planner_row = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	setDetachedAttributes: function(_nodes, _values) {
 
-	},
+	}
 
-});
+});}).call(this);
 
 et2_register_widget(et2_calendar_planner_row, ["calendar-planner_row"]);

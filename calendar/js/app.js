@@ -40,7 +40,7 @@
  *
  * @augments AppJS
  */
-app.classes.calendar = AppJS.extend(
+app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 {
 	/**
 	 * application name
@@ -2060,7 +2060,7 @@ app.classes.calendar = AppJS.extend(
 				// caching keys, otherwise they'll fetch & cache consolidated
 				if(state.state.view == 'day' && state.state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')))
 				{
-					day_value = [];
+					var day_value = [];
 					for(var i = 0; i < state.state.owner.length; i++)
 					{
 						day_value.push({
@@ -2748,7 +2748,7 @@ app.classes.calendar = AppJS.extend(
 					this._queries_in_progress.splice(idx,1);
 				}
 				//console.log(data);
-				
+
 				// Look for any updated select options
 				if(data.rows && data.rows.sel_options && this.sidebox_et2)
 				{
@@ -3501,7 +3501,7 @@ app.classes.calendar = AppJS.extend(
 			return d;
 		}
 	}
-});
+});}).call(this);
 
 
 jQuery.extend(app.classes.calendar,{
