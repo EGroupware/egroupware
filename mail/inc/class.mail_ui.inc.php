@@ -721,6 +721,10 @@ class mail_ui
 
 				// sending preview toolbar actions
 				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
+				
+				// We need to send toolbar actions to client-side because view template needs them
+				if (html::$ua_mobile) $sel_options['toolbar'] = $this->get_toolbar_actions();
+				
 				//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
 				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['cat_id']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
 				$readonlys = $preserv = array();
@@ -909,9 +913,10 @@ class mail_ui
 				'caption' => lang('Open'),
 				'icon' => 'view',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_open',
+				'onExecute' => html::$ua_mobile?'javaScript:app.mail.mobileView':'javaScript:app.mail.mail_open',
 				'allowOnMultiple' => false,
 				'default' => true,
+				'mobileViewTemplate' => 'view.xet'
 			),
 			'reply' => array(
 				'caption' => 'Reply',

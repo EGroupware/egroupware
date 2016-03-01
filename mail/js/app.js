@@ -157,7 +157,6 @@ app.classes.mail = AppJS.extend(
 			case 'mail.sieve.vacation':
 				this.vacationFilterStatusChange();
 				break;
-			case 'mail.mobile_index':
 			case 'mail.index':
 				var self = this;
 				jQuery('iframe#mail-index_messageIFRAME').on('load', function()
@@ -4257,12 +4256,12 @@ app.classes.mail = AppJS.extend(
 	 * Prepare display dialog for printing
 	 * copies iframe content to a DIV, as iframe causes
 	 * trouble for multipage printing
-	 *
+	 * @param {jQuery object} _iframe mail body iframe
 	 * @returns {undefined}
 	 */
-	mail_prepare_print: function()
+	mail_prepare_print: function(_iframe)
 	{
-		var mainIframe = jQuery('#mail-display_mailDisplayBodySrc');
+		var $mainIframe = _iframe || jQuery('#mail-display_mailDisplayBodySrc');
 		var tmpPrintDiv = jQuery('#tempPrintDiv');
 
 		if (tmpPrintDiv.length == 0 && tmpPrintDiv.children())
@@ -4273,12 +4272,12 @@ app.classes.mail = AppJS.extend(
 			var notAttached = true;
 		}
 
-		if (mainIframe)
+		if ($mainIframe)
 		{
-			tmpPrintDiv[0].innerHTML = mainIframe.contents().find('body').html();
+			tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
 		}
 		// Attach the element to the DOM after maniupulation
-		if (notAttached) jQuery('#mail-display_mailDisplayBodySrc').after(tmpPrintDiv);
+		if (notAttached) $mainIframe.after(tmpPrintDiv);
 		tmpPrintDiv.find('#divAppboxHeader').remove();
 
 	},
@@ -5139,7 +5138,66 @@ app.classes.mail = AppJS.extend(
 		};
 		et2_dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
 			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+	},
+	
+	/**
+	 * Implement mobile view
+	 * 
+	 * @param {type} _action
+	 * @param {type} _sender
+	 */
+	mobileView: function(_action, _sender)
+	{
+		// app id in nm
+		var id = _sender[0].id;
+		var content = {};
+
+		if (id){
+			content = egw.dataGetUIDdata(id);
+			content.data['toolbar'] = etemplate2.getByApplication('mail')[0].widgetContainer.getArrayMgr('sel_options').data.toolbar;
+			this.et2.setArrayMgr('content', content);
+		}
+		// set the current selected row
+		this.mail_currentlyFocussed = id;
+		
+		var self = this;
+		
+		this.viewEntry(_action, _sender, function(etemplate){
+			// et2 object in view
+			var et2 = etemplate.widgetContainer;
+			// iframe to load message
+			var iframe = et2.getWidgetById('iframe');
+			// toolbar widget
+			var toolbar = et2.getWidgetById('toolbar');
+			// attachments details title DOM node
+			var $attachment = jQuery('.attachments span.et2_details_title');
+			// details DOM
+			var $details = jQuery('.et2_details.details');
+			// Content
+			var content = et2.getArrayMgr('content').data;
+			
+			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
+			{
+				$attachment.text(content.attachmentsBlock.length+' '+ egw.lang('attachments'));
+			}
+			else
+			{
+				// disable attachments area if there's no attachments
+				$attachment.parent().hide();
+			}
+			// disable the detials if there's no details
+			if (!content.ccaddress) $details.hide();
+			
+			toolbar.set_actions(content.toolbar);
+			
+			// Request email body from server
+			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));
+			jQuery(iframe.getDOMNode()).on('load',function(){
+				// Use prepare print function to copy iframe content into div
+				// as we don't want to show content in iframe.
+				self.mail_prepare_print(jQuery(this));
+			});
+			
+		});
 	}
-
-
 });
