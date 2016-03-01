@@ -45,6 +45,12 @@ foreach(egw_framework::get_bundles() as $name => $files)
 		if ($path[0] == '/') $path = substr($path, 1);
 	});
 
+	// phpgwapi/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
+	if ($name == 'api' && ($key = array_search('phpgwapi/js/jsapi/egw.js', $files)))
+	{
+		unset($files[$key]);
+	}
+
 	//var_dump($name, $files);
 	if (isset($uglify[$name]))
 	{
@@ -53,11 +59,14 @@ foreach(egw_framework::get_bundles() as $name => $files)
 	}
 	elseif (isset($uglify[$append = substr($name, 0, -1)]))
 	{
+		reset($uglify[$append]['files']);
+		list($target) = each($uglify[$append]['files']);
 		$uglify[$append]['files'][$target] = array_merge($uglify[$append]['files'][$target], array_values($files));
 	}
-	else
+	else	// create new bundle using last file as target
 	{
-		error_log("Bundle $name ignored!\n");
+		$target = str_replace('.js', '.min.js', end($files));
+		$uglify[$name]['files'][$target] = array_values($files);
 	}
 }
 

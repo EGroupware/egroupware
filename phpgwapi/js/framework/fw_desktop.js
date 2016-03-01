@@ -13,7 +13,7 @@
 	framework.fw_base;
 	framework.fw_browser;
 	framework.fw_ui;
-	egw_fw_classes;
+	framework.fw_classes;
 	egw_inheritance.js;
 */
 

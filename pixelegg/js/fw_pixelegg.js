@@ -8,12 +8,14 @@
  * @description Create jdots framework
  */
 
-"use strict";
 /*egw:uses
 	jquery.jquery;
 	framework.fw_desktop;
+	/pixelegg/js/slider.js;
 */
 (function(window){
+	"use strict";
+
 	/**
 	 * jdots framework object defenition
 	 * here we can add framework methods and also override fw_desktop methods if it is neccessary

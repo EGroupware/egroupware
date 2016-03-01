@@ -270,8 +270,8 @@ class egw_include_mgr
 	 *    --> /phpgwapi/inc/calendar-setup.js?lang=de
 	 *
 	 * @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
-	 * @param string|array $file=null file to be included - no ".js" on the end or array with get params
-	 * @param string $app='phpgwapi' application directory to search - default = phpgwapi
+	 * @param string|array $file =null file to be included - no ".js" on the end or array with get params
+	 * @param string $app ='phpgwapi' application directory to search - default = phpgwapi
 	 *
 	 * @returns the correct path on the server if the file is found or false, if the
 	 *  file is not found or no further processing is needed.
@@ -332,8 +332,8 @@ class egw_include_mgr
 	 *    --> /phpgwapi/inc/calendar-setup.js?lang=de
 	 *
 	 * @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
-	 * @param string|array $file=null file to be included - no ".js" on the end or array with get params
-	 * @param string $app='phpgwapi' application directory to search - default = phpgwapi
+	 * @param string|array $file =null file to be included - no ".js" on the end or array with get params
+	 * @param string $app ='phpgwapi' application directory to search - default = phpgwapi
 	 */
 	public function include_js_file($package, $file = null, $app = 'phpgwapi')
 	{
@@ -361,11 +361,11 @@ class egw_include_mgr
 	 * Include given files, optionally clear list of files to include
 	 *
 	 * @param array $files
-	 * @param boolean $clear_files=false if true clear list of files, before including given ones
+	 * @param boolean $clear_files =false if true clear list of files, before including given ones
 	 */
 	public function include_files(array $files, $clear_files=false)
 	{
-		if ($clear_files) self::$included_files = array();
+		if ($clear_files) $this->included_files = array();
 
 		foreach ($files as $file)
 		{
@@ -376,7 +376,7 @@ class egw_include_mgr
 	/**
 	 * Return all files
 	 *
-	 * @param boolean $clear_files=false if true clear list of files after returning them
+	 * @param boolean $clear_files =false if true clear list of files after returning them
 	 * @return array
 	 */
 	public function get_included_files($clear_files=false)
@@ -389,7 +389,7 @@ class egw_include_mgr
 	/**
 	 * Constructor
 	 *
-	 * @param array $files=null optional files to include as for include_files method
+	 * @param array $files =null optional files to include as for include_files method
 	 */
 	public function __construct(array $files = null)
 	{

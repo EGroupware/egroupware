@@ -822,6 +822,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."() truncsize=$truncsize, mimeSupport=".array2string($mimesupport));
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
+		// fix for z-push bug returning additional bodypreference type 4, even if only 1 is requested and mimessupport = 0
+		if (!$mimesupport && ($key = array_search('4', $bodypreference))) unset($bodypreference[$key]);
+
 		//$this->debugLevel=4;
 		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));

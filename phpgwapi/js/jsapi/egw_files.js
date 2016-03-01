@@ -51,6 +51,13 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var bundle2files_regexp = /phpgwapi\/inc\/min\/\?b=[^&]+&f=([^&]+)/;
 
 	/**
+	 * Regexp to detect and remove .min.js extension
+	 *
+	 * @type RegExp
+	 */
+	var min_js_regexp = /\.min\.js$/;
+
+	/**
 	 * Return array of files-sources from bundle(s) incl. bundle-src itself
 	 *
 	 * @param {string|Array} _srcs all url's have to be egw releativ!
@@ -65,12 +72,16 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		for(var n=0; n < _srcs.length; ++n)
 		{
 			var file = _srcs[n];
-			files.push(file);
+			files.push(file.replace(min_js_regexp, '.js'));
 			var contains = file.match(bundle2files_regexp);
 
 			if (contains && contains.length > 1)
 			{
-				files = files.concat(contains[1].split(','));
+				var bundle = contains[1].split(',');
+				for(var i; i < bundle.length; ++i)
+				{
+					files.push(bundle[i].replace(min_js_regexp, '.js'));
+				}
 			}
 		}
 		return files;
@@ -122,7 +133,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	}
 	// make urls egw-relative
 	files = strip_egw_url(files);
-	// resolve bundles
+	// resolve bundles and replace .min.js with .js
 	files = files_from_bundles(files);
 
 	return {
@@ -189,13 +200,16 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		/**
 		 * Check if file is already included and optional mark it as included if not yet included
 		 *
+		 * Check does NOT differenciate between file.min.js and file.js.
+		 * Only .js get's recored in files for further checking, if _add_if_not set.
+		 *
 		 * @param {string} _file
 		 * @param {boolean} _add_if_not if true mark file as included
 		 * @return boolean true if file already included, false if not
 		 */
 		included: function(_file, _add_if_not)
 		{
-			var file = removeTS(_file);
+			var file = removeTS(_file).replace(min_js_regexp, '.js');
 			var not_inc = files.indexOf(file) == -1;
 
 			if (not_inc && _add_if_not)

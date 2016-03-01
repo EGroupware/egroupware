@@ -2037,6 +2037,20 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Url of minified version of bundle
+	 *
+	 * @var array
+	 */
+	static $bundle2minurl = array(
+		'api' => '/phpgwapi/js/jsapi.min.js',
+		'et2' => '/etemplate/js/etemplate2.min.js',
+		'et21'=> '/etemplate/js/etemplate2.min.js',
+		'pixelegg' => '/pixelegg/js/fw_pixelegg.min.js',
+		'jdots' => '/jdots/js/fw_jdots.min.js',
+		'mobile' => '/jdots/js/fw_mobile.min.js',
+	);
+
+	/**
 	 * Devide js-includes in bundles of javascript files to include eg. api or etemplate2, if minifying is enabled
 	 *
 	 * @param array $js_includes files to include with egw relative url
@@ -2054,7 +2068,13 @@ abstract class egw_framework
 			unset($bundles['.ts']);
 			foreach($bundles as $name => $files)
 			{
-				$file2bundle += array_combine($files, array_fill(0, count($files), $name));
+				// ignore bundles of not used templates, as they can contain identical files
+				if (in_array($name, array('api', 'et2', 'et21')) ||
+					$name == (html::$ua_mobile ? 'mobile' : $GLOBALS['egw_info']['server']['template_set']) ||
+					isset($GLOBALS['egw_info']['apps'][$name]))
+				{
+					$file2bundle += array_combine($files, array_fill(0, count($files), $name));
+				}
 			}
 		}
 		$to_include = $included_bundles = array();
@@ -2065,18 +2085,33 @@ abstract class egw_framework
 			{
 				if (($bundle = $file2bundle[$file]))
 				{
-					//error_log(__METHOD__."() requiring boundle $bundle for $file");
+					//error_log(__METHOD__."() requiring bundle $bundle for $file");
 					if (!in_array($bundle, $included_bundles))
 					{
-						$max_modified = 0;
-						$to_include = array_merge($to_include, self::bundle_urls($bundles[$bundle], $max_modified));
 						$included_bundles[] = $bundle;
-						// check if bundle-config is more recent then
-						if ($max_modified > $bundles_ts)
+						$minurl = self::$bundle2minurl[$bundle];
+						if (!isset($minurl) && isset($GLOBALS['egw_info']['apps'][$bundle]))
 						{
-							// force new bundle config by deleting cached one and call ourself again
-							egw_cache::unsetTree(__CLASS__, 'bundles');
-							return self::bundle_js_includes($js_includes);
+							$minurl = '/'.$bundle.'/js/app.min.js';
+						}
+						if (isset($minurl) && file_exists(EGW_SERVER_ROOT.$minurl))
+						{
+							if (!isset($to_include[$minurl]))
+							{
+								$to_include[$minurl] = $minurl.'?'.filemtime(EGW_SERVER_ROOT.$minurl);
+							}
+						}
+						else
+						{
+							$max_modified = 0;
+							$to_include = array_merge($to_include, self::bundle_urls($bundles[$bundle], $max_modified));
+							// check if bundle-config is more recent then
+							if ($max_modified > $bundles_ts)
+							{
+								// force new bundle config by deleting cached one and call ourself again
+								egw_cache::unsetTree(__CLASS__, 'bundles');
+								return self::bundle_js_includes($js_includes);
+							}
 						}
 					}
 				}
@@ -2085,7 +2120,14 @@ abstract class egw_framework
 					unset($query);
 					list($path, $query) = explode('?', $file, 2);
 					$mod = filemtime(EGW_SERVER_ROOT.$path);
-
+					// check if we have a more recent minified version of the file and use it
+					if ($GLOBALS['egw_info']['server']['debug_minify'] !== 'True' &&
+						substr($path, -3) == '.js' && file_exists(EGW_SERVER_ROOT.($min_path = substr($path, 0, -3).'.min.js')) &&
+						(($min_mod = filemtime(EGW_SERVER_ROOT.$min_path)) >= $mod))
+					{
+						$path = $min_path;
+						$mod  = $min_mod;
+					}
 					$to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
 				}
 			}
@@ -2169,7 +2211,7 @@ abstract class egw_framework
 		$inc_mgr = new egw_include_mgr();
 		$bundles = array();
 
-		$api_max_mod = $et2_max_mod = $jdots_max_mod = 0;
+		$max_mod = array();
 
 		// generate api bundle
 		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery.js');
@@ -2195,22 +2237,33 @@ abstract class egw_framework
 		$inc_mgr->include_js_file('/phpgwapi/js/ckeditor/ckeditor.js');
 		$inc_mgr->include_js_file('/phpgwapi/js/ckeditor/config.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
-		self::bundle_urls($bundles['api'], $api_max_mod);
+		self::bundle_urls($bundles['api'], $max_mod['api']);
 
 		// generate et2 bundle (excluding files in api bundle)
 		//$inc_mgr->include_js_file('/etemplate/js/lib/jsdifflib/difflib.js');	// it does not work with "use strict" therefore included in front
 		$inc_mgr->include_js_file('/etemplate/js/etemplate2.js');
 		$bundles['et2'] = array_diff($inc_mgr->get_included_files(), $bundles['api']);
-		self::bundle_urls($bundles['et2'], $et2_max_mod);
+		self::bundle_urls($bundles['et2'], $max_mod['et2']);
 
-		// generate jdots bundle, if installed
-		/* switching jdots bundle off, as fw_pixelegg will cause whole jdots bundle incl. fw_jdots to include
-		if (file_exists(EGW_SERVER_ROOT.'/jdots'))
+		$stock_files = call_user_func_array('array_merge', $bundles);
+
+		// generate template and app bundles, if installed
+		foreach(array(
+			'jdots' => '/jdots/js/fw_jdots.js',
+			'mobile' => '/jdots/js/fw_mobile.js',
+			'pixelegg' => '/pixelegg/js/fw_pixelegg.js',
+			'calendar' => '/calendar/js/app.js',
+			'mail' => '/mail/js/app.js',
+		) as $bundle => $file)
 		{
-			$inc_mgr->include_js_file('/jdots/js/fw_jdots.js');
-			$bundles['jdots'] = array_diff($inc_mgr->get_included_files(), call_user_func_array('array_merge', $bundles));
-			self::bundle_urls($bundles['jdots'], $jdots_max_mod);
-		}*/
+			if (@file_exists(EGW_SERVER_ROOT.$file))
+			{
+				$inc_mgr = new egw_include_mgr($stock_files);	// reset loaded files to stock files
+				$inc_mgr->include_js_file($file);
+				$bundles[$bundle] = array_diff($inc_mgr->get_included_files(), $stock_files);
+				self::bundle_urls($bundles[$bundle], $max_mod[$bundle]);
+			}
+		}
 
 		// automatic split bundles with more then MAX_BUNDLE_FILES (=50) files
 		foreach($bundles as $name => $files)
@@ -2224,7 +2277,7 @@ abstract class egw_framework
 		}
 
 		// store max modification time of all files in all bundles
-		$bundles['.ts'] = max(array($api_max_mod, $et2_max_mod, $jdots_max_mod));
+		$bundles['.ts'] = max($max_mod);
 
 		//error_log(__METHOD__."() returning ".array2string($bundles));
 		return $bundles;

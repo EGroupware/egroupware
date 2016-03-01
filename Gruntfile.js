@@ -68,7 +68,6 @@ module.exports = function (grunt) {
 						"phpgwapi\/js\/jsapi\/egw_message.js",
 						"phpgwapi\/js\/es6-promise.min.js",
 						"phpgwapi\/js\/jsapi\/app_base.js",
-						"phpgwapi\/js\/jsapi\/egw.js",
 						"phpgwapi\/js\/dhtmlxtree\/codebase\/dhtmlxcommon.js",
 						"phpgwapi\/js\/dhtmlxtree\/sources\/dhtmlxtree.js",
 						"phpgwapi\/js\/dhtmlxtree\/sources\/ext\/dhtmlxtree_json.js",
@@ -188,12 +187,63 @@ module.exports = function (grunt) {
 			},
 			mail: {
 				files: {
-					"mail\/js\/app.min.js": "mail\/js\/app.js"
+					"mail\/js\/app.min.js": [
+						"mail\/js\/app.js"
+					]
 				}
 			},
 			calendar: {
 				files: {
-					"calendar\/js\/app.min.js": "calendar\/js\/app.js"
+					"calendar\/js\/app.min.js": [
+						"calendar\/js\/et2_widget_owner.js",
+						"calendar\/js\/et2_widget_view.js",
+						"calendar\/js\/et2_widget_timegrid.js",
+						"calendar\/js\/et2_widget_event.js",
+						"calendar\/js\/et2_widget_daycol.js",
+						"calendar\/js\/et2_widget_planner_row.js",
+						"calendar\/js\/et2_widget_planner.js",
+						"calendar\/js\/app.js"
+					]
+				}
+			},
+			jdots: {
+				files: {
+					"jdots\/js\/fw_jdots.min.js": [
+						"phpgwapi\/js\/framework\/fw_base.js",
+						"phpgwapi\/js\/framework\/fw_browser.js",
+						"phpgwapi\/js\/jquery\/mousewheel\/mousewheel.js",
+						"phpgwapi\/js\/framework\/fw_ui.js",
+						"phpgwapi\/js\/framework\/fw_classes.js",
+						"phpgwapi\/js\/framework\/fw_desktop.js",
+						"jdots\/js\/fw_jdots.js"
+					]
+				}
+			},
+			mobile: {
+				files: {
+					"jdots\/js\/fw_mobile.min.js": [
+						"phpgwapi\/js\/jquery\/fastclick\/lib\/fastclick.js",
+						"phpgwapi\/js\/framework\/fw_base.js",
+						"phpgwapi\/js\/framework\/fw_browser.js",
+						"phpgwapi\/js\/jquery\/mousewheel\/mousewheel.js",
+						"phpgwapi\/js\/framework\/fw_ui.js",
+						"phpgwapi\/js\/framework\/fw_classes.js",
+						"jdots\/js\/fw_mobile.js"
+					]
+				}
+			},
+			pixelegg: {
+				files: {
+					"pixelegg\/js\/fw_pixelegg.min.js": [
+						"phpgwapi\/js\/framework\/fw_base.js",
+						"phpgwapi\/js\/framework\/fw_browser.js",
+						"phpgwapi\/js\/jquery\/mousewheel\/mousewheel.js",
+						"phpgwapi\/js\/framework\/fw_ui.js",
+						"phpgwapi\/js\/framework\/fw_classes.js",
+						"phpgwapi\/js\/framework\/fw_desktop.js",
+						"pixelegg\/js\/slider.js",
+						"pixelegg\/js\/fw_pixelegg.js"
+					]
 				}
 			}
 		}
