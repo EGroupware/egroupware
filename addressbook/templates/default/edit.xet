@@ -172,7 +172,7 @@
 			<rows>
 				<row valign="top">
 					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
-					<listbox type="select-cat" id="cat_id" rows="11" tags="true" empty_label="Category" width="100%"/>
+					<taglist-cat id="cat_id" tags="true" empty_label="Category" width="100%" height="195"/>
 					<grid width="100%">
 						<columns>
 							<column width="80"/>
