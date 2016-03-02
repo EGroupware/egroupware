@@ -1047,7 +1047,7 @@ abstract class bo_merge
 						}
 					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
-					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
+					$value = str_replace(array("\r","\n",'<p>','</p>','<div>','</div>','<br />'),array('','','',"\r\n",'',"\r\n","\r\n"),$value);
 					$value = strip_tags($value,implode('',$replace_tags));
 
 					// Change <tag>...\r\n</tag> to <tag>...</tag>\r\n or simplistic line break below will mangle it
