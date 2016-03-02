@@ -14,12 +14,13 @@
  *		sudo npm install -g grunt-cli
  *		npm install grunt --save-dev
  *		npm install grunt-contrib-uglify --save-dev
+ *		npm install grunt-newer --save-dev
  *
  * Building happens by running in your EGroupware directory:
  *
- *		grunt
+ *		grunt	# runs uglify for all targets with changed files
  * or
- *		grunt uglify:<target>	# targets: api, et2, pixelegg, mobile, mail, calendar, ...
+ *		grunt [newer:]uglify:<target>	# targets: api, et2, pixelegg, mobile, mail, calendar, ...
  *
  * app.js files can be added like mail target or, if you want automatic dependencies,
  * you need to add them in egw_framework::$bundle2minurl and egw_framework::get_bundles().
@@ -255,6 +256,9 @@ module.exports = function (grunt) {
 	// Load the plugin that provides the "uglify" task.
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
+	// Load the plugin that runs tasks only on modified files
+	grunt.loadNpmTasks('grunt-newer');
+
 	// Default task(s).
-	grunt.registerTask('default', ['uglify']);
+	grunt.registerTask('default', ['newer:uglify']);
 };
