@@ -481,7 +481,7 @@ url (business)	addressbook	en	url (business)
 url (private)	addressbook	en	url (private)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
 use addressbooks "own sorting" attribute	addressbook	en	use addressbooks "own sorting" attribute
-use an extra category tab?	addressbook	en	Use an extra tab for categories
+use a category tree?	addressbook	en	Use a tree for selecting categories
 use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields
 use country list	addressbook	en	Use country list
 use setup for a full account-migration	admin	en	Use setup for a full account migration

@@ -41,12 +41,11 @@ select[multiple] { width:100%;}
     </td>
    </tr>
    <tr class="row_on">
-    <td>&nbsp;{lang_Use_an_extra_category_tab?}</td>
+    <td>&nbsp;{lang_Use_a_category_tree?}</td>
     <td>
      <select name="newsettings[cat_tab]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_cat_tab_True}>{lang_Yes}</option>
-      <option value="Tree"{selected_cat_tab_Tree}>{lang_Yes}, {lang_Category_tree}</option>
+      <option value="True">{lang_No}</option>
+      <option value="Tree"{selected_cat_tab_Tree}>{lang_Yes}</option>
      </select>
     </td>
    </tr>
