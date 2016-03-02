@@ -1001,7 +1001,8 @@ abstract class bo_merge
 					continue;
 				}
 				// decode html entities back to utf-8
-				if (is_string($value) && (strpos($value,'&') !== false))
+				
+				if (is_string($value) && (strpos($value,'&') !== false) && $this->parse_html_styles)
 				{
 					$value = html_entity_decode($value,ENT_QUOTES,$charset);
 
@@ -1011,8 +1012,13 @@ abstract class bo_merge
 						$value = preg_replace('/&[^; ]+;/','',$value);
 					}
 				}
-				// remove all html tags, evtl. included
-				if (is_string($value) && (strpos($value,'<') !== false))
+
+				if(!$this->parse_html_styles)
+				{
+					// Encode special chars so they don't break the file
+					$value = htmlspecialchars($value,ENT_NOQUOTES);
+				}
+				else if (is_string($value) && (strpos($value,'<') !== false))
 				{
 					// Clean HTML, if it's being kept
 					if($replace_tags && extension_loaded('tidy')) {
@@ -1030,7 +1036,7 @@ abstract class bo_merge
 						}
 					}
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
-					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
+					$value = str_replace(array("\r","\n",'<p>','</p>','<div>','</div>','<br />'),array('','','',"\r\n",'',"\r\n","\r\n"),$value);
 					$value = strip_tags($value,implode('',$replace_tags));
 
 					// Change <tag>...\r\n</tag> to <tag>...</tag>\r\n or simplistic line break below will mangle it
