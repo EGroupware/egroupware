@@ -8,6 +8,7 @@
 
 /*egw:uses
 	jquery.jquery;
+	egw_action.egw_action_common;
 	egw_inheritance.js;
 */
 
