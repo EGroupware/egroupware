@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		uglify: {
 			options: {
-				banner: "\/*! build <%= grunt.template.today() %> *\/\n",
+				banner: "\/*!\n * EGroupware (http:\/\/www.egroupware.org\/) minified Javascript\n *\n * full sources are available under https:\/\/svn.stylite.de\/viewvc\/egroupware\/\n *\n * build <%= grunt.template.today() %>\n *\/\n",
 				mangle: false,
 				sourceMap: true,
 				screwIE8: true
@@ -88,7 +88,6 @@ module.exports = function (grunt) {
 						"phpgwapi\/js\/dhtmlxMenu\/sources\/ext\/dhtmlxmenu_ext.js",
 						"phpgwapi\/js\/egw_action\/egw_menu_dhtmlx.js",
 						"phpgwapi\/js\/jquery\/chosen\/chosen.jquery.js",
-						"phpgwapi\/js\/ckeditor\/ckeditor.js",
 						"phpgwapi\/js\/ckeditor\/config.js"
 					]
 				}

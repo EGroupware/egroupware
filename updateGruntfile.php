@@ -50,6 +50,11 @@ foreach(egw_framework::get_bundles() as $name => $files)
 	{
 		unset($files[$key]);
 	}
+	// ckeditor is loaded separate before the bundle
+	if ($name == 'api' && ($key = array_search('phpgwapi/js/ckeditor/ckeditor.js', $files)))
+	{
+		unset($files[$key]);
+	}
 
 	//var_dump($name, $files);
 	if (isset($uglify[$name]))

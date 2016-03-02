@@ -2094,24 +2094,14 @@ abstract class egw_framework
 						{
 							$minurl = '/'.$bundle.'/js/app.min.js';
 						}
-						if (isset($minurl) && file_exists(EGW_SERVER_ROOT.$minurl))
+						$max_modified = 0;
+						$to_include = array_merge($to_include, self::bundle_urls($bundles[$bundle], $max_modified, $minurl));
+						// check if bundle-config is more recent then
+						if ($max_modified > $bundles_ts)
 						{
-							if (!isset($to_include[$minurl]))
-							{
-								$to_include[$minurl] = $minurl.'?'.filemtime(EGW_SERVER_ROOT.$minurl);
-							}
-						}
-						else
-						{
-							$max_modified = 0;
-							$to_include = array_merge($to_include, self::bundle_urls($bundles[$bundle], $max_modified));
-							// check if bundle-config is more recent then
-							if ($max_modified > $bundles_ts)
-							{
-								// force new bundle config by deleting cached one and call ourself again
-								egw_cache::unsetTree(__CLASS__, 'bundles');
-								return self::bundle_js_includes($js_includes);
-							}
+							// force new bundle config by deleting cached one and call ourself again
+							egw_cache::unsetTree(__CLASS__, 'bundles');
+							return self::bundle_js_includes($js_includes);
 						}
 					}
 				}
@@ -2144,12 +2134,14 @@ abstract class egw_framework
 	 *
 	 * @param array $js_includes
 	 * @param int& $max_modified =null on return maximum modification time of bundle
+	 * @param string $minurl =null url of minified bundle, to be used, if existing and recent
 	 * @return array js-files (can be more then one, if one of given files can not be bundeled)
 	 */
-	protected static function bundle_urls(array $js_includes, &$max_modified=null)
+	protected static function bundle_urls(array $js_includes, &$max_modified=null, $minurl=null)
 	{
 		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
-		$to_include = $to_minify = array();
+		// ignore not existing minurl
+		$to_include_first = $to_include = $to_minify = array();
 		$max_modified = 0;
 		$query = null;
 		foreach($js_includes as $path)
@@ -2160,8 +2152,13 @@ abstract class egw_framework
 			list($path,$query) = explode('?',$path,2);
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
 
+			// ckeditor must be included before bundled files, as they depend on it!
+			if (strpos($path,'/ckeditor/ckeditor.js') !== false)
+			{
+				$to_include_first[] = $path . '?' . $mod;
+			}
 			// for now minify does NOT support query parameters, nor php files generating javascript
-			if ($debug_minify || $query || substr($path, -3) != '.js' || strpos($path,'ckeditor') !== false ||
+			elseif ($debug_minify || $query || substr($path, -3) != '.js' ||
 				substr($path, -7) == '/app.js')	// do NOT include app.js, as it changes from app to app
 			{
 				$path .= '?'. $mod.($query ? '&'.$query : '');
@@ -2175,16 +2172,25 @@ abstract class egw_framework
 		}
 		if (!$debug_minify && $to_minify)
 		{
-			$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
-			if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
-			$path = '/phpgwapi/inc/min/?'.($base_path && $base_path != '/' ? 'b='.substr($base_path, 1).'&' : '').
-				'f='.implode(',', $to_minify) .
-				($GLOBALS['egw_info']['server']['debug_minify'] === 'debug' ? '&debug' : '').
-				'&'.$max_modified;
+			if (!empty($minurl) && file_exists(EGW_SERVER_ROOT.$minurl) &&
+				($mod=filemtime(EGW_SERVER_ROOT.$minurl)) >= $max_modified)
+			{
+				$path = $minurl.'?'.$mod;
+			}
+			else
+			{
+				$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
+				if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
+				$path = '/phpgwapi/inc/min/?'.($base_path && $base_path != '/' ? 'b='.substr($base_path, 1).'&' : '').
+					'f='.implode(',', $to_minify) .
+					($GLOBALS['egw_info']['server']['debug_minify'] === 'debug' ? '&debug' : '').
+					'&'.$max_modified;
+			}
 			// need to include minified javascript before not minified stuff like jscalendar-setup, as it might depend on it
 			array_unshift($to_include, $path);
 		}
-		//error_log(__METHOD__."(".array2string($js_includes).") returning ".array2string($to_include));
+		if ($to_include_first) $to_include = array_merge($to_include_first, $to_include);
+		//error_log(__METHOD__."("./*array2string($js_includes).*/", $max_modified, $minurl) returning ".array2string($to_include));
 		return $to_include;
 	}
 
