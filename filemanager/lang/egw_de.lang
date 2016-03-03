@@ -26,6 +26,7 @@
 %d erros while moving, %d files successfully moved.	filemanager	de	%d Fehler beim Verschieben (%d Dateien erfolgreich verschoben)!
 %d files successfully copied.	filemanager	de	%d Dateien erfolgreich kopiert
 %d files successfully moved.	filemanager	de	%d Dateien erfolgreich verschoben
+/ = everywhere	filemanager	de	/ = überall
 0 means all, -n newer then n days	filemanager	de	0 für alle, -N für neuer als N Tage
 accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
@@ -264,6 +265,7 @@ there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei
 tile view	filemanager	de	Kachelansicht
 to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
 total files	filemanager	de	Gesamtanzahl Dateien
+under directory	filemanager	de	unter dem Verzeichnis
 unmount	filemanager	de	Unmount
 unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
@@ -273,7 +275,6 @@ upload files	filemanager	de	Dateien hochladen
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	de	Benutzen Sie dieses Symbol für Adressetiketten. Stellen Sie den Inhalt der wiederholt werden soll zwischen 2 Symbole.
 used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
-versioned directory	filemanager	de	Versioniertes Verzeichnis
 versioning	filemanager	de	Versionierung
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:

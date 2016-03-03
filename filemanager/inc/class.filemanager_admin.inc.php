@@ -183,9 +183,9 @@ class filemanager_admin extends filemanager_ui
 						$deleted = $errors = 0;
 
 						// shortcut to efficently delete every old version and deleted file
-						if ($content['versionedpath'] == '/' && !$content['ctime'])
+						if ($content['versionedpath'] == '/')
 						{
-							$deleted = Versioning\StreamWrapper::purge_all_versioning();
+							$deleted = Versioning\StreamWrapper::purge_all_versioning($content['mtime']);
 						}
 						else
 						{
@@ -194,8 +194,8 @@ class filemanager_admin extends filemanager_ui
 								'hidden' => true,
 								'depth' => true,
 								'path_preg' => '#/\.(attic|versions)/#',
-							)+(!(int)$content['ctime'] ? array() : array(
-								'ctime' => ($content['ctime']<0?'-':'+').(int)$content['ctime'],
+							)+(!(int)$content['mtime'] ? array() : array(
+								'mtime' => ($content['mtime']<0?'-':'+').(int)$content['mtime'],
 							)), function($path) use (&$deleted, &$errors)
 							{
 								if (($is_dir = Vfs::is_dir($path)) && Vfs::rmdir($path) ||
@@ -218,9 +218,15 @@ class filemanager_admin extends filemanager_ui
 				}
 			}
 		}
+		else
+		{
+			// defaults for deleting of older versions
+			$content['versionedpath'] = '/';
+			$content['mtime'] = 100;
+		}
 		if (true) $content = array(
 			'versionedpath' => $content['versionedpath'],
-			'ctime' => $content['ctime'],
+			'mtime' => $content['mtime'],
 		);
 		if ($this->versioning)
 		{
