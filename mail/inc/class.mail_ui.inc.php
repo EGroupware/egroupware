@@ -2714,7 +2714,7 @@ class mail_ui
 		{
 			if (strtolower($attach['mimeType']) == 'text/calendar' &&
 				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
-				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],0,(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
+				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],$attach['is_winmail'],(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
 			{
 				//error_log(__METHOD__.__LINE__.array2string($attachment));
 				egw_cache::setSession('calendar', 'ical', array(
