@@ -2126,7 +2126,7 @@ abstract class egw_framework
 		_debug_array(array_values($to_include));
 		die('STOP');*/
 
-		return array_values($to_include);
+		return array_values(array_unique($to_include));
 	}
 
 	/**
@@ -2158,8 +2158,7 @@ abstract class egw_framework
 				$to_include_first[] = $path . '?' . $mod;
 			}
 			// for now minify does NOT support query parameters, nor php files generating javascript
-			elseif ($debug_minify || $query || substr($path, -3) != '.js' ||
-				substr($path, -7) == '/app.js')	// do NOT include app.js, as it changes from app to app
+			elseif ($debug_minify || $query || substr($path, -3) != '.js')
 			{
 				$path .= '?'. $mod.($query ? '&'.$query : '');
 				$to_include[] = $path;
