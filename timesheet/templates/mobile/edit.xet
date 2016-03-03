@@ -132,7 +132,7 @@
 				<row>
 					<description value="Date"/>
 					<hbox>
-						<date id="ts_start" needed="1" options=",8" width="90%"/>
+						<date id="ts_start" needed="1" options=",8"/>
 						<textbox align="right" type="integer" id="ts_id" readonly="true"/>
 					</hbox>
 				</row>
