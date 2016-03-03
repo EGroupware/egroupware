@@ -26,6 +26,7 @@
 %d erros while moving, %d files successfully moved.	filemanager	en	%d errors while moving, %d files successfully moved.
 %d files successfully copied.	filemanager	en	%d files successfully copied.
 %d files successfully moved.	filemanager	en	%d files successfully moved.
+/ = everywhere	filemanager	en	/ = everywhere
 0 means all, -n newer then n days	filemanager	en	0 means all, -N newer then N days
 accessrights	filemanager	en	Access rights
 acl added.	filemanager	en	ACL added.
@@ -264,6 +265,7 @@ there's already a file with that name!	filemanager	en	There's already a file wit
 tile view	filemanager	en	Tile view
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing filestore again
 total files	filemanager	en	Total files
+under directory	filemanager	en	under directory
 unmount	filemanager	en	Unmount
 unused space	filemanager	en	Unused space
 up	filemanager	en	Up
@@ -273,7 +275,6 @@ upload files	filemanager	en	Upload files
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
-versioned directory	filemanager	en	Versioned directory
 versioning	filemanager	en	Versioning
 vfs mounts and versioning	common	en	VFS mounts and versioning
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
