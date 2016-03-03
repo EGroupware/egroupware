@@ -2755,30 +2755,20 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			if (strtolower($attach['mimeType']) == 'text/calendar' &&
 				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
-				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],0,(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
+				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],$attach['is_winmail'],(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
 			{
-				$ical = new calendar_ical();
-				$ical_charset = $attach['charset'] ? $attach['charset'] : 'utf-8';
-				if (($events = $ical->icaltoegw($attachment['attachment'], '', $ical_charset)))
-				{
-					//error_log(__METHOD__.__LINE__.array2string($attachment));
-					egw_cache::setSession('calendar', 'ical', array(
-						'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
-						'attachment' => $attachment['attachment'],
-						'method' => $attach['method'],
-						'sender' => $mailbox,
-					));
-					$this->mail_bo->htmlOptions = $bufferHtmlOptions;
-					translation::add_app('calendar');
-					return ExecMethod( 'calendar.calendar_uiforms.meeting',
-						array('event'=>null,'msg'=>'','useSession'=>true)
-					);
-				}
-				else
-				{
-					error_log(__METHOD__.__LINE__.'Cannot import the following as ical:'.array2string($attachment));
-					//$bodyParts[] = array('body'=>$attachment['attachment'], 'charSet'=>$attach['charset'] ? $attach['charset'] : 'utf-8');
-				}
+				//error_log(__METHOD__.__LINE__.array2string($attachment));
+				egw_cache::setSession('calendar', 'ical', array(
+					'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
+					'attachment' => $attachment['attachment'],
+					'method' => $attach['method'],
+					'sender' => $mailbox,
+				));
+				$this->mail_bo->htmlOptions = $bufferHtmlOptions;
+				translation::add_app('calendar');
+				return ExecMethod( 'calendar.calendar_uiforms.meeting',
+					array('event'=>null,'msg'=>'','useSession'=>true)
+				);
 			}
 		}
 		// Compose the content of the frame
