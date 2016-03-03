@@ -28,19 +28,20 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var egw = this;
 
 	/**
-	 * Remove optional timestamp attached directly as first query parameter, eg. /path/name.js?12345678[&other=val]
+	 * Remove optional timestamp attached as query parameter, eg. /path/name.js?12345678[&other=val]
 	 *
 	 * Examples:
 	 *  /path/file.js --> /path/file.js
 	 *  /path/file.js?123456 --> /path/file.js
 	 *  /path/file.php?123456&param=value --> /path/file.php?param=value
+	 *  /path/file.php?param=value&123456 --> /path/file.php?param=value
 	 *
 	 * @param _src url
 	 * @return url with timestamp stripped off
 	 */
 	function removeTS(_src)
 	{
-		return _src.replace(/\?[0-9]+&?/, '?').replace(/\?$/, '');
+		return _src.replace(/[?&][0-9]+&?/, '?').replace(/\?$/, '');
 	}
 
 	/**
@@ -78,7 +79,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			if (contains && contains.length > 1)
 			{
 				var bundle = contains[1].split(',');
-				for(var i; i < bundle.length; ++i)
+				for(var i=0; i < bundle.length; ++i)
 				{
 					files.push(bundle[i].replace(min_js_regexp, '.js'));
 				}
