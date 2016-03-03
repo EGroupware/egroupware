@@ -785,9 +785,26 @@
 				.mob-fontsize-n;
 				font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
 			}
-			.et2_textbox, .et2_date, .et2_dropdown, .et2_link, .et2_label, input{
-				height:32px;
+			.et2_textbox, .et2_date, .et2_dropdown, .et2_link, .et2_label, input, select, .et2_selectbox{
+				height:46px;
+				padding-left: 8px;
 			}
+			input, select {
+				padding:0;
+			}
+			ul.et2_selectbox {
+				li{padding-top: 13px;}
+			}
+			/* Exceptional cases to not get the general left padding*/
+			.et2_label .et2_date_ro.et2_label, .et2_date input.et2_date {padding-left: 0;}
+			
+			.et2_button_with_image {
+				background-color: transparent;
+				border:none;
+				box-shadow: none;
+				color: #1e1e1e;
+			}
+			.et2_date {min-width:100px;}
 			.et2_button_with_image, .et2_button_text {
 				height: 46px;
 				margin: 1px;
@@ -811,6 +828,7 @@
 			.et2_details {
 				position: relative;
 				background-color: #F0F0F0;
+				height:32px;
 				.et2_details_toggle {
 					position: absolute;
 					right: 2px;
@@ -1074,7 +1092,7 @@
 			line-height: 32px;
 			vertical-align: middle;
 			position: relative;
-			padding-left: 40px;
+			padding-left: 40px !important;
 			input[type="checkbox"] {
 				position: absolute;
 				left:0

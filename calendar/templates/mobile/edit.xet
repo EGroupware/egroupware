@@ -9,7 +9,6 @@
 				<column width = "600"/>
 			</columns>
 			<rows>
-				
 				<row>
 					<description for="priority" value="Priority"/>
 					<menulist>
@@ -18,17 +17,17 @@
 				</row>
 				<row class="row add_alarm_action" valign="top" disabled="@no_add_alarm">
 					<button id="button[add_alarm]" label="Alarm" image="add" background_image="1"/>
-					<hbox>
+					<vbox>
 						<menulist>
-							<menupopup type="select" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
+							<menupopup type="select" statustext="" id="new_alarm[options]" class="et2_fullWidth" onchange="app.calendar.alarm_custom_date"/>
 						</menulist>
-						<date-time id="new_alarm[date]" class="calendar_alarm_date_display"/>
-					</hbox>
+						<date-time id="new_alarm[date]" class="calendar_alarm_date_display et2_fullWidth"/>
+					</vbox>
 				</row>
 				<row>
 					<description value="for"/>
 					<menulist>
-						<menupopup statustext="Select who should get the alarm" id="new_alarm[owner]" no_lang="1"/>
+						<menupopup statustext="Select who should get the alarm" id="new_alarm[owner]" no_lang="1" class="et2_fullWidth"/>
 					</menulist>
 				</row>
 				<row disabled="!@alarm">
@@ -67,26 +66,20 @@
 		<grid width="99%" id="participants">
 			<columns>
 				<column width = "120"/>
-				<column width="95%"/>
+				<column width="80%"/>
 				<column width = "20"/>
 			</columns>
 			<rows>
-				<row class="th" disabled="@view">
-					<description value="Add new participants or resource" span="all"/>
+				<row  disabled="@view">
+					<calendar-owner id="participant" allowFreeEntries="true"  empty_label="Add new participants or resource"/>
 				</row>
 				<row disabled="@no_add">
-					<vbox>
-						<menulist>
-							<menupopup type="select-account" statustext="User or group" id="account" multiple="true" no_lang="true" tags="true" account_type="both" empty_label="User or group" class="et2_fullWidth" width="99%"/>
-						</menulist>
-						<link-entry id="resource" options="@cal_resources" query="app.calendar.edit_participant_search"/>
-					</vbox>
-					<vbox>
-						<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
-						<menulist>
-							<menupopup class="selectRole" id="role"/>
-						</menulist>
-					</vbox>
+					<menulist>
+						<menupopup class="selectRole" id="role"/>
+					</menulist>
+					<hbox >
+						<textbox label="Quantity" type="integer" class="quantity" id="quantity" min="1" size="3"/>
+					</hbox>
 					<button align="center" id="add" image="add" background_image="1" novalidate="1"/>
 				</row>
 				<row class="th">
@@ -94,7 +87,7 @@
 					<description value="Status"/>
 					<description value="Actions"/>
 				</row>
-				<row valign="top">
+				<row >
 					<description id="${row}[title]" no_lang="1"/>
 					<hbox>
 						<menulist>
@@ -103,7 +96,7 @@
 						<textbox type="integer" align="center" id="${row}[quantity]" readonly="true" min="1" size="3"/>
 						<description id="${row}[role_label]"/>
 					</hbox>	
-					<button align="center" label="Delete" id="delete[$row_cont[delete_id]]" image="delete"/>
+					<button align="center" id="delete[$row_cont[delete_id]]" image="delete"/>
 				</row>
 			</rows>
 		</grid>
@@ -130,16 +123,16 @@
 						<menupopup type="select-number" statustext="repeating interval, eg. 2 to repeat every second week" id="recur_interval" options="None,2,31" class="et2_fullWidth"/>
 					</menulist>
 				</row>
-				<row>
-					<description for="recur_enddate" value="End date"/>
-					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate"/>
-				</row>	
 				<row>	
 					<description for="tzid" value="Timezone"/>
 					<menulist>
 						<menupopup type="select-timezone" statustext="Timezone in which recurrences have identical time" id="tzid" class="et2_fullWidth"/>
 					</menulist>
 				</row>
+				<row>
+					<description for="recur_enddate" value="End date"/>
+					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate"/>
+				</row>	
 				<row>
 					<description for="recur_data" value="Repeat days"/>
 					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
@@ -197,6 +190,32 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="calendar.edit.ownership" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%">
+			<columns>
+				<column width = "120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row disabled="!@owner">
+					<description value="Owner"/>
+					<menulist>
+						<menupopup type="select-account" id="owner" readonly="true"/>
+					</menulist>
+				</row>
+				<row disabled="!@modified">
+					<description value="Updated"/>
+					<date-time id="modified" no_lang="1" readonly="true"/>
+				</row>
+				<row disabled="!@modifier">	
+					<description value="by"/>	
+					<menulist>
+						<menupopup type="select-account"   class="et2_nowrap" id="modifier" readonly="true"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="calendar.edit" template="" lang="" group="0" version="1.9.001">
 		<grid border="1" width="100%">
 			<columns>
@@ -240,11 +259,11 @@
 				</row>
 				<row>
 					<description value="Options"/>
-					<hbox>
+					<vbox>
+						<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
 						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
 						<checkbox label="Private" id="public" options="0,1"/>
-						<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
-					</hbox>
+					</vbox>
 				</row>
 				<row>
 					<description for="location" value="Location"/>
@@ -252,19 +271,18 @@
 				</row>
 				<row>
 					<description for="category" value="Categories"/>
-					<menulist class="et2_fullWidth">
-						<menupopup type="select-cat" statustext="select a category for this entry" id="category" options="None"/>
-					</menulist>
+					<taglist-cat id="category" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<tabbox id="tabs" span="all" width="100%" align_tabs="v">
 						<tabs>
-							<tab id="description" label="Description" statustext="Full description"/>
-							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
-							<tab id="details" label="Details" statustext="Location, Start- and Endtimes, ..."/>
-							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
-							<tab id="custom" label="Custom" statustext="Custom fields"/>
-							<tab id="links" label="Links" statustext="Links, Attachments"/>
+							<tab id="description" label="Description" />
+							<tab id="participants" label="Participants" />
+							<tab id="details" label="Details" />
+							<tab id="recurrence" label="Recurrence" />
+							<tab id="custom" label="Custom"/>
+							<tab id="links" label="Links"/>
+							<tab id="ownership" label="Ownership"/>
 						</tabs>
 						<tabpanels>
 							<template id="calendar.edit.description"/>
@@ -273,36 +291,12 @@
 							<template id="calendar.edit.recurrence"/>
 							<template id="calendar.edit.custom"/>
 							<template id="calendar.edit.links"/>
+							<template id="calendar.edit.ownership"/>
 						</tabpanels>
 					</tabbox>
 				</row>
 				<row>
-					<details title="Ownership">
-						<grid width="100%">
-							<columns>
-								<column width = "120"/>
-								<column width="600"/>
-							</columns>
-							<rows>
-								<row disabled="!@owner" class="dialogOperators">
-									<description value="Owner"/>
-									<menulist>
-										<menupopup type="select-account" id="owner" readonly="true"/>
-									</menulist>
-								</row>
-								<row>
-									<description value="Updated"/>
-									<date-time id="modified" no_lang="1" readonly="true"/>
-								</row>
-								<row>	
-									<description/>	
-									<menulist>
-										<menupopup type="select-account"  label="by" class="et2_nowrap" id="modifier" align="right" readonly="true"/>
-									</menulist>
-								</row>
-							</rows>
-						</grid>
-					</details>
+					
 				</row>
 			</rows>
 		</grid>

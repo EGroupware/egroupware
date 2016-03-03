@@ -5286,35 +5286,21 @@ button.image_button {
  * @package pixelegg
  * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
-/*SVG Filter / not for Logo */
-#egw_fw_sidebar img[src$="svg"] {
-  background-color: #696969;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNjk2OTY5IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #696969, #696969);
-  background-image: -ms-linear-gradient(top, #696969, #696969);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#696969), to(#696969));
-  background-image: -webkit-linear-gradient(top, #696969, #696969);
-  background-image: -o-linear-gradient(top, #696969, #696969);
-  background-image: linear-gradient(top, #696969, #696969);
-  background-repeat: repeat-x;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #ffffff;
+/* disabled for now in pixelegg.less, until we use svg outside filemanager thumbnails
+
+//SVG Filter / not for Logo
+#egw_fw_sidebar img[src$="svg"]{
+            .gradient_vertical (@gray_60, @gray_60);
+            .rounded(3px);
+            border: 1px solid @gray_0;;
 }
+
 #egw_fw_main img[src$="svg"],
-#egw_fw_footer img[src$="svg"] {
-  /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
-  background-color: rgba(0, 0, 0, 0.5);
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-repeat: repeat-x;
-}
+#egw_fw_footer img[src$="svg"]{
+            //.gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+            .gradient_vertical (fade(@gray_100,50%), fade(@gray_100,50%));
+
+}*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -5326,7 +5312,7 @@ button.image_button {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_table.less 55030 2016-02-16 17:18:02Z ralfbecker $
+ * @version $Id: layout_table.less 55187 2016-02-29 13:25:21Z ralfbecker $
  */
 /** #####################################################################################
  * et2
@@ -5433,6 +5419,12 @@ table.egwGridView_outer > tbody > tr td.frame {
   /*border: 1px solid @gray_10; can't have - breaks grid scroll calculations'
             /*padding: 0px 5px; no need*/
 }
+table.egwGridView_outer > tbody > tr > td {
+  /* disabled as it skrews display of svg in filemanager
+        img[src$="svg"]  {
+            .gradient_vertical (fade(@gray_100,50%), fade(@gray_100,50%));
+        }*/
+}
 table.egwGridView_outer > tbody > tr > td .et2_link {
   margin-left: 0px;
   color: #26537c;
@@ -5443,17 +5435,6 @@ table.egwGridView_outer > tbody > tr > td img {
 }
 table.egwGridView_outer > tbody > tr > td time {
   display: block;
-}
-table.egwGridView_outer > tbody > tr > td img[src$="svg"] {
-  background-color: rgba(0, 0, 0, 0.5);
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuNSkiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC41KSIgb2Zmc2V0PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c3NDMpIi8+PC9zdmc+);
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background-repeat: repeat-x;
 }
 /*########################################################*/
 table.egwGridView_grid {
@@ -7613,6 +7594,9 @@ span.egw_tutorial_title {
     border: none;
     border-bottom: 1px solid #e6e6e6;
   }
+  body #popupMainDiv {
+    /* Exceptional cases to not get the general left padding*/
+  }
   body #popupMainDiv * {
     font-size: 10pt;
     font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
@@ -7622,8 +7606,31 @@ span.egw_tutorial_title {
   body #popupMainDiv .et2_dropdown,
   body #popupMainDiv .et2_link,
   body #popupMainDiv .et2_label,
-  body #popupMainDiv input {
-    height: 32px;
+  body #popupMainDiv input,
+  body #popupMainDiv select,
+  body #popupMainDiv .et2_selectbox {
+    height: 46px;
+    padding-left: 8px;
+  }
+  body #popupMainDiv input,
+  body #popupMainDiv select {
+    padding: 0;
+  }
+  body #popupMainDiv ul.et2_selectbox li {
+    padding-top: 13px;
+  }
+  body #popupMainDiv .et2_label .et2_date_ro.et2_label,
+  body #popupMainDiv .et2_date input.et2_date {
+    padding-left: 0;
+  }
+  body #popupMainDiv .et2_button_with_image {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #1e1e1e;
+  }
+  body #popupMainDiv .et2_date {
+    min-width: 100px;
   }
   body #popupMainDiv .et2_button_with_image,
   body #popupMainDiv .et2_button_text {
@@ -7646,6 +7653,7 @@ span.egw_tutorial_title {
   body #popupMainDiv .et2_details {
     position: relative;
     background-color: #F0F0F0;
+    height: 32px;
   }
   body #popupMainDiv .et2_details .et2_details_toggle {
     position: absolute;
@@ -7875,7 +7883,7 @@ span.egw_tutorial_title {
     line-height: 32px;
     vertical-align: middle;
     position: relative;
-    padding-left: 40px;
+    padding-left: 40px !important;
   }
   body .et2_label.et2_checkbox_label input[type="checkbox"] {
     position: absolute;

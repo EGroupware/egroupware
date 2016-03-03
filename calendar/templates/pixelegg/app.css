@@ -1716,42 +1716,6 @@ div.calendar {
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
-#calendar-edit #calendar-edit_calendar-edit-participants {
-  /*.et2_label {padding: 0 5px 0 0;}*/
-}
-#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants {
-  margin: 5px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants td {
-  padding: 0.2em 0.5em;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_account {
-  width: 143px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_resource select {
-  width: 143px !important;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants table#calendar-edit_participants #calendar-edit_resource input {
-  width: 103px !important;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tr.optional {
-  background-color: rgba(255, 221, 115, 0.1);
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody {
-  display: table;
-  width: 100%;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody td {
-  vertical-align: top;
-  padding-top: 3px;
-}
-#calendar-edit #calendar-edit_calendar-edit-participants tbody input#calendar-edit_quantity {
-  width: 30px;
-  /*                position: relative;
-                top: 34px;
-                left: 40px;*/
-  margin: 6px 0px;
-}
 #calendar-edit #calendar-edit_calendar-edit-recurrence tbody {
   display: table;
   width: 100%;
