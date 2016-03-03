@@ -28,7 +28,7 @@
  *
  * @type object
  */
-window.app = {classes: {}};
+app = {classes: {}};
 
 /**
  * Common base class for application javascript
@@ -145,13 +145,14 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 
 	/**
 	 * Clean up any created objects & references
+	 * @param {pbject} _app local app object
 	 */
-	destroy: function() {
+	destroy: function(_app) {
 		delete this.et2;
 		if (this.sidebox)
 			this.sidebox.off();
 		delete this.sidebox;
-		delete window.app[this.appname];
+		if (!_app) delete window.app[this.appname];
 	},
 
 	/**
@@ -387,28 +388,45 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 *
 	 * @param {object} _action
 	 * @param {object} _senders
+	 * @param {boolean} _noEdit defines whether to set edit button or not default is false
+	 * @param {function} callback function to run after et2 is loaded
 	 */
-	viewEntry: function(_action, _senders)
+	viewEntry: function(_action, _senders, _noEdit, et2_callback)
 	{
-		// app id in nm
+		//full id in nm
 		var id = _senders[0].id;
-		// entry id
-		var id_app = '';
+		// flag for edit button
+		var noEdit = _noEdit || false;
+		// nm row id
+		var rowID = '';
+		// content to feed to etemplate2
 		var content = {};
+		
 		var self = this;
-
-
+		
 		if (id){
-			id_app = id.split('::');
+			var parts = id.split('::');
+			rowID = parts[1];
 			content = egw.dataGetUIDdata(id);
 			if (content.data) content = content.data;
 		}
+
+		// create a new app object with just constructors for our new etemplate2 object
+		var app = { classes: window.app.classes };
 
 		/* destroy generated etemplate for view mode in DOM*/
 		var destroy = function(){
 			self.viewContainer.remove();
 			delete self.viewTemplate;
 			delete self.viewContainer;
+			delete self.et2_view;
+			this.destroy(app);
+			// we need to reference back into parent context this
+			for (var v in self)
+			{
+				this[v] = self[v];
+			}
+			app = null;
 		};
 
 		// view container
@@ -432,39 +450,40 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		// close button
 		var close = jQuery(document.createElement('span'))
 				.addClass('egw_fw_mobile_popup_close loaded')
-				.click(function(){destroy();})
+				.click(function(){destroy.call(app[self.appname]);})
 				.appendTo(this.viewContainer);
-
-		// edit button
-		var edit = jQuery(document.createElement('span'))
-				.addClass('mobile-view-editBtn')
-				.click(function(){
-					egw.open(id_app[1], self.appname);
-				})
-				.text(egw.lang('Edit'))
-				.appendTo(this.viewContainer);
-
+		if (!noEdit)
+		{
+			// edit button
+			var edit = jQuery(document.createElement('span'))
+					.addClass('mobile-view-editBtn')
+					.click(function(){
+						egw.open(rowID, self.appname);
+					})
+					.text(egw.lang('Edit'))
+					.appendTo(this.viewContainer);
+		}
 		// view template main container (content)
 		this.viewTemplate = jQuery(document.createElement('div'))
 				.attr('id', this.appname+'-view')
 				.addClass('et2_mobile-view-container')
 				.appendTo(this.viewContainer);
-
-		var templateName = _action.data.mobileViewTemplate || 'edit.xet';
-		var etemplate = new etemplate2 (this.viewTemplate[0], false);
-		var template = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'?1';
-		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}, currentapp:id_app[0]};
-
-		if(template.indexOf('.xet') > 0)
+		
+		var templateName = _action.data.mobileViewTemplate || 'edit';
+		var templateURL = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'.xet'+'?1';
+		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}, currentapp:this.appname};
+		
+		// etemplate2 object for view
+		this.et2_view = new etemplate2 (this.viewTemplate[0], false);
+		
+		if(templateName)
 		{
-			// File name provided, fetch from server
-			etemplate.load("",template, data, function() {});
+			this.et2_view.load(this.appname+'.'+templateName,templateURL, data, typeof et2_callback == 'function'?et2_callback:function(){}, app);
 		}
-		else
-		{
-			// Just template name, it better be loaded already
-			etemplate.load(template,'',data);
-		}
+		
+		// define a global close function for view template
+		// in order to be able to destroy view on action
+		app[this.appname]['close'] = destroy;
 	},
 
 	/**

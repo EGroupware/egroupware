@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Etherpad jQuery Plugin Example</title>
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	<script src="js/etherpad.js"></script>
+</head>
+
+<body id="home">
+
+	<h1>Etherpad jQuery Plugin Example</h1>
+
+        <h2>Usage:</h2>
+        <p>Include jQuery.js, include etherpad.js</p>
+
+        <h2>Example #1: Sets the pad id and puts the pad in the div</h2>
+        <pre>$('#examplePadBasic').pad({'padId':'test'});</pre>
+	<div id="examplePadBasic"></div>
+
+        <h2>Example #2: Sets the pad id, some more parameters and puts the pad in the div</h2>
+        <pre>$('#examplePadIntense').pad({'padId':'test2','showChat':'true'});</pre>
+        <div id="examplePadIntense"></div>
+
+        <h2>Example #3: Sets the pad id, some plugin parameters and puts the pad in the div</h2>
+        <pre>$('#examplePadPlugins').pad({'padId':'test3','plugins':{'pageview':'true'}});</pre>
+        <div id="examplePadPlugins"></div>
+
+        <h2>Example #4: Gets the padContents from Example #2</h2>
+        <pre>$('#examplePadIntense').pad({'getContents':'exampleGetContents'});</pre>
+        <div id="exampleGetContents"><a id="contents" onClick="$('#examplePadIntense').pad({'getContents':'exampleGetContents'});">Click me to Replace me with the pad contents</a></div>
+
+        <h2>Available options and parameters</h2>
+        <pre>
+               'host'             : 'http://beta.etherpad.org', // the host and port of the Etherpad instance, by default the foundation will host your pads for you
+               'baseUrl'          : '/p/',                      // The base URL of the pads
+               'showControls'     : false,                      // If you want to show controls IE bold, italic, etc.
+               'showChat'         : false,                      // If you want to show the chat button or not
+               'showLineNumbers'  : false,                      // If you want to show the line numbers or not
+               'userName'         : 'unnamed',                  // The username you want to pass to the pad
+               'useMonospaceFont' : false,                      // Use monospaced fonts
+               'noColors'         : false,                      // Disable background colors on author text
+               'userColor'        : false,                      // The background color of this authors text in hex format IE #000
+               'hideQRCode'       : false,                      // Hide QR code
+               'alwaysShowChat'   : false,                      // Always show the chat on the UI
+               'width'            : 100,                        // The width of the embedded IFrame
+               'height'           : 100,                        // The height of the embedded IFrame
+               'border'           : 0,                          // The width of the border (make sure to append px to a numerical value)
+               'borderStyle'      : 'solid'                     // The CSS style of the border [none, dotted, dashed, solid, double, groove, ridge, inset, outset]
+               'plugins'          : {},                         // The options related to the plugins, not to the basic Etherpad configuration
+               'rtl'              : false                       // Show right to left text
+        </pre>
+
+	<script type="text/javascript">
+        // The most basic example
+	$('#examplePadBasic').pad({'padId':'test'}); // sets the pad id and puts the pad in the div
+
+        // A slightly more intense example
+        $('#examplePadIntense').pad({'padId':'test2','showChat':'true'}); // sets the pad id and puts the pad in the div
+
+        // An example with plugin parameters
+        $('#examplePadPlugins').pad({'padId':'test3','plugins':{'pageview':'true'}}); // sets the pad id, some plugin parameters, and puts the pad in the div
+	</script>
+
+<h3>If you are confused, view the source code for examples</h3>
+</body>
+</html>

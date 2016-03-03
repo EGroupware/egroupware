@@ -332,9 +332,11 @@ etemplate2.prototype.download = function(_url)
  * @param {string} _url url to load template
  * @param {object} _data object with attributes content, langRequire, etemplate_exec_id, ...
  * @param {function} _callback called after tempalte is loaded
+ * @param {object} _app local app object
  */
-etemplate2.prototype.load = function(_name, _url, _data, _callback)
+etemplate2.prototype.load = function(_name, _url, _data, _callback, _app)
 {
+	var app = _app || window.app;
 	this.name = _name;	// store top-level template name to have it available in widgets
 	// store template base url, in case initial template is loaded via webdav, to use that for further loads too
 	// need to split off domain first, as it could contain app-name part of template eg. stylite.report.xet and https://my.stylite.de/egw/...

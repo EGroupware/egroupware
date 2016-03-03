@@ -308,6 +308,15 @@ app.classes.mail = AppJS.extend(
 				break;
 			case 'mail.folder_management':
 				this.egw.message(this.egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'),'info',true);
+				break;
+			case 'mail.view':
+				// we need to set mail_currentlyFocused var otherwise mail
+				// defined actions won't work
+				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
+				// a replacement for is_popup to distinguishe whether
+				// the view should be considered like popup and it does indicate
+				// we are in view mode
+				this.mail_viewMode = true;
 		}
 	},
 
@@ -1574,7 +1583,14 @@ app.classes.mail = AppJS.extend(
 		//alert(_action.id+','+ msg);
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
-		if (calledFromPopup && this.mail_isMainWindow==false) egw(window).close();
+		if (calledFromPopup && this.mail_isMainWindow==false)
+		{
+			egw(window).close();
+		}
+		else if (this.mail_viewMode)
+		{
+			this.close();
+		}
 	},
 
 	/**
@@ -2077,7 +2093,7 @@ app.classes.mail = AppJS.extend(
 			data = {
 				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
 				all: _allMessagesChecked || false,
-				popup: egw(window).is_popup() || false,
+				popup: this.mail_viewMode || egw(window).is_popup() || false,
 				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
 			},
 			rowClass = _action.id;
@@ -2101,7 +2117,8 @@ app.classes.mail = AppJS.extend(
 				rowClass = 'seen';
 				if (data.popup)
 				{
-					tree = opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+					var et_2 = this.mail_viewMode? etemplate2:opener.etemplate2;
+					tree = et_2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 				}
 				else
 				{
@@ -5148,21 +5165,36 @@ app.classes.mail = AppJS.extend(
 	 */
 	mobileView: function(_action, _sender)
 	{
-		// app id in nm
+		// row id in nm
 		var id = _sender[0].id;
-		var content = {};
-
-		if (id){
-			content = egw.dataGetUIDdata(id);
-			content.data['toolbar'] = etemplate2.getByApplication('mail')[0].widgetContainer.getArrayMgr('sel_options').data.toolbar;
-			this.et2.setArrayMgr('content', content);
-		}
-		// set the current selected row
-		this.mail_currentlyFocussed = id;
 		
+		var defaultActions= {
+			actions:['delete', 'forward','reply','flagged'], // default actions to display
+			check:function(_action){
+				for (var i=0;i<= this.actions.length;i++)
+				{
+					if (_action == this.actions[i]) return true;
+				}
+				return false;
+			}
+		};
+		
+		var content = {};
 		var self = this;
 		
-		this.viewEntry(_action, _sender, function(etemplate){
+		if (id){
+			content = egw.dataGetUIDdata(id);
+			content.data['toolbar'] = this.et2.getArrayMgr('sel_options').getEntry('toolbar');
+			// Set default actions
+			for(var action in content.data['toolbar'])
+			{
+				content.data.toolbar[action]['toolbarDefault'] = defaultActions.check(action);
+			}
+			// update local storage with added toolbar actions
+			egw.dataStoreUID(id,content.data);
+		}
+		
+		this.viewEntry(_action, _sender, true, function(etemplate){
 			// et2 object in view
 			var et2 = etemplate.widgetContainer;
 			// iframe to load message
@@ -5175,6 +5207,9 @@ app.classes.mail = AppJS.extend(
 			var $details = jQuery('.et2_details.details');
 			// Content
 			var content = et2.getArrayMgr('content').data;
+			
+			// set the current selected row
+			et2.mail_currentlyFocussed = id;
 			
 			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
 			{
@@ -5197,7 +5232,6 @@ app.classes.mail = AppJS.extend(
 				// as we don't want to show content in iframe.
 				self.mail_prepare_print(jQuery(this));
 			});
-			
 		});
 	}
 });
