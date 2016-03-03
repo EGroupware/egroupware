@@ -2782,7 +2782,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				else
 				{
-					$bodyParts[] = array('body'=>$attachment['attachment'], 'charSet'=>$attach['charset'] ? $attach['charset'] : 'utf-8');
+					error_log(__METHOD__.__LINE__.'Cannot import the following as ical:'.array2string($attachment));
+					//$bodyParts[] = array('body'=>$attachment['attachment'], 'charSet'=>$attach['charset'] ? $attach['charset'] : 'utf-8');
 				}
 			}
 		}
