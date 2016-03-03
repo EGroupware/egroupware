@@ -5533,15 +5533,17 @@ class emailadmin_imapbase
 		if ($ext && stripos($filename,'.')===false && stripos($filename,$ext)===false) $filename = trim($filename).'.'.$ext;
 		if (!$part)
 		{
-			error_log(__METHOD__.__LINE__.'Error: Could not fetch attachment for:'." Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr in $_folder:".array2string(function_backtrace()));
-			error_log(__METHOD__.__LINE__.'# Fetched StructureMime:'.$structure_mime.' with Filename:'.$filename);
+			throw new egw_exception_wrong_parameter("Error: Could not fetch attachment for Uid=$_uid, PartId=$_partID, WinMailNr=$_winmail_nr, folder=$_folder");
 		}
 		$attachmentData = array(
 			'type'		=> $structure_mime,
 			'filename'	=> $filename,
 			//'attachment'	=> $part->getContents(array('stream'=>$_stream))
-			'attachment'	=> ($part?$part->getContents(array('stream'=>$_stream)):'Error: Could not fetch attachment for:'." Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr in $_folder:".array2string(function_backtrace()))
-			);
+			'attachment'	=> $part->getContents(array(
+				// tnef_decode needs strings not a stream
+				'stream' => $_stream && !($filename == 'winmail.dat' && $_winmail_nr)
+			)),
+		);
 		
 		// try guessing the mimetype, if we get the application/octet-stream
 		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
