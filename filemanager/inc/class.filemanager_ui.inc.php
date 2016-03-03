@@ -143,7 +143,7 @@ class filemanager_ui
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'onExecute' => html::$ua_mobile?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
-				'mobileViewTemplate' => 'file.xet'
+				'mobileViewTemplate' => 'file'
 			),
 			'mkdir' => array(
 				'caption' => lang('Create directory'),
