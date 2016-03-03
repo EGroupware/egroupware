@@ -2763,18 +2763,27 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
 				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],0,(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
 			{
-				//error_log(__METHOD__.__LINE__.array2string($attachment));
-				egw_cache::setSession('calendar', 'ical', array(
-					'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
-					'attachment' => $attachment['attachment'],
-					'method' => $attach['method'],
-					'sender' => $mailbox,
-				));
-				$this->mail_bo->htmlOptions = $bufferHtmlOptions;
-				translation::add_app('calendar');
-				return ExecMethod( 'calendar.calendar_uiforms.meeting',
-					array('event'=>null,'msg'=>'','useSession'=>true)
-				);
+				$ical = new calendar_ical();
+				$ical_charset = $attach['charset'] ? $attach['charset'] : 'utf-8';
+				if (($events = $ical->icaltoegw($attachment['attachment'], '', $ical_charset)))
+				{
+					//error_log(__METHOD__.__LINE__.array2string($attachment));
+					egw_cache::setSession('calendar', 'ical', array(
+						'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
+						'attachment' => $attachment['attachment'],
+						'method' => $attach['method'],
+						'sender' => $mailbox,
+					));
+					$this->mail_bo->htmlOptions = $bufferHtmlOptions;
+					translation::add_app('calendar');
+					return ExecMethod( 'calendar.calendar_uiforms.meeting',
+						array('event'=>null,'msg'=>'','useSession'=>true)
+					);
+				}
+				else
+				{
+					$bodyParts[] = array('body'=>$attachment['attachment'], 'charSet'=>$attach['charset'] ? $attach['charset'] : 'utf-8');
+				}
 			}
 		}
 		// Compose the content of the frame
