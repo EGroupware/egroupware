@@ -298,6 +298,62 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="addressbook.edit.ownership" template="" lang="" group="0" version="16.1.00">
+		<grid width="100%">
+			<columns>
+				<column width = "120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row>
+					<description disabled="@no_tid" for="tid" value="Type"/>
+					<menulist disabled="@no_tid">
+						<menupopup id="tid" no_lang="1" class="et2_fullWidth" onchange="1"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Addressbook"/>
+					<menulist span="2" class="et2_fullWidth">
+						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="own sorting"/>
+					<menulist span="2">
+						<menupopup blur="Name" id="fileas_type" no_lang="1" class="fileas et2_fullWidth"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Created"/>
+					<hbox>
+						<menulist>
+							<menupopup type="select-account" id="creator" readonly="true"/>
+						</menulist>
+						<date-time id="created" readonly="true" align="right"/>
+					</hbox>
+				</row>
+				<row>
+					<description value="Last modified"/>
+					<hbox>
+						<menulist>
+							<menupopup type="select-account" id="modifier" readonly="true"/>
+						</menulist>
+						<date-time id="modified" readonly="true" align="right"/>
+					</hbox>
+				</row>
+				<row disabled="!@showsearchbuttons">
+					<menulist>
+						<menupopup label="Operator" id="operator" no_lang="1"/>
+					</menulist>
+				</row>
+				<row disabled="!@showsearchbuttons">
+					<menulist>
+						<menupopup id="meth_select" no_lang="1"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004">
 		<template id="addressbook.editname"/>
 		<grid border="1" width="100%">
@@ -373,6 +429,7 @@
 							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
 							<tab id="custom" label="Extra" statustext="Custom fields"/>
 							<tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
+							<tab id="ownership" label="Ownership" statustext="Ownership"/>
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
@@ -382,66 +439,12 @@
 							<template id="addressbook.edit.distribution_list"/>
 							<template id="addressbook.edit.custom"/>
 							<template id="addressbook.edit.custom_private"/>
+							<template id="addressbook.edit.ownership"/>
 						</tabpanels>
 					</tabbox>
 				</row>
 				<row>
-					<details title="Ownership">
-						<grid width="100%">
-							<columns>
-								<column width = "120"/>
-								<column width="600"/>
-							</columns>
-							<rows>
-								<row>
-									<description disabled="@no_tid" for="tid" value="Type"/>
-									<menulist disabled="@no_tid">
-										<menupopup id="tid" no_lang="1" class="et2_fullWidth" onchange="1"/>
-									</menulist>
-								</row>
-								<row>
-									<description value="Addressbook"/>
-									<menulist span="2" class="et2_fullWidth">
-										<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1"/>
-									</menulist>
-								</row>
-								<row>
-									<description value="own sorting"/>
-									<menulist span="2">
-										<menupopup blur="Name" id="fileas_type" no_lang="1" class="fileas et2_fullWidth"/>
-									</menulist>
-								</row>
-								<row>
-									<description value="Created"/>
-									<hbox>
-										<menulist>
-											<menupopup type="select-account" id="creator" readonly="true"/>
-										</menulist>
-										<date-time id="created" readonly="true" align="right"/>
-									</hbox>
-								</row>
-								<row>
-									<description value="Last modified"/>
-									<hbox>
-										<menulist>
-											<menupopup type="select-account" id="modifier" readonly="true"/>
-										</menulist>
-										<date-time id="modified" readonly="true" align="right"/>
-									</hbox>
-								</row>
-								<row disabled="!@showsearchbuttons">
-									<menulist>
-										<menupopup label="Operator" id="operator" no_lang="1"/>
-									</menulist>
-								</row>
-								<row disabled="!@showsearchbuttons">
-									<menulist>
-										<menupopup id="meth_select" no_lang="1"/>
-									</menulist>
-								</row>
-							</rows>
-						</grid>
-					</details>
+					
 				</row>
 			</rows>
 		</grid>

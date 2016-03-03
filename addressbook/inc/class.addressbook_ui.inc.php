@@ -744,7 +744,7 @@ class addressbook_ui extends addressbook_bo
 		if (html::$ua_mobile)
 		{
 			$actions['open']['onExecute'] = 'javaScript:app.addressbook.viewEntry';
-			$actions['open']['mobileViewTemplate'] = 'view.xet';
+			$actions['open']['mobileViewTemplate'] = 'view';
 			$actions['view']['default'] = false;
 			$actions['open']['default'] = true;
 		}
