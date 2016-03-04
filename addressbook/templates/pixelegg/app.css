@@ -172,13 +172,13 @@ select#addressbook-index_col_filter\[tid\] {
     margin-right: 5px;
   }
   div#addressbook_view_sidebox #addressbook-view_n_fn {
-    font-size: 14.3px;
+    font-size: 14px;
     font-weight: bold;
     padding: 2px 0 2px 0;
     width: 85%;
   }
   div#addressbook_view_sidebox #addressbook-view_org_name {
-    font-size: 14.3px;
+    font-size: 14px;
     padding: 2px 0 2px 0;
     width: 85%;
   }

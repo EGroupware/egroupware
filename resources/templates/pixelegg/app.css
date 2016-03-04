@@ -75,24 +75,3 @@ div.resources_pictureFile div.progress {
 #resources-edit .et2_container {
   width: 848px;
 }
-/* tablets and smartphones  */
-@media only screen and (max-device-width: 1024px) {
-  #resources-show table.egwGridView_outer tbody img[id^="resources-show_"][id$="picture_thumb]"] {
-    border: 1px solid silver;
-    border-radius: 50%;
-  }
-  #resources-show table.egwGridView_outer tbody div.resourcesCol2 {
-    font-size: 8pt;
-  }
-  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="name]"] {
-    font-weight: bold;
-  }
-  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="name]"],
-  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="short_description]"],
-  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="accessory_of_label]"],
-  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="accessories]"] {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-}

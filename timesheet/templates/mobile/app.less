@@ -27,7 +27,7 @@
 				width: 90px;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				.mob-fontsize-s;
+				.mob-fontsize-n;
 			}
 			tr.timesheetRow td {
 				position: relative;
@@ -35,22 +35,27 @@
 			span[id^='timesheet-index'][id$='cat_id]'] {
 				position: absolute;
 				bottom: 5px;
-				.mob-fontsize-s;
+				.mob-fontsize-n;
 			}
 			span[id^='timesheet-index'][id$='ts_description]'] {
 				height: 30px;
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
+				.mob-fontsize-n;
+			}
+			span[id^='timesheet-index'][id$='ts_title]'] {
+				.mob-fontsize-l;
 			}
 			div.timesheet3Col {
-				.mob-fontsize-s;
+				.mob-fontsize-n;
 			}
 			span[id^='timesheet-index'][id$='ts_duration]'] {
 				font-weight: bold;
 			}
 			label[id^='timesheet-index'][id$='ts_link]'] > span.et2_link {
 				font-weight: normal;
+				.mob-fontsize-n;
 			}
 		}
 	}

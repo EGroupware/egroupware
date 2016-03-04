@@ -13,7 +13,7 @@
 /* tablets and smartphones  */
 @media all {
   #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='size]'] {
-    font-size: 9pt;
+    font-size: 10pt;
     text-align: right;
   }
   #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] {
@@ -22,7 +22,14 @@
     max-width: 100%;
   }
   #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] span {
+    font-size: 12pt;
     white-space: nowrap;
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='comment]'] {
+    font-size: 10pt;
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='mtime]'] time {
+    font-size: 10pt;
   }
   #filemanager-index_nm #filemanager-index_buttons {
     position: relative;

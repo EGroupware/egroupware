@@ -18,7 +18,7 @@
 	#filemanager-index_nm {
 		table.egwGridView_outer tbody {
 			span[id^='filemanager-index'][id$='size]']{
-				.mob-fontsize-s;
+				.mob-fontsize-n;
 				text-align: right;
 			}
 			label[id^='filemanager-index'][id$='name]'] {
@@ -26,8 +26,17 @@
 				text-overflow: ellipsis;
 				max-width: 100%;
 				span{
+					.mob-fontsize-l;
 					white-space: nowrap;
-
+				}
+			}
+			span[id^='filemanager-index'][id$='comment]']
+			{
+				.mob-fontsize-n;
+			}
+			label[id^='filemanager-index'][id$='mtime]'] {
+				time{
+					.mob-fontsize-n;
 				}
 			}
 		}

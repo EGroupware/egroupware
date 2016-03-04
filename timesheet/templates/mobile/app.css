@@ -21,7 +21,7 @@
     width: 90px;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 9pt;
+    font-size: 10pt;
   }
   #timesheet-index table.egwGridView_outer tbody tr.timesheetRow td {
     position: relative;
@@ -29,22 +29,27 @@
   #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='cat_id]'] {
     position: absolute;
     bottom: 5px;
-    font-size: 9pt;
+    font-size: 10pt;
   }
   #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='ts_description]'] {
     height: 30px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 10pt;
+  }
+  #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='ts_title]'] {
+    font-size: 12pt;
   }
   #timesheet-index table.egwGridView_outer tbody div.timesheet3Col {
-    font-size: 9pt;
+    font-size: 10pt;
   }
   #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='ts_duration]'] {
     font-weight: bold;
   }
   #timesheet-index table.egwGridView_outer tbody label[id^='timesheet-index'][id$='ts_link]'] > span.et2_link {
     font-weight: normal;
+    font-size: 10pt;
   }
   #timesheet-edit_pl_id {
     width: 69%;

@@ -16,7 +16,7 @@
   }
   div.infoDescRow {
     height: 32px;
-    font-size: 9pt;
+    font-size: 10pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -25,21 +25,21 @@
   }
   div.infoLinksRow,
   div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
-    font-size: 9pt;
+    font-size: 10pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap !important;
   }
   label[id^='infolog-index_'][id$='info_enddate]'] {
-    font-size: 8pt;
+    font-size: 10pt;
   }
   label[id^='infolog-index_'][id$='info_enddate]'] time {
     float: none;
     font-weight: normal;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] {
-    font-size: 8pt;
+    font-size: 10pt;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] time {
     float: none;
@@ -50,7 +50,7 @@
     max-height: 15px;
   }
   ul[id^='infolog-index_'][id$='info_responsible]'] li {
-    font-size: 9pt;
+    font-size: 10pt;
     text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -62,13 +62,14 @@
   }
   .infoSubRow span[id^='infolog-index_'][id$='info_subject]'] {
     white-space: nowrap;
+    font-size: 12pt;
   }
   label[id^='infolog-index_'][id$='info_link]'] {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 100%;
-    font-size: 9pt;
+    font-size: 10pt;
     font-weight: normal;
   }
   infolog_rowHasSubs span.arrow,

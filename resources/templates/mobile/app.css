@@ -1,0 +1,34 @@
+/**
+ *
+ * Resources - Mobile
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ * Pixleegg Template app.css
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package resources
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+/* tablets and smartphones  */
+@media all {
+  #resources-show table.egwGridView_outer tbody img[id^="resources-show_"][id$="picture_thumb]"] {
+    border: 1px solid silver;
+    border-radius: 50%;
+  }
+  #resources-show table.egwGridView_outer tbody div.resourcesCol2 {
+    font-size: 10pt;
+  }
+  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="name]"] {
+    font-weight: bold;
+    font-size: 12pt;
+  }
+  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="name]"],
+  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="short_description]"],
+  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="accessory_of_label]"],
+  #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="accessories]"] {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
