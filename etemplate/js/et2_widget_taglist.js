@@ -98,7 +98,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 			"description": "The maximum number of items the user can select if multiple selection is allowed."
 		},
 		// Selectbox attributes that are not applicable
-		"multiple": { ignore: true},
+		"multiple": {
+			type: 'any', // boolean or 'toggle'
+			default: true,
+			description: "True, false or 'toggle'"
+		},
 		"rows": { ignore: true},
 		"tags": { ignore: true},
 		useCommaKey: {
@@ -122,6 +126,13 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 		// jQuery wrapped DOM node
 		this.div = jQuery("<div></div>").addClass('et2_taglist');
 
+		this.multiple_toggle = jQuery("<div></div>")
+			.addClass('toggle')
+			.on('click', jQuery.proxy(function() {
+				this._set_multiple(!this._multiple);
+			},this))
+			.appendTo(this.div);
+		
 		// magicSuggest object
 		this.taglist = null;
 
@@ -152,6 +163,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 				this.egw().debug('warn', 'Invalid autocomplete_params: '+_attrs.autocomplete_params );
 			}
 		}
+
+		if(_attrs.multiple !== 'toggle')
+		{
+			_attrs.multiple = et2_evalBool(_attrs.multiple);
+		}
 	},
 
 	doLoadingFinished: function() {
@@ -167,7 +183,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 		}
 
 		// MagicSuggest would replaces our div, so add a wrapper instead
-		this.taglist = $j('<div/>').appendTo(this.div);
+		this.taglist = $j('<div/>').prependTo(this.div);
 
 		this.taglist_options = jQuery.extend( {
 			// magisuggest can NOT work setting an empty autocomplete url, it will then call page url!
@@ -179,7 +195,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 			displayField: "label",
 			invalidCls: 'invalid ui-state-error',
 			placeholder: this.options.empty_label,
-			hideTrigger: true,
+			hideTrigger: this.options.multiple === true ? true : false,
 			noSuggestionText: this.egw().lang("No suggestions"),
 			required: this.options.required,
 			allowFreeEntries: this.options.allowFreeEntries,
@@ -189,7 +205,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 			editable: !(this.options.disabled || this.options.readonly),
 			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
 			renderer: jQuery.proxy(this.options.listRenderer || this.selectionRenderer,this),
-			maxSelection: this.options.maxSelection,
+			maxSelection: this.options.multiple ? this.options.maxSelection : 1,
 			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
 			width: this.options.width,	// propagate width
 			highlight: false,	// otherwise renderer have to return strings
@@ -208,6 +224,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 			this.taglist.addToSelection(this.options.value,true);
 		}
 
+		this._set_multiple(this.options.multiple);
+		
 		// AJAX _and_ select options - use custom function
 		if(this.options.autocomplete_url && !jQuery.isEmptyObject(this.options.select_options))
 		{
@@ -419,6 +437,34 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 	},
 
 	/**
+	 * Set whether the widget accepts only 1 value, many, or allows the user
+	 * to toggle between the two.
+	 *
+	 * @param {boolean|string} multiple true, false, or 'toggle'
+	 */
+	set_multiple: function set_multiple(multiple) {
+		if(multiple != this.options.multiple)
+		{
+			this.options.multiple = multiple;
+			if(this.taglist !== null)
+			{
+				this._set_multiple(multiple);
+			}
+		}
+	},
+
+	_set_multiple: function(multiple) {
+		this._multiple = multiple === true ? true : false;
+		this.div.toggleClass('et2_taglist_single', !this._multiple);
+		this.div.toggleClass('et2_taglist_toggle', this.options.multiple === 'toggle');
+		this.taglist.setMaxSelection(this._multiple ? this.options.maxSelection : 1);
+		if(!this._multiple && this.taglist.getValue().length > 1)
+		{
+			this.set_value(this.taglist.getValue()[0]);
+		}
+	},
+
+	/**
 	 * Set value(s) of taglist, add them automatic to select-options, if allowFreeEntries
 	 *
 	 * @param value (array of) ids
@@ -513,10 +559,11 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 			'default': 'accounts',
 			type: 'string',
 			description: 'Limit type of accounts.  One of {accounts,groups,both,owngroups}.'
-		}
+		},
 	},
 	lib_options: {
-		minChars: 2
+		minChars: 2,
+		toggleOnClick: true
 	},
 
 	init:function ()

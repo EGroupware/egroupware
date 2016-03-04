@@ -568,6 +568,15 @@
             self._processSuggestions();
         };
 
+		/**
+		 * Set the maximum allowed selections
+		 * @param {integer} name
+		 */
+		this.setMaxSelection = function(max)
+		{
+			cfg.maxSelection = max;
+		};
+		
         /**
          * Sets the name for the input field so it can be fetched in the form
          * @param name
