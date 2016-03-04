@@ -7104,7 +7104,7 @@ span.egw_tutorial_title {
     background-image: url(../images/setup.svg);
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_acl:before {
-    background-image: url(../images/access.svg);
+    background-image: url(../images/lock.svg);
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_cats:before {
     background-image: url(../images/tag_message.svg);
@@ -7116,7 +7116,7 @@ span.egw_tutorial_title {
     background-image: url(../images/help.svg);
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items ul li a#topmenu_search:before {
-    background-image: url(../images/topmenu_items/mobile/search.svg);
+    background-image: url(../images/search.svg);
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu_active.svg);
