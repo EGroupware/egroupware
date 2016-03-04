@@ -124,8 +124,8 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 
 		$query = $_REQUEST['query'];
 		// Arbitrarily limited to 50 / resource
-		$options = ['start' => 0, 'num_rows' => 50];
-		$results = [];
+		$options = array('start' => 0, 'num_rows' => 50);
+		$results = array();
 
 		$resources = array_merge(array('' => $bo->resources['']),$bo->resources);
 		foreach($resources as $type => $data)
@@ -156,12 +156,12 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 				if($id && $title)
 				{
 					// Magicsuggest uses id, not value.
-					$value = [
+					$value = array(
 						'id' => $type.$id,
 						'value'=> $type.$id,
 						'label' => $title,
 						'app'	=> lang($data['app'])
-					];
+					);
 					if(is_array($value['label']))
 					{
 						$value = array_merge($value, $value['label']);
