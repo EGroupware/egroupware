@@ -137,8 +137,16 @@
 			</columns>
 			<rows>
 				<row>
+					<description for="category" value="Categories"/>
+					<taglist-cat id="category" class="et2_fullWidth" empty_label="Select categories"/>
+				</row>
+				<row>
 					<description value="Notes"/>
 					<textbox multiline="true" id="note" rows="10" resize_ratio="0" class="et2_fullWidth" height="200"/>
+				</row>
+				<row>
+					<description for="pubkey" value="Public key"/>
+					<textbox multiline="true" id="pubkey" rows="4" resize_ratio="0" class="et2_fullWidth"/>
 				</row>
 				<row disabled="@hidebuttons">
 					<description value="Last date"/>
@@ -147,16 +155,6 @@
 				<row disabled="@hidebuttons">
 					<description value="Next date"/>
 					<link id="next_link"/>
-				</row>
-				<row>
-					<description for="pubkey" value="Public key"/>
-					<textbox multiline="true" id="pubkey" rows="4" resize_ratio="0" class="et2_fullWidth"/>
-				</row>
-				<row disabled="!@cat_tab=Tree">
-					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
-				</row>	
-				<row disabled="@cat_tab=Tree">
-					<listbox type="select-cat" id="cat_id" rows="11"/>
 				</row>
 			</rows>
 		</grid>
@@ -402,7 +400,7 @@
 					<description for="org_unit" value="department"/>
 					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
 				</row>
-				
+
 				<row>
 					<description for="tel_work" value="Business phone"/>
 					<url-phone id="tel_work" class="et2_fullWidth" autocomplete="work tel" />
@@ -444,7 +442,7 @@
 					</tabbox>
 				</row>
 				<row>
-					
+
 				</row>
 			</rows>
 		</grid>

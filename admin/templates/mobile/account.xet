@@ -15,10 +15,10 @@
 				</row>
 				<row>
 					<description value="Expires" for="account_expires"/>
-					<hbox>
+					<vbox>
 						<date id="account_expires"/>
 						<checkbox id="account_status" selected_value="A" label="Account active"/>
-					</hbox>
+					</vbox>
 				</row>
 				<row>
 					<description value="Password" for="account_passwd"/>
@@ -49,7 +49,7 @@
 					<description value="Login shell" for="loginshell"/>
 					<textbox id="loginshell" class="et2_fullWidth"/>
 				</row>
-				
+
 				<row>
 					<description value="Primary group" for="account_primary_group"/>
 					<select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>

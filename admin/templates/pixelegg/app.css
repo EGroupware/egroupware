@@ -18,7 +18,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 53026 2015-07-01 18:35:24Z ralfbecker $
+ * @version $Id: app.css 55140 2016-02-25 08:42:33Z ralfbecker $
  */
 .admin_tree table,
 .admin_tree tr,
@@ -167,23 +167,4 @@ td.admin_userAgent span {
 #                                           #
 #                                           #
 ##############################################*/
-}
-/* tablets and smartphones  */
-@media only screen and (max-device-width: 1024px) {
-  #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='status]'] {
-    text-align: right;
-    font-size: 9pt;
-  }
-  #admin-index table.egwGridView_outer tbody .adminCol2 {
-    float: right;
-  }
-  #admin-index table.egwGridView_outer tbody .adminCol2 div {
-    text-align: right;
-  }
-  #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='account_lid]'] {
-    font-weight: bold;
-  }
-  #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='account_lastname]']::after {
-    content: ",";
-  }
 }

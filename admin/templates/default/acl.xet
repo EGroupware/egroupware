@@ -60,11 +60,23 @@
 		</grid>
 	</template>
 	<template id="admin.acl" template="" lang="" group="0" version="1.9.001">
-		<vbox>
-			<nextmatch id="nm" template="admin.acl.rows" header_left="admin.acl.add"/>
-			<hbox class="dialogFooterToolbar">
-				<button label="Close" id="cancel" onclick="window.close();"/>
-			</hbox>
-		</vbox>
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Access control" class=""/>
+				</row>
+				<row>
+					<nextmatch id="nm" template="admin.acl.rows" header_left="admin.acl.add" height="400"/>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox>
+						<button label="Close" id="cancel" onclick="window.close();"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
 	</template>
 </overlay>
