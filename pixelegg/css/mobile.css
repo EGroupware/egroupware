@@ -1546,6 +1546,10 @@ div#ui-datepicker-div {
   background-color: #fecc44 !important;
   color: #373737;
 }
+.ui-widget-overlay,
+.ui-widget-shadow {
+  background-image: none;
+}
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -1896,7 +1900,7 @@ body {
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
   background-color: #ffc200;
   color: #000000;
-  font-size: 19.8px;
+  font-size: 20px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"]:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -3774,7 +3778,7 @@ td.message span.message {
   text-decoration: none;
   height: 32px;
   /*font-size: 1.1em;*/
-  font-size: 12.1px;
+  font-size: 12px;
   line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
@@ -3798,7 +3802,7 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
   padding-right: 20px;
-  font-size: 12.1px;
+  font-size: 12px;
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
@@ -4196,7 +4200,7 @@ td.message span.message {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12.1px;
+  font-size: 12px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
@@ -4367,7 +4371,7 @@ td.message span.message {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 15px;
   line-height: 1em;
-  font-size: 12.1px;
+  font-size: 12px;
   background-image: url(../images/arrow_right.png);
   background-repeat: no-repeat;
   background-position: left center;
@@ -5840,7 +5844,7 @@ a.textSidebox {
 .egw-loading-prompt-container::before {
   opacity: .3;
   content: "";
-  background: #aaaaaa url("images/ui-bg_flat_0_aaaaaa_40x100.png") 50% 50% repeat-x;
+  background-color: #aaaaaa;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -6407,7 +6411,7 @@ span.egw_tutorial_title {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
   }
   body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
-    font-size: 14.3px;
+    font-size: 14px;
     line-height: 1em;
     margin: 0 15px 2px 2px;
     vertical-align: super;
@@ -6527,7 +6531,7 @@ span.egw_tutorial_title {
     padding-top: 0.31em;
     padding-left: 3em;
     color: #999999;
-    font-size: 14.3px;
+    font-size: 14px;
     line-height: 17px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header object {
@@ -6673,7 +6677,7 @@ span.egw_tutorial_title {
     margin: 5px 0px 3px 5px;
     padding: 0px 0px 0px 15px;
     line-height: 1em;
-    font-size: 12.1px;
+    font-size: 12px;
     background-image: url(../images/arrow_left.png);
     background-repeat: no-repeat;
     background-position: left center;
