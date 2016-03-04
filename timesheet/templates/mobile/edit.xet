@@ -21,8 +21,8 @@
 				<row disabled="@ts_viewtype">
 					<description value="Unitprice" for="ts_unitprice"/>
 					<hbox disabled="@pm_integration=none" >
-						<textbox type="float" id="ts_unitprice" span="all" size="10"/>
-						<projectmanager-pricelist id="pl_id" class="et2_fullWidth" onchange="window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));" options="None"/>
+						<textbox type="float" id="ts_unitprice" span="all" size="10" width="30%"/>
+						<projectmanager-pricelist id="pl_id" width="70%" onchange="window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));" options="None"/>
 					</hbox>
 				</row>
 				<row class="row" disabled="!@ts_viewtype">
@@ -57,7 +57,7 @@
 				<row class="th">
 					<description value="Existing links"/>
 				</row>
-				<row>        
+				<row>
 					<link-list id="link_to"/>
 				</row>
 			</rows>
@@ -95,7 +95,7 @@
 					<description value="Last modified"/>
 					<menulist>
 						<menupopup type="select-account" id="ts_modifier" readonly="true"/>
-					</menulist>	
+					</menulist>
 				</row>
 				<row>
 					<description/>

@@ -38,7 +38,7 @@
 		#popupMainDiv {
 			padding: 1px 8px 0 8px;
 			background: none;
-			
+
 			div.et2_toolbar.et2_head_toolbar {
 				padding: 1px 5px 5px 10px !important;
 				button {
@@ -52,7 +52,7 @@
 				div.et2_toolbar_actionlist {
 					margin-left: 50px;
 				}
-				
+
 			}
 			#mail-compose_composeToolbar{
 				// Senden Button
@@ -74,9 +74,9 @@
 					&:disabled {background-color: none;}
 				}
 			}
-			
-				
-			
+
+
+
 			.mail-d-h1{
 				padding-bottom: 15px;
 				border-bottom: 1px solid silver;
@@ -150,9 +150,9 @@
 					background-color: #FFFFFF;
 				}
 			}
-				
+
 		}
-		
+
 		.dtree {
 			div.containerTableStyle {
 				overflow: hidden;
@@ -183,7 +183,7 @@
 						border-top: 1px solid silver;
 					}
 					span#mail-compose_cc_expander, span#mail-compose_cc_expander,
-					span#mail-compose_bcc_expander, span#mail-compose_bcc_expander, 
+					span#mail-compose_bcc_expander, span#mail-compose_bcc_expander,
 					span#mail-compose_folder_expander, span#mail-compose_folder_expander,
 					span#mail-compose_replyto_expander, span#mail-compose_replyto_expander
 					{
@@ -207,7 +207,7 @@
 			}
 		}
 	}
-	
+
 	#mail-index {
 		table.egwGridView_outer tbody {
 			span.et2_date_ro.et2_label {
@@ -237,7 +237,6 @@
 					text-overflow: ellipsis;
 					width: 98%;
 					.mob-fontsize-n;
-					color: @gray_50 !important;
 					font-weight: normal !important;
 				}
 				label[id^='mail-index_'][id$='date]']{
@@ -313,14 +312,10 @@
 					background-image: url(../pixelegg/images/kmmsgforwarded.png);
 				}
 				span.bodypreview {
-					max-height: 12px;
-					overflow: hidden;
-					white-space: nowrap;
 					text-overflow: ellipsis;
 					padding-left: 2px;
 					font-style: normal;
-					font-size: 8pt;
-					padding-top: 5px;
+					.mob-fontsize-n;
 				}
 			}
 		}
@@ -341,7 +336,7 @@
 				text-align: center;
 			}
 		}
-		
+
 	}
 	#mail-index_buttonmailcreate {display:none;}
 }

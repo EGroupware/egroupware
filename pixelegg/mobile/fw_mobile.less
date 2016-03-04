@@ -46,7 +46,7 @@
 
 @media @handheld
 {
-	
+
 	#egw_fw_print {
 		display:none;
 	}
@@ -86,7 +86,7 @@
 				border-radius: 0;
 				form {
 					margin-top: 3em;
-					
+
 					table.divLoginbox {
 						width:100%;
 						float:left;
@@ -166,7 +166,7 @@
 
 @media @smartphones {
 	body{
-		#egw_fw_basecontainer.sidebar-toggle 
+		#egw_fw_basecontainer.sidebar-toggle
 		{
 			div#egw_fw_top_toolbar {
 				z-index: 0;
@@ -181,10 +181,10 @@
 					filter: none;
 				}
 			}
-			
+
 		}
 		#egw_fw_basecontainer {
-			
+
 			#egw_fw_top_toolbar {
 				z-index: 998;
 				width: 300px;
@@ -310,11 +310,11 @@
 				h1 {
 					display: none;
 				}
-				
+
 			}
 		}
-		
-		
+
+
 		//###################
 		//#					#
 		//#	 CONTEXT MENU   #
@@ -333,7 +333,7 @@
 				tr.sub_item_selected {height:46px;}
 				tr.sub_item {width:100%;height:46px !important;}
 				td.sub_item_hk {width:100%;}
-			} 
+			}
 		}
 		div#egw_message {
 			bottom: 0px;
@@ -392,7 +392,7 @@
 			}
 		}
 		.et2_nextmatch {
-			.nextmatch_header_row, .nextmatch_header 
+			.nextmatch_header_row, .nextmatch_header
 			{
 				div.header_row_right {
 					position: absolute;
@@ -584,7 +584,7 @@
 								text-overflow: ellipsis;
 								overflow: hidden;
 								border-bottom: 1px solid silver;
-								
+
 								a {
 									width: 100%;
 									line-height: 30px;
@@ -594,7 +594,7 @@
 									div.ui-icon-trash {
 										display: block;
 									}
-								}	
+								}
 							}
 						}
 					}
@@ -762,7 +762,7 @@
 				padding-right: 0px;
 			}
 			.containerTableStyle {
-				overflow: auto;			
+				overflow: auto;
 			}
 		}
 		.et2_details {
@@ -789,22 +789,27 @@
 				height:46px;
 				padding-left: 8px;
 			}
-			input, select {
+			input, select, .et2_selectbox {
 				padding:0;
+				padding-left:0;
+				border-left:0;
+				border-top:0;
+				border-right:0;
+				border-radius: 0;
 			}
 			ul.et2_selectbox {
 				li{padding-top: 13px;}
 			}
 			/* Exceptional cases to not get the general left padding*/
-			.et2_label .et2_date_ro.et2_label, .et2_date input.et2_date {padding-left: 0;}
-			
+			.et2_label .et2_date_ro.et2_label {padding-left: 0;}
+
 			.et2_button_with_image {
 				background-color: transparent;
 				border:none;
 				box-shadow: none;
 				color: #1e1e1e;
 			}
-			.et2_date {min-width:100px;}
+			.et2_date {min-width:100px;padding-left:0;}
 			.et2_button_with_image, .et2_button_text {
 				height: 46px;
 				margin: 1px;
@@ -822,7 +827,7 @@
 					padding-top: 6px;
 				}
 				.et2_details_toggle {
-					
+
 				}
 			}
 			.et2_details {
@@ -855,13 +860,13 @@
 				width: auto;
 			}
 		}
-		
+
 		//###########################################
 		//#											#
 		//#	 et2_toolbar styles used in headbar		#
 		//#											#
 		//###########################################
-		
+
 		div.et2_toolbar.et2_head_toolbar {
 				background-color: transparent;
 				padding: 1px 5px 5px 10px !important;
@@ -1057,7 +1062,7 @@
 				width:100%;
 			}
 		}
-		
+
 		img.et2_button_icon[src*="svg"] {
 			background: none;
 			box-shadow: none;
@@ -1068,7 +1073,7 @@
 			border:none;
 			box-shado:none;
 		}
-		
+
 		/***************CHECKBOX *************/
 		/**************************************/
 		input[type="checkbox"] {
@@ -1077,7 +1082,7 @@
 		}
 
 		input[type="checkbox"]:before {
-			content:""; 
+			content:"";
 			width:32px;
 			height:32px;
 			background-image:url(../images/topmenu_items/mobile/checkbox.svg) !important;
@@ -1123,5 +1128,5 @@
 				}
 			}
 		}
-	}	
+	}
 }

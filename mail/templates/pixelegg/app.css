@@ -140,13 +140,14 @@ tr.forwarded span.status_img {
   font-family: Arial;
 }
 .bodypreview {
-  white-space: normal !important;
-  max-height: 25px !important;
-  font-size: 11px;
-  font-style: italic;
+  white-space: nowrap;
+  max-height: 18px;
+  font-size: 12px;
   font-weight: normal !important;
   font-family: Arial;
-  color: grey  !important;
+  color: grey !important;
+  overflow: hidden;
+  padding-top: 5px;
 }
 TR.sieveRowActive {
   font-size: 11px;
@@ -1798,13 +1799,6 @@ tr.forwarded span.status_img {
 .subject {
   font-size: 12px;
   font-family: Arial;
-}
-.bodypreview {
-  font-size: 10px;
-  font-style: italic;
-  font-weight: normal;
-  font-family: Arial;
-  color: grey;
 }
 TR.sieveRowActive {
   font-size: 11px;

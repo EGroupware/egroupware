@@ -1147,7 +1147,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: jquery-ui.less 54623 2015-12-23 18:37:23Z nathangray $
+ * @version $Id: jquery-ui.less 55245 2016-03-04 09:21:40Z ralfbecker $
  */
 #uical_select_resource {
   background-color: #ffdd73;
@@ -1557,6 +1557,10 @@ div#ui-datepicker-div {
   background-color: #fecc44 !important;
   color: #373737;
 }
+.ui-widget-overlay,
+.ui-widget-shadow {
+  background-image: none;
+}
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -1907,7 +1911,7 @@ body {
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
   background-color: #ffc200;
   color: #000000;
-  font-size: 19.8px;
+  font-size: 20px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"]:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -3785,7 +3789,7 @@ td.message span.message {
   text-decoration: none;
   height: 32px;
   /*font-size: 1.1em;*/
-  font-size: 12.1px;
+  font-size: 12px;
   line-height: 1.5em;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
@@ -3809,7 +3813,7 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
   padding-right: 20px;
-  font-size: 12.1px;
+  font-size: 12px;
   content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
@@ -4207,7 +4211,7 @@ td.message span.message {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12.1px;
+  font-size: 12px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header object {
@@ -4378,7 +4382,7 @@ td.message span.message {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 15px;
   line-height: 1em;
-  font-size: 12.1px;
+  font-size: 12px;
   background-image: url(../images/arrow_right.png);
   background-repeat: no-repeat;
   background-position: left center;
@@ -5604,7 +5608,7 @@ table.nextmatch_header img {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_traditional.less 54473 2015-12-07 09:08:09Z hnategh $
+ * @version $Id: layout_traditional.less 55245 2016-03-04 09:21:40Z ralfbecker $
  */
 /* traditional */
 form {
@@ -5851,7 +5855,7 @@ a.textSidebox {
 .egw-loading-prompt-container::before {
   opacity: .3;
   content: "";
-  background: #aaaaaa url("images/ui-bg_flat_0_aaaaaa_40x100.png") 50% 50% repeat-x;
+  background-color: #aaaaaa;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -6418,7 +6422,7 @@ span.egw_tutorial_title {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
   }
   body .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
-    font-size: 14.3px;
+    font-size: 14px;
     line-height: 1em;
     margin: 0 15px 2px 2px;
     vertical-align: super;
@@ -6538,7 +6542,7 @@ span.egw_tutorial_title {
     padding-top: 0.31em;
     padding-left: 3em;
     color: #999999;
-    font-size: 14.3px;
+    font-size: 14px;
     line-height: 17px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header object {
@@ -6684,7 +6688,7 @@ span.egw_tutorial_title {
     margin: 5px 0px 3px 5px;
     padding: 0px 0px 0px 15px;
     line-height: 1em;
-    font-size: 12.1px;
+    font-size: 12px;
     background-image: url(../images/arrow_left.png);
     background-repeat: no-repeat;
     background-position: left center;
@@ -7613,14 +7617,19 @@ span.egw_tutorial_title {
     padding-left: 8px;
   }
   body #popupMainDiv input,
-  body #popupMainDiv select {
+  body #popupMainDiv select,
+  body #popupMainDiv .et2_selectbox {
     padding: 0;
+    padding-left: 0;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-radius: 0;
   }
   body #popupMainDiv ul.et2_selectbox li {
     padding-top: 13px;
   }
-  body #popupMainDiv .et2_label .et2_date_ro.et2_label,
-  body #popupMainDiv .et2_date input.et2_date {
+  body #popupMainDiv .et2_label .et2_date_ro.et2_label {
     padding-left: 0;
   }
   body #popupMainDiv .et2_button_with_image {
@@ -7631,6 +7640,7 @@ span.egw_tutorial_title {
   }
   body #popupMainDiv .et2_date {
     min-width: 100px;
+    padding-left: 0;
   }
   body #popupMainDiv .et2_button_with_image,
   body #popupMainDiv .et2_button_text {
