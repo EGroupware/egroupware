@@ -1,3 +1,22 @@
+egroupware-epl (14.3.20160304) hardy; urgency=low
+
+  * All apps: updated included Horde and PEAR packages (now including PEAR itself) to improve php 7.0 compatibility
+  * Filemanager: add ability to finally delete all old versions or deleted files from a versioned directory
+  * Filemanager: fix not working upload in idots template
+  * Filemanger: filemanager/cli.php wrongly reported wrong passwords for setup or config user with newer password hashes
+  * ActiveDirectory: fix creation of groups without description or removing of description of an existing group
+  * ActiveDirectory: fixed user who never changed his password get forced to change his password
+  * Bookmarks: respect Preference-Setting for defaultview (tree/list)
+  * Mail: fix drag and drop of folders for mail folder tree
+  * Mail: deny moving folders from one mailaccount to another as we are not supporting it
+  * Mail: fix for problem when retrieving and displaying an event from winmail.dat attachment
+  * EMailAdmin: new flag to allow users to change forwarding in EGroupware managed mail-servers (mandatory database update!)
+  * eSync: close session for ping requests to not block other requests
+  * PHP 5.3: fix PHP Fatal error when opening Addressbook app caused by using a PHP 5.4+ feature
+  * PHP 7.0: minimal support, full support will come with 16.1
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 03 Mar 2016 19:41:50 +0100
+
 egroupware-epl (14.3.20160113) hardy; urgency=low
 
   * All Applications: Fix missing Ckeditor in previous packages
