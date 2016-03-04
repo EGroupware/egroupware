@@ -14,7 +14,6 @@
 @media only screen and (max-device-width: 1024px) {
   #timesheet-index table.egwGridView_outer tbody label[id^='timesheet-index'][id$='ts_start]'] > time {
     font-weight: bold;
-    float: left;
   }
   #timesheet-index table.egwGridView_outer tbody ul[id^='timesheet-index'][id$='ts_owner]'] > li {
     overflow: hidden;
@@ -32,8 +31,9 @@
     font-size: 10pt;
   }
   #timesheet-index table.egwGridView_outer tbody span[id^='timesheet-index'][id$='ts_description]'] {
-    height: 30px;
+    height: 19px;
     white-space: nowrap;
+    line-height: 18px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 10pt;

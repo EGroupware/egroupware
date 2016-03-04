@@ -17,37 +17,33 @@
 		<grid width="100%">
 			<columns>
 				<column width="10"/>
+				<column width="80%" />
 				<column width="110"/>
-				<column width="90%" />
-				<column width="60"/>
 			</columns>
 			<rows>
 				<row class="th">
-					
+
 				</row>
 				<row class="$row_cont[class] timesheetRow">
 					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
-					<vbox>
-						<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
-						<menulist class="$cont[ownerClass]">
-							<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
-						</menulist>
-						<menulist class="noWrap">
-							<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
-						</menulist>
-					</vbox>
 					<vbox>
 						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
 						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
 						<link id="${row}[ts_link]" no_lang="1"/>
 					</vbox>
 					<vbox class="timesheet3Col">
-						<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1" align="right"/>
-						<textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
-						<textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>
-						<menulist>
-							<menupopup id="${row}[ts_status]" readonly="true"/>
-						</menulist>
+						<hbox>
+							<time_or_date id="${row}[ts_start]" readonly="true" options=",8" align="left"/>
+						</hbox>
+
+						<hbox>
+							<menulist class="$cont[ownerClass]">
+								<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
+							</menulist>
+						</hbox>
+						<hbox>
+							<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1"/>
+						</hbox>
 					</vbox>
 				</row>
 			</rows>
