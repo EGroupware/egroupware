@@ -939,7 +939,7 @@ ul.et2_link_string {
 .et2_taglist_toggle > div:last-child {
 	margin-left: -1px;
 	float: right;
-	
+
 	width: 23px;
 	height: 23px;
 	position: relative;
@@ -1734,6 +1734,19 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	margin: 2px;
 	border-radius: 3px;
 	height: 18px;
+}
+.et2_toolbar div.chzn-container-multi, .nextmatch_header_row div.chzn-container-multi {
+	margin-right: 4px;
+}
+.et2_toolbar .chzn-container-multi ul.chzn-choices, .nextmatch_header_row .chzn-container-multi ul.chzn-choices {
+	border-radius: 3px;
+	border: 1px solid silver;
+}
+.et2_toolbar .chzn-container-multi li.search-choice, .nextmatch_header_row .chzn-container-multi li.search-choice {
+	margin: 1px;
+}
+.et2_toolbar .chzn-container-multi li.search-field input, .nextmatch_header_row .chzn-container-multi li.search-field input {
+	padding: 3px;
 }
 /**
  * Daterange selection in NM header
