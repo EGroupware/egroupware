@@ -2600,7 +2600,7 @@ class calendar_uiforms extends calendar_ui
 			// For DnD, create an exception if they gave the date
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
-			
+
 			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
 			if (!is_array($conflicts) && $conflicts)
 			{
@@ -2629,7 +2629,7 @@ class calendar_uiforms extends calendar_ui
 			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($seriesInstance,'ts');
 			$event['start'] = $old_event['start'] + $offset;
 			$event['duration'] = $duration;
-		
+
 			// We have a recurring event starting in the past -
 			// stop it & create a new one.
 			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
@@ -2726,8 +2726,8 @@ class calendar_uiforms extends calendar_ui
 	{
 		$query = $_REQUEST['query'];
 		// Arbitrarily limited to 50 / resource
-		$options = ['start' => 0, 'num_rows' => 50];
-		$results = [];
+		$options = array('start' => 0, 'num_rows' => 50);
+		$results = array();
 		if($query)
 		{
 			$resources = array_merge(array('' => $this->bo->resources['']),$this->bo->resources);
@@ -2759,12 +2759,12 @@ class calendar_uiforms extends calendar_ui
 					if($id && $title)
 					{
 						// Magicsuggest uses id, not value.
-						$value = [
+						$value = array(
 							'id' => $type.$id,
 							'value'=> $type.$id,
 							'label' => $title,
 							'app'	=> lang($data['app'])
-						];
+						);
 						if(is_array($value['label']))
 						{
 							$value = array_merge($value, $value['label']);
@@ -2785,7 +2785,7 @@ class calendar_uiforms extends calendar_ui
 		echo json_encode($results);
 		common::egw_exit();
 	}
-	
+
 	/**
 	 * imports a mail as Calendar
 	 *
