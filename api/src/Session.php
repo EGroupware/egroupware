@@ -22,7 +22,7 @@
 
 namespace EGroupware\Api;
 
-// explicitly reference clased still in phpgwapi
+// explicitly reference classes still in phpgwapi
 use egw_mailer;
 use common;	// randomstring
 use egw_digest_auth;	// egw_digest_auth::parse_digest
