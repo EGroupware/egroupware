@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $DEBUG = @$_POST['debug'] || @$_GET['debug'];
 /*
  TODO: We allow a user to hose their setup here, need to make use
@@ -31,7 +33,7 @@ if (!$GLOBALS['egw_setup']->auth('Config'))
 // Does not return unless user is authorized
 
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+$setup_tpl = new Template($tpl_root);
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',
@@ -40,12 +42,12 @@ $setup_tpl->set_file(array(
 	'T_login_stage_header' => 'login_stage_header.tpl',
 	'T_setup_main' => 'applications.tpl'
 ));
-$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 // check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
 {
-	egw_csrf::validate($_POST['csrf_token'], __FILE__);
+	Api\Csrf::validate($_POST['csrf_token'], __FILE__);
 }
 
 $setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');

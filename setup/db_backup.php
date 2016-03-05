@@ -45,18 +45,18 @@ if ($_POST['download'])
 	readfile($file);
 	exit;
 }
-$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+$setup_tpl = new Template($tpl_root);
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',
 	'T_db_backup' => 'db_backup.tpl',
 ));
-$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 // check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
 {
-	egw_csrf::validate($_POST['csrf_token'], __FILE__);
+	Api\Csrf::validate($_POST['csrf_token'], __FILE__);
 }
 $setup_tpl->set_block('T_db_backup','schedule_row','schedule_rows');
 $setup_tpl->set_block('T_db_backup','set_row','set_rows');
@@ -107,13 +107,13 @@ if ($_POST['save_backup_settings'])
 }
 if ($_POST['mount'])
 {
-	egw_vfs::$is_root = true;
+	Api\Vfs::$is_root = true;
 	echo '<div align="center">'.
-		(egw_vfs::mount('filesystem://default'.$db_backup->backup_dir.'?group=Admins&mode=070','/backup',false) ?
+		(Api\Vfs::mount('filesystem://default'.$db_backup->backup_dir.'?group=Admins&mode=070','/backup',false) ?
 			lang('Backup directory %1 mounted as %2',$db_backup->backup_dir,'/backup') :
 			lang('Failed to mount Backup directory!')).
 		"</div>\n";
-	egw_vfs::$is_root = false;
+	Api\Vfs::$is_root = false;
 }
 // create a backup now
 if($_POST['backup'])

@@ -9,6 +9,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Site configuration for all apps using an $app/templates/default/config.tpl
  */
@@ -24,7 +26,7 @@ class uiconfig
 		// for POST requests validate CSRF token (or terminate request)
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
-			egw_csrf::validate($_POST['csrf_token'], __CLASS__);
+			Api\Csrf::validate($_POST['csrf_token'], __CLASS__);
 		}
 
 		if (empty($_GET['appname']) && isset($params['appname']))
@@ -44,7 +46,7 @@ class uiconfig
 		// load the translations of the app we show too, so they dont need to be in admin!
 		if ($_appname != 'admin')
 		{
-			translation::add_app($_appname);
+			Api\Translation::add_app($_appname);
 		}
 
 		if(get_magic_quotes_gpc() && is_array($_POST['newsettings']))
@@ -103,7 +105,7 @@ class uiconfig
 		// fix footer submit buttons to just {submit} {cancel}
 		$t->set_var('footer', preg_replace('/<input[^>]+value="{lang_(submit|cancel)}"[^>]*>/', '{$1}', $t->get_var('footer')));
 
-		$c = new config($config_appname);
+		$c = new Api\Config($config_appname);
 		$c->read_repository();
 		if ($_POST['cancel'] || ($_POST['submit'] || $_POST['save'] || $_POST['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
@@ -177,7 +179,7 @@ class uiconfig
 		$t->set_var('th_text',   $GLOBALS['egw_info']['theme']['th_text']);
 		$t->set_var('row_on',    $GLOBALS['egw_info']['theme']['row_on']);
 		$t->set_var('row_off',   $GLOBALS['egw_info']['theme']['row_off']);
-		$t->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__CLASS__)));
+		$t->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__CLASS__)));
 
 		$vars = $t->get_undefined('body');
 

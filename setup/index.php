@@ -10,13 +10,15 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $GLOBALS['DEBUG'] = False;
 include('./inc/functions.inc.php');
 
 @set_time_limit(0);
 
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+$setup_tpl = new Template($tpl_root);
 $setup_tpl->set_file(array
 (
 	'T_head'       => 'head.tpl',
@@ -251,7 +253,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 4:
-		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 		$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',$setup_info['phpgwapi']['currentver']));
 		$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
 		$setup_tpl->set_var('backupwarn',lang('but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>'));
@@ -273,7 +275,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 5:
-		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 		$setup_tpl->set_var('are_you_sure',lang('ARE YOU SURE?'));
 		$setup_tpl->set_var('really_uninstall_all_applications',lang('REALLY Uninstall all applications'));
 		$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));
@@ -298,7 +300,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 						!preg_match('/^[0-9.a-z_]+$/i', $_POST['db_grant_host']) ? 'localhost' : $_POST['db_grant_host']);
 					break;
 				case 'drop':
-					egw_csrf::validate($_POST['csrf_token'], __FILE__);
+					Api\Csrf::validate($_POST['csrf_token'], __FILE__);
 					$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
 					$setup_info = $GLOBALS['egw_setup']->process->droptables($setup_info);
 					break;
@@ -346,11 +348,11 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 					}
 					break;
 				case 'oldversion':
-					egw_csrf::validate($_POST['csrf_token'], __FILE__);
+					Api\Csrf::validate($_POST['csrf_token'], __FILE__);
 					// create a backup, before upgrading the tables
 					if ($_POST['backup'])
 					{
-						$db_backup =& CreateObject('phpgwapi.db_backup');
+						$db_backup = new Api\Db\Backup();
 						if (is_resource($f = $db_backup->fopen_backup()))
 						{
 							echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
@@ -373,7 +375,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 					break;
 			}
 		}
-		catch (egw_exception_db $e)
+		catch (Api\Db\Exception $e)
 		{
 			echo "<pre>".$e->getMessage()."</pre>\n";
 		}

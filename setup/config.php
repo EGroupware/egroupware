@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 include('./inc/functions.inc.php');
 
 /*
@@ -23,7 +25,7 @@ if(!$GLOBALS['egw_setup']->auth('Config') || @$_POST['cancel'])
 }
 
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+$setup_tpl = new Template($tpl_root);
 
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
@@ -32,12 +34,12 @@ $setup_tpl->set_file(array(
 	'T_config_pre_script' => 'config_pre_script.tpl',
 	'T_config_post_script' => 'config_post_script.tpl'
 ));
-$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 // check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
 {
-	egw_csrf::validate($_POST['csrf_token'], __FILE__);
+	Api\Csrf::validate($_POST['csrf_token'], __FILE__);
 }
 
 /* Following to ensure windows file paths are saved correctly */
@@ -78,14 +80,14 @@ if(@get_var('submit',Array('POST')) && @$newsettings)
 		/* Don't erase passwords, since we also do not print them below */
 		if(!empty($value) || !(stristr($setting,'passwd') || stristr($setting,'password') || stristr($setting,'root_pw')))
 		{
-			config::save_value($setting, $value, 'phpgwapi');
+			Api\Config::save_value($setting, $value, 'phpgwapi');
 		}
 	}
 	if(!$GLOBALS['error'])
 	{
 		$GLOBALS['egw_setup']->db->transaction_commit();
 		// unset cached config, as this is the primary source for configuration now
-		egw_cache::unsetInstance('config', 'configs');
+	Api\Cache::unsetInstance('config', 'configs');
 
 		Header('Location: index.php');
 		exit;
@@ -119,7 +121,7 @@ class phpgw
 $GLOBALS['egw'] = new phpgw;
 $GLOBALS['egw']->db     =& $GLOBALS['egw_setup']->db;
 
-$t = CreateObject('phpgwapi.Template', common::get_tpl_dir('setup'));
+$t = new Template(common::get_tpl_dir('setup'));
 
 $t->set_unknowns('keep');
 $t->set_file(array('config' => 'config.tpl'));

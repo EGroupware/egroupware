@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 if (strpos($_SERVER['PHP_SELF'],'admin_account.php') !== false)
 {
 	include('./inc/functions.inc.php');
@@ -29,7 +31,7 @@ if ($_POST['submit'])
 	// for POST (not GET or cli call via setup_cmd_admin) validate CSRF token
 	if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
-		egw_csrf::validate($_POST['csrf_token'], __FILE__);
+		Api\Csrf::validate($_POST['csrf_token'], __FILE__);
 	}
 
 	/* Posted admin data */
@@ -52,7 +54,7 @@ if ($_POST['submit'])
 if(!$_POST['submit'] || $error)
 {
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+	$setup_tpl = new Template($tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head'       => 'head.tpl',
 		'T_footer'     => 'footer.tpl',
@@ -89,7 +91,7 @@ if(!$_POST['submit'] || $error)
 	$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
 	$setup_tpl->set_var('demo_desc',lang('The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
 
-	$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', egw_csrf::token(__FILE__)));
+	$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 	$setup_tpl->set_var('lang_submit',lang('Save'));
 	$setup_tpl->set_var('lang_cancel',lang('Cancel'));

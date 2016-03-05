@@ -6,9 +6,14 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2014 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014-16 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api;
+
+// explicitly reference classes still in phpgwapi
+use auth;
 
 /**
  * Class supplying methods to prevent successful CSRF by requesting a random token,
@@ -22,12 +27,12 @@
  * If a token does not validate (incl. purpose, if specified in generation)
  * the request will be imediatly terminated.
  */
-class egw_csrf
+class Csrf
 {
 	/**
 	 * Get a CSRF token for an optional $purpose, which can be validated
 	 *
-	 * @param mixed $_purpose=true if given it need to be used in validate too! (It must NOT be NULL)
+	 * @param mixed $_purpose =true if given it need to be used in validate too! (It must NOT be NULL)
 	 * @return string CSRF token
 	 */
 	public static function token($_purpose=true)
@@ -42,7 +47,7 @@ class egw_csrf
 			auth::randomstring(64);
 
 		// store it in session for later validation
-		egw_cache::setSession(__CLASS__, $token, $_purpose);
+		Cache::setSession(__CLASS__, $token, $_purpose);
 
 		return $token;
 	}
@@ -50,13 +55,13 @@ class egw_csrf
 	/**
 	 * Validate a CSRF token or teminate the request
 	 *
-	 * @param string $_token CSRF token generated with egw_csfr::token()
-	 * @param string $_purpose=true optional purpose string passed to token method
-	 * @param boolean $_delete_token=true true if token should be deleted after validation, it will validate no second time
+	 * @param string $_token CSRF token generated with egw_csrf::token()
+	 * @param string $_purpose =true optional purpose string passed to token method
+	 * @param boolean $_delete_token =true true if token should be deleted after validation, it will validate no second time
 	 */
 	public static function validate($_token, $_purpose=true, $_delete_token=true)
 	{
-		$stored_purpose = egw_cache::getSession(__CLASS__, $_token);
+		$stored_purpose = Cache::getSession(__CLASS__, $_token);
 
 		// if token and purpose dont validate, log and terminate request
 		if (!isset($stored_purpose) || $stored_purpose !== $_purpose)
@@ -66,6 +71,6 @@ class egw_csrf
 			// we are not throwing an exception here, but die, to not allow catching it!
 			die("CSRF detected, request terminated!");
 		}
-		if ($_delete_token) egw_cache::unsetTree (__CLASS__, $_token);
+		if ($_delete_token) Cache::unsetSession(__CLASS__, $_token);
 	}
 }
