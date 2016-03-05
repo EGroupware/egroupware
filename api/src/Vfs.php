@@ -14,7 +14,6 @@
 namespace EGroupware\Api;
 
 // explicitly import old phpgwapi classes used:
-use common;
 use html;
 use HTTP_WebDAV_Server;
 
@@ -1210,13 +1209,13 @@ class Vfs extends Vfs\StreamWrapper
 		$mime_full = strtolower(str_replace	('/','_',$mime_type));
 		list($mime_part) = explode('_',$mime_full);
 
-		if (!($img=common::image('etemplate',$icon='mime'.$size.'_'.$mime_full)) &&
+		if (!($img=Image::find('etemplate',$icon='mime'.$size.'_'.$mime_full)) &&
 			// check mime-alias-map before falling back to more generic icons
 			!(isset(MimeMagic::$mime_alias_map[$mime_type]) &&
-				($img=common::image('etemplate',$icon='mime'.$size.'_'.str_replace('/','_',MimeMagic::$mime_alias_map[$mime_full])))) &&
-			!($img=common::image('etemplate',$icon='mime'.$size.'_'.$mime_part)))
+				($img=Image::find('etemplate',$icon='mime'.$size.'_'.str_replace('/','_',MimeMagic::$mime_alias_map[$mime_full])))) &&
+			!($img=Image::find('etemplate',$icon='mime'.$size.'_'.$mime_part)))
 		{
-			$img = common::image('etemplate',$icon='mime'.$size.'_unknown');
+			$img = Image::find('etemplate',$icon='mime'.$size.'_unknown');
 		}
 		if ($et_image === 'url')
 		{
@@ -1895,7 +1894,7 @@ class Vfs extends Vfs\StreamWrapper
 
 		if ($mime_main == 'egw')
 		{
-			$image = common::image($mime_sub, 'navbar');
+			$image = Image::find($mime_sub, 'navbar');
 		}
 		else if ($file && $mime_main == 'image' && in_array($mime_sub, array('png','jpeg','jpg','gif','bmp')) &&
 		         (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
@@ -1919,7 +1918,7 @@ class Vfs extends Vfs\StreamWrapper
 		else
 		{
 			list($app, $name) = explode("/", self::mime_icon($mime), 2);
-			$image = common::image($app, $name);
+			$image = Image::find($app, $name);
 		}
 
 		return $image;

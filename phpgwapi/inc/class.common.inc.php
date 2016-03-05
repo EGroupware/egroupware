@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API: Commononly used (static) functions
+ * EGroupware API: Commononly used (static) functions
  *
  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>
  * and Joseph Engo <jengo@phpgroupware.org>
@@ -16,8 +16,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
- * common class containing commonly used static functions
+ * Commononly used (static) functions
+ *
+ * @deprecated use Api\* alternatives mentioned in individual methods
  */
 class common
 {
@@ -29,8 +33,8 @@ class common
 	 *
 	 * This method uses the language and nationalty set in the users common prefs.
 	 *
-	 * @param $category=LC_ALL category to set, see setlocal function
-	 * @param $charset=null default system charset
+	 * @param $category =LC_ALL category to set, see setlocal function
+	 * @param $charset =null default system charset
 	 * @return string the local (or best estimate) set
 	 */
 	static function setlocale($category=LC_ALL,$charset=null)
@@ -74,6 +78,7 @@ class common
 	 * This function checks for major version only.
 	 * @param $str1
 	 * @param $str2
+	 * @deprecated not used anymore
 	 */
 	static function cmp_version($str1,$str2,$debug=False)
 	{
@@ -106,6 +111,7 @@ class common
 	 * This function checks all fields. cmp_version() checks release version only.
 	 * @param $str1
 	 * @param $str2
+	 * @deprecated not used anymore
 	 */
 	static function cmp_version_long($str1,$str2,$debug=False)
 	{
@@ -175,6 +181,7 @@ class common
 	 * return an array of installed languages
 	 *
 	 * @return $installedLanguages; an array containing the installed languages
+	 * @deprecated not used anymore
 	 */
 	static function getInstalledLanguages()
 	{
@@ -193,6 +200,7 @@ class common
 	 * Uses HTTP_ACCEPT_LANGUAGE (from the browser) and getInstalledLanguages to find out which languages are installed
 	 *
 	 * @return string
+	 * @deprecated not used anymore
 	 */
 	static function getPreferredLanguage()
 	{
@@ -297,7 +305,9 @@ class common
 		return $s;
 	}
 
-	// Look at the note towards the top of this file (jengo)
+	/**
+	 * @deprecated just use forward slashes supported by PHP on all OS
+	 */
 	static function filesystem_separator()
 	{
 		return filesystem_separator();
@@ -307,6 +317,7 @@ class common
 	 * This is used for reporting errors in a nice format.
 	 *
 	 * @param $error - array of errors
+	 * @deprecated not used anymore
 	 */
 	static function error_list($errors,$text='Error')
 	{
@@ -327,10 +338,10 @@ class common
 	/**
 	 * return the fullname of a user
 	 *
-	 * @param $lid='' account loginid
-	 * @param $firstname='' firstname
-	 * @param $lastname='' lastname
-	 * @param $accountid=0 id, to check if it's a user or group, otherwise the lid will be used
+	 * @param $lid ='' account loginid
+	 * @param $firstname ='' firstname
+	 * @param $lastname ='' lastname
+	 * @param $accountid =0 id, to check if it's a user or group, otherwise the lid will be used
 	 */
 	static function display_fullname($lid = '', $firstname = '', $lastname = '',$accountid=0)
 	{
@@ -390,10 +401,10 @@ class common
 	/**
 	 * grab the owner name
 	 *
-	 * @param $id account id
+	 * @param string $accountid =null account id
 	 * @return string full name of user or "#$accountid" if user not found
 	 */
-	static function grab_owner_name($accountid = '')
+	static function grab_owner_name($accountid=null)
 	{
 		$lid = $fname = $lname = null;
 		if (!$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname))
@@ -414,6 +425,7 @@ class common
 	 * 		 * 		 * 	 page in a new browser window.
 	 * @param mixed $selected the tab whos key is $selected will be displayed as current tab
 	 * @param $fontsize optional
+	 * @deprecated not used anymore
 	 * @return string return html that displays the tabs
 	 */
 	static function create_tabs($tabs, $selected, $fontsize = '')
@@ -732,94 +744,43 @@ class common
 	}
 
 	/**
-	 * @deprecated use image($app,$image) they are identical now
+	 * @deprecated use Api\Image::find($app,$image) they are identical now
 	 */
 	static function find_image($app,$image)
 	{
-		return self::image($app,$image);
+		return Api\Image::find($app,$image);
 	}
 
 	/**
 	 * Searches an image of a given type, if not found also without extension
 	 *
-	 * @param string $appname
+	 * @param string $app
 	 * @param string|array $image one or more image-name in order of precedence
-	 * @param string $extension='' extension to $image, makes sense only with an array
-	 * @param boolean $svg=false should svg images be returned or not:
+	 * @param string $extension ='' extension to $image, makes sense only with an array
+	 * @param boolean $svg =false should svg images be returned or not:
 	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
 	 * @return string url of image or null if not found
+	 * @deprecated not used in newer template
 	 */
 	static function image_on($app,$image,$extension='_on',$svg=false)
 	{
-		return ($img = self::image($app,$image,$extension,$svg)) ? $img : self::image($app,$image,'',$svg);
+		return ($img = Api\Image::find($app,$image,$extension,$svg)) ? $img : Api\Image::find($app,$image,'',$svg);
 	}
 
 	/**
 	 * Searches a appname, template and maybe language and type-specific image
 	 *
-	 * @param string $appname
+	 * @param string $app
 	 * @param string|array $image one or more image-name in order of precedence
-	 * @param string $extension='' extension to $image, makes sense only with an array
-	 * @param boolean $svg=false should svg images be returned or not:
+	 * @param string $extension ='' extension to $image, makes sense only with an array
+	 * @param boolean $_svg =false should svg images be returned or not:
 	 *	true: always return svg, false: never return svg (current default), null: browser dependent, see svg_usable()
 	 * @return string url of image or null if not found
+	 * @deprecated use Api\Image::find($app,$image,$extension='',$_svg=false)
 	 */
-	static function image($app,$image,$extension='',$svg=false)
+	static function image($app,$image,$extension='',$_svg=false)
 	{
-		$svg = html::$ua_mobile?null:$svg; // ATM we use svg icons only for mobile theme
-		static $image_map_no_svg = null, $image_map_svg = null;
-		if (is_null($svg)) $svg = self::svg_usable ();
-		if ($svg)
-		{
-			$image_map =& $image_map_svg;
-		}
-		else
-		{
-			$image_map =& $image_map_no_svg;
-		}
-		if (is_null($image_map)) $image_map = self::image_map(null, $svg);
-
-		// array of images in descending precedence
-		if (is_array($image))
-		{
-			foreach($image as $img)
-			{
-				if (($url = self::image($app, $img, $extension)))
-				{
-					return $url;
-				}
-			}
-			//error_log(__METHOD__."('$app', ".array2string($image).", '$extension') NONE found!");
-			return null;
-		}
-
-		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
-
-		// instance specific images have highest precedence
-		if (isset($image_map['vfs'][$image.$extension]))
-		{
-			return $webserver_url.$image_map['vfs'][$image.$extension];
-		}
-		// then app specific ones
-		if(isset($image_map[$app][$image.$extension]))
-		{
-			return $webserver_url.$image_map[$app][$image.$extension];
-		}
-		// then api
-		if(isset($image_map['phpgwapi'][$image.$extension]))
-		{
-			return $webserver_url.$image_map['phpgwapi'][$image.$extension];
-		}
-
-		// if image not found, check if it has an extension and try withoug
-		if (strpos($image, '.') !== false)
-		{
-			$name = null;
-			self::get_extension($image, $name);
-			return self::image($app, $name, $extension);
-		}
-		//error_log(__METHOD__."('$app', '$image', '$extension') image NOT found!");
-		return null;
+		return Api\Image::find($app, $image, $extension, $_svg);
 	}
 
 	/**
@@ -828,10 +789,11 @@ class common
 	 * All non IE and IE 9+
 	 *
 	 * @return boolean
+	 * @deprecated use Api\Image::svg_usable()
 	 */
 	static function svg_usable()
 	{
-		return html::$user_agent !== 'msie' || html::$ua_version >= 9;
+		return Api\Image::svg_usable();
 	}
 
 	/**
@@ -842,131 +804,24 @@ class common
 	 *
 	 * VFS image directory is treated like an application named 'vfs'.
 	 *
-	 * @param string $template_set=null 'default', 'idots', 'jerryr', default is template-set from user prefs
-	 * @param boolean $svg=null prefer svg images, default for all browsers but IE<9
+	 * @param string $template_set =null 'default', 'idots', 'jerryr', default is template-set from user prefs
+	 * @param boolean $svg =null prefer svg images, default for all browsers but IE<9
 	 * @return array of application => image-name => full path
+	 * @deprecated use Api\Image::map($template_set=null, $svg=null)
 	 */
 	static function image_map($template_set=null, $svg=null)
 	{
-		if (is_null($template_set))
-		{
-			$template_set = $GLOBALS['egw_info']['server']['template_set'];
-		}
-		if (is_null($svg))
-		{
-			$svg = self::svg_usable();
-		}
-		$cache_name = 'image_map_'.$template_set.($svg ? '_svg' : '');
-		if (($map = egw_cache::getInstance(__CLASS__, $cache_name)))
-		{
-			return $map;
-		}
-		//$starttime = microtime(true);
-
-		// priority: : PNG->JPG->GIF
-		$img_types = array('png','jpg','gif','ico');
-
-		// if we want svg, prepend it to img-types
-		if ($svg) array_unshift ($img_types, 'svg');
-
-		$map = array();
-		foreach(scandir(EGW_SERVER_ROOT) as $app)
-		{
-			if ($app[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$app) || !file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates')) continue;
-
-			$app_map =& $map[$app];
-			if (true) $app_map = array();
-			$imagedirs = array();
-			if ($app == 'phpgwapi')
-			{
-				$imagedirs[] = $GLOBALS['egw']->framework->template_dir.'/images';
-			}
-			else
-			{
-				$imagedirs[] = '/'.$app.'/templates/'.$template_set.'/images';
-			}
-			if ($template_set != 'idots') $imagedirs[] = '/'.$app.'/templates/idots/images';
-			$imagedirs[] = '/'.$app.'/templates/default/images';
-
-			foreach($imagedirs as $imagedir)
-			{
-				if (!file_exists($dir = EGW_SERVER_ROOT.$imagedir) || !is_readable($dir)) continue;
-
-				foreach(scandir($dir) as $img)
-				{
-					if ($img[0] == '.') continue;
-
-					$subdir = null;
-					foreach(is_dir($dir.'/'.$img) ? scandir($dir.'/'.($subdir=$img)) : (array) $img as $img)
-					{
-						$name = null;
-						if (!in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
-
-						if (isset($subdir)) $name = $subdir.'/'.$name;
-
-						if (!isset($app_map[$name]) || array_search($ext, $img_types) < array_search(self::get_extension($app_map[$name]), $img_types))
-						{
-							$app_map[$name] = $imagedir.'/'.$name.'.'.$ext;
-						}
-					}
-				}
-			}
-		}
-		$app_map =& $map['vfs'];
-		if (true) $app_map = array();
-		if (($dir = $GLOBALS['egw_info']['server']['vfs_image_dir']) && egw_vfs::file_exists($dir) && egw_vfs::is_readable($dir))
-		{
-			foreach(egw_vfs::find($dir) as $img)
-			{
-				if (!in_array($ext = self::get_extension($img, $name), $img_types) || empty($name)) continue;
-
-				if (!isset($app_map[$name]) || array_search($ext, $img_types) < array_search(self::get_extension($app_map[$name]), $img_types))
-				{
-					$app_map[$name] = egw_vfs::download_url($img);
-				}
-			}
-		}
-		else if ($dir)
-		{
-			return $map;
-		}
-		//error_log(__METHOD__."('$template_set') took ".(microtime(true)-$starttime).' secs');
-		egw_cache::setInstance(__CLASS__, $cache_name, $map, 86400);	// cache for one day
-		//echo "<p>template_set=".array2string($template_set)."</p>\n"; _debug_array($map);
-		return $map;
+		return Api\Image::map($template_set, $svg);
 	}
 
 	/**
 	 * Delete image map cache for ALL template sets
-	 */
-	public static function delete_image_map()
-	{
-		$templates = array('idots', 'jerryr', 'jdots', 'pixelegg');
-		if (($template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set']) && !in_array($template_set, $templates))
-		{
-			$templates[] = $template_set;
-		}
-		//error_log(__METHOD__."() for templates ".array2string($templates));
-		foreach($templates as $template_set)
-		{
-			egw_cache::unsetInstance(__CLASS__, 'image_map_'.$template_set);
-			egw_cache::unsetInstance(__CLASS__, 'image_map_'.$template_set.'_svg');
-		}
-	}
-
-	/**
-	 * Get extension (and optional basename without extension) of a given path
 	 *
-	 * @param string $path
-	 * @param string &$name on return basename without extension
-	 * @return string extension without dot, eg. 'php'
+	 * @deprecated use Api\Image::invalidate()
 	 */
-	public static function get_extension($path, &$name=null)
+	public static function delete_map()
 	{
-		$parts = explode('.', basename($path));
-		$ext = array_pop($parts);
-		$name = implode('.', $parts);
-		return $ext;
+		return Api\Image::invalidate();
 	}
 
 	/**
@@ -1053,6 +908,9 @@ class common
 		return egw_framework::_get_body_attribs();
 	}
 
+	/**
+	 * @deprecated not used anymore
+	 */
 	static function hex2bin($data)
 	{
 		$len = strlen($data);
@@ -1062,6 +920,7 @@ class common
 	/**
 	 * encrypt data passed to the function
 	 *
+	 * @deprecated not used anymore
 	 * @param $data data (string?) to be encrypted
 	 */
 	static function encrypt($data)
@@ -1072,6 +931,7 @@ class common
 	/**
 	 * decrypt $data
 	 *
+	 * @deprecated not used anymore
 	 * @param $data data to be decrypted
 	 */
 	static function decrypt($data)
@@ -1120,9 +980,9 @@ class common
 	/**
 	 * return a formatted timestamp or current time
 	 *
-	 * @param int $t=0 timestamp, default current time
-	 * @param string $format='' timeformat, default '' = read from the user prefernces
-	 * @param boolean $adjust_to_usertime=true should datetime::tz_offset be added to $t or not, default true
+	 * @param int $t =0 timestamp, default current time
+	 * @param string $format ='' timeformat, default '' = read from the user prefernces
+	 * @param boolean $adjust_to_usertime =true should datetime::tz_offset be added to $t or not, default true
 	 * @deprecated use egw_time::to($time, $format) egw_time::server2user($time, $format)
 	 * @return string the formated date/time
 	 */
@@ -1140,8 +1000,9 @@ class common
 	 *
 	 * @param string $yearstr year
 	 * @param string $monthstr month
-	 * @param string $day day
-	 * @param boolean $add_seperator=false add the separator specifed in the prefs or not, default no
+	 * @param string $daystr day
+	 * @param boolean $add_seperator =false add the separator specifed in the prefs or not, default no
+	 * @deprecated use Api\DateTime->format()
 	 * @return string
 	 */
 	static function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
@@ -1166,7 +1027,8 @@ class common
 	 *
 	 * @param int $hour hour
 	 * @param int $min minutes
-	 * @param int/string $sec='' defaults to ''
+	 * @param int|string $sec ='' defaults to ''
+	 * @deprecated use Api\DateTime->format()
 	 * @return string formated time
 	 */
 	static function formattime($hour,$min,$sec='')
@@ -1367,6 +1229,7 @@ class common
 	 * @param $error error
 	 * @param $line line
 	 * @param $file file
+	 * @deprecated not used anymore
 	 */
 	static function phpgw_error($error,$line = '', $file = '')
 	{
@@ -1387,6 +1250,7 @@ class common
 	 * create phpcode from array
 	 *
 	 * @param $array - array
+	 * @deprecated not used anymore
 	 */
 	static function create_phpcode_from_array($array)
 	{
@@ -1436,6 +1300,7 @@ class common
 	 * return the full phpgw_info array for debugging
 	 *
 	 * @param array - array
+	 * @deprecated not used anymore
 	 */
 	static function debug_list_array_contents($array)
 	{
@@ -1479,6 +1344,7 @@ class common
 	/**
 	 * return a list of functionsin the API
 	 *
+	 * @deprecated not used anymore
 	 */
 	static function debug_list_core_functions()
 	{
@@ -1495,8 +1361,8 @@ class common
 	 * Return a value for the next id an app/class may need to insert values into LDAP
 	 *
 	 * @param string $appname app-name
-	 * @param int $min=0 if != 0 minimum id
-	 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
+	 * @param int $min =0 if != 0 minimum id
+	 * @param int $max =0 if != 0 maximum id allowed, if it would be exceeded we return false
 	 * @return int/boolean the next id or false if $max given and exceeded
 	 */
 	static function next_id($appname,$min=0,$max=0)
@@ -1525,8 +1391,8 @@ class common
 	 * Return a value for the last id entered, which an app may need to check values for LDAP
 	 *
 	 * @param string $appname app-name
-	 * @param int $min=0 if != 0 minimum id
-	 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
+	 * @param int $min =0 if != 0 minimum id
+	 * @param int $max =0 if != 0 maximum id allowed, if it would be exceeded we return false
 	 * @return int current id in the next_id table for a particular app/class or -1 for no app and false if $max is exceeded.
 	 */
 	static function last_id($appname,$min=0,$max=0)
@@ -1552,8 +1418,8 @@ class common
 	/**
 	 * gets an eGW conformat referer from $_SERVER['HTTP_REFERER'], suitable for direct use in the link function
 	 *
-	 * @param string $default='' default to use if referer is not set by webserver or not determinable
-	 * @param string $referer='' referer string to use, default ('') use $_SERVER['HTTP_REFERER']
+	 * @param string $default ='' default to use if referer is not set by webserver or not determinable
+	 * @param string $referer ='' referer string to use, default ('') use $_SERVER['HTTP_REFERER']
 	 * @return string
 	 * @todo get "real" referer for jDots template
 	 */
@@ -1571,11 +1437,11 @@ class common
 		{
 			list(,$referer) = explode($webserver_url,$referer,2);
 		}
-		$referer = str_replace('/etemplate/process_exec.php','/index.php',$referer);
+		$ret = str_replace('/etemplate/process_exec.php', '/index.php', $referer);
 
-		if (empty($referer) || strpos($referer,'cd=yes') !== false) $referer = $default;
+		if (empty($ret) || strpos($ret, 'cd=yes') !== false) $ret = $default;
 
-		return $referer;
+		return $ret;
 	}
 
 	// some depricated functions for the migration

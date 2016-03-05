@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Static hooks for admin application
  */
@@ -62,7 +64,7 @@ class admin_hooks
 			{
 				$file['User Accounts']              = array(
 					'id' => '/accounts',
-					'icon' => common::image('addressbook', 'accounts'),
+					'icon' => Api\Image::find('addressbook', 'accounts'),
 				);
 			}
 
@@ -75,7 +77,7 @@ class admin_hooks
 			{
 				$file['User Groups']                = array(
 					'id' => '/groups',
-					'icon' => common::image('addressbook', 'group'),
+					'icon' => Api\Image::find('addressbook', 'group'),
 					'child' => 1,
 				);
 			}
@@ -165,11 +167,11 @@ class admin_hooks
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
-		egw_cache::flush(egw_cache::INSTANCE);
+		Api\Cache::flush(Api\Cache::INSTANCE);
 
 		$GLOBALS['egw']->hooks->register_all_hooks();
 
-		common::delete_image_map();
+		Api\Image::invalidate();
 
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{
