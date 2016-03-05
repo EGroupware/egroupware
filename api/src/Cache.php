@@ -14,7 +14,6 @@
 namespace EGroupware\Api;
 
 use egw_session;
-use config;
 
 /**
  * Class to manage caching in eGroupware.
