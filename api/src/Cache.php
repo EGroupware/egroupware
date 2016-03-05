@@ -13,15 +13,13 @@
 
 namespace EGroupware\Api;
 
-use egw_session;
-
 /**
  * Class to manage caching in eGroupware.
  *
  * It allows to cache on 4 levels:
  * a) tree:     for all instances/domains runining on a certain source path
  * b) instance: for all sessions on a given instance
- * c) session:  for all requests of a session, same as egw_session::appsession()
+ * c) session:  for all requests of a session, same as deprecated egw_session::appsession()
  * d) request:  just for this request (same as using a static variable)
  *
  * There's a get, a set and a unset method for each level: eg. getTree() or setInstance(),
@@ -371,12 +369,12 @@ class Cache
 	static public function setSession($app,$location,$data,$expiration=0)
 	{
 		unset($expiration);	// not used, but required by function signature
-		if (isset($_SESSION[egw_session::EGW_SESSION_ENCRYPTED]))
+		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
-			if (egw_session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return false;	// can no longer store something in the session, eg. because commit_session() was called
 		}
-		$_SESSION[egw_session::EGW_APPSESSION_VAR][$app][$location] = $data;
+		$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
 
 		return true;
 	}
@@ -396,16 +394,16 @@ class Cache
 	static public function &getSession($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		unset($expiration);	// not used, but required by function signature
-		if (isset($_SESSION[egw_session::EGW_SESSION_ENCRYPTED]))
+		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
-			if (egw_session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return null;	// can no longer store something in the session, eg. because commit_session() was called
 		}
-		if (!isset($_SESSION[egw_session::EGW_APPSESSION_VAR][$app][$location]) && !is_null($callback))
+		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]) && !is_null($callback))
 		{
-			$_SESSION[egw_session::EGW_APPSESSION_VAR][$app][$location] = call_user_func_array($callback,$callback_params);
+			$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = call_user_func_array($callback,$callback_params);
 		}
-		return $_SESSION[egw_session::EGW_APPSESSION_VAR][$app][$location];
+		return $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location];
 	}
 
 	/**
@@ -417,16 +415,16 @@ class Cache
 	 */
 	static public function unsetSession($app,$location)
 	{
-		if (isset($_SESSION[egw_session::EGW_SESSION_ENCRYPTED]))
+		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
-			if (egw_session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return false;	// can no longer store something in the session, eg. because commit_session() was called
 		}
-		if (!isset($_SESSION[egw_session::EGW_APPSESSION_VAR][$app][$location]))
+		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]))
 		{
 			return false;
 		}
-		unset($_SESSION[egw_session::EGW_APPSESSION_VAR][$app][$location]);
+		unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]);
 
 		return true;
 	}
