@@ -578,7 +578,7 @@ class Cache
 				$db = $GLOBALS['egw']->db ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 
 				try {
-					if (($rs = $db->select(config::TABLE,'config_value',array(
+					if (($rs = $db->select(Config::TABLE,'config_value',array(
 						'config_app'	=> 'phpgwapi',
 						'config_name'	=> $name,
 					),__LINE__,__FILE__)))

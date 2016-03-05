@@ -18,7 +18,6 @@ use EGroupware\Api;
 
 // explicitly import old phpgwapi classes used:
 use mime_magic;
-use config;
 
 
 /**
@@ -1185,7 +1184,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			}
 			$GLOBALS['egw_info']['server']['max_subquery_depth'] = --$max_subquery_depth;
 			error_log(__METHOD__."() decremented max_subquery_depth to $max_subquery_depth");
-			config::save_value('max_subquery_depth', $max_subquery_depth, 'phpgwapi');
+			Api\Config::save_value('max_subquery_depth', $max_subquery_depth, 'phpgwapi');
 			if (method_exists($GLOBALS['egw'],'invalidate_session_cache')) $GLOBALS['egw']->invalidate_session_cache();
 			return self::url_stat($url, $flags, $eacl_access);
 		}

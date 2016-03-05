@@ -15,7 +15,6 @@ namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
 
-use config;
 use translation;
 use html;
 
@@ -316,11 +315,11 @@ class Backup
 	 */
 	function saveConfig($minCount,$backupFiles=null)
 	{
-		config::save_value('backup_mincount',$this->backup_mincount=(int)$minCount,'phpgwapi');
+		Config::save_value('backup_mincount',$this->backup_mincount=(int)$minCount,'phpgwapi');
 
 		if (!is_null($backupFiles))
 		{
-			config::save_value('backup_files',$this->backup_files=(boolean)$backupFiles,'phpgwapi');
+			Config::save_value('backup_files',$this->backup_files=(boolean)$backupFiles,'phpgwapi');
 		}
 	}
 
@@ -429,7 +428,7 @@ class Backup
 
 		if ($convert_to_system_charset)	// store the changed charset
 		{
-			$this->db->insert(config::TABLE, array(
+			$this->db->insert(Config::TABLE, array(
 				'config_value' => $this->schema_proc->system_charset,
 			),array(
 				'config_app' => 'phpgwapi',
