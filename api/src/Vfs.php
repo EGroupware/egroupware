@@ -14,7 +14,6 @@
 namespace EGroupware\Api;
 
 // explicitly import old phpgwapi classes used:
-use mime_magic;
 use common;
 use html;
 use HTTP_WebDAV_Server;
@@ -1213,8 +1212,8 @@ class Vfs extends Vfs\StreamWrapper
 
 		if (!($img=common::image('etemplate',$icon='mime'.$size.'_'.$mime_full)) &&
 			// check mime-alias-map before falling back to more generic icons
-			!(isset(mime_magic::$mime_alias_map[$mime_type]) &&
-				($img=common::image('etemplate',$icon='mime'.$size.'_'.str_replace('/','_',mime_magic::$mime_alias_map[$mime_full])))) &&
+			!(isset(MimeMagic::$mime_alias_map[$mime_type]) &&
+				($img=common::image('etemplate',$icon='mime'.$size.'_'.str_replace('/','_',MimeMagic::$mime_alias_map[$mime_full])))) &&
 			!($img=common::image('etemplate',$icon='mime'.$size.'_'.$mime_part)))
 		{
 			$img = common::image('etemplate',$icon='mime'.$size.'_unknown');
@@ -1227,7 +1226,7 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			return 'etemplate/'.$icon;
 		}
-		return html::image('etemplate',$icon,mime_magic::mime2label($mime_type));
+		return html::image('etemplate',$icon,MimeMagic::mime2label($mime_type));
 	}
 
 	/**

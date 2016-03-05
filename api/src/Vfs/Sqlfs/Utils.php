@@ -14,9 +14,7 @@
 namespace EGroupware\Api\Vfs\Sqlfs;
 
 use EGroupware\Api\Vfs;
-
-// explicitly import old phpgwapi classes used:
-use mime_magic;
+use EGroupware\Api;
 
 /**
  * sqlfs stream wrapper utilities: migration db-fs, fsck
@@ -317,7 +315,7 @@ class Utils extends StreamWrapper
 			if ($check_only)
 			{
 				$msgs[] = lang('Found unconnected %1 %2!',
-					mime_magic::mime2label($row['fs_mime']),
+					Api\MimeMagic::mime2label($row['fs_mime']),
 					Vfs::decodePath($row['fs_name']).' (#'.$row['fs_id'].')');
 				continue;
 			}
@@ -349,14 +347,14 @@ class Utils extends StreamWrapper
 			)))
 			{
 				$msgs[] = lang('Moved unconnected %1 %2 to %3.',
-					mime_magic::mime2label($row['fs_mime']),
+					Api\MimeMagic::mime2label($row['fs_mime']),
 					Vfs::decodePath($row['fs_name']).' (#'.$row['fs_id'].')',
 					self::LOST_N_FOUND);
 			}
 			else
 			{
 				$msgs[] = lang('Failed to move unconnected %1 %2 to %3!',
-					mime_magic::mime2label($row['fs_mime']), Vfs::decodePath($row['fs_name']), self::LOST_N_FOUND);
+					Api\MimeMagic::mime2label($row['fs_mime']), Vfs::decodePath($row['fs_name']), self::LOST_N_FOUND);
 			}
 		}
 		if ($check_only && $msgs)

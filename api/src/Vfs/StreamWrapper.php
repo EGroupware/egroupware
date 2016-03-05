@@ -14,9 +14,7 @@
 namespace EGroupware\Api\Vfs;
 
 use EGroupware\Api\Vfs;
-
-// explicitly import old phpgwapi classes used:
-use mime_magic;
+use EGroupware\Api;
 
 /**
  * eGroupWare API: VFS - stream wrapper interface
@@ -848,7 +846,7 @@ class StreamWrapper implements StreamWrapperIface
 		// using EGw's own mime magic (currently only checking the extension!)
 		if (!$mime)
 		{
-			$mime = mime_magic::filename2mime(self::parse_url($url,PHP_URL_PATH));
+			$mime = Api\MimeMagic::filename2mime(self::parse_url($url,PHP_URL_PATH));
 		}
 		//error_log(__METHOD__."($path,$recheck) mime=$mime");
 		return $mime;

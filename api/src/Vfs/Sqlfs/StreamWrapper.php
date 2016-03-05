@@ -16,10 +16,6 @@ namespace EGroupware\Api\Vfs\Sqlfs;
 use EGroupware\Api\Vfs;
 use EGroupware\Api;
 
-// explicitly import old phpgwapi classes used:
-use mime_magic;
-
-
 /**
  * EGroupware API: VFS - new DB based VFS stream wrapper
  *
@@ -359,7 +355,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			$values = array(
 				'fs_size' => $this->stream_tell(),
 				// todo: analyse the file for the mime-type
-				'fs_mime' => mime_magic::filename2mime($this->opened_path),
+				'fs_mime' => Api\MimeMagic::filename2mime($this->opened_path),
 				'fs_id'   => $this->opened_fs_id,
 				'fs_modifier' => Vfs::$user,
 				'fs_modified' => self::_pdo_timestamp(time()),
