@@ -17,7 +17,6 @@ namespace EGroupware\Api;
 use mime_magic;
 use common;
 use html;
-use translation;
 use HTTP_WebDAV_Server;
 use egw_time;
 
@@ -1518,7 +1517,7 @@ class Vfs extends Vfs\StreamWrapper
 
 			// Use safe names - replace unsafe chars, convert to ASCII (ZIP spec says CP437, but we'll try)
 			$path = explode('/',$relative);
-			$_name = translation::convert(translation::to_ascii(implode('/', str_replace($replace,'_',$path))),false,'ASCII');
+			$_name = Translation::convert(Translation::to_ascii(implode('/', str_replace($replace,'_',$path))),false,'ASCII');
 
 			// Don't go infinite with app entries
 			if(self::is_link($addfile))

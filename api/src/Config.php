@@ -11,7 +11,6 @@
 namespace EGroupware\Api;
 
 use egw_customfields;
-use translation;
 
 /**
  * eGW's application configuration in a centralized location
@@ -295,7 +294,7 @@ class Config
 			//$client_config[$app]['customfields'] = egw_customfields::get($app);
 		}
 		// some things need on client-side which are not direct configs
-		$client_config['phpgwapi']['max_lang_time'] = translation::max_lang_time();
+		$client_config['phpgwapi']['max_lang_time'] = Translation::max_lang_time();
 
 		return $client_config;
 	}

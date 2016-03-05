@@ -15,7 +15,6 @@ namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
 
-use translation;
 use html;
 
 /**
@@ -641,7 +640,7 @@ class Backup
 					{
 						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
 						{
-							$data = translation::convert($data,$charset);
+							$data = Api\Translation::convert($data,$charset);
 						}
 						if ($insert_n_rows > 1)
 						{
