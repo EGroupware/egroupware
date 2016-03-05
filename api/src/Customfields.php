@@ -224,17 +224,7 @@ class Customfields implements \IteratorAggregate
 			case 'date-time':
 				if ($value)
 				{
-					$format = $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
-					$formats = preg_split('/[\\/. :-]/',$format);
-					$values = preg_split('/[\\/. :-]/', is_numeric($value) ? DateTime::to($value, $format) : $value);
-					if (count($formats) != count($values))
-					{
-						//error_log(__METHOD__."(".array2string($field).", value='$value') format='$format', formats=".array2string($formats).", values=".array2string($values));
-						$values = array_slice($values, 0, count($formats));
-					}
-					$date = array_combine($formats, $values);
-					$value = common::dateformatorder($date['Y'], $date['m'], $date['d'],true);
-					if (isset($date['H'])) $value .= ' '.common::formattime($date['H'], $date['i']);
+					$value = DateTime::to($value, $field['type'] == 'date' ? true : '');
 				}
 				break;
 
