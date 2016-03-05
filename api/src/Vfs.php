@@ -18,7 +18,6 @@ use mime_magic;
 use common;
 use html;
 use HTTP_WebDAV_Server;
-use egw_time;
 
 /**
  * Class containing static methods to use the new eGW virtual file system
@@ -1561,7 +1560,7 @@ class Vfs extends Vfs\StreamWrapper
 		}
 
 		// Set a comment to help tell them apart
-		$zip->setArchiveComment(lang('Created by %1', $GLOBALS['egw_info']['user']['account_lid']) . ' ' .egw_time::to());
+		$zip->setArchiveComment(lang('Created by %1', $GLOBALS['egw_info']['user']['account_lid']) . ' ' .DateTime::to());
 
 		// Record total for debug, not available after close()
 		$total_files = $zip->numFiles;
