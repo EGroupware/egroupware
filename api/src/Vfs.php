@@ -14,7 +14,6 @@
 namespace EGroupware\Api;
 
 // explicitly import old phpgwapi classes used:
-use html;
 use HTTP_WebDAV_Server;
 
 /**
@@ -1192,7 +1191,7 @@ class Vfs extends Vfs\StreamWrapper
 	 * Get the closest mime icon
 	 *
 	 * @param string $mime_type
-	 * @param boolean $et_image =true return $app/$icon string for etemplate (default) or html img tag if false
+	 * @param boolean $et_image =true return $app/$icon string for etemplate (default) or url for false
 	 * @param int $size =128
 	 * @return string
 	 */
@@ -1217,15 +1216,7 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			$img = Image::find('etemplate',$icon='mime'.$size.'_unknown');
 		}
-		if ($et_image === 'url')
-		{
-			return $img;
-		}
-		if ($et_image)
-		{
-			return 'etemplate/'.$icon;
-		}
-		return html::image('etemplate',$icon,MimeMagic::mime2label($mime_type));
+		return $et_image ? 'etemplate/'.$icon : $img;
 	}
 
 	/**
