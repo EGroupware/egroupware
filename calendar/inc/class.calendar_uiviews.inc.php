@@ -2200,9 +2200,8 @@ class calendar_uiviews extends calendar_ui
 			}
 			elseif ($enum_groups && $GLOBALS['egw']->accounts->get_type($user) == 'g')	// groups
 			{
-				foreach((array) $GLOBALS['egw']->accounts->members($user) as $data)
+				foreach((array) $GLOBALS['egw']->accounts->members($user, true) as $user)
 				{
-					$user = $data['account_id'];
 					if ($this->bo->check_perms(EGW_ACL_READ | EGW_ACL_FREEBUSY,0,$user))
 					{
 						$users[$user] = $this->bo->participant_name($user);

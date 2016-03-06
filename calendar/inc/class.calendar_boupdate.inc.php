@@ -759,11 +759,10 @@ class calendar_boupdate extends calendar_bo
 		foreach($to_notify as $userid => $statusid)
 		{
 			if (is_numeric($userid) && $GLOBALS['egw']->accounts->get_type($userid) == 'g' &&
-				($members = $GLOBALS['egw']->accounts->members($userid)))
+				($members = $GLOBALS['egw']->accounts->members($userid, true)))
 			{
 				foreach($members as $member)
 				{
-					$member = $member['account_id'];
 					if (!isset($to_notify[$member]))
 					{
 						$to_notify[$member] = 'G';	// Group-invitation
@@ -2084,30 +2083,30 @@ class calendar_boupdate extends calendar_bo
 			// for groups we have to include the members
 			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
 			{
-				$members = $GLOBALS['egw']->accounts->members($user);
+				$members = $GLOBALS['egw']->accounts->members($user, true);
 				if (is_array($members))
 				{
 					foreach($members as $member)
 					{
 						// use only members which gave the user a read-grant
-						if (!in_array($member['account_id'],$users) &&
-								$this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY,0,$member['account_id']))
+						if (!in_array($member, $users) &&
+								$this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY, 0, $member))
 						{
-							$users[] = $member['account_id'];
+							$users[] = $member;
 						}
 					}
 				}
 			}
 			else	// for users we have to include all the memberships, to get the group-events
 			{
-				$memberships = $GLOBALS['egw']->accounts->memberships($user);
+				$memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 				if (is_array($memberships))
 				{
 					foreach($memberships as $group)
 					{
-						if (!in_array($group['account_id'],$users))
+						if (!in_array($group, $users))
 						{
-							$users[] = $group['account_id'];
+							$users[] = $group;
 						}
 					}
 				}

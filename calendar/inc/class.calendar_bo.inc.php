@@ -337,11 +337,10 @@ class calendar_bo
 		foreach(array_keys($event['participants']) as $uid)
 		{
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'g' &&
-				($members = $GLOBALS['egw']->accounts->members($uid)))
+				($members = $GLOBALS['egw']->accounts->members($uid, true)))
 			{
 				foreach($members as $member)
 				{
-					$member = $member['account_id'];
 					if (!isset($event['participants'][$member]))
 					{
 						$event['participants'][$member] = 'G';
@@ -392,30 +391,30 @@ class calendar_bo
 			{
 				if ($no_enum_groups) continue;
 
-				$members = $GLOBALS['egw']->accounts->members($user);
+				$members = $GLOBALS['egw']->accounts->members($user, true);
 				if (is_array($members))
 				{
 					foreach($members as $member)
 					{
 						// use only members which gave the user a read-grant
-						if (!in_array($member['account_id'],$users) &&
-							($ignore_acl || $this->check_perms(EGW_ACL_READ|($use_freebusy?EGW_ACL_FREEBUSY:0),0,$member['account_id'])))
+						if (!in_array($member, $users) &&
+							($ignore_acl || $this->check_perms(EGW_ACL_READ|($use_freebusy?EGW_ACL_FREEBUSY:0),0,$member)))
 						{
-							$users[] = $member['account_id'];
+							$users[] = $member;
 						}
 					}
 				}
 			}
 			else	// for users we have to include all the memberships, to get the group-events
 			{
-				$memberships = $GLOBALS['egw']->accounts->memberships($user);
+				$memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 				if (is_array($memberships))
 				{
 					foreach($memberships as $group)
 					{
-						if (!in_array($group['account_id'],$users))
+						if (!in_array($group,$users))
 						{
-							$users[] = $group['account_id'];
+							$users[] = $group;
 						}
 					}
 				}
@@ -1693,13 +1692,13 @@ class calendar_bo
 		{
 			self::_list_cals_add($id,$users,$groups);
 		}
-		if (($memberships = $GLOBALS['egw']->accounts->memberships($user)))
+		if (($memberships = $GLOBALS['egw']->accounts->memberships($user, true)))
 		{
-			foreach($memberships as $group_info)
+			foreach($memberships as $group)
 			{
-				self::_list_cals_add($group_info['account_id'],$users,$groups);
+				self::_list_cals_add($group,$users,$groups);
 
-				if (($account_perms = $GLOBALS['egw']->acl->get_ids_for_location($group_info['account_id'],EGW_ACL_READ,'calendar')))
+				if (($account_perms = $GLOBALS['egw']->acl->get_ids_for_location($group,EGW_ACL_READ,'calendar')))
 				{
 					foreach($account_perms as $id)
 					{
