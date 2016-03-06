@@ -668,8 +668,9 @@ class egw_minimal
 		'framework' => true,	// special handling in __get()
 		'template' => 'Template',
 		// classes moved to new api dir
-		'session' => 'EGroupware\Api\Session',
-		'ldap' => 'EGroupware\Api\Ldap',
+		'session' => 'EGroupware\\Api\\Session',
+		'ldap' => true,
+		'auth' => 'EGroupware\\Api\\Auth',
 	);
 
 	/**
@@ -716,6 +717,8 @@ class egw_minimal
 					return null;
 				}
 				return $this->template = new Template($tpl_dir);
+			case 'ldap':
+				return $this->ldap = Api\Ldap::factory(false);
 			default:
 				$class = isset(self::$sub_objects[$name]) ? self::$sub_objects[$name] : $name;
 				break;

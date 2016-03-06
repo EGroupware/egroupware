@@ -812,17 +812,12 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			throw new Api\Exception\WrongUserInput(lang('You need to specify a password!'));
 		}
-		$this->test_ldap = new ldap();
 
-		$error_rep = error_reporting();
-		error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
-		ob_start();
-		$ds = $this->test_ldap->ldapConnect($host,$dn,$pw);
-		ob_end_clean();
-		error_reporting($error_rep);
-
-		if (!$ds)
-		{
+		try {
+			$this->test_ldap = Api\Ldap::factory(false, $host, $dn, $pw);
+		}
+		catch (Api\Exception\NoPermission $e) {
+			_egw_log_exception($e);
 			throw new Api\Exception\WrongUserInput(lang('Can not connect to LDAP server on host %1 using DN %2!',
 				$host,$dn).($this->test_ldap->ds ? ' ('.ldap_error($this->test_ldap->ds).')' : ''));
 		}

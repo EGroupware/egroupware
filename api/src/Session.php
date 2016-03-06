@@ -24,10 +24,8 @@ namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use egw_mailer;
-use common;	// randomstring
 use egw_digest_auth;	// egw_digest_auth::parse_digest
 use html;	// html::$ua_mobile
-use auth;	// check_password_change
 
 /**
  * Create, verifies or destroys an EGroupware session
@@ -230,7 +228,7 @@ class Session
 			}
 			if (!isset($GLOBALS['egw_info']['server']['install_id']))
 			{
-				$GLOBALS['egw_info']['server']['install_id']  = md5(common::randomstring(15));
+				$GLOBALS['egw_info']['server']['install_id']  = md5(Auth::randomstring(15));
 			}
 			if (!isset($GLOBALS['egw_info']['server']['max_history']))
 			{
@@ -511,7 +509,7 @@ class Session
 				if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 				return false;
 			}
-			if ($fail_on_forced_password_change && auth::check_password_change($this->reason) === false)
+			if ($fail_on_forced_password_change && Auth::check_password_change($this->reason) === false)
 			{
 				$this->cd_reason = self::CD_FORCE_PASSWORD_CHANGE;
 				return false;
@@ -550,7 +548,7 @@ class Session
 				}
 				$this->sessionid = session_id();
 			}
-			$this->kp3       = common::randomstring(24);
+			$this->kp3       = Auth::randomstring(24);
 
 			$GLOBALS['egw_info']['user'] = $this->read_repositories();
 			if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))

@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API - Authentication from CAS
+ * EGroupware API - Authentication from CAS
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
@@ -9,10 +9,15 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Auth;
+
+use EGroupware\Api;
+use phpCAS;
+
 /**
- * eGroupWare API - Authentication based on CAS (Central Authetication Service)
+ * Authentication based on CAS (Central Authetication Service)
  */
-class auth_cas implements auth_backend
+class Cas implements Backend
 {
 	var $previous_login = -1;
 
@@ -21,7 +26,7 @@ class auth_cas implements auth_backend
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
-	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @param string $passwd_type ='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
@@ -43,7 +48,7 @@ class auth_cas implements auth_backend
 					'gidnumber' => 'primary_group',
 					) as $ldap_name => $acct_name)
 				{
-					$GLOBALS['auto_create_acct'][$acct_name] = $GLOBALS['egw']->translation->convert($allValues[0][$ldap_name][0],'utf-8');
+					$GLOBALS['auto_create_acct'][$acct_name] = Api\Translation::convert($allValues[0][$ldap_name][0],'utf-8');
 				}
 				return True;
 			}
@@ -57,7 +62,7 @@ class auth_cas implements auth_backend
 	 *
 	 * @param string $old_passwd must be cleartext or empty to not to be checked
 	 * @param string $new_passwd must be cleartext
-	 * @param int $account_id=0 account id of user whose passwd should be changed
+	 * @param int $account_id =0 account id of user whose passwd should be changed
 	 * @return boolean true if password successful changed, false otherwise
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)

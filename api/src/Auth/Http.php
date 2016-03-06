@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API - Authentication based on HTTP auth
+ * EGroupware API - Authentication based on HTTP auth
  *
  * @link http://www.egroupware.org
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
@@ -8,14 +8,16 @@
  * Copyright (C) 2000, 2001 Dan Kuykendall
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
- * @subpackage authentication
+ * @subpackage auth
  * @version $Id$
  */
+
+namespace EGroupware\Api\Auth;
 
 /**
  * Authentication based on HTTP auth
  */
-class auth_http implements auth_backend
+class Http implements Backend
 {
 	var $previous_login = -1;
 
@@ -24,19 +26,14 @@ class auth_http implements auth_backend
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
-	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @param string $passwd_type ='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		if (isset($_SERVER['PHP_AUTH_USER']))
-		{
-			return True;
-		}
-		else
-		{
-			return False;
-		}
+		unset($username, $passwd, $passwd_type);	// not used, but required by interface
+
+		return isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] === $username;
 	}
 
 	/**
@@ -49,6 +46,8 @@ class auth_http implements auth_backend
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
+		unset($old_passwd, $new_passwd, $account_id);	// not used, but required by interface
+
 		return False;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API - Authentication from SQL
+ * EGroupware API - Authentication from SQL
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <ralfbecker@outdoor-training.de>
@@ -13,6 +13,10 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Auth;
+
+use EGroupware\Api;
+
 /**
  * eGroupWare API - Authentication based on SQL table of accounts
  *
@@ -21,12 +25,12 @@
  *
  * Massive code cleanup and added password migration by Cornelius Weiss <egw@von-und-zu-weiss.de
  */
-class auth_sql implements auth_backend
+class Sql implements Backend
 {
 	/**
 	 * Reference to the global db object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	var $db;
 	var $table = 'egw_accounts';
@@ -45,7 +49,7 @@ class auth_sql implements auth_backend
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
-	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @param string $passwd_type ='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
@@ -58,7 +62,7 @@ class auth_sql implements auth_backend
 		);
 		if (!$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
 		{
-			$where[] = 'account_lid '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
+			$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
 			unset($where['account_lid']);
 		}
 		if($passwd_type == 'text')
@@ -69,7 +73,8 @@ class auth_sql implements auth_backend
 			{
 				return false;
 			}
-			if(!($match = auth::compare_password($passwd, $row['account_pwd'], $this->type, strtolower($username), $type)) ||
+			$type = null;
+			if(!($match = Api\Auth::compare_password($passwd, $row['account_pwd'], $this->type, strtolower($username), $type)) ||
 				$type != $this->type && in_array($type, explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
 			{
 				// do we have to migrate an old password ?
@@ -79,7 +84,7 @@ class auth_sql implements auth_backend
 					{
 						foreach(explode(',', $GLOBALS['egw_info']['server']['pwd_migration_types']) as $type)
 						{
-							if(($match = auth::compare_password($passwd,$row['account_pwd'],$type,strtolower($username))))
+							if(($match = Api\Auth::compare_password($passwd,$row['account_pwd'],$type,strtolower($username))))
 							{
 								break;
 							}
@@ -87,7 +92,7 @@ class auth_sql implements auth_backend
 					}
 					if ($match)
 					{
-						$encrypted_passwd = auth::encrypt_sql($passwd);
+						$encrypted_passwd = Api\Auth::encrypt_sql($passwd);
 						$this->_update_passwd($encrypted_passwd,$passwd,$row['account_id'],false,true);
 					}
 				}
@@ -126,7 +131,7 @@ class auth_sql implements auth_backend
 		);
 		if (!$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
 		{
-			$where[] = 'account_lid '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
+			$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
 			unset($where['account_lid']);
 		}
 		if (!($row = $this->db->select($this->table,'account_lid,account_lastpwd_change',$where,__LINE__,__FILE__)->fetch()) ||
@@ -145,10 +150,10 @@ class auth_sql implements auth_backend
 	 *
 	 * @param int $account_id account id of user whose passwd should be changed
 	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
-	 * @param int $lastpwdchange must be a unixtimestamp
+	 * @param int $_lastpwdchange =null must be a unixtimestamp
 	 * @return boolean true if account_lastpwd_change successful changed, false otherwise
 	 */
-	function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL)
+	function setLastPwdChange($account_id=0, $passwd=NULL, $_lastpwdchange=NULL)
 	{
 		$admin = True;
 		// Don't allow password changes for other accounts when using XML-RPC
@@ -172,11 +177,11 @@ class auth_sql implements auth_backend
 			return false;	// account not found
 		}
 		// Check the passwd to make sure this is legal
-		if(!$admin && !auth::compare_password($passwd,$pw,$this->type,strtolower($username)))
+		if(!$admin && !Api\Auth::compare_password($passwd,$pw,$this->type,strtolower($username)))
 		{
 			return false;
 		}
-		$lastpwdchange = (is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange);
+		$lastpwdchange = (is_null($_lastpwdchange) || $_lastpwdchange < 0 ? time() : $_lastpwdchange);
 		$this->db->update($this->table,array(
 			'account_lastpwd_change' => $lastpwdchange,
 		),array(
@@ -184,7 +189,7 @@ class auth_sql implements auth_backend
 		),__LINE__,__FILE__);
 
 		if(!$this->db->affected_rows()) return false;
-		if (!$admin) egw_cache::setSession('phpgwapi','auth_alpwchange_val',$lastpwdchange);
+		if (!$admin) Api\Cache::setSession('phpgwapi', 'auth_alpwchange_val', $lastpwdchange);
 		return true;
 	}
 
@@ -219,13 +224,13 @@ class auth_sql implements auth_backend
 			return false;	// account not found
 		}
 		// Check the old_passwd to make sure this is legal
-		if(!$admin && !auth::compare_password($old_passwd,$pw,$this->type,strtolower($username)))
+		if(!$admin && !Api\Auth::compare_password($old_passwd,$pw,$this->type,strtolower($username)))
 		{
 			return false;
 		}
 
 		// old password ok, or admin called the function from the admin application (no old passwd available).
-		return $this->_update_passwd(auth::encrypt_sql($new_passwd),$new_passwd,$account_id,$admin);
+		return $this->_update_passwd(Api\Auth::encrypt_sql($new_passwd),$new_passwd,$account_id,$admin);
 	}
 
 	/**
@@ -234,12 +239,14 @@ class auth_sql implements auth_backend
 	 * @param string $encrypted_passwd
 	 * @param string $new_passwd cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
-	 * @param boolean $admin=false called by admin, if not update password in the session
-	 * @param boolean $update_lastpw_change=true
+	 * @param boolean $admin =false called by admin, if not update password in the session
+	 * @param boolean $update_lastpw_change =true
 	 * @return boolean true if password successful changed, false otherwise
 	 */
 	private function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=false,$update_lastpw_change=true)
 	{
+		unset($new_passwd);	// not used, but required by function signature
+
 		$update = array('account_pwd' => $encrypted_passwd);
 		if ($update_lastpw_change) $update['account_lastpwd_change'] = time();
 
@@ -252,7 +259,7 @@ class auth_sql implements auth_backend
 
 		if(!$admin)
 		{
-			egw_cache::setSession('phpgwapi','auth_alpwchange_val',$update['account_lastpwd_change']);
+			Api\Cache::setSession('phpgwapi','auth_alpwchange_val',$update['account_lastpwd_change']);
 		}
 		return true;
 	}

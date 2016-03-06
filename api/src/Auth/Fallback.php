@@ -6,39 +6,46 @@
  * @author Ralf Becker <ralfbecker@outdoor-training.de>
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
- * @subpackage authentication
+ * @subpackage auth
  * @version $Id$
  */
+
+namespace EGroupware\Api\Auth;
+
+use EGroupware\Api;
 
 /**
  * Authentication agains a LDAP Server with fallback to SQL
  *
  * For other fallback types, simply change auth backends in constructor call
  */
-class auth_fallback implements auth_backend
+class Fallback implements Backend
 {
 	/**
 	 * Primary auth backend
 	 *
-	 * @var auth_backend
+	 * @var Backend
 	 */
 	private $primary_backend;
 
 	/**
 	 * Fallback auth backend
 	 *
-	 * @var auth_backend
+	 * @var Backend
 	 */
 	private $fallback_backend;
 
 	/**
 	 * Constructor
+	 *
+	 * @param string $primary ='ldap'
+	 * @param string $fallback ='sql'
 	 */
-	function __construct($primary='auth_ldap',$fallback='auth_sql')
+	function __construct($primary='ldap',$fallback='sql')
 	{
-		$this->primary_backend = new $primary;
+		$this->primary_backend = Api\Auth::backend(str_replace('auth_', '', $primary));
 
-		$this->fallback_backend = new $fallback;
+		$this->fallback_backend = Api\Auth::backend(str_replace('auth_', '', $fallback));
 	}
 
 	/**
@@ -52,14 +59,14 @@ class auth_fallback implements auth_backend
 	{
 		if ($this->primary_backend->authenticate($username, $passwd, $passwd_type))
 		{
-			egw_cache::setInstance(__CLASS__,'backend_used-'.$username,'primary');
+			Api\Cache::setInstance(__CLASS__,'backend_used-'.$username,'primary');
 			// check if fallback has correct password, if not update it
 			if (($account_id = $GLOBALS['egw']->accounts->name2id($username)) &&
 				!$this->fallback_backend->authenticate($username,$passwd, $passwd_type))
 			{
 				$backup_currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
 				$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';	// otherwise
-				$ret = $this->fallback_backend->change_password('', $passwd, $account_id);
+				$this->fallback_backend->change_password('', $passwd, $account_id);
 				$GLOBALS['egw_info']['flags']['currentapp'] = $backup_currentapp;
 				//error_log(__METHOD__."('$username', \$passwd) updated password for #$account_id on fallback ".($ret ? 'successfull' : 'failed!'));
 			}
@@ -67,7 +74,7 @@ class auth_fallback implements auth_backend
 		}
 		if ($this->fallback_backend->authenticate($username,$passwd, $passwd_type))
 		{
-			egw_cache::setInstance(__CLASS__,'backend_used-'.$username,'fallback');
+			Api\Cache::setInstance(__CLASS__,'backend_used-'.$username,'fallback');
 			return true;
 		}
 		return false;
@@ -88,7 +95,6 @@ class auth_fallback implements auth_backend
 	{
 		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
 		{
-			$admin = False;
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			$username = $GLOBALS['egw_info']['user']['account_lid'];
 		}
@@ -96,7 +102,7 @@ class auth_fallback implements auth_backend
 		{
 			$username = $GLOBALS['egw']->accounts->id2name($account_id);
 		}
-		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
+		if (Api\Cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
 		{
 			if (($ret = $this->primary_backend->change_password($old_passwd, $new_passwd, $account_id)))
 			{
@@ -108,7 +114,7 @@ class auth_fallback implements auth_backend
 		{
 			$ret = $this->fallback_backend->change_password($old_passwd, $new_passwd, $account_id);
 		}
-		//error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) username='$username', backend=".egw_cache::getInstance(__CLASS__,'backend_used-'.$username)." returning ".array2string($ret));
+		//error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) username='$username', backend=".Api\Cache::getInstance(__CLASS__,'backend_used-'.$username)." returning ".array2string($ret));
 		return $ret;
 	}
 
@@ -120,11 +126,17 @@ class auth_fallback implements auth_backend
 	 */
 	function getLastPwdChange($username)
 	{
-		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
+		if (Api\Cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
 		{
-			if (method_exists($this->primary_backend,'getLastPwdChange')) return $this->primary_backend->getLastPwdChange($username);
+			if (method_exists($this->primary_backend,'getLastPwdChange'))
+			{
+				return $this->primary_backend->getLastPwdChange($username);
+			}
 		}
-		if (method_exists($this->fallback_backend,'getLastPwdChange')) return $this->fallback_backend->getLastPwdChange($username);
+		if (method_exists($this->fallback_backend,'getLastPwdChange'))
+		{
+			return $this->fallback_backend->getLastPwdChange($username);
+		}
 		return false;
 	}
 
@@ -140,7 +152,6 @@ class auth_fallback implements auth_backend
 	{
 		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
 		{
-			$admin = False;
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			$username = $GLOBALS['egw_info']['user']['account_lid'];
 		}
@@ -148,11 +159,17 @@ class auth_fallback implements auth_backend
 		{
 			$username = $GLOBALS['egw']->accounts->id2name($account_id);
 		}
-		if (egw_cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
+		if (Api\Cache::getInstance(__CLASS__,'backend_used-'.$username) == 'primary')
 		{
-			if (method_exists($this->primary_backend,'setLastPwdChange')) return $this->primary_backend->setLastPwdChange($username);
+			if (method_exists($this->primary_backend,'setLastPwdChange'))
+			{
+				return $this->primary_backend->setLastPwdChange($username);
+			}
 		}
-		if (method_exists($this->fallback_backend,'setLastPwdChange')) return $this->fallback_backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
+		if (method_exists($this->fallback_backend,'setLastPwdChange'))
+		{
+			return $this->fallback_backend->setLastPwdChange($account_id, $passwd, $lastpwdchange);
+		}
 		return false;
 	}
 }

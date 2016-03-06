@@ -12,15 +12,12 @@
 
 namespace EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use auth;
-
 /**
  * Class supplying methods to prevent successful CSRF by requesting a random token,
  * stored on server and validated when request get posted.
  *
  * CSRF token generation used openssl_random_pseudo_bytes, if available, otherwise
- * mt_rand based auth::randomstring is used.
+ * mt_rand based Auth::randomstring is used.
  *
  * CSRF tokens are stored (incl. optional purpose) in user session.
  *
@@ -41,10 +38,10 @@ class Csrf
 		{
 			throw new egw_exception_wrong_parameter(__METHOD__.'(NULL) $_purspose must NOT be NULL!');
 		}
-		// generate random token (using oppenssl if available otherwise mt_rand based auth::randomstring)
+		// generate random token (using oppenssl if available otherwise mt_rand based Auth::randomstring)
 		$token = function_exists('openssl_random_pseudo_bytes') ?
 			base64_encode(openssl_random_pseudo_bytes(64)) :
-			auth::randomstring(64);
+			Auth::randomstring(64);
 
 		// store it in session for later validation
 		Cache::setSession(__CLASS__, $token, $_purpose);

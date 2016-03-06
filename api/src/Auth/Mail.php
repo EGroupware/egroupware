@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API - Authentication agains mail server
+ * EGroupware API - Authentication agains mail server
  *
  * @link http://www.egroupware.org
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
@@ -11,10 +11,14 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Auth;
+
+use Horde_Imap_Client_Socket, Horde_Imap_Client_Exception;
+
 /**
  * Authentication agains mail server
  */
-class auth_mail implements auth_backend
+class Mail implements Backend
 {
 	var $previous_login = -1;
 

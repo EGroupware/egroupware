@@ -158,8 +158,7 @@ class Ldap
 		// enable the caching in the session, done by the accounts class extending this class.
 		$this->use_session_cache = true;
 
-		$this->ldap = new Api\Ldap(true);
-		$this->ds = $this->ldap->ldapConnect($this->frontend->config['ldap_host'],
+		$this->ds = Api\Ldap::factory(true, $this->frontend->config['ldap_host'],
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
 
 		$this->user_context  = $this->frontend->config['ldap_context'];
@@ -1207,7 +1206,7 @@ class Ldap
 	 */
 	function __wakeup()
 	{
-		$this->ds = $this->ldap->ldapConnect($this->frontend->config['ldap_host'],
+		$this->ds = Api\Ldap::factory(true, $this->frontend->config['ldap_host'],
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
 	}
 }

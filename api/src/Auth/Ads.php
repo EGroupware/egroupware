@@ -19,10 +19,14 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Auth;
+
+use EGroupware\Api;
+
 /**
  * Authentication agains a ADS Server
  */
-class auth_ads implements auth_backend
+class Ads implements Backend
 {
 	var $previous_login = -1;
 
@@ -44,7 +48,7 @@ class auth_ads implements auth_backend
 		// harden ldap auth, by removing \000 bytes, causing passwords to be not empty by php, but empty to c libaries
 		$passwd = str_replace("\000", '', $_passwd);
 
-		$adldap = accounts_ads::get_adldap();
+		$adldap = Api\Accounts\Ads::get_adldap();
 		// bind with username@ads_domain, only if a non-empty password given, in case anonymous search is enabled
 		if(empty($passwd) || !$adldap->authenticate($username, $passwd))
 		{
@@ -97,7 +101,7 @@ class auth_ads implements auth_backend
 			}
 			if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 			{
-				$GLOBALS['auto_create_acct']['account_id'] = accounts_ads::sid2account_id($allValues[0]['objectsid'][0]);
+				$GLOBALS['auto_create_acct']['account_id'] = Api\Accounts\Ads::sid2account_id($allValues[0]['objectsid'][0]);
 
 				// create a global array with all availible info about that account
 				foreach(array(
@@ -107,7 +111,7 @@ class auth_ads implements auth_backend
 				) as $ldap_name => $acct_name)
 				{
 					$GLOBALS['auto_create_acct'][$acct_name] =
-						translation::convert($allValues[0][$ldap_name][0],'utf-8');
+						Api\Translation::convert($allValues[0][$ldap_name][0],'utf-8');
 				}
 				//error_log(__METHOD__."() \$GLOBALS[auto_create_acct]=".array2string($GLOBALS['auto_create_acct']));
 				return True;
@@ -130,7 +134,7 @@ class auth_ads implements auth_backend
 	static function getLastPwdChange($username)
 	{
 		$ret = false;
-		if (($adldap = accounts_ads::get_adldap()) &&
+		if (($adldap = Api\Accounts\Ads::get_adldap()) &&
 			($data = $adldap->user()->info($username, array('pwdlastset'))))
 		{
 			$ret = !$data[0]['pwdlastset'][0] ? $data[0]['pwdlastset'][0] :
@@ -154,7 +158,7 @@ class auth_ads implements auth_backend
 	static function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL, $return_mod=false)
 	{
 		unset($passwd);	// not used but required by function signature
-		if (!($adldap = accounts_ads::get_adldap())) return false;
+		if (!($adldap = Api\Accounts\Ads::get_adldap())) return false;
 
 		if ($lastpwdchange)
 		{
@@ -172,13 +176,13 @@ class auth_ads implements auth_backend
 		}
 		if ($lastpwdchange && $lastpwdchange != -1)
 		{
-			$lastpwdchange = accounts_ads::convertUnixTimeToWindowsTime($lastpwdchange);
+			$lastpwdchange = Api\Accounts\Ads::convertUnixTimeToWindowsTime($lastpwdchange);
 		}
 		$mod = array('pwdlastset' => $lastpwdchange);
 		if ($return_mod) return $mod;
 
 		$ret = false;
-		if ($account_id && ($username = accounts::id2name($account_id, 'account_lid')) &&
+		if ($account_id && ($username = Api\Accounts::id2name($account_id, 'account_lid')) &&
 			($data = $adldap->user()->info($username, array('pwdlastset'))))
 		{
 			$ret = ldap_modify($adldap->getLdapConnection(), $data[0]['dn'], $mod);
@@ -194,19 +198,19 @@ class auth_ads implements auth_backend
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
 	 * @return boolean true if password successful changed, false otherwise
-	 * @throws egw_exception_wrong_userinput
+	 * @throws Api\Exception_wrong_userinput
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
-		if (!($adldap = accounts_ads::get_adldap()))
+		if (!($adldap = Api\Accounts\Ads::get_adldap()))
 		{
-			error_log(__METHOD__."(\$old_passwd, \$new_passwd, $account_id) accounts_ads::get_adldap() returned false");
+			error_log(__METHOD__."(\$old_passwd, \$new_passwd, $account_id) Api\Accounts\Ads::get_adldap() returned false");
 			return false;
 		}
 
 		if (!($adldap->getUseSSL() || $adldap->getUseTLS()))
 		{
-			throw new egw_exception(lang('Failed to change password.').' '.lang('Active directory requires SSL or TLS to change passwords!'));
+			throw new Api\Exception(lang('Failed to change password.').' '.lang('Active directory requires SSL or TLS to change passwords!'));
 		}
 
 		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
@@ -234,7 +238,7 @@ class auth_ads implements auth_backend
 		}
 		catch (Exception $e) {
 			// as we cant detect what the problem is, we do a password strength check and throw it's message, if it fails
-			$error = auth::crackcheck($new_passwd,
+			$error = Api\Auth::crackcheck($new_passwd,
 				// if admin has nothing configured use windows default of 3 char classes, 7 chars min and name-part-check
 				$GLOBALS['egw_info']['server']['force_pwd_strength'] ? $GLOBALS['egw_info']['server']['force_pwd_strength'] : 3,
 				$GLOBALS['egw_info']['server']['force_pwd_length'] ? $GLOBALS['egw_info']['server']['force_pwd_length'] : 7,
@@ -245,7 +249,7 @@ class auth_ads implements auth_backend
 				'Server is unwilling to perform.' => lang('Server is unwilling to perform.'),
 				'Your password might not match the password policy.' => lang('Your password might not match the password policy.'),
 			));
-			throw new egw_exception('<p>'.lang('Failed to change password.')."</p>\n".$msg.($error ? "\n<p>".$error."</p>\n" : ''));
+			throw new Api\Exception('<p>'.lang('Failed to change password.')."</p>\n".$msg.($error ? "\n<p>".$error."</p>\n" : ''));
 		}
 		return false;
 	}

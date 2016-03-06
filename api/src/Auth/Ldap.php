@@ -19,10 +19,14 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Auth;
+
+use EGroupware\Api;
+
 /**
  * Authentication agains a LDAP Server
  */
-class auth_ldap implements auth_backend
+class Ldap implements Backend
 {
 	var $previous_login = -1;
 	/**
@@ -44,25 +48,24 @@ class auth_ldap implements auth_backend
 		unset($passwd_type);	// not used by required by function signature
 
 		// allow non-ascii in username & password
-		$username = translation::convert($_username,translation::charset(),'utf-8');
+		$username = Api\Translation::convert($_username,Api\Translation::charset(),'utf-8');
 		// harden ldap auth, by removing \000 bytes, causing passwords to be not empty by php, but empty to c libaries
-		$passwd = str_replace("\000", '', translation::convert($_passwd,translation::charset(),'utf-8'));
+		$passwd = str_replace("\000", '', Api\Translation::convert($_passwd,Api\Translation::charset(),'utf-8'));
 
-		if(!$ldap = common::ldapConnect())
-		{
-			return False;
+		// Login with the LDAP Admin. User to find the User DN.
+		try {
+			$ldap = Api\Ldap::factory();
 		}
-
-		/* Login with the LDAP Admin. User to find the User DN.  */
-		if(!@ldap_bind($ldap, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']))
+		catch(Api\Exception\NoPermission $e)
 		{
+			unset($e);
 			if ($this->debug) error_log(__METHOD__."('$username',\$password) can NOT bind with ldap_root_dn to search!");
 			return False;
 		}
 		/* find the dn for this uid, the uid is not always in the dn */
 		$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','shadowExpire','homeDirectory');
 
-		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
+		$filter = str_replace(array('%user','%domain'),array(Api\Ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
 			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
@@ -114,7 +117,7 @@ class auth_ldap implements auth_backend
 							) as $ldap_name => $acct_name)
 							{
 								$GLOBALS['auto_create_acct'][$acct_name] =
-									translation::convert($allValues[0][$ldap_name][0],'utf-8');
+									Api\Translation::convert($allValues[0][$ldap_name][0],'utf-8');
 							}
 							$ret = true;
 						}
@@ -141,8 +144,8 @@ class auth_ldap implements auth_backend
 					if (($sri = ldap_search($ldap, $userDN,"(objectclass=*)", array('userPassword'))) &&
 						($values = ldap_get_entries($ldap, $sri)) && isset($values[0]['userpassword'][0]) &&
 						($type = preg_match('/^{(.+)}/',$values[0]['userpassword'][0],$matches) ? strtolower($matches[1]) : 'plain') &&
-						// for crypt use auth::crypt_compare to detect correct sub-type, strlen("{crypt}")=7
-						($type != 'crypt' || auth::crypt_compare($passwd, substr($values[0]['userpassword'][0], 7), $type)) &&
+						// for crypt use Api\Auth::crypt_compare to detect correct sub-type, strlen("{crypt}")=7
+						($type != 'crypt' || Api\Auth::crypt_compare($passwd, substr($values[0]['userpassword'][0], 7), $type)) &&
 						in_array($type, explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
 					{
 						$this->change_password($passwd, $passwd, $allValues[0]['uidnumber'][0], false);
@@ -165,23 +168,21 @@ class auth_ldap implements auth_backend
 	function getLastPwdChange($_username)
 	{
 		// allow non-ascii in username & password
-		$username = translation::convert($_username,translation::charset(),'utf-8');
+		$username = Api\Translation::convert($_username,Api\Translation::charset(),'utf-8');
 
-		if(!$ldap = common::ldapConnect())
-		{
-			return False;
+		// Login with the LDAP Admin. User to find the User DN.
+		try {
+			$ldap = Api\Ldap::factory();
 		}
-
-		/* Login with the LDAP Admin. User to find the User DN.  */
-		if(!@ldap_bind($ldap, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']))
-		{
+		catch (Api\Exception\NoPermission $ex) {
+			unset($ex);
 			if ($this->debug) error_log(__METHOD__."('$username') can NOT bind with ldap_root_dn to search!");
 			return false;
 		}
 		/* find the dn for this uid, the uid is not always in the dn */
 		$attributes	= array('uid','dn','shadowexpire','shadowlastchange');
 
-		$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
+		$filter = str_replace(array('%user','%domain'),array(Api\Ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),
 			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
@@ -236,15 +237,15 @@ class auth_ldap implements auth_backend
 		}
 		else
 		{
-			$username = translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
-				translation::charset(),'utf-8');
+			$username = Api\Translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
+				Api\Translation::charset(),'utf-8');
 		}
-		//echo "<p>auth_ldap::change_password('$old_passwd','$new_passwd',$account_id) username='$username'</p>\n";
+		//echo "<p>auth_Api\Ldap::change_password('$old_passwd','$new_passwd',$account_id) username='$username'</p>\n";
 
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),
 			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
-		$ds = common::ldapConnect();
+		$ds = Api\Ldap::factory();
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
 		$allValues = ldap_get_entries($ds, $sri);
 
@@ -254,14 +255,14 @@ class auth_ldap implements auth_backend
 
 		if(!$admin && $passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
 		{
-			$ds = common::ldapConnect('',$dn,$passwd);
+			$ds = Api\Ldap::factory('', $dn, $passwd);
 		}
 		if (!@ldap_modify($ds, $dn, $entry))
 		{
 			return false;
 		}
 		// using time() is sufficient to represent the current time, we do not need the timestamp written to the storage
-		if (!$admin) egw_cache::setSession('phpgwapi','auth_alpwchange_val',(is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange));
+		if (!$admin) Api\Cache::setSession('phpgwapi','auth_alpwchange_val',(is_null($lastpwdchange) || $lastpwdchange<0 ? time():$lastpwdchange));
 		return true;
 	}
 
@@ -285,19 +286,19 @@ class auth_ldap implements auth_backend
 		}
 		else
 		{
-			$username = translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
-				translation::charset(),'utf-8');
+			$username = Api\Translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
+				Api\Translation::charset(),'utf-8');
 		}
 		if ($this->debug) error_log(__METHOD__."('$old_passwd','$new_passwd',$account_id, $update_lastchange) username='$username'");
 
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),
 			$GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)');
 
-		$ds = $ds_admin = common::ldapConnect();
+		$ds = $ds_admin = Api\Ldap::factory();
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
 		$allValues = ldap_get_entries($ds, $sri);
 
-		$entry['userpassword'] = auth::encrypt_password($new_passwd);
+		$entry['userpassword'] = Api\Auth::encrypt_password($new_passwd);
 		if ($update_lastchange)
 		{
 			$entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
@@ -307,11 +308,10 @@ class auth_ldap implements auth_backend
 
 		if($old_passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
 		{
-			$user_ds = new ldap(true);	// true throw exceptions in case of error
 			try {
-				$ds = $user_ds->ldapConnect('',$dn,$old_passwd);
+				$ds = Api\Ldap\factory('',$dn,$old_passwd);
 			}
-			catch (egw_exception_no_permission $e) {
+			catch (Api\Exception\NoPermission $e) {
 				unset($e);
 				return false;	// wrong old user password
 			}
@@ -325,7 +325,7 @@ class auth_ldap implements auth_backend
 		if($old_passwd)	// if old password given (not called by admin) update the password in the session
 		{
 			// using time() is sufficient to represent the current time, we do not need the timestamp written to the storage
-			egw_cache::setSession('phpgwapi','auth_alpwchange_val',time());
+			Api\Cache::setSession('phpgwapi','auth_alpwchange_val',time());
 		}
 		return $entry['userpassword'];
 	}

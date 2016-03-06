@@ -250,16 +250,16 @@ class common
 	/**
 	 * connect to the ldap server and return a handle
 	 *
-	 * @deprecated use Api\Ldap::ldapConnect()
-	 * @param $host ldap host
-	 * @param $dn ldap_root_dn
-	 * @param $passwd ldap_root_pw
+	 * @deprecated use Api\Ldap::factory(true, $host, $dn, $passwd)
+	 * @param string $host ='' ldap host
+	 * @param string $dn ='' ldap_root_dn
+	 * @param string $passwd ='' ldap_root_pw
 	 * @return resource
 	 */
 	static function ldapConnect($host='', $dn='', $passwd='')
 	{
 		// use Lars new ldap class
-		return $GLOBALS['egw']->ldap->ldapConnect($host,$dn,$passwd);
+		return Api\Ldap::factory(true, $host, $dn, $passwd);
 	}
 
 	/**
@@ -287,22 +287,11 @@ class common
 	 * return a random string of size $size
 	 *
 	 * @param $size int-size of random string to return
+	 * @deprecated use Api\Auth::randomstring($size)
 	 */
 	static function randomstring($size)
 	{
-		static $random_char = array(
-			'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
-			'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-			'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
-			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
-		);
-
-		$s = '';
-		for ($i=0; $i < $size; $i++)
-		{
-			$s .= $random_char[mt_rand(0,count($random_char)-1)];
-		}
-		return $s;
+		return Api\Auth::randomstring($size);
 	}
 
 	/**

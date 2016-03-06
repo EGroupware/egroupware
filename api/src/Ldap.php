@@ -25,6 +25,8 @@ namespace EGroupware\Api;
  * If multiple (space-separated) ldap hosts or urls are given, try them in order and
  * move first successful one to first place in session, to try not working ones
  * only once per session.
+ *
+ * Use Api\Ldap::factory($resource=true, $host='', $dn='', $passwd='') to open only a single connection.
  */
 class Ldap
 {
@@ -58,6 +60,40 @@ class Ldap
 	{
 		$this->exception_on_error = $exception_on_error;
 		$this->restoreSessionData();
+	}
+
+	/**
+	 * Connections created with factory method
+	 *
+	 * @var array
+	 */
+	protected static $connections = array();
+
+	/**
+	 * Connect to ldap server and return a handle or Api\Ldap object
+	 *
+	 * Use this factory method to open only a single connection to LDAP server!
+	 *
+	 * @param boolean $ressource =true true: return LDAP ressource for ldap_*-methods,
+	 *	false: return connected instances of this Api\Ldap class
+	 * @param string $host ='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
+	 * @param string $dn ='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
+	 * @param string $passwd ='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
+	 * @return resource|Ldap resource from ldap_connect() or false on error
+	 * @throws Exception\AssertingFailed 'LDAP support unavailable!' (no ldap extension)
+	 * @throws Exception\NoPermission if bind fails
+	 */
+	public static function factory($ressource=true, $host='', $dn='', $passwd='')
+	{
+		$key = md5($host.':'.$dn.':'.$passwd);
+
+		if (!isset(self::$connections[$key]))
+		{
+			self::$connections[$key] = new Ldap(true);
+
+			self::$connections[$key]->ldapConnect($host, $dn, $passwd);
+		}
+		return $ressource ? self::$connections[$key]->ds : self::$connections[$key];
 	}
 
 	/**
@@ -121,11 +157,12 @@ class Ldap
 	 * move first successful one to first place in session, to try not working ones
 	 * only once per session.
 	 *
-	 * @param $host ='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
-	 * @param $dn ='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
-	 * @param $passwd ='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
+	 * @param string $host ='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
+	 * @param string $dn ='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
+	 * @param string $passwd ='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
 	 * @return resource|boolean resource from ldap_connect() or false on error
 	 * @throws Exception\AssertingFailed 'LDAP support unavailable!' (no ldap extension)
+	 * @throws Exception\NoPermission if bind fails
 	 */
 	function ldapConnect($host='', $dn='', $passwd='')
 	{
