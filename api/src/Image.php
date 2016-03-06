@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-namespace EGroupware\APi;
+namespace EGroupware\Api;
 
 // explicitly import old phpgwapi classes used:
 use html;
