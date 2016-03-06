@@ -159,7 +159,7 @@ class egw extends egw_minimal
 		// translation class is here only for backward compatibility, as all it's methods can be called static now
 		$this->translation    = new translation();
 		$this->common         = new common();
-		$this->accounts       = accounts::getInstance();
+		$this->accounts       = new accounts();
 		$this->acl            = new acl();
 		// we instanciate the hooks object here manually, to cache it's hooks in the session
 		$this->hooks          = new hooks();
