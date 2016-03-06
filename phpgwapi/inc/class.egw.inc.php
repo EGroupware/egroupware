@@ -665,10 +665,11 @@ class egw_minimal
 //		'js'  => 'javascript',
 		'link' => 'bolink',		// depricated use static egw_link methods
 		'datetime' => 'egw_datetime',
-//		'session' => 'sessions',
-		'session' => 'egw_session',
 		'framework' => true,	// special handling in __get()
 		'template' => 'Template',
+		// classes moved to new api dir
+		'session' => 'EGroupware\Api\Session',
+		'ldap' => 'EGroupware\Api\Ldap',
 	);
 
 	/**

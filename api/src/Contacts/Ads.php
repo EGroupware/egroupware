@@ -14,9 +14,6 @@ namespace EGroupware\Api\Contacts;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use accounts_ads;
-
 /**
  * Active directory backend for accounts (not yet AD contacts)
  *
@@ -67,7 +64,7 @@ class Ads extends Ldap
 	/**
 	 * Accounts ADS object
 	 *
-	 * @var accounts_ads
+	 * @var Api\Accounts\Acs
 	 */
 	protected $accounts_ads;
 
@@ -205,7 +202,7 @@ class Ads extends Ldap
 		$contact['id'] = $contact['uid'] = $this->accounts_ads->objectguid2str($data['objectguid']);
 
 		// ignore system accounts
-		if ($contact['account_id'] < accounts_ads::MIN_ACCOUNT_ID) return false;
+		if ($contact['account_id'] < Api\Accounts\Ads::MIN_ACCOUNT_ID) return false;
 
 		// ignore deactivated or expired accounts
 		if (!$this->accounts_ads->user_active($data)) return false;

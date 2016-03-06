@@ -15,7 +15,6 @@ namespace EGroupware\Api\Storage;
 use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
-use common;
 use egw_link;
 
 /**
@@ -198,7 +197,7 @@ class Customfields implements \IteratorAggregate
 					$values = array();
 					foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
 					{
-						$values[] = common::grab_owner_name($value);
+						$values[] = Api\Accounts::username($value);
 					}
 					$value = implode(', ',$values);
 				}

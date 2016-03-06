@@ -159,8 +159,8 @@ class auth_ads implements auth_backend
 		if ($lastpwdchange)
 		{
 			// Samba4 can NOT set -1 for current time
-			$ldapServerInfo = ldapserverinfo::get($adldap->getLdapConnection(), $GLOBALS['egw_info']['server']['ads_host']);
-			if ($ldapServerInfo->serverType == SAMBA4_LDAPSERVER)
+			$ldapServerInfo = Api\Ldap\ServerInfo::get($adldap->getLdapConnection(), $GLOBALS['egw_info']['server']['ads_host']);
+			if ($ldapServerInfo->serverType == Api\Ldap\ServerInfo::SAMBA4)
 			{
 				if ($lastpwdchange == -1) $lastpwdchange = time();
 			}

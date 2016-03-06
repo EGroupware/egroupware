@@ -238,19 +238,19 @@ class common
 	 * It's actually a PHP-Bug, that we have to escape space.
 	 * For all other Characters, refer to RFC2254.
 	 *
-	 * @deprecated use ldap::quote()
+	 * @deprecated use Api\Ldap::quote()
 	 * @param $string either a string to be escaped, or an array of values to be escaped
 	 * @return string
 	 */
 	static function ldap_addslashes($string='')
 	{
-		return ldap::quote($string);
+		return Api\Ldap::quote($string);
 	}
 
 	/**
 	 * connect to the ldap server and return a handle
 	 *
-	 * @deprecated use ldap::ldapConnect()
+	 * @deprecated use Api\Ldap::ldapConnect()
 	 * @param $host ldap host
 	 * @param $dn ldap_root_dn
 	 * @param $passwd ldap_root_pw
@@ -342,76 +342,23 @@ class common
 	 * @param $firstname ='' firstname
 	 * @param $lastname ='' lastname
 	 * @param $accountid =0 id, to check if it's a user or group, otherwise the lid will be used
+	 * @deprecated use Api\Accounts::format_username()
 	 */
 	static function display_fullname($lid = '', $firstname = '', $lastname = '',$accountid=0)
 	{
-		if (! $lid && ! $firstname && ! $lastname)
-		{
-			$lid       = $GLOBALS['egw_info']['user']['account_lid'];
-			$firstname = $GLOBALS['egw_info']['user']['account_firstname'];
-			$lastname  = $GLOBALS['egw_info']['user']['account_lastname'];
-		}
-		$is_group = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g';
-
-		if (empty($firstname)) $firstname = $lid;
-		if (empty($lastname) || $is_group)
-		{
-			$lastname  = $is_group ? lang('Group') : lang('User');
-		}
-		$display = $GLOBALS['egw_info']['user']['preferences']['common']['account_display'];
-
-		if ($firstname && $lastname)
-		{
-			$delimiter = $is_group ? ' ' : ', ';
-		}
-		else
-		{
-			$delimiter = '';
-		}
-
-		$name = '';
-		switch($display)
-		{
-			case 'firstname':
-				$name = $firstname . ' ' . $lastname;
-				break;
-			case 'lastname':
-				$name = $lastname . $delimiter . $firstname;
-				break;
-			case 'username':
-				$name = $lid;
-				break;
-			case 'firstall':
-				$name = $firstname . ' ' . $lastname . ' ['.$lid.']';
-				break;
-			case 'lastall':
-				$name = $lastname . $delimiter . $firstname . ' ['.$lid.']';
-				break;
-			case 'allfirst':
-				$name = '['.$lid.'] ' . $firstname . ' ' . $lastname;
-				break;
-			case 'all':
-				/* fall through */
-			default:
-				$name = '['.$lid.'] ' . $lastname . $delimiter . $firstname;
-		}
-		return $name;
+		return Api\Accounts::format_username($lid, $firstname, $lastname, $accountid);
 	}
 
 	/**
-	 * grab the owner name
+	 * Return formatted username for a given account_id
 	 *
 	 * @param string $accountid =null account id
 	 * @return string full name of user or "#$accountid" if user not found
+	 * @deprecated use Api\Accounts::username($accountid)
 	 */
 	static function grab_owner_name($accountid=null)
 	{
-		$lid = $fname = $lname = null;
-		if (!$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname))
-		{
-			return '#'.$accountid;
-		}
-		return self::display_fullname($lid,$fname,$lname,$accountid);
+		return Api\Accounts::username($accountid);
 	}
 
 	/**

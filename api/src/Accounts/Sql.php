@@ -23,21 +23,27 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Accounts;
+
+use EGroupware\Api;
+
+// explicitly reference classes still in phpgwapi of old structure
+use emailadmin_smtp_sql;
+use acl;
+
 /**
  * SQL Backend for accounts
  *
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package api
- * @subpackage accounts
  * @access internal only use the interface provided by the accounts class
  */
-class accounts_sql
+class Sql
 {
 	/**
 	 * instance of the db class
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	var $db;
 	/**
@@ -74,9 +80,9 @@ class accounts_sql
 	private $frontend;
 
 	/**
-	 * Instance of contacts object / addressbook_bo, NOT automatic instanciated!
+	 * Instance of contacts object, NOT automatic instanciated!
 	 *
-	 * @var addressbook_bo
+	 * @var Api\Contacts
 	 */
 	private $contacts;
 
@@ -93,10 +99,9 @@ class accounts_sql
 	/**
 	 * Constructor
 	 *
-	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
-	 * @return accounts_sql
+	 * @param Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
 	 */
-	function __construct(accounts $frontend)
+	function __construct(Api\Accounts $frontend)
 	{
 		$this->frontend = $frontend;
 
@@ -171,14 +176,13 @@ class accounts_sql
 			$data['account_lastname'] = $data['account_type'] == 'g' ? 'Group' : 'User';
 			// if we call lang() before the translation-class is correctly setup,
 			// we can't switch away from english language anymore!
-			if (translation::$lang_arr)
+			if (Api\Translation::$lang_arr)
 			{
 				$data['account_lastname'] = lang($data['account_lastname']);
 			}
 		}
 		if (!$data['account_fullname']) $data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
 
-		//echo "accounts_sql::read($account_id)"; _debug_array($data);
 		return $data;
 	}
 
@@ -192,7 +196,6 @@ class accounts_sql
 	 */
 	function save(&$data)
 	{
-		//echo "<p>accounts_sql::save(".print_r($data,true).")</p>\n";
 		$to_write = $data;
 		unset($to_write['account_passwd']);
 		// encrypt password if given or unset it if not
@@ -287,7 +290,7 @@ class accounts_sql
 		}
 		if ($contact_id)
 		{
-			if (!isset($this->contacts)) $this->contacts = new addressbook_bo();
+			if (!isset($this->contacts)) $this->contacts = new Api\Contacts();
 			$this->contacts->delete($contact_id,false);	// false = allow to delete accounts (!)
 		}
 		return true;
@@ -311,7 +314,6 @@ class accounts_sql
 				$memberships[(string) $gid] = $this->id2name($gid);
 			}
 		}
-		//echo "accounts::memberships($account_id)"; _debug_array($memberships);
 		return $memberships;
 	}
 
@@ -357,7 +359,6 @@ class accounts_sql
 		{
 			$members[$row['account_id']] = $row['account_lid'];
 		}
-		//echo "accounts::members($accountid)"; _debug_array($members);
 		return $members;
 	}
 
@@ -369,7 +370,6 @@ class accounts_sql
 	 */
 	function set_members($members,$gid)
 	{
-		//echo "<p align=right>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
 		$GLOBALS['egw']->acl->delete_repository('phpgw_group',$gid,false);
 
 		if (is_array($members))
@@ -410,11 +410,11 @@ class accounts_sql
 			'account_email'     => 'contact_email',
 		);
 
-		// fetch order of account_fullname from common::display_fullname
+		// fetch order of account_fullname from Api\Accounts::format_username
 		if (strpos($param['order'],'account_fullname') !== false)
 		{
 			$param['order'] = str_replace('account_fullname', preg_replace('/[ ,]+/',',',str_replace(array('[',']'),'',
-				common::display_fullname('account_lid','account_firstname','account_lastname'))), $param['order']);
+				Api\Accounts::format_username('account_lid','account_firstname','account_lastname'))), $param['order']);
 		}
 		$order = str_replace(array_keys($order2contact),array_values($order2contact),$param['order']);
 		// allways add 'account_lid', as it is only valid one for groups
@@ -490,7 +490,7 @@ class accounts_sql
 		}
 		if ($param['active'])
 		{
-			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),addressbook_sql::ACOUNT_ACTIVE_FILTER);
+			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),Api\Contacts\Sql::ACOUNT_ACTIVE_FILTER);
 		}
 		$criteria = array();
 		$wildcard = $param['query_type'] == 'start' || $param['query_type'] == 'exact' ? '' : '%';
@@ -532,7 +532,7 @@ class accounts_sql
 					break;
 			}
 		}
-		if (!isset($this->contacts)) $this->contacts = new addressbook_bo();
+		if (!isset($this->contacts)) $this->contacts = new Api\Contacts();
 
 		$accounts = array();
 		foreach((array) $this->contacts->search($criteria,
@@ -556,9 +556,9 @@ class accounts_sql
 					'account_status'	=> $contact['account_status'],
 					'account_expires'	=> $contact['account_expires'],
 					'account_primary_group'	=> $contact['account_primary_group'],
-					// addressbook_bo::search() returns everything in user-time, need to convert to server-time
-					'account_created'	=> egw_time::user2server($contact['created']),
-					'account_modified'	=> egw_time::user2server($contact['modified']),
+					// Api\Contacts::search() returns everything in user-time, need to convert to server-time
+					'account_created'	=> Api\DateTime::user2server($contact['created']),
+					'account_modified'	=> Api\DateTime::user2server($contact['modified']),
 					'account_description' => $contact['account_description'],
 				);
 			}
@@ -607,7 +607,7 @@ class accounts_sql
 				// check if we need to treat username case-insensitive
 				if ($which == 'account_lid' && !$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
 				{
-					$where[] = 'account_lid '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($where['account_lid']);
+					$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($where['account_lid']);
 					unset($where['account_lid']);
 				}
 		}

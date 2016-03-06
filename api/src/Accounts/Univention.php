@@ -11,6 +11,11 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Accounts;
+
+// explicitly reference classes still in phpgwapi
+use emailadmin_account;
+
 /**
  * Univention LDAP Backend for accounts
  *
@@ -22,7 +27,7 @@
  * Existing users and groups need to be renamed via same CLI, as removing and
  * adding entry under new dn via LDAP fails (Type or value exists).
  */
-class accounts_univention extends accounts_ldap
+class Univention extends Ldap
 {
 	/**
 	 * Attribute with mail address
@@ -97,7 +102,7 @@ class accounts_univention extends accounts_ldap
 				{
 					$params[5] = '********';	// mask out password!
 					$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
-					throw new egw_exception_wrong_userinput($cmd."\nreturned\n".$output);
+					throw new Api\Exception\WrongUserinput($cmd."\nreturned\n".$output);
 				}
 				$data['account_dn'] = $matches[1];
 				$data['account_id'] = $this->name2id($data['account_lid'], 'account_lid', 'u');
@@ -121,7 +126,7 @@ class accounts_univention extends accounts_ldap
 				{
 					$params[5] = '********';	// mask out password!
 					$cmd = self::DIRECTORY_MANAGER_BIN.' '.implode(' ', array_map('escapeshellarg', $params));
-					throw new egw_exception_wrong_userinput($cmd."\nreturned\n".$output);
+					throw new Api\Exception\WrongUserinput($cmd."\nreturned\n".$output);
 				}
 				$data['account_dn'] = $data['account_type'] !== 'g' ? $matches[1] :
 					// duno why but directory-manager returns old dn for groups ...

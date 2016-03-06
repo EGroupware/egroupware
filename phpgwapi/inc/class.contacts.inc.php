@@ -5,15 +5,17 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package api
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * contacts service provided by the addressbook application
  */
-class contacts extends addressbook_bo
+class contacts extends Api\Contacts
 {
 	/**
 	 * @deprecated since 1.3 use total
@@ -40,10 +42,10 @@ class contacts extends addressbook_bo
 	/**
 	* reads contacts matched by key and puts all cols in the data array
 	*
-	* reimplemented from bocontacts to call the old read function, if more then one param
+	* reimplemented to call the old read function, if more then one param
 	*
-	* @param int/string $contact_id
-	* @return array/boolean contact data or false on error
+	* @param int|string $contact_id
+	* @return array|boolean contact data or false on error
 	*/
 	function read($contact_id)
 	{
@@ -67,15 +69,15 @@ class contacts extends addressbook_bo
 	 * This method was named read in eGW 1.0 and 1.2
 	 *
 	 * @deprecated since 1.3 use search() instead
-	 * @param int $start=0 starting number of the range, if $limit != 0
-	 * @param int $limit=0 max. number of entries to return, 0=all
-	 * @param array $fields=null fields to return or null for all stock fields, fields are either in the keys or values
-	 * @param string $query='' search pattern or '' for none
-	 * @param string $filter='' filters with syntax like <name>=<value>,<name2>=<value2>,<name3>=!'' for not empty
-	 * @param string $sort='' sorting: ASC or DESC
-	 * @param string $order='' column to order, default ('') n_family,n_given,email ASC
-	 * @param int $lastmod=-1 return only values modified after given timestamp, default (-1) return all
-	 * @param string $cquery='' return only entries starting with given character, default ('') all
+	 * @param int $start =0 starting number of the range, if $limit != 0
+	 * @param int $limit =0 max. number of entries to return, 0=all
+	 * @param array $fields =null fields to return or null for all stock fields, fields are either in the keys or values
+	 * @param string $query ='' search pattern or '' for none
+	 * @param string $filter ='' filters with syntax like <name>=<value>,<name2>=<value2>,<name3>=!'' for not empty
+	 * @param string $sort ='' sorting: ASC or DESC
+	 * @param string $order ='' column to order, default ('') n_family,n_given,email ASC
+	 * @param int $lastmod =-1 return only values modified after given timestamp, default (-1) return all
+	 * @param string $cquery ='' return only entries starting with given character, default ('') all
 	 * @return array of contacts
 	 */
 	function old_read($start=0,$limit=0,$fields=null,$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
@@ -155,7 +157,7 @@ class contacts extends addressbook_bo
 						$row['bday'] = egw_time::to((isset($row['bday'])?$row['bday']:$row['contact_bday']),"Y-m-d");
 						list($y,$m,$d) = explode('-',$row['bday']);
 						$rows[$n]['bday'] = sprintf('%d/%d/%04d',$m,$d,$y);
-						
+
 					}
 				}
 			}
@@ -168,11 +170,13 @@ class contacts extends addressbook_bo
 	 *
 	 * @deprecated since 1.3 use read() instead
 	 * @param int $id
-	 * @param string $fields='' we always return all fields now
+	 * @param string $fields ='' we always return all fields now
 	 * @return array/boolean contact or false on failure
 	 */
 	function read_single_entry($id,$fields='')
 	{
+		unset($fields);	// not used, but required by function signature
+
 		return $this->read($id);
 	}
 
@@ -182,9 +186,9 @@ class contacts extends addressbook_bo
 	 * @deprecated since 1.3 use save() instead
 	 * @param int $owner owner of the entry
 	 * @param array $fields contains access, cat_id and tif if their param is null
-	 * @param string $access=null 'private' or 'public'
-	 * @param int $cat_id=null
-	 * @param string $tid=null 'n'
+	 * @param string $access =null 'private' or 'public'
+	 * @param int $cat_id =null
+	 * @param string $tid =null 'n'
 	 * @return array/boolean contact or false on failure
 	 */
 	function add($owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
@@ -214,10 +218,10 @@ class contacts extends addressbook_bo
 	 * @param int $id id of the entry
 	 * @param int $owner owner of the entry
 	 * @param array $fields contains access, cat_id and tif if their param is null
-	 * @param string $access=null 'private' or 'public'
-	 * @param int $cat_id=null
-	 * @param string $tid=null 'n'
-	 * @return array/boolean contact or false on failure
+	 * @param string $access =null 'private' or 'public'
+	 * @param int $cat_id =null
+	 * @param string $tid =null 'n'
+	 * @return array|boolean contact or false on failure
 	 */
 	function update($id,$owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 	{

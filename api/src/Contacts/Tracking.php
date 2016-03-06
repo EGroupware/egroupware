@@ -15,9 +15,6 @@ namespace EGroupware\Api\Contacts;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use common;
-
 /**
  * Contacts history and notifications
  */
@@ -113,7 +110,6 @@ class Tracking extends Api\Storage\Tracking
 	{
 		unset($old);	// not used, but required by function signature
 
-		//echo "<p>".__METHOD__."($name,".print_r($data,true).",...)</p>\n";
 		switch($name)
 		{
 			case 'copy':
@@ -128,7 +124,6 @@ class Tracking extends Api\Storage\Tracking
 			case 'sender':
 				if ($data['is_contactform'])
 				{
-					//echo "<p>addressbook_tracking::get_config($name,...) email={$data['email']}, n_given={$data['n_given']}, n_family={$data['n_family']}</p>\n";
 					return $data['email'] ? $data['n_given'].' '.$data['n_family'].' <'.$data['email'].'>' : null;
 				}
 				break;
@@ -195,11 +190,11 @@ class Tracking extends Api\Storage\Tracking
 		if (!$data['modified'] || !$old)
 		{
 			return lang('New contact submitted by %1 at %2',
-				common::grab_owner_name($data['creator']),
+				Api\Accounts::username($data['creator']),
 				$this->datetime($data['created']));
 		}
 		return lang('Contact modified by %1 at %2',
-			common::grab_owner_name($data['modifier']),
+			Api\Accounts::username($data['modifier']),
 			$this->datetime($data['modified']));
 	}
 
@@ -252,17 +247,16 @@ class Tracking extends Api\Storage\Tracking
 				case 'bday':
 					if ($data[$name])
 					{
-						list($y,$m,$d) = explode('-',$data[$name]);
 						$details[$name] = array(
 							'label' => $label,
-							'value' => common::dateformatorder($y,$m,$d,true),
+							'value' => Api\DateTime::to($data[$name], true),
 						);
 					}
 					break;
 				case 'owner': case 'creator': case 'modifier':
 					$details[$name] = array(
 						'label' => $label,
-						'value' => common::grab_owner_name($data[$name]),
+						'value' => Api\Accounts::username($data[$name]),
 					);
 					break;
 				case 'cat_id':

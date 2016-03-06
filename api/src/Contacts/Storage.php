@@ -16,9 +16,6 @@ namespace EGroupware\Api\Contacts;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-
-
 /**
  * Contacts storage object
  *
@@ -438,7 +435,8 @@ class Storage
 		{
 			if ((isset($row[$this->distri_id])&&strlen($row[$this->distri_value])>0))
 			{
-				$fields[$row[$this->distri_id]][$row[$this->distri_key]] = $row[$this->distri_value].' ('.$GLOBALS['egw']->common->grab_owner_name($row[$this->distri_owner]).')';
+				$fields[$row[$this->distri_id]][$row[$this->distri_key]] = $row[$this->distri_value].' ('.
+					Api\Accounts::username($row[$this->distri_owner]).')';
 			}
 		}
 		return $fields;
@@ -606,7 +604,6 @@ class Storage
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
 	{
-		//echo '<p>'.__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')</p>\n";
 		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',".array2string($start).','.array2string($filter,true).",'$join')");
 
 		// Handle 'None' country option
@@ -772,13 +769,12 @@ class Storage
 
 		$rows = $this->somain->organisations($param);
 		$this->total = $this->somain->total;
-		//echo "<p>socontacts::organisations(".print_r($param,true).")<br />".$this->somain->db->Query_ID->sql."</p>\n";
 
 		if (!$rows) return array();
 
 		foreach($rows as $n => $row)
 		{
-			if (strpos($row['org_name'],'&')!==false) $row['org_name'] = str_replace('&','*AND*',$row['org_name']); //echo "Ampersand found<br>";
+			if (strpos($row['org_name'],'&')!==false) $row['org_name'] = str_replace('&','*AND*',$row['org_name']);
 			$rows[$n]['id'] = 'org_name:'.$row['org_name'];
 			foreach(array(
 				'org_unit' => lang('departments'),
@@ -791,7 +787,7 @@ class Storage
 				}
 				else
 				{
-					if (strpos($row[$by],'&')!==false) $row[$by] = str_replace('&','*AND*',$row[$by]); //echo "Ampersand found<br>";
+					if (strpos($row[$by],'&')!==false) $row[$by] = str_replace('&','*AND*',$row[$by]);
 					$rows[$n]['id'] .= '|||'.$by.':'.$row[$by];
 				}
 			}
@@ -890,13 +886,11 @@ class Storage
 		$backend =& $this->get_backend($contact_id,$owner);
 
 		$supported_fields = method_exists($backend,supported_fields) ? $backend->supported_fields() : $all_fields;
-		//echo "supported fields=";_debug_array($supported_fields);
 
 		if ($type == 'supported')
 		{
 			return $supported_fields;
 		}
-		//echo "unsupported fields=";_debug_array(array_diff($all_fields,$supported_fields));
 		return array_diff($all_fields,$supported_fields);
 	}
 
@@ -1015,10 +1009,9 @@ class Storage
 			$lists[$list_id] = $data['list_name'];
 			if ($data['list_owner'] != $this->user)
 			{
-				$lists[$list_id] .= ' ('.$GLOBALS['egw']->common->grab_owner_name($data['list_owner']).')';
+				$lists[$list_id] .= ' ('.Api\Accounts::username($data['list_owner']).')';
 			}
 		}
-		//echo "<p>socontacts_sql::get_lists($required,'$extra_label')</p>\n"; _debug_array($lists);
 		return $lists;
 	}
 

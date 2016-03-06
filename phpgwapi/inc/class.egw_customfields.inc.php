@@ -15,6 +15,6 @@ use EGroupware\Api;
 /**
  * Managing custom-field definitions
  *
- * @deprecated use Api\Customfields
+ * @deprecated use Api\Storage\Customfields
  */
-class egw_customfields extends Api\Customfields { }
+class egw_customfields extends Api\Storage\Customfields { }

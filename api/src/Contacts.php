@@ -18,7 +18,6 @@ namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use categories;
-use common;	// grab_owner_name
 use egw_link;
 
 use calendar_bo;	// to_do: do NOT require it, just use if there
@@ -346,8 +345,6 @@ class Contacts extends Contacts\Storage
 	 */
 	function get_addressbooks($required=EGW_ACL_READ,$extra_label=null,$user=null)
 	{
-		//echo "uicontacts::get_addressbooks($required,$include_all) grants="; _debug_array($this->grants);
-
 		if (is_null($user))
 		{
 			$user = $this->user;
@@ -391,7 +388,7 @@ class Contacts extends Contacts\Storage
 		{
 			if ($uid != $user && ($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
-				$to_sort[$uid] = common::grab_owner_name($uid);
+				$to_sort[$uid] = Accounts::username($uid);
 			}
 		}
 		if ($to_sort)
@@ -403,7 +400,6 @@ class Contacts extends Contacts\Storage
 		{
 			$addressbooks[$user.'p'] = lang('Private');
 		}
-		//echo "<p>".__METHOD__."($required,'$extra_label')"; _debug_array($addressbooks);
 		return $addressbooks;
 	}
 
@@ -452,7 +448,6 @@ class Contacts extends Contacts\Storage
 		{
 			$fileas = substr($fileas,0,-2);
 		}
-		//echo "<p align=right>bocontacts::fileas(,$type)='$fileas'</p>\n";
 		return $fileas;
 	}
 
@@ -566,7 +561,6 @@ class Contacts extends Contacts\Storage
 				}
 				if ($old_fileas != $contact['n_fileas'] || $old_fn != $contact['n_fn'])
 				{
-					//echo "<p>('$old_fileas' != '{$contact['n_fileas']}' || '$old_fn' != '{$contact['n_fn']}')=".array2string($old_fileas != $contact['n_fileas'] || $old_fn != $contact['n_fn'])."</p>\n";
 					// only specify/write updated fields plus "keys"
 					$contact = array_intersect_key($contact,array(
 						'id' => true,
@@ -1277,7 +1271,6 @@ class Contacts extends Contacts\Storage
 
 			arsort($values,SORT_NUMERIC);
 			list($value,$num) = each($values);
-			//echo "<p>$name: '$value' $num/".count($contacts)."=".($num / (double) count($contacts))." >= $this->org_common_factor = ".($num / (double) count($contacts) >= $this->org_common_factor ? 'true' : 'false')."</p>\n";
 			if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
 			{
 				if (!in_array($name,$csvs))
@@ -1404,7 +1397,6 @@ class Contacts extends Contacts\Storage
 				if ((string)$value == (string)$member[$name])
 				{
 					$member[$name] = $to[$name];
-					//echo "<p>$member[n_family], $member[n_given]: $name='{$to[$name]}'</p>\n";
 					++$fields;
 				}
 			}
@@ -1591,7 +1583,6 @@ class Contacts extends Contacts\Storage
 				'cn' => trim($contact['n_given'].' '.$contact['n_family']),
 			);
 		}
-		//echo "<p>calendar_info(".print_r($ids,true).")="; _debug_array($data);
 		return $data;
 	}
 
@@ -2028,7 +2019,6 @@ class Contacts extends Contacts\Storage
 			default:
 				$adr_format = $this->prefs['addr_format'] ? $this->prefs['addr_format'] : 'postcode_city';
 		}
-		//echo "<p>bocontacts::addr_format_by_country('$country'='$code') = '$adr_format'</p>\n";
 		return $adr_format;
 	}
 

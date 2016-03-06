@@ -11,7 +11,12 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Accounts;
+
+use EGroupware\Api;
+
 require_once EGW_API_INC.'/adldap/adLDAP.php';
+use adLDAPException;
 
 /**
  * Active directory backend for accounts
@@ -31,7 +36,7 @@ require_once EGW_API_INC.'/adldap/adLDAP.php';
  * @link http://www.selfadsi.org/attributes-e2k7.htm
  * @link http://msdn.microsoft.com/en-us/library/ms675090(v=vs.85).aspx
  */
-class accounts_ads
+class Ads
 {
 	/**
 	 * Instance of adLDAP class
@@ -113,7 +118,6 @@ class accounts_ads
 	 *
 	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
 	 * @throws adLDAPException
-	 * @return accounts_ldap
 	 */
 	function __construct(accounts $frontend)
 	{
@@ -136,8 +140,8 @@ class accounts_ads
 
 		if (!isset($adldap[$config['ads_domain']]))
 		{
-			if (empty($config['ads_host'])) throw new Exception("Required ADS host name(s) missing!");
-			if (empty($config['ads_domain'])) throw new Exception("Required ADS domain missing!");
+			if (empty($config['ads_host'])) throw new Api\Exception("Required ADS host name(s) missing!");
+			if (empty($config['ads_domain'])) throw new Api\Exception("Required ADS domain missing!");
 
 			$base_dn_parts = array();
 			foreach(explode('.', $config['ads_domain']) as $dc)
@@ -153,9 +157,9 @@ class accounts_ads
 				'admin_password' => $config['ads_admin_passwd'],
 				'use_tls' => $config['ads_connection'] == 'tls',
 				'use_ssl' => $config['ads_connection'] == 'ssl',
-				'charset' => translation::charset(),
+				'charset' => Api\Translation::charset(),
 			);
-			$adldap[$config['ads_domain']] = new adLDAP_egw($options);
+			$adldap[$config['ads_domain']] = new adLDAP($options);
 			if (self::$debug) error_log(__METHOD__."() new adLDAP(".array2string($options).") returned ".array2string($adldap[$config['ads_domain']]).' '.function_backtrace());
 		}
 		//else error_log(__METHOD__."() returning cached adLDAP ".array2string($adldap[$config['ads_domain']]).' '.function_backtrace());
@@ -173,7 +177,7 @@ class accounts_ads
 		static $domain_sid = null;
 		if (!isset($domain_sid))
 		{
-			$domain_sid = egw_cache::getCache($this->frontend->config['install_id'], __CLASS__, 'ads_domain_sid');
+			$domain_sid = Api\Cache::getCache($this->frontend->config['install_id'], __CLASS__, 'ads_domain_sid');
 			if ((!is_array($domain_sid) || !isset($domain_sid[$this->frontend->config['ads_domain']])) &&
 				($adldap = self::get_adldap($this->frontend->config)) &&
 				($sr = ldap_search($adldap->getLdapConnection(), $adldap->getBaseDn(), '(objectclass=domain)', array('objectsid'))) &&
@@ -181,7 +185,7 @@ class accounts_ads
 			{
 				$domain_sid = array();
 				$domain_sid[$this->frontend->config['ads_domain']] = $adldap->utilities()->getTextSID($entries[0]['objectsid'][0]);
-				egw_cache::setCache($this->frontend->config['install_id'], __CLASS__, 'ads_domain_sid', $domain_sid);
+				Api\Cache::setCache($this->frontend->config['install_id'], __CLASS__, 'ads_domain_sid', $domain_sid);
 			}
 		}
 		$sid = $domain_sid[$this->frontend->config['ads_domain']];
@@ -234,7 +238,7 @@ class accounts_ads
 		$matches = null;
 		if (!preg_match('/^(.*),'.preg_quote($base, '/').'$/i', $context, $matches))
 		{
-			throw new egw_exception_wrong_userinput("Wrong or not configured ADS context '$context' (baseDN='$base')!");
+			throw new Api\Exception\WrongUserinput("Wrong or not configured ADS context '$context' (baseDN='$base')!");
 		}
 		$container = $matches[1];
 		if (self::$debug) error_log(__METHOD__."() context='$context', base='$base' returning ".array2string($container));
@@ -348,7 +352,7 @@ class accounts_ads
 	function save(&$data)
 	{
 		$is_group = $data['account_id'] < 0 || $data['account_type'] === 'g';
-		$data = translation::convert($data, translation::charset(), 'utf-8');
+		$data = Api\Translation::convert($data, Api\Translation::charset(), 'utf-8');
 
 		if ($data['account_id'] && !($old = $this->read($data['account_id'])))
 		{
@@ -362,7 +366,7 @@ class accounts_ads
 				error_log(__METHOD__.'('.array2string($data).") changing account-type user <--> group forbidden!");
 				return false;
 			}
-			$old = translation::convert($old, translation::charset(), 'utf-8');
+			$old = Api\Translation::convert($old, Api\Translation::charset(), 'utf-8');
 		}
 		$ret = $is_group ? $this->_save_group($data, $old) : $this->_save_user($data, $old);
 
@@ -408,7 +412,7 @@ class accounts_ads
 	 */
 	protected function _ldap2group($_data)
 	{
-		$data = translation::convert($_data, 'utf-8');
+		$data = Api\Translation::convert($_data, 'utf-8');
 
 		// no need to calculate sid, if already calculated
 		$sid = is_string($data['objectsid']) ? $data['objectsid'] :
@@ -469,7 +473,7 @@ class accounts_ads
 	 */
 	protected function _ldap2user(array $_data)
 	{
-		$data = translation::convert($_data, 'utf-8');
+		$data = Api\Translation::convert($_data, 'utf-8');
 
 		// no need to calculate sid, if already calculated
 		$sid = is_string($data['objectsid']) ? $data['objectsid'] :
@@ -561,8 +565,8 @@ class accounts_ads
 		if (!isset($utc)) $utc = new DateTimeZone('UTC');
 
 		list($when) = explode('.', $_when);	// remove .0Z not understood by createFromFormat
-		$datetime = egw_time::createFromFormat(self::WHEN_FORMAT, $when, $utc);
-		if (egw_time::$server_timezone) $datetime->setTimezone(egw_time::$server_timezone);
+		$datetime = Api\DateTime::createFromFormat(self::WHEN_FORMAT, $when, $utc);
+		if (Api\DateTime::$server_timezone) $datetime->setTimezone(Api\DateTime::$server_timezone);
 
 		return $datetime->getTimestamp();
 	}
@@ -945,7 +949,6 @@ class accounts_ads
 
 			$account_search[$unl_serial]['total'] = $this->total = count($accounts);
 		}
-		//echo "<p>accounts_ldap::search() found $this->total: ".microtime()."</p>\n";
 		// return only the wanted accounts
 		reset($sortedAccounts);
 		if(is_numeric($start) && is_numeric($offset))
@@ -1072,7 +1075,7 @@ class accounts_ads
 					continue;	// ignore system accounts incl. "Administrator"
 				}
 				$accounts[($data['samaccounttype'][0] == adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP ? '-' : '').$rid] =
-					$attrs ? $data : translation::convert($data['samaccountname'][0], 'utf-8');
+					$attrs ? $data : Api\Translation::convert($data['samaccountname'][0], 'utf-8');
 			}
 		}
 		else if (self::$debug) error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter')=$sri allValues=".array2string($allValues));
@@ -1241,7 +1244,7 @@ class accounts_ads
  * - allow to use utf-8 charset internally, not just an 8-bit iso-charset
  * - support for Windows2008r2 (maybe earlier too) and Samba4 "CN=Users" DN as container to create users or groups
  */
-class adLDAP_egw extends adLDAP
+class adLDAP extends \adLDAP
 {
 	/**
 	 * Charset used for internal encoding
@@ -1286,7 +1289,7 @@ class adLDAP_egw extends adLDAP
 	 */
 	public function user() {
 		if (!$this->userClass) {
-			$this->userClass = new adLDAPUsers_egw($this);
+			$this->userClass = new adLDAPUsers($this);
 		}
 		return $this->userClass;
 	}
@@ -1298,7 +1301,7 @@ class adLDAP_egw extends adLDAP
     */
     public function group() {
         if (!$this->groupClass) {
-            $this->groupClass = new adLDAPGroups_egw($this);
+            $this->groupClass = new adLDAPGroups($this);
         }
         return $this->groupClass;
     }
@@ -1310,7 +1313,7 @@ class adLDAP_egw extends adLDAP
     */
     public function utilities() {
         if (!$this->utilClass) {
-            $this->utilClass = new adLDAPUtils_egw($this);
+            $this->utilClass = new adLDAPUtils($this);
         }
         return $this->utilClass;
     }
@@ -1319,7 +1322,7 @@ class adLDAP_egw extends adLDAP
 /**
  * Fixes an enhancements for adLDAPUser required by EGroupware
  */
-class adLDAPUsers_egw extends adLDAPUsers
+class adLDAPUsers extends \adLDAPUsers
 {
 	/**
 	 * Create a user
@@ -1579,7 +1582,7 @@ class adLDAPUsers_egw extends adLDAPUsers
 /**
  * Fixes an enhancements for adLDAPGroups required by EGroupware
  */
-class adLDAPGroups_egw extends adLDAPGroups
+class adLDAPGroups extends \adLDAPGroups
 {
 	/**
 	 * Create a group
@@ -1623,7 +1626,7 @@ class adLDAPGroups_egw extends adLDAPGroups
 /**
  * Fixes an enhancements for adLDAPUtils required by EGroupware
  */
-class adLDAPUtils_egw extends adLDAPUtils
+class adLDAPUtils extends \adLDAPUtils
 {
 	/**
 	 * Convert 8bit characters e.g. accented characters to UTF8 encoded characters

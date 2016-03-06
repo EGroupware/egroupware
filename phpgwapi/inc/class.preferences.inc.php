@@ -12,6 +12,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * preferences class used for setting application preferences
  *
@@ -278,14 +280,11 @@ class preferences
 		{
 			$GLOBALS['egw_info']['user']['preferences'] = $this->data;	// else no lang()
 		}
-		// we cant use phpgw_info/user/fullname, as it's not set when we run
-		$lid = $fname = $lname = null;
-		$GLOBALS['egw']->accounts->get_account_name($this->account_id,$lid,$fname,$lname);
-
+		// we cant use egw_info/user/fullname, as it's not set when we run
 		$this->values = array(	// standard notify replacements
-			'fullname'  => common::display_fullname('',$fname,$lname),
-			'firstname' => $fname,
-			'lastname'  => $lname,
+			'fullname'  => Api\Accounts::id2name($this->account_id, 'account_fullname'),
+			'firstname' => Api\Accounts::id2name($this->account_id, 'account_firstname'),
+			'lastname'  => Api\Accounts::id2name($this->account_id, 'account_lastname'),
 			'domain'    => $GLOBALS['egw_info']['server']['mail_suffix'],
 			'email'     => $this->email_address($this->account_id),
 			'date'      => common::show_date('',$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']),

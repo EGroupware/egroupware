@@ -491,7 +491,6 @@ class Session
 			}
 			unset($GLOBALS['egw_info']['server']['default_domain']); // we kill this for security reasons
 
-			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			$user_ip = self::getuser_ip();
 
 			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
@@ -533,8 +532,6 @@ class Session
 			}
 
 			$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
-			$GLOBALS['egw']->accounts->__construct();
-			$GLOBALS['egw']->accounts->setAccountId($this->account_id);
 
 			// for *DAV and eSync we use a pseudo sessionid created from md5(user:passwd)
 			// --> allows this stateless protocolls which use basic auth to use sessions!
@@ -619,7 +616,6 @@ class Session
 				self::egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
 				self::egw_setcookie('last_domain',$this->account_domain,$now+1209600);
 			}
-			//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) successfull sessionid=$this->sessionid");
 
 			return $this->sessionid;
@@ -1063,7 +1059,6 @@ class Session
 		{
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__." ********* about to call session_destroy!");
 			session_unset();
-			//echo '<p>'.__METHOD__.": session_destroy() returned ".(session_destroy() ? 'true' : 'false')."</p>\n";
 			@session_destroy();
 			// we need to (re-)load the eGW session-handler, as session_destroy unloads custom session-handlers
 			if (function_exists('init_session_handler'))
@@ -1295,7 +1290,6 @@ class Session
 		{
 			self::$cookie_path = '/';
 		}
-		//echo "<p>cookie_path='self::$cookie_path', cookie_domain='self::$cookie_domain'</p>\n";
 
 		session_set_cookie_params(0, self::$cookie_path, self::$cookie_domain,
 			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
@@ -1534,7 +1528,7 @@ class Session
 		$password_md5 = $allow_password_md5 && preg_match('/^[a-f0-9]{32}$/',$password) ? $password : md5($password);
 
 		$hash = sha1(strtolower($user).$password_md5);
-		//echo "<p>".__METHOD__."('$user','$password',$allow_password_md5) sha1('".strtolower($user)."$password_md5')='$hash'</p>\n";
+
 		return $hash;
 	}
 
