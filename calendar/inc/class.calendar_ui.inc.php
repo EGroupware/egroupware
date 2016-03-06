@@ -186,7 +186,7 @@ class calendar_ui
 			$owner = trim($owner);
 			if (is_numeric($owner) && $GLOBALS['egw']->accounts->get_type($owner) == 'g')
 			{
-				foreach($GLOBALS['egw']->accounts->member($owner) as $member)
+				foreach($GLOBALS['egw']->accounts->members($owner) as $member)
 				{
 					$member = $member['account_id'];
 					if (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$member))

@@ -583,7 +583,7 @@ class calendar_uiviews extends calendar_ui
 			}
 		}
 		$content = array('view' => array());
-		
+
 		if ($weeks)
 		{
 			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
@@ -612,7 +612,7 @@ class calendar_uiviews extends calendar_ui
 			$search_params = $this->search_params;
 			$search_params['start'] = $week_start->format('ts');
 			$search_params['end'] = $week_end->format('ts');
-			
+
 			$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params)) +
 			array(
 				'id' => $week_start->format('Ymd')
@@ -625,7 +625,7 @@ class calendar_uiviews extends calendar_ui
 
 		// Get the actions
 		$home->setElementAttribute('view','actions',$this->get_actions());
-		
+
 		$home->exec(__METHOD__, $content);
 	}
 
@@ -2200,7 +2200,7 @@ class calendar_uiviews extends calendar_ui
 			}
 			elseif ($enum_groups && $GLOBALS['egw']->accounts->get_type($user) == 'g')	// groups
 			{
-				foreach((array) $GLOBALS['egw']->accounts->member($user) as $data)
+				foreach((array) $GLOBALS['egw']->accounts->members($user) as $data)
 				{
 					$user = $data['account_id'];
 					if ($this->bo->check_perms(EGW_ACL_READ | EGW_ACL_FREEBUSY,0,$user))

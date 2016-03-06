@@ -337,7 +337,7 @@ class calendar_bo
 		foreach(array_keys($event['participants']) as $uid)
 		{
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'g' &&
-				($members = $GLOBALS['egw']->accounts->member($uid)))
+				($members = $GLOBALS['egw']->accounts->members($uid)))
 			{
 				foreach($members as $member)
 				{
@@ -392,7 +392,7 @@ class calendar_bo
 			{
 				if ($no_enum_groups) continue;
 
-				$members = $GLOBALS['egw']->accounts->member($user);
+				$members = $GLOBALS['egw']->accounts->members($user);
 				if (is_array($members))
 				{
 					foreach($members as $member)
@@ -408,7 +408,7 @@ class calendar_bo
 			}
 			else	// for users we have to include all the memberships, to get the group-events
 			{
-				$memberships = $GLOBALS['egw']->accounts->membership($user);
+				$memberships = $GLOBALS['egw']->accounts->memberships($user);
 				if (is_array($memberships))
 				{
 					foreach($memberships as $group)
@@ -1693,7 +1693,7 @@ class calendar_bo
 		{
 			self::_list_cals_add($id,$users,$groups);
 		}
-		if (($memberships = $GLOBALS['egw']->accounts->membership($user)))
+		if (($memberships = $GLOBALS['egw']->accounts->memberships($user)))
 		{
 			foreach($memberships as $group_info)
 			{

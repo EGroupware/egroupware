@@ -759,7 +759,7 @@ class calendar_boupdate extends calendar_bo
 		foreach($to_notify as $userid => $statusid)
 		{
 			if (is_numeric($userid) && $GLOBALS['egw']->accounts->get_type($userid) == 'g' &&
-				($members = $GLOBALS['egw']->accounts->member($userid)))
+				($members = $GLOBALS['egw']->accounts->members($userid)))
 			{
 				foreach($members as $member)
 				{
@@ -2084,7 +2084,7 @@ class calendar_boupdate extends calendar_bo
 			// for groups we have to include the members
 			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
 			{
-				$members = $GLOBALS['egw']->accounts->member($user);
+				$members = $GLOBALS['egw']->accounts->members($user);
 				if (is_array($members))
 				{
 					foreach($members as $member)
@@ -2100,7 +2100,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			else	// for users we have to include all the memberships, to get the group-events
 			{
-				$memberships = $GLOBALS['egw']->accounts->membership($user);
+				$memberships = $GLOBALS['egw']->accounts->memberships($user);
 				if (is_array($memberships))
 				{
 					foreach($memberships as $group)
