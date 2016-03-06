@@ -1,13 +1,21 @@
 <?php
 /**
- * Addressbook - ADS Backend
+ * EGroupware API: Contacts ADS Backend
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
- * @package addressbook
+ * @package api
+ * @subpackage contacts
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+namespace EGroupware\Api\Contacts;
+
+use EGroupware\Api;
+
+// explicitly reference classes still in phpgwapi
+use accounts_ads;
 
 /**
  * Active directory backend for accounts (not yet AD contacts)
@@ -22,7 +30,7 @@
  * All values used to construct filters need to run through ldap::quote(),
  * to be save against LDAP query injection!!!
  */
-class addressbook_ads extends addressbook_ldap
+class Ads extends Ldap
 {
 	/**
 	 * LDAP searches only a limited set of attributes for performance reasons,
@@ -74,11 +82,13 @@ class addressbook_ads extends addressbook_ldap
 	/**
 	 * constructor of the class
 	 *
-	 * @param array $ldap_config=null default use from $GLOBALS['egw_info']['server']
-	 * @param resource $ds=null ldap connection to use
+	 * @param array $ldap_config =null default use from $GLOBALS['egw_info']['server']
+	 * @param resource $ds =null ldap connection to use
 	 */
 	function __construct(array $ldap_config=null, $ds=null)
 	{
+		if (false) parent::__construct ();	// quiten IDE warning, we are explicitly NOT calling parrent constructor!
+
 		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];
 
 		if ($ldap_config)
@@ -103,8 +113,8 @@ class addressbook_ads extends addressbook_ldap
 		{
 			$this->connect();
 		}
-		$this->ldapServerInfo = ldapserverinfo::get($this->ds, $this->ldap_config['ads_host']);
-		$this->is_samba4 = $this->ldapServerInfo->serverType == SAMBA4_LDAPSERVER;
+		$this->ldapServerInfo = Api\Ldap\ServerInfo::get($this->ds, $this->ldap_config['ads_host']);
+		$this->is_samba4 = $this->ldapServerInfo->serverType == Api\Ldap\ServerInfo::SAMBA4;
 
 		// AD seems to use user, instead of inetOrgPerson
 		unset($this->schema2egw['posixaccount']);
@@ -118,22 +128,24 @@ class addressbook_ads extends addressbook_ldap
 		unset($this->schema2egw['user']['n_fileas']);
 		unset($this->schema2egw['inetorgperson']);
 
-		foreach($this->schema2egw as $schema => $attributes)
+		foreach($this->schema2egw as $attributes)
 		{
 			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
 		}
 		$this->all_attributes = array_values(array_unique($this->all_attributes));
 
-		$this->charset = translation::charset();
+		$this->charset = Api\Translation::charset();
 	}
 
 	/**
 	 * connect to LDAP server
 	 *
-	 * @param boolean $admin=false true (re-)connect with admin not user credentials, eg. to modify accounts
+	 * @param boolean $admin =false true (re-)connect with admin not user credentials, eg. to modify accounts
 	 */
 	function connect($admin=false)
 	{
+		unset($admin);	// not used, but required by function signature
+
 		$this->ds = $this->accounts_ads->ldap_connection();
 	}
 
@@ -159,21 +171,21 @@ class addressbook_ads extends addressbook_ldap
 	/**
 	 * reads contact data
 	 *
-	 * @param string/array $contact_id contact_id or array with values for id or account_id
+	 * @param string/array $_contact_id contact_id or array with values for id or account_id
 	 * @return array/boolean data if row could be retrived else False
 	*/
-	function read($contact_id)
+	function read($_contact_id)
 	{
-		if (is_array($contact_id) && isset($contact_id['account_id']) ||
-			!is_array($contact_id) && substr($contact_id,0,8) == 'account:')
+		if (is_array($_contact_id) && isset($_contact_id['account_id']) ||
+			!is_array($_contact_id) && substr($_contact_id,0,8) == 'account:')
 		{
-			$account_id = (int)(is_array($contact_id) ? $contact_id['account_id'] : substr($contact_id,8));
-			$contact_id = $GLOBALS['egw']->accounts->id2name($account_id, 'person_id');
+			$account_id = (int)(is_array($_contact_id) ? $_contact_id['account_id'] : substr($_contact_id,8));
+			$_contact_id = $GLOBALS['egw']->accounts->id2name($account_id, 'person_id');
 		}
-		$contact_id = !is_array($contact_id) ? $contact_id :
-			(isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid']);
+		$contact_id = !is_array($_contact_id) ? $_contact_id :
+			(isset ($_contact_id['id']) ? $_contact_id['id'] : $_contact_id['uid']);
 
-		$rows = $this->_searchLDAP($this->allContactsDN, $filter=$this->id_filter($contact_id), $this->all_attributes, ADDRESSBOOK_ALL);
+		$rows = $this->_searchLDAP($this->allContactsDN, $filter=$this->id_filter($contact_id), $this->all_attributes, Ldap::ALL);
 		//error_log(__METHOD__."('$contact_id') _searchLDAP($this->allContactsDN, '$filter',...)=".array2string($rows));
 		return $rows ? $rows[0] : false;
 	}
@@ -214,5 +226,4 @@ class addressbook_ads extends addressbook_ldap
 
 		parent::sanitize_update($ldapContact);
 	}
-
 }

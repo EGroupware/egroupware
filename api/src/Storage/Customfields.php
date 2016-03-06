@@ -10,7 +10,9 @@
  * @version $Id$
  */
 
-namespace EGroupware\Api;
+namespace EGroupware\Api\Storage;
+
+use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use common;
@@ -28,7 +30,7 @@ class Customfields implements \IteratorAggregate
 	/**
 	 * Reference to the global db class
 	 *
-	 * @var Db
+	 * @var Api\Db
 	 */
 	static protected $db;
 
@@ -94,13 +96,13 @@ class Customfields implements \IteratorAggregate
 	 */
 	function getIterator()
 	{
-		return new Db\CallbackIterator($this->iterator, function($_row)
+		return new Api\Db\CallbackIterator($this->iterator, function($_row)
 		{
-			$row = Db::strip_array_keys($_row, 'cf_');
+			$row = Api\Db::strip_array_keys($_row, 'cf_');
 			$row['private'] = $row['private'] ? explode(',', $row['private']) : array();
 			$row['type2'] = $row['type2'] ? explode(',', $row['type2']) : array();
 			$row['values'] = json_decode($row['values'], true);
-			$row['needed'] = Db::from_bool($row['needed']);
+			$row['needed'] = Api\Db::from_bool($row['needed']);
 
 			return $row;
 		}, array(), function($row)
@@ -137,18 +139,18 @@ class Customfields implements \IteratorAggregate
 	public static function get($app, $all_private_too=false, $only_type2=null, egw_db $db=null)
 	{
 		$cache_key = $app.':'.($all_private_too?'all':$GLOBALS['egw_info']['user']['account_id']).':'.$only_type2;
-		$cfs = Cache::getInstance(__CLASS__, $cache_key);
+		$cfs = Api\Cache::getInstance(__CLASS__, $cache_key);
 
 		if (!isset($cfs))
 		{
 			$cfs = iterator_to_array(new Customfields($app, $all_private_too, $only_type2, 0, null, $db));
 
-			Cache::setInstance(__CLASS__, $cache_key, $cfs);
-			$cached = Cache::getInstance(__CLASS__, $app);
+			Api\Cache::setInstance(__CLASS__, $cache_key, $cfs);
+			$cached = Api\Cache::getInstance(__CLASS__, $app);
 			if (!in_array($cache_key, (array)$cached))
 			{
 				$cached[] = $cache_key;
-				Cache::setInstance(__CLASS__, $app, $cached);
+				Api\Cache::setInstance(__CLASS__, $app, $cached);
 			}
 		}
 		//error_log(__METHOD__."('$app', $all_private_too, '$only_type2') returning fields: ".implode(', ', array_keys($cfs)));
@@ -224,7 +226,7 @@ class Customfields implements \IteratorAggregate
 			case 'date-time':
 				if ($value)
 				{
-					$value = DateTime::to($value, $field['type'] == 'date' ? true : '');
+					$value = Api\DateTime::to($value, $field['type'] == 'date' ? true : '');
 				}
 				break;
 
@@ -461,13 +463,13 @@ class Customfields implements \IteratorAggregate
 	 */
 	protected static function invalidate_cache($app)
 	{
-		if (($cached = Cache::getInstance(__CLASS__, $app)))
+		if (($cached = Api\Cache::getInstance(__CLASS__, $app)))
 		{
 			foreach($cached as $key)
 			{
-				Cache::unsetInstance(__CLASS__, $key);
+				Api\Cache::unsetInstance(__CLASS__, $key);
 			}
-			Cache::unsetInstance(__CLASS__, $app);
+			Api\Cache::unsetInstance(__CLASS__, $app);
 		}
 	}
 
@@ -532,7 +534,7 @@ class Customfields implements \IteratorAggregate
 	/**
 	 * Initialise our db
 	 *
-	 * We use a reference here (no clone), as we no longer use Db::row() or Db::next_record()!
+	 * We use a reference here (no clone), as we no longer use Api\Db::row() or Api\Db::next_record()!
 	 *
 	 */
 	public static function init_static()

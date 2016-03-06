@@ -1138,9 +1138,9 @@ window.egw_LAB.wait(function() {
 						if ($contact['owner'] ||	// regular contact or
 							empty($contact['account_id']) ||	// accounts without account_id
 							// already deleted account (should no longer happen, but needed to allow for cleanup)
-							$contact['tid'] == addressbook_so::DELETED_TYPE)
+							$contact['tid'] == self::DELETED_TYPE)
 						{
-							$Ok = $this->delete($id, $contact['tid'] != addressbook_so::DELETED_TYPE && $contact['account_id']);
+							$Ok = $this->delete($id, $contact['tid'] != self::DELETED_TYPE && $contact['account_id']);
 						}
 						// delete single account --> redirect to admin
 						elseif (count($checked) == 1 && $contact['account_id'])
@@ -1684,7 +1684,7 @@ window.egw_LAB.wait(function() {
 				{
 					$row['class'] .= 'rowAccount rowNoDelete ';
 				}
-				elseif (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
+				elseif (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == self::DELETED_TYPE))
 				{
 					$row['class'] .= 'rowNoDelete ';
 				}
@@ -2274,7 +2274,7 @@ window.egw_LAB.wait(function() {
 		);
 
 		// Links for deleted entries
-		if($content['tid'] == addressbook_so::DELETED_TYPE)
+		if($content['tid'] == self::DELETED_TYPE)
 		{
 			$content['link_to']['show_deleted'] = true;
 			if(!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge')
@@ -2604,7 +2604,7 @@ window.egw_LAB.wait(function() {
 			'to_id'  => $content['id'],
 		);
 		// Links for deleted entries
-		if($content['tid'] == addressbook_so::DELETED_TYPE)
+		if($content['tid'] == self::DELETED_TYPE)
 		{
 			$content['link_to']['show_deleted'] = true;
 		}

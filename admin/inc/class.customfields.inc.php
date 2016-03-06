@@ -1,6 +1,6 @@
 <?php
 /**
- * eGgroupWare admin - UI for adding custom fields
+ * EGgroupware admin - UI for adding custom fields
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -9,6 +9,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * Customfields class -  manages customfield definitions in egw_config table
@@ -103,10 +105,10 @@ class customfields
 	{
 		if (($this->appname = $appname))
 		{
-			$this->fields = egw_customfields::get($this->appname,true);
-			$this->content_types = config::get_content_types($this->appname);
+			$this->fields = Api\Storage\Customfields::get($this->appname,true);
+			$this->content_types = Api\Config::get_content_types($this->appname);
 		}
-		$this->so = new so_sql('phpgwapi','egw_customfields',null,'',true);
+		$this->so = new Api\Storage\Base('phpgwapi','egw_customfields',null,'',true);
 	}
 
 	/**
@@ -121,7 +123,7 @@ class customfields
 		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || $content['use_private'];
 
 		// Read fields, constructor doesn't always know appname
-		$this->fields = egw_customfields::get($this->appname,true);
+		$this->fields = Api\Storage\Customfields::get($this->appname,true);
 
 		$this->tmpl = new etemplate_new();
 		$this->tmpl->read('admin.customfields');
@@ -135,7 +137,7 @@ class customfields
 		{
 			if(count($this->content_types) == 0)
 			{
-				$this->content_types = config::get_content_types($this->appname);
+				$this->content_types = Api\Config::get_content_types($this->appname);
 			}
 			if (count($this->content_types)==0)
 			{
@@ -152,7 +154,7 @@ class customfields
 			}
 			elseif($content['content_types']['create'])
 			{
-				if($new_type = $this->create_content_type($content))
+				if(($new_type = $this->create_content_type($content)))
 				{
 					$content['content_types']['types'] = $this->content_type = $new_type;
 				}
@@ -214,7 +216,6 @@ class customfields
 
 			$content['type_template'] = $this->appname . '.admin.types';
 			$content['content_types']['appname'] = $this->appname;
-			$content_types = array_keys($this->content_types);
 
 			$content['content_type_options'] = $this->content_types[$this->content_type]['options'];
 			$content['content_type_options']['type'] = $this->types2[$this->content_type];
@@ -251,6 +252,7 @@ class customfields
 		);
 
 		// Allow extending app a change to change content before display
+		$readonlys = null;
 		static::app_index($content, $sel_options, $readonlys, $preserve);
 
 		// Make sure app css gets loaded, extending app might cause et2 to miss it
@@ -292,7 +294,7 @@ class customfields
 		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || $content['use_private'];
 
 		// Read fields, constructor doesn't always know appname
-		$this->fields = egw_customfields::get($this->appname,true);
+		$this->fields = Api\Storage\Customfields::get($this->appname,true);
 
 		// Update based on info returned from template
 		if (is_array($content))
@@ -328,8 +330,8 @@ class customfields
 						{
 							foreach(explode("\n",trim($content['cf_values'])) as $line)
 							{
-								list($var,$value) = explode('=',trim($line),2);
-								$var = trim($var);
+								list($var_raw,$value) = explode('=',trim($line),2);
+								$var = trim($var_raw);
 								$values[$var] = trim($value)==='' ? $var : $value;
 							}
 						}
@@ -343,10 +345,10 @@ class customfields
 							$update_content[substr($key,3)] = $value;
 						}
 					}
-					egw_customfields::update($update_content);
+					Api\Storage\Customfields::update($update_content);
 					if(!$cf_id)
 					{
-						$this->fields = egw_customfields::get($this->appname,true);
+						$this->fields = Api\Storage\Customfields::get($this->appname,true);
 						$cf_id = (int)$this->fields[$content['cf_name']]['id'];
 					}
 					egw_framework::refresh_opener('Saved', 'admin', $cf_id, 'edit');
@@ -415,7 +417,7 @@ class customfields
 		{
 			if(count($this->content_types) == 0)
 			{
-				$this->content_types = config::get_content_types($this->appname);
+				$this->content_types = Api\Config::get_content_types($this->appname);
 			}
 			if (count($this->content_types)==0)
 			{
@@ -455,6 +457,7 @@ class customfields
 	 */
 	protected function app_index(&$content, &$sel_options, &$readonlys)
 	{
+		unset($content, $sel_options, $readonlys);	// not used, as this is a stub
 		// This is just a stub.
 	}
 
@@ -493,78 +496,6 @@ class customfields
 		);
 		return $actions;
 	}
-
-	function update_fields(&$content)
-	{
-		foreach($content['fields'] as $field)
-		{
-			$name = trim($field['name']);
-			$old_name = $field['old_name'];
-
-			if (!empty($delete) && $delete == $old_name)
-			{
-				unset($this->fields[$old_name]);
-				continue;
-			}
-			if (isset($field['old_name']))
-			{
-				if (empty($name))	// empty name not allowed
-				{
-					$content['error_msg'] = lang('Name must not be empty !!!');
-					$name = $old_name;
-				}
-				if (!empty($name) && $old_name != $name)	// renamed
-				{
-					unset($this->fields[$old_name]);
-				}
-			}
-			elseif (empty($name))		// new item and empty ==> ignore it
-			{
-				continue;
-			}
-			$values = array();
-			if (!empty($field['values']))
-			{
-				foreach(explode("\n",$field['values']) as $line)
-				{
-					list($var,$value) = explode('=',trim($line),2);
-					$var = trim($var);
-					$values[$var] = empty($value) ? $var : $value;
-				}
-			}
-			$this->fields[$name] = array(
-				'type'  => $field['type'],
-				'type2'	=> $field['type2'],
-				'label' => empty($field['label']) ? $name : $field['label'],
-				'help'  => $field['help'],
-				'values'=> $values,
-				'len'   => $field['len'],
-				'rows'  => (int)$field['rows'],
-				'order' => (int)$field['order'],
-				'private' => $field['private'],
-				'needed' => $field['needed'],
-			);
-			if(!$this->fields[$name]['type2'] && $this->manage_content_types)
-			{
-				$this->fields[$name]['type2'] = (string)0;
-			}
-		}
-		if (!function_exists('sort_by_order'))
-		{
-			function sort_by_order($arr1,$arr2)
-			{
-				return $arr1['order'] - $arr2['order'];
-			}
-		}
-		uasort($this->fields,sort_by_order);
-
-		$n = 0;
-		foreach($this->fields as $name => $data)
-		{
-			$this->fields[$name]['order'] = ($n += 10);
-		}
-	}
-
 
 	function update(&$content)
 	{
@@ -627,7 +558,7 @@ class customfields
 		}
 		else
 		{
-			foreach($this->content_types as $letter => $type)
+			foreach($this->content_types as $type)
 			{
 				if($type['name'] == $new_name)
 				{
@@ -640,8 +571,8 @@ class customfields
 			{
 				if (!$this->content_types[chr($i)] &&
 					// skip letter of deleted type for addressbook content-types, as it gives SQL error
-					// content-type are lowercase, addressbook_so::DELETED_TYPE === 'D', but DB is case-insensitive
-					($this->appname !== 'addressbook' || chr($i) !== strtolower(addressbook_so::DELETED_TYPE)))
+					// content-type are lowercase, Api\Contacts::DELETED_TYPE === 'D', but DB is case-insensitive
+					($this->appname !== 'addressbook' || chr($i) !== strtolower(Api\Contacts::DELETED_TYPE)))
 				{
 					$new_type = chr($i);
 					break;
@@ -664,32 +595,32 @@ class customfields
 		$config->value('types',$this->content_types);
 		$config->save_repository();
 
-		egw_customfields::save($this->appname, $this->fields);
+		Api\Storage\Customfields::save($this->appname, $this->fields);
 	}
 
 	/**
 	* get customfields of using application
 	*
-	* @deprecated use egw_customfields::get() direct, no need to instanciate this UI class
+	* @deprecated use Api\Storage\Customfields::get() direct, no need to instanciate this UI class
 	* @author Cornelius Weiss
-	* @param boolean $all_private_too=false should all the private fields be returned too
+	* @param boolean $all_private_too =false should all the private fields be returned too
 	* @return array with customfields
 	*/
 	function get_customfields($all_private_too=false)
 	{
-		return egw_customfields::get($this->appname,$all_private_too);
+		return Api\Storage\Customfields::get($this->appname,$all_private_too);
 	}
 
 	/**
 	* get_content_types of using application
 	*
-	* @deprecated use config::get_content_types() direct, no need to instanciate this UI class
+	* @deprecated use Api\Config::get_content_types() direct, no need to instanciate this UI class
 	* @author Cornelius Weiss
 	* @return array with content-types
 	*/
 	function get_content_types()
 	{
-		return config::get_content_types($this->appname);
+		return Api\Config::get_content_types($this->appname);
 	}
 
 	/**

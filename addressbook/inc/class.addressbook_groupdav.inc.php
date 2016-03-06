@@ -7,9 +7,11 @@
  * @package addressbook
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * EGroupware: GroupDAV access: addressbook handler
@@ -953,7 +955,7 @@ class addressbook_groupdav extends groupdav_handler
 		if (is_null($non_deleted_tids))
 		{
 			$non_deleted_tids = $this->bo->content_types;
-			unset($non_deleted_tids[addressbook_so::DELETED_TYPE]);
+			unset($non_deleted_tids[Api\Contacts::DELETED_TYPE]);
 			$non_deleted_tids = array_keys($non_deleted_tids);
 		}
 		$contact = $this->bo->read(array(self::$path_attr => $id, 'tid' => $non_deleted_tids));
@@ -1000,7 +1002,7 @@ class addressbook_groupdav extends groupdav_handler
 			$contact = null;
 		}
 
-		if ($contact && $contact['tid'] == addressbook_so::DELETED_TYPE)
+		if ($contact && $contact['tid'] == Api\Contacts::DELETED_TYPE)
 		{
 			$contact = null;	// handle deleted events, as not existing (404 Not Found)
 		}

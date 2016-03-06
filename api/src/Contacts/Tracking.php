@@ -1,19 +1,27 @@
 <?php
 /**
- * Addressbook - history and notifications
+ * EGroupware API - Contacts history and notifications
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @package addressbook
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package api
+ * @subpackage contacts
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+namespace EGroupware\Api\Contacts;
+
+use EGroupware\Api;
+
+// explicitly reference classes still in phpgwapi
+use common;
+
 /**
- * Addressbook - tracking object
+ * Contacts history and notifications
  */
-class addressbook_tracking extends bo_tracking
+class Tracking extends Api\Storage\Tracking
 {
 	/**
 	 * Application we are tracking (required!)
@@ -64,10 +72,10 @@ class addressbook_tracking extends bo_tracking
 	/**
 	 * Constructor
 	 *
-	 * @param addressbook_bo $bocontacts
+	 * @param Api\Contacts $bocontacts
 	 * @return tracker_tracking
 	 */
-	function __construct(addressbook_bo $bocontacts)
+	function __construct(Api\Contacts $bocontacts)
 	{
 		$this->contacts = $bocontacts;
 
@@ -93,17 +101,19 @@ class addressbook_tracking extends bo_tracking
 	/**
 	 * Get a notification-config value
 	 *
-	 * @param string $what
+	 * @param string $name
 	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
 	 *  - 'lang' string lang code for copy mail
 	 *  - 'sender' string send email address
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param array $old =null old/last state of the entry or null for a new entry
 	 * @return mixed
 	 */
 	function get_config($name,$data,$old=null)
 	{
-		//echo "<p>addressbook_tracking::get_config($name,".print_r($data,true).",...)</p>\n";
+		unset($old);	// not used, but required by function signature
+
+		//echo "<p>".__METHOD__."($name,".print_r($data,true).",...)</p>\n";
 		switch($name)
 		{
 			case 'copy':
@@ -134,9 +144,9 @@ class addressbook_tracking extends bo_tracking
 	 *
 	 * @internal use only track($data,$old)
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
-	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param array $old =null old/last state of the entry or null for a new entry
+	 * @param boolean $deleted =null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $changed_fields =null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @return int number of log-entries made
 	 */
 	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
@@ -180,6 +190,8 @@ class addressbook_tracking extends bo_tracking
 	 */
 	protected function get_message($data,$old,$receiver=null)
 	{
+		unset($receiver);	// not used, but required by function signature
+
 		if (!$data['modified'] || !$old)
 		{
 			return lang('New contact submitted by %1 at %2',
@@ -196,12 +208,14 @@ class addressbook_tracking extends bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param boolean $deleted =null can be set to true to let the tracking know the item got deleted or undelted
 	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string
 	 */
 	protected function get_subject($data,$old,$deleted=null,$receiver=null)
 	{
+		unset($old, $deleted, $receiver);	// not used, but required by function signature
+
 		if ($data['is_contactform'])
 		{
 			$prefix = ($data['subject_contactform'] ? $data['subject_contactform'] : lang('Contactform')).': ';
@@ -218,6 +232,8 @@ class addressbook_tracking extends bo_tracking
 	 */
 	function get_details($data,$receiver=null)
 	{
+		unset($receiver);	// not used, but required by function signature
+
 		foreach($this->contacts->contact_fields as $name => $label)
 		{
 			if (!$data[$name] && $name != 'owner') continue;

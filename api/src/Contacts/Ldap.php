@@ -1,20 +1,23 @@
 <?php
 /**
- * Addressbook - LDAP Backend
+ * EGroupware API: Contacts LDAP Backend
  *
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
  * @author Lars Kneschke <l.kneschke-AT-metaways.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @package addressbook
+ * @package api
+ * @subpackage contacts
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
-define('ADDRESSBOOK_ALL',0);
-define('ADDRESSBOOK_ACCOUNTS',1);
-define('ADDRESSBOOK_PERSONAL',2);
-define('ADDRESSBOOK_GROUP',3);
+namespace EGroupware\Api\Contacts;
+
+use EGroupware\Api;
+
+// explicitly reference classes still in phpgwapi
+use common;	// randomstring
 
 /**
  * LDAP Backend for contacts, compatible with vars and parameters of eTemplate's so_sql.
@@ -23,8 +26,14 @@ define('ADDRESSBOOK_GROUP',3);
  * All values used to construct filters need to run through ldap::quote(),
  * to be save against LDAP query injection!!!
  */
-class addressbook_ldap
+class Ldap
 {
+
+	const ALL = 0;
+	const ACCOUNTS = 1;
+	const PERSONAL = 2;
+	const GROUP = 3;
+
 	var $data;
 
 	/**
@@ -298,7 +307,7 @@ class addressbook_ldap
 		}
 		$this->all_attributes = array_values(array_unique($this->all_attributes));
 
-		$this->charset = translation::charset();
+		$this->charset = Api\Translation::charset();
 	}
 
 	/**
@@ -414,7 +423,7 @@ class addressbook_ldap
 			$filter = $this->id_filter($contact_id);
 		}
 		$rows = $this->_searchLDAP($this->allContactsDN,
-			$filter, $this->all_attributes, ADDRESSBOOK_ALL, array('_posixaccount2egw'));
+			$filter, $this->all_attributes, self::ALL, array('_posixaccount2egw'));
 
 		return $rows ? $rows[0] : false;
 	}
@@ -508,7 +517,7 @@ class addressbook_ldap
 
 		if(empty($contactUID))
 		{
-			$ldapContact[$this->dn_attribute] = $this->data[$this->contacts_id] = $contactUID = md5($GLOBALS['egw']->common->randomstring(15));
+			$ldapContact[$this->dn_attribute] = $this->data[$this->contacts_id] = $contactUID = md5(common::randomstring(15));
 		}
 		//error_log(__METHOD__."() contactUID='$contactUID', isUpdate=".array2string($isUpdate).", oldContactInfo=".array2string($oldContactInfo));
 		// add for all supported objectclasses the objectclass and it's attributes
@@ -537,7 +546,7 @@ class addressbook_ldap
 				{
 					// dont convert the (binary) jpegPhoto!
 					$ldapContact[$ldapFieldName] = $ldapFieldName == 'jpegphoto' ? $data[$egwFieldName] :
-						translation::convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
+						Api\Translation::convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
 				}
 				elseif($isUpdate && isset($data[$egwFieldName]))
 				{
@@ -593,7 +602,7 @@ class addressbook_ldap
 			{
 				$result = ldap_read($this->ds, $dn, 'objectclass=*');
 				$entries = ldap_get_entries($this->ds, $result);
-				$oldContact = ldap::result2array($entries[0]);
+				$oldContact = Api\Ldap::result2array($entries[0]);
 				unset($oldContact['dn']);
 
 				$newContact = $oldContact;
@@ -681,7 +690,7 @@ class addressbook_ldap
 
 		foreach($keys as $entry)
 		{
-			$entry = ldap::quote(is_array($entry) ? $entry['id'] : $entry);
+			$entry = Api\Ldap::quote(is_array($entry) ? $entry['id'] : $entry);
 			if(($result = ldap_search($this->ds, $this->allContactsDN,
 				"(|(entryUUID=$entry)(uid=$entry))", $attributes)))
 			{
@@ -759,33 +768,33 @@ class addressbook_ldap
 		{
 			if (!($accountName = $GLOBALS['egw']->accounts->id2name($filter['owner']))) return false;
 
-			$searchDN = 'cn='. ldap::quote(strtolower($accountName)) .',';
+			$searchDN = 'cn='. Api\Ldap::quote(strtolower($accountName)) .',';
 
 			if ($filter['owner'] < 0)
 			{
 				$searchDN .= $this->sharedContactsDN;
-				$addressbookType = ADDRESSBOOK_GROUP;
+				$addressbookType = self::GROUP;
 			}
 			else
 			{
 				$searchDN .= $this->personalContactsDN;
-				$addressbookType = ADDRESSBOOK_PERSONAL;
+				$addressbookType = self::PERSONAL;
 			}
 		}
 		elseif (!isset($filter['owner']))
 		{
 			$searchDN = $this->allContactsDN;
-			$addressbookType = ADDRESSBOOK_ALL;
+			$addressbookType = self::ALL;
 		}
 		else
 		{
 			$searchDN = $this->accountContactsDN;
-			$addressbookType = ADDRESSBOOK_ACCOUNTS;
+			$addressbookType = self::ACCOUNTS;
 		}
 		// create the search filter
 		switch($addressbookType)
 		{
-			case ADDRESSBOOK_ACCOUNTS:
+			case self::ACCOUNTS:
 				$objectFilter = $this->accountsFilter;
 				break;
 			default:
@@ -813,8 +822,8 @@ class addressbook_ldap
 				{
 					if(($ldapSearchKey = $mapping[$egwSearchKey]))
 					{
-						$searchString = translation::convert($searchValue,$this->charset,'utf-8');
-						$searchFilter .= '('.$ldapSearchKey.'='.$wildcard.ldap::quote($searchString).$wildcard.')';
+						$searchString = Api\Translation::convert($searchValue,$this->charset,'utf-8');
+						$searchFilter .= '('.$ldapSearchKey.'='.$wildcard.Api\Ldap::quote($searchString).$wildcard.')';
 						break;
 					}
 				}
@@ -915,7 +924,7 @@ class addressbook_ldap
 					}
 					elseif ($value)
 					{
-						$filters .= '(uidNumber='.ldap::quote($value).')';
+						$filters .= '(uidNumber='.Api\Ldap::quote($value).')';
 
 					}
 					break;
@@ -935,9 +944,9 @@ class addressbook_ldap
 						if (count($cats) > 1) $filters .= '(|';
 						foreach($cats as $cat)
 						{
-							$catName = translation::convert(
+							$catName = Api\Translation::convert(
 								$GLOBALS['egw']->categories->id2name($cat),$this->charset,'utf-8');
-							$filters .= '(category='.ldap::quote($catName).')';
+							$filters .= '(category='.Api\Ldap::quote($catName).')';
 						}
 						if (count($cats) > 1) $filters .= ')';
 					}
@@ -965,13 +974,13 @@ class addressbook_ldap
 							{
 								// todo: value = "!''"
 								$filters .= '('.$mapping[$key].'='.($value === "!''" ? '*' :
-									ldap::quote(translation::convert($value,$this->charset,'utf-8'))).')';
+									Api\Ldap::quote(Api\Translation::convert($value,$this->charset,'utf-8'))).')';
 								break;
 							}
 						}
 					}
 					// filter for letter-search
-					elseif (preg_match("/^([^ ]+) ".preg_quote($GLOBALS['egw']->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE])." '(.*)%'$/",$value,$matches))
+					elseif (preg_match("/^([^ ]+) ".preg_quote($GLOBALS['egw']->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE])." '(.*)%'$/",$value,$matches))
 					{
 						list(,$name,$value) = $matches;
 						if (strpos($name,'.') !== false) list(,$name) = explode('.',$name);
@@ -979,8 +988,8 @@ class addressbook_ldap
 						{
 							if (isset($mapping[$name]))
 							{
-								$filters .= '('.$mapping[$name].'='.ldap::quote(
-									translation::convert($value,$this->charset,'utf-8')).'*)';
+								$filters .= '('.$mapping[$name].'='.Api\Ldap::quote(
+									Api\Translation::convert($value,$this->charset,'utf-8')).'*)';
 								break;
 							}
 						}
@@ -1017,7 +1026,7 @@ class addressbook_ldap
 
 		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype)");
 
-		if($_addressbooktype == ADDRESSBOOK_ALL || $_ldapContext == $this->allContactsDN)
+		if($_addressbooktype == self::ALL || $_ldapContext == $this->allContactsDN)
 		{
 			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
 		}
@@ -1048,7 +1057,7 @@ class addressbook_ldap
 				{
 					if(!empty($entry[$ldapFieldName][0]) && !is_int($egwFieldName) && !isset($contact[$egwFieldName]))
 					{
-						$contact[$egwFieldName] = translation::convert($entry[$ldapFieldName][0],'utf-8');
+						$contact[$egwFieldName] = Api\Translation::convert($entry[$ldapFieldName][0],'utf-8');
 					}
 				}
 				$objectclass2egw = '_'.$objectclass.'2egw';
@@ -1206,7 +1215,7 @@ class addressbook_ldap
 			$ldapContact['category'] = array();
 			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat)
 			{
-				$ldapContact['category'][] = translation::convert(
+				$ldapContact['category'][] = Api\Translation::convert(
 					ExecMethod('phpgwapi.categories.id2name',$cat),$this->charset,'utf-8');
 			}
 		}
@@ -1217,7 +1226,7 @@ class addressbook_ldap
 		{
 			if($value != '$, $$$')
 			{
-				$ldapContact[$attr] = translation::convert($value,$this->charset,'utf-8');
+				$ldapContact[$attr] = Api\Translation::convert($value,$this->charset,'utf-8');
 			}
 			elseif($isUpdate)
 			{
@@ -1421,6 +1430,6 @@ class addressbook_ldap
 	 */
 	function change_owner($account_id,$new_owner)
 	{
-		error_log("so_ldap::change_owner($account_id,$new_owner) not yet implemented");
+		error_log(__METHOD__."($account_id,$new_owner) not yet implemented");
 	}
 }

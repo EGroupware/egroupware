@@ -228,13 +228,13 @@ class Config
 	 * @param string $app
 	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
-	 * @deprecated use Api\Customfields::get()
+	 * @deprecated use Api\Storage\Customfields::get()
 	 * @return array with customfields
 	 */
 	static function get_customfields($app, $all_private_too=false, $only_type2=null)
 	{
-		//error_log(__METHOD__."('$app', $all_private_too, $only_type2) deprecated, use Customfields::get() in ".  function_backtrace());
-		return Customfields::get($app, $all_private_too, $only_type2);
+		//error_log(__METHOD__."('$app', $all_private_too, $only_type2) deprecated, use Storage\Customfields::get() in ".  function_backtrace());
+		return Storage\Customfields::get($app, $all_private_too, $only_type2);
 	}
 
 	/**

@@ -1,20 +1,23 @@
 <?php
 /**
- * Addressbook - Univention Backend
+ * EGroupware API: Contacts Univention Backend
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
- * @package addressbook
+ * @package api
+ * @subpackage contacts
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+namespace EGroupware\Api\Contacts;
 
 /**
  * Univention backend for addressbook
  *
  * Different mail attribute is only difference to LDAP backend
  */
-class addressbook_univention extends addressbook_ldap
+class Univention extends Ldap
 {
 	function __construct($ldap_config = null, $ds = null)
 	{

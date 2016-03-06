@@ -1,15 +1,16 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware Addressbook
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package importexport
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id: $
+ * @version $Id$
  */
 
+use EGroupware\Api;
 
 /**
  * class import_csv for addressbook
@@ -29,8 +30,10 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	private $bocontacts;
 
 	/**
-	* For figuring out if a contact has changed
-	*/
+	 * For figuring out if a contact has changed
+	 *
+	 * @var Api\Contacts\Tracking
+	 */
 	protected $tracking;
 
 	/**
@@ -48,10 +51,10 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	public function init(importexport_definition &$_definition ) {
 
 		// fetch the addressbook bo
-		$this->bocontacts = new addressbook_bo();
+		$this->bocontacts = new Api\Contacts();
 
 		// Get the tracker for changes
-		$this->tracking = new addressbook_tracking($this->bocontacts);
+		$this->tracking = new Api\Contacts\Tracking($this->bocontacts);
 
 		$this->lookups = array(
 			'tid' => array('n'=>'contact')
@@ -138,10 +141,10 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		// Also handle categories in their own field
 		$record_array = $record->get_record_array();
 		$more_categories = array();
-		foreach($this->definition->plugin_options['field_mapping'] as $number => $field_name) {
+		foreach($this->definition->plugin_options['field_mapping'] as $field_name) {
 			if(!array_key_exists($field_name, $record_array) ||
 				substr($field_name,0,3) != 'cat' || !$record->$field_name || $field_name == 'cat_id') continue;
-			list($cat, $cat_id) = explode('-', $field_name);
+			list(, $cat_id) = explode('-', $field_name);
 			if(is_numeric($record->$field_name) && $record->$field_name != 1) {
 				// Column has a single category ID
 				$more_categories[] = $record->$field_name;
@@ -175,7 +178,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 						if($record_array[$condition['string']]) {
 							$searchcondition = array( $condition['string'] => $record_array[$condition['string']]);
 							// if we use account_id for the condition, we need to set the owner for filtering, as this
-							// enables addressbook_so to decide what backend is to be used
+							// enables Api\Contacts\Storage to decide what backend is to be used
 							if ($condition['string']=='account_id') $searchcondition['owner']=0;
 							$contacts = $this->bocontacts->search(
 								//array( $condition['string'] => $record[$condition['string']],),
@@ -204,7 +207,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 						break;
 					case 'equal':
 						// Match on field
-						$result = $this->equal($record, $condition, $matches);
+						$result = $this->equal($record, $condition);
 						if($result)
 						{
 							// Apply true action to any matching records found
@@ -270,7 +273,8 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 				$old = $this->bocontacts->read($_data['id']);
 				// if we get countrycodes as countryname, try to translate them -> the rest should be handled by bo classes.
 				foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
-					if (strlen(trim($_data[$c_prefix.'countryname']))==2) $_data[$c_prefix.'countryname'] = $GLOBALS['egw']->country->get_full_name(trim($_data[$c_prefix.'countryname']),$translated=true);
+					if (strlen(trim($_data[$c_prefix.'countryname']))==2)
+						$_data[$c_prefix.'countryname'] = $GLOBALS['egw']->country->get_full_name(trim($_data[$c_prefix.'countryname']), true);
 				}
 				// Don't change a user account into a contact
 				if($old['owner'] == 0) {
@@ -288,7 +292,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 				} else {
 					//error_log(__METHOD__.__LINE__.array2string($changed).' Old:'.$old['adr_one_countryname'].' ('.$old['adr_one_countrycode'].') New:'.$_data['adr_one_countryname'].' ('.$_data['adr_one_countryname'].')');
 				}
-				
+
 				// Make sure n_fn gets updated
 				unset($_data['n_fn']);
 
@@ -320,7 +324,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 				}
 			default:
 				throw new egw_exception('Unsupported action: '. $_action);
-			
+
 		}
 	}
 
@@ -412,4 +416,3 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
                 return $this->results;
         }
 } // end of iface_export_plugin
-?>

@@ -1,19 +1,27 @@
 <?php
 /**
- * EGroupware : Addressbook - SQL backend
+ * EGroupware API: Contacts - SQL storage
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @package addressbook
- * @copyright (c) 2006-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package api
+ * @subpackage contacts
+ * @copyright (c) 2006-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+namespace EGroupware\Api\Contacts;
+
+use EGroupware\Api;
+
+// explicitly reference classes still in phpgwapi
+use common;	// common::generate_uid
+
 /**
- * SQL storage object of the adressbook
+ * Contacts - SQL storage
  */
-class addressbook_sql extends so_sql_cf
+class Sql extends Api\Storage
 {
 	/**
 	 * name of custom fields table
@@ -60,15 +68,15 @@ class addressbook_sql extends so_sql_cf
 	/**
 	 * Constructor
 	 *
-	 * @param egw_db $db=null
+	 * @param Api\Db $db =null
 	 */
-	function __construct(egw_db $db=null)
+	function __construct(Api\Db $db=null)
 	{
-		parent::__construct('phpgwapi', 'egw_addressbook', self::EXTRA_TABLE, 'contact_',
-			$extra_key='_name',$extra_value='_value',$extra_id='_id',$db);
+		parent::__construct('phpgwapi', 'egw_addressbook', self::EXTRA_TABLE,
+			'contact_', '_name', '_value', '_id', $db);
 
 		// Get custom fields from addressbook instead of phpgwapi
-		$this->customfields = config::get_customfields('addressbook');
+		$this->customfields = Api\Storage\Customfields::get('addressbook');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'])
 		{
@@ -146,7 +154,7 @@ class addressbook_sql extends so_sql_cf
 		}
 		if ($param['searchletter'])
 		{
-			$filter[] = 'org_name '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%');
+			$filter[] = 'org_name '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%');
 		}
 		else
 		{
@@ -169,8 +177,8 @@ class addressbook_sql extends so_sql_cf
 			// org total for more then one $by
 			$by_expr = $by == 'org_unit_count' ? "COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END)" :
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END)";
-			$append = "GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort";
-			parent::search($param['search'],array('org_name'),$append,array(
+			parent::search($param['search'],array('org_name'),
+				"GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort", array(
 				"NULL AS $by",
 				'1 AS is_main',
 				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
@@ -178,8 +186,8 @@ class addressbook_sql extends so_sql_cf
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
 			),$wildcard,false,$op/*'OR'*/,'UNION',$filter);
 			// org by location
-			$append = "GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort";
-			parent::search($param['search'],array('org_name'),$append,array(
+			parent::search($param['search'],array('org_name'),
+				"GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort", array(
 				"CASE WHEN $by IS NULL THEN '' ELSE $by END AS $by",
 				'0 AS is_main',
 				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
@@ -195,7 +203,7 @@ class addressbook_sql extends so_sql_cf
 
 		// query the values for *_count == 1, to display them instead
 		$filter['org_name'] = $orgs = array();
-		foreach($rows as $n => $row)
+		foreach($rows as $row)
 		{
 			if ($row['org_unit_count'] == 1 || $row['adr_one_locality_count'] == 1)
 			{
@@ -208,7 +216,8 @@ class addressbook_sql extends so_sql_cf
 
 		if (count($filter['org_name']))
 		{
-			foreach((array) parent::search($criteria,array('org_name','org_unit','adr_one_locality'),'GROUP BY org_name,org_unit,adr_one_locality',
+			foreach((array) parent::search(null, array('org_name','org_unit','adr_one_locality'),
+				'GROUP BY org_name,org_unit,adr_one_locality',
 				'',$wildcard,false,$op/*'AND'*/,false,$filter) as $row)
 			{
 				$org_key = $row['org_name'].($by ? '|||'.$row[$by] : '');
@@ -243,19 +252,19 @@ class addressbook_sql extends so_sql_cf
 	 *
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
-	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or
+	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param boolean|string|array $only_keys =true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
-	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard='' appended befor and after each criteria
-	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
-	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
-	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
+	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start =false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
+	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return boolean/array of matching rows (the row is an array of the cols) or False
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
@@ -360,7 +369,9 @@ class addressbook_sql extends so_sql_cf
 					// fall through
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
-			if ($this->db->Type != 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",$order_by,$all_matches,PREG_SET_ORDER))
+			$all_matches = null;
+			if ($this->db->Type != 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",
+				$order_by, $all_matches, PREG_SET_ORDER))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				foreach($all_matches as $matches)
@@ -394,10 +405,12 @@ class addressbook_sql extends so_sql_cf
 			// Understand search by date with wildcard (????.10.??) according to user date preference
 			if(is_string($criteria) && strpos($criteria, '?') !== false)
 			{
-				$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 				// First, check for a 'date', with wildcards, in the user's format
-				$date_regex = str_replace(array('Y','m','d','.','-'), array('(?P<Y>(?:\?|\Q){4})','(?P<m>(?:\?|\Q){2})','(?P<d>(?:\?|\Q){2})','\.','\-'),$date_format);
-				$date_regex = str_replace('Q','d',$date_regex);
+				$date_regex = str_replace('Q','d',
+					str_replace(array('Y','m','d','.','-'),
+						array('(?P<Y>(?:\?|\Q){4})','(?P<m>(?:\?|\Q){2})','(?P<d>(?:\?|\Q){2})','\.','\-'),
+							$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']));
+
 				if(preg_match_all('$'.$date_regex.'$', $criteria, $matches))
 				{
 					foreach($matches[0] as $m_id => $match)
@@ -467,7 +480,7 @@ class addressbook_sql extends so_sql_cf
 	{
 		if (!$new_owner)	// otherwise we would create an account (contact_owner==0)
 		{
-			throw egw_exception_wrong_parameter(__METHOD__."($account_id, $new_owner) new owner must not be 0!");
+			throw Api\Exception\WrongParameter(__METHOD__."($account_id, $new_owner) new owner must not be 0!");
 		}
 		// contacts
 		$this->db->update($this->table_name,array(
@@ -496,9 +509,9 @@ class addressbook_sql extends so_sql_cf
 	 *
 	 * @param array $uids array of user or group id's for $uid_column='list_owners', or values for $uid_column,
 	 * 	or whole where array: column-name => value(s) pairs
-	 * @param string $uid_column='list_owner' column-name or null to use $uids as where array
-	 * @param string $member_attr=null null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
-	 * @param boolean|int|array $limit_in_ab=false if true only return members from the same owners addressbook,
+	 * @param string $uid_column ='list_owner' column-name or null to use $uids as where array
+	 * @param string $member_attr =null null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
+	 * @param boolean|int|array $limit_in_ab =false if true only return members from the same owners addressbook,
 	 * 	if int|array only return members from the given owners addressbook(s)
 	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
@@ -547,7 +560,7 @@ class addressbook_sql extends so_sql_cf
 	 *
 	 * @param string|array $keys list-name or array with column-name => value pairs to specify the list
 	 * @param int $owner user- or group-id
-	 * @param array $contacts=array() contacts to add (only for not yet existing lists!)
+	 * @param array $contacts =array() contacts to add (only for not yet existing lists!)
 	 * @param array &$data=array() values for keys 'list_uid', 'list_carddav_name', 'list_name'
 	 * @return int|boolean integer list_id or false on error
 	 */
@@ -606,7 +619,7 @@ class addressbook_sql extends so_sql_cf
 	 *
 	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
-	 * @param array $existing=null array of existing contact-id(s) of list, to not reread it, eg. array()
+	 * @param array $existing =null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
 	function add2list($contact,$list,array $existing=null)
@@ -648,7 +661,7 @@ class addressbook_sql extends so_sql_cf
 	 * Removes one contact from distribution list(s)
 	 *
 	 * @param int|array $contact contact_id(s)
-	 * @param int $list=null list-id or null to remove from all lists
+	 * @param int $list =null list-id or null to remove from all lists
 	 * @return false on error
 	 */
 	function remove_from_list($contact,$list=null)
@@ -690,7 +703,7 @@ class addressbook_sql extends so_sql_cf
 	/**
 	 * Deletes a distribution list (incl. it's members)
 	 *
-	 * @param int/array $list list_id(s)
+	 * @param int|array $list list_id(s)
 	 * @return number of members deleted or false if list does not exist
 	 */
 	function delete_list($list)
@@ -705,7 +718,7 @@ class addressbook_sql extends so_sql_cf
 	/**
 	 * Get ctag (max list_modified as timestamp) for lists
 	 *
-	 * @param int|array $owner=null null for all lists user has access too
+	 * @param int|array $owner =null null for all lists user has access too
 	 * @return int
 	 */
 	function lists_ctag($owner=null)
@@ -745,7 +758,7 @@ class addressbook_sql extends so_sql_cf
 		}
 		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
 		// caused by non-ascii chars compared with ascii field uid
-		catch(egw_exception_db $e) {
+		catch(Api\Db\Exception $e) {
 			_egw_log_exception($e);
 			return false;
 		}
@@ -762,11 +775,13 @@ class addressbook_sql extends so_sql_cf
 	 * Saves a contact, reimplemented to check a given etag and set a uid
 	 *
 	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
-	 * @param string|array $extra_where=null extra where clause, eg. to check the etag, returns 'nothing_affected' if not affected rows
+	 * @param string|array $extra_where =null extra where clause, eg. to check the etag, returns 'nothing_affected' if not affected rows
 	 * @return int 0 on success and errno != 0 else
 	 */
 	function save($keys = NULL, $extra_where = NULL)
 	{
+		unset($extra_where);	// not used, but required by function signature
+
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
 		} else {

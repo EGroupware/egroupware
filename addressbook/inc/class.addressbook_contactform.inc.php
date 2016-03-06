@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * SiteMgr contact form for the addressbook
@@ -75,7 +77,7 @@ class addressbook_contactform
 			elseif ($content['submitit'])
 			{
 				$submitted = true;
-				$contact = new addressbook_bo();
+				$contact = new Api\Contacts();
 				if ($content['owner'])	// save the contact in the addressbook
 				{
 					$content['private'] = 0;	// in case default_private is set
@@ -90,9 +92,9 @@ class addressbook_contactform
 								// the anonymous user to have run rights for addressbook AND
 								// edit rights for the addressbook used to store the new entry,
 								// which is clearly not wanted securitywise
-								egw_vfs::$is_root = true;
+								Api\Vfs::$is_root = true;
 								egw_link::link('addressbook',$id,egw_link::VFS_APPNAME,$value,$name);
-								egw_vfs::$is_root = false;
+								Api\Vfs::$is_root = false;
 							}
 						}
 
@@ -108,8 +110,7 @@ class addressbook_contactform
 				{
 					if ($content['email_contactform'])
 					{
-						require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_tracking.inc.php');
-						$tracking = new addressbook_tracking($contact);
+						$tracking = new Api\Contacts\Tracking($contact);
 					}
 					if ($tracking->do_notifications($contact->data2db($content),null))
 					{
@@ -141,7 +142,7 @@ class addressbook_contactform
 					static $contact;
 					if (is_null($contact))
 					{
-						$contact = new addressbook_bo();
+						$contact = new Api\Contacts();
 					}
 					$content['show']['custom'.$custom] = true;
 					$content['customfield'][$custom] = $name;
@@ -174,7 +175,7 @@ class addressbook_contactform
 				if ($name[0] == '#')     // custom field
 				{
 					static $contact;
-					if (is_null($contact)) $contact = new addressbook_bo();
+					if (is_null($contact)) $contact = new Api\Contacts();
 					$content['show']['custom'.$custom] = true;
 					$content['customfield'][$custom] = $name;
 					$content['customlabel'][$custom] = $contact->customfields[substr($name,1)]['label'];

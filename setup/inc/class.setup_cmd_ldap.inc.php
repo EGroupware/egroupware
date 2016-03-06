@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * setup command: test or create the ldap connection and hierarchy
@@ -121,7 +123,7 @@ class setup_cmd_ldap extends setup_cmd
 	{
 		if (!empty($this->domain) && !preg_match('/^([a-z0-9_-]+\.)*[a-z0-9]+/i',$this->domain))
 		{
-			throw new egw_exception_wrong_userinput(lang("'%1' is no valid domain name!",$this->domain));
+			throw new Api\Exception\WrongUserinput(lang("'%1' is no valid domain name!",$this->domain));
 		}
 		if ($this->remote_id && $check_only && !in_array($this->sub_command, array('set_mailbox', 'sid2uidnumber', 'copy2ad')))
 		{
@@ -186,7 +188,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+			throw new Api\Exception\WrongUserinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 
 		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
@@ -194,7 +196,7 @@ class setup_cmd_ldap extends setup_cmd
 			array('uidNumber','gidNumber','uid','cn', 'objectClass',self::sambaSID))) ||
 			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
-			throw new egw_exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
+			throw new Api\Exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
 		}
 		$change = $accounts = array();
 		$cmd_change_account_id = 'admin/admin-cli.php --change-account-id <admin>@<domain>,<adminpw>';
@@ -203,7 +205,7 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			if ($key === 'count') continue;
 
-			$entry = ldap::result2array($entry);
+			$entry = Api\Ldap::result2array($entry);
 			$accounts[$entry['dn']] = $entry;
 			//print_r($entry);
 
@@ -247,7 +249,7 @@ class setup_cmd_ldap extends setup_cmd
 			}
 			if (!$check_only && $modify && !ldap_modify($this->test_ldap->ds, $dn, $modify))
 			{
-				throw new egw_exception("Failed to modify ldap: !ldap_modify({$this->test_ldap->ds}, '$dn', ".array2string($modify).") ".ldap_error($this->test_ldap->ds).
+				throw new Api\Exception("Failed to modify ldap: !ldap_modify({$this->test_ldap->ds}, '$dn', ".array2string($modify).") ".ldap_error($this->test_ldap->ds).
 					"\n- ".implode("\n- ", $msg));	// EGroupware change already run successful
 			}
 			if ($modify) ++$changed;
@@ -313,7 +315,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if ads base does exist
 		if (!@ldap_read($ads->ds, $this->ads_context, 'objectClass=*'))
 		{
-			throw new egw_exception_wrong_userinput(lang('Ads dn "%1" NOT found!',$this->ads_context));
+			throw new Api\Exception\WrongUserInput(lang('Ads dn "%1" NOT found!',$this->ads_context));
 		}
 
 		// connect to source ldap
@@ -322,7 +324,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if ldap base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+			throw new Api\Exception\WrongUserInput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 
 		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
@@ -330,7 +332,7 @@ class setup_cmd_ldap extends setup_cmd
 				'(&(objectClass=posixAccount)('.self::sambaSID.'=*)(!(uid=*$)))', $attrs)) ||
 			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
-			throw new egw_exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
+			throw new Api\Exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
 		}
 		$changed = 0;
 		$utc_diff = null;
@@ -338,12 +340,12 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			if ($key === 'count') continue;
 
-			$entry_arr = ldap::result2array($entry);
+			$entry_arr = Api\Ldap::result2array($entry);
 			$uid = $entry_arr['uid'];
 			$entry = array_diff_key($entry_arr, $ignore_attr);
 
 			if (!($sr = ldap_search($ads->ds, $this->ads_context,
-				$search='(&(objectClass=user)(sAMAccountName='.ldap::quote($uid).'))', array('dn'))) ||
+				$search='(&(objectClass=user)(sAMAccountName='.Api\Ldap::quote($uid).'))', array('dn'))) ||
 				!($dest = ldap_get_entries($ads->ds, $sr)))
 			{
 				$msg[] = lang('User "%1" not found!', $uid);
@@ -591,7 +593,7 @@ class setup_cmd_ldap extends setup_cmd
 				// should we run any or some addAccount hooks
 				if ($this->add_account_hook)
 				{
-					// setting up egw_info array with new ldap information, so hook can use ldap::ldapConnect()
+					// setting up egw_info array with new ldap information, so hook can use Api\Ldap::ldapConnect()
 					if (!$egw_info_set++)
 					{
 						foreach(array('ldap_host','ldap_root_dn','ldap_root_pw','ldap_context','ldap_group_context','ldap_search_filter','ldap_encryptin_type','mail_suffix','mail_login_type') as $name)
@@ -798,7 +800,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $dn =null default $this->ldap_root_dn
 	 * @param string $pw =null default $this->ldap_root_pw
 	 * @param string $host =null default $this->ldap_host, hostname, ip or ldap-url
-	 * @throws egw_exception_wrong_userinput Can not connect to ldap ...
+	 * @throws Api\Exception\WrongUserInput Can not connect to ldap ...
 	 */
 	private function connect($dn=null,$pw=null,$host=null)
 	{
@@ -806,9 +808,9 @@ class setup_cmd_ldap extends setup_cmd
 		if (is_null($pw)) $pw = $this->ldap_root_pw;
 		if (is_null($host)) $host = $this->ldap_host;
 
-		if (!$pw)	// ldap::ldapConnect use the current eGW's pw otherwise
+		if (!$pw)	// Api\Ldap::ldapConnect use the current eGW's pw otherwise
 		{
-			throw new egw_exception_wrong_userinput(lang('You need to specify a password!'));
+			throw new Api\Exception\WrongUserInput(lang('You need to specify a password!'));
 		}
 		$this->test_ldap = new ldap();
 
@@ -821,7 +823,7 @@ class setup_cmd_ldap extends setup_cmd
 
 		if (!$ds)
 		{
-			throw new egw_exception_wrong_userinput(lang('Can not connect to LDAP server on host %1 using DN %2!',
+			throw new Api\Exception\WrongUserInput(lang('Can not connect to LDAP server on host %1 using DN %2!',
 				$host,$dn).($this->test_ldap->ds ? ' ('.ldap_error($this->test_ldap->ds).')' : ''));
 		}
 		return lang('Successful connected to LDAP server on %1 using DN %2.',$this->ldap_host,$dn);
@@ -831,7 +833,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Count active (not expired) users
 	 *
 	 * @return int number of active users
-	 * @throws egw_exception_wrong_userinput
+	 * @throws Api\Exception\WrongUserInput
 	 */
 	private function users()
 	{
@@ -840,7 +842,7 @@ class setup_cmd_ldap extends setup_cmd
 		$sr = ldap_list($this->test_ldap->ds,$this->ldap_context,'ObjectClass=posixAccount',array('dn','shadowExpire'));
 		if (!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
-			throw new egw_exception('Error listing "dn=%1"!',$this->ldap_context);
+			throw new Api\Exception('Error listing "dn=%1"!',$this->ldap_context);
 		}
 		$num = 0;
 		foreach($entries as $n => $entry)
@@ -856,7 +858,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Check and if does not yet exist create the new database and user
 	 *
 	 * @return string with success message
-	 * @throws egw_exception_wrong_userinput
+	 * @throws Api\Exception\WrongUserInput
 	 */
 	private function create()
 	{
@@ -883,7 +885,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Delete whole LDAP tree of an instance dn=$this->ldap_base using $this->ldap_admin/_pw
 	 *
 	 * @return string with success message
-	 * @throws egw_exception if dn not found, not listable or delete fails
+	 * @throws Api\Exception if dn not found, not listable or delete fails
 	 */
 	private function delete_base()
 	{
@@ -897,12 +899,12 @@ class setup_cmd_ldap extends setup_cmd
 		// some precausion to not delete whole ldap tree!
 		if (count(explode(',',$this->ldap_base)) < 2)
 		{
-			throw new egw_exception_assertion_failed(lang('Refusing to delete dn "%1"!',$this->ldap_base));
+			throw new Api\Exception\AssertionFailed(lang('Refusing to delete dn "%1"!',$this->ldap_base));
 		}
 		// check if base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+			throw new Api\Exception\WrongUserInput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 		return lang('LDAP dn="%1" with %2 entries deleted.',
 			$this->ldap_base,$this->rdelete($this->ldap_base));
@@ -913,14 +915,14 @@ class setup_cmd_ldap extends setup_cmd
 	 *
 	 * @param string $dn
 	 * @return int integer number of deleted entries
-	 * @throws egw_exception if dn not listable or delete fails
+	 * @throws Api\Exception if dn not listable or delete fails
 	 */
 	private function rdelete($dn)
 	{
 		if (!($sr = ldap_list($this->test_ldap->ds,$dn,'ObjectClass=*',array(''))) ||
 			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
-			throw new egw_exception(lang('Error listing "dn=%1"!',$dn));
+			throw new Api\Exception(lang('Error listing "dn=%1"!',$dn));
 		}
 		$deleted = 0;
 		foreach($entries as $n => $entry)
@@ -930,7 +932,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		if (!ldap_delete($this->test_ldap->ds,$dn))
 		{
-			throw new egw_exception(lang('Error deleting "dn=%1"!',$dn));
+			throw new Api\Exception(lang('Error deleting "dn=%1"!',$dn));
 		}
 		return ++$deleted;
 	}
@@ -944,7 +946,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $this->mbox_attr ='mailmessagestore' lowercase!!!
 	 * @param string $this->mail_login_type ='email' 'email', 'vmailmgr', 'standard' or 'uidNumber'
 	 * @return string with success message N entries modified
-	 * @throws egw_exception if dn not found, not listable or delete fails
+	 * @throws Api\Exception if dn not found, not listable or delete fails
 	 */
 	private function set_mailbox($check_only=false)
 	{
@@ -958,7 +960,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+			throw new Api\Exception\WrongUserInput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 		$object_class = $this->object_class ? $this->object_class : 'qmailUser';
 		$mbox_attr = $this->mbox_attr ? $this->mbox_attr : 'mailmessagestore';
@@ -968,7 +970,7 @@ class setup_cmd_ldap extends setup_cmd
 				'objectClass='.$object_class,array('mail','uidNumber','uid',$mbox_attr))) ||
 			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
-			throw new egw_exception(lang('Error listing "dn=%1"!',$this->ldap_base));
+			throw new Api\Exception(lang('Error listing "dn=%1"!',$this->ldap_base));
 		}
 		$modified = 0;
 		foreach($entries as $n => $entry)
@@ -987,7 +989,7 @@ class setup_cmd_ldap extends setup_cmd
 				$mbox_attr => $mbox,
 			)))
 			{
-				throw new egw_exception(lang("Error modifying dn=%1: %2='%3'!",$entry['dn'],$mbox_attr,$mbox));
+				throw new Api\Exception(lang("Error modifying dn=%1: %2='%3'!",$entry['dn'],$mbox_attr,$mbox));
 			}
 			++$modified;
 			if ($check_only) echo "$modified: $entry[dn]: $mbox_attr={$entry[$mbox_attr][0]} --> $mbox\n";
@@ -1015,7 +1017,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $dn dn to create, eg. "cn=admin,dc=local"
 	 * @param array $extra =array() extra attributes to set
 	 * @return boolean true if the node was create, false if it was already there
-	 * @throws egw_exception_wrong_userinput
+	 * @throws Api\Exception\WrongUserinput
 	 */
 	private function _create_node($dn,$extra=array())
 	{
@@ -1035,7 +1037,7 @@ class setup_cmd_ldap extends setup_cmd
 
 		if (!isset(self::$requiredObjectclasses[$name]))
 		{
-			throw new egw_exception_wrong_userinput(lang('Can not create DN %1!',$dn).' '.
+			throw new Api\Exception\WrongUserinput(lang('Can not create DN %1!',$dn).' '.
 				lang('Supported node types:').implode(', ',array_keys(self::$requiredObjectclasses)));
 		}
 		if ($name == 'dc') $extra['o'] = $value;	// required by organisation
@@ -1046,7 +1048,7 @@ class setup_cmd_ldap extends setup_cmd
 			'objectClass' => self::$requiredObjectclasses[$name],
 		)+$extra))
 		{
-			throw new egw_exception_wrong_userinput(lang('Can not create DN %1!',$dn).
+			throw new Api\Exception\WrongUserinput(lang('Can not create DN %1!',$dn).
 				' ('.ldap_error($this->test_ldap->ds).', attributes='.print_r($attr,true).')');
 		}
 		return true;

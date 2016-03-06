@@ -167,7 +167,7 @@ class Storage extends Storage\Base
 		$this->extra_join_order = " LEFT JOIN $extra_table extra_order ON $table.$this->autoinc_id=extra_order.$this->extra_id";
 		$this->extra_join_filter = " JOIN $extra_table extra_filter ON $table.$this->autoinc_id=extra_filter.$this->extra_id";
 
-		$this->customfields = Customfields::get($app, false, null, $db);
+		$this->customfields = Storage\Customfields::get($app, false, null, $db);
 	}
 
 	/**
