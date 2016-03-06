@@ -17,7 +17,6 @@ use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use egw_link;
-use historylog;
 use html;
 
 /**
@@ -139,12 +138,11 @@ abstract class Tracking
 	var $errors = array();
 
 	/**
-	 * instance of the historylog object for the app we are tracking
+	 * Instance of the History object for the app we are tracking
 	 *
-	 * @access private
-	 * @var historylog
+	 * @var History
 	 */
-	var $historylog;
+	protected $historylog;
 
 	/**
 	 * Current user, can be set via bo_tracking::track(,,$user)
@@ -403,7 +401,7 @@ abstract class Tracking
 
 		if (!is_object($this->historylog) || $this->historylog->user != $this->user)
 		{
-			$this->historylog = new historylog($this->app,$this->user);
+			$this->historylog = new History($this->app, $this->user);
 		}
 		// log user-agent and session-action
 		if ($GLOBALS['egw_info']['server']['log_user_agent_action'] && ($changed_fields || !$old))

@@ -16,9 +16,6 @@ namespace EGroupware\Api\Contacts;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use common;	// randomstring
-
 /**
  * LDAP Backend for contacts, compatible with vars and parameters of eTemplate's so_sql.
  * Maybe one day this becomes a generalized ldap storage object :-)
@@ -514,7 +511,7 @@ class Ldap
 
 		if(empty($contactUID))
 		{
-			$ldapContact[$this->dn_attribute] = $this->data[$this->contacts_id] = $contactUID = md5(common::randomstring(15));
+			$ldapContact[$this->dn_attribute] = $this->data[$this->contacts_id] = $contactUID = md5(Api\Auth::randomstring(15));
 		}
 		//error_log(__METHOD__."() contactUID='$contactUID', isUpdate=".array2string($isUpdate).", oldContactInfo=".array2string($oldContactInfo));
 		// add for all supported objectclasses the objectclass and it's attributes
