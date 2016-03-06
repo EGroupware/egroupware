@@ -23,7 +23,6 @@ use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi or old structure
 use common;	// next_id
-use auth;
 
 /**
  * LDAP Backend for accounts
@@ -599,7 +598,7 @@ class Ldap
 			}
 			elseif (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']))	// if it's not already entcrypted, do so now
 			{
-				$data['account_passwd'] = auth::encrypt_ldap($data['account_passwd']);
+				$data['account_passwd'] = Api\Auth::encrypt_ldap($data['account_passwd']);
 			}
 			$to_write['userpassword'] = $data['account_passwd'];
 			$to_write['shadowlastchange'] = round((time()-$utc_diff) / (24*3600));
