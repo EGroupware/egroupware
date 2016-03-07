@@ -406,7 +406,7 @@ abstract class Tracking
 		if ($GLOBALS['egw_info']['server']['log_user_agent_action'] && ($changed_fields || !$old))
 		{
 			$this->historylog->add('user_agent_action', $data[$this->id_field],
-				$_SERVER['HTTP_USER_AGENT'], $_SESSION[Api\SessionEGW_SESSION_VAR]['session_action']);
+				$_SERVER['HTTP_USER_AGENT'], $_SESSION[Api\Session::EGW_SESSION_VAR]['session_action']);
 		}
 		foreach($changed_fields as $name)
 		{

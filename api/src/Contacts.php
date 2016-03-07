@@ -18,6 +18,7 @@ namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use categories;
+use etemplate;	// cats2color
 
 use calendar_bo;	// to_do: do NOT require it, just use if there
 
