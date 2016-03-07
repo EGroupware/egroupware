@@ -7693,6 +7693,9 @@ span.egw_tutorial_title {
     border: none;
     padding-right: 15px;
   }
+  body #popupMainDiv .et2_taglist > div {
+    min-height: auto;
+  }
   body .rowHeader {
     font-size: 12pt;
   }
