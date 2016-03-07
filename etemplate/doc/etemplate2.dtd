@@ -1,26 +1,28 @@
 <?xml version="1.1" encoding="UTF-8"?>
 
 <!--
-
+==========================================================
+	EGroupware: DTD
 	AUTHOR: Hadi Nategh <hn[AT]stylite.de>
 	COPYRIGHT: 2014 by Stylite AG
-    PUBLIC ID:
-    SYSTEM ID:
-	Version: 1.1
--->
+	LICENSE: http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+    PUBLIC ID: "http://www.egroupware.org/etemplate2.dtd"
+	Version: 1.2
+==========================================================
 
-<!--
+==========================================================
     An example how to use this DTD from your XML document:
 
     <?xml version="1.0"?>
-
-    <!DOCTYPE overlay SYSTEM "etemplate2.dtd">
+	<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 
     <overlay>
     ...
     </overlay>
+==========================================================
 -->
-<!ENTITY % Widgets "template|grid|vbox|box|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|passwd|hidden|int|integer|float|url|url-email|url-phone|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|customfields|customfields-list|favorites|gantt|html|htmlarea|tabbox|taglist|taglist-account|taglist-email|toolbar|tree|tree-cat|historylog|hrule|image|appicon|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|itempicker|script|template|grid|vbox|box|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|passwd|hidden|int|integer|float|url|url-email|url-phone|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|customfields|customfields-list|favorites|gantt|html|htmlarea|tabbox|taglist|taglist-account|taglist-email|toolbar|tree|tree-cat|historylog|hrule|image|appicon|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|itempicker|script">
+
+<!ENTITY % Widgets "template|grid|vbox|box|details|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|passwd|hidden|searchbox|int|integer|float|url|url-email|url-phone|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|time_or_date|date-range|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|customfields|customfields-list|favorites|gantt|html|htmlarea|tabbox|taglist|taglist-account|taglist-email|taglist-cat|toolbar|tree|tree-cat|historylog|hrule|image|appicon|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|barcode|itempicker|script">
 <!ELEMENT overlay (%Widgets;)*>
 <!ELEMENT template (%Widgets;)*>
 <!ATTLIST template
@@ -29,6 +31,7 @@ group CDATA #IMPLIED
 version CDATA #IMPLIED
 lang CDATA #IMPLIED
 content CDATA #IMPLIED
+url CDATA #IMPLIED
 disabled (true|false) "false"
 width CDATA #IMPLIED
 height CDATA #IMPLIED
@@ -39,6 +42,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -77,6 +81,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -100,6 +105,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -123,6 +129,33 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+>
+<!ELEMENT details EMPTY>
+<!ATTLIST details
+toggle_align CDATA "right"
+title CDATA #IMPLIED
+rows CDATA #IMPLIED
+cols CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -144,6 +177,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -165,6 +199,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -187,6 +222,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -211,6 +247,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 span CDATA #IMPLIED
 type CDATA #IMPLIED
@@ -239,6 +276,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -268,6 +306,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -298,6 +337,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -330,6 +370,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -363,6 +404,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -374,6 +416,7 @@ readonly CDATA #IMPLIED
 field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
+precision CDATA "2"
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
@@ -390,6 +433,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -400,6 +444,7 @@ type CDATA #IMPLIED
 field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
+precision CDATA "2"
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
@@ -416,6 +461,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -426,6 +472,7 @@ type CDATA #IMPLIED
 field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
+precision CDATA "2"
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
@@ -442,6 +489,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -452,6 +500,7 @@ type CDATA #IMPLIED
 field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
+precision CDATA "2"
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
@@ -468,6 +517,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -478,6 +528,7 @@ type CDATA #IMPLIED
 field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
+precision CDATA "2"
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
@@ -494,6 +545,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -504,6 +556,7 @@ type CDATA #IMPLIED
 field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
+precision CDATA "2"
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
@@ -520,6 +573,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -530,6 +584,7 @@ type CDATA #IMPLIED
 field CDATA #IMPLIED
 compare CDATA #IMPLIED
 alternate_fields CDATA #IMPLIED
+precision CDATA "2"
 value CDATA #IMPLIED
 readonly CDATA #IMPLIED
 label CDATA #IMPLIED
@@ -546,6 +601,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -583,6 +639,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -620,6 +677,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -657,6 +715,47 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+>
+<!ELEMENT searchbox EMPTY>
+<!ATTLIST searchbox
+overlay (true|false) "false"
+fix (true|false) "true"
+multiline (true|false) "false"
+size CDATA #IMPLIED
+maxlength CDATA #IMPLIED
+blur CDATA #IMPLIED
+rows CDATA #IMPLIED
+cols CDATA #IMPLIED
+validator CDATA #IMPLIED
+autocomplete CDATA #IMPLIED
+onkeypress CDATA #IMPLIED
+needed (true|false) "false"
+onchange CDATA #IMPLIED
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+value CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -697,6 +796,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -737,6 +837,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -777,6 +878,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -814,6 +916,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -851,6 +954,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -888,6 +992,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -925,6 +1030,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -962,6 +1068,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -999,6 +1106,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1036,6 +1144,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1073,6 +1182,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1110,6 +1220,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1147,6 +1258,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1184,6 +1296,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1221,6 +1334,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1258,6 +1372,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1295,6 +1410,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1332,6 +1448,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1369,6 +1486,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1406,6 +1524,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1443,6 +1562,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1480,6 +1600,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1517,6 +1638,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1554,6 +1676,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1571,6 +1694,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1584,6 +1708,8 @@ unselected_value CDATA #IMPLIED
 ro_true CDATA "X "
 ro_false CDATA #IMPLIED
 value CDATA #IMPLIED
+toggle_on CDATA #IMPLIED
+toggle_off CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -1604,6 +1730,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1635,6 +1762,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1661,6 +1789,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1697,6 +1826,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1731,6 +1861,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1765,6 +1896,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1804,6 +1936,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1830,6 +1963,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1857,10 +1991,69 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 readonly CDATA #IMPLIED
+>
+<!ELEMENT time_or_date EMPTY>
+<!ATTLIST time_or_date
+value CDATA #IMPLIED
+type CDATA #IMPLIED
+data_format CDATA #IMPLIED
+min CDATA #IMPLIED
+max CDATA #IMPLIED
+year_range CDATA #IMPLIED
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+readonly CDATA #IMPLIED
+>
+<!ELEMENT date-range EMPTY>
+<!ATTLIST date-range
+value CDATA #IMPLIED
+relative (true|false) "false"
+needed (true|false) "false"
+onchange CDATA #IMPLIED
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
 >
 <!ELEMENT diff EMPTY>
 <!ATTLIST diff
@@ -1879,6 +2072,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1914,6 +2108,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1956,6 +2151,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -1995,6 +2191,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2028,6 +2225,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2052,6 +2250,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2079,6 +2278,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2109,6 +2309,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2138,6 +2339,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2176,6 +2378,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2202,6 +2405,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2229,6 +2433,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2269,6 +2474,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
@@ -2300,6 +2506,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2323,6 +2530,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2338,7 +2546,7 @@ expand_toolbar (true|false) "true"
 base_href CDATA #IMPLIED
 config CDATA #IMPLIED
 value CDATA #IMPLIED
-imageDataUrl (true|false) "false"
+imageUpload CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -2357,6 +2565,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2369,6 +2578,7 @@ type CDATA #IMPLIED
 tabs CDATA #IMPLIED
 add_tabs CDATA #IMPLIED
 tab_height CDATA #IMPLIED
+align_tabs CDATA "h"
 label CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
@@ -2384,6 +2594,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2403,8 +2614,9 @@ onclick CDATA #IMPLIED
 tagRenderer CDATA #IMPLIED
 listRenderer CDATA #IMPLIED
 width CDATA "100%"
+height CDATA #IMPLIED
 maxSelection CDATA #IMPLIED
-multiple (true|false) "false"
+multiple CDATA #IMPLIED
 rows CDATA #IMPLIED
 tags (true|false) "false"
 useCommaKey (true|false) "true"
@@ -2421,7 +2633,6 @@ label CDATA #IMPLIED
 statustext CDATA #IMPLIED
 align CDATA "left"
 disabled (true|false) "false"
-height CDATA #IMPLIED
 class CDATA #IMPLIED
 overflow CDATA #IMPLIED
 parent_node CDATA #IMPLIED
@@ -2429,6 +2640,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2448,8 +2660,9 @@ onclick CDATA #IMPLIED
 tagRenderer CDATA #IMPLIED
 listRenderer CDATA #IMPLIED
 width CDATA "100%"
+height CDATA #IMPLIED
 maxSelection CDATA #IMPLIED
-multiple (true|false) "false"
+multiple CDATA #IMPLIED
 rows CDATA #IMPLIED
 tags (true|false) "false"
 useCommaKey (true|false) "true"
@@ -2466,7 +2679,6 @@ label CDATA #IMPLIED
 statustext CDATA #IMPLIED
 align CDATA "left"
 disabled (true|false) "false"
-height CDATA #IMPLIED
 class CDATA #IMPLIED
 overflow CDATA #IMPLIED
 parent_node CDATA #IMPLIED
@@ -2474,6 +2686,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2494,8 +2707,9 @@ onclick CDATA #IMPLIED
 tagRenderer CDATA #IMPLIED
 listRenderer CDATA #IMPLIED
 width CDATA "100%"
+height CDATA #IMPLIED
 maxSelection CDATA #IMPLIED
-multiple (true|false) "false"
+multiple CDATA #IMPLIED
 rows CDATA #IMPLIED
 tags (true|false) "false"
 expand_multiple_rows CDATA #IMPLIED
@@ -2511,7 +2725,6 @@ label CDATA #IMPLIED
 statustext CDATA #IMPLIED
 align CDATA "left"
 disabled (true|false) "false"
-height CDATA #IMPLIED
 class CDATA #IMPLIED
 overflow CDATA #IMPLIED
 parent_node CDATA #IMPLIED
@@ -2519,6 +2732,52 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+>
+<!ELEMENT taglist-cat EMPTY>
+<!ATTLIST taglist-cat
+autocomplete_url CDATA #IMPLIED
+autocomplete_params CDATA #IMPLIED
+allowFreeEntries (true|false) "false"
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+value CDATA #IMPLIED
+onchange CDATA #IMPLIED
+onclick CDATA #IMPLIED
+tagRenderer CDATA #IMPLIED
+listRenderer CDATA #IMPLIED
+width CDATA "100%"
+height CDATA #IMPLIED
+maxSelection CDATA #IMPLIED
+multiple CDATA #IMPLIED
+rows CDATA #IMPLIED
+tags (true|false) "false"
+useCommaKey (true|false) "true"
+expand_multiple_rows CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+other CDATA #IMPLIED
+needed (true|false) "false"
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+disabled (true|false) "false"
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2538,6 +2797,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2558,6 +2818,8 @@ value CDATA #IMPLIED
 actions CDATA #IMPLIED
 autoloading CDATA #IMPLIED
 std_images CDATA #IMPLIED
+multimarking CDATA #IMPLIED
+highlighting (true|false) "false"
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -2576,6 +2838,7 @@ parent_node CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2595,6 +2858,8 @@ value CDATA #IMPLIED
 actions CDATA #IMPLIED
 autoloading CDATA #IMPLIED
 std_images CDATA #IMPLIED
+multimarking CDATA #IMPLIED
+highlighting (true|false) "false"
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -2613,6 +2878,7 @@ parent_node CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2636,6 +2902,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2657,6 +2924,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2686,6 +2954,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2715,6 +2984,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2727,6 +2997,7 @@ label CDATA #IMPLIED
 needed CDATA #IMPLIED
 seamless (true|false) "true"
 name CDATA #IMPLIED
+fullscreen (true|false) "false"
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
 align CDATA "left"
@@ -2741,6 +3012,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2780,6 +3052,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2805,6 +3078,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2836,6 +3110,7 @@ overflow CDATA #IMPLIED
 parent_node CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2873,6 +3148,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2895,6 +3171,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2933,6 +3210,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2959,6 +3237,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -2992,6 +3271,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -3025,6 +3305,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -3053,6 +3334,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -3081,6 +3363,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -3089,6 +3372,8 @@ readonly CDATA #IMPLIED
 >
 <!ELEMENT vfs-upload EMPTY>
 <!ATTLIST vfs-upload
+value CDATA #IMPLIED
+path CDATA #IMPLIED
 multiple (true|false) "false"
 max_file_size CDATA #IMPLIED
 mime CDATA #IMPLIED
@@ -3106,7 +3391,6 @@ onfocus CDATA #IMPLIED
 validation_error CDATA #IMPLIED
 tabindex CDATA #IMPLIED
 readonly (true|false) "false"
-value CDATA #IMPLIED
 statustext CDATA #IMPLIED
 align CDATA "left"
 onclick CDATA #IMPLIED
@@ -3120,6 +3404,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -3155,6 +3440,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -3182,6 +3468,37 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+>
+<!ELEMENT barcode EMPTY>
+<!ATTLIST barcode
+code_type CDATA "datamatrix"
+bgColor CDATA "#FFFFFF"
+barColor CDATA "#000000"
+format CDATA "css"
+barWidth CDATA "1"
+barHeight CDATA "50"
+label CDATA #IMPLIED
+value CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
@@ -3216,6 +3533,7 @@ actions CDATA #IMPLIED
 default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
