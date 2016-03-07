@@ -6,7 +6,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row height="60">
@@ -59,7 +59,7 @@
 						<grid>
 							<columns>
 								<column width = "120"/>
-								<column width="600"/>
+								<column/>
 							</columns>
 							<rows>
 								<row>
@@ -98,7 +98,7 @@
 						<grid>
 							<columns>
 								<column width = "120"/>
-								<column width="600"/>
+								<column/>
 							</columns>
 							<rows>
 								<row>
@@ -196,7 +196,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -211,7 +211,7 @@
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
@@ -225,7 +225,7 @@
 						<button label="Search" id="button[search]" image="search" background_image="1"/>
 						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
 					</hbox>
-				</row>	
+				</row>
 				<row class="dialogTabs">
 					<tabbox id="tabs" span="all" width="100%" align_tabs="v">
 						<tabs>
@@ -247,7 +247,7 @@
 			</rows>
 		</grid>
 		<styles>
-			
+
 		</styles>
 	</template>
 </overlay>

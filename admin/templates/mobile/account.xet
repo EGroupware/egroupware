@@ -6,7 +6,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>

@@ -58,7 +58,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -133,7 +133,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -163,7 +163,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -205,8 +205,8 @@
 				<row disabled="@addr_format=city_state_postcode">
 					<description for="adr_two_locality" value="city"/>
 					<hbox>
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64" autocomplete="section-two postal-code" />
-						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="242" autocomplete="section-two address-level2" />
+						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="20%" maxlength="64" autocomplete="section-two postal-code" />
+						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="80%" autocomplete="section-two address-level2" />
 					</hbox>
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
@@ -236,7 +236,7 @@
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@view">
@@ -255,7 +255,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -270,7 +270,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -285,7 +285,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -300,7 +300,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -357,7 +357,7 @@
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >

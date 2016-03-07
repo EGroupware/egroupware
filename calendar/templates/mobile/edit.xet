@@ -6,7 +6,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width = "600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -95,7 +95,7 @@
 						</menulist>
 						<textbox type="integer" align="center" id="${row}[quantity]" readonly="true" min="1" size="3"/>
 						<description id="${row}[role_label]"/>
-					</hbox>	
+					</hbox>
 					<button align="center" id="delete[$row_cont[delete_id]]" image="delete"/>
 				</row>
 			</rows>
@@ -108,7 +108,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row height="12">
@@ -116,14 +116,14 @@
 					<menulist>
 						<menupopup id="recur_type" onchange="app.calendar.check_recur_type" class="et2_fullWidth"/>
 					</menulist>
-				</row>	
-				<row>	
+				</row>
+				<row>
 					<description for="recur_interval" value="Interval"/>
 					<menulist>
 						<menupopup type="select-number" statustext="repeating interval, eg. 2 to repeat every second week" id="recur_interval" options="None,2,31" class="et2_fullWidth"/>
 					</menulist>
 				</row>
-				<row>	
+				<row>
 					<description for="tzid" value="Timezone"/>
 					<menulist>
 						<menupopup type="select-timezone" statustext="Timezone in which recurrences have identical time" id="tzid" class="et2_fullWidth"/>
@@ -132,7 +132,7 @@
 				<row>
 					<description for="recur_enddate" value="End date"/>
 					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate"/>
-				</row>	
+				</row>
 				<row>
 					<description for="recur_data" value="Repeat days"/>
 					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
@@ -144,7 +144,7 @@
 					<grid id="recur_exception">
 						<columns>
 							<column width = "120"/>
-							<column width="600"/>
+							<column/>
 						</columns>
 						<rows>
 							<row>
@@ -161,7 +161,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -175,7 +175,7 @@
 	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
 		<grid width="100%">
 			<columns>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@view">
@@ -184,7 +184,7 @@
 				<row class="th">
 					<description value="Existing links"/>
 				</row>
-				<row>        
+				<row>
 					<link-list id="link_to"/>
 				</row>
 			</rows>
@@ -194,7 +194,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@owner">
@@ -207,8 +207,8 @@
 					<description value="Updated"/>
 					<date-time id="modified" no_lang="1" readonly="true"/>
 				</row>
-				<row disabled="!@modifier">	
-					<description value="by"/>	
+				<row disabled="!@modifier">
+					<description value="by"/>
 					<menulist>
 						<menupopup type="select-account"   class="et2_nowrap" id="modifier" readonly="true"/>
 					</menulist>
@@ -220,7 +220,7 @@
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
@@ -238,7 +238,7 @@
 						<button label="Search" id="button[search]" image="search" background_image="1"/>
 						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
 					</hbox>
-				</row>	
+				</row>
 				<row>
 					<description value="Title"/>
 					<textbox id="title" needed="1" maxlength="255" tabindex="1" class="et2_fullWidth"/>
@@ -247,7 +247,7 @@
 					<description for="start" value="Start" width="88"/>
 					<date-time id="start" needed="1" class="required"/>
 				</row>
-				
+
 				<row>
 					<description for="duration" value="Duration" width="0" id="calendar_edit_duration" />
 					<hbox>
@@ -296,7 +296,7 @@
 					</tabbox>
 				</row>
 				<row>
-					
+
 				</row>
 			</rows>
 		</grid>

@@ -6,7 +6,7 @@
 		<grid class="addressbook_view" border="1" width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row class="dialogHeadbar" >
@@ -17,9 +17,7 @@
 					</hbox>
 				</row>
 				<row>
-					<hbox>
-						<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" />
-					</hbox>
+					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" />
 				</row>
 				<row>
 					<description for="org_name" value="Organisation"/>
@@ -33,7 +31,7 @@
 					<description for="org_unit" value="department"/>
 					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
 				</row>
-				
+
 				<row>
 					<description for="tel_work" value="Business phone"/>
 					<url-phone id="tel_work" class="et2_fullWidth" autocomplete="work tel" />
@@ -55,7 +53,7 @@
 						<grid width="100%">
 							<columns>
 								<column width = "120"/>
-								<column width="600"/>
+								<column/>
 							</columns>
 							<rows>
 								<row disabled="@addr_format=city_state_postcode">
@@ -104,7 +102,7 @@
 						<grid width="100%">
 							<columns>
 								<column width = "120"/>
-								<column width="600"/>
+								<column/>
 							</columns>
 							<rows>
 								<row>
@@ -142,8 +140,8 @@
 								<row disabled="@addr_format=city_state_postcode">
 									<description for="adr_two_locality" value="city"/>
 									<hbox>
-										<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64" autocomplete="section-two postal-code" />
-										<textbox statustext="City" id="adr_two_locality" maxlength="64" width="242" autocomplete="section-two address-level2" />
+										<textbox statustext="ZIP Code" id="adr_two_postalcode" width="20%" maxlength="64" autocomplete="section-two postal-code" />
+										<textbox statustext="City" id="adr_two_locality" maxlength="64" width="80%" autocomplete="section-two address-level2" />
 									</hbox>
 								</row>
 								<row disabled="@addr_format=city_state_postcode">
