@@ -14,9 +14,6 @@ namespace EGroupware\Api\Storage;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use egw_link;
-
 /**
  * Managing custom-field definitions
  */
@@ -248,7 +245,7 @@ class Customfields implements \IteratorAggregate
 					{
 						$app = $field['type'];
 					}
-					if ($value) $value = egw_link::title($app, $value);
+					if ($value) $value = Api\Link::title($app, $value);
 				}
 				break;
 		}
@@ -301,7 +298,7 @@ class Customfields implements \IteratorAggregate
 
 		if (is_null($link_types))
 		{
-			$link_types = array_keys(array_intersect(egw_link::app_list('query'),egw_link::app_list('title')));
+			$link_types = array_keys(array_intersect(Api\Link::app_list('query'),Api\Link::app_list('title')));
 			$link_types[] = 'link-entry';
 		}
 		return $link_types;
@@ -338,7 +335,7 @@ class Customfields implements \IteratorAggregate
 					$app = $data['type'];
 					$id = $old['#'.$name];
 				}
-				egw_link::unlink(false,$own_app,$values[$id_name],'',$app,$id);
+				Api\Link::unlink(false,$own_app,$values[$id_name],'',$app,$id);
 			}
 			if ($data['type'] == 'link-entry')
 			{
@@ -351,7 +348,7 @@ class Customfields implements \IteratorAggregate
 			}
 			if ($id)	// create new link, does nothing for already existing links
 			{
-				egw_link::link($own_app,$values[$id_name],$app,$id);
+				Api\Link::link($own_app,$values[$id_name],$app,$id);
 			}
 		}
 	}

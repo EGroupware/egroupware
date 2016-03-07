@@ -16,7 +16,6 @@ namespace EGroupware\Api\Storage;
 use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
-use egw_link;
 use html;
 
 /**
@@ -195,7 +194,7 @@ abstract class Tracking
 	{
 		if ($cf_app)
 		{
-			$linkable_cf_types = array('link-entry')+array_keys(egw_link::app_list());
+			$linkable_cf_types = array('link-entry')+array_keys(Api\Link::app_list());
 			foreach(Customfields::get($cf_app, true) as $cf_name => $cf_data)
 			{
 				$this->field2history['#'.$cf_name] = '#'.$cf_name;
@@ -357,9 +356,9 @@ abstract class Tracking
 			}
 			$source_id = $data[$this->id_field];
 			//error_log(__METHOD__.__LINE__.array2string($source_id));
-			if ($source_id) egw_link::link($this->app,$source_id,$app,$id);
-			//error_log(__METHOD__.__LINE__."egw_link::link('$this->app',".array2string($source_id).",'$app',$id);");
-			//echo "<p>egw_link::link('$this->app',{$data[$this->id_field]},'$app',$id);</p>\n";
+			if ($source_id) Api\Link::link($this->app,$source_id,$app,$id);
+			//error_log(__METHOD__.__LINE__."Api\Link::link('$this->app',".array2string($source_id).",'$app',$id);");
+			//echo "<p>Api\Link::link('$this->app',{$data[$this->id_field]},'$app',$id);</p>\n";
 		}
 
 		// unlink removed application entries
@@ -372,8 +371,8 @@ abstract class Tracking
 				if (!$id) continue;
 			}
 			$source_id = $data[$this->id_field];
-			if ($source_id) egw_link::unlink(null,$this->app,$source_id,0,$app,$id);
-			//echo "<p>egw_link::unlink(NULL,'$this->app',{$data[$this->id_field]},0,'$app',$id);</p>\n";
+			if ($source_id) Api\Link::unlink(null,$this->app,$source_id,0,$app,$id);
+			//echo "<p>Api\Link::unlink(NULL,'$this->app',{$data[$this->id_field]},0,'$app',$id);</p>\n";
 		}
 	}
 
@@ -869,7 +868,7 @@ abstract class Tracking
 	{
 		unset($old);	// not used, but required by function signature
 
-		return egw_link::title($this->app,$data[$this->id_field]);
+		return Api\Link::title($this->app,$data[$this->id_field]);
 	}
 
 	/**
@@ -887,7 +886,7 @@ abstract class Tracking
 	{
 		unset($old, $deleted, $receiver);	// not used, but required by function signature
 
-		return egw_link::title($this->app,$data[$this->id_field]);
+		return Api\Link::title($this->app,$data[$this->id_field]);
 	}
 
 	/**
@@ -932,10 +931,10 @@ abstract class Tracking
 		}
 		else
 		{
-			if (($view = egw_link::view($this->app,$data[$this->id_field])))
+			if (($view = Api\Link::view($this->app,$data[$this->id_field])))
 			{
 				$link = $GLOBALS['egw']->link('/index.php',$view);
-				$popup = egw_link::is_popup($this->app,'view');
+				$popup = Api\Link::is_popup($this->app,'view');
 			}
 		}
 		if ($link[0] == '/')
@@ -966,14 +965,14 @@ abstract class Tracking
 	{
 		unset($receiver);	// not used, but required by function signature
 
-		if (($view = egw_link::view($this->app,$data[$this->id_field])))
+		if (($view = Api\Link::view($this->app,$data[$this->id_field])))
 		{
 			return array(
 				'text' 	=> $this->get_title($data,$old),
 				'app'	=> $this->app,
 				'id'	=> $data[$this->id_field],
 				'view' 	=> $view,
-				'popup'	=> egw_link::is_popup($this->app,'view'),
+				'popup'	=> Api\Link::is_popup($this->app,'view'),
 			);
 		}
 		return false;

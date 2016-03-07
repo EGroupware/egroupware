@@ -14,9 +14,9 @@
 namespace EGroupware\Api\Vfs\Links;
 
 use EGroupware\Api\Vfs;
+use EGroupware\Api;
 
 // explicitly import old phpgwapi classes used:
-use egw_link;
 use addressbook_vcal;
 
 /**
@@ -111,10 +111,10 @@ class StreamWrapper extends LinksParent
 		// which gives him then read AND write access to the file store of the entry
 		else
 		{
-			// vfs & stream-wrapper use posix rights, egw_link::file_access uses EGW_ACL_{EDIT|READ}!
+			// vfs & stream-wrapper use posix rights, Api\Link::file_access uses EGW_ACL_{EDIT|READ}!
 			$required = $check & Vfs::WRITABLE ? EGW_ACL_EDIT : EGW_ACL_READ;
-			$access = egw_link::file_access($app,$id,$required,$rel_path,Vfs::$user);
-			$what = "from egw_link::file_access('$app',$id,$required,'$rel_path,".Vfs::$user.")";
+			$access = Api\Link::file_access($app,$id,$required,$rel_path,Vfs::$user);
+			$what = "from Api\Link::file_access('$app',$id,$required,'$rel_path,".Vfs::$user.")";
 		}
 		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".Vfs::$user." ($what) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;

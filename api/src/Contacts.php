@@ -18,7 +18,6 @@ namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use categories;
-use egw_link;
 
 use calendar_bo;	// to_do: do NOT require it, just use if there
 
@@ -813,11 +812,11 @@ class Contacts extends Contacts\Storage
 					$delete['tid'] = self::DELETED_TYPE;
 					if ($check_etag) $delete['etag'] = $check_etag;
 					if (($ok = $this->save($delete))) $ok = true;	// we have to return true or false
-					egw_link::unlink(0,'addressbook',$id,'','','',true);
+					Link::unlink(0,'addressbook',$id,'','','',true);
 				}
 				elseif (($ok = parent::delete($id,$check_etag)))
 				{
-					egw_link::unlink(0,'addressbook',$id);
+					Link::unlink(0,'addressbook',$id);
 				}
 
 				// Don't notify of final purge
@@ -996,12 +995,12 @@ class Contacts extends Contacts\Storage
 				$GLOBALS['egw']->hooks->process($to_write,False,True);	// called for every app now, not only enabled ones));
 			}
 			// Notify linked apps about changes in the contact data
-			egw_link::notify_update('addressbook',  $contact['id'], $contact);
+			Link::notify_update('addressbook',  $contact['id'], $contact);
 
 			// Check for restore of deleted contact, restore held links
 			if($old && $old['tid'] == self::DELETED_TYPE && $contact['tid'] != self::DELETED_TYPE)
 			{
-				egw_link::restore('addressbook', $contact['id']);
+				Link::restore('addressbook', $contact['id']);
 			}
 
 			// Record change history for sql - doesn't work for LDAP accounts
@@ -1805,11 +1804,11 @@ class Contacts extends Contacts\Storage
 			{
 				continue;
 			}
-			foreach(egw_link::get_links('addressbook',$contact['id']) as $data)
+			foreach(Link::get_links('addressbook',$contact['id']) as $data)
 			{
 				//_debug_array(array('function'=>__METHOD__,'line'=>__LINE__,'app'=>'addressbook','id'=>$contact['id'],'data:'=>$data,'target'=>$target['id']));
 				// info_from and info_link_id (main link)
-				$newlinkID = egw_link::link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
+				$newlinkID = Link::link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
 				//_debug_array(array('newLinkID'=>$newlinkID));
 				if ($newlinkID)
 				{
