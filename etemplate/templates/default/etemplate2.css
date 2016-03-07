@@ -908,6 +908,84 @@ ul.et2_link_string {
 /**
  * Tag list
  */
+.ms-ctn,
+.ms-res-ctn {
+  /* It doesn't really work smaller than this */
+  min-width: 150px;
+  border: solid 1px #bbbbbb;
+}
+.ms-ctn .loading {
+  position: relative;
+  margin: 0px auto -16px auto;
+  top: 5px;
+}
+.et2_taglist div.ms-sel-ctn .ms-close-btn {
+    width: 10px;
+    height: 10px;
+	background-position-y: -10px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	margin: 2px -16px 0 10px;
+}
+.et2_taglist .ms-res-ctn {
+	position:absolute;
+	background: #FFF;
+	overflow-y: auto;
+	z-index: 9999;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #CCC;
+	left: -1px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	border-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	padding: 1px 0px;
+}
+.et2_taglist div.ms-sel-ctn {
+	padding-right: 0px;
+	overflow-x: hidden;
+}
+.et2_taglist div.ms-sel-ctn .ms-sel-item {
+	margin: 0px 5px 3px 0px;
+    padding: 3px 20px 3px 5px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    background-color: #e4e4e4;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
+    background-image: -webkit-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-image: -moz-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-image: -o-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-clip: padding-box;
+    box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    color: #333;
+    line-height: 13px;
+	font-size: 11px;
+    cursor: default;
+	word-break: break-all;
+}
+.et2_taglist.ui-state-hover,
+.et2_taglist.ui-state-active {
+	font-weight: inherit;
+}
+.et2_taglist div.ms-ctn {
+	background-color: white;
+}
+.et2_taglist div.ms-ctn input {
+	padding: 3px 5px;
+}
+.et2_taglist div.ms-ctn input:focus {
+	min-width: 10em;
+}
+
+.et2_taglist .ms-res-ctn .ms-res-item {
+	line-height: 13px;
+	padding: 3px 6px;
+}
 .et2_taglist_ro ul {
   margin: 0px;
   padding: 0px;
@@ -921,8 +999,8 @@ ul.et2_link_string {
   font-weight: bold;
 }
 /* min-height to fix calculations done while hidden */
-.et2_taglist > div {
-	min-height: 2em;
+.et2_taglist > div:first-child {
+	min-height: 23px;
 }
 /* Toggle single / multiple */
 .et2_taglist_toggle {
@@ -936,7 +1014,7 @@ ul.et2_link_string {
 .et2_taglist_toggle.et2_taglist_single > div.ms-ctn {
 	padding-right: 7px
 }
-.et2_taglist_toggle > div:last-child {
+.et2_taglist_toggle > div.toggle {
 	margin-left: -1px;
 	float: right;
 
@@ -949,7 +1027,7 @@ ul.et2_link_string {
 	background-position: center center;
 	background-image: url("../../../phpgwapi/templates/default/images/foldertree_nolines_minus.gif");
 }
-.et2_taglist_toggle.et2_taglist_single > div:last-child {
+.et2_taglist_toggle.et2_taglist_single > div.toggle {
 	background-image: url("../../../phpgwapi/templates/default/images/foldertree_nolines_plus.gif");
 }
 .et2_taglist_toggle:not(.et2_taglist_single) .ms-trigger {
@@ -958,6 +1036,7 @@ ul.et2_link_string {
 /* Single select */
 .et2_taglist_single .ms-ctn {
 	padding: 0px 7px;
+	min-width: 50px;
 }
 .et2_taglist_single div.ms-ctn .ms-sel-item + input {
 	display: none;
@@ -971,6 +1050,62 @@ div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	width: calc(100% - 43px);
 	margin-bottom: 0px;
 	padding-bottom: 6px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+/* Taglist that is limited in size - does not grow */
+.et2_taglist.et2_taglist_small .ms-ctn,
+.et2_taglist.et2_taglist_small .ms-res-ctn {
+	min-width: auto;
+}
+.et2_taglist_small {
+	position: relative;
+	max-height: 3em;
+	overflow: hidden;
+}
+.et2_taglist_small::before {
+	content: attr(data-content) '';
+	text-align: right;
+	position: absolute;
+	z-index: 1;
+	top: 1px;
+	bottom: 0px;
+	right: 0;
+	padding-top: 1em;
+	padding-bottom: 3px;
+	padding-right: 1em;
+	padding-left: 2em;
+	min-height: 1.2em;
+	min-width: 25%;
+	background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 25%);
+}
+.et2_taglist_toggle.et2_taglist_small::before {
+	right: 25px;
+}
+.et2_taglist_small.ui-state-hover,
+.et2_taglist_small.ui-state-active {
+	position: absolute;
+	max-height: none;
+	max-width: 25em;
+	min-width: 15em;
+	background: white;
+	z-index: 5;
+	margin-top: -14px;
+	transition-duration: 0s;
+	font-weight: normal;
+	overflow: visible;
+}
+.et2_taglist_small.ui-state-hover::before,
+.et2_taglist_small.ui-state-active::before {
+	display: none;
+}
+.et2_taglist_small div.ms-sel-item {
+	white-space: nowrap;
+	overflow: hidden;
+}
+.et2_taglist_toggle.et2_taglist_small.et2_taglist_single::before {
+	right: 51px;
 }
 
 /* Taglist category */
@@ -1617,79 +1752,6 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 }
 .long_task .message {
 	height: inherit;
-}
-/**
-* et2_taglist
-*/
-.ms-ctn,
-.ms-res-ctn {
-  /* It doesn't really work smaller than this */
-  min-width: 150px;
-  border: solid 1px #bbbbbb;
-}
-.ms-ctn .loading {
-  position: relative;
-  margin: 0px auto -16px auto;
-  top: 5px;
-}
-.et2_taglist div.ms-sel-ctn .ms-close-btn {
-    width: 10px;
-    height: 10px;
-	background-position-y: -10px;
-	background-size: cover;
-	background-repeat: no-repeat;
-	margin: 2px -16px 0 10px;
-}
-.et2_taglist .ms-res-ctn {
-	position:absolute;
-	background: #FFF;
-	overflow-y: auto;
-	z-index: 9999;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #CCC;
-	left: -1px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	border-top: 0;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	padding: 1px 0px;
-}
-.et2_taglist div.ms-sel-ctn {
-	padding-right: 0px;
-}
-.et2_taglist div.ms-sel-ctn .ms-sel-item {
-	margin: 0px 5px 3px 0px;
-    padding: 3px 20px 3px 5px;
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    background-color: #e4e4e4;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
-    background-image: -webkit-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-    background-image: -moz-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-    background-image: -o-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-    background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-    background-clip: padding-box;
-    box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-    color: #333;
-    line-height: 13px;
-	font-size: 11px;
-    cursor: default;
-	word-break: break-all;
-}
-.et2_taglist div.ms-ctn input {
-	padding: 3px 5px;
-}
-.et2_taglist div.ms-ctn input:focus {
-	min-width: 10em;
-}
-
-.et2_taglist .ms-res-ctn .ms-res-item {
-	line-height: 13px;
-	padding: 3px 6px;
 }
 /**
 * et2_toolbar

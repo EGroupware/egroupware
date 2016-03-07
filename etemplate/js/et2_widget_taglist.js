@@ -24,7 +24,7 @@
  * @see http://nicolasbize.github.io/magicsuggest/
  * @augments et2_selectbox
  */
-var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
+var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IResizeable],
 {
 	attributes: {
 		"empty_label": {
@@ -144,6 +144,10 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 		{
 			// Undo the plugin
 		}
+		if(this._hide_timeout)
+		{
+			window.clearTimeout(this._hide_timeout);
+		}
 		this._super.apply(this, arguments);
 
 	},
@@ -203,6 +207,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 			useCommaKey: this.options.useCommaKey,
 			disabled: this.options.disabled || this.options.readonly,
 			editable: !(this.options.disabled || this.options.readonly),
+			// If there are select options, enable toggle on click so user can see them
+			toggleOnClick: !jQuery.isEmptyObject(this.options.select_options),
 			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
 			renderer: jQuery.proxy(this.options.listRenderer || this.selectionRenderer,this),
 			maxSelection: this.options.multiple ? this.options.maxSelection : 1,
@@ -215,6 +221,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 		if(this.options.height) {
 			this.div.css('height','');
 			this.taglist_options.maxDropHeight = parseInt(this.options.height);
+		}
+
+		// If only one, do not require minimum chars or the box won't drop down
+		if(this.options.multiple !== true)
+		{
+			this.taglist_options.minChars = 0;
 		}
 
 		this.taglist = this.taglist.magicSuggest(this.taglist_options);
@@ -242,7 +254,39 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 		// Keep focus when selecting from the list
 			.on("selectionchange", function() { $j('input',this.container).focus();})
 		// Bind keyup so we can start ajax search when we like
-			.on('keyup.start_search', jQuery.proxy(this._keyup, this));
+			.on('keyup.start_search', jQuery.proxy(this._keyup, this))
+			.on('blur', jQuery.proxy(this.resize, this))
+		// Hide tooltip when you're editing, it can get annoying otherwise
+			.on('focus', function() {
+				$j('.egw_tooltip').hide();
+			})
+		// Position absolute to break out of containers
+			.on('expand', jQuery.proxy(function(c) {			
+				var taglist = this.taglist;
+				var background = this.taglist.combobox.css('background');
+				var wrapper = jQuery(document.createElement('div'))
+					// Keep any additional classes
+					.addClass(this.div.attr('class'))
+				
+					.css('position','absolute')
+					.appendTo('body')
+					.position({my: 'left top', at: 'left bottom', of: this.taglist.container})
+				this.taglist.combobox
+					.width(this.taglist.container.innerWidth())
+					.appendTo(wrapper)
+					.css('background', background);
+				
+				// Close dropdown if click elsewhere, but wait until after or it
+				// will close immediately
+				window.setTimeout(function() {
+					$j('body').one('click',function() {
+						taglist.collapse();
+					})},1
+				);
+				this.$taglist.one('collapse', function() {
+					wrapper.remove();
+				})
+			},this));
 
 		// Unbind change handler of widget's ancestor to stop it from bubbling
 		// taglist has its own onchange
@@ -273,6 +317,10 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 				widget.onfocus.call(widget.taglist, e, widget);
 			});
 		}
+
+		// Do size limit checks
+		this.resize();
+		
 		return true;
 	},
 
@@ -455,13 +503,76 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 
 	_set_multiple: function(multiple) {
 		this._multiple = multiple === true ? true : false;
-		this.div.toggleClass('et2_taglist_single', !this._multiple);
-		this.div.toggleClass('et2_taglist_toggle', this.options.multiple === 'toggle');
+		this.div.toggleClass('et2_taglist_single', !this._multiple)
+			.toggleClass('et2_taglist_toggle', this.options.multiple === 'toggle')
+			.removeClass('ui-state-hover');
 		this.taglist.setMaxSelection(this._multiple ? this.options.maxSelection : 1);
 		if(!this._multiple && this.taglist.getValue().length > 1)
 		{
 			this.set_value(this.taglist.getValue()[0]);
 		}
+
+		// This changes sizes, so
+		this.resize();
+	},
+
+	/**
+	 * Set up this widget as size-restricted, so it cannot be as large as needed.
+	 * Therefore, we hide some things if the user is not interacting.
+	 */
+	_setup_small: function() {
+		this.div.addClass('et2_taglist_small');
+		var value_count = this.taglist.getValue().length;
+		if(value_count)
+		{
+			this.div.attr('data-content', value_count > 1 ? egw.lang('%1 selected',value_count) : '...');
+		}
+		else
+		{
+			this.div.attr('data-content','');
+		}
+
+		this.div.css('height','')
+		// Listen to hover on size restricted taglists
+			.on('mouseenter.small_size', jQuery.proxy(function() {
+				this.div.addClass('ui-state-hover');
+
+				if(this._hide_timeout)
+				{
+					window.clearTimeout(this._hide_timeout);
+				}
+				$j('.egw_tooltip').hide();
+			},this))
+			.on('mouseleave.small_size', jQuery.proxy(function(event) {
+					// Ignore tooltip
+					if(event.toElement && $j(event.toElement).hasClass('egw_tooltip')) return;
+
+					if(this._hide_timeout)
+					{
+						window.clearTimeout(this._hide_timeout);
+					}
+					this._hide_timeout = window.setTimeout(
+					jQuery.proxy(function() {
+						this.div.removeClass('ui-state-hover');
+						// Re-enable tooltip
+						this.set_statustext(this.options.statustext);
+						this._hide_timeout = null;
+					},this), 500);
+				},this)
+			);
+		this.$taglist
+			.on('blur.small_size', jQuery.proxy(function() {
+				this.div.removeClass('ui-state-active');
+				this.div.trigger('mouseleave');
+			},this))
+			.on('focus.small_size', jQuery.proxy(function() {
+				this.div.addClass('ui-state-active');
+
+				if(this._hide_timeout)
+				{
+					window.clearTimeout(this._hide_timeout);
+				}
+			},this))
 	},
 
 	/**
@@ -535,6 +646,36 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend(
 		// trigger blur on taglist to not loose just typed value
 		jQuery(this.taglist.container).trigger('blur');
 		return this.taglist.getValue();
+	},
+
+	/**
+	 * Resize lets us toggle the 'small' handling
+	 */
+	resize: function() {
+
+		this.div.off('.small_size');
+		
+		this.div.removeClass('et2_taglist_small');
+		
+		// How much space is needed for first one?
+		var min_width = $j('.ms-sel-item',this.div ).first().outerWidth() || this.div.children().first().width();
+
+		// Not ready yet
+		if(min_width === null) return;
+
+		min_width += (this.options.multiple === 'toggle' ? $j('.toggle',this.div).outerWidth() : 0);
+
+		// Not enough for one
+		if(min_width > this.div.width() || 
+			this.taglist.container.width() > this.div.width() || this.taglist.container.height() > this.div.height()
+		)
+		{
+			this._setup_small();
+		}
+		else
+		{
+			console.log("not small");
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_taglist, ["taglist"]);
