@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" height="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row class="dialogHeadbar">
+					<hbox span="all">
+						<button id="button[save]" class="$cont[hideIfSieveDisabled]"/>
+						<button id="button[apply]" class="$cont[hideIfSieveDisabled]"/>
+						<button id="button[cancel]" onclick="window.close();" class="$cont[hideIfSieveDisabled]"/>
+					</hbox>
+				</row>
+				<row>
+					<taglist id="mailbox" width="100%" maxSelection="1" empty_label="Folder" autocomplete_params='' allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
+				</row>
+				<row>
+					<grid id="grid" width="100%">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Rights"/>
+							</row>
+							<row class="row"  valign="top">
+								<vbox>
+									<taglist-account id="${row}[acc_id]" allowFreeEntries="true" maxSelection="1" account_type="@account_type" empty_label="Add user or email" />
+									<hbox>
+										<menulist>
+											<menupopup id="${row}[acl]" label="Rights" onchange="app.mail.acl_common_rights_selector"/>
+										</menulist>
+										<checkbox align="center" label="Recursively" id="${row}[acl_recursive]"/>
+										<button align="right" statustext="Delete this ACL" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account','Remove')"/>
+									</hbox>
+
+									<hbox class="aclDetails">
+										<checkbox align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights" label="L"/>
+										<checkbox align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights" label="R"/>
+										<checkbox align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights" label="S"/>
+										<checkbox align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights" label="W"/>
+										<checkbox align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights" label="I"/>
+										<checkbox align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights" label="P"/>
+										<checkbox align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights" label="C"/>
+										<checkbox align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights" label="D"/>
+										<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights" label="A"/>
+									</hbox>
+								</vbox>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

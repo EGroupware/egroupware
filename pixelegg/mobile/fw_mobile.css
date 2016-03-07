@@ -7606,6 +7606,12 @@ span.egw_tutorial_title {
     border: none;
     border-bottom: 1px solid #e6e6e6;
   }
+  body .et2_taglist_category span[class*="cat_"] {
+    height: 42px;
+  }
+  body .et2_button_icon {
+    height: 32px;
+  }
   body #popupMainDiv {
     /* Exceptional cases to not get the general left padding*/
   }
@@ -7634,8 +7640,20 @@ span.egw_tutorial_title {
     border-right: 0;
     border-radius: 0;
   }
+  body #popupMainDiv .et2_label .et2_selectbox {
+    padding-left: 8px;
+  }
   body #popupMainDiv ul.et2_selectbox li {
     padding-top: 13px;
+  }
+  body #popupMainDiv .et2_taglist input[type="text"] {
+    height: 36px;
+  }
+  body #popupMainDiv .et2_taglist .ms-sel-item {
+    margin-left: 3px;
+    line-height: 36px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   body #popupMainDiv .et2_label .et2_date_ro.et2_label {
     padding-left: 0;
