@@ -15,8 +15,9 @@ namespace EGroupware\Api\Storage;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
+// explicitly reference classes still in phpgwapi or otherwise outside api
 use html;
+use notifications;
 
 /**
  * Abstract base class for trackering:
