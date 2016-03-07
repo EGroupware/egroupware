@@ -7530,7 +7530,7 @@ span.egw_tutorial_title {
   body .et2_nextmatch table.egwGridView_grid tbody tr.selected td:last-child:before {
     content: " ";
     position: absolute;
-    background: #ffffff;
+    background: #696969;
     top: 0px;
     left: 0px;
     bottom: 0px;
@@ -7661,12 +7661,14 @@ span.egw_tutorial_title {
   }
   body #popupMainDiv .et2_details.et2_details_expanded {
     background-color: transparent;
+    height: 100%;
   }
   body #popupMainDiv .et2_details.et2_details_expanded .et2_details_title {
     display: inline-block;
     background-color: #F0F0F0;
     width: 100%;
     padding-top: 6px;
+    height: 32px;
   }
   body #popupMainDiv .et2_details {
     position: relative;
@@ -7695,6 +7697,9 @@ span.egw_tutorial_title {
     font-size: 12pt;
   }
   body .et2_fullWidth input[type="radio"] {
+    width: auto;
+  }
+  body td.et2_fullWidth {
     width: auto;
   }
   body div.et2_toolbar.et2_head_toolbar {

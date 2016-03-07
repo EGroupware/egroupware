@@ -6,7 +6,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -48,7 +48,7 @@
 	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
 		<grid width="100%">
 			<columns>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@view">
@@ -67,7 +67,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -82,7 +82,7 @@
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row>
@@ -108,7 +108,7 @@
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
-				<column width="600"/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
