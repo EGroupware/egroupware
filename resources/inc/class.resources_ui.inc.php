@@ -105,11 +105,8 @@ class resources_ui
 		$content = array();
 		$content['msg'] = $msg ? $msg : $_GET['msg'];
 
-		$content['nm']['header_row']	= 'resources.show.nm_right';
 		$content['nm']['get_rows']		= 'resources.resources_bo.get_rows';
 		$content['nm']['no_filter'] 	= False;
-		$content['nm']['filter_label']	= lang('Category');
-		$content['nm']['filter2_label']	= 'Display';
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
 		$content['nm']['bottom_too']	= true;
