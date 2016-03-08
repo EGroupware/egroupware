@@ -528,12 +528,14 @@ class infolog_ui
 		}
 
 		// switch cf column off, if we have no cf's
-		if (!$query['custom_fields']) $rows['no_customfields'] = true;
+		$rows['no_customfields'] = !$query['custom_fields'];
 
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
-			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		$rows['no_info_owner_info_responsible'] = (
+			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin'])
+		);
+		if($rows['no_info_owner_info_responsible'])
 		{
-			$rows['no_info_owner_info_responsible'] = true;
 			// dont show owner, responsible in the columnselection
 			$query['options-selectcols']['info_owner'] = $query['options-selectcols']['info_responsible'] = false;
 		}
