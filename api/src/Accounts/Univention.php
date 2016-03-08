@@ -13,6 +13,8 @@
 
 namespace EGroupware\Api\Accounts;
 
+use EGroupware\Api;
+
 // explicitly reference classes still in phpgwapi
 use emailadmin_account;
 

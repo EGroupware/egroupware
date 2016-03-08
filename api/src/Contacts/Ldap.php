@@ -20,7 +20,7 @@ use EGroupware\Api;
  * LDAP Backend for contacts, compatible with vars and parameters of eTemplate's so_sql.
  * Maybe one day this becomes a generalized ldap storage object :-)
  *
- * All values used to construct filters need to run through ldap::quote(),
+ * All values used to construct filters need to run through Api\Ldap::quote(),
  * to be save against LDAP query injection!!!
  */
 class Ldap
@@ -375,7 +375,7 @@ class Ldap
 	 */
 	protected function id_filter($id)
 	{
-		return '(|(entryUUID='.ldap::quote($id).')(uid='.ldap::quote($id).'))';
+		return '(|(entryUUID='.Api\Ldap::quote($id).')(uid='.Api\Ldap::quote($id).'))';
 	}
 
 	/**

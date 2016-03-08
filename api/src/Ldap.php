@@ -294,7 +294,7 @@ class Ldap
 	{
 		if (isset($GLOBALS['egw']->session))	// no availible in setup
 		{
-			Cache::getSession(__CLASS__, 'ldapServerInfo', $this->ldapserverinfo);
+			Cache::setSession(__CLASS__, 'ldapServerInfo', $this->ldapserverinfo);
 		}
 	}
 }

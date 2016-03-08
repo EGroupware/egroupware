@@ -54,7 +54,7 @@ class Ads
 	/**
 	 * Reference to our frontend
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	protected $frontend;
 
@@ -116,10 +116,10 @@ class Ads
 	/**
 	 * Constructor
 	 *
-	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
+	 * @param Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
 	 * @throws adLDAPException
 	 */
-	function __construct(accounts $frontend)
+	function __construct(Api\Accounts $frontend)
 	{
 		$this->frontend = $frontend;
 

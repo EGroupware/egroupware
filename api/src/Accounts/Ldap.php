@@ -124,14 +124,14 @@ class Ldap
 	/**
 	 * Reference to our frontend
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	private $frontend;
 
 	/**
 	 * Instance of the ldap class
 	 *
-	 * @var ldap
+	 * @var Api\Ldap
 	 */
 	private $ldap;
 
@@ -148,17 +148,18 @@ class Ldap
 	/**
 	 * Constructor
 	 *
-	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
+	 * @param Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
 	 */
-	function __construct(accounts $frontend)
+	function __construct(Api\Accounts $frontend)
 	{
 		$this->frontend = $frontend;
 
 		// enable the caching in the session, done by the accounts class extending this class.
 		$this->use_session_cache = true;
 
-		$this->ds = Api\Ldap::factory(true, $this->frontend->config['ldap_host'],
+		$this->ldap = Api\Ldap::factory(false, $this->frontend->config['ldap_host'],
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
+		$this->ds = $this->ldap->ds;
 
 		$this->user_context  = $this->frontend->config['ldap_context'];
 		$this->account_filter = $this->frontend->config['ldap_search_filter'];

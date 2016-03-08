@@ -667,8 +667,8 @@ class egw_minimal
 		'datetime' => 'egw_datetime',
 		'framework' => true,	// special handling in __get()
 		'template' => 'Template',
+		'session' => 'egw_session',	// otherwise $GLOBALS['egw']->session->appsession() fails
 		// classes moved to new api dir
-		'session' => 'EGroupware\\Api\\Session',
 		'ldap' => true,
 		'auth' => 'EGroupware\\Api\\Auth',
 	);

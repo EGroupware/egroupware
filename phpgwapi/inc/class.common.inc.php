@@ -755,7 +755,7 @@ class common
 	 *
 	 * @deprecated use Api\Image::invalidate()
 	 */
-	public static function delete_map()
+	public static function delete_image_map()
 	{
 		return Api\Image::invalidate();
 	}
