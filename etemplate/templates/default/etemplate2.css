@@ -1000,7 +1000,7 @@ ul.et2_link_string {
   font-weight: bold;
 }
 /* min-height to fix calculations done while hidden */
-.et2_taglist > div:first-child {
+.et2_taglist, .et2_taglist > div:first-child {
 	min-height: 23px;
 }
 /* Toggle single / multiple */
