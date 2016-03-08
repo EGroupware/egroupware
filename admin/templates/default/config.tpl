@@ -113,6 +113,13 @@
     </td>
    </tr>
 
+   <tr class="row_off">
+    <td>{lang_List_of_enabled_applications_on_mobile_template_(apps_must_be_comma_separated)}:</td>
+    <td>
+		{call_jdots_framework::mobile_app_list}
+    </td>
+   </tr>
+
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_security}</b></td>
    </tr>
