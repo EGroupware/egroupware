@@ -23,86 +23,31 @@
 /**
  * CSS for new eTemplate filemanager UI
  */
-.mimeHuge img {
-  width: 64px;
-  height: 64px;
+select#filemanager-index_filter {
+  width: 160px;
 }
-.fileName input {
-  font-weight: bold;
-  width: 100%;
+input#filemanager-index_path {
+  width: 300px;
+  font-size: 150%;
+  padding: 1px 5px 3px 2px;
 }
-.previewImage img {
-  max-width: 430px;
-  max-height: 275px;
-  border: 1px solid black;
-}
-.pathSelection {
-  font-weight: bold;
-}
-.pathSelection a {
-  font-weight: bold;
-  font-size: 120%;
-}
-.pathSelectionContainer {
-  width: 640px;
-  overflow: auto;
-}
-/**
- * Get path input to take all remaining width
- */
-#filemanager-index_filemanager-index-header_left {
+#filemanager-index_filemanager-index-header_right .et2_hbox > *,
+#filemanager-index_filemanager-index-header_row > *,
+#filemanager-index_filemanager-index-header_left .et2_hbox > * {
   float: left;
-  width: 100%;
-  margin-bottom: 2px;
 }
-div.filemanager_navigation {
-  position: relative;
-  width: 100%;
-  white-space: normal;
+#filemanager-index_filemanager-index-header_left .et2_file,
+#filemanager-index_filemanager-index-header_left .et2_file input {
+  width: 24px;
 }
-div.filemanager_navigation > * {
-  vertical-align: middle;
-}
-div.filemanager_navigation > img {
-  margin-top: 3px;
-}
-#filemanager-index_buttons {
-  float: right;
-}
-button#filemanager-index_button\[change_view\] {
-  margin-right: 20px;
-}
-div.filemanager_navigation > label {
-  position: absolute;
-  left: 56px;
-  right: 456px;
-  font-size: 140%;
-  white-space: nowrap;
-}
-div.filemanager_navigation > label > input {
-  width: 100%;
-}
-#filemanager-index_buttons div.et2_file {
-  margin: 2px 0 0 0;
-  vertical-align: top;
-  padding-right: 7px;
-}
-#filemanager-index_buttons div.et2_file span,
-#filemanager-index_buttons div.et2_file input {
-  width: 130px;
-  height: 16px;
-  top: 0;
-  background-position: 3px 3px;
-  margin: 0;
-  text-indent: 22px;
-  color: #666666;
-}
-#filemanager-index_buttons div.et2_file .progress {
-  width: auto;
-  margin: 0;
+#filemanager-index_filemanager-index-header_left .et2_file span {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background-position-x: 3px;
+  background-image: url(../../../pixelegg/images/add.png);
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-height: none;
+  text-indent: 100px;
 }
 /**
  * Tile view

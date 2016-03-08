@@ -294,7 +294,6 @@ class filemanager_ui
 					'parent_id'      => 'dir',
 					'is_parent'      => 'mime',
 					'is_parent_value'=> egw_vfs::DIR_MIME_TYPE,
-					'header_left'    => 'filemanager.index.header_left',
 					'favorites'      => true,
 					'placeholder_actions' => array('mkdir','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
@@ -492,9 +491,8 @@ class filemanager_ui
 		// Set view button to match current settings
 		if($content['nm']['view'] == 'tile')
 		{
-			$tpl->setElementAttribute('nm[buttons][button][change_view]','label',lang('List view'));
-			$tpl->setElementAttribute('nm[buttons][button][change_view]','image','list_row');
-
+			$tpl->setElementAttribute('nm[button][change_view]','statustext',lang('List view'));
+			$tpl->setElementAttribute('nm[button][change_view]','image','list_row');
 		}
 		// if initial load is done via GET request (idots template or share.php)
 		// get_rows cant call app.filemanager.set_readonly, so we need to do that here
