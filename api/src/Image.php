@@ -160,6 +160,10 @@ class Image
 			$app_map =& $map[$app];
 			if (true) $app_map = array();
 			$imagedirs = array();
+			if (html::$ua_mobile)
+			{
+				$imagedirs[] = '/'.$app.'/templates/mobile/images';
+			}
 			if ($app == 'phpgwapi')
 			{
 				$imagedirs[] = $GLOBALS['egw']->framework->template_dir.'/images';
