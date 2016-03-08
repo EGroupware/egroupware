@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package admin
- * @copyright (c) 2014 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014-16 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -82,7 +82,7 @@ class admin_account
 			}
 			// should we show extra ldap attributes home-directory and login-shell
 			$account['ldap_extra_attributes'] = $GLOBALS['egw_info']['server']['ldap_extra_attributes'] &&
-				get_class($GLOBALS['egw']->accounts->backend) === 'accounts_ldap';
+				get_class($GLOBALS['egw']->accounts->backend) === 'EGroupware\\Api\\Accounts\\Ldap';
 
 			$readonlys = array();
 
