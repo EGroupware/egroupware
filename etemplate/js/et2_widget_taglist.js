@@ -672,10 +672,6 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		{
 			this._setup_small();
 		}
-		else
-		{
-			console.log("not small");
-		}
 	}
 });}).call(this);
 et2_register_widget(et2_taglist, ["taglist"]);
