@@ -252,7 +252,7 @@ class Storage
 		{
 			if ($this->account_repository != $this->contact_repository)
 			{
-				$class = 'EGroupware\\Contacts\\'.ucfirst($this->account_repository);
+				$class = 'EGroupware\\Api\\Contacts\\'.ucfirst($this->account_repository);
 				$this->so_accounts = new $class();
 				$this->account_cols_to_search = $this->so_accounts->search_attributes;
 			}
