@@ -766,7 +766,7 @@ class timesheet_ui extends timesheet_bo
 			if(!$row['titleClass']) $row['titleClass'] = 'timesheet_titleDetails';
 
 		}
-		if (!$have_cats || $query['cat_id']) $rows['no_cat_id'] = true;
+		$rows['no_cat_id'] = (!$have_cats || $query['cat_id']);
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
 		if (!$rows['no_owner_col'] && $query['selectcols'] && !strpos($query['selectcols'],'ts_owner')) $rows['no_owner_col'] = 1;
