@@ -1811,6 +1811,35 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	padding: 3px;
 }
 /**
+ * Fileupload in toolbar or NM header
+ */
+.et2_toolbar div.et2_file, .nextmatch_header_row div.et2_file {
+	width: 145px;
+	margin-top: 1px;
+	padding-right: 4px;
+}
+.et2_toolbar div.et2_file span, .nextmatch_header_row div.et2_file span,
+.et2_toolbar div.et2_file input, .nextmatch_header_row div.et2_file input {
+	height: 16px;
+	top: 0;
+	margin: 0;
+	border-radius: 3px;
+	background-color: #fafafa;
+	border: 1px solid silver;
+	text-indent: 0;
+}
+/**
+ * Textbox in toolbar or NM header
+ */
+.et2_toolbar input.et2_textbox, .nextmatch_header_row input.et2_textbox {
+	height: 18px;
+	margin: 1px 4px 1px 0;
+	border-radius: 3px;
+	background-color: #fafafa;
+	border: 1px solid silver;
+	padding: 2px 5px 2px 2px;
+}
+/**
  * Daterange selection in NM header
  */
 .nextmatch_header_row span.et2_date[name$=date] {
@@ -2479,7 +2508,6 @@ td.avatar {
 .et2_searchbox .flex input{
 	height: 18px;
 	width: 100%;
-	padding-left: 5px;
 	border-color: silver;
 	border-radius: 3px;
 }
