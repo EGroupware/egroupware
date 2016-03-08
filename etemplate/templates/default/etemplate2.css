@@ -974,6 +974,7 @@ ul.et2_link_string {
 }
 .et2_taglist div.ms-ctn {
 	background-color: white;
+	padding-right: 0;
 }
 .et2_taglist div.ms-ctn input {
 	padding: 3px 5px;
