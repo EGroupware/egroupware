@@ -266,7 +266,7 @@ function egwPopupActionImplementation()
 				}
 				jQuery('.nm-mob-header .nm_action_header').toggleClass('back', _egw_active_menu);
 			}
-			
+
 			//Obtain the event object
 			if (!e)
 			{
@@ -291,7 +291,7 @@ function egwPopupActionImplementation()
 			}
 			return !e.cancelBubble;
 		};
-		
+
 		$j(_node).on('contextmenu', contextHandler);
 	};
 
@@ -561,7 +561,7 @@ function egwPopupActionImplementation()
 		var tree = {"root": []};
 
 		// Automatically add in Drag & Drop actions
-		if(this.auto_paste)
+		if(this.auto_paste && !egwIsMobile())
 		{
 			this._addCopyPaste(_links,_selected);
 		}
@@ -726,17 +726,17 @@ function egwPopupActionImplementation()
 				var target = $j(clipboard_action.data.target);
 				var old_select = target.css('user-select');
 				target.css('user-select','all');
-				
+
 				var range = document.createRange();
 				range.selectNode(clipboard_action.data.target);
 				window.getSelection().removeAllRanges();
 				window.getSelection().addRange(range);
 
 				target.css('user-select',old_select);
-				
+
 				var successful = false;
 				try {
-					// detect we are in IE via checking setActive, since it's 
+					// detect we are in IE via checking setActive, since it's
 					// only supported in IE, and make sure there's clipboardData object
 					if (typeof event.target.setActive !='undefined' && window.clipboardData)
 					{
