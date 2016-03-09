@@ -892,10 +892,12 @@ class Backup
 	/**
 	 * Backup all data in the form of a (compressed) csv file
 	 *
-	 * @param f resource file opened with fopen for writing
-	 * @todo use https://github.com/maennchen/ZipStream-PHP to not assamble all files in memmory
+	 * @param resource $f file opened with fopen for writing
+	 * @param boolean $lock_table =null true: allways, false: never, null: if no primary key
+	 *	default of null limits memory usage if there is no primary key, by locking table and use ROW_CHUCK
+	 * @todo use https://github.com/maennchen/ZipStream-PHP to not assemble all files in memmory
 	 */
-	function backup($f)
+	function backup($f, $lock_table=null)
 	{
 		//echo "function backup($f)<br>";	// !
 		@set_time_limit(0);
@@ -947,6 +949,10 @@ class Backup
 			// backups don't restore because of doublicate keys
 			$pk = $schema['pk'] && count($schema['pk']) == 1 ? $schema['pk'][0] : null;
 
+			if ($lock_table || empty($pk) && is_null($lock_table))
+			{
+				$this->db->Link_ID->RowLock($table);
+			}
 			$total = $max = 0;
 			do {
 				$num_rows = 0;
@@ -955,8 +961,10 @@ class Backup
 					// limit by maximum primary key already received
 					empty($pk) || !$max ? false : $pk.' > '.$this->db->quote($max, $schema['fd'][$pk]['type']),
 					__LINE__, __FILE__,
-					empty($pk) ? false : 0,					// if no primary key, query all rows
-					empty($pk) ? '' : 'ORDER BY '.$this->db->name_quote($pk).' ASC',	// order by primary key
+					// if no primary key, either lock table, or query all rows
+					empty($pk) ? ($lock_table !== false ? $total : false) : 0,
+					// if we have a primary key, order by it to ensure rows are not read double
+					empty($pk) ? '' : 'ORDER BY '.$this->db->name_quote($pk).' ASC',
 					false, self::ROW_CHUNK) as $row)
 				{
 					if (!empty($pk)) $max = $row[$pk];
@@ -968,7 +976,9 @@ class Backup
 					++$num_rows;
 				}
 			}
-			while(!empty($pk) && !($total % self::ROW_CHUNK) && $num_rows);
+			while((!empty($pk) || $lock_table !== false) && !($total % self::ROW_CHUNK) && $num_rows);
+
+			if (!$pk) $this->db->Link_ID->RollbackLock($table);
 		}
 		if(!$zippresent)  // save without files
 		{
