@@ -581,27 +581,6 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 				}
 			}
 		}
-		// Might be trying to disable a column
-		var col_refresh = false;
-		for(var column_index = 0; column_index < nm.columns.length; column_index++)
-		{
-			if(typeof nm.columns[column_index].disabled === 'string' &&
-				nm.columns[column_index].disabled[0] === '@')
-			{
-				col_refresh = true;
-				nm.dataview.columnMgr.getColumnById('col_'+column_index)
-					.set_visibility(
-						mgr.parseBoolExpression(nm.columns[column_index].disabled) ?
-						ET2_COL_VISIBILITY_DISABLED :
-						ET2_COL_VISIBILITY_VISIBLE
-					);
-			}
-		}
-		if(col_refresh)
-		{
-			nm.dataview.columnMgr.updated = true;
-			nm.dataview._updateColumns();
-		}
 
 		// If we're doing an autorefresh and the count decreases, preserve the
 		// selection or it will be lost when the grid rows are shuffled.  Increases

@@ -850,9 +850,9 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			for(var i = 0; i < _row.length; i++)
 			{
 				colName = '';
-				if(_row[i].disabled === true)
+				if(_row[i].disabled)
 				{
-					_colData[i].visible = false;
+					_colData[i].disabled = true;
 					continue;
 				}
 
@@ -873,14 +873,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 							}
 							// Resets field visibility too
 							_row[i].widget._getColumnName();
-							_colData[i].visible = !(negated || jQuery.isEmptyObject(_row[i].widget.options.fields));
+							_colData[i].disabled = negated || jQuery.isEmptyObject(_row[i].widget.options.fields);
 							break;
 						}
 					}
 					// Disable if there are no custom fields
 					if(jQuery.isEmptyObject(_row[i].widget.customfields))
 					{
-						_colData[i].visible = false;
+						_colData[i].disabled = true;
 						continue;
 					}
 					colName = _row[i].widget.id;
@@ -907,12 +907,12 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				{
 					if(columnDisplay[j] == colName)
 					{
-						_colData[i].visible = !negated;
+						_colData[i].disabled = negated;
 
 						continue RowLoop;
 					}
 				}
-				_colData[i].visible = negated;
+				_colData[i].disabled = !negated;
 			}
 		}
 	},
@@ -1030,7 +1030,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				_row[x].widget = et2_createWidget("label");
 			}
 		}
-		
+
 		// Get column display preference
 		this._applyUserPreferences(_row, _colData);
 
@@ -1047,18 +1047,12 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				"widget": _row[x].widget
 			},_colData[x]);
 
-			var visibility = (!_colData[x] || _colData[x].visible) ?
-				ET2_COL_VISIBILITY_VISIBLE :
-				ET2_COL_VISIBILITY_INVISIBLE;
-			if(_colData[x].disabled && _colData[x].disabled !=='' &&
-				this.getArrayMgr("content").parseBoolExpression(_colData[x].disabled))
-			{
-				visibility = ET2_COL_VISIBILITY_DISABLED;
-			}
+
 			columnData[x] = {
 				"id": "col_" + x,
 				"caption": this._genColumnCaption(_row[x].widget),
-				"visibility": visibility,
+				"visibility": (!_colData[x] || _colData[x].disabled) ?
+					ET2_COL_VISIBILITY_INVISIBLE : ET2_COL_VISIBILITY_VISIBLE,
 				"width": _colData[x] ? _colData[x].width : 0
 			};
 			if(_colData[x].minWidth)
@@ -1148,7 +1142,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				columnWidgets[x] = _row[x].widget;
 			}
 			// Pass along column alignment
-			if(_row[x].align && columnWidgets[x])
+			if(_row[x].align)
 			{
 				columnWidgets[x].align = _row[x].align;
 			}
@@ -1301,9 +1295,8 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		{
 			var col = columnMgr.columns[i];
 			var widget = this.columns[i].widget;
-			
-			if(col.caption && col.visibility !== ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-				col.visibility !== ET2_COL_VISIBILITY_DISABLED)
+
+			if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
 			{
 				columns[col.id] = col.caption;
 				if(col.visibility == ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
@@ -1376,8 +1369,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				for (var i = 0; i < columnMgr.columns.length; i++)
 				{
 					var col = columnMgr.columns[i];
-					if(col.caption && col.visibility !== ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-						col.visibility !== ET2_COL_VISIBILITY_DISABLED )
+					if(col.caption && col.visibility != ET2_COL_VISIBILITY_ALWAYS_NOSELECT )
 					{
 						visibility[col.id] = {visible: false};
 					}

@@ -21,7 +21,6 @@ var ET2_COL_VISIBILITY_ALWAYS = 0;
 var ET2_COL_VISIBILITY_VISIBLE = 1;
 var ET2_COL_VISIBILITY_INVISIBLE = 2;
 var ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
-var ET2_COL_VISIBILITY_DISABLED = 4;
 
 /**
  * Class which stores the data of a single column.
@@ -252,9 +251,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 			result.push({
 				"id": this.columns[i].id,
 				"width": this.getColumnWidth(i),
-				"visible": this.columns[i].visibility !== ET2_COL_VISIBILITY_INVISIBLE &&
-					this.columns[i].visibility !== ET2_COL_VISIBILITY_DISABLED
-
+				"visible": this.columns[i].visibility != ET2_COL_VISIBILITY_INVISIBLE
 			});
 		}
 
@@ -275,7 +272,6 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 				result[this.columns[i].id] = {
 					"caption": this.columns[i].caption,
 					"enabled": (this.columns[i].visibility != ET2_COL_VISIBILITY_ALWAYS) &&
-						(this.columns[i].visibility != ET2_COL_VISIBILITY_DISABLED) &&
 						(this.columns[i].type != ET2_COL_TYPE_NAME_ICON_FIXED),
 					"visible": this.columns[i].visibility != ET2_COL_VISIBILITY_INVISIBLE
 				};
@@ -331,9 +327,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 		for (var i = 0; i < this.columns.length; i++)
 		{
 			var col = this.columns[i];
-			if (col.visibility !== ET2_COL_VISIBILITY_INVISIBLE &&
-				col.visibility !== ET2_COL_VISIBILITY_DISABLED
-			)
+			if (col.visibility != ET2_COL_VISIBILITY_INVISIBLE)
 			{
 				// Some bounds sanity checking
 				if(col.fixedWidth > tw || col.fixedWidth < 0)
@@ -362,9 +356,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 		{
 			var w = 0;
 			var col = this.columns[i];
-			if (col.visibility != ET2_COL_VISIBILITY_INVISIBLE &&
-				col.visibility !== ET2_COL_VISIBILITY_DISABLED
-			)
+			if (col.visibility != ET2_COL_VISIBILITY_INVISIBLE)
 			{
 				if (col._larger)
 				{
@@ -403,8 +395,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 			// Pick the first relative column and use it
 			for(columnIndex = 0; columnIndex < this.columns.length; columnIndex++)
 			{
-				if(this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_INVISIBLE ||
-					col.visibility === ET2_COL_VISIBILITY_DISABLED ||
+				if(this.columns[columnIndex].visibility == ET2_COL_VISIBILITY_INVISIBLE ||
 					this.columnWidths[columnIndex] <= 0)
 				{
 					continue;
