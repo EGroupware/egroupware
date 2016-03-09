@@ -96,6 +96,7 @@ application '%1' not found (maybe not installed or misspelled)!	admin	en	Applica
 application name	admin	en	Application name
 application title	admin	en	Application title
 applications	admin	en	Applications
+applications available on mobile devices	admin	en	Applications available on mobile devices
 applications list	admin	en	Applications list
 applications run rights updated.	admin	en	Applications run rights updated.
 applies the changes	admin	en	Applies the changes
@@ -416,7 +417,6 @@ limit to members of	admin	en	Limit to members of
 list config settings	admin	en	List config settings
 list current sessions	admin	en	List current sessions
 list of current users	admin	en	List of current users
-list of enabled applications on mobile template (apps must be comma separated)	admin	en	List of enabled applications on mobile template (apps must be comma separated)
 log user-agent and action of changes in history-log of entries	admin	en	Log user-agent and action of changes in history-log of entries
 logged out	admin	en	Logged out
 login history	admin	en	Login history

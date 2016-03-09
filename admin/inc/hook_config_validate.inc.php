@@ -14,7 +14,7 @@ use EGroupware\Api;
 /*
   Set global flag to indicate for which config settings we have equally named validation methods
 */
-$GLOBALS['egw_info']['server']['found_validation_hook'] = array('vfs_image_dir');
+$GLOBALS['egw_info']['server']['found_validation_hook'] = array('vfs_image_dir','fw_mobile_app_list');
 
 /**
  * Check VFS dir exists and delete image map to recreate it, if vfs-image-dir changes
@@ -38,5 +38,24 @@ function vfs_image_dir($vfs_image_dir)
 
 		// Set the global now, or the old value will get re-loaded
 		$GLOBALS['egw_info']['server']['vfs_image_dir'] = $vfs_image_dir;
+	}
+}
+
+/**
+ * Do NOT store the default to allow changing it if more apps become available
+ *
+ * @param type $app_list
+ * @param \EGroupware\Api\Config $c
+ */
+function fw_mobile_app_list($app_list, Api\Config $c)
+{
+	// normalize lists
+	sort($app_list);
+	$default_list = explode(',', jdots_framework::DEFAULT_MOBILE_APPS);
+	sort($default_list);
+
+	if ($app_list == $default_list)
+	{
+		$c->config_data['fw_mobile_app_list'] = null;
 	}
 }

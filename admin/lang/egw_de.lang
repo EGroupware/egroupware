@@ -96,6 +96,7 @@ application '%1' not found (maybe not installed or misspelled)!	admin	de	Anwendu
 application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
+applications available on mobile devices	admin	de	Anwendungen die auf Mobilgeräten zur Verfügung stehen
 applications list	admin	de	Liste der Anwendungen
 applications run rights updated.	admin	de	Anwendungsrechte aktualisiert.
 applies the changes	admin	de	übernimmt Änderungen
@@ -416,7 +417,6 @@ limit to members of	admin	de	beschränken auf Mitglieder von
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
-list of enabled applications on mobile template (apps must be comma separated)	admin	de	Liste freigeschalteter Anwendung für Mobilgeräte (komma separiert)
 log user-agent and action of changes in history-log of entries	admin	de	Protokolliere Browser-Typ und Aktion von Änderungen in der History der Einträge
 logged out	admin	de	abgemeldet
 login history	admin	de	Login-Kontrolle

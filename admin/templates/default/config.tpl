@@ -114,7 +114,7 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_List_of_enabled_applications_on_mobile_template_(apps_must_be_comma_separated)}:</td>
+    <td>{lang_Applications_available_on_mobile_devices}:</td>
     <td>
 		{call_jdots_framework::mobile_app_list}
     </td>

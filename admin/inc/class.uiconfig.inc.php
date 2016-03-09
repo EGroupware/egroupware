@@ -124,7 +124,7 @@ class uiconfig
 					$c->config_data[$key] = $config;
 					if (in_array($key, (array)$GLOBALS['egw_info']['server']['found_validation_hook'], true) && function_exists($key))
 					{
-						call_user_func($key,$config);
+						call_user_func($key, $config, $c);
 						if($GLOBALS['config_error'])
 						{
 							$errors .= lang($GLOBALS['config_error']) . "\n";
