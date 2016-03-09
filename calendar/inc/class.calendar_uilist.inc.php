@@ -41,6 +41,7 @@ class calendar_uilist extends calendar_ui
 	var $date_filters = array(
 		'after'  => 'After current date',
 		'before' => 'Before current date',
+		'today'  => 'Today',
 		'week'   => 'Week',
 		'month'  => 'Month',
 		'all'	=> 'All events',
@@ -321,6 +322,13 @@ class calendar_uilist extends calendar_ui
 				$this->first = $search_params['start'] = egw_time::to($params['startdate'],'ts');
 				$this->last  = $search_params['end'] = strtotime('+1 day', $this->bo->date2ts($params['enddate']))-1;
 				$label = $this->bo->long_date($this->first,$this->last);
+				break;
+			case 'today':
+				$today = new egw_time();
+				$today->setTime(0, 0, 0);
+				$this->first = $search_params['start'] = $today->format('ts');
+				$today->setTime(23,59,59);
+				$this->last  = $search_params['end'] = $today->format('ts');
 				break;
 			case 'week':
 				$start = $this->bo->date2array($params['date'] ? $params['date'] : $this->date);
