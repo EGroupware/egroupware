@@ -14,6 +14,7 @@
 namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
+use ZipArchive;
 
 use html;
 
@@ -961,7 +962,7 @@ class Backup
 					if (!empty($pk)) $max = $row[$pk];
 					if ($total === 0) fwrite($f,"\ntable: $table\n".implode(',',array_keys($row))."\n");
 
-					array_walk($row,array('db_backup','escape_data'),$schema['fd']);
+					array_walk($row, array(__CLASS__, 'escape_data'), $schema['fd']);
 					fwrite($f,implode(',',$row)."\n");
 					++$total;
 					++$num_rows;
@@ -1154,7 +1155,7 @@ class Backup
 $line = '"de","NULL","ranking",NULL,NULL,"one backslash: \\\\ here","\\\\","use \\"yes\\", or \\"no, prefession\\"","benützen Sie \\"yes\\" oder \\"no, Beruf\\"",NULL';
 
 echo "<p>line='$line'</p>\n";
-$fields = db_backup::csv_split($line);
+$fields = Backup::csv_split($line);
 echo "<pre>".print_r($fields,true)."</pre>\n";
 //echo count($fields)." fields\n";
 */
