@@ -1089,6 +1089,7 @@ class infolog_ui
 				'enabled' => 'javaScript:app.infolog.has_parent',
 				'onExecute' => 'javaScript:app.infolog.view_parent',
 				'group' => $group,
+				'hideOnMobile' => true
 			),
 			'add' => array(
 				'caption' => 'Add',
@@ -1115,6 +1116,7 @@ class infolog_ui
 						'icon' => 'copy',
 					),
 				),
+				'hideOnMobile' => true
 			),
 			'no_notifications' => array(
 				'caption' => 'Do not notify',
@@ -1165,6 +1167,7 @@ class infolog_ui
 						'nm_action' => 'open_popup',
 					),
 				),
+				'hideOnMobile' => true
 			),
 			'close' => array(
 				'caption' => 'Close',
@@ -1245,6 +1248,7 @@ class infolog_ui
 			'postSubmit' => true,	// download needs post submit to work
 			'group' => $group,
 			'allowOnMultiple' => true,
+			'hideOnMobile' => true
 		);
 
 		$actions['delete'] = array(

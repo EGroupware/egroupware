@@ -868,7 +868,8 @@ class calendar_uilist extends calendar_ui
 		$actions = array(
 			'add' => array(
 				'caption' => 'Add',
-				'egw_open' => 'add-calendar'
+				'egw_open' => 'add-calendar',
+				'hideOnMobile' => true
 			),
 			'open' => array(
 				'caption' => 'Open',

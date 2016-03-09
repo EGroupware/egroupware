@@ -372,7 +372,8 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'contact_organisation',
 				'hideOnDisabled' => true,
 				// Children added below
-				'children' => array()
+				'children' => array(),
+				'hideOnMobile' => true
 			),
 			'open' => array(
 				'caption' => 'Open',
@@ -404,6 +405,7 @@ class addressbook_ui extends addressbook_bo
 						'icon' => 'copy',
 					),
 				),
+				'hideOnMobile' => true
 			),
 		);
 		// CRM view options
@@ -548,6 +550,7 @@ class addressbook_ui extends addressbook_bo
 				'prefix' => 'move_to_',
 				'group' => $group,
 				'disableClass' => 'rowNoDelete',
+				'hideOnMobile' => true
 			);
 		}
 		$actions['merge'] = array(
@@ -556,6 +559,7 @@ class addressbook_ui extends addressbook_bo
 			'hint' => 'Merge into first or account, deletes all other!',
 			'allowOnMultiple' => 'only',
 			'group' => $group,
+			'hideOnMobile' => true
 		);
 
 		++$group;	// integration with other apps: infolog, calendar, filemanager
@@ -580,7 +584,8 @@ class addressbook_ui extends addressbook_bo
 						'popup' => egw_link::get_registry('infolog', 'add_popup'),
 						'onExecute' => 'javaScript:app.addressbook.add_task',	// call server for org-view only
 					),
-				)
+				),
+				'hideOnMobile' => true
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
@@ -604,6 +609,7 @@ class addressbook_ui extends addressbook_bo
 						'onExecute' => 'javaScript:app.addressbook.add_cal',
 					),
 				),
+				'hideOnMobile' => true
 			);
 		}
 		//Send to email
@@ -664,6 +670,7 @@ class addressbook_ui extends addressbook_bo
 				'group' => $group,
 				// disable for for org-views, as it needs contact-ids
 				'disableClass' => 'contact_organisation',
+				'hideOnMobile' => true
 			);
 		}
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
@@ -687,6 +694,7 @@ class addressbook_ui extends addressbook_bo
 						'icon' => egw_vfs::mime_icon('text/vcard'),
 					),
 				),
+				'hideOnMobile' => true
 			);
 		}
 
@@ -703,6 +711,7 @@ class addressbook_ui extends addressbook_bo
 				'onExecute' => 'javaScript:app.addressbook.adb_mail_vcard',
 				'disableClass' => 'contact_organisation',
 				'hideOnDisabled' => true,
+				'hideOnMobile' => true
 			);
 		}
 		++$group;

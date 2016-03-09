@@ -195,6 +195,7 @@ class resources_ui
 				'url' => 'menuaction=resources.resources_ui.edit&accessory_of=-1',
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'group' => $group,
+				'hideOnMobile' => true
 			),
 			'view-acc' => array(
 				'caption' => 'View accessories',

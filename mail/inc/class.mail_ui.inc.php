@@ -438,7 +438,7 @@ class mail_ui
 							'actions'        => self::get_actions(),
 							'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 							'placeholder_actions' => array('composeasnew'),
-							
+
 						);
 					}
 					if (html::$ua_mobile) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
@@ -609,7 +609,7 @@ class mail_ui
 					'sieve' => array(
 						'caption' => 'Mail filter',
 						'onExecute' => 'javaScript:app.mail.edit_sieve',
-						
+
 						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
 						'icon' => 'etemplate/fav_filter',	// funnel
 						'hideOnMobile' => true
@@ -677,7 +677,7 @@ class mail_ui
 						);
 						break;
 				}
-				
+
 				$junkFolder = $this->mail_bo->getJunkFolder();
 				//error_log(__METHOD__.__LINE__.$junkFolder);
 				if ($junkFolder && !empty($junkFolder))
@@ -691,9 +691,9 @@ class mail_ui
 					);
 				}
 				$tree_actions['sieve']['group']	= $tree_actions['vacation']['group'] = ++$group;	// new group for filter
-				$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	= ++$group;	
-				
-				
+				$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	= ++$group;
+
+
 				// enforce global (group-specific) ACL
 				if (!mail_hooks::access('aclmanagement'))
 				{
@@ -721,10 +721,10 @@ class mail_ui
 
 				// sending preview toolbar actions
 				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
-				
+
 				// We need to send toolbar actions to client-side because view template needs them
 				if (html::$ua_mobile) $sel_options['toolbar'] = $this->get_toolbar_actions();
-				
+
 				//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
 				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['cat_id']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
 				$readonlys = $preserv = array();
@@ -955,6 +955,7 @@ class mail_ui
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 					),
 				),
+				'hideOnMobile' => true
 			),
 			'composeasnew' => array(
 				'caption' => 'Compose',
@@ -1063,6 +1064,7 @@ class mail_ui
 							'allowOnMultiple' => false,
 						),
 					),
+					'hideOnMobile' => true
 				),
 				'view' => array(
 					'caption' => 'View',
@@ -1102,6 +1104,7 @@ class mail_ui
 							'allowOnMultiple' => false,
 						),
 					),
+					'hideOnMobile' => true
 				),
 				'mark' => array(
 					'caption' => 'Set / Remove Flags',
@@ -1976,7 +1979,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		);
 		$actions['tracker']['toolbarDefault'] = true;
 		$actions['forward']['toolbarDefault'] = true;
-		
+
 		$compose = $actions['composeasnew'];
 		unset($actions['composeasnew']);
 		$actions = array_reverse($actions,true);
@@ -2527,7 +2530,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function vfsSaveAttachment($ids,$path)
 	{
 		//error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
-		
+
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); egw(window).close();';
@@ -2535,7 +2538,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$err=null;
 		$dupe_count = array();
 		$rememberServerID = $this->mail_bo->profileID;
-		
+
 		/**
 		 * Extract all parameteres from the given id
 		 * @param int $id message id ('::' delimited mailbox::uid::part-id::is_winmail::name)
@@ -2556,7 +2559,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				'icServer' => $hA['profileID']
 			);
 		};
-		
+
 		//Examine the first attachment to see if attachment
 		//is winmail.dat embedded attachments.
 		$isMultipleDownload=is_array($ids);
@@ -3757,7 +3760,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$response->call('app.mail.mail_reloadNode',$refreshData);
 
 	}
-	
+
 	/**
 	 * ResolveWinmail fetches the encoded attachments
 	 * from winmail.dat and will response expected structure back
@@ -3773,11 +3776,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function ajax_resolveWinmail ($_rowid)
 	{
 		$response = egw_json_response::get();
-		
+
 		$idParts = self::splitRowID($_rowid);
 		$uid = $idParts['msgUID'];
 		$mbox = $idParts['folder'];
-		
+
 		$attachments = $this->mail_bo->getMessageAttachments($uid, null, null, false,true,true,$mbox);
 		if (is_array($attachments))
 		{
@@ -3789,7 +3792,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$response->call('egw.message', lang('Can not resolve the winmail.dat attachment!'));
 		}
 	}
-	
+
 	/**
 	 * move folder
 	 *
