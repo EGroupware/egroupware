@@ -48,7 +48,6 @@ class admin_ui
 			'get_rows' => 'admin_ui::get_users',
 			'no_cat' => true,
 			'no_filter2' => true,
-			'filter_label' => 'Group',
 			'filter_no_lang' => true,
 			'lettersearch' => true,
 			'order' => 'account_lid',
@@ -59,7 +58,7 @@ class admin_ui
 		);
 		//$content['msg'] = 'Hi Ralf ;-)';
 		$sel_options['tree'] = $this->tree_data();
-		$sel_options['filter'] = array('' => lang('All'));
+		$sel_options['filter'] = array('' => lang('All groups'));
 		foreach(self::$accounts->search(array(
 			'type' => 'groups',
 			'start' => false,

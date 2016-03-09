@@ -715,64 +715,14 @@
 * Kategorien
 *
 ################################################################*/
-  div#admin-categories-index {
+  /*div#admin-categories-index{
+
     padding: 0px;
-  }
-  div#admin-categories-index div.ui-helper-clearfix {
-    height: 0px;
-  }
-  div#admin-categories-index div.et2_hbox_right {
-    margin-right: 0;
-    padding: 0;
-  }
-  /*ADD Button*/
-  button#admin-categories-index_add {
-    width: 32px;
-    /*border: 1px solid #0C5DA5;*/
-    margin: 6px 2px;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-    padding: -0.5em;
-    background-color: #e6e6e6 !important;
-    background-size: 16px 16px;
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 10px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 10px;
-    border-radius: 3px;
-    border-top-left-radius: 10px;
-    height: 24px;
-    margin: -2px 2px;
-  }
-  button#admin-categories-index_add:before {
-    content: "";
-    font-size: 2em;
-    color: #0c5da5;
-    line-height: 0.6em;
-    padding-left: 0.1em;
-    padding-right: 100em;
-  }
-  button#admin-categories-index_add:active {
-    background-color: #1aa200;
-  }
-  button#admin-categories-index_add:hover {
-    background-color: #189800 !important;
-    color: #ffc200;
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    -webkit-border-radius: 3px;
-    -webkit-border-top-left-radius: 10px;
-    -moz-border-radius: 3px;
-    -moz-border-radius-topleft: 10px;
-    border-radius: 3px;
-    border-top-left-radius: 10px;
-  }
-  button#admin-categories-index_add:active {
-    background-color: #1aa200 !important;
-  }
-  #admin-categories-index_filter {
-    top: 8px;
-  }
+
+    // save space above nextmatch
+    // set height to zero
+    div.ui-helper-clearfix { height: 0px;}
+}*/
   /*################################################################
 *
 * Favorites

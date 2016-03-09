@@ -2,11 +2,6 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.categories.index.right" template="" lang="" group="0" version="1.9.001">
-		<hbox>
-			<buttononly align="right" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
-		</hbox>
-	</template>
 	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
@@ -60,18 +55,11 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.categories.index.add" template="" lang="" group="0" version="1.9.001">
+		<buttononly lable="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
+	</template>
 	<template id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column/>
-				<column disabled="!@nm[selectcols]=/legacy_actions/"/>
-			</columns>
-			<rows>
-				<row>
-					<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_row="admin.categories.index.right"/>
-				</row>
-			</rows>
-		</grid>
+		<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_left="admin.categories.index.add"/>
 		<box class="action_popup prompt" id="owner_popup">
 			<vbox>
 				<description value="Change owner" class="promptheader"/>

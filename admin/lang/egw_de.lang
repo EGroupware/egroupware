@@ -81,6 +81,7 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 aliases	admin	de	E-Mail-Alias
 all applications	admin	de	Alle Anwendungen
 all categories	admin	de	Alle Kategorien
+all groups	admin	de	Alle Gruppen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen

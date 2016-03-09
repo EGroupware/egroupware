@@ -26,9 +26,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.customfields.header_add" template="" lang="" group="0" version="1.9.001">
-		<buttononly label="Add" id="add" onclick="egw.open_link('admin.customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]')+'&amp;use_private='+widget.getArrayMgr('content').getRoot().getEntry('use_private'),false,'450x380');"/>
-	</template>
 	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.9.001">
 		<grid readonly="true">
 			<columns>
@@ -85,19 +82,11 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.customfields.add" template="" lang="" group="0" version="1.9.001">
+		<buttononly label="Add" id="add" onclick="egw.open_link('admin.customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]')+'&amp;use_private='+widget.getArrayMgr('content').getRoot().getEntry('use_private'),false,'450x380');"/>
+	</template>
 	<template id="admin.customfields" template="" lang="" group="0" version="1.9.001">
-		<grid>
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<template id="@type_template" span="all"/>
-				</row>
-				<row>
-					<nextmatch id="nm" template="admin.customfields.fields" header_row="admin.customfields.header_add" span="all"/>
-				</row>
-			</rows>
-		</grid>
+		<template id="@type_template"/>
+		<nextmatch id="nm" template="admin.customfields.fields" header_left="admin.customfields.add"/>
 	</template>
 </overlay>
