@@ -196,7 +196,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		}
 
 		// MagicSuggest would replaces our div, so add a wrapper instead
-		this.taglist = $j('<div/>').prependTo(this.div);
+		this.taglist = $j('<div/>').appendTo(this.div);
 
 		this.taglist_options = jQuery.extend( {
 			// magisuggest can NOT work setting an empty autocomplete url, it will then call page url!
@@ -280,6 +280,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		// Position absolute to break out of containers
 			.on('expand', jQuery.proxy(function(c) {			
 				var taglist = this.taglist;
+				this.div.addClass('expanded');
 				var background = this.taglist.combobox.css('background');
 				var wrapper = jQuery(document.createElement('div'))
 					// Keep any additional classes
@@ -313,6 +314,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				);
 				this.$taglist.one('collapse', function() {
 					wrapper.remove();
+					widget.div.removeClass('expanded');
 				})
 			},this));
 
@@ -512,6 +514,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		disabled ? this.taglist.disable() : this.taglist.enable();
 	},
 
+	set_width: function(_width)
+	{
+		this.div.width(_width);
+		this.options.width = _width;
+	},
+
 	/**
 	 * Normally the widget will display 1 row (multiple off) or expand as needed
 	 * based on selected entries.  Setting row will limit the max height.
@@ -706,6 +714,9 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 
 		if(this.taglist == null) return;
 
+		// Switch to multiple if allowed and more than 1 value
+		this._set_multiple(this.options.multiple ? values.length > 1 : false);
+		
 		this.taglist.setSelection(values);
 	},
 

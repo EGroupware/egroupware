@@ -1004,7 +1004,7 @@ ul.et2_link_string {
   font-weight: bold;
 }
 /* min-height to fix calculations done while hidden */
-.et2_taglist, .et2_taglist > div:first-child {
+.et2_taglist, .et2_taglist > div.ms-ctn  {
 	min-height: 23px;
 }
 /* Toggle single / multiple */
@@ -1012,8 +1012,12 @@ ul.et2_link_string {
 }
 .et2_taglist_toggle > div.ms-ctn {
 	display: inline-block;
-    width: calc(100% - 40px);
-	padding-right: 2px
+    width: calc(100% - 16px);
+	padding-right: 2px;
+}
+.et2_taglist_toggle.ui-state-hover,
+.et2_taglist_toggle.ui-state-active {
+	z-index: 1;
 }
 .et2_taglist_toggle:not(.et2_taglist_single) .ms-ctn {
 /*    height: 100%;*/
@@ -1025,17 +1029,25 @@ ul.et2_link_string {
 	margin-left: -1px;
 	float: right;
 
-	width: 23px;
+	width: 25px;
 	height: 23px;
 	position: relative;
 
+	z-index: 5;
+
 	border: 1px solid #BBB;
+	background-color: white;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-image: url("../../../phpgwapi/templates/default/images/foldertree_nolines_minus.gif");
 }
-.et2_taglist_toggle.et2_taglist_single > div.toggle {
+
+.et2_taglist_toggle.et2_taglist_single:not(.expanded) > div.toggle {
+	display: none;
+}
+.et2_taglist_toggle.et2_taglist_single.expanded > div.toggle {
 	background-image: url("../../../phpgwapi/templates/default/images/foldertree_nolines_plus.gif");
+	display: block;
 }
 .et2_taglist_toggle:not(.et2_taglist_single) .ms-trigger {
     display: none;
@@ -1064,6 +1076,7 @@ div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 }
 .et2_taglist_single div.ms-sel-item > span:first-child {
 	max-width: 100%;
+	width: 100%;
 	display: inline-block;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -1074,7 +1087,7 @@ div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 .et2_taglist_single div.ms-sel-ctn .ms-close-btn {
 	position: relative;
 	top: 0px;
-	right: 5px;
+	right: 10px;
 	float: none;
 	display: inline-block;
 }
@@ -1093,7 +1106,7 @@ div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 	content: attr(data-content) '';
 	text-align: right;
 	position: absolute;
-	z-index: 1;
+	z-index: 10;
 	top: 1px;
 	bottom: 0px;
 	right: 0;
@@ -1105,16 +1118,18 @@ div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 	min-width: 25%;
 	background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 25%);
 }
+.et2_taglist_small:not(.et2_taglist_single) {
+	border-bottom: 1px solid silver;
+}
 div .et2_taglist_small.et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	max-width: calc(100% - 43px);
+	width: 100%;
 }
 .et2_taglist_toggle.et2_taglist_small::before {
-	right: 25px;
 }
 .et2_taglist_small.ui-state-hover,
 .et2_taglist_small.ui-state-active {
 	max-height: none;
-	max-width: 25em;
 	min-width: 15em;
 	background: white;
 	z-index: 5;

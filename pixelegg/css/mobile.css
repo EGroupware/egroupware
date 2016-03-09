@@ -1000,7 +1000,7 @@
     background-image: url("../images/minus.svg");
     background-size: 50%;
   }
-  .et2_taglist_toggle.et2_taglist_single > div.toggle {
+  .et2_taglist_toggle.et2_taglist_single.expanded > div.toggle {
     background-image: url("../images/plus.svg");
     background-size: 50%;
   }
