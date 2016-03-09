@@ -141,7 +141,7 @@ $checks = array(
 		'func' => 'extension_check',
 		'error' => lang('The PDO extension plus a database specific driver is needed by the VFS (virtual file system)!'),
 	),
-	'mysql' => array(
+	'mysqli' => array(
 		'func' => 'extension_check',
 		'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','mysql','MySQL')
 	),
