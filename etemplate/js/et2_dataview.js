@@ -406,43 +406,50 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 			if(this.columnMgr && this.columnMgr.columns[i])
 			{
 				column.addClass(this.columnMgr.columns[i].fixedWidth ? 'fixedWidth' : 'relativeWidth');
+				if(this.columnMgr.columns[i].visibility === ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+				{
+					column.addClass('noResize');
+				}
 			}
 
 			// make column resizable
 			var enc_column = self.columnMgr.getColumnById(col.id);
-			et2_dataview_makeResizeable(column, function(_w) {
+			if(enc_column.visibility !== ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+			{
+				et2_dataview_makeResizeable(column, function(_w) {
 
-				// User wants the column to stay where they put it, even for relative
-				// width columns, so set it explicitly first and adjust other relative
-				// columns to match.
-				if(this.relativeWidth)
-				{
-					// Set to selected width
-					this.set_width(_w + "px");
-					self.columnMgr.updated = true;
-					// Just triggers recalculation
-					self.columnMgr.getColumnWidth(0);
-
-					// Set relative widths to match
-					var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
-					this.set_width(_w / relative);
-					for(var i = 0; i < self.columnMgr.columns.length; i++)
+					// User wants the column to stay where they put it, even for relative
+					// width columns, so set it explicitly first and adjust other relative
+					// columns to match.
+					if(this.relativeWidth)
 					{
-						var col = self.columnMgr.columns[i];
-						if(col == this || col.fixedWidth) continue;
-						col.set_width(self.columnMgr.columnWidths[i] / relative);
-					}
-					// Triggers column change callback, which saves
-					self.updateColumns();
-				}
-				else
-				{
-					this.set_width(this.relativeWidth ? (_w / self.columnMgr.totalWidth) : _w + "px");
-					self.columnMgr.updated = true;
-					self.updateColumns();
-				}
+						// Set to selected width
+						this.set_width(_w + "px");
+						self.columnMgr.updated = true;
+						// Just triggers recalculation
+						self.columnMgr.getColumnWidth(0);
 
-			}, enc_column);
+						// Set relative widths to match
+						var relative = self.columnMgr.totalWidth - self.columnMgr.totalFixed + _w;
+						this.set_width(_w / relative);
+						for(var i = 0; i < self.columnMgr.columns.length; i++)
+						{
+							var col = self.columnMgr.columns[i];
+							if(col == this || col.fixedWidth) continue;
+							col.set_width(self.columnMgr.columnWidths[i] / relative);
+						}
+						// Triggers column change callback, which saves
+						self.updateColumns();
+					}
+					else
+					{
+						this.set_width(this.relativeWidth ? (_w / self.columnMgr.totalWidth) : _w + "px");
+						self.columnMgr.updated = true;
+						self.updateColumns();
+					}
+
+				}, enc_column);
+			}
 
 			// Store both nodes in the columnNodes array
 			this.columnNodes.push({

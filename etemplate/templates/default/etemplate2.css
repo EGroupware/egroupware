@@ -1637,6 +1637,10 @@ div.et2_progress > div {
 table.egwGridView_outer.egwResizing .fixedWidth {
   opacity: 0.5;
 }
+table.egwGridView_outer thead tr th.noResize:hover {
+    background-image: none;
+    background-color: inherit;
+}
 .egwResizeOverlay {
   position: fixed;
   width: 100%;

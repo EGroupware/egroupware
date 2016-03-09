@@ -107,12 +107,16 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			// Initialize the cell description objects
 			for (var x = 0; x < w; x++)
 			{
+				// Some columns (nm) we do not parse into a boolean
+				var col_disabled = typeof _colData[x].disabled == 'boolean' ?
+						_colData[x].disabled :
+						this.getArrayMgr("content").parseBoolExpression(_colData[x].disabled);
 				cells[y][x] = {
 					"td": null,
 					"widget": null,
 					"colData": _colData[x],
 					"rowData": _rowData[y],
-					"disabled": _colData[x].disabled || _rowData[y].disabled,
+					"disabled": col_disabled || _rowData[y].disabled,
 					"class": _colData[x]["class"],
 					"colSpan": 1,
 					"autoColSpan": false,
@@ -171,10 +175,22 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 	},
 
 	_fetchRowColData: function(columns, rows, colData, rowData) {
+		// Some things cannot be done inside a nextmatch - nm will do the expansion later
+		var nm = false;
+		var widget = this;
+		while(!nm && widget != this.getRoot())
+		{
+			nm = (widget._type == 'nextmatch');
+			widget = widget.getParent();
+		}
+
 		// Parse the columns tag
 		et2_filteredNodeIterator(columns, function(node, nodeName) {
 			var colDataEntry = this._getColDataEntry();
-			colDataEntry["disabled"] = this.getArrayMgr("content")
+			// This cannot be done inside a nm, it will expand it later
+			colDataEntry["disabled"] = nm ? 
+				et2_readAttrWithDefault(node, "disabled", "") : 
+				this.getArrayMgr("content")
 					.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
 			if (nodeName == "column")
 			{
@@ -254,12 +270,6 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 					// Old etemplate checked first two widgets, or first two box children
 					// This cannot be done inside a nextmatch - nm will do the expansion later
 					var nm = false;
-					var widget = this;
-					while(!nm && widget != this.getRoot())
-					{
-						nm = (widget._type == 'nextmatch');
-						widget = widget.getParent();
-					}
 					if(nm)
 					{
 						// No further checks for repeated rows
