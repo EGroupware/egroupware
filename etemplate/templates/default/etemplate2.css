@@ -966,11 +966,15 @@ ul.et2_link_string {
     line-height: 13px;
 	font-size: 11px;
     cursor: default;
-	word-break: break-all;
+	word-break: break-word;
+	white-space: normal;
+	max-width: calc(100% - 30px);
 }
 .et2_taglist.ui-state-hover,
 .et2_taglist.ui-state-active {
 	font-weight: inherit;
+	border: inherit;
+	background: inherit;
 }
 .et2_taglist div.ms-ctn {
 	background-color: white;
@@ -1005,12 +1009,14 @@ ul.et2_link_string {
 }
 /* Toggle single / multiple */
 .et2_taglist_toggle {
-	white-space: nowrap;
 }
 .et2_taglist_toggle > div.ms-ctn {
 	display: inline-block;
     width: calc(100% - 40px);
 	padding-right: 2px
+}
+.et2_taglist_toggle:not(.et2_taglist_single) .ms-ctn {
+/*    height: 100%;*/
 }
 .et2_taglist_toggle.et2_taglist_single > div.ms-ctn {
 	padding-right: 7px
@@ -1048,11 +1054,29 @@ ul.et2_link_string {
 div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	border: none;
 	background: inherit;
-	width: calc(100% - 43px);
 	margin-bottom: 0px;
 	padding-bottom: 6px;
 	white-space: nowrap;
 	overflow: hidden;
+}
+div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
+	width: calc(100% - 43px);
+}
+.et2_taglist_single div.ms-sel-item > span:first-child {
+	max-width: 100%;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.et2_taglist_toggle.et2_taglist_small.et2_taglist_single::before {
+	display: none;
+}
+.et2_taglist_single div.ms-sel-ctn .ms-close-btn {
+	position: relative;
+	top: 0px;
+	right: 5px;
+	float: none;
+	display: inline-block;
 }
 
 /* Taglist that is limited in size - does not grow */
@@ -1081,18 +1105,20 @@ div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	min-width: 25%;
 	background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 25%);
 }
+div .et2_taglist_small.et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
+	max-width: calc(100% - 43px);
+}
 .et2_taglist_toggle.et2_taglist_small::before {
 	right: 25px;
 }
 .et2_taglist_small.ui-state-hover,
 .et2_taglist_small.ui-state-active {
-	position: absolute;
 	max-height: none;
 	max-width: 25em;
 	min-width: 15em;
 	background: white;
 	z-index: 5;
-	margin-top: -14px;
+	margin-top: 0px;
 	transition-duration: 0s;
 	font-weight: normal;
 	overflow: visible;
@@ -1104,9 +1130,6 @@ div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 .et2_taglist_small div.ms-sel-item {
 	white-space: nowrap;
 	overflow: hidden;
-}
-.et2_taglist_toggle.et2_taglist_small.et2_taglist_single::before {
-	right: 51px;
 }
 
 /* Taglist category */

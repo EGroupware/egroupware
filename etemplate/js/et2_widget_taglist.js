@@ -526,7 +526,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		}
 		if(_rows)
 		{
-			var max = (25 * _rows) + _rows;
+			var border = this.taglist !== null ?
+				this.div.outerHeight(true) - this.taglist.container.innerHeight() :
+				0;
+			
+			var max = (25 * _rows) + _rows + border;
 			css['max-height'] = max+'px';
 			if(this._multiple)
 			{
@@ -729,6 +733,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		if(min_width === null) return;
 
 		min_width += (this.options.multiple === 'toggle' ? $j('.toggle',this.div).outerWidth() : 0);
+		min_width += this.taglist.trigger ? this.taglist.trigger.outerWidth(true) : 0;
 
 		// Not enough for one
 		if(min_width > this.div.width() || 
