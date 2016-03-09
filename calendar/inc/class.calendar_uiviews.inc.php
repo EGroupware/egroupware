@@ -1038,7 +1038,7 @@ class calendar_uiviews extends calendar_ui
 			'year'      => $this->year,
 			'month'     => $this->month,
 			'day'       => $this->day,
-			'owner'     => $this->owner	// num. id of the user, not necessary current user
+			'owner'     => $this->owner == 0 ? $this->user : $this->owner	// num. id of the user, not necessary current user
 		));
 
 		if(is_array($todo_label))
