@@ -1109,17 +1109,34 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 
 		var cache_id = widget._type+'_'+options_string;
 		var cache = egw.window.et2_selectbox.type_cache[cache_id];
-		if (typeof cache == 'undefined')
+
+		// Options for a selectbox in a nextmatch must be returned now, as the
+		// widget we have is not enough to set the options later.
+		var in_nextmatch = false;
+		if(typeof cache === 'undefined' || typeof cache.length === 'undefined')
+		{
+			var parent = widget._parent;
+			while(parent !== null && !in_nextmatch)
+			{
+				in_nextmatch = (parent._type === 'nextmatch')
+				parent = parent._parent;
+			}
+		}
+		if (typeof cache == 'undefined' || in_nextmatch)
 		{
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			egw.window.et2_selectbox.type_cache[cache_id] = egw.json(
+			var req = egw.json(
 				widget.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
 				[widget._type,options_string,attrs.value]
-			).sendRequest(true);
+			).sendRequest(!in_nextmatch);
+			if(typeof cache === 'undefined')
+			{
+				egw.window.et2_selectbox.type_cache[cache_id] = req;
+			}
+			cache = req;
 		}
-		cache = egw.window.et2_selectbox.type_cache[cache_id];
 		if(typeof cache.done == 'function')
 		{
 			// pending, wait for it
