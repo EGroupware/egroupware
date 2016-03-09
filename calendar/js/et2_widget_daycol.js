@@ -1012,7 +1012,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			return false;
 		}
 		// Header, but not the hidden event indicators that are in there
-		else if (this.header.has(_ev.target).length && !$j('.hiddenEventBefore',this.header).has(_ev.target) ||
+		else if (this.header.has(_ev.target).length && !$j('.hiddenEventBefore',this.header).has(_ev.target).length ||
 			this.header.is(_ev.target)
 		)
 		{

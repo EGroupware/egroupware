@@ -1322,7 +1322,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Get a little smarter with the context
 			if(!extra)
 			{
-				var context = {}
+				var context = {};
 				if(egw.dataGetUIDdata(_events[0].id) && egw.dataGetUIDdata(_events[0].id).data)
 				{
 					// Found data in global cache
@@ -1336,6 +1336,17 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						_events[0].iface.getWidget().getValue() :
 						_events[0].iface.getWidget().options.value || {}
 					extra = {};
+				}
+				// Try to pull whatever we can from the event
+				else if (jQuery.isEmptyObject(context) && _action.menu_context && (_action.menu_context.event.target))
+				{
+					var target = _action.menu_context.event.target;
+					while(target != null && target.parentNode && jQuery.isEmptyObject(target.dataset))
+					{
+						target = target.parentNode;
+					}
+
+					context = extra = target.dataset;
 				}
 				if(context.date) extra.date = context.date;
 				if(context.app) extra.app = context.app;

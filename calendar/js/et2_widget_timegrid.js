@@ -1643,6 +1643,25 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				}
 			}
 		}
+		// No time grid, click on a day
+		else if (this.options.granularity === 0 &&
+			($j(_ev.target).hasClass('event_wrapper') || $j(_ev.target).hasClass('.calendar_calDayCol'))
+		)
+		{
+			// Default handler to open a new event at the selected time
+			var target = $j(_ev.target).hasClass('event_wrapper') ? _ev.target.parentNode : _ev.target;
+			var options = {
+				date: target.dataset.date || this.options.date,
+				hour: target.dataset.hour || this._parent.options.day_start,
+				minute: target.dataset.minute || 0
+			};
+			if (this.options.owner != app.calendar.state.owner)
+			{
+				options.owner = this.options.owner;
+			}
+			this.egw().open(null, 'calendar', 'add', options, '_blank');
+			return false;
+		}
 	},
 
 	/**
