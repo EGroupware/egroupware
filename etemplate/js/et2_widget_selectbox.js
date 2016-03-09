@@ -1116,9 +1116,9 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 		if(typeof cache === 'undefined' || typeof cache.length === 'undefined')
 		{
 			var parent = widget._parent;
-			while(parent !== null && !in_nextmatch)
+			while(parent && !in_nextmatch)
 			{
-				in_nextmatch = (parent._type === 'nextmatch')
+				in_nextmatch =(parent && parent._type && parent._type === 'nextmatch')
 				parent = parent._parent;
 			}
 		}
