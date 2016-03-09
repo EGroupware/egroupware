@@ -720,8 +720,9 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		{
 			this._set_multiple(multiple);
 		}
-		
-		this.taglist.setSelection(values);
+
+		this.taglist.clear(true);
+		this.taglist.addToSelection(values,true);
 	},
 
 	getValue: function()
