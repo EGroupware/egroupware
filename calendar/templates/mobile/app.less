@@ -11,6 +11,7 @@
  * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
  */
 @import (reference) "../../../pixelegg/less/definitions.less";
+@import (less) "../../../pixelegg/mobile/app_colors.less";
 @import (less) "../pixelegg/app.css";
 /* tablets and smartphones  */
 @media all {
@@ -38,12 +39,12 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
-	
+
 	label[id^="calendar-list_"][id$="start]"]> time ,label[id^="calendar-list_"][id$="end]"]> time{
 		float: none;
 		color:#828282;
 	}
-	
+
 	.calDates .dash {
 		text-align: center;
 		padding: 0px 5px 0 5px !important;
@@ -53,6 +54,7 @@
 	}
 	#calendar-edit_category {max-width: 100%;}
 	#calendar-edit #calendar-edit_whole_day {margin:0;}
-	.quantity{margin-left:5px;} 
+	.quantity{margin-left:5px;}
 	#popupMainDiv .et2_date.calendar_alarm_date_display {padding-left: 3px;}
+	#calendar-toolbar {background-color: @calendar-color;}
 }

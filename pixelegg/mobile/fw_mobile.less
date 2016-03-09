@@ -12,7 +12,7 @@
 
 @import "../css/mobile.less";
 @import (reference) "../less/def_mobile.less";
-
+@import "app_colors.less";
 /********************************/
 /*								*/
 /*		MEDIA DEFINITION		*/
@@ -297,6 +297,8 @@
 				background: none;
 				box-shadow: none;
 				border:none;
+				filter:none;
+				-webkit-filter:none;
 			}
 			#egw_fw_main img[src$="svg"], #egw_fw_footer img[src$="svg"] {
 				background:none;
@@ -630,6 +632,7 @@
 				}
 				div.nm_appname_header {
 					width: 100%;
+					display: none;
 					position: absolute;
 					top: 0;
 					height: 50px;
@@ -641,7 +644,6 @@
 					font-weight: bold;
 					opacity:0.2;
 					text-align: center;
-					display: inline;
 					padding-top: 13px;
 					z-index:-1;
 				}

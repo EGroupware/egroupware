@@ -1,0 +1,72 @@
+/**
+ *
+ * Mobile FW - Applications colors
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ * Pixleegg Template app.css
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package Mobile Framework
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+
+
+// Color code for applications
+@addressbook-color: #333399;
+@admin-color: #0073ce;
+@bookmarks-color: #db0087;
+@calendar-color: #CC0033;
+@filemanager-color:#F9d730;
+@infolog-color: #FFB936;
+@mail-color:#47b2d4;
+@projectmanager-color: #75de27;
+@resources-color: #009966;
+@timesheet-color:#9d15ea;
+@tracker-color: #006666;
+
+
+// Addressbook
+div[id^="addressbook-"],form[id^="addressbook-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @addressbook-color;}
+}
+// Admin
+div[id^="admin-"],form[id^="admin-"] {
+	.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @admin-color;}
+}
+// Bookmarks
+div[id^="bookmarks-"],form[id^="bookmarks-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @bookmarks-color;}
+}
+// Calendar
+div[id^="calendar-"],form[id^="calendar-"]{
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @calendar-color;}
+}
+// Filemanager
+div[id^="filemanager-"],form[id^="filemanager-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @filemanager-color;}
+}
+// Infolog
+div[id^="infolog-"],form[id^="infolog-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @infolog-color;}
+}
+// Mail
+div[id^="mail-"],form[id^="mail-"] {
+	.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @mail-color;}
+}
+// Projectmanager
+div[id^="projectmanager-"],form[id^="projectmanager-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @projectmanager-color;}
+}
+// Resources
+div[id^="resources-"],form[id^="resources-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @resources-color;}
+}
+// Timesheet
+div[id^="timesheet-"],form[id^="timesheet-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @timesheet-color;}
+}
+// Tracker
+div[id^="tracker-"],form[id^="tracker-"] {
+	.nm_favorites_div .et2_dropdown button:nth-child(2),.plus_button,.search.nm-mob-header,.dialogHeadbar {background-color: @tracker-color;}
+}

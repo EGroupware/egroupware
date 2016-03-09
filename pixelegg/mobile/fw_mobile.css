@@ -6895,6 +6895,124 @@ span.egw_tutorial_title {
     top: 140px;
   }
 }
+/**
+ *
+ * Mobile FW - Applications colors
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ * Pixleegg Template app.css
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@stylite.de>
+ * @package Mobile Framework
+ * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
+ */
+div[id^="addressbook-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="addressbook-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="addressbook-"] .plus_button,
+form[id^="addressbook-"] .plus_button,
+div[id^="addressbook-"] .search.nm-mob-header,
+form[id^="addressbook-"] .search.nm-mob-header,
+div[id^="addressbook-"] .dialogHeadbar,
+form[id^="addressbook-"] .dialogHeadbar {
+  background-color: #333399;
+}
+div[id^="admin-"] .plus_button,
+form[id^="admin-"] .plus_button,
+div[id^="admin-"] .search.nm-mob-header,
+form[id^="admin-"] .search.nm-mob-header,
+div[id^="admin-"] .dialogHeadbar,
+form[id^="admin-"] .dialogHeadbar {
+  background-color: #0073ce;
+}
+div[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="bookmarks-"] .plus_button,
+form[id^="bookmarks-"] .plus_button,
+div[id^="bookmarks-"] .search.nm-mob-header,
+form[id^="bookmarks-"] .search.nm-mob-header,
+div[id^="bookmarks-"] .dialogHeadbar,
+form[id^="bookmarks-"] .dialogHeadbar {
+  background-color: #db0087;
+}
+div[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="calendar-"] .plus_button,
+form[id^="calendar-"] .plus_button,
+div[id^="calendar-"] .search.nm-mob-header,
+form[id^="calendar-"] .search.nm-mob-header,
+div[id^="calendar-"] .dialogHeadbar,
+form[id^="calendar-"] .dialogHeadbar {
+  background-color: #cc0033;
+}
+div[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="filemanager-"] .plus_button,
+form[id^="filemanager-"] .plus_button,
+div[id^="filemanager-"] .search.nm-mob-header,
+form[id^="filemanager-"] .search.nm-mob-header,
+div[id^="filemanager-"] .dialogHeadbar,
+form[id^="filemanager-"] .dialogHeadbar {
+  background-color: #f9d730;
+}
+div[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="infolog-"] .plus_button,
+form[id^="infolog-"] .plus_button,
+div[id^="infolog-"] .search.nm-mob-header,
+form[id^="infolog-"] .search.nm-mob-header,
+div[id^="infolog-"] .dialogHeadbar,
+form[id^="infolog-"] .dialogHeadbar {
+  background-color: #ffb936;
+}
+div[id^="mail-"] .plus_button,
+form[id^="mail-"] .plus_button,
+div[id^="mail-"] .search.nm-mob-header,
+form[id^="mail-"] .search.nm-mob-header,
+div[id^="mail-"] .dialogHeadbar,
+form[id^="mail-"] .dialogHeadbar {
+  background-color: #47b2d4;
+}
+div[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="projectmanager-"] .plus_button,
+form[id^="projectmanager-"] .plus_button,
+div[id^="projectmanager-"] .search.nm-mob-header,
+form[id^="projectmanager-"] .search.nm-mob-header,
+div[id^="projectmanager-"] .dialogHeadbar,
+form[id^="projectmanager-"] .dialogHeadbar {
+  background-color: #75de27;
+}
+div[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="resources-"] .plus_button,
+form[id^="resources-"] .plus_button,
+div[id^="resources-"] .search.nm-mob-header,
+form[id^="resources-"] .search.nm-mob-header,
+div[id^="resources-"] .dialogHeadbar,
+form[id^="resources-"] .dialogHeadbar {
+  background-color: #009966;
+}
+div[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="timesheet-"] .plus_button,
+form[id^="timesheet-"] .plus_button,
+div[id^="timesheet-"] .search.nm-mob-header,
+form[id^="timesheet-"] .search.nm-mob-header,
+div[id^="timesheet-"] .dialogHeadbar,
+form[id^="timesheet-"] .dialogHeadbar {
+  background-color: #9d15ea;
+}
+div[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="tracker-"] .plus_button,
+form[id^="tracker-"] .plus_button,
+div[id^="tracker-"] .search.nm-mob-header,
+form[id^="tracker-"] .search.nm-mob-header,
+div[id^="tracker-"] .dialogHeadbar,
+form[id^="tracker-"] .dialogHeadbar {
+  background-color: #006666;
+}
 /********************************/
 /*								*/
 /*		MEDIA DEFINITION		*/
@@ -7133,6 +7251,8 @@ span.egw_tutorial_title {
     background: none;
     box-shadow: none;
     border: none;
+    filter: none;
+    -webkit-filter: none;
   }
   body #egw_fw_basecontainer #egw_fw_main img[src$="svg"],
   body #egw_fw_basecontainer #egw_fw_footer img[src$="svg"] {
@@ -7466,6 +7586,7 @@ span.egw_tutorial_title {
   }
   body .et2_nextmatch .nm-mob-header div.nm_appname_header {
     width: 100%;
+    display: none;
     position: absolute;
     top: 0;
     height: 50px;
@@ -7477,7 +7598,6 @@ span.egw_tutorial_title {
     font-weight: bold;
     opacity: 0.2;
     text-align: center;
-    display: inline;
     padding-top: 13px;
     z-index: -1;
   }
