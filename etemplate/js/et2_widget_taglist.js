@@ -715,7 +715,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		if(this.taglist == null) return;
 
 		// Switch to multiple if allowed and more than 1 value
-		this._set_multiple(this.options.multiple ? values.length > 1 : false);
+		var multiple = this.options.multiple ? values.length > 1 : false;
+		if(multiple !== this._multiple)
+		{
+			this._set_multiple(multiple);
+		}
 		
 		this.taglist.setSelection(values);
 	},
