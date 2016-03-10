@@ -593,7 +593,14 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		this._multiple = multiple === true ? true : false;
 		this.div.toggleClass('et2_taglist_single', !this._multiple)
 			.toggleClass('et2_taglist_toggle', this.options.multiple === 'toggle')
-			.removeClass('ui-state-hover');
+			.removeClass('ui-state-hover')
+			.off('click.single');
+		if(this._multiple == false)
+		{
+			this.div.on('click.single', jQuery.proxy(function() {
+				this.taglist.expand();
+			},this));
+		}
 		this.taglist.setMaxSelection(this._multiple ? this.options.maxSelection : 1);
 		if(!this._multiple && this.taglist.getValue().length > 1)
 		{
