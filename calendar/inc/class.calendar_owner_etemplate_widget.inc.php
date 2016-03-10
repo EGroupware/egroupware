@@ -50,9 +50,13 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 		foreach($list as $type)
 		{
 			$account_options = array('account_type' => $type);
-			$accounts += accounts::link_query('',$account_options);
+			$accounts_type = accounts::link_query('',$account_options);
+			if($type == 'accounts')
+			{
+				$accounts_type = array_intersect_key($accounts_type, $GLOBALS['egw']->acl->get_grants('calendar'));
+			}
+			$accounts += $accounts_type;
 		}
-		$accounts = array_intersect_key($accounts, $GLOBALS['egw']->acl->get_grants('calendar'));
 		$sel_options += array_map(
 			function($account_id, $account_name) {
 				return array(
