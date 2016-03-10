@@ -534,7 +534,7 @@
 					background-image: url(../images/dots.svg);
 					background-position: center;
 					background-repeat: no-repeat;
-					margin-right:5px;
+					margin-right:2px;
 					border-left:1px solid silver;
 					border:0;
 					color: white;
@@ -549,6 +549,8 @@
 				}
 				button.nm_action_header.back {
 					background-image: url(../images/cancelled.svg);
+					-webkit-filter: none!important;
+					background-color: white !important;
 				}
 				div.nm_favorites_div {
 					background-position: center;
@@ -607,6 +609,8 @@
 				}
 				button.nm_toggle_header_on {
 					background-image: url(../images/cancelled.svg);
+					-webkit-filter: none!important;
+					background-color: white !important;
 				}
 				input[type="search"] {
 					width: 50px;
@@ -1064,6 +1068,7 @@
 				top:0;
 				outline: none;
 				z-index: 100;
+				border-radius: 0;
 			}
 			span.ui-icon.clear{
 				top: 0px;
@@ -1079,6 +1084,7 @@
 			}
 			.flex{
 				width:100%;
+				position: absolute;
 			}
 		}
 

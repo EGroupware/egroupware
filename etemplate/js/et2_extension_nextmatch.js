@@ -1030,7 +1030,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				_row[x].widget = et2_createWidget("label");
 			}
 		}
-		
+
 		// Get column display preference
 		this._applyUserPreferences(_row, _colData);
 
@@ -1306,7 +1306,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		{
 			var col = columnMgr.columns[i];
 			var widget = this.columns[i].widget;
-			
+
 			if(col.caption && col.visibility !== ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
 				col.visibility !== ET2_COL_VISIBILITY_DISABLED)
 			{
@@ -2303,7 +2303,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		// searchbox widget options
 		var searchbox_options = {
 			id:"search",
-			overlay:(typeof settings.searchbox != 'undefined' && typeof settings.searchbox.overlay != 'undefined')?settings.searchbox.overlay:Boolean(egwIsMobile()),
+			overlay:(typeof settings.searchbox != 'undefined' && typeof settings.searchbox.overlay != 'undefined')?settings.searchbox.overlay:false,
 			onchange:function(){
 				self.nextmatch.applyFilters({search: this.get_value()});
 			},

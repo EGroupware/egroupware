@@ -7437,7 +7437,7 @@ form[id^="tracker-"] .dialogHeadbar {
     background-image: url(../images/dots.svg);
     background-position: center;
     background-repeat: no-repeat;
-    margin-right: 5px;
+    margin-right: 2px;
     border-left: 1px solid silver;
     border: 0;
     color: white;
@@ -7456,6 +7456,8 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body .et2_nextmatch .nm-mob-header button.nm_action_header.back {
     background-image: url(../images/cancelled.svg);
+    -webkit-filter: none!important;
+    background-color: white !important;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     background-position: center;
@@ -7511,6 +7513,8 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on {
     background-image: url(../images/cancelled.svg);
+    -webkit-filter: none!important;
+    background-color: white !important;
   }
   body .et2_nextmatch .nm-mob-header input[type="search"] {
     width: 50px;
@@ -7955,6 +7959,7 @@ form[id^="tracker-"] .dialogHeadbar {
     top: 0;
     outline: none;
     z-index: 100;
+    border-radius: 0;
   }
   body .et2_searchbox.expanded span.ui-icon.clear {
     top: 0px;
@@ -7970,6 +7975,7 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body .et2_searchbox.expanded .flex {
     width: 100%;
+    position: absolute;
   }
   body img.et2_button_icon[src*="svg"] {
     background: none;

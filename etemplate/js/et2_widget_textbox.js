@@ -490,6 +490,7 @@ var et2_searchbox = (function(){ "use strict"; return et2_textbox.extend(
 			},
 
 			blur: function(event){
+				if (egwIsMobile()) return;
 				if (!event.relatedTarget || !jQuery(event.relatedTarget.parentNode).hasClass('et2_searchbox'))
 				{
 					self._show_hide((!self.options.overlay && self.get_value()));
@@ -545,8 +546,7 @@ var et2_searchbox = (function(){ "use strict"; return et2_textbox.extend(
 	 */
 	_searchToggleState:function()
 	{
-		// Not applied for fix option
-		if (this.options.fix) return;
+		if (this.options.fix || egwIsMobile()) return;
 
 		if (!this.get_value())
 		{
