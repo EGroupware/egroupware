@@ -1656,8 +1656,11 @@ class mail_compose
 
 		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 			foreach($attachments as $attachment) {
+				//error_log(__METHOD__.__LINE__.array2string($attachment));
 				$cid = $attachment['cid'];
-				preg_match("/[cid:{$cid}]/", $bodyParts['0']['body'], $match);
+				$match=null;
+				preg_match("/cid:{$cid}/", $bodyParts['0']['body'], $match);
+				//error_log(__METHOD__.__LINE__.'searching for cid:'."/cid:{$cid}/".'#'.$r.'#'.array2string($match));
 				if (!$match || !$attachment['cid'])
 				{
 					$this->addMessageAttachment($_uid, $attachment['partID'],
@@ -2565,8 +2568,14 @@ class mail_compose
 								$success = false;
 								error_log(__METHOD__.__LINE__.$msg);
 							}
+						} else {
+							error_log(__METHOD__.__LINE__.': original message ('.$pMuid.') has attachments and lastDrafted ID ('.$duid.') equals the former');
 						}
+					} else {
+						error_log(__METHOD__.__LINE__." No current draftID (".$draft_id."), or no lastDrafted Info (".$content['lastDrafted'].") or the former being equal:".array2string($content)."(, action=$action)");
 					}
+				} else {
+					error_log(__METHOD__.__LINE__.' No headerdata found for messageUID='.$messageUid.' in Folder:'.$folder.':'.array2string($content)."(, action=$action)");
 				}
 			}
 			else
