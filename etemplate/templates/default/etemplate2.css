@@ -2553,6 +2553,7 @@ td.avatar {
 	width: 100%;
 	border-color: silver;
 	border-radius: 3px;
+	padding-right: 20px;
 }
 .et2_searchbox button.et2_button.toolbar_toggled {
 	background-color: rgba(70, 155, 221, 0.16);
@@ -2563,14 +2564,14 @@ td.avatar {
 	background-position: -95px -126px;
 	position: absolute;
 	float: right;
-	right: 12px;
+	right: 8px;
 	top: 3px;
 }
 .et2_searchbox .flex {
 	width: 120px;
 	position:relative;
 	display: inline-block;
-	padding-right: 12px;
+	padding-right: 28px;
 	float: right;
 }
 .et2_searchbox .flex.overlay {
