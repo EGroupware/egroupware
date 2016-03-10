@@ -277,6 +277,20 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				$j('.egw_tooltip').hide();
 				widget.div.addClass('ui-state-active');
 			})
+			// If not using autoSelect, avoid some errors with selection starting
+			// with the group
+			.on('load expand', function() {
+				if(widget.taglist && widget.taglist_options.groupBy)
+				{
+					window.setTimeout(function() {
+						if(widget && widget.taglist.combobox)
+						{
+							widget.taglist.combobox.find('.ms-res-group.ms-res-item-active')
+								.removeClass('ms-res-item-active');
+						}
+					},1);
+				}
+			})
 		// Position absolute to break out of containers
 			.on('expand', jQuery.proxy(function(c) {			
 				var taglist = this.taglist;
@@ -714,11 +728,14 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 
 		if(this.taglist == null) return;
 
-		// Switch to multiple if allowed and more than 1 value
-		var multiple = this.options.multiple ? values.length > 1 : false;
-		if(multiple !== this._multiple)
+		// Switch multiple according to attribute and more than 1 value
+		if(this.options.multiple !== true)
 		{
-			this._set_multiple(multiple);
+			var multiple = this.options.multiple ? values.length > 1 : false;
+			if(multiple !== this._multiple)
+			{
+				this._set_multiple(multiple);
+			}
 		}
 
 		this.taglist.clear(true);
@@ -785,8 +802,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 		},
 	},
 	lib_options: {
-		minChars: 2,
-		toggleOnClick: true
+		minChars: 2
 	},
 
 	init:function ()
@@ -1082,7 +1098,6 @@ var et2_taglist_category = (function(){ "use strict"; return et2_taglist.extend(
 		}
 	},
 	lib_options: {
-		toggleOnClick: true
 	},
 
 	init: function() {

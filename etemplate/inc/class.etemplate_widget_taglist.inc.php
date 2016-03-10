@@ -107,7 +107,7 @@ class etemplate_widget_taglist extends etemplate_widget
 
 			foreach((array) $value as $key => $val)
 			{
-				if(!$this->attrs['allowFreeEntries'] && !array_key_exists($val,$allowed))
+				if(count($allowed) && !$this->attrs['allowFreeEntries'] && !array_key_exists($val,$allowed))
 				{
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
 					unset($value[$key]);
@@ -131,6 +131,10 @@ class etemplate_widget_taglist extends etemplate_widget
 			if ($ok && $value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+			}
+			if($this->attrs['multiple'] == false)
+			{
+				$value = array_shift($value);
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			// returning null instead of array(), as array() will be overwritten by etemplate_new::complete_array_merge()
