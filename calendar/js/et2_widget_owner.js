@@ -68,18 +68,7 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 		// onChange fired when losing focus, which is different from normal
 		this._oldValue = this.taglist.getValue();
 		this.$taglist
-			.on('focus', function() {widget.taglist.expand();})
-			// Since not using autoSelect, avoid some errors with selection starting
-			// with the group
-			.on('load expand', function() {
-				window.setTimeout(function() {
-					if(widget && widget.div)
-					{
-						widget.div.find('.ms-res-item-active')
-							.removeClass('ms-res-item-active');
-					}
-				},1);
-			});
+			.on('focus', function() {widget.taglist.expand();});
 
 
 		return true;
