@@ -7236,6 +7236,10 @@ form[id^="tracker-"] .dialogHeadbar {
     width: 100%;
     height: 46px !important;
   }
+  body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
+    filter: none;
+    -webkit-filter: none;
+  }
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_hk {
     width: 100%;
   }
