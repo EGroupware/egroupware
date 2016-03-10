@@ -5680,7 +5680,7 @@ class emailadmin_imapbase
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
 			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding, $fetchAsBinary),
-			array('encoding' => $encoding));
+			array('encoding' => (!$fetchAsBinary&&!$encoding?'8bit':$encoding)));
 
 		return $part;
 	}
@@ -6625,6 +6625,7 @@ class emailadmin_imapbase
 		{
 			$structure = Horde_Mime_Part::parseMessage($message);
 			$mailer->setBasePart($structure);
+			//error_log(__METHOD__.__LINE__.':'.array2string($structure));
 
 			// unfortunately parseMessage does NOT return parsed headers (we assume header is shorter then 8k)
 			$start = is_string($message) ? substr($message, 0, 8192) :
@@ -6641,7 +6642,14 @@ class emailadmin_imapbase
 					$overwrite = !$n;
 					switch($header)
 					{
+						case 'Content-Transfer-Encoding':
+							//as we parse the message and this sets the part with a Content-Transfer-Encoding, we
+							//should not overwrite it with the header-values of the source-message as the encoding
+							//may be altered when retrieving the message e.g. from server
+							//error_log(__METHOD__.__LINE__.':'.$header.'->'.$val.'<->'.$mailer->getHeader('Content-Transfer-Encoding'));
+							break;
 						default:
+							//error_log(__METHOD__.__LINE__.':'.$header.'->'.$val);
 							$mailer->addHeader($header, $val, $overwrite);
 					}
 				}
