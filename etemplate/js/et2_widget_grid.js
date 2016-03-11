@@ -188,8 +188,8 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 		et2_filteredNodeIterator(columns, function(node, nodeName) {
 			var colDataEntry = this._getColDataEntry();
 			// This cannot be done inside a nm, it will expand it later
-			colDataEntry["disabled"] = nm ? 
-				et2_readAttrWithDefault(node, "disabled", "") : 
+			colDataEntry["disabled"] = nm ?
+				et2_readAttrWithDefault(node, "disabled", "") :
 				this.getArrayMgr("content")
 					.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
 			if (nodeName == "column")
@@ -953,27 +953,24 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 		// 'allowed' for this widget at this time
 		var action_links = this._get_action_links(actions);
 
-		// Deal with each row
-		for(var i = 0; i < this.rowData.length; i++)
+		// Deal with each row in tbody, ignore action-wise rows in thead or tfooter for now
+		for(var i = 0, r = 0; i < this.rowData.length; i++)
 		{
-			// Add a new action object to the object manager
-			var row = $j('tr', this.tbody)[i];
-			var aoi = new et2_action_object_impl(this, row);
-			var id = "row_"+i;
+			if (this.rowData[i].part != 'body') continue;
 			var content = this.getArrayMgr('content').getEntry(i);
-			if(content && content.id)
-			{
-				id = content.id;
-			}
-			var obj = widget_object.addObject(id, aoi);
-
-			// Set the data to the content so it's available for the action
 			if(content)
 			{
-				obj.data = content;
-			}
+				// Add a new action object to the object manager
+				var row = $j('tr', this.tbody)[r];
+				var aoi = new et2_action_object_impl(this, row);
+				var obj = widget_object.addObject(content.id || "row_"+r, aoi);
 
-			obj.updateActionLinks(action_links);
+				// Set the data to the content so it's available for the action
+				obj.data = content;
+
+				obj.updateActionLinks(action_links);
+			}
+			r++;
 		}
 	},
 
