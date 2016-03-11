@@ -52,6 +52,7 @@ add shortcut	common	it	Aggiungi scorciatoia
 add sub	common	it	Aggiungi sottovoce
 add user to responsibles	groupdav	it	aggiungi ai responsabili
 add user to responsibles, removing evtl. previous category user	groupdav	it	Aggiungi utente ai responsabili rimuovendo eventuali utenti precedenti della categoria
+add your domain as "%1" in options to list of email providers and enable api.	common	it	Aggiungi il tuo dominio come "%1" nelle opzioni, per elencare i provider di posta elettronica e abilitare l'API.
 addressbook	common	it	Rubrica
 addressbooks to sync in addition to personal addressbook	groupdav	it	Rubriche da sincronizzare oltre alla rubrica personale
 admin	common	it	Amministra
@@ -85,6 +86,7 @@ apply the action on the whole query, not only the shown entries	common	it	Applic
 april	common	it	Aprile
 are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci ?
 are you sure you want to delete this entry ?	common	it	Vuoi davvero cancellare questa voce?
+are you sure, you would like to delete the backup key?	common	it	Sicuro di voler eliminare la chiave di backup?
 argentina	common	it	ARGENTINA
 armenia	common	it	ARMENIA
 aruba	common	it	ARUBA
@@ -103,6 +105,7 @@ azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
 back to user login	common	it	Torna al Login utente
 background color:	common	it	Colore di sfondo:
+backup/restore	common	it	Backup/Ripristino
 backupdir '%1' is not writeable by the webserver	common	it	directory di backup '%1' non è scrivibile dal webserver
 bad login or password	common	it	Nome utente o password errati
 bahamas	common	it	BAHAMAS
@@ -110,6 +113,7 @@ bahrain	common	it	BAHRAIN
 bangladesh	common	it	BANGLADESH
 barbados	common	it	BARBADOS
 bcc	common	it	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	it	Prima di procedere, si raccomanda la visione di questo breve filmato, per capire come funziona il plugin mailvelope con Egroupware.
 belarus	common	it	BELARUS
 belgium	common	it	BELGIO
 belize	common	it	BELIZE
@@ -214,7 +218,7 @@ ctrl	common	it	Ctrl
 cuba	common	it	CUBA
 currency	common	it	Valuta
 current	common	it	Attuale
-current users	common	it	Utenti attuali
+current users	common	it	Sessioni attive
 cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
 dark moono theme	common	it	Tema Dark Moono
@@ -230,6 +234,7 @@ default height for the windows	common	it	Altezza predefinita per le finestre
 default width for the windows	common	it	Larghezza predefinita per le finestre
 del	common	it	Canc
 delete	common	it	Elimina
+delete backup key	common	it	Elimina la chiave di backup
 delete category	common	it	Elimina categoria
 delete file	common	it	Elimina file
 delete row	common	it	Cancella riga
@@ -263,6 +268,7 @@ domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo e-
 domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
+don't show this again	common	it	Non mostrare più
 done	common	it	Finito
 dos international	common	it	DOS International
 download	common	it	Scarica
@@ -277,6 +283,9 @@ edit %1 category for	common	it	Modifica categoria %1 per
 edit categories	common	it	Modifica Categorie
 edit category	common	it	Modifica Categoria
 egroupware	common	it	EGroupware
+egroupware administrators group, do not delete	common	it	Gruppo Amministratori: NON eliminare
+egroupware all users group, do not delete	common	it	Gruppo per tutti gli utenti: NON eliminare
+egroupware anonymous users group, do not delete	common	it	Gruppo utenti anonimi: NON eliminare
 egroupware api version	common	it	Versione API EGroupware
 egroupware maintenance update %1 available	common	it	Aggiornamento di manutenzione %1 EPL disponibile
 egroupware security update %1 needs to be installed!	common	it	E' necessario installare l'aggiornamento di sicurezza %1!
@@ -405,6 +414,7 @@ if the clock is enabled would you like it to update it every second or every min
 if there are some images in the background folder you can choose the one you would like to see.	common	it	Se ci sono diverse immagini nella cartella sfondi, puoi scegliere quale vuoi vedere.
 image directory relative to document root (use / !), example:	common	it	La cartella delle immagini relativa alla base dei documenti (docroot) (usare / !), esempio:
 image url	common	it	URL immagine
+in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	it	Per copiare negli appunti c'è bisogno del Flash player.\n Puoi abilitarlo con la barra in alto per adesso, oppure permanentemente usando le impostazioni del browser.
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
 infolog types to sync	common	it	Tipi di Attività da sincronizzare
@@ -416,6 +426,7 @@ insert in dokument	common	it	Inserisci nel documento
 insert row after	common	it	Inserisci una riga dopo
 insert row before	common	it	Inserisci una riga prima
 international	common	it	Internazionale
+introduction	common	it	Introduzione
 invalid filename	common	it	Nome file non valido
 invalid ip address	common	it	Indirizzo IP errato
 invalid password	common	it	Password errata
@@ -425,6 +436,7 @@ ireland	common	it	IRLANDA
 israel	common	it	ISRAELE
 it has been more then %1 days since you changed your password	common	it	Sono passati più di %1 giorni da quando hai cambiato la password
 it is recommended that you run setup to upgrade your tables to the current version	common	it	E' consigliato eseguire il setup per aggiornare le tabelle alla versione attuale.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	it	E' raccomandato il salvataggio della chiave pubblica in Rubrica, per consentire agli utenti di inviarti email criptate.
 italic	common	it	Corsivo
 italy	common	it	ITALIA
 jamaica	common	it	GIAMAICA
@@ -492,6 +504,8 @@ macau	common	it	MACAO
 macedonia, the former yugoslav republic of	common	it	MACEDONIA, EX REPUBBLICA YUGOSLAVA DI
 madagascar	common	it	MADAGASCAR
 mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
+mailvelope addon installation faild! please try agian.	common	it	L'installazione di Mailvelope non è andata a buon fine. Riprovare prego...
+mailvelope addon installation succeded. now you may configure the options.	common	it	L'installazione di Mailvelope è stata portata a termine con successo. Ora potrai configurarne le opzioni.
 main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
 maintainer	common	it	Manutentore
@@ -558,8 +572,10 @@ no - cancel	common	it	No - Annulla
 no entries found, try again ...	common	it	nessuna voce trovata, prova ancora ...
 no filters	common	it	Nessun filtro
 no history for this record	common	it	Nessuna history per questo record
+no key for recipient:	common	it	Nessuna chiave per il destinatario:
 no savant2 template directories were found in:	common	it	Nessuna directory template Savant2 trovata in:
 no subject	common	it	Nessun Oggetto
+no thanks	common	it	No grazie
 none	common	it	Nessuno
 none of %1	common	it	nessuno di %1
 norfolk island	common	it	ISOLE NORFOLK
@@ -629,6 +645,8 @@ personal	common	it	Personale
 peru	common	it	PERU
 pg down	common	it	Pg giù
 pg up	common	it	Pg su
+pgp encryption	common	it	Cifratura PGP
+pgp encryption installation	common	it	Installazione cifratura PGP
 philippines	common	it	FILIPPINE
 phone number	common	it	numero telefonico
 phpgwapi	common	it	API eGroupWare
@@ -715,6 +733,7 @@ scheduling outbox	common	it	Programmazione outbox
 search	common	it	Cerca
 search %1 '%2'	common	it	Cerca %1 '%2'
 search accounts	common	it	Cerca account
+search for '%1'	common	it	Cerca '%1'
 search or select accounts	common	it	Cerca o seleziona account
 second	common	it	secondo
 section	common	it	Sezione
@@ -765,6 +784,8 @@ show in sidebox	common	it	Mostra nel menù laterale
 show log of following device	groupdav	it	Mostra il registro del seguente dispositivo
 show logo's on the desktop.	common	it	Mostra logo sul desktop
 show menu	common	it	visualizza menu
+show next login	common	it	Mostra al prossimo login
+show now	common	it	Mostra adesso
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina?
 show page generation time?	common	it	Mostrare tempo generazione pagina?
@@ -794,6 +815,7 @@ start time	common	it	Ora Inizio
 start with	common	it	Inizia con
 starting up...	common	it	Inizializzazione...
 status	common	it	Status
+store your public key in addressbook?	common	it	Salvare la chiave nella rubrica?
 stretched	common	it	adattato
 subject	common	it	Oggetto
 submit	common	it	Invia
@@ -816,6 +838,7 @@ tajikistan	common	it	TAJIKISTAN
 tanzania, united republic of	common	it	TANZANIA, REPUBBLICA UNITA DELLA
 text color:	common	it	Colore testo
 thailand	common	it	TAILANDIA
+the backup key has been deleted.	common	it	La chiave di backup è stata eliminata
 the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	it	Il blocco dei popup del browser è attivo. Cliccare su OK per visualizzarlo. \n\nPer evitare la visualizzione in futuro di questo messaggio, permettere la apertura di popup nel browser da %1
 the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
 the mail server returned	common	it	Il mail server ha risposto
@@ -856,6 +879,7 @@ uganda	common	it	UGANDA
 ukraine	common	it	UCRAINA
 un-delete	common	it	Ripristina
 unconnected nodes will be moved to %1.	admin	it	I file disconnessi saranno sposati a %1.
+undefined	common	it	non definito
 underline	common	it	Sottolineato
 unicode	common	it	Unicode
 united arab emirates	common	it	EMIRATI ARABI UNITI
@@ -892,6 +916,8 @@ view	common	it	Visualizza
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
 virgin islands, u.s.	common	it	ISOLE VERGINI, U.S.
 wallis and futuna	common	it	WALLIS E FUTUNA
+was not able to delete the backup key because %1	common	it	Non è stato possibile eliminare la chiave di backup perché %1
+we would like to introduce you to egroupware by showing a short introduction video.	common	it	Vorremmo introdurti a EGroupware con un breve filmato introduttivo.
 wednesday	common	it	Mercoledì
 welcome	common	it	Benvenuto
 western european	common	it	Europeo occidentale
@@ -916,6 +942,7 @@ yemen	common	it	YEMEN
 yes	common	it	Sì
 yes - delete	common	it	Sì - Cancella
 yes - delete including sub-entries	common	it	Sì - Cancella includendo voci secondarie
+yes and allow non-admin users to do that too (recommended)	common	it	Sì e permetti anche agli utenti non amministratori di farlo (raccomandato).
 you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
 you can customize how many icons and toolbars the editor shows.	common	it	Quante icone e barre degli strumenti mostra l'editor
 you have been successfully logged out	login	it	L'uscita è stata effettuata correttamente
@@ -929,8 +956,10 @@ you have successfully logged out	common	it	Ti sei disconesso con successo
 you need to %1set your timezone preference%2.	common	it	Devi %1impostare la tua zona oraria%2
 you need to add the webserver user '%1' to the group '%2'.	common	it	Devi aggiungere l'utente '%1' del webserver al gruppo '%2'.
 you need to be an egroupware administrator to access this functionality!	common	it	Devi essere un amministratore per accedere a questa funzione!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	it	Bisogna installare Mailvelope disponibile per Chrome e Firefox da www.mailvelope.com oppure cliccando sul pulsante di installazione.
 you need to select some entries first!	common	it	Devi prima selezionare alcune voci"
 you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi impostare la registrazione a "%1" per creare e aggiornare i registri
+you will not be able to send or receive encrypted mails before completing that step!	common	it	Non potrai inviare e ricevere email cifrate senza completare questo step!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
 your message has been sent	common	it	Il tuo messaggio è stato inviato
@@ -946,4 +975,3 @@ your settings have been updated	common	it	Le tue impostazioni sono state aggiorn
 zambia	common	it	ZAMBIA
 zimbabwe	common	it	ZIMBABWE
 zoom	common	it	Zoom
-search for '%1'	common	it	Cerca '%1'
