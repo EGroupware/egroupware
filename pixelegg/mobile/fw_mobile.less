@@ -584,10 +584,12 @@
 							}
 						}
 						ul.favorites {
+							height: 250px;
 							width:100%;
 							left:0px !important;
 							box-shadow: 0px 4px 5px 2px silver;
 							border: 1px solid silver;
+							overflow-y:auto !important;
 							li.ui-menu-item {
 								white-space: nowrap;
 								text-overflow: ellipsis;
@@ -602,6 +604,7 @@
 									}
 									div.ui-icon-trash {
 										display: block;
+										padding-right:8px;
 									}
 								}
 							}
@@ -902,9 +905,16 @@
 				}
 				div.ui-toolbar-menulist
 				{
-					min-width: 200px;
+					width: 100%;
+					left:0px;
 					height: 322px !important;
 					overflow-y: auto !important;
+					box-shadow: 2px 3px 13px #666666;
+					-moz-box-shadow: 2px 3px 13px #666666;
+					-webkit-box-shadow: 2px 3px 13px #666666;
+					-khtml-box-shadow: 2px 3px 13px #666666;
+					filter: progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=135,strength=3);
+					-moz-user-select: none;
 				}
 				button.et2_toolbar_hasCaption {
 					width:auto;
@@ -920,7 +930,7 @@
 					}
 				}
 				div.et2_toolbar_more {
-
+					position:inherit;
 					h.ui-state-hover {
 						background:none;
 					}

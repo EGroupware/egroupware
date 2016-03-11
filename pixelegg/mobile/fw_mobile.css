@@ -7490,10 +7490,12 @@ form[id^="tracker-"] .dialogHeadbar {
     display: none;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
+    height: 250px;
     width: 100%;
     left: 0px !important;
     box-shadow: 0px 4px 5px 2px silver;
     border: 1px solid silver;
+    overflow-y: auto !important;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
     white-space: nowrap;
@@ -7510,6 +7512,7 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
     display: block;
+    padding-right: 8px;
   }
   body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on {
     background-image: url(../images/cancelled.svg);
@@ -7812,9 +7815,16 @@ form[id^="tracker-"] .dialogHeadbar {
     touch-action: auto;
   }
   body div.et2_toolbar.et2_head_toolbar div.ui-toolbar-menulist {
-    min-width: 200px;
+    width: 100%;
+    left: 0px;
     height: 322px !important;
     overflow-y: auto !important;
+    box-shadow: 2px 3px 13px #666666;
+    -moz-box-shadow: 2px 3px 13px #666666;
+    -webkit-box-shadow: 2px 3px 13px #666666;
+    -khtml-box-shadow: 2px 3px 13px #666666;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color=#999999, direction=135, strength=3);
+    -moz-user-select: none;
   }
   body div.et2_toolbar.et2_head_toolbar button.et2_toolbar_hasCaption {
     width: auto;
@@ -7832,6 +7842,9 @@ form[id^="tracker-"] .dialogHeadbar {
     background-size: 24px 24px !important;
     border: none;
     margin-right: 15px;
+  }
+  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more {
+    position: inherit;
   }
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more h.ui-state-hover {
     background: none;
