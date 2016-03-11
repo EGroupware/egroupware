@@ -7475,7 +7475,6 @@ form[id^="tracker-"] .dialogHeadbar {
     outline: none;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] {
-    position: relative !important;
     top: 0 !important;
     outline: none;
   }
@@ -7491,7 +7490,8 @@ form[id^="tracker-"] .dialogHeadbar {
     display: none;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
-    width: 160px;
+    width: 100%;
+    left: 0px !important;
     box-shadow: 0px 4px 5px 2px silver;
     border: 1px solid silver;
   }
