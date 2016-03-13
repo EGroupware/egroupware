@@ -16,7 +16,6 @@ namespace EGroupware\Api;
 
 // explicitly import classes not yet imported into Api
 use egw_framework;	// validate_file, includeCSS
-use egw_ckeditor_config;
 use egw;	// link
 
 /**
@@ -437,7 +436,7 @@ class Html
 
 		// User preferences
 		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-		$font_size = egw_ckeditor_config::font_size_from_prefs();
+		$font_size = Html\CkEditorConfing::font_size_from_prefs();
 		$font_span = '<span '.($font||$font_size?'style=\"':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'\">';
 		if (empty($font) && empty($font_size)) $font_span = '';
 
@@ -449,7 +448,7 @@ class Html
 <script type="text/javascript">
 window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/";
 egw_LAB.wait(function() {
-	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
+	CKEDITOR.replace("'.$_name.'", '.Html\CkEditorConfing::get_ckeditor_config($_mode,
 		$pxheight, $expanded, $_start_path).');
 	CKEDITOR.addCss("body { margin: 5px; }");
 	CKEDITOR.instances["'.$_name.'"].on(

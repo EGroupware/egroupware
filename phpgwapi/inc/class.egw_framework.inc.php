@@ -12,6 +12,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * eGW API - framework: virtual base class for all template sets
  *
@@ -128,15 +130,6 @@ abstract class egw_framework
 	}
 
 	/**
-	 * Additional attributes or urls for CSP script-src 'self'
-	 *
-	 * 'unsafe-eval' is currently allways added, as it is used in a couple of places.
-	 *
-	 * @var array
-	 */
-	private static $csp_script_src_attrs = array("'unsafe-eval'");
-
-	/**
 	 * Set/get Content-Security-Policy attributes for script-src: 'unsafe-eval' and/or 'unsafe-inline'
 	 *
 	 * Using CK-Editor currently requires both to be set :(
@@ -145,132 +138,49 @@ abstract class egw_framework
 	 *
 	 * EGroupware itself currently still requires 'unsafe-eval'!
 	 *
-	 * @param string|array $set =array() 'unsafe-eval' and/or 'unsafe-inline' (without quotes!) or URL (incl. protocol!)
-	 * @return string with attributes eg. "'unsafe-eval' 'unsafe-inline'"
+	 * @param string|array $set =null 'unsafe-eval' and/or 'unsafe-inline' (without quotes!) or URL (incl. protocol!)
+	 * @deprecated use Api\Header\ContentSecurityPolicy::add('script-src', $set);
 	 */
 	public static function csp_script_src_attrs($set=null)
 	{
-		foreach((array)$set as $attr)
-		{
-			if (in_array($attr, array('none', 'self', 'unsafe-eval', 'unsafe-inline')))
-			{
-				$attr = "'$attr'";	// automatic add quotes
-			}
-			if (!in_array($attr, self::$csp_script_src_attrs))
-			{
-				self::$csp_script_src_attrs[] = $attr;
-				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
-			}
-		}
-		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_script_src_attrs)).' '.function_backtrace());
-		return implode(' ', self::$csp_script_src_attrs);
+		Api\Header\ContentSecurityPolicy::add('script-src', $set);
 	}
-
-	/**
-	 * Additional attributes or urls for CSP style-src 'self'
-	 *
-	 * 'unsafe-inline' is currently allways added, as it is used in a couple of places.
-	 *
-	 * @var array
-	 */
-	private static $csp_style_src_attrs = array("'unsafe-inline'");
 
 	/**
 	 * Set/get Content-Security-Policy attributes for style-src: 'unsafe-inline'
 	 *
 	 * EGroupware itself currently still requires 'unsafe-inline'!
 	 *
-	 * @param string|array $set =array() 'unsafe-inline' (without quotes!) and/or URL (incl. protocol!)
-	 * @return string with attributes eg. "'unsafe-inline'"
+	 * @param string|array $set =null 'unsafe-inline' (without quotes!) and/or URL (incl. protocol!)
+	 * @deprecated use Api\Header\ContentSecurityPolicy::add('style-src', $set);
 	 */
 	public static function csp_style_src_attrs($set=null)
 	{
-		foreach((array)$set as $attr)
-		{
-			if (in_array($attr, array('none', 'self', 'unsafe-inline')))
-			{
-				$attr = "'$attr'";	// automatic add quotes
-			}
-			if (!in_array($attr, self::$csp_style_src_attrs))
-			{
-				self::$csp_style_src_attrs[] = $attr;
-				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
-			}
-		}
-		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_script_src_attrs)).' '.function_backtrace());
-		return implode(' ', self::$csp_style_src_attrs);
+		Api\Header\ContentSecurityPolicy::add('style-src', $set);
 	}
-
-	/**
-	 * Additional attributes or urls for CSP connect-src 'self'
-	 *
-	 * @var array
-	 */
-	private static $csp_connect_src_attrs = array();
 
 	/**
 	 * Set/get Content-Security-Policy attributes for connect-src:
 	 *
 	 * @param string|array $set =array() URL (incl. protocol!)
-	 * @return string with attributes eg. "'unsafe-inline'"
+	 * @deprecated use Api\Header\ContentSecurityPolicy::add('connect-src', $set);
 	 */
 	public static function csp_connect_src_attrs($set=null)
 	{
-		foreach((array)$set as $attr)
-		{
-			if (!in_array($attr, self::$csp_connect_src_attrs))
-			{
-				self::$csp_connect_src_attrs[] = $attr;
-				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
-			}
-		}
-		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_connect_src_attrs)).' '.function_backtrace());
-		return implode(' ', self::$csp_connect_src_attrs);
+		Api\Header\ContentSecurityPolicy::add('connect-src', $set);
 	}
-
-	/**
-	 * Additional attributes or urls for CSP frame-src 'self'
-	 *
-	 * @var array
-	 */
-	private static $csp_frame_src_attrs;
 
 	/**
 	 * Set/get Content-Security-Policy attributes for frame-src:
 	 *
 	 * Calling this method with an empty array sets no frame-src, but "'self'"!
 	 *
-	 * @param string|array $set =array() URL (incl. protocol!)
-	 * @return string with attributes eg. "'unsafe-inline'"
+	 * @param string|array $set =null URL (incl. protocol!)
+	 * @deprecated use Api\Header\ContentSecurityPolicy::add('frame-src', $set);
 	 */
 	public static function csp_frame_src_attrs($set=null)
 	{
-		// set frame-src attrs of API and apps via hook
-		if (!isset(self::$csp_frame_src_attrs) && !isset($set))
-		{
-			$frame_src = array('manual.egroupware.org', 'www.egroupware.org');
-			if (($app_additional = $GLOBALS['egw']->hooks->process('csp-frame-src')))
-			{
-				foreach($app_additional as $addtional)
-				{
-					if ($addtional) $frame_src = array_unique(array_merge($frame_src, $addtional));
-				}
-			}
-			return self::csp_frame_src_attrs($frame_src);
-		}
-
-		if (!isset(self::$csp_frame_src_attrs)) self::$csp_frame_src_attrs = array();
-
-		foreach((array)$set as $attr)
-		{
-			if (!in_array($attr, self::$csp_frame_src_attrs))
-			{
-				self::$csp_frame_src_attrs[] = $attr;
-				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
-			}
-		}
-		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_frame_src_attrs)).' '.function_backtrace());
-		return implode(' ', self::$csp_frame_src_attrs);
+		Api\Header\ContentSecurityPolicy::add('frame-src', $set);
 	}
 
 	/**
@@ -281,20 +191,7 @@ abstract class egw_framework
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 		header('Content-type: text/html; charset='.translation::charset());
 
-		// content-security-policy header:
-		// - "script-src 'self' 'unsafe-eval'" allows only self and eval (eg. ckeditor), but forbids inline scripts, onchange, etc
-		// - "connect-src 'self'" allows ajax requests only to self
-		// - "style-src 'self' 'unsave-inline'" allows only self and inline style, which we need
-		// - "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
-		$csp = "script-src 'self' ".self::csp_script_src_attrs().
-			"; connect-src 'self' ".self::csp_connect_src_attrs().
-			"; style-src 'self' ".self::csp_style_src_attrs().
-			"; frame-src 'self' ".self::csp_frame_src_attrs();
-
-		//$csp = "default-src * 'unsafe-eval' 'unsafe-inline'";	// allow everything
-		header("Content-Security-Policy: $csp");
-		header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
-		header("X-Content-Security-Policy: $csp");	// FF <= 22
+		Api\Header\ContentSecurityPolicy::send();
 
 		// allow client-side to detect first load aka just logged in
 		$reload_count =& egw_cache::getSession(__CLASS__, 'framework-reload');

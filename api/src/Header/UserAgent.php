@@ -50,7 +50,7 @@ class UserAgent
 	}
 
 	/**
-	 * user-agent: 'firefox', 'msie', 'safari' (incl. iPhone), 'chrome', 'opera', 'konqueror', 'mozilla'
+	 * user-agent: 'firefox', 'msie', 'edge', 'safari' (incl. iPhone), 'chrome', 'opera', 'konqueror', 'mozilla'
 	 *
 	 * @var string
 	 */
