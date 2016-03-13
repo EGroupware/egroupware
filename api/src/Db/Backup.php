@@ -16,8 +16,6 @@ namespace EGroupware\Api\Db;
 use EGroupware\Api;
 use ZipArchive;
 
-use html;
-
 /**
  * DB independent backup and restore of EGroupware database
  *
@@ -1100,7 +1098,7 @@ class Backup
 		else
 		{
 			$def = "<?php\n\t/* EGroupware schema-backup from ".date('Y-m-d H:i:s')." */\n\n".$def;
-			html::content_header('schema-backup-'.date('YmdHi').'.inc.php','text/plain',bytes($def));
+			Api\Header\Content::type('schema-backup-'.date('YmdHi').'.inc.php','text/plain',bytes($def));
 			echo $def;
 		}
 	}

@@ -11,9 +11,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly import old phpgwapi classes used:
-use html;
-
 /**
  * Finding template specific images
  *
@@ -34,7 +31,7 @@ class Image
 	 */
 	static function find($app,$image,$extension='',$_svg=false)
 	{
-		$svg = html::$ua_mobile ? null : $_svg; // ATM we use svg icons only for mobile theme
+		$svg = Header\UserAgent::mobile() ? null : $_svg; // ATM we use svg icons only for mobile theme
 		static $image_map_no_svg = null, $image_map_svg = null;
 		if (is_null($svg)) $svg = self::svg_usable ();
 		if ($svg)
@@ -114,7 +111,7 @@ class Image
 	 */
 	public static function svg_usable()
 	{
-		return html::$user_agent !== 'msie' || html::$ua_version >= 9;
+		return Header\UserAgent::type() !== 'msie' || Header\UserAgent::version() >= 9;
 	}
 
 	/**
@@ -160,7 +157,7 @@ class Image
 			$app_map =& $map[$app];
 			if (true) $app_map = array();
 			$imagedirs = array();
-			if (html::$ua_mobile)
+			if (Header\UserAgent::mobile())
 			{
 				$imagedirs[] = '/'.$app.'/templates/mobile/images';
 			}

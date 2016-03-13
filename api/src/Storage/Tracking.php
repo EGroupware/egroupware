@@ -16,7 +16,6 @@ namespace EGroupware\Api\Storage;
 use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi or otherwise outside api
-use html;
 use notifications;
 
 /**
@@ -1057,7 +1056,7 @@ abstract class Tracking
 
 		if ($html_mail)
 		{
-			if (!$this->html_content_allow) $line = html::htmlspecialchars($line);	// XSS
+			if (!$this->html_content_allow) $line = Api\Html::htmlspecialchars($line);	// XSS
 
 			$color = $modified ? 'red' : false;
 			$size  = '110%';
@@ -1080,7 +1079,7 @@ abstract class Tracking
 					// Only Convert nl2br on non-html content
 					if (strpos($data, '<br') === false)
 					{
-						$data = nl2br($this->html_content_allow ? $data : html::htmlspecialchars($data));
+						$data = nl2br($this->html_content_allow ? $data : Api\Html::htmlspecialchars($data));
 						$this->html_content_allow = true;	// to NOT do htmlspecialchars again
 					}
 					break;
@@ -1108,15 +1107,15 @@ abstract class Tracking
 			if ($type == 'link')
 			{
 				// the link is often too long for html boxes chunk-split allows to break lines if needed
-				$content .= html::a_href(chunk_split(rawurldecode($data),40,'&#8203;'),$data,'','target="_blank"');
+				$content .= Api\Html::a_href(chunk_split(rawurldecode($data),40,'&#8203;'),$data,'','target="_blank"');
 			}
 			elseif ($this->html_content_allow)
 			{
-				$content .= html::activate_links($data);
+				$content .= Api\Html::activate_links($data);
 			}
 			else
 			{
-				$content .= html::htmlspecialchars($data);
+				$content .= Api\Html::htmlspecialchars($data);
 			}
 		}
 		else

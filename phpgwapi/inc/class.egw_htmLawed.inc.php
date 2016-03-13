@@ -110,13 +110,108 @@ class egw_htmLawed
 		if (empty($Spec)) $Spec = $this->Spec;
 		// If we are processing mails, we take out stuff in <style> stuff </style> tags and
 		// put it back in after purifying; styles are processed for known security risks
-		// in html::getStyles
-		$styles='';
+		// in self::getStyles
 		// we allow filtered style sections now throughout egroupware
-		/*if ($Config['hook_tag'] =="hl_email_tag_transform")*/ $styles = html::getStyles($html2check);
+		/*if ($Config['hook_tag'] =="hl_email_tag_transform")*/ $styles = self::getStyles($html2check);
 		//error_log(__METHOD__.__LINE__.array2string($styles));
 
 		return ($styles?$styles:'').htmLawed($html2check, $Config, $Spec);
+	}
+
+	/**
+	 * get all style tag definitions, <style> stuff </style> of the html passed in
+	 * and remove it from input
+	 * @author Leithoff, Klaus
+	 * @param string html
+	 * @return string the style css
+	 */
+	static function getStyles(&$html)
+	{
+		$ct=0;
+		$newStyle = null;
+		if (stripos($html,'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $html, $newStyle);
+		if ($ct>0)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
+			$style2buffer = implode('',$newStyle[0]);
+			// only replace what we have found, we use it here, as we use the same routine in Translation::replaceTagsCompletley
+			// no need to do the extra routine
+			$html = str_ireplace($newStyle[0],'',$html);
+		}
+		if ($style2buffer)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($style2buffer));
+			$test = json_encode($style2buffer);
+			//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
+			//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
+			if ($test=="null" && strlen($style2buffer)>0)
+			{
+				// this should not be needed, unless something fails with charset detection/ wrong charset passed
+				error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Carset Detected:'.Translation::detect_encoding($style2buffer));
+				$style2buffer = utf8_encode($style2buffer);
+			}
+		}
+		$style .= $style2buffer;
+		// clean out comments and stuff
+		$search = array(
+			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
+//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
+		);
+		$style = preg_replace($search,"",$style);
+
+		// CSS Security
+		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
+		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
+		if (stripos($css,'script')!==false) Translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
+		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
+		$css_no_comment = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
+		//error_log(__METHOD__.__LINE__.$css);
+		// we already removed what we have found, above, as we used pretty much the same routine as in Translation::replaceTagsCompletley
+		// no need to do the extra routine
+		// TODO: we may have to strip urls and maybe comments and ifs
+		//if (stripos($html,'style')!==false) Translation::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
+		return $css_no_comment;
+	}
+
+	/**
+	 * Runs HTMLPurifier over supplied html to remove malicious code
+	 *
+	 * @param string $html
+	 * @param array|string $config =null - config to influence the behavior of current purifying engine
+	 * @param array|string $spec =null - spec to influence the behavior of current purifying engine
+	 *		The $spec argument can be used to disallow an otherwise legal attribute for an element,
+	 *		or to restrict the attribute's values
+	 * @param boolean $_force =null - force the config passed to be used without merging to the default
+	 */
+	static function purify($html,$config=null,$spec=array(),$_force=false)
+	{
+		$defaultConfig = array('valid_xhtml'=>1,'safe'=>1);
+
+		if (empty($html)) return $html;	// no need to process further
+		if (!empty($config) && is_string($config))
+		{
+			//error_log(__METHOD__.__LINE__.$config);
+			$config = json_decode($config,true);
+			if (is_null($config)) error_log(__METHOD__.__LINE__." decoding of config failed; standard will be applied");
+		}
+
+		// User preferences
+		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
+		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+
+		// Check for "blank" = just user preference span - for some reason we can't match on the entity, so approximate
+		$regex = '#^<span style="font-family:'.$font.';font-size:'.$font_size.';">.?</span>$#us';
+		if(preg_match($regex,$html))
+		{
+			return '';
+		}
+		$htmLawed = new egw_htmLawed();
+		if (is_array($config) && $_force===false) $config = array_merge($defaultConfig, $config);
+		if (empty($config)) $config = $defaultConfig;
+		//error_log(__METHOD__.__LINE__.array2string($config));
+		return $htmLawed->egw_htmLawed($html,$config,$spec);
 	}
 }
 
@@ -237,8 +332,8 @@ function hl_my_tag_transform($element, $attribute_array=0)
 function hl_email_tag_transform($element, $attribute_array=0)
 {
 	//error_log(__METHOD__.__LINE__.$element.array2string($attribute_array));
-	static $lastelement;
-	static $throwawaycounter;
+	static $lastelement = null;
+	static $throwawaycounter = null;
 	if (is_null($lastelement)) $lastelement='';
 	if (is_null($throwawaycounter)) $throwawaycounter = 0;
 	//if ($throwawaycounter>1) error_log(__METHOD__.__LINE__.' '.$throwawaycounter.$element.array2string($attribute_array));

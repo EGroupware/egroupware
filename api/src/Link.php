@@ -18,7 +18,6 @@
 namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
-use html;
 use egw;	// on_shutdown
 use egw_json_response;
 
@@ -202,7 +201,8 @@ class Link extends Link\Storage
 	{
 		// FireFox 36 can not display pdf with it's internal viewer in an iframe used by mobile theme/template for popups
 		// same is true for all mobile devices
-		if (html::$user_agent == 'firefox' && $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' || html::$ua_mobile)
+		if (Header\UserAgent::type() == 'firefox' && $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' ||
+			Header\UserAgent::mobile())
 		{
 			unset(self::$app_register['home']['mime']['application/pdf']);
 		}

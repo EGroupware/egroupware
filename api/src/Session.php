@@ -25,7 +25,6 @@ namespace EGroupware\Api;
 // explicitly reference classes still in phpgwapi
 use egw_mailer;
 use egw_digest_auth;	// egw_digest_auth::parse_digest
-use html;	// html::$ua_mobile
 
 /**
  * Create, verifies or destroys an EGroupware session
@@ -1245,7 +1244,7 @@ class Session
 		// if we are installed in iOS as web-app, we must not set a cookietime==0 (session-cookie),
 		// as every change between apps will cause the cookie to get lost
 		static $is_iOS = null;
-		if (!$cookietime && !isset($is_iOS)) $is_iOS = (bool)preg_match('/^(iPhone|iPad|iPod)/i', html::$ua_mobile);
+		if (!$cookietime && !isset($is_iOS)) $is_iOS = (bool)preg_match('/^(iPhone|iPad|iPod)/i', Header\UserAgent::mobile());
 
 		if(!headers_sent())	// gives only a warning, but can not send the cookie anyway
 		{

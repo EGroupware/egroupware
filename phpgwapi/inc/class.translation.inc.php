@@ -279,7 +279,7 @@ class translation extends Api\Translation
 		{
 			if (stripos($_html,'<pre ')!==false || stripos($_html,'<pre>')!==false)
 			{
-				$contentArr = html::splithtmlByPRE($_html);
+				$contentArr = self::splithtmlByPRE($_html);
 				foreach ($contentArr as $k =>&$elem)
 				{
 					if (stripos($elem,'<pre ')===false && stripos($elem,'<pre>')===false)
@@ -349,7 +349,7 @@ class translation extends Api\Translation
 		{
 			if (stripos($_html,'<pre ')!==false || stripos($_html,'<pre>')!==false)
 			{
-				$contentArr = html::splithtmlByPRE($_html);
+				$contentArr = self::splithtmlByPRE($_html);
 				foreach ($contentArr as $k =>&$elem)
 				{
 					if (stripos($elem,'<pre ')===false && stripos($elem,'<pre>')===false)
@@ -457,5 +457,44 @@ class translation extends Api\Translation
 			}
 			return implode("\r\n",$asciiTextBuff);
 		}
+	}
+
+	/**
+	 * split html by PRE tag, return array with all content pre-sections isolated in array elements
+	 * @author Leithoff, Klaus
+	 * @param string html
+	 * @return mixed array of parts or unaffected html
+	 */
+	static function splithtmlByPRE($html)
+	{
+		$searchFor = '<pre ';
+		$pos = stripos($html,$searchFor);
+		if ($pos===false)
+		{
+			$searchFor = '<pre>';
+			$pos = stripos($html,$searchFor);
+		}
+		if ($pos === false)
+		{
+			return $html;
+		}
+		$html2ret[] = substr($html,0,$pos);
+		while ($pos!==false)
+		{
+			$endofpre = stripos($html,'</pre>',$pos);
+			$length = $endofpre-$pos+6;
+			$html2ret[] = substr($html,$pos,$length);
+			$searchFor = '<pre ';
+			$pos = stripos($html,$searchFor, $endofpre+6);
+			if ($pos===false)
+			{
+				$searchFor = '<pre>';
+				$pos = stripos($html,$searchFor, $endofpre+6);
+			}
+			$html2ret[] = ($pos ? substr($html,$endofpre+6,$pos-($endofpre+6)): substr($html,$endofpre+6));
+			//$pos=false;
+		}
+		//error_log(__METHOD__.__LINE__.array2string($html2ret));
+		return $html2ret;
 	}
 }

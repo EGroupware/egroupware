@@ -230,7 +230,7 @@ class mail_compose
 		}
 		if (html::$ua_mobile)
 		{
-			foreach ($actions as $key => $action)
+			foreach (array_keys($actions) as $key)
 			{
 				if (!in_array($key, array('send','button[saveAsDraft]','uploadForCompose' ))) {
 					$actions[$key]['toolbarDefault'] = false;
@@ -548,7 +548,7 @@ class mail_compose
 			$suppressSigOnTop = true;
 			if (stripos($content['mail_htmltext'],'<pre>')!==false)
 			{
-				$contentArr = html::splithtmlByPRE($content['mail_htmltext']);
+				$contentArr = translation::splithtmlByPRE($content['mail_htmltext']);
 				if (is_array($contentArr))
 				{
 					foreach ($contentArr as $k =>&$elem)
@@ -1171,7 +1171,7 @@ class mail_compose
 			foreach((array)$addr_content as $key => $value) {
 				if ($value=="NIL@NIL") continue;
 				if ($destination=='replyto' && str_replace('"','',$value) ==
-					str_replace('"','',$identities[$presetId ? $presetId : $this->mail_bo->getDefaultIdentity()]))
+					str_replace('"','',$identities[$this->mail_bo->getDefaultIdentity()]))
 				{
 					// preserve/restore the value to content.
 					$content[strtolower($destination)][]=$value;
@@ -1539,6 +1539,7 @@ class mail_compose
 			}
 			catch (Exception $e)
 			{
+				unset($e);
 				// fail silently
 				$this->sessionData['mailaccount'] = $mail_bo->profileID;
 			}
@@ -2123,9 +2124,9 @@ class mail_compose
 				}
 
 				// add line breaks to $bodyParts
-				$newBody = translation::convert_jsonsafe($bodyParts[$i]['body'],$bodyParts[$i]['charSet']);
+				$newBody2 = translation::convert_jsonsafe($bodyParts[$i]['body'],$bodyParts[$i]['charSet']);
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-				$newBody = mail_ui::resolve_inline_images($newBody, $_folder, $_uid, $_partID, 'plain');
+				$newBody = mail_ui::resolve_inline_images($newBody2, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
 				// create body new, with good line breaks and indention
 				foreach(explode("\n",$newBody) as $value) {
@@ -2153,7 +2154,7 @@ class mail_compose
 		return $this->sessionData;
 
 	}
-	
+
 	/**
 	 * HTML cleanup
 	 *
