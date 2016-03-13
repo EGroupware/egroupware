@@ -36,7 +36,7 @@ class Csrf
 	{
 		if (is_null($_purpose))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__.'(NULL) $_purspose must NOT be NULL!');
+			throw new Exception\WrongParameter(__METHOD__.'(NULL) $_purspose must NOT be NULL!');
 		}
 		// generate random token (using oppenssl if available otherwise mt_rand based Auth::randomstring)
 		$token = function_exists('openssl_random_pseudo_bytes') ?
