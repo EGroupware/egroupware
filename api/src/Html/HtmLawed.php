@@ -5,19 +5,21 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage htmLawed
+ * @subpackage html
  * @author Klaus Leithoff <kl-AT-stylite.de>
  * @version $Id$
  */
 
-require_once(EGW_API_INC.'/htmLawed/htmLawed.php');
+namespace EGroupware\Api\Html;
+
+require_once(__DIR__.'/htmLawed/htmLawed.php');
 
 /**
  * This class does NOT use anything EGroupware specific, it just calls htmLawed and supports autoloading
  * while matching egw namespace requirements. It also provides (as a non class function ) a hook_tag function
  * to do further tag / attribute validation
  */
-class egw_htmLawed
+class HtmLawed
 {
 	/**
 	 * config options see constructor
@@ -95,14 +97,14 @@ class egw_htmLawed
 	}
 
 	/**
-	 * egw_htmlLawed
+	 * Run htmLawed
 	 *
 	 * @param varchar $html2check =text input Text to check
 	 * @param mixed $Config = text or array
 	 * @param mixed $Spec =text or array; The '$spec' argument can be used to disallow an otherwise legal attribute for an element
 	 * @return varchar cleaned/fixed html
 	 */
-	function egw_htmLawed($html2check, $Config=null, $Spec=array())
+	function run($html2check, $Config=null, $Spec=array())
 	{
 		//error_log(__METHOD__.__LINE__.' Input:'.$html2check);
 		if (is_array($Config) && is_array($this->Configuration)) $Config = array_merge($this->Configuration, $Config);
@@ -207,11 +209,11 @@ class egw_htmLawed
 		{
 			return '';
 		}
-		$htmLawed = new egw_htmLawed();
+		$htmLawed = new HtmLawed();
 		if (is_array($config) && $_force===false) $config = array_merge($defaultConfig, $config);
 		if (empty($config)) $config = $defaultConfig;
 		//error_log(__METHOD__.__LINE__.array2string($config));
-		return $htmLawed->egw_htmLawed($html,$config,$spec);
+		return $htmLawed->run($html,$config,$spec);
 	}
 }
 

@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Mail User Interface
  *
@@ -2948,11 +2950,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$hasOther = true;
 						$newBody = $matches[2];
 					}
-					$htmLawed = new egw_htmLawed();
+					$htmLawed = new Api\Html\HtmLawed();
 					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
 					// as we switched off HTMLaweds tidy functionality
 					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
-					$newBody = $htmLawed->egw_htmLawed($newBody,mail_bo::$htmLawed_config);
+					$newBody = $htmLawed->run($newBody,mail_bo::$htmLawed_config);
 					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
 					$alreadyHtmlLawed=true;
 				}

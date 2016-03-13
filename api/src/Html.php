@@ -18,7 +18,6 @@ namespace EGroupware\Api;
 use egw_framework;	// validate_file, includeCSS
 use egw_ckeditor_config;
 use egw;	// link
-use egw_htmLawed;
 
 /**
  * Generates html with methods representing html-tags or higher widgets
@@ -1281,30 +1280,6 @@ egw_LAB.wait(function() {
 	 */
 	static function purify($html,$config=null,$spec=array(),$_force=false)
 	{
-		$defaultConfig = array('valid_xhtml'=>1,'safe'=>1);
-
-		if (empty($html)) return $html;	// no need to process further
-		if (!empty($config) && is_string($config))
-		{
-			//error_log(__METHOD__.__LINE__.$config);
-			$config = json_decode($config,true);
-			if (is_null($config)) error_log(__METHOD__.__LINE__." decoding of config failed; standard will be applied");
-		}
-
-		// User preferences
-		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
-
-		// Check for "blank" = just user preference span - for some reason we can't match on the entity, so approximate
-		$regex = '#^<span style="font-family:'.$font.';font-size:'.$font_size.';">.?</span>$#us';
-		if(preg_match($regex,$html))
-		{
-			return '';
-		}
-		$htmLawed = new egw_htmLawed();
-		if (is_array($config) && $_force===false) $config = array_merge($defaultConfig, $config);
-		if (empty($config)) $config = $defaultConfig;
-		//error_log(__METHOD__.__LINE__.array2string($config));
-		return $htmLawed->egw_htmLawed($html,$config,$spec);
+		return Html\HtmLawed::purify($html, $config, $spec, $_force);
 	}
 }
