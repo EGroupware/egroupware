@@ -701,11 +701,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				// Check options
 				(result = $j.grep(this.options.select_options, function(e) {
 					return e.id == v;
-				})) ||
-				// Check current selection to avoid going back to server
-				(result = $j.grep(this.taglist.getSelection(), function(e) {
-					return e.id == v;
-				}))
+				})) && result.length
 			)
 			{
 				// Options should have been provided, but they weren't
@@ -714,6 +710,17 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				{
 					this.options.select_options = [];
 				}
+				values[i] = result[0] ? result[0] : {
+					id: v,
+					label: v
+				};
+			}
+			else if (
+				// Check current selection to avoid going back to server
+				(result = $j.grep(this.taglist.getSelection(), function(e) {
+					return e.id == v;
+				})) && result.length)
+			{
 				values[i] = result[0] ? result[0] : {
 					id: v,
 					label: v
