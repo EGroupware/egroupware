@@ -6145,7 +6145,7 @@ span.egw_tutorial_title {
     overflow-x: scroll;
     position: initial;
     white-space: nowrap;
-    position: fixed;
+    position: absolute;
     left: 83%;
     top: 15px;
     height: 50px;
@@ -6199,7 +6199,7 @@ span.egw_tutorial_title {
     width: 280px;
     display: inline;
     float: left;
-    position: fixed;
+    position: absolute;
     padding: 8px 5px 0 50px;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul {
@@ -6299,7 +6299,7 @@ span.egw_tutorial_title {
     background-position: center;
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
-    position: fixed;
+    position: absolute;
     top: 50px;
     margin-left: 8px;
     width: 300px;
@@ -6794,7 +6794,7 @@ span.egw_tutorial_title {
   body .egw_fw_mobile_popup_container {
     width: 100%;
     height: 100%;
-    position: fixed;
+    position: absolute;
     display: none;
     z-index: 999;
     -webkit-overflow-scrolling: touch;
