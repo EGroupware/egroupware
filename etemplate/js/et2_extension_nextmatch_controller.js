@@ -593,7 +593,7 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 					.set_visibility(
 						nm.getArrayMgr('content').parseBoolExpression(nm.columns[column_index].disabled) ?
 						ET2_COL_VISIBILITY_DISABLED :
-						ET2_COL_VISIBILITY_VISIBLE
+						nm.columns[column_index].visible
 					);
 			}
 		}
