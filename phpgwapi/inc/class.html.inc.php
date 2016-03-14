@@ -17,20 +17,20 @@ use EGroupware\Api;
 /**
  * Generates html with methods representing html-tags or higher widgets
  *
- * @deprecated use methods of Api\Html, Api\Api\Header\Content or Api\Api\Header\UserAgent classes
+ * @deprecated use methods of Api\Html, Api\Header\Content or Api\Header\UserAgent classes
  */
 class html extends Api\Html
 {
 	/**
-	 * @deprecated use Api\Api\Header\UserAgent::type()
+	 * @deprecated use Api\Header\UserAgent::type()
 	 */
 	static $user_agent;
 	/**
-	 * @deprecated use Api\Api\Header\UserAgent::mobile()
+	 * @deprecated use Api\Header\UserAgent::mobile()
 	 */
 	static $ua_mobile;
 	/**
-	 * @deprecated use Api\Api\Header\UserAgent::version()
+	 * @deprecated use Api\Header\UserAgent::version()
 	 */
 	static $ua_version;
 	/**
@@ -63,11 +63,11 @@ class html extends Api\Html
 	 * @param boolean $nocache =true send headers to disallow browser/proxies to cache the download
 	 * @param boolean $force_download =true send content-disposition attachment header
 	 * @param boolean $no_content_type =false do not send actual content-type and content-length header, just content-disposition
-	 * @deprecated use Api\Api\Header\Content::safe()
+	 * @deprecated use Api\Header\Content::safe()
 	 */
 	public static function safe_content_header(&$content, $path, &$mime='', &$length=0, $nocache=true, $force_download=true, $no_content_type=false)
 	{
-		Api\Api\Header\Content::safe($content, $path, $mime, $length, $nocache, $force_download, $no_content_type);
+		Api\Header\Content::safe($content, $path, $mime, $length, $nocache, $force_download, $no_content_type);
 	}
 
 	/**
@@ -82,11 +82,11 @@ class html extends Api\Html
 	 * @param int $length =0 content length, default 0 = skip that header
 	 * @param boolean $nocache =true send headers to disallow browser/proxies to cache the download
 	 * @param boolean $forceDownload =true send headers to handle as attachment/download
-	 * @deprecated use Api\Api\Header\Content::type()
+	 * @deprecated use Api\Header\Content::type()
 	 */
 	public static function content_header($fn,$mime='',$length=0,$nocache=True,$forceDownload=true)
 	{
-		Api\Api\Header\Content::type($fn, $mime, $length, $nocache, $forceDownload);
+		Api\Header\Content::type($fn, $mime, $length, $nocache, $forceDownload);
 	}
 
 	/**
@@ -94,11 +94,11 @@ class html extends Api\Html
 	 *
 	 * @param string $fn filename
 	 * @param boolean $forceDownload =true send headers to handle as attachment/download
-	 * @deprecated use Api\Api\Header\Content::disposition()
+	 * @deprecated use Api\Header\Content::disposition()
 	 */
 	public static function content_disposition_header($fn,$forceDownload=true)
 	{
-		Api\Api\Header\Content::disposition($fn, $forceDownload);
+		Api\Header\Content::disposition($fn, $forceDownload);
 	}
 
 	/**
