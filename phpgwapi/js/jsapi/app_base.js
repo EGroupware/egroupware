@@ -437,7 +437,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 					height:"100%",
 					background:"white",
 					display:'block',
-					position:'fixed',
+					position: 'absolute',
 					top:0,
 					left:0,
 					bottom:0,
