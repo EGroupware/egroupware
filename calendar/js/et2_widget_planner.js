@@ -346,12 +346,13 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 									break;
 								}
 							}
-							var row = planner.getWidgetById(this);
+							var row = planner.getWidgetById('planner_row_'+this);
 							if(row && row.set_label)
 							{
 								row.set_label(name);
 							}
 						},user);
+						if(!label) label = user;
 						if(already_added.indexOf(user) < 0)
 						{
 							labels.push({id: user, label: label, data: {participants:user,owner:''}});
@@ -385,7 +386,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 						}
 					}
 				}
-
+				
 				return labels.sort(function(a,b) {
 					return a.label.localeCompare(b.label);
 				});
