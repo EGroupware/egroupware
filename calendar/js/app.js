@@ -39,9 +39,15 @@ app.classes.calendar = AppJS.extend(
 			delete window.top.app.calendar;
 			window.top.app.calendar = this;
 		}
-
+		
 		// call parent
 		this._super.apply(this, arguments);
+
+		// Make sure translations are loaded
+		if(!this.egw.is_popup())
+		{
+			this.egw.langRequireApp(this.egw.window, this.appname);
+		}
 
 		//Drag_n_Drop (need to wait for DOM ready to init dnd)
 		jQuery(jQuery.proxy(this.drag_n_drop,this));
