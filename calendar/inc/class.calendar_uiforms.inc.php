@@ -768,7 +768,7 @@ class calendar_uiforms extends calendar_ui
 				}
 				// Adding participants needs to be done as an edit, in case we
 				// have participants visible in seperate calendars
-				if(count(array_diff_key($event['participants'], $old_event['participants'])))
+				if(is_array($old_event['participants']) && count(array_diff_key($event['participants'], $old_event['participants'])))
 				{
 					$update_type = 'edit';
 				}
@@ -2969,7 +2969,7 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 			$participants = array_merge($participants , array(
-				"account" => $accounts,
+				"participant" => $accounts,
 				"role" => "REQ-PARTICIPANT",
 				"add" => "pressed"
 			));
