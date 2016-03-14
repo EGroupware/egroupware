@@ -1736,7 +1736,7 @@ window.egw_LAB.wait(function() {
 				$row['cat_id'] = $this->categories->check_list(EGW_ACL_READ,$row['cat_id']);
 			}
 		}
-		$readonlys['no_distrib_lists'] = (bool)$show_distributionlist;
+		$rows['no_distribution_list'] = (bool)$query['filter2'];
 
 		// disable customfields column, if we have no customefield(s)
 		if (!$this->customfields) $rows['no_customfields'] = true;
