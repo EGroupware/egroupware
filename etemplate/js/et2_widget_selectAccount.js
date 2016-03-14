@@ -263,7 +263,8 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 					}
 					if(this.options.select_options[i].value == search[j]) found = true;
 				}
-				if(!found)
+				// We only look for numeric IDs, non-numeric IDs cause an exception
+				if(!found && !isNaN(search[j]))
 				{
 					// Add it in
 					var name = this.egw().link_title('home-accounts', search[j]);
