@@ -1114,11 +1114,11 @@ class Accounts
 	 * @param int $account_id
 	 * @param boolean $need_active =false true = 'members-active' required
 	 * @return array
-	 * @throws egw_exception_wrong_parameter if no integer was passed as $account_id
+	 * @throws Exception\WrongParameter if no integer was passed as $account_id
 	 */
 	static function cache_read($account_id, $need_active=false)
 	{
-		if (!is_numeric($account_id)) throw new egw_exception_wrong_parameter('Not an integer!');
+		if (!is_numeric($account_id)) throw new Exception\WrongParameter('Not an integer!');
 
 		$account =& self::$request_cache[$account_id];
 
