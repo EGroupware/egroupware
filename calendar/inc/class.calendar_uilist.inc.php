@@ -66,27 +66,6 @@ class calendar_uilist extends calendar_ui
 	}
 
 	/**
-	 * Show the calendar on the home page
-	 *
-	 * @return string with content
-	 */
-	function &home()
-	{
-		// set the defaults for the home-page
-		$this->__construct(array(
-			'date'	   => $this->bo->date2string($this->bo->now_su),
-			'cat_id'	 => 0,
-			'filter'	 => 'default',
-			'owner'	  => $this->user,
-			'multiple'   => 0,
-			'view'	   => $this->bo->cal_prefs['mainscreen_showevents'],
-		));
-		egw_session::appsession('calendar_list','calendar','');	// in case there's already something set
-
-		return $this->listview(null,'',true);
-	}
-
-	/**
 	 * Show the listview
 	 */
 	function listview($content=null,$msg='',$home=false)
@@ -460,13 +439,11 @@ class calendar_uilist extends calendar_ui
 			}
 			elseif ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$event['edit_link'] = "edit_series({$event['id']}, {$event['start']});return false;";
 				$event['app_id'] .= ':'.egw_time::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
 			}
 			else
 			{
 				$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
-				$event['edit_link'] = $this->popup($view_link).'; return false;';
 			}
 
 			// Format start and end with timezone

@@ -27,12 +27,6 @@
 class calendar_uiviews extends calendar_ui
 {
 	var $public_functions = array(
-		'day'   => True,
-		'day4'  => True,
-		'week'  => True,
-		'weekN' => True,
-		'month' => True,
-		'planner' => True,
 		'index' => True,
 	);
 
@@ -42,13 +36,6 @@ class calendar_uiviews extends calendar_ui
 	 * @var mixed
 	 */
 	var $debug=false;
-
-	/**
-	 * minimum width for an event
-	 *
-	 * @var int
-	 */
-	var $eventCol_min_width = 80;
 
 	/**
 	 * extra rows above and below the workday
@@ -202,7 +189,7 @@ class calendar_uiviews extends calendar_ui
 	}
 
 	/**
-	 * Show the last view or the default one, if no last
+	 * Load all views used by calendar, client side switches between them as needed
 	 */
 	function index($content=array())
 	{
@@ -406,59 +393,6 @@ class calendar_uiviews extends calendar_ui
 	}
 
 	/**
-	 * Show the calendar on the home page
-	 *
-	 * @return string with content
-	 */
-	function &home()
-	{
-		// set some stuff for the home-page
-		$this->__construct(array(
-			'date'       => $this->bo->date2string($this->bo->now_su),
-			'cat_id'     => 0,
-			'filter'     => 'default',
-			'owner'      => $this->user,
-			'multiple'   => 0,
-			'view'       => $this->bo->cal_prefs['mainscreen_showevents'],
-		));
-
-		if (($error = $this->check_owners_access()))
-		{
-			return $error;
-		}
-		if ($this->group_warning)
-		{
-			$group_warning = '<p class="message" align="center">'.$this->group_warning."</p>\n";
-		}
-		switch($this->cal_prefs['mainscreen_showevents'])
-		{
-			case 'planner_user':
-			case 'planner_cat':
-			case 'planner':
-				return $group_warning.$this->planner(true);
-
-			case 'year':
-				return $group_warning.$this->year(true);
-
-			case 'month':
-				return $group_warning.$this->month(0,true);
-
-			case 'weekN':
-				return $group_warning.$this->weekN(true);
-
-			default:
-			case 'week':
-				return $group_warning.$this->week(0,true);
-
-			case 'day':
-				return $group_warning.$this->day(true);
-
-			case 'day4':
-				return $group_warning.$this->week(4,true);
-		}
-	}
-
-	/**
 	 * Displays the planner view
 	 *
 	 * @param boolean|etemplate_new $home = false if etemplate return content suitable for home-page
@@ -536,18 +470,6 @@ class calendar_uiviews extends calendar_ui
 		$tmpl->setElementAttribute('planner','actions',$this->get_actions());
 
 		$tmpl->exec(__METHOD__, $content);
-	}
-
-	/**
-	 * Displays a multiple week-view
-	 *
-	 * @param boolean|etemplate2 $home = false if not false return content suitable for home-page
-	 */
-	function &weekN($home=false)
-	{
-		if (($num = (int)$this->cal_prefs['multiple_weeks']) < 2) $num = 3;	// default 3 weeks
-
-		return $this->month($num,$home);
 	}
 
 	/**
@@ -656,38 +578,6 @@ class calendar_uiviews extends calendar_ui
 		$last['min'] = $last['sec'] = 59;
 		unset($last['raw']);	// otherwise date2ts does not calc raw new, but uses it
 		$last = $this->bo->date2ts($last);
-	}
-
-	/**
-	 * Get start and end of a year aligned to full months
-	 *
-	 * @param int &$first timestamp 0h of first day of week containing the first of the current year
-	 * @param int &$last timestamp 23:59:59 of last day of week containg the last day of the current year
-	 */
-	function _month_align_year(&$first,&$last)
-	{
-		$first = $this->datetime->get_weekday_start($this->year,$this->month=1,$this->day=1);
-		$last = $this->datetime->get_weekday_start($this->year,$this->month+12,
-				$this->datetime->days_in_month($this->month+12,$this->year));
-		// now we need to calculate the end of the last day of that week
-		// as simple $last += WEEK_s - 1; does NOT work, if daylight saving changes in that week!!!
-		$last = $this->bo->date2array($last);
-		$last['day'] += 6;
-		$last['hour'] = 23;
-		$last['min'] = $last['sec'] = 59;
-		unset($last['raw']);	// otherwise date2ts does not calc raw new, but uses it
-		$last = $this->bo->date2ts($last);
-	}
-
-	/**
-	 * Four days view, everythings done by the week-view code ...
-	 *
-	 * @param boolean $home = false if true return content suitable for home-page
-	 * @return string
-	 */
-	function day4($home=false)
-	{
-		return $this->week(4,$home);
 	}
 
 	/**
@@ -818,128 +708,6 @@ class calendar_uiviews extends calendar_ui
 		$tmpl->setElementAttribute('view','actions',$this->get_actions());
 
 		$tmpl->exec(__METHOD__, $content);
-	}
-
-	/**
-	 * Displays the dayview
-	 *
-	 * @param boolean $home = false if true return content suitable for home-page
-	 */
-	function &day($home=false)
-	{
-		if ($this->debug > 0) $this->bo->debug_message('uiviews::day() date=%1',True,$this->date);
-
-		$this->last = $this->first = $this->bo->date2ts((string)$this->date);
-		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$this->bo->long_date($this->first,0,false,true);
-
-		$this->use_time_grid = true;    // day-view always uses a time-grid, independent what's set in the prefs!
-
-		$this->search_params['end'] = $this->last = $this->first+DAY_s-1;
-
-		$merge = $this->merge();
-		if($merge)
-		{
-			egw::redirect_link('/index.php',array(
-				'menuaction' => 'calendar.calendar_uiviews.index',
-				'msg'        => $merge,
-			));
-		}
-
-		if (!$home)
-		{
-			$this->do_header();
-
-			$users = $this->search_params['users'];
-			if (!is_array($users)) $users = array($users);
-
-			// for more then X users, show all in one row
-			if (count($users) == 1 || count($users) >= $this->cal_prefs['day_consolidate'])
-			{
-				$dayEvents =& $this->bo->search($this->search_params);
-				$owner = 0;
-			}
-			else
-			{
-				$dayEvents = $owner = array();
-				$search_params = $this->search_params;
-				foreach($this->_get_planner_users(false) as $uid => $label)
-				{
-					$search_params['users'] = $uid;
-					list(,$dayEvents['<b>'.$label.'</b>'.$this->close_button($uid)]) = each($this->bo->search($search_params));
-					$owner[] = $uid;
-				}
-			}
-			$cols = array();
-
-			//Load the ""show holiday as event" preference here and set the event
-			//types mask accordingly.
-			$display_holidays_event = $GLOBALS['egw_info']['user']['preferences']['calendar']['display_holidays_event'];
-			$this->display_holiday_event_types = array(
-				'bdays' => ((int)$display_holidays_event & 1) != 0,
-				'hdays' => ((int)$display_holidays_event & 2) != 0
-			);
-
-			//Add the holiday events
-			$holidays = $this->_get_holiday_events($this->date, $this->display_holiday_event_types);
-			foreach($dayEvents as &$events)
-			{
-				$events = array_merge($events,$holidays);
-			}
-			unset($events);
-			unset($holidays);
-
-			$cols[0] =& $this->timeGridWidget($this->tagWholeDayOnTop($dayEvents),$this->cal_prefs['interval'],450,'','',$owner);
-
-			if (count($users) > 1)
-			{
-				$navHeader = '<div class="calendar_calWeek calendar_calWeekNavHeader">'
-				.html::a_href(html::image('phpgwapi','left',lang('previous'),$options=' alt="<<"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd',$this->first-1),
-				)). '<span>'.$this->bo->long_date($this->first,0,false,true);
-
-				$navHeader = $navHeader.'</span>'.html::a_href(html::image('phpgwapi','right',lang('next'),$options=' alt=">>"'),array(
-				'menuaction' => $this->view_menuaction,
-				'date'       => date('Ymd',$this->last+1),
-				)).'</div>';
-			}
-
-			// only show todo's for a single user
-			if (count($users) == 1 && ($todos = $this->get_todos($todo_label)) !== false)
-			{
-				if ($GLOBALS['egw_info']['user']['apps']['infolog'])
-				{
-					foreach(array('task','phone','note') as $type)
-					{
-						$todo_label .= '&nbsp;'.html::a_href( html::image('infolog',$type,lang('Add')),'infolog.infolog_ui.edit',array(
-							'type' => $type,
-							'start_time' => $ts,
-						),' data-todo="app|750x590"');
-					}
-				}
-				$cols[1] = html::div(
-					html::div($todo_label,'','calendar_calDayTodosHeader th')."\n".
-					html::div($todos,'','calendar_calDayTodosTable'),'','calendar_calDayTodos');
-				$cols['.1'] = 'width=30%';
-				echo html::table(array(
-					0 => $cols,
-					'.0' => 'valign="top"'
-				),'class="calendar_calDayView"');
-			}
-			else
-			{
-				$cols[0] = $navHeader . $cols[0];
-				echo $cols[0];
-			}
-
-		}
-		else
-		{
-			$content = $this->timeGridWidget($this->bo->search($this->search_params),$this->cal_prefs['interval'],300);
-
-
-			return $content;
-		}
 	}
 
 	/**
@@ -1950,29 +1718,6 @@ class calendar_uiviews extends calendar_ui
 		return '';
 	}
 
-	/**
-	* Calculates a brighter color for a given color
-	*
-	* @param $rgb string color as #rrggbb value
-	* @param $decr int value to add to each component, default 64
-	* @return string the brighter color
-	*/
-	static function brighter($rgb,$decr=64)
-	{
-		if (!preg_match('/^#?([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$/',$rgb,$components))
-		{
-			return '#ffffff';
-		}
-		$brighter = '#';
-		for ($i = 1; $i <=3; ++$i)
-		{
-			$val = hexdec($components[$i]) + $decr;
-			if ($val > 255) $val = 255;
-			$brighter .= sprintf('%02x',$val);
-		}
-		//echo "brighter($rgb=".print_r($components,True).")=$brighter</p>\n";
-		return $brighter;
-	}
 
 	/**
 	 * Calculates the brightness of a hexadecimal rgb color (median of the r, g and b components)

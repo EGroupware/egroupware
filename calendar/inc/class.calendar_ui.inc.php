@@ -215,28 +215,6 @@ class calendar_ui
 	}
 
 	/**
-	 * show the egw-framework plus evtl. $this->group_warning from check_owner_access
-	 */
-	function do_header()
-	{
-		// Include the jQuery-UI CSS - many more complex widgets use it
-		$theme = 'redmond';
-		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
-		// Load our CSS after jQuery-UI, so we can override it
-		egw_framework::includeCSS('/etemplate/templates/default/etemplate2.css');
-
-		// load etemplate2
-		egw_framework::validate_file('/etemplate/js/etemplate2.js');
-
-		// load our app.js file
-		egw_framework::validate_file('/calendar/js/app.js');
-
-		common::egw_header();
-
-		if ($this->bo->warnings) echo '<pre class="message" align="center">'.html::htmlspecialchars(implode("\n",$this->bo->warnings))."</pre>\n";
-	}
-
-	/**
 	 * Manages the states of certain controls in the UI: date shown, category selected, ...
 	 *
 	 * The state of all these controls is updated if they are set in $_REQUEST or $set_states and saved in the session.
@@ -474,24 +452,6 @@ class calendar_ui
 	}
 
 	/**
-	* Create a select-box item in the sidebox-menu
-	* @privat used only by sidebox_menu !
-	*/
-	function _select_box($title,$name,$options,$width='99%')
-	{
-		$select = " <select style=\"width: $width;\" name=\"".$name.'" id="calendar_'.$name.'" title="'.
-			lang('Select a %1',lang($title)).'">'.
-			$options."</select>\n";
-
-		return array(
-			'text' => $select,
-			'no_lang' => True,
-			'link' => False,
-			'icon' => false,
-		);
-	}
-
-	/**
 	 * Generate a link to add an event, incl. the necessary popup
 	 *
 	 * @param string $content content of the link
@@ -514,21 +474,6 @@ class calendar_ui
 		return html::a_href($content,'',$vars,' data-date="' .$vars['date'].'|'.$vars['hour'].'|'.$vars['minute']
 				. '" title="'.html::htmlspecialchars(lang('Add')).'"');
 	}
-
-	/**
-	 * returns javascript to open a popup window: window.open(...)
-	 *
-	 * @param string $link link or this.href
-	 * @param string $target name of target or this.target
-	 * @param int $width width of the window
-	 * @param int $height height of the window
-	 * @return string javascript (using single quotes)
-	 */
-	function popup($link,$target='_blank',$width=750,$height=410)
- 	{
-		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
- 	}
 
 	/**
 	 * creates the content for the sidebox-menu, called as hook
@@ -793,6 +738,14 @@ class calendar_ui
 		}
 	}
 
+	/**
+	 * Merge calendar events into a document
+	 *
+	 * Checks $_GET['merge'] for the document, and $timespan for the date range.
+	 * If timespan is not provided, we try to guess based on the document name.
+	 *
+	 * @param Array $timespan
+	 */
 	public function merge($timespan = array())
 	{
 		// Merge print
