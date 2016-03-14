@@ -259,6 +259,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				{
 					// Discard cache, reload
 					this._clear_cache();
+					this.setState({state: this.state});
 				}
 				break;
 			case 'calendar':
