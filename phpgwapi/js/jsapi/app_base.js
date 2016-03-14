@@ -401,9 +401,9 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		var rowID = '';
 		// content to feed to etemplate2
 		var content = {};
-		
+
 		var self = this;
-		
+
 		if (id){
 			var parts = id.split('::');
 			rowID = parts[1];
@@ -445,6 +445,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 					overflow:'auto',
 					"padding":'60px 0 10px 0'})
 				.attr('id','popupMainDiv')
+				.addClass('popupMainDiv')
 				.appendTo('body');
 
 		// close button
@@ -468,19 +469,19 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				.attr('id', this.appname+'-view')
 				.addClass('et2_mobile-view-container')
 				.appendTo(this.viewContainer);
-		
+
 		var templateName = _action.data.mobileViewTemplate || 'edit';
 		var templateURL = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'.xet'+'?1';
 		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}, currentapp:this.appname};
-		
+
 		// etemplate2 object for view
 		this.et2_view = new etemplate2 (this.viewTemplate[0], false);
-		
+
 		if(templateName)
 		{
 			this.et2_view.load(this.appname+'.'+templateName,templateURL, data, typeof et2_callback == 'function'?et2_callback:function(){}, app);
 		}
-		
+
 		// define a global close function for view template
 		// in order to be able to destroy view on action
 		app[this.appname]['close'] = destroy;

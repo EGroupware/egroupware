@@ -30,12 +30,15 @@
 /*All devices landscape mode*/
 @handheld-landscape: ~"only screen and (max-device-width : @{tablet-max}) and (orientation : landscape)";
 /*Tablets landscape mode*/
-@tablet-portrait: ~"only screen and (max-device-width : @{tablet-max}) and (min-width: @{smartphone-max}) and (orientation : landscape)";
+@tablet-landscape: ~"only screen and (max-device-width : @{tablet-max}) and (min-width: @{smartphone-max}) and (orientation : landscape)";
 /*Tablets Portrait*/
 @tablet-portrait: ~"only screen and (max-device-width : @{tablet-max}) and (min-width: @{smartphone-max}) and (orientation : portrait)";
 /*Smartphones*/
 @smartphones: ~"only screen and (max-device-width: @{smartphone-max}) and (min-width: @{smartphone-min})";
-
+/*Smartphones portrait*/
+@smartphones-portrait: ~"only screen and (max-device-width: @{smartphone-max}) and (min-width: @{smartphone-min}) and (oriantation:portrait)";
+/*Smartphones landscape*/
+@smartphones-landscape: ~"only screen and (max-device-width: @{smartphone-max}) and (min-width: @{smartphone-min}) and (oriantation:landscape)";
 .white-svg {
 	-webkit-filter: brightness(0) invert(1) !important;
 	filter: brightness(0) invert(1) !important;
@@ -46,7 +49,6 @@
 
 @media @handheld
 {
-
 	#egw_fw_print {
 		display:none;
 	}
@@ -398,6 +400,10 @@
 			}
 		}
 		.et2_nextmatch {
+			.nextmatch_sortheader {
+				padding-right: 0px;
+				margin-right: 0px;
+			}
 			.nextmatch_header_row, .nextmatch_header
 			{
 				div.header_row_right {
@@ -796,7 +802,8 @@
 		}
 		.et2_taglist_category span[class*="cat_"] {height: 42px;}
 		.et2_button_icon {height:32px;}
-		#popupMainDiv {
+		.popupMainDiv {
+			padding-top: 60px !important;
 			* {
 				.mob-fontsize-n;
 				font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
@@ -871,13 +878,14 @@
 					margin-top:0;
 				}
 			}
-			.dialogHeadbar {
-				button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
-					.white-svg;
-					padding-right: 15px;
-				}
-			}
+
 			.et2_taglist>div{min-height: auto;}
+		}
+		.dialogHeadbar {
+			button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
+				.white-svg;
+				padding-right: 15px;
+			}
 		}
 		.rowHeader {
 			.mob-fontsize-l;

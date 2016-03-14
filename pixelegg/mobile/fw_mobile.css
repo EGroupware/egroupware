@@ -6976,6 +6976,8 @@ form[id^="tracker-"] .dialogHeadbar {
 /*Tablets landscape mode*/
 /*Tablets Portrait*/
 /*Smartphones*/
+/*Smartphones portrait*/
+/*Smartphones landscape*/
 .white-svg {
   -webkit-filter: brightness(0) invert(1) !important;
   filter: brightness(0) invert(1) !important;
@@ -7301,6 +7303,10 @@ form[id^="tracker-"] .dialogHeadbar {
   body button.plus_button:hover,
   body button.plus_button:active {
     background-color: #0c5da5;
+  }
+  body .et2_nextmatch .nextmatch_sortheader {
+    padding-right: 0px;
+    margin-right: 0px;
   }
   body .et2_nextmatch .nextmatch_header_row,
   body .et2_nextmatch .nextmatch_header {
@@ -7693,27 +7699,28 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_button_icon {
     height: 32px;
   }
-  body #popupMainDiv {
+  body .popupMainDiv {
+    padding-top: 60px !important;
     /* Exceptional cases to not get the general left padding*/
   }
-  body #popupMainDiv * {
+  body .popupMainDiv * {
     font-size: 10pt;
     font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
   }
-  body #popupMainDiv .et2_textbox,
-  body #popupMainDiv .et2_date,
-  body #popupMainDiv .et2_dropdown,
-  body #popupMainDiv .et2_link,
-  body #popupMainDiv .et2_label,
-  body #popupMainDiv input,
-  body #popupMainDiv select,
-  body #popupMainDiv .et2_selectbox {
+  body .popupMainDiv .et2_textbox,
+  body .popupMainDiv .et2_date,
+  body .popupMainDiv .et2_dropdown,
+  body .popupMainDiv .et2_link,
+  body .popupMainDiv .et2_label,
+  body .popupMainDiv input,
+  body .popupMainDiv select,
+  body .popupMainDiv .et2_selectbox {
     height: 46px;
     padding-left: 8px;
   }
-  body #popupMainDiv input,
-  body #popupMainDiv select,
-  body #popupMainDiv .et2_selectbox {
+  body .popupMainDiv input,
+  body .popupMainDiv select,
+  body .popupMainDiv .et2_selectbox {
     padding: 0;
     padding-left: 0;
     border-left: 0;
@@ -7721,79 +7728,79 @@ form[id^="tracker-"] .dialogHeadbar {
     border-right: 0;
     border-radius: 0;
   }
-  body #popupMainDiv .et2_label .et2_selectbox {
+  body .popupMainDiv .et2_label .et2_selectbox {
     padding-left: 8px;
   }
-  body #popupMainDiv ul.et2_selectbox li {
+  body .popupMainDiv ul.et2_selectbox li {
     padding-top: 13px;
   }
-  body #popupMainDiv .et2_taglist input[type="text"] {
+  body .popupMainDiv .et2_taglist input[type="text"] {
     height: 36px;
   }
-  body #popupMainDiv .et2_taglist .ms-sel-item {
+  body .popupMainDiv .et2_taglist .ms-sel-item {
     margin-left: 3px;
     line-height: 36px;
     margin-top: 0;
     margin-bottom: 0;
   }
-  body #popupMainDiv .et2_label .et2_date_ro.et2_label {
+  body .popupMainDiv .et2_label .et2_date_ro.et2_label {
     padding-left: 0;
   }
-  body #popupMainDiv .et2_button_with_image {
+  body .popupMainDiv .et2_button_with_image {
     background-color: transparent;
     border: none;
     box-shadow: none;
     color: #1e1e1e;
   }
-  body #popupMainDiv .et2_date {
+  body .popupMainDiv .et2_date {
     min-width: 100px;
     padding-left: 0;
   }
-  body #popupMainDiv .et2_button_with_image,
-  body #popupMainDiv .et2_button_text {
+  body .popupMainDiv .et2_button_with_image,
+  body .popupMainDiv .et2_button_text {
     height: 46px;
     margin: 1px;
     margin-left: 3px;
   }
-  body #popupMainDiv form {
+  body .popupMainDiv form {
     margin-top: 50px;
   }
-  body #popupMainDiv .et2_details.et2_details_expanded {
+  body .popupMainDiv .et2_details.et2_details_expanded {
     background-color: transparent;
     height: 100%;
   }
-  body #popupMainDiv .et2_details.et2_details_expanded .et2_details_title {
+  body .popupMainDiv .et2_details.et2_details_expanded .et2_details_title {
     display: inline-block;
     background-color: #F0F0F0;
     width: 100%;
     padding-top: 6px;
     height: 32px;
   }
-  body #popupMainDiv .et2_details {
+  body .popupMainDiv .et2_details {
     position: relative;
     background-color: #F0F0F0;
     height: 32px;
   }
-  body #popupMainDiv .et2_details .et2_details_toggle {
+  body .popupMainDiv .et2_details .et2_details_toggle {
     position: absolute;
     right: 2px;
     top: 0px;
     margin: 0px;
   }
-  body #popupMainDiv .et2_details .et2_details_title {
+  body .popupMainDiv .et2_details .et2_details_title {
     padding-top: 6px;
     margin-top: 0;
   }
-  body #popupMainDiv .dialogHeadbar button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
+  body .popupMainDiv .et2_taglist > div {
+    min-height: auto;
+  }
+  body .dialogHeadbar button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
     background-size: 24px 24px !important;
     border: none;
     padding-right: 15px;
-  }
-  body #popupMainDiv .et2_taglist > div {
-    min-height: auto;
   }
   body .rowHeader {
     font-size: 12pt;

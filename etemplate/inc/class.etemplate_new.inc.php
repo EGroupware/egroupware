@@ -263,7 +263,7 @@ class etemplate_new extends etemplate_widget_template
 			}
 			else	// mark popups as such, by enclosing everything in div#popupMainDiv
 			{
-				echo '<div id="popupMainDiv">'."\n";
+				echo '<div id="popupMainDiv" class="popupMainDiv">'."\n";
 			}
 			// Send any accumulated json responses - after flush to avoid sending the buffer as a response
 			if(egw_json_response::isJSONResponse())

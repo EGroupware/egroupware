@@ -325,7 +325,7 @@ class etemplate extends boetemplate
 				else
 				{
 					echo $GLOBALS['egw']->framework->header();
-					echo '<div id="popupMainDiv">'."\n";
+					echo '<div id="popupMainDiv" class="popupMainDiv">'."\n";
 					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{
 						$manual = new etemplate('etemplate.popup.manual');
