@@ -132,7 +132,7 @@ class etemplate_widget_taglist extends etemplate_widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
-			if($this->attrs['multiple'] == false)
+			if(array_key_exists('multiple', $this->attrs) && $this->attrs['multiple'] == false)
 			{
 				$value = array_shift($value);
 			}
