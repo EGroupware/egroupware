@@ -941,7 +941,7 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 {
 	var edit_id = event_data.app_id;
 	var edit_date = event_data.start;
-	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : (window.opener || window).egw;
+	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : (window.opener || window).egw('calendar');
 	var that = this;
 
 	var extra_params = extra_data && typeof extra_data == 'object' ? extra_data : {};
@@ -1005,7 +1005,7 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
  */
 et2_calendar_event.series_split_prompt = function(event_data, instance_date, callback)
 {
-	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : (window.opener || window).egw;
+	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : (window.opener || window).egw('calendar');
 	var that = this;
 
 	if(typeof instance_date == 'string')
