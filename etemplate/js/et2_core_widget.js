@@ -550,6 +550,10 @@ var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 					}
 				}
 			}
+			else if (attrName == "readonly" && typeof _target[attrName] != "undefined")
+			{
+				// do NOT overwrite already evaluated readonly attribute
+			}
 			else
 			{
 				if (mgr != null && typeof _proto.attributes[attrName] != "undefined")
