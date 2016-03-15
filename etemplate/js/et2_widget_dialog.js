@@ -65,7 +65,7 @@
  * <code>
  *	var dialog = et2_createWidget("dialog",{
  *		// If you use a template, the second parameter will be the value of the template, as if it were submitted.
- *		callback: function(button_id, value) {...},
+ *		callback: function(button_id, value) {...},	// return false to prevent dialog closing
  *		buttons: [
  *			// These ones will use the callback, just like normal
  *			{text: egw.lang("OK"),id:"OK", class="ui-priority-primary", default: true},
@@ -96,23 +96,29 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			description: "Callback function is called with the value when the dialog is closed",
 			"default": function(button_id) {egw.debug("log","Button ID: %d",button_id);}
 		},
+		beforeClose: {
+			name: "before close callback",
+			type: "js",
+			description: "Callback function before dialog is closed, return false to prevent that",
+			"default": function() {}
+		},
 		message: {
 			name: "Message",
 			type: "string",
 			description: "Dialog message (plain text, no html)",
-			"default": "Somebody forgot to set this...",
+			"default": "Somebody forgot to set this..."
 		},
 		dialog_type: {
 			name: "Dialog type",
 			type: "integer",
 			description: "To use a pre-defined dialog style, use et2_dialog.ERROR_MESSAGE, INFORMATION_MESSAGE,WARNING_MESSAGE,QUESTION_MESSAGE,PLAIN_MESSAGE constants.  Default is et2_dialog.PLAIN_MESSAGE",
-			"default": 0, //this.PLAIN_MESSAGE
+			"default": 0 //this.PLAIN_MESSAGE
 		},
 		buttons: {
 			name: "Buttons",
 			type: "any",
 			"default": 0, //this.BUTTONS_OK,
-			description: "Buttons that appear at the bottom of the dialog.  You can use the constants et2_dialog.BUTTONS_OK, BUTTONS_YES_NO, BUTTONS_YES_NO_CANCEL, BUTTONS_OK_CANCEL, or pass in an array for full control",
+			description: "Buttons that appear at the bottom of the dialog.  You can use the constants et2_dialog.BUTTONS_OK, BUTTONS_YES_NO, BUTTONS_YES_NO_CANCEL, BUTTONS_OK_CANCEL, or pass in an array for full control"
 		},
 		icon: {
 			name: "Icon",
@@ -165,7 +171,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 		//WARNING_MESSAGE: 3,
 		"dialog_warning",
 		//ERROR_MESSAGE: 4,
-		"dialog_error",
+		"dialog_error"
 	],
 
 	_buttons: [
@@ -259,7 +265,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	click: function(target, button_id) {
 		if(this.options.callback)
 		{
-			this.options.callback.call(this,button_id,this.get_value());
+			if (this.options.callback.call(this,button_id,this.get_value()) === false) return;
 		}
 		// Triggers destroy too
 		this.div.dialog("close");
@@ -281,7 +287,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	/**
 	 * Set the displayed prompt message
 	 *
-	 * @param string New message for the dialog
+	 * @param {string} message New message for the dialog
 	 */
 	set_message: function(message) {
 		this.options.message = message;
@@ -294,7 +300,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	/**
 	 * Set the dialog type to a pre-defined type
 	 *
-	 * @param integer Type constant from et2_dialog
+	 * @param {integer} type constant from et2_dialog
 	 */
 	set_dialog_type: function(type) {
 		if(this.options.dialog_type != type && typeof this._dialog_types[type] == "string")
@@ -307,7 +313,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	/**
 	 * Set the icon for the dialog
 	 *
-	 * @param string icon
+	 * @param {string} icon_url
 	 */
 	set_icon: function(icon_url) {
 		if(icon_url == "")
@@ -325,6 +331,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	 *
 	 * Use either the pre-defined options in et2_dialog, or an array
 	 * @see http://api.jqueryui.com/dialog/#option-buttons
+	 * @param {array} buttons
 	 */
 	set_buttons: function(buttons) {
 		this.options.buttons = buttons;
@@ -381,7 +388,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	/**
 	 * Set the dialog title
 	 *
-	 * @param string New title for the dialog
+	 * @param {string} title New title for the dialog
 	 */
 	set_title: function(title) {
 		this.options.title = title;
@@ -391,7 +398,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	/**
 	 * Block interaction with the page behind the dialog
 	 *
-	 * @param boolean Block page behind dialog
+	 * @param {boolean} modal Block page behind dialog
 	 */
 	set_modal: function(modal) {
 		this.options.modal = modal;
@@ -423,6 +430,8 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			// Just template name, it better be loaded already
 			this.template.load(template,'',this.options.value||{});
 		}
+		// set template-name as id, to allow to style dialogs
+		this.div.children().attr('id', template.replace(/^(.*\/)?([^/]+)(\.xet)?$/, '$2').replace(/\./g, '-'));
 	},
 
 	/**
@@ -451,7 +460,8 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 				// Focus default button so enter works
 				$j(this).parents('.ui-dialog-buttonpane button[default]').focus();
 			},
-			close: jQuery.proxy(function() {this.destroy();},this)
+			close: jQuery.proxy(function() {this.destroy();},this),
+			beforeClose: this.options.beforeClose
 		});
 	}
 });}).call(this);
@@ -489,7 +499,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 	/**
 	 * Create a parent to inject application specific egw object with loaded translations into et2_dialog
 	 *
-	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
+	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
 	 */
 	_create_parent: function(_egw_or_appname)
 	{
@@ -516,14 +526,14 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 	/**
 	 * Show a confirmation dialog
 	 *
-	 * @param function _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
-	 * @param String _message Message to be place in the dialog.
-	 * @param String _title Text in the top bar of the dialog.
-	 * @param any _value passed unchanged to callback as 2. parameter
-	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
-	 * @param integer _type One of the message constants.  This defines the style of the message.
-	 * @param String _icon URL of an icon to display.  If not provided, a type-specific icon will be used.
-	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
+	 * @param {function} _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
+	 * @param {string} _message Message to be place in the dialog.
+	 * @param {string} _title Text in the top bar of the dialog.
+	 * @param _value passed unchanged to callback as 2. parameter
+	 * @param {integer|array} _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
+	 * @param {integer} _type One of the message constants.  This defines the style of the message.
+	 * @param {string} _icon URL of an icon to display.  If not provided, a type-specific icon will be used.
+	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
 	 */
 	show_dialog: function(_callback, _message, _title, _value, _buttons, _type, _icon, _egw_or_appname)
 	{
@@ -544,9 +554,9 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 	/**
 	 * Show an alert message with OK button
 	 *
-	 * @param {String} _message Message to be place in the dialog.
-	 * @param {String} _title Text in the top bar of the dialog.
-	 * @param integer _type One of the message constants.  This defines the style of the message.
+	 * @param {string} _message Message to be place in the dialog.
+	 * @param {string} _title Text in the top bar of the dialog.
+	 * @param {integer} _type One of the message constants.  This defines the style of the message.
 	 */
 	alert: function (_message, _title, _type)
 	{
@@ -563,12 +573,12 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 	/**
 	 * Show a prompt dialog
 	 *
-	 * @param function _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
-	 * @param String _message Message to be place in the dialog.
-	 * @param String _title Text in the top bar of the dialog.
-	 * @param String _value for prompt, passed to callback as 2. parameter
-	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
-	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
+	 * @param {function} _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
+	 * @param {string} _message Message to be place in the dialog.
+	 * @param {string} _title Text in the top bar of the dialog.
+	 * @param {string} _value for prompt, passed to callback as 2. parameter
+	 * @param {integer|array} _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
+	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
 	 */
 	show_prompt: function(_callback, _message, _title, _value, _buttons, _egw_or_appname)
 	{
@@ -635,18 +645,18 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 	 * also be called if the user clicks a button (OK or CANCEL), so be sure to
 	 * check to avoid executing more than intended.
 	 *
-	 * @param function _callback Function called when the user clicks a button,
+	 * @param {function} _callback Function called when the user clicks a button,
 	 *	or when the list is done processing.  The context will be the et2_dialog
 	 *	widget, and the button constant is passed in.
-	 * @param String _message Message to be place in the dialog.  Usually just
+	 * @param {string} _message Message to be place in the dialog.  Usually just
 	 *	text, but DOM nodes will work too.
-	 * @param String _title Text in the top bar of the dialog.
+	 * @param {string} _title Text in the top bar of the dialog.
 	 * @param {string} _menuaction the menuaction function which should be called and
 	 * 	which handles the actual request. If the menuaction is a full featured
 	 * 	url, this one will be used instead.
 	 * @param {Array[]} _list - List of parameters, one for each call to the
 	 *	address.  Multiple parameters are allowed, in an array.
-	 * @param {string|egw} _egw_or_appname= egw object with already laoded translations or application name to load translations for
+	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
 	 *
 	 * @return {et2_dialog}
 	 */
