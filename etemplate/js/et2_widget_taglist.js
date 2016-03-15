@@ -115,6 +115,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			type: "boolean",
 			"default": true,
 			description: "Set to false to allow comma in entered content"
+		},
+		groupBy: {
+			name: "group results",
+			type: "string",
+			default: null,
+			description: "group results by given JSON attribute"
 		}
 	},
 
@@ -124,6 +130,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 	 * Construtor
 	 *
 	 * @memberOf et2_selectbox
+	 * @param {et2_widget} _parent
+	 * @param {object} _attrs
 	 */
 	init: function(_parent, _attrs) {
 		this._super.apply(this, arguments);
@@ -224,7 +232,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
 			width: this.options.width,	// propagate width
 			highlight: false,	// otherwise renderer have to return strings
-			selectFirst: true
+			selectFirst: true,
+			groupBy: this.options.groupBy && typeof this.options.groupBy == 'string' ? this.options.groupBy : null
 		}, this.lib_options);
 
 		if(this.options.height) {
@@ -324,12 +333,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				window.setTimeout(function() {
 					$j('body').one('click',function() {
 						taglist.collapse();
-					})},1
+					});},1
 				);
 				this.$taglist.one('collapse', function() {
 					wrapper.remove();
 					widget.div.removeClass('expanded');
-				})
+				});
 			},this));
 
 		// Unbind change handler of widget's ancestor to stop it from bubbling
@@ -545,7 +554,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		var css = {
 			'max-height': '',
 			'height': 'auto'
-		}
+		};
 		if(_rows)
 		{
 			var border = this.taglist !== null ?
@@ -669,7 +678,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				{
 					window.clearTimeout(this._hide_timeout);
 				}
-			},this))
+			},this));
 		this.taglist.container[0].scrollIntoView();
 	},
 
@@ -813,7 +822,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 			'default': 'accounts',
 			type: 'string',
 			description: 'Limit type of accounts.  One of {accounts,groups,both,owngroups}.'
-		},
+		}
 	},
 	lib_options: {
 		minChars: 2
